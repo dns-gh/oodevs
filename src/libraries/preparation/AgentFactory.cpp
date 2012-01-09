@@ -293,9 +293,9 @@ Automat_ABC* AgentFactory::Create( xml::xistream& xis, Entity_ABC& parent )
 // Name: AgentFactory::Create
 // Created: SBO 2006-11-09
 // -----------------------------------------------------------------------------
-Population_ABC* AgentFactory::CreatePop( xml::xistream& xis, Team_ABC& parent )
+Population_ABC* AgentFactory::Create( xml::xistream& xis, Team_ABC& parent, const kernel::PopulationType& type )
 {
-    Population* result = new Population( xis, controllers_.controller_, idManager_, static_.types_ );
+    Population* result = new Population( xis, type, controllers_.controller_, idManager_ );
     result->Attach< Positions >( *new PopulationPositions( xis, *result, controllers_.controller_, static_.coordinateConverter_ ) );
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, &parent ) );
     kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
@@ -311,9 +311,9 @@ Population_ABC* AgentFactory::CreatePop( xml::xistream& xis, Team_ABC& parent )
 // Name: AgentFactory::Create
 // Created: SLG 2010-11-23
 // -----------------------------------------------------------------------------
-Inhabitant_ABC* AgentFactory::CreateInhab( xml::xistream& xis, Team_ABC& parent )
+Inhabitant_ABC* AgentFactory::Create( xml::xistream& xis, Team_ABC& parent, const kernel::InhabitantType& type )
 {
-    Inhabitant* result = new Inhabitant( xis, controllers_.controller_, idManager_, static_.types_ );
+    Inhabitant* result = new Inhabitant( xis, type, controllers_.controller_, idManager_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new InhabitantPositions( xis, controllers_.controller_, static_.coordinateConverter_, model_.urban_, *result, dico ) );
     result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, &parent ) );

@@ -69,15 +69,22 @@ kernel::Formation_ABC* FormationModel::Create( kernel::Entity_ABC& parent, unsig
 // Name: FormationModel::Create
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-void FormationModel::Create( xml::xistream& xis, kernel::Entity_ABC& parent, Model& model, std::string& loadingErrors )
+void FormationModel::Create( xml::xistream& xis, kernel::Entity_ABC& parent, Model& model )
 {
-    Formation_ABC* formation = factory_.Create( xis, parent, levels_ );
-    Register( formation->GetId(), *formation );
-    xis >> xml::list( "formation"   , *this               , &FormationModel::Create    , *(Entity_ABC*)formation, model, loadingErrors )
-        >> xml::list( "automat"     , model.agents_       , &AgentsModel::CreateAutomat, *formation, model.limits_, model.ghosts_, loadingErrors )
-        >> xml::list( "phantom"     , model.ghosts_       , &GhostModel::Create        , *(Entity_ABC*)formation )
-        >> xml::list( "lima"        , model.limits_       , &LimitsModel::CreateLima   , *(Entity_ABC*)formation )
-        >> xml::list( "limit"       , model.limits_       , &LimitsModel::CreateLimit  , *(Entity_ABC*)formation );
+    try
+    {
+        Formation_ABC* formation = factory_.Create( xis, parent, levels_ );
+        Register( formation->GetId(), *formation );
+        xis >> xml::list( "formation", *this        , &FormationModel::Create    , *formation, model )
+            >> xml::list( "automat"  , model.agents_, &AgentsModel::CreateAutomat, *formation, model )
+            >> xml::list( "phantom"  , model.ghosts_, &GhostModel::Create        , *formation )
+            >> xml::list( "lima"     , model.limits_, &LimitsModel::CreateLima   , *formation )
+            >> xml::list( "limit"    , model.limits_, &LimitsModel::CreateLimit  , *formation );
+    }
+    catch( std::exception& e )
+    {
+        model.AppendLoadingError( eOthers, std::string( e.what() ) );
+    }
 }
 
 // -----------------------------------------------------------------------------

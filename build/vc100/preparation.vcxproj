@@ -127,7 +127,6 @@
     <ClCompile Include="..\..\src\libraries\preparation\Agent.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\AgentFactory.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\AgentsModel.cpp" />
-    <ClCompile Include="..\..\src\libraries\preparation\AgentsModelChecker.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\AgentAffinities.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\AgentCommunications.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\AgentHierarchies.cpp" />
@@ -233,6 +232,7 @@
     <ClCompile Include="..\..\src\libraries\preparation\LocationSerializer.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\preparation\ConsistencyErrorTypes.h" />
     <ClInclude Include="..\..\src\libraries\preparation\Ghost.h" />
     <ClInclude Include="..\..\src\libraries\preparation\GhostFactory.h" />
     <ClInclude Include="..\..\src\libraries\preparation\GhostFactory_ABC.h" />
@@ -250,7 +250,6 @@
     <ClInclude Include="..\..\src\libraries\preparation\EnumTypes.h" />
     <ClInclude Include="..\..\src\libraries\preparation\IdManager.h" />
     <ClInclude Include="..\..\src\libraries\preparation\Model.h" />
-    <ClInclude Include="..\..\src\libraries\preparation\ModelChecker_ABC.h" />
     <ClInclude Include="..\..\src\libraries\preparation\ProfileHierarchies.h" />
     <ClInclude Include="..\..\src\libraries\preparation\ProfileHierarchies_ABC.h" />
     <ClInclude Include="..\..\src\libraries\preparation\StaticModel.h" />
@@ -273,7 +272,6 @@
     <ClInclude Include="..\..\src\libraries\preparation\AgentFactory.h" />
     <ClInclude Include="..\..\src\libraries\preparation\AgentFactory_ABC.h" />
     <ClInclude Include="..\..\src\libraries\preparation\AgentsModel.h" />
-    <ClInclude Include="..\..\src\libraries\preparation\AgentsModelChecker.h" />
     <ClInclude Include="..\..\src\libraries\preparation\AgentAffinities.h" />
     <ClInclude Include="..\..\src\libraries\preparation\AgentCommunications.h" />
     <ClInclude Include="..\..\src\libraries\preparation\AgentHierarchies.h" />

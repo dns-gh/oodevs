@@ -34,7 +34,7 @@ FilterProxyModel::~FilterProxyModel()
 // Name: FilterProxyModel::ToggleFilter
 // Created: LGY 2011-10-26
 // -----------------------------------------------------------------------------
-void FilterProxyModel::ToggleFilter( ModelConsistencyChecker::E_ConsistencyCheck type )
+void FilterProxyModel::ToggleFilter( E_ConsistencyCheck type )
 {
     if( filters_.find( type ) != filters_.end() )
         filters_.erase( type );
@@ -50,7 +50,7 @@ void FilterProxyModel::ToggleFilter( ModelConsistencyChecker::E_ConsistencyCheck
 bool FilterProxyModel::filterAcceptsRow( int row, const QModelIndex& parent ) const
 {
     QModelIndex index = sourceModel()->index( row, 0, parent );
-    ModelConsistencyChecker::E_ConsistencyCheck type = static_cast< ModelConsistencyChecker::E_ConsistencyCheck >( index.data( Qt::UserRole + 1 ).toInt() );
+    E_ConsistencyCheck type = static_cast< E_ConsistencyCheck >( index.data( Qt::UserRole + 1 ).toInt() );
     if( filters_.find( type ) != filters_.end() )
         return true;
     return false;

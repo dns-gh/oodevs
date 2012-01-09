@@ -10,7 +10,7 @@
 #ifndef __FilterProxyModel_h_
 #define __FilterProxyModel_h_
 
-#include "preparation/ModelConsistencyChecker.h"
+#include "preparation/ConsistencyErrorTypes.h"
 #include <set>
 
 // =============================================================================
@@ -32,7 +32,7 @@ public:
 
     //! @name Operations
     //@{
-    void ToggleFilter( ModelConsistencyChecker::E_ConsistencyCheck type );
+    void ToggleFilter( E_ConsistencyCheck type );
     //@}
 
 private:
@@ -44,7 +44,7 @@ private:
 private:
     //! @name Types
     //@{
-    typedef std::set< ModelConsistencyChecker::E_ConsistencyCheck > T_Filters;
+    typedef std::set< E_ConsistencyCheck > T_Filters;
     //@}
 
 private:

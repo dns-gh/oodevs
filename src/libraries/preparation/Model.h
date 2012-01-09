@@ -10,8 +10,10 @@
 #ifndef __Model_h_
 #define __Model_h_
 
+#include "ConsistencyErrorTypes.h"
 #include "clients_kernel/EntityResolverFacade.h"
 #include "clients_kernel/Model_ABC.h"
+#include <set>
 
 namespace kernel
 {
@@ -48,7 +50,6 @@ class LimitsModel;
 class WeatherModel;
 class ProfilesModel;
 class ProfileFactory_ABC;
-class ModelChecker_ABC;
 class ObjectsModel;
 class ObjectFactory_ABC;
 class ScoresModel;
@@ -66,6 +67,13 @@ class UrbanModel;
 class Model : public kernel::Model_ABC
             , public kernel::EntityResolverFacade
 {
+public:
+    //! @name Types
+    //@{
+    typedef std::pair< E_ConsistencyCheck, std::string > T_LoadingError;
+    typedef std::set< T_LoadingError > T_LoadingErrors;
+    //@}
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -90,8 +98,11 @@ public:
 
     //! @name Operations
     //@
-    void Load( const tools::ExerciseConfig& config, std::string& loadingErrors );
-    bool Save( const tools::ExerciseConfig& config, ModelChecker_ABC& checker );
+    void Load( const tools::ExerciseConfig& config );
+    void Save( const tools::ExerciseConfig& config );
+    void AppendLoadingError( E_ConsistencyCheck type, const std::string& error );
+    const T_LoadingErrors& GetLoadingErrors() const;
+    void ClearLoadingErrors();
     void Purge();
     QString GetName() const;
     IdManager& GetIdManager() const;
@@ -125,6 +136,7 @@ private:
     kernel::ResourceNetworkSelectionObserver& resourceObserver_;
     QString name_;
     bool loaded_;
+    T_LoadingErrors loadingErrors_;
     //@}
 
 public:

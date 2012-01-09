@@ -12,6 +12,7 @@
 
 #include <boost/test/auto_unit_test.hpp>
 #include <boost/test/floating_point_comparison.hpp>
+#include <google/protobuf/stubs/common.h>
 
 #define BOOST_LIB_NAME boost_unit_test_framework
 #include <boost/config/auto_link.hpp>
@@ -37,5 +38,18 @@ inline xml::xostream& operator<<( xml::xostream& xos, const QString& s )
 #pragma warning( disable : 4505 )
 
 std::string BOOST_RESOLVE( const std::string& filename );
+
+struct ProtobufConfig {
+    ProtobufConfig()
+    {
+        GOOGLE_PROTOBUF_VERIFY_VERSION;
+    }
+    ~ProtobufConfig()
+    {
+        google::protobuf::ShutdownProtobufLibrary();
+    }
+};
+
+BOOST_GLOBAL_FIXTURE( ProtobufConfig );
 
 #endif // __clients_test_pch_h_

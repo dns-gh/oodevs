@@ -47,7 +47,7 @@ public:
              Object( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
                      const kernel::ObjectType& type, const QString& name, IdManager& idManager );
              Object( xml::xistream& xis, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
-                     const tools::Resolver_ABC< kernel::ObjectType, std::string >& types, IdManager& idManager );
+                     const kernel::ObjectType& type, IdManager& idManager );
     virtual ~Object();
     //@}
 

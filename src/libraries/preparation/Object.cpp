@@ -41,10 +41,10 @@ Object::Object( Controller& controller, const CoordinateConverter_ABC& converter
 // Name: Object constructor
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-Object::Object( xml::xistream& xis, Controller& controller, const CoordinateConverter_ABC& converter, const tools::Resolver_ABC< ObjectType, std::string >& types, IdManager& idManager )
+Object::Object( xml::xistream& xis, Controller& controller, const CoordinateConverter_ABC& converter, const kernel::ObjectType& type, IdManager& idManager )
     : EntityImplementation< Object_ABC >( controller, xis.attribute< unsigned long >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
     , converter_( converter )
-    , type_     ( types.Get( xis.attribute< std::string >( "type" ) ) )
+    , type_     ( type )
 {
     if( type_.HasSpawn() )
         idManager.Lock( id_ + 1 );

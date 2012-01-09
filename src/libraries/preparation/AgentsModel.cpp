@@ -11,13 +11,14 @@
 #include "Agent.h"
 #include "AgentFactory_ABC.h"
 #include "AgentsModel.h"
-#include "AgentsModelChecker.h"
 #include "Automat.h"
 #include "DiamondFormation.h"
 #include "GhostModel.h"
 #include "LogisticBaseStates.h"
 #include "LimitsModel.h"
 #include "Model.h"
+#include "StaticModel.h"
+#include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Inhabitant_ABC.h"
 #include "clients_kernel/AutomatType.h"
@@ -34,10 +35,10 @@ using namespace kernel;
 // Name: AgentsModel constructor
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-AgentsModel::AgentsModel( Controllers& controllers, AgentFactory_ABC& agentFactory, Model& model )
-    : agentFactory_( agentFactory )
-    , controllers_ ( controllers )
-    , model_       ( model )
+AgentsModel::AgentsModel( Controllers& controllers, AgentFactory_ABC& agentFactory, const StaticModel& staticModel )
+    : controllers_ ( controllers )
+    , agentFactory_( agentFactory )
+    , staticModel_ ( staticModel )
 {
     controllers_.Register( *this );
 }
@@ -122,7 +123,7 @@ void AgentsModel::CreateAutomatChildren( Automat_ABC& automat, const AutomatType
 // Name: AgentsModel::CreateAutomat
 // Created: SBO 2006-10-09
 // -----------------------------------------------------------------------------
-void AgentsModel::CreateAutomat( xml::xistream& xis, Entity_ABC& parent, LimitsModel& limits, GhostModel& ghosts, std::string& loadingErrors )
+void AgentsModel::CreateAutomat( xml::xistream& xis, Entity_ABC& parent, Model& model )
 {
     try
     {
@@ -130,18 +131,18 @@ void AgentsModel::CreateAutomat( xml::xistream& xis, Entity_ABC& parent, LimitsM
         if( automat )
         {
             tools::Resolver< Automat_ABC >::Register( automat->GetId(), *automat );
-            xis >> xml::list( "automat", *this , &AgentsModel::CreateAutomat, *automat, limits, ghosts, loadingErrors )
-                >> xml::list( "unit"   , *this , &AgentsModel::CreateAgent,   *automat, loadingErrors )
-                >> xml::list( "phantom", ghosts, &GhostModel::Create,         *(Entity_ABC*)automat )
-                >> xml::list( "lima"   , limits, &LimitsModel::CreateLima ,   *(Entity_ABC*)automat )
-                >> xml::list( "limit"  , limits, &LimitsModel::CreateLimit,   *(Entity_ABC*)automat );
+            xis >> xml::list( "automat", *this        , &AgentsModel::CreateAutomat, *automat, model )
+                >> xml::list( "unit"   , *this        , &AgentsModel::CreateAgent  , *automat, model )
+                >> xml::list( "phantom", model.ghosts_, &GhostModel::Create        , *automat )
+                >> xml::list( "lima"   , model.limits_, &LimitsModel::CreateLima   , *automat )
+                >> xml::list( "limit"  , model.limits_, &LimitsModel::CreateLimit  , *automat );
         }
         else
-            model_.ghosts_.Create( xis, parent, eGhostType_Automat );
+            model.ghosts_.Create( xis, parent, eGhostType_Automat );
     }
     catch( std::exception& e )
     {
-        loadingErrors += std::string( e.what() ) + "\n";
+        model.AppendLoadingError( eOthers, std::string( e.what() ) );
     }
 }
 
@@ -188,7 +189,7 @@ void AgentsModel::CreateAgent( Ghost_ABC& ghost, const AgentType& type, const ge
 // Name: AgentsModel::CreateAgent
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-void AgentsModel::CreateAgent( xml::xistream& xis, Automat_ABC& parent, std::string& loadingErrors )
+void AgentsModel::CreateAgent( xml::xistream& xis, Automat_ABC& parent, Model& model )
 {
     try
     {
@@ -196,11 +197,11 @@ void AgentsModel::CreateAgent( xml::xistream& xis, Automat_ABC& parent, std::str
         if( agent )
             tools::Resolver< Agent_ABC >::Register( agent->GetId(), *agent );
         else
-            model_.ghosts_.Create( xis, parent, eGhostType_Agent );
+            model.ghosts_.Create( xis, parent, eGhostType_Agent );
     }
     catch( std::exception& e )
     {
-        loadingErrors += std::string( e.what() ) + "\n";
+        model.AppendLoadingError( eOthers, std::string( e.what() ) );
     }
 }
 
@@ -251,16 +252,23 @@ void AgentsModel::CreatePopulation( Entity_ABC& parent, const PopulationType& ty
 // Name: AgentsModel::CreatePopulation
 // Created: SBO 2006-11-09
 // -----------------------------------------------------------------------------
-void AgentsModel::CreatePopulation( xml::xistream& xis, Team_ABC& parent, std::string& loadingErrors )
+void AgentsModel::CreatePopulation( xml::xistream& xis, Team_ABC& parent, Model& model )
 {
     try
     {
-        Population_ABC* popu = agentFactory_.CreatePop( xis, parent );
-        tools::Resolver< Population_ABC >::Register( popu->GetId(), *popu );
+        const std::string typeName = xis.attribute< std::string >( "type" );
+        const PopulationType* type = staticModel_.types_.tools::StringResolver< PopulationType >::Find( typeName );
+        if( type )
+        {
+            Population_ABC* population = agentFactory_.Create( xis, parent, *type );
+            tools::Resolver< Population_ABC >::Register( population->GetId(), *population );
+        }
+        else
+            model.AppendLoadingError( eUnknownCrowdTypes, typeName );
     }
     catch( std::exception& e )
     {
-        loadingErrors += std::string( e.what() ) + "\n";
+        model.AppendLoadingError( eOthers, std::string( e.what() ) );
     }
 }
 
@@ -297,16 +305,23 @@ void AgentsModel::CreateInhabitant( Entity_ABC& parent, const InhabitantType& ty
 // Name: AgentsModel::CreateInhabitant
 // Created: SLG 2010-11-23
 // -----------------------------------------------------------------------------
-void AgentsModel::CreateInhabitant( xml::xistream& xis, Team_ABC& parent, std::string& loadingErrors )
+void AgentsModel::CreateInhabitant( xml::xistream& xis, Team_ABC& parent, Model& model )
 {
     try
     {
-        Inhabitant_ABC* inhab = agentFactory_.CreateInhab( xis, parent );
-        tools::Resolver< Inhabitant_ABC >::Register( inhab->GetId(), *inhab );
+        const std::string typeName = xis.attribute< std::string >( "type" );
+        const InhabitantType* type = staticModel_.types_.tools::StringResolver< InhabitantType >::Find( typeName );
+        if( type )
+        {
+            Inhabitant_ABC* inhabitant = agentFactory_.Create( xis, parent, *type );
+            tools::Resolver< Inhabitant_ABC >::Register( inhabitant->GetId(), *inhabitant );
+        }
+        else
+            model.AppendLoadingError( eUnknownPopulationTypes, typeName );
     }
     catch( std::exception& e )
     {
-        loadingErrors += std::string( e.what() ) + "\n";
+        model.AppendLoadingError( eOthers, std::string( e.what() ) );
     }
 }
 
@@ -362,16 +377,6 @@ void AgentsModel::NotifyDeleted( const Population_ABC& agent )
 void AgentsModel::NotifyDeleted( const Inhabitant_ABC& agent )
 {
     tools::Resolver< Inhabitant_ABC >::Remove( agent.GetId() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentsModel::CheckValidity
-// Created: SBO 2007-01-18
-// -----------------------------------------------------------------------------
-bool AgentsModel::CheckValidity( ModelChecker_ABC& checker ) const
-{
-    AgentsModelChecker agentChecker;
-    return agentChecker.Check( *this, checker );
 }
 
 // -----------------------------------------------------------------------------

@@ -36,7 +36,6 @@ namespace tools
 class UserProfile;
 class ProfileFactory_ABC;
 class Model;
-class ModelChecker_ABC;
 
 // =============================================================================
 /** @class  ProfilesModel

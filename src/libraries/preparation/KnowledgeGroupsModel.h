@@ -50,9 +50,9 @@ public:
     void Purge();
     virtual tools::Iterator< const kernel::KnowledgeGroup_ABC& > CreateIterator() const;
     void Create( kernel::Team_ABC& parent ); // LTO
-    void Create( xml::xistream& xis, kernel::Team_ABC& parent, Model& model, std::string& loadingErrors );
+    void Create( xml::xistream& xis, kernel::Team_ABC& parent, Model& model );
     void CreateSubKnowledgeGroup( kernel::KnowledgeGroup_ABC& parent ); // LTO
-    void CreateSubKnowledgeGroup( xml::xistream& xis, kernel::KnowledgeGroup_ABC& parent, Model& model, std::string& loadingErrors );
+    void CreateSubKnowledgeGroup( xml::xistream& xis, kernel::KnowledgeGroup_ABC& parent, Model& model );
     //@}
 
 private:

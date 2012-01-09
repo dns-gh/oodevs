@@ -14,6 +14,7 @@
 #include "Model.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/Tools.h"
 #include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
@@ -23,9 +24,10 @@ using namespace kernel;
 // Name: ObjectsModel constructor
 // Created: JSR 2011-02-22
 // -----------------------------------------------------------------------------
-ObjectsModel::ObjectsModel( Controllers& controllers, ObjectFactory_ABC& factory )
+ObjectsModel::ObjectsModel( Controllers& controllers, ObjectFactory_ABC& factory, const tools::StringResolver< ObjectType >& resolver )
     : controllers_( controllers )
     , factory_    ( factory )
+    , resolver_   ( resolver )
 {
     controllers_.Register( *this );
 }
@@ -73,16 +75,23 @@ Object_ABC* ObjectsModel::CreateObject( const Team_ABC& team, const ObjectType& 
 // Name: ObjectsModel::CreateObject
 // Created: JSR 2011-02-22
 // -----------------------------------------------------------------------------
-void ObjectsModel::CreateObject( xml::xistream& xis, const kernel::Team_ABC& team, std::string& loadingErrors )
+void ObjectsModel::CreateObject( xml::xistream& xis, const kernel::Team_ABC& team, Model& model )
 {
     try
     {
-        Object_ABC* object = factory_.CreateObject( xis, team );
-        Register( object->GetId(), *object );
+        const std::string typeName = xis.attribute< std::string >( "type" );
+        const ObjectType* type = resolver_.Find( typeName );
+        if( type )
+        {
+            Object_ABC* object = factory_.CreateObject( xis, team, *type );
+            Register( object->GetId(), *object );
+        }
+        else
+            model.AppendLoadingError( eUnknownObjectTypes, typeName );
     }
     catch( std::exception& e )
     {
-        loadingErrors += std::string( e.what() ) + "\n";
+        model.AppendLoadingError( eOthers, std::string( e.what() ) );
     }
 }
 

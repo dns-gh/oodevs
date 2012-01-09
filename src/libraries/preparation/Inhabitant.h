@@ -12,7 +12,6 @@
 
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Inhabitant_ABC.h"
-#include "tools/Resolver.h"
 #include "clients_kernel/Serializable_ABC.h"
 
 namespace kernel
@@ -42,7 +41,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              Inhabitant( const kernel::InhabitantType& type, int number, const QString& name, kernel::Controller& controller, IdManager& idManager );
-             Inhabitant( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, const tools::StringResolver< kernel::InhabitantType >& types );
+             Inhabitant( xml::xistream& xis, const kernel::InhabitantType& type, kernel::Controller& controller, IdManager& idManager );
     virtual ~Inhabitant();
     //@}
 

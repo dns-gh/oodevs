@@ -512,14 +512,6 @@
         <translation>Objets</translation>
     </message>
     <message>
-        <source>Error loading the new orbat file</source>
-        <translation>Erreur de chargement du nouveau fichier orbat</translation>
-    </message>
-    <message>
-        <source>The following entities cannot be loaded: </source>
-        <translation>Les entités suivantes n&apos;ont pas pu être chargées: </translation>
-    </message>
-    <message>
         <source>File does not appear to be a valid orbat file.&lt;br&gt;Please select an other orbat file to import.</source>
         <translation>Le fichier sélectionné n&apos;est pas un fichier d&apos;ordre de bataille valide.&lt;br&gt;Merci de sélectionner un autre fichier à importer.</translation>
     </message>
@@ -834,12 +826,6 @@
     <message>
         <source>Load exercise definition file (exercise.xml)</source>
         <translation>Charger un fichier de définition d&apos;exercice (exercise.xml)</translation>
-    </message>
-    <message>
-        <source>
-Do you want to save anyway?</source>
-        <translation>
-Voulez-vous sauvegarder malgré tout?</translation>
     </message>
     <message>
         <source>Watershed</source>
@@ -1255,16 +1241,56 @@ Voulez-vous sauvegarder malgré tout?</translation>
         <translation>Unicité</translation>
     </message>
     <message>
-        <source>DQP</source>
-        <translation>DQP</translation>
-    </message>
-    <message>
         <source>Long name size limit exceeded : %1.</source>
         <translation>Limite de taille du nom long dépassée : %1</translation>
     </message>
     <message>
         <source>Allocated stocks of nature %1 exceed max capacity.</source>
         <translation>Stocks affectés de nature %1 supérieurs à la capacité maximum.</translation>
+    </message>
+    <message>
+        <source>Others</source>
+        <translation>Autres</translation>
+    </message>
+    <message>
+        <source>Unknown object type &quot;%1&quot;, some objects could not be loaded.</source>
+        <translation>Type d&apos;objet &quot;%1&quot; inconnu, certains objets n&apos;ont pas pu être chargés.</translation>
+    </message>
+    <message>
+        <source>Unknown crowd type &quot;%1&quot;, some crowds could not be loaded.</source>
+        <translation>Type de foule &quot;%1&quot; inconnu, certaines foules n&apos;ont pas pu être chargées.</translation>
+    </message>
+    <message>
+        <source>Unknown population type &quot;%1&quot;, some populations could not be loaded.</source>
+        <translation>Type de population &quot;%1&quot; inconnu, certaines populations n&apos;ont pas pu être chargées.</translation>
+    </message>
+    <message>
+        <source>Command Post</source>
+        <translation>Poste de Commande</translation>
+    </message>
+    <message>
+        <source>No logistic base defined.</source>
+        <translation>Pas de base logistique définie.</translation>
+    </message>
+    <message>
+        <source>Automat has no command post.</source>
+        <translation>L'automate n'a pas de poste de commande.</translation>
+    </message>
+    <message>
+        <source>Automat has more than one command post.</source>
+        <translation>L'automate a plus d'un poste de commande.</translation>
+    </message>
+    <message>
+        <source>Automat has no knowledge group.</source>
+        <translation>L'automate n'a pas de groupe de connaissance.</translation>
+    </message>
+    <message>
+        <source>Score definitions contain errors: %1</source>
+        <translation>Les définitions des scores contiennent des erreurs: %1</translation>
+    </message>
+    <message>
+        <source>Success factor definitions contain errors: %1</source>
+        <translation>Les définitions des facteurs de réussite contiennent des erreurs: %1</translation>
     </message>
 </context>
 <context>
@@ -2301,10 +2327,6 @@ Voulez-vous sauvegarder malgré tout?</translation>
     <message>
         <source>Error loading exercise: </source>
         <translation>Erreur lors du chargement de l&apos;exercice: </translation>
-    </message>
-    <message>
-        <source>The following entities cannot be loaded: </source>
-        <translation>Les entités suivantes n&apos;ont pas pu être chargées: </translation>
     </message>
 </context>
 </TS>

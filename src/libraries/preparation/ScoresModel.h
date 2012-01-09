@@ -30,7 +30,6 @@ namespace tools
     class SchemaWriter_ABC;
 }
 
-class ModelChecker_ABC;
 class Score_ABC;
 class ScoreFactory_ABC;
 class TeamsModel;
@@ -56,8 +55,9 @@ public:
     void Delete( const Score_ABC& score );
     void Purge();
     void Load( const tools::Loader_ABC& fileLoader, const std::string& file );
-    bool CheckValidity( ModelChecker_ABC& checker, const tools::SchemaWriter_ABC& schemaWriter ) const;
+    bool CheckValidity( const tools::SchemaWriter_ABC& schemaWriter ) const;
     void Serialize( const std::string& file, const tools::SchemaWriter_ABC& schemaWriter ) const;
+    void Serialize( xml::xostream& xos, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void GenerateScoresFromTemplate( const tools::Loader_ABC& fileLoader );
     //@}
 
@@ -72,7 +72,6 @@ private:
     //@{
     void ReadTemplate( xml::xistream& xis );
     void Read( xml::xistream& xis );
-    void Serialize( xml::xostream& xos, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void ReadScore( xml::xistream& xis );
     void ReadForeach( xml::xistream& xis );
     void IterateAmmunitions( const std::string& content, const std::string& toReplace, const std::string& name, const std::string& toReplaceParties );

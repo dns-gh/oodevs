@@ -43,7 +43,7 @@ public:
     //! @name Operations
     //@{
     virtual kernel::Object_ABC* CreateObject( const kernel::ObjectType& type, const kernel::Team_ABC& team, const QString& name, const kernel::Location_ABC& location );
-    virtual kernel::Object_ABC* CreateObject( xml::xistream& xis, const kernel::Team_ABC& team );
+    virtual kernel::Object_ABC* CreateObject( xml::xistream& xis, const kernel::Team_ABC& team, const kernel::ObjectType& type );
     //@}
 
 private:

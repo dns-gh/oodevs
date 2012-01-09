@@ -10,6 +10,7 @@
 #include "preparation_pch.h"
 #include "ModelConsistencyChecker.h"
 #include "AgentsModel.h"
+#include "CommandPostAttributes.h"
 #include "Dotation.h"
 #include "FormationModel.h"
 #include "GhostModel.h"
@@ -18,8 +19,10 @@
 #include "Model.h"
 #include "ObjectsModel.h"
 #include "ProfilesModel.h"
+#include "ScoresModel.h"
 #include "StaticModel.h"
 #include "Stocks.h"
+#include "SuccessFactorsModel.h"
 #include "TacticalLine_ABC.h"
 #include "TeamsModel.h"
 #include "clients_gui/LongNameHelper.h"
@@ -28,6 +31,7 @@
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/ComponentType.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/EquipmentType.h"
@@ -36,11 +40,15 @@
 #include "clients_kernel/ExtensionType.h"
 #include "clients_kernel/ExtensionTypes.h"
 #include "clients_kernel/Karma.h"
+#include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
+#include "tools/GeneralConfig.h"
+#include "tools/SchemaWriter.h"
 #include <boost/foreach.hpp>
 #include <boost/format.hpp>
+#include <xeuseuleu/xsl.hpp>
 
 using namespace kernel;
 using namespace tools;
@@ -86,6 +94,7 @@ namespace
         {
             // NOTHING
         }
+
         virtual ~EntityWithLongNameExtractor()
         {
             // NOTHING
@@ -116,34 +125,33 @@ namespace
 // Name: ModelConsistencyChecker::CheckConsistency
 // Created: ABR 2011-09-22
 // -----------------------------------------------------------------------------
-bool ModelConsistencyChecker::CheckConsistency( unsigned int filters /*= eAllChecks*/ )
+bool ModelConsistencyChecker::CheckConsistency()
 {
     ClearErrors();
-    filters_ = filters;
-    if( filters & eLongNameUniqueness )
-        CheckUniqueness( eLongNameUniqueness, &CompareLongName );
-    if( filters & eTeamNameUniqueness )
-        CheckUniqueness( eTeamNameUniqueness, &CompareName );
-    if( filters & eObjectNameUniqueness )
-        CheckUniqueness( eObjectNameUniqueness, &CompareName );
-    if( filters & eLimaNameUniqueness )
-        CheckUniqueness( eLimaNameUniqueness, &CompareName );
-    if( filters & eLimitNameUniqueness )
-        CheckUniqueness( eLimitNameUniqueness, &CompareName );
-    if( filters & eStockInitialization )
-        CheckStockInitialization();
-    if( filters & eStockMaxExceeded )
-        CheckMaxStockExceeded();
-    if( filters & eLogisticInitialization )
-        CheckLogisticInitialization();
-    if( filters & eProfileUniqueness )
-        CheckProfileUniqueness();
-    if( filters & eProfileUnreadable || filters & eProfileUnwritable )
-        CheckProfileInitialization();
-    if( filters & eGhostExistence || filters & eGhostConverted )
-        CheckGhosts();
-    if( filters & eLongNameSize )
-        CheckLongNameSize();
+
+    CheckUniqueness( eLongNameUniqueness, &CompareLongName );
+    CheckUniqueness( eTeamNameUniqueness, &CompareName );
+    CheckUniqueness( eObjectNameUniqueness, &CompareName );
+    CheckUniqueness( eLimaNameUniqueness, &CompareName );
+    CheckUniqueness( eLimitNameUniqueness, &CompareName );
+
+    CheckStockInitialization();
+    CheckMaxStockExceeded();
+    CheckLogisticInitialization();
+
+    CheckProfileUniqueness();
+    CheckProfileInitialization();
+
+    CheckGhosts();
+
+    CheckCommandPosts();
+
+    CheckKnowledgeGroups();
+    CheckLongNameSize();
+    CheckLoadingErrors();
+    CheckScores();
+    CheckSuccessFactors();
+
     return !errors_.empty();
 }
 
@@ -227,12 +235,6 @@ void ModelConsistencyChecker::FillEntitiesCopy( E_ConsistencyCheck type )
             }
         }
         break;
-    case eStockInitialization:
-    case eStockMaxExceeded:
-    case eLogisticInitialization:
-    case eProfileUniqueness:
-    case eProfileUnreadable:
-    case eProfileUnwritable:
     default:
         throw std::runtime_error( __FUNCTION__ " invalid call to FillEntitiesCopy." );
         break;
@@ -401,9 +403,8 @@ void ModelConsistencyChecker::CheckProfileInitialization()
         const Automat_ABC& agent = it.NextElement();
         if( !model_.profiles_.IsWriteable( agent ) )
         {
-            if( filters_ & eProfileUnwritable )
-                AddError( eProfileUnwritable, &agent );
-            if( filters_ & eProfileUnreadable && !model_.profiles_.IsReadable( agent ) )
+            AddError( eProfileUnwritable, &agent );
+            if( !model_.profiles_.IsReadable( agent ) )
                 AddError( eProfileUnreadable, &agent );
         }
     }
@@ -419,13 +420,8 @@ void ModelConsistencyChecker::CheckGhosts()
     while( it.HasMoreElements() )
     {
         const Ghost_ABC& ghost = it.NextElement();
-        if( filters_ & eGhostConverted )
-        {
-            if( ghost.IsConverted() )
-                AddError( eGhostConverted, &ghost, ghost.GetType().ascii() );
-            else if( filters_ & eGhostExistence )
-                AddError( eGhostExistence, &ghost );
-        }
+        if( ghost.IsConverted() )
+            AddError( eGhostConverted, &ghost, ghost.GetType().ascii() );
         else
             AddError( eGhostExistence, &ghost );
     }
@@ -459,13 +455,119 @@ void ModelConsistencyChecker::CheckLongNameSize()
     }
 }
 
+namespace
+{
+    bool IsCommandPost( const Entity_ABC& entity )
+    {
+        if( const CommandPostAttributes* pAttributes = entity.Retrieve< CommandPostAttributes >() )
+            return pAttributes->IsCommandPost();
+        return false;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelConsistencyChecker::CheckCommandPosts
+// Created: JSR 2012-01-06
+// -----------------------------------------------------------------------------
+void ModelConsistencyChecker::CheckCommandPosts()
+{
+    Iterator< const Automat_ABC& > it = model_.GetAutomatResolver().CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const Automat_ABC& automat = it.NextElement();
+        const TacticalHierarchies& hierarchies = automat.Get< TacticalHierarchies >();
+        tools::Iterator< const Entity_ABC& > itChild = hierarchies.CreateSubordinateIterator();
+        unsigned int commandPostCount = 0;
+        while( itChild.HasMoreElements() )
+        {
+            if( IsCommandPost( itChild.NextElement() ) )
+                ++commandPostCount;
+        }
+        if( commandPostCount == 0 )
+            AddError( eNoCommandPost, &automat );
+        else if( commandPostCount > 1 )
+            AddError( eSeveralCommandPost, &automat );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelConsistencyChecker::CheckKnowledgeGroups
+// Created: JSR 2012-01-06
+// -----------------------------------------------------------------------------
+void ModelConsistencyChecker::CheckKnowledgeGroups()
+{
+    // TODO à vérifier
+    Iterator< const Team_ABC& > it = model_.GetTeamResolver().CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const Team_ABC& team = it.NextElement();
+        const CommunicationHierarchies& hierarchies = team.Get< CommunicationHierarchies >();
+        tools::Iterator< const Entity_ABC& > itSub = hierarchies.CreateSubordinateIterator();
+        while( itSub.HasMoreElements() )
+        {
+            const Entity_ABC* entity = &itSub.NextElement();
+            if( !dynamic_cast< const KnowledgeGroup_ABC* >( entity ) )
+                AddError( eNoKnowledgeGroup, entity );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelConsistencyChecker::CheckScores
+// Created: JSR 2012-01-06
+// -----------------------------------------------------------------------------
+void ModelConsistencyChecker::CheckScores()
+{
+    try
+    {
+        const tools::SchemaWriter schemaWriter;
+        xml::xostringstream xos;
+        model_.scores_.Serialize( xos, schemaWriter );
+    }
+    catch( std::exception& e )
+    {
+        AddError( eScoreError, 0, std::string( e.what() ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelConsistencyChecker::CheckSuccessFactors
+// Created: JSR 2012-01-06
+// -----------------------------------------------------------------------------
+void ModelConsistencyChecker::CheckSuccessFactors()
+{
+    try
+    {
+        const tools::SchemaWriter schemaWriter;
+        xml::xostringstream xos;
+        model_.successFactors_.Serialize( xos, schemaWriter );
+        xsl::xstringtransform xst( tools::GeneralConfig::BuildResourceChildFile( "SuccessFactors.xsl" ) );
+        xml::xistringstream xis( xos.str() );
+        xst << xis;
+    }
+    catch( std::exception& e )
+    {
+        AddError( eSuccessFactorError, 0, std::string( e.what() ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelConsistencyChecker::CheckLoadingErrors
+// Created: JSR 2012-01-04
+// -----------------------------------------------------------------------------
+void ModelConsistencyChecker::CheckLoadingErrors()
+{
+    Model::T_LoadingErrors errors = model_.GetLoadingErrors();
+    for( Model::T_LoadingErrors::const_iterator it = errors.begin(); it != errors.end(); ++it )
+        AddError( it->first, 0, it->second );
+}
+
 // -----------------------------------------------------------------------------
 // Name: ModelConsistencyChecker::AddError
 // Created: ABR 2011-09-27
 // -----------------------------------------------------------------------------
 void ModelConsistencyChecker::AddError( E_ConsistencyCheck type, const Entity_ABC* entity, const std::string& optional /*= ""*/ )
 {
-    assert( entity );
     ConsistencyError error( type );
     error.entities_.push_back( new SafePointer< Entity_ABC >( controllers_, entity ) );
     error.optional_ = optional;

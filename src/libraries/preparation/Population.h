@@ -15,8 +15,8 @@
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Units.h"
-#include "tools/Resolver_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -41,12 +41,13 @@ class IdManager;
 class Population : public kernel::EntityImplementation< kernel::Population_ABC >
                  , public kernel::Extension_ABC
                  , public kernel::Serializable_ABC
+                 , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
              Population( const kernel::PopulationType& type, int number, kernel::Controller& controller, IdManager& idManager );
-             Population( xml::xistream& xis, kernel::Controller& controller, IdManager& idManager, const tools::Resolver_ABC< kernel::PopulationType, std::string >& types );
+             Population( xml::xistream& xis, const kernel::PopulationType& type, kernel::Controller& controller, IdManager& idManager );
     virtual ~Population();
     //@}
 
@@ -61,12 +62,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Population( const Population& );            //!< Copy constructor
-    Population& operator=( const Population& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::Controller& controller );

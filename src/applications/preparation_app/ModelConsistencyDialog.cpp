@@ -32,6 +32,8 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     setCaption( tr( "Consistency analysis" ) );
     setMinimumSize( 500, 500 );
 
+    connect( this, SIGNAL( ClearLoadingErrors() ), parent, SLOT( ClearLoadingErrors() ) );
+
     // Model
     horizontalHeaders_ << tr( "ID" ) << tr( "Name" ) << tr( "Description" );
     dataModel_ = new QStandardItemModel( this );
@@ -54,15 +56,17 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     QPushButton* refreshButton = new QPushButton( tr( "Refresh" ) );
     QPushButton* closeButton = new QPushButton( tr( "Close" ) );
     connect( refreshButton, SIGNAL( clicked() ), SLOT( OnRefresh() ) );
-    connect( closeButton, SIGNAL( clicked() ), SLOT( reject() ) );
+    connect( closeButton, SIGNAL( clicked() ), SLOT( OnClose() ) );
+    closeButton->setDefault( true );
 
     // CheckBox
     QHBoxLayout* checkBoxLayout = new QHBoxLayout();
-    CreateCheckbox( *checkBoxLayout, boost::assign::map_list_of( ModelConsistencyChecker::eAllProfile, tr( "Profile" ) )
-                                                               ( ModelConsistencyChecker::eAllGhost, tr( "Ghost" ) )
-                                                               ( ModelConsistencyChecker::eAllInitialization, tr( "Logistic" ) )
-                                                               ( ModelConsistencyChecker::eAllUniqueness, tr( "Unicity" ) ) 
-                                                               ( ModelConsistencyChecker::eAllDQP, tr( "DQP" ) ) );
+    CreateCheckbox( *checkBoxLayout, boost::assign::map_list_of( eUniquenessMask,  tr( "Unicity" ) )
+                                                               ( eLogisticMask,    tr( "Logistic" ) )
+                                                               ( eProfileMask,     tr( "Profile" ) )
+                                                               ( eGhostMask,       tr( "Ghost" ) )
+                                                               ( eCommandPostMask, tr( "Command Post" ) )
+                                                               ( eOthersMask,      tr( "Others" ) ) );
 
     // Layout creation
     QVBoxLayout* mainLayout = new QVBoxLayout();
@@ -77,20 +81,41 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     buttonLayout->addWidget( closeButton );
 
     // Fill errors text
-    errorDescriptions_[ ModelConsistencyChecker::eLongNameUniqueness ]              = tr( "Duplicate long name for units %1." );
-    errorDescriptions_[ ModelConsistencyChecker::eTeamNameUniqueness ]              = tr( "Duplicate name for parties %1." );
-    errorDescriptions_[ ModelConsistencyChecker::eObjectNameUniqueness ]            = tr( "Duplicate name for objects %1." );
-    errorDescriptions_[ ModelConsistencyChecker::eLimaNameUniqueness ]              = tr( "Duplicate name for limas %1." );
-    errorDescriptions_[ ModelConsistencyChecker::eLimitNameUniqueness ]             = tr( "Duplicate name for limits %1." );
-    errorDescriptions_[ ModelConsistencyChecker::eStockInitialization ]             = tr( "No stocks initialized." );
-    errorDescriptions_[ ModelConsistencyChecker::eStockMaxExceeded ]                = tr( "Allocated stocks of nature %1 exceed max capacity." );
-    errorDescriptions_[ ModelConsistencyChecker::eLogisticInitialization ]          = tr( "No logistic link initialized." );
-    errorDescriptions_[ ModelConsistencyChecker::eProfileUniqueness ]               = tr( "Association with multiple profiles: %1." );
-    errorDescriptions_[ ModelConsistencyChecker::eProfileUnreadable ]               = tr( "Not 'readable' to any user profile. You will not be able to see it on the game." );
-    errorDescriptions_[ ModelConsistencyChecker::eProfileUnwritable ]               = tr( "Not 'writable' to any user profile. You will not be able to give orders to it on the game." );
-    errorDescriptions_[ ModelConsistencyChecker::eGhostExistence ]                  = tr( "A phantom unit is present." );
-    errorDescriptions_[ ModelConsistencyChecker::eGhostConverted ]                  = tr( "Unknown type '%1', a phantom unit has been created instead." );
-    errorDescriptions_[ ModelConsistencyChecker::eLongNameSize ]                    = tr( "Long name size limit exceeded : %1." );
+    // Uniqueness
+    errorDescriptions_[ eLongNameUniqueness ]              = tr( "Duplicate long name for units %1." );
+    errorDescriptions_[ eTeamNameUniqueness ]              = tr( "Duplicate name for parties %1." );
+    errorDescriptions_[ eObjectNameUniqueness ]            = tr( "Duplicate name for objects %1." );
+    errorDescriptions_[ eLimaNameUniqueness ]              = tr( "Duplicate name for limas %1." );
+    errorDescriptions_[ eLimitNameUniqueness ]             = tr( "Duplicate name for limits %1." );
+
+    // Logistic
+    errorDescriptions_[ eStockInitialization ]             = tr( "No stocks initialized." );
+    errorDescriptions_[ eStockMaxExceeded ]                = tr( "Allocated stocks of nature %1 exceed max capacity." );
+    errorDescriptions_[ eLogisticInitialization ]          = tr( "No logistic link initialized." );
+    errorDescriptions_[ eNoLogisticBase ]                  = tr( "No logistic base defined." );
+
+    // Profile
+    errorDescriptions_[ eProfileUniqueness ]               = tr( "Association with multiple profiles: %1." );
+    errorDescriptions_[ eProfileUnreadable ]               = tr( "Not 'readable' to any user profile. You will not be able to see it on the game." );
+    errorDescriptions_[ eProfileUnwritable ]               = tr( "Not 'writable' to any user profile. You will not be able to give orders to it on the game." );
+
+    // Ghost
+    errorDescriptions_[ eGhostExistence ]                  = tr( "A phantom unit is present." );
+    errorDescriptions_[ eGhostConverted ]                  = tr( "Unknown type '%1', a phantom unit has been created instead." );
+
+    // Command Post
+    errorDescriptions_[ eNoCommandPost ]                  = tr( "Automat has no command post." );
+    errorDescriptions_[ eSeveralCommandPost ]             = tr( "Automat has more than one command post." );
+
+    // Others
+    errorDescriptions_[ eLongNameSize ]                    = tr( "Long name size limit exceeded : %1." );
+    errorDescriptions_[ eUnknownObjectTypes ]              = tr( "Unknown object type \"%1\", some objects could not be loaded." );
+    errorDescriptions_[ eUnknownCrowdTypes ]               = tr( "Unknown crowd type \"%1\", some crowds could not be loaded." );
+    errorDescriptions_[ eUnknownPopulationTypes ]          = tr( "Unknown population type \"%1\", some populations could not be loaded." );
+    errorDescriptions_[ eNoKnowledgeGroup ]                = tr( "Automat has no knowledge group." );
+    errorDescriptions_[ eScoreError ]                      = tr( "Score definitions contain errors: %1" );
+    errorDescriptions_[ eSuccessFactorError ]              = tr( "Success factor definitions contain errors: %1" );
+    errorDescriptions_[ eOthers ]                          = "%1";
 }
 
 // -----------------------------------------------------------------------------
@@ -125,7 +150,18 @@ void ModelConsistencyDialog::CreateCheckbox( QHBoxLayout& layout, const T_Types&
 // -----------------------------------------------------------------------------
 void ModelConsistencyDialog::OnRefresh()
 {
+    emit( ClearLoadingErrors() );
     CheckConsistency();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelConsistencyDialog::OnClose
+// Created: JSR 2012-01-05
+// -----------------------------------------------------------------------------
+void ModelConsistencyDialog::OnClose()
+{
+    emit( ClearLoadingErrors() );
+    reject();
 }
 
 // -----------------------------------------------------------------------------
@@ -166,40 +202,41 @@ void ModelConsistencyDialog::UpdateDataModel()
 
         for( ModelConsistencyChecker::CIT_SafeEntities entityIt = error.entities_.begin(); entityIt != error.entities_.end(); ++entityIt, ++currentRow )
         {
+            QList< QStandardItem* > items;
             const kernel::SafePointer< kernel::Entity_ABC >& entity = **entityIt;
             if( entity )
             {
-                QList< QStandardItem* > items;
                 AddItem( static_cast< unsigned int >( entity->GetId() ), QString::number( entity->GetId() ), entity, error.type_, items );
                 AddItem( entity->GetName(), entity->GetName(), entity, error.type_, items );
-                QString text = ( error.type_ & ModelConsistencyChecker::eAllUniqueness ||
-                                 error.type_ & ModelConsistencyChecker::eProfileUniqueness ||
-                                 error.type_ & ModelConsistencyChecker::eGhostConverted ||
-                                 error.type_ & ModelConsistencyChecker::eLongNameSize ||
-                                 error.type_ & ModelConsistencyChecker::eStockMaxExceeded )
-                               ? errorDescriptions_[ error.type_ ].arg( ( error.optional_.empty() ) ? idList : error.optional_.c_str() )
-                               : errorDescriptions_[ error.type_ ];
-
-                AddItem( text, text, entity, error.type_, items  );
-                dataModel_->appendRow( items );
             }
+            else
+            {
+                AddItem( 0, "---", entity, error.type_, items );
+                AddItem( "---", "---", entity, error.type_, items );
+            }
+
+            QString text = errorDescriptions_[ error.type_ ];
+            if( text.contains( "%1" ) )
+                text = text.arg( ( error.optional_.empty() ) ? idList : error.optional_.c_str() );
+            AddItem( text, text, entity, error.type_, items  );
+            dataModel_->appendRow( items );
         }
     }
 }
 
 namespace
 {
-    int Convert( ModelConsistencyChecker::E_ConsistencyCheck type )
+    #define CONVERT_TO_MASK( mask ) { if( type & mask ) return mask; }
+
+    int Convert( E_ConsistencyCheck type )
     {
-        if( type <= ModelConsistencyChecker::eAllUniqueness )
-            return ModelConsistencyChecker::eAllUniqueness;
-        if( type <= ModelConsistencyChecker::eAllInitialization )
-            return ModelConsistencyChecker::eAllInitialization;
-        if( type <= ModelConsistencyChecker::eAllProfile )
-            return ModelConsistencyChecker::eAllProfile;
-        if ( type <= ModelConsistencyChecker::eAllGhost )
-            return ModelConsistencyChecker::eAllGhost;
-        return ModelConsistencyChecker::eAllDQP;
+        CONVERT_TO_MASK( eUniquenessMask )
+        CONVERT_TO_MASK( eLogisticMask )
+        CONVERT_TO_MASK( eProfileMask )
+        CONVERT_TO_MASK( eGhostMask )
+        CONVERT_TO_MASK( eCommandPostMask )
+        CONVERT_TO_MASK( eOthersMask )
+        throw std::runtime_error( "Consistency type Unknown" );
     }
 }
 
@@ -209,7 +246,7 @@ namespace
 // -----------------------------------------------------------------------------
 template< typename T >
 void ModelConsistencyDialog::AddItem( T data, QString text, const kernel::SafePointer< kernel::Entity_ABC >& entity,
-                                      ModelConsistencyChecker::E_ConsistencyCheck type, QList< QStandardItem* >& items )
+                                      E_ConsistencyCheck type, QList< QStandardItem* >& items )
 {
     QStandardItem* item = new QStandardItem( text );
     item->setFlags( Qt::ItemIsSelectable | Qt::ItemIsEnabled );
@@ -242,6 +279,6 @@ void ModelConsistencyDialog::OnSelectionChanged( const QModelIndex& index )
 // -----------------------------------------------------------------------------
 void ModelConsistencyDialog::OnFilterChanged( int type )
 {
-    proxyModel_->ToggleFilter( static_cast< ModelConsistencyChecker::E_ConsistencyCheck >( type ) );
+    proxyModel_->ToggleFilter( static_cast< E_ConsistencyCheck >( type ) );
     proxyModel_->setSourceModel( dataModel_ );
 }
