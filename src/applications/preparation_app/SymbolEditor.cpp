@@ -10,6 +10,7 @@
 #include "preparation_app_pch.h"
 #include "SymbolEditor.h"
 #include "moc_SymbolEditor.cpp"
+#include "preparation/ProfileHierarchies_ABC.h"
 #include "clients_gui/EntitySymbols.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Controller.h"
@@ -234,5 +235,7 @@ void SymbolEditor::UpdateHierarchies()
             controllers_.controller_.Update( *pCommunication );
         else if( const kernel::CommunicationHierarchies* pCommunication = pTactical->GetTop().Retrieve< kernel::CommunicationHierarchies >() )
             controllers_.controller_.Update( *pCommunication );
+        if( const ProfileHierarchies_ABC* pProfil = selected_->Retrieve< ProfileHierarchies_ABC >() )
+            controllers_.controller_.Update( *pProfil );
     }
 }
