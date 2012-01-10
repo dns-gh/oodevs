@@ -1824,6 +1824,40 @@ estacionado con motor encendido</translation>
     </message>
 </context>
 <context>
+    <name>ADN_FuneralPackagingResources_GUI</name>
+    <message>
+        <source>Resource</source>
+        <translation type="unfinished">Dotación</translation>
+    </message>
+    <message>
+        <source>Packaging duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Is terminal</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add resource</source>
+        <translation type="unfinished">Agregar dotación</translation>
+    </message>
+    <message>
+        <source>Remove resource</source>
+        <translation type="unfinished">Remover dotación</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Funeral_GUI</name>
+    <message>
+        <source>Funeral system data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Fake transporter speed</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_Health_GUI</name>
     <message>
         <source>Medical system data</source>

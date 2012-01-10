@@ -15,6 +15,8 @@ ADN_AiEngine_Data.cpp \
 ADN_AiEngine_GUI.cpp \
 ADN_App.cpp \
 ADN_ArmorInfos.cpp \
+ADN_UserData_ListViewItem.inl \
+ADN_Connector_Enum.inl \
 ADN_AttritionEffectOnHuman.cpp \
 ADN_AutomatLogCategory_ListView.cpp \
 ADN_AutomatLog_ListView.cpp \
@@ -57,6 +59,7 @@ ADN_ConfigDialog.cpp \
 ADN_Consumptions_Table.cpp \
 ADN_DataException.cpp \
 ADN_DialogLog.cpp \
+ADN_HtmlBuilder.cpp \
 ADN_EquipementSelector.cpp \
 ADN_Equipement_AmmoListView.cpp \
 ADN_Equipement_AttritionGraph.cpp \
@@ -83,6 +86,8 @@ ADN_KnowledgeGroups_Wizard.cpp \
 ADN_Launcher_Wizard.cpp \
 ADN_Launchers_GUI.cpp \
 ADN_ListView.cpp \
+ADN_ListViewItem.cpp \
+ADN_ListViewToolTip.cpp \
 ADN_ListViewDialog.cpp \
 ADN_ListView_Categories_Armor.cpp \
 ADN_ListView_Categories_DotationNature.cpp \
@@ -96,6 +101,8 @@ ADN_ListView_Missions.cpp \
 ADN_ListView_Models.cpp \
 ADN_ListView_Objects.cpp \
 ADN_ListView_Orders.cpp \
+ADN_Funeral_GUI.cpp \
+ADN_FuneralPackagingResources_GUI.cpp \
 ADN_ListView_ResourceNetworks.cpp \
 ADN_ListView_RoofShapes.cpp \
 ADN_ListView_Sensors.cpp \

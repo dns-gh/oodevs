@@ -1826,6 +1826,40 @@ Arrêt moteur allumé</translation>
     </message>
 </context>
 <context>
+    <name>ADN_FuneralPackagingResources_GUI</name>
+    <message>
+        <source>Resource</source>
+        <translation>Dotation</translation>
+    </message>
+    <message>
+        <source>Packaging duration</source>
+        <translation>Durée de paquetage</translation>
+    </message>
+    <message>
+        <source>Is terminal</source>
+        <translation>Final</translation>
+    </message>
+    <message>
+        <source>Add resource</source>
+        <translation>Ajouter une dotation</translation>
+    </message>
+    <message>
+        <source>Remove resource</source>
+        <translation>Retirer une dotation</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Funeral_GUI</name>
+    <message>
+        <source>Funeral system data</source>
+        <translation>Données de la chaîne mortuaire</translation>
+    </message>
+    <message>
+        <source>Fake transporter speed</source>
+        <translation>Vitesse du transporteur virtuel</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Health_GUI</name>
     <message>
         <source>Contamination</source>
@@ -6041,7 +6075,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>Funeral</source>
-        <translation type="unfinished"></translation>
+        <translation>Chaîne mortuaire</translation>
     </message>
 </context>
 <context>
@@ -6237,7 +6271,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>Equipment - Invalid terrain type &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Equipement - Type de terrain invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
@@ -6442,11 +6476,11 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>Logistic supply system - Invalid unit &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Ravitaillement logistique - Unité invalide &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Logistic supply system - Invalid mission &apos;%1&apos;</source>
-        <translation type="unfinished"></translation>
+        <translation>Ravitaillement logistique - Mission invalide &apos;%1&apos;</translation>
     </message>
 </context>
 <context>
