@@ -45,8 +45,8 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, kernel::Controllers& cont
     tabs->addTab( populationRights, tr( "Crowds" ) );
     populationRights_ = populationRights;
     addTab( box, tr( "Permissions" ) );
-    new QLabel( tr( "'Read' permission allows you to see an unit.\n"
-                    "'Write' permission allows you to control an unit." ), group );
+    new QLabel( tr( "'Read' permission allows you to see a unit.\n"
+                    "'Write' permission allows you to control a unit." ), group );
 }
 
 // -----------------------------------------------------------------------------

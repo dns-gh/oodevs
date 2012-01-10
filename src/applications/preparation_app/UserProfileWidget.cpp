@@ -73,8 +73,8 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, Controllers& controllers,
 
         addTab( box, tr( "Permissions" ) );
         connect( supervisor_, SIGNAL( toggled( bool ) ), SLOT( OnSupervisorChanged( bool ) ) );
-        new QLabel( tr( "'Read' permission allows you to see an unit.\n"
-                        "'Write' permission allows you to control an unit." ), group );
+        new QLabel( tr( "'Read' permission allows you to see a unit.\n"
+                        "'Write' permission allows you to control a unit." ), group );
     }
     SetEnabled( false );
 }

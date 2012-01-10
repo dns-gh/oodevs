@@ -3372,8 +3372,8 @@ Motivo: %3
         <translation>EL perfil ha cambiado,¿realizar las modificaciones?</translation>
     </message>
     <message>
-        <source>&apos;Read&apos; permission allows you to see an unit.
-&apos;Write&apos; permission allows you to control an unit.</source>
+        <source>&apos;Read&apos; permission allows you to see a unit.
+&apos;Write&apos; permission allows you to control a unit.</source>
         <translation>Los permisos de &apos;Lectura&apos; permiten visualizar la unidad.
 Los permisos de &apos;Escritura&apos; permiten controlar la unidad.</translation>
     </message>
