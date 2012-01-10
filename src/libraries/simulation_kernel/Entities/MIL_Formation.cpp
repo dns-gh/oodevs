@@ -49,10 +49,10 @@ MIL_Formation::MIL_Formation( xml::xistream& xis, MIL_Army_ABC& army, MIL_Format
     , pExtensions_( new MIL_DictionaryExtensions( xis ) )
     , pColor_     ( new MIL_Color( xis ) )
 {
-	std::string symbol = xis.attribute< std::string >( "nature", "" );
-	if ( !symbol.empty() && symbol.find( "symbols/" ) == std::string::npos )
-		symbol = "symbols/" + symbol;
-	symbol_ = symbol;
+    std::string symbol = xis.attribute< std::string >( "nature", "" );
+    if ( !symbol.empty() && symbol.find( "symbols/" ) == std::string::npos )
+        symbol = "symbols/" + symbol;
+    symbol_ = symbol;
     pLevel_ = PHY_NatureLevel::Find( xis.attribute< std::string >( "level" ) );
     if( !pLevel_ )
         xis.error( "Unknown level" );
@@ -248,12 +248,12 @@ void MIL_Formation::WriteODB( xml::xostream& xos ) const
             << xml::attribute( "level", pLevel_->GetName() )
             << xml::attribute( "name", GetName() );
     if( !symbol_.empty() )
-	{
-		std::string nature = symbol_;
-		if ( nature.find( "symbols/" ) == 0 )
-			nature = nature.substr( 8, nature.length() - 8 );
+    {
+        std::string nature = symbol_;
+        if ( nature.find( "symbols/" ) == 0 )
+            nature = nature.substr( 8, nature.length() - 8 );
         xos << xml::attribute( "nature", nature );
-	}
+    }
     pColor_->WriteODB( xos );
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::WriteODB, _1, boost::ref( xos ) ) );
     tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::WriteODB, _1, boost::ref( xos ) ) );
