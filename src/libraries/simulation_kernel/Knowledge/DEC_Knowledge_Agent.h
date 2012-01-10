@@ -124,6 +124,7 @@ public:
     bool IsInUrbanBlock( const MIL_Object_ABC& urban ) const;
     const std::string& GetCriticalIntelligence() const;
     bool IsPerceptionDistanceHacked() const;
+    bool IsTransported() const;
     //@}
 
     //! @name Perception
