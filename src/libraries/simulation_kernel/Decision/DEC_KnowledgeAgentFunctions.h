@@ -67,6 +67,7 @@ public:
     static bool  CanIlluminate                          ( const MIL_AgentPion& callerAgent );
     static unsigned int GetAgentIdFromKnowledge         ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static bool IsRefugee                               ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static bool IsTransported                           ( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static std::string GetMilPionType                   ( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static boost::shared_ptr< MIL_Mission_ABC > GetMission( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static void NeutralizeAgent( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );

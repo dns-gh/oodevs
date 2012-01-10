@@ -434,6 +434,17 @@ bool DEC_KnowledgeAgentFunctions::IsRefugee( boost::shared_ptr< DEC_Knowledge_Ag
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeAgentFunctions::IsTransported
+// Created: DDA 2012-01-10
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgeAgentFunctions::IsTransported( const MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+{
+    if( !pKnowledge )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+    return pKnowledge->IsTransported();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::GetMilPionType
 // Created: DDA 2011-05-23
 // -----------------------------------------------------------------------------
@@ -443,7 +454,6 @@ std::string DEC_KnowledgeAgentFunctions::GetMilPionType( boost::shared_ptr< DEC_
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     return pKnowledge->GetAgentKnown().GetType().GetMilPionType();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: boost::shared_ptr< MIL_Mission_ABC > DEC_KnowledgeAgentFunctions::GetMission

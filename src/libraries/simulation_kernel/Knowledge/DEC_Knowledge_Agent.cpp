@@ -18,8 +18,9 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/MIL_AgentType_ABC.h"
-#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
+#include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/Units/Sensors/PHY_SensorTypeAgent.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Automates/MIL_Automate.h"
@@ -1124,4 +1125,13 @@ void DEC_Knowledge_Agent::HackPerceptionLevel( const PHY_PerceptionLevel* pPerce
 bool DEC_Knowledge_Agent::IsPerceptionDistanceHacked() const
 {
     return bPerceptionDistanceHacked_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Agent::IsTransported
+// Created: DDA 2012-01-10
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_Agent::IsTransported() const
+{
+    return pAgentKnown_->GetRole< transport::PHY_RoleInterface_Transported >().IsTransported();
 }
