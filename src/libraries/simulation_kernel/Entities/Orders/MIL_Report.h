@@ -550,7 +550,6 @@ public:
         eRC_AlreadyEngaged,
         eRC_AlreadyDisengaged,
         eRC_NoPEInAutomat,
-        eRC_WaitObstacleActivation,
         eRC_SectionUndeployed,
         eRC_StartUndeploy,
         eLast
