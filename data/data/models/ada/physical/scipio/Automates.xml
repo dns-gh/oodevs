@@ -20,7 +20,7 @@
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ASS . PC Equipe Reco Mortier"/>
     <unit max-occurs="2" min-occurs="2" type="ASS . Equipe Reco Mortier"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.ASS.COBRA - DLOP" id="698" name="ASS . Batterie COBRA" type="Automate ASS">
+  <automat decisional-model="Masalife.Automate.ASS.COBRA" id="698" name="ASS . Batterie COBRA" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ASS . PC Batterie COBRA"/>
     <unit max-occurs="2" min-occurs="2" type="ASS . Station COBRA"/>
   </automat>
@@ -69,17 +69,17 @@
     <unit max-occurs="1" min-occurs="1" type="ASS . Section de Tir TRF1 CDS OFF"/>
     <unit max-occurs="1" min-occurs="1" type="ASS . Section de Tir TRF1 CDS SOFF"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.ASS.RATAC - DLO" id="709" name="ASS . DLO AMX10P" type="Automate ASS">
+  <automat decisional-model="Masalife.Automate.ASS.DLO" id="709" name="ASS . DLO AMX10P" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ASS . Groupe CDT DLOP"/>
     <unit max-occurs="3" min-occurs="3" type="ASS . EO CHEF OFF sur AMX10P"/>
     <unit max-occurs="1" min-occurs="1" type="ASS . EO CHEF SOFF sur AMX10P"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.ASS.RATAC - DLO" id="710" name="ASS . DLO VAB" type="Automate ASS">
+  <automat decisional-model="Masalife.Automate.ASS.DLO" id="710" name="ASS . DLO VAB" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ASS . Groupe CDT DLO"/>
     <unit max-occurs="3" min-occurs="3" type="ASS . EO CHEF OFF sur VAB"/>
     <unit max-occurs="1" min-occurs="1" type="ASS . EO CHEF SOFF sur VAB"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.ASS.COBRA - DLOP" id="711" name="ASS . DLOP" type="Automate ASS">
+  <automat decisional-model="Masalife.Automate.ASS.DLOP" id="711" name="ASS . DLOP" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ASS . Groupe CDT DLOP"/>
     <unit max-occurs="2" min-occurs="2" type="ASS . EOP CHEF OFF"/>
     <unit max-occurs="2" min-occurs="2" type="ASS . EOP CHEF SOFF"/>
@@ -280,7 +280,7 @@
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASS . PC BM 21"/>
     <unit max-occurs="3" min-occurs="3" type="GLAISE - ASS . Section BM30"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.ASS.RATAC - DLO" id="755" name="GLAISE - ASS . DLO" type="Automate ASS">
+  <automat decisional-model="Masalife.Automate.ASS.DLO" id="755" name="GLAISE - ASS . DLO" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASS . PC"/>
     <unit type="GLAISE - ASS . EO"/>
   </automat>
@@ -439,7 +439,7 @@
     <unit command-post="true" max-occurs="1" min-occurs="1" type="RENS - Section MO SDTI"/>
     <unit max-occurs="6" min-occurs="6" type="RENS - Drone SDTI"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.ASS.RATAC - DLO" id="799" name="ASS . Section RATAC" type="Automate ASS">
+  <automat decisional-model="Masalife.Automate.ASS.RATAC" id="799" name="ASS . Section RATAC" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ASS . PC RATAC"/>
     <unit max-occurs="2" min-occurs="2" type="ASS . Groupe RATAC"/>
   </automat>
@@ -509,13 +509,13 @@
   <automat decisional-model="Masalife.Automate.TRANS.TAC" id="813" name="ASS . DLART" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ASS . DLART"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.ASS.COBRA - DLOP" id="814" name="ASS . EOP" type="Automate ASS">
+  <automat decisional-model="Masalife.Automate.ASS.DLOP" id="814" name="ASS . EOP" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ASS . EOP"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.ASS.RATAC - DLO" id="815" name="ASS . EO VAB" type="Automate ASS">
+  <automat decisional-model="Masalife.Automate.ASS.DLO" id="815" name="ASS . EO VAB" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ASS . EO VAB"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.ASS.RATAC - DLO" id="816" name="ASS . EO AMX10P" type="Automate ASS">
+  <automat decisional-model="Masalife.Automate.ASS.DLO" id="816" name="ASS . EO AMX10P" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ASS . EO AMX10P"/>
   </automat>
   <automat decisional-model="Masalife.Automate.TRANS.TAC" id="817" name="GEN . DLGEN" type="Automate ASS">
@@ -1057,7 +1057,7 @@
   <automat decisional-model="Masalife.Automate.TRANS.TAC" id="922" name="ASS . CAF" type="Automate TRANS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ASS . DAFA"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.ASS.RATAC - DLO" id="923" name="ASS . OA" type="Automate ASS">
+  <automat decisional-model="Masalife.Automate.ASS.DLO" id="923" name="ASS . OA" type="Automate ASS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ASS . EO VAB"/>
   </automat>
   <automat decisional-model="Sgpt Tigre" id="924" name="ALAT - ESCADRILLE TIGRE CONFIGURABLE" type="Automate ALAT">
@@ -1596,4 +1596,4 @@
     <unit max-occurs="1" min-occurs="1" type="GLAISE - RENS . Patrouille URH"/>
   </automat>
 </automats>
-<!-- signature="1637305534" -->
+<!-- signature="3279113920" -->
