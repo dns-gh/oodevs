@@ -111,8 +111,8 @@ bool PHY_MedicalEvacuationAmbulance::RegisterHuman( PHY_MedicalEvacuationConsign
 void PHY_MedicalEvacuationAmbulance::UnregisterHuman( PHY_MedicalEvacuationConsign& consign )
 {
     IT_ConsignVector itConsign = std::find( consigns_.begin(), consigns_.end(), &consign );
-    assert( itConsign != consigns_.end() );
-    consigns_.erase( itConsign );
+    if( itConsign != consigns_.end() )
+        consigns_.erase( itConsign );
     if( consigns_.empty() )
         EnterStateFinished();
 }
@@ -268,4 +268,16 @@ bool PHY_MedicalEvacuationAmbulance::Update()
 int PHY_MedicalEvacuationAmbulance::GetTimer() const
 {
     return nTimer_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalEvacuationAmbulance::GetNbrHumans
+// Created: NLD 2005-01-11
+// -----------------------------------------------------------------------------
+void PHY_MedicalEvacuationAmbulance::Cancel()
+{
+    T_ConsignVector tmpConsigns = consigns_;
+    for( CIT_ConsignVector itConsign = tmpConsigns.begin(); itConsign != tmpConsigns.end(); ++itConsign )
+        (**itConsign).EnterStateWaitingForEvacuation();
+    EnterStateFinished();
 }

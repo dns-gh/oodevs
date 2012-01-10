@@ -15,6 +15,7 @@
 
 #include "PHY_MedicalHumanState.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Medical.h"
+#include "Entities/Agents/Units/Humans/Human_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "MIL_AgentServer.h"
 #include "protocol/ClientSenders.h"
@@ -224,4 +225,22 @@ PHY_RoleInterface_Medical& PHY_MedicalConsign_ABC::GetPionMedical() const
 {
     assert( pMedical_ );
     return *pMedical_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceConsign_ABC::GetPionMaintenance
+// Created: NLD 2006-08-11
+// -----------------------------------------------------------------------------
+void PHY_MedicalConsign_ABC::FinishSuccessfullyWithoutDelay()   
+{
+    if( pHumanState_ )
+    {
+        pHumanState_->NotifyHandledByMedical();
+        Human_ABC& human = const_cast< Human_ABC& >( pHumanState_->GetHuman() ); //$$$ BEURK
+        human.HealContamination();
+        human.HealWound();
+        human.HealMentalDisease();
+        // NB : DO NOT CALL "pHumanState_ = 0; - The consign stays in the last unit forever in the "finished" state
+    }
+    EnterStateFinished();
 }

@@ -3197,6 +3197,10 @@ Motivo: %3
         <source>Reload brain</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Finish logistic handlings</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UnitStateDialog</name>

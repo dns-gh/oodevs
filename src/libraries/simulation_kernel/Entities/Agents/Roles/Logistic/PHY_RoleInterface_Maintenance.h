@@ -67,6 +67,8 @@ public:
 
     virtual bool HandleComposanteForRepair( PHY_MaintenanceComposanteState& composanteState ) = 0;
     virtual int GetAvailabilityScoreForRepair( const PHY_MaintenanceComposanteState& composanteState ) const = 0;
+
+    virtual void FinishAllHandlingsSuccessfullyWithoutDelay() = 0;
     //@}
 
     //! @name Tools

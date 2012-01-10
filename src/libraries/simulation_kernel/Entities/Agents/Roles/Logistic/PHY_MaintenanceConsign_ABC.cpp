@@ -105,7 +105,6 @@ void PHY_MaintenanceConsign_ABC::EnterStateFinished()
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceConsign_ABC::SendFullState( client::LogMaintenanceHandlingUpdate& asn ) const
 {
-    assert( pComposanteState_ );
     assert( pMaintenance_ );
     asn().mutable_provider()->set_id( pMaintenance_->GetID() );
     asn().set_state( sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus( nState_ ) );
@@ -118,7 +117,6 @@ void PHY_MaintenanceConsign_ABC::SendFullState( client::LogMaintenanceHandlingUp
 // -----------------------------------------------------------------------------
 void PHY_MaintenanceConsign_ABC::SendChangedState( client::LogMaintenanceHandlingUpdate& asn ) const
 {
-    assert( pComposanteState_ );
     if( bHasChanged_ )
         SendFullState( asn );
 }
@@ -214,3 +212,17 @@ PHY_RoleInterface_Maintenance& PHY_MaintenanceConsign_ABC::GetPionMaintenance() 
     assert( pMaintenance_ );
     return pMaintenance_->GetRole< PHY_RoleInterface_Maintenance >();
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MaintenanceConsign_ABC::GetPionMaintenance
+// Created: NLD 2006-08-11
+// -----------------------------------------------------------------------------
+ void PHY_MaintenanceConsign_ABC::FinishSuccessfullyWithoutDelay()
+ {
+     if( pComposanteState_ )
+     {
+         pComposanteState_->NotifyRepaired();
+         pComposanteState_ = 0;
+     }
+     EnterStateFinished();
+ }

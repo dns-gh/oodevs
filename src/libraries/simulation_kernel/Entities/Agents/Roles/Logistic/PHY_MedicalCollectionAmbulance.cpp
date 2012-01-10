@@ -129,8 +129,8 @@ bool PHY_MedicalCollectionAmbulance::RegisterHuman( PHY_MedicalCollectionConsign
 void PHY_MedicalCollectionAmbulance::UnregisterHuman( PHY_MedicalCollectionConsign& consign )
 {
     IT_ConsignVector itConsign = std::find( consigns_.begin(), consigns_.end(), &consign );
-    assert( itConsign != consigns_.end() );
-    consigns_.erase( itConsign );
+    if( itConsign != consigns_.end() )
+        consigns_.erase( itConsign );
     if( consigns_.empty() )
         EnterStateFinished();
 }
@@ -368,4 +368,17 @@ int PHY_MedicalCollectionAmbulance::GetTimer() const
 bool PHY_MedicalCollectionAmbulance::IsAnEmergency() const
 {
     return bEmergencyAmbulance_;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalCollectionAmbulance::GetNbrHumans
+// Created: NLD 2005-01-11
+// -----------------------------------------------------------------------------
+void PHY_MedicalCollectionAmbulance::Cancel()
+{
+    T_ConsignVector tmpConsigns = consigns_;
+    for( CIT_ConsignVector itConsign = tmpConsigns.begin(); itConsign != tmpConsigns.end(); ++itConsign )
+        (**itConsign).EnterStateWaitingForCollection();
+    EnterStateFinished();
 }

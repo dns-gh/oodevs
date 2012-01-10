@@ -534,7 +534,7 @@ void PHY_RolePion_Humans::Update( bool /*bIsDead*/ )
     {
         Human_ABC& human = **it;
         ++it;
-        human.Update(); // !!! Can erase the human from humansToUpdate_
+        human.Update(); // !!! Can erase the human from humansToUpdate_ = bullshit ...
     }
     if( hasChanged_ )
     {

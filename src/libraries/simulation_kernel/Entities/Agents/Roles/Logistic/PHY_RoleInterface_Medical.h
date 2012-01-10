@@ -89,6 +89,8 @@ public:
     virtual PHY_ComposantePion* GetAvailableDoctorForSorting() const = 0;
     virtual PHY_ComposantePion* GetAvailableDoctorForHealing( const Human_ABC& human ) const = 0;
     virtual bool HasUsableDoctorForHealing( const Human_ABC& human, bool bBypassPriorities = false ) const = 0;
+
+    virtual void FinishAllHandlingsSuccessfullyWithoutDelay() = 0;
     //@}
 
     //! @name Tools

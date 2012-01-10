@@ -204,7 +204,7 @@ void PHY_Human::Heal()
     CancelMedicalLogisticRequest();
     HealMentalDisease();
     HealContamination();
-    SetWound( PHY_HumanWound::notWounded_ ); //$$$ NB : don't use HealWound() => 'cause it don't heal deads ...
+    SetWound( PHY_HumanWound::notWounded_ ); //$$$ NB : don't use HealWound() => 'cause it doesn't heal deads ...
 }
 
 // -----------------------------------------------------------------------------
@@ -392,10 +392,12 @@ bool PHY_Human::NotifyBackToWar()
 // -----------------------------------------------------------------------------
 void PHY_Human::NotifyHandledByMedical()
 {
-    assert( nLocation_ != eMedical );
-    PHY_Human oldHumanState( *this );
-    nLocation_ = eMedical;
-    NotifyHumanChanged( oldHumanState );
+    if( nLocation_ != eMedical )
+    {
+        PHY_Human oldHumanState( *this );
+        nLocation_ = eMedical;
+        NotifyHumanChanged( oldHumanState );
+    }
 }
 
 // -----------------------------------------------------------------------------

@@ -49,7 +49,11 @@ PHY_MedicalHealingConsign::PHY_MedicalHealingConsign()
 // -----------------------------------------------------------------------------
 PHY_MedicalHealingConsign::~PHY_MedicalHealingConsign()
 {
-    // NOTHING
+    if( pDoctor_ )
+    {
+        GetPionMedical().StopUsingForLogistic( *pDoctor_ );
+        pDoctor_ = 0;
+    }
 }
 
 // -----------------------------------------------------------------------------

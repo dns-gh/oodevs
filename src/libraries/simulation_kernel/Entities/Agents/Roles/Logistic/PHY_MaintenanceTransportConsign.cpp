@@ -57,7 +57,11 @@ PHY_MaintenanceTransportConsign::PHY_MaintenanceTransportConsign()
 // -----------------------------------------------------------------------------
 PHY_MaintenanceTransportConsign::~PHY_MaintenanceTransportConsign()
 {
-    // NOTHING
+    if( pCarrier_ )
+    {
+        GetPionMaintenance().StopUsingForLogistic( *pCarrier_ );
+        pCarrier_ = 0;
+    }
 }
 
 // -----------------------------------------------------------------------------

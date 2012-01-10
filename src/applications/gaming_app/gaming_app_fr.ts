@@ -3197,6 +3197,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Reload brain</source>
         <translation>Recharger le decisionnel</translation>
     </message>
+    <message>
+        <source>Finish logistic handlings</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UnitStateDialog</name>

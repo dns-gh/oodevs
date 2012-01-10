@@ -967,3 +967,18 @@ void PHY_RolePionLOG_Medical::CancelReservationForSorting( const PHY_MedicalColl
     if( reservations_.erase( &ambulance ) != 1 )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Medical::FinishAllHandlingsSuccessfullyWithoutDelay
+// Created: NLD 2012-01-09
+// -----------------------------------------------------------------------------
+void PHY_RolePionLOG_Medical::FinishAllHandlingsSuccessfullyWithoutDelay()
+{
+    for( IT_EvacuationAmbulancesMMap itEvacuationAmbulance = evacuationAmbulances_.begin(); itEvacuationAmbulance != evacuationAmbulances_.end(); ++itEvacuationAmbulance )
+        itEvacuationAmbulance->second->Cancel();
+    for( IT_CollectionAmbulancesList itCollectionAmbulance = collectionAmbulances_.begin(); itCollectionAmbulance != collectionAmbulances_.end(); ++itCollectionAmbulance )
+        (*itCollectionAmbulance)->Cancel();
+    for( IT_MedicalConsigns itConsigns = consigns_.begin(); itConsigns != consigns_.end(); ++itConsigns )
+        for ( IT_MedicalConsignList itConsign = itConsigns->second.begin(); itConsign != itConsigns->second.end(); ++itConsign )
+            (*itConsign)->FinishSuccessfullyWithoutDelay();
+}

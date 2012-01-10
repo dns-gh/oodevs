@@ -49,7 +49,11 @@ PHY_MedicalCollectionConsign::PHY_MedicalCollectionConsign()
 // -----------------------------------------------------------------------------
 PHY_MedicalCollectionConsign::~PHY_MedicalCollectionConsign()
 {
-    // NOTHING
+    if( pCollectionAmbulance_ )
+    {
+        pCollectionAmbulance_->UnregisterHuman( *this );
+        pCollectionAmbulance_ = 0;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -70,7 +74,11 @@ void PHY_MedicalCollectionConsign::serialize( Archive& file, const unsigned int 
 void PHY_MedicalCollectionConsign::EnterStateWaitingForCollection()
 {
     assert( pHumanState_ );
-    assert( !pCollectionAmbulance_ );
+    if( pCollectionAmbulance_ )
+    {
+        pCollectionAmbulance_->UnregisterHuman( *this );
+        pCollectionAmbulance_ = 0;
+    }
     pHumanState_->SetHumanPosition( GetPionMedical().GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition() );
     ResetTimer( 0 );
     SetState( eWaitingForCollection );

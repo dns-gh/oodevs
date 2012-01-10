@@ -54,6 +54,8 @@ public:
 
             void Clean     ();
             bool HasChanged() const;
+
+            void FinishSuccessfullyWithoutDelay();
     //@}
 
     //! @name Network

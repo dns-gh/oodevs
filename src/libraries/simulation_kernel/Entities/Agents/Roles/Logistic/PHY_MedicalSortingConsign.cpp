@@ -44,7 +44,11 @@ PHY_MedicalSortingConsign::PHY_MedicalSortingConsign()
     : PHY_MedicalConsign_ABC()
     , pDoctor_( 0 )
 {
-    // NOTHING
+    if( pDoctor_ )
+    {
+        GetPionMedical().StopUsingForLogistic( *pDoctor_ );
+        pDoctor_ = 0;
+    }
 }
 
 // -----------------------------------------------------------------------------

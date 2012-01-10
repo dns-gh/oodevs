@@ -40,6 +40,7 @@ public:
     //! @name Operations
     //@{
     bool Update();
+    void Cancel();
 
     bool RegisterHuman  ( PHY_MedicalEvacuationConsign& consign );
     void UnregisterHuman( PHY_MedicalEvacuationConsign& consign );

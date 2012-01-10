@@ -34,6 +34,7 @@
 #include "gaming/MagicOrders.h"
 #include "gaming/AutomatDecisions.h"
 #include "gaming/Attributes.h"
+#include "gaming/LogisticConsigns.h"
 #include "protocol/SimulationSenders.h"
 #pragma warning( push, 0 )
 #include <google/protobuf/message.h>
@@ -93,6 +94,11 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Agent_ABC& agent
             AddMagic( tr( "Recover - Transporters" ), SLOT( RecoverHumanTransporters() ), magicMenu );
         AddMagic( tr( "Destroy - Component" ),  SLOT( DestroyComponent() ),  magicMenu );;
         AddMagic( tr( "Reload brain" ), SLOT( ReloadBrain() ), magicMenu );
+
+        const LogMaintenanceConsigns* maintenanceConsigns = agent.Retrieve< LogMaintenanceConsigns >();
+        const LogMedicalConsigns* medicalConsigns = agent.Retrieve< LogMedicalConsigns >();
+        if( ( maintenanceConsigns && maintenanceConsigns->IsHandlingConsigns() ) || ( medicalConsigns && medicalConsigns->IsHandlingConsigns() ) )
+            AddMagic( tr( "Finish logistic handlings" ), SLOT( FinishLogisticHandlings() ), magicMenu );
         FillCommonOrders( magicMenu );
     }
 }
@@ -337,6 +343,22 @@ void UnitMagicOrdersInterface::ReloadBrain()
     {
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "reload_brain" );
         UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Reload brain" ), true );
+        action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
+        action->Attach( *new ActionTasker( selectedEntity_, false ) );
+        action->RegisterAndPublish( actionsModel_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitMagicOrdersInterface::FinishLogisticHandlings
+// Created: NLD 2012-01-09
+// -----------------------------------------------------------------------------
+void UnitMagicOrdersInterface::FinishLogisticHandlings()
+{
+    if( selectedEntity_ )
+    {
+        MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "log_finish_handlings" );
+        UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Finish logistic handlings" ), true );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( selectedEntity_, false ) );
         action->RegisterAndPublish( actionsModel_ );

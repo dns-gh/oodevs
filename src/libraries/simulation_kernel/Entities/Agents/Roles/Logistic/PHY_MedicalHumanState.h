@@ -66,7 +66,7 @@ public:
     void NotifyHandledByMedical();
     bool GoBackToWar           ();
     void Cancel                ();
-    unsigned int Heal                  ( const PHY_ComposantePion& doctor );
+    unsigned int Heal          ( const PHY_ComposantePion& doctor );
     //@}
 
     //! @name Consign

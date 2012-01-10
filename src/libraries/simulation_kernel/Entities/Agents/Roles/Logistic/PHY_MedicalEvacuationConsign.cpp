@@ -58,6 +58,16 @@ PHY_MedicalEvacuationConsign::PHY_MedicalEvacuationConsign()
 // -----------------------------------------------------------------------------
 PHY_MedicalEvacuationConsign::~PHY_MedicalEvacuationConsign()
 {
+    if( pDoctor_ )
+    {
+        GetPionMedical().StopUsingForLogistic( *pDoctor_ );
+        pDoctor_ = 0;
+    }
+    if( pEvacuationAmbulance_ )
+    {
+        pEvacuationAmbulance_->UnregisterHuman( *this );
+        pEvacuationAmbulance_ = 0;
+    }
 }
 
 // =============================================================================
@@ -86,9 +96,16 @@ void PHY_MedicalEvacuationConsign::serialize( Archive& file, const unsigned int 
 void PHY_MedicalEvacuationConsign::EnterStateWaitingForEvacuation()
 {
     assert( pHumanState_ );
-    assert( !pDoctor_ );
-    assert( !pEvacuationAmbulance_ );
-
+    if( pDoctor_ )
+    {
+        GetPionMedical().StopUsingForLogistic( *pDoctor_ );
+        pDoctor_ = 0;
+    }
+    if( pEvacuationAmbulance_ )
+    {
+        pEvacuationAmbulance_->UnregisterHuman( *this );
+        pEvacuationAmbulance_ = 0;
+    }
     SetState( eWaitingForEvacuation );
     ResetTimer( 0 );
 }

@@ -51,7 +51,11 @@ PHY_MaintenanceRepairConsign::PHY_MaintenanceRepairConsign()
 // -----------------------------------------------------------------------------
 PHY_MaintenanceRepairConsign::~PHY_MaintenanceRepairConsign()
 {
-    // NOTHING
+    if( pRepairer_ )
+    {
+        GetPionMaintenance().StopUsingForLogistic( *pRepairer_ );
+        pRepairer_ = 0;
+    }
 }
 
 // -----------------------------------------------------------------------------

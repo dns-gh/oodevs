@@ -1092,6 +1092,9 @@ void MIL_AgentPion::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg,
     case sword::UnitMagicAction::change_equipment_human_size:
         OnReceiveChangeEquipmentHumanSize( msg.parameters() );
         break;
+    case sword::UnitMagicAction::log_finish_handlings:
+        OnReceiveFinishLogisticHandlings(); 
+        break;
     default:
         assert( false );
         break;
@@ -1652,4 +1655,19 @@ void MIL_AgentPion::OnReceiveChangeEquipmentHumanSize( const sword::MissionParam
 void MIL_AgentPion::ChangeNationality( const std::string& nationality )
 {
     pExtensions_->SetExtension( "Nationalite", nationality );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::OnReceiveChangeEquipmentHumanSize
+// Created: NLD 2012-01-09
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::OnReceiveFinishLogisticHandlings()
+{
+    PHY_RoleInterface_Maintenance* roleMaintenance = RetrieveRole< PHY_RoleInterface_Maintenance >();
+    if( roleMaintenance )
+        roleMaintenance->FinishAllHandlingsSuccessfullyWithoutDelay();
+
+    PHY_RoleInterface_Medical* roleMedical = RetrieveRole< PHY_RoleInterface_Medical >();
+    if( roleMedical )
+        roleMedical->FinishAllHandlingsSuccessfullyWithoutDelay();
 }
