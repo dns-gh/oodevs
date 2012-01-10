@@ -382,7 +382,12 @@ void MIL_ObjectManager::OnReceiveObjectMagicAction( const sword::ObjectMagicActi
         if( !pObject || pObject->Retrieve< CrowdCapacity >() )
             nErrorCode = sword::ObjectMagicActionAck::error_invalid_object;
         else
+        {
+            MIL_Army_ABC* army = pObject->GetArmy();
+            if( army )
+                army->GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( *pObject );
             ( *pObject )().Destroy();
+        }
     }
     else if( msg.type() == sword::ObjectMagicAction::update )
     {
