@@ -10,10 +10,12 @@ goto end
 
 :x86
 "%~dp0\vcredist_vc100.exe" /S /NCRC
+goto launcher
 
 :x64
 "%~dp0\vcredist_vc100_x64.exe" /S /NCRC
 
-%~dp0../applications/launcher_app.exe -i 
+:launcher
+"%~dp0\..\applications\launcher_app.exe" -i
 
 :end
