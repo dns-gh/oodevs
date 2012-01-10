@@ -772,6 +772,7 @@
     </target>
 
     <target name="generate-database-security" description="compile behavior model database for security">
+        <bmc src="${models.dir}/common/src" core="${models.dir}/directia.core/directia.core.bml" luac="false"/>
         <bmc src="${models.dir}/security/src" core="${models.dir}/directia.core/directia.core.bml" depends="${models.dir}/common/src" luac="false"/>
         <bmc src="${models.dir}/security_test/src" core="${models.dir}/directia.core/directia.core.bml" depends="${models.dir}/security/src;${models.dir}/common/src" luac="false"/>
         <bmc src="${models.dir}/security_training/src" core="${models.dir}/directia.core/directia.core.bml" depends="${models.dir}/security/src" luac="false"/>
