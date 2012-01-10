@@ -87,7 +87,8 @@ void ADN_NBC_GUI::Build()
     ADN_NBC_Intox_GUI* gaz = new ADN_NBC_Intox_GUI( gazGroup );
     vInfosConnectors[eGazGroup] = &gaz->GetConnector();
     pHolder = builder.AddFieldHolder( gazGroup );
-    builder.AddField<ADN_TimeField>( pHolder, tr( "Span" ), vInfosConnectors[eGazLifetime] );
+    ADN_TimeField* pField = builder.AddField<ADN_TimeField>( pHolder, tr( "Span" ), vInfosConnectors[eGazLifetime] );
+    pField->SetMinimumValueInSecond( 1 );
     builder.AddField<ADN_EditLine_Double>( pHolder, tr( "Spread angle" ), vInfosConnectors[eGazSpreadAngle], tr( "°" ) );
     builder.SetValidator( new ADN_DoubleValidator( 0.01, 360, 2, this ) );
 
