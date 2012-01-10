@@ -3372,8 +3372,8 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Le profil a changé, sauvegarder les modifications ?</translation>
     </message>
     <message>
-        <source>&apos;Read&apos; permission allows you to see an unit.
-&apos;Write&apos; permission allows you to control an unit.</source>
+        <source>&apos;Read&apos; permission allows you to see a unit.
+&apos;Write&apos; permission allows you to control a unit.</source>
         <translation>&apos;Lecture&apos; permet de voir une unité.
 &apos;Ecriture&apos; permet de contrôler une unité.</translation>
     </message>

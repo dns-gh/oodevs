@@ -2264,7 +2264,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&apos;Control&apos; permission allows you to control an unit.</source>
+        <source>&apos;Control&apos; permission allows you to control a unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2272,7 +2272,7 @@
         <translation type="unfinished">Usuario repetido: &apos;%1&apos;.</translation>
     </message>
     <message>
-        <source>&apos;View&apos; permission allows you to see an unit.</source>
+        <source>&apos;View&apos; permission allows you to see a unit.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

@@ -92,7 +92,7 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, Controllers& controllers,
         QWidget* information = new QWidget( group_ );
         QVBoxLayout* layout = new QVBoxLayout( information );
         colorInformation_ = new QLabel( "<font color='#FF0A0A'>" + tr( "Units controlled by another profile." ) + "</font>", information );
-        informationControls_ = new QLabel( tr( "'Control' permission allows you to control an unit." ), information );
+        informationControls_ = new QLabel( tr( "'Control' permission allows you to control a unit." ), information );
         layout->addWidget( colorInformation_ );
         layout->addWidget( informationControls_ );
     }
@@ -255,8 +255,8 @@ void UserProfileWidget::Update()
         if( !editable )
             profile_->Clear();
         bool supervisor = std::find( supervisors_.begin(), supervisors_.end(), profile_->GetUserRole() ) != supervisors_.end();
-        informationControls_->setText( supervisor ? tr( "'View' permission allows you to see an unit." )
-                                                  : tr( "'Control' permission allows you to control an unit." ) );
+        informationControls_->setText( supervisor ? tr( "'View' permission allows you to see a unit." )
+                                                  : tr( "'Control' permission allows you to control a unit." ) );
         colorInformation_->setVisible( !supervisor );
         pUnits_->Update( supervisor, *profile_ );
         pPopulations_->Update( supervisor, *profile_ );
