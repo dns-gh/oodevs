@@ -183,8 +183,8 @@ void ADN_NBC_Datas::NbcIntoxInfos::WriteContent( xml::xostream& output )
 // -----------------------------------------------------------------------------
 ADN_NBC_Datas::NbcGazInfos::NbcGazInfos()
     : intoxInfos_  ( "gaz" )
-    , lifeTime_    ( "0s" )
-    , rSpreadAngle_( 0.0 )
+    , lifeTime_    ( "1s" )
+    , rSpreadAngle_( 20 )
 {
     intoxInfos_.SetParentNode( *this );
     lifeTime_.SetDataName( "la durée de vie d'" );
@@ -241,6 +241,7 @@ void ADN_NBC_Datas::NbcGazInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "effects" )
             << xml::attribute( "type", "gaseous" )
+            << xml::attribute( "affliction", "false" )
             << xml::attribute( "propagation", rSpreadAngle_ )
             << xml::attribute( "life-time", lifeTime_ );
     intoxInfos_.WriteContent( output );
