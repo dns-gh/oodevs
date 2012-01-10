@@ -38,6 +38,8 @@
 #include "Entities/Automates/MIL_DotationSupplyManager.h"
 #include "Entities/Automates/MIL_StockSupplyManager.h"
 #include "Entities/MIL_EntityVisitor_ABC.h"
+#include "MT_Tools/MT_ScipioException.h"
+#include "MT_Tools/MT_FormatString.h"
 #include "Network/NET_AsnException.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
@@ -386,16 +388,16 @@ void MIL_Automate::Initialize( xml::xistream& xis, unsigned int gcPause, unsigne
         >> xml::list( "automat", *this, &MIL_Automate::ReadAutomatSubordinate );
     pExtensions_.reset( new MIL_DictionaryExtensions( xis ) );
     if( !pPionPC_ )
-        xis.error( "Automat's command post is not defined" );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Automat with id %d has no command post", nID_ ) );
     pKnowledgeGroup_ = GetArmy().FindKnowledgeGroup( nKnowledgeGroup );
     if( !pKnowledgeGroup_ )
-        xis.error( "Unknown knowledge group" );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Automat with id %d has no knowledge group", nID_ ) );
 
     std::string logLevelStr( PHY_LogisticLevel::none_.GetName() );
     xis >> xml::optional() >> xml::attribute( "logistic-level", logLevelStr );
     const PHY_LogisticLevel* pLogLevel = PHY_LogisticLevel::Find( logLevelStr );
     if( !pLogLevel )
-        xis.error( "Invalid logistic level" );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Automat with id %d has an invalid logistic level", nID_ ) );
     if( *pLogLevel != PHY_LogisticLevel::none_ )
     {
         pBrainLogistic_.reset( new MIL_AutomateLOG( *this, *pLogLevel ) );
@@ -418,7 +420,7 @@ void MIL_Automate::ReadUnitSubordinate( xml::xistream& xis )
     bool isPc = false;
     xis >> xml::optional() >> xml::attribute( "command-post", isPc );
     if( isPc && pPionPC_ )
-        xis.error( "Automat's command post already defined" );
+        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Automat with id %d has several command posts", nID_ ) );
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( xis.attribute< std::string >( "type" ) );
     if( !pType )
     {
