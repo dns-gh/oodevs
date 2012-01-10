@@ -103,6 +103,7 @@ public:
     void AppendLoadingError( E_ConsistencyCheck type, const std::string& error );
     const T_LoadingErrors& GetLoadingErrors() const;
     void ClearLoadingErrors();
+    void SetExerciseValidity( bool valid );
     void Purge();
     QString GetName() const;
     IdManager& GetIdManager() const;

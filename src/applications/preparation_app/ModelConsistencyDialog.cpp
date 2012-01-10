@@ -197,7 +197,7 @@ void ModelConsistencyDialog::OnClose()
 // -----------------------------------------------------------------------------
 void ModelConsistencyDialog::CheckConsistency()
 {
-    checker_.CheckConsistency();
+    checker_.CheckConsistency( IsError );
     UpdateDataModel();
     if( !checker_.GetConsistencyErrors().empty() && dataModel_->rowCount() > 0 )
         show();

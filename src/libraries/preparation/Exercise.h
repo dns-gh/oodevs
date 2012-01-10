@@ -70,6 +70,7 @@ public:
     void SetBriefing( const QString& lang, const QString& text );
     void AddResource( const QString& name, const QString& file );
     void SetActionPlanning( const std::string& filename );
+    void SetExerciseValidity( bool isValid );
     void ClearResources();
     //@}
 
@@ -96,6 +97,7 @@ private:
     T_Resources             briefings_;
     T_Resources             resources_;
     std::string             actionPlanning_;
+    bool                    isValid_;
     //@}
 };
 

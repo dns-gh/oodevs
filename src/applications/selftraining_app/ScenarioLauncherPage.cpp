@@ -51,6 +51,23 @@ namespace
         return QString( "%1://%2" ).arg( protocol ).arg( info.absFilePath() ).ascii();
     }
 
+    bool IsValid( const std::string& fileName, const tools::Loader_ABC& fileLoader )
+    {
+        bool isValid = true;
+        try
+        {
+            std::auto_ptr< xml::xistream > xis = fileLoader.LoadFile( fileName );
+            *xis >> xml::start( "exercise" )
+                    >> xml::optional() >> xml::attribute( "valid", isValid )
+                 >> xml::end;
+        }
+        catch( ... )
+        {
+            // NOTHING
+        }
+        return isValid;
+    }
+
     std::string ReadTargetApplication( const std::string& fileName, const tools::Loader_ABC& fileLoader )
     {
         std::string target = "gaming";
@@ -318,7 +335,10 @@ bool ScenarioLauncherPage::CanBeStarted() const
 {
     if( exercise_ )
     {
-        const std::string target = ReadTargetApplication( config_.GetExerciseFile( exercise_->GetName().c_str() ), fileLoader_ );
+        const std::string exerciseFile = config_.GetExerciseFile( exercise_->GetName().c_str() );
+        if( !IsValid( exerciseFile, fileLoader_ ) )
+            return false;
+        const std::string target = ReadTargetApplication( exerciseFile, fileLoader_ );
         if( target == "gaming" || target == "replayer" )
             return profile_.IsValid();
         if( target == "preparation" )

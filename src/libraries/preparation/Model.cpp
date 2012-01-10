@@ -360,6 +360,15 @@ void Model::AppendLoadingError( E_ConsistencyCheck type, const std::string& erro
 }
 
 // -----------------------------------------------------------------------------
+// Name: Model::SetExerciseValidity
+// Created: JSR 2012-01-09
+// -----------------------------------------------------------------------------
+void Model::SetExerciseValidity( bool valid )
+{
+    exercise_.SetExerciseValidity( valid );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Model::GetLoadingErrors
 // Created: JSR 2012-01-05
 // -----------------------------------------------------------------------------

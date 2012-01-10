@@ -28,6 +28,7 @@ Exercise::Exercise( kernel::Controller& controller )
     : controller_    ( controller )
     , actionPlanning_( "" )
     , settings_      ()
+    , isValid_       ( true )
 {
     // NOTHING
 }
@@ -100,6 +101,7 @@ void Exercise::Purge()
     briefings_.clear();
     resources_.clear();
     actionPlanning_.clear();
+    isValid_ = true;
     settings_.Purge();
     controller_.Update( *this );
 }
@@ -130,6 +132,7 @@ void Exercise::SerializeAndSign( const tools::ExerciseConfig& config, const tool
     xml::xofstream xos( file, xml::encoding( "UTF-8" ) );
     xos << xml::start( "exercise" );
     schemaWriter.WriteExerciseSchema( xos, "exercise" );
+    xos << xml::attribute( "valid", isValid_ );
     xos << xml::start( "meta" );
     if( ! name_.isEmpty() )
         xos << xml::start( "name" ) << xml::cdata( name_.ascii() ) << xml::end;
@@ -231,6 +234,15 @@ void Exercise::SetActionPlanning( const std::string& filename )
 {
     if( actionPlanning_.empty() )
         actionPlanning_ = filename;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Exercise::SetExerciseValidity
+// Created: JSR 2012-01-09
+// -----------------------------------------------------------------------------
+void Exercise::SetExerciseValidity( bool isValid )
+{
+    isValid_ = isValid;
 }
 
 // -----------------------------------------------------------------------------

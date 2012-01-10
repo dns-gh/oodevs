@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2008 rel. 2 (http://www.altova.com) by mazuki (darksiderg) -->
 <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" version="4.8.2">
 	<xs:include schemaLocation="common.xsd"/>
 	<xs:element name="exercise">
@@ -53,6 +54,11 @@
 			<xs:attribute name="model-version" type="T_Version" use="optional">
 				<xs:annotation>
 					<xs:documentation xml:lang="en">Defines model version used for exercise generation.</xs:documentation>
+				</xs:annotation>
+			</xs:attribute>
+			<xs:attribute name="valid" type="xs:boolean" use="optional">
+				<xs:annotation>
+					<xs:documentation>Indicates if the exercise is valid and can be launched</xs:documentation>
 				</xs:annotation>
 			</xs:attribute>
 		</xs:complexType>

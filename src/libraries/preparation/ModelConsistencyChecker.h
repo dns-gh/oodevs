@@ -69,7 +69,7 @@ public:
     //! @name Operations
     //@{
     const T_ConsistencyErrors& GetConsistencyErrors() const;
-    bool CheckConsistency();
+    bool CheckConsistency( bool( *IsError )( E_ConsistencyCheck type ) );
 
     //@}
 

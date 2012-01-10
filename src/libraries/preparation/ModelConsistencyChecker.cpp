@@ -124,7 +124,7 @@ namespace
 // Name: ModelConsistencyChecker::CheckConsistency
 // Created: ABR 2011-09-22
 // -----------------------------------------------------------------------------
-bool ModelConsistencyChecker::CheckConsistency()
+bool ModelConsistencyChecker::CheckConsistency( bool( *IsError )( E_ConsistencyCheck type ) )
 {
     ClearErrors();
 
@@ -150,6 +150,15 @@ bool ModelConsistencyChecker::CheckConsistency()
     CheckLoadingErrors();
     CheckScores();
     CheckSuccessFactors();
+
+    bool isValid = true;
+    for( IT_ConsistencyErrors it = errors_.begin(); it != errors_.end(); ++it )
+        if( IsError( it->type_ ) )
+        {
+            isValid = false;
+            break;
+        }
+    const_cast< Model& >( model_ ).SetExerciseValidity( isValid );
 
     return !errors_.empty();
 }
