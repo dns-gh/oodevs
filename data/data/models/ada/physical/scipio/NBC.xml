@@ -127,12 +127,12 @@
     <agent category="chemical" id="9" name="gaz sarin">
       <effects affliction="false" type="liquid"/>
       <effects affliction="true" life-time="3600s" propagation="20" type="gaseous">
-        <effect percentage="1" wound="healthy"/>
-        <effect percentage="0" wound="u1"/>
-        <effect percentage="0" wound="u2"/>
-        <effect percentage="0" wound="u3"/>
-        <effect percentage="0" wound="ue"/>
-        <effect percentage="0" wound="dead"/>
+        <effect percentage="0.2" wound="healthy"/>
+        <effect percentage="0.1" wound="u1"/>
+        <effect percentage="0.2" wound="u2"/>
+        <effect percentage="0.2" wound="u3"/>
+        <effect percentage="0.15" wound="ue"/>
+        <effect percentage="0.15" wound="dead"/>
       </effects>
     </agent>
     <agent category="chemical" id="10" name="soman">
@@ -158,4 +158,4 @@
     </agent>
   </agents>
 </nbc>
-<!-- signature="2555357518" -->
+<!-- signature="1173824950" -->
