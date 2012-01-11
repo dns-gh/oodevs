@@ -858,14 +858,6 @@
       <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="false" type="Boolean"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.ConstruireCamps" dia-type="france.military.platoon.combat.support.engineer.tasks.ConstruireCamps" id="2050" name="PION GENIE Realiser Camps" package="support">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Camps a construire" optional="false" type="PlannedWork"/>
-      <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
-    </mission>
     <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.ActiverObstacles" dia-type="france.military.platoon.combat.support.engineer.tasks.ActiverObstacles" id="2104" name="PION GENIE Activer Obstacles" package="support">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -3134,4 +3126,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_RejoindrePointLancement" id="405" name="Rejoindre point de lancement"/>
   </fragorders>
 </missions>
-<!-- signature="2128310482" -->
+<!-- signature="3696784724" -->
