@@ -114,6 +114,20 @@ void ColorEditor::NotifyContextMenu( const kernel::Ghost_ABC& entity, kernel::Co
 }
 
 // -----------------------------------------------------------------------------
+// Name: ColorEditor::NotifyContextMenu
+// Created: MMC 2012-01-10
+// -----------------------------------------------------------------------------
+void ColorEditor::NotifyUpdated( const kernel::Team_ABC& team )
+{
+    if( const kernel::Color_ABC* pTeamColor = team.Retrieve< kernel::Color_ABC >() )
+    {
+        QColor baseColor = colorStrategy_.FindBaseColor( team );
+        if ( static_cast< QColor >( *pTeamColor ) != baseColor )
+            colorEditor_.Reset( team, baseColor );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: ColorEditor::Update
 // Created: LGY 2011-06-23
 // -----------------------------------------------------------------------------

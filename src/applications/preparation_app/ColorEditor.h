@@ -45,6 +45,7 @@ class ColorEditor : public QObject
                   , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
                   , public kernel::ContextMenuObserver_ABC< kernel::Ghost_ABC >
                   , public tools::ElementObserver_ABC< kernel::Entity_ABC >
+                  , public tools::ElementObserver_ABC< kernel::Team_ABC >
                   , private boost::noncopyable
 {
     Q_OBJECT;
@@ -66,6 +67,7 @@ public:
     virtual void NotifyContextMenu( const kernel::Ghost_ABC& entity, kernel::ContextMenu& menu );
 
     virtual void NotifyCreated( const kernel::Entity_ABC& entity );
+    virtual void NotifyUpdated( const kernel::Team_ABC& team );
     //@}
 
 private:

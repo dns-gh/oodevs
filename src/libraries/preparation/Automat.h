@@ -82,8 +82,6 @@ private:
     const kernel::AutomatType& type_;
     mutable std::string symbol_;
     mutable std::string level_;
-    std::string color_;
-    std::string nature_;
     //@}
 };
 
