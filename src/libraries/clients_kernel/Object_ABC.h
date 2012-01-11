@@ -13,6 +13,8 @@
 #include "Entity_ABC.h"
 #include "Displayable_ABC.h"
 
+class QColor;
+
 namespace kernel
 {
     class Team_ABC;
