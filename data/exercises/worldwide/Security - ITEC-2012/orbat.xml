@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/exercise/orbat.xsd">
+  <parties>
+    <party id="1" name="Camp 1" type="friend">
+      <objects/>
+      <tactical>
+        <formation id="3" level="iii" name="Formation [3]">
+          <automat engaged="false" id="7" knowledge-group="8" name="ML_Security - Civil Protection [7]" type="ML_Security - Civil Protection">
+            <unit command-post="true" id="9" name="ML_Security - Civil Protection - Safety" position="29TNF3543155261" type="ML_Security - Civil Protection - Safety"/>
+            <unit command-post="false" id="10" name="ML_Security - Civil Protection - Safety" position="29TNF3532755408" type="ML_Security - Civil Protection - Safety"/>
+            <unit command-post="false" id="11" name="ML_Security - Civil Protection - Safety" position="29TNF3521955431" type="ML_Security - Civil Protection - Safety"/>
+            <unit command-post="false" id="12" name="ML_Security - Civil Protection - Safety" position="29TNF3544655404" type="ML_Security - Civil Protection - Safety"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="8" name="Groupe de connaissance [8]" type="Standard"/>
+      </communication>
+      <populations>
+        <population attitude="calme" id="5" name="Standard Crowd [5]" position="29TNF3511055655" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="6" name="Standard Crowd [6]" position="29TNF3639156019" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+      </populations>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party id="2" name="Camp 2" type="neutral">
+      <objects/>
+      <tactical>
+        <formation id="4" level="iii" name="Formation [4]">
+          <automat engaged="false" id="13" knowledge-group="14" name="ML_Security - Civil Protection [13]" type="ML_Security - Civil Protection">
+            <unit command-post="true" id="15" name="ML_Security - Civil Protection - Safety" position="29TNF3606855478" type="ML_Security - Civil Protection - Safety"/>
+            <unit command-post="false" id="16" name="ML_Security - Civil Protection - Safety" position="29TNF3613455316" type="ML_Security - Civil Protection - Safety"/>
+            <unit command-post="false" id="17" name="ML_Security - Civil Protection - Safety" position="29TNF3610255241" type="ML_Security - Civil Protection - Safety"/>
+            <unit command-post="false" id="18" name="ML_Security - Civil Protection - Safety" position="29TNF3604755324" type="ML_Security - Civil Protection - Safety"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="14" name="Groupe de connaissance [14]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1">
+      <relationship diplomacy="neutral" party="2"/>
+    </party>
+    <party id="2">
+      <relationship diplomacy="neutral" party="1"/>
+    </party>
+  </diplomacy>
+</orbat>
+<!-- signature="3029261317" -->
