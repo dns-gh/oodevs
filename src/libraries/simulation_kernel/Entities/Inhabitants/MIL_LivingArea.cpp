@@ -419,13 +419,13 @@ MIL_LivingArea::T_Blocks MIL_LivingArea::GetBlockUsage( const std::string& motiv
 // Name: MIL_LivingArea::Alert
 // Created: BCI 2011-02-01
 // -----------------------------------------------------------------------------
-void MIL_LivingArea::Alert( const TER_Localisation& localisation )
+void MIL_LivingArea::Alert( const TER_Localisation& localisation, bool status )
 {
     bool hasBeenAlerted = false;
     BOOST_FOREACH( MIL_LivingAreaBlock* block, blocks_ )
         if( block->GetObject().Intersect2DWithLocalisation( localisation ) )
         {
-            block->SetAlerted( true );
+            block->SetAlerted( status );
             hasBeenAlerted = true;
         }
     assert( pInhabitant_ );

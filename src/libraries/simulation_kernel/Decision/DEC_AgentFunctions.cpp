@@ -783,6 +783,16 @@ void DEC_AgentFunctions::AlertInhabitants( const TER_Localisation* location )
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::UndoAlertInhabitants
+// Created: CCD 2012-01-11
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::UndoAlertInhabitants( const TER_Localisation* location )
+{
+    assert( location );
+    MIL_AgentServer::GetWorkspace().GetEntityManager().UndoAlertInhabitants( *location );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::IsInhabitantsAlerted
 // Created: BCI 2011-02-18
 // -----------------------------------------------------------------------------

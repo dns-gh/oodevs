@@ -89,6 +89,7 @@ public:
     //! @name Operations
     //@{
     void NotifyAlerted( const TER_Localisation& localisation );
+    void NotifyUndoAlerted( const TER_Localisation& localisation );
     void NotifyConfined( const TER_Localisation& localisation );
     void NotifyUndoConfined( const TER_Localisation& localisation );
     bool IsAlerted( const TER_Localisation& localisation ) const;

@@ -1757,6 +1757,15 @@ void MIL_EntityManager::AlertInhabitants( const TER_Localisation& localisation )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::AlertInhabitants
+// Created: CCD 2012-01-11
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::UndoAlertInhabitants( const TER_Localisation& localisation )
+{
+    inhabitantFactory_->Apply( boost::bind( &MIL_Inhabitant::NotifyUndoAlerted, _1, localisation ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::ConfineInhabitants
 // Created: BCI 2011-02-18
 // -----------------------------------------------------------------------------

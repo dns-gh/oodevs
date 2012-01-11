@@ -122,6 +122,7 @@ void RegisterPopulationFunctions( directia::brain::Brain& brain )
 
     // Inhabitants => je ne sais pas trop comment nommer ou classer cette méthode : le terme "population" fait parfois référence aux foules, parfois aux populations...
     brain[ "DEC_Agent_Alert" ] = &DEC_AgentFunctions::AlertInhabitants;
+    brain[ "DEC_Agent_UndoAlert" ] = &DEC_AgentFunctions::UndoAlertInhabitants;
     brain[ "DEC_Agent_IsAlerted" ] = &DEC_AgentFunctions::IsInhabitantsAlerted;
     brain[ "DEC_Agent_Confine" ] = &DEC_AgentFunctions::ConfineInhabitants;
     brain[ "DEC_Agent_UndoConfine" ] = &DEC_AgentFunctions::UndoConfineInhabitants;

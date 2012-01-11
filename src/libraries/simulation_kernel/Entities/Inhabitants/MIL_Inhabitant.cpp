@@ -434,6 +434,15 @@ void MIL_Inhabitant::NotifyAlerted( const TER_Localisation& localisation )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Inhabitant::NotifyAlerted
+// Created: CCD 2012-01-11
+// -----------------------------------------------------------------------------
+void MIL_Inhabitant::NotifyUndoAlerted( const TER_Localisation& localisation )
+{
+    pLivingArea_->Alert( localisation, false );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Inhabitant::NotifyConfined
 // Created: BCI 2011-02-18
 // -----------------------------------------------------------------------------
