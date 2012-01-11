@@ -5916,7 +5916,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.TRANS.PC TAC" id="205" name="GEN . DLGEN" type="Pion ASS">
-    <nature atlas-nature="None" level="o" nature-app6="combat/armor/track/heavy"/>
+    <nature atlas-nature="None" level="o" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="4" major="true" type="VTC P4"/>
     </equipments>
@@ -10295,7 +10295,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.TRANS.PC TAC" id="353" name="ASS . DLGEN" type="Pion ASS">
-    <nature atlas-nature="None" level="o" nature-app6="combat/armor/track/heavy"/>
+    <nature atlas-nature="None" level="o" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="4" major="true" type="VTC P4"/>
     </equipments>
@@ -11159,28 +11159,6 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.PC" id="385" name="LOG . Masalife.LOG.PC BLD Secteur Maintenance" type="Pion LOG BLD Maintenance">
-    <nature atlas-nature="Log" level="i" nature-app6="combat service support/maintenance"/>
-    <equipments>
-      <equipment count="3" crew="2" major="true" type="VAB 12,7"/>
-    </equipments>
-    <sensors-range range="5000"/>
-    <equipments-range range="5000"/>
-    <crew-ranks>
-      <crew-rank count="1" type="Officier"/>
-      <crew-rank count="3" type="SousOfficier"/>
-    </crew-ranks>
-    <postures>
-      <posture name="PosteReflexe" setup-time="900s"/>
-      <posture name="Poste" setup-time="1800s"/>
-      <posture name="PosteAmenage" setup-time="3600s"/>
-      <posture name="PostePrepareGenie" setup-time="5400s"/>
-    </postures>
-    <setup installation-time="2m" uninstallation-time="2m"/>
-    <nbc decontamination-delay="2250s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
-    <crossing-height height="0m"/>
-  </unit>
   <unit decisional-model="Masalife.LOG.PC" id="386" name="LOG . PC LOG BLD secteur appro" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
@@ -11249,71 +11227,6 @@
   </unit>
   <unit decisional-model="Masalife.LOG.PC" id="389" name="LOG . PC LOG BLD secteur munition" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
-    <equipments>
-      <equipment count="3" crew="2" major="true" type="VAB 12,7"/>
-    </equipments>
-    <sensors-range range="5000"/>
-    <equipments-range range="5000"/>
-    <crew-ranks>
-      <crew-rank count="1" type="Officier"/>
-      <crew-rank count="3" type="SousOfficier"/>
-    </crew-ranks>
-    <postures>
-      <posture name="PosteReflexe" setup-time="900s"/>
-      <posture name="Poste" setup-time="1800s"/>
-      <posture name="PosteAmenage" setup-time="3600s"/>
-      <posture name="PostePrepareGenie" setup-time="5400s"/>
-    </postures>
-    <setup installation-time="2m" uninstallation-time="2m"/>
-    <nbc decontamination-delay="2250s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
-    <crossing-height height="0m"/>
-  </unit>
-  <unit decisional-model="Masalife.LOG.PC" id="390" name="LOG . Masalife.LOG.PC BLD Secteur Ravitaillement" type="Pion LOG BLD Ravitaillement">
-    <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
-    <equipments>
-      <equipment count="3" crew="2" major="true" type="VAB 12,7"/>
-    </equipments>
-    <sensors-range range="5000"/>
-    <equipments-range range="5000"/>
-    <crew-ranks>
-      <crew-rank count="1" type="Officier"/>
-      <crew-rank count="3" type="SousOfficier"/>
-    </crew-ranks>
-    <postures>
-      <posture name="PosteReflexe" setup-time="900s"/>
-      <posture name="Poste" setup-time="1800s"/>
-      <posture name="PosteAmenage" setup-time="3600s"/>
-      <posture name="PostePrepareGenie" setup-time="5400s"/>
-    </postures>
-    <setup installation-time="2m" uninstallation-time="2m"/>
-    <nbc decontamination-delay="2250s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
-    <crossing-height height="0m"/>
-  </unit>
-  <unit decisional-model="Masalife.LOG.PC" id="391" name="LOG . Masalife.LOG.PC BLD Secteur Sante" type="Pion LOG BLD Sante">
-    <nature atlas-nature="Log" level="i" nature-app6="combat service support/medical"/>
-    <equipments>
-      <equipment count="3" crew="2" major="true" type="VAB 12,7"/>
-    </equipments>
-    <sensors-range range="5000"/>
-    <equipments-range range="5000"/>
-    <crew-ranks>
-      <crew-rank count="1" type="Officier"/>
-      <crew-rank count="3" type="SousOfficier"/>
-    </crew-ranks>
-    <postures>
-      <posture name="PosteReflexe" setup-time="900s"/>
-      <posture name="Poste" setup-time="1800s"/>
-      <posture name="PosteAmenage" setup-time="3600s"/>
-      <posture name="PostePrepareGenie" setup-time="5400s"/>
-    </postures>
-    <nbc decontamination-delay="2250s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
-    <crossing-height height="0m"/>
-  </unit>
-  <unit decisional-model="Masalife.LOG.PC" id="392" name="LOG . Masalife.LOG.PC BLD Secteur Transport" type="Pion LOG BLD Maintenance">
-    <nature atlas-nature="Log" level="i" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment count="3" crew="2" major="true" type="VAB 12,7"/>
     </equipments>
@@ -12283,56 +12196,6 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.Transport" id="430" name="LOG . Masalife.LOG.Transport VTLR (PT)" type="Pion LOG BLD Ravitaillement">
-    <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
-    <equipments>
-      <equipment count="1" crew="2" type="TRM 2000 12,7"/>
-      <equipment count="1" crew="2" type="VTC P4 7,62"/>
-      <equipment convoyer="true" count="18" crew="2" major="true" type="VTL R"/>
-      <equipment count="1" crew="2" type="GBC 8 KT 12.7"/>
-    </equipments>
-    <sensors-range range="5000"/>
-    <equipments-range range="5000"/>
-    <crew-ranks>
-      <crew-rank count="1" type="Officier"/>
-      <crew-rank count="7" type="SousOfficier"/>
-    </crew-ranks>
-    <postures>
-      <posture name="PosteReflexe" setup-time="900s"/>
-      <posture name="Poste" setup-time="1800s"/>
-      <posture name="PosteAmenage" setup-time="3600s"/>
-      <posture name="PostePrepareGenie" setup-time="5400s"/>
-    </postures>
-    <setup installation-time="2m" uninstallation-time="2m"/>
-    <nbc decontamination-delay="8850s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
-    <crossing-height height="0m"/>
-  </unit>
-  <unit decisional-model="Masalife.LOG.Transport" id="431" name="LOG . Masalife.LOG.Transport TRM 10000" type="Pion LOG BLD Ravitaillement">
-    <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
-    <equipments>
-      <equipment count="1" crew="2" type="TRM 2000 12,7"/>
-      <equipment count="1" crew="2" type="VTC P4 7,62"/>
-      <equipment count="1" crew="2" type="GBC 8 KT 12.7"/>
-      <equipment convoyer="true" count="18" crew="2" major="true" type="TRM 10000"/>
-    </equipments>
-    <sensors-range range="5000"/>
-    <equipments-range range="5000"/>
-    <crew-ranks>
-      <crew-rank count="1" type="Officier"/>
-      <crew-rank count="7" type="SousOfficier"/>
-    </crew-ranks>
-    <postures>
-      <posture name="PosteReflexe" setup-time="900s"/>
-      <posture name="Poste" setup-time="1800s"/>
-      <posture name="PosteAmenage" setup-time="3600s"/>
-      <posture name="PostePrepareGenie" setup-time="5400s"/>
-    </postures>
-    <setup installation-time="2m" uninstallation-time="2m"/>
-    <nbc decontamination-delay="8850s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
-    <crossing-height height="0m"/>
-  </unit>
   <unit decisional-model="Masalife.LOG.Transport" id="432" name="LOG . Peloton Transport TRM 10000" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
     <equipments>
@@ -12438,28 +12301,6 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.LOG.Transport" id="436" name="LOG . Peloton Transport BLIAT" type="Pion LOG BLT Ravitaillement">
-    <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
-    <equipments>
-      <equipment convoyer="true" count="200" crew="2" major="true" type="VTL R"/>
-    </equipments>
-    <sensors-range range="5000"/>
-    <equipments-range range="5000"/>
-    <crew-ranks>
-      <crew-rank count="1" type="Officier"/>
-      <crew-rank count="7" type="SousOfficier"/>
-    </crew-ranks>
-    <postures>
-      <posture name="PosteReflexe" setup-time="900s"/>
-      <posture name="Poste" setup-time="1800s"/>
-      <posture name="PosteAmenage" setup-time="3600s"/>
-      <posture name="PostePrepareGenie" setup-time="5400s"/>
-    </postures>
-    <setup installation-time="02m" uninstallation-time="2m"/>
-    <nbc decontamination-delay="8850s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
-    <crossing-height height="0m"/>
-  </unit>
-  <unit decisional-model="Masalife.LOG.Transport" id="437" name="LOG . Masalife.LOG.Transport BLIAT" type="Pion LOG BLT Ravitaillement">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment convoyer="true" count="200" crew="2" major="true" type="VTL R"/>
@@ -19750,4 +19591,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="0546554754" -->
+<!-- signature="2629008817" -->
