@@ -225,6 +225,9 @@ void LivingAreaPanel::Update()
 // -----------------------------------------------------------------------------
 void LivingAreaPanel::Accept()
 {
+    if( selected_ )
+        if( InhabitantPositions* positions = static_cast< InhabitantPositions* >( selected_.ConstCast()->Retrieve< kernel::Positions >() ) )
+            positions->Accept();
     controllers_.options_.Change( "LivingAreaEditor", false, false );
     Reset();
 }

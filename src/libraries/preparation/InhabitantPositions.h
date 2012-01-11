@@ -83,6 +83,7 @@ public:
     virtual void Remove( const kernel::Location_ABC& location );
 
     void StartEdition();
+    void Accept();
     void Reject();
     //@}
 
