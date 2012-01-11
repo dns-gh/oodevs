@@ -84,7 +84,7 @@ public:
     bool IsAlerted( const TER_Localisation& localisation ) const;
     bool IsConfined( const TER_Localisation& localisation ) const;
     void SetAlerted( bool, UrbanObjectWrapper* pUrbanObject = 0 );
-    void Confine( const TER_Localisation& localisation );
+    void Confine( const TER_Localisation& localisation, bool status = true );
     void SetConfined( bool, UrbanObjectWrapper* pUrbanObject = 0 );
     void SetEvacuated( bool, UrbanObjectWrapper* pUrbanObject = 0 );
     float Consume( const PHY_ResourceNetworkType& resource, unsigned int consumption, T_Blocks& angryBlocks );

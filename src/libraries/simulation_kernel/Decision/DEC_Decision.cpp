@@ -124,6 +124,7 @@ void RegisterPopulationFunctions( directia::brain::Brain& brain )
     brain[ "DEC_Agent_Alert" ] = &DEC_AgentFunctions::AlertInhabitants;
     brain[ "DEC_Agent_IsAlerted" ] = &DEC_AgentFunctions::IsInhabitantsAlerted;
     brain[ "DEC_Agent_Confine" ] = &DEC_AgentFunctions::ConfineInhabitants;
+    brain[ "DEC_Agent_UndoConfine" ] = &DEC_AgentFunctions::UndoConfineInhabitants;
     brain[ "DEC_Agent_IsConfined" ] = &DEC_AgentFunctions::IsInhabitantsConfined;
 }
 

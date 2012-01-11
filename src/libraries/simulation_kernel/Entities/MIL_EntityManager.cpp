@@ -1765,6 +1765,15 @@ void MIL_EntityManager::ConfineInhabitants( const TER_Localisation& localisation
     inhabitantFactory_->Apply( boost::bind( &MIL_Inhabitant::NotifyConfined, _1, localisation ) );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::UndoConfineInhabitants
+// Created: CCD 2012-01-11
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::UndoConfineInhabitants( const TER_Localisation& localisation )
+{
+    inhabitantFactory_->Apply( boost::bind( &MIL_Inhabitant::NotifyUndoConfined, _1, localisation ) );
+}
+
 struct IsInhabitantsAlertedFunctor : boost::noncopyable
 {
     IsInhabitantsAlertedFunctor( const TER_Localisation& localisation )

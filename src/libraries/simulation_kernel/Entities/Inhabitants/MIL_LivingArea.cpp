@@ -497,13 +497,13 @@ bool MIL_LivingArea::IsConfined( const TER_Localisation& localisation ) const
 // Name: MIL_LivingArea::Confine
 // Created: BCI 2011-02-18
 // -----------------------------------------------------------------------------
-void MIL_LivingArea::Confine( const TER_Localisation& localisation )
+void MIL_LivingArea::Confine( const TER_Localisation& localisation, bool status )
 {
     bool hasBeenConfined = false;
     BOOST_FOREACH( MIL_LivingAreaBlock* block, blocks_ )
         if( block->GetObject().IsContainedByLocalisation( localisation ) )
         {
-            block->SetConfined( true );
+            block->SetConfined( status );
             hasBeenConfined = true;
         }
     assert( pInhabitant_ );
