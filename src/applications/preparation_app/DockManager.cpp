@@ -31,6 +31,7 @@
 #include "clients_gui/GlProxy.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/Tools.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/OptionVariant.h"
 #include <boost/foreach.hpp>
@@ -70,37 +71,37 @@ DockManager::DockManager( QMainWindow* parent, kernel::Controllers& controllers,
         Q3VBox* listsTabBox = new Q3VBox( pListsTabWidget );
         new gui::EntitySearchBox< kernel::Agent_ABC >( listsTabBox, controllers );
         new TacticalListView( listsTabBox, controllers, factory, icons, modelBuilder, model.formations_.levels_ );
-        pAgentsTabWidget->addTab( listsTabBox, parent->tr( "Tactical" ) );
+        pAgentsTabWidget->addTab( listsTabBox, tools::translate( "DockManager","Tactical" ) );
 
         listsTabBox = new Q3VBox( pListsTabWidget );
         new gui::EntitySearchBox< kernel::Agent_ABC >( listsTabBox, controllers );
         new CommunicationListView( listsTabBox, controllers, factory, icons, modelBuilder );
-        pAgentsTabWidget->addTab( listsTabBox, parent->tr( "Communication" ) );
+        pAgentsTabWidget->addTab( listsTabBox, tools::translate( "DockManager", "Communication" ) );
 
         listsTabBox = new Q3VBox( pListsTabWidget );
         logisticListView_ = new gui::LogisticList< LogisticListView >( controllers, factory, PreparationProfile::GetProfile(), icons, modelBuilder );
-        pAgentsTabWidget->addTab( logisticListView_, parent->tr( "Logistic" ) );
-        pListsTabWidget->addTab( pAgentsTabWidget, parent->tr( "Units" ) );
+        pAgentsTabWidget->addTab( logisticListView_, tools::translate( "DockManager", "Logistic" ) );
+        pListsTabWidget->addTab( pAgentsTabWidget, tools::translate( "DockManager", "Units" ) );
     }
     {
         Q3VBox* listsTabBox = new Q3VBox( pListsTabWidget );
         new gui::EntitySearchBox< kernel::Object_ABC >( listsTabBox, controllers );
         new ObjectListView( listsTabBox, controllers, factory, modelBuilder );
-        pListsTabWidget->addTab( listsTabBox, parent->tr( "Objects" ) );
+        pListsTabWidget->addTab( listsTabBox, tools::translate( "DockManager", "Objects" ) );
     }
     {
         Q3VBox* listsTabBox = new Q3VBox( pListsTabWidget );
         new gui::EntitySearchBox< kernel::Population_ABC >( listsTabBox, controllers );
         new PopulationListView( listsTabBox, controllers, factory, modelBuilder );
-        pListsTabWidget->addTab( listsTabBox, parent->tr( "Crowds" ) );
+        pListsTabWidget->addTab( listsTabBox, tools::translate( "DockManager", "Crowds" ) );
     }
     {
         Q3VBox* listsTabBox = new Q3VBox( pListsTabWidget );
         new gui::EntitySearchBox< kernel::Inhabitant_ABC >( listsTabBox, controllers );
         new InhabitantListView( listsTabBox, controllers, factory, modelBuilder );
-        pListsTabWidget->addTab( listsTabBox, parent->tr( "Populations" ) );
+        pListsTabWidget->addTab( listsTabBox, tools::translate( "DockManager", "Populations" ) );
     }
-    pListDockWnd->setWindowTitle( parent->tr( "ORBAT" ) );
+    pListDockWnd->setWindowTitle( tools::translate( "DockManager", "ORBAT" ) );
     pListDockWnd->setWidget( box );
     // Properties panel
     {
@@ -109,7 +110,7 @@ DockManager::DockManager( QMainWindow* parent, kernel::Controllers& controllers,
         parent->addDockWidget( Qt::RightDockWidgetArea, pPropertiesDockWnd );
         PropertiesPanel* propertiesPanel = new PropertiesPanel( pPropertiesDockWnd, controllers, model, staticModel );
         pPropertiesDockWnd->setWidget( propertiesPanel );
-        pPropertiesDockWnd->setWindowTitle( parent->tr( "Properties" ) );
+        pPropertiesDockWnd->setWindowTitle( tools::translate( "DockManager", "Properties" ) );
         dockWidgets_.push_back( pPropertiesDockWnd );
     }
     // ResourceNetwork panel
@@ -134,7 +135,7 @@ DockManager::DockManager( QMainWindow* parent, kernel::Controllers& controllers,
         pCreationDockWnd->hide();
         pCreationPanel_ = new CreationPanels( pCreationDockWnd, controllers, staticModel, model, config, factory, symbols, colorStrategy, paramLayer, weatherLayer, glProxy );
         pCreationDockWnd->setWidget( pCreationPanel_ );
-        pCreationDockWnd->setWindowTitle( parent->tr( "Creation" ) );
+        pCreationDockWnd->setWindowTitle( tools::translate( "DockManager", "Creation" ) );
         dockWidgets_.push_back( pCreationDockWnd );
     }
     // Living area panel
