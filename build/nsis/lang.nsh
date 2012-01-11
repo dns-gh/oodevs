@@ -69,7 +69,7 @@ LangString OT_PREPARATION ${LANG_ENGLISH} "Preparation"
 LangString OT_PREPARATION ${LANG_FRENCH} "Preparation"
 
 LangString OT_SELF_TRAINING ${LANG_ENGLISH} "Self Training"
-LangString OT_SELF_TRAINING ${LANG_FRENCH} "Auto Formation"
+LangString OT_SELF_TRAINING ${LANG_FRENCH} "Portail SWORD"
 
 LangString OT_GEN ${LANG_ENGLISH} "Terrain Generation"
 LangString OT_GEN ${LANG_FRENCH}  "Generation Terrain"
