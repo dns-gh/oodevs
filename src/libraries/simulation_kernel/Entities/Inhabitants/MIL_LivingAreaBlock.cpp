@@ -177,6 +177,15 @@ bool MIL_LivingAreaBlock::IsAlerted( const TER_Localisation& localisation ) cons
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_LivingAreaBlock::IsConfined
+// Created: CCD 2012-01-10
+// -----------------------------------------------------------------------------
+bool MIL_LivingAreaBlock::IsConfined( const TER_Localisation& localisation ) const
+{
+    return confined_ && urbanObject_->Intersect2DWithLocalisation( localisation );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_LivingAreaBlock::IsEvacuated
 // Created: ABR 2011-04-11
 // -----------------------------------------------------------------------------

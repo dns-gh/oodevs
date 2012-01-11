@@ -1796,6 +1796,38 @@ bool MIL_EntityManager::IsInhabitantsAlerted( const TER_Localisation& localisati
     return functor.nbAlerted_ > 0 && functor.total_ > 0;
 }
 
+struct IsInhabitantsConfinedFunctor : boost::noncopyable
+{
+    IsInhabitantsConfinedFunctor( const TER_Localisation& localisation )
+        : nbConfined_   ( 0 )
+        , total_       ( 0 )
+        , localisation_( localisation )
+    {
+        // NOTHING
+    }
+    void operator()( const MIL_Inhabitant& inhabitant ) const
+    {
+        if( inhabitant.IsConfined( localisation_ ) )
+            ++nbConfined_;
+        ++total_;
+    }
+    mutable int nbConfined_;
+    mutable int total_;
+    const TER_Localisation& localisation_;
+};
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::IsInhabitantsConfined
+// Created: CCD 2012-01-10
+// -----------------------------------------------------------------------------
+bool MIL_EntityManager::IsInhabitantsConfined( const TER_Localisation& localisation )
+{
+    IsInhabitantsConfinedFunctor functor( localisation );
+    inhabitantFactory_->Apply( functor );
+    return functor.nbConfined_ > 0 && functor.total_ > 0;
+}
+
+
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::load
 // Created: JVT 2005-03-23

@@ -803,6 +803,16 @@ void DEC_AgentFunctions::ConfineInhabitants( const TER_Localisation* location )
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::IsInhabitantsConfined
+// Created: CCD 2012-01-10
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::IsInhabitantsConfined( const TER_Localisation* location )
+{
+    assert( location );
+    return MIL_AgentServer::GetWorkspace().GetEntityManager().IsInhabitantsConfined( *location );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::IsInstalled
 // Created: NLD 2006-08-10
 // -----------------------------------------------------------------------------

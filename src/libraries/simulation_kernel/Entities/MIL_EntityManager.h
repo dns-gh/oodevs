@@ -188,6 +188,7 @@ public:
     void ChannelPopulations( const TER_Localisation& localisation );
     void AlertInhabitants( const TER_Localisation& localisation );
     bool IsInhabitantsAlerted( const TER_Localisation& localisation );
+    bool IsInhabitantsConfined( const TER_Localisation& localisation );
     void ConfineInhabitants( const TER_Localisation& localisation );
     //@}
 

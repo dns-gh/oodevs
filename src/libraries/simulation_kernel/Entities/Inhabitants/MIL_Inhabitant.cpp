@@ -452,6 +452,15 @@ bool MIL_Inhabitant::IsAlerted( const TER_Localisation& localisation ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Inhabitant::IsConfined
+// Created: CCD 2012-01-10
+// -----------------------------------------------------------------------------
+bool MIL_Inhabitant::IsConfined( const TER_Localisation& localisation ) const
+{
+    return pLivingArea_->IsConfined( localisation );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Inhabitant::ComputeSpeed
 // Created: SLG 2011-01-27
 // -----------------------------------------------------------------------------

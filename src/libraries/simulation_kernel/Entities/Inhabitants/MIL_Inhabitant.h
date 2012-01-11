@@ -91,6 +91,7 @@ public:
     void NotifyAlerted( const TER_Localisation& localisation );
     void NotifyConfined( const TER_Localisation& localisation );
     bool IsAlerted( const TER_Localisation& localisation ) const;
+    bool IsConfined( const TER_Localisation& localisation ) const;
     void ReStartMotivation();
     //@}
 

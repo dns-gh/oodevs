@@ -482,6 +482,18 @@ void MIL_LivingArea::SetConfined( bool confined, UrbanObjectWrapper* pUrbanObjec
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_LivingArea::IsConfined
+// Created: CCD 2012-01-10
+// -----------------------------------------------------------------------------
+bool MIL_LivingArea::IsConfined( const TER_Localisation& localisation ) const
+{
+    BOOST_FOREACH( const MIL_LivingAreaBlock* block, blocks_ )
+        if( block->IsConfined( localisation ) )
+            return true;
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_LivingArea::Confine
 // Created: BCI 2011-02-18
 // -----------------------------------------------------------------------------
