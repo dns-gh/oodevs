@@ -50,7 +50,7 @@ void Options::Register( tools::Observer_ABC& o )
     {
         observers_.push_back( observer );
         for( CIT_Options it = options_.begin(); it != options_.end(); ++it )
-            observer->OptionChanged( it->first, it->second );
+            observer->OptionChanged( it->first, it->second.first );
     }
 }
 
@@ -70,9 +70,9 @@ void Options::Unregister( tools::Observer_ABC& o )
 // Name: Options::Change
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-void Options::Change( const std::string& name, const OptionVariant& value )
+void Options::Change( const std::string& name, const OptionVariant& value, bool savable )
 {
-    options_[ name ] = value;
+    options_[ name ] = std::make_pair( value, savable );
     for( unsigned i = 0; i < observers_.size(); ++i )
         observers_.at( i )->OptionChanged( name, value );
 }
@@ -81,11 +81,11 @@ void Options::Change( const std::string& name, const OptionVariant& value )
 // Name: Options::GetOption
 // Created: AGE 2006-03-30
 // -----------------------------------------------------------------------------
-const OptionVariant& Options::GetOption( const std::string& name, const OptionVariant& defaultValue )
+const OptionVariant& Options::GetOption( const std::string& name, const OptionVariant& defaultValue, bool savable )
 {
     if( options_.find( name ) == options_.end() )
-        options_[ name ] = defaultValue;
-    return options_[ name ];
+        options_[ name ] = std::make_pair( defaultValue, savable );
+    return options_[ name ].first;
 }
 
 // -----------------------------------------------------------------------------
@@ -159,7 +159,8 @@ void Options::Save( Settings_ABC& settings )
 {
     Clear( settings );
     for( CIT_Options it = options_.begin(); it != options_.end(); ++it )
-        it->second.Save( settings, it->first );
+        if( it->second.second )
+            it->second.first.Save( settings, it->first );
 }
 
 // -----------------------------------------------------------------------------

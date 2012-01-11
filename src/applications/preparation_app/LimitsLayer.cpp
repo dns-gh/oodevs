@@ -24,7 +24,7 @@ using namespace gui;
 LimitsLayer::LimitsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy,
                           ParametersLayer& parameters, ModelBuilder& modelBuilder, gui::View_ABC& view,
                           gui::ExclusiveEventStrategy& eventStrategy, const kernel::Profile_ABC& profile, const gui::LayerFilter_ABC& filter )
-    : TacticalLinesLayer( controllers, tools, strategy, parameters, view, profile, filter )
+    : EditorProxy< TacticalLinesLayer >( controllers, tools, strategy, parameters, view, profile, filter )
     , modelBuilder_( modelBuilder )
     , tools_( tools )
     , eventStrategy_( eventStrategy )
@@ -126,4 +126,26 @@ bool LimitsLayer::MousePress( kernel::TacticalLine_ABC& entity, QMouseEvent* mou
     }
     eventStrategy_.ReleaseExclusiveFocus();
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsLayer::ShouldDisplay
+// Created: LGY 2012-01-03
+// -----------------------------------------------------------------------------
+bool LimitsLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
+{
+    if( ! EditorProxy< TacticalLinesLayer >::ShouldDisplay( entity ) )
+        return false;
+    return drawLines_.IsSet( true, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsLayer::OptionChanged
+// Created: LGY 2012-01-04
+// -----------------------------------------------------------------------------
+void LimitsLayer::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
+{
+    EditorProxy< TacticalLinesLayer >::OptionChanged( name, value );
+    if( name == "TacticalLines" )
+        drawLines_ = value.To< FourStateOption >();
 }

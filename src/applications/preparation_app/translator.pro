@@ -7,6 +7,7 @@ Application.cpp \
 ColorEditor.cpp \
 CommunicationListView.cpp \
 CsvExport.cpp \
+DockManager.cpp \
 DotationsEditor.cpp \
 EditorFactory.cpp \
 ExerciseCreationDialog.cpp \
@@ -31,7 +32,7 @@ InitialStateDialog.cpp \
 InitialStateTableCrew.cpp \
 InitialStateTableEquipments.cpp \
 InitialStateTableResources.cpp \
-LivingAreaEditor.cpp \
+LivingAreaPanel.cpp \
 LogisticLinksEditor.cpp \
 LongNameEditor.cpp\
 LogisticStockEditor.cpp \

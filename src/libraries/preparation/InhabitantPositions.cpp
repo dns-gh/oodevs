@@ -312,3 +312,22 @@ bool InhabitantPositions::Exists( unsigned long id ) const
             return true;
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: InhabitantPositions::StartEdition
+// Created: LGY 2012-01-11
+// -----------------------------------------------------------------------------
+void InhabitantPositions::StartEdition()
+{
+    edition_ = livingUrbanObject_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: InhabitantPositions::Reject
+// Created: LGY 2012-01-11
+// -----------------------------------------------------------------------------
+void InhabitantPositions::Reject()
+{
+    livingUrbanObject_ = edition_;
+    edition_.clear();
+}

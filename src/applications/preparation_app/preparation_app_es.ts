@@ -212,6 +212,49 @@
     </message>
 </context>
 <context>
+    <name>DockManager</name>
+    <message>
+        <source>Tactical</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Communication</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Units</source>
+        <translation type="unfinished">Unidades</translation>
+    </message>
+    <message>
+        <source>Objects</source>
+        <translation type="unfinished">Objetos</translation>
+    </message>
+    <message>
+        <source>Crowds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Populations</source>
+        <translation type="unfinished">Poblaciones</translation>
+    </message>
+    <message>
+        <source>ORBAT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creation</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DotationsEditor</name>
     <message>
         <source>Resources editor</source>
@@ -715,35 +758,34 @@
 <context>
     <name>LivingAreaEditor</name>
     <message>
-        <source>Information</source>
+        <source>Change living Area</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LivingAreaPanel</name>
+    <message>
+        <source>Validation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Location:</source>
+        <source>Remove urban blocks</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>---</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Urban blocks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
     </message>
     <message>
         <source>Add urban blocks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Remove urban blocks</source>
+        <source>Click on a urban block to add or remove it from the living area.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Living Area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use the context menu to add or remove several urban blocks at once.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -847,18 +889,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Tactical</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Communication</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Crowds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Formations</source>
         <translation type="unfinished"></translation>
     </message>
@@ -895,18 +925,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Properties</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Creation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logistic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Loading configuration ...</source>
         <translation type="unfinished"></translation>
     </message>
@@ -932,10 +950,6 @@
     </message>
     <message>
         <source>Initialize data ...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ORBAT</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -2235,12 +2249,6 @@
         <translation>Permisos</translation>
     </message>
     <message>
-        <source>&apos;Read&apos; permission allows you to see an unit.
-&apos;Write&apos; permission allows you to control an unit.</source>
-        <translation>Permiso de &apos;Lectura&apos; permite visualizar una unidad.
-Permiso de &apos;Escritura&apos; permite controlar una unidad.</translation>
-    </message>
-    <message>
         <source>Crowds</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2250,6 +2258,11 @@ Permiso de &apos;Escritura&apos; permite controlar una unidad.</translation>
     </message>
     <message>
         <source>Supervisor actions</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&apos;Read&apos; permission allows you to see a unit.
+&apos;Write&apos; permission allows you to control a unit.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

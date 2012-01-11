@@ -11,6 +11,8 @@
 #define __ObjectsLayer_h_
 
 #include "clients_gui/ObjectsLayer.h"
+#include "clients_kernel/OptionsObserver_ABC.h"
+#include "EditorProxy.h"
 
 namespace gui
 {
@@ -23,7 +25,7 @@ namespace gui
 */
 // Created: SBO 2006-10-16
 // =============================================================================
-class ObjectsLayer : public gui::ObjectsLayer
+class ObjectsLayer : public EditorProxy< gui::ObjectsLayer >
 {
 public:
     //! @name Constructors/Destructor

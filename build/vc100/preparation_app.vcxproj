@@ -144,6 +144,7 @@
     <ClCompile Include="..\..\src\applications\preparation_app\Application.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\Config.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\CsvExport.cpp" />
+    <ClCompile Include="..\..\src\applications\preparation_app\DockManager.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\FilterCsv.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\FilterInputArgument.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\FilterProxyModel.cpp" />
@@ -152,7 +153,9 @@
     <ClCompile Include="..\..\src\applications\preparation_app\GhostsPanel.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\GhostSymbolDialog.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\GhostSymbolEditor.cpp" />
-    <ClCompile Include="..\..\src\applications\preparation_app\LivingAreaEditor.cpp" />
+    <ClCompile Include="..\..\src\applications\preparation_app\InhabitantLayer.cpp" />
+    <ClCompile Include="..\..\src\applications\preparation_app\LivingAreaPanel.cpp" />
+    <ClCompile Include="..\..\src\applications\preparation_app\LocationEditorToolbar.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\LogisticLinksEditor.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\LogisticListView.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\LogisticStockEditor.cpp" />
@@ -201,6 +204,7 @@
     <ClCompile Include="..\..\src\applications\preparation_app\UnitStateTableCrew.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\UnitStateTableEquipment.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\UnitStateTableResource.cpp" />
+    <ClCompile Include="..\..\src\applications\preparation_app\UrbanLayer.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\WeatherListView.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\WeatherPanel.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\PropertiesPanel.cpp" />
@@ -273,6 +277,8 @@
     <ClInclude Include="..\..\src\applications\preparation_app\Application.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\Config.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\CsvExport.h" />
+    <ClInclude Include="..\..\src\applications\preparation_app\DockManager.h" />
+    <ClInclude Include="..\..\src\applications\preparation_app\EditorProxy.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\ErrorEvent.h" />
     <CustomBuild Include="..\..\src\applications\preparation_app\MainWindow.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
@@ -331,20 +337,6 @@
       <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing "%(FullPath)"</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\preparation_app\LivingAreaEditor.h">
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing "%(FullPath)"</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing "%(FullPath)"</Message>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
@@ -461,6 +453,22 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\applications\preparation_app\InhabitantLayer.h" />
+    <CustomBuild Include="..\..\src\applications\preparation_app\LivingAreaPanel.h">
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing "%(FullPath)"</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+    </CustomBuild>
+    <ClInclude Include="..\..\src\applications\preparation_app\LocationEditorToolbar.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\LogisticListView.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
@@ -843,6 +851,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\applications\preparation_app\UrbanLayer.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\UserProfileRights_ABC.h" />
     <CustomBuild Include="..\..\src\applications\preparation_app\UserProfileUnitRights.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
@@ -1507,6 +1516,7 @@
     <ClInclude Include="..\..\src\applications\preparation_app\FileLoaderObserver.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\src\applications\preparation_app\EditorProxy.inl" />
     <None Include="..\..\src\applications\preparation_app\MultipleResolverEditor.inl" />
     <None Include="..\..\src\applications\preparation_app\preparation_app_es.ts" />
     <None Include="..\..\src\applications\preparation_app\preparation_app_fr.ts">

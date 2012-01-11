@@ -18,7 +18,7 @@
 // Created: SBO 2006-10-16
 // -----------------------------------------------------------------------------
 ObjectsLayer::ObjectsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile, gui::TerrainPicker& picker, const gui::LayerFilter_ABC& filter )
-    : gui::ObjectsLayer( controllers, tools, strategy, view, profile, picker, filter )
+    : EditorProxy< gui::ObjectsLayer >( controllers, tools, strategy, view, profile, picker, filter )
     , selected_( controllers )
     , tools_   ( tools )
     , dummy_   ( new QWidget )

@@ -21,19 +21,13 @@ namespace kernel
 
 namespace gui
 {
-    class OptionsPanel;
     class GlProxy;
-    class GlWidget;
     class ParametersLayer;
-    class GlPlaceHolder;
-    class IconLayout;
     class ColorStrategy;
     class CircularEventStrategy;
     class ExclusiveEventStrategy;
     class LightingProxy;
     class GlSelector;
-    template< typename T >
-    class LogisticList;
     class PreferencesDialog;
     class TerrainLayer;
     class Layer_ABC;
@@ -45,21 +39,16 @@ namespace gui
 }
 
 class Config;
-class CreationPanels;
 class FileToolbar;
 class FilterDialogs;
-class InhabitantCreationPanel;
-class LogisticListView;
-class MapLayer_ABC;
 class Menu;
 class Model;
 class ModelBuilder;
 class ModelConsistencyDialog;
-class ObjectCreationPanel;
 class ScoreDialog;
 class StaticModel;
 class ColorController;
-class LivingAreaEditor;
+class DockManager;
 
 // =============================================================================
 /** @class  MainWindow
@@ -119,10 +108,10 @@ private:
     //! @name Helpers
     //@{
     void LoadExercise();
-    void CreateLayers( const CreationPanels& creationPanels, gui::ParametersLayer& parameters, gui::Layer_ABC& locations,
+    void CreateLayers( gui::ParametersLayer& parameters, gui::Layer_ABC& locations,
                        gui::Layer_ABC& weather, gui::TerrainLayer& terrain, gui::Layer_ABC& profilerLayer,
                        gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile, gui::TerrainPicker& picker,
-                       LivingAreaEditor& livingAreaEditor, gui::AutomatsLayer& automats, gui::FormationLayer& formation );
+                       gui::AutomatsLayer& automats, gui::FormationLayer& formation );
     void closeEvent( QCloseEvent* pEvent );
     void WriteOptions();
     void ReadOptions();
@@ -144,30 +133,26 @@ private:
     kernel::Controllers& controllers_;
     StaticModel& staticModel_;
     Model& model_;
-    ModelBuilder* modelBuilder_;
     Config& config_;
+    std::auto_ptr< ModelBuilder > modelBuilder_;
     std::auto_ptr< gui::CircularEventStrategy > forward_;
     std::auto_ptr< gui::ExclusiveEventStrategy > eventStrategy_;
     std::auto_ptr< gui::Painter_ABC > pPainter_;
     std::auto_ptr< gui::LayerFilter_ABC > simpleFilter_;
     std::auto_ptr< gui::LayerFilter_ABC > urbanFilter_;
     std::auto_ptr< ColorController > colorController_;
-    gui::GlProxy* glProxy_;
-    gui::ColorStrategy* strategy_;
-    gui::LightingProxy* lighting_;
+    std::auto_ptr< DockManager > pDockManager_;
+    std::auto_ptr< gui::GlProxy > glProxy_;
+    std::auto_ptr< gui::LightingProxy > lighting_;
+    std::auto_ptr< gui::ColorStrategy > strategy_;
     gui::GlSelector* selector_;
-    gui::OptionsPanel* pOptionsPanel_;
-    gui::ParametersLayer* parameters_;
     Menu* menu_;
     FileToolbar* fileToolBar_;
-    QDockWidget* pExtensionsPanel_;
-    gui::LogisticList< ::LogisticListView >* logisticListView_;
     bool loading_;
     bool needsSaving_;
     QString savedState_;
     QByteArray docks_;
     QByteArray toolbars_;
-    CreationPanels* pCreationPanel_;
     ScoreDialog* pScoreDialog_;
     FilterDialogs* filterDialogs_;
     QProgressDialog* progressDialog_;

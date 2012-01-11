@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __LocationEditorToolbar_h_
-#define __LocationEditorToolbar_h_
+#ifndef _gui_LocationEditorToolbar_h_
+#define _gui_LocationEditorToolbar_h_
 
 #include "LocationEditor_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
@@ -56,6 +56,7 @@ public:
     //@{
     virtual void StartEdit( ParametersLayer& parameters );
     virtual void EndEdit();
+    virtual void NotifyContextMenu( const geometry::Point2f& point, kernel::ContextMenu& menu );
     //@}
 
 private slots:
@@ -79,7 +80,6 @@ private:
 
     //! @name Helpers
     //@{
-    virtual void NotifyContextMenu( const geometry::Point2f& point, kernel::ContextMenu& menu );
     bool GetPosition( geometry::Point2f& point );
     void SetAspect( bool oneValue, bool red );
     //@}
@@ -122,4 +122,4 @@ private:
 
 }
 
-#endif // __LocationEditorToolbar_h_
+#endif // _gui_LocationEditorToolbar_h_

@@ -81,6 +81,9 @@ public:
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void Add( const kernel::Location_ABC& location );
     virtual void Remove( const kernel::Location_ABC& location );
+
+    void StartEdition();
+    void Reject();
     //@}
 
 private:
@@ -104,6 +107,7 @@ private:
     kernel::PropertiesDictionary& dictionary_;
     geometry::Point2f position_;
     T_UrbanObjectVector livingUrbanObject_;
+    T_UrbanObjectVector edition_;
     //@}
 
 };

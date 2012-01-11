@@ -212,6 +212,49 @@
     </message>
 </context>
 <context>
+    <name>DockManager</name>
+    <message>
+        <source>Tactical</source>
+        <translation>Tactique</translation>
+    </message>
+    <message>
+        <source>Communication</source>
+        <translation>Communication</translation>
+    </message>
+    <message>
+        <source>Logistic</source>
+        <translation>Logistique</translation>
+    </message>
+    <message>
+        <source>Units</source>
+        <translation>Unités</translation>
+    </message>
+    <message>
+        <source>Objects</source>
+        <translation>Objets</translation>
+    </message>
+    <message>
+        <source>Crowds</source>
+        <translation>Foules</translation>
+    </message>
+    <message>
+        <source>Populations</source>
+        <translation>Populations</translation>
+    </message>
+    <message>
+        <source>ORBAT</source>
+        <translation>ODB</translation>
+    </message>
+    <message>
+        <source>Properties</source>
+        <translation>Proprietés</translation>
+    </message>
+    <message>
+        <source>Creation</source>
+        <translation>Création</translation>
+    </message>
+</context>
+<context>
     <name>DotationsEditor</name>
     <message>
         <source>Resources editor</source>
@@ -715,36 +758,35 @@
 <context>
     <name>LivingAreaEditor</name>
     <message>
-        <source>Information</source>
-        <translation>Information</translation>
+        <source>Change living Area</source>
+        <translation>Modification de la zone de vie</translation>
+    </message>
+</context>
+<context>
+    <name>LivingAreaPanel</name>
+    <message>
+        <source>Validation</source>
+        <translation>Validation</translation>
     </message>
     <message>
-        <source>Location:</source>
-        <translation>Position:</translation>
-    </message>
-    <message>
-        <source>---</source>
-        <translation>---</translation>
-    </message>
-    <message>
-        <source>Urban blocks</source>
-        <translation>Blocs urbains</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuler</translation>
+        <source>Remove urban blocks</source>
+        <translation>Supprimer des blocs urbains</translation>
     </message>
     <message>
         <source>Add urban blocks</source>
         <translation>Ajouter des blocs urbains</translation>
     </message>
     <message>
-        <source>Remove urban blocks</source>
-        <translation>Supprimer des blocs urbains</translation>
+        <source>Click on a urban block to add or remove it from the living area.</source>
+        <translation>Cliquez sur un bloc urbain pour en ajouter ou en supprimer dans la zone de vie.</translation>
+    </message>
+    <message>
+        <source>Living Area</source>
+        <translation>Zone de vie</translation>
+    </message>
+    <message>
+        <source>Use the context menu to add or remove several urban blocks at once.</source>
+        <translation>Utilisez le menu contextuel pour ajouter ou supprimer plusieurs blocs urbains à la fois.</translation>
     </message>
 </context>
 <context>
@@ -847,18 +889,6 @@
         <translation>Populations</translation>
     </message>
     <message>
-        <source>Tactical</source>
-        <translation>Tactique</translation>
-    </message>
-    <message>
-        <source>Communication</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Crowds</source>
-        <translation>Foules</translation>
-    </message>
-    <message>
         <source>Formations</source>
         <translation>Formations</translation>
     </message>
@@ -895,18 +925,6 @@
         <translation>Lignes de contour</translation>
     </message>
     <message>
-        <source>Properties</source>
-        <translation>Proprietés</translation>
-    </message>
-    <message>
-        <source>Creation</source>
-        <translation>Création</translation>
-    </message>
-    <message>
-        <source>Logistic</source>
-        <translation>Logistique</translation>
-    </message>
-    <message>
         <source>Loading configuration ...</source>
         <translation>Chargement de la configuration ...</translation>
     </message>
@@ -933,10 +951,6 @@
     <message>
         <source>Initialize data ...</source>
         <translation>Initialisation des données ...</translation>
-    </message>
-    <message>
-        <source>ORBAT</source>
-        <translation>ODB</translation>
     </message>
     <message>
         <source>Phantom</source>
@@ -2235,12 +2249,6 @@
         <translation>Droits</translation>
     </message>
     <message>
-        <source>&apos;Read&apos; permission allows you to see an unit.
-&apos;Write&apos; permission allows you to control an unit.</source>
-        <translation>&apos;Lecture&apos; permet de voir une unité.
-&apos;Ecriture&apos; permet de contrôler une unité.</translation>
-    </message>
-    <message>
         <source>Crowds</source>
         <translation>Foules</translation>
     </message>
@@ -2251,6 +2259,12 @@
     <message>
         <source>Supervisor actions</source>
         <translation>Actions de supervision</translation>
+    </message>
+    <message>
+        <source>&apos;Read&apos; permission allows you to see a unit.
+&apos;Write&apos; permission allows you to control a unit.</source>
+        <translation type="unfinished">&apos;Lecture&apos; permet de voir une unité.
+&apos;Ecriture&apos; permet de contrôler une unité.</translation>
     </message>
 </context>
 <context>

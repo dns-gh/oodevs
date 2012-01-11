@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "preparation_app_pch.h"
-#include "PopulationsLayer.h"
+#include "PopulationsLayer.h"   
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/PopulationPrototype.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -26,11 +26,11 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 PopulationsLayer::PopulationsLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy,
                                     gui::View_ABC& view, Model& model, const kernel::Profile_ABC& profile, const gui::LayerFilter_ABC& filter )
-    : gui::PopulationsLayer( controllers, tools, strategy, view, profile, filter )
-    , model_( model )
-    , selectedEntity_( controllers )
+    : EditorProxy< gui::PopulationsLayer >( controllers, tools, strategy, view, profile, filter )
+    , model_             ( model )
+    , selectedEntity_    ( controllers )
     , selectedPopulation_( controllers )
-    , dummy_( new QWidget() )
+    , dummy_             ( new QWidget() )
 {
     // NOTHING
 }

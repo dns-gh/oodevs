@@ -149,6 +149,7 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     Wrap( insertItem( tools::translate( "Menu", "&Exercise" ), menu ) );
 
     QMenu* pMenu = pParent->createPopupMenu();
+    pMenu->removeItemAt( 0 );
     pMenu->removeItemAt( 5 );
     addMenu( pMenu );
     insertItem( tools::translate( "Menu", "&Windows" ), pMenu );

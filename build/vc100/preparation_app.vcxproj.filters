@@ -92,6 +92,9 @@
     <Filter Include="Source Files\Dialogs\Consistency">
       <UniqueIdentifier>{ef8e205d-93c8-4eeb-97fc-71c09fc62a0c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Panels\Living area">
+      <UniqueIdentifier>{ebcc3ace-dec1-47be-92bd-73229501cb0f}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\preparation_app\Application.cpp">
@@ -415,9 +418,6 @@
     <ClCompile Include="..\..\src\applications\preparation_app\LogisticListView.cpp">
       <Filter>Source Files\Lists</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\preparation_app\LivingAreaEditor.cpp">
-      <Filter>Source Files\Dialogs\Editors</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\LongNameEditor.cpp">
       <Filter>Source Files\Dialogs\Editors</Filter>
     </ClCompile>
@@ -457,8 +457,23 @@
     <ClCompile Include="..\..\src\applications\preparation_app\NewProfileDialog.cpp">
       <Filter>Source Files\Dialogs\Profiles</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\DockManager.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\LivingAreaPanel.cpp">
+      <Filter>Source Files\Panels\Living area</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\UrbanLayer.cpp">
+      <Filter>Source Files\Layers</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\FormationHierarchyEditor.cpp">
       <Filter>Source Files\Dialogs\Editors</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\InhabitantLayer.cpp">
+      <Filter>Source Files\Layers</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\LocationEditorToolbar.cpp">
+      <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -630,6 +645,21 @@
     <ClInclude Include="..\..\src\applications\preparation_app\ProfilesChecker_ABC.h">
       <Filter>Source Files\Dialogs\Profiles</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\EditorProxy.h">
+      <Filter>Source Files\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\DockManager.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\UrbanLayer.h">
+      <Filter>Source Files\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\InhabitantLayer.h">
+      <Filter>Source Files\Layers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\LocationEditorToolbar.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\preparation_app\preparation_app_es.ts">
@@ -640,6 +670,9 @@
     </None>
     <None Include="..\..\src\applications\preparation_app\MultipleResolverEditor.inl">
       <Filter>Source Files\Dialogs\Editors</Filter>
+    </None>
+    <None Include="..\..\src\applications\preparation_app\EditorProxy.inl">
+      <Filter>Source Files\Layers</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>
@@ -817,9 +850,6 @@
     <CustomBuild Include="..\..\src\applications\preparation_app\UserProfileUnitRights.h">
       <Filter>Source Files\Dialogs\Profiles\Rights</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\preparation_app\LivingAreaEditor.h">
-      <Filter>Source Files\Dialogs\Editors</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\ModelConsistencyDialog.h">
       <Filter>Source Files\Dialogs\Consistency</Filter>
     </CustomBuild>
@@ -855,6 +885,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\FormationHierarchyEditor.h">
       <Filter>Source Files\Dialogs\Editors</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\LivingAreaPanel.h">
+      <Filter>Source Files\Panels\Living area</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>
