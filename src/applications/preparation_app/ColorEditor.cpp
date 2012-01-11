@@ -122,7 +122,7 @@ void ColorEditor::NotifyUpdated( const kernel::Team_ABC& team )
     if( const kernel::Color_ABC* pTeamColor = team.Retrieve< kernel::Color_ABC >() )
     {
         QColor baseColor = colorStrategy_.FindBaseColor( team );
-        if( pTeamColor->IsOverride() || static_cast< QColor >( *pTeamColor ) != baseColor )
+        if( pTeamColor->IsOverride() && static_cast< QColor >( *pTeamColor ) != baseColor )
             colorEditor_.Reset( team, baseColor );
     }
 }
