@@ -41,7 +41,7 @@ DEC_PathResult::~DEC_PathResult()
 // Name: DEC_PathResult::GetPointOnPathCloseTo
 // Created: CMA 2011-12-06
 //-----------------------------------------------------------------------------
-MT_Vector2D DEC_PathResult::GetPointOnPathCloseTo( const MT_Vector2D& posToTest, T_FollowingPathList& pathPoints, const MT_Vector2D& lastJoiningPoint, bool forceNextPoint ) const
+MT_Vector2D DEC_PathResult::GetPointOnPathCloseTo( const MT_Vector2D& posToTest, T_FollowingPathList& pathPoints, const MT_Vector2D& lastJoiningPoint, bool forceNextPoint, double minDistance ) const
 {
     if( resultList_.empty() )
     {
@@ -65,14 +65,17 @@ MT_Vector2D DEC_PathResult::GetPointOnPathCloseTo( const MT_Vector2D& posToTest,
     bool bNewMin = false;
     bool hasMoreThanTwoPoints = pathPoints.size() > 2;
     double rSquareDistance = std::numeric_limits< double >::max();
+    double squareMinDistance = minDistance * minDistance;
     for( ; itResultEnd != resultList_.end(); ++itResultStart, ++itResultEnd )
     {
         if( itNextRequest == pathPoints.end() )
             break;
 
-        MT_Line vLine( (*itResultStart)->GetPos(), (*itResultEnd)->GetPos() );
+        MT_Vector2D endPos = (*itResultEnd)->GetPos();
+        MT_Line vLine( (*itResultStart)->GetPos(), endPos );
         MT_Vector2D vClosest = vLine.ClosestPointOnLine( posToTest );
         double rCurrentSquareDistance = vClosest.SquareDistance( posToTest );
+        double rSquareDistanceFromCurrentToEnd = endPos.SquareDistance( posToTest );
         if( rCurrentSquareDistance < rSquareDistance )
         {
             rSquareDistance = rCurrentSquareDistance;
@@ -81,7 +84,7 @@ MT_Vector2D DEC_PathResult::GetPointOnPathCloseTo( const MT_Vector2D& posToTest,
 
         if( itNextRequest->second == itResultEnd )
         {
-            if( bNewMin || rSquareDistance > 1000 )
+            if( bNewMin )
             {
                 if( itCurrentRequest != pathPoints.begin() )
                 {
@@ -93,7 +96,10 @@ MT_Vector2D DEC_PathResult::GetPointOnPathCloseTo( const MT_Vector2D& posToTest,
                 itCurrentRequest = itNextRequest;
                 ++itNextRequest;
                 bNewMin = false;
-                if( lastJoiningPoint != MT_Vector2D( 0, 0 ) && itCurrentRequest->first.SquareDistance( lastJoiningPoint ) < precision_ )
+                if( itCurrentRequest->first.SquareDistance( posToTest ) < squareMinDistance)
+                    rSquareDistance = std::numeric_limits< double >::max();
+                else if( lastJoiningPoint != MT_Vector2D( 0, 0 ) 
+                 && itCurrentRequest->first.SquareDistance( lastJoiningPoint ) < precision_ )
                     break;
             }
             else
@@ -202,9 +208,10 @@ MT_Vector2D DEC_PathResult::GetFuturePosition( const MT_Vector2D& vStartPos, dou
 // Name: DEC_PathResult::ComputeFutureObjectCollision
 // Created: NLD 2003-10-08
 // -----------------------------------------------------------------------------
-bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) const
+bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, double& rDistanceBefore, double& rDistanceAfter, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) const
 {
-    rDistance = std::numeric_limits< double >::max();
+    rDistanceBefore = std::numeric_limits< double >::max();
+    rDistanceAfter = std::numeric_limits< double >::max(); 
     pObject.reset();
     E_State nPathState = GetState();
     if( nPathState != eValid && nPathState != ePartial )
@@ -216,7 +223,6 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos,
         return false;
     CIT_PathPointList itNextPathPoint = itCurrentPathPoint;
     ++itNextPathPoint;
-    std::multimap< double, boost::shared_ptr< DEC_Knowledge_Object > > objectsOnPathMap;
     // Determination de tous les objets connus avec lesquels il va y avoir collision dans le déplacement en cours
     for( CIT_KnowledgeObjectVector itKnowledge = objectsToTest.begin(); itKnowledge != objectsToTest.end(); ++itKnowledge )
     {
@@ -229,20 +235,25 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos,
             T_PointSet collisions( colCmp );
             if( pKnowledge->GetLocalisation().Intersect2D( lineTmp, collisions ) )
             {
-                if( collisions.empty() )
-                    return false;
+                if( collisions.empty() ) // should never happen
+                    continue;
                 //$$$ Distance fausse (distance en ligne droite)
                 const double rColDist = vStartPos.Distance( *collisions.begin() );
-                objectsOnPathMap.insert( std::make_pair( rColDist, pKnowledge ) );
-                break;
+                if( !pObject )
+                {
+                    rDistanceBefore = rColDist;
+                    pObject = pKnowledge;
+                    if( collisions.size() > 1 )
+                        rDistanceAfter = rColDist;
+                }
+                else
+                    rDistanceAfter = rColDist;
             }
             pPrevPos = &(*itPathPoint)->GetPos();
         }
     }
-    if( objectsOnPathMap.empty() )
+    if( !pObject )
         return false;
-    rDistance = objectsOnPathMap.begin()->first;
-    pObject   = objectsOnPathMap.begin()->second;
     return true;
 }
 

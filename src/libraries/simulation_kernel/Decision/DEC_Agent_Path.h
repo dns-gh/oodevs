@@ -79,7 +79,7 @@ public:
     const DEC_PathType& GetPathType() const;
     const DEC_Agent_PathClass& GetPathClass() const;
     double GetUnitMajorWeight() const;
-    MT_Vector2D GetPointOnPathCloseTo( const MT_Vector2D& posToTest, const MT_Vector2D& lastJoiningPoint, bool forceNextPoint );
+    MT_Vector2D GetPointOnPathCloseTo( const MT_Vector2D& posToTest, const MT_Vector2D& lastJoiningPoint, bool forceNextPoint, double minDistance );
     //@}
 
     //! @name Tools

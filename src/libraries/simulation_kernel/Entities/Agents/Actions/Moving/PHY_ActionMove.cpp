@@ -73,13 +73,13 @@ void PHY_ActionMove::StopAction()
 // Name: PHY_ActionMove::CreateJoiningPath
 // Created: NLD 2004-09-29
 // -----------------------------------------------------------------------------
-bool PHY_ActionMove::CreateJoiningPath( const MT_Vector2D& lastJoiningPoint, bool forceNextPoint )
+bool PHY_ActionMove::CreateJoiningPath( const MT_Vector2D& lastJoiningPoint, bool forceNextPoint, double minDistance )
 {
     assert( pMainPath_.get() );
     assert( pMainPath_->GetState() != DEC_Path_ABC::eComputing );
     assert( !pJoiningPath_.get() );
     const MT_Vector2D& vPionPos = pion_.GetRole< PHY_RoleInterface_Location >().GetPosition();
-    const MT_Vector2D& vTestPos = pMainPath_->GetPointOnPathCloseTo( vPionPos, lastJoiningPoint, forceNextPoint );
+    const MT_Vector2D& vTestPos = pMainPath_->GetPointOnPathCloseTo( vPionPos, lastJoiningPoint, forceNextPoint, minDistance );
     if( vPionPos == vTestPos )
         return false;
     pJoiningPath_.reset( new DEC_Agent_Path( pion_, vTestPos, pMainPath_->GetPathType() ) );
@@ -192,9 +192,10 @@ void PHY_ActionMove::AvoidObstacles()
 
     boost::shared_ptr< DEC_Knowledge_Object > pObjectColliding;
 
-    double rDistanceCollision = 0.;
+    double rDistanceBeforeCollision = 0.;
+    double rDistanceAfterCollision = 0.;
 
-    if( !role_.ComputeFutureObjectCollision( pion_.GetRole< PHY_RoleInterface_Location >().GetPosition(), objectsToAvoid_, rDistanceCollision, pObjectColliding ) )
+    if( !role_.ComputeFutureObjectCollision( pion_.GetRole< PHY_RoleInterface_Location >().GetPosition(), objectsToAvoid_, rDistanceBeforeCollision, rDistanceAfterCollision, pObjectColliding ) )
         return;
 
     assert( pObjectColliding && pObjectColliding->IsValid() );
@@ -207,7 +208,7 @@ void PHY_ActionMove::AvoidObstacles()
     if( !isTreatingJoining_ )
     {
         DestroyJoiningPath();
-        if( !CreateJoiningPath( MT_Vector2D(), forceNextPoint_ ) )
+        if( !CreateJoiningPath( MT_Vector2D(), forceNextPoint_, rDistanceAfterCollision ) )
             CreateFinalPath();
         role_.SendRC( MIL_Report::eReport_DifficultTerrain );
     }
@@ -315,7 +316,7 @@ void PHY_ActionMove::CreateFinalPath()
 int PHY_ActionMove::CreateAdaptedPath( boost::shared_ptr< DEC_PathResult > pCurrentPath, const MT_Vector2D& lastJoiningPoint, bool forceNextPoint )
 {
     role_.MoveSuspended( pCurrentPath );
-    if( CreateJoiningPath( lastJoiningPoint, forceNextPoint ) )
+    if( CreateJoiningPath( lastJoiningPoint, forceNextPoint, 0. ) )
     {
         pCurrentPath = pJoiningPath_;
         return role_.Move( pCurrentPath );

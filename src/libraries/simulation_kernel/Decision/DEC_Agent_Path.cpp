@@ -233,10 +233,13 @@ void DEC_Agent_Path::InitializePathKnowledges( const T_PointVector& pathPoints )
     {
         T_KnowledgeObjectVector knowledgesObject;
         queryMaker_.GetArmy().GetKnowledge().GetObjects( knowledgesObject );
+        T_PointVector firstPointVector;
+        if( !pathPoints.empty() )
+            firstPointVector.push_back( *pathPoints.begin() );
         for( CIT_KnowledgeObjectVector itKnowledgeObject = knowledgesObject.begin(); itKnowledgeObject != knowledgesObject.end(); ++itKnowledgeObject )
         {
             const DEC_Knowledge_Object& knowledge = **itKnowledgeObject;
-            if( knowledge.CanCollideWith( queryMaker_ ) )
+            if( knowledge.CanCollideWith( queryMaker_ ) && !knowledge.IsObjectInsidePathPoint( firstPointVector, queryMaker_ ) ) //$$$ BOF
             {
                 if( pathKnowledgeObjects_.size() <= knowledge.GetType().GetID() )
                     pathKnowledgeObjects_.resize( knowledge.GetType().GetID() + 1 );
@@ -643,10 +646,10 @@ bool DEC_Agent_Path::IsDestinationTrafficable() const
 // Name: DEC_Agent_Path::GetPointOnPathCloseTo
 // Created: CMA 2011-11-10
 // -----------------------------------------------------------------------------
-MT_Vector2D DEC_Agent_Path::GetPointOnPathCloseTo( const MT_Vector2D& posToTest, const MT_Vector2D& lastJoiningPoint, bool forceNextPoint )
+MT_Vector2D DEC_Agent_Path::GetPointOnPathCloseTo( const MT_Vector2D& posToTest, const MT_Vector2D& lastJoiningPoint, bool forceNextPoint, double minDistance )
 {
     if( followingPathPoints_.size() > 1 )
-        return DEC_PathResult::GetPointOnPathCloseTo( posToTest, followingPathPoints_, lastJoiningPoint, forceNextPoint );
+        return DEC_PathResult::GetPointOnPathCloseTo( posToTest, followingPathPoints_, lastJoiningPoint, forceNextPoint, minDistance );
     else if( followingPathPoints_.size() == 1 )
         return followingPathPoints_.front().first;
     return posToTest;

@@ -53,9 +53,9 @@ public:
     //! @name Tools
     //@{
             CIT_PathPointList GetCurrentKeyOnPath         ( const MT_Vector2D& vPos ) const;
-            MT_Vector2D       GetPointOnPathCloseTo       ( const MT_Vector2D& posToTest, T_FollowingPathList& pathPoints, const MT_Vector2D& lastJoiningPoint, bool forceNextPoint ) const;
+            MT_Vector2D       GetPointOnPathCloseTo       ( const MT_Vector2D& posToTest, T_FollowingPathList& pathPoints, const MT_Vector2D& lastJoiningPoint, bool forceNextPoint, double minDistance ) const;
             MT_Vector2D       GetFuturePosition           ( const MT_Vector2D& vStartPos, double rDist, bool bBoundOnPath ) const;
-            bool              ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) const;
+            bool              ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, double& rDistanceBefore, double& rDistanceAfter, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) const;
     virtual void              InsertDecPoints             () = 0;
     //@}
 

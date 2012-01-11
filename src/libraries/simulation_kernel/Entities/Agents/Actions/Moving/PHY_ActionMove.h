@@ -55,7 +55,7 @@ public:
 private:
     //! @name Tools
     //@{
-    bool        CreateJoiningPath( const MT_Vector2D& lastJoiningPoint, bool forceNextPoint );
+    bool        CreateJoiningPath( const MT_Vector2D& lastJoiningPoint, bool forceNextPoint, double minDistance );
     void        DestroyJoiningPath();
     MT_Vector2D GetLastPointAndDestroyJoiningPath();
     void        AvoidObstacles();
