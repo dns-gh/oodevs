@@ -45,6 +45,9 @@ public:
     virtual const T_Color& GetColor() const = 0;
     virtual void ChangeColor( const T_Color& color ) = 0;
     virtual void Clear() = 0;
+
+    inline void ChangeColor( const QColor& color ) { ChangeColor( T_Color( color.red(), color.green(), color.blue() ) ); }
+    inline operator QColor() const { return QColor( GetColor().get< 0 >(), GetColor().get< 1 >(), GetColor().get< 2 >() ); }
     //@}
 };
 

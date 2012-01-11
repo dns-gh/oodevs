@@ -38,6 +38,7 @@ public:
     //@{
     virtual void Add( const kernel::Entity_ABC& entity, const QColor& color ) = 0;
     virtual void Remove( const kernel::Entity_ABC& entity ) = 0;
+    virtual void Reset( const kernel::Entity_ABC& entity, const QColor& color ) = 0;
     //@}
 };
 

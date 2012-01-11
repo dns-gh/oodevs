@@ -71,7 +71,7 @@ void ColorController::AddSubordinate( const kernel::Entity_ABC& entity, const QC
 {
     colors_[ entity.GetId() ] = newColor;
     if( const kernel::Color_ABC* pColor = entity.Retrieve< kernel::Color_ABC >() )
-        const_cast< kernel::Color_ABC* >( pColor )->ChangeColor( kernel::Color_ABC::T_Color( newColor.red(), newColor.green(), newColor.blue() ) );
+        const_cast< kernel::Color_ABC* >( pColor )->ChangeColor( newColor );
     tools::Iterator< const kernel::Entity_ABC& > it = entity.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
     while( it.HasMoreElements() )
     {
@@ -97,10 +97,7 @@ void ColorController::Remove( const kernel::Entity_ABC& entity )
             if( const kernel::Entity_ABC* pSuperior = pHierarchies->GetSuperior() )
                 if( const kernel::Color_ABC* pColor = pSuperior->Retrieve< kernel::Color_ABC >() )
                     if( pColor->IsOverride() )
-                    {
-                        const kernel::Color_ABC::T_Color newColor = pColor->GetColor();
-                        Add( entity, QColor( newColor.get< 0 >(), newColor.get< 1 >(), newColor.get< 2 >() ) );
-                    }
+                        Add( entity, static_cast< QColor >( *pColor ) );
         UpdateHierarchies( entity );
     }
 }
@@ -163,6 +160,33 @@ void ColorController::UpdateLogisticBaseStates( const kernel::TacticalHierarchie
 }
 
 // -----------------------------------------------------------------------------
+// Name: ColorController::Reset
+// Created: MMC 2012-01-10
+// -----------------------------------------------------------------------------
+void ColorController::Reset( const kernel::Entity_ABC& entity, const QColor& newColor )
+{
+    ResetSubordinate( entity, newColor );
+    UpdateHierarchies( entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorController::ResetSubordinate
+// Created: MMC 2012-01-10
+// -----------------------------------------------------------------------------
+void ColorController::ResetSubordinate( const kernel::Entity_ABC& entity, const QColor& newColor )
+{
+    colors_[ entity.GetId() ] = newColor;
+    if( const kernel::Color_ABC* pColor = entity.Retrieve< kernel::Color_ABC >() )
+        const_cast< kernel::Color_ABC* >( pColor )->ChangeColor( newColor );
+    tools::Iterator< const kernel::Entity_ABC& > it = entity.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
+    while( it.HasMoreElements() )
+    {
+        const kernel::Entity_ABC& child = it.NextElement();
+        ResetSubordinate( child, newColor );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: ColorController::NotifyCreated
 // Created: LGY 2011-06-24
 // -----------------------------------------------------------------------------
@@ -171,8 +195,7 @@ void ColorController::NotifyCreated( const kernel::Entity_ABC& entity )
     if( const kernel::Color_ABC* color = entity.Retrieve< kernel::Color_ABC >() )
         if( color->IsOverride() )
         {
-            const kernel::Color_ABC::T_Color newColor = color->GetColor();
-            colors_[ entity.GetId() ] = QColor( newColor.get< 0 >(), newColor.get< 1 >(), newColor.get< 2 >() );
+            colors_[ entity.GetId() ] = static_cast< QColor >( *color );
             UpdateHierarchies( entity );
         }
 }

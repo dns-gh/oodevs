@@ -52,8 +52,6 @@ Automat::Automat( xml::xistream& xis, Controller& controller, IdManager& idManag
     RegisterSelf( *this );
     CreateDictionary( controller );
     idManager.Lock( id_ );
-    xis >> xml::optional >> xml::attribute( "nature", nature_ )
-        >> xml::optional >> xml::attribute( "color", color_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -137,10 +135,6 @@ void Automat::SerializeAttributes( xml::xostream& xos ) const
     xos << xml::attribute( "id", id_ )
         << xml::attribute( "name", name_.ascii() )
         << xml::attribute( "type", type_.GetName() );
-    if (nature_.length() > 0)
-        xos << xml::attribute( "nature", nature_ );
-    if (color_.length() > 0)
-        xos << xml::attribute( "color", color_ );
 }
 
 // -----------------------------------------------------------------------------

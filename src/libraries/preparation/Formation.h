@@ -83,8 +83,6 @@ private:
     //! @name Member data
     //@{
     const kernel::HierarchyLevel_ABC* level_;
-    std::string color_;
-    std::string nature_;
     mutable std::string symbolPath_;
     mutable std::string levelPath_;
     const kernel::FormationLevels& levels_;

@@ -44,6 +44,7 @@ public:
     virtual QColor Apply( const kernel::Entity_ABC& entity, const QColor& base );
     virtual void Add( const kernel::Entity_ABC& entity, const QColor& newColor );
     virtual void Remove( const kernel::Entity_ABC& entity );
+    virtual void Reset( const kernel::Entity_ABC& entity, const QColor& newColor );
 
     virtual void NotifyCreated( const kernel::Entity_ABC& entity );
     virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
@@ -56,6 +57,7 @@ private:
     void RemoveSubordinate( const kernel::Entity_ABC& entity, const QColor& color );
     void UpdateHierarchies( const kernel::Entity_ABC& entity );
     void UpdateLogisticBaseStates( const kernel::TacticalHierarchies& tactical );
+    void ResetSubordinate( const kernel::Entity_ABC& entity, const QColor& newColor );
     //@}
 
 private:
