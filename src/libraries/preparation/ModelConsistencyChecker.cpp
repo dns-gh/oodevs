@@ -412,6 +412,14 @@ void ModelConsistencyChecker::CheckProfileInitialization()
     }
 }
 
+namespace
+{
+	bool compare_ghosts ( const Ghost_ABC* ghost1, const Ghost_ABC* ghost2 )
+	{
+		return ghost1->GetType().ascii() < ghost2->GetType().ascii();
+	}
+}
+
 // -----------------------------------------------------------------------------
 // Name: ModelConsistencyChecker::CheckGhosts
 // Created: ABR 2011-10-20
@@ -419,14 +427,18 @@ void ModelConsistencyChecker::CheckProfileInitialization()
 void ModelConsistencyChecker::CheckGhosts()
 {
     Iterator< const Ghost_ABC& > it = model_.ghosts_.CreateIterator();
+	std::list< const Ghost_ABC* > convertedEntities;
     while( it.HasMoreElements() )
     {
         const Ghost_ABC& ghost = it.NextElement();
         if( ghost.IsConverted() )
-            AddError( eGhostConverted, &ghost, ghost.GetType().ascii() );
+			convertedEntities.push_back( &ghost );
         else
             AddError( eGhostExistence, &ghost );
     }
+	convertedEntities.sort( compare_ghosts );
+	for ( std::list< const Ghost_ABC* >::const_iterator cit = convertedEntities.begin(); cit != convertedEntities.end(); ++cit )
+		AddError( eGhostConverted, *cit, (*cit)->GetType().ascii() );
 }
 
 // -----------------------------------------------------------------------------
