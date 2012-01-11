@@ -73,6 +73,10 @@
         <source>Select color</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Change underground network color</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>CommunicationListView</name>
@@ -2264,16 +2268,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>&apos;Control&apos; permission allows you to control a unit.</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Duplicate login: &apos;%1&apos;.</source>
         <translation type="unfinished">Usuario repetido: &apos;%1&apos;.</translation>
-    </message>
-    <message>
-        <source>&apos;View&apos; permission allows you to see a unit.</source>
-        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Hide automats controlled by another profile</source>
@@ -2285,6 +2281,14 @@
     </message>
     <message>
         <source>Units controlled by another profile.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&apos;Control&apos; permission allows you to control a unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&apos;View&apos; permission allows you to see a unit.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

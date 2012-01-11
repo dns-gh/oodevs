@@ -23,6 +23,7 @@ namespace kernel
     class Automat_ABC;
     class Controllers;
     class Ghost_ABC;
+    class Object_ABC;
 }
 
 namespace gui
@@ -44,6 +45,7 @@ class ColorEditor : public QObject
                   , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
                   , public kernel::ContextMenuObserver_ABC< kernel::Agent_ABC >
                   , public kernel::ContextMenuObserver_ABC< kernel::Ghost_ABC >
+                  , public kernel::ContextMenuObserver_ABC< kernel::Object_ABC >
                   , public tools::ElementObserver_ABC< kernel::Entity_ABC >
                   , public tools::ElementObserver_ABC< kernel::Team_ABC >
                   , private boost::noncopyable
@@ -65,6 +67,7 @@ public:
     virtual void NotifyContextMenu( const kernel::Automat_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Ghost_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu );
 
     virtual void NotifyCreated( const kernel::Entity_ABC& entity );
     virtual void NotifyUpdated( const kernel::Team_ABC& team );
@@ -79,6 +82,7 @@ private:
 private slots:
     //! @name Slots
     //@{
+    void ChangeUndergroundNetwork();
     void Show();
     void Reset();
     //@}

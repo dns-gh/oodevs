@@ -15,6 +15,7 @@
 #include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Ghost_ABC.h"
+#include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -22,6 +23,7 @@
 #include "clients_gui/ColorStrategy_ABC.h"
 #include "clients_gui/ColorModifier_ABC.h"
 #include "clients_gui/ColorEditor_ABC.h"
+#include "preparation/UndergroundAttribute.h"
 
 // -----------------------------------------------------------------------------
 // Name: ColorEditor constructor
@@ -57,6 +59,25 @@ void ColorEditor::Show()
     QColor color = QColorDialog::getColor( current, 0, tools::translate( "ColorEditor", "Select color" ) );
     if( color.isValid() && color != current )
         colorEditor_.Add( *selected_, color );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorEditor::ChangeUndergroundNetwork
+// Created: JSR 2012-01-11
+// -----------------------------------------------------------------------------
+void ColorEditor::ChangeUndergroundNetwork()
+{
+    if( selected_ )
+    {
+        const UndergroundAttribute* attr = selected_->Retrieve< UndergroundAttribute >();
+        if( attr )
+        {
+            const QColor* attColor = attr->GetOverridenColor();
+            QColor color = QColorDialog::getColor( attColor ? *attColor : Qt::white, 0, tools::translate( "ColorEditor", "Select color" ) );
+            if( color.isValid() )
+                attr->OverrideColor( color );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -128,12 +149,25 @@ void ColorEditor::NotifyUpdated( const kernel::Team_ABC& team )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ColorEditor::NotifyContextMenu
+// Created: JSR 2012-01-11
+// -----------------------------------------------------------------------------
+void ColorEditor::NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu )
+{
+    if( entity.Retrieve< UndergroundAttribute >() )
+    {
+        selected_ = static_cast< const kernel::Entity_ABC* >( &entity );
+        menu.InsertItem( "Color", tools::translate( "ColorEditor", "Change underground network color" ), this, SLOT( ChangeUndergroundNetwork() ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: ColorEditor::Update
 // Created: LGY 2011-06-23
 // -----------------------------------------------------------------------------
 void ColorEditor::Update( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
-    selected_ = const_cast< kernel::Entity_ABC* >( &entity );
+    selected_ = &entity;
     menu.InsertItem( "Color", tools::translate( "ColorEditor", "Change color" ), this, SLOT( Show() ) );
     if( const kernel::Color_ABC* pColor = entity.Retrieve< kernel::Color_ABC >() )
         if( pColor->IsOverride() )

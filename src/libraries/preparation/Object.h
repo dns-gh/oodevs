@@ -54,6 +54,7 @@ public:
     //! @name Accessors
     //@{
     virtual const kernel::ObjectType& GetType() const;
+    virtual const QColor* GetOverridenColor() const;
     //@}
 
     //! @name Operations

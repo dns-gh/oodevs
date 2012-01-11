@@ -53,6 +53,7 @@ public:
     //! @name Operations
     //@{
     virtual QString GetTypeName() const;
+    virtual const QColor* GetOverridenColor() const;
     virtual void Select( ActionController& controller ) const;
     virtual void ContextMenu( ActionController& controller, const QPoint& where ) const;
     virtual void Activate( ActionController& controller ) const;

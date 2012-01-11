@@ -212,7 +212,8 @@ namespace
 // -----------------------------------------------------------------------------
 void ColorStrategy::SelectColor( const Object_ABC& object )
 {
-    Process( object, FindSuperiorColor( object, colorController_, FindBaseColor( object ) ) );
+    const QColor* objColor = object.GetOverridenColor();
+    Process( object, objColor ? *objColor : FindSuperiorColor( object, colorController_, FindBaseColor( object ) ) );
 }
 
 // -----------------------------------------------------------------------------

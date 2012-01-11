@@ -73,6 +73,10 @@
         <source>Select color</source>
         <translation>Sélectionnez la couleur</translation>
     </message>
+    <message>
+        <source>Change underground network color</source>
+        <translation>Modifier la couleur du réseau souterrain</translation>
+    </message>
 </context>
 <context>
     <name>CommunicationListView</name>
@@ -2264,16 +2268,8 @@
         <translation>Rôle</translation>
     </message>
     <message>
-        <source>&apos;Control&apos; permission allows you to control a unit.</source>
-        <translation>&apos;Contrôle&apos; permet de contrôler une unité.</translation>
-    </message>
-    <message>
         <source>Duplicate login: &apos;%1&apos;.</source>
         <translation>Profil en double: &apos;%1&apos;.</translation>
-    </message>
-    <message>
-        <source>&apos;View&apos; permission allows you to see a unit.</source>
-        <translation>&apos;Vue&apos; permet de voir une unité.</translation>
     </message>
     <message>
         <source>Hide automats controlled by another profile</source>
@@ -2286,6 +2282,14 @@
     <message>
         <source>Units controlled by another profile.</source>
         <translation>Unités controlées par un autre profile.</translation>
+    </message>
+    <message>
+        <source>&apos;Control&apos; permission allows you to control a unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&apos;View&apos; permission allows you to see a unit.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

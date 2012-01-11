@@ -32,6 +32,7 @@
 #include "ScoreFactory.h"
 #include "SuccessFactorsModel.h"
 #include "SuccessFactorFactory.h"
+#include "UndergroundAttribute.h"
 #include "UrbanModel.h"
 #include "clients_gui/TerrainObjectProxy.h"
 #include "clients_kernel/Controllers.h"
@@ -255,6 +256,7 @@ void Model::Purge()
     objects_.Purge();
     exercise_.Purge();
     idManager_.Reset();
+    UndergroundAttribute::Purge();
     SetLoaded( false );
 }
 

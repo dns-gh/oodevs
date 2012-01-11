@@ -11,6 +11,7 @@
 #include "Object.h"
 #include "IdManager.h"
 #include "ObjectPositions.h"
+#include "UndergroundAttribute.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
@@ -70,6 +71,18 @@ Object::~Object()
 const ObjectType& Object::GetType() const
 {
     return type_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Object::GetOverridenColor
+// Created: JSR 2012-01-11
+// -----------------------------------------------------------------------------
+const QColor* Object::GetOverridenColor() const
+{
+    const UndergroundAttribute* attr = Retrieve< UndergroundAttribute >();
+    if( attr )
+        return attr->GetOverridenColor();
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

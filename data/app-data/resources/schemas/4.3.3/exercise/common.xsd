@@ -256,15 +256,15 @@
       </xs:element>
       <xs:element name="stock" minOccurs="0">
         <xs:complexType>
-            <xs:sequence>
-                <xs:element name="resource" maxOccurs="unbounded" >
-                    <xs:complexType>
-                        <xs:attribute name="current" type="xs:nonNegativeInteger" use="required"/>
-                        <xs:attribute name="max" type="xs:nonNegativeInteger" use="required"/>
-                        <xs:attribute name="type" type="xs:string" use="required"/>
-                    </xs:complexType>
-                </xs:element>
-            </xs:sequence>
+          <xs:sequence>
+            <xs:element name="resource" maxOccurs="unbounded">
+              <xs:complexType>
+                <xs:attribute name="current" type="xs:nonNegativeInteger" use="required"/>
+                <xs:attribute name="max" type="xs:nonNegativeInteger" use="required"/>
+                <xs:attribute name="type" type="xs:string" use="required"/>
+              </xs:complexType>
+            </xs:element>
+          </xs:sequence>
         </xs:complexType>
       </xs:element>
       <xs:element name="medical-treatment" minOccurs="0">
@@ -413,6 +413,7 @@
       <xs:element name="underground" minOccurs="0">
         <xs:complexType>
           <xs:attribute name="network" type="xs:string" use="required"/>
+          <xs:attribute name="color" type="T_ColorRGB"/>
         </xs:complexType>
       </xs:element>
     </xs:all>
