@@ -2636,6 +2636,13 @@
         <fragorder name="Munition - Authorize all"/>
       </fragorders>
     </unit>
+    <unit dia-type="roles.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="ML_SecurityAgent">
+      <missions>
+        <mission name="ML_Security_Follow"/>
+        <mission name="ML_Security_MoveTo"/>
+      </missions>
+      <fragorders/>
+    </unit>
   </units>
   <automats>
     <automat dia-type="StrategicBomberSquadron" file="Air\Automates\Escadrille Assaut\Model.bms" masalife="false" name="Strategic Bomber Squadron">
@@ -3849,6 +3856,10 @@
       </missions>
       <fragorders/>
     </automat>
+    <automat dia-type="roles.Leader" file="BMAutomatSecurityWorldwide.bms" masalife="true" name="ML_SecurityLeader">
+      <missions/>
+      <fragorders/>
+    </automat>
   </automats>
   <crowd>
     <crowd dia-type="T_Population" file="Population\Populations\Model.bms" masalife="false" name="Crowd">
@@ -3882,4 +3893,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="4062738179" -->
+<!-- signature="2350414341" -->
