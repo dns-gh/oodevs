@@ -15,6 +15,7 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "actions_gui/resources.h"
+#include "ParamComboBox.h"
 
 using namespace actions::gui;
 
@@ -48,7 +49,8 @@ namespace
 // Created: APE 2004-04-20
 // -----------------------------------------------------------------------------
 MissionInterface_ABC::MissionInterface_ABC( QWidget* parent, const kernel::OrderType& order, kernel::Entity_ABC& entity, kernel::ActionController& controller )
-    : Q3VBox      ( parent )
+    : Q3VBox            ( parent )
+    , ParamInterface_ABC()
     , title_     ( order.GetName().c_str() )
     , controller_( controller )
     , entity_    ( entity )
@@ -246,3 +248,14 @@ void MissionInterface_ABC::paintEvent( QPaintEvent*, QString title )
     label->setAlignment( Qt::AlignRight );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MissionInterface_ABC::GetIndex
+// Created: ABR 2011-12-29
+// -----------------------------------------------------------------------------
+int MissionInterface_ABC::GetIndex( Param_ABC* param ) const
+{
+    for( int i = 0; i < parameters_.size(); ++i )
+        if( parameters_[ i ] == param )
+            return i;
+    return -1;
+}

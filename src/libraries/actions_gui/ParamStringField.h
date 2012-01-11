@@ -13,15 +13,11 @@
 #include "Param_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 
-namespace gui
-{
-    class RichLabel;
-}
-
 namespace actions
 {
 namespace gui
 {
+    class InterfaceBuilder_ABC;
 
 // =============================================================================
 /** @class  ParamStringField
@@ -34,14 +30,13 @@ class ParamStringField : public Param_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ParamStringField( const kernel::OrderParameter& parameter );
+    explicit ParamStringField( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter );
     virtual ~ParamStringField();
     //@}
 
     //! @name Operations
     //@{
     virtual QWidget* BuildInterface( QWidget* parent );
-
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     //@}
 
@@ -54,8 +49,6 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::OrderParameter parameter_;
-    ::gui::RichLabel* pLabel_;
     QLineEdit* pEdit_;
     //@}
 };

@@ -9,9 +9,9 @@
 
 #include "actions_gui_pch.h"
 #include "ParamStringField.h"
+#include "InterfaceBuilder_ABC.h"
 #include "actions/Action_ABC.h"
 #include "actions/String.h"
-#include "clients_gui/RichLabel.h"
 
 using namespace actions::gui;
 
@@ -19,10 +19,8 @@ using namespace actions::gui;
 // Name: ParamStringField constructor
 // Created: AGE 2006-03-15
 // -----------------------------------------------------------------------------
-ParamStringField::ParamStringField( const kernel::OrderParameter& parameter )
-    : Param_ABC( parameter.GetName().c_str(), parameter.IsOptional() )
-    , parameter_( parameter )
-    , pLabel_( 0 )
+ParamStringField::ParamStringField( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
+    : Param_ABC( builder.GetParentObject(), builder.GetParamInterface(), parameter )
     , pEdit_ ( 0 )
 {
     // NOTHING

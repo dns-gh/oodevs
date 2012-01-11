@@ -12,14 +12,8 @@
 #include "moc_AfterActionFunctionList.cpp"
 #include "actions/ParameterContainer_ABC.h"
 #include "actions/Parameter_ABC.h"
-#include "actions_gui/ParamAgent.h"
-#include "actions_gui/ParamAgentList.h"
-#include "actions_gui/ParamCrowdList.h"
-#include "actions_gui/ParamInhabitantList.h"
-#include "actions_gui/ParamDotationTypeList.h"
-#include "actions_gui/ParamEquipmentList.h"
-#include "actions_gui/ParamUrbanBlockList.h"
 #include "actions_gui/ParamLocation.h"
+#include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_gui/ListItemToolTip.h"
@@ -39,14 +33,14 @@ using namespace gui;
 // Name: AfterActionFunctionList constructor
 // Created: AGE 2007-09-21
 // -----------------------------------------------------------------------------
-AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, Controllers& controllers, ItemFactory_ABC& factory, AfterActionModel& model, ParametersLayer& layer, const ::StaticModel& staticModel )
+AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, Controllers& controllers, ItemFactory_ABC& factory, AfterActionModel& model, actions::gui::InterfaceBuilder_ABC& interfaceBuilder )
     : Q3VBox( parent, "AfterActionFunctionList" )
+    , builder_    ( interfaceBuilder )
     , controllers_( controllers )
     , model_      ( model )
-    , layer_      ( layer )
-    , staticModel_( staticModel )
     , parameters_ ( 0 )
     , request_    ( 0 )
+    , title_      ( tr( "After action review" ) )
 {
     functions_ = new ListDisplayer< AfterActionFunctionList >( this, *this, factory );
     functions_->AddColumn( tr( "Name" ) );
@@ -131,6 +125,8 @@ void AfterActionFunctionList::OnSelectionChange( Q3ListViewItem* i )
     paramList_.clear();
     delete parameters_;
     parameters_ = new Q3VGroupBox( tr( "Parameters" ), this );
+    builder_.SetParamInterface( *this );
+    builder_.SetParentObject( this );
     if( ValuedListItem* item = static_cast< ValuedListItem* >( i ) )
     {
         const AfterActionFunction* function = item->GetValue< const AfterActionFunction >();
@@ -193,34 +189,36 @@ void AfterActionFunctionList::Request()
 // -----------------------------------------------------------------------------
 boost::shared_ptr< actions::gui::Param_ABC > AfterActionFunctionList::CreateParameter( const std::string& type, const QString& name )
 {
-    boost::shared_ptr< actions::gui::Param_ABC > result;
-    if( type == "unit" || type == "zone" )
+    std::string compatibleType = "";
+    unsigned int nbOccur = 1;
+    if( type == "unit" )
+        compatibleType = "agent";
+    else if( type == "dotation list" )
+        compatibleType = "allresourcetype";
+    else if( type == "equipment list" )
+        compatibleType = "maintenancepriorities";
+    else if( type == "zone" )
+        compatibleType = "location";
+    else 
     {
-        const OrderParameter parameter( name.ascii(), type.c_str(), false );
-        if( type == "unit" )
-            result.reset( new actions::gui::ParamAgent( this, parameter, controllers_.controller_ ) );
-        else if( type == "zone" )
-        {
-            std::auto_ptr< actions::gui::ParamLocation > location( new actions::gui::ParamLocation( parameter, layer_, staticModel_.coordinateConverter_ ) );
-            location->SetShapeFilter( false, false, true, true, false );
-            result.reset( location.release() );
-        }
-    }
-    else
-    {
-        const OrderParameter parameter( name.ascii(), type.c_str(), false, 1, std::numeric_limits< int >::max() );
+        nbOccur = std::numeric_limits< int >::max();
         if( type == "unit list" )
-            result.reset( new actions::gui::ParamAgentList( this, parameter, controllers_.actions_, controllers_.controller_ ) );
+            compatibleType = "agent";
         else if( type == "crowd list" )
-            result.reset( new actions::gui::ParamCrowdList( this, parameter, controllers_.actions_, controllers_.controller_ ) );
-        else if( type == "population list" )
-            result.reset( new actions::gui::ParamInhabitantList( this, parameter, controllers_.actions_, controllers_.controller_ ) );
-        else if( type == "dotation list" )
-            result.reset( new actions::gui::ParamDotationTypeList( this, parameter, staticModel_.objectTypes_ ) );
-        else if( type == "equipment list" )
-            result.reset( new actions::gui::ParamEquipmentList( this, parameter, staticModel_.objectTypes_ ) );
+            compatibleType = "crowd";
         else if( type == "urban block list" )
-            result.reset( new actions::gui::ParamUrbanBlockList( this, parameter, controllers_.actions_, controllers_.controller_ ) );
+            compatibleType = "urbanknowledge";
+        else if( type == "population list" )
+            compatibleType = "inhabitant";
+    }
+    boost::shared_ptr< actions::gui::Param_ABC > result;
+    if( !compatibleType.empty() )
+    {
+        const OrderParameter parameter( name.ascii(), compatibleType, false, 1, nbOccur );
+        actions::gui::Param_ABC* param = &builder_.BuildOne( parameter, false );
+        if( compatibleType == "location" )
+            static_cast< actions::gui::ParamLocation* >( param )->SetShapeFilter( false, false, true, true, false );
+        result.reset( param );
     }
     return result;
 }
@@ -240,4 +238,25 @@ void AfterActionFunctionList::CreateParameter( const AfterActionParameter& param
     }
     else
         new QLabel( parameter.GetName(), parameters_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionFunctionList::Title
+// Created: ABR 2012-01-11
+// -----------------------------------------------------------------------------
+QString AfterActionFunctionList::Title() const
+{
+    return title_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AfterActionFunctionList::GetIndex
+// Created: ABR 2012-01-11
+// -----------------------------------------------------------------------------
+int AfterActionFunctionList::GetIndex( actions::gui::Param_ABC* param ) const
+{
+    for( int i = 0; i < paramList_.size(); ++i )
+        if( paramList_[ i ].get() == param )
+            return i;
+    return -1;
 }

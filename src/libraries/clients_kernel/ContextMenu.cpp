@@ -9,9 +9,6 @@
 
 #include "clients_kernel_pch.h"
 #include "ContextMenu.h"
-#pragma warning( push, 0 )
-#include <Qt3Support/q3popupmenu.h>
-#pragma warning( pop )
 
 using namespace kernel;
 
@@ -20,7 +17,18 @@ using namespace kernel;
 // Created: AGE 2006-08-04
 // -----------------------------------------------------------------------------
 ContextMenu::ContextMenu()
-    : menu_( new Q3PopupMenu() )
+    : Q3PopupMenu() //: QMenu()
+{
+    setSeparatorsCollapsible( true );
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ContextMenu constructor
+// Created: ABR 2011-12-29
+// -----------------------------------------------------------------------------
+ContextMenu::ContextMenu( QWidget* parent )
+    : Q3PopupMenu( parent ) //: QMenu( parent )
 {
     // NOTHING
 }
@@ -31,18 +39,24 @@ ContextMenu::ContextMenu()
 // -----------------------------------------------------------------------------
 ContextMenu::~ContextMenu()
 {
-    delete menu_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ContextMenu::AddCategory
-// Created: AGE 2006-08-04
+// Name: ContextMenu::InitializeBaseCategories
+// Created: ABR 2012-01-03
 // -----------------------------------------------------------------------------
-void ContextMenu::AddCategory( const std::string& text )
+void ContextMenu::InitializeBaseCategories()
 {
-    QAction* separatorAction = menu_->addSeparator();
-    categories_.push_back( text );
-    separators_[ text ] = separatorAction;
+    if( baseCategories_.size() == 0 )
+    {
+        baseCategories_.push_back( "Parameter" );
+        baseCategories_.push_back( "Creation" );
+        baseCategories_.push_back( "Interface" );
+        baseCategories_.push_back( "Order" );
+        baseCategories_.push_back( "Command" );
+        baseCategories_.push_back( "Helpers" );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -51,194 +65,283 @@ void ContextMenu::AddCategory( const std::string& text )
 // -----------------------------------------------------------------------------
 void ContextMenu::Clear()
 {
-    menu_->clear();
-    categories_.clear();
+    for( CIT_Menus menu = menus_.begin(); menu != menus_.end(); ++menu )
+        for( CIT_SubMenus subMenu = menu->second.begin(); subMenu != menu->second.end(); ++subMenu )
+        {
+            if( QAction* const* vAction = boost::get< QAction* >( &subMenu->second ) )
+            {
+                QAction* action = *vAction;
+                delete action;
+                action = 0;
+            }
+            else if( ContextMenu* const* vMenu = boost::get< ContextMenu* >( &subMenu->second ) )
+            {
+                ContextMenu* menu = *vMenu;
+                menu->Clear();
+                delete menu;
+                menu = 0;
+            }
+        }
     menus_.clear();
-    separators_.clear();
+    this->clear();
 }
 
 // -----------------------------------------------------------------------------
-// Name: ContextMenu::SetItemEnabled
-// Created: AGE 2006-08-04
+// Name: ContextMenu::ConnectSubActions
+// Created: ABR 2012-01-06
 // -----------------------------------------------------------------------------
-void ContextMenu::SetItemEnabled( int id, bool enable )
+void ContextMenu::ConnectSubActions( const QObject* receiver, const char* member, int depth /*= 1*/ )
 {
-    menu_->setItemEnabled( id, enable );
+    if( depth == 0 )
+        return;
+    for( CIT_Menus menu = menus_.begin(); menu != menus_.end(); ++menu )
+        for( CIT_SubMenus subMenu = menu->second.begin(); subMenu != menu->second.end(); ++subMenu )
+        {
+            if( QAction* const* vAction = boost::get< QAction* >( &subMenu->second ) )
+                QObject::connect( *vAction, SIGNAL( triggered() ), receiver, member );
+            else if( ContextMenu* const* vMenu = boost::get< ContextMenu* >( &subMenu->second ) )
+                ConnectSubActions( receiver, member, depth - 1 );
+        }
 }
 
 // -----------------------------------------------------------------------------
-// Name: ContextMenu::SetItemParameter
-// Created: AGE 2006-08-04
+// Name: ContextMenu::FillCategory
+// Created: ABR 2012-01-03
 // -----------------------------------------------------------------------------
-void ContextMenu::SetItemParameter( int id, int parameter )
+void ContextMenu::InternalFillMenu( const ContextMenu::CIT_Menus& currentMenu )
 {
-    menu_->setItemParameter( id, parameter );
+    QAction* separatorAction = this->addSeparator();
+    if( currentMenu->first.separatorText_ )
+        separatorAction->setText( currentMenu->first.name_.c_str() );
+    for( CIT_SubMenus subMenu = currentMenu->second.begin(); subMenu != currentMenu->second.end(); ++subMenu )
+    {
+        if( QAction* const* newAction = boost::get< QAction* >( &subMenu->second ) )
+            this->addAction( *newAction );
+        else if( ContextMenu* const* newMenu = boost::get< ContextMenu* >( &subMenu->second ) )
+            this->addMenu( ( *newMenu )->FillMenu() );
+        else
+            throw std::exception( __FUNCTION__ "Invalid boost variant value" );
+    }
 }
 
 // -----------------------------------------------------------------------------
-// Name: ContextMenu::SetPixmap
-// Created: SBO 2008-10-20
+// Name: ContextMenu::FillMenu
+// Created: ABR 2012-01-03
 // -----------------------------------------------------------------------------
-void ContextMenu::SetPixmap( int id, const QPixmap& pixmap )
+ContextMenu* ContextMenu::FillMenu()
 {
-    menu_->changeItem( id, pixmap, menu_->text( id ) );
+    // Add base categories first
+    for( CIT_BaseCategories it = baseCategories_.begin(); it != baseCategories_.end(); ++it )
+        for( CIT_Menus menu = menus_.begin(); menu != menus_.end(); ++menu )
+            if( menu->first.name_ == *it )
+            {
+                InternalFillMenu( menu );
+                break;
+            }
+    // Add on the fly categories after
+    for( CIT_Menus menu = menus_.begin(); menu != menus_.end(); ++menu )
+        if( std::find( baseCategories_.begin(), baseCategories_.end(), menu->first.name_ ) == baseCategories_.end() )
+            InternalFillMenu( menu );
+    return this;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ContextMenu::InsertCategory
-// Created: AGE 2006-08-04
+// Name: ContextMenu::GetCategoryCreateIFN
+// Created: ABR 2012-01-03
 // -----------------------------------------------------------------------------
-QAction* ContextMenu::InsertCategory( const std::string& category )
+ContextMenu::T_SubMenus& ContextMenu::GetCategoryCreateIFN( const std::string& text, bool separatorText /*= false*/ )
 {
-    T_OrderedCategories::iterator it = std::find( categories_.begin(), categories_.end(), category );
-    if( it == categories_.end() )
-        AddCategory( category );
-    return separators_[ category ];
+    Category category( text, separatorText );
+    CIT_Menus itMenu = menus_.find( category );
+    if( itMenu == menus_.end() )
+        menus_[ category ] = T_SubMenus();
+    return menus_[ category ];
+}
+
+// -----------------------------------------------------------------------------
+// Name: ContextMenu::InsertVariant
+// Created: ABR 2012-01-06
+// -----------------------------------------------------------------------------
+ContextMenu::T_MenuVariant ContextMenu::InsertVariant( const std::string& category, T_MenuVariant& variant, bool separatorText /*= false*/, int index /*= -1*/ )
+{
+    //T_SubMenus& subMenus = GetCategoryCreateIFN( category, separatorText );
+
+    ContextMenu::T_MenuVariant result;
+
+    if( QAction* const* newAction = boost::get< QAction* >( &variant ) )
+        result = InsertAction( category, *newAction, separatorText, index );
+        //this->addAction( *newAction );
+    else if( ContextMenu* const* newMenu = boost::get< ContextMenu* >( &variant ) )
+        result = SubMenu( category, *newMenu, separatorText, index );
+        //InsertItem( category, *newMenu, separatorText, index );
+        //this->addMenu( ( *newMenu )->FillMenu() );
+    else
+        throw std::exception( __FUNCTION__ "Invalid boost variant value" );
+
+    //subMenus[ ( index == -1 ) ? static_cast< int >( subMenus.size() ) : index ] = variant;
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ContextMenu::InsertAction
+// Created: ABR 2012-01-05
+// -----------------------------------------------------------------------------
+QAction* ContextMenu::InsertAction( const std::string& category, QAction* action, bool separatorText /* = false */, int index /* = -1*/ )
+{
+    T_SubMenus& subMenus = GetCategoryCreateIFN( category, separatorText );
+    subMenus[ ( index == -1 ) ? static_cast< int >( subMenus.size() ) : index ] = action;
+    return action;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ContextMenu::InsertItem
 // Created: AGE 2006-08-07
+// Modified: ABR 2012-01-03
 // -----------------------------------------------------------------------------
-QAction* ContextMenu::InsertItem( const std::string& category, const QString& text, const QObject* receiver, const char* member )
+QAction* ContextMenu::InsertItem( const std::string& category, const QString& text, const QObject* receiver, const char* member, bool separatorText /* = false */, int index /* = -1*/ )
 {
-    QAction* actionCategory = InsertCategory( category );
-    QList<QAction*> actions = menu_->actions();
-    for( QList<QAction*>::iterator it = actions.begin(); it != actions.end(); ++it )
-        if( *it == actionCategory )
-        {
-            QAction* action;
-            ++it;
-            if( it == actions.end() )
-                action = menu_->addAction( text, receiver, member );
-            else
-            {
-                action = new QAction(text, menu_);
-                QObject::connect( action, SIGNAL(triggered()), receiver, member );
-                menu_->insertAction( *it, action );
-            }
-            return action;
-        }
-    return 0;
+    T_SubMenus& subMenus = GetCategoryCreateIFN( category, separatorText );
+    QAction* action = new QAction( text, this );
+    QObject::connect( action, SIGNAL( triggered() ), receiver, member );
+    subMenus[ ( index == -1 ) ? static_cast< int >( subMenus.size() ) : index ] = action;
+    return action;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ContextMenu::InsertItem
 // Created: AGE 2006-08-04
+// Modified: ABR 2012-01-03
 // -----------------------------------------------------------------------------
-QAction* ContextMenu::InsertItem( const std::string& category, const QString& text, const QObject* receiver, const char* member, const QKeySequence& accel /* = 0*/, int /*id*/ /* = -1*/ )
+QAction* ContextMenu::InsertItem( const std::string& category, const QString& text, const QObject* receiver, const char* member, const QKeySequence& accel /* = 0*/, int index /* = -1*/ )
 {
-    QAction* actionCategory = InsertCategory( category );
-    QList<QAction*> actions = menu_->actions();
-    for( QList<QAction*>::iterator it = actions.begin(); it != actions.end(); ++it )
-        if( *it == actionCategory )
-        {
-            QAction* action;
-            ++it;
-            if( it == actions.end() )
-                action = menu_->addAction( text, receiver, member );
-            else
-            {
-                action = new QAction(text, menu_);
-                QObject::connect( action, SIGNAL(triggered()), receiver, member );
-                menu_->insertAction( *it, action );
-            }
-            action->setShortcut( accel );
-            return action;
-        }
-    return 0;
+    T_SubMenus& subMenus = GetCategoryCreateIFN( category, false );
+    QAction* action = new QAction( text, this );
+    action->setShortcut( accel );
+    QObject::connect( action, SIGNAL( triggered() ), receiver, member );
+    subMenus[ ( index == -1 ) ? static_cast< int >( subMenus.size() ) : index ] = action;
+    return action;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ContextMenu::InsertItem
 // Created: AGE 2006-08-04
+// Modified: ABR 2012-01-03
 // -----------------------------------------------------------------------------
-QAction* ContextMenu::InsertItem( const std::string& category, const QString& text, int /*id*/ /* = -1*/ )
+QAction* ContextMenu::InsertItem( const std::string& category, const QString& text, int index /* = -1*/ )
 {
-    QAction* actionCategory = InsertCategory( category );
-    QList<QAction*> actions = menu_->actions();
-    for( QList<QAction*>::iterator it = actions.begin(); it != actions.end(); ++it )
-        if( *it == actionCategory )
-        {
-            QAction* action;
-            ++it;
-            if( it == actions.end() )
-                action = menu_->addAction( text );
-            else
-            {
-                action = new QAction(text, menu_);
-                menu_->insertAction( *it, action );
-            }
-            return action;
-        }
-    return 0;
+    T_SubMenus& subMenus = GetCategoryCreateIFN( category, false );
+    QAction* action = new QAction( text, this );
+    subMenus[ ( index == -1 ) ? static_cast< int >( subMenus.size() ) : index ] = action;
+    return action;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ContextMenu::InsertItem
 // Created: AGE 2006-08-04
+// Modified: ABR 2012-01-03
 // -----------------------------------------------------------------------------
-QAction* ContextMenu::InsertItem( const std::string& category, const QString& text, Q3PopupMenu* popup, int /*id*/ /* = -1*/ )
+QAction* ContextMenu::InsertItem( const std::string& category, const QString& text, ContextMenu* subMenu, int index /* = -1*/ )
 {
-    QAction* actionCategory = InsertCategory( category );
-    popup->setTitle( text );
-    QList<QAction*> actions = menu_->actions();
-    for( QList<QAction*>::iterator it = actions.begin(); it != actions.end(); ++it )
-        if( *it == actionCategory )
-        {
-            ++it;
-            if( it == actions.end() )
-                menu_->addMenu( popup );
-            else
-                menu_->insertMenu( *it, popup );
-            return popup->menuAction();
-        }
-    return popup->menuAction();
+    T_SubMenus& subMenus = GetCategoryCreateIFN( category, false );
+    subMenus[ ( index == -1 ) ? static_cast< int >( subMenus.size() ) : index ] = subMenu;
+    subMenu->setTitle( text );
+    return subMenu->menuAction();
 }
 
 // -----------------------------------------------------------------------------
 // Name: ContextMenu::SubMenu
 // Created: SBO 2006-08-10
+// Modified: ABR 2012-01-03
 // -----------------------------------------------------------------------------
-Q3PopupMenu* ContextMenu::SubMenu( const std::string& category, const QString& text )
+ContextMenu* ContextMenu::SubMenu( const std::string& category, const QString& text, bool textSeparator /* = false */, int index /* = -1*/  )
 {
-    T_OrderedCategories::iterator it = std::find( categories_.begin(), categories_.end(), category );
-    if( it == categories_.end() )
-        AddCategory( category );
+    T_SubMenus& subMenus = GetCategoryCreateIFN( category, textSeparator );
 
-    CategoryTextKey categoryKey( category, text.toStdString() );
-    T_CategoryMenus::iterator itMenu = menus_.find( categoryKey );
-    if( itMenu == menus_.end() )
-        menus_[ categoryKey ] = new Q3PopupMenu( menu_ );
-    Q3PopupMenu* result = menus_[ categoryKey ];
-    InsertItem( category, text, result );
-    return result;
+    // Check if exist by index
+    if( index != -1 )
+    {
+        CIT_SubMenus subMenu = subMenus.find( index );
+        if( subMenu != subMenus.end() )
+        {
+            if( ContextMenu* const* existingMenu = boost::get< ContextMenu* >( &subMenu->second ) )
+            {
+                assert( text == ( *existingMenu )->title() );
+                return *existingMenu;
+            }
+        }
+    }
+    // Check if exist by name
+    else
+        for( CIT_SubMenus subMenu = subMenus.begin(); subMenu != subMenus.end(); ++subMenu )
+            if( ContextMenu* const* existingMenu = boost::get< ContextMenu* >( &subMenu->second ) )
+                if( text == ( *existingMenu )->title() )
+                    return *existingMenu;
+
+    // Create
+    ContextMenu* newMenu = new ContextMenu( this );
+    newMenu->setTitle( text );
+    subMenus[ ( index == -1 ) ? static_cast< int >( subMenus.size() ) : index ] = newMenu;
+    return newMenu;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ContextMenu::SubMenu
+// Created: ABR 2012-01-10
+// -----------------------------------------------------------------------------
+ContextMenu* ContextMenu::SubMenu( const std::string& category, ContextMenu* newMenu, bool textSeparator /*= false*/, int index /*= -1*/ )
+{
+    T_SubMenus& subMenus = GetCategoryCreateIFN( category, textSeparator );
+
+    // Check if exist by index
+    if( index != -1 )
+    {
+        CIT_SubMenus subMenu = subMenus.find( index );
+        if( subMenu != subMenus.end() )
+        {
+            if( ContextMenu* const* existingMenu = boost::get< ContextMenu* >( &subMenu->second ) )
+            {
+                assert( newMenu->title() == ( *existingMenu )->title() );
+                if( newMenu != *existingMenu )
+                    delete newMenu;
+                newMenu = *existingMenu;
+                return newMenu;
+            }
+        }
+    }
+    // Check if exist by name
+    else
+        for( CIT_SubMenus subMenu = subMenus.begin(); subMenu != subMenus.end(); ++subMenu )
+            if( ContextMenu* const* existingMenu = boost::get< ContextMenu* >( &subMenu->second ) )
+                if( newMenu->title() == ( *existingMenu )->title() )
+                {
+                    if( newMenu != *existingMenu )
+                        delete newMenu;
+                    newMenu = *existingMenu;
+                    return newMenu;
+                }
+
+    // Add
+    subMenus[ ( index == -1 ) ? static_cast< int >( subMenus.size() ) : index ] = newMenu;
+    return newMenu;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ContextMenu::Popup
 // Created: AGE 2006-08-04
+// Modified: ABR 2012-01-03
 // -----------------------------------------------------------------------------
 void ContextMenu::Popup( const QPoint& where )
 {
-    if( menu_ && menu_->count() > 0 )
-        menu_->popup( where );
+    FillMenu();
+    this->popup( where );
 }
-/*
-// -----------------------------------------------------------------------------
-// Name: ContextMenu::InsertSeparators
-// Created: AGE 2006-08-04
-// -----------------------------------------------------------------------------
-void ContextMenu::InsertSeparators()
-{
 
-}
-*/
 // -----------------------------------------------------------------------------
 // Name: ContextMenu::operator QWidget*
 // Created: AGE 2006-08-04
+// Modified: ABR 2012-01-03
 // -----------------------------------------------------------------------------
 ContextMenu::operator QWidget*() const
 {
-    return menu_;
+    return const_cast< ContextMenu* >( this );
 }

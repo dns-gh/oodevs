@@ -3,52 +3,61 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
 
-#include "actions_gui_pch.h"
-#include "ListParameter.h"
-#include "moc_ListParameter.cpp"
-#include "actions/ParameterList.h"
-#include "clients_gui/ValuedListItem.h"
-#include "clients_gui/Tools.h"
-
-using namespace actions::gui;
-
 // -----------------------------------------------------------------------------
 // Name: ListParameter constructor
-// Created: SBO 2007-04-26
+// Created: ABR 2012-01-09
 // -----------------------------------------------------------------------------
-ListParameter::ListParameter( QObject* parent, const kernel::OrderParameter& parameter, kernel::ActionController& controller )
-    : QObject       ( parent )
-    , Param_ABC     ( parameter.GetName().c_str(), parameter.IsOptional() )
-    , parameter_    ( parameter )
-    , controller_   ( controller )
+template< typename ConcreteElement >
+ListParameter< ConcreteElement >::ListParameter( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
+    : ListParameterBase( builder, parameter )
+    , builder_      ( builder )
+    , controller_   ( builder.GetControllers().actions_ )
     , list_         ( 0 )
     , selected_     ( 0 )
     , min_          ( parameter.MinOccurs() )
     , max_          ( parameter.MaxOccurs() )
     , createEnabled_( true )
+    , count_        ( 0 )
 {
-    // NOTHING
+    CreatePotential();
 }
 
 // -----------------------------------------------------------------------------
 // Name: ListParameter destructor
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-ListParameter::~ListParameter()
+template< typename ConcreteElement >
+ListParameter< ConcreteElement >::~ListParameter()
 {
+    if( potential_ )
+        potential_->RemoveFromController();
+    delete potential_;
     Clear();
     delete list_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ListParameter::CreatePotential
+// Created: ABR 2011-12-30
+// -----------------------------------------------------------------------------
+template< typename ConcreteElement >
+void ListParameter< ConcreteElement >::CreatePotential()
+{
+    potential_ = CreateElement();
+    if( potential_ )
+        potential_->RegisterIn( controller_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ListParameter::InternalCheckValidity
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-bool ListParameter::InternalCheckValidity() const
+template< typename ConcreteElement >
+bool ListParameter< ConcreteElement >::InternalCheckValidity() const
 {
     if( !list_ )
         return false;
@@ -65,7 +74,8 @@ bool ListParameter::InternalCheckValidity() const
 // Name: ListParameter::BuildInterface
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-QWidget* ListParameter::BuildInterface( QWidget* parent )
+template< typename ConcreteElement >
+QWidget* ListParameter< ConcreteElement >::BuildInterface( QWidget* parent )
 {
     Param_ABC::BuildInterface( parent );
     QVBoxLayout* layout = new QVBoxLayout( group_ );
@@ -86,9 +96,10 @@ QWidget* ListParameter::BuildInterface( QWidget* parent )
 // Name: ListParameter::OnRequestPopup
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-void ListParameter::OnRequestPopup( Q3ListViewItem* item, const QPoint& pos )
+template< typename ConcreteElement >
+void ListParameter< ConcreteElement >::OnRequestPopup( Q3ListViewItem* item, const QPoint& pos )
 {
-    Q3PopupMenu* menu = new Q3PopupMenu( list_ );
+    kernel::ContextMenu* menu = new kernel::ContextMenu( list_ );
     if( createEnabled_ )
         menu->insertItem( tools::translate( "ListParameter", "Add" ), this, SLOT( OnCreate() ) );
     if( item )
@@ -101,7 +112,8 @@ void ListParameter::OnRequestPopup( Q3ListViewItem* item, const QPoint& pos )
 // Name: ListParameter::EnableCreation
 // Created: SBO 2007-05-02
 // -----------------------------------------------------------------------------
-void ListParameter::EnableCreation( bool enabled )
+template< typename ConcreteElement >
+void ListParameter< ConcreteElement >::EnableCreation( bool enabled )
 {
     createEnabled_ = enabled;
 }
@@ -110,31 +122,41 @@ void ListParameter::EnableCreation( bool enabled )
 // Name: ListParameter::OnCreate
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-void ListParameter::OnCreate()
+template< typename ConcreteElement >
+void ListParameter< ConcreteElement >::OnCreate()
 {
     if( ! list_ || ( list_->childCount() && ! CheckValidity() ) )
         return;
     Param_ABC* param = CreateElement();
     if( param )
-    {
-        param->SetOptional( false );
-        Q3VBox* widget = new Q3VBox( list_->parentWidget() );
-        widgets_[param] = widget;
-        param->BuildInterface( widget );
-        ::gui::ValuedListItem* item = new ::gui::ValuedListItem( list_, list_->lastItem() );
-        item->SetValue( param );
-        item->setText( 0, param->GetName() );
-        list_->setSelected( item, true );
-        if( group_ && IsOptional() )
-            group_->setChecked( true );
-    }
+        AddElement( *param );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ListParameter::AddElement
+// Created: ABR 2011-12-28
+// -----------------------------------------------------------------------------
+template< typename ConcreteElement >
+void ListParameter< ConcreteElement >::AddElement( Param_ABC& param )
+{
+    param.SetOptional( false );
+    Q3VBox* widget = new Q3VBox( list_->parentWidget() );
+    widgets_[ &param ] = widget;
+    param.BuildInterface( widget );
+    ::gui::ValuedListItem* item = new ::gui::ValuedListItem( list_, list_->lastItem() );
+    item->SetValue( &param );
+    item->setText( 0, param.GetName() );
+    list_->setSelected( item, true );
+    if( group_ && IsOptional() )
+        group_->setChecked( true );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ListParameter::OnDeleteSelectedItem
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-void ListParameter::OnDeleteSelectedItem()
+template< typename ConcreteElement >
+void ListParameter< ConcreteElement >::OnDeleteSelectedItem()
 {
     if( list_ )
     {
@@ -148,7 +170,8 @@ void ListParameter::OnDeleteSelectedItem()
 // Name: ListParameter::OnClear
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-void ListParameter::OnClear()
+template< typename ConcreteElement >
+void ListParameter< ConcreteElement >::OnClear()
 {
     Clear();
     if( group_ && IsOptional() )
@@ -159,7 +182,8 @@ void ListParameter::OnClear()
 // Name: ListParameter::OnSelectionChanged
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-void ListParameter::OnSelectionChanged( Q3ListViewItem* item )
+template< typename ConcreteElement >
+void ListParameter< ConcreteElement >::OnSelectionChanged( Q3ListViewItem* item )
 {
     if( selected_ == item )
         return;
@@ -180,11 +204,13 @@ void ListParameter::OnSelectionChanged( Q3ListViewItem* item )
         }
     }
     if( item )
+    {
         if( Param_ABC* param = static_cast< ::gui::ValuedListItem* >( item )->GetValue< Param_ABC >() )
         {
             param->RegisterIn( controller_ );
             widgets_[param]->show();
         }
+    }
     selected_ = item;
 }
 
@@ -192,7 +218,8 @@ void ListParameter::OnSelectionChanged( Q3ListViewItem* item )
 // Name: ListParameter::DeleteItem
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-void ListParameter::DeleteItem( Q3ListViewItem* item )
+template< typename ConcreteElement >
+void ListParameter< ConcreteElement >::DeleteItem( Q3ListViewItem* item )
 {
     if( item == selected_ )
     {
@@ -213,7 +240,8 @@ void ListParameter::DeleteItem( Q3ListViewItem* item )
 // Name: ListParameter::DeleteElement
 // Created: SBO 2007-05-02
 // -----------------------------------------------------------------------------
-void ListParameter::DeleteElement( Param_ABC& param )
+template< typename ConcreteElement >
+void ListParameter< ConcreteElement >::DeleteElement( Param_ABC& param )
 {
     widgets_.erase( &param );
     delete &param;
@@ -223,7 +251,8 @@ void ListParameter::DeleteElement( Param_ABC& param )
 // Name: ListParameter::Clear
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-void ListParameter::Clear()
+template< typename ConcreteElement >
+void ListParameter< ConcreteElement >::Clear()
 {
     if( list_ )
         while( list_->childCount() )
@@ -231,26 +260,11 @@ void ListParameter::Clear()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ListParameter::Draw
-// Created: SBO 2007-04-26
-// -----------------------------------------------------------------------------
-void ListParameter::Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
-{
-    if( !list_ )
-        return;
-    Q3ListViewItemIterator it( list_ );
-    for( unsigned int i = 0; it.current(); ++it, ++i )
-    {
-        ::gui::ValuedListItem* item = static_cast< ::gui::ValuedListItem* >( it.current() );
-        item->GetValue< Param_ABC >()->Draw( point, viewport, tools );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: ListParameter::Count
 // Created: SBO 2007-04-26
 // -----------------------------------------------------------------------------
-unsigned int ListParameter::Count() const
+template< typename ConcreteElement >
+unsigned int ListParameter< ConcreteElement >::Count() const
 {
     return list_->childCount();
 }
@@ -259,7 +273,8 @@ unsigned int ListParameter::Count() const
 // Name: ListParameter::CommitChildrenTo
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------
-bool ListParameter::CommitChildrenTo( actions::ParameterContainer_ABC& parent ) const
+template< typename ConcreteElement >
+bool ListParameter< ConcreteElement >::CommitChildrenTo( actions::ParameterContainer_ABC& parent ) const
 {
     bool result = false;
     if( !list_ || !IsChecked() )
@@ -278,7 +293,8 @@ bool ListParameter::CommitChildrenTo( actions::ParameterContainer_ABC& parent ) 
 // Name: ListParameter::Select
 // Created: SBO 2007-05-02
 // -----------------------------------------------------------------------------
-void ListParameter::Select( const Param_ABC& param )
+template< typename ConcreteElement >
+void ListParameter< ConcreteElement >::Select( const Param_ABC& param )
 {
     ::gui::ValuedListItem* item = ::gui::FindItem( &param, list_->firstChild() );
     if( item )
@@ -289,7 +305,8 @@ void ListParameter::Select( const Param_ABC& param )
 // Name: ListParameter::Invalid
 // Created: SBO 2007-04-27
 // -----------------------------------------------------------------------------
-bool ListParameter::Invalid()
+template< typename ConcreteElement >
+bool ListParameter< ConcreteElement >::Invalid()
 {
     if( list_ )
         list_->header()->setPaletteForegroundColor( Qt::red );
@@ -301,32 +318,122 @@ bool ListParameter::Invalid()
 // Name: ListParameter::TurnHeaderBlack
 // Created: SBO 2007-04-27
 // -----------------------------------------------------------------------------
-void ListParameter::TurnHeaderBlack()
+template< typename ConcreteElement >
+void ListParameter< ConcreteElement >::TurnHeaderBlack()
 {
     if( list_ )
         list_->header()->setPaletteForegroundColor( Qt::black );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ListParameter::SetLabel
+// Name: ListParameter::SetName
 // Created: ABR 2011-01-21
 // -----------------------------------------------------------------------------
-void ListParameter::SetLabel( const QString& label )
+template< typename ConcreteElement >
+void ListParameter< ConcreteElement >::SetName( const QString& name )
 {
     if( list_ )
     {
         assert( list_->columns() == 1 );
-        list_->setColumnText( 0, label );
+        list_->setColumnText( 0, name );
     }
+    ListParameterBase::SetName( name );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ListParameter::CommitTo
 // Created: ABR 2011-11-30
 // -----------------------------------------------------------------------------
-void ListParameter::CommitTo( actions::ParameterContainer_ABC& action ) const
+template< typename ConcreteElement >
+void ListParameter< ConcreteElement >::CommitTo( actions::ParameterContainer_ABC& action ) const
 {
     std::auto_ptr< actions::Parameter_ABC > param( new actions::parameters::ParameterList( parameter_ ) );
     param->Set( CommitChildrenTo( *param ) );
     action.AddParameter( *param.release() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ListParameter::Draw
+// Created: SBO 2007-04-26
+// -----------------------------------------------------------------------------
+template< typename ConcreteElement >
+void ListParameter< ConcreteElement >::Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
+{
+    if( !list_ )
+        return;
+    Q3ListViewItemIterator it( list_ );
+    for( unsigned int i = 0; it.current(); ++it, ++i )
+    {
+        ::gui::ValuedListItem* item = static_cast< ::gui::ValuedListItem* >( it.current() );
+        item->GetValue< Param_ABC >()->Draw( point, viewport, tools );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ListParameter::CreateElement
+// Created: MMC 2011-12-19
+// -----------------------------------------------------------------------------
+template< typename ConcreteElement >
+Param_ABC* ListParameter< ConcreteElement >::CreateElement() 
+{
+    kernel::OrderParameter param = parameter_;
+    param.SetName( tools::translate( "ListParameter", "%1 (item %2)" ).arg( parameter_.GetName().c_str() ).arg( ++count_ ).toStdString() );
+    param.SetOptional( false );
+    param.SetMinMaxOccurs( 1, 1 );
+    Param_ABC& parameter = builder_.BuildOne( param, false );
+    parameter.SetParentList( this );
+    return &parameter;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ListParameter::IsSelected
+// Created: ABR 2011-12-23
+// -----------------------------------------------------------------------------
+template< typename ConcreteElement >
+bool ListParameter< ConcreteElement >::IsSelected( Param_ABC* parameter )
+{
+    if( selected_ )
+    {
+        if( Param_ABC* selected = static_cast< ::gui::ValuedListItem* >( selected_ )->GetValue< Param_ABC >() )
+        {
+            return parameter == selected;
+        }
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ListParameter::IsPotential
+// Created: ABR 2011-12-28
+// -----------------------------------------------------------------------------
+template< typename ConcreteElement >
+bool ListParameter< ConcreteElement >::IsPotential( Param_ABC* param )
+{
+    return param == potential_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ListParameter::OnMenuClick
+// Created: ABR 2011-12-28
+// -----------------------------------------------------------------------------
+template< typename ConcreteElement >
+void ListParameter< ConcreteElement >::OnMenuClick()
+{
+    assert( potential_ );
+    Param_ABC* newParam = potential_;
+    newParam->RemoveFromController();
+    AddElement( *newParam );
+    CreatePotential();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ListParameter::CreateInternalMenu
+// Created: ABR 2012-01-09
+// -----------------------------------------------------------------------------
+template< typename ConcreteElement >
+void ListParameter< ConcreteElement >::CreateInternalMenu( kernel::ContextMenu& mainMenu )
+{
+    kernel::ContextMenu* menu = new kernel::ContextMenu( &mainMenu );
+    menu->setTitle( GetMenuName() );
+    internalMenu_ = menu;
 }

@@ -30,21 +30,13 @@ class ParamCrowd : public EntityParameter< kernel::Population_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamCrowd( QObject* parent, const kernel::OrderParameter& parameter, kernel::Controller& controller );
-             ParamCrowd( QObject* parent, const kernel::OrderParameter& parameter, const kernel::Population_ABC& entity, kernel::Controller& controller );
+             ParamCrowd(  const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter );
     virtual ~ParamCrowd();
     //@}
 
     //! @name Operations
     //@{
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
-    void SetName( const QString& name );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    kernel::OrderParameter parameter_;
     //@}
 };
 

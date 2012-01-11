@@ -113,6 +113,7 @@ void GlSelector::Clean()
         proxy_.Reset3d();
         delete widget3d_;
         widget3d_ = 0;
+        proxy_.ChangeTo( widget3d_ );
     }
     if( widget2d_ )
     {
@@ -121,6 +122,7 @@ void GlSelector::Clean()
         emit Widget2dChanged( 0 );
         delete widget2d_;
         widget2d_ = 0;
+        proxy_.ChangeTo( widget2d_ );
     }
 }
 

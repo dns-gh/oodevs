@@ -18,15 +18,14 @@ using namespace actions::gui;
 
 // -----------------------------------------------------------------------------
 // Name: ParamPopulationKnowledge constructor
-// Created: AGE 2006-03-14
+// Created: ABR 2012-01-04
 // -----------------------------------------------------------------------------
-ParamPopulationKnowledge::ParamPopulationKnowledge( QObject* parent, const kernel::OrderParameter& parameter, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent, kernel::Controller& controller )
-    : EntityParameter< kernel::PopulationKnowledge_ABC >( parent, parameter, controller )
-    , parameter_( parameter )
-    , converter_( converter )
-    , agent_( agent )
+ParamPopulationKnowledge::ParamPopulationKnowledge( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
+    : EntityParameter< kernel::PopulationKnowledge_ABC >( builder, parameter )
+    , converter_( builder.GetAgentKnowledgeConverter() )
+    , agent_( builder.GetCurrentEntity() )
 {
-    // NOTHING
+    assert( converter_ != 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,7 +43,7 @@ ParamPopulationKnowledge::~ParamPopulationKnowledge()
 // -----------------------------------------------------------------------------
 void ParamPopulationKnowledge::NotifyContextMenu( const kernel::Population_ABC& entity, kernel::ContextMenu& menu )
 {
-    const kernel::PopulationKnowledge_ABC* knowledge = converter_.Find( entity, agent_ );
+    const kernel::PopulationKnowledge_ABC* knowledge = converter_->Find( entity, agent_ );
     if( knowledge )
         EntityParameter< kernel::PopulationKnowledge_ABC >::NotifyContextMenu( *knowledge, menu );
 }

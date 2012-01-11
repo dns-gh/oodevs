@@ -11,6 +11,7 @@
 #include "UnitStateTableResource.h"
 #include "moc_UnitStateTableResource.cpp"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/ObjectTypes.h"
@@ -38,7 +39,7 @@ namespace
     // Name: SortMenu
     // Created: ABR 2011-03-01
     // -----------------------------------------------------------------------------
-    void SortMenu( Q3PopupMenu& menu )
+    void SortMenu( kernel::ContextMenu& menu )
     {
         T_MenuItemVector vItems;
         while( menu.count() > 0 )
@@ -83,9 +84,9 @@ void UnitStateTableResource::contextMenuEvent( QContextMenuEvent* e )
 {
     if( IsReadOnly() )
         return;
-    Q3PopupMenu menu( this );
-    Q3PopupMenu targetMenu( &menu );
-    std::map< std::string, Q3PopupMenu* > categoryMap;
+    kernel::ContextMenu menu( this );
+    kernel::ContextMenu targetMenu( &menu );
+    std::map< std::string, kernel::ContextMenu* > categoryMap;
     tools::Iterator< const kernel::DotationType& > dotationIterator = staticModel_.objectTypes_.kernel::Resolver2< kernel::DotationType >::CreateIterator();
 
     while( dotationIterator.HasMoreElements() )
@@ -94,10 +95,10 @@ void UnitStateTableResource::contextMenuEvent( QContextMenuEvent* e )
         if( IsDotationAlreadyPresent( dotation.GetName().c_str() ) )
             continue;
         if( categoryMap.find( dotation.GetCategoryDisplay() ) == categoryMap.end() )
-            categoryMap[ dotation.GetCategoryDisplay() ] = new Q3PopupMenu( &targetMenu );
+            categoryMap[ dotation.GetCategoryDisplay() ] = new kernel::ContextMenu( &targetMenu );
         categoryMap[ dotation.GetCategoryDisplay() ]->insertItem( dotation.GetName().c_str(), dotation.GetId() );
     }
-    for( std::map< std::string, Q3PopupMenu* >::iterator it = categoryMap.begin(); it != categoryMap.end(); ++it )
+    for( std::map< std::string, kernel::ContextMenu* >::iterator it = categoryMap.begin(); it != categoryMap.end(); ++it )
     {
         SortMenu( *it->second );
         targetMenu.insertItem( it->first.c_str(), it->second );

@@ -37,7 +37,7 @@ class ParamPopulationKnowledge : public EntityParameter< kernel::PopulationKnowl
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamPopulationKnowledge( QObject* parent, const kernel::OrderParameter& parameter, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent, kernel::Controller& controller );
+             ParamPopulationKnowledge( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter );
     virtual ~ParamPopulationKnowledge();
     //@}
 
@@ -47,12 +47,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ParamPopulationKnowledge( const ParamPopulationKnowledge& );            //!< Copy constructor
-    ParamPopulationKnowledge& operator=( const ParamPopulationKnowledge& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyContextMenu( const kernel::Population_ABC& entity, kernel::ContextMenu& menu );
@@ -61,8 +55,7 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::OrderParameter parameter_;
-    kernel::AgentKnowledgeConverter_ABC& converter_;
+    kernel::AgentKnowledgeConverter_ABC* converter_;
     const kernel::Entity_ABC& agent_;
     //@}
 };

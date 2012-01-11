@@ -665,7 +665,7 @@ unsigned int Model::TaskerToId( const sword::Tasker& tasker ) const
 // -----------------------------------------------------------------------------
 const kernel::ExtensionTypes& Model::GetExtensionTypes() const
 {
-    return staticModel_.extensionTypes_;
+    return staticModel_.extensions_;
 }
 
 // -----------------------------------------------------------------------------

@@ -34,7 +34,7 @@ namespace
     template< typename T >
     struct CompositeMenu
     {
-        CompositeMenu( Q3PopupMenu* menu, QToolBar* toolBar, const QString& label, const QIcon& icons, kernel::Options& options, const std::string& option )
+        CompositeMenu( kernel::ContextMenu* menu, QToolBar* toolBar, const QString& label, const QIcon& icons, kernel::Options& options, const std::string& option )
             : menu_( new OptionMenu< T >( menu, options, option ) )
         {
             {
@@ -84,7 +84,7 @@ namespace
             menu.OnSelected( index );
     }
 
-    void AddSubMenu3( QToolBar* toolBar, Q3PopupMenu* parent, const QString& label, const QIcon& iconSet, kernel::Options& options, const std::string& option )
+    void AddSubMenu3( QToolBar* toolBar, kernel::ContextMenu* parent, const QString& label, const QIcon& iconSet, kernel::Options& options, const std::string& option )
     {
         {
             QToolButton* button = new QToolButton( toolBar );
@@ -104,7 +104,7 @@ namespace
         }
     }
 
-    void AddSubMenu4( QToolBar* toolBar, Q3PopupMenu* parent, const QString& label, const QIcon& iconSet, kernel::Options& options, const std::string& option, kernel::FourStateOption state = kernel::FourStateOption::Selected() )
+    void AddSubMenu4( QToolBar* toolBar, kernel::ContextMenu* parent, const QString& label, const QIcon& iconSet, kernel::Options& options, const std::string& option, kernel::FourStateOption state = kernel::FourStateOption::Selected() )
     {
         {
             QToolButton* button = new QToolButton( toolBar );
@@ -139,7 +139,7 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     , controllers_( controllers )
     , profileDialog_( profileDialog )
 {
-    Q3PopupMenu* menu = new Q3PopupMenu( this );
+    kernel::ContextMenu* menu = new kernel::ContextMenu( this );
     addMenu( menu );
     new ConnectionMenu( menu, controllers, network, logger );
 
@@ -147,9 +147,9 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     menu->insertItem( tools::translate( "Menu", "&Quit" ), pParent, SLOT( close() ), Qt::CTRL + Qt::Key_Q );
     insertItem( tools::translate( "Menu", "&File" ), menu );
 
-    menu = new Q3PopupMenu( this );
+    menu = new kernel::ContextMenu( this );
     addMenu( menu );
-    Q3PopupMenu* subMenu = new Q3PopupMenu( menu );
+    kernel::ContextMenu* subMenu = new kernel::ContextMenu( menu );
     QToolBar* toolBar = new QToolBar( pParent, "units toolbar" );
     pParent->addToolBar( toolBar );
     toolBar->setLabel( tools::translate( "Menu", "Units toolbar" ) );
@@ -170,7 +170,7 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     AddSubMenu4( toolBar, subMenu, tools::translate( "Menu", "Decisional State" ), MakePixmap( "decisional_state" ), controllers.options_, "DecisionalState" );
     menu->insertItem( tools::translate( "Menu", "Units..." ), subMenu );
 
-    subMenu = new Q3PopupMenu( menu );
+    subMenu = new kernel::ContextMenu( menu );
     toolBar = new QToolBar( pParent, "logistics toolbar" );
     pParent->addToolBar( toolBar );
     toolBar->setLabel( tools::translate( "Menu", "Logistics toolbar" ) );
@@ -186,7 +186,7 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     }
     menu->insertItem( tools::translate( "Menu", "Logistic..." ), subMenu );
 
-    subMenu = new Q3PopupMenu( menu );
+    subMenu = new kernel::ContextMenu( menu );
     toolBar = new QToolBar( pParent, "terrain toolbar" );
     pParent->addToolBar( toolBar );
     toolBar->setLabel( tools::translate( "Menu", "Terrain toolbar" ) );
@@ -242,7 +242,7 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     menu->insertItem( tools::translate( "Menu", "&Preferences..." ), &prefDialog, SLOT( exec() ), Qt::CTRL + Qt::Key_P );
     insertItem( tools::translate( "Menu", "&Display" ), menu );
 
-    menu = new Q3PopupMenu( this );
+    menu = new kernel::ContextMenu( this );
     addMenu( menu );
     menu->insertItem( MAKE_ICON( profile ), tools::translate( "Menu", "Profiles..." ), &profileDialog_, SLOT( exec() ) );
     profileMenu_ = insertItem( tools::translate( "Menu", "Profi&les" ), menu );
@@ -256,7 +256,7 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     addMenu( pMenu );
     insertItem( tools::translate( "Menu", "&Windows" ), pMenu );
 
-    menu = new Q3PopupMenu( this );
+    menu = new kernel::ContextMenu( this );
     addMenu( menu );
     menu->insertItem( tools::translate( "Menu", "Help" ), &help, SLOT( ShowHelp() ), Qt::Key_F1 );
     menu->insertSeparator();

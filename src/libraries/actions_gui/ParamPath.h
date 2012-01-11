@@ -10,32 +10,23 @@
 #ifndef __ParamPath_h_
 #define __ParamPath_h_
 
-#include "Param_ABC.h"
-#include "clients_kernel/ContextMenuObserver_ABC.h"
-#include "clients_kernel/OrderParameter.h"
-#include "clients_gui/ShapeHandler_ABC.h"
+#include "ParamLocation_ABC.h"
 
 namespace kernel
 {
-    class CoordinateConverter_ABC;
     class Entity_ABC;
-    class Location_ABC;
-    class Positions;
-    struct Nothing;
-}
-
-namespace gui
-{
-    class ParametersLayer;
-    class RichLabel;
 }
 
 namespace actions
 {
-    class Parameter_ABC;
+    namespace parameters
+    {
+        class Path;
+    }
 
     namespace gui
     {
+        class InterfaceBuilder_ABC;
 
 // =============================================================================
 /** @class  ParamPath
@@ -43,50 +34,25 @@ namespace actions
 */
 // Created: APE 2004-03-25
 // =============================================================================
-class ParamPath : public QObject
-                , public Param_ABC
-                , public kernel::ContextMenuObserver_ABC< kernel::Nothing > // $$$$ AGE 2007-07-11: geometry::Point2d
-                , private ::gui::ShapeHandler_ABC
+class ParamPath : public ParamLocation_ABC< actions::parameters::Path >
 {
-    Q_OBJECT;
-
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamPath( QObject* parent, const kernel::OrderParameter& parameter, ::gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, const kernel::Entity_ABC& agent );
+             ParamPath( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter );
     virtual ~ParamPath();
     //@}
 
-    //! @name Operations
+protected:
+    //! @name Param_ABC
     //@{
-    virtual QWidget* BuildInterface( QWidget* parent );
-    virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& extent, const kernel::GlTools_ABC& tools ) const;
-    virtual void NotifyContextMenu( const kernel::Nothing&, kernel::ContextMenu& );
-    virtual void Handle( kernel::Location_ABC& location );
-    virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
-    //@}
-
-private slots:
-    //! @name Slots
-    //@{
-    void StartPath();
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    virtual bool InternalCheckValidity() const;
+    virtual void OnMenuClick();
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::OrderParameter parameter_;
-    const kernel::CoordinateConverter_ABC& converter_;
-    ::gui::ParametersLayer& layer_;
     const kernel::Entity_ABC& entity_;
-    QLabel*               pPosLabel_;
-    std::auto_ptr< kernel::Location_ABC > location_;
     //@}
 };
 

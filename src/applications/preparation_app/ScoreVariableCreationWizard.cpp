@@ -13,12 +13,7 @@
 #include "ParamStringEnumeration.h"
 #include "actions/Parameter_ABC.h"
 #include "actions/ParameterContainer_ABC.h"
-#include "actions_gui/ParamAgent.h"
-#include "actions_gui/ParamAgentList.h"
-#include "actions_gui/ParamDotationTypeList.h"
-#include "actions_gui/ParamEquipmentList.h"
 #include "actions_gui/ParamLocation.h"
-#include "actions_gui/ParamUrbanBlockList.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/OrderParameter.h"
@@ -34,14 +29,15 @@ using namespace kernel;
 // Name: ScoreVariableCreationWizard constructor
 // Created: SBO 2009-04-21
 // -----------------------------------------------------------------------------
-ScoreVariableCreationWizard::ScoreVariableCreationWizard( QWidget* parent, Controllers& controllers, gui::ParametersLayer& layer,
-                                                          const StaticModel& staticModel, const GlTools_ABC& tools )
+ScoreVariableCreationWizard::ScoreVariableCreationWizard( QWidget* parent, Controllers& controllers, const GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder )
     : QDialog( parent )
     , controllers_( controllers )
-    , layer_      ( layer )
-    , staticModel_( staticModel )
     , tools_      ( tools )
+    , builder_    ( builder )
 {
+    builder_.SetParamInterface( *this );
+    builder_.SetParentObject( this );
+
     setCaption( tr( "Create variable" ) );
     setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
     Q3GridLayout* grid = new Q3GridLayout( this, 3, 2, 0, 5 );
@@ -181,20 +177,7 @@ void ScoreVariableCreationWizard::OnChangeName()
     }
 
     if( parameter_ )
-    {
-        if( type_->GetValue() == "unit" )
-        {
-            static_cast< actions::gui::ParamAgent* >( parameter_.get() )->SetName( variableName );
-        }
-        else if( type_->GetValue() == "unit list" )
-        {
-            static_cast< actions::gui::ParamAgentList* >( parameter_.get() )->SetName( variableName );
-        }
-        else if( type_->GetValue() == "zone" )
-        {
-            static_cast< actions::gui::ParamLocation* >( parameter_.get() )->SetName( variableName );
-        }
-    }
+        parameter_->SetName( variableName );
 }
 
 // -----------------------------------------------------------------------------
@@ -324,55 +307,65 @@ namespace
 // -----------------------------------------------------------------------------
 boost::shared_ptr< actions::gui::Param_ABC > ScoreVariableCreationWizard::CreateParameter( const std::string& type, const QString& name )
 {
+    std::string compatibleType = "";
+    unsigned int nbOccur = std::numeric_limits< unsigned int >::max();
+
+    if( type == "unit list" )
+        compatibleType = "agent";
+    else if( type == "urban block list" )
+        compatibleType = "urbanknowledge";
+    else
+    {
+        nbOccur = 1;
+        if( type == "unit" )
+            compatibleType = "agent";
+        if( type == "dotation list" )
+            compatibleType = "allresourcetype";
+        else if( type == "equipment list" )
+            compatibleType = "maintenancepriorities";
+        else if( type == "zone" )
+            compatibleType = "location";
+    }
+
     const QString variableName = name.isEmpty() ? tr( "Variable value: " ) : name;
     boost::shared_ptr< actions::gui::Param_ABC > result;
-    if( type == "unit list" )
+
+    if( !compatibleType.empty() )
     {
-        const OrderParameter parameter( variableName.ascii(), type.c_str(), false, 1, std::numeric_limits< unsigned int >::max() );
-        result.reset( new actions::gui::ParamAgentList( this, parameter, controllers_.actions_, controllers_.controller_ ) );
+        const OrderParameter parameter( variableName.ascii(), compatibleType, false, 1, nbOccur );
+        actions::gui::Param_ABC* param = &builder_.BuildOne( parameter, false );
+        if( compatibleType == "location" )
+            static_cast< actions::gui::ParamLocation* >( param )->SetShapeFilter( false, false, true, true, false );
+        result.reset( param );
     }
     else
     {
-        const OrderParameter parameter( variableName.ascii(), type.c_str(), false );
-
-        if( type == "unit" )
-            result.reset( new actions::gui::ParamAgent( this, parameter, controllers_.controller_ ) );
-        else if( type == "dotation list" )
-            result.reset( new actions::gui::ParamDotationTypeList( this, parameter, staticModel_.objectTypes_ ) );
-        else if( type == "equipment list" )
-            result.reset( new actions::gui::ParamEquipmentList( this, parameter, staticModel_.objectTypes_ ) );
-        else if( type == "urban block list" )
-            result.reset( new actions::gui::ParamUrbanBlockList( this, parameter, controllers_.actions_, controllers_.controller_ ) );
-        else if( type == "zone" )
-        {
-            std::auto_ptr< actions::gui::ParamLocation > location( new actions::gui::ParamLocation( parameter, layer_, staticModel_.coordinateConverter_ ) );
-            location->SetShapeFilter( false, false, true, true, false );
-            result.reset( location.release() );
-        }
-        else if( type == "force-ratio types" )
-            result.reset( new ParamStringEnumeration( this, tr( "Force ratio types" ), parameter, ForceRatioTypes() ) );
+        // TODO: move ParamStringEnumeration to actions_gui and make it creatable by the builder
+        const OrderParameter parameter( variableName.ascii(), type, false );
+        if( type == "force-ratio types" )
+            result.reset( new ParamStringEnumeration( this, *this, tr( "Force ratio types" ),   parameter, ForceRatioTypes() ) );
         else if( type == "ambulance types" )
-            result.reset( new ParamStringEnumeration( this, tr( "Ambulance types" ), parameter, AmbulanceTypes() ) );
+            result.reset( new ParamStringEnumeration( this, *this, tr( "Ambulance types" ),     parameter, AmbulanceTypes() ) );
         else if( type == "crowd states" )
-            result.reset( new ParamStringEnumeration( this, tr( "Crowd states" ), parameter, CrowdStates() ) );
+            result.reset( new ParamStringEnumeration( this, *this, tr( "Crowd states" ),        parameter, CrowdStates() ) );
         else if( type == "equipment states" )
-            result.reset( new ParamStringEnumeration( this, tr( "Equipment states" ), parameter, EquipmentStates() ) );
+            result.reset( new ParamStringEnumeration( this, *this, tr( "Equipment states" ),    parameter, EquipmentStates() ) );
         else if( type == "fire types" )
-            result.reset( new ParamStringEnumeration( this, tr( "Fire types" ), parameter, FireTypes() ) );
+            result.reset( new ParamStringEnumeration( this, *this, tr( "Fire types" ),          parameter, FireTypes() ) );
         else if( type == "fratricide" )
-            result.reset( new ParamStringEnumeration( this, tr( "Fratricide fires" ), parameter, Fratricide() ) );
+            result.reset( new ParamStringEnumeration( this, *this, tr( "Fratricide fires" ),    parameter, Fratricide() ) );
         else if( type == "human states" )
-            result.reset( new ParamStringEnumeration( this, tr( "Human states" ), parameter, HumanStates() ) );
+            result.reset( new ParamStringEnumeration( this, *this, tr( "Human states" ),        parameter, HumanStates() ) );
         else if( type == "human ranks" )
-            result.reset( new ParamStringEnumeration( this, tr( "Human ranks" ), parameter, HumanRanks() ) );
+            result.reset( new ParamStringEnumeration( this, *this, tr( "Human ranks" ),         parameter, HumanRanks() ) );
         else if( type == "maintenance types" )
-            result.reset( new ParamStringEnumeration( this, tr( "Maintenance types" ), parameter, MaintenanceTypes() ) );
+            result.reset( new ParamStringEnumeration( this, *this, tr( "Maintenance types" ),   parameter, MaintenanceTypes() ) );
         else if( type == "population states" )
-            result.reset( new ParamStringEnumeration( this, tr( "Population states" ), parameter, PopulationStates() ) );
+            result.reset( new ParamStringEnumeration( this, *this, tr( "Population states" ),   parameter, PopulationStates() ) );
         else if( type == "perception levels" )
-            result.reset( new ParamStringEnumeration( this, tr( "Perception levels" ), parameter, PerceptionLevels() ) );
+            result.reset( new ParamStringEnumeration( this, *this, tr( "Perception levels" ),   parameter, PerceptionLevels() ) );
         else if( type == "satisfaction types" )
-            result.reset( new ParamStringEnumeration( this, tr( "Satisfaction types" ), parameter, SatisfactionTypes() ) );
+            result.reset( new ParamStringEnumeration( this, *this, tr( "Satisfaction types" ),  parameter, SatisfactionTypes() ) );
     }
     return result;
 }
@@ -394,4 +387,22 @@ void ScoreVariableCreationWizard::Draw( Viewport_ABC& viewport )
 {
     if( parameter_ && isVisible() )
         parameter_->Draw( geometry::Point2f(), viewport, tools_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScoreVariableCreationWizard::Title
+// Created: ABR 2012-01-11
+// -----------------------------------------------------------------------------
+QString ScoreVariableCreationWizard::Title() const
+{
+    return tr( "Create variable" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScoreVariableCreationWizard::GetIndex
+// Created: ABR 2012-01-11
+// -----------------------------------------------------------------------------
+int ScoreVariableCreationWizard::GetIndex( actions::gui::Param_ABC* /*param*/ ) const
+{
+    return 1;
 }

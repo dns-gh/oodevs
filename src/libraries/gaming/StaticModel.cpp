@@ -9,28 +9,26 @@
 
 #include "gaming_pch.h"
 #include "StaticModel.h"
-#include "reports/ReportFactory.h"
-#include "SurfaceFactory.h"
-#include "clients_kernel/DetectionMap.h"
+
+#include "clients_gui/DrawingTypes.h"
 #include "clients_kernel/ModelLoaded.h"
 #include "clients_kernel/ObjectTypes.h"
-#include "clients_gui/DrawingTypes.h"
-#include "indicators/Primitives.h"
 #include "indicators/GaugeTypes.h"
+#include "indicators/Primitives.h"
+#include "reports/ReportFactory.h"
 #include "tools/ExerciseConfig.h"
-#include "UrbanModel.h"
 
 // -----------------------------------------------------------------------------
 // Name: StaticModel constructor
 // Created: AGE 2006-08-01
 // -----------------------------------------------------------------------------
 StaticModel::StaticModel( kernel::Controllers& controllers, const RcEntityResolver_ABC& rcResolver, const kernel::Time_ABC& simulation )
-    : controllers_  ( controllers )
-    , detection_    ( *new kernel::DetectionMap() )
-    , reportFactory_( *new ReportFactory( rcResolver, objectTypes_, objectTypes_, &simulation ) )
-    , drawings_     ( *new gui::DrawingTypes( controllers_.controller_ ) )
+    : kernel::StaticModel()
+    , controllers_  ( controllers )
     , indicators_   ( *new indicators::Primitives() )
     , gaugeTypes_   ( *new indicators::GaugeTypes() )
+    , drawings_     ( *new gui::DrawingTypes( controllers_.controller_ ) )
+    , reportFactory_( *new ReportFactory( rcResolver, objectTypes_, objectTypes_, &simulation ) )
 {
     // NOTHING
 }
@@ -41,11 +39,10 @@ StaticModel::StaticModel( kernel::Controllers& controllers, const RcEntityResolv
 // -----------------------------------------------------------------------------
 StaticModel::~StaticModel()
 {
+    delete &reportFactory_;
+    delete &drawings_;
     delete &gaugeTypes_;
     delete &indicators_;
-    delete &drawings_;
-    delete &reportFactory_;
-    delete &detection_;
 }
 
 // -----------------------------------------------------------------------------
@@ -55,11 +52,10 @@ StaticModel::~StaticModel()
 void StaticModel::Load( const tools::ExerciseConfig& config )
 {
     kernel::StaticModel::Load( config );
-    detection_.Load( config );
-    reportFactory_.Load( config );
-    drawings_.Load( config );
     indicators_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "IndicatorPrimitives.xml" ) );
     gaugeTypes_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "IndicatorGaugeTemplates.xml" ) );
+    drawings_.Load( config );
+    reportFactory_.Load( config );
     controllers_.controller_.Update( kernel::ModelLoaded( config ) );
 }
 
@@ -69,8 +65,8 @@ void StaticModel::Load( const tools::ExerciseConfig& config )
 // -----------------------------------------------------------------------------
 void StaticModel::Purge()
 {
-    gaugeTypes_.Purge();
     indicators_.Purge();
+    gaugeTypes_.Purge();
     drawings_.Purge();
     reportFactory_.Purge();
     kernel::StaticModel::Purge();

@@ -32,7 +32,7 @@ ReportListView::ReportListView( QWidget* pParent, Controllers& controllers, cons
     , filter_( filter )
     , factory_( factory )
     , selected_( controllers )
-    , menu_( new Q3PopupMenu( this ) )
+    , menu_( new kernel::ContextMenu( this ) )
     , readTimer_( new QTimer( this ) )
 {
     setFrameStyle( Q3Frame::Plain );

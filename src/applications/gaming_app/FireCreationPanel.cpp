@@ -38,10 +38,10 @@ using namespace actions;
 // Name: FireCreationPanel constructor
 // Created: MGD 2010-02-23
 // -----------------------------------------------------------------------------
-FireCreationPanel::FireCreationPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::Controllers& controllers
+FireCreationPanel::FireCreationPanel( QWidget* parent, ::gui::PanelStack_ABC& panel, kernel::Controllers& controllers
                                     , actions::ActionsModel& actionsModel, const kernel::Time_ABC& simulation, const StaticModel& staticModel
-                                    , gui::ParametersLayer& paramLayer, const kernel::GlTools_ABC& tools )
-    : gui::InfoPanel_ABC( parent, panel, tools::translate( "FireCreationPanel", "Strike" ), "FireCreationPanel" )
+                                    , ::gui::ParametersLayer& paramLayer, const kernel::GlTools_ABC& tools )
+    : ::gui::InfoPanel_ABC( parent, panel, tools::translate( "FireCreationPanel", "Strike" ), "FireCreationPanel" )
     , staticModel_( staticModel )
     , controllers_( controllers )
     , actionsModel_( actionsModel )
@@ -63,7 +63,7 @@ FireCreationPanel::FireCreationPanel( QWidget* parent, gui::PanelStack_ABC& pane
     Q3GroupBox* group = new Q3GroupBox( 2, Qt::Horizontal, tools::translate( "FireCreationPanel", "Strike order description" ), box );
     {
         new QLabel( tools::translate( "FireCreationPanel", "Strike type:" ), group );
-        strikeCombo_ = new gui::ValuedComboBox< E_StrikeType >( group );
+        strikeCombo_ = new ::gui::ValuedComboBox< E_StrikeType >( group );
         strikeCombo_->AddItem( tools::translate( "FireCreationPanel", "Strike on unit" ), eStrikeOnUnit);
         strikeCombo_->AddItem( tools::translate( "FireCreationPanel", "Strike on position" ), eStrikeOnPosition);
         connect( strikeCombo_, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged() ) );
@@ -75,7 +75,7 @@ FireCreationPanel::FireCreationPanel( QWidget* parent, gui::PanelStack_ABC& pane
         locationLabel_->setMinimumWidth( 100 );
         locationLabel_->setAlignment( Qt::AlignCenter );
         locationLabel_->setFrameStyle( Q3Frame::Box | Q3Frame::Sunken );
-        locationCreator_ = new gui::LocationCreator( group, tools::translate( "FireCreationPanel", "Strike order: location target" ), paramLayer, *this );
+        locationCreator_ = new ::gui::LocationCreator( group, tools::translate( "FireCreationPanel", "Strike order: location target" ), paramLayer, *this );
         locationCreator_->Allow( true, false, false, false, false );
 
         targetTitle_ = new QLabel( tools::translate( "FireCreationPanel", "Target:" ), group );
@@ -95,7 +95,7 @@ FireCreationPanel::FireCreationPanel( QWidget* parent, gui::PanelStack_ABC& pane
         reporterLabel_->setFrameStyle( Q3Frame::Box | Q3Frame::Sunken );
 
         new QLabel( tools::translate( "FireCreationPanel", "Ammunition:" ), group );
-        ammunitionsBox_ = new gui::ValuedComboBox< int >( group );
+        ammunitionsBox_ = new ::gui::ValuedComboBox< int >( group );
         ammunitionsBox_->setSorting( true );
 
         new QLabel( tools::translate( "FireCreationPanel", "Iteration:" ), group );
@@ -348,7 +348,7 @@ void FireCreationPanel::Draw( kernel::Viewport_ABC& /*viewport*/ )
 {
     if( isVisible() && location_ && location_->IsValid() )
     {
-        gui::ShapeHandler_ABC::Draw( *location_, geometry::Rectangle2f(), tools_ );
+        ::gui::ShapeHandler_ABC::Draw( *location_, geometry::Rectangle2f(), tools_ );
     }
 }
 

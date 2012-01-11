@@ -13,6 +13,14 @@
 #include "tools/ElementObserver_ABC.h"
 #include <boost/noncopyable.hpp>
 
+namespace actions
+{
+    namespace gui
+    {
+        class InterfaceBuilder_ABC;
+    }
+}
+
 namespace kernel
 {
     class Controllers;
@@ -46,7 +54,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AfterAction( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, AfterActionModel& model,
-                          gui::ParametersLayer& layer, const StaticModel& staticModel, IndicatorPlotFactory& plotFactory );
+                          IndicatorPlotFactory& plotFactory, actions::gui::InterfaceBuilder_ABC& interfaceBuilder );
     virtual ~AfterAction();
     //@}
 
@@ -59,7 +67,7 @@ private:
     //! @name Helpers
     //@{
     void CreateAfterActionDock( QMainWindow* window, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, AfterActionModel& model,
-                                gui::ParametersLayer& layer, const StaticModel& staticModel, IndicatorPlotFactory& plotFactory );
+                                IndicatorPlotFactory& plotFactory, actions::gui::InterfaceBuilder_ABC& interfaceBuilder );
     virtual void NotifyUpdated( const Services& services );
     virtual void NotifyCreated( const AfterActionRequest& );
     //@}

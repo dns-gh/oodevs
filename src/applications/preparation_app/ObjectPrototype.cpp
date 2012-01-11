@@ -246,7 +246,7 @@ namespace
 // Name: ObjectPrototype constructor
 // Created: SBO 2006-04-18
 // -----------------------------------------------------------------------------
-ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, const StaticModel& model,
+ObjectPrototype::ObjectPrototype( QWidget* parent, Controllers& controllers, const ::StaticModel& model,
                                   ObjectsModel& objectsModel, const UrbanModel& urbanModel, const Team_ABC& noSideTeam,
                                   ParametersLayer& layer, const tools::GeneralConfig& config )
     : ObjectPrototype_ABC( parent, controllers, model.coordinateConverter_, model.objectTypes_, noSideTeam, layer,

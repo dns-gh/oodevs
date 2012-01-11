@@ -876,8 +876,8 @@ Please check access permissions or write protection.</source>
 <context>
     <name>gui::LocationCreator</name>
     <message>
-        <source>Point</source>
-        <translation>Point</translation>
+        <source>Add drawing as &apos;%1&apos;</source>
+        <translation>Ajouter le dessin en tant que &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Line</source>
@@ -896,8 +896,8 @@ Please check access permissions or write protection.</source>
         <translation>Rectangle</translation>
     </message>
     <message>
-        <source>Add drawing as &apos;%1&apos;</source>
-        <translation>Ajouter le dessin en tant que &apos;%1&apos;</translation>
+        <source>Point</source>
+        <translation>Point</translation>
     </message>
 </context>
 <context>

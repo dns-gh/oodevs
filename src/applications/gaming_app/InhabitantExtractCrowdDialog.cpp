@@ -197,7 +197,7 @@ void InhabitantExtractCrowdDialog::NotifyContextMenu( const kernel::Inhabitant_A
     if( profile_.CanDoMagic( entity ) )
     {
         selected_ = &entity;
-        Q3PopupMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
+        kernel::ContextMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
         subMenu->insertItem( tools::translate( "InhabitantExtractCrowdDialog", "Extract crowd" ), this, SLOT( Show() ) );
     }
 }

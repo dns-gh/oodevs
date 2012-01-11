@@ -76,8 +76,8 @@ private:
 
     //! @name Helpers
     //@{
-    int  AddMagic( const QString& label, const char* slot, Q3PopupMenu* menu );
-    void AddMagicTypeItem( const QString& label, const char* slot, Q3PopupMenu* menu, const kernel::KnowledgeGroupType& type, int id );
+    int  AddMagic( const QString& label, const char* slot, kernel::ContextMenu* menu );
+    void AddMagicTypeItem( const QString& label, const char* slot, kernel::ContextMenu* menu, const kernel::KnowledgeGroupType& type, int id );
     //@}
 
     //! @name Types

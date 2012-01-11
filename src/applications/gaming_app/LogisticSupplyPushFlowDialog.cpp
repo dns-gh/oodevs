@@ -73,7 +73,7 @@ namespace
 // Name: LogisticSupplyPushFlowDialog constructor
 // Created: SBO 2006-07-03
 // -----------------------------------------------------------------------------
-LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::ParametersLayer& layer, const tools::Resolver_ABC< Automat_ABC >& automats, const Profile_ABC& profile )
+LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, ::gui::ParametersLayer& layer, const tools::Resolver_ABC< Automat_ABC >& automats, const Profile_ABC& profile )
     : QDialog( parent, tr( "Push supply flow" ), 0, Qt::WStyle_Customize | Qt::WStyle_Title )
     , controllers_( controllers )
     , actionsModel_( actionsModel )
@@ -221,8 +221,8 @@ LogisticSupplyPushFlowDialog::~LogisticSupplyPushFlowDialog()
 // -----------------------------------------------------------------------------
 void LogisticSupplyPushFlowDialog::OnRecipientContextMenu( Q3ListViewItem* item, const QPoint& point, int /*column*/ )
 {
-    Q3PopupMenu menu( this );
-    Q3PopupMenu subMenu( &menu );
+    kernel::ContextMenu menu( this );
+    kernel::ContextMenu subMenu( &menu );
     menu.insertItem( tr( "Add recipient" ), &subMenu );
 
     QString recipient;
@@ -238,7 +238,7 @@ void LogisticSupplyPushFlowDialog::OnRecipientContextMenu( Q3ListViewItem* item,
     int menuIndex = menu.exec( point );
     if( menuIndex == 1000 && item )
         RemoveRecipient( *item );
-    else if( 0 <= menuIndex && menuIndex < recipientsList.size() )
+    else if( menuIndex >= 0 && menuIndex < recipientsList.size() )
         AddRecipient( recipientsList[ menuIndex ] );
 }
 

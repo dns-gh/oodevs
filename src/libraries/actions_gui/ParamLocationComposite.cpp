@@ -11,64 +11,89 @@
 #include "ParamLocationComposite.h"
 #include "moc_ParamLocationComposite.cpp"
 #include "InterfaceBuilder_ABC.h"
-#include "actions/Parameter_ABC.h"
 #include "actions/Parameter.h"
 #include "actions/Location.h"
-#include <Qt3Support/Q3widgetstack.h>
-
-class QWidget;
+#include "clients_kernel/OrderParameter.h"
+#include "clients_kernel/ContextMenu.h"
+#include "clients_kernel/Controllers.h"
+#include "clients_kernel/StaticModel.h"
+#include "clients_kernel/tools.h"
+#include <QtGui/QStackedWidget.h>
+#include "MissionInterface_ABC.h"
 
 using namespace actions::gui;
 
 namespace
 {
-    class ChoiceVisitor : public kernel::ChoicesVisitor_ABC
+    class ParameterChoiceVisitor : public kernel::ChoicesVisitor_ABC, private boost::noncopyable
     {
     public:
-        ChoiceVisitor( Param_ABC& paramcomposite, const std::string& name, std::vector<Param_ABC*>& parameters, const InterfaceBuilder_ABC& builder )
+        ParameterChoiceVisitor( ParamLocationComposite& paramcomposite )
             : paramcomposite_( paramcomposite )
-            , name_          ( name )
-            , parameters_    ( parameters )
-            , builder_       ( builder )
         {}
         virtual void Visit( const std::string& type )
         {
-            kernel::OrderParameter orderParam( name_, type, paramcomposite_.IsOptional() );
-            Param_ABC* param = &builder_.Build( orderParam, false );
-            parameters_.push_back( param );
-            param->RegisterListener( paramcomposite_ );
+            paramcomposite_.AddElement( type );
         }
     private:
-        ChoiceVisitor( const ChoiceVisitor& );
-        ChoiceVisitor& operator=( const ChoiceVisitor& );
-    private:
-        Param_ABC& paramcomposite_;
-        std::string name_;
-        std::vector<Param_ABC*>& parameters_;
-        const InterfaceBuilder_ABC& builder_;
+        ParamLocationComposite& paramcomposite_;
     };
 }
 
 // -----------------------------------------------------------------------------
 // Name: ParamLocationComposite constructor
-// Created: LDC 2010-08-18
+// Created: ABR 2011-12-29
 // -----------------------------------------------------------------------------
-ParamLocationComposite::ParamLocationComposite( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const InterfaceBuilder_ABC& builder )
-    : Param_ABC( parameter.GetName().c_str(), parameter.IsOptional() )
-    , parameter_( parameter )
-    , converter_( converter )
+ParamLocationComposite::ParamLocationComposite( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
+    : Param_ABC ( builder.GetParentObject(), builder.GetParamInterface(), parameter )
+    , builder_      ( builder )
     , selectedParam_( 0 )
+    , stack_        ( 0 )
 {
-    ChoiceVisitor visitor( *this, GetName().ascii(), params_, builder );
+    ParameterChoiceVisitor visitor( *this );
     parameter.Accept( visitor );
 }
+
 // -----------------------------------------------------------------------------
 // Name: ParamLocationComposite destructor
 // Created: LDC 2010-08-18
 // -----------------------------------------------------------------------------
 ParamLocationComposite::~ParamLocationComposite()
 {
+    Purge();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationComposite::AddElement
+// Created: ABR 2012-01-09
+// -----------------------------------------------------------------------------
+Param_ABC* ParamLocationComposite::AddElement( const std::string& type, const std::string& name /*= ""*/ )
+{
+    kernel::OrderParameter orderParam( name.empty() ? GetName().toStdString() : name, type, IsOptional() );
+    Param_ABC* param = &builder_.BuildOne( orderParam, false );
+    param->SetType( type );
+    params_.push_back( param );
+    param->RegisterListener( *this );
+    return param;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationComposite::Purge
+// Created: ABR 2012-01-09
+// -----------------------------------------------------------------------------
+void ParamLocationComposite::Purge()
+{
     RemoveFromController();
+    for( CIT_Params it = params_.begin(); it != params_.end(); ++it )
+        delete *it;
+    params_.clear();
+    for( std::vector< QWidget* >::const_iterator it = widgets_.begin(); it != widgets_.end(); ++it )
+    {
+        stack_->removeWidget( *it );
+        delete *it;
+    }
+    widgets_.clear();
+    selectedParam_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -79,7 +104,6 @@ void ParamLocationComposite::RemoveFromController()
 {
     for( CIT_Params it = params_.begin(); it != params_.end(); ++it )
         (*it)->RemoveFromController();
-    Param_ABC::RemoveFromController();
 }
 
 // -----------------------------------------------------------------------------
@@ -108,14 +132,24 @@ void ParamLocationComposite::Draw( const geometry::Point2f& point, const kernel:
 // -----------------------------------------------------------------------------
 QWidget* ParamLocationComposite::BuildInterface( QWidget* parent )
 {
-    stack_ = new Q3WidgetStack( parent );
+    stack_ = new QStackedWidget( parent );
+    InternalBuildInterface();
+    return stack_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationComposite::InternalBuildInterface
+// Created: ABR 2012-01-09
+// -----------------------------------------------------------------------------
+void ParamLocationComposite::InternalBuildInterface()
+{
     for( CIT_Params it = params_.begin(); it != params_.end(); ++it )
     {
         QWidget* widget = (*it)->BuildInterface( stack_ );
+        stack_->addWidget( widget );
         connect( static_cast< QGroupBox* >( widget ), SIGNAL( clicked( bool ) ), this, SLOT( OnChecked( bool ) ) );
         widgets_.push_back( widget );
     }
-    return stack_;
 }
 
 // -----------------------------------------------------------------------------
@@ -142,7 +176,7 @@ void ParamLocationComposite::CommitTo( actions::ParameterContainer_ABC& containe
     if( selectedParam_ )
         selectedParam_->CommitTo( container );
     else
-        container.AddParameter( *new actions::parameters::Location( parameter_, converter_ ) );
+        container.AddParameter( *new actions::parameters::Location( parameter_, builder_.GetStaticModel().coordinateConverter_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -152,13 +186,14 @@ void ParamLocationComposite::CommitTo( actions::ParameterContainer_ABC& containe
 void ParamLocationComposite::NotifyChanged( Param_ABC& param )
 {
     selectedParam_ = &param;
+    assert( widgets_.size() == params_.size() );
     std::vector<Param_ABC*>::const_iterator it = params_.begin();
     std::vector<QWidget*>::const_iterator itWidget = widgets_.begin();
     for( ; it != params_.end(); ++it, ++itWidget )
     {
         if( selectedParam_ == *it )
         {
-            stack_->raiseWidget( *itWidget );
+            stack_->setCurrentWidget( *itWidget );
             break;
         }
     }
@@ -187,4 +222,38 @@ void ParamLocationComposite::OnChecked( bool checked )
         static_cast< QGroupBox* >( *it )->setChecked( checked );
         connect( static_cast< QGroupBox* >( *it ), SIGNAL( clicked( bool ) ), this, SLOT( OnChecked( bool ) ) );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationComposite::GetIndex
+// Created: ABR 2011-12-29
+// -----------------------------------------------------------------------------
+int ParamLocationComposite::GetIndex( Param_ABC* param ) const
+{
+    for( int i = 0; i < params_.size(); ++i )
+        if( params_[ i ] == param )
+            return i;
+    return -1;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationComposite::SetParentList
+// Created: ABR 2011-12-29
+// -----------------------------------------------------------------------------
+void ParamLocationComposite::SetParentList( ListParameterBase* parentList )
+{
+    Param_ABC::SetParentList( parentList );
+    for( IT_Params it = params_.begin(); it != params_.end(); ++it )
+        ( *it )->SetParentList( parentList );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocationComposite::CreateInternalMenu
+// Created: ABR 2012-01-09
+// -----------------------------------------------------------------------------
+void ParamLocationComposite::CreateInternalMenu( kernel::ContextMenu& mainMenu )
+{
+    kernel::ContextMenu* menu = new kernel::ContextMenu( &mainMenu );
+    menu->setTitle( GetMenuName() );
+    internalMenu_ = menu;
 }

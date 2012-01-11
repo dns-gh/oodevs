@@ -19,6 +19,7 @@ class FilterDialogs;
 
 namespace kernel
 {
+    class ContextMenu;
     class Controllers;
     class ModelLoaded;
     class ModelUnLoaded;
@@ -74,7 +75,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     std::vector< int >   exerciseItems_;
-    Q3PopupMenu*          fileMenu_;
+    kernel::ContextMenu* fileMenu_;
     int                  saveItem_;
     //@}
 };

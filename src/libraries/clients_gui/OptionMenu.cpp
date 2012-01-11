@@ -18,7 +18,7 @@ using namespace gui;
 // Created: SBO 2006-04-28
 // -----------------------------------------------------------------------------
 OptionMenuBase::OptionMenuBase( QWidget* parent )
-    : Q3PopupMenu( parent )
+    : kernel::ContextMenu( parent )
     , selected_( -1 )
 {
     connect( this, SIGNAL( activated( int ) ), this, SLOT( OnItemSelected( int ) ) );

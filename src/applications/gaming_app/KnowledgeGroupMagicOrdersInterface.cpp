@@ -72,7 +72,7 @@ void KnowledgeGroupMagicOrdersInterface::NotifyContextMenu( const KnowledgeGroup
     if( !profile_.CanDoMagic( entity ) )
         return;
     selectedEntity_ = &entity;
-    Q3PopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
+    kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ), false, 1 );
     const KnowledgeGroup& knowledgeGroup = static_cast< const KnowledgeGroup& >( entity );
 
     if( knowledgeGroup.IsActivated() )
@@ -83,7 +83,7 @@ void KnowledgeGroupMagicOrdersInterface::NotifyContextMenu( const KnowledgeGroup
 
     AddMagic( tr( "Add knowledge" ), SLOT( OnAddKnowledgeInGroup() ), magicMenu  );
 
-    Q3PopupMenu* typeMenu = menu.SubMenu( "Type", tr( "Change Type" ) );
+    kernel::ContextMenu* typeMenu = menu.SubMenu( "Type", tr( "Change Type" ) );
     tools::Iterator< const kernel::KnowledgeGroupType& > it = knowledgeGroupTypes_.CreateIterator();
     for( int id = 0; it.HasMoreElements(); ++id )
     {
@@ -175,7 +175,7 @@ void KnowledgeGroupMagicOrdersInterface::OnCreateSubKnowledgeGroup()
 // Name: KnowledgeGroupMagicOrdersInterface::AddMagic
 // Created: SLG 2009-12-16
 // -----------------------------------------------------------------------------
-int KnowledgeGroupMagicOrdersInterface::AddMagic( const QString& label, const char* slot, Q3PopupMenu* menu )
+int KnowledgeGroupMagicOrdersInterface::AddMagic( const QString& label, const char* slot, kernel::ContextMenu* menu )
 {
     return menu->insertItem( label, this, slot );
 }
@@ -184,7 +184,7 @@ int KnowledgeGroupMagicOrdersInterface::AddMagic( const QString& label, const ch
 // Name: KnowledgeGroupMagicOrdersInterface::AddMagicTypeItem
 // Created: SLG 2009-12-16
 // -----------------------------------------------------------------------------
-void KnowledgeGroupMagicOrdersInterface::AddMagicTypeItem( const QString& label, const char* slot, Q3PopupMenu* menu, const kernel::KnowledgeGroupType& type, int id )
+void KnowledgeGroupMagicOrdersInterface::AddMagicTypeItem( const QString& label, const char* slot, kernel::ContextMenu* menu, const kernel::KnowledgeGroupType& type, int id )
 {
     menu->insertItem( label, this, slot, 0, id );
     items_[ id ] = &type;

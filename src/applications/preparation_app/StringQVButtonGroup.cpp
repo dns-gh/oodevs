@@ -16,7 +16,7 @@
 // Created: HBD 2010-09-16
 // -----------------------------------------------------------------------------
 StringQVButtonGroup::StringQVButtonGroup( const QString& title, QWidget* parent )
-: Q3VButtonGroup( title, parent )
+    : Q3VButtonGroup( title, parent )
 {
     connect( this, SIGNAL( clicked( int ) ), this, SLOT ( OnClicked( int )) );
 }

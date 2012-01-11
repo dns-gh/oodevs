@@ -876,28 +876,28 @@ Please check access permissions or write protection.</source>
 <context>
     <name>gui::LocationCreator</name>
     <message>
-        <source>Point</source>
-        <translation>Point</translation>
+        <source>Add drawing as &apos;%1&apos;</source>
+        <translation>Ajouter le dessin en tant que &apos;%1&apos;</translation>
     </message>
     <message>
         <source>Line</source>
-        <translation>Ligne</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Polygon</source>
-        <translation>Polygone</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Circle</source>
-        <translation>Cercle</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Rectangle</source>
-        <translation>Rectangle</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Add drawing as &apos;%1&apos;</source>
-        <translation>Ajouter le dessin en tant que &apos;%1&apos;</translation>
+        <source>Point</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

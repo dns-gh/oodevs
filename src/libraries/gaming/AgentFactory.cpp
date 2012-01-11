@@ -139,7 +139,7 @@ kernel::Automat_ABC* AgentFactory::Create( const sword::AutomatCreation& message
     result->Attach( *new DebugPoints( static_.coordinateConverter_ ) );
     result->Attach( *new ConvexHulls( *result ) );
     result->Attach( *new DecisionalStates() );
-    result->Attach< kernel::DictionaryExtensions >( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensionTypes_ ) );
+    result->Attach< kernel::DictionaryExtensions >( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     if( message.has_color() )
         result->Attach< kernel::Color_ABC >( *new Color( message.color() ) );
     result->Update( message );
@@ -190,7 +190,7 @@ kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
     result->Attach( *new Affinities( *result,controllers_.controller_, model_.teams_, dico ) );
     if( message.has_color() )
         result->Attach< kernel::Color_ABC >( *new Color( message.color() ) );
-    result->Attach< kernel::DictionaryExtensions >( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensionTypes_ ) );
+    result->Attach< kernel::DictionaryExtensions >( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     AttachExtensions( *result );
 
     result->Update( message );
@@ -212,7 +212,7 @@ kernel::Population_ABC* AgentFactory::Create( const sword::CrowdCreation& messag
     result->Attach( *new PopulationDecisions( controllers_.controller_, *result ) );
     result->Attach( *new DecisionalStates() );
     result->Attach( *new Affinities( *result, controllers_.controller_, model_.teams_, dico ) );
-    result->Attach< kernel::DictionaryExtensions >( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensionTypes_ ) );
+    result->Attach< kernel::DictionaryExtensions >( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     AttachExtensions( *result );
     result->Polish();
     return result;
@@ -231,7 +231,7 @@ kernel::Inhabitant_ABC* AgentFactory::Create( const sword::PopulationCreation& m
     result->Attach< kernel::TacticalHierarchies >( *new InhabitantHierarchies( *result, model_.teams_.GetTeam( message.party().id() ) ) );
     result->Attach( *new Affinities( *result, controllers_.controller_, model_.teams_, dico ) );
     result->Attach< kernel::LivingArea_ABC >( *new LivingArea( message, result->GetId(), controllers_.controller_, model_.urbanObjects_ ) );
-    result->Attach< kernel::DictionaryExtensions >( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensionTypes_ ) );
+    result->Attach< kernel::DictionaryExtensions >( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     result->Polish();
     return result;
 }

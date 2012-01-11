@@ -9,12 +9,11 @@
 
 #include "gaming_app_pch.h"
 #include "PopulationMissionInterface.h"
-#include "MissionInterfaceBuilder.h"
+#include "actions_gui/InterfaceBuilder_ABC.h"
 #include "actions/ActionsModel.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/MissionType.h"
 
-using namespace sword;
 using namespace kernel;
 using namespace actions;
 
@@ -22,13 +21,13 @@ using namespace actions;
 // Name: PopulationMissionInterface constructor
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-PopulationMissionInterface::PopulationMissionInterface( QWidget* parent, Entity_ABC& entity, const MissionType& mission, ActionController& controller
-                                                      , MissionInterfaceBuilder& builder, ActionsModel& model )
+PopulationMissionInterface::PopulationMissionInterface( QWidget* parent, Entity_ABC& entity, const MissionType& mission, ActionController& controller,
+                                                        actions::gui::InterfaceBuilder_ABC& builder, ActionsModel& model )
     : actions::gui::MissionInterface_ABC( parent, mission, entity, controller )
     , model_( model )
     , mission_( mission )
 {
-    builder.Build( *this, entity, mission );
+    builder.BuildAll( *this, entity, mission );
 }
 
 // -----------------------------------------------------------------------------

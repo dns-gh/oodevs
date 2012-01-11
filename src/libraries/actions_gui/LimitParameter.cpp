@@ -9,14 +9,16 @@
 
 #include "actions_gui_pch.h"
 #include "LimitParameter.h"
-#include "moc_LimitParameter.cpp"
+#include "InterfaceBuilder_ABC.h"
 #include "actions/Limit.h"
 #include "actions/Action_ABC.h"
+#include "actions_gui/MissionInterface_ABC.h"
 #include "clients_kernel/Controller.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_kernel/Lines.h"
 #include "clients_kernel/Positions.h"
+#include "clients_kernel/StaticModel.h"
 #include "clients_kernel/TacticalLine_ABC.h"
-#include "clients_gui/RichLabel.h"
 #include "ENT/Ent_Tr.h"
 
 using namespace actions::gui;
@@ -25,16 +27,15 @@ using namespace actions::gui;
 // Name: LimitParameter constructor
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-LimitParameter::LimitParameter( QObject* parent, const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, kernel::Controller& controller )
-    : QObject    ( parent )
-    , Param_ABC  ( ENT_Tr::ConvertFromActionParameter( ENT_Tr::ConvertToActionParameter( parameter.GetName().c_str() ), ENT_Tr_ABC::eToTr ).c_str(), parameter.IsOptional() )
-    , controller_( controller )
-    , parameter_ ( parameter )
-    , converter_ ( converter )
+LimitParameter::LimitParameter( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
+    : Param_ABC  ( builder.GetParentObject(), builder.GetParamInterface(), parameter )
+    , controller_( builder.GetControllers().controller_ )
+    , converter_ ( builder.GetStaticModel().coordinateConverter_ )
     , potential_ ( 0 )
     , selected_  ( 0 )
 {
     controller_.Register( *this );
+    name_ = ENT_Tr::ConvertFromActionParameter( ENT_Tr::ConvertToActionParameter( parameter.GetName().c_str() ), ENT_Tr_ABC::eToTr ).c_str();
     if( name_.isEmpty() )
         name_ = parameter_.GetName().c_str();
 }
@@ -81,9 +82,15 @@ void LimitParameter::NotifyContextMenu( const kernel::TacticalLine_ABC& entity, 
     if( entity.IsLimit() )
     {
         potential_ = &entity;
-        QAction* action = menu.InsertItem( "Parameter", tools::translate( "LimitParameter", "Set %1" ).arg( GetName() ), this, SLOT( MenuItemValidated() ) );
-        action->setCheckable( true );
-        action->setChecked( selected_ != 0 );
+        kernel::ContextMenu::T_MenuVariant variant = Param_ABC::CreateMenu( menu );
+        if( QAction* const* vAction = boost::get< QAction* >( &variant ) )
+        {
+            if( *vAction )
+            {
+                ( *vAction )->setCheckable( true );
+                ( *vAction )->setChecked( selected_ != 0 );
+            }
+        }
     }
 }
 
@@ -91,7 +98,7 @@ void LimitParameter::NotifyContextMenu( const kernel::TacticalLine_ABC& entity, 
 // Name: LimitParameter::MenuItemValidated
 // Created: SBO 2006-11-14
 // -----------------------------------------------------------------------------
-void LimitParameter::MenuItemValidated()
+void LimitParameter::OnMenuClick()
 {
     selected_ = potential_;
     Display( selected_ ? selected_->GetName() : "---" ); // $$$$ AGE 2006-03-14: use a displayer

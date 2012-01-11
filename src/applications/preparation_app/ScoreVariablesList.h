@@ -13,6 +13,14 @@
 #include "clients_gui/ListDisplayer.h"
 #include <boost/noncopyable.hpp>
 
+namespace actions
+{
+    namespace gui
+    {
+        class InterfaceBuilder_ABC;
+    }
+}
+
 namespace gui
 {
     class ParametersLayer;
@@ -49,7 +57,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ScoreVariablesList( QWidget* parent, gui::ItemFactory_ABC& factory, kernel::Controllers& controllers,
-                                 gui::ParametersLayer& layer, const StaticModel& staticModel, const kernel::GlTools_ABC& tools );
+                                 const StaticModel& staticModel, const kernel::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder );
     virtual ~ScoreVariablesList();
     //@}
 

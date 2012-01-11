@@ -13,7 +13,7 @@
 #include "Param_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 
-class Q3WidgetStack;
+class QStackedWidget;
 
 namespace kernel
 {
@@ -22,54 +22,58 @@ namespace kernel
 
 namespace actions
 {
-    class Parameter_ABC;
-
     namespace gui
     {
         class InterfaceBuilder_ABC;
+        class ListParameterBase;
+
 // =============================================================================
 /** @class  ParamLocationComposite
     @brief  ParamLocationComposite
 */
 // Created: LDC 2010-08-18
 // =============================================================================
-class ParamLocationComposite: public QObject
-                            , public Param_ABC
+class ParamLocationComposite: public Param_ABC
 {
     Q_OBJECT
-
-    typedef actions::gui::Param_ABC* (Functor)( const kernel::OrderParameter& parameter );
 
 public:
     //! @name Constructors/Destructor
     //@{
-    ParamLocationComposite( const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const InterfaceBuilder_ABC& builder );
+             ParamLocationComposite( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter );
     virtual ~ParamLocationComposite();
     //@}
 
     //! @name Operations
     //@{
-    virtual void RemoveFromController();
+    virtual void CreateInternalMenu( kernel::ContextMenu& mainMenu );
+    Param_ABC* AddElement( const std::string& type, const std::string& name = "" );
+    void Purge();
+    virtual int GetIndex( Param_ABC* param ) const;
+    virtual void SetParentList( ListParameterBase* parentList );
     virtual void RegisterIn( kernel::ActionController& controller );
+    virtual void RemoveFromController();
 
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual QWidget* BuildInterface( QWidget* parent );
     virtual void CommitTo( actions::ParameterContainer_ABC& container ) const;
+    virtual bool CheckValidity();
     //@}
 
 protected:
     //! @name Helpers
     //@{
+    void InternalBuildInterface();
     virtual void NotifyChanged( Param_ABC& param );
+    virtual bool IsChecked() const;
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::vector<Param_ABC*>  T_Params;
+    typedef std::vector<Param_ABC*>    T_Params;
+    typedef T_Params::iterator        IT_Params;
     typedef T_Params::const_iterator CIT_Params;
-    virtual bool CheckValidity();
-    virtual bool IsChecked() const;
     //@}
 
 private slots:
@@ -78,14 +82,13 @@ private slots:
     void OnChecked( bool checked );
     //@}
 
-private:
+protected:
     //! @name Member data
     //@{
-    const kernel::OrderParameter&          parameter_;
-    const kernel::CoordinateConverter_ABC& converter_;
+    const InterfaceBuilder_ABC&            builder_;
     std::vector< Param_ABC* >              params_;
     std::vector< QWidget* >                widgets_;
-    Q3WidgetStack*                         stack_;
+    QStackedWidget*                        stack_;
     Param_ABC*                             selectedParam_;
     //@}
 };

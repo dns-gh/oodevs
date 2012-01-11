@@ -97,7 +97,7 @@ void LogisticLinksEditor::Create( const QString& title, const kernel::Entity_ABC
                             kernel::ContextMenu& menu, QSignalMapper& mapper )
 {
     selected_ = const_cast< kernel::Entity_ABC* >( &entity );
-    Q3PopupMenu* pSubMenu = menu.SubMenu( "Logistic", tr( "Logistic" ) );
+    kernel::ContextMenu* pSubMenu = menu.SubMenu( "Logistic", tr( "Logistic" ) );
     mapper.setMapping( pSubMenu->addAction( title, &mapper, SLOT( map() ) ), 0 );
 }
 

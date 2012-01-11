@@ -24,6 +24,7 @@ namespace actions
 {
     namespace gui
     {
+        class InterfaceBuilder_ABC;
 
 // =============================================================================
 /** @class  ParamDotationTypeList
@@ -31,15 +32,14 @@ namespace actions
 */
 // Created: SBO 2006-08-09
 // =============================================================================
-class ParamDotationTypeList : public QObject
-                            , public Param_ABC
+class ParamDotationTypeList : public Param_ABC
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamDotationTypeList( QObject* parent, const kernel::OrderParameter& parameter, const tools::Resolver_ABC< kernel::DotationType >& resolver );
+             ParamDotationTypeList( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter );
     virtual ~ParamDotationTypeList();
     //@}
 
@@ -65,7 +65,6 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::OrderParameter parameter_;
     const tools::Resolver_ABC< kernel::DotationType >& resolver_;
     Q3ListView* list_;
     //@}

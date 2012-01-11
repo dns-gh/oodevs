@@ -10,10 +10,12 @@
 #include "actions_gui_pch.h"
 #include "ParamAtlasNature.h"
 #include "moc_ParamAtlasNature.cpp"
+#include "InterfaceBuilder_ABC.h"
 #include "actions/Action_ABC.h"
 #include "actions/AtlasNature.h"
 #include "clients_kernel/AtlasNatures.h"
 #include "clients_kernel/OrderParameter.h"
+#include "clients_kernel/StaticModel.h"
 #include "clients_gui/Tools.h"
 #include <Qt3Support/q3buttongroup.h>
 
@@ -21,13 +23,11 @@ using namespace actions::gui;
 
 // -----------------------------------------------------------------------------
 // Name: ParamAtlasNature constructor
-// Created: AGE 2006-03-15
+// Created: ABR 2012-01-05
 // -----------------------------------------------------------------------------
-ParamAtlasNature::ParamAtlasNature( QObject* parent, const kernel::OrderParameter& parameter, const kernel::AtlasNatures& natures )
-    : QObject( parent )
-    , Param_ABC( parameter.GetName().c_str(), parameter.IsOptional() )
-    , parameter_( parameter )
-    , natures_  ( natures )
+ParamAtlasNature::ParamAtlasNature( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
+    : Param_ABC( builder.GetParentObject(), builder.GetParamInterface(), parameter )
+    , natures_ ( builder.GetStaticModel().atlasNatures_ )
 {
     // NOTHING
 }

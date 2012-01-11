@@ -12,6 +12,7 @@
 #include "moc_Menu.cpp"
 #include "FilterDialog.h"
 #include "FilterDialogs.h"
+#include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/TristateOption.h"
 #include "clients_kernel/FourStateOption.h"
@@ -43,14 +44,14 @@ namespace
         menu.AddItem( FourStateOption::OffName(), FourStateOption::Off() );
     }
 
-    void AddSubMenu3( Q3PopupMenu* parent, const QString& label, const QIcon& iconSet, Options& options, const std::string& option )
+    void AddSubMenu3( kernel::ContextMenu* parent, const QString& label, const QIcon& iconSet, Options& options, const std::string& option )
     {
         OptionMenu< TristateOption >* optionMenu = new OptionMenu< TristateOption >( parent, options, option );
         Populate( *optionMenu );
         parent->insertItem( iconSet, label, optionMenu );
     }
 
-    void AddSubMenu4( Q3PopupMenu* parent, const QString& label, const QIcon& iconSet, Options& options, const std::string& option )
+    void AddSubMenu4( kernel::ContextMenu* parent, const QString& label, const QIcon& iconSet, Options& options, const std::string& option )
     {
         OptionMenu< FourStateOption >* optionMenu = new OptionMenu< FourStateOption >( parent, options, option );
         Populate( *optionMenu );
@@ -71,7 +72,7 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     : QMenuBar    ( pParent )
     , controllers_( controllers )
 {
-    fileMenu_ = new Q3PopupMenu( this );
+    fileMenu_ = new kernel::ContextMenu( this );
     addMenu( fileMenu_ );
     fileMenu_->insertItem( MAKE_ICON( new ) , tools::translate( "Menu", "&New..." ) , parent(), SLOT( New() ) , Qt::CTRL + Qt::Key_N );
     fileMenu_->insertItem( MAKE_ICON( open ), tools::translate( "Menu", "&Open..." ), parent(), SLOT( Open() ), Qt::CTRL + Qt::Key_O );
@@ -86,16 +87,16 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     fileMenu_->insertItem( tools::translate( "Menu", "&Quit" ), pParent, SLOT( close() ), Qt::CTRL + Qt::Key_Q );
     insertItem( tools::translate( "Menu", "&File" ), fileMenu_ );
 
-    Q3PopupMenu* menu = new Q3PopupMenu( this );
+    kernel::ContextMenu* menu = new kernel::ContextMenu( this );
     addMenu( menu );
     menu->insertItem( MAKE_ICON( profile ), tools::translate( "Menu", "View/Edit..." ), &profileDialog, SLOT( exec() ) );
     menu->insertSeparator();
     menu->insertItem( tools::translate( "Menu", "Creation wizard..." ), &profileWizardDialog, SLOT( exec() ) );
     Wrap( insertItem( tools::translate( "Menu", "&Profiles" ), menu ) );
 
-    menu = new Q3PopupMenu( this );
+    menu = new kernel::ContextMenu( this );
     addMenu( menu );
-    Q3PopupMenu* subMenu = new Q3PopupMenu( menu );
+    kernel::ContextMenu* subMenu = new kernel::ContextMenu( menu );
     AddSubMenu4( subMenu, tools::translate( "Menu", "Links" )            , MakePixmap( "logistic_links" ), controllers.options_, "LogisticLinks" );
     AddSubMenu4( subMenu, tools::translate( "Menu", "Missing links" )    , MakePixmap( "logistic_missing_links" ), controllers.options_, "MissingLogisticLinks" );
     {
@@ -108,7 +109,7 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     }
     Wrap( menu->insertItem( tools::translate( "Menu", "Logistic..." ), subMenu ) );
 
-    subMenu = new Q3PopupMenu( menu );
+    subMenu = new kernel::ContextMenu( menu );
     AddSubMenu3( subMenu, tools::translate( "Menu", "Small text" )    , MAKE_ICON( textsmall )    , controllers.options_, "SmallText" );
     AddSubMenu3( subMenu, tools::translate( "Menu", "Large text" )    , MAKE_ICON( textbig )      , controllers.options_, "BigText" );
     AddSubMenu4( subMenu, tools::translate( "Menu", "Tactical lines" ), MAKE_ICON( tacticallines ), controllers.options_, "TacticalLines" );
@@ -140,7 +141,7 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     menu->insertItem( tools::translate( "Menu", "&Preferences..." ), &prefDialog, SLOT( exec() ), Qt::CTRL + Qt::Key_P );
     Wrap( insertItem( tools::translate( "Menu", "&Display" ), menu ) );
 
-    menu = new Q3PopupMenu( this );
+    menu = new kernel::ContextMenu( this );
     addMenu( menu );
     menu->insertItem( tools::translate( "Menu", "Properties..." ), &exerciseDialog, SLOT( exec() ) );
     menu->insertItem( tools::translate( "Menu", "Scores..." ), &scoreDialog, SLOT( exec() ) );
@@ -154,7 +155,7 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     addMenu( pMenu );
     insertItem( tools::translate( "Menu", "&Windows" ), pMenu );
 
-    menu = new Q3PopupMenu( this );
+    menu = new kernel::ContextMenu( this );
     addMenu( menu );
     menu->insertItem( tools::translate( "Menu", "Help" ), &help, SLOT( ShowHelp() ), Qt::Key_F1 );
     menu->insertSeparator();

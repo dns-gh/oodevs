@@ -25,12 +25,12 @@
 // Name: ScoreVariablesList constructor
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-ScoreVariablesList::ScoreVariablesList( QWidget* parent, gui::ItemFactory_ABC& factory, kernel::Controllers& controllers, gui::ParametersLayer& layer,
-                                        const StaticModel& staticModel, const kernel::GlTools_ABC& tools )
+ScoreVariablesList::ScoreVariablesList( QWidget* parent, gui::ItemFactory_ABC& factory, kernel::Controllers& controllers,
+                                        const StaticModel& staticModel, const kernel::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder )
     : Q3VBox   ( parent )
     , factory_( factory )
     , tools_  ( tools )
-    , wizard_ ( new ScoreVariableCreationWizard( this, controllers, layer, staticModel, tools_ ) )
+    , wizard_ ( new ScoreVariableCreationWizard( this, controllers, tools_, builder ) )
     , list_   ( new gui::ListDisplayer< ScoreVariablesList >( this, *this, factory ) )
     , parser_ ( new gui::UtmParser( controllers, staticModel.coordinateConverter_ ) )
 {

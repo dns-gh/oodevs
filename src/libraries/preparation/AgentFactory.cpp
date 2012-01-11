@@ -63,7 +63,7 @@ using namespace kernel;
 // Name: AgentFactory constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-AgentFactory::AgentFactory( Controllers& controllers, Model& model, const StaticModel& staticModel, IdManager& idManager, KnowledgeGroupFactory_ABC& knowledgeGroupFactory )
+AgentFactory::AgentFactory( Controllers& controllers, Model& model, const ::StaticModel& staticModel, IdManager& idManager, KnowledgeGroupFactory_ABC& knowledgeGroupFactory )
     : controllers_( controllers )
     , model_( model )
     , static_( staticModel )

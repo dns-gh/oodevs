@@ -31,18 +31,16 @@ namespace actions
 
 // =============================================================================
 /** @class  ParamDotationDType
-    @brief  ParamDotationDType
-    // $$$$ SBO 2007-03-21: ParamComboBox< const DotationType* > ?
-    // $$$$ AGE 2007-10-23: pas utilisé
+    @brief  Agent's resources only
 */
 // Created: SBO 2006-08-09
 // =============================================================================
-class ParamDotationDType : public ParamComboBox< int /*sword::DotationType*/ >
+class ParamDotationDType : public ParamComboBox< int >
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamDotationDType( const kernel::OrderParameter& parameter, const tools::Resolver_ABC< kernel::DotationType >& resolver, const kernel::Entity_ABC& agent );
+             ParamDotationDType( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter );
     virtual ~ParamDotationDType();
     //@}
 
@@ -61,7 +59,6 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::OrderParameter parameter_;
     const tools::Resolver_ABC< kernel::DotationType >& resolver_;
     const kernel::Entity_ABC& agent_;
     //@}

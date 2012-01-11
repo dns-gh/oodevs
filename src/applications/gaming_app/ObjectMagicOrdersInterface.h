@@ -77,9 +77,9 @@ private slots:
 private:
     //! @name Helpers
     //@{
-    int AddMagic( const QString& label, const char* slot, Q3PopupMenu* menu );
-    void AddIntValuedMagic( Q3PopupMenu* parent, kernel::ContextMenu& menu, const QString& label, const char* slot, unsigned int value );
-    void AddDoubleValuedMagic( Q3PopupMenu* parent, kernel::ContextMenu& menu, const QString& label, const char* slot, double value );
+    int AddMagic( const QString& label, const char* slot, kernel::ContextMenu* menu );
+    void AddIntValuedMagic( kernel::ContextMenu* parent, kernel::ContextMenu& menu, const QString& label, const char* slot, unsigned int value );
+    void AddDoubleValuedMagic( kernel::ContextMenu* parent, kernel::ContextMenu& menu, const QString& label, const char* slot, double value );
     void DoMineObject( int quantity );
     void PublishActivation( const std::string& name, unsigned int id, bool activate );
     void DoActivateReservedObstacle( bool activate );

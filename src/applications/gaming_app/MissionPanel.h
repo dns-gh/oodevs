@@ -10,6 +10,7 @@
 #ifndef __MissionPanel_h_
 #define __MissionPanel_h_
 
+#include <boost/noncopyable.hpp>
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "tools/Observer_ABC.h"
 #include "tools/Iterator.h"
@@ -42,14 +43,14 @@ namespace gui
 namespace actions
 {
     class ActionsModel;
-
     namespace gui
     {
+        class InterfaceBuilder_ABC;
         class MissionInterface_ABC;
     }
 }
 
-class Q3PopupMenu;
+class kernel::ContextMenu;
 class Decisions_ABC;
 class Decisions;
 class AutomatDecisions;
@@ -69,15 +70,16 @@ class MissionPanel : public QDockWidget
                    , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
                    , public kernel::ContextMenuObserver_ABC< kernel::Population_ABC >
                    , public tools::ElementObserver_ABC< kernel::Entity_ABC >
+                   , private boost::noncopyable
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-    MissionPanel( QWidget* pParent, kernel::Controllers& controllers, const StaticModel& model, Publisher_ABC& publisher, gui::ParametersLayer& layer, const kernel::GlTools_ABC& tools, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel
-                , kernel::AgentKnowledgeConverter_ABC& knowledgeConverter, kernel::ObjectKnowledgeConverter_ABC& objectKnowledgeConverter
-                , const kernel::Time_ABC& simulation );
+    MissionPanel( QWidget* pParent, kernel::Controllers& controllers, const ::StaticModel& model, Publisher_ABC& publisher,
+                  const kernel::GlTools_ABC& tools, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel,
+                  const kernel::Time_ABC& simulation, actions::gui::InterfaceBuilder_ABC& interfaceBuilder );
     virtual ~MissionPanel();
     //@}
 
@@ -107,12 +109,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy / Assignment
-    //@{
-    MissionPanel( const MissionPanel& );
-    MissionPanel& operator=( const MissionPanel& );
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu );
@@ -127,7 +123,7 @@ private:
     void NotifyMission();
 
     template< typename E, typename T >
-    void AddMissionGroup( Q3PopupMenu& menu, const QString& prefix, const T& list, const char* slot, int current );
+    void AddMissionGroup( kernel::ContextMenu& menu, const QString& prefix, const T& list, const char* slot, int current );
     //@}
 
 private:
@@ -137,14 +133,12 @@ private:
     const StaticModel& static_;
     actions::ActionsModel& actionsModel_;
     std::auto_ptr< Publisher_ABC > publisher_;
-    gui::ParametersLayer& layer_;
-    const kernel::CoordinateConverter_ABC& converter_;
     const kernel::GlTools_ABC& tools_;
     const kernel::Profile_ABC& profile_;
     std::auto_ptr< CommandPublisher > commandPublisher_;
     const kernel::Time_ABC& simulation_;
     actions::gui::MissionInterface_ABC* pMissionInterface_;
-    MissionInterfaceBuilder* interfaceBuilder_;
+    actions::gui::InterfaceBuilder_ABC& interfaceBuilder_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
     bool isPlanifMode_;
     //@}

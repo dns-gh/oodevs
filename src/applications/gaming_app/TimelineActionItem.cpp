@@ -16,6 +16,7 @@
 #include "actions/ActionTasker.h"
 #include "actions/ActionTiming.h"
 #include "clients_kernel/Tools.h"
+#include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Controllers.h"
 
 using namespace actions;
@@ -240,7 +241,7 @@ void TimelineActionItem::DisplayToolTip( QWidget* parent ) const
 // Name: TimelineActionItem::DisplayContextMenu
 // Created: SBO 2008-04-22
 // -----------------------------------------------------------------------------
-void TimelineActionItem::DisplayContextMenu( Q3PopupMenu* menu ) const
+void TimelineActionItem::DisplayContextMenu( kernel::ContextMenu* menu ) const
 {
     if( !nameEditor_ )
     {

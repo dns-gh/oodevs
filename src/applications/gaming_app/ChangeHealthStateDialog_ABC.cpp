@@ -122,7 +122,7 @@ void ChangeHealthStateDialog_ABC::DoNotifyContextMenu( const kernel::Entity_ABC&
     if( profile_.CanDoMagic( entity ) )
     {
         selected_ = &entity;
-        Q3PopupMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
+        kernel::ContextMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
         subMenu->insertItem( tools::translate( "ChangeHealthStateDialog_ABC", "Change health state" ), this, SLOT( Show() ) );
     }
 }

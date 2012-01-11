@@ -12,6 +12,9 @@
 #include "actions/DotationType.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Dotations_ABC.h"
+#include "clients_kernel/OrderParameter.h"
+#include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/StaticModel.h"
 #include "protocol/Protocol.h"
 #include "tools/Iterator.h"
 
@@ -21,11 +24,10 @@ using namespace actions::gui;
 // Name: ParamDotationDType constructor
 // Created: SBO 2006-08-09
 // -----------------------------------------------------------------------------
-ParamDotationDType::ParamDotationDType( const kernel::OrderParameter& parameter, const tools::Resolver_ABC< kernel::DotationType >& resolver, const kernel::Entity_ABC& agent )
-    : ParamComboBox< int >( parameter )
-    , resolver_( resolver )
-    , parameter_( parameter )
-    , agent_( agent )
+ParamDotationDType::ParamDotationDType( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
+    : ParamComboBox< int >( builder, parameter )
+    , resolver_( builder.GetStaticModel().objectTypes_ )
+    , agent_( builder.GetCurrentEntity() )
 {
     // NOTHING
 }
@@ -60,7 +62,7 @@ QWidget* ParamDotationDType::BuildInterface( QWidget* parent )
             }
         }
     }
-    return ParamComboBox< int /*sword::DotationType*/ >::BuildInterface( parent );
+    return ParamComboBox< int >::BuildInterface( parent );
 }
 
 // -----------------------------------------------------------------------------

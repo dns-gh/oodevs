@@ -181,7 +181,7 @@ void TacticalListView::OnContextMenuRequested( Q3ListViewItem* item, const QPoin
     if( item || !isVisible() )
         return;
     modelBuilder_.ClearSelection();
-    Q3PopupMenu* menu = new Q3PopupMenu( this );
+    kernel::ContextMenu* menu = new kernel::ContextMenu( this );
     menu->insertItem( tr( "Create side" ), &modelBuilder_, SLOT( OnCreate() ) );
     menu->exec( pos, index );
 }
@@ -227,7 +227,7 @@ void TacticalListView::AddFormationMenu( ContextMenu& menu, const HierarchyLevel
 {
     if( !isVisible() )
         return;
-    Q3PopupMenu* subMenu = menu.SubMenu( "Creation", tr( "Create formation" ) );
+    kernel::ContextMenu* subMenu = menu.SubMenu( "Creation", tr( "Create formation" ) );
     for( const HierarchyLevel_ABC* level = &root; level; level = level->GetNext() )
         subMenu->insertItem( tools::findTranslation( "models::app6", level->GetName().ascii() ), &modelBuilder_, SLOT( OnCreateFormation( int ) ), 0, level->GetId() );
 }

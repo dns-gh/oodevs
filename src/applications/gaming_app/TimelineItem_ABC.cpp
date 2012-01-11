@@ -9,6 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "TimelineItem_ABC.h"
+#include "clients_kernel/ContextMenu.h"
 
 // -----------------------------------------------------------------------------
 // Name: TimelineItem_ABC constructor
@@ -60,7 +61,7 @@ void TimelineItem_ABC::DisplayToolTip( QWidget* ) const
 // Name: TimelineItem_ABC::DisplayContextMenu
 // Created: SBO 2008-04-22
 // -----------------------------------------------------------------------------
-void TimelineItem_ABC::DisplayContextMenu( Q3PopupMenu* ) const
+void TimelineItem_ABC::DisplayContextMenu( kernel::ContextMenu* ) const
 {
     // NOTHING
 }

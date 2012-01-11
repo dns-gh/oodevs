@@ -80,7 +80,6 @@ MedicalConsignsWidget.cpp \
 MedicalDoctorsListView.cpp \
 MedicalReliefAmbulancesListView.cpp \
 Menu.cpp \
-MissionInterfaceBuilder.cpp \
 MissionPanel.cpp \
 NoteDialog.cpp \
 NotesPanel.cpp \

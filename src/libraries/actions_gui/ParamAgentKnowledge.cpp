@@ -17,29 +17,15 @@
 using namespace actions::gui;
 
 // -----------------------------------------------------------------------------
-// Name: ParamAgentKnowledge constructor
-// Created: AGE 2006-03-14
+// Name: ParamAgentKnowledge::ParamAgentKnowledge
+// Created: ABR 2012-01-04
 // -----------------------------------------------------------------------------
-ParamAgentKnowledge::ParamAgentKnowledge( QObject* pParent, const kernel::OrderParameter& parameter, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent, kernel::Controller& controller )
-    : EntityParameter< kernel::AgentKnowledge_ABC >( pParent, parameter, controller )
-    , parameter_( parameter )
-    , converter_( converter )
-    , agent_    ( agent )
+ParamAgentKnowledge::ParamAgentKnowledge( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
+    : EntityParameter< kernel::AgentKnowledge_ABC >( builder, parameter )
+    , converter_( builder.GetAgentKnowledgeConverter() )
+    , agent_    ( builder.GetCurrentEntity() )
 {
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamAgentKnowledge constructor
-// Created: SBO 2007-05-25
-// -----------------------------------------------------------------------------
-ParamAgentKnowledge::ParamAgentKnowledge( QObject* pParent, const kernel::OrderParameter& parameter, kernel::AgentKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent, const kernel::AgentKnowledge_ABC& potential, kernel::Controller& controller )
-    : EntityParameter< kernel::AgentKnowledge_ABC >( pParent, parameter, potential, controller )
-    , parameter_( parameter )
-    , converter_( converter )
-    , agent_    ( agent )
-{
-    // NOTHING
+    assert( converter_ != 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,7 +43,7 @@ ParamAgentKnowledge::~ParamAgentKnowledge()
 // -----------------------------------------------------------------------------
 void ParamAgentKnowledge::NotifyContextMenu( const kernel::Agent_ABC& entity, kernel::ContextMenu& menu )
 {
-    const kernel::AgentKnowledge_ABC* knowledge = converter_.Find( entity, agent_ );
+    const kernel::AgentKnowledge_ABC* knowledge = converter_->Find( entity, agent_ );
     if( knowledge )
         EntityParameter< kernel::AgentKnowledge_ABC >::NotifyContextMenu( *knowledge, menu );
 }

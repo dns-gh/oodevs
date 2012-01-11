@@ -15,6 +15,7 @@ namespace kernel
     class CoordinateSystems;
     class CoordinateConverter_ABC;
     class Controllers;
+    class ContextMenu;
 }
 
 namespace gui
@@ -78,7 +79,7 @@ private:
     QLabel* latitudeLabel_;
     QLabel* longitudeLabel_;
     QToolButton* choiceParserButton_;
-    Q3PopupMenu* parserMenu_;
+    kernel::ContextMenu* parserMenu_;
     QLineEdit* singleField_;
     QMenu* subMenu_;
     Q3ListBox* list_;

@@ -18,6 +18,7 @@
 namespace kernel
 {
     class Logger_ABC;
+    class ContextMenu;
 }
 
 class Network;
@@ -38,7 +39,7 @@ public:
 
     //! @name Operations
     //@{
-    void FillPopupMenu( Q3PopupMenu* menu );
+    void FillPopupMenu( kernel::ContextMenu* menu );
     //@}
 
 private slots:

@@ -30,7 +30,7 @@ using namespace kernel;
 // Name: CreationPanels constructor
 // Created: SBO 2006-08-28
 // -----------------------------------------------------------------------------
-CreationPanels::CreationPanels( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel, const Model& model,
+CreationPanels::CreationPanels( QWidget* parent, kernel::Controllers& controllers, const ::StaticModel& staticModel, const Model& model,
                                 const tools::ExerciseConfig& config, gui::ItemFactory_ABC& factory, gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy,
                                 gui::ParametersLayer& paramLayer, gui::WeatherLayer& weatherLayer, gui::GlProxy& glProxy )
     : Panels( parent )

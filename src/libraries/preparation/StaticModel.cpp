@@ -9,50 +9,31 @@
 
 #include "preparation_pch.h"
 #include "StaticModel.h"
+
+#include "LogisticLevel.h"
 #include "SuccessFactorActionTypes.h"
 #include "TeamKarmas.h"
-#include "LogisticLevel.h"
 #include "clients_gui/DrawingTypes.h"
-#include "clients_kernel/AccommodationTypes.h"
-#include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/CoordinateConverter.h"
-#include "clients_kernel/CoordinateSystems.h"
-#include "clients_kernel/DetectionMap.h"
-#include "clients_kernel/ExtensionTypes.h"
-#include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/ModelLoaded.h"
-#include "clients_kernel/ObjectTypes.h"
 #include "indicators/GaugeTypes.h"
 #include "indicators/Primitives.h"
 #include "tools/ExerciseConfig.h"
-#include <boost/filesystem/path.hpp>
-
-namespace bfs = boost::filesystem;
-
-using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: StaticModel constructor
 // Created: AGE 2006-08-01
 // -----------------------------------------------------------------------------
-StaticModel::StaticModel( Controllers& controllers )
-    : controllers_             ( controllers )
-    , coordinateSystems_       ( *new CoordinateSystems() )
-    , coordinateConverter_     ( *new CoordinateConverter( coordinateSystems_ ) )
-    , detection_               ( *new DetectionMap() )
-    , types_                   ( *new AgentTypes() )
-    , objectTypes_             ( *new ObjectTypes() )
-    , levels_                  ( *new FormationLevels() )
-    , accommodationTypes_      ( *new AccommodationTypes() )
-    , extensions_              ( *new ExtensionTypes() )
-    , teamKarmas_              ( *new TeamKarmas() )
-    , drawings_                ( *new gui::DrawingTypes( controllers.controller_ ) )
+StaticModel::StaticModel( kernel::Controllers& controllers )
+    : kernel::StaticModel()
+    , controllers_             ( controllers )
     , indicators_              ( *new indicators::Primitives() )
     , gaugeTypes_              ( *new indicators::GaugeTypes() )
+    , drawings_                ( *new gui::DrawingTypes( controllers_.controller_ ) )
     , successFactorActionTypes_( *new SuccessFactorActionTypes() )
     , logisticLevels_          ( *new preparation::LogisticLevel() )
+    , teamKarmas_              ( *new TeamKarmas() )
 {
     // NOTHING
 }
@@ -63,20 +44,12 @@ StaticModel::StaticModel( Controllers& controllers )
 // -----------------------------------------------------------------------------
 StaticModel::~StaticModel()
 {
+    delete &teamKarmas_;
+    delete &logisticLevels_;
     delete &successFactorActionTypes_;
+    delete &drawings_;
     delete &gaugeTypes_;
     delete &indicators_;
-    delete &drawings_;
-    delete &teamKarmas_;
-    delete &extensions_;
-    delete &levels_;
-    delete &accommodationTypes_;
-    delete &objectTypes_;
-    delete &types_;
-    delete &detection_;
-    delete &coordinateConverter_;
-    delete &coordinateSystems_;
-    delete &logisticLevels_;
 }
 
 // -----------------------------------------------------------------------------
@@ -85,18 +58,12 @@ StaticModel::~StaticModel()
 // -----------------------------------------------------------------------------
 void StaticModel::Load( const tools::ExerciseConfig& config )
 {
-    Purge();
-    types_.Load( config );
-    objectTypes_.Load( config );
-    static_cast< CoordinateConverter& >( coordinateConverter_ ).Load( config );
-    detection_.Load( config );
-    extensions_.Load( config );
-    drawings_.Load( config );
-    accommodationTypes_.Load( config );
+    kernel::StaticModel::Load( config );
     indicators_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "IndicatorPrimitives.xml" ) );
     gaugeTypes_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "IndicatorGaugeTemplates.xml" ) );
+    drawings_.Load( config );
     successFactorActionTypes_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "SuccessFactorActions.xml" ) );
-    controllers_.controller_.Update( ModelLoaded( config ) );
+    controllers_.controller_.Update( kernel::ModelLoaded( config ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -105,13 +72,10 @@ void StaticModel::Load( const tools::ExerciseConfig& config )
 // -----------------------------------------------------------------------------
 void StaticModel::Purge()
 {
-    successFactorActionTypes_.Purge();
-    gaugeTypes_.Purge();
     indicators_.Purge();
+    gaugeTypes_.Purge();
     drawings_.Purge();
-    types_.Purge();
-    objectTypes_.Purge();
-    extensions_.Purge();
-    accommodationTypes_.Purge();
-    controllers_.controller_.Update( ModelUnLoaded() );
+    successFactorActionTypes_.Purge();
+    kernel::StaticModel::Purge();
+    controllers_.controller_.Update( kernel::ModelUnLoaded() );
 }

@@ -21,6 +21,7 @@ namespace actions
 {
     namespace gui
     {
+        class InterfaceBuilder_ABC;
 
 // =============================================================================
 /** @class  ParamDirection
@@ -28,15 +29,14 @@ namespace actions
 */
 // Created: AGE 2006-03-15
 // =============================================================================
-class ParamDirection : public QObject
-                     , public Param_ABC
+class ParamDirection : public Param_ABC
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamDirection( QObject* parent, const kernel::OrderParameter& parameter );
+             ParamDirection( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter );
     virtual ~ParamDirection();
     //@}
 
@@ -55,7 +55,6 @@ private slots:
 private:
     //! @name Member data
     //@{
-    kernel::OrderParameter parameter_;
     int value_;
     //@}
 };

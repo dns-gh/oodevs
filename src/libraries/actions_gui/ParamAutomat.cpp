@@ -16,22 +16,10 @@ using namespace actions::gui;
 
 // -----------------------------------------------------------------------------
 // Name: ParamAutomat constructor
-// Created: AGE 2006-11-29
+// Created: ABR 2012-01-04
 // -----------------------------------------------------------------------------
-ParamAutomat::ParamAutomat( QObject* parent, const kernel::OrderParameter& parameter, kernel::Controller& controller )
-    : EntityParameter< kernel::Automat_ABC >( parent, parameter, controller )
-    , parameter_( parameter )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamAutomat constructor
-// Created: SBO 2007-05-23
-// -----------------------------------------------------------------------------
-ParamAutomat::ParamAutomat( QObject* parent, const kernel::OrderParameter& parameter, const kernel::Automat_ABC& entity, kernel::Controller& controller )
-    : EntityParameter< kernel::Automat_ABC >( parent, parameter, entity, controller )
-    , parameter_( parameter )
+ParamAutomat::ParamAutomat( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
+    : EntityParameter< kernel::Automat_ABC >( builder, parameter )
 {
     // NOTHING
 }
@@ -55,4 +43,3 @@ void ParamAutomat::CommitTo( actions::ParameterContainer_ABC& action ) const
     EntityParameter< kernel::Automat_ABC >::CommitTo( *param );
     action.AddParameter( *param.release() );
 }
-

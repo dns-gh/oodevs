@@ -10,6 +10,11 @@
 #ifndef __TimelineItem_ABC_h_
 #define __TimelineItem_ABC_h_
 
+namespace kernel
+{
+    class ContextMenu;
+}
+
 // =============================================================================
 /** @class  TimelineItem_ABC
     @brief  TimelineItem_ABC
@@ -31,7 +36,7 @@ public:
     virtual void Move( long offset );
     virtual void Delete();
     virtual void DisplayToolTip( QWidget* parent ) const; // $$$$ SBO 2007-07-19: make a displayer maybe...
-    virtual void DisplayContextMenu( Q3PopupMenu* menu ) const;
+    virtual void DisplayContextMenu( kernel::ContextMenu* menu ) const;
     //@}
 
 private:

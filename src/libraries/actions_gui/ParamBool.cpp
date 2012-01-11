@@ -10,6 +10,7 @@
 #include "actions_gui_pch.h"
 #include "ParamBool.h"
 #include "moc_ParamBool.cpp"
+#include "InterfaceBuilder_ABC.h"
 #include "actions/Action_ABC.h"
 #include "actions/Bool.h"
 #include "clients_kernel/OrderParameter.h"
@@ -18,13 +19,12 @@ using namespace actions::gui;
 
 // -----------------------------------------------------------------------------
 // Name: ParamBool constructor
-// Created: AGE 2006-03-15
+// Created: ABR 2012-01-04
 // -----------------------------------------------------------------------------
-ParamBool::ParamBool( QObject* parent, const kernel::OrderParameter& parameter, bool defaultValue /* = false*/ )
-    : QObject( parent )
-    , Param_ABC( parameter.GetName().c_str(), parameter.IsOptional() )
-    , parameter_( parameter )
-    , value_( defaultValue )
+ParamBool::ParamBool( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
+    : Param_ABC( builder.GetParentObject(), builder.GetParamInterface(), parameter )
+    , value_   ( false )
+    , checkBox_( 0 )
 {
     // NOTHING
 }
@@ -39,6 +39,17 @@ ParamBool::~ParamBool()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ParamBool::SetValue
+// Created: ABR 2012-01-05
+// -----------------------------------------------------------------------------
+void ParamBool::SetValue( bool value )
+{
+    value_ = value;
+    if( checkBox_ != 0 )
+        checkBox_->setChecked( value_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ParamBool::BuildInterface
 // Created: SBO 2007-03-13
 // -----------------------------------------------------------------------------
@@ -47,10 +58,10 @@ QWidget* ParamBool::BuildInterface( QWidget* parent )
     Param_ABC::BuildInterface( parent );
     QHBoxLayout* layout = new QHBoxLayout( group_ );
     layout->setAlignment( Qt::AlignCenter );
-    QCheckBox* checkBox = new QCheckBox( parent );
-    checkBox->setChecked( value_ );
-    layout->addWidget( checkBox, Qt::AlignCenter );
-    connect( checkBox, SIGNAL( clicked() ), SLOT( OnClicked() ) );
+    checkBox_ = new QCheckBox( parent );
+    checkBox_->setChecked( value_ );
+    layout->addWidget( checkBox_, Qt::AlignCenter );
+    connect( checkBox_, SIGNAL( clicked() ), SLOT( OnClicked() ) );
     return group_;
 }
 

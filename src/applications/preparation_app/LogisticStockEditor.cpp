@@ -201,7 +201,7 @@ void LogisticStockEditor::NotifyContextMenu( const kernel::Formation_ABC& format
 void LogisticStockEditor::Update( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
 {
     selected_ = const_cast< kernel::Entity_ABC* >( &entity );
-    Q3PopupMenu* pSubMenu = menu.SubMenu( "Logistic", tr( "Logistic" ) );
+    kernel::ContextMenu* pSubMenu = menu.SubMenu( "Logistic", tr( "Logistic" ) );
     pSubMenu->insertItem( tools::translate( "LogisticStockEditor", "Supply stocks" ), this, SLOT( show() ) );
 }
 

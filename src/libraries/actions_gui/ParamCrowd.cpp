@@ -16,22 +16,10 @@ using namespace actions::gui;
 
 // -----------------------------------------------------------------------------
 // Name: ParamCrowd constructor
-// Created: FPO 2011-05-30
+// Created: ABR 2012-01-04
 // -----------------------------------------------------------------------------
-ParamCrowd::ParamCrowd( QObject* parent, const kernel::OrderParameter& parameter, kernel::Controller& controller )
-    : EntityParameter< kernel::Population_ABC >( parent, parameter, controller )
-    , parameter_( parameter )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamCrowd constructor
-// Created: FPO 2011-05-30
-// -----------------------------------------------------------------------------
-ParamCrowd::ParamCrowd( QObject* parent, const kernel::OrderParameter& parameter, const kernel::Population_ABC& entity, kernel::Controller& controller )
-    : EntityParameter< kernel::Population_ABC >( parent, parameter, entity, controller )
-    , parameter_( parameter )
+ParamCrowd::ParamCrowd(  const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
+    : EntityParameter< kernel::Population_ABC >( builder, parameter )
 {
     // NOTHING
 }
@@ -54,14 +42,4 @@ void ParamCrowd::CommitTo( actions::ParameterContainer_ABC& action ) const
     std::auto_ptr< actions::parameters::Entity< kernel::Population_ABC > > param( new actions::parameters::Crowd( parameter_, controller_ ) );
     EntityParameter< kernel::Population_ABC >::CommitTo( *param );
     action.AddParameter( *param.release() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamCrowd::SetName
-// Created: FPO 2011-05-30
-// -----------------------------------------------------------------------------
-void ParamCrowd::SetName( const QString& name )
-{
-    this->name_ = name;
-    EntityParameterBase::SetLabel( name );
 }

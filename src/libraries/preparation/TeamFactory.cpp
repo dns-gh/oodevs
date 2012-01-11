@@ -33,7 +33,7 @@ using namespace kernel;
 // Name: TeamFactory constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-TeamFactory::TeamFactory( Controllers& controllers, Model& model, const StaticModel& staticModel, IdManager& idManager )
+TeamFactory::TeamFactory( Controllers& controllers, Model& model, const ::StaticModel& staticModel, IdManager& idManager )
     : controllers_( controllers )
     , model_      ( model )
     , staticModel_( staticModel )

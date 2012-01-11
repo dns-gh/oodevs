@@ -12,6 +12,11 @@
 
 #include "reports/Report.h"
 
+namespace kernel
+{
+    class ContextMenu;
+}
+
 // =============================================================================
 /** @class  ReportFilterOptions
     @brief  ReportFilterOptions
@@ -31,7 +36,7 @@ public:
     //! @name Operations
     //@{
     bool ShouldDisplay( const Report& report ) const;
-    void AddContextMenu( Q3PopupMenu* menu ) const;
+    void AddContextMenu( kernel::ContextMenu* menu ) const;
     //@}
 
 signals:
@@ -60,7 +65,7 @@ private:
     //! @name Helpers
     //@{
     void Toggle( Report::E_Type type );
-    void AddMenuItem( Q3PopupMenu* menu, const QString& name, Report::E_Type type, const char* slot ) const;
+    void AddMenuItem( kernel::ContextMenu* menu, const QString& name, Report::E_Type type, const char* slot ) const;
     //@}
 
 private:

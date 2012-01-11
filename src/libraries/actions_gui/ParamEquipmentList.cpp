@@ -10,9 +10,12 @@
 #include "actions_gui_pch.h"
 #include "ParamEquipmentList.h"
 #include "moc_ParamEquipmentList.cpp"
+#include "InterfaceBuilder_ABC.h"
 #include "actions/Action_ABC.h"
 #include "actions/MaintenancePriorities.h"
 #include "clients_kernel/EquipmentType.h"
+#include "clients_kernel/StaticModel.h"
+#include "clients_kernel/ObjectTypes.h"
 #include "clients_gui/ValuedListItem.h"
 #include "clients_gui/resources.h"
 
@@ -20,14 +23,13 @@ using namespace actions::gui;
 
 // -----------------------------------------------------------------------------
 // Name: ParamEquipmentList constructor
-// Created: SBO 2005-09-27
+// Created: ABR 2012-01-05
 // -----------------------------------------------------------------------------
-ParamEquipmentList::ParamEquipmentList( QObject* parent, const kernel::OrderParameter& parameter, const tools::Resolver< kernel::EquipmentType >& resolver )
-    : QObject( parent )
-    , Param_ABC( parameter.GetName().c_str(), parameter.IsOptional() )
-    , parameter_( parameter )
-    , resolver_ ( resolver )
-    , list_     ( 0 )
+ParamEquipmentList::ParamEquipmentList( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
+    : Param_ABC( builder.GetParentObject(), builder.GetParamInterface(), parameter )
+    , resolver_( builder.GetStaticModel().objectTypes_ )
+    , list_    ( 0 )
+    , baseList_( 0 )
 {
     // NOTHING
 }

@@ -14,6 +14,7 @@
 #include "DisconnectDialog.h"
 #include "gaming/Simulation.h"
 #include "gaming/Services.h"
+#include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_gui/resources.h"
@@ -59,14 +60,14 @@ namespace
         SIMControlToolbar& toolBar_;
     };
 
-    class AutoFitPopupMenu : public Q3PopupMenu
+    class AutoFitPopupMenu : public kernel::ContextMenu
     {
     public:
-        explicit AutoFitPopupMenu( QWidget* parent ) : Q3PopupMenu( parent ) {}
+        explicit AutoFitPopupMenu( QWidget* parent ) : kernel::ContextMenu( parent ) {}
         virtual ~AutoFitPopupMenu() {}
         virtual void showEvent( QShowEvent* event )
         {
-            Q3PopupMenu::showEvent( event );
+            kernel::ContextMenu::showEvent( event );
             adjustSize();
         }
     };
@@ -145,7 +146,7 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     pCheckpointButton_->setEnabled( false );
 
     {
-        Q3PopupMenu* popup = new AutoFitPopupMenu( pCheckpointButton_ );
+        kernel::ContextMenu* popup = new AutoFitPopupMenu( pCheckpointButton_ );
         pCheckpointButton_->setPopup( popup );
         pCheckpointButton_->setPopupMode( QToolButton::MenuButtonPopup );
         popup->addAction( new LineEdit( this, popup ) );
@@ -153,7 +154,7 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
 
     pConnectDlg_ = new ConnectDialog( pParent, network, logger );
     {
-        Q3PopupMenu* popup = new Q3PopupMenu( pConnectButton_ );
+        kernel::ContextMenu* popup = new kernel::ContextMenu( pConnectButton_ );
         pConnectDlg_->FillPopupMenu( popup );
         pConnectButton_->setPopup( popup );
         pConnectButton_->setPopupMode( QToolButton::MenuButtonPopup );
@@ -338,7 +339,7 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
             pConnectButton_->setTextLabel( tr( "Connect (C)" ) );
             pConnectButton_->setFocus();
             {
-                Q3PopupMenu* popup = new Q3PopupMenu( pConnectButton_ );
+                kernel::ContextMenu* popup = new kernel::ContextMenu( pConnectButton_ );
                 pConnectDlg_->FillPopupMenu( popup );
                 pConnectButton_->setPopup( popup );
                 pConnectButton_->setPopupDelay( 0 );

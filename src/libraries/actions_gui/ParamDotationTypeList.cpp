@@ -10,22 +10,23 @@
 #include "actions_gui_pch.h"
 #include "ParamDotationTypeList.h"
 #include "moc_ParamDotationTypeList.cpp"
+#include "InterfaceBuilder_ABC.h"
 #include "actions/DotationType.h"
 #include "actions/DotationTypeList.h"
 #include "clients_kernel/DotationType.h"
+#include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/StaticModel.h"
 #include "tools/Iterator.h"
 
 using namespace actions::gui;
 
 // -----------------------------------------------------------------------------
 // Name: ParamDotationTypeList constructor
-// Created: SBO 2006-08-09
+// Created: ABR 2012-01-10
 // -----------------------------------------------------------------------------
-ParamDotationTypeList::ParamDotationTypeList( QObject* parent, const kernel::OrderParameter& parameter, const tools::Resolver_ABC< kernel::DotationType >& resolver )
-    : QObject( parent )
-    , Param_ABC( parameter.GetName().c_str(), parameter.IsOptional() )
-    , resolver_( resolver )
-    , parameter_( parameter )
+ParamDotationTypeList::ParamDotationTypeList( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
+    : Param_ABC( builder.GetParentObject(), builder.GetParamInterface(), parameter )
+    , resolver_( builder.GetStaticModel().objectTypes_ )
     , list_( 0 )
 {
     // NOTHING
@@ -47,7 +48,7 @@ ParamDotationTypeList::~ParamDotationTypeList()
 QWidget* ParamDotationTypeList::BuildInterface( QWidget* parent )
 {
     Param_ABC::BuildInterface( parent );
-    QVBoxLayout* layout = new QVBoxLayout( parent );
+    QVBoxLayout* layout = new QVBoxLayout( group_ );
 
     list_ = new Q3ListView( parent );
     list_->setRootIsDecorated( true );

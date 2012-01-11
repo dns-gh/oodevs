@@ -317,7 +317,7 @@ void ResourceLinksDialog_ABC::NotifyContextMenu( const Object_ABC& object, Conte
         return;
     if( selected_ != node )
         linkToChange_ = &object;
-    Q3PopupMenu* subMenu = menu.SubMenu( "Resource", tr( "Resource networks" ) );
+    ContextMenu* subMenu = menu.SubMenu( "Resource", tr( "Resource networks" ) );
     tools::Iterator< const ResourceNetworkType& > it = resources_.CreateIterator();
     int resourceId = 0;
     while( it.HasMoreElements() )
@@ -327,7 +327,7 @@ void ResourceLinksDialog_ABC::NotifyContextMenu( const Object_ABC& object, Conte
         {
             if( !selected_->FindResourceNode( resource.GetName() ) )
             {
-                Q3PopupMenu* resourceMenu = new Q3PopupMenu( subMenu );
+                ContextMenu* resourceMenu = new ContextMenu( subMenu );
                 subMenu->insertItem( resource.GetName().c_str(), resourceMenu );
                 resourceMenu->insertItem( tr( "Create node" ), this , SLOT( OnCreateNode( int ) ), 0, resourceId );
             }
@@ -335,7 +335,7 @@ void ResourceLinksDialog_ABC::NotifyContextMenu( const Object_ABC& object, Conte
         }
         else
         {
-            Q3PopupMenu* resourceMenu = new Q3PopupMenu( subMenu );
+            ContextMenu* resourceMenu = new ContextMenu( subMenu );
             subMenu->insertItem( resource.GetName().c_str(), resourceMenu );
             resourceMenu->insertItem( tr( "Add/Remove link" ), this , SLOT( OnChangeLink( int ) ), 0, resourceId++ );
         }

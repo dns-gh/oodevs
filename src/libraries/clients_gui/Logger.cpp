@@ -15,6 +15,7 @@
 #include "ValuedListItem.h"
 #include "ItemFactory_ABC.h"
 #include "clients_kernel\Time_ABC.h"
+#include "clients_kernel\ContextMenu.h"
 
 using namespace gui;
 
@@ -27,6 +28,7 @@ Logger::Logger( QWidget* pParent, ItemFactory_ABC& factory, const kernel::Time_A
     , factory_   ( factory )
     , simulation_( simulation )
     , log_       ( filename.c_str(), std::ios::out | std::ios::app )
+    , popupMenu_ ( new kernel::ContextMenu() )
 {
     setBackgroundColor( Qt::white );
     setMinimumSize( 40, 40 );
@@ -39,7 +41,7 @@ Logger::Logger( QWidget* pParent, ItemFactory_ABC& factory, const kernel::Time_A
     setResizeMode( Q3ListView::LastColumn );
     setAllColumnsShowFocus ( true );
 
-    popupMenu_.insertItem( tr( "Clear list" ), this, SLOT( clear() ) );
+    popupMenu_->insertItem( tr( "Clear list" ), this, SLOT( clear() ) );
 
     connect( this, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestPopup( Q3ListViewItem*, const QPoint& ) ) );
 }
@@ -58,6 +60,7 @@ namespace
 // -----------------------------------------------------------------------------
 Logger::~Logger()
 {
+    delete popupMenu_;
     MakeHeader( log_, simulation_ );
     log_ << "----------------------------------------------------------------" << std::endl;
 }
@@ -129,5 +132,5 @@ void Logger::End( std::stringstream& output )
 // -----------------------------------------------------------------------------
 void Logger::OnRequestPopup( Q3ListViewItem* /*pItem*/, const QPoint& pos )
 {
-    popupMenu_.popup( pos );
+    popupMenu_->popup( pos );
 }

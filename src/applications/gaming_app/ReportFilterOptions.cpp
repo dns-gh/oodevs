@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "ReportFilterOptions.h"
 #include "moc_ReportFilterOptions.cpp"
+#include "clients_kernel/ContextMenu.h"
 
 // -----------------------------------------------------------------------------
 // Name: ReportFilterOptions constructor
@@ -113,7 +114,7 @@ void ReportFilterOptions::OnToggleWarnings()
 // Name: ReportFilterOptions::AddMenuItem
 // Created: SBO 2007-02-06
 // -----------------------------------------------------------------------------
-void ReportFilterOptions::AddMenuItem( Q3PopupMenu* menu, const QString& name, Report::E_Type type, const char* slot ) const
+void ReportFilterOptions::AddMenuItem( kernel::ContextMenu* menu, const QString& name, Report::E_Type type, const char* slot ) const
 {
     int id = menu->insertItem( name );
     menu->setItemChecked( id, toDisplay_.find( type ) != toDisplay_.end() );
@@ -124,7 +125,7 @@ void ReportFilterOptions::AddMenuItem( Q3PopupMenu* menu, const QString& name, R
 // Name: ReportFilterOptions::AddContextMenu
 // Created: SBO 2007-02-06
 // -----------------------------------------------------------------------------
-void ReportFilterOptions::AddContextMenu( Q3PopupMenu* menu ) const
+void ReportFilterOptions::AddContextMenu( kernel::ContextMenu* menu ) const
 {
     menu->insertSeparator();
     AddMenuItem( menu, tr( "Show reports" ) , Report::eRC      , SLOT( OnToggleRCs     () ) );

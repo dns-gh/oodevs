@@ -37,8 +37,7 @@ class ParamObjectKnowledge : public EntityParameter< kernel::ObjectKnowledge_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamObjectKnowledge( QObject* parent, const kernel::OrderParameter& parameter, kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent, kernel::Controller& controller );
-             ParamObjectKnowledge( QObject* parent, const kernel::OrderParameter& parameter, kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent, const kernel::ObjectKnowledge_ABC& potential, kernel::Controller& controller );
+             ParamObjectKnowledge( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter );
     virtual ~ParamObjectKnowledge();
     //@}
 
@@ -48,12 +47,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ParamObjectKnowledge( const ParamObjectKnowledge& );            //!< Copy constructor
-    ParamObjectKnowledge& operator=( const ParamObjectKnowledge& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu );
@@ -62,8 +55,7 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::OrderParameter parameter_;
-    kernel::ObjectKnowledgeConverter_ABC& converter_;
+    kernel::ObjectKnowledgeConverter_ABC* converter_;
     const kernel::Entity_ABC& agent_;
     //@}
 };

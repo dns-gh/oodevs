@@ -2,56 +2,25 @@
 <!DOCTYPE TS>
 <TS version="2.0">
 <context>
+    <name>InterfaceBuilder</name>
+    <message>
+        <source>Unknown mission parameter: %1</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>LimaParameter</name>
     <message>
+        <source>Schedule</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Line</source>
-        <translation>Línea</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Functions</source>
-        <translation>Funciones</translation>
-    </message>
-    <message>
-        <source>Schedule</source>
-        <translation>Cronograma</translation>
-    </message>
-    <message>
-        <source>Set &apos;%1&apos; function</source>
-        <translation>Asignar la funcion &apos;%1&apos;</translation>
-    </message>
-</context>
-<context>
-    <name>LimitParameter</name>
-    <message>
-        <source>Set %1</source>
-        <translation>Asignar %1</translation>
-    </message>
-</context>
-<context>
-    <name>ListParameter</name>
-    <message>
-        <source>Remove</source>
-        <translation>Remover</translation>
-    </message>
-    <message>
-        <source>Clear list</source>
-        <translation>Limpiar la lista</translation>
-    </message>
-    <message>
-        <source>Add</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1: add item</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>%1 (item %2)</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Add hierarchy</source>
-        <translation type="unfinished">Agregar jerarquía</translation>
     </message>
 </context>
 <context>
@@ -93,24 +62,28 @@
     </message>
 </context>
 <context>
-    <name>ParamLimaList</name>
-    <message>
-        <source>%1: add item as</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ParamResourceNetwork</name>
-    <message>
-        <source>Resource network</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Object</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Resource</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>Param_ABC</name>
+    <message>
+        <source>Add item</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add automat&apos;s agents</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Add formation&apos;s agents</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -140,15 +113,15 @@
         <translation type="unfinished">Tipo de obstáculo</translation>
     </message>
     <message>
+        <source>Obstacle location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
         <source>Density</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>TC2</source>
-        <translation type="unfinished">TC2: {2?}</translation>
-    </message>
-    <message>
-        <source>Obstacle location</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

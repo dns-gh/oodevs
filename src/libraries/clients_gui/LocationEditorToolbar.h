@@ -112,7 +112,7 @@ private:
     QToolButton* okButton_;
     QToolButton* paramsButton_;
     QToolButton* gotoButton_;
-    Q3PopupMenu* bookmarksMenu_;
+    kernel::ContextMenu* bookmarksMenu_;
     T_Bookmarks bookmarks_;
     geometry::Point2f menuPoint_;
     FeatureNameParser featureNameParser_;

@@ -33,7 +33,7 @@ using namespace kernel;
 // Name: LongNameEditor constructor
 // Created: JSR 2011-09-12
 // -----------------------------------------------------------------------------
-LongNameEditor::LongNameEditor( QWidget* parent, Controllers& controllers, const StaticModel& model )
+LongNameEditor::LongNameEditor( QWidget* parent, Controllers& controllers, const ::StaticModel& model )
     : QObject( parent )
     , controllers_( controllers )
     , types_      ( model.extensions_ )

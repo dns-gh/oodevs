@@ -30,7 +30,7 @@ using namespace kernel;
 // Created: SBO 2006-09-19
 // -----------------------------------------------------------------------------
 FormationModel::FormationModel( kernel::Controllers& controllers, FormationFactory_ABC& formationFactory,
-                                const tools::Resolver< kernel::Automat_ABC>& automatResolver, const StaticModel& staticModel )
+                                const tools::Resolver< kernel::Automat_ABC>& automatResolver, const ::StaticModel& staticModel )
     : controllers_    ( controllers )
     , factory_        ( formationFactory )
     , levels_         ( *new FormationLevels() )

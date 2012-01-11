@@ -13,6 +13,7 @@
 #include "gaming/Network.h"
 #include "clients_kernel/Logger_ABC.h"
 #include "clients_gui/Tools.h"
+#include "clients_kernel/ContextMenu.h"
 
 //-----------------------------------------------------------------------------
 // Name: ConnectDialog constructor
@@ -136,7 +137,7 @@ void ConnectDialog::SaveConfig()
 // Name: ConnectDialog::FillPopupMenu
 // Created: SBO 2008-09-18
 // -----------------------------------------------------------------------------
-void ConnectDialog::FillPopupMenu( Q3PopupMenu* menu )
+void ConnectDialog::FillPopupMenu( kernel::ContextMenu* menu )
 {
     const QString port = QString::number( pPortSpinBox_->value() );
     for( int n = 0; n < pHostNameComboBox_->count(); ++n )

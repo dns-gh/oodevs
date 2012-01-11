@@ -3,43 +3,43 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2007 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2012 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __ParamPointList_h_
-#define __ParamPointList_h_
-
-#include "ParamLocationList.h"
+#ifndef __ParamInterface_ABC_h_
+#define __ParamInterface_ABC_h_
 
 namespace actions
 {
     namespace gui
     {
+        class Param_ABC;
 
 // =============================================================================
-/** @class  ParamPointList
-    @brief  ParamPointList
+/** @class  ParamInterface_ABC
+    @brief  ParamInterface_ABC
 */
-// Created: SBO 2007-03-15
+// Created: ABR 2012-01-11
 // =============================================================================
-class ParamPointList : public ParamLocationList
+class ParamInterface_ABC
 {
+
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamPointList( QObject* parent, const kernel::OrderParameter& parameter, ::gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, kernel::ActionController& controller );
-    virtual ~ParamPointList();
+             ParamInterface_ABC() {}
+    virtual ~ParamInterface_ABC() {}
     //@}
 
-private:
-    //! @name Helpers
+    //! @name Operations
     //@{
-    virtual Param_ABC* CreateElement();
+    virtual QString Title() const = 0;
+    virtual int GetIndex( Param_ABC* param ) const = 0;
     //@}
 };
 
     }
 }
 
-#endif // __ParamPointList_h_
+#endif // __ParamInterface_ABC_h_

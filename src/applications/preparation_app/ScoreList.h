@@ -13,6 +13,14 @@
 #include "tools/ElementObserver_ABC.h"
 #include "clients_gui/ListDisplayer.h"
 
+namespace actions
+{
+    namespace gui
+    {
+        class InterfaceBuilder_ABC;
+    }
+}
+
 namespace gui
 {
     class ParametersLayer;
@@ -54,9 +62,8 @@ class ScoreList : public Q3VBox
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::ParametersLayer& layer,
-                        ScoresModel& model, const StaticModel& staticModel, const tools::ExerciseConfig& config,
-                        const kernel::GlTools_ABC& tools );
+             ScoreList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ScoresModel& model, const tools::ExerciseConfig& config,
+                        const StaticModel& staticModel, const kernel::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder );
     virtual ~ScoreList();
     //@}
 
@@ -101,13 +108,13 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
-    gui::ItemFactory_ABC& factory_;
-    ScoresModel& model_;
+    kernel::Controllers&             controllers_;
+    gui::ItemFactory_ABC&            factory_;
+    ScoresModel&                     model_;
     gui::ListDisplayer< ScoreList >* scores_;
-    ScoreEditor* editor_;
-    const tools::ExerciseConfig& config_;
-    Q3HBox* generatorBox_;
+    ScoreEditor*                     editor_;
+    const tools::ExerciseConfig&     config_;
+    Q3HBox*                          generatorBox_;
     //@}
 };
 

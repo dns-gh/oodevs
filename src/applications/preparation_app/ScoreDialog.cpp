@@ -11,8 +11,10 @@
 #include "ScoreDialog.h"
 #include "ScoreList.h"
 #include "moc_ScoreDialog.cpp"
+#include "actions_gui/InterfaceBuilder.h"
 #include "clients_kernel/SimpleLocationDrawer.h"
 #include "preparation/ScoresModel.h"
+#include "preparation/StaticModel.h"
 
 using namespace kernel;
 
@@ -39,11 +41,12 @@ namespace
 // Created: SBO 2009-04-16
 // -----------------------------------------------------------------------------
 ScoreDialog::ScoreDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ScoresModel& model,
-                          gui::ParametersLayer& layer, const StaticModel& staticModel, const tools::ExerciseConfig& config,
+                          gui::ParametersLayer& layer, const ::StaticModel& staticModel, const tools::ExerciseConfig& config,
                           const kernel::GlTools_ABC& tools)
     : QDialog( parent, "ScoreDialog" )
-    , model_   ( model )
-    , tools_   ( tools )
+    , builder_( new actions::gui::InterfaceBuilder( controllers, layer, staticModel ) )
+    , model_  ( model )
+    , tools_  ( tools )
 {
     setModal( false );
     setCaption( tr( "Scores" ) );
@@ -52,7 +55,7 @@ ScoreDialog::ScoreDialog( QWidget* parent, kernel::Controllers& controllers, gui
     grid->setRowStretch( 0, 4 );
     {
         Q3GroupBox* box = new Q3HGroupBox( tr( "Scores" ), this );
-        scores_ = new ScoreList( box, controllers, factory, layer, model, staticModel, config, tools_ );
+        scores_ = new ScoreList( box, controllers, factory, model, config, staticModel, tools_, *builder_ );
         grid->addMultiCellWidget( box, 0, 0, 0, 2 );
         connect( scores_, SIGNAL( ScoreDeleted( const Score_ABC& ) ), SLOT( OnDeleteScore( const Score_ABC& ) ) );
         connect( scores_, SIGNAL( Show() ), SLOT( show() ) );
@@ -82,7 +85,7 @@ ScoreDialog::ScoreDialog( QWidget* parent, kernel::Controllers& controllers, gui
 // -----------------------------------------------------------------------------
 ScoreDialog::~ScoreDialog()
 {
-    // NOTHING
+    delete builder_;
 }
 
 // -----------------------------------------------------------------------------

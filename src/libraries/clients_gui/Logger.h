@@ -17,6 +17,7 @@
 namespace kernel
 {
     class Time_ABC;
+    class ContextMenu;
 }
 
 namespace gui
@@ -77,7 +78,7 @@ private:
     //@{
     ItemFactory_ABC& factory_;
     const kernel::Time_ABC& simulation_;
-    Q3PopupMenu popupMenu_;
+    kernel::ContextMenu* popupMenu_;
     T_Items items_;
     std::ofstream log_;
     //@}

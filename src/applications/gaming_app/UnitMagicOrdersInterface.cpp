@@ -49,7 +49,7 @@ using namespace actions;
 // Name: UnitMagicOrdersInterface constructor
 // Created: SBO 2007-05-04
 // -----------------------------------------------------------------------------
-UnitMagicOrdersInterface::UnitMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::ParametersLayer& layer, const kernel::Profile_ABC& profile )
+UnitMagicOrdersInterface::UnitMagicOrdersInterface( QWidget* parent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, ::gui::ParametersLayer& layer, const kernel::Profile_ABC& profile )
     : QObject( parent )
     , controllers_( controllers )
     , actionsModel_( actionsModel )
@@ -85,7 +85,7 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Agent_ABC& agent
     selectedEntity_ = &agent;
     if( const MagicOrders* orders = agent.Retrieve< MagicOrders >() )
     {
-        Q3PopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
+        kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
         int moveId = AddMagic( tr( "Teleport" ), SLOT( Move() ), magicMenu );
         magicMenu->setItemEnabled( moveId, orders->CanMagicMove() );
         AddSurrenderMenu( magicMenu, agent );
@@ -107,7 +107,7 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Automat_ABC& age
         return;
 
     selectedEntity_ = &agent;
-    Q3PopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
+    kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
     int moveId = AddMagic( tr( "Teleport" ), SLOT( Move() ), magicMenu );
     bool bMoveAllowed = false;
     if( const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >() )
@@ -127,7 +127,7 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Formation_ABC& e
     if( !profile_.CanDoMagic( entity ) )
         return;
     selectedEntity_ = &entity;
-    Q3PopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
+    kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
     FillCommonOrders( magicMenu );
 }
 
@@ -140,7 +140,7 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Team_ABC& entity
     if( !profile_.CanDoMagic( entity ) )
         return;
     selectedEntity_ = &entity;
-    Q3PopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
+    kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
     FillCommonOrders( magicMenu );
 }
 
@@ -347,7 +347,7 @@ void UnitMagicOrdersInterface::ReloadBrain()
 // Name: UnitMagicOrdersInterface::AddMagic
 // Created: SBO 2007-05-04
 // -----------------------------------------------------------------------------
-void UnitMagicOrdersInterface::AddMagic( const QString& label, int id, Q3PopupMenu* menu )
+void UnitMagicOrdersInterface::AddMagic( const QString& label, int id, kernel::ContextMenu* menu )
 {
     const int nId = menu->insertItem( label, this, SLOT( Magic( int ) ) );
     menu->setItemParameter( nId, id );
@@ -357,7 +357,7 @@ void UnitMagicOrdersInterface::AddMagic( const QString& label, int id, Q3PopupMe
 // Name: UnitMagicOrdersInterface::AddMagic
 // Created: SBO 2007-05-04
 // -----------------------------------------------------------------------------
-int UnitMagicOrdersInterface::AddMagic( const QString& label, const char* slot, Q3PopupMenu* menu )
+int UnitMagicOrdersInterface::AddMagic( const QString& label, const char* slot, kernel::ContextMenu* menu )
 {
     return menu->insertItem( label, this, slot );
 }
@@ -376,7 +376,7 @@ void UnitMagicOrdersInterface::ApplyOnHierarchy( const kernel::Entity_ABC& entit
 // Name: UnitMagicOrdersInterface::FillCommonOrders
 // Created: SBO 2007-05-04
 // -----------------------------------------------------------------------------
-void UnitMagicOrdersInterface::FillCommonOrders( Q3PopupMenu* magicMenu )
+void UnitMagicOrdersInterface::FillCommonOrders( kernel::ContextMenu* magicMenu )
 {
     AddMagic( tr( "Recover - All" ),        sword::UnitMagicAction_Type_recover_all,      magicMenu );
     AddMagic( tr( "Recover - Troops" ),     sword::UnitMagicAction_Type_recover_troops,  magicMenu );
@@ -422,14 +422,14 @@ namespace
 // Name: UnitMagicOrdersInterface::AddSurrenderMenu
 // Created: SBO 2007-05-04
 // -----------------------------------------------------------------------------
-void UnitMagicOrdersInterface::AddSurrenderMenu( Q3PopupMenu* parent, const kernel::Entity_ABC& entity )
+void UnitMagicOrdersInterface::AddSurrenderMenu( kernel::ContextMenu* parent, const kernel::Entity_ABC& entity )
 {
     if( IsSurrendered( entity ) )
         AddMagic( tr( "Cancel surrender" ), sword::UnitMagicAction_Type_cancel_surrender, parent );
     else
     {
         const kernel::Entity_ABC& team = entity.Get< kernel::TacticalHierarchies >().GetTop();
-        Q3PopupMenu* menu = new Q3PopupMenu( parent );
+        kernel::ContextMenu* menu = new kernel::ContextMenu( parent );
         for( CIT_Teams it = teams_.begin(); it != teams_.end(); ++it )
             if( *it != &team )
                 menu->insertItem( (*it)->GetName(), this, SLOT( SurrenderTo( int ) ), 0, ( int ) *it );

@@ -21,6 +21,7 @@ namespace actions
 {
     namespace gui
     {
+        class InterfaceBuilder_ABC;
 
 // =============================================================================
 /** @class  ParamBool
@@ -28,15 +29,14 @@ namespace actions
 */
 // Created: AGE 2006-03-15
 // =============================================================================
-class ParamBool : public QObject
-                , public Param_ABC
+class ParamBool : public Param_ABC
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamBool( QObject* parent, const kernel::OrderParameter& parameter, bool defaultValue = false );
+             ParamBool( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter );
     virtual ~ParamBool();
     //@}
 
@@ -44,6 +44,7 @@ public:
     //@{
     virtual QWidget* BuildInterface( QWidget* parent );
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
+    void SetValue( bool value );
     //@}
 
 private slots:
@@ -55,8 +56,8 @@ private slots:
 private:
     //! @name Member data
     //@{
-    kernel::OrderParameter parameter_;
-    bool value_;
+    QCheckBox* checkBox_;
+    bool       value_;
     //@}
 };
 

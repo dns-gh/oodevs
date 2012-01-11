@@ -31,7 +31,7 @@ using namespace kernel;
 // Name: FormationFactory constructor
 // Created: SBO 2006-09-19
 // -----------------------------------------------------------------------------
-FormationFactory::FormationFactory( Controllers& controllers, const StaticModel& staticModel, IdManager& idManager, kernel::SymbolFactory& symbolsFactory )
+FormationFactory::FormationFactory( Controllers& controllers, const ::StaticModel& staticModel, IdManager& idManager, kernel::SymbolFactory& symbolsFactory )
     : controllers_   ( controllers )
     , staticModel_   ( staticModel )
     , idManager_     ( idManager )

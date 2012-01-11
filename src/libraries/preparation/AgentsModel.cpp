@@ -35,7 +35,7 @@ using namespace kernel;
 // Name: AgentsModel constructor
 // Created: AGE 2006-02-10
 // -----------------------------------------------------------------------------
-AgentsModel::AgentsModel( Controllers& controllers, AgentFactory_ABC& agentFactory, const StaticModel& staticModel )
+AgentsModel::AgentsModel( Controllers& controllers, AgentFactory_ABC& agentFactory, const ::StaticModel& staticModel )
     : controllers_ ( controllers )
     , agentFactory_( agentFactory )
     , staticModel_ ( staticModel )
