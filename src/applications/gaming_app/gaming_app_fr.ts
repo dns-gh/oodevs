@@ -3199,7 +3199,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Finish logistic handlings</source>
-        <translation type="unfinished"></translation>
+        <translation>Terminer les consignes logistiques</translation>
     </message>
 </context>
 <context>
