@@ -36,6 +36,7 @@ DEC_PathWalker::DEC_PathWalker( PHY_MovingEntity_ABC& movingEntity )
     , bFuelReportSent_   ( false )
     , bTerrainReportSent_( false )
     , pathSet_           ( eFinished )
+    , obstacle_          ( 0 )
 {
     // NOTHING
 }
@@ -284,6 +285,7 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
                         bTerrainReportSent_ = true;
                     }
                     pathSet_ = eBlockedByObject;
+                    obstacle_ = &object;
                     return false;
                 }
             }
@@ -315,6 +317,7 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
                     bTerrainReportSent_ = true;
                 }
                 pathSet_ = eBlockedByObject;
+                obstacle_ = &object;
                 return false;
             }
         }
@@ -370,7 +373,7 @@ bool DEC_PathWalker::TryToMoveTo( const DEC_PathResult& path, const MT_Vector2D&
     ComputeObjectsCollision( vNewPos_, vNewPosTmp, moveStepSet );
     if( moveStepSet.size() < 2 )
     {
-        MT_LOG_ERROR_MSG( "Move step set has not at least 2 elements" );
+        MT_LOG_ERROR_MSG( "Move step set has not at least 2 elements" ); // $$$$ LDC RC Can never happen.
         return false;
     }
     CIT_MoveStepSet itCurMoveStep  = moveStepSet.begin();
@@ -535,4 +538,13 @@ bool DEC_PathWalker::SerializeCurrentPath( sword::Path& asn ) const
         return false;
     pCurrentPath_->Serialize( asn );
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathWalker::GetObstacle
+// Created: NLD 2011-01-12
+// -----------------------------------------------------------------------------
+MIL_Object_ABC* DEC_PathWalker::GetObstacle() const
+{
+    return( pathSet_ == eBlockedByObject ) ? obstacle_ : 0;
 }

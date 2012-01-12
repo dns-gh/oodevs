@@ -60,6 +60,7 @@ public:
     void MoveCanceled( boost::shared_ptr< DEC_PathResult > pPath );
     void Apply(); // Called by MIL_Effect_Move
     void Clean();
+    MIL_Object_ABC* GetObstacle() const;
     //@}
 
     //! @name Tools
@@ -153,6 +154,7 @@ private:
     bool bTerrainReportSent_;
     boost::shared_ptr< DEC_PathResult > pCurrentPath_;
     E_ReturnCode pathSet_;
+    MIL_Object_ABC* obstacle_;
     //@}
 };
 

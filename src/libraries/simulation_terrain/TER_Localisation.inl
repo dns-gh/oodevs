@@ -117,8 +117,8 @@ bool TER_Localisation::IsInside( const MT_Vector2D& vPos, double rPrecision ) co
     switch( nType_ )
     {
 //        case ePoint:   return vPos.SquareDistance( pointVector_[0] ) <= ( rPrecision_ * rPrecision_ );
-        case ePoint:   return polygon_.IsNull() || ( boundingBox_.IsInside( vPos, rPrecision_ ) && polygon_ .IsInside( vPos, rPrecision ) );
-        case ePolygon: return polygon_.IsNull() || ( boundingBox_.IsInside( vPos, rPrecision_ ) && polygon_ .IsInside( vPos, rPrecision ) );
+        case ePoint:   return polygon_.IsNull() || ( polygon_ .IsInside( vPos, rPrecision ) );
+        case ePolygon: return polygon_.IsNull() || ( polygon_ .IsInside( vPos, rPrecision ) );
         case eLine:    return boundingBox_.IsInside( vPos, rPrecision_ ) && polyline_.IsInside( vPos, rPrecision );
         default:
             return false;

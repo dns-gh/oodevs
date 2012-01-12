@@ -852,7 +852,7 @@ bool DEC_Knowledge_Object::IsObjectInsidePathPoint( const T_PointVector& pathPoi
             return false;
         }
     for( CIT_PointVector it = pathPoints.begin(); it != pathPoints.end(); ++it )
-        if( localisation_.IsInside( *it ) )
+        if( localisation_.IsInside( *it ) && ( !pObjectKnown_ || pObjectKnown_->GetLocalisation().IsInside( *it ) ) )
             return true;
     return false;
 }

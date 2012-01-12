@@ -80,6 +80,7 @@ public:
     const DEC_Agent_PathClass& GetPathClass() const;
     double GetUnitMajorWeight() const;
     MT_Vector2D GetPointOnPathCloseTo( const MT_Vector2D& posToTest, const MT_Vector2D& lastJoiningPoint, bool forceNextPoint, double minDistance );
+    MT_Vector2D GetNextPointOutsideObstacle( const MT_Vector2D& currentPos, MIL_Object_ABC* obstacle ) const;
     //@}
 
     //! @name Tools

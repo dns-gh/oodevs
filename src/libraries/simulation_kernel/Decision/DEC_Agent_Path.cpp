@@ -654,3 +654,16 @@ MT_Vector2D DEC_Agent_Path::GetPointOnPathCloseTo( const MT_Vector2D& posToTest,
         return followingPathPoints_.front().first;
     return posToTest;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Agent_Path::GetNextPointOutsideObstacle
+// Created: LDC 2012-01-12
+// -----------------------------------------------------------------------------
+MT_Vector2D DEC_Agent_Path::GetNextPointOutsideObstacle( const MT_Vector2D& currentPos, MIL_Object_ABC* obstacle ) const
+{
+    if( followingPathPoints_.size() > 1 )
+        return DEC_PathResult::GetNextPointOutsideObstacle( currentPos, obstacle );
+    else if( followingPathPoints_.size() == 1 )
+        return followingPathPoints_.front().first;
+    return currentPos;
+}

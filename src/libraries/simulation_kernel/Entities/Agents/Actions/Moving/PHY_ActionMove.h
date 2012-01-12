@@ -25,6 +25,7 @@ namespace moving
 }
 class DEC_Path_ABC;
 class DEC_Agent_Path;
+class MIL_Object_ABC;
 
 // =============================================================================
 // @class  PHY_ActionMove
@@ -55,13 +56,14 @@ public:
 private:
     //! @name Tools
     //@{
-    bool        CreateJoiningPath( const MT_Vector2D& lastJoiningPoint, bool forceNextPoint, double minDistance );
-    void        DestroyJoiningPath();
+    bool CreateJoiningPath( const MT_Vector2D& lastJoiningPoint, bool forceNextPoint, double minDistance );
+    void DestroyJoiningPath();
     MT_Vector2D GetLastPointAndDestroyJoiningPath();
-    void        AvoidObstacles();
-    bool        UpdateObjectsToAvoid();
-    void        CreateFinalPath();
-    int         CreateAdaptedPath( boost::shared_ptr< DEC_PathResult > pCurrentPath, const MT_Vector2D& lastJoiningPoint, bool forceNextPoint );
+    void AvoidObstacles();
+    bool UpdateObjectsToAvoid();
+    void CreateFinalPath();
+    int CreatePathAfterObjectCollision( boost::shared_ptr< DEC_PathResult > pCurrentPath, MIL_Object_ABC* obstacle );
+    int CreateAdaptedPath( boost::shared_ptr< DEC_PathResult > pCurrentPath, const MT_Vector2D& lastJoiningPoint, bool forceNextPoint );
     //@}
 
 private:
@@ -81,6 +83,7 @@ private:
     bool forceNextPoint_;
     bool isTreatingJoining_;
     std::pair< std::pair< MT_Vector2D, MT_Vector2D >, unsigned int > lastBlockedPoint_;
+    MIL_Object_ABC* obstacle_;
 };
 
 #endif // __PHY_ActionMove_h_

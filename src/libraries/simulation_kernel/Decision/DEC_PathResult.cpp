@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_PathResult.h"
 #include "DEC_PathPoint.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/Protocol.h"
@@ -122,6 +123,34 @@ MT_Vector2D DEC_PathResult::GetPointOnPathCloseTo( const MT_Vector2D& posToTest,
     }
 
     return itCurrentRequest->first;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathResult::GetNextPointOutsideObstacle
+// Created: LDC 2011-01-12
+// -----------------------------------------------------------------------------
+MT_Vector2D DEC_PathResult::GetNextPointOutsideObstacle( const MT_Vector2D& posToTest, MIL_Object_ABC* obstacle ) const
+{
+    if( resultList_.size() <= 1 || !obstacle )
+        return posToTest;
+    static const double rWeldValue = TER_World::GetWorld().GetWeldValue();
+    CIT_PathPointList itEnd = resultList_.begin();
+    ++itEnd;
+    bool currentPositionReached = false;
+    const TER_Localisation& obstacleLocalisation = obstacle->GetLocalisation();
+    for( CIT_PathPointList itStart = resultList_.begin(); itEnd != resultList_.end(); ++itStart, ++itEnd )
+    {
+        MT_Vector2D endPos = (*itEnd)->GetPos();
+        if( !currentPositionReached )
+        {
+            MT_Line vLine( (*itStart)->GetPos(), endPos );
+            if( vLine.IsInside( posToTest, rWeldValue ) )
+                currentPositionReached = true;
+        }
+        if( currentPositionReached && !obstacleLocalisation.IsInside( endPos ) )
+            return endPos;
+    }
+    return posToTest;
 }
 
 // -----------------------------------------------------------------------------
