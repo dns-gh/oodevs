@@ -48,9 +48,9 @@ FormationHierarchyEditor::~FormationHierarchyEditor()
 void FormationHierarchyEditor::NotifyContextMenu( const kernel::Formation_ABC& entity, kernel::ContextMenu& menu )
 {
     const Formation* pFormation = dynamic_cast< const Formation* >( &entity );
-    if ( !pFormation )
+    if( !pFormation )
         return;
-    
+
     selected_ = pFormation;
     Q3PopupMenu* subMenu = menu.SubMenu( "Creation", tr( "Change hierarchy level" ) );
     for( const kernel::HierarchyLevel_ABC* level = levels_.Resolve( "xxxxx" ); level; level = level->GetNext() )

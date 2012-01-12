@@ -31,7 +31,6 @@ namespace tools
     class SchemaWriter_ABC;
 }
 
-
 class Model;
 class StaticModel;
 

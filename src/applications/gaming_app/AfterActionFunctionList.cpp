@@ -199,7 +199,7 @@ boost::shared_ptr< actions::gui::Param_ABC > AfterActionFunctionList::CreatePara
         compatibleType = "maintenancepriorities";
     else if( type == "zone" )
         compatibleType = "location";
-    else 
+    else
     {
         nbOccur = std::numeric_limits< int >::max();
         if( type == "unit list" )

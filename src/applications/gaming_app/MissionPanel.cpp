@@ -46,7 +46,6 @@
 
 #include "actions_gui/InterfaceBuilder_ABC.h"
 
-
 using namespace kernel;
 
 // -----------------------------------------------------------------------------

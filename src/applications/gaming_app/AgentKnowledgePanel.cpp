@@ -59,7 +59,7 @@ AgentKnowledgePanel::AgentKnowledgePanel( QWidget* parent, PanelStack_ABC& panel
                 .AddLabel( tools::findTranslation( "AgentKnowledge",  "Command post:" ) )
                 .AddLabel( tools::findTranslation( "AgentKnowledge",  "Relevance:" ) )
                 .AddLabel( tools::findTranslation( "AgentKnowledge",  "Critical intelligence:" ) );
-    
+
     pPerceptionListView_ = new ListDisplayer< AgentKnowledgePanel >( this, *this, factory );
     pPerceptionListView_->AddColumn( tools::translate( "AgentKnowledge", "Unit" ) ).
                           AddColumn( tools::translate( "AgentKnowledge", "Perception level" ) );

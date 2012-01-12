@@ -33,5 +33,4 @@ public:
     //@}
 };
 
-
 #endif // __LivingAreaEditor_ABC_h_

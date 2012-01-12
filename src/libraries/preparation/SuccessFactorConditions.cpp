@@ -57,7 +57,7 @@ SuccessFactorConditions::~SuccessFactorConditions()
 void SuccessFactorConditions::NotifyDeleted( const Score_ABC& score )
 {
     IT_Elements it = elements_.begin();
-    while ( it != elements_.end() )
+    while( it != elements_.end() )
     {
         IT_Elements itCur = it++;
         if( &itCur->second->GetScore() == &score )

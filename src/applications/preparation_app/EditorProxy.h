@@ -12,7 +12,6 @@
 
 #include "clients_kernel/OptionsObserver_ABC.h"
 
-
 namespace kernel
 {
     class Controllers;

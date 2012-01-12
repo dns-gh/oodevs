@@ -147,7 +147,7 @@ void ProfilesPanel::NotifyUpdated( const Profile& profile )
         current_ = "";
     }
     for( int i = 0; i < dataModel_->rowCount(); ++i )
-        if(  QStandardItem* item = dataModel_->item( i, 1 ) )
+        if( QStandardItem* item = dataModel_->item( i, 1 ) )
         {
             unsigned int count = profile.GetProfileCount( item->text().ascii() );
             if( QStandardItem* connected = dataModel_->item( i, 4 ) )

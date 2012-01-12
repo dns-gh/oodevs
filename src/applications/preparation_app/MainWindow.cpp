@@ -43,7 +43,7 @@
 #include "clients_gui/AutomatsLayer.h"
 #include "clients_gui/CircularEventStrategy.h"
 #include "clients_gui/ColorStrategy.h"
-#include "clients_gui/DefaultLayer.h" 
+#include "clients_gui/DefaultLayer.h"
 #include "clients_gui/DisplayToolbar.h"
 #include "clients_gui/DrawerFactory.h"
 #include "clients_gui/DrawerLayer.h"

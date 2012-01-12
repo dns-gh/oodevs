@@ -30,7 +30,6 @@ namespace gui
     class ParametersLayer;
 }
 
-
 // =============================================================================
 /** @class  LivingAreaPanel
     @brief  Living area panel

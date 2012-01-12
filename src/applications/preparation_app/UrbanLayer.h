@@ -20,7 +20,6 @@ namespace kernel
     class Profile_ABC;
 }
 
-
 namespace gui
 {
     class ColorStrategy_ABC;

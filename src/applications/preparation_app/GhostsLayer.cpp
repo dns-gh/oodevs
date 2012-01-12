@@ -86,7 +86,7 @@ bool GhostsLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Po
         if( IsInSelection( *entities_[ i ], point ) )
         {
             highLightedGhost_ = static_cast< const Ghost_ABC* >( entities_[ i ] );
-            if( ( gui::ValuedDragObject::Provides< const AgentType >( event ) && highLightedGhost_->GetGhostType() == eGhostType_Agent ) || 
+            if( ( gui::ValuedDragObject::Provides< const AgentType >( event ) && highLightedGhost_->GetGhostType() == eGhostType_Agent ) ||
                 ( gui::ValuedDragObject::Provides< const AutomatType > ( event ) && highLightedGhost_->GetGhostType() == eGhostType_Automat ) )
             {
                 highLightedGhost_->OverFly( controllers_.actions_ );
@@ -217,7 +217,6 @@ bool GhostsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f&
     }
     return result;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: GhostsLayer::BeforeSelection

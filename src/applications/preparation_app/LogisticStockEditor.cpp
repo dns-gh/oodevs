@@ -281,7 +281,7 @@ void LogisticStockEditor::SupplyLogisticBaseStocks( const kernel::Entity_ABC& bl
         const kernel::Entity_ABC& entity = logChildren.NextElement();
         if( IsLogisticBase( entity ) )
         {
-            if ( blLogBase.GetId() != entity.GetId() )
+            if( blLogBase.GetId() != entity.GetId() )
                 SupplyLogisticBaseStocks( entity, logType, requirements );
         }
         else

@@ -68,7 +68,6 @@ void NewProfileDialog::UpdateText()
     }
     else
     {
-        
         if( model_.Exists( name ) || checker_.Exists( name ) )
         {
             warningLabel_->setText( "<font color=\"#FF0000\">" + tr( "Profile '%1' already exists." ).arg( name ) + "</font>" );

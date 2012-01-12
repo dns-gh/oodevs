@@ -153,7 +153,7 @@ void ScoreList::Load()
 {
     if( bfs::exists( config_.GetOptionalPhysicalChildFile( "scores" ) ) )
         generatorBox_->show();
-    else 
+    else
         generatorBox_->hide();
 }
 

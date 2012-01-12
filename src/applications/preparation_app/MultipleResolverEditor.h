@@ -54,7 +54,6 @@ protected:
     //@}
 };
 
-
 #include "MultipleResolverEditor.inl"
 
 #endif // __MultipleResolverEditor_h_
