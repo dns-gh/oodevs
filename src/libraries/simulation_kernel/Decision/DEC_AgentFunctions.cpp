@@ -46,6 +46,7 @@
 #include "Entities/Objects/ActivableCapacity.h"
 #include "Entities/Objects/BypassAttribute.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
+#include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/MIL_Army.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
@@ -830,6 +831,15 @@ bool DEC_AgentFunctions::IsInhabitantsConfined( const TER_Localisation* location
 {
     assert( location );
     return MIL_AgentServer::GetWorkspace().GetEntityManager().IsInhabitantsConfined( *location );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::UrbanBlockIsPopulated
+// Created: CCD 2012-01-11
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::UrbanBlockIsPopulated( const UrbanObjectWrapper* pUrbanBlock )
+{
+     return pUrbanBlock->GetTotalInhabitants() > 0;
 }
 
 // -----------------------------------------------------------------------------

@@ -552,6 +552,7 @@ public:
         eRC_NoPEInAutomat,
         eRC_SectionUndeployed,
         eRC_StartUndeploy,
+        eRC_NoPopulationUrbanBlock,
         eLast
     };
     //@}
