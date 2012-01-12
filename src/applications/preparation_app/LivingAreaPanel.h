@@ -14,6 +14,7 @@
 #include "clients_kernel/SafePointer.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include "clients_gui/ShapeHandler_ABC.h"
+#include "LivingAreaEditor_ABC.h"
 
 namespace kernel
 {
@@ -42,6 +43,7 @@ class LivingAreaPanel : public QDockWidget
                       , public kernel::ContextMenuObserver_ABC< kernel::Inhabitant_ABC >
                       , public kernel::ContextMenuObserver_ABC< geometry::Point2f >
                       , public gui::ShapeHandler_ABC
+                      , public LivingAreaEditor_ABC
 {
     Q_OBJECT;
 
@@ -51,6 +53,11 @@ public:
              LivingAreaPanel( QMainWindow* parent, kernel::Controllers& controllers, gui::ParametersLayer& paramLayer,
                               const kernel::GlTools_ABC& tools );
     virtual ~LivingAreaPanel();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual void Select( const geometry::Point2f& point );
     //@}
 
 private:

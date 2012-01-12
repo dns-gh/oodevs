@@ -339,3 +339,26 @@ void InhabitantPositions::Reject()
     UpdateDictionary();
     controller_.Update( inhabitant_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: InhabitantPositions::Update
+// Created: LGY 2012-01-12
+// -----------------------------------------------------------------------------
+void InhabitantPositions::Update( const geometry::Point2f& point )
+{
+    tools::Iterator< const gui::TerrainObjectProxy& > it = urbanModel_.tools::Resolver< gui::TerrainObjectProxy >::CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const gui::TerrainObjectProxy& object = it.NextElement();
+        if( const kernel::UrbanPositions_ABC* positions = object.Retrieve< kernel::UrbanPositions_ABC >() )
+            if( positions->IsInside( point ) )
+            {
+                if( Exists( object.GetId() ) )
+                    livingUrbanObject_.erase( std::remove_if( livingUrbanObject_.begin(), livingUrbanObject_.end(),
+                                              boost::bind( &Check, _1, boost::cref( object ) ) ), livingUrbanObject_.end() );
+                else
+                    livingUrbanObject_.push_back( boost::make_tuple( object.GetId(), object.GetName(), &object ) );
+                return;
+            }
+    }
+}

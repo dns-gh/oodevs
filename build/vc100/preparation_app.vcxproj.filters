@@ -660,6 +660,9 @@
     <ClInclude Include="..\..\src\applications\preparation_app\LocationEditorToolbar.h">
       <Filter>Source Files</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\LivingAreaEditor_ABC.h">
+      <Filter>Source Files\Panels\Living area</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\preparation_app\preparation_app_es.ts">

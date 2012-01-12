@@ -39,6 +39,7 @@
 #include "SuccessFactorDialog.h"
 #include "DockManager.h"
 #include "LocationEditorToolbar.h"
+#include "LivingAreaPanel.h"
 #include "clients_gui/AutomatsLayer.h"
 #include "clients_gui/CircularEventStrategy.h"
 #include "clients_gui/ColorStrategy.h"
@@ -283,7 +284,7 @@ void MainWindow::CreateLayers( ParametersLayer& parameters, gui::Layer_ABC& loca
     Layer_ABC& ghosts                   = *new GhostsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile, *simpleFilter_ );
     Layer_ABC& defaultLayer             = *new DefaultLayer( controllers_ );
     Layer_ABC& drawerLayer              = *new DrawerLayer( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile, *simpleFilter_ );
-    Layer_ABC& inhabitantLayer          = *new ::InhabitantLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_ );
+    Layer_ABC& inhabitantLayer          = *new ::InhabitantLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_, pDockManager_->GetLivingAreaPanel() );
     Layer_ABC& contour                  = *new ::ContourLinesLayer( controllers_ );
 
     // ordre de dessin

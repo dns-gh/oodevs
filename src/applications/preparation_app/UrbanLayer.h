@@ -48,14 +48,6 @@ public:
     //! @name Operations
     //@{
     virtual bool ShouldDisplay( const kernel::Entity_ABC& entity );
-    virtual void NotifySelected( const gui::TerrainObjectProxy* object );
-    virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
-    //@}
-
-private:
-    //! @name Member Data
-    //@{
-    kernel::Controllers& controllers_;
     //@}
 };
 

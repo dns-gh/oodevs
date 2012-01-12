@@ -78,6 +78,7 @@ public:
     QByteArray SaveState() const;
     ObjectCreationPanel& GetObjectCreationPanel() const;
     InhabitantCreationPanel& GetInhabitantCreationPanel() const;
+    LivingAreaPanel& GetLivingAreaPanel() const;
     //@}
 
 private:

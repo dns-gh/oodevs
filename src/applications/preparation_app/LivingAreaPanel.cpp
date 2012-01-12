@@ -117,8 +117,8 @@ void LivingAreaPanel::NotifyContextMenu( const geometry::Point2f& /*point*/, ker
 {
     if( editorEnabled_ )
     {
-        menu.InsertItem( "Update", tools::translate( "LivingAreaPanel", "Remove urban blocks" ), this, SLOT( Remove() ) );
         menu.InsertItem( "Update", tools::translate( "LivingAreaPanel", "Add urban blocks" ), this, SLOT( Add() ) );
+        menu.InsertItem( "Update", tools::translate( "LivingAreaPanel", "Remove urban blocks" ), this, SLOT( Remove() ) );
     }
 }
 
@@ -243,4 +243,15 @@ void LivingAreaPanel::Reject()
             positions->Reject();
     controllers_.options_.Change( "LivingAreaEditor", false, false );
     Reset();
+}
+
+// -----------------------------------------------------------------------------
+// Name: LivingAreaPanel::Select
+// Created: LGY 2012-01-12
+// -----------------------------------------------------------------------------
+void LivingAreaPanel::Select( const geometry::Point2f& point )
+{
+    if( selected_ )
+        if( InhabitantPositions* positions = static_cast< InhabitantPositions* >( selected_.ConstCast()->Retrieve< kernel::Positions >() ) )
+            positions->Update( point );
 }

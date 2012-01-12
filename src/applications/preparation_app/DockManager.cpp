@@ -269,3 +269,12 @@ QByteArray DockManager::SaveState() const
         return state_;
     return parent_->saveState();
 }
+
+// -----------------------------------------------------------------------------
+// Name: DockManager::GetLivingAreaPanel
+// Created: LGY 2012-01-12
+// -----------------------------------------------------------------------------
+LivingAreaPanel& DockManager::GetLivingAreaPanel() const
+{
+    return *pLivingAreaPanel_;
+}

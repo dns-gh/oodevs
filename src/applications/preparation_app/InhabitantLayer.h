@@ -28,6 +28,8 @@ namespace gui
     class ColorStrategy_ABC;
 }
 
+class LivingAreaEditor_ABC;
+
 // =============================================================================
 /** @class  InhabitantLayer
     @brief  Inhabitant layer
@@ -41,7 +43,7 @@ public:
     //@{
              InhabitantLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools,
                               gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile,
-                              const gui::LayerFilter_ABC& filter );
+                              const gui::LayerFilter_ABC& filter, LivingAreaEditor_ABC& editor );
     virtual ~InhabitantLayer();
     //@}
 
@@ -50,6 +52,12 @@ public:
     virtual bool ShouldDisplay( const kernel::Entity_ABC& entity );
     virtual void NotifySelected( const kernel::Inhabitant_ABC* inhabitant );
     virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
+    //@}
+
+private:
+    //! @name Member Data
+    //@{
+    LivingAreaEditor_ABC& editor_;
     //@}
 };
 

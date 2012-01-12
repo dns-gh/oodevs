@@ -9,6 +9,7 @@
 
 #include "preparation_app_pch.h"
 #include "InhabitantLayer.h"
+#include "LivingAreaEditor_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: EntityLayerBase::InhabitantLayer
@@ -16,8 +17,9 @@
 // -----------------------------------------------------------------------------
 InhabitantLayer::InhabitantLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools,
                                   gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile,
-                                  const gui::LayerFilter_ABC& filter )
+                                  const gui::LayerFilter_ABC& filter, LivingAreaEditor_ABC& editor )
     : EditorProxy< gui::InhabitantLayer >( controllers, tools, strategy, view, profile, filter )
+    , editor_( editor )
 {
     // NOTHING
 }
@@ -59,7 +61,11 @@ bool InhabitantLayer::HandleMousePress( QMouseEvent* event, const geometry::Poin
     if( !livingAreaEditor_ )
         return EditorProxy< gui::InhabitantLayer >::HandleMousePress( event, point );
     if( event && event->state() != Qt::NoButton )
+    {
+        if( event->button() == Qt::LeftButton )
+            editor_.Select( point );
         if( event->button() == Qt::RightButton )
             controllers_.actions_.ContextMenu( point, kernel::Nothing(), event->globalPos() );
+    }
     return true;
 }
