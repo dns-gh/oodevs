@@ -152,7 +152,7 @@
     </message>
     <message>
         <source>Content to copy:</source>
-        <translation type="unfinished"></translation>
+        <translation>Contenu à copier</translation>
     </message>
 </context>
 <context>
@@ -561,7 +561,7 @@
     </message>
     <message>
         <source>Starting %1</source>
-        <translation type="unfinished"></translation>
+        <translation>Lancement de %1</translation>
     </message>
 </context>
 <context>
