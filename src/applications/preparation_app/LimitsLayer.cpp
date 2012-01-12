@@ -47,6 +47,8 @@ LimitsLayer::~LimitsLayer()
 // -----------------------------------------------------------------------------
 bool LimitsLayer::CanCreateLine()
 {
+    if( livingAreaEditor_ )
+        return false;
     return modelBuilder_.CanCreateLine();
 }
 

@@ -19,7 +19,7 @@ UrbanLayer::UrbanLayer( kernel::Controllers& controllers, const kernel::GlTools_
     : EditorProxy< gui::UrbanLayer >( controllers, tools, strategy, view, profile, filter )
     , controllers_( controllers )
 {
-//    controllers_.Update( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -28,7 +28,7 @@ UrbanLayer::UrbanLayer( kernel::Controllers& controllers, const kernel::GlTools_
 // -----------------------------------------------------------------------------
 UrbanLayer::~UrbanLayer()
 {
-//    controllers_.Unregister( *this );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
