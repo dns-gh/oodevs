@@ -573,8 +573,8 @@
   <report category="operational" id="401" message="Already engaged"/>
   <report category="operational" id="402" message="Already disengaged"/>
   <report category="operational" id="403" message="No platoon can do the main effect"/>
-  <report category="operational" id="404" message="Obstacle should be activated"/>
-  <report category="operational" id="405" message="Section undeployed"/>
-  <report category="operational" id="406" message="Starting undeploy"/>
+  <report category="operational" id="404" message="Section undeployed"/>
+  <report category="operational" id="405" message="Starting undeploy"/>
+  <report category="operational" id="406" message="No population in the urban block"/>
 </reports>
 <!-- signature="3919319845" -->
