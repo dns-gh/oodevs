@@ -16,6 +16,7 @@
 #include "Entities/Agents/Roles/Deployment/PHY_RoleInterface_Deployment.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/MIL_Army.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Decision/DEC_PathFind_Manager.h"
 #include "Decision/DEC_PathWalker.h"
@@ -76,13 +77,13 @@ void PHY_ActionMove::StopAction()
 // Name: PHY_ActionMove::CreateJoiningPath
 // Created: NLD 2004-09-29
 // -----------------------------------------------------------------------------
-bool PHY_ActionMove::CreateJoiningPath( const MT_Vector2D& lastJoiningPoint, bool forceNextPoint )
+bool PHY_ActionMove::CreateJoiningPath( const MT_Vector2D& lastJoiningPoint, bool forceNextPoint, double minDistance )
 {
     assert( pMainPath_.get() );
     assert( pMainPath_->GetState() != DEC_Path_ABC::eComputing );
     assert( !pJoiningPath_.get() );
     const MT_Vector2D& vPionPos = pion_.GetRole< PHY_RoleInterface_Location >().GetPosition();
-    const MT_Vector2D& vTestPos = pMainPath_->GetPointOnPathCloseTo( vPionPos, lastJoiningPoint, forceNextPoint );
+    const MT_Vector2D& vTestPos = pMainPath_->GetPointOnPathCloseTo( vPionPos, lastJoiningPoint, forceNextPoint, minDistance );
     if( vPionPos == vTestPos )
         return false;
     pJoiningPath_.reset( new DEC_Agent_Path( pion_, vTestPos, pMainPath_->GetPathType() ) );
@@ -193,16 +194,16 @@ void PHY_ActionMove::AvoidObstacles()
     if( !UpdateObjectsToAvoid() )
         return;
 
-    boost::shared_ptr< DEC_Knowledge_Object > pObjectColliding;
+    double rDistanceBeforeCollision = 0.;
+    double rDistanceAfterCollision = 0.;
 
-    double rDistanceCollision = 0.;
-
-    if( !role_.ComputeFutureObjectCollision( pion_.GetRole< PHY_RoleInterface_Location >().GetPosition(), objectsToAvoid_, rDistanceCollision, pObjectColliding ) )
+    boost::shared_ptr< DEC_Knowledge_Object > obstacle;
+    if( !role_.ComputeFutureObjectCollision( pion_.GetRole< PHY_RoleInterface_Location >().GetPosition(), objectsToAvoid_, rDistanceBeforeCollision, rDistanceAfterCollision, obstacle ) )
         return;
 
-    assert( pObjectColliding && pObjectColliding->IsValid() );
-    const unsigned int nObjectToAvoidDiaID = pObjectColliding->GetID();
-    // Le pion à déjà tenté d'éviter l'obstacle
+    assert( obstacle && obstacle->IsValid() );
+    const unsigned int nObjectToAvoidDiaID = obstacle->GetID();
+    // Le pion à déjà tenté d'éviter l'obstacle - $$$$ RC LDC Si l'obstacle croise 2 branches de pathfind, c'est tres douteux comme optimisation
     if( objectAvoidAttempts_.find( nObjectToAvoidDiaID ) != objectAvoidAttempts_.end() )
         return;
     objectAvoidAttempts_.insert( nObjectToAvoidDiaID );
@@ -210,10 +211,11 @@ void PHY_ActionMove::AvoidObstacles()
     if( !isTreatingJoining_ )
     {
         DestroyJoiningPath();
-        if( !CreateJoiningPath( MT_Vector2D(), forceNextPoint_ ) )
+        if( !CreateJoiningPath( MT_Vector2D(), forceNextPoint_, rDistanceAfterCollision ) )
             CreateFinalPath();
         role_.SendRC( MIL_Report::eReport_DifficultTerrain );
     }
+    return;
 }
 
 // =============================================================================
@@ -259,7 +261,8 @@ void PHY_ActionMove::Execute()
             }
             else
                 lastBlockedPoint_ = std::make_pair( std::make_pair( vPionPos, lastJoiningPoint ), 1 );
-            nReturn = CreateAdaptedPath( pCurrentPath, lastJoiningPoint, forceNextPoint_ );
+            obstacle_ = role_.GetCurrentObstacle();
+            nReturn = CreatePathAfterObjectCollision( pCurrentPath, obstacle_ );
         }
         forceNextPoint_ = false;
     }
@@ -312,13 +315,34 @@ void PHY_ActionMove::CreateFinalPath()
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ActionMove::CreateAdaptedPath
+// Name: PHY_ActionMove::CreatePathAfterObjectCollision
+// Bypassd: LDC 2012-01-12
+// -----------------------------------------------------------------------------
+int PHY_ActionMove::CreatePathAfterObjectCollision( boost::shared_ptr< DEC_PathResult > pCurrentPath, MIL_Object_ABC* obstacle )
+{
+    role_.MoveSuspended( pCurrentPath );
+    const MT_Vector2D& vPionPos = pion_.GetRole< PHY_RoleInterface_Location >().GetPosition();
+    const MT_Vector2D& vTestPos = pMainPath_->GetNextPointOutsideObstacle( vPionPos, obstacle );
+    if( vPionPos != vTestPos )
+    {
+        pJoiningPath_.reset( new DEC_Agent_Path( pion_, vTestPos, pMainPath_->GetPathType() ) );
+        MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pJoiningPath_ );
+        isTreatingJoining_ = true;
+        pCurrentPath = pJoiningPath_;
+        return role_.Move( pCurrentPath );
+    }
+    CreateFinalPath();
+    return DEC_PathWalker::eRunning;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ActionMove::CreatePathAfterObjectCollision
 // Bypassd: CMA 2011-11-22
 // -----------------------------------------------------------------------------
 int PHY_ActionMove::CreateAdaptedPath( boost::shared_ptr< DEC_PathResult > pCurrentPath, const MT_Vector2D& lastJoiningPoint, bool forceNextPoint )
 {
     role_.MoveSuspended( pCurrentPath );
-    if( CreateJoiningPath( lastJoiningPoint, forceNextPoint ) )
+    if( CreateJoiningPath( lastJoiningPoint, forceNextPoint, 0. ) )
     {
         pCurrentPath = pJoiningPath_;
         return role_.Move( pCurrentPath );

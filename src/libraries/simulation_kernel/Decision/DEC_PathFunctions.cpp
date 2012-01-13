@@ -134,12 +134,13 @@ std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > >
     std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > result;
     boost::shared_ptr< DEC_Knowledge_Object > pObjectColliding;
     double rDistanceCollision = 0.;
+    double rDistanceAfter = 0.;
     const PHY_RoleInterface_Location& roleLocation = callerAgent.GetRole< PHY_RoleInterface_Location >();
     const double rHeight = roleLocation.GetHeight  ();
     const MT_Vector2D&  position = roleLocation.GetPosition();
     T_KnowledgeObjectVector knowledges;
     callerAgent.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledges, rHeight, filter );
-    if( knowledges.empty() || !callerAgent.GetRole< moving::PHY_RoleAction_Moving >().ComputeFutureObjectCollision( position, knowledges, rDistanceCollision, pObjectColliding ) )
+    if( knowledges.empty() || !callerAgent.GetRole< moving::PHY_RoleAction_Moving >().ComputeFutureObjectCollision( position, knowledges, rDistanceCollision, rDistanceAfter, pObjectColliding ) )
     {
         result.first = false;
         return result;
@@ -200,13 +201,14 @@ std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > >
     RemovableFromPathObjectFilter filter( callerAgent.GetPion() );
     std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > result;
     boost::shared_ptr< DEC_Knowledge_Object > pObjectColliding;
-    double rDistanceCollision = 0.;
+    double rDistanceBeforeCollision = 0.;
+    double rDistanceAfterCollision = 0.;
     const PHY_RoleInterface_Location& roleLocation = callerAgent.GetPion().GetRole< PHY_RoleInterface_Location >();
     const double rHeight = roleLocation.GetHeight  ();
     const MT_Vector2D&  position = roleLocation.GetPosition();
     T_KnowledgeObjectVector knowledges;
     callerAgent.GetPion().GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledges, rHeight, filter );
-    if( knowledges.empty() || !callerAgent.GetPion().GetRole< moving::PHY_RoleAction_Moving >().ComputeFutureObjectCollision( position, knowledges, rDistanceCollision, pObjectColliding ) )
+    if( knowledges.empty() || !callerAgent.GetPion().GetRole< moving::PHY_RoleAction_Moving >().ComputeFutureObjectCollision( position, knowledges, rDistanceBeforeCollision, rDistanceAfterCollision, pObjectColliding ) )
     {
         result.first = false;
         return result;
@@ -215,7 +217,7 @@ std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > >
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     result.first = true;
     result.second.first = pObjectColliding;
-    result.second.second = MIL_Tools::ConvertSimToMeter( rDistanceCollision );
+    result.second.second = MIL_Tools::ConvertSimToMeter( rDistanceBeforeCollision );
     return result;
 }
 

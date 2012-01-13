@@ -35,6 +35,7 @@ DEC_PathWalker::DEC_PathWalker( PHY_MovingEntity_ABC& movingEntity )
     , bHasMoved_         ( false )
     , bFuelReportSent_   ( false )
     , bTerrainReportSent_( false )
+    , obstacle_          ( 0 )
 {
     // NOTHING
 }
@@ -52,11 +53,11 @@ DEC_PathWalker::~DEC_PathWalker()
 // Name: DEC_PathWalker::ComputeFutureObjectCollision
 // Created: NLD 2005-10-03
 // -----------------------------------------------------------------------------
-bool DEC_PathWalker::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) const
+bool DEC_PathWalker::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, double& rDistanceBefore, double& rDistanceAfter, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) const
 {
     if( !pCurrentPath_.get() )
         return false;
-    return pCurrentPath_->ComputeFutureObjectCollision( vStartPos, objectsToTest, rDistance, pObject );
+    return pCurrentPath_->ComputeFutureObjectCollision( vStartPos, objectsToTest, rDistanceBefore, rDistanceAfter, pObject );
 }
 
 // -----------------------------------------------------------------------------
@@ -283,6 +284,7 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
                         bTerrainReportSent_ = true;
                     }
                     pathSet_ = eBlockedByObject;
+                    obstacle_ = &object;
                     return false;
                 }
             }
@@ -314,6 +316,7 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
                     bTerrainReportSent_ = true;
                 }
                 pathSet_ = eBlockedByObject;
+                obstacle_ = &object;
                 return false;
             }
         }
@@ -369,7 +372,7 @@ bool DEC_PathWalker::TryToMoveTo( const DEC_PathResult& path, const MT_Vector2D&
     ComputeObjectsCollision( vNewPos_, vNewPosTmp, moveStepSet );
     if( moveStepSet.size() < 2 )
     {
-        MT_LOG_ERROR_MSG( "Move step set has not at least 2 elements" );
+        MT_LOG_ERROR_MSG( "Move step set has not at least 2 elements" ); // $$$$ LDC RC Can never happen.
         return false;
     }
     CIT_MoveStepSet itCurMoveStep  = moveStepSet.begin();
@@ -534,4 +537,13 @@ bool DEC_PathWalker::SerializeCurrentPath( sword::Path& asn ) const
         return false;
     pCurrentPath_->Serialize( asn );
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathWalker::GetObstacle
+// Created: NLD 2011-01-12
+// -----------------------------------------------------------------------------
+MIL_Object_ABC* DEC_PathWalker::GetObstacle() const
+{
+    return( pathSet_ == eBlockedByObject ) ? obstacle_ : 0;
 }

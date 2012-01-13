@@ -173,5 +173,8 @@ void DEC_KS_ObjectInteraction::NotifyObjectInteraction( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void DEC_KS_ObjectInteraction::NotifyObjectCollision( MIL_Object_ABC& object, const MT_Vector2D& vPosition )
 {
-    objectCollisions_.push_back( std::make_pair( &object, vPosition ) );
+    const TER_Localisation& objectLocation = object.GetLocalisation();
+    MT_Vector2D collisionPosition;
+    objectLocation.ComputeNearestPoint( vPosition, collisionPosition );
+    objectCollisions_.push_back( std::make_pair( &object, collisionPosition ) );
 }
