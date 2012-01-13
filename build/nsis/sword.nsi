@@ -164,7 +164,7 @@ SectionGroupEnd
 
 ; ------------------------------------------------------------------------------
 Section "Uninstall"
-    !insertmacro OT.KillRunning
+    !insertmacro OT.KillRunning $(OT_ABORTING_UNINSTALLATION)
     !insertmacro OT.UninstallAdditionalComponent "Terrain"
     !insertmacro OT.RemoveMasaLifeIde
     !insertmacro OT.Uninstall
@@ -180,6 +180,7 @@ Function .onInit
     !insertmacro OT.CheckRunning
     !insertmacro MULTIUSER_INIT
     !insertmacro OT.ParseCommandLine
+    !insertmacro OT.KillRunning $(OT_ABORTING_INSTALLATION)
     !insertmacro OT.ChooseLanguage
 
     ; Set section names

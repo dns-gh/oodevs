@@ -7,6 +7,8 @@
 !include "AdvUninstLog.nsh"
 !include "lang.nsh"
 !include "Sections.nsh"
+!include "servicelib.nsh"
+!include "ProcFunc.nsh" ; Processes.dll bugs on windows seven, developpment was stopped in 2005 for vista. ProcFunc works just fine.
 
 !ifndef locate::RMDirEmpty
     !include "Locate.nsh"
@@ -293,27 +295,44 @@
 !macroend
 
 ;------------------------------------------------------------------------------
-; Running Applications Utilities
+; Kill Launcher service
 ;------------------------------------------------------------------------------
-Function un.KillRunningApplication
+!macro OT.KillService AbortMessage
 
-    Processes::FindProcess "$9"
-    StrCmp $R0 "0" notrunning
-    MessageBox MB_YESNO|MB_ICONQUESTION $(OT_APPLICATION_IS_RUNNING) /SD IDYES IDYES kill
-        MessageBox MB_OK $(OT_ABORTING_UNINSTALLATION)
+    !insertmacro SERVICE "installed" "Launcher" ""
+    Pop $0
+    StrCmp $0 "false" notrunning
+    MessageBox MB_YESNO|MB_ICONQUESTION $(OT_SERVICE_IS_RUNNING) /SD IDYES IDYES kill
+        MessageBox MB_OK ${AbortMessage}
         Abort
     kill:
-        Pop $R0
-        Processes::KillProcess "$9"
+        !insertmacro SERVICE "stop" "Launcher" ""
+        !insertmacro SERVICE "delete" "Launcher" ""
     notrunning:
 
-FunctionEnd
+!macroend
 
-!macro OT._KillRunning ApplicationName
+;------------------------------------------------------------------------------
+; Running Applications Utilities
+;------------------------------------------------------------------------------
+
+!macro OT._KillRunning ApplicationName AbortMessage
 
     Push $9
     StrCpy $9 "${ApplicationName}"
-    Call un.KillRunningApplication
+
+    ${If} ${ProcessExists} $9
+        MessageBox MB_YESNO|MB_ICONQUESTION $(OT_APPLICATION_IS_RUNNING) /SD IDYES IDYES +3
+            MessageBox MB_OK ${AbortMessage}
+            Abort
+        Push $8
+        ${TerminateProcess} $9 $8
+        ${If} $8 == -1
+            MessageBox MB_OK ${AbortMessage}
+            Abort
+        ${EndIf}
+        Pop $8
+    ${EndIf}
     Pop $9
 
 !macroend
@@ -321,18 +340,26 @@ FunctionEnd
 ;------------------------------------------------------------------------------
 ; Kill running OT processes
 ;------------------------------------------------------------------------------
-!macro OT.KillRunning
+!macro OT.KillRunning AbortMessage
 
-    !insertmacro OT._KillRunning "simulation_app.exe"
-    !insertmacro OT._KillRunning "adaptation_app.exe"
-    !insertmacro OT._KillRunning "selftraining_app.exe"
-    !insertmacro OT._KillRunning "gaming_app.exe"
-    !insertmacro OT._KillRunning "preparation_app.exe"
-    !insertmacro OT._KillRunning "replayer_app.exe"
-    !insertmacro OT._KillRunning "detection_app.exe"
-    !insertmacro OT._KillRunning "raster_app.exe"
-    !insertmacro OT._KillRunning "generation_app.exe"
-    !insertmacro OT._KillRunning "terrain_workshop_app.exe"
+    !insertmacro OT.KillService ${AbortMessage}
+
+    !insertmacro OT._KillRunning "detection_app.exe" ${AbortMessage}
+    !insertmacro OT._KillRunning "generation_app.exe" ${AbortMessage}
+    !insertmacro OT._KillRunning "generation_light.exe" ${AbortMessage}
+    !insertmacro OT._KillRunning "raster_app.exe" ${AbortMessage}
+    !insertmacro OT._KillRunning "terrain_workshop_app.exe" ${AbortMessage}
+
+    !insertmacro OT._KillRunning "adaptation_app.exe" ${AbortMessage}
+    !insertmacro OT._KillRunning "dispatcher_app.exe" ${AbortMessage}
+    !insertmacro OT._KillRunning "gaming_app.exe" ${AbortMessage}
+    !insertmacro OT._KillRunning "launcher_app.exe" ${AbortMessage}
+    !insertmacro OT._KillRunning "mission_tester_app.exe" ${AbortMessage}
+    !insertmacro OT._KillRunning "package_app.exe" ${AbortMessage}
+    !insertmacro OT._KillRunning "preparation_app.exe" ${AbortMessage}
+    !insertmacro OT._KillRunning "replayer_app.exe" ${AbortMessage}
+    !insertmacro OT._KillRunning "simulation_app.exe" ${AbortMessage}
+    !insertmacro OT._KillRunning "selftraining_app.exe" ${AbortMessage}
 
 !macroend
 
