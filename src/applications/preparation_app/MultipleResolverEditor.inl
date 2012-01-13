@@ -7,9 +7,6 @@
 //
 // *****************************************************************************
 
-#include "preparation_app_pch.h"
-#include "MultipleResolverEditor.h"
-
 // -----------------------------------------------------------------------------
 // Name: MultipleResolverEditor constructor
 // Created: ABR 2011-11-29
