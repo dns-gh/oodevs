@@ -15,6 +15,7 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/OptionVariant.h"
 
 using namespace kernel;
 using namespace gui;
@@ -26,11 +27,11 @@ using namespace gui;
 LimitsLayer::LimitsLayer( Controllers& controllers, const GlTools_ABC& tools, ColorStrategy_ABC& strategy, ParametersLayer& parameters,
                           TacticalLineFactory& factory, gui::View_ABC& view, const kernel::Profile_ABC& profile, const gui::LayerFilter_ABC& filter )
     : TacticalLinesLayer( controllers, tools, strategy, parameters, view, profile, filter )
-    , tools_            ( tools )
-    , factory_          ( factory )
-    , selectedEntity_   ( controllers )
+    , tools_         ( tools )
+    , factory_       ( factory )
+    , selectedEntity_( controllers )
 {
-    // NOTHING
+    controllers_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -39,7 +40,7 @@ LimitsLayer::LimitsLayer( Controllers& controllers, const GlTools_ABC& tools, Co
 // -----------------------------------------------------------------------------
 LimitsLayer::~LimitsLayer()
 {
-    // NOTHING
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -71,7 +72,7 @@ void LimitsLayer::Delete( const kernel::TacticalLine_ABC& l )
 // -----------------------------------------------------------------------------
 bool LimitsLayer::ShouldDisplay( const kernel::Entity_ABC& entity )
 {
-    if( ! TacticalLinesLayer::ShouldDisplay( entity ) )
+    if( ! drawLines_.IsSet( true, true ) )
         return false;
     if( const kernel::TacticalHierarchies* hierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
         if( const kernel::Entity_ABC* superior = hierarchies->GetSuperior() )
@@ -142,4 +143,14 @@ void LimitsLayer::Select( const kernel::Formation_ABC& entity )
 void LimitsLayer::AfterSelection()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimitsLayer::OptionChanged
+// Created: LGY 2012-01-04
+// -----------------------------------------------------------------------------
+void LimitsLayer::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
+{
+    if( name == "TacticalLines" )
+        drawLines_ = value.To< FourStateOption >();
 }

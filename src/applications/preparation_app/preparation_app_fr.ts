@@ -213,6 +213,49 @@
     </message>
 </context>
 <context>
+    <name>DockManager</name>
+    <message>
+        <source>Tactical</source>
+        <translation>Tactique</translation>
+    </message>
+    <message>
+        <source>Communication</source>
+        <translation>Communication</translation>
+    </message>
+    <message>
+        <source>Logistic</source>
+        <translation>Logistique</translation>
+    </message>
+    <message>
+        <source>Units</source>
+        <translation>Unités</translation>
+    </message>
+    <message>
+        <source>Objects</source>
+        <translation>Objets</translation>
+    </message>
+    <message>
+        <source>Crowds</source>
+        <translation>Foules</translation>
+    </message>
+    <message>
+        <source>Populations</source>
+        <translation>Populations</translation>
+    </message>
+    <message>
+        <source>ORBAT</source>
+        <translation>ODB</translation>
+    </message>
+    <message>
+        <source>Properties</source>
+        <translation>Proprietés</translation>
+    </message>
+    <message>
+        <source>Creation</source>
+        <translation>Création</translation>
+    </message>
+</context>
+<context>
     <name>DotationsEditor</name>
     <message>
         <source>Resources editor</source>
@@ -712,36 +755,35 @@
 <context>
     <name>LivingAreaEditor</name>
     <message>
-        <source>Information</source>
-        <translation>Information</translation>
+        <source>Change living Area</source>
+        <translation>Modification de la zone de vie</translation>
+    </message>
+</context>
+<context>
+    <name>LivingAreaPanel</name>
+    <message>
+        <source>Validation</source>
+        <translation>Validation</translation>
     </message>
     <message>
-        <source>Location:</source>
-        <translation>Position:</translation>
-    </message>
-    <message>
-        <source>---</source>
-        <translation>---</translation>
-    </message>
-    <message>
-        <source>Urban blocks</source>
-        <translation>Blocs urbains</translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation>Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation>Annuler</translation>
+        <source>Remove urban blocks</source>
+        <translation>Supprimer des blocs urbains</translation>
     </message>
     <message>
         <source>Add urban blocks</source>
         <translation>Ajouter des blocs urbains</translation>
     </message>
     <message>
-        <source>Remove urban blocks</source>
-        <translation>Supprimer des blocs urbains</translation>
+        <source>Click on a urban block to add or remove it from the living area.</source>
+        <translation>Cliquez sur un bloc urbain pour en ajouter ou en supprimer dans la zone de vie.</translation>
+    </message>
+    <message>
+        <source>Living Area</source>
+        <translation>Zone de vie</translation>
+    </message>
+    <message>
+        <source>Use the context menu to add or remove several urban blocks at once.</source>
+        <translation>Utilisez le menu contextuel pour ajouter ou supprimer plusieurs blocs urbains à la fois.</translation>
     </message>
 </context>
 <context>
@@ -804,104 +846,64 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Units</source>
-        <translation>Unités</translation>
+        <source>Loading complete</source>
+        <translation>Chargement terminé</translation>
     </message>
     <message>
-        <source>Objects</source>
-        <translation>Objets</translation>
-    </message>
-    <message>
-        <source>Terrain</source>
-        <translation>Terrain</translation>
-    </message>
-    <message>
-        <source>Raster</source>
-        <translation>Cartes Raster</translation>
+        <source>Initialize data ...</source>
+        <translation>Initialisation des données ...</translation>
     </message>
     <message>
         <source>Elevation</source>
         <translation>Elévation</translation>
     </message>
     <message>
-        <source>Automats</source>
-        <translation>Automates</translation>
+        <source>Raster</source>
+        <translation>Cartes Raster</translation>
     </message>
     <message>
-        <source>Load exercise definition file (exercise.xml)</source>
-        <translation>Charger un fichier de définition d&apos;exercice (exercise.xml)</translation>
-    </message>
-    <message>
-        <source>Watershed</source>
-        <translation>Montée des eaux</translation>
-    </message>
-    <message>
-        <source>Crowd</source>
-        <translation>Foule</translation>
-    </message>
-    <message>
-        <source>Populations</source>
-        <translation>Populations</translation>
-    </message>
-    <message>
-        <source>Tactical</source>
-        <translation>Tactique</translation>
-    </message>
-    <message>
-        <source>Communication</source>
-        <translation>Communication</translation>
-    </message>
-    <message>
-        <source>Crowds</source>
-        <translation>Foules</translation>
-    </message>
-    <message>
-        <source>Formations</source>
-        <translation>Formations</translation>
-    </message>
-    <message>
-        <source>Save exercise as ...</source>
-        <translation>Enregistrer l&apos;exercice sous ...</translation>
-    </message>
-    <message>
-        <source>Type exercise name here</source>
-        <translation>Entrer le nom de l&apos;exercice ici</translation>
-    </message>
-    <message>
-        <source>The exercise &apos;%1&apos; already exist. Please, enter a new exercise name:</source>
-        <translation>L&apos;exercice &apos;%1&apos; existe déjà. Merci de saisir un nouveau nom d&apos;exercice:</translation>
-    </message>
-    <message>
-        <source>Enter an exercise name:</source>
-        <translation>Saisir un nom d&apos;exercice:</translation>
-    </message>
-    <message>
-        <source>No file loaded</source>
-        <translation>Pas de fichier chargé</translation>
-    </message>
-    <message>
-        <source>New ORBAT</source>
-        <translation>Nouvel ODB</translation>
-    </message>
-    <message>
-        <source>Preparation - [%1]</source>
-        <translation>Préparation - [%1]</translation>
+        <source>Terrain</source>
+        <translation>Terrain</translation>
     </message>
     <message>
         <source>Contour Lines</source>
         <translation>Lignes de contour</translation>
     </message>
     <message>
-        <source>Properties</source>
-        <translation>Proprietés</translation>
+        <source>Watershed</source>
+        <translation>Montée des eaux</translation>
     </message>
     <message>
-        <source>Creation</source>
-        <translation>Création</translation>
+        <source>Populations</source>
+        <translation>Populations</translation>
     </message>
     <message>
-        <source>Logistic</source>
-        <translation>Logistique</translation>
+        <source>Objects</source>
+        <translation>Objets</translation>
+    </message>
+    <message>
+        <source>Crowd</source>
+        <translation>Foule</translation>
+    </message>
+    <message>
+        <source>Phantom</source>
+        <translation>Fantôme</translation>
+    </message>
+    <message>
+        <source>Units</source>
+        <translation>Unités</translation>
+    </message>
+    <message>
+        <source>Automats</source>
+        <translation>Automates</translation>
+    </message>
+    <message>
+        <source>Formations</source>
+        <translation>Formations</translation>
+    </message>
+    <message>
+        <source>Load exercise definition file (exercise.xml)</source>
+        <translation>Charger un fichier de définition d&apos;exercice (exercise.xml)</translation>
     </message>
     <message>
         <source>Loading configuration ...</source>
@@ -924,20 +926,32 @@
         <translation>Chargement de l&apos;exercice ...</translation>
     </message>
     <message>
-        <source>Loading complete</source>
-        <translation>Chargement terminé</translation>
+        <source>Save exercise as ...</source>
+        <translation>Enregistrer l&apos;exercice sous ...</translation>
     </message>
     <message>
-        <source>Initialize data ...</source>
-        <translation>Initialisation des données ...</translation>
+        <source>The exercise &apos;%1&apos; already exist. Please, enter a new exercise name:</source>
+        <translation>L&apos;exercice &apos;%1&apos; existe déjà. Merci de saisir un nouveau nom d&apos;exercice:</translation>
     </message>
     <message>
-        <source>ORBAT</source>
-        <translation>ODB</translation>
+        <source>Enter an exercise name:</source>
+        <translation>Saisir un nom d&apos;exercice:</translation>
     </message>
     <message>
-        <source>Phantom</source>
-        <translation>Fantôme</translation>
+        <source>Type exercise name here</source>
+        <translation>Entrer le nom de l&apos;exercice ici</translation>
+    </message>
+    <message>
+        <source>No file loaded</source>
+        <translation>Pas de fichier chargé</translation>
+    </message>
+    <message>
+        <source>New ORBAT</source>
+        <translation>Nouvel ODB</translation>
+    </message>
+    <message>
+        <source>Preparation - [%1]</source>
+        <translation>Préparation - [%1]</translation>
     </message>
 </context>
 <context>

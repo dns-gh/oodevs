@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __UrbanLayer_h_
-#define __UrbanLayer_h_
+#ifndef __gui_UrbanLayer_h_
+#define __gui_UrbanLayer_h_
 
 #include "EntityLayer.h"
 #include "clients_gui/TerrainObjectProxy.h"
@@ -62,10 +62,15 @@ private:
     //! @name Member data
     //@{
     View_ABC& view_;
-    const kernel::Controllers& controllers_;
     const TerrainObjectProxy* selectedObject_;
+    //@}
+
+protected:
+    //! @name Member data
+    //@{
+    kernel::Controllers& controllers_;
     //@}
 };
 
 }
-#endif // __UrbanLayer_h_
+#endif // __gui_UrbanLayer_h_

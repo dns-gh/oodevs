@@ -30,7 +30,7 @@ using namespace kernel;
 // Created: SBO 2006-08-31
 // -----------------------------------------------------------------------------
 AgentsLayer::AgentsLayer( Controllers& controllers, const GlTools_ABC& tools, gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, Model& model, const Profile_ABC& profile, const gui::LayerFilter_ABC& filter, QWidget* parent )
-    : gui::AgentsLayer  ( controllers, tools, strategy, view, profile, filter )
+    : EditorProxy< gui::AgentsLayer >( controllers, tools, strategy, view, profile, filter )
     , model_            ( model )
     , selectedAgent_    ( controllers )
     , selectedAutomat_  ( controllers )
@@ -165,7 +165,7 @@ bool AgentsLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Po
         }
         return true;
     }
-    return gui::AgentsLayer::HandleMoveDragEvent( event, point );
+    return EditorProxy< gui::AgentsLayer >::HandleMoveDragEvent( event, point );
 }
 
 // -----------------------------------------------------------------------------
@@ -225,7 +225,7 @@ bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
 // -----------------------------------------------------------------------------
 bool AgentsLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
 {
-    bool result = gui::AgentsLayer::HandleMousePress( event, point );
+    bool result = EditorProxy< gui::AgentsLayer >::HandleMousePress( event, point );
     if( ( event->button() & Qt::LeftButton ) != 0 && event->state() == Qt::NoButton && IsEligibleForDrag( point ) )
     {
         if( const AgentPositions* pos = static_cast< const AgentPositions* >( selectedAgent_->Retrieve< Positions >() ) )

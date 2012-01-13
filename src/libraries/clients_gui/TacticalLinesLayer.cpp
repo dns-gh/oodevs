@@ -127,25 +127,6 @@ void TacticalLinesLayer::Handle( kernel::Location_ABC& location )
 }
 
 // -----------------------------------------------------------------------------
-// Name: TacticalLinesLayer::ShouldDisplay
-// Created: AGE 2006-11-21
-// -----------------------------------------------------------------------------
-bool TacticalLinesLayer::ShouldDisplay( const kernel::Entity_ABC& )
-{
-    return drawLines_.IsSet( true, true );
-}
-
-// -----------------------------------------------------------------------------
-// Name: TacticalLinesLayer::OptionChanged
-// Created: AGE 2006-11-21
-// -----------------------------------------------------------------------------
-void TacticalLinesLayer::OptionChanged( const std::string& name, const kernel::OptionVariant& value )
-{
-    if( name == "TacticalLines" )
-        drawLines_ = value.To< FourStateOption >();
-}
-
-// -----------------------------------------------------------------------------
 // Name: TacticalLinesLayer::VisitLines
 // Created: AGE 2006-11-21
 // -----------------------------------------------------------------------------

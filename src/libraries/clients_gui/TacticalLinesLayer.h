@@ -13,8 +13,6 @@
 #include "EntityLayer.h"
 #include "ShapeHandler_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
-#include "clients_kernel/OptionsObserver_ABC.h"
-#include "clients_kernel/FourStateOption.h"
 #include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/SafePointer.h"
@@ -38,7 +36,6 @@ namespace gui
 class TacticalLinesLayer : public QObject
                          , public EntityLayer< kernel::TacticalLine_ABC >
                          , public kernel::ContextMenuObserver_ABC< kernel::Nothing >
-                         , public kernel::OptionsObserver_ABC
                          , private ShapeHandler_ABC
                          , private kernel::LocationVisitor_ABC
 {
@@ -74,9 +71,6 @@ protected:
     virtual void NotifySelected        ( const kernel::TacticalLine_ABC* element );
 
     virtual void Handle( kernel::Location_ABC& location );
-    virtual bool ShouldDisplay( const kernel::Entity_ABC& );
-
-    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
 
     virtual void VisitLines     ( const T_PointVector& points );
     virtual void VisitRectangle ( const T_PointVector& /*points*/ ) {};
@@ -100,8 +94,6 @@ protected:
     const kernel::GlTools_ABC& tools_;
     gui::ColorStrategy_ABC& strategy_;
     gui::ParametersLayer& parameters_;
-
-    kernel::FourStateOption drawLines_;
     bool isLimit_;
     kernel::SafePointer< kernel::TacticalLine_ABC > selected_;
     //@}

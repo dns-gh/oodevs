@@ -11,7 +11,9 @@
 #define __LimitsLayer_h_
 
 #include "clients_gui/TacticalLinesLayer.h"
+#include "clients_kernel/OptionsObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
+#include "clients_kernel/FourStateOption.h"
 
 class TacticalLineFactory;
 
@@ -24,6 +26,7 @@ class TacticalLineFactory;
 class LimitsLayer : public gui::TacticalLinesLayer
                   , public tools::SelectionObserver_Base< kernel::Automat_ABC >
                   , public tools::SelectionObserver_Base< kernel::Formation_ABC >
+                  , public kernel::OptionsObserver_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -37,6 +40,7 @@ public:
 private:
     //! @name Helpers
     //@{
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     virtual bool CanCreateLine();
     virtual void Delete( const kernel::TacticalLine_ABC& line );
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );
@@ -56,6 +60,7 @@ private:
     const kernel::GlTools_ABC& tools_;
     TacticalLineFactory& factory_;
     kernel::SafePointer< kernel::Entity_ABC > selectedEntity_;
+    kernel::FourStateOption drawLines_;
     //@}
 };
 

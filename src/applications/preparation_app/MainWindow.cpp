@@ -11,10 +11,10 @@
 #include "MainWindow.h"
 #include "moc_MainWindow.cpp"
 #include "AgentsLayer.h"
+#include "UrbanLayer.h"
 #include "Config.h"
-#include "CommunicationListView.h"
+#include "InhabitantLayer.h"
 #include "ExerciseCreationDialog.h"
-#include "CreationPanels.h"
 #include "Dialogs.h"
 #include "ExerciseDialog.h"
 #include "ExtensionsPanel.h"
@@ -24,16 +24,13 @@
 #include "FilterOrbatReIndexer.h"
 #include "GhostsLayer.h"
 #include "LimitsLayer.h"
-#include "LogisticListView.h"
+
 #include "Menu.h"
 #include "ModelBuilder.h"
 #include "ModelConsistencyDialog.h"
 #include "ObjectCreationPanel.h"
 #include "InhabitantCreationPanel.h"
-#include "ObjectListView.h"
 #include "ObjectsLayer.h"
-#include "PopulationListView.h"
-#include "InhabitantListView.h"
 #include "PopulationsLayer.h"
 #include "PreparationProfile.h"
 #include "ProfileDialog.h"
@@ -42,12 +39,13 @@
 #include "ResourceNetworkDialog.h"
 #include "ScoreDialog.h"
 #include "SuccessFactorDialog.h"
-#include "TacticalListView.h"
-#include "LivingAreaEditor.h"
+#include "DockManager.h"
+#include "LocationEditorToolbar.h"
+#include "LivingAreaPanel.h"
 #include "clients_gui/AutomatsLayer.h"
 #include "clients_gui/CircularEventStrategy.h"
 #include "clients_gui/ColorStrategy.h"
-#include "clients_gui/DefaultLayer.h"
+#include "clients_gui/DefaultLayer.h" 
 #include "clients_gui/DisplayToolbar.h"
 #include "clients_gui/DrawerFactory.h"
 #include "clients_gui/DrawerLayer.h"
@@ -64,13 +62,11 @@
 #include "clients_gui/HelpSystem.h"
 #include "clients_gui/HighlightColorModifier.h"
 #include "clients_gui/LightingProxy.h"
-#include "clients_gui/LocationEditorToolbar.h"
 #include "clients_gui/LogisticList.h"
 #include "clients_gui/InhabitantLayer.h"
 #include "clients_gui/LocationsLayer.h"
 #include "clients_gui/MetricsLayer.h"
 #include "clients_gui/MiscLayer.h"
-#include "clients_gui/OptionsPanel.h"
 #include "clients_gui/OverFlyingColorModifier.h"
 #include "clients_gui/ParametersLayer.h"
 #include "clients_gui/PreferencesDialog.h"
@@ -94,7 +90,6 @@
 #include "clients_gui/ContourLinesLayer.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/ElevationPainter.h"
-#include "clients_gui/AggregateToolbar.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
@@ -143,7 +138,10 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     , simpleFilter_     ( new gui::SimpleFilter() )
     , urbanFilter_      ( new gui::UrbanFilter() )
     , colorController_  ( new ColorController( controllers_ ) )
-    , glProxy_          ( 0 )
+    , glProxy_          ( new GlProxy() )
+    , lighting_         ( new LightingProxy( this ) )
+    , strategy_         ( new ColorStrategy( controllers, *glProxy_, *colorController_ ) )
+    , pDockManager_     ( 0 )
     , menu_             ( 0 )
     , fileToolBar_      ( 0 )
     , needsSaving_      ( false )
@@ -154,7 +152,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     QSettings settings;
     settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
     settings.beginGroup( "/Gaming" );
-    restoreGeometry(settings.value("mainWindowGeometry").toByteArray());
+    restoreGeometry( settings.value("mainWindowGeometry").toByteArray() );
 
     if( config_.HasGenerateScores() || !config_.GetFolderToMigrate().empty() )
     {
@@ -167,6 +165,7 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
             MigrateExercises();
         return;
     }
+    setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
 
     // Progress dialog
     progressDialog_ = new QProgressDialog( this, Qt::SplashScreen );
@@ -179,13 +178,6 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     progressDialog_->setLabel( label );
     SetProgression( 0, tr( "Initialize data ..." ) );
 
-    setIcon( QPixmap( tools::GeneralConfig::BuildResourceChildFile( "images/gui/logo32x32.png" ).c_str() ) );
-
-    lighting_ = new LightingProxy( this );
-    PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers, *lighting_, staticModel_.coordinateSystems_, *pPainter_ );
-    glProxy_ = new GlProxy();
-
-    strategy_ = new ColorStrategy( controllers, *glProxy_, *colorController_ );
     strategy_->Add( std::auto_ptr< ColorModifier_ABC >( new SelectionColorModifier( controllers, *glProxy_ ) ) );
     strategy_->Add( std::auto_ptr< ColorModifier_ABC >( new HighlightColorModifier( controllers ) ) );
     strategy_->Add( std::auto_ptr< ColorModifier_ABC >( new OverFlyingColorModifier( controllers ) ) );
@@ -198,100 +190,24 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     connect( selector_, SIGNAL( Widget2dChanged( gui::GlWidget* ) ), symbols, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
     gui::EntitySymbols* icons = new gui::EntitySymbols( *symbols, *strategy_ );
 
+    // Dialogs
     RichItemFactory* factory = new RichItemFactory( this );
     ProfileDialog* profileDialog = new ProfileDialog( this, controllers, *factory, *icons, model_, staticModel_.extensions_ );
     ProfileWizardDialog* profileWizardDialog = new ProfileWizardDialog( this, model_, model_.profiles_ );
-
+    PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers, *lighting_, staticModel_.coordinateSystems_, *pPainter_ );
     new Dialogs( this, controllers, staticModel, PreparationProfile::GetProfile(), *strategy_, *colorController_, *icons, config, model_.GetSymbolsFactory(), *symbols );
 
+    // A few layers
     AutomatsLayer& automats = *new AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, PreparationProfile::GetProfile(), *simpleFilter_ );
     FormationLayer& formation = *new FormationLayer( controllers_, *glProxy_, *strategy_, *glProxy_, PreparationProfile::GetProfile(), *simpleFilter_ );
 
-    // Agent list panel
-    QDockWidget* pListDockWnd_ = new QDockWidget( "orbat", this );
-    pListDockWnd_->setObjectName( "Orbat" );
-    addDockWidget( Qt::LeftDockWidgetArea, pListDockWnd_ );
-    Q3VBox* box = new Q3VBox( pListDockWnd_ );
-    new gui::AggregateToolbar( box, controllers.controller_, automats, formation );
-
-    QTabWidget* pListsTabWidget = new QTabWidget( box );
-    {
-        QTabWidget* pAgentsTabWidget = new QTabWidget( pListsTabWidget );
-        Q3VBox* listsTabBox = new Q3VBox( pListsTabWidget );
-        new EntitySearchBox< Agent_ABC >( listsTabBox, controllers );
-        new ::TacticalListView( listsTabBox, controllers, *factory, *icons, *modelBuilder_, model_.formations_.levels_ );
-        pAgentsTabWidget->addTab( listsTabBox, tr( "Tactical" ) );
-
-        listsTabBox = new Q3VBox( pListsTabWidget );
-        new EntitySearchBox< Agent_ABC >( listsTabBox, controllers );
-        new ::CommunicationListView( listsTabBox, controllers, *factory, *icons, *modelBuilder_ );
-        pAgentsTabWidget->addTab( listsTabBox, tr( "Communication" ) );
-
-        logisticListView_ = new gui::LogisticList< ::LogisticListView >( controllers, *factory, PreparationProfile::GetProfile(), *icons, *modelBuilder_ );
-        pAgentsTabWidget->addTab( logisticListView_, tr( "Logistic" ) );
-        pListsTabWidget->addTab( pAgentsTabWidget, tr( "Units" ) );
-    }
-    {
-        Q3VBox* listsTabBox = new Q3VBox( pListsTabWidget );
-        new EntitySearchBox< Object_ABC >( listsTabBox, controllers );
-        new ::ObjectListView( listsTabBox, controllers, *factory, *modelBuilder_ );
-        pListsTabWidget->addTab( listsTabBox, tr( "Objects" ) );
-    }
-    {
-        Q3VBox* listsTabBox = new Q3VBox( pListsTabWidget );
-        new EntitySearchBox< Population_ABC >( listsTabBox, controllers );
-        new ::PopulationListView( listsTabBox, controllers, *factory, *modelBuilder_ );
-        pListsTabWidget->addTab( listsTabBox, tr( "Crowds" ) );
-    }
-    {
-        Q3VBox* listsTabBox = new Q3VBox( pListsTabWidget );
-        new EntitySearchBox< Inhabitant_ABC >( listsTabBox, controllers );
-        new ::InhabitantListView( listsTabBox, controllers, *factory, *modelBuilder_ );
-        pListsTabWidget->addTab( listsTabBox, tr( "Populations" ) );
-    }
-    pListDockWnd_->setWindowTitle( tr( "ORBAT" ) );
-    pListDockWnd_->setWidget( box );
-
-    // Properties panel
-    {
-        QDockWidget* pPropertiesDockWnd = new QDockWidget( "properties", this );
-        pPropertiesDockWnd->setObjectName( "properties" );
-        addDockWidget( Qt::RightDockWidgetArea, pPropertiesDockWnd );
-        ::PropertiesPanel* propertiesPanel = new ::PropertiesPanel( pPropertiesDockWnd, controllers, model_, staticModel_ );
-        pPropertiesDockWnd->setWidget( propertiesPanel );
-        pPropertiesDockWnd->setWindowTitle( tr( "Properties" ) );
-    }
-    // ResourceNetwork panel
-    {
-        QDockWidget* pResourceWnd = new ResourceNetworkDialog( this, controllers, staticModel_, model_ );
-        addDockWidget( Qt::LeftDockWidgetArea, pResourceWnd );
-        pResourceWnd->hide();
-    }
-    // Extensions panel
-    {
-        pExtensionsPanel_ = new ::ExtensionsPanel( this, controllers, staticModel_.extensions_, model.agents_, *factory, *icons, PreparationProfile::GetProfile(), "ExtensionsPanel" );
-        addDockWidget( Qt::LeftDockWidgetArea, pExtensionsPanel_ );
-        pExtensionsPanel_->hide();
-    }
-
-    // A few layers
     LocationsLayer* locationsLayer = new LocationsLayer( *glProxy_ );
-    gui::LocationEditorToolbar* LocEditToolBar = new gui::LocationEditorToolbar( this, controllers_, staticModel_.coordinateConverter_, *glProxy_, *locationsLayer );
-    ParametersLayer* paramLayer = new ParametersLayer( *glProxy_, *LocEditToolBar );
-    ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, model_, PreparationProfile::GetProfile(), *simpleFilter_, this );
+    ::LocationEditorToolbar* locEditToolBar = new ::LocationEditorToolbar( this, controllers_, staticModel_.coordinateConverter_, *glProxy_, *locationsLayer );
+    ParametersLayer* paramLayer = new ParametersLayer( *glProxy_, *locEditToolBar );
     gui::WeatherLayer* weatherLayer = new gui::WeatherLayer( *glProxy_, *eventStrategy_ );
     gui::TerrainProfilerLayer* profilerLayer = new gui::TerrainProfilerLayer( *glProxy_ );
     gui::TerrainPicker* picker = new gui::TerrainPicker( this );
     gui::TerrainLayer* terrainLayer = new gui::TerrainLayer( controllers_, *glProxy_, prefDialog->GetPreferences(), *picker );
-
-    // Creation panel
-    QDockWidget* pCreationDockWnd = new QDockWidget( "creation", this );
-    pCreationDockWnd->setObjectName( "creation" );
-    addDockWidget( Qt::RightDockWidgetArea, pCreationDockWnd );
-    pCreationDockWnd->hide();
-    pCreationPanel_ = new CreationPanels( pCreationDockWnd, controllers, staticModel_, model_, config_, *factory, *symbols, *strategy_, *paramLayer, *weatherLayer, *glProxy_ );
-    pCreationDockWnd->setWidget( pCreationPanel_ );
-    pCreationDockWnd->setWindowTitle( tr( "Creation" ) );
 
     // Dialogs
     QDialog* exerciseDialog = new ExerciseDialog( this, controllers, model.exercise_, config_ );
@@ -299,12 +215,14 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     SuccessFactorDialog* successFactorDialog = new SuccessFactorDialog( this, controllers, model_.successFactors_, *factory, staticModel_.successFactorActionTypes_, model_.scores_ );
     fileToolBar_ = new FileToolbar( this, controllers );
     consistencyDialog_ = new ModelConsistencyDialog( this, model, staticModel_, controllers_ );
-    LivingAreaEditor* pLivingAreaEditor = new LivingAreaEditor( this, controllers, *paramLayer, *glProxy_ );
 
     addToolBar( fileToolBar_ );
     addToolBar( new DisplayToolbar( this, controllers ) );
     addToolBar( new gui::GisToolbar( this, controllers, staticModel_.detection_, *profilerLayer ) );
-    addToolBar( LocEditToolBar );
+    addToolBar( locEditToolBar );
+
+    // Dock widgets
+    pDockManager_.reset( new DockManager( this, controllers_, automats, formation, *icons, *modelBuilder_, *factory, model_, staticModel_, config_, *symbols, *strategy_, *paramLayer, *weatherLayer, *glProxy_ ) );
 
     // Menu
     gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/preparation.xml" ) );
@@ -313,8 +231,9 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
     filterDialogs_ = new FilterDialogs( this, config_, model, *menu_, staticModel_.coordinateConverter_ );
 
     // Layers
-    CreateLayers( *pCreationPanel_, *paramLayer, *locationsLayer, *weatherLayer, *agentsLayer, *terrainLayer,
-                  *profilerLayer, *prefDialog, PreparationProfile::GetProfile(), *picker, *pLivingAreaEditor, automats, formation );
+    CreateLayers( *paramLayer, *locationsLayer, *weatherLayer, *terrainLayer,
+                *profilerLayer, *prefDialog, PreparationProfile::GetProfile(), *picker, automats, formation );
+
 
     // Status bar
     StatusBar* pStatus = new StatusBar( statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_ );
@@ -340,30 +259,27 @@ MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Mode
 MainWindow::~MainWindow()
 {
     controllers_.Unregister( *this );
-    delete glProxy_;
-    delete modelBuilder_;
-    delete progressDialog_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow::CreateLayers
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void MainWindow::CreateLayers( const CreationPanels& creationPanels, ParametersLayer& parameters, gui::Layer_ABC& locations, 
-                               gui::Layer_ABC& weather, ::AgentsLayer& agents, gui::TerrainLayer& terrain, gui::Layer_ABC& profilerLayer,
-                               PreferencesDialog& preferences, const Profile_ABC& profile, gui::TerrainPicker& picker,
-                               LivingAreaEditor& livingAreaEditor, gui::AutomatsLayer& automats, gui::FormationLayer& formation )
+void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer_ABC& locations,
+                               gui::Layer_ABC& weather, gui::TerrainLayer& terrain, gui::Layer_ABC& profilerLayer,
+                               gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile, gui::TerrainPicker& picker,
+                               gui::AutomatsLayer& automats, gui::FormationLayer& formation )
 {
+    ::AgentsLayer& agents               = *new ::AgentsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, PreparationProfile::GetProfile(), *simpleFilter_, this );
     TooltipsLayer_ABC& tooltipLayer     = *new TooltipsLayer( *glProxy_ );
-    Layer_ABC& objectCreationLayer      = *new MiscLayer< ObjectCreationPanel >( creationPanels.GetObjectCreationPanel() );
-    Layer_ABC& inhabitantCreationLayer  = *new MiscLayer< InhabitantCreationPanel >( creationPanels.GetInhabitantCreationPanel() );
+    Layer_ABC& objectCreationLayer      = *new MiscLayer< ObjectCreationPanel >( pDockManager_->GetObjectCreationPanel() );
+    Layer_ABC& inhabitantCreationLayer  = *new MiscLayer< InhabitantCreationPanel >( pDockManager_->GetInhabitantCreationPanel() );
     Layer_ABC& indicatorCreationLayer   = *new MiscLayer< ScoreDialog >( *pScoreDialog_ );
-    Layer_ABC& livingAreaEditorLayer    = *new MiscLayer< LivingAreaEditor >( livingAreaEditor );
     Elevation2dLayer& elevation2d       = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
     Layer_ABC& raster                   = *new RasterLayer( controllers_.controller_ );
     Layer_ABC& watershed                = *new WatershedLayer( controllers_, staticModel_.detection_ );
     Layer_ABC& elevation3d              = *new Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
-    Layer_ABC& urbanLayer               = *new UrbanLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_ );
+    Layer_ABC& urbanLayer               = *new ::UrbanLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_ );
     Layer_ABC& grid                     = *new GridLayer( controllers_, *glProxy_ );
     Layer_ABC& metrics                  = *new MetricsLayer( staticModel_.detection_, *glProxy_ );
     Layer_ABC& limits                   = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, *eventStrategy_, profile, *simpleFilter_ );
@@ -372,7 +288,7 @@ void MainWindow::CreateLayers( const CreationPanels& creationPanels, ParametersL
     Layer_ABC& ghosts                   = *new GhostsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile, *simpleFilter_ );
     Layer_ABC& defaultLayer             = *new DefaultLayer( controllers_ );
     Layer_ABC& drawerLayer              = *new DrawerLayer( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile, *simpleFilter_ );
-    Layer_ABC& inhabitantLayer          = *new InhabitantLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_ );
+    Layer_ABC& inhabitantLayer          = *new ::InhabitantLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_, pDockManager_->GetLivingAreaPanel() );
     Layer_ABC& contour                  = *new ::ContourLinesLayer( controllers_ );
 
     // ordre de dessin
@@ -388,7 +304,6 @@ void MainWindow::CreateLayers( const CreationPanels& creationPanels, ParametersL
     glProxy_->Register( weather );                                                                                  weather             .SetPasses( "main" );
     glProxy_->Register( limits );                                                                                   limits              .SetPasses( "main" );
     glProxy_->Register( indicatorCreationLayer );
-    glProxy_->Register( livingAreaEditorLayer );                                                                    livingAreaEditorLayer.SetPasses( "main" );
     glProxy_->Register( inhabitantLayer );          preferences.AddLayer( tr( "Populations" ), inhabitantLayer );   inhabitantLayer     .SetPasses( "main" );
     glProxy_->Register( objectsLayer );             preferences.AddLayer( tr( "Objects" ), objectsLayer );          objectsLayer        .SetPasses( "main" );
     glProxy_->Register( populations );              preferences.AddLayer( tr( "Crowd" ), populations );             populations         .SetPasses( "main" );
@@ -519,8 +434,7 @@ bool MainWindow::Load()
     {
         SetProgression( 10, tr( "Loading configuration ..." ) );
         WriteOptions();
-        if( logisticListView_ )
-            logisticListView_->Purge();
+        pDockManager_->Purge();
         model_.Purge();
         pScoreDialog_->Load();
         selector_->Close();
@@ -531,7 +445,6 @@ bool MainWindow::Load()
         filterDialogs_->Purge();
         filterDialogs_->Load();
         SetProgression( 60, tr( "Loading options ..." ) );
-        pExtensionsPanel_->hide();
         SetWindowTitle( false );
     }
     catch( xml::exception& e )
@@ -554,8 +467,7 @@ bool MainWindow::Close()
 {
     if( model_.IsLoaded() && !CheckSaving() )
         return false;
-    if( logisticListView_ )
-        logisticListView_->Purge();
+    pDockManager_->Purge();
     model_.Purge();
     staticModel_.Purge();
     selector_->Close();
@@ -588,7 +500,7 @@ void MainWindow::LoadExercise()
         loading_ = true;
         SetProgression( 70, tr( "Loading exercise ..." ) );
         model_.Load( config_ );
-        pCreationPanel_->Load();
+        pDockManager_->Load();
         if( config_.HasGenerateScores() )
         {
             model_.scores_.GenerateScoresFromTemplate( config_.GetLoader() );
@@ -686,8 +598,8 @@ void MainWindow::closeEvent( QCloseEvent* pEvent )
     QSettings settings;
     settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
     settings.beginGroup( "/Gaming" );
-    settings.setValue("mainWindowGeometry", saveGeometry());
-    settings.setValue("mainWindowState", saveState());
+    settings.setValue( "mainWindowGeometry", pDockManager_->SaveGeometry() );
+    settings.setValue( "mainWindowState", pDockManager_->SaveState() );
 
     WriteOptions();
 

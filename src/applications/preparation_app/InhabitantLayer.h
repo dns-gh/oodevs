@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#ifndef _gui_InhabitantLayer_h_
-#define _gui_InhabitantLayer_h_
+#ifndef __InhabitantLayer_h_
+#define __InhabitantLayer_h_
 
-#include "EntityLayer.h"
-#include "clients_kernel/Inhabitant_ABC.h"
+#include "clients_gui/InhabitantLayer.h"
+#include "EditorProxy.h"
 
 namespace kernel
 {
@@ -19,29 +19,46 @@ namespace kernel
     class GlTools_ABC;
     class Viewport_ABC;
     class Profile_ABC;
+    class Inhabitant_ABC;
 }
 
 namespace gui
 {
     class View_ABC;
     class ColorStrategy_ABC;
+}
+
+class LivingAreaEditor_ABC;
 
 // =============================================================================
 /** @class  InhabitantLayer
     @brief  Inhabitant layer
 */
-// Created: SLG 2006-03-23
+// Created: LGY 2012-01-10
 // =============================================================================
-class InhabitantLayer : public EntityLayer< kernel::Inhabitant_ABC >
+class InhabitantLayer : public EditorProxy< gui::InhabitantLayer >
 {
 public:
     //! @name Constructors/Destructor
     //@{
              InhabitantLayer( kernel::Controllers& controllers, const kernel::GlTools_ABC& tools,
-                              ColorStrategy_ABC& strategy, View_ABC& view, const kernel::Profile_ABC& profile, const gui::LayerFilter_ABC& filter );
+                              gui::ColorStrategy_ABC& strategy, gui::View_ABC& view, const kernel::Profile_ABC& profile,
+                              const gui::LayerFilter_ABC& filter, LivingAreaEditor_ABC& editor );
     virtual ~InhabitantLayer();
+    //@}
+
+    //! @name Operations
+    //@{
+    virtual bool ShouldDisplay( const kernel::Entity_ABC& entity );
+    virtual void NotifySelected( const kernel::Inhabitant_ABC* inhabitant );
+    virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
+    //@}
+
+private:
+    //! @name Member Data
+    //@{
+    LivingAreaEditor_ABC& editor_;
     //@}
 };
 
-}
-#endif // _gui_InhabitantLayer_h_
+#endif // __InhabitantLayer_h_

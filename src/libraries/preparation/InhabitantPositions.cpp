@@ -270,13 +270,9 @@ void InhabitantPositions::Remove( const kernel::Location_ABC& location )
 // -----------------------------------------------------------------------------
 void InhabitantPositions::Add( const gui::TerrainObjectProxy& object, const geometry::Polygon2f& polygon )
 {
-    for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
-        dictionary_.Remove( tools::translate( "Population", "Living Area/%1" ).arg( ( *it ).get< 0 >() ) );
     if( const kernel::UrbanPositions_ABC* positions = object.Retrieve< kernel::UrbanPositions_ABC >() )
         if( polygon.IsInside( positions->Barycenter() ) && !Exists( object.GetId() ) )
             livingUrbanObject_.push_back( boost::make_tuple( object.GetId(), object.GetName(), &object ) );
-    UpdateDictionary();
-    controller_.Update( inhabitant_ );
 }
 
 namespace
@@ -293,14 +289,10 @@ namespace
 // -----------------------------------------------------------------------------
 void InhabitantPositions::Remove( const gui::TerrainObjectProxy& object, const geometry::Polygon2f& polygon )
 {
-    for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
-        dictionary_.Remove( tools::translate( "Population", "Living Area/%1" ).arg( ( *it ).get< 0 >() ) );
     if( const kernel::UrbanPositions_ABC* positions = object.Retrieve< kernel::UrbanPositions_ABC >() )
         if( polygon.IsInside( positions->Barycenter() ) && Exists( object.GetId() ) )
             livingUrbanObject_.erase( std::remove_if( livingUrbanObject_.begin(), livingUrbanObject_.end(),
                                                       boost::bind( &Check, _1, boost::cref( object ) ) ), livingUrbanObject_.end() );
-    UpdateDictionary();
-    controller_.Update( inhabitant_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -313,4 +305,62 @@ bool InhabitantPositions::Exists( unsigned long id ) const
         if( (*it).get< 2 >()->GetId() == id )
             return true;
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: InhabitantPositions::StartEdition
+// Created: LGY 2012-01-11
+// -----------------------------------------------------------------------------
+void InhabitantPositions::StartEdition()
+{
+    edition_.clear();
+    edition_ = livingUrbanObject_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: InhabitantPositions::Accept
+// Created: LGY 2012-01-11
+// -----------------------------------------------------------------------------
+void InhabitantPositions::Accept()
+{
+    for( CIT_UrbanObjectVector it = edition_.begin(); it != edition_.end(); ++it )
+        dictionary_.Remove( tools::translate( "Population", "Living Area/%1" ).arg( ( *it ).get< 0 >() ) );
+    UpdateDictionary();
+    controller_.Update( inhabitant_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InhabitantPositions::Reject
+// Created: LGY 2012-01-11
+// -----------------------------------------------------------------------------
+void InhabitantPositions::Reject()
+{
+    for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
+        dictionary_.Remove( tools::translate( "Population", "Living Area/%1" ).arg( ( *it ).get< 0 >() ) );
+    livingUrbanObject_ = edition_;
+    UpdateDictionary();
+    controller_.Update( inhabitant_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InhabitantPositions::Update
+// Created: LGY 2012-01-12
+// -----------------------------------------------------------------------------
+void InhabitantPositions::Update( const geometry::Point2f& point )
+{
+    tools::Iterator< const gui::TerrainObjectProxy& > it = urbanModel_.tools::Resolver< gui::TerrainObjectProxy >::CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const gui::TerrainObjectProxy& object = it.NextElement();
+        if( const kernel::UrbanPositions_ABC* positions = object.Retrieve< kernel::UrbanPositions_ABC >() )
+            if( positions->IsInside( point ) )
+            {
+                if( Exists( object.GetId() ) )
+                    livingUrbanObject_.erase( std::remove_if( livingUrbanObject_.begin(), livingUrbanObject_.end(),
+                                              boost::bind( &Check, _1, boost::cref( object ) ) ), livingUrbanObject_.end() );
+                else
+                    livingUrbanObject_.push_back( boost::make_tuple( object.GetId(), object.GetName(), &object ) );
+                return;
+            }
+    }
 }

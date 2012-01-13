@@ -14,6 +14,7 @@
 #include <vector>
 #include <map>
 #include "OptionVariant.h"
+#include <boost/noncopyable.hpp>
 
 namespace tools
 {
@@ -30,7 +31,7 @@ namespace kernel
 */
 // Created: AGE 2006-02-13
 // =============================================================================
-class Options
+class Options : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -44,8 +45,8 @@ public:
     void Register( tools::Observer_ABC& observer );
     void Unregister( tools::Observer_ABC& observer );
 
-    void Change( const std::string& name, const OptionVariant& value );
-    const OptionVariant& GetOption( const std::string& name, const OptionVariant& defaultValue );
+    void Change( const std::string& name, const OptionVariant& value, bool savable = true );
+    const OptionVariant& GetOption( const std::string& name, const OptionVariant& defaultValue, bool savable = true );
 
     void Remove( const std::string& name );
 
@@ -54,19 +55,14 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    Options( const Options& );            //!< Copy constructor
-    Options& operator=( const Options& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     typedef std::vector< OptionsObserver_ABC* > T_Observers;
     typedef T_Observers::const_iterator       CIT_Observers;
 
-    typedef std::map< std::string, OptionVariant > T_Options;
-    typedef T_Options::const_iterator            CIT_Options;
+    typedef std::pair< OptionVariant, bool >   T_Savable;
+    typedef std::map< std::string, T_Savable > T_Options;
+    typedef T_Options::const_iterator        CIT_Options;
 
     typedef std::vector< std::string > T_Removed;
     //@}

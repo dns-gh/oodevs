@@ -11,6 +11,8 @@
 #define __LimitsLayer_h_
 
 #include "clients_gui/TacticalLinesLayer.h"
+#include "clients_kernel/FourStateOption.h"
+#include "EditorProxy.h"
 
 namespace gui
 {
@@ -25,7 +27,7 @@ class ModelBuilder;
 */
 // Created: AGE 2006-03-24
 // =============================================================================
-class LimitsLayer : public gui::TacticalLinesLayer
+class LimitsLayer : public EditorProxy< gui::TacticalLinesLayer >
 {
 public:
     //! @name Constructors/Destructor
@@ -44,6 +46,7 @@ private:
     virtual bool ShouldDisplay( const kernel::Entity_ABC& );
     virtual void CreateLimit( const T_PointVector& points );
     virtual void CreateLima( const T_PointVector& points );
+    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
 
     float Precision( const geometry::Point2f& point ) const;
     virtual bool MouseMove ( kernel::TacticalLine_ABC& entity, QMouseEvent* mouse, const geometry::Point2f& point );
@@ -57,6 +60,7 @@ private:
     gui::ExclusiveEventStrategy& eventStrategy_;
     const kernel::GlTools_ABC& tools_;
     geometry::Point2f dragPoint_;
+    kernel::FourStateOption drawLines_;
     //@}
 };
 

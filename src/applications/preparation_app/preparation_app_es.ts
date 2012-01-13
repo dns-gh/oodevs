@@ -213,6 +213,49 @@
     </message>
 </context>
 <context>
+    <name>DockManager</name>
+    <message>
+        <source>Tactical</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Communication</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Units</source>
+        <translation type="unfinished">Unidades</translation>
+    </message>
+    <message>
+        <source>Objects</source>
+        <translation type="unfinished">Objetos</translation>
+    </message>
+    <message>
+        <source>Crowds</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Populations</source>
+        <translation type="unfinished">Poblaciones</translation>
+    </message>
+    <message>
+        <source>ORBAT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Properties</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Creation</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>DotationsEditor</name>
     <message>
         <source>Resources editor</source>
@@ -712,35 +755,34 @@
 <context>
     <name>LivingAreaEditor</name>
     <message>
-        <source>Information</source>
+        <source>Change living Area</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>LivingAreaPanel</name>
+    <message>
+        <source>Validation</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Location:</source>
+        <source>Remove urban blocks</source>
         <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>---</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Urban blocks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Ok</source>
-        <translation type="unfinished">Ok</translation>
-    </message>
-    <message>
-        <source>Cancel</source>
-        <translation type="unfinished">Cancelar</translation>
     </message>
     <message>
         <source>Add urban blocks</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Remove urban blocks</source>
+        <source>Click on a urban block to add or remove it from the living area.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Living Area</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Use the context menu to add or remove several urban blocks at once.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -804,55 +846,55 @@
 <context>
     <name>MainWindow</name>
     <message>
-        <source>Units</source>
-        <translation>Unidades</translation>
+        <source>Loading complete</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Objects</source>
-        <translation>Objetos</translation>
-    </message>
-    <message>
-        <source>Populations</source>
-        <translation>Poblaciones</translation>
-    </message>
-    <message>
-        <source>Terrain</source>
-        <translation>Terreno</translation>
-    </message>
-    <message>
-        <source>Raster</source>
-        <translation>Imágenes raster</translation>
+        <source>Initialize data ...</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Elevation</source>
-        <translation>Elevación</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Automats</source>
-        <translation>Automatas</translation>
+        <source>Raster</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Load exercise definition file (exercise.xml)</source>
-        <translation>Cargar archivo de definición de ejercicio (exercise.xml)</translation>
+        <source>Terrain</source>
+        <translation type="unfinished">Terreno</translation>
+    </message>
+    <message>
+        <source>Contour Lines</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Watershed</source>
-        <translation>Crecida de agua</translation>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Populations</source>
+        <translation type="unfinished">Poblaciones</translation>
+    </message>
+    <message>
+        <source>Objects</source>
+        <translation type="unfinished">Objetos</translation>
     </message>
     <message>
         <source>Crowd</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Tactical</source>
+        <source>Phantom</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Communication</source>
-        <translation type="unfinished"></translation>
+        <source>Units</source>
+        <translation type="unfinished">Unidades</translation>
     </message>
     <message>
-        <source>Crowds</source>
+        <source>Automats</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -860,47 +902,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Save exercise as ...</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Type exercise name here</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>The exercise &apos;%1&apos; already exist. Please, enter a new exercise name:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Enter an exercise name:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>No file loaded</source>
-        <translation type="unfinished">No hay archivo cargado</translation>
-    </message>
-    <message>
-        <source>New ORBAT</source>
-        <translation type="unfinished">Nuevo ORBAT</translation>
-    </message>
-    <message>
-        <source>Preparation - [%1]</source>
-        <translation type="unfinished">Preparación - [%1]</translation>
-    </message>
-    <message>
-        <source>Contour Lines</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Properties</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Creation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Logistic</source>
+        <source>Load exercise definition file (exercise.xml)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -924,19 +926,31 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Loading complete</source>
+        <source>Save exercise as ...</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Initialize data ...</source>
+        <source>The exercise &apos;%1&apos; already exist. Please, enter a new exercise name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>ORBAT</source>
+        <source>Enter an exercise name:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Phantom</source>
+        <source>Type exercise name here</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>No file loaded</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New ORBAT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Preparation - [%1]</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
