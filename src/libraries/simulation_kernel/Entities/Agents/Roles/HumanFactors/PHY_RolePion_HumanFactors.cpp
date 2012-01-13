@@ -293,7 +293,7 @@ void PHY_RolePion_HumanFactors::NotifyAttacked()
         stressValue_ += PHY_Stress::evolution_.incPerShot_;
         UpdateStress();
         if( HasChanged() )
-            owner_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+            entity_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
     }
 }
 
