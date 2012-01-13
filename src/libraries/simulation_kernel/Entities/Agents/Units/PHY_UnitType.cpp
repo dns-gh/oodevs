@@ -46,6 +46,8 @@ PHY_UnitType::PHY_UnitType( xml::xistream& xis )
     , postureTimes_                     ( PHY_Posture::GetPostures().size(), 0 )
     , rInstallationTime_                ( 0. )
     , rUninstallationTime_              ( 0. )
+    , footprintRadius_                  ( 0 )
+    , rSpeedModifier_                   ( 1 )
     , rCoupDeSondeLength_               ( 0. )
     , rCoupDeSondeWidth_                ( 0. )
     , commandersRepartition_            ()
@@ -281,14 +283,21 @@ void PHY_UnitType::InitializeInstallationTimes( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_UnitType::ReadSetup( xml::xistream& xis )
 {
-    tools::ReadTimeAttribute( xis, "installation-time", rInstallationTime_ );
-    tools::ReadTimeAttribute( xis, "uninstallation-time", rUninstallationTime_ );
-    if( rInstallationTime_ < 0 )
-        xis.error( "setup: installation-time < 0" );
-    if( rUninstallationTime_ < 0 )
-        xis.error( "setup: uninstallation-time < 0" );
-    rInstallationTime_ = static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( rInstallationTime_ ) );
-    rUninstallationTime_ = static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( rUninstallationTime_ ) );
+    if( tools::ReadTimeAttribute( xis, "installation-time", rInstallationTime_ ) && tools::ReadTimeAttribute( xis, "uninstallation-time", rUninstallationTime_ ) )
+    {
+        if( rInstallationTime_ < 0 )
+            xis.error( "setup: installation-time < 0" );
+        if( rUninstallationTime_ < 0 )
+            xis.error( "setup: uninstallation-time < 0" );
+        rInstallationTime_ = static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( rInstallationTime_ ) );
+        rUninstallationTime_ = static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( rUninstallationTime_ ) );
+    }
+    xis >> xml::optional >> xml::attribute( "footprint-radius", footprintRadius_ )
+        >> xml::optional >> xml::attribute( "speed-modifier", rSpeedModifier_ );
+    if( footprintRadius_ < 0 )
+        xis.error( "setup: footprint-radius < 0" );
+    if( rSpeedModifier_ < 0 || rSpeedModifier_ > 1 )
+        xis.error( "setup: speed-modifier not in [0,1]" );
 }
 
 // -----------------------------------------------------------------------------
@@ -430,6 +439,24 @@ double PHY_UnitType::GetInstallationTime() const
 double PHY_UnitType::GetUninstallationTime() const
 {
     return rUninstallationTime_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_UnitType::GetFootprintRadius
+// Created: JSR 2012-01-12
+// -----------------------------------------------------------------------------
+unsigned int PHY_UnitType::GetFootprintRadius() const
+{
+    return footprintRadius_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_UnitType::GetSpeedModifier
+// Created: JSR 2012-01-12
+// -----------------------------------------------------------------------------
+double PHY_UnitType::GetSpeedModifier() const
+{
+    return rSpeedModifier_;
 }
 
 // -----------------------------------------------------------------------------

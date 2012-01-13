@@ -81,6 +81,8 @@ void ADN_ListView_Units::ConnectItem( bool bConnect )
     vItemConnectors_[ ADN_Units_GUI::eIsAutonomous ]->Connect( &pInfos->bIsAutonomous_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eInstallationDelay ]->Connect( &pInfos->installationDelay_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eUninstallationDelay ]->Connect( &pInfos->uninstallationDelay_, bConnect );
+    vItemConnectors_[ ADN_Units_GUI::eFootprintRadius ]->Connect( &pInfos->nFootprintRadius_, bConnect );
+    vItemConnectors_[ ADN_Units_GUI::eSpeedModifier ]->Connect( &pInfos->rSpeedModifier_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eHasInstallation ]->Connect( &pInfos->bInstallationDelay_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eRecon ]->Connect( &pInfos->nReconEfficiency_, bConnect );
     vItemConnectors_[ ADN_Units_GUI::eCombatSupport ]->Connect( &pInfos->nCombatSupportEfficiency_, bConnect );

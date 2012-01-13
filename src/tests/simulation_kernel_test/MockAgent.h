@@ -60,6 +60,9 @@ MOCK_BASE_CLASS( MockAgent, MIL_Agent_ABC )
     MOCK_METHOD( GetKnowledge, 0 );
 
     MOCK_METHOD( GetLogisticHierarchy, 0 );
+
+    MOCK_METHOD( CanInteractWithTraffic, 0 );
+    MOCK_METHOD( InteractWithTraffic, 1 );
 };
 
 #endif // __MockAgent_h_

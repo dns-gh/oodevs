@@ -1214,6 +1214,45 @@ void MIL_AgentPion::NotifyAttacking( MIL_Population& /*target*/ ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::CanInteractWithTraffic
+// Created: JSR 2012-01-12
+// -----------------------------------------------------------------------------
+bool MIL_AgentPion::CanInteractWithTraffic() const
+{
+    if ( GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock() != 0 || 
+         GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() ||
+         GetRole< PHY_RoleAction_MovingUnderground >().IsUnderground() ||
+         GetRole< transport::PHY_RolePion_Transported >().IsTransported() )
+        return false;
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::InteractWithTraffic
+// Created: JSR 2012-01-12
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::InteractWithTraffic( const std::vector< TER_Agent_ABC* >& agents )
+{
+    assert( pType_ );
+    double speedModifier = pType_->GetUnitType().GetSpeedModifier();
+    if( speedModifier < 1. && CanInteractWithTraffic() )
+    {
+        for( std::vector< TER_Agent_ABC* >::const_iterator itAgent = agents.begin(); itAgent != agents.end(); ++itAgent )
+        {
+            MIL_Agent_ABC& agent = static_cast< PHY_RoleInterface_Location& >( **itAgent ).GetAgent();
+            if( agent.CanInteractWithTraffic() )
+            {
+                MT_Vector2D position = GetRole< PHY_RoleInterface_Location >().GetPosition();
+                MT_Vector2D positionAgent = ( *itAgent )->GetPosition();
+                unsigned int distance = pType_->GetUnitType().GetFootprintRadius() + agent.GetType().GetUnitType().GetFootprintRadius();
+                if( position.SquareDistance( positionAgent ) < distance * distance )
+                    GetRole< moving::PHY_RoleAction_Moving >().ApplyTrafficModifier();
+            }
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::IsPerceiving
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------

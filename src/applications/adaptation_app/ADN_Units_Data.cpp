@@ -449,6 +449,8 @@ ADN_Units_Data::UnitInfos::UnitInfos()
     , bInstallationDelay_               ( false )
     , installationDelay_                ( "0s" )
     , uninstallationDelay_              ( "0s" )
+    , nFootprintRadius_                 ( 0 )
+    , rSpeedModifier_                   ( 1 )
     , nReconEfficiency_                 ( 50 )
     , nCombatSupportEfficiency_         ( 50 )
     , nCombatEfficiency_                ( 50 )
@@ -588,6 +590,9 @@ ADN_Units_Data::UnitInfos* ADN_Units_Data::UnitInfos::CreateCopy()
     pCopy->installationDelay_   = installationDelay_.GetData();
     pCopy->uninstallationDelay_ = uninstallationDelay_.GetData();
 
+    pCopy->nFootprintRadius_ = nFootprintRadius_.GetData();
+    pCopy->rSpeedModifier_ = rSpeedModifier_.GetData();
+
     pCopy->nReconEfficiency_ = nReconEfficiency_.GetData();
     pCopy->nCombatSupportEfficiency_ = nCombatSupportEfficiency_.GetData();
     pCopy->nCombatEfficiency_ = nCombatEfficiency_.GetData();
@@ -715,8 +720,10 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
 
     input >> xml::optional
             >> xml::start( "setup" )
-                >> xml::attribute( "installation-time", installationDelay_ )
-                >> xml::attribute( "uninstallation-time", uninstallationDelay_ )
+                >> xml::optional >> xml::attribute( "installation-time", installationDelay_ )
+                >> xml::optional >> xml::attribute( "uninstallation-time", uninstallationDelay_ )
+                >> xml::optional >> xml::attribute( "footprint-radius", nFootprintRadius_ )
+                >> xml::optional >> xml::attribute( "speed-modifier", rSpeedModifier_ )
             >> xml::end;
     bInstallationDelay_ = installationDelay_ != "0s" || uninstallationDelay_ != "0s";
     input >> xml::start( "nbc" )
@@ -833,11 +840,21 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output ) const
         (*itPosture)->WriteArchive( output );
     output << xml::end;
 
-    if( bInstallationDelay_.GetData() )
-        output << xml::start( "setup" )
-                << xml::attribute( "installation-time", installationDelay_ )
-                << xml::attribute( "uninstallation-time", uninstallationDelay_ )
-               << xml::end;
+    if( bInstallationDelay_.GetData() || nFootprintRadius_ != 0 || rSpeedModifier_ != 1. )
+    {
+        output << xml::start( "setup" );
+        if( bInstallationDelay_.GetData() )
+        {
+            output << xml::attribute( "installation-time", installationDelay_ )
+                   << xml::attribute( "uninstallation-time", uninstallationDelay_ );
+        }
+        if( nFootprintRadius_ != 0 || rSpeedModifier_ != 1. )
+        {
+            output << xml::attribute( "footprint-radius", nFootprintRadius_ )
+                   << xml::attribute( "speed-modifier", rSpeedModifier_ );
+        }
+        output << xml::end;
+    }
 
     output << xml::start( "nbc" )
             << xml::attribute(  "decontamination-delay", decontaminationDelay_ )

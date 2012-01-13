@@ -75,6 +75,8 @@ public:
         eHasInstallation,
         eInstallationDelay,
         eUninstallationDelay,
+        eFootprintRadius,
+        eSpeedModifier,
         eRecon,
         eCombatSupport,
         eCombat,

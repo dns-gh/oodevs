@@ -87,6 +87,7 @@ public:
     void SetSpeedModificator( double rFactor );
     void SetMaxSpeedModificator( double rFactor );
     double GetMaxSpeedModificator();
+    void ApplyTrafficModifier();
     //@}
 
     //! @name Network
@@ -152,6 +153,7 @@ private:
     double rSpeed_;
     double rSpeedModificator_;
     double rMaxSpeedModificator_;
+    double rTrafficModificator_;
     // Network
     bool bCurrentPathHasChanged_;
     bool bEnvironmentHasChanged_;

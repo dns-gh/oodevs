@@ -5452,6 +5452,18 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <source>Sensors</source>
         <translation>Capteurs</translation>
     </message>
+    <message>
+        <source>Traffic</source>
+        <translation>Trafic</translation>
+    </message>
+    <message>
+        <source>Footprint radius</source>
+        <translation>Rayon de l&apos;empreinte</translation>
+    </message>
+    <message>
+        <source>Speed reduction modifier</source>
+        <translation>Coefficient de réduction de la vitesse</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Units_LogThreshold_GUI</name>

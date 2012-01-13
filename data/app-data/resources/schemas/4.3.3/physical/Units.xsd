@@ -122,8 +122,10 @@
 							</xs:element>
 							<xs:element name="setup" minOccurs="0">
 								<xs:complexType>
-									<xs:attribute name="installation-time" type="T_Time" use="required"/>
-									<xs:attribute name="uninstallation-time" type="T_Time" use="required"/>
+									<xs:attribute name="installation-time" type="T_Time" use="optional"/>
+									<xs:attribute name="uninstallation-time" type="T_Time" use="optional"/>
+									<xs:attribute name="footprint-radius" type="xs:positiveInteger" use="optional"/>
+									<xs:attribute name="speed-modifier" type="T_ZeroToOneDouble" use="optional"/>
 								</xs:complexType>
 							</xs:element>
 							<xs:element name="nbc">
@@ -166,8 +168,8 @@
 									<xs:attribute name="urban-area" type="T_IntegralPercentage" use="required"/>
 								</xs:complexType>
 							</xs:element>
-              <xs:element name="repartition" type="T_Repartition" minOccurs="0"/>
-              <xs:element name="crossing-height" minOccurs="0">
+							<xs:element name="repartition" type="T_Repartition" minOccurs="0"/>
+							<xs:element name="crossing-height" minOccurs="0">
 								<xs:complexType>
 									<xs:attribute name="height" type="xs:string" use="required"/>
 								</xs:complexType>

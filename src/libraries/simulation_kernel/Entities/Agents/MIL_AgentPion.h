@@ -162,6 +162,8 @@ public:
     void NotifyAttacking( MIL_Population& target ) const;
     virtual void NotifyAttackedBy( MIL_AgentPion& pion, bool mustReport );
     virtual void NotifyAttackedBy( MIL_Population& population );
+    virtual bool CanInteractWithTraffic() const;
+    virtual void InteractWithTraffic( const std::vector< TER_Agent_ABC* >& agents );
     void ChangeSuperior( MIL_Automate& newAutomate );
     void ChangeNationality( const std::string& nationality );
     //@}

@@ -229,6 +229,9 @@ public:
         ADN_Type_Time                                               installationDelay_;
         ADN_Type_Time                                               uninstallationDelay_;
 
+        ADN_Type_Int                                                nFootprintRadius_;
+        ADN_Type_Double                                             rSpeedModifier_;
+
         ADN_Type_Int                                                nReconEfficiency_;
         ADN_Type_Int                                                nCombatSupportEfficiency_;
         ADN_Type_Int                                                nCombatEfficiency_;

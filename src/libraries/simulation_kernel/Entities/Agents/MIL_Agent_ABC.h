@@ -27,6 +27,7 @@ class MIL_KnowledgeGroup;
 class MIL_PionOrderManager;
 class MIL_Population;
 class MT_Vector2D;
+class TER_Agent_ABC;
 
 namespace logistic
 {
@@ -85,6 +86,8 @@ public:
     virtual void NotifyAttackedBy( MIL_Population& population ) = 0;
     virtual void MagicMove( const MT_Vector2D& ) = 0;
     virtual double Distance( const MIL_Agent_ABC& pion ) const = 0;
+    virtual bool CanInteractWithTraffic() const = 0;
+    virtual void InteractWithTraffic( const std::vector< TER_Agent_ABC* >& agents ) = 0;
     //@}
 
     //! @name Knowledge

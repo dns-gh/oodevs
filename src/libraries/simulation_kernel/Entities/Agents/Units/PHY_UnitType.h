@@ -59,6 +59,8 @@ public:
     double GetPostureTime( const PHY_Posture& posture ) const;
     double GetInstallationTime() const;
     double GetUninstallationTime() const;
+    unsigned int GetFootprintRadius() const;
+    double GetSpeedModifier() const;
     double GetCoupDeSondeLength() const;
     double GetCoupDeSondeWidth() const;
     double GetCoefDecontaminationPerTimeStep() const;
@@ -123,6 +125,8 @@ private:
     T_PostureTimesVector postureTimes_;
     double rInstallationTime_;
     double rUninstallationTime_;
+    unsigned int footprintRadius_;
+    double rSpeedModifier_;
     double rCoupDeSondeLength_;
     double rCoupDeSondeWidth_;
     T_CommanderRepartitionMap commandersRepartition_;

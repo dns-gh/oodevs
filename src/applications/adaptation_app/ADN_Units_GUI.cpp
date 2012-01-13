@@ -199,6 +199,11 @@ void ADN_Units_GUI::Build()
     connect( pComposantes, SIGNAL( currentChanged ( int, int ) ), this, SLOT( OnComponentChanged() ) );
     connect( pComposantes, SIGNAL( contextMenuRequested ( int, int, const QPoint& ) ), this, SLOT( OnComponentChanged() ) );
 
+    // Trafic
+    Q3GroupBox* pTrafficGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Traffic" ), pGroup );
+    builder.AddField< ADN_EditLine_Int >( pTrafficGroup, tr( "Footprint radius" ), vInfosConnectors[ eFootprintRadius ], tr( "m" ), eGreaterEqualZero );
+    builder.AddField< ADN_EditLine_Double >( pTrafficGroup, tr( "Speed reduction modifier" ), vInfosConnectors[ eSpeedModifier ], 0, eZeroOne );
+
     // Dotations
     ADN_GroupBox* pDotationsGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Complementary resources" ), pGroup );
     vInfosConnectors[eHasTC1] = &pDotationsGroup->GetConnector();
@@ -263,6 +268,7 @@ void ADN_Units_GUI::Build()
     pGroupLayout->addMultiCellWidget( pDotationsGroup, 3, 4, 0, 1 );
     pGroupLayout->addMultiCellWidget( pStockGroup_, 3, 4, 2, 3 );
     pGroupLayout->addMultiCellWidget( pComposantesGroup, 5, 5, 0, 3 );
+    pGroupLayout->addMultiCellWidget( pTrafficGroup, 6, 6, 0, 3 );
 }
 
 // -----------------------------------------------------------------------------
