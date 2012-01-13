@@ -2164,6 +2164,10 @@ overwhelming force.]]></doctrine>
       </parameter>
     </mission>
     <mission dia-behavior="tasks.ConfineUrbanBlocksWithinArea" dia-type="tasks.ConfineUrbanBlocksWithinArea" id="4444" name="ML_Security_Confine population">
+      <description>
+        <doctrine><![CDATA[To confine a population into a set of given urban blocks]]></doctrine>
+        <usage><![CDATA[An agent moves to a urban block and when the urban block is reached, the agent confines it. The population into the urban block is confined. When several urban blocks are choosen, the agent moves to each urban block, one by one, by following the order of the user's choice to the select the urban blocks through the interface.]]></usage>
+      </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2178,7 +2182,26 @@ overwhelming force.]]></doctrine>
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="tasks.IncreaseResourceNodeProduction" dia-type="tasks.IncreaseResourceNodeProduction" id="4445" name="ML_Security_IncreaseResourceNodeProduction">
+    <mission dia-behavior="tasks.UndoConfineUrbanBlocksWithinArea" dia-type="tasks.UndoConfineUrbanBlocksWithinArea" id="4445" name="ML_Security_Lift confinement">
+      <description>
+        <doctrine><![CDATA[To lift the confinement of a population in several urban blocks.]]></doctrine>
+        <usage><![CDATA[An agent moves to a urban block and when the urban block is reached, the agent lifts its confinement. The population into the urban block is no more confined. When several urban blocks are selected, the agent moves to each urban block, one by one, by following the order of the user's choice to select the urban blocks through the interface.]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="area" name="area to lift confinement" optional="false" type="Polygon">
+        <choice>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+          <parameter type="ObjectKnowledge"/>
+          <parameter type="CrowdKnowledge"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
+    <mission dia-behavior="tasks.IncreaseResourceNodeProduction" dia-type="tasks.IncreaseResourceNodeProduction" id="4446" name="ML_Security_IncreaseResourceNodeProduction">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -3538,4 +3561,4 @@ overwhelming force.]]></doctrine>
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="3392522208" -->
+<!-- signature="3609692281" -->
