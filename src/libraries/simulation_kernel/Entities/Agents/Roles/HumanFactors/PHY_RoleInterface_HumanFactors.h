@@ -75,6 +75,7 @@ public:
     //! @name Operations
     //@{
     virtual double ModifyPH ( double rPH ) const = 0;
+    virtual void NotifyAttacked() = 0;
     //@}
 
     //! @name Network

@@ -95,7 +95,7 @@ public:
      //! @name Operations
      //@{
     double ModifyPH( double rPH ) const;
-    void NotifyAttacked();
+    virtual void NotifyAttacked();
      //@}
 
     //! @name Network
