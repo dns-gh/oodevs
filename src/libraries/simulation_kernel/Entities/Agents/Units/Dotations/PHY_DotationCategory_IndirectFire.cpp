@@ -16,6 +16,7 @@
 #include "Entities/Agents/Roles/Posture/PHY_RoleInterface_Posture.h"
 #include "Entities/Agents/Roles/Protection/PHY_RoleInterface_ActiveProtection.h"
 #include "Entities/Agents/Units/Postures/PHY_Posture.h"
+#include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
 #include "Entities/Effects/MIL_Effect_Explosion.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
@@ -203,6 +204,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
             MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **itTarget ).GetAgent();
             if( target.GetRole< PHY_RoleInterface_Location >().GetHeight() > 0 )
                 continue;
+            target.GetRole< PHY_RoleInterface_HumanFactors >().NotifyAttacked();
             PHY_RoleInterface_ActiveProtection& targetRoleProtection = target.GetRole< PHY_RoleInterface_ActiveProtection >();
             bool counter = targetRoleProtection.CounterIndirectFire( dotationCategory_ );
             targetRoleProtection.UseAmmunition( dotationCategory_ );
