@@ -419,10 +419,11 @@ eRC_Disengaged = 400
 eRC_AlreadyEngaged = 401
 eRC_AlreadyDisengaged = 402
 eRC_NoPEInAutomat = 403
-eRC_WaitObstacleActivation = 404
-eRC_SectionUndeployed = 405
-eRC_StartUndeploy = 406
-eNbr = 403
+eRC_SectionUndeployed = 404
+eRC_StartUndeploy = 405
+eRC_NoPopulationUrbanBlock = 406
+eNbr = 407
+
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : delai (float),
 ]]--[[// Parametre : T_Pion
