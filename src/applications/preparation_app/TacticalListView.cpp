@@ -15,11 +15,13 @@
 #include "preparation/AutomatDecisions.h"
 #include "preparation/TacticalHierarchies.h"
 #include "preparation/EntityCommunications.h"
+#include "Preparation/Formation.h"
 #include "preparation/CommandPostAttributes.h"
 #include "preparation/ProfileHierarchies_ABC.h"
 #include "preparation/ProfileHierarchies.h"
 #include "clients_gui/ChangeSuperiorDialog.h"
 #include "clients_kernel/Level.h"
+#include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
@@ -128,6 +130,36 @@ void TacticalListView::NotifyUpdated( const AutomatDecisions& decisions )
         UpdatePixmap( *agent, item );
 }
 
+
+namespace
+{
+    bool UpdateFormationRenamingText( const Entity_ABC& entity, ValuedListItem& item )
+    {
+        if( const Formation* formation = dynamic_cast< const Formation* >( &entity ) )
+        {
+            item.SetRenamingText( 0, formation->GetBasicName() );
+            return true;
+        }
+        return false;
+    }
+
+    void UpdateHierarchieFormationRenamingText( const Entity_ABC& entity, Q3ListViewItem* firstItem )
+    {
+        if( ValuedListItem* item = FindItem( &entity, firstItem ) )
+            if( !UpdateFormationRenamingText( entity, *item ) )
+            {
+                Q3ListViewItemIterator it( firstItem );
+                while( it.current() )
+                {
+                    item = static_cast< ValuedListItem* >( it.current() );
+                    if( item && item->GetValue< const Entity_ABC >() )
+                        UpdateFormationRenamingText( *item->GetValue< const Entity_ABC >(), *item );
+                    ++it;
+                }
+            }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: TacticalListView::NotifyUpdated
 // Created: SBO 2006-09-28
@@ -138,7 +170,38 @@ void TacticalListView::NotifyUpdated( const Entity_ABC& entity )
     {
         item->SetNamed( entity );
         UpdatePixmap( entity, item );
+        UpdateFormationRenamingText( entity, *item );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalListView::NotifyCreated
+// Created: MMC 2012-01-12
+// -----------------------------------------------------------------------------
+void TacticalListView::NotifyCreated( const kernel::TacticalHierarchies& hierarchy )
+{
+    HierarchyListView< kernel::TacticalHierarchies >::NotifyCreated( hierarchy );
+    UpdateHierarchieFormationRenamingText( static_cast< const Hierarchies* >( &hierarchy )->GetEntity(), firstChild() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalListView::NotifyUpdated
+// Created: MMC 2012-01-12
+// -----------------------------------------------------------------------------
+void TacticalListView::NotifyUpdated( const kernel::TacticalHierarchies& hierarchy )
+{
+    HierarchyListView< kernel::TacticalHierarchies >::NotifyUpdated( hierarchy );
+    UpdateHierarchieFormationRenamingText( static_cast< const Hierarchies* >( &hierarchy )->GetEntity(), firstChild() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalListView::NotifyCreated
+// Created: MMC 2012-01-12
+// -----------------------------------------------------------------------------
+void TacticalListView::NotifyCreated( const kernel::Formation_ABC& entity )
+{
+    if( ValuedListItem* item = FindItem( &entity, firstChild() ) )
+        UpdateFormationRenamingText( entity, *item );
 }
 
 // -----------------------------------------------------------------------------
@@ -168,7 +231,7 @@ void TacticalListView::UpdatePixmap( const kernel::Entity_ABC& entity, gui::Valu
 void TacticalListView::keyPressEvent( QKeyEvent* event )
 {
     if( selectedItem() && event->key() == Qt::Key_Delete )
-        modelBuilder_.DeleteEntity( *((ValuedListItem*)selectedItem())->GetValue< const Entity_ABC >() );
+        modelBuilder_.DeleteEntity( *( ( ValuedListItem* )selectedItem() )->GetValue< const Entity_ABC >() );
     else
         Q3ListView::keyPressEvent( event );
 }
@@ -179,6 +242,9 @@ void TacticalListView::keyPressEvent( QKeyEvent* event )
 // -----------------------------------------------------------------------------
 void TacticalListView::OnContextMenuRequested( Q3ListViewItem* item, const QPoint& pos, int index )
 {
+    if ( isRenaming() )
+        static_cast< RichListItem* >( item )->ValidUserRenaming( 0 );
+
     HierarchyListView_ABC::OnContextMenuRequested( item, pos, index );
     if( item || !isVisible() )
         return;
