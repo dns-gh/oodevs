@@ -20,22 +20,39 @@
 // =============================================================================
 MOCK_BASE_CLASS( MockPHY_RoleInterface_HumanFactors, PHY_RoleInterface_HumanFactors )
 {
+    //! @name Operations
+    //@{
     MOCK_METHOD( Update, 1 );
     MOCK_METHOD( Clean, 0 );
     MOCK_METHOD( HasChanged, 0 );
+    //@}
 
+    //! @name Main
+    //@{
     MOCK_METHOD( ReadOverloading, 1 );
     MOCK_METHOD( SetMorale, 1 );
     MOCK_METHOD( SetExperience, 1 );
     MOCK_METHOD( SetTiredness, 2 );
+    MOCK_METHOD( SetStress, 2 );
+    //@}
 
+    //! @name Accessors
+    //@{
     MOCK_METHOD( GetMorale, 0 );
     MOCK_METHOD( GetTiredness, 0 );
+    //@}
 
+    //! @name Operations
+    //@{
     MOCK_METHOD( ModifyPH, 1 );
+    MOCK_METHOD( NotifyAttacked, 0 );
+    //@}
 
+    //! @name Network
+    //@{
     MOCK_METHOD( SendChangedState, 1 );
     MOCK_METHOD( SendFullState, 1 );
+    //@}
 };
 
 #endif // __MockPHY_RoleInterface_HumanFactors_h_

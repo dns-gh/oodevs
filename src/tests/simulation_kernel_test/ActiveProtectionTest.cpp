@@ -15,6 +15,7 @@
 #include "MockNET_Publisher_ABC.h"
 #include "MockPHY_RoleInterface_ActiveProtection.h"
 #include "MockPHY_RoleInterface_Composantes.h"
+#include "MockPHY_RoleInterface_HumanFactors.h"
 #include "MockPHY_RoleInterface_UrbanLocation.h"
 #include "MockRoleDotations.h"
 #include "MockRoleLocation.h"
@@ -26,6 +27,7 @@
 #include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
+#include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCapacity.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
@@ -123,6 +125,10 @@ BOOST_AUTO_TEST_CASE( ActiveProtectionTest )
         AlgorithmsFactories algorithms;
         MOCK_EXPECT( pion, GetAlgorithms ).at_least( 1 ).returns( boost::cref( algorithms ) );
         pAction->Execute();
+
+        MockPHY_RoleInterface_HumanFactors* humanFactorRole = new MockPHY_RoleInterface_HumanFactors();
+        pion.RegisterRole< PHY_RoleInterface_HumanFactors >( *humanFactorRole );
+        MOCK_EXPECT( humanFactorRole, NotifyAttacked ).once();
 
         BOOST_CHECK_EQUAL( firing::PHY_RoleAction_IndirectFiring::eFinished, callbackValue );
         MockPHY_RoleInterface_ActiveProtection* protectionRole = new MockPHY_RoleInterface_ActiveProtection();
