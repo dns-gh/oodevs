@@ -149,6 +149,7 @@ void Path::CommitTo( sword::MissionParameter& message ) const
     if( IsSet() )
         CommitTo( *message.mutable_value()->Add()->mutable_path()->mutable_location() );
 }
+
 // -----------------------------------------------------------------------------
 // Name: Path::CommitTo
 // Created: SBO 2007-05-21

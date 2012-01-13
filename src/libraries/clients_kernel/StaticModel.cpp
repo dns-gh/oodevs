@@ -9,15 +9,16 @@
 
 #include "clients_kernel_pch.h"
 #include "StaticModel.h"
+
 #include "AccommodationTypes.h"
 #include "AgentTypes.h"
 #include "AtlasNatures.h"
 #include "CoordinateConverter.h"
 #include "CoordinateSystems.h"
+#include "DetectionMap.h"
+#include "ExtensionTypes.h"
 #include "FormationLevels.h"
 #include "ObjectTypes.h"
-#include "ExtensionTypes.h"
-#include "tools/ExerciseConfig.h"
 
 using namespace kernel;
 
@@ -31,9 +32,10 @@ StaticModel::StaticModel()
     , types_              ( *new AgentTypes() )
     , objectTypes_        ( *new ObjectTypes() )
     , levels_             ( *new FormationLevels() )
-    , extensionTypes_     ( *new ExtensionTypes() )
+    , extensions_         ( *new ExtensionTypes() )
     , atlasNatures_       ( *new AtlasNatures() )
     , accommodationTypes_ ( *new AccommodationTypes() )
+    , detection_          ( *new DetectionMap() )
 {
     // NOTHING
 }
@@ -44,14 +46,15 @@ StaticModel::StaticModel()
 // -----------------------------------------------------------------------------
 StaticModel::~StaticModel()
 {
+    delete &detection_;
+    delete &accommodationTypes_;
     delete &atlasNatures_;
-    delete &extensionTypes_;
+    delete &extensions_;
     delete &levels_;
     delete &objectTypes_;
     delete &types_;
     delete &coordinateConverter_;
     delete &coordinateSystems_;
-    delete &accommodationTypes_;
 }
 
 // -----------------------------------------------------------------------------
@@ -61,11 +64,12 @@ StaticModel::~StaticModel()
 void StaticModel::Load( const tools::ExerciseConfig& config )
 {
     Purge();
+    coordinateConverter_.Load( config );
     types_.Load( config );
-    accommodationTypes_.Load( config );
     objectTypes_.Load( config );
-    extensionTypes_.Load( config );
-    static_cast< kernel::CoordinateConverter& >( coordinateConverter_ ).Load( config );
+    extensions_.Load( config );
+    accommodationTypes_.Load( config );
+    detection_.Load( config );
 }
 
 // -----------------------------------------------------------------------------
@@ -75,6 +79,7 @@ void StaticModel::Load( const tools::ExerciseConfig& config )
 void StaticModel::Purge()
 {
     types_.Purge();
-    extensionTypes_.Purge();
     objectTypes_.Purge();
+    extensions_.Purge();
+    accommodationTypes_.Purge();
 }

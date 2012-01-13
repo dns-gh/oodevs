@@ -10,6 +10,7 @@
 #include "actions_gui_pch.h"
 #include "ParamDateTime.h"
 #include "moc_ParamDateTime.cpp"
+#include "InterfaceBuilder_ABC.h"
 #include "actions/DateTime.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include <QtGui/qdatetimeedit.h>
@@ -18,26 +19,11 @@ using namespace actions::gui;
 
 // -----------------------------------------------------------------------------
 // Name: ParamDateTime constructor
-// Created: SBO 2009-06-03
+// Created: ABR 2012-01-04
 // -----------------------------------------------------------------------------
-ParamDateTime::ParamDateTime( QObject* parent, const kernel::OrderParameter& parameter, const QDateTime& current )
-    : QObject( parent )
-    , Param_ABC( parameter.GetName().c_str(), parameter.IsOptional() )
-    , parameter_( parameter )
-    , date_( current )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamDateTime constructor
-// Created: SBO 2007-05-14
-// -----------------------------------------------------------------------------
-ParamDateTime::ParamDateTime( QObject* parent, const QString& name, const QDateTime& current, bool optional )
-    : QObject( parent )
-    , Param_ABC( name, optional )
-    , parameter_( name.ascii(), "datetime", optional )
-    , date_( current )
+ParamDateTime::ParamDateTime( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
+    : Param_ABC( builder.GetParentObject(), builder.GetParamInterface(), parameter )
+    , date_( builder.GetCurrentDateTime() )
 {
     // NOTHING
 }

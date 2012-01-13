@@ -12,28 +12,17 @@
 #include "actions/UrbanBlock.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/ObjectType.h"
+#include "MissionInterface_ABC.h"
 
 using namespace actions::gui;
 using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: ParamUrbanBlock constructor
-// Created: LGY 2011-02-25
+// Created: ABR 2012-01-04
 // -----------------------------------------------------------------------------
-ParamUrbanBlock::ParamUrbanBlock( QObject* parent, const OrderParameter& parameter, Controller& controller )
-    : EntityParameter< Object_ABC >( parent, parameter, controller )
-    , parameter_( parameter )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamUrbanBlock constructor
-// Created: LGY 2011-02-25
-// -----------------------------------------------------------------------------
-ParamUrbanBlock::ParamUrbanBlock( QObject* parent, const OrderParameter& parameter, const Object_ABC& object, Controller& controller )
-    : EntityParameter< Object_ABC >( parent, parameter, object, controller )
-    , parameter_( parameter )
+ParamUrbanBlock::ParamUrbanBlock( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
+    : EntityParameter< Object_ABC >( builder, parameter )
 {
     // NOTHING
 }

@@ -60,6 +60,9 @@ public:
     //@{
     std::string GetName() const;
     std::string GetType() const;
+    void SetName( const std::string& name );
+    void SetOptional( bool optional );
+    void SetMinMaxOccurs( unsigned int min, unsigned int max );
     bool IsOptional() const;
     unsigned int MinOccurs() const;
     unsigned int MaxOccurs() const;

@@ -19,6 +19,7 @@ namespace kernel
     class Automat_ABC;
     class Formation_ABC;
     class Controller;
+    class ContextMenu;
 }
 
 namespace gui
@@ -90,7 +91,7 @@ private:
     FormationLayer& formationsLayer_;
     T_Automats automats_;
     T_Formations formations_;
-    Q3PopupMenu* menu_;
+    kernel::ContextMenu* menu_;
     //@}
 };
 }

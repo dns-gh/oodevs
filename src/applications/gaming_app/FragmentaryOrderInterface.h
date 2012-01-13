@@ -20,13 +20,15 @@ namespace kernel
 namespace actions
 {
     class ActionsModel;
+    namespace gui
+    {
+        class InterfaceBuilder_ABC;
+    }
 }
-
-class MissionInterfaceBuilder;
 
 // =============================================================================
 /** @class  FragmentaryOrderInterface
-    @brief  Fragmentatry order interface builder
+    @brief  Fragmentary order interface builder
 */
 // Created: SBO 2006-11-22
 // =============================================================================
@@ -35,18 +37,12 @@ class FragmentaryOrderInterface : public actions::gui::MissionInterface_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             FragmentaryOrderInterface( QWidget* parent, kernel::Entity_ABC& entity, const kernel::FragOrderType& fragOrder, kernel::ActionController& controller
-                         , MissionInterfaceBuilder& builder, actions::ActionsModel& model );
+             FragmentaryOrderInterface( QWidget* parent, kernel::Entity_ABC& entity, const kernel::FragOrderType& fragOrder, kernel::ActionController& controller,
+                                        actions::gui::InterfaceBuilder_ABC& builder, actions::ActionsModel& model );
     virtual ~FragmentaryOrderInterface();
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    FragmentaryOrderInterface( const FragmentaryOrderInterface& );
-    FragmentaryOrderInterface& operator=( const FragmentaryOrderInterface& );
-    //@}
-
     //! @name Helpers
     //@{
     virtual void Publish();

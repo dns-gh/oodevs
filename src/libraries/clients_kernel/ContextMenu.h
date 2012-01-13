@@ -12,11 +12,16 @@
 
 #include <boost/noncopyable.hpp>
 
-class Q3PopupMenu;
+#pragma warning( push, 0 )
+#include <Qt3Support/q3popupmenu.h>
+//#include <QtGui/qmenu.h> // $$$$ ABR 2011-12-30: TODO: migrate menu to Qt4
+#pragma warning( pop )
+
+#include <boost/variant.hpp>
+
 class QAction;
 class QKeySequence;
 class QObject;
-class QPixmap;
 class QPoint;
 class QString;
 class QWidget;
@@ -30,32 +35,47 @@ namespace kernel
 */
 // Created: AGE 2006-08-04
 // =============================================================================
-class ContextMenu : private boost::noncopyable
+class ContextMenu : public Q3PopupMenu //QMenu
+                  , private boost::noncopyable
 {
+public:
+    //! @name Types
+    //@{
+    struct Category
+    {
+        Category( const std::string name, bool separatorText = false ) : name_( name ), separatorText_( separatorText ) {}
+        bool operator<( const Category& category ) const { return name_ < category.name_; }
+
+        std::string name_;
+        bool        separatorText_;
+    };
+
+    typedef boost::variant< QAction*, ContextMenu* >        T_MenuVariant;
+
+    typedef std::map< int, T_MenuVariant >                  T_SubMenus;
+    typedef T_SubMenus::const_iterator                    CIT_SubMenus;
+
+    typedef std::map< Category, T_SubMenus >                T_Menus;
+    typedef T_Menus::const_iterator                       CIT_Menus;
+
+    typedef std::vector< std::string >                      T_BaseCategories;
+    typedef T_BaseCategories::const_iterator              CIT_BaseCategories;
+    //@}
+
 public:
     //! @name Constructors/Destructor
     //@{
              ContextMenu();
+    explicit ContextMenu( QWidget* parent );
     virtual ~ContextMenu();
     //@}
 
     //! @name Operations
     //@{
-    void AddCategory( const std::string& text );
-
+    void InitializeBaseCategories();
     void Clear();
-    void SetItemEnabled( int id, bool enable );
-    void SetItemParameter( int id, int parameter );
-    void SetPixmap( int id, const QPixmap& pixmap );
-
-    QAction* InsertItem( const std::string& category, const QString& text, const QObject* receiver, const char* member );
-    QAction* InsertItem( const std::string& category, const QString& text, const QObject* receiver, const char* member, const QKeySequence& accel, int id = -1 );
-    QAction* InsertItem( const std::string& category, const QString& text, int id = -1 );
-    QAction* InsertItem( const std::string& category, const QString& text, Q3PopupMenu* popup, int id = -1 );
-
-    Q3PopupMenu* SubMenu( const std::string& category, const QString& text );
-
     void Popup( const QPoint& where );
+    void ConnectSubActions( const QObject* receiver, const char* member, int depth = 1 );
     //@}
 
     //! @name Operators
@@ -63,35 +83,31 @@ public:
     operator QWidget*() const;
     //@}
 
-private:
-    //! @name Types
+    //! @name 
     //@{
-    struct CategoryTextKey
-    {
-        CategoryTextKey( const std::string category, const std::string text ) : category_( category ), text_( text ) {}
-        bool operator<( const CategoryTextKey& categoryText ) const { return ( category_ == categoryText.category_ ) ? ( text_ < categoryText.text_ ) : ( category_ < categoryText.category_ ); }
-
-        std::string category_;
-        std::string text_;
-    };
-
-    typedef std::vector< std::string > T_OrderedCategories;
-    typedef std::map< CategoryTextKey, Q3PopupMenu* > T_CategoryMenus;
-    typedef std::map< std::string, QAction* > T_Categories;
+    T_MenuVariant InsertVariant( const std::string& category, T_MenuVariant& variant, bool separatorText = false, int index = -1 );
+    QAction* InsertAction( const std::string& category, QAction* action, bool separatorText = false, int index = -1 );
+    QAction* InsertItem( const std::string& category, const QString& text, const QObject* receiver, const char* member, bool separatorText = false, int index = -1 );
+    QAction* InsertItem( const std::string& category, const QString& text, const QObject* receiver, const char* member, const QKeySequence& accel, int index = -1 );
+    QAction* InsertItem( const std::string& category, const QString& text, int index = -1 );
+    QAction* InsertItem( const std::string& category, const QString& text, ContextMenu* popup, int index = -1 );
+    ContextMenu* SubMenu( const std::string& category, const QString& text, bool textSeparator = false, int index = -1 );
+    ContextMenu* SubMenu( const std::string& category, ContextMenu* popup, bool textSeparator = false, int index = -1 );
     //@}
 
+private:
     //! @name Helpers
     //@{
-    QAction* InsertCategory( const std::string& category );
+    ContextMenu* FillMenu();
+    void InternalFillMenu( const CIT_Menus& currentMenu );
+    T_SubMenus& GetCategoryCreateIFN( const std::string& category, bool separatorText = false );
     //@}
 
 private:
     //! @name Member data
     //@{
-    Q3PopupMenu* menu_;
-    T_OrderedCategories categories_;
-    T_Categories separators_;
-    T_CategoryMenus menus_;
+    T_BaseCategories baseCategories_;
+    T_Menus          menus_;
     //@}
 };
 

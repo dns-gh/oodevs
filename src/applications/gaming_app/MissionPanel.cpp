@@ -21,6 +21,10 @@
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/MagicActionType.h"
+#include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/tools.h"
 
 #include "gaming/AutomatDecisions.h"
 #include "gaming/CommandPublisher.h"
@@ -34,16 +38,14 @@
 #include "AutomateMissionInterface.h"
 #include "PopulationMissionInterface.h"
 #include "FragmentaryOrderInterface.h"
-#include "MissionInterfaceBuilder.h"
-#include "clients_kernel/GlTools_ABC.h"
-#include "clients_gui/ParametersLayer.h"
 #include "icons.h"
 
 #include "actions/ActionTasker.h"
 #include "actions/EngageMagicAction.h"
 #include "actions/ActionTiming.h"
-#include "clients_kernel/MagicActionType.h"
-#include "clients_kernel/Entity_ABC.h"
+
+#include "actions_gui/InterfaceBuilder_ABC.h"
+
 
 using namespace kernel;
 
@@ -51,22 +53,21 @@ using namespace kernel;
 // Name: MissionPanel constructor
 // Created: APE 2004-03-19
 // -----------------------------------------------------------------------------
-MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const ::StaticModel& model, Publisher_ABC& publisher, gui::ParametersLayer& layer, const GlTools_ABC& tools, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel
-                          , AgentKnowledgeConverter_ABC& knowledgeConverter, ObjectKnowledgeConverter_ABC& objectKnowledgeConverter, const kernel::Time_ABC& simulation )
+MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const ::StaticModel& model, Publisher_ABC& publisher,
+                            const GlTools_ABC& tools, const kernel::Profile_ABC& profile, actions::ActionsModel& actionsModel,
+                            const kernel::Time_ABC& simulation, actions::gui::InterfaceBuilder_ABC& interfaceBuilder )
     : QDockWidget              ( "mission", pParent )
     , controllers_             ( controllers )
     , static_                  ( model )
     , actionsModel_            ( actionsModel )
-    , layer_                   ( layer )
-    , converter_               ( static_.coordinateConverter_ )
     , tools_                   ( tools )
     , profile_                 ( profile )
     , commandPublisher_        ( new CommandPublisher( controllers_, publisher, profile_ ) )
     , pMissionInterface_       ( 0 )
-    , interfaceBuilder_        ( new MissionInterfaceBuilder( controllers_, layer_, knowledgeConverter, objectKnowledgeConverter, static_, simulation ) )
     , selectedEntity_          ( controllers )
     , isPlanifMode_            ( false )
-    , simulation_              (simulation)
+    , simulation_              ( simulation )
+    , interfaceBuilder_        ( interfaceBuilder )
 {
     setObjectName( "missionPanel" );
     setFloating( true );
@@ -82,7 +83,6 @@ MissionPanel::MissionPanel( QWidget* pParent, Controllers& controllers, const ::
 MissionPanel::~MissionPanel()
 {
     controllers_.Unregister( *this );
-    delete interfaceBuilder_;
 }
 
 // -----------------------------------------------------------------------------
@@ -195,7 +195,7 @@ namespace
 // Created: SBO 2008-10-20
 // -----------------------------------------------------------------------------
 template< typename E, typename T >
-void MissionPanel::AddMissionGroup( Q3PopupMenu& menu, const QString& prefix, const T& list, const char* slot, int current )
+void MissionPanel::AddMissionGroup( kernel::ContextMenu& menu, const QString& prefix, const T& list, const char* slot, int current )
 {
     if( list.empty() )
         return;
@@ -229,7 +229,7 @@ void MissionPanel::AddMissionGroup( Q3PopupMenu& menu, const QString& prefix, co
 // -----------------------------------------------------------------------------
 QAction* MissionPanel::AddMissions( tools::Iterator< const Mission& > it, ContextMenu& menu, const QString& name, const char* slot, int current )
 {
-    Q3PopupMenu& missions = *new Q3PopupMenu( menu );
+    kernel::ContextMenu& missions = *new kernel::ContextMenu( &menu );
     QString lastPrefix;
     typedef std::map< QString, std::set< const Mission*, MissionComparator >, MissionComparator > T_Missions;
     T_Missions list;
@@ -241,7 +241,7 @@ QAction* MissionPanel::AddMissions( tools::Iterator< const Mission& > it, Contex
     }
     for( T_Missions::const_iterator itM = list.begin(); itM != list.end(); ++itM )
         AddMissionGroup< Mission >( missions, itM->first, itM->second, slot, current );
-    return menu.InsertItem( "Order", name, &missions );
+    return menu.InsertItem( "Order", name, &missions, 3 );
 }
 
 // -----------------------------------------------------------------------------
@@ -250,7 +250,7 @@ QAction* MissionPanel::AddMissions( tools::Iterator< const Mission& > it, Contex
 // -----------------------------------------------------------------------------
 QAction* MissionPanel::AddFragOrders( const Decisions_ABC& decisions, ContextMenu& menu, const QString& name, const char* slot )
 {
-    Q3PopupMenu& orders = *new Q3PopupMenu( menu );
+    kernel::ContextMenu& orders = *new kernel::ContextMenu( &menu );
     typedef std::map< QString, std::set< const FragOrder*, MissionComparator >, MissionComparator > T_FragOrders;
     T_FragOrders list;
     if( const Mission* mission = decisions.GetCurrentMission() )
@@ -280,7 +280,7 @@ QAction* MissionPanel::AddFragOrders( const Decisions_ABC& decisions, ContextMen
     }
     for( T_FragOrders::const_iterator itM = list.begin(); itM != list.end(); ++itM )
         AddMissionGroup< FragOrder >( orders, itM->first, itM->second, slot, -1 );
-    return menu.InsertItem( "Order", name, &orders );
+    return menu.InsertItem( "Order", name, &orders, 2 );
 }
 
 // -----------------------------------------------------------------------------
@@ -311,7 +311,7 @@ void MissionPanel::ActivateAgentMission( int id )
 {
     SetInterface( 0 );
     const kernel::MissionType& mission = static_cast< tools::Resolver_ABC< kernel::MissionType >& >( static_.types_).Get( id );
-    SetInterface( new UnitMissionInterface( this, *selectedEntity_.ConstCast(), mission, controllers_.actions_, *interfaceBuilder_, actionsModel_ ) );
+    SetInterface( new UnitMissionInterface( this, *selectedEntity_.ConstCast(), mission, controllers_.actions_, interfaceBuilder_, actionsModel_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -325,7 +325,7 @@ void MissionPanel::ActivateAutomatMission( int id )
     Entity_ABC* entity = selectedEntity_.ConstCast();
     if( !entity->Retrieve< AutomatDecisions >() )
         entity = const_cast< kernel::Entity_ABC* >( entity->Get< kernel::TacticalHierarchies >().GetSuperior() );
-    SetInterface( new AutomateMissionInterface( this, *entity, mission, controllers_.actions_, *interfaceBuilder_, actionsModel_ ) );
+    SetInterface( new AutomateMissionInterface( this, *entity, mission, controllers_.actions_, interfaceBuilder_, actionsModel_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -336,7 +336,7 @@ void MissionPanel::ActivatePopulationMission( int id )
 {
     SetInterface( 0 );
     const kernel::MissionType& mission = static_cast< tools::Resolver_ABC< kernel::MissionType >& >( static_.types_).Get( id );
-    SetInterface( new PopulationMissionInterface( this, *selectedEntity_.ConstCast(), mission, controllers_.actions_, *interfaceBuilder_, actionsModel_ ) );
+    SetInterface( new PopulationMissionInterface( this, *selectedEntity_.ConstCast(), mission, controllers_.actions_, interfaceBuilder_, actionsModel_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -355,7 +355,7 @@ void MissionPanel::ActivateFragOrder( int id )
             if( decisions->IsEmbraye() )
                 entity = superior;
     }
-    SetInterface( new FragmentaryOrderInterface( this, *entity, order, controllers_.actions_, *interfaceBuilder_, actionsModel_ ) );
+    SetInterface( new FragmentaryOrderInterface( this, *entity, order, controllers_.actions_, interfaceBuilder_, actionsModel_ ) );
 }
 
 // -----------------------------------------------------------------------------

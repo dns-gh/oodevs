@@ -21,11 +21,9 @@
 // Name: ParamStringEnumeration constructor
 // Created: SBO 2009-08-05
 // -----------------------------------------------------------------------------
-ParamStringEnumeration::ParamStringEnumeration( QObject* parent, const QString& title, const kernel::OrderParameter& parameter, const std::map< std::string, std::string >& values )
-    : QObject( parent )
-    , actions::gui::Param_ABC( parameter.GetName().c_str() )
+ParamStringEnumeration::ParamStringEnumeration( QObject* parent, const actions::gui::ParamInterface_ABC& paramInterface, const QString& title, const kernel::OrderParameter& parameter, const std::map< std::string, std::string >& values )
+    : actions::gui::Param_ABC( parent, paramInterface, parameter )
     , title_( title )
-    , parameter_( parameter )
     , values_( values )
 {
     // NOTHING
@@ -58,8 +56,8 @@ QWidget* ParamStringEnumeration::BuildInterface( QWidget* parent )
 // -----------------------------------------------------------------------------
 void ParamStringEnumeration::OnToggle( const std::string& id )
 {
-        bool& selected = selected_[ id ];
-        selected = !selected;
+    bool& selected = selected_[ id ];
+    selected = !selected;
 }
 
 // -----------------------------------------------------------------------------

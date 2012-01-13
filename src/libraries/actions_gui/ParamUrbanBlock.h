@@ -28,8 +28,7 @@ class ParamUrbanBlock : public EntityParameter< kernel::Object_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamUrbanBlock( QObject* parent, const kernel::OrderParameter& parameter, kernel::Controller& controller );
-             ParamUrbanBlock( QObject* parent, const kernel::OrderParameter& parameter, const kernel::Object_ABC& object, kernel::Controller& controller );
+             ParamUrbanBlock( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter );
     virtual ~ParamUrbanBlock();
     //@}
 
@@ -37,12 +36,6 @@ public:
     //@{
     virtual void NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu );
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    kernel::OrderParameter parameter_;
     //@}
 };
 

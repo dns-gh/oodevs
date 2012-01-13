@@ -26,9 +26,6 @@
     <Filter Include="Source Files\Parameters\Static model types">
       <UniqueIdentifier>{8eab13e4-2abe-45a6-b0b6-638b49768353}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Parameters\Urban">
-      <UniqueIdentifier>{a230b33b-482e-4e32-93bd-ccd3dfea6c9a}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Interface">
       <UniqueIdentifier>{6efc0a63-1b0e-40f4-80d7-bf5209e0938c}</UniqueIdentifier>
     </Filter>
@@ -55,43 +52,22 @@
     <ClCompile Include="..\..\src\libraries\actions_gui\LimitParameter.cpp">
       <Filter>Source Files\Parameters\Tactical lines</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamLimaList.cpp">
-      <Filter>Source Files\Parameters\Tactical lines</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamAgent.cpp">
-      <Filter>Source Files\Parameters\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamAgentList.cpp">
       <Filter>Source Files\Parameters\Entities</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamAutomat.cpp">
       <Filter>Source Files\Parameters\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamAutomatList.cpp">
-      <Filter>Source Files\Parameters\Entities</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamCrowd.cpp">
-      <Filter>Source Files\Parameters\Entities</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamCrowdList.cpp">
       <Filter>Source Files\Parameters\Entities</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamInhabitant.cpp">
       <Filter>Source Files\Parameters\Entities</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamInhabitantList.cpp">
-      <Filter>Source Files\Parameters\Entities</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamAgentKnowledge.cpp">
       <Filter>Source Files\Parameters\Knowledges</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamAgentKnowledgeList.cpp">
-      <Filter>Source Files\Parameters\Knowledges</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamObjectKnowledge.cpp">
-      <Filter>Source Files\Parameters\Knowledges</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamObjectKnowledgeList.cpp">
       <Filter>Source Files\Parameters\Knowledges</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamPopulationKnowledge.cpp">
@@ -103,37 +79,10 @@
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamLocationComposite.cpp">
       <Filter>Source Files\Parameters\Locations</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamLocationCompositeList.cpp">
-      <Filter>Source Files\Parameters\Locations</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamLocationList.cpp">
-      <Filter>Source Files\Parameters\Locations</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamPath.cpp">
       <Filter>Source Files\Parameters\Locations</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamPathList.cpp">
-      <Filter>Source Files\Parameters\Locations</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamPoint.cpp">
-      <Filter>Source Files\Parameters\Locations</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamPointList.cpp">
-      <Filter>Source Files\Parameters\Locations</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamPolygon.cpp">
-      <Filter>Source Files\Parameters\Locations</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamPolygonList.cpp">
-      <Filter>Source Files\Parameters\Locations</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\EntityListParameter.cpp">
-      <Filter>Source Files\Parameters\Base</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\actions_gui\EntityParameter.cpp">
-      <Filter>Source Files\Parameters\Base</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\ListParameter.cpp">
       <Filter>Source Files\Parameters\Base</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\actions_gui\Param_ABC.cpp">
@@ -145,20 +94,11 @@
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamDotationDType.cpp">
       <Filter>Source Files\Parameters\Static model types</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamDotationTypeList.cpp">
-      <Filter>Source Files\Parameters\Static model types</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamEquipmentList.cpp">
       <Filter>Source Files\Parameters\Static model types</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamHumanWoundList.cpp">
       <Filter>Source Files\Parameters\Static model types</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamUrbanBlock.cpp">
-      <Filter>Source Files\Parameters\Urban</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamUrbanBlockList.cpp">
-      <Filter>Source Files\Parameters\Urban</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\actions_gui\MissionInterface_ABC.cpp">
       <Filter>Source Files\Interface</Filter>
@@ -175,13 +115,7 @@
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamNumericField.cpp">
       <Filter>Source Files\Parameters\Common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamNumericList.cpp">
-      <Filter>Source Files\Parameters\Common</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamResourceNetwork.cpp">
-      <Filter>Source Files\Parameters\Resource Network</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamResourceNetworkList.cpp">
       <Filter>Source Files\Parameters\Resource Network</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamStringField.cpp">
@@ -190,7 +124,13 @@
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamObstacle.cpp">
       <Filter>Source Files\Parameters\Static model types</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamObstacleList.cpp">
+    <ClCompile Include="..\..\src\libraries\actions_gui\ParamUrbanBlock.cpp">
+      <Filter>Source Files\Parameters\Entities</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions_gui\InterfaceBuilder.cpp">
+      <Filter>Source Files\Interface</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions_gui\ParamDotationTypeList.cpp">
       <Filter>Source Files\Parameters\Static model types</Filter>
     </ClCompile>
   </ItemGroup>
@@ -201,37 +141,19 @@
     <ClInclude Include="..\..\src\libraries\actions_gui\resources.h">
       <Filter>Source Files</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\actions_gui\ParamAgent.h">
-      <Filter>Source Files\Parameters\Entities</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamAutomat.h">
-      <Filter>Source Files\Parameters\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\actions_gui\ParamAutomatList.h">
       <Filter>Source Files\Parameters\Entities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamCrowd.h">
       <Filter>Source Files\Parameters\Entities</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\actions_gui\ParamCrowdList.h">
-      <Filter>Source Files\Parameters\Entities</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamInhabitant.h">
-      <Filter>Source Files\Parameters\Entities</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\actions_gui\ParamInhabitantList.h">
       <Filter>Source Files\Parameters\Entities</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamAgentKnowledge.h">
       <Filter>Source Files\Parameters\Knowledges</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\actions_gui\ParamAgentKnowledgeList.h">
-      <Filter>Source Files\Parameters\Knowledges</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamObjectKnowledge.h">
-      <Filter>Source Files\Parameters\Knowledges</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\actions_gui\ParamObjectKnowledgeList.h">
       <Filter>Source Files\Parameters\Knowledges</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamPopulationKnowledge.h">
@@ -240,38 +162,11 @@
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamLocation.h">
       <Filter>Source Files\Parameters\Locations</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\actions_gui\ParamLocationCompositeList.h">
-      <Filter>Source Files\Parameters\Locations</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\actions_gui\ParamLocationList.h">
-      <Filter>Source Files\Parameters\Locations</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\actions_gui\ParamPathList.h">
-      <Filter>Source Files\Parameters\Locations</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\actions_gui\ParamPointList.h">
-      <Filter>Source Files\Parameters\Locations</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\actions_gui\ParamPolygon.h">
-      <Filter>Source Files\Parameters\Locations</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\actions_gui\ParamPolygonList.h">
-      <Filter>Source Files\Parameters\Locations</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamDotationDType.h">
       <Filter>Source Files\Parameters\Static model types</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\actions_gui\ParamUrbanBlock.h">
-      <Filter>Source Files\Parameters\Urban</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\actions_gui\ParamUrbanBlockList.h">
-      <Filter>Source Files\Parameters\Urban</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\actions_gui\InterfaceBuilder_ABC.h">
       <Filter>Source Files\Interface</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\actions_gui\ParamNumericList.h">
-      <Filter>Source Files\Parameters\Common</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamComboBox.h">
       <Filter>Source Files\Parameters\Common</Filter>
@@ -279,20 +174,26 @@
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamNumericField.h">
       <Filter>Source Files\Parameters\Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\actions_gui\ParamResourceNetworkList.h">
-      <Filter>Source Files\Parameters\Resource Network</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamStringField.h">
       <Filter>Source Files\Parameters\Common</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\actions_gui\ParamObstacleList.h">
-      <Filter>Source Files\Parameters\Static model types</Filter>
+    <ClInclude Include="..\..\src\libraries\actions_gui\ParamLocation_ABC.h">
+      <Filter>Source Files\Parameters\Locations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions_gui\ParamUrbanBlock.h">
+      <Filter>Source Files\Parameters\Entities</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions_gui\InterfaceBuilder.h">
+      <Filter>Source Files\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions_gui\ParamInterface_ABC.h">
+      <Filter>Source Files\Interface</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions_gui\EntityParameter.h">
+      <Filter>Source Files\Parameters\Base</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <None Include="..\..\src\libraries\actions_gui\EntityListParameter.inl">
-      <Filter>Source Files\Parameters\Base</Filter>
-    </None>
     <None Include="..\..\src\libraries\actions_gui\EntityParameter.inl">
       <Filter>Source Files\Parameters\Base</Filter>
     </None>
@@ -302,6 +203,18 @@
     <None Include="..\..\src\libraries\actions_gui\actions_gui_fr.ts">
       <Filter>Translations</Filter>
     </None>
+    <None Include="..\..\src\libraries\actions_gui\ListParameter.inl">
+      <Filter>Source Files\Parameters\Base</Filter>
+    </None>
+    <None Include="..\..\src\libraries\actions_gui\ParamNumericField.inl">
+      <Filter>Source Files\Parameters\Common</Filter>
+    </None>
+    <None Include="..\..\src\libraries\actions_gui\ParamComboBox.inl">
+      <Filter>Source Files\Parameters\Common</Filter>
+    </None>
+    <None Include="..\..\src\libraries\actions_gui\ParamLocation_ABC.inl">
+      <Filter>Source Files\Parameters\Locations</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\libraries\actions_gui\LimaParameter.h">
@@ -310,31 +223,13 @@
     <CustomBuild Include="..\..\src\libraries\actions_gui\LimitParameter.h">
       <Filter>Source Files\Parameters\Tactical lines</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\actions_gui\ParamLimaList.h">
-      <Filter>Source Files\Parameters\Tactical lines</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\actions_gui\ParamAgentList.h">
-      <Filter>Source Files\Parameters\Entities</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\actions_gui\ParamPath.h">
       <Filter>Source Files\Parameters\Locations</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\actions_gui\ParamPoint.h">
-      <Filter>Source Files\Parameters\Locations</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\actions_gui\EntityListParameter.h">
-      <Filter>Source Files\Parameters\Base</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\actions_gui\EntityParameter.h">
-      <Filter>Source Files\Parameters\Base</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\actions_gui\ListParameter.h">
       <Filter>Source Files\Parameters\Base</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\actions_gui\ParamAtlasNature.h">
-      <Filter>Source Files\Parameters\Static model types</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\actions_gui\ParamDotationTypeList.h">
       <Filter>Source Files\Parameters\Static model types</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\actions_gui\ParamEquipmentList.h">
@@ -348,9 +243,6 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\actions_gui\translator.pro">
       <Filter>Translations</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\actions_gui\Param_ABC.h">
-      <Filter>Source Files\Parameters\Base</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\actions_gui\ParamLocationComposite.h">
       <Filter>Source Files\Parameters\Locations</Filter>
@@ -368,6 +260,15 @@
       <Filter>Source Files\Parameters\Resource Network</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\actions_gui\ParamObstacle.h">
+      <Filter>Source Files\Parameters\Static model types</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\actions_gui\Param_ABC.h">
+      <Filter>Source Files\Parameters\Base</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\actions_gui\ParamAgent.h">
+      <Filter>Source Files\Parameters\Entities</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\actions_gui\ParamDotationTypeList.h">
       <Filter>Source Files\Parameters\Static model types</Filter>
     </CustomBuild>
   </ItemGroup>

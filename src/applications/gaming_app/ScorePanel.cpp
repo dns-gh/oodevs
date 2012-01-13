@@ -175,7 +175,7 @@ void ScorePanel::Display( const Score& score, gui::ValuedListItem* item )
 // -----------------------------------------------------------------------------
 void ScorePanel::OnContextMenu( Q3ListViewItem* item, const QPoint& point, int /*column*/ )
 {
-    Q3PopupMenu* menu = new Q3PopupMenu( scores_ );
+    kernel::ContextMenu* menu = new kernel::ContextMenu( scores_ );
     if( item )
     {
         menu->insertItem( tools::translate( "ScorePanel", "View graph" ), this, SLOT( OnShowGraph() ) );

@@ -14,6 +14,7 @@
 #include "moc_WeatherListView.cpp"
 #include "Meteo/Meteo.h"
 #include <boost/shared_ptr.hpp>
+#include "clients_kernel/ContextMenu.h"
 
 using namespace gui;
 
@@ -55,7 +56,7 @@ void WeatherListView::Clear()
 // -----------------------------------------------------------------------------
 void WeatherListView::ContextMenuRequested( Q3ListViewItem* item, const QPoint& point, int /*column*/ )
 {
-    Q3PopupMenu* menu = new Q3PopupMenu( this );
+    kernel::ContextMenu* menu = new kernel::ContextMenu( this );
     menu->insertItem( tr( "Add" ), this, SLOT( CreateItem() ) );
     if( item )
         menu->insertItem(tr( "Delete" ), this, SLOT( DeleteItem() ) );

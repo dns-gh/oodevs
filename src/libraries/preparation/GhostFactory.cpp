@@ -34,7 +34,7 @@ using namespace kernel;
 // Name: GhostFactory constructor
 // Created: ABR 2011-10-14
 // -----------------------------------------------------------------------------
-GhostFactory::GhostFactory( kernel::Controllers& controllers, Model& model, const StaticModel& staticModel,
+GhostFactory::GhostFactory( kernel::Controllers& controllers, Model& model, const ::StaticModel& staticModel,
                             IdManager& idManager, kernel::KnowledgeGroupFactory_ABC& knowledgeGroupFactory, kernel::SymbolFactory& symbolsFactory )
     : controllers_          ( controllers )
     , model_                ( model )

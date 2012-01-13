@@ -11,11 +11,14 @@
 #include "LimaParameter.h"
 #include "moc_LimaParameter.cpp"
 #include "ParamDateTime.h"
+#include "ListParameter.h"
 #include "actions/Lima.h"
+#include "actions_gui/MissionInterface_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Lines.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/Positions.h"
+#include "clients_kernel/StaticModel.h"
 #include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_gui/Tools.h"
 
@@ -23,32 +26,15 @@ using namespace actions::gui;
 
 // -----------------------------------------------------------------------------
 // Name: LimaParameter constructor
-// Created: SBO 2007-05-02
+// Created: ABR 2012-01-05
 // -----------------------------------------------------------------------------
-LimaParameter::LimaParameter( QObject* parent, const QString& name, const kernel::CoordinateConverter_ABC& converter, const QDateTime& currentDate, const kernel::TacticalLine_ABC& line, bool optional )
-    : QObject( parent )
-    , Param_ABC( name, optional )
-    , converter_   ( converter )
-    , currentDate_ ( currentDate )
-    , clickedLine_ ( &line )
-    , selectedLine_( &line )
-    , schedule_    ( 0 )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: LimaParameter constructor
-// Created: MGD 2010-10-27
-// -----------------------------------------------------------------------------
-LimaParameter::LimaParameter( QObject* parent, const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const QDateTime& currentDate )
-    : QObject( parent )
-    , Param_ABC( parameter.GetName().c_str(), parameter.IsOptional() )
-    , converter_   ( converter )
-    , currentDate_ ( currentDate )
+LimaParameter::LimaParameter( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
+    : Param_ABC( builder.GetParentObject(), builder.GetParamInterface(), parameter )
+    , converter_   ( builder.GetStaticModel().coordinateConverter_ )
     , clickedLine_ ( 0 )
     , selectedLine_( 0 )
-    , schedule_    ( 0 )
+    , functions_   ( new Q3ListBox() )
+    , schedule_    ( static_cast< ParamDateTime* >( &builder.BuildOne( kernel::OrderParameter( tools::translate( "LimaParameter", "Schedule" ).ascii(), "datetime", true ), false ) ) )
 {
     // NOTHING
 }
@@ -59,6 +45,7 @@ LimaParameter::LimaParameter( QObject* parent, const kernel::OrderParameter& par
 // -----------------------------------------------------------------------------
 LimaParameter::~LimaParameter()
 {
+    delete functions_;
     delete schedule_;
 }
 
@@ -85,21 +72,22 @@ QWidget* LimaParameter::BuildInterface( QWidget* parent )
     entityLabel_->setAlignment( Qt::AlignCenter );
     entityLabel_->setFrameStyle( Q3Frame::Box | Q3Frame::Sunken );
 
-    functions_ = new Q3ListBox( parent );
     functions_->setSelectionMode( Q3ListBox::Multi );
     for( unsigned int i = 0; i < kernel::eLimaFuncNbr; ++i )
         functions_->insertItem( tools::ToShortString( (kernel::E_FuncLimaType)i ), i );
     functions_->setRowMode( Q3ListBox::FitToHeight );
     //functions_->setFixedSize( 150, functions_->itemHeight( 0 ) * 4 );
     functions_->setFixedHeight( functions_->itemHeight( 0 ) * 4 );
-    schedule_ = new ParamDateTime( this, tools::translate( "LimaParameter", "Schedule" ), currentDate_, true ); // $$$$ SBO 2007-05-14: optional
-    QWidget* scheduleBox = schedule_->BuildInterface( parent );
 
+    QWidget* scheduleBox = schedule_->BuildInterface( parent );
     layout->addWidget( new QLabel( tools::translate( "LimaParameter", "Line" ), parent ), 0, 0 );
     layout->addWidget( entityLabel_, 0, 1 );
     layout->addWidget( new QLabel( tools::translate( "LimaParameter", "Functions" ), parent ), 1, 0 );
     layout->addWidget( functions_, 1, 1 );
     layout->addWidget( scheduleBox, 2, 0, 1, 2 );
+
+    if( IsInList() )
+        parentList_->EnableCreation( false );
 
     return group_;
 }
@@ -132,21 +120,6 @@ void LimaParameter::Draw( const geometry::Point2f& point, const kernel::Viewport
 }
 
 // -----------------------------------------------------------------------------
-// Name: LimaParameter::MenuItemValidated
-// Created: SBO 2007-05-02
-// -----------------------------------------------------------------------------
-void LimaParameter::MenuItemValidated( int index )
-{
-    assert( clickedLine_ != 0 );
-    selectedLine_ = clickedLine_;
-    clickedLine_ = 0;
-    if( group_ && IsOptional() )
-        group_->setChecked( true );
-    entityLabel_->setText( selectedLine_->GetName() );
-    functions_->setSelected( index, !functions_->isSelected( index ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: LimaParameter::NotifyContextMenu
 // Created: SBO 2007-05-02
 // -----------------------------------------------------------------------------
@@ -155,14 +128,56 @@ void LimaParameter::NotifyContextMenu( const kernel::TacticalLine_ABC& entity, k
     if( entity.IsLimit() )
         return;
     clickedLine_ = &entity;
-    Q3PopupMenu* limaMenu = new Q3PopupMenu( menu );
+    Param_ABC::CreateMenu( menu );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimaParameter::CreateInternalMenu
+// Created: ABR 2012-01-06
+// -----------------------------------------------------------------------------
+void LimaParameter::CreateInternalMenu( kernel::ContextMenu& menu )
+{
+    kernel::ContextMenu* internalMenu = new kernel::ContextMenu( &menu );
+    internalMenu->setTitle( GetMenuName() );
+
+    actions_.clear();
     for( unsigned int i = 0; i < kernel::eLimaFuncNbr; ++i )
     {
-        int id = limaMenu->insertItem( tools::ToString( (kernel::E_FuncLimaType)i ), this, SLOT( MenuItemValidated( int ) ) );
-        limaMenu->setItemParameter( id, i );
-        limaMenu->setItemChecked( id, functions_->isSelected( i ) );
+        QAction* action = internalMenu->InsertItem( "", tools::ToString( (kernel::E_FuncLimaType)i ), i );
+        action->setCheckable( true );
+        action->setChecked( functions_->isSelected( i ) );
+        actions_.push_back( action );
     }
-    menu.InsertItem( "Parameter", tools::translate( "LimaParameter", "Set '%1' function" ).arg( GetName() ), limaMenu );
+    QObject::connect( internalMenu, SIGNAL( triggered( QAction* ) ), this, SLOT( OnMenuClick( QAction* ) ) );
+    internalMenu_ = internalMenu;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LimaParameter::OnMenuClick
+// Created: ABR 2012-01-06
+// -----------------------------------------------------------------------------
+void LimaParameter::OnMenuClick( QAction* action )
+{
+    selectedLine_ = clickedLine_;
+    clickedLine_ = 0;
+    int index = 0;
+    if( selectedLine_ )
+    {
+        for( CIT_Actions it = actions_.begin(); it != actions_.end(); ++it, ++index )
+            if( *it == action )
+            {
+                entityLabel_->setText( selectedLine_->GetName() );
+                functions_->setSelected( index, !functions_->isSelected( index ) );
+            }
+    }
+    else
+    {
+        entityLabel_->setText( "---" );
+        for( unsigned int i = 0; i < kernel::eLimaFuncNbr; ++i )
+            functions_->setSelected( i, !functions_->isSelected( i ) );
+    }
+    if( group_ && IsOptional() )
+        group_->setChecked( true );
 }
 
 namespace

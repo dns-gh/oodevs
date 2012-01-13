@@ -99,7 +99,7 @@ private:
     const tools::ExerciseConfig& config_;
     std::auto_ptr< kernel::SymbolFactory > pFactory_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
-    Q3PopupMenu* menu_;
+    kernel::ContextMenu* menu_;
     //@}
 };
 

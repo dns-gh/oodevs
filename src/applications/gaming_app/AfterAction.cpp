@@ -11,6 +11,7 @@
 #include "AfterAction.h"
 #include "AfterActionFunctionList.h"
 #include "AfterActionRequestList.h"
+#include "actions_gui/InterfaceBuilder_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "gaming/Services.h"
 #include "gaming/Tools.h"
@@ -25,13 +26,13 @@ using namespace kernel;
 // Created: AGE 2007-09-17
 // -----------------------------------------------------------------------------
 AfterAction::AfterAction( QMainWindow* window, Controllers& controllers, ItemFactory_ABC& factory, AfterActionModel& model,
-                          ParametersLayer& layer, const StaticModel& staticModel, IndicatorPlotFactory& plotFactory )
+                          IndicatorPlotFactory& plotFactory, actions::gui::InterfaceBuilder_ABC& interfaceBuilder )
     : window_      ( window )
     , functionsTab_( 0 )
     , aar_         ( false )
     , firstUpdate_ ( true )
 {
-    CreateAfterActionDock( window, controllers, factory, model, layer, staticModel, plotFactory );
+    CreateAfterActionDock( window, controllers, factory, model, plotFactory, interfaceBuilder );
     controllers.Register( *this );
 }
 
@@ -48,7 +49,7 @@ AfterAction::~AfterAction()
 // Name: AfterAction::CreateAfterActionDock
 // Created: AGE 2007-09-25
 // -----------------------------------------------------------------------------
-void AfterAction::CreateAfterActionDock( QMainWindow* window, Controllers& controllers, ItemFactory_ABC& factory, AfterActionModel& model, ParametersLayer& layer, const StaticModel& staticModel, IndicatorPlotFactory& plotFactory )
+void AfterAction::CreateAfterActionDock( QMainWindow* window, Controllers& controllers, ItemFactory_ABC& factory, AfterActionModel& model, IndicatorPlotFactory& plotFactory, actions::gui::InterfaceBuilder_ABC& interfaceBuilder )
 {
     aarDock_ = new QDockWidget( "aar", window );
     aarDock_->setObjectName( tools::translate( "AfterAction", "After action review" ) );
@@ -57,7 +58,7 @@ void AfterAction::CreateAfterActionDock( QMainWindow* window, Controllers& contr
     box->setMinimumSize( 250, 200 );
     functionsTab_ = new QTabWidget( box );
 
-    AfterActionFunctionList* list = new AfterActionFunctionList( functionsTab_, controllers, factory, model, layer, staticModel );
+    AfterActionFunctionList* list = new AfterActionFunctionList( functionsTab_, controllers, factory, model, interfaceBuilder );
     functionsTab_->addTab( list, tools::translate( "AfterAction", "Functions" ) );
 
     AfterActionRequestList* requests = new AfterActionRequestList( functionsTab_, controllers, factory, plotFactory );

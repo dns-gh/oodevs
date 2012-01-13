@@ -24,18 +24,9 @@ namespace kernel
 
 namespace actions
 {
-    class Parameter_ABC;
-}
-
-namespace gui
-{
-    class RichLabel;
-}
-
-namespace actions
-{
     namespace gui
     {
+        class InterfaceBuilder_ABC;
 
 // =============================================================================
 /** @class  LimitParameter
@@ -43,18 +34,16 @@ namespace actions
 */
 // Created: SBO 2006-11-14
 // =============================================================================
-class LimitParameter : public QObject
-                     , public Param_ABC
+class LimitParameter : public Param_ABC
                      , public kernel::ContextMenuObserver_ABC< kernel::TacticalLine_ABC >
                      , public tools::ElementObserver_ABC< kernel::TacticalLine_ABC >
 
 {
-    Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             LimitParameter( QObject* parent, const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, kernel::Controller& controller );
+             LimitParameter( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter );
     virtual ~LimitParameter();
     //@}
 
@@ -65,10 +54,10 @@ public:
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     //@}
 
-private slots:
+private:
     //! @name Slots
     //@{
-    virtual void MenuItemValidated();
+    virtual void OnMenuClick();
     //@}
 
 private:
@@ -84,7 +73,6 @@ private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    kernel::OrderParameter parameter_;
     const kernel::CoordinateConverter_ABC& converter_;
     QLabel* entityLabel_;
     const kernel::TacticalLine_ABC* potential_;

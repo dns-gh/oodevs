@@ -71,7 +71,7 @@ namespace
 // Created : AHC 2010-10-14
 // -----------------------------------------------------------------------------
 LogisticSupplyPullFlowDialog::LogisticSupplyPullFlowDialog( QWidget* parent, Controllers& controllers, actions::ActionsModel& actionsModel,
-        const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::ParametersLayer& layer, const tools::Resolver_ABC< Automat_ABC >& automats,
+        const ::StaticModel& staticModel, const kernel::Time_ABC& simulation, ::gui::ParametersLayer& layer, const tools::Resolver_ABC< Automat_ABC >& automats,
         const tools::Resolver_ABC< kernel::Formation_ABC >& formations, const Profile_ABC& profile )
     : QDialog( parent, tr( "Pull supply flow" ) )
     , controllers_( controllers )

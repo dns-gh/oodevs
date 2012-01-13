@@ -12,6 +12,11 @@
 
 #include <geometry/Types.h>
 
+namespace tools
+{
+    class ExerciseConfig;
+}
+
 namespace kernel
 {
     class CoordinateSystems;
@@ -32,6 +37,8 @@ public:
 
     //! @name Operations
     //@{
+    virtual void Load( const tools::ExerciseConfig& config ) = 0;
+
     virtual const geometry::Rectangle2f& GetExtent() const = 0;
     virtual bool IsInBoundaries                     ( const geometry::Point2f& point ) const = 0;
     virtual std::string       ConvertToMgrs         ( const geometry::Point2f& pos ) const = 0;

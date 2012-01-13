@@ -30,21 +30,13 @@ class ParamInhabitant : public EntityParameter< kernel::Inhabitant_ABC >
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamInhabitant( QObject* parent, const kernel::OrderParameter& parameter, kernel::Controller& controller );
-             ParamInhabitant( QObject* parent, const kernel::OrderParameter& parameter, const kernel::Inhabitant_ABC& entity, kernel::Controller& controller );
+             ParamInhabitant( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter );
     virtual ~ParamInhabitant();
     //@}
 
     //! @name Operations
     //@{
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
-    void SetName( const QString& name );
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    kernel::OrderParameter parameter_;
     //@}
 };
 

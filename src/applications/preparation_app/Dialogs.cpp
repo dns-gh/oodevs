@@ -29,7 +29,7 @@ using namespace kernel;
 // Name: Dialogs constructor
 // Created: AGE 2006-04-20
 // -----------------------------------------------------------------------------
-Dialogs::Dialogs( QWidget* parent, Controllers& controllers, const StaticModel& model, const kernel::Profile_ABC& profile,
+Dialogs::Dialogs( QWidget* parent, Controllers& controllers, const ::StaticModel& model, const kernel::Profile_ABC& profile,
                   gui::ColorStrategy_ABC& colorStrategy, gui::ColorEditor_ABC& colorEditor, const gui::EntitySymbols& symbols,
                   const tools::ExerciseConfig& config, kernel::SymbolFactory& symbolsFactory, gui::SymbolIcons& icons )
     : QObject( parent )

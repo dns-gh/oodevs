@@ -19,13 +19,15 @@ namespace kernel
 namespace actions
 {
     class ActionsModel;
+    namespace gui
+    {
+        class InterfaceBuilder_ABC;
+    }
 }
 
-class MissionInterfaceBuilder;
-
 // =============================================================================
-/** @class  MissionInterfaceBuilder
-    @brief  Mission interface builder
+/** @class  PopulationMissionInterface
+    @brief  Population interface builder
 */
 // Created: SBO 2006-11-22
 // =============================================================================
@@ -34,18 +36,12 @@ class PopulationMissionInterface : public actions::gui::MissionInterface_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationMissionInterface( QWidget* parent, kernel::Entity_ABC& entity, const kernel::MissionType& mission, kernel::ActionController& controller
-                 , MissionInterfaceBuilder& builder, actions::ActionsModel& model );
+             PopulationMissionInterface( QWidget* parent, kernel::Entity_ABC& entity, const kernel::MissionType& mission, kernel::ActionController& controller,
+                                         actions::gui::InterfaceBuilder_ABC& builder, actions::ActionsModel& model );
     virtual ~PopulationMissionInterface();
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    PopulationMissionInterface( const PopulationMissionInterface& );
-    PopulationMissionInterface& operator=( const PopulationMissionInterface& );
-    //@}
-
     //! @name Helpers
     //@{
     virtual void Publish();

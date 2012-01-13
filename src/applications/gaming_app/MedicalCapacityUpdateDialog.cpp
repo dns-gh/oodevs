@@ -161,7 +161,7 @@ void MedicalCapacityUpdateDialog::NotifyContextMenu( const kernel::Object_ABC& o
     if( profile_.CanDoMagic( object ) && ( object.GetType().HasMedicalCapacity() || object.Retrieve< kernel::MedicalTreatmentAttribute_ABC >() ) )
     {
         selected_ = &object;
-        Q3PopupMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
+        kernel::ContextMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
         subMenu->insertItem( tr( "Update medical capacity" ), this, SLOT( Show() ) );
     }
 }

@@ -111,6 +111,35 @@ unsigned int OrderParameter::MaxOccurs() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: OrderParameter::SetName
+// Created: ABR 2012-01-09
+// -----------------------------------------------------------------------------
+void OrderParameter::SetName( const std::string& name )
+{
+    name_ = name;
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrderParameter::SetOptional
+// Created: ABR 2012-01-09
+// -----------------------------------------------------------------------------
+void OrderParameter::SetOptional( bool optional )
+{
+    optional_ = optional;
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrderParameter::SetMinMaxOccurs
+// Created: ABR 2012-01-09
+// -----------------------------------------------------------------------------
+void OrderParameter::SetMinMaxOccurs( unsigned int min, unsigned int max )
+{
+    minOccurs_ = min;
+    maxOccurs_ = max;
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: OrderParameter::GetValue
 // Created: SBO 2007-05-25
 // -----------------------------------------------------------------------------

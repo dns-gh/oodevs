@@ -24,6 +24,7 @@ namespace actions
 {
     namespace gui
     {
+        class InterfaceBuilder_ABC;
 
 // =============================================================================
 /** @class  ParamResourceNetwork
@@ -31,16 +32,15 @@ namespace actions
 */
 // Created: JSR 2011-05-02
 // =============================================================================
-class ParamResourceNetwork : public QObject
+class ParamResourceNetwork : public Param_ABC
                            , public kernel::ContextMenuObserver_ABC< kernel::Object_ABC >
-                           , public Param_ABC
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamResourceNetwork( QObject* parent, const kernel::OrderParameter& parameter, kernel::Controller& controller );
+             ParamResourceNetwork( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter );
     virtual ~ParamResourceNetwork();
     //@}
 
@@ -49,29 +49,31 @@ public:
     virtual QWidget* BuildInterface( QWidget* parent );
     virtual void CommitTo( actions::ParameterContainer_ABC& ) const;
     virtual bool InternalCheckValidity() const;
-    //@}
-
-public slots:
-    //! @name Slots
-    //@{
-    void MenuItemValidated( int index );
+    virtual void CreateInternalMenu( kernel::ContextMenu& menu );
     //@}
 
 private:
     //! @name Helpers
     //@{
     virtual void NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu );
+    void UpdateLabel();
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void OnMenuClick( QAction* action );
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
-    kernel::OrderParameter parameter_;
     const kernel::Object_ABC* current_;
     const kernel::Object_ABC* selected_;
     QLabel* objectName_;
     QLabel* resourceName_;
+    T_Actions actions_;
     //@}
 };
 

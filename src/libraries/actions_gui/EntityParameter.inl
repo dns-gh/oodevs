@@ -9,29 +9,13 @@
 
 // -----------------------------------------------------------------------------
 // Name: EntityParameter constructor
-// Created: AGE 2006-03-14
+// Created: ABR 2012-01-04
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-EntityParameter< ConcreteEntity >::EntityParameter( QObject* parent, const kernel::OrderParameter& parameter, kernel::Controller& controller )
-    : EntityParameterBase( parent, parameter.GetName().c_str(), parameter.IsOptional() )
-    , controller_        ( controller )
-    , parameter_         ( parameter )
+EntityParameter< ConcreteEntity >::EntityParameter( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
+    : EntityParameterBase( builder, parameter )
+    , controller_        ( builder.GetControllers().controller_ )
     , potential_         ( 0 )
-    , selected_          ( 0 )
-{
-    controller_.Register( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntityParameter constructor
-// Created: SBO 2007-05-23
-// -----------------------------------------------------------------------------
-template< typename ConcreteEntity >
-EntityParameter< ConcreteEntity >::EntityParameter( QObject* parent, const kernel::OrderParameter& parameter, const ConcreteEntity& entity, kernel::Controller& controller )
-    : EntityParameterBase( parent, parameter.GetName().c_str(), parameter.IsOptional() )
-    , controller_        ( controller )
-    , parameter_         ( parameter )
-    , potential_         ( &entity )
     , selected_          ( 0 )
 {
     controller_.Register( *this );
@@ -44,7 +28,20 @@ EntityParameter< ConcreteEntity >::EntityParameter( QObject* parent, const kerne
 template< typename ConcreteEntity >
 EntityParameter< ConcreteEntity >::~EntityParameter()
 {
+    Purge();
     controller_.Unregister( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityParameter::Purge
+// Created: ABR 2012-01-10
+// -----------------------------------------------------------------------------
+template< typename ConcreteEntity >
+void EntityParameter< ConcreteEntity >::Purge()
+{
+    potential_ = 0;
+    selected_ = 0;
+    Display( "---" );
 }
 
 // -----------------------------------------------------------------------------
@@ -55,7 +52,7 @@ template< typename ConcreteEntity >
 void EntityParameter< ConcreteEntity >::NotifyContextMenu( const ConcreteEntity& entity, kernel::ContextMenu& menu )
 {
     potential_ = &entity;
-    AddToMenu( menu );
+    CreateMenu( menu );
 }
 
 // -----------------------------------------------------------------------------
@@ -101,7 +98,7 @@ void EntityParameter< ConcreteEntity >::CommitTo( actions::parameters::Entity< C
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
 template< typename ConcreteEntity >
-void EntityParameter< ConcreteEntity >::MenuItemValidated()
+void EntityParameter< ConcreteEntity >::OnMenuClick()
 {
     selected_ = potential_;
     Display( selected_ ? selected_->GetName() : "---" );
@@ -124,4 +121,14 @@ void EntityParameter< ConcreteEntity >::NotifyDeleted( const ConcreteEntity& ent
         selected_ = 0;
         Display( "---" );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntityParameter::SetPotential
+// Created: ABR 2012-01-04
+// -----------------------------------------------------------------------------
+template< typename ConcreteEntity >
+void EntityParameter< ConcreteEntity >::SetPotential( const ConcreteEntity& entity )
+{
+    potential_ = &entity;
 }

@@ -31,7 +31,7 @@
 // -----------------------------------------------------------------------------
 ExtensionsPanel::ExtensionsPanel( QMainWindow* parent, kernel::Controllers& controllers, const Model& model, const StaticModel& staticModel, const kernel::Time_ABC& simulation,
                                   gui::ItemFactory_ABC& factory, const gui::EntitySymbols& icons, const kernel::Profile_ABC& profile, const char* name /* = 0*/ )
-    : gui::ExtensionsPanel( parent, controllers, staticModel.extensionTypes_, model.agents_, factory, icons, profile, name )
+    : gui::ExtensionsPanel( parent, controllers, staticModel.extensions_, model.agents_, factory, icons, profile, name )
     , actions_        ( model.actions_ )
     , types_          ( staticModel.types_ )
     , simulation_     ( simulation )

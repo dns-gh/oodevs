@@ -13,6 +13,7 @@
 #include "clients_kernel/Options.h"
 #include "tools/Observer_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
+#include "clients_kernel/ContextMenu.h"
 
 namespace gui
 {
@@ -23,7 +24,7 @@ namespace gui
 */
 // Created: SBO 2006-04-28
 // =============================================================================
-class OptionMenuBase : public Q3PopupMenu
+class OptionMenuBase : public kernel::ContextMenu
 {
     Q_OBJECT;
 public:

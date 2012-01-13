@@ -53,7 +53,7 @@ LocationEditorToolbar::LocationEditorToolbar( QMainWindow* parent, kernel::Contr
     gotoButton_->setIconSet( MAKE_PIXMAP( goto ) );
     gotoButton_->setPopupDelay( 0 );
     gotoButton_->setPopupMode( QToolButton::MenuButtonPopup );
-    bookmarksMenu_ = new Q3PopupMenu( gotoButton_ );
+    bookmarksMenu_ = new kernel::ContextMenu( gotoButton_ );
     gotoButton_->setPopup( bookmarksMenu_ );
     ClearBookmarks();
     QToolTip::add( gotoButton_, tr( "Center on location" ) );

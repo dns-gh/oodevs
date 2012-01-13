@@ -13,6 +13,14 @@
 #include "actions_gui/Param_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 
+namespace actions
+{
+    namespace gui
+    {
+        class ParamInterface_ABC;
+    }
+}
+
 class StringQVButtonGroup;
 
 // =============================================================================
@@ -21,14 +29,14 @@ class StringQVButtonGroup;
 */
 // Created: SBO 2009-08-05
 // =============================================================================
-class ParamStringEnumeration : public QObject, public actions::gui::Param_ABC
+class ParamStringEnumeration : public actions::gui::Param_ABC
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-    ParamStringEnumeration( QObject* parent, const QString& title, const kernel::OrderParameter& parameter, const std::map< std::string, std::string >& values );
+             ParamStringEnumeration( QObject* parent, const actions::gui::ParamInterface_ABC& paramInterface, const QString& title, const kernel::OrderParameter& parameter, const std::map< std::string, std::string >& values );
     virtual ~ParamStringEnumeration();
     //@}
 
@@ -46,12 +54,6 @@ private slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ParamStringEnumeration( const ParamStringEnumeration& );            //!< Copy constructor
-    ParamStringEnumeration& operator=( const ParamStringEnumeration& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void AddItem( StringQVButtonGroup* group, const std::pair<std::string, std::string>& name );
@@ -68,7 +70,6 @@ private:
     //! @name Member data
     //@{
     const QString title_;
-    const kernel::OrderParameter parameter_;
     const std::map< std::string, std::string > values_;
     T_Items selected_;
     //@}

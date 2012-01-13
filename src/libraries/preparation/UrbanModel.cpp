@@ -48,7 +48,7 @@ namespace
 // Name: UrbanModel constructor
 // Created: SLG 2009-10-20
 // -----------------------------------------------------------------------------
-UrbanModel::UrbanModel( Controllers& controllers, const StaticModel& staticModel, const Resolver< Object_ABC >& objects )
+UrbanModel::UrbanModel( Controllers& controllers, const ::StaticModel& staticModel, const Resolver< Object_ABC >& objects )
     : controllers_        ( controllers )
     , objectTypes_        ( staticModel.objectTypes_ )
     , accommodationTypes_ ( staticModel.accommodationTypes_ )

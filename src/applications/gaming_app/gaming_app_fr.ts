@@ -107,6 +107,10 @@
         <source>Duration</source>
         <translation>Durée</translation>
     </message>
+    <message>
+        <source>After action review</source>
+        <translation>Analyse après action</translation>
+    </message>
 </context>
 <context>
     <name>AfterActionRequestList</name>
@@ -2235,13 +2239,6 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     <message>
         <source>&amp;Windows</source>
         <translation>&amp;Fenêtres</translation>
-    </message>
-</context>
-<context>
-    <name>MissionInterfaceBuilder</name>
-    <message>
-        <source>Unknown mission parameter: %1</source>
-        <translation>Paramètre de mission inconnu : %1</translation>
     </message>
 </context>
 <context>

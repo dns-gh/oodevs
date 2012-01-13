@@ -10,6 +10,7 @@
 #include "actions_gui_pch.h"
 #include "ParamHumanWoundList.h"
 #include "moc_ParamHumanWoundList.cpp"
+#include "InterfaceBuilder_ABC.h"
 #include "actions/Action_ABC.h"
 #include "actions/MedicalPriorities.h"
 #include "clients_kernel/OrderParameter.h"
@@ -23,10 +24,8 @@ using namespace actions::gui;
 // Name: ParamHumanWoundList constructor
 // Created: SBO 2005-09-27
 // -----------------------------------------------------------------------------
-ParamHumanWoundList::ParamHumanWoundList( QObject* parent, const kernel::OrderParameter& parameter )
-    : QObject( parent )
-    , Param_ABC( parameter.GetName().c_str(), parameter.IsOptional() )
-    , parameter_( parameter )
+ParamHumanWoundList::ParamHumanWoundList( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
+    : Param_ABC( builder.GetParentObject(), builder.GetParamInterface(), parameter )
     , list_( 0 )
 {
     // NOTHING
@@ -134,8 +133,8 @@ void ParamHumanWoundList::OnRemove()
 // -----------------------------------------------------------------------------
 void ParamHumanWoundList::OnContextMenu( Q3ListViewItem* item, const QPoint& point, int )
 {
-    Q3PopupMenu* menu = new Q3PopupMenu( list_ );
-    Q3PopupMenu* items = new Q3PopupMenu( menu );
+    kernel::ContextMenu* menu = new kernel::ContextMenu( list_ );
+    kernel::ContextMenu* items = new kernel::ContextMenu( menu );
     for( unsigned int i = eHumanWound_BlesseUrgence1; i < int( eNbrHumanWound ); ++i )
     {
         const QString name = tools::ToString( ( E_HumanWound )i );

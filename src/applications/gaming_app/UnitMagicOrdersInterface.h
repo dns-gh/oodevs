@@ -95,13 +95,13 @@ private:
 
     //! @name Helpers
     //@{
-    void AddMagic( const QString& label, int id,           Q3PopupMenu* menu );
-    int  AddMagic( const QString& label, const char* slot, Q3PopupMenu* menu );
+    void AddMagic( const QString& label, int id,           kernel::ContextMenu* menu );
+    int  AddMagic( const QString& label, const char* slot, kernel::ContextMenu* menu );
     void ApplyOnHierarchy( const kernel::Entity_ABC& entity, int id );
-    void FillCommonOrders( Q3PopupMenu* magicMenu );
+    void FillCommonOrders( kernel::ContextMenu* magicMenu );
     void CreateAndPublish( const std::string& actionType, const QString& name );
 
-    void AddSurrenderMenu( Q3PopupMenu* parent, const kernel::Entity_ABC& entity );
+    void AddSurrenderMenu( kernel::ContextMenu* parent, const kernel::Entity_ABC& entity );
     virtual void NotifyCreated( const kernel::Team_ABC& team );
     virtual void NotifyDeleted( const kernel::Team_ABC& team );
     //@}

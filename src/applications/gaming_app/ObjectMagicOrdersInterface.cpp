@@ -113,7 +113,7 @@ void ObjectMagicOrdersInterface::NotifyContextMenu( const Object_ABC& entity, Co
     if( !profile_.CanDoMagic( entity ) )
         return;
     selectedEntity_ = &entity;
-    Q3PopupMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
+    kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ), false, 1 );
     if( entity.GetType().IsUrban() )
     {
         unsigned int value = static_cast< const StructuralStateAttribute* >( entity.Retrieve< kernel::StructuralStateAttribute_ABC >() )->GetValue();
@@ -167,7 +167,7 @@ void ObjectMagicOrdersInterface::NotifyContextMenu( const Object_ABC& entity, Co
 // Name: ObjectMagicOrdersInterface::AddMagic
 // Created: SBO 2007-05-04
 // -----------------------------------------------------------------------------
-int ObjectMagicOrdersInterface::AddMagic( const QString& label, const char* slot, Q3PopupMenu* menu )
+int ObjectMagicOrdersInterface::AddMagic( const QString& label, const char* slot, kernel::ContextMenu* menu )
 {
     return menu->insertItem( label, this, slot );
 }
@@ -176,9 +176,9 @@ int ObjectMagicOrdersInterface::AddMagic( const QString& label, const char* slot
 // Name: ObjectMagicOrdersInterface::AddIntValuedMagic
 // Created: JSR 2011-03-01
 // -----------------------------------------------------------------------------
-void ObjectMagicOrdersInterface::AddIntValuedMagic( Q3PopupMenu* parent, kernel::ContextMenu& menu, const QString& label, const char* slot, unsigned int value )
+void ObjectMagicOrdersInterface::AddIntValuedMagic( kernel::ContextMenu* parent, kernel::ContextMenu& menu, const QString& label, const char* slot, unsigned int value )
 {
-    Q3PopupMenu* valueMenu = new Q3PopupMenu( parent );
+    kernel::ContextMenu* valueMenu = new kernel::ContextMenu( parent );
     QLineEdit* valueEditor = new InitializedIntLineEdit( valueMenu, value );
     valueMenu->insertItem( valueEditor->text() );
     parent->insertItem( label, valueMenu );
@@ -191,9 +191,9 @@ void ObjectMagicOrdersInterface::AddIntValuedMagic( Q3PopupMenu* parent, kernel:
 // Name: ObjectMagicOrdersInterface::AddDoubleValuedMagic
 // Created: CMA 2011-09-07
 // -----------------------------------------------------------------------------
-void ObjectMagicOrdersInterface::AddDoubleValuedMagic( Q3PopupMenu* parent, kernel::ContextMenu& menu, const QString& label, const char* slot, double value )
+void ObjectMagicOrdersInterface::AddDoubleValuedMagic( kernel::ContextMenu* parent, kernel::ContextMenu& menu, const QString& label, const char* slot, double value )
 {
-    Q3PopupMenu* valueMenu = new Q3PopupMenu( parent );
+    kernel::ContextMenu* valueMenu = new kernel::ContextMenu( parent );
     QLineEdit* valueEditor = new InitializedDoubleLineEdit( valueMenu, value );
     valueMenu->insertItem( valueEditor->text() );
     parent->insertItem( label, valueMenu );

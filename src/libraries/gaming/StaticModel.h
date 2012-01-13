@@ -14,20 +14,19 @@
 
 namespace kernel
 {
-    class DetectionMap;
     class Controllers;
     class Time_ABC;
-}
-
-namespace gui
-{
-    class DrawingTypes;
 }
 
 namespace indicators
 {
     class GaugeTypes;
     class Primitives;
+}
+
+namespace gui
+{
+    class DrawingTypes;
 }
 
 namespace tools
@@ -37,8 +36,6 @@ namespace tools
 
 class RcEntityResolver_ABC;
 class ReportFactory;
-class Simulation;
-class UrbanModel;
 
 // =============================================================================
 /** @class  StaticModel
@@ -64,19 +61,11 @@ public:
 public:
     //! @name Member data
     //@{
-    kernel::Controllers&    controllers_;
-    kernel::DetectionMap&   detection_;
-    ReportFactory&          reportFactory_;
-    gui::DrawingTypes&      drawings_;
-    indicators::Primitives& indicators_;
-    indicators::GaugeTypes& gaugeTypes_;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    StaticModel( const StaticModel& );            //!< Copy constructor
-    StaticModel& operator=( const StaticModel& ); //!< Assignment operator
+    kernel::Controllers&     controllers_;
+    indicators::Primitives&  indicators_; // Move to kernel::StaticModel
+    indicators::GaugeTypes&  gaugeTypes_; // Move to kernel::StaticModel
+    gui::DrawingTypes&       drawings_;   // Move to kernel::StaticModel
+    ReportFactory&           reportFactory_;
     //@}
 };
 

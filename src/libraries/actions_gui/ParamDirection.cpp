@@ -10,6 +10,7 @@
 #include "actions_gui_pch.h"
 #include "ParamDirection.h"
 #include "moc_ParamDirection.cpp"
+#include "InterfaceBuilder_ABC.h"
 #include "actions/Direction.h"
 #include "actions/Action_ABC.h"
 #include "clients_kernel/OrderParameter.h"
@@ -20,14 +21,12 @@ using namespace actions::gui;
 
 // -----------------------------------------------------------------------------
 // Name: ParamDirection constructor
-// Created: AGE 2006-03-15
+// Created: ABR 2012-01-04
 // -----------------------------------------------------------------------------
-ParamDirection::ParamDirection( QObject* parent, const kernel::OrderParameter& parameter )
-    : QObject   ( parent )
-    , Param_ABC ( ENT_Tr::ConvertFromActionParameter( ENT_Tr::ConvertToActionParameter( parameter.GetName().c_str() ), ENT_Tr_ABC::eToTr ).c_str(), parameter.IsOptional() )
-    , parameter_( parameter )
-    , value_    ( 180 )
+ParamDirection::ParamDirection( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
+    : Param_ABC( builder.GetParentObject(), builder.GetParamInterface(), parameter )
 {
+    name_ = ENT_Tr::ConvertFromActionParameter( ENT_Tr::ConvertToActionParameter( parameter.GetName().c_str() ), ENT_Tr_ABC::eToTr ).c_str();
     if( name_.isEmpty() )
         name_ = parameter_.GetName().c_str();
 }

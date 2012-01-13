@@ -84,7 +84,7 @@ void ObjectListView::OnContextMenuRequested( Q3ListViewItem* item, const QPoint&
     if( item || !isVisible() )
         return;
     modelBuilder_.ClearSelection();
-    Q3PopupMenu* menu = new Q3PopupMenu( this );
+    kernel::ContextMenu* menu = new kernel::ContextMenu( this );
     menu->insertItem( tools::translate( "ObjectListView", "Create side" ), &modelBuilder_, SLOT( OnCreate() ) );
     menu->exec( pos, index );
 }

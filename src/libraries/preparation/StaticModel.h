@@ -10,19 +10,17 @@
 #ifndef __StaticModel_h_
 #define __StaticModel_h_
 
-#include <boost/noncopyable.hpp>
+#include "clients_kernel/StaticModel.h"
 
 namespace kernel
 {
-    class AccommodationTypes;
-    class AgentTypes;
     class Controllers;
-    class CoordinateConverter_ABC;
-    class CoordinateSystems;
-    class DetectionMap;
-    class ExtensionTypes;
-    class FormationLevels;
-    class ObjectTypes;
+}
+
+namespace indicators
+{
+    class GaugeTypes;
+    class Primitives;
 }
 
 namespace tools
@@ -35,19 +33,13 @@ namespace gui
     class DrawingTypes;
 }
 
-namespace indicators
-{
-    class GaugeTypes;
-    class Primitives;
-}
-
-class SuccessFactorActionTypes;
-class TeamKarmas;
-
 namespace preparation
 {
     class LogisticLevel;
 }
+
+class SuccessFactorActionTypes;
+class TeamKarmas;
 
 // =============================================================================
 /** @class  StaticModel
@@ -55,7 +47,7 @@ namespace preparation
 */
 // Created: AGE 2006-08-01
 // =============================================================================
-class StaticModel : private boost::noncopyable
+class StaticModel : public kernel::StaticModel
 {
 public:
     //! @name Constructors/Destructor
@@ -73,21 +65,13 @@ public:
 public:
     //! @name Member data
     //@{
-    kernel::Controllers&             controllers_;
-    kernel::CoordinateSystems&       coordinateSystems_;
-    kernel::CoordinateConverter_ABC& coordinateConverter_;
-    kernel::DetectionMap&            detection_;
-    kernel::AgentTypes&              types_;
-    kernel::ObjectTypes&             objectTypes_;
-    kernel::FormationLevels&         levels_;
-    kernel::AccommodationTypes&      accommodationTypes_;
-    kernel::ExtensionTypes&          extensions_;
-    TeamKarmas&                      teamKarmas_;
-    gui::DrawingTypes&               drawings_;
-    indicators::Primitives&          indicators_;
-    indicators::GaugeTypes&          gaugeTypes_;
-    SuccessFactorActionTypes&        successFactorActionTypes_;
-    preparation::LogisticLevel&      logisticLevels_;
+    kernel::Controllers&        controllers_;
+    indicators::Primitives&     indicators_; // Move to kernel::StaticModel
+    indicators::GaugeTypes&     gaugeTypes_; // Move to kernel::StaticModel
+    gui::DrawingTypes&          drawings_;   // Move to kernel::StaticModel
+    SuccessFactorActionTypes&   successFactorActionTypes_;
+    preparation::LogisticLevel& logisticLevels_;
+    TeamKarmas&                 teamKarmas_;
     //@}
 };
 

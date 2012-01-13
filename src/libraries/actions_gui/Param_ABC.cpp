@@ -9,6 +9,8 @@
 
 #include "actions_gui_pch.h"
 #include "Param_ABC.h"
+#include "moc_Param_ABC.cpp"
+#include "ListParameter.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_gui/Tools.h"
 
@@ -16,14 +18,18 @@ using namespace actions::gui;
 
 // -----------------------------------------------------------------------------
 // Name: Param_ABC constructor
-// Created: SBO 2007-04-25
+// Created: ABR 2011-12-29
 // -----------------------------------------------------------------------------
-Param_ABC::Param_ABC( const QString& name, bool optional /*= false*/ )
-    : name_      ( name )
-    , controller_( 0 )
-    , listener_  ( 0 )
-    , group_     ( 0 )
-    , optional_  ( optional )
+Param_ABC::Param_ABC( QObject* parent, const ParamInterface_ABC& paramInterface, const kernel::OrderParameter& parameter )
+    : QObject( parent )
+    , paramInterface_ ( paramInterface )
+    , parameter_      ( parameter )
+    , parentList_     ( 0 )
+    , parentParameter_( 0 )
+    , name_           ( parameter.GetName().c_str() )
+    , type_           ( parameter.GetName() )
+    , controller_     ( 0 )
+    , group_          ( 0 )
 {
     // NOTHING
 }
@@ -44,7 +50,10 @@ Param_ABC::~Param_ABC()
 void Param_ABC::RemoveFromController()
 {
     if( controller_ )
+    {
         controller_->Unregister( *this );
+        controller_ = 0;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -105,7 +114,7 @@ QString Param_ABC::GetName() const
 // -----------------------------------------------------------------------------
 bool Param_ABC::IsOptional() const
 {
-    return optional_;
+    return parameter_.IsOptional();
 }
 
 // -----------------------------------------------------------------------------
@@ -114,7 +123,7 @@ bool Param_ABC::IsOptional() const
 // -----------------------------------------------------------------------------
 void Param_ABC::RegisterListener( Param_ABC& param )
 {
-    listener_ = &param;
+    parentParameter_ = &param;
 }
 
 // -----------------------------------------------------------------------------
@@ -123,8 +132,8 @@ void Param_ABC::RegisterListener( Param_ABC& param )
 // -----------------------------------------------------------------------------
 void Param_ABC::NotifyChange()
 {
-    if( listener_ )
-        listener_->NotifyChanged( *this );
+    if( parentParameter_ )
+        parentParameter_->NotifyChanged( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -166,5 +175,178 @@ bool Param_ABC::IsChecked() const
 // -----------------------------------------------------------------------------
 void Param_ABC::SetOptional( bool optional )
 {
-    optional_ = optional;
+    parameter_.SetOptional( optional );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::GetMenuName
+// Created: ABR 2012-01-06
+// -----------------------------------------------------------------------------
+QString Param_ABC::GetMenuName() const
+{
+    QString name;
+    if( IsInList() && parentList_->IsPotential( const_cast< Param_ABC* >( this ) ) )
+    {
+        name = tools::translate( "Param_ABC", "Add item" );
+    }
+    else
+        name = IsInParam() ? GetType().c_str() : GetName();
+    return name;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::ConnectAction
+// Created: ABR 2012-01-10
+// -----------------------------------------------------------------------------
+void Param_ABC::ConnectAction()
+{
+    if( QAction* const* vAction = boost::get< QAction* >( &internalMenu_ ) )
+        QObject::connect( *vAction, SIGNAL( triggered() ), this, SLOT( OnMenuClick() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::ConnectWithParentList
+// Created: ABR 2012-01-06
+// -----------------------------------------------------------------------------
+void Param_ABC::ConnectWithParentList()
+{
+    if( QAction* const* vAction = boost::get< QAction* >( &internalMenu_ ) )
+        QObject::connect( *vAction, SIGNAL( triggered() ), parentList_, SLOT( OnMenuClick() ) );
+    else if( kernel::ContextMenu* const* vMenu = boost::get< kernel::ContextMenu* >( &internalMenu_ ) )
+        ( *vMenu )->ConnectSubActions( parentList_, SLOT( OnMenuClick() ), 1 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::CreateInternalMenu
+// Created: ABR 2012-01-06
+// -----------------------------------------------------------------------------
+void Param_ABC::CreateInternalMenu( kernel::ContextMenu& menu )
+{
+    QAction* action = new QAction( GetMenuName(), menu );
+    internalMenu_ = action;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::CreateMenu
+// Created: ABR 2011-12-23
+// -----------------------------------------------------------------------------
+kernel::ContextMenu::T_MenuVariant Param_ABC::CreateMenu( kernel::ContextMenu& mainMenu )
+{
+    if( IsInParam() )
+    {
+        kernel::ContextMenu::T_MenuVariant variantMenu = parentParameter_->CreateMenu( mainMenu );
+        if( kernel::ContextMenu* const* menu = boost::get< kernel::ContextMenu* >( &variantMenu ) )
+        {
+            CreateInternalMenu( **menu );
+            if( IsInList() && parentList_->IsPotential( parentParameter_ ) )
+                ConnectWithParentList();
+            ConnectAction();
+            internalMenu_ = ( *menu )->InsertVariant( "", internalMenu_, false, parentParameter_->GetIndex( this ) );
+            return internalMenu_;
+        }
+        return static_cast< QAction* >( 0 );
+    }
+    else if( IsInList() )
+    {
+        kernel::ContextMenu::T_MenuVariant variantMenu = parentList_->CreateMenu( mainMenu );
+        if( kernel::ContextMenu* const* menu = boost::get< kernel::ContextMenu* >( &variantMenu ) )
+        {
+            if( parentList_->IsSelected( this ) )
+            {
+                CreateInternalMenu( **menu );
+                ConnectAction();
+                internalMenu_ = ( *menu )->InsertVariant( "", internalMenu_, false, 1 );
+                return internalMenu_;
+            }
+            else if( parentList_->IsPotential( this ) )
+            {
+                CreateInternalMenu( **menu );
+                ConnectWithParentList();
+                ConnectAction();
+                internalMenu_ = ( *menu )->InsertVariant( "", internalMenu_, false, 0 );
+                return internalMenu_;
+            }
+            return static_cast< QAction* >( 0 );
+        }
+        assert( false ); // Parent list must create a ContextMenu
+    }
+
+    CreateInternalMenu( mainMenu );
+    ConnectAction();
+    internalMenu_ = mainMenu.InsertVariant( paramInterface_.Title().toStdString(), internalMenu_, true, paramInterface_.GetIndex( this ) );
+    return internalMenu_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::OnMenuClick
+// Created: ABR 2011-12-23
+// -----------------------------------------------------------------------------
+void Param_ABC::OnMenuClick()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::GetIndex
+// Created: ABR 2012-01-11
+// -----------------------------------------------------------------------------
+int Param_ABC::GetIndex( Param_ABC* ) const
+{
+    return -1;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::SetParentList
+// Created: ABR 2012-01-11
+// -----------------------------------------------------------------------------
+void Param_ABC::SetParentList( ListParameterBase* parentList )
+{
+    parentList_ = parentList;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::SetName
+// Created: ABR 2012-01-11
+// -----------------------------------------------------------------------------
+void Param_ABC::SetName( const QString& name )
+{
+    name_ = name;
+    if( group_ )
+        group_->setTitle( name_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::SetType
+// Created: ABR 2012-01-11
+// -----------------------------------------------------------------------------
+void Param_ABC::SetType( const std::string& type )
+{
+    type_ = type;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::GetType
+// Created: ABR 2012-01-11
+// -----------------------------------------------------------------------------
+const std::string& Param_ABC::GetType() const
+{
+    return type_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::IsInList
+// Created: ABR 2012-01-11
+// -----------------------------------------------------------------------------
+bool Param_ABC::IsInList() const
+{
+    return parentList_ != 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::IsInParam
+// Created: ABR 2012-01-11
+// -----------------------------------------------------------------------------
+bool Param_ABC::IsInParam() const
+{
+    return parentParameter_ != 0;
 }

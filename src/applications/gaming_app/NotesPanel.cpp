@@ -186,7 +186,7 @@ void NotesPanel::Display( const Note& note, Q3ListViewItem* item )
 
 void NotesPanel::OnContextMenu( Q3ListViewItem* item, const QPoint& point, int)
 {
-    Q3PopupMenu* menu = new Q3PopupMenu( notes_ );
+    kernel::ContextMenu* menu = new kernel::ContextMenu( notes_ );
     if( item )
     {
         menu->insertItem( tools::translate( "Notes", "Update note" ), this, SLOT( UpdateNote() ) );

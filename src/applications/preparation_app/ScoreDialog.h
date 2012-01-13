@@ -12,6 +12,14 @@
 
 #include <boost/noncopyable.hpp>
 
+namespace actions
+{
+    namespace gui
+    {
+        class InterfaceBuilder_ABC;
+    }
+}
+
 namespace indicators
 {
     class GaugeTypes;
@@ -85,6 +93,7 @@ private:
     //! @name Member data
     //@{
     ScoresModel& model_;
+    actions::gui::InterfaceBuilder_ABC* builder_;
     ScoreList* scores_;
     QLineEdit* editor_;
     QPushButton* createButton_;

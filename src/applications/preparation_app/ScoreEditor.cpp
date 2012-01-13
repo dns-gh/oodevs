@@ -109,8 +109,8 @@ namespace
 // Name: ScoreEditor constructor
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::ParametersLayer& layer,
-                          const ScoresModel& model, const StaticModel& staticModel, const kernel::GlTools_ABC& tools )
+ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, const ScoresModel& model,
+                          const ::StaticModel& staticModel, const kernel::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder )
     : QDialog( parent, "ScoreEditor" )
     , current_( 0 )
     , tools_( tools )
@@ -152,7 +152,7 @@ ScoreEditor::ScoreEditor( QWidget* parent, kernel::Controllers& controllers, gui
             }
             {
                 Q3GroupBox* box = new Q3HGroupBox( tr( "Variables" ), page );
-                variables_ = new ScoreVariablesList( box, factory, controllers, layer, staticModel, tools );
+                variables_ = new ScoreVariablesList( box, factory, controllers, staticModel, tools, builder );
                 pageLayout->addWidget( box, 1, 1 );
                 connect( variables_, SIGNAL( Insert( const QString& ) ), SLOT( OnInsert( const QString& ) ) );
                 connect( variables_, SIGNAL( Updated() ), SLOT( CheckFormula() ) );

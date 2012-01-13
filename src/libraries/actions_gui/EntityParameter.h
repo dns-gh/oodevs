@@ -14,15 +14,12 @@
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/Controller.h"
+#include "InterfaceBuilder_ABC.h"
+#include "clients_kernel/Controllers.h"
 
 namespace kernel
 {
     class OrderParameter;
-}
-
-namespace gui
-{
-    class RichLabel;
 }
 
 namespace actions
@@ -40,15 +37,12 @@ namespace actions
 */
 // Created: AGE 2006-03-14
 // =============================================================================
-class EntityParameterBase : public QObject
-                          , public Param_ABC
+class EntityParameterBase : public Param_ABC
 {
-    Q_OBJECT;
-
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityParameterBase( QObject* parent, const QString& name, bool optional );
+             EntityParameterBase( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter );
     virtual ~EntityParameterBase();
     //@}
 
@@ -59,25 +53,16 @@ public:
     virtual QWidget* BuildInterface( QWidget* parent );
     //@}
 
-private slots:
-    //! @name Slots
-    //@{
-    virtual void MenuItemValidated() = 0;
-    //@}
-
 protected:
     //! @name Helpers
     //@{
-    void AddToMenu( kernel::ContextMenu& menu );
     void Display( const QString& what );
-    void SetLabel( const QString& label );
     //@}
 
 private:
     //! @name Member data
     //@{
-    ::gui::RichLabel* pLabel_;
-    QLabel* entityLabel_; // $$$$ AGE 2006-03-14: LabelDisplayer ?
+    QLabel* entityLabel_;
     //@}
 };
 
@@ -95,27 +80,29 @@ class EntityParameter : public EntityParameterBase
 public:
     //! @name Constructors/Destructor
     //@{
-             EntityParameter( QObject* parent, const kernel::OrderParameter& parameter, kernel::Controller& controller );
-             EntityParameter( QObject* parent, const kernel::OrderParameter& parameter, const ConcreteEntity& entity, kernel::Controller& controller );
+             EntityParameter( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter );
     virtual ~EntityParameter();
     //@}
 
     //! @name Operations
     //@{
-    virtual bool InternalCheckValidity() const;
+    void Purge();
+    void SetPotential( const ConcreteEntity& entity );
     void CommitTo( int& message ) const;
     void CommitTo( actions::parameters::Entity< ConcreteEntity >& parameter ) const;
-    virtual void MenuItemValidated();
+    virtual void OnMenuClick();
     //@}
 
 protected:
     //! @name Helpers
     //@{
+    virtual bool InternalCheckValidity() const;
     virtual void NotifyContextMenu( const ConcreteEntity& entity, kernel::ContextMenu& menu );
     virtual void NotifyUpdated( const ConcreteEntity& ) {};
     virtual void NotifyDeleted( const ConcreteEntity& entity );
     //@}
 
+protected:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
@@ -124,7 +111,6 @@ protected:
 private:
     //! @name Member data
     //@{
-    kernel::OrderParameter parameter_;
     const ConcreteEntity* potential_;
     const ConcreteEntity* selected_;
     //@}

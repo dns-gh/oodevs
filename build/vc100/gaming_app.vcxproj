@@ -304,7 +304,6 @@
     <ClCompile Include="..\..\src\applications\gaming_app\icons.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\AutomateMissionInterface.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\FragmentaryOrderInterface.cpp" />
-    <ClCompile Include="..\..\src\applications\gaming_app\MissionInterfaceBuilder.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\MissionPanel.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\PopulationMissionInterface.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\UnitMissionInterface.cpp" />
@@ -1899,7 +1898,6 @@
     <ClInclude Include="..\..\src\applications\gaming_app\icons.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\AutomateMissionInterface.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\FragmentaryOrderInterface.h" />
-    <ClInclude Include="..\..\src\applications\gaming_app\MissionInterfaceBuilder.h" />
     <CustomBuild Include="..\..\src\applications\gaming_app\MissionPanel.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>

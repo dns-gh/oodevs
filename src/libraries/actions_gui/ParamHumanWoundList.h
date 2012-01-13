@@ -17,6 +17,7 @@ namespace actions
 {
     namespace gui
     {
+        class InterfaceBuilder_ABC;
 
 // =============================================================================
 /** @class  ParamHumanWoundList
@@ -24,15 +25,14 @@ namespace actions
 */
 // Created: SBO 2005-09-27
 // =============================================================================
-class ParamHumanWoundList : public QObject
-                          , public Param_ABC
+class ParamHumanWoundList : public Param_ABC
 {
     Q_OBJECT;
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamHumanWoundList( QObject* parent, const kernel::OrderParameter& parameter );
+             ParamHumanWoundList( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter );
     virtual ~ParamHumanWoundList();
     //@}
 
@@ -56,7 +56,6 @@ private slots:
 private:
     //! @name Member data
     //@{
-    kernel::OrderParameter parameter_;
     Q3ListView* list_;
     //@}
 };

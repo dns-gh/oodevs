@@ -23,6 +23,7 @@ namespace actions
 {
     namespace gui
     {
+        class InterfaceBuilder_ABC;
 
 // =============================================================================
 /** @class  ParamEquipmentList
@@ -30,15 +31,14 @@ namespace actions
 */
 // Created: SBO 2005-09-27
 // =============================================================================
-class ParamEquipmentList : public QObject
-                         , public Param_ABC
+class ParamEquipmentList : public Param_ABC
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamEquipmentList( QObject* parent, const kernel::OrderParameter& parameter, const tools::Resolver< kernel::EquipmentType >& resolver );
+             ParamEquipmentList( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter );
     virtual ~ParamEquipmentList();
     //@}
 
@@ -67,7 +67,6 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::OrderParameter parameter_;
     const tools::Resolver< kernel::EquipmentType >& resolver_;
     Q3ListView* baseList_;
     Q3ListView* list_;

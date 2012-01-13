@@ -61,6 +61,7 @@
 #include "UserProfileDialog.h"
 #include "WeatherLayer.h"
 #include "clients_kernel/ActionController.h"
+#include "actions_gui/InterfaceBuilder.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DetectionMap.h"
 #include "clients_kernel/ExtensionTypes.h"
@@ -231,7 +232,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     gui::LocationsLayer* locationsLayer = new gui::LocationsLayer( *glProxy_ );
     gui::LocationEditorToolbar* LocEditToolBar = new gui::LocationEditorToolbar( this, controllers_, staticModel.coordinateConverter_, *glProxy_, *locationsLayer );
     addToolBar( LocEditToolBar );
-    gui::ParametersLayer* paramLayer = new gui::ParametersLayer( *glProxy_, *LocEditToolBar );
+    parameters_ = new gui::ParametersLayer( *glProxy_, *LocEditToolBar );
     ::AgentsLayer* agentsLayer = new ::AgentsLayer( controllers, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_ );
     ::AutomatsLayer* automatsLayer = new ::AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.actions_, simulation, network_.GetMessageMgr(), model.agents_, *simpleFilter_ );
     ::FormationLayer* formationLayer = new ::FormationLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, model_.actions_, staticModel_, simulation, network_.GetMessageMgr(), model_.agents_, *simpleFilter_ );
@@ -239,7 +240,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     addToolBarBreak();
 
     //Dialogs
-    new Dialogs( this, controllers, model_, staticModel, publisher, model_.actions_, simulation, profile, network.GetCommands(), config, rcResolver, *factory, *paramLayer );
+    new Dialogs( this, controllers, model_, staticModel, publisher, model_.actions_, simulation, profile, network.GetCommands(), config, rcResolver, *factory, *parameters_ );
 
     // Profile
     gui::SymbolIcons* symbols = new gui::SymbolIcons( this, *glProxy_ );
@@ -289,8 +290,10 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     pInfoDockWnd_->setWindowTitle( tr( "Knowledge" ) );
     pInfoDockWnd_->hide();
 
-     // Mission panel
-    pMissionPanel_ = new MissionPanel( this, controllers_, staticModel_, publisher, *paramLayer, *glProxy_, profile, model_.actions_, model_.agentKnowledgeConverter_, model_.objectKnowledgeConverter_, simulation );
+    // Interface Builder
+    interfaceBuilder_.reset( new actions::gui::InterfaceBuilder( controllers_, *parameters_, staticModel_, &model_.agentKnowledgeConverter_, &model_.objectKnowledgeConverter_, &simulation ) );
+    // Mission panel
+    pMissionPanel_ = new MissionPanel( this, controllers_, staticModel_, publisher, *glProxy_, profile, model_.actions_, simulation, *interfaceBuilder_ );
     addDockWidget( Qt::LeftDockWidgetArea, pMissionPanel_ );
     pMissionPanel_->setProperty( "notAppropriate", QVariant( true ) );
     pMissionPanel_->hide();
@@ -332,16 +335,16 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     pCreationWnd->setObjectName( "creation" );
     addDockWidget( Qt::RightDockWidgetArea, pCreationWnd );
     pCreationWnd->hide();
-    CreationPanels* creationPanels = new CreationPanels( pCreationWnd, controllers, staticModel_, *factory, model_.actions_, simulation, *paramLayer, *meteoLayer, *glProxy_, *symbols, *strategy_, model_.drawings_, config_ );
+    CreationPanels* creationPanels = new CreationPanels( pCreationWnd, controllers, staticModel_, *factory, model_.actions_, simulation, *parameters_, *meteoLayer, *glProxy_, *symbols, *strategy_, model_.drawings_, config_ );
     pCreationWnd->setWidget( creationPanels );
     pCreationWnd->setWindowTitle( tr( "Creation" ) );
 
-    new MagicOrdersInterface( this, controllers_, model_.actions_, staticModel_, simulation, *paramLayer, profile );
+    new MagicOrdersInterface( this, controllers_, model_.actions_, staticModel_, simulation, *parameters_, profile );
     ReplayerToolbar* replayerToolbar = new ReplayerToolbar( this, controllers, publisher );
     addToolBar( replayerToolbar );
     IndicatorExportDialog* indicatorExportDialog = new IndicatorExportDialog( this );
     IndicatorPlotFactory* plotFactory = new IndicatorPlotFactory( this, controllers_, publisher, *indicatorExportDialog, simulation );
-    AfterAction* aar = new AfterAction( this, controllers_, *factory, model.aar_, *paramLayer, staticModel_, *plotFactory );
+    AfterAction* aar = new AfterAction( this, controllers_, *factory, model.aar_, *plotFactory, *interfaceBuilder_ );
 
     // Actions panel
     {
@@ -384,7 +387,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/gaming.xml" ) );
     setMenuBar( new Menu( this, controllers, staticModel_, *prefDialog, *profileDialog, *factory, license, *help, *interpreter, network_, logger ) );
 
-    CreateLayers( *pMissionPanel_, *creationPanels, *paramLayer, *locationsLayer, *agentsLayer, *automatsLayer, *formationLayer, *terrainLayer, *meteoLayer, *profilerLayer, *prefDialog, profile, simulation, *picker );
+    CreateLayers( *pMissionPanel_, *creationPanels, *parameters_, *locationsLayer, *agentsLayer, *automatsLayer, *formationLayer, *terrainLayer, *meteoLayer, *profilerLayer, *prefDialog, profile, simulation, *picker );
     ::StatusBar* pStatus_ = new ::StatusBar( statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_, controllers_, pProfilerDockWnd_ );
     connect( selector_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
     connect( selector_, SIGNAL( MouseMove( const geometry::Point3f& ) ), pStatus_, SLOT( OnMouseMove( const geometry::Point3f& ) ) );
@@ -532,6 +535,7 @@ void MainWindow::Load()
 void MainWindow::Close()
 {
     network_.Disconnect();
+    parameters_->Reset();
     selector_->Close();
     if( logisticListView_ )
         logisticListView_->Purge();
@@ -546,6 +550,8 @@ void MainWindow::Close()
 MainWindow::~MainWindow()
 {
     controllers_.Unregister( *this );
+    delete pMissionPanel_;
+    delete parameters_;
     delete selector_;
 }
 

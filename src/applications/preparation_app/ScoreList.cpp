@@ -24,15 +24,14 @@ namespace bfs = boost::filesystem;
 // Name: ScoreList constructor
 // Created: SBO 2009-04-20
 // -----------------------------------------------------------------------------
-ScoreList::ScoreList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::ParametersLayer& layer,
-                      ScoresModel& model, const StaticModel& staticModel, const tools::ExerciseConfig& config,
-                      const kernel::GlTools_ABC& tools )
+ScoreList::ScoreList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, ScoresModel& model, const tools::ExerciseConfig& config,
+                      const StaticModel& staticModel, const kernel::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder )
     : Q3VBox       ( parent )
     , controllers_( controllers )
     , factory_    ( factory )
     , model_      ( model )
     , scores_     ( new gui::ListDisplayer< ScoreList >( this, *this, factory ) )
-    , editor_     ( new ScoreEditor( this, controllers, factory, layer, model, staticModel, tools ) )
+    , editor_     ( new ScoreEditor( this, controllers, factory, model, staticModel, tools, builder ) )
     , config_     ( config )
 {
     layout()->setAlignment( Qt::AlignRight );

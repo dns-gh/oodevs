@@ -309,7 +309,7 @@ void TimelineView::contentsContextMenuEvent( QContextMenuEvent* evt )
 {
     if( !selectedItem_ )
         Select( evt->pos() );
-    Q3PopupMenu* menu = new Q3PopupMenu( this );
+    kernel::ContextMenu* menu = new kernel::ContextMenu( this );
     if( selectedItem_ )
     {
         selectedItem_->DisplayContextMenu( menu );

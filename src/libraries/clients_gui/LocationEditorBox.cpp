@@ -17,6 +17,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/CoordinateSystems.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/ContextMenu.h"
 
 using namespace gui;
 // -----------------------------------------------------------------------------
@@ -35,7 +36,7 @@ LocationEditorBox::LocationEditorBox( QWidget* parent, kernel::Controllers& cont
 
     choiceParserButton_ = new QToolButton( this );
     choiceParserButton_->setFixedWidth( 60 );
-    parserMenu_ = new  Q3PopupMenu( choiceParserButton_ );
+    parserMenu_ = new  kernel::ContextMenu( choiceParserButton_ );
     choiceParserButton_->setPopup( parserMenu_ );
     choiceParserButton_->setPopupDelay( 0 );
     choiceParserButton_->setText( tr("Location: " ));
@@ -59,7 +60,7 @@ LocationEditorBox::LocationEditorBox( QWidget* parent, kernel::Controllers& cont
     FillDefaultMenu();
     SelectParser( converter.GetCoordSystem().defaultCoordinateSystem_ );
 
-    subMenu_ = new Q3PopupMenu();
+    subMenu_ = new kernel::ContextMenu();
     list_ = new Q3ListBox( subMenu_ );
     list_->setColumnMode( Q3ListBox::Variable );
     list_->setRowMode( Q3ListBox::Variable );

@@ -10,6 +10,8 @@
 #include "actions_gui_pch.h"
 #include "ParamObstacle.h"
 #include "moc_ParamObstacle.cpp"
+#include "InterfaceBuilder_ABC.h"
+#include "ListParameter.h"
 #include "ParamLocation.h"
 #include "ParamNumericField.h"
 #include "ParamAutomat.h"
@@ -17,9 +19,12 @@
 #include "actions/EngineerConstruction.h"
 #include "actions/ObstacleType.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/StaticModel.h"
 #include "tools/Resolver.h"
+#include "MissionInterface_ABC.h"
 
 using namespace actions::gui;
 
@@ -27,21 +32,18 @@ using namespace actions::gui;
 // Name: ParamObstacle constructor
 // Created: APE 2004-05-18
 // -----------------------------------------------------------------------------
-ParamObstacle::ParamObstacle( QObject* parent, const kernel::OrderParameter& parameter, const kernel::ObjectTypes& objectTypes, ::gui::ParametersLayer& layer, const kernel::CoordinateConverter_ABC& converter, kernel::Controller& controller )
-    : QObject     ( parent )
-    , Param_ABC   ( parameter.GetName().c_str(), parameter.IsOptional() )
-    , parameter_  ( parameter )
-    , objectTypes_( objectTypes )
-    , layer_      ( layer )
-    , converter_  ( converter )
-    , controller_ ( controller )
+ParamObstacle::ParamObstacle( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
+    : ParamLocationComposite( builder, parameter )
+    , objectTypes_( builder.GetStaticModel().objectTypes_ )
+    , layer_      ( builder.GetParameterLayer() )
+    , converter_  ( builder.GetStaticModel().coordinateConverter_ )
+    , controller_ ( builder.GetControllers().actions_ )
     , typeCombo_  ( 0 )
     , obstacleTypeCombo_( 0 )
-    , location_   ( 0 )
-    , density_    ( 0 )
-    , tc2_        ( 0 )
 {
-    // NOTHING
+    location_   = static_cast< ParamLocation* > ( AddElement( "location", tr( "Obstacle location" ).ascii() ) );
+    density_    = static_cast< ParamFloat* >    ( AddElement( "float", tr( "Density" ).ascii() ) );
+    tc2_        = static_cast< ParamAutomat* >  ( AddElement( "automat", tr( "TC2" ).ascii() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -51,9 +53,34 @@ ParamObstacle::ParamObstacle( QObject* parent, const kernel::OrderParameter& par
 ParamObstacle::~ParamObstacle()
 {
     RemoveFromController();
-    delete tc2_;
-    delete density_;
-    delete location_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamObstacle::NotifyChanged
+// Created: ABR 2012-01-10
+// -----------------------------------------------------------------------------
+void ParamObstacle::NotifyChanged( Param_ABC& /*param*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamObstacle::RegisterIn
+// Created: ABR 2012-01-10
+// -----------------------------------------------------------------------------
+void ParamObstacle::RegisterIn( kernel::ActionController& /*controller*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamObstacle::RemoveFromController
+// Created: ABR 2012-01-10
+// -----------------------------------------------------------------------------
+void ParamObstacle::RemoveFromController()
+{
+    location_->RemoveFromController();
+    tc2_->RemoveFromController();
 }
 
 // -----------------------------------------------------------------------------
@@ -93,9 +120,8 @@ QWidget* ParamObstacle::BuildInterface( QWidget* parent )
 
     // Density
     {
-        density_ = new ParamNumericField( kernel::OrderParameter( tr( "Density" ).ascii(), "density", false ), true );
-        QGroupBox* densityBox = static_cast< QGroupBox* >( density_->BuildInterface( parent ) );
-        density_->SetLimits( 0.f, 5.f ); // $$$$ ABR 2011-11-21: Must be after BuildInterface call
+        QGroupBox* densityBox = static_cast< QGroupBox* >( static_cast< Param_ABC* >( density_ )->BuildInterface( parent ) );
+        density_->SetLimits( 0.f, 5.f );
         densityBox->layout()->setMargin( 0 );
         densityBox->layout()->setSpacing( 0 );
         layout->addWidget( densityBox );
@@ -103,8 +129,7 @@ QWidget* ParamObstacle::BuildInterface( QWidget* parent )
 
     // TC2
     {
-        tc2_ = new ParamAutomat( this, kernel::OrderParameter( tr( "TC2" ).ascii(), "tc2", false ), controller_ );
-        QGroupBox* tc2Box = static_cast< QGroupBox* >( tc2_->BuildInterface( parent ) );
+        QGroupBox* tc2Box = static_cast< QGroupBox* >( static_cast< Param_ABC* >( tc2_ )->BuildInterface( parent ) );
         tc2Box->layout()->setMargin( 0 );
         tc2Box->layout()->setSpacing( 0 );
         layout->addWidget( tc2Box );
@@ -112,8 +137,7 @@ QWidget* ParamObstacle::BuildInterface( QWidget* parent )
 
     // Location
     {
-        location_ = new ParamLocation( kernel::OrderParameter( tr( "Obstacle location" ).ascii(), "location", false ), layer_, converter_ );
-        QGroupBox* locationBox = static_cast< QGroupBox* >( location_->BuildInterface( parent ) );
+        QGroupBox* locationBox = static_cast< QGroupBox* >( static_cast< Param_ABC* >( location_ )->BuildInterface( parent ) );
         locationBox->layout()->setMargin( 0 );
         locationBox->layout()->setSpacing( 0 );
         layout->addWidget( locationBox );
@@ -125,26 +149,12 @@ QWidget* ParamObstacle::BuildInterface( QWidget* parent )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamObstacle::RemoveFromController
-// Created: SBO 2006-06-28
+// Name: ParamObstacle::CheckValidity
+// Created: ABR 2012-01-10
 // -----------------------------------------------------------------------------
-void ParamObstacle::RemoveFromController()
+bool ParamObstacle::CheckValidity()
 {
-    location_->RemoveFromController();
-    tc2_->RemoveFromController();
-    density_->RemoveFromController();
-    Param_ABC::RemoveFromController();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamObstacle::RegisterIn
-// Created: SBO 2006-06-28
-// -----------------------------------------------------------------------------
-void ParamObstacle::RegisterIn( kernel::ActionController& controller )
-{
-    location_->RegisterIn( controller );
-    tc2_->RegisterIn( controller );
-    density_->RegisterIn( controller );
+    return InternalCheckValidity();
 }
 
 // -----------------------------------------------------------------------------
@@ -200,6 +210,8 @@ void ParamObstacle::Draw( const geometry::Point2f& point, const kernel::Viewport
 void ParamObstacle::OnTypeChanged()
 {
     density_->Hide();
+    tc2_->Purge();
+    tc2_->RemoveFromController();
     tc2_->Hide();
     const kernel::ObjectType* type = typeCombo_->GetValue();
     if( !type )
@@ -207,7 +219,23 @@ void ParamObstacle::OnTypeChanged()
     if( type->HasBuildableDensity() )
         density_->Show();
     if( type->HasLogistic() )
+    {
+        tc2_->RegisterIn( controller_ );
         tc2_->Show();
+    }
+    location_->RemoveFromController();
     location_->SetShapeFilter( type->CanBePoint(), type->CanBeLine(), type->CanBePolygon(), type->CanBeCircle(), type->CanBeRectangle() );
+    location_->RegisterIn( controller_ );
     emit ToggleReservable( type->CanBeReservedObstacle() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamObstacle::CreateMenu
+// Created: ABR 2012-01-10
+// -----------------------------------------------------------------------------
+kernel::ContextMenu::T_MenuVariant ParamObstacle::CreateMenu( kernel::ContextMenu& menu )
+{
+    if( IsInList() && parentList_->IsPotential( this ) )
+        return internalMenu_;
+    return ParamLocationComposite::CreateMenu( menu );
 }

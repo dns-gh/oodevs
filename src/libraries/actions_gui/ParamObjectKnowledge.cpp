@@ -10,6 +10,7 @@
 #include "actions_gui_pch.h"
 #include "ParamObjectKnowledge.h"
 #include "actions/ObjectKnowledge.h"
+#include "InterfaceBuilder_ABC.h"
 #include "clients_kernel/ObjectKnowledge_ABC.h"
 #include "clients_kernel/ObjectKnowledgeConverter_ABC.h"
 #include "clients_kernel/Object_ABC.h"
@@ -22,28 +23,14 @@ using namespace actions::gui;
 
 // -----------------------------------------------------------------------------
 // Name: ParamObjectKnowledge constructor
-// Created: AGE 2006-03-14
+// Created: ABR 2012-01-04
 // -----------------------------------------------------------------------------
-ParamObjectKnowledge::ParamObjectKnowledge( QObject* parent, const kernel::OrderParameter& parameter, kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent, kernel::Controller& controller )
-    : EntityParameter< kernel::ObjectKnowledge_ABC >( parent, parameter, controller )
-    , parameter_( parameter )
-    , converter_( converter )
-    , agent_    ( agent )
+ParamObjectKnowledge::ParamObjectKnowledge( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
+    : EntityParameter< kernel::ObjectKnowledge_ABC >( builder, parameter )
+    , converter_( builder.GetObjectKnowledgeConverter() )
+    , agent_    ( builder.GetCurrentEntity() )
 {
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParamObjectKnowledge constructor
-// Created: SBO 2007-05-25
-// -----------------------------------------------------------------------------
-ParamObjectKnowledge::ParamObjectKnowledge( QObject* parent, const kernel::OrderParameter& parameter, kernel::ObjectKnowledgeConverter_ABC& converter, const kernel::Entity_ABC& agent, const kernel::ObjectKnowledge_ABC& potential, kernel::Controller& controller )
-    : EntityParameter< kernel::ObjectKnowledge_ABC >( parent, parameter, potential, controller )
-    , parameter_( parameter )
-    , converter_( converter )
-    , agent_( agent )
-{
-    // NOTHING
+    assert( converter_ != 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +54,7 @@ void ParamObjectKnowledge::NotifyContextMenu( const kernel::Object_ABC& entity, 
         if( ! hierarchies )
             hierarchies = agent_.Retrieve< kernel::TacticalHierarchies >();
         const kernel::Team_ABC& team = static_cast< const kernel::Team_ABC& >( hierarchies->GetTop() );
-        const kernel::ObjectKnowledge_ABC* knowledge = converter_.Find( entity, team );
+        const kernel::ObjectKnowledge_ABC* knowledge = converter_->Find( entity, team );
         if( knowledge )
             EntityParameter< kernel::ObjectKnowledge_ABC >::NotifyContextMenu( *knowledge, menu );
     }
@@ -83,4 +70,3 @@ void ParamObjectKnowledge::CommitTo( actions::ParameterContainer_ABC& action ) c
     EntityParameter< kernel::ObjectKnowledge_ABC >::CommitTo( *param );
     action.AddParameter( *param.release() );
 }
-

@@ -11,6 +11,7 @@
 #define __ExerciseMenu_h_
 
 #include "tools/ElementObserver_ABC.h"
+#include "clients_kernel/ContextMenu.h"
 
 namespace kernel
 {
@@ -41,7 +42,7 @@ namespace tools
 */
 // Created: SBO 2008-08-27
 // =============================================================================
-class ExerciseMenu : public Q3PopupMenu
+class ExerciseMenu : public kernel::ContextMenu
                    , public tools::Observer_ABC
                    , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                    , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >

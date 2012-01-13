@@ -65,7 +65,7 @@ using namespace kernel;
 // Name: Model constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-Model::Model( Controllers& controllers, const StaticModel& staticModel )
+Model::Model( Controllers& controllers, const ::StaticModel& staticModel )
     : EntityResolverFacade( static_cast< Model_ABC& >( *this ) )
     , controllers_          ( controllers )
     , idManager_            ( *new IdManager() )

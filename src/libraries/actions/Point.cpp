@@ -74,6 +74,7 @@ void Point::CommitTo( sword::MissionParameter& message ) const
     if( IsSet() )
         Location::CommitTo( *message.mutable_value()->Add()->mutable_point()->mutable_location() );
 }
+
 // -----------------------------------------------------------------------------
 // Name: Point::CommitTo
 // Created: SBO 2007-05-22

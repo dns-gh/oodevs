@@ -9,20 +9,19 @@
 
 #include "actions_gui_pch.h"
 #include "EntityParameter.h"
-#include "moc_EntityParameter.cpp"
-#include "clients_gui/RichLabel.h"
+#include "actions_gui/MissionInterface_ABC.h"
 
 using namespace actions::gui;
 
 // -----------------------------------------------------------------------------
 // Name: EntityParameterBase constructor
-// Created: AGE 2006-03-14
+// Created: ABR 2012-01-04
 // -----------------------------------------------------------------------------
-EntityParameterBase::EntityParameterBase( QObject* parent, const QString& name, bool optional )
-    : QObject( parent )
-    , Param_ABC( name, optional )
+EntityParameterBase::EntityParameterBase( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
+    : Param_ABC( builder.GetParentObject(), builder.GetParamInterface(), parameter )
 {
-    // NOTHING
+    entityLabel_ = new QLabel();
+    Display( "---" );
 }
 
 // -----------------------------------------------------------------------------
@@ -42,7 +41,6 @@ QWidget* EntityParameterBase::BuildInterface( QWidget* parent )
 {
     Param_ABC::BuildInterface( parent );
     QVBoxLayout* layout = new QVBoxLayout( group_ );
-    entityLabel_ = new QLabel( "---", parent );
     layout->addWidget( entityLabel_ );
     entityLabel_->setMinimumWidth( 100 );
     entityLabel_->setAlignment( Qt::AlignHCenter | Qt::AlignVCenter );
@@ -68,30 +66,10 @@ void EntityParameterBase::Hide()
 }
 
 // -----------------------------------------------------------------------------
-// Name: EntityParameterBase::AddToMenu
-// Created: AGE 2006-03-14
-// -----------------------------------------------------------------------------
-void EntityParameterBase::AddToMenu( kernel::ContextMenu& menu )
-{
-    if( entityLabel_->isShown() )
-        menu.InsertItem( "Parameter", GetName(), this, SLOT( MenuItemValidated() ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: EntityParameterBase::Display
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
 void EntityParameterBase::Display( const QString& what )
 {
     entityLabel_->setText( what );
-}
-
-// -----------------------------------------------------------------------------
-// Name: EntityParameterBase::SetLabel
-// Created: ABR 2011-01-21
-// -----------------------------------------------------------------------------
-void EntityParameterBase::SetLabel( const QString& label )
-{
-    if( group_ )
-        group_->setTitle( label );
 }

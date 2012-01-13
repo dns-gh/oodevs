@@ -125,7 +125,7 @@ using namespace gui;
 // Name: MainWindow constructor
 // Created: APE 2004-03-01
 // -----------------------------------------------------------------------------
-MainWindow::MainWindow( Controllers& controllers, StaticModel& staticModel, Model& model, Config& config, const QString& expiration )
+MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Model& model, Config& config, const QString& expiration )
     : QMainWindow( 0, 0, Qt::WDestructiveClose )
     , controllers_      ( controllers )
     , staticModel_      ( staticModel )

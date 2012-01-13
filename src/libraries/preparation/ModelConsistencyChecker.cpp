@@ -58,7 +58,7 @@ using namespace tools;
 // Name: ModelConsistencyChecker constructor
 // Created: ABR 2011-09-22
 // -----------------------------------------------------------------------------
-ModelConsistencyChecker::ModelConsistencyChecker( const Model& model, const StaticModel& staticModel, Controllers& controllers )
+ModelConsistencyChecker::ModelConsistencyChecker( const Model& model, const ::StaticModel& staticModel, Controllers& controllers )
     : model_      ( model )
     , staticModel_( staticModel )
     , controllers_( controllers )

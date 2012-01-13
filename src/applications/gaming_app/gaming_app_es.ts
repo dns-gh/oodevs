@@ -107,6 +107,10 @@
         <source>Duration</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>After action review</source>
+        <translation type="unfinished">Revisión post acción</translation>
+    </message>
 </context>
 <context>
     <name>AfterActionRequestList</name>
@@ -2235,13 +2239,6 @@ Motivo: %3
     <message>
         <source>&amp;Windows</source>
         <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>MissionInterfaceBuilder</name>
-    <message>
-        <source>Unknown mission parameter: %1</source>
-        <translation>Parámetro de misión desconocido : %1</translation>
     </message>
 </context>
 <context>

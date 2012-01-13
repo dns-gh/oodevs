@@ -17,6 +17,7 @@ namespace actions
 {
     namespace gui
     {
+        class InterfaceBuilder_ABC;
 
 // =============================================================================
 /** @class  ParamDateTime
@@ -24,16 +25,14 @@ namespace actions
 */
 // Created: SBO 2007-05-14
 // =============================================================================
-class ParamDateTime : public QObject
-                    , public Param_ABC
+class ParamDateTime : public Param_ABC
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamDateTime( QObject* parent, const kernel::OrderParameter& parameter, const QDateTime& current );
-             ParamDateTime( QObject* parent, const QString& name, const QDateTime& current, bool optional );
+             ParamDateTime( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter );
     virtual ~ParamDateTime();
     //@}
 
@@ -54,7 +53,6 @@ private slots:
 private:
     //! @name Member data
     //@{
-    kernel::OrderParameter parameter_;
     QDateTime date_;
     //@}
 };

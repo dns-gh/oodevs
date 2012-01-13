@@ -13,15 +13,11 @@
 #include "Param_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 
-namespace gui
-{
-    class RichLabel;
-}
-
 namespace actions
 {
     namespace gui
     {
+        class InterfaceBuilder_ABC;
 
 // =============================================================================
 /** @class  ParamNumericField
@@ -29,12 +25,13 @@ namespace actions
 */
 // Created: AGE 2006-03-15
 // =============================================================================
+template< typename NumericType = float >
 class ParamNumericField : public Param_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamNumericField( const kernel::OrderParameter& parameter, bool isReal );
+             ParamNumericField( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter );
     virtual ~ParamNumericField();
     //@}
 
@@ -44,7 +41,7 @@ public:
     virtual void Hide();
     virtual QWidget* BuildInterface( QWidget* parent );
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
-    void SetLimits( float min, float max );
+    void SetLimits( NumericType min, NumericType max );
     //@}
 
 private:
@@ -56,13 +53,16 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::OrderParameter parameter_;
-    bool isReal_;
     QLineEdit* pEdit_;
     //@}
 };
 
+typedef ParamNumericField< int >   ParamInt;
+typedef ParamNumericField< float > ParamFloat;
+
     }
 }
+
+#include "ParamNumericField.inl"
 
 #endif // __ParamNumericField_h_

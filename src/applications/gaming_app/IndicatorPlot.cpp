@@ -13,7 +13,8 @@
 #include "IndicatorExportDialog.h"
 #include "gaming/IndicatorRequest.h"
 #include "gaming/Simulation.h"
-#include "gaming/Tools.h"
+#include "clients_kernel/ContextMenu.h"
+#include "clients_kernel/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/ValuedDragObject.h"
 #include "protocol/Protocol.h"
@@ -211,7 +212,7 @@ void IndicatorPlot::mouseReleaseEvent( QMouseEvent* e )
 // -----------------------------------------------------------------------------
 void IndicatorPlot::contextMenuEvent( QContextMenuEvent* e )
 {
-    Q3PopupMenu* menu = new Q3PopupMenu( this );
+    kernel::ContextMenu* menu = new kernel::ContextMenu( this );
     menu->insertItem( tools::translate( "Indicators", "Export data..." ), this, SLOT( OnExportData() ) );
     menu->exec( e->globalPos() );
 }

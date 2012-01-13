@@ -44,7 +44,7 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const tools::ExerciseConfig& config );
+    virtual void Load( const tools::ExerciseConfig& config );
 
     virtual const CoordinateSystems& GetCoordSystem() const;
     virtual std::string GetStringPosition( const geometry::Point2f& position ) const;

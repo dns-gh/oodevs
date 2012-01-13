@@ -14,6 +14,7 @@
 #include "moc_UnitStateTableCrew.cpp"
 #include "SpinTableItem.h"
 #include "clients_kernel/Tools.h"
+#include "clients_kernel/ContextMenu.h"
 
 using namespace gui;
 
@@ -115,7 +116,7 @@ void UnitStateTableCrew::contextMenuEvent( QContextMenuEvent* e )
 {
     if( IsReadOnly() )
         return;
-    Q3PopupMenu popupMenu;
+    kernel::ContextMenu popupMenu;
     popupMenu.insertItem( tr( "Add" ), this, SLOT( AddLine() ) );
     if( dataModel_.rowCount() > eNbrHumanRank )
     {

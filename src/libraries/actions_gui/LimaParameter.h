@@ -25,6 +25,7 @@ namespace actions
     namespace gui
     {
         class ParamDateTime;
+        class InterfaceBuilder_ABC;
 
 // =============================================================================
 /** @class  LimaParameter
@@ -32,39 +33,37 @@ namespace actions
 */
 // Created: SBO 2007-05-02
 // =============================================================================
-class LimaParameter : public QObject
-                    , public Param_ABC
+class LimaParameter : public Param_ABC
                     , public kernel::ContextMenuObserver_ABC< kernel::TacticalLine_ABC >
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             LimaParameter( QObject* parent, const QString& name, const kernel::CoordinateConverter_ABC& converter, const QDateTime& currentDate, const kernel::TacticalLine_ABC& line, bool optional );
-             LimaParameter( QObject* parent, const kernel::OrderParameter& parameter, const kernel::CoordinateConverter_ABC& converter, const QDateTime& currentDate );
+             LimaParameter( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter );
     virtual ~LimaParameter();
     //@}
 
     //! @name Operations
     //@{
-    virtual bool InternalCheckValidity() const;
     virtual QWidget* BuildInterface( QWidget* parent );
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     //@}
 
 public slots:
     //! @name Slots
     //@{
-    void MenuItemValidated( int index );
+    void OnMenuClick( QAction* action );
     //@}
 
 private:
     //! @name Helpers
     //@{
+    virtual bool InternalCheckValidity() const;
     virtual void NotifyContextMenu( const kernel::TacticalLine_ABC& entity, kernel::ContextMenu& menu );
+    virtual void CreateInternalMenu( kernel::ContextMenu& menu );
     //@}
 
 private:
@@ -77,6 +76,7 @@ private:
     Q3ListBox* functions_;
     QLabel* entityLabel_;
     ParamDateTime* schedule_;
+    T_Actions actions_;
     //@}
 };
 }

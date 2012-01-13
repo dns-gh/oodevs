@@ -13,6 +13,12 @@
 #include "EntityParameter.h"
 #include "clients_kernel/Agent_ABC.h"
 
+namespace kernel
+{
+    class Automat_ABC;
+    class Formation_ABC;
+}
+
 namespace actions
 {
     namespace gui
@@ -25,25 +31,41 @@ namespace actions
 // Created: AGE 2006-03-14
 // =============================================================================
 class ParamAgent : public EntityParameter< kernel::Agent_ABC >
+                 , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC >
+                 , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
 {
+    Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamAgent( QObject* parent, const kernel::OrderParameter& parameter, kernel::Controller& controller );
-             ParamAgent( QObject* parent, const kernel::OrderParameter& parameter, const kernel::Agent_ABC& entity, kernel::Controller& controller );
+             ParamAgent( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter );
     virtual ~ParamAgent();
     //@}
 
     //! @name Operations
     //@{
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
-    void SetName( const QString& name );
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void AddHierarchy( const kernel::Entity_ABC& superior );
+    virtual void NotifyContextMenu( const kernel::Automat_ABC& entity, kernel::ContextMenu& menu );
+    virtual void NotifyContextMenu( const kernel::Formation_ABC& entity, kernel::ContextMenu& menu );
+    //@}
+
+private slots:
+    //! @name Slots
+    //@{
+    void AddHierarchy();
     //@}
 
 private:
     //! @name Member data
     //@{
-    kernel::OrderParameter parameter_;
+    const kernel::Entity_ABC* superior_;
     //@}
 };
 

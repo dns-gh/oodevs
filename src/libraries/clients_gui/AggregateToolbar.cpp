@@ -19,6 +19,7 @@
 #include "clients_kernel/HierarchyLevel_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Tools.h"
+#include "clients_kernel/ContextMenu.h"
 #include <boost/assign/list_of.hpp>
 
 using namespace gui;
@@ -49,7 +50,7 @@ AggregateToolbar::AggregateToolbar( QWidget* parent, kernel::Controller& control
     QToolTip::add( btn, tools::translate( "AggregateToolbar", "Aggregate all automats" ) );
     connect( btn, SIGNAL( clicked() ), SLOT( Aggregate() ) );
 
-    menu_ = new Q3PopupMenu( btn );
+    menu_ = new kernel::ContextMenu( btn );
     for( unsigned int i = 0u; i < LEVELS.size(); ++i )
         menu_->insertItem( LEVELS[ i ].c_str(), i );
     btn->setPopup( menu_ );

@@ -23,6 +23,7 @@ namespace actions
 {
     namespace gui
     {
+        class InterfaceBuilder_ABC;
 
 // =============================================================================
 /** @class  ParamAtlasNature
@@ -30,15 +31,14 @@ namespace actions
 */
 // Created: AGE 2006-03-15
 // =============================================================================
-class ParamAtlasNature : public QObject
-                       , public Param_ABC
+class ParamAtlasNature : public Param_ABC
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamAtlasNature( QObject* parent, const kernel::OrderParameter& parameter, const kernel::AtlasNatures& natures );
+             ParamAtlasNature( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter );
     virtual ~ParamAtlasNature();
     //@}
 
@@ -68,7 +68,6 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::OrderParameter parameter_;
     const kernel::AtlasNatures& natures_;
     kernel::AtlasNature nature_;
     T_NatureFields fields_;

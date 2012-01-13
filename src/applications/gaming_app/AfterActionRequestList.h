@@ -71,7 +71,7 @@ private:
     QPixmap pendingPixmap_;
     QPixmap donePixmap_;
     QPixmap failedPixmap_;
-    Q3PopupMenu popupMenu_;
+    kernel::ContextMenu popupMenu_;
     //@}
 };
 

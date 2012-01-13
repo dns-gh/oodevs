@@ -27,7 +27,7 @@ namespace bfs = boost::filesystem;
 // Created: SBO 2008-08-27
 // -----------------------------------------------------------------------------
 ExerciseMenu::ExerciseMenu( QWidget* parent, kernel::Controllers& controllers, gui::LinkInterpreter_ABC& interpreter )
-    : Q3PopupMenu( parent )
+    : kernel::ContextMenu( parent )
     , controllers_( controllers )
     , interpreter_( interpreter )
 {

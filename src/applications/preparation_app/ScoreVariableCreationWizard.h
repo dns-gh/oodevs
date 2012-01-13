@@ -11,6 +11,7 @@
 #define __ScoreVariableCreationWizard_h_
 
 #include "clients_gui/ValuedComboBox.h"
+#include "actions_gui/ParamInterface_ABC.h"
 #include <boost/shared_ptr.hpp>
 #include <boost/noncopyable.hpp>
 
@@ -19,6 +20,7 @@ namespace actions
     namespace gui
     {
         class Param_ABC;
+        class InterfaceBuilder_ABC;
     }
 }
 
@@ -49,15 +51,15 @@ class Q3VGroupBox;
 // Created: SBO 2009-04-21
 // =============================================================================
 class ScoreVariableCreationWizard : public QDialog
+                                  , public actions::gui::ParamInterface_ABC
                                   , private boost::noncopyable
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ScoreVariableCreationWizard( QWidget* parent, kernel::Controllers& controllers, gui::ParametersLayer& layer,
-                                          const StaticModel& staticModel, const kernel::GlTools_ABC& tools );
+             ScoreVariableCreationWizard( QWidget* parent, kernel::Controllers& controllers, const kernel::GlTools_ABC& tools, actions::gui::InterfaceBuilder_ABC& builder );
     virtual ~ScoreVariableCreationWizard();
     //@}
 
@@ -65,6 +67,12 @@ public:
     //@{
     void Create();
     void Draw( kernel::Viewport_ABC& viewport );
+    //@}
+
+    //! @name ParamInterface_ABC implementation
+    //@{
+    virtual QString Title() const;
+    virtual int GetIndex( actions::gui::Param_ABC* param ) const;
     //@}
 
 signals:
@@ -94,14 +102,13 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    gui::ParametersLayer& layer_;
-    const StaticModel& staticModel_;
+    const kernel::GlTools_ABC& tools_;
+    actions::gui::InterfaceBuilder_ABC& builder_;
     QLineEdit* name_;
     QPushButton* ok_;
     gui::ValuedComboBox< std::string >* type_;
     Q3VGroupBox* paramBox_;
     boost::shared_ptr< actions::gui::Param_ABC > parameter_;
-    const kernel::GlTools_ABC& tools_;
     //@}
 };
 

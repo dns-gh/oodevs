@@ -16,6 +16,7 @@ namespace kernel
 {
     class Logger_ABC;
     class Controllers;
+    class ContextMenu;
 }
 
 class Network;
@@ -38,7 +39,7 @@ class ConnectionMenu : public QObject
 public:
     //! @name Constructors/Destructor
     //@{
-             ConnectionMenu( Q3PopupMenu* parent, kernel::Controllers& controllers, Network& network, kernel::Logger_ABC& logger );
+             ConnectionMenu( kernel::ContextMenu* parent, kernel::Controllers& controllers, Network& network, kernel::Logger_ABC& logger );
     virtual ~ConnectionMenu();
     //@}
 
@@ -65,8 +66,8 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    Q3PopupMenu* menu_;
-    Q3PopupMenu* hosts_;
+    kernel::ContextMenu* menu_;
+    kernel::ContextMenu* hosts_;
     ConnectDialog* connectDialog_;
     DisconnectDialog* disconnectDialog_;
     int connectItem_, disconnectItem_, recentItem_;

@@ -53,7 +53,7 @@ public:
     virtual void Move( long offset );
     virtual void Delete();
     virtual void DisplayToolTip( QWidget* parent ) const;
-    virtual void DisplayContextMenu( Q3PopupMenu* menu ) const;
+    virtual void DisplayContextMenu( kernel::ContextMenu* menu ) const;
     //@}
 
 private slots:

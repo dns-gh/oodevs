@@ -21,12 +21,7 @@ ActionController::ActionController()
     , overFlying_( false )
     , menu_()
 {
-    menu_.AddCategory( "Parameter" );
-    menu_.AddCategory( "Creation" );
-    menu_.AddCategory( "Interface" );
-    menu_.AddCategory( "Order" );
-    menu_.AddCategory( "Command" );
-    menu_.AddCategory( "Helpers" );
+    menu_.InitializeBaseCategories();
 }
 
 // -----------------------------------------------------------------------------

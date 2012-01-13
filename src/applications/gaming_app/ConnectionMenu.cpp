@@ -15,18 +15,19 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/resources.h"
 #include "gaming/Simulation.h"
+#include "clients_kernel/ContextMenu.h"
 #include "gaming/Tools.h"
 
 // -----------------------------------------------------------------------------
 // Name: ConnectionMenu constructor
 // Created: SBO 2008-09-18
 // -----------------------------------------------------------------------------
-ConnectionMenu::ConnectionMenu( Q3PopupMenu* parent, kernel::Controllers& controllers, Network& network, kernel::Logger_ABC& logger )
+ConnectionMenu::ConnectionMenu( kernel::ContextMenu* parent, kernel::Controllers& controllers, Network& network, kernel::Logger_ABC& logger )
     : QObject( parent )
-    , menu_( parent )
-    , controllers_( controllers )
-    , hosts_( new Q3PopupMenu( menu_ ) )
-    , connectDialog_( new ConnectDialog( menu_->parentWidget(), network, logger ) )
+    , menu_            ( parent )
+    , controllers_     ( controllers )
+    , hosts_           ( new kernel::ContextMenu( menu_ ) )
+    , connectDialog_   ( new ConnectDialog( menu_->parentWidget(), network, logger ) )
     , disconnectDialog_( new DisconnectDialog( menu_->parentWidget(), network ) )
 {
     connectDialog_->FillPopupMenu( hosts_ );

@@ -1,25 +1,14 @@
 HEADERS = 
 
-SOURCES = LimaParameter.cpp \
+SOURCES = InterfaceBuilder.cpp \
+LimaParameter.cpp \
 LimitParameter.cpp \
-ListParameter.cpp \
+ListParameter.inl \
 MissionInterface_ABC.cpp \
-ParamAgentKnowledgeList.cpp \
-ParamAgentList.cpp \
-ParamAutomatList.cpp \
+Param_ABC.cpp \
+ParamAgent.cpp \
 ParamHumanWoundList.cpp \
-ParamLimaList.cpp \
-ParamLocationCompositeList.cpp \
-ParamLocationList.cpp \
-ParamMissionObjectiveList.cpp \
-ParamNumericList.cpp \
-ParamObjectKnowledgeList.cpp \
 ParamObstacle.cpp \
-ParamObstacleList.cpp \
-ParamPathList.cpp \
 ParamResourceNetwork.cpp \
-ParamCrowdList.cpp \
-ParamInhabitantList.cpp \
-ParamUrbanBlockList.cpp \
 
 TRANSLATIONS = actions_gui_fr.ts actions_gui_es.ts

@@ -565,9 +565,6 @@
     <ClCompile Include="..\..\src\applications\gaming_app\FragmentaryOrderInterface.cpp">
       <Filter>Source Files\Missions</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\MissionInterfaceBuilder.cpp">
-      <Filter>Source Files\Missions</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\MissionPanel.cpp">
       <Filter>Source Files\Missions</Filter>
     </ClCompile>
@@ -979,9 +976,6 @@
       <Filter>Source Files\Missions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\FragmentaryOrderInterface.h">
-      <Filter>Source Files\Missions</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\gaming_app\MissionInterfaceBuilder.h">
       <Filter>Source Files\Missions</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\PopulationMissionInterface.h">

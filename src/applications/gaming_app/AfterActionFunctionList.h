@@ -11,6 +11,7 @@
 #define __AfterActionFunctionList_h_
 
 #include "clients_gui/ListDisplayer.h"
+#include "actions_gui/ParamInterface_ABC.h"
 #include <boost/noncopyable.hpp>
 
 namespace kernel
@@ -27,6 +28,7 @@ namespace actions
 {
     namespace gui
     {
+        class InterfaceBuilder_ABC;
         class Param_ABC;
     }
 }
@@ -44,6 +46,7 @@ class StaticModel;
 // Created: AGE 2007-09-21
 // =============================================================================
 class AfterActionFunctionList : public Q3VBox
+                              , public actions::gui::ParamInterface_ABC
                               , public tools::Observer_ABC
                               , public tools::ElementObserver_ABC< Simulation >
                               , private boost::noncopyable
@@ -54,13 +57,19 @@ public:
     //! @name Constructors/Destructor
     //@{
              AfterActionFunctionList( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, AfterActionModel& model,
-                                      gui::ParametersLayer& layer, const StaticModel& staticModel );
+                                      actions::gui::InterfaceBuilder_ABC& interfaceBuilder );
     virtual ~AfterActionFunctionList();
     //@}
 
     //! @name Operations
     //@{
     void Display( const AfterActionFunction& function, kernel::Displayer_ABC& displayer, gui::ValuedListItem* item );
+    //@}
+
+    //! @name ParamInterface_ABC implementation
+    //@{
+    virtual QString Title() const;
+    virtual int GetIndex( actions::gui::Param_ABC* param ) const;
     //@}
 
 private slots:
@@ -87,10 +96,9 @@ private:
 private:
     //! @name Member data
     //@{
+    actions::gui::InterfaceBuilder_ABC& builder_;
     kernel::Controllers& controllers_;
     AfterActionModel& model_;
-    gui::ParametersLayer& layer_;
-    const StaticModel& staticModel_;
     gui::ListDisplayer< AfterActionFunctionList >* functions_;
     Q3GroupBox* parameters_;
     Q3VGroupBox* timeGroup_;
@@ -98,6 +106,7 @@ private:
     QSpinBox* duration_;
     QPushButton* request_;
     T_Parameters paramList_;
+    QString title_;
     //@}
 };
 

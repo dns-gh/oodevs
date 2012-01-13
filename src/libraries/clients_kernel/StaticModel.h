@@ -22,8 +22,10 @@ namespace kernel
     class AccommodationTypes;
     class AgentTypes;
     class AtlasNatures;
+    class Controllers;
     class CoordinateConverter_ABC;
     class CoordinateSystems;
+    class DetectionMap;
     class ExtensionTypes;
     class FormationLevels;
     class ObjectTypes;
@@ -39,7 +41,7 @@ class StaticModel : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             StaticModel();
+    explicit StaticModel();
     virtual ~StaticModel();
     //@}
 
@@ -52,14 +54,15 @@ public:
 public:
     //! @name Member data
     //@{
-    kernel::CoordinateSystems&       coordinateSystems_;
-    kernel::CoordinateConverter_ABC& coordinateConverter_;
-    kernel::AgentTypes&              types_;
-    kernel::ObjectTypes&             objectTypes_;
-    kernel::FormationLevels&         levels_;
-    kernel::ExtensionTypes&          extensionTypes_;
-    kernel::AtlasNatures&            atlasNatures_;
-    kernel::AccommodationTypes&      accommodationTypes_;
+    CoordinateSystems&       coordinateSystems_;
+    CoordinateConverter_ABC& coordinateConverter_;
+    AgentTypes&              types_;
+    ObjectTypes&             objectTypes_;
+    FormationLevels&         levels_;
+    ExtensionTypes&          extensions_;
+    AtlasNatures&            atlasNatures_;
+    AccommodationTypes&      accommodationTypes_;
+    DetectionMap&            detection_;
     //@}
 };
 

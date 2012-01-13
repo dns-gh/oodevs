@@ -9,7 +9,7 @@
 
 #include "gaming_app_pch.h"
 #include "FragmentaryOrderInterface.h"
-#include "MissionInterfaceBuilder.h"
+#include "actions_gui/InterfaceBuilder_ABC.h"
 #include "actions/ActionsModel.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/FragOrderType.h"
@@ -21,13 +21,13 @@ using namespace actions;
 // Name: FragmentaryOrderInterface constructor
 // Created: SBO 2006-11-23
 // -----------------------------------------------------------------------------
-FragmentaryOrderInterface::FragmentaryOrderInterface( QWidget* parent, Entity_ABC& entity, const FragOrderType& fragOrder, ActionController& controller
-                                                    , MissionInterfaceBuilder& builder, ActionsModel& model )
+FragmentaryOrderInterface::FragmentaryOrderInterface( QWidget* parent, Entity_ABC& entity, const FragOrderType& fragOrder, ActionController& controller,
+                                                      actions::gui::InterfaceBuilder_ABC& builder, ActionsModel& model )
     : actions::gui::MissionInterface_ABC( parent, fragOrder, entity, controller )
     , model_( model )
     , fragOrder_( fragOrder )
 {
-    builder.Build( *this, entity, fragOrder );
+    builder.BuildAll( *this, entity, fragOrder );
 }
 
 // -----------------------------------------------------------------------------

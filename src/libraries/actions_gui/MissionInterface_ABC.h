@@ -10,8 +10,8 @@
 #ifndef __MissionInterface_ABC_h_
 #define __MissionInterface_ABC_h_
 
-#include "ParamComboBox.h"
-
+#include "ParamInterface_ABC.h"
+#include <boost/noncopyable.hpp>
 #pragma warning( push, 0 )
 #include <Qt3Support/q3vbox.h>
 #pragma warning( pop )
@@ -21,6 +21,8 @@ namespace kernel
     class ActionController;
     class Entity_ABC;
     class OrderType;
+    class GlTools_ABC;
+    class Viewport_ABC;
 }
 
 class QTabWidget;
@@ -41,6 +43,8 @@ namespace actions
 // Created: APE 2004-04-20
 // =============================================================================
 class MissionInterface_ABC : public Q3VBox
+                           , public ParamInterface_ABC
+                           , private boost::noncopyable
 {
     Q_OBJECT;
 
@@ -53,11 +57,16 @@ public:
 
     //! @name Operations
     //@{
-    QString Title() const;
     void Draw( const kernel::GlTools_ABC& tools, kernel::Viewport_ABC& extent ) const;
     bool IsEmpty() const;
     void AddParameter( Param_ABC& parameter );
     void ChangeOkValueButton( bool planningMode );
+    //@}
+
+    //! @name ParamInterface_ABC implementation
+    //@{
+    virtual QString Title() const;
+    virtual int GetIndex( Param_ABC* param ) const;
     //@}
 
 public slots:
@@ -68,7 +77,10 @@ public slots:
     //@}
 
 signals:
+    //! @name Signals
+    //@{
     void OkClicked();
+    //@}
 
 protected:
     //! @name Helpers
@@ -83,8 +95,6 @@ private:
     //! @name Copy/Assignment
     //@{
     virtual void paintEvent( QPaintEvent*, QString title );
-    MissionInterface_ABC( const MissionInterface_ABC& );
-    MissionInterface_ABC& operator=( const MissionInterface_ABC& );
     //@}
 
     //! @name Helpers
@@ -96,7 +106,7 @@ private:
 
     //! @name Types
     //@{
-    typedef std::vector< Param_ABC* >      T_Parameters;
+    typedef std::vector< Param_ABC* >      T_Parameters; // $$$$ ABR 2012-01-11: Todo : use sharepointer
     typedef T_Parameters::const_iterator CIT_Parameters;
     //@}
 
