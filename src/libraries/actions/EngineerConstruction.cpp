@@ -188,7 +188,7 @@ void EngineerConstruction::CommitTo( sword::PlannedWork& message ) const
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
     {
         const std::string type = it->second->GetType();
-        if( type == "location" )
+        if( type == "location" || type == "circle" || type == "rectangle" || type == "point" || type == "polygon" || type == "line" )
             static_cast< const Location* >( it->second )->CommitTo( *message.mutable_position() );
         else if( type == "obstacletype" )
             static_cast< const ObstacleType* >( it->second )->CommitTo( boost::bind( &sword::PlannedWork::set_type_obstacle, boost::ref( message ), _1 ) );
