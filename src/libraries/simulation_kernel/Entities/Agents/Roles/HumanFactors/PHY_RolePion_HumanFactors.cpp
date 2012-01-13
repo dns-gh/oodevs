@@ -288,10 +288,13 @@ void PHY_RolePion_HumanFactors::UpdateStressValue()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_HumanFactors::NotifyAttacked()
 {
-    stressValue_ += PHY_Stress::evolution_.incPerShot_;
-    UpdateStress();
-    if( HasChanged() )
-        entity_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+    if( evolutionFunction_ == boost::bind( &PHY_RolePion_HumanFactors::Evolution, this ) )
+    {
+        stressValue_ += PHY_Stress::evolution_.incPerShot_;
+        UpdateStress();
+        if( HasChanged() )
+            owner_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
+    }
 }
 
 // -----------------------------------------------------------------------------
