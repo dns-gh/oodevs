@@ -37,11 +37,21 @@ DictionaryType::~DictionaryType()
 // Name: DictionaryType::GetStringList
 // Created: JSR 2010-10-05
 // -----------------------------------------------------------------------------
-void DictionaryType::GetStringList( QStringList& list, const std::string& kind, const std::string& language ) const
+void DictionaryType::GetStringList( QStringList& list, const std::string& kind, const std::string& language, bool addAlias /* = false */ ) const
 {
     tools::Iterator< const DictionaryEntryType& > it = CreateIterator();
     while( it.HasMoreElements() )
-        list.append( it.NextElement().GetLabel( kind, language ).c_str() );
+    {
+        const DictionaryEntryType& entry = it.NextElement();
+        std::string toAdd = entry.GetLabel( kind, language );
+        if( addAlias )
+        {
+            const std::string alias = entry.GetAlias();
+            if( !alias.empty() )
+                toAdd += " " + alias;
+        }
+        list.append( toAdd.c_str() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -65,14 +75,23 @@ void DictionaryType::GetStringList( std::vector< std::string >& vector, const st
 // Name: DictionaryType::GetLabel
 // Created: JSR 2010-10-06
 // -----------------------------------------------------------------------------
-std::string DictionaryType::GetLabel( const std::string& key, const std::string& kind, const std::string& language ) const
+std::string DictionaryType::GetLabel( const std::string& key, const std::string& kind, const std::string& language, bool addAlias /*= false*/ ) const
 {
     tools::Iterator< const DictionaryEntryType& > it = CreateIterator();
     while( it.HasMoreElements() )
     {
         const DictionaryEntryType& entry = it.NextElement();
         if( entry.GetKey() == key )
-            return entry.GetLabel( kind, language );
+        {
+            std::string ret = entry.GetLabel( kind, language );
+            if( addAlias )
+            {
+                const std::string alias = entry.GetAlias();
+                if( !alias.empty() )
+                    ret += " " + alias;
+            }
+            return ret;
+        }
     }
     return "";
 }
@@ -81,13 +100,20 @@ std::string DictionaryType::GetLabel( const std::string& key, const std::string&
 // Name: DictionaryType::GetKey
 // Created: JSR 2010-10-06
 // -----------------------------------------------------------------------------
-std::string DictionaryType::GetKey( const std::string& label, const std::string& kind, const std::string& language ) const
+std::string DictionaryType::GetKey( const std::string& label, const std::string& kind, const std::string& language, bool hasAlias /*= false*/ ) const
 {
     tools::Iterator< const DictionaryEntryType& > it = CreateIterator();
     while( it.HasMoreElements() )
     {
         const DictionaryEntryType& entry = it.NextElement();
-        if( entry.GetLabel( kind, language ) == label )
+        std::string strSearch = entry.GetLabel( kind, language );
+        if( hasAlias )
+        {
+            const std::string alias = entry.GetAlias();
+            if( !alias.empty() )
+                strSearch += " " + alias;
+        }
+        if( strSearch == label )
             return entry.GetKey();
     }
     return "";

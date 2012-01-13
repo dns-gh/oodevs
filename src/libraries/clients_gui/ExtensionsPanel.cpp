@@ -213,7 +213,7 @@ namespace
         mutable unsigned int trailing_;
     };
 
-    void FillCombo( QComboBox& combo, const kernel::AttributeType& attribute, const tools::StringResolver< DictionaryType >& resolver )
+    void FillCombo( QComboBox& combo, const kernel::AttributeType& attribute, const tools::StringResolver< DictionaryType >& resolver, bool addAlias )
     {
         std::string dictionary;
         std::string kind;
@@ -223,12 +223,12 @@ namespace
         if( dico )
         {
             QStringList list;
-            dico->GetStringList( list, kind, language );
+            dico->GetStringList( list, kind, language, addAlias );
             combo.insertStringList( list );
         }
     }
 
-    std::string GetDictionaryString( const std::string& key, const kernel::AttributeType& attribute, const tools::StringResolver< DictionaryType >& resolver )
+    std::string GetDictionaryString( const std::string& key, const kernel::AttributeType& attribute, const tools::StringResolver< DictionaryType >& resolver, bool addAlias )
     {
         static const std::string defaultString;
         std::string dictionary;
@@ -237,11 +237,11 @@ namespace
         attribute.GetDictionaryValues( dictionary, kind, language );
         DictionaryType* dico = resolver.Find( dictionary );
         if( dico )
-            return dico->GetLabel( key, kind, language );
+            return dico->GetLabel( key, kind, language, addAlias );
         return defaultString;
     }
 
-    std::string GetDictionaryKey( const QString& label, const kernel::AttributeType& attribute, const tools::StringResolver< DictionaryType >& resolver )
+    std::string GetDictionaryKey( const QString& label, const kernel::AttributeType& attribute, const tools::StringResolver< DictionaryType >& resolver, bool hasAlias )
     {
         std::string dictionary;
         std::string kind;
@@ -249,7 +249,7 @@ namespace
         attribute.GetDictionaryValues( dictionary, kind, language );
         DictionaryType* dico = resolver.Find( dictionary );
         if( dico )
-            return dico->GetKey( label.ascii(), kind, language );
+            return dico->GetKey( label.ascii(), kind, language, hasAlias );
         return "";
     }
 }
@@ -314,10 +314,11 @@ void ExtensionsPanel::AddWidget( const kernel::AttributeType& attribute )
     case AttributeType::ETypeDictionary:
         {
             QComboBox* combo = new QComboBox( box, attribute.GetName().c_str() );
-            FillCombo( *combo, attribute, extensions_ );
+            bool nationality = attribute.GetName() == "Nationalite";
+            FillCombo( *combo, attribute, extensions_, nationality );
             try
             {
-                const std::string& selected = GetDictionaryString( value, attribute, extensions_ );
+                const std::string& selected = GetDictionaryString( value, attribute, extensions_, nationality );
                 if( !selected.empty() )
                     combo->setCurrentText( selected.c_str() );
             }
@@ -328,14 +329,14 @@ void ExtensionsPanel::AddWidget( const kernel::AttributeType& attribute )
             box->setStretchFactor( combo, 1 );
             widgets_.push_back( combo );
             connect( combo, SIGNAL( activated( int ) ), SLOT( Commit() ) );
-            if( attribute.GetName() == "Nationalite" )
+            if( nationality )
                 connect( combo, SIGNAL( activated( int ) ), SLOT( OnChangeNationality() ) );
         }
         break;
     case AttributeType::ETypeLoosyDictionary:
         {
             QComboBox* combo = new QComboBox( true, box, attribute.GetName().c_str() );
-            FillCombo( *combo, attribute, extensions_ );
+            FillCombo( *combo, attribute, extensions_, false );
             if( min != -1 || max != 1 )
             {
                 QMinMaxValidator* validator = new QMinMaxValidator( combo, min, max );
@@ -441,7 +442,7 @@ void ExtensionsPanel::Commit()
             case AttributeType::ETypeDictionary:
                 {
                     QComboBox* combo = static_cast< QComboBox* >( *it );
-                    const std::string key = GetDictionaryKey( combo->currentText(), *attribute, extensions_ );
+                    const std::string key = GetDictionaryKey( combo->currentText(), *attribute, extensions_, attribute->GetName() == "Nationalite" );
                     if( !key.empty() )
                         ext->SetValue( combo->name(), enabled ? key : "" );
                 }
@@ -508,7 +509,7 @@ void ExtensionsPanel::UpdateDisplay()
             case AttributeType::ETypeDictionary:
                 {
                     QComboBox* combo = static_cast< QComboBox* >( *it );
-                    const std::string& selected = GetDictionaryString( value.ascii(), *attribute, extensions_ );
+                    const std::string& selected = GetDictionaryString( value.ascii(), *attribute, extensions_, attribute->GetName() == "Nationalite" );
                     if( !selected.empty() )
                         combo->setCurrentText( selected.c_str() );
                 }
