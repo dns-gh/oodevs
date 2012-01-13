@@ -73,7 +73,6 @@ protected:
     //! @name Member data
     //@{
     ValuedComboBox< E_DemolitionTargetType >* types_;
-    LoadableCheckBox*                         activation_;
     LoadableTimeEdit*                         activationTime_;
     LoadableTimeEdit*                         activityTime_;
     //@}

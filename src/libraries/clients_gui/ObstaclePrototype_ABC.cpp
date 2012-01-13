@@ -44,11 +44,6 @@ ObstaclePrototype_ABC::ObstaclePrototype_ABC( QWidget* parent )
         types_ = new ValuedComboBox< E_DemolitionTargetType >( hBox );
     }
     {
-        activation_ = new LoadableCheckBox( tools::translate( "gui::ObstaclePrototype_ABC", "Reserved obstacle activated:" ), vbox );
-        activation_->hide();
-        connect( this, SIGNAL( ToggleActivable( bool ) ), activation_, SLOT( setShown( bool ) ) );
-    }
-    {
         Q3HBox* activationBox = new Q3HBox( vbox );
         QLabel* activationLabel = new QLabel( tools::translate( "gui::ObstaclePrototype_ABC", "Activation time:" ), activationBox );
         activationTime_ = new LoadableTimeEdit( activationBox );
@@ -64,11 +59,6 @@ ObstaclePrototype_ABC::ObstaclePrototype_ABC( QWidget* parent )
         connect( this, SIGNAL( ToggleActivable( bool ) ), activationTime_, SLOT( setShown( bool ) ) );
         connect( this, SIGNAL( ToggleActivable( bool ) ), activityLabel, SLOT( setShown( bool ) ) );
         connect( this, SIGNAL( ToggleActivable( bool ) ), activityTime_, SLOT( setShown( bool ) ) );
-
-        connect( activation_->GetDefaultValueWidget(), SIGNAL( toggled( bool ) ), activationLabel, SLOT( setDisabled( bool ) ) );
-        connect( activation_->GetDefaultValueWidget(), SIGNAL( toggled( bool ) ), activationTime_, SLOT( setDisabled( bool ) ) );
-        connect( activation_->GetDefaultValueWidget(), SIGNAL( toggled( bool ) ), activityLabel, SLOT( setDisabled( bool ) ) );
-        connect( activation_->GetDefaultValueWidget(), SIGNAL( toggled( bool ) ), activityTime_, SLOT( setDisabled( bool ) ) );
     }
     connect( types_, SIGNAL( activated( int ) ), this, SLOT( OnObstacleTypeChanged() ) );
 }
@@ -118,7 +108,7 @@ void ObstaclePrototype_ABC::OnObstacleTypeChanged()
 bool ObstaclePrototype_ABC::IsActivated() const
 {
     if( types_->GetValue() == eDemolitionTargetType_Reserved )
-        return activation_->isChecked();
+        return false;
     else if( types_->GetValue() == eDemolitionTargetType_Preliminary )
         return true;
     return false;
@@ -154,7 +144,6 @@ int ObstaclePrototype_ABC::GetActivityTime() const
 // -----------------------------------------------------------------------------
 void ObstaclePrototype_ABC::SetLoader( ObjectPrototypeLoader_ABC* loader )
 {
-    activation_->SetLoader( loader );
     activationTime_->SetLoader( loader );
     activityTime_->SetLoader( loader );
 }

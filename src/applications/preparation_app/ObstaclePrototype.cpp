@@ -47,7 +47,7 @@ void ObstaclePrototype::Commit()
     {
         PropertiesDictionary& dico = creation_->Get< PropertiesDictionary >();
         ObstacleAttribute* attribute = new ObstacleAttribute( dico, types_->GetValue() );
-        attribute->Activate( activation_->isChecked() );
+        attribute->Activate( IsActivated() );
         attribute->SetActivationTime( GetActivationTime() );
         attribute->SetActivityTime( GetActivityTime() );
         creation_->Attach( *attribute );
