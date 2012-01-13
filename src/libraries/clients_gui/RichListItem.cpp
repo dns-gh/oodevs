@@ -395,6 +395,10 @@ QString RichListItem::text( int column ) const
 {
     if( column < 0 || column >= ( int ) columns_.size() )
         return "";
+
+    if ( isSelected() && listView()->isRenaming() && !columns_[ column ].renamingText.isNull() )
+        return columns_[ column ].renamingText;
+
     return columns_[ column ].base;
 }
 
@@ -416,6 +420,26 @@ const QPixmap * RichListItem::pixmap( int column ) const
 int RichListItem::rtti() const
 {
     return 999;
+}
+
+// -----------------------------------------------------------------------------
+// Name: RichListItem::ValidUserRenaming
+// Created: MMC 2012-01-11
+// -----------------------------------------------------------------------------
+void RichListItem::ValidUserRenaming( int column )
+{
+    Q3ListViewItem::okRename( column );
+}
+
+// -----------------------------------------------------------------------------
+// Name: RichListItem::SetRenamingText
+// Created: MMC 2012-01-11
+// -----------------------------------------------------------------------------
+void RichListItem::SetRenamingText( int column, const QString& text )
+{
+    if( column < 0 || column >= columns_.size() )
+        return;
+    columns_[ column ].renamingText = text;
 }
 
 // -----------------------------------------------------------------------------

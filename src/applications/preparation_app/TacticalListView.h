@@ -42,6 +42,7 @@ class ModelBuilder;
 class TacticalListView : public gui::HierarchyListView< kernel::TacticalHierarchies >
                        , public tools::ElementObserver_ABC< kernel::Entity_ABC >
                        , public tools::ElementObserver_ABC< AutomatDecisions >
+                       , public tools::ElementObserver_ABC< kernel::Formation_ABC >
                        , public kernel::ContextMenuObserver_ABC< kernel::Entity_ABC >
                        , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
                        , public kernel::ContextMenuObserver_ABC< kernel::Formation_ABC >
@@ -64,6 +65,13 @@ public:
     virtual void DoChangeSuperior( kernel::Entity_ABC& entity, kernel::Entity_ABC& superior );
     //@}
 
+protected:
+    //! @name Helpers
+    //@{
+    virtual void NotifyCreated( const kernel::TacticalHierarchies& hierarchy );
+    virtual void NotifyUpdated( const kernel::TacticalHierarchies& hierarchy );
+    //@}
+
 private slots:
     //! @name Slots
     //@{
@@ -81,8 +89,9 @@ private:
     virtual void viewportResizeEvent( QResizeEvent* e );
     virtual void setColumnWidth( int column, int w );
 
-    virtual void NotifyUpdated( const kernel::Entity_ABC& );
-    virtual void NotifyUpdated( const AutomatDecisions& );
+    virtual void NotifyUpdated( const kernel::Entity_ABC& entity );
+    virtual void NotifyUpdated( const AutomatDecisions& decisions );
+    virtual void NotifyCreated( const kernel::Formation_ABC& entity );
     virtual void NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Team_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Formation_ABC& agent, kernel::ContextMenu& menu );

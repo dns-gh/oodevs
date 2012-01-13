@@ -52,10 +52,11 @@ public:
     //! @name Accessors
     //@{
     virtual QString GetName() const;
+    virtual QString GetBasicName() const;
     virtual const kernel::HierarchyLevel_ABC& GetLevel() const;
     void Rename( const QString& name );
     void SetLevel( int levelId );
-    virtual const kernel::LogisticLevel& GetLogisticLevel() const ;
+    virtual const kernel::LogisticLevel& GetLogisticLevel() const;
     //@}
 
     //! @name Operations

@@ -65,6 +65,8 @@ public:
     virtual void setPixmap( int column, const QPixmap & pm );
     virtual const QPixmap * pixmap( int column ) const;
     int rtti() const;
+    virtual void ValidUserRenaming( int column );
+    virtual void SetRenamingText( int column, const QString& text );
     //@}
 
 private:
@@ -87,6 +89,7 @@ private:
         QString          base;
         Q3SimpleRichText* rich;
         QPixmap          pixMap;
+        QString          renamingText;
     };
     typedef std::vector< RichText > T_RichTexts;
     typedef T_RichTexts::iterator  IT_RichTexts;
