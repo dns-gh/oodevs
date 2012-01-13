@@ -2640,7 +2640,8 @@
       <missions>
         <mission name="ML_Security_Follow"/>
         <mission name="ML_Security_MoveTo"/>
-        <mission name="ML_Security_Confine population"/>
+		<mission name="ML_Security_Confine population"/>
+        <mission name="ML_Security_IncreaseResourceNodeProduction"/>
       </missions>
       <fragorders/>
     </unit>
@@ -3894,4 +3895,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1258127908" -->
+<!-- signature="0460288713" -->
