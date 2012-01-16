@@ -40,6 +40,12 @@ TER_Localisation::TER_Localisation( const TER_Localisation& localisation )
 {
     nType_       = localisation.GetType();
     pointVector_ = localisation.GetPoints();
+    if( localisation.bWasCircle_ )
+    {
+        bWasCircle_ = true;
+        rCircleRadius_ = localisation.rCircleRadius_;
+        vCircleCenter_ = localisation.vCircleCenter_;
+    }
     if( nType_ == ePolygon )
         polygon_ = localisation.polygon_;
     else if( nType_ == eLine )
