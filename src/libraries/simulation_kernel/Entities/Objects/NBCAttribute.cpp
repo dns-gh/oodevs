@@ -313,3 +313,24 @@ bool NBCAttribute::Update( const NBCAttribute& rhs )
     }
     return NeedUpdate( eOnUpdate );
 }
+
+// -----------------------------------------------------------------------------
+// Name: NBCAttribute::UpdateCloudAttribute
+// Created: LGY 2012-01-13
+// -----------------------------------------------------------------------------
+bool NBCAttribute::UpdateCloudAttribute( const NBCAttribute& rhs )
+{
+    agents_.clear();
+    for( CIT_NBCAgents it = rhs.agents_.begin(); it != rhs.agents_.end(); ++it )
+        if( (*it)->IsGasContaminating() || (*it)->IsGasPoisonous() )
+            agents_.push_back( *it );
+    if( !agents_.empty() )
+        NotifyAttributeUpdated( eOnUpdate );
+    if( danger_ != rhs.danger_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate );
+        danger_ = rhs.danger_;
+    }
+    nForm_ = eGas;
+    return NeedUpdate( eOnUpdate );
+}
