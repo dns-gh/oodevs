@@ -400,9 +400,11 @@
     <rule autonomous="true" flying="true" inherits="base" type="logistic"/>
     <rule autonomous="true" flying="false" inherits="base" type="criminal"/>
     <rule autonomous="true" flying="true" inherits="base" type="criminal"/>
+    <rule autonomous="true" flying="false" inherits="base" type="nbc"/>
+    <rule autonomous="true" flying="true" inherits="base" type="nbc"/>
   </unit-rules>
   <population-rules>
     <rule channeling-range="1" cost-out-of-channeling="5000" type="base"/>
   </population-rules>
 </pathfind>
-<!-- signature="0787880459" -->
+<!-- signature="0993461131" -->
