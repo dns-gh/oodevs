@@ -456,6 +456,16 @@ void PHY_Human::NotifyBackFromFuneral()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_Human::NotifyDiagnosed
+// Created: AHC 2011-01-26
+// -----------------------------------------------------------------------------
+void PHY_Human::NotifyDiagnosed()
+{
+    if( pWound_ && *pWound_ != PHY_HumanWound::killed_ && *pWound_ != PHY_HumanWound::notWounded_ )
+        nDeathTimeStep_ += static_cast< unsigned int >( static_cast< double >( pWound_->GetLifeExpectancy() ) * ( PHY_HumanWound::GetDiagnosisLifeExpectancyFactor() - 1.0 ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_Human::Update
 // Created: NLD 2005-01-10
 // -----------------------------------------------------------------------------

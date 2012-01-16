@@ -68,6 +68,7 @@ ADN_Health_Data::ADN_Health_Data()
     , contaminationTreatTime_  ( "0s" )
     , shockRestingTime_        ( "0s" )
     , contaminationRestingTime_( "0s" )
+    , diagnosisLifeExpectancyFactor_( 2.0 )
 {
     for( int n = 0; n < eNbrDoctorSkills; ++n )
         wounds[n].nType_ = (E_DoctorSkills)n;
@@ -155,6 +156,7 @@ void ADN_Health_Data::ReadArchive( xml::xistream& input )
             >> xml::start( "times" )
                 >> xml::attribute( "diagnosis-time", diagnosticTime_ )
                 >> xml::attribute( "sorting-time", sortingTime_ )
+                >> xml::optional >> xml::attribute( "diagnosis-life-expectancy-factor", diagnosisLifeExpectancyFactor_ )
             >> xml::end
             >> xml::start( "injuries" )
                 >> xml::list( "injury", *this, &ADN_Health_Data::ReadInjury )
@@ -180,6 +182,7 @@ void ADN_Health_Data::WriteArchive( xml::xostream& output )
     output  << xml::start( "times" )
                 << xml::attribute( "diagnosis-time", diagnosticTime_ )
                 << xml::attribute( "sorting-time", sortingTime_ )
+                << xml::attribute( "diagnosis-life-expectancy-factor", diagnosisLifeExpectancyFactor_ )
             << xml::end
             << xml::start( "injuries" );
     for( int n = 0; n < eNbrDoctorSkills; ++n )

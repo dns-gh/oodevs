@@ -23,6 +23,7 @@ PHY_HumanWound::T_HumanWoundMap PHY_HumanWound::humanWounds_;
 
 unsigned int PHY_HumanWound::nDiagnosticTime_ = 0;
 unsigned int PHY_HumanWound::nSortingTime_ = 0;
+double       PHY_HumanWound::diagnosisLifeExpectancyFactor_ = 2.0;
 unsigned int PHY_HumanWound::nContaminatedHealingTime_ = 0;
 unsigned int PHY_HumanWound::nContaminatedRestingTime_ = 0;
 unsigned int PHY_HumanWound::nMentalDiseaseHealingTime_ = 0;
@@ -77,6 +78,11 @@ void PHY_HumanWound::InitializeMedicalData( xml::xistream& xis )
     if( rTimeVal < 0 )
         xis.error( "times: sorting-time < 0" );
     nSortingTime_ = static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( rTimeVal ) );
+
+    xis >> xml::optional >> xml::attribute( "diagnosis-life-expectancy-factor", diagnosisLifeExpectancyFactor_ );
+    if ( diagnosisLifeExpectancyFactor_ < 0.0 )
+        xis.error( "times: diagnosis-life-expectancy-factor < 0" );
+
     xis >> xml::end;
 
     double rFactorSum = 0.;
@@ -114,7 +120,7 @@ void PHY_HumanWound::ReadInjury( xml::xistream& xis, double& rFactorSum )
         if( tools::ReadTimeAttribute( xis, "life-expectancy", rValue ) )
         {
             if( rValue <= 0 )
-                xis.error( "injury: life-exectancy <= 0" );
+                xis.error( "injury: life-expectancy <= 0" );
             const_cast< PHY_HumanWound& >( wound ).nLifeExpectancy_ = static_cast< unsigned int >( MIL_Tools::ConvertSecondsToSim( rValue ) );
         }
         tools::ReadTimeAttribute( xis, "caring-time", rValue );
@@ -243,6 +249,15 @@ unsigned int PHY_HumanWound::GetDiagnosticTime()
 unsigned int PHY_HumanWound::GetSortingTime()
 {
     return nSortingTime_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_HumanWound::GetDiagnosisLifeExpectancyFactor
+// Created: AHC 2011-01-26
+// -----------------------------------------------------------------------------
+double PHY_HumanWound::GetDiagnosisLifeExpectancyFactor()
+{
+    return diagnosisLifeExpectancyFactor_;
 }
 
 // -----------------------------------------------------------------------------

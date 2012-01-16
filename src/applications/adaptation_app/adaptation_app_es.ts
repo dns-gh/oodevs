@@ -1911,6 +1911,10 @@ estacionado con motor encendido</translation>
         <source>Doctors</source>
         <translation>Médicos</translation>
     </message>
+    <message>
+        <source>Diagnosis life span factor</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_HumanFactors_GUI</name>

@@ -77,6 +77,7 @@ public:
 
     ADN_Type_Time   contaminationTreatTime_;
     ADN_Type_Time   contaminationRestingTime_;
+    ADN_Type_Double diagnosisLifeExpectancyFactor_;
 
     T_AvailabilityWarning_Vector vChangeOverWarnings_;
     T_AvailabilityWarning_Vector vCollectingWarnings_;

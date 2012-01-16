@@ -96,6 +96,7 @@ public:
 
     virtual void NotifyHandledByMedical() = 0;
     virtual bool NotifyBackToWar() = 0;
+    virtual void NotifyDiagnosed() = 0;
     virtual void HealMentalDisease() = 0;
     virtual void HealWound() = 0;
     virtual void HealContamination() = 0;

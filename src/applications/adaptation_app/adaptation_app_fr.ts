@@ -1913,6 +1913,10 @@ Arrêt moteur allumé</translation>
         <source>Ambulances - collection</source>
         <translation>Ambulances - ramassage</translation>
     </message>
+    <message>
+        <source>Diagnosis life span factor</source>
+        <translation>Coefficient de durée de vie lié au diagnostic</translation>
+    </message>
 </context>
 <context>
     <name>ADN_HumanFactors_GUI</name>

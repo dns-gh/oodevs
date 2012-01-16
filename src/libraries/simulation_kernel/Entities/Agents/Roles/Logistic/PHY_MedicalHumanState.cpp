@@ -368,6 +368,9 @@ bool PHY_MedicalHumanState::NeedDiagnosis() const
 void PHY_MedicalHumanState::NotifyDiagnosed()
 {
     bDiagnosed_ = true;
+
+    assert( pHuman_ );
+    pHuman_->NotifyDiagnosed();
 }
 
 // -----------------------------------------------------------------------------

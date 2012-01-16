@@ -80,6 +80,7 @@ void ADN_Health_GUI::Build()
 
     builder.AddField< ADN_TimeField >( pHolder, tr( "Diagnostic duration" ), data_.diagnosticTime_ );
     builder.AddField< ADN_TimeField >( pHolder, tr( "Triage duration" ), data_.sortingTime_ );
+    builder.AddField< ADN_EditLine_Double >( pHolder, tr( "Diagnosis life span factor" ), data_.diagnosisLifeExpectancyFactor_, 0, eGreaterZero );
 
     // wounds
     Q3HBox* pWoundsGroup = new Q3HBox( pVBox );
