@@ -48,6 +48,7 @@ public:
     //! @name Operations
     //@{
     virtual bool ShouldDisplay( const kernel::Entity_ABC& entity );
+    virtual bool HandleMousePress( QMouseEvent* event, const geometry::Point2f& point );
     //@}
 };
 
