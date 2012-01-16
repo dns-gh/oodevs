@@ -24,7 +24,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( CloudPropagationCapacity )
 // Created: LGY 2011-07-04
 // -----------------------------------------------------------------------------
 CloudPropagationCapacity::CloudPropagationCapacity()
-    : rCurrentCircleRadius_     ( 100.f )
+    : rCurrentCircleRadius_     ( 0.f )
     , rCurrentPropagationLenght_( 0.f )
 {
     // NOTHING
@@ -80,6 +80,7 @@ void CloudPropagationCapacity::Finalize( MIL_Object_ABC& object )
 {
     origin_ = object.GetLocalisation().ComputeBarycenter();
     time_ = MIL_AgentServer::GetWorkspace().GetCurrentTick();
+    rCurrentCircleRadius_ = object.GetLocalisation().GetCircleRadius();
 }
 
 namespace
