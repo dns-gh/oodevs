@@ -49,7 +49,10 @@ ResourceNetworkAttribute::ResourceNetworkAttribute( xml::xistream& xis, MIL_Obje
 {
     ResourceNetworkCapacity* capacity = object.Retrieve< ResourceNetworkCapacity >();
     if( capacity )
+    {
+        nodeProperties_ = capacity->GetNodeProperties();
         capacity->Update( xis, object );
+    }
 }
 
 // -----------------------------------------------------------------------------
