@@ -522,5 +522,9 @@
     <border/>
     <universal/>
   </object>
+  <object description="a ressource node" geometry="polygon" name="Ressource node" symbol="G*MPNDP---****X" type="ressource node">
+    <constructor default-consumption-mode="ArretMoteurAllume" unit-type="raw"/>
+    <resources/>
+  </object>
 </objects>
-<!-- signature="1022459949" -->
+<!-- signature="4082723158" -->

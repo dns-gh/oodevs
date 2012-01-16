@@ -1,5 +1,62 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <urban-state model-version="4.2.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/exercise/urbanstate.xsd">
-  <urban-objects/>
+  <urban-objects>
+    <urban-object id="83">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="Electricity" stock="0"/>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="Running Water" stock="0"/>
+      </resources>
+    </urban-object>
+    <urban-object id="107">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="Natural Gas" stock="0"/>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="Running Water" stock="0"/>
+      </resources>
+    </urban-object>
+    <urban-object id="199">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="Electricity" stock="0"/>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="Natural Gas" stock="0">
+          <link capacity="-1" kind="urban-object" target="107"/>
+        </node>
+      </resources>
+    </urban-object>
+    <urban-object id="201">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="Running Water" stock="100"/>
+      </resources>
+    </urban-object>
+    <urban-object id="207">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="1000" resource-type="Electricity" stock="0">
+          <link capacity="-1" kind="urban-object" target="199"/>
+        </node>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="Running Water" stock="0">
+          <link capacity="-1" kind="urban-object" target="203"/>
+          <link capacity="-1" kind="urban-object" target="197"/>
+          <link capacity="-1" kind="urban-object" target="195"/>
+          <link capacity="-1" kind="urban-object" target="193"/>
+          <link capacity="-1" kind="urban-object" target="204"/>
+          <link capacity="-1" kind="urban-object" target="132"/>
+          <link capacity="-1" kind="urban-object" target="129"/>
+          <link capacity="-1" kind="urban-object" target="135"/>
+          <link capacity="-1" kind="urban-object" target="208"/>
+          <link capacity="-1" kind="urban-object" target="202"/>
+          <link capacity="-1" kind="urban-object" target="130"/>
+          <link capacity="-1" kind="urban-object" target="113"/>
+          <link capacity="-1" kind="urban-object" target="109"/>
+          <link capacity="-1" kind="urban-object" target="133"/>
+          <link capacity="-1" kind="urban-object" target="131"/>
+          <link capacity="-1" kind="urban-object" target="2"/>
+          <link capacity="-1" kind="urban-object" target="114"/>
+          <link capacity="-1" kind="urban-object" target="81"/>
+          <link capacity="-1" kind="urban-object" target="82"/>
+          <link capacity="-1" kind="urban-object" target="83"/>
+          <link capacity="-1" kind="urban-object" target="201"/>
+          <link capacity="-1" kind="urban-object" target="139"/>
+        </node>
+      </resources>
+    </urban-object>
+  </urban-objects>
 </urban-state>
-<!-- signature="3363644254" -->
+<!-- signature="3005597990" -->

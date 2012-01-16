@@ -2,7 +2,52 @@
 <orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/exercise/orbat.xsd">
   <parties>
     <party id="1" name="Camp 1" type="friend">
-      <objects/>
+      <objects>
+        <object id="19" name="Ressource node [19]" type="ressource node">
+          <shape type="polygone">
+            <points>
+              <point>29TNF3680255353</point>
+              <point>29TNF3699055291</point>
+              <point>29TNF3694255354</point>
+              <point>29TNF3681355477</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+            <resources>
+              <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="100" resource-type="Electricity" stock="4000">
+                <link capacity="-1" kind="terrain-object" target="20"/>
+                <link capacity="-1" kind="urban-object" target="199"/>
+              </node>
+              <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="100" resource-type="Natural Gas" stock="0"/>
+              <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="100" resource-type="Running Water" stock="0"/>
+            </resources>
+          </attributes>
+        </object>
+        <object id="20" name="Ressource node [20]" type="ressource node">
+          <shape type="polygone">
+            <points>
+              <point>29TNF3661856452</point>
+              <point>29TNF3660656304</point>
+              <point>29TNF3679556315</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+            <resources>
+              <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="10" resource-type="Electricity" stock="50000">
+                <link capacity="-1" kind="urban-object" target="83"/>
+              </node>
+              <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="5000" resource-type="Natural Gas" stock="0">
+                <link capacity="-1" kind="urban-object" target="107"/>
+              </node>
+              <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="Running Water" stock="0">
+                <link capacity="-1" kind="urban-object" target="107"/>
+              </node>
+            </resources>
+          </attributes>
+        </object>
+      </objects>
       <tactical>
         <formation id="3" level="iii" name="Formation [3]">
           <automat engaged="false" id="7" knowledge-group="8" name="ML_Security - Civil Protection [7]" type="ML_Security - Civil Protection">
@@ -64,4 +109,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="3029261317" -->
+<!-- signature="2070699515" -->
