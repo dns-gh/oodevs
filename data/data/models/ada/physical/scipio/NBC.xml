@@ -12,7 +12,7 @@
         <effect percentage="0" wound="ue"/>
         <effect percentage="0" wound="dead"/>
       </effects>
-      <effects affliction="true" life-time="24h" propagation="360" type="gaseous">
+      <effects affliction="true" life-time="24h" propagation="30" type="gaseous">
         <effect percentage="0.3" wound="healthy"/>
         <effect percentage="0.3" wound="u1"/>
         <effect percentage="0.15" wound="u2"/>
@@ -58,7 +58,7 @@
         <effect percentage="0" wound="ue"/>
         <effect percentage="0" wound="dead"/>
       </effects>
-      <effects affliction="true" life-time="24h" propagation="360" type="gaseous">
+      <effects affliction="true" life-time="24h" propagation="30" type="gaseous">
         <effect percentage="0.3" wound="healthy"/>
         <effect percentage="0.3" wound="u1"/>
         <effect percentage="0.15" wound="u2"/>
@@ -115,7 +115,7 @@
         <effect percentage="0" wound="ue"/>
         <effect percentage="0" wound="dead"/>
       </effects>
-      <effects affliction="true" life-time="24h" propagation="360" type="gaseous">
+      <effects affliction="true" life-time="24h" propagation="30" type="gaseous">
         <effect percentage="0.3" wound="healthy"/>
         <effect percentage="0.3" wound="u1"/>
         <effect percentage="0.15" wound="u2"/>
@@ -158,4 +158,4 @@
     </agent>
   </agents>
 </nbc>
-<!-- signature="2612221390" -->
+<!-- signature="0112012058" -->
