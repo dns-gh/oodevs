@@ -4077,6 +4077,10 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
         <source>Modifiers</source>
         <translation>Modificateurs</translation>
     </message>
+    <message id="0">
+        <source>ADN_Sensors_Environments_GUI</source>
+        <translation>ADN_Sensors_Environments_GUI</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Sensors_GUI</name>

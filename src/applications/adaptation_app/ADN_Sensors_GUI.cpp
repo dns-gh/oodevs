@@ -123,28 +123,14 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
 
     ADN_Sensors_Sizes_GUI* pComposantes = new ADN_Sensors_Sizes_GUI( pAgentDetectionModifiersGroup );
     vConnectors[eModifSizes] = &pComposantes->GetConnector();
-    pComposantes->setSelectionMode( Q3Table::SingleRow );
-    pComposantes->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::MinimumExpanding );
-
     ADN_Sensors_Meteos_GUI* pMeteos = new ADN_Sensors_Meteos_GUI( pAgentDetectionModifiersGroup );
     vConnectors[eModifWeather] = &pMeteos->GetConnector();
-    pMeteos->setSelectionMode( Q3Table::SingleRow );
-    pMeteos->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::MinimumExpanding );
-
     ADN_Sensors_Illumination_GUI* pIllu = new ADN_Sensors_Illumination_GUI( pAgentDetectionModifiersGroup );
     vConnectors[eModifIllumination] = &pIllu->GetConnector();
-    pIllu->setSelectionMode( Q3Table::SingleRow );
-    pIllu->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::MinimumExpanding );
-
     ADN_Sensors_Environments_GUI* pEnv = new ADN_Sensors_Environments_GUI( pAgentDetectionModifiersGroup );
     vConnectors[eModifEnvironement] = &pEnv->GetConnector();
-    pEnv->setSelectionMode( Q3Table::SingleRow );
-    pEnv->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::MinimumExpanding );
-
     ADN_Sensors_UrbanBlockMaterial_GUI* pMaterial = new ADN_Sensors_UrbanBlockMaterial_GUI( pAgentDetectionModifiersGroup );
     vConnectors[eModifUrbanBlockMaterial] = &pMaterial->GetConnector();
-    pMaterial->setSelectionMode( Q3Table::SingleRow );
-    pMaterial->setSizePolicy( QSizePolicy::Preferred, QSizePolicy::MinimumExpanding );
 
     QHBoxLayout* pAgentDetectionModifiersLayout = new QHBoxLayout();
     pAgentDetectionModifiersLayout->setSpacing( 5 );
@@ -282,13 +268,14 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     connect( identification, SIGNAL( textChanged( const QString& ) ), algorithmPreview, SLOT( OnIdentificationChanged( const QString& ) ) );
     connect( pStance, SIGNAL( PostureChanged( std::string , double ) ), algorithmPreview, SLOT( OnPerceiverStanceChanged( std::string , double ) ) );
     connect( pTargetStance, SIGNAL( PostureChanged( std::string , double ) ), algorithmPreview, SLOT( OnTargetStanceChanged( std::string , double ) ) );
-    connect( pComposantes, SIGNAL( SizeChanged( std::string , double ) ), algorithmPreview, SLOT( OnSizeChanged( std::string , double ) ) );
-    connect( pMeteos, SIGNAL( WeatherChanged( std::string , double ) ), algorithmPreview, SLOT( WeatherChanged( std::string , double ) ) );
-    connect( pIllu, SIGNAL( IlluminationChanged( std::string , double ) ), algorithmPreview, SLOT( IlluminationChanged( std::string , double ) ) );
-    connect( pEnv, SIGNAL( EnvironmentChanged( ADN_Sensors_Data::ModificatorEnvironmentInfos*, double ) ), algorithmPreview, SLOT( EnvironmentChanged( ADN_Sensors_Data::ModificatorEnvironmentInfos* , double ) ) );
-    connect( pMaterial, SIGNAL( UrbanBlockChanged( std::string , double ) ), algorithmPreview, SLOT( UrbanBlockChanged( std::string , double ) ) );
     connect( populationModifier, SIGNAL( textChanged( const QString& ) ), algorithmPreview, SLOT( OnPopulationModifierChanged( const QString& ) ) );
     connect( populationDensity, SIGNAL( textChanged( const QString& ) ), algorithmPreview, SLOT( OnPopulationDensityChanged( const QString& ) ) );
+
+    connect( pComposantes, SIGNAL( ContentChanged( std::string , double ) ), algorithmPreview, SLOT( OnSizeChanged( std::string , double ) ) );
+    connect( pMeteos, SIGNAL( ContentChanged( std::string , double ) ), algorithmPreview, SLOT( WeatherChanged( std::string , double ) ) );
+    connect( pIllu, SIGNAL( ContentChanged( std::string , double ) ), algorithmPreview, SLOT( IlluminationChanged( std::string , double ) ) );
+    connect( pEnv, SIGNAL( ContentChanged( std::string, double ) ), algorithmPreview, SLOT( EnvironmentChanged( std::string, double ) ) );
+    connect( pMaterial, SIGNAL( ContentChanged( std::string , double ) ), algorithmPreview, SLOT( UrbanBlockChanged( std::string , double ) ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -1309,6 +1309,9 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_FuneralPackagingResources_GUI.cpp">
       <Filter>Source Files\Workspace\Logistic\Funeral\Funeral GUI</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensors_MaterialsTable.cpp">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">
@@ -1992,6 +1995,21 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FuneralPackagingResources_GUI.h">
       <Filter>Source Files\Workspace\Logistic\Funeral\Funeral GUI</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Sensors_UrbanBlockMaterial_GUI.h">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Sensors_Sizes_GUI.h">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Sensors_Illumination_GUI.h">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Sensors_Environments_GUI.h">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Sensors_Meteos_GUI.h">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\adaptation_app\ADN_Config.inl">
@@ -2097,6 +2115,9 @@
       <Filter>Translations</Filter>
     </None>
     <None Include="..\..\src\applications\adaptation_app\style_scipio.css" />
+    <None Include="..\..\src\applications\adaptation_app\ADN_Sensors_MaterialsTable.inl">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ConfigDialog.h">
@@ -2171,25 +2192,10 @@
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Sensors_DetectionAlgorithmPrevision.h">
       <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Sensors_Environments_GUI.h">
-      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Sensors_GUI.h">
       <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Sensors_Illumination_GUI.h">
-      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Sensors_Meteos_GUI.h">
-      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Sensors_Postures_GUI.h">
-      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Sensors_Sizes_GUI.h">
-      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Sensors_UrbanBlockMaterial_GUI.h">
       <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Sensor_Wizard.h">
@@ -2392,6 +2398,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Funeral_GUI.h">
       <Filter>Source Files\Workspace\Logistic\Funeral\Funeral GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Sensors_MaterialsTable.h">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

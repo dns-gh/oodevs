@@ -10,8 +10,6 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Sensors_UrbanBlockMaterial_GUI.h"
-#include "moc_ADN_Sensors_UrbanBlockMaterial_GUI.cpp"
-
 #include "ADN_App.h"
 #include "ADN_Tools.h"
 #include "ADN_Connector_Table_ABC.h"
@@ -21,95 +19,60 @@
 typedef ADN_Sensors_Data::SensorInfos                   SensorInfos;
 typedef ADN_Sensors_Data::ModificatorUrbanBlockInfos    ModificatorUrbanBlockInfos;
 
-//-----------------------------------------------------------------------------
-// Internal Table connector to be connected with T_ModificatorEnvironmentInfos_Vector
-//-----------------------------------------------------------------------------
-class ADN_CT_Sensors_UrbanBlock
-    :public ADN_Connector_Table_ABC
+// -----------------------------------------------------------------------------
+// Name: ADN_CT_Sensors_UrbanBlock constructor
+// Created: ABR 2012-01-16
+// -----------------------------------------------------------------------------
+ADN_CT_Sensors_UrbanBlock::ADN_CT_Sensors_UrbanBlock( ADN_Table& table )
+    : ADN_Connector_Table_ABC( table, false )
 {
-public:
-
-    ADN_CT_Sensors_UrbanBlock(ADN_Sensors_UrbanBlockMaterial_GUI& tab)
-        : ADN_Connector_Table_ABC(tab,false)
-    {}
-
-    void  AddSubItems(int i,void *obj)
-    {
-        assert(obj);
-        ADN_TableItem_String *pItemString=0;
-        ADN_TableItem_Double *pItemDouble=0;
-
-        // add a new row & set new values
-        tab_.setItem(i,0,pItemString=new ADN_TableItem_String(&tab_,obj));
-        tab_.setItem(i,1,pItemDouble=new ADN_TableItem_Double(&tab_,obj));
-
-        // disable first column
-        pItemString->setEnabled(false);
-
-
-        // set table item properties
-        pItemDouble->GetValidator().setRange( 0, 1, 2 );
-
-        // connect items & datas
-        pItemString->GetConnector().Connect(&static_cast<ModificatorUrbanBlockInfos*>(obj)->ptrMaterial_.GetData()->strName_);
-        pItemDouble->GetConnector().Connect(&static_cast<ModificatorUrbanBlockInfos*>(obj)->rCoeff_);
-    }
-
-private:
-    ADN_CT_Sensors_UrbanBlock& operator=( const ADN_CT_Sensors_UrbanBlock& );
-};
-
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Sensors_UrbanBlockMaterial_GUI constructor
-// Created: SLG 2010-03-02
-//-----------------------------------------------------------------------------
-ADN_Sensors_UrbanBlockMaterial_GUI::ADN_Sensors_UrbanBlockMaterial_GUI(QWidget * parent)
-:   ADN_Table2(parent, "ADN_Sensors_UrbanBlockMaterial_GUI" )
-{
-    // peut etre selectionne & trie
-    setSorting(true);
-    setSelectionMode(Q3Table::NoSelection);
-    setShowGrid(false);
-    setLeftMargin(0);
-
-    // hide vertical header
-    verticalHeader()->hide();
-
-    // tab with 2 columns
-    setNumCols(2);
-    setNumRows(0);
-    setColumnStretchable(0,true);
-    setColumnStretchable(1,true);
-    setMaximumWidth( 300 );
-
-    horizontalHeader()->setLabel(0, tr( "Material" ) );
-    horizontalHeader()->setLabel(1, tr( "Modifiers" ) );
-
-    // connector creation
-    pConnector_=new ADN_CT_Sensors_UrbanBlock(*this);
-    connect( this, SIGNAL( currentChanged( int, int ) ), SLOT( OnCurrentChanged() ) );
-    connect( this, SIGNAL( selectionChanged() ), SLOT( OnCurrentChanged() ) );
+    // NOTHING
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_CT_Sensors_UrbanBlock::AddSubItems
+// Created: ABR 2012-01-16
+// -----------------------------------------------------------------------------
+void ADN_CT_Sensors_UrbanBlock::AddSubItems(int i,void *obj)
+{
+    assert( obj );
+    ADN_TableItem_String* pItemString = 0;
+    ADN_TableItem_Double* pItemDouble = 0;
 
-//-----------------------------------------------------------------------------
+    tab_.setItem( i, 0, pItemString = new ADN_TableItem_String( &tab_, obj ) );
+    tab_.setItem( i, 1, pItemDouble = new ADN_TableItem_Double( &tab_, obj ) );
+
+    pItemDouble->GetValidator().setRange( 0, 1, 2 );
+    pItemString->GetConnector().Connect( &static_cast< ModificatorUrbanBlockInfos* >( obj )->ptrMaterial_.GetData()->strName_ );
+    pItemDouble->GetConnector().Connect( &static_cast< ModificatorUrbanBlockInfos* >( obj )->rCoeff_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_UrbanBlockMaterial_GUI constructor
+// Created: ABR 2012-01-16
+// -----------------------------------------------------------------------------
+ADN_Sensors_UrbanBlockMaterial_GUI::ADN_Sensors_UrbanBlockMaterial_GUI( QWidget * parent /*= 0*/ )
+    : ADN_Sensors_MaterialsTable< ADN_CT_Sensors_UrbanBlock >( parent, tr( "ADN_Sensors_UrbanBlockMaterial_GUI" ), tr( "Material" ), tr( "Modifiers" ) )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Sensors_UrbanBlockMaterial_GUI destructor
-// Created: SLG 2010-03-02
-//-----------------------------------------------------------------------------
+// Created: ABR 2012-01-16
+// -----------------------------------------------------------------------------
 ADN_Sensors_UrbanBlockMaterial_GUI::~ADN_Sensors_UrbanBlockMaterial_GUI()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Sensors_UrbanBlockMaterial_GUI::OnCurrentChanged
-// Created: HBD 2010-05-03
+// Name: ADN_Sensors_UrbanBlockMaterial_GUI::InternalEmit
+// Created: ABR 2012-01-16
 // -----------------------------------------------------------------------------
-void ADN_Sensors_UrbanBlockMaterial_GUI::OnCurrentChanged()
+void ADN_Sensors_UrbanBlockMaterial_GUI::InternalEmit()
 {
     if( ModificatorUrbanBlockInfos* data = static_cast< ModificatorUrbanBlockInfos* >( GetCurrentData() ) )
         if( data  && data->ptrMaterial_.GetData() )
-            emit UrbanBlockChanged( data->GetItemName(), data->rCoeff_.GetData() );
-
+            emit ContentChanged( data->GetItemName(), data->rCoeff_.GetData() );
 }
