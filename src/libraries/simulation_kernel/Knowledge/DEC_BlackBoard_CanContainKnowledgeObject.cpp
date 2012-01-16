@@ -155,8 +155,11 @@ void DEC_BlackBoard_CanContainKnowledgeObject::DestroyKnowledgeObject( DEC_Knowl
 {
     knowledge.Invalidate();
     if( knowledge.GetObjectKnown() )
+    {
         if( objectMap_.erase( knowledge.GetObjectKnown() ) < 1 )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
+        knowledge.CleanObjectKnown();
+    }
     if( knowledgeObjectFromIDMap_.erase( knowledge.GetID() ) < 1 )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
 }

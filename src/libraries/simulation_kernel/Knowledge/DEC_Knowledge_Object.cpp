@@ -448,13 +448,8 @@ void DEC_Knowledge_Object::UpdateRelevance()
         return;
     }
     // L'objet réel va être détruit
-    if( pObjectKnown_ && pObjectKnown_->IsMarkedForDestruction() )
-    {
-        if( bPerceptionDistanceHacked_ || pObjectKnown_->Retrieve< CrowdCapacity >() ) // $$$$ _RC_ LDC 2011:08:10 Should be pObjectKnown_->IsUniversal() and ADN modified accordingly.
-            rRelevance_ = 0.;
-        pObjectKnown_ = 0;
-        NotifyAttributeUpdated( eAttr_RealObject );
-    }
+    CleanObjectKnown();
+
     // Si plus d'objet réel associé est si l'emplacement de l'objet est vu
     assert( pArmyKnowing_ );
     if( !pObjectKnown_ && pArmyKnowing_->IsPerceived( *this ) )
@@ -874,6 +869,21 @@ bool DEC_Knowledge_Object::IsRecon() const
 bool DEC_Knowledge_Object::Clean() const
 {
     return GetRelevance() <= 0.;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::CleanObjectKnown
+// Created: JSR 2012-01-16
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Object::CleanObjectKnown()
+{
+    if( pObjectKnown_ && pObjectKnown_->IsMarkedForDestruction() )
+    {
+        if( bPerceptionDistanceHacked_ || pObjectKnown_->Retrieve< CrowdCapacity >() ) // $$$$ _RC_ LDC 2011:08:10 Should be pObjectKnown_->IsUniversal() and ADN modified accordingly.
+            rRelevance_ = 0.;
+        pObjectKnown_ = 0;
+        NotifyAttributeUpdated( eAttr_RealObject );
+    }
 }
 
 // -----------------------------------------------------------------------------
