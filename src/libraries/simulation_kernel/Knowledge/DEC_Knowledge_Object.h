@@ -78,6 +78,7 @@ public:
     void Update( const DEC_Knowledge_ObjectPerception& perception );
     void Update( const DEC_Knowledge_ObjectCollision& collision );
     bool Clean() const;
+    void CleanObjectKnown();
     bool IsValid() const;
     void Invalidate();
     const PHY_PerceptionLevel& GetCurrentPerceptionLevel( const MIL_Agent_ABC& pion ) const;

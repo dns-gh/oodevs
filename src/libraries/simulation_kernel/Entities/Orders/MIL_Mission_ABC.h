@@ -124,6 +124,26 @@ private:
     //@}
 };
 
+template< typename Archive >
+void save_construct_data( Archive& archive, const MIL_Mission_ABC* mission, const unsigned int /*version*/ )
+{
+    const DEC_KnowledgeResolver_ABC* const resolver = &mission->knowledgeResolver_;
+    archive << resolver
+        << mission->type_.GetId();
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, MIL_Mission_ABC* mission, const unsigned int /*version*/ )
+{
+    DEC_KnowledgeResolver_ABC* resolver = 0;
+    int id = -1;
+    archive >> resolver
+        >> id;
+    MIL_MissionType_ABC* type = MIL_PionMissionType::Find( id );
+    assert( type );
+    ::new( mission )MIL_Mission_ABC( *type, *resolver );
+}
+
 BOOST_CLASS_EXPORT_KEY( MIL_Mission_ABC )
 
 #endif // __MIL_Mission_ABC_h_
