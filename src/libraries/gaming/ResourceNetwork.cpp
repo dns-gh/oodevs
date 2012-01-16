@@ -35,21 +35,22 @@ double ResourceNetwork::stippleFactor_ = 1;
 // Name: ResourceNetwork constructor
 // Created: JSR 2011-03-04
 // -----------------------------------------------------------------------------
-ResourceNetwork::ResourceNetwork( Controllers& controllers, unsigned int id, const tools::Resolver_ABC< TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::StringResolver< ResourceNetworkType >& resourceNetworkResolver, PropertiesDictionary& dico )
+ResourceNetwork::ResourceNetwork( Controllers& controllers, unsigned int id, const tools::Resolver_ABC< TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::StringResolver< ResourceNetworkType >& resourceNetworkResolver, PropertiesDictionary* dico )
     : controllers_            ( controllers )
     , id_                     ( id )
     , urbanResolver_          ( urbanResolver )
     , objectResolver_         ( objectResolver )
     , resourceNetworkResolver_( resourceNetworkResolver )
 {
-    CreateDictionary( dico );
+    if( dico )
+        CreateDictionary( *dico );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ResourceNetwork constructor
 // Created: JSR 2010-08-19
 // -----------------------------------------------------------------------------
-ResourceNetwork::ResourceNetwork( Controllers& controllers, unsigned int id, const tools::Resolver_ABC< TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::StringResolver< ResourceNetworkType >& resourceNetworkResolver, const sword::UrbanAttributes_Infrastructures& msg, PropertiesDictionary& dico )
+ResourceNetwork::ResourceNetwork( Controllers& controllers, unsigned int id, const tools::Resolver_ABC< TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::StringResolver< ResourceNetworkType >& resourceNetworkResolver, const sword::UrbanAttributes_Infrastructures& msg, PropertiesDictionary* dico )
     : controllers_            ( controllers )
     , id_                     ( id )
     , urbanResolver_          ( urbanResolver )
@@ -58,14 +59,15 @@ ResourceNetwork::ResourceNetwork( Controllers& controllers, unsigned int id, con
 {
     for( int i = 0; i < msg.resource_network_size(); ++i )
         UpdateNetwork( 0, msg.resource_network( i ) );
-    CreateDictionary( dico );
+    if( dico )
+        CreateDictionary( *dico );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ResourceNetwork constructor
 // Created: JSR 2010-08-31
 // -----------------------------------------------------------------------------
-ResourceNetwork::ResourceNetwork( Controllers& controllers, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::StringResolver< ResourceNetworkType >& resourceNetworkResolver, const sword::ObjectAttributeResourceNetwork& msg, PropertiesDictionary& dico )
+ResourceNetwork::ResourceNetwork( Controllers& controllers, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::StringResolver< ResourceNetworkType >& resourceNetworkResolver, const sword::ObjectAttributeResourceNetwork& msg, PropertiesDictionary* dico )
     : controllers_            ( controllers )
     , id_                     ( id )
     , urbanResolver_          ( urbanResolver )
@@ -74,7 +76,8 @@ ResourceNetwork::ResourceNetwork( Controllers& controllers, unsigned int id, con
 {
     for( int i = 0; i < msg.network_size(); ++i )
         UpdateNetwork( 0, msg.network( i ) );
-    CreateDictionary( dico );
+    if( dico )
+        CreateDictionary( *dico );
 }
 
 // -----------------------------------------------------------------------------
