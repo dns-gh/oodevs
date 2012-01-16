@@ -38,3 +38,14 @@ bool UrbanLayer::ShouldDisplay( const kernel::Entity_ABC& /*entity*/ )
 {
     return true;
 }
+
+// -----------------------------------------------------------------------------
+// Name: UrbanLayer::HandleMousePress
+// Created: LGY 2012-01-16
+// -----------------------------------------------------------------------------
+bool UrbanLayer::HandleMousePress( QMouseEvent* event, const geometry::Point2f& point )
+{
+    if( !livingAreaEditor_ )
+        return EditorProxy< gui::UrbanLayer >::HandleMousePress( event, point );
+    return false;
+}
