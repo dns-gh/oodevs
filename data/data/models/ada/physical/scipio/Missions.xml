@@ -1123,7 +1123,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Itineraire" optional="false" type="Point"/>
+      <parameter dia-name="objectives" name="Itineraire" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="france.military.platoon.tasks.DetruireReseau" dia-type="france.military.platoon.tasks.DetruireReseau" id="2140" name="PION Desactiver Point Du Reseau" package="none">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3134,4 +3134,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_RejoindrePointLancement" id="405" name="Rejoindre point de lancement"/>
   </fragorders>
 </missions>
-<!-- signature="0165976534" -->
+<!-- signature="2079998253" -->
