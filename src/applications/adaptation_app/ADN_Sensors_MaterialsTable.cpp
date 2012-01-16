@@ -31,8 +31,8 @@ ADN_Sensors_MaterialsTable_ABC::ADN_Sensors_MaterialsTable_ABC( QWidget* pParent
     setNumRows(0);
     setColumnStretchable(0,true);
     setColumnStretchable(1,true);
-    //horizontalHeader()->setLabel(0, firstColumnName );
-    //horizontalHeader()->setLabel(1, secondColumnName );
+    horizontalHeader()->setLabel(0, firstColumnName );
+    horizontalHeader()->setLabel(1, secondColumnName );
 
     connect( this, SIGNAL( selectionChanged() ), SLOT( OnCurrentChanged() ) );
 }
