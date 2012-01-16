@@ -128,6 +128,15 @@ bool DEC_AgentFunctions::IsContaminated( const MIL_Agent_ABC& callerAgent )
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::IsIntoxicated
+// Created: LGY 2012-01-13
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::IsIntoxicated( const MIL_Agent_ABC& callerAgent )
+{
+    return callerAgent.GetRole< nbc::PHY_RoleInterface_NBC >().IsIntoxicated();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::ImmunizeAgent
 // Created: JSR 2011-06-14
 // -----------------------------------------------------------------------------

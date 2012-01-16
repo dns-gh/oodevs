@@ -21,6 +21,7 @@
 MOCK_BASE_CLASS( MockRoleNBC, nbc::PHY_RoleInterface_NBC )
 {
     MOCK_METHOD( IsContaminated, 0 );
+    MOCK_METHOD( IsIntoxicated, 0 );
     MOCK_METHOD( Poison, 1 );
     MOCK_METHOD( Contaminate, 1 );
     MOCK_METHOD_EXT( Decontaminate, 0, void(), DecontaminateComplete );

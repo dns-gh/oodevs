@@ -119,6 +119,7 @@ public:
 
     // NBC
     static bool IsContaminated( const MIL_Agent_ABC& callerAgent );
+    static bool IsIntoxicated( const MIL_Agent_ABC& callerAgent );
     static void WearNbcProtectionSuit( MIL_Agent_ABC& callerAgent );
     static void RemoveNbcProtectionSuit( MIL_Agent_ABC& callerAgent );
     static void SelfDecontaminate( MIL_Agent_ABC& callerAgent );
