@@ -304,9 +304,9 @@ void ADN_Sensors_DetectionAlgorithmPrevision::IlluminationChanged( std::string i
 // Name: ADN_Sensors_DetectionAlgorithmPrevision::EnvironmentChanged
 // Created: HBD 2010-05-03
 // -----------------------------------------------------------------------------
-void ADN_Sensors_DetectionAlgorithmPrevision::EnvironmentChanged( ADN_Sensors_Data::ModificatorEnvironmentInfos* env, double factor )
+void ADN_Sensors_DetectionAlgorithmPrevision::EnvironmentChanged( std::string environment, double factor )
 {
-    environment_->setText( env->GetItemName().c_str() );
+    environment_->setText( environment.c_str() );
     urbanMaterial_->setText( tr( "Cannot be selected." ) );
     urbanSelected_ = false;
     environmentFactor_ = factor;

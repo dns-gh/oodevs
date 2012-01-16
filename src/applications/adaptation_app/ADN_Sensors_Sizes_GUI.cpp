@@ -10,108 +10,68 @@
 //*****************************************************************************
 #include "adaptation_app_pch.h"
 #include "ADN_Sensors_Sizes_GUI.h"
-#include "moc_ADN_Sensors_Sizes_GUI.cpp"
-
 #include "ADN_App.h"
 #include "ADN_CommonGfx.h"
-#include "ADN_Connector_Table_ABC.h"
 #include "ADN_Sensors_Data.h"
 #include "ADN_Workspace.h"
 
-typedef ADN_Sensors_Data::ModificatorSizeInfos       ModificatorSizeInfos;
+typedef ADN_Sensors_Data::ModificatorSizeInfos ModificatorSizeInfos;
 
-
-//-----------------------------------------------------------------------------
-// Internal Table connector to be connected with ADN_Sensors_Sizes_GUI
-//-----------------------------------------------------------------------------
-class ADN_CT_Sensors_Sizes
-:public ADN_Connector_Table_ABC
+// -----------------------------------------------------------------------------
+// Name: ADN_CT_Sensors_Sizes Constructor
+// Created: ABR 2012-01-16
+// -----------------------------------------------------------------------------
+ADN_CT_Sensors_Sizes::ADN_CT_Sensors_Sizes( ADN_Table& table )
+    : ADN_Connector_Table_ABC( table, false )
 {
-public:
+    // NOTHING
+}
 
-    ADN_CT_Sensors_Sizes(ADN_Sensors_Sizes_GUI& tab)
-    : ADN_Connector_Table_ABC(tab,false)
-    {}
-
-    void  AddSubItems(int i,void *obj)
-    {
-        assert(obj);
-        ADN_TableItem_String *pItemString=0;
-        ADN_TableItem_Double *pItemDouble=0;
-
-        // add a new row & set new values
-        tab_.setItem(i,0,pItemString=new ADN_TableItem_String(&tab_,obj));
-        tab_.setItem(i,1,pItemDouble=new ADN_TableItem_Double(&tab_,obj));
-
-        // disable composante category name
-        pItemString->setEnabled(false);
-        pItemString->SetAutoEnabled(false);
-
-        // set table item properties
-        pItemDouble->GetValidator().setRange( 0, 1, 2 );
-
-        // connect items & datas
-        pItemString->GetConnector().Connect(static_cast<ModificatorSizeInfos*>(obj)->ptrSize_.GetData());
-        pItemDouble->GetConnector().Connect(&static_cast<ModificatorSizeInfos*>(obj)->rCoeff_);
-    }
-
-
-private:
-    ADN_CT_Sensors_Sizes& operator=( const ADN_CT_Sensors_Sizes& );
-};
-
-
-
-//-----------------------------------------------------------------------------
-// Name: ADN_Sensors_Sizes_GUI constructor
-// Created: JDY 03-07-03
-//-----------------------------------------------------------------------------
-ADN_Sensors_Sizes_GUI::ADN_Sensors_Sizes_GUI(QWidget * parent )
-:   ADN_Table2(parent, "ADN_Sensors_Sizes_GUI" )
+// -----------------------------------------------------------------------------
+// Name: ADN_CT_Sensors_Sizes::AddSubItems
+// Created: ABR 2012-01-16
+// -----------------------------------------------------------------------------
+void ADN_CT_Sensors_Sizes::AddSubItems(int i,void *obj)
 {
-    // peut etre selectionne & trie
-    setSorting(true);
-    setSelectionMode(Q3Table::NoSelection);
-    setShowGrid(false);
-    setLeftMargin(0);
+    assert( obj );
+    ADN_TableItem_String* pItemString = 0;
+    ADN_TableItem_Double* pItemDouble = 0;
 
-    // hide vertical header
-    verticalHeader()->hide();
+    tab_.setItem( i, 0, pItemString = new ADN_TableItem_String( &tab_, obj ) );
+    tab_.setItem( i, 1, pItemDouble = new ADN_TableItem_Double( &tab_, obj ) );
 
-    // tab with 2 columns
-    setNumCols(2);
-    setNumRows(0);
-    setColumnStretchable(0,true);
-    setColumnStretchable(1,true);
-    setMaximumWidth( 300 );
-
-    horizontalHeader()->setLabel(0, tr( "Volumes" ) );
-    horizontalHeader()->setLabel(1, tr( "Modifiers" ) );
-
-    // connector creation
-    pConnector_=new ADN_CT_Sensors_Sizes(*this);
-    connect( this, SIGNAL( currentChanged( int, int ) ), SLOT( OnCurrentChanged() ) );
-    connect( this, SIGNAL( selectionChanged() ), SLOT( OnCurrentChanged() ) );
+    pItemDouble->GetValidator().setRange( 0, 1, 2 );
+    pItemString->GetConnector().Connect( static_cast< ModificatorSizeInfos* >( obj )->ptrSize_.GetData() );
+    pItemDouble->GetConnector().Connect( &static_cast< ModificatorSizeInfos* >( obj )->rCoeff_ );
 }
 
 
-//-----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
+// Name: ADN_Sensors_Sizes_GUI constructor
+// Created: ABR 2012-01-16
+// -----------------------------------------------------------------------------
+ADN_Sensors_Sizes_GUI::ADN_Sensors_Sizes_GUI( QWidget * parent /*= 0*/ )
+    : ADN_Sensors_MaterialsTable< ADN_CT_Sensors_Sizes >( parent, tr( "ADN_Sensors_Sizes_GUI" ), tr( "Volumes" ), tr( "Modifiers" ) )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Sensors_Sizes_GUI destructor
-// Created: JDY 03-07-03
-//-----------------------------------------------------------------------------
+// Created: ABR 2012-01-16
+// -----------------------------------------------------------------------------
 ADN_Sensors_Sizes_GUI::~ADN_Sensors_Sizes_GUI()
 {
-    delete pConnector_;
+    // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
-// Name: ADN_Sensors_Sizes_GUI::OnCurrentChanged
-// Created: HBD 2010-05-03
+// Name: ADN_Sensors_Sizes_GUI::InternalEmit
+// Created: ABR 2012-01-16
 // -----------------------------------------------------------------------------
-void ADN_Sensors_Sizes_GUI::OnCurrentChanged()
+void ADN_Sensors_Sizes_GUI::InternalEmit()
 {
-     ModificatorSizeInfos* data = static_cast< ModificatorSizeInfos* >( GetCurrentData() );
-     if( data  && data->ptrSize_.GetData() )
-        emit SizeChanged( data->GetItemName(), data->rCoeff_.GetData() );
+    ModificatorSizeInfos* data = static_cast< ModificatorSizeInfos* >( GetCurrentData() );
+    if( data  && data->ptrSize_.GetData() )
+        emit ContentChanged( data->GetItemName(), data->rCoeff_.GetData() );
 }

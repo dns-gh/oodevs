@@ -38,14 +38,15 @@ public:
 public slots:
     //! @name Operations
     //@{
-    void OnSelectSensor( void* data );
-    void OnPerceiverStanceChanged( std::string posture, double factor );
-    void OnTargetStanceChanged( std::string targetPosture, double factor );
     void OnSizeChanged( std::string volume, double factor );
     void WeatherChanged( std::string weather, double factor );
     void IlluminationChanged( std::string illumination, double factor );
-    void EnvironmentChanged( ADN_Sensors_Data::ModificatorEnvironmentInfos* env, double factor );
+    void EnvironmentChanged( std::string environment, double factor );
     void UrbanBlockChanged( std::string urban, double factor );
+
+    void OnSelectSensor( void* data );
+    void OnPerceiverStanceChanged( std::string posture, double factor );
+    void OnTargetStanceChanged( std::string targetPosture, double factor );
     void OnDetectionChanged( const QString& );
     void OnRecognitionChanged( const QString& );
     void OnIdentificationChanged( const QString& );

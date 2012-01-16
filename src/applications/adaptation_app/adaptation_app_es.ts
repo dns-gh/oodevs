@@ -4089,6 +4089,10 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
         <source>Modifiers</source>
         <translation>Modificadores</translation>
     </message>
+    <message id="0">
+        <source>ADN_Sensors_Environments_GUI</source>
+        <translation>ADN_Sensors_Environments_GUI</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Sensors_GUI</name>

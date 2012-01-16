@@ -12,32 +12,44 @@
 #ifndef __ADN_Sensors_Meteos_GUI_h_
 #define __ADN_Sensors_Meteos_GUI_h_
 
-#include "ADN_CommonGfx.h"
+#include "ADN_Connector_Table_ABC.h"
+#include "ADN_Sensors_MaterialsTable.h"
 
-//*****************************************************************************
-// Created: JDY 03-07-08
-//*****************************************************************************
-class ADN_Sensors_Meteos_GUI
-: public ADN_Table2
+//-----------------------------------------------------------------------------
+// Internal Table connector
+//-----------------------------------------------------------------------------
+class ADN_CT_Sensors_Meteos : public ADN_Connector_Table_ABC
 {
+public:
+    //! @name Constructor / Destructor
+    //@{
+    ADN_CT_Sensors_Meteos( ADN_Table& tab );
+    //@}
 
-    Q_OBJECT;
+    //! @name Operations
+    //@{
+    void AddSubItems(int i,void *obj);
+    //@}
+};
+
+// =============================================================================
+/** @class  ADN_Sensors_Meteos_GUI
+    @brief  ADN_Sensors_Meteos_GUI
+*/
+// Created: ABR 2012-01-16
+// =============================================================================
+class ADN_Sensors_Meteos_GUI : public ADN_Sensors_MaterialsTable< ADN_CT_Sensors_Meteos >
+{
 
 public:
     explicit ADN_Sensors_Meteos_GUI(QWidget * parent = 0 );
     virtual ~ADN_Sensors_Meteos_GUI();
 
-signals:
-    //! @name Signals
+private:
+    //! @name ADN_Sensors_MaterialsTable implementation
     //@{
-    void WeatherChanged( std::string posture, double coeff );
+    virtual void InternalEmit();
     //@}
-
-private slots:
-        //! @name Slots
-        //@{
-        void OnCurrentChanged();
-        //@}
 };
 
 

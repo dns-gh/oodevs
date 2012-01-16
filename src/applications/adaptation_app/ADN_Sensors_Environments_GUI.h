@@ -12,31 +12,46 @@
 #ifndef __ADN_Sensors_Environments_GUI_h_
 #define __ADN_Sensors_Environments_GUI_h_
 
-#include "ADN_CommonGfx.h"
-#include "ADN_Sensors_Data.h"
+#include "ADN_Connector_Table_ABC.h"
+#include "ADN_Sensors_MaterialsTable.h"
 
-//*****************************************************************************
-// Created: JDY 03-07-08
-//*****************************************************************************
-class ADN_Sensors_Environments_GUI
-: public ADN_Table2
+//-----------------------------------------------------------------------------
+// Internal Table connector
+//-----------------------------------------------------------------------------
+class ADN_CT_Sensors_Environments : public ADN_Connector_Table_ABC
 {
-    Q_OBJECT;
 public:
-    explicit ADN_Sensors_Environments_GUI(QWidget * parent = 0 );
-    virtual ~ADN_Sensors_Environments_GUI();
-signals:
-    //! @name Signals
+    //! @name Constructor / Destructor
     //@{
-    void EnvironmentChanged( ADN_Sensors_Data::ModificatorEnvironmentInfos* env, double coeff );
+    ADN_CT_Sensors_Environments( ADN_Table& tab );
     //@}
 
-private slots:
-    //! @name Slots
+    //! @name Operations
     //@{
-    void OnCurrentChanged();
+    void AddSubItems( int i, void *obj );
     //@}
 };
 
+// =============================================================================
+/** @class  ADN_Sensors_Environments_GUI
+    @brief  ADN_Sensors_Environments_GUI
+*/
+// Created: ABR 2012-01-16
+// =============================================================================
+class ADN_Sensors_Environments_GUI : public ADN_Sensors_MaterialsTable< ADN_CT_Sensors_Environments >
+{
+public:
+    //! @name Constructor / Destructor
+    //@{
+    explicit ADN_Sensors_Environments_GUI( QWidget * parent = 0 );
+    virtual ~ADN_Sensors_Environments_GUI();
+    //@}
+
+private:
+    //! @name ADN_Sensors_MaterialsTable implementation
+    //@{
+    virtual void InternalEmit();
+    //@}
+};
 
 #endif // __ADN_Sensors_Environments_GUI_h_
