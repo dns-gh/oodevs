@@ -157,7 +157,7 @@ void SpawnCapacity::CreateNBCObject( MIL_Object_ABC& object )
     if( pNBC && IsGas( *pNBC ) )
     {
         MIL_Object_ABC* pObject = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( childType_, object.GetArmy(), object.GetLocalisation(), object.GetID() + 1 );
-        pObject->GetAttribute< NBCAttribute >().Update( *pNBC );
+        pObject->GetAttribute< NBCAttribute >().UpdateCloudAttribute( *pNBC );
     }
 }
 

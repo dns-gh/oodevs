@@ -93,6 +93,7 @@ public:
     //@{
     NBCAttribute& operator=( const NBCAttribute& ); //!< Assignment operator
     bool Update( const NBCAttribute& rhs );
+    bool UpdateCloudAttribute( const NBCAttribute& rhs );
     //@}
 
 private:
