@@ -136,6 +136,7 @@
     <upgrade schema="schemas/4.3.1/physical/Objects.xsd" apply="schemas/4.3.2/xsl/objects_4.3.1-4.3.2.xsl"/>
   </migration>
   <migration from="4.3.2" to="4.3.3">
+    <upgrade schema="schemas/4.3.2/physical/Pathfind.xsd" apply="schemas/4.3.3/xsl/Pathfind_4.3.2-4.3.3.xsl"/>
     <upgrade schema="schemas/4.3.2/physical/Physical.xsd" apply="schemas/4.3.3/xsl/physical_4.3.2-4.3.3.xsl"/>
     <upgrade schema="schemas/4.3.2/physical/Objects.xsd" apply="schemas/4.3.3/xsl/objects_4.3.2-4.3.3.xsl"/>
     <upgrade schema="schemas/4.3.2/physical/HumanFactors.xsd" apply="schemas/4.3.3/xsl/human-factors_4.3.2-4.3.3.xsl"/>
