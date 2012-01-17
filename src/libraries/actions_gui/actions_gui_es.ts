@@ -88,6 +88,17 @@
     </message>
 </context>
 <context>
+    <name>actions::gui::ParamBool</name>
+    <message>
+        <source>True</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>False</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>actions::gui::ParamHumanWoundList</name>
     <message>
         <source>Add...</source>

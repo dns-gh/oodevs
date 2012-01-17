@@ -14,6 +14,10 @@
 #include "actions/Action_ABC.h"
 #include "actions/Bool.h"
 #include "clients_kernel/OrderParameter.h"
+#pragma warning( push )
+#pragma warning( disable : 4251 )
+#include <QtGui/qcombobox.h>
+#pragma warning( pop )
 
 using namespace actions::gui;
 
@@ -24,7 +28,7 @@ using namespace actions::gui;
 ParamBool::ParamBool( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
     : Param_ABC( builder.GetParentObject(), builder.GetParamInterface(), parameter )
     , value_   ( false )
-    , checkBox_( 0 )
+    , comboBox_( 0 )
 {
     // NOTHING
 }
@@ -45,8 +49,8 @@ ParamBool::~ParamBool()
 void ParamBool::SetValue( bool value )
 {
     value_ = value;
-    if( checkBox_ != 0 )
-        checkBox_->setChecked( value_ );
+    if( comboBox_ != 0 )
+        comboBox_->setCurrentIndex( value_ ? 0 : 1 );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,10 +62,12 @@ QWidget* ParamBool::BuildInterface( QWidget* parent )
     Param_ABC::BuildInterface( parent );
     QHBoxLayout* layout = new QHBoxLayout( group_ );
     layout->setAlignment( Qt::AlignCenter );
-    checkBox_ = new QCheckBox( parent );
-    checkBox_->setChecked( value_ );
-    layout->addWidget( checkBox_, Qt::AlignCenter );
-    connect( checkBox_, SIGNAL( clicked() ), SLOT( OnClicked() ) );
+    comboBox_ = new QComboBox( parent );
+    comboBox_->addItem( tr( "True" ) );
+    comboBox_->addItem( tr( "False" ) );
+    comboBox_->setCurrentIndex( value_ ? 0 : 1 );
+    layout->addWidget( comboBox_, Qt::AlignCenter );
+    connect( comboBox_, SIGNAL( currentIndexChanged( int ) ), SLOT( OnCurrentIndexChanged( int ) ) );
     return group_;
 }
 
@@ -78,10 +84,10 @@ void ParamBool::CommitTo( actions::ParameterContainer_ABC& action ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamBool::OnClicked
+// Name: ParamBool::OnCurrentIndexChanged
 // Created: SBO 2007-03-16
 // -----------------------------------------------------------------------------
-void ParamBool::OnClicked()
+void ParamBool::OnCurrentIndexChanged( int index )
 {
-    value_ = !value_;
+    value_ = ( index == 0 );
 }

@@ -50,13 +50,13 @@ public:
 private slots:
     //! @name Slots
     //@{
-    void OnClicked();
+    void OnCurrentIndexChanged( int index );
     //@}
 
 private:
     //! @name Member data
     //@{
-    QCheckBox* checkBox_;
+    QComboBox* comboBox_;
     bool       value_;
     //@}
 };
