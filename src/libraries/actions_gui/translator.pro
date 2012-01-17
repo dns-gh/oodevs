@@ -7,6 +7,7 @@ ListParameter.inl \
 MissionInterface_ABC.cpp \
 Param_ABC.cpp \
 ParamAgent.cpp \
+ParamBool.cpp \
 ParamHumanWoundList.cpp \
 ParamObstacle.cpp \
 ParamResourceNetwork.cpp \
