@@ -397,10 +397,30 @@ ADN_Table* ADN_Equipement_GUI::CreatePKTable()
         int nSubRow = 0;
         for( helpers::IT_AttritionInfos_Vector it2 = ammoCategory.attritions_.begin(); it2 != ammoCategory.attritions_.end(); ++it2, ++nSubRow )
         {
+            helpers::AttritionInfos* pAttrition = *it2;
+
             builder.AddTableCell< ADN_TableItem_String >( pTable, *it, nRow + nSubRow, 1, ( *it2 )->ptrArmor_.GetData()->strName_, eNone, Q3TableItem::Never );
-            builder.AddTableCell< ADN_TableItem_Double >( pTable, *it, nRow + nSubRow, 2, ( *it2 )->rRepairNoEvac_, ePercentage )->UseColor( true );
-            builder.AddTableCell< ADN_TableItem_Double >( pTable, *it, nRow + nSubRow, 3, ( *it2 )->rRepairWithEvac_, ePercentage )->UseColor( true );
-            builder.AddTableCell< ADN_TableItem_Double >( pTable, *it, nRow + nSubRow, 4, ( *it2 )->rDestroy_, ePercentage )->UseColor( true );
+
+            ADN_TableItem_Percentage* pItem0 = builder.AddTableCell< ADN_TableItem_Percentage >( pTable, *it, nRow + nSubRow, 2, ( *it2 )->rRepairNoEvac_, ePercentage );
+            ADN_PercentageValidator* pValidator0 = new ADN_PercentageValidator( pItem0 );
+            pValidator0->AddLinkedValue( pAttrition->rRepairWithEvac_ );
+            pValidator0->AddLinkedValue( pAttrition->rDestroy_ );
+            pItem0->SetValidator( pValidator0 );
+            pItem0->UseColor( true );
+
+            ADN_TableItem_Percentage* pItem1 = builder.AddTableCell< ADN_TableItem_Percentage >( pTable, *it, nRow + nSubRow, 3, ( *it2 )->rRepairWithEvac_, ePercentage );
+            ADN_PercentageValidator* pValidator1 = new ADN_PercentageValidator( pItem1 );
+            pValidator1->AddLinkedValue( pAttrition->rDestroy_ );
+            pValidator1->AddLinkedValue( pAttrition->rRepairNoEvac_ );
+            pItem1->SetValidator( pValidator1 );
+            pItem1->UseColor( true );
+
+            ADN_TableItem_Percentage* pItem2 = builder.AddTableCell< ADN_TableItem_Percentage >( pTable, *it, nRow + nSubRow, 4, ( *it2 )->rDestroy_, ePercentage );
+            ADN_PercentageValidator* pValidator2 = new ADN_PercentageValidator( pItem2 );
+            pValidator2->AddLinkedValue( pAttrition->rRepairNoEvac_ );
+            pValidator2->AddLinkedValue( pAttrition->rRepairWithEvac_ );
+            pItem2->SetValidator( pValidator2 );
+            pItem2->UseColor( true );
         }
         nRow += nRowSize;
     }
