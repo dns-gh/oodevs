@@ -159,6 +159,24 @@ void LinkGenerator::DeleteLink( const kernel::Entity_ABC& entity, const kernel::
 // -----------------------------------------------------------------------------
 void LinkGenerator::CreateLink( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& base, boost::function< bool( const kernel::Entity_ABC& ) > fun )
 {
+    const LogisticHierarchiesBase* pHierarchy = entity.Retrieve< LogisticHierarchiesBase >();
+    if( pHierarchy )
+    {
+        const kernel::Entity_ABC* superior = pHierarchy->GetSuperior();
+        const kernel::Entity_ABC* firstSuperior = superior;
+        while( superior )
+        {
+            const kernel::TacticalHierarchies& tactical = superior->Get< kernel::TacticalHierarchies >();
+            if( tactical.IsSubordinateOf( entity ) )
+            {
+                RemoveLogisticSuperior( const_cast< kernel::Entity_ABC& >( entity ), *firstSuperior );
+                DeleteLink( entity, *firstSuperior );
+                break;
+            }
+            const LogisticHierarchiesBase* superiorHierarchy = superior->Retrieve< LogisticHierarchiesBase >();
+            superior = superiorHierarchy ? superiorHierarchy->GetSuperior() : 0;
+        }
+    }
     tools::Iterator< const kernel::Entity_ABC& > children = entity.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {

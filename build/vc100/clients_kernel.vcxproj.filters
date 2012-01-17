@@ -1040,9 +1040,6 @@
     <None Include="..\..\src\libraries\clients_kernel\Displayer_ABC.inl">
       <Filter>Source Files\Display</Filter>
     </None>
-    <None Include="..\..\src\libraries\clients_kernel\CommunicationHierarchies.inl">
-      <Filter>Source Files\Model\Extensions</Filter>
-    </None>
     <None Include="..\..\src\libraries\clients_kernel\Creatable.inl">
       <Filter>Source Files\Model\Extensions</Filter>
     </None>

@@ -96,7 +96,7 @@ void LogisticLinksEditor::NotifyContextMenu( const kernel::Team_ABC& team, kerne
 void LogisticLinksEditor::Create( const QString& title, const kernel::Entity_ABC& entity,
                             kernel::ContextMenu& menu, QSignalMapper& mapper )
 {
-    selected_ = const_cast< kernel::Entity_ABC* >( &entity );
+    selected_ = &entity;
     kernel::ContextMenu* pSubMenu = menu.SubMenu( "Logistic", tr( "Logistic" ) );
     mapper.setMapping( pSubMenu->addAction( title, &mapper, SLOT( map() ) ), 0 );
 }

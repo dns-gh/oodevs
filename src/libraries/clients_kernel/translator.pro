@@ -2,7 +2,6 @@ HEADERS =
 
 SOURCES = AtlasNatures.cpp \
 Circle.cpp \
-CommunicationHierarchies.inl \
 CoordinateSystems.cpp \
 EntityHierarchies.inl \
 Formatter.cpp \
