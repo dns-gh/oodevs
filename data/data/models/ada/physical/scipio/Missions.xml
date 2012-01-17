@@ -3095,13 +3095,8 @@
     </fragorder>
     <fragorder available-without-mission="false" dia-type="france.military.platoon.combat.support.artillery.tasks.AppliquerFeux" id="392" name="Pion Appliquer Feux">
       <parameter dia-name="munitions_" name="Munitions" optional="false" type="ResourceType"/>
-      <parameter dia-name="nbIT_" name="Type d'intervention" optional="false" type="Integer"/>
-      <parameter dia-name="pointCible_" name="Cible" optional="false" type="Point">
-        <choice>
-          <parameter type="Point"/>
-          <parameter type="AgentKnowledge"/>
-        </choice>
-      </parameter>
+      <parameter dia-name="nbIT_" name="Nb IT" optional="false" type="Integer"/>
+      <parameter dia-name="pointCible_" name="Cible" optional="false" type="Point"/>
     </fragorder>
     <fragorder available-without-mission="true" dia-type="france.military.platoon.tasks.Embarquer" id="394" name="Embarquer"/>
     <fragorder available-without-mission="true" dia-type="france.military.platoon.tasks.Debarquer" id="395" name="Debarquer"/>
@@ -3124,4 +3119,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_RejoindrePointLancement" id="405" name="Rejoindre point de lancement"/>
   </fragorders>
 </missions>
-<!-- signature="0404719635" -->
+<!-- signature="1960311455" -->
