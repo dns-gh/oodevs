@@ -4473,7 +4473,7 @@
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION COMMUNES Decrocher"/>
-        <mission name="PION RATAC Acquerir Objectifs"/>
+        <mission name="PION ASS RATAC Acquerir Objectifs"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -4507,8 +4507,7 @@
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Se Faire Transporter"/>
-        <mission name="PION ASS Acquerir Objectifs"/>
-        <mission name="PION ASS Suivre et Acquerir Objectifs"/>
+        <mission name="PION ASS EO Acquerir Objectifs"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -5308,6 +5307,42 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
+      </fragorders>
+    </unit>
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.ASS.EOP">
+      <missions>
+        <mission name="PION COMMUNES Faire Mouvement"/>
+        <mission name="PION COMMUNES Franchir"/>
+        <mission name="PION COMMUNES Se Faire Decontaminer"/>
+        <mission name="PION COMMUNES Stationner"/>
+        <mission name="PION COMMUNES Suivre"/>
+        <mission name="PION COMMUNES Decrocher"/>
+        <mission name="PION COMMUNES Se Faire Transporter"/>
+        <mission name="PION ASS EOP Acquerir Objectifs"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Rejoindre"/>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+        <fragorder name="Embarquer"/>
+        <fragorder name="Debarquer"/>
       </fragorders>
     </unit>
   </units>
@@ -7972,6 +8007,7 @@
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE COMMUNES Franchir"/>
         <mission name="AUTOMATE ASS Se Deployer"/>
+        <mission name="AUTOMATE ASS DLO Acquerir Objectifs"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -8365,6 +8401,7 @@
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE COMMUNES Franchir"/>
         <mission name="AUTOMATE ASS Se Deployer"/>
+        <mission name="AUTOMATE ASS RATAC Acquerir Objectifs"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -8456,4 +8493,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2579935122" -->
+<!-- signature="0023896958" -->

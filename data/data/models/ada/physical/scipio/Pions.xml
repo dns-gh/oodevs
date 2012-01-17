@@ -1006,7 +1006,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ASS.EO" id="35" name="ASS . EOP CHEF OFF" type="Pion ASS">
+  <unit decisional-model="Masalife.ASS.EOP" id="35" name="ASS . EOP CHEF OFF" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="o" nature-app6="combat/field artillery"/>
     <equipments>
       <equipment count="4" crew="1" loadable="true" major="true" type="Fantassin EOP"/>
@@ -1401,7 +1401,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ASS.EO" id="48" name="ASS . EOP CHEF SOFF" type="Pion ASS">
+  <unit decisional-model="Masalife.ASS.EOP" id="48" name="ASS . EOP CHEF SOFF" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="o" nature-app6="combat/field artillery"/>
     <equipments>
       <equipment count="4" crew="1" loadable="true" major="true" type="Fantassin EOP"/>
@@ -5887,7 +5887,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ASS.EO" id="204" name="ASS . EOP" type="Pion ASS">
+  <unit decisional-model="Masalife.ASS.EOP" id="204" name="ASS . EOP" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="o" nature-app6="combat/field artillery"/>
     <equipments>
       <equipment count="1" crew="1" type="TRM 2000"/>
@@ -19591,4 +19591,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="0120188895" -->
+<!-- signature="3243563254" -->
