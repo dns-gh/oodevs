@@ -172,31 +172,6 @@
       <parameter dia-name="zoneImplantation_" name="Zone implantation" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="menanceRoem_" name="Menance roem" optional="false" type="Boolean"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_ASS_EO_AcquerirObjectifs" dia-type="T_Mission_Pion_ASS_EO_AcquerirObjectifs" id="33" name="PION ASS EO Acquerir Objectifs" package="intelligence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="zoneAObserver_" name="Zone a observer" optional="false" type="Polygon"/>
-      <parameter dia-name="automateAAppuyer_" name="Unite a appuyer" optional="false" type="Automat"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_ASS_EOP_AcquerirObjectifs" dia-type="T_Mission_Pion_ASS_EOP_AcquerirObjectifs" id="34" name="PION ASS EOP Acquerir Objectifs" package="intelligence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="zoneAObserver_" name="Zone a observer" optional="false" type="Polygon"/>
-      <parameter dia-name="positionInstallation_" name="Position installation" optional="false" type="Point"/>
-      <parameter dia-name="positionDebarquement_" name="Position debarquement" optional="false" type="Point"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_ASS_RATAC_AcquerirObjectifs" dia-type="T_Mission_Pion_ASS_RATAC_AcquerirObjectifs" id="35" name="PION ASS RATAC Acquerir Objectifs" package="intelligence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="zoneAObserver_" name="Zone a observer" optional="false" type="Polygon"/>
-      <parameter dia-name="positionDeploiement_" name="Position deploiement" optional="false" type="Point"/>
-    </mission>
     <mission dia-behavior="MIS_Pion_FaireMouvement" dia-type="T_Mission_Pion_FaireMouvement" id="131" name="PION Faire Mouvement" package="move">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -1565,7 +1540,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="area" name="Zone à renseigner" optional="false" type="Polygon"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.combat.support.artillery.tasks.AcquerirObjectif" dia-type="france.military.platoon.combat.support.artillery.tasks.AcquerirObjectif" id="2487" name="PION ASS Acquerir Objectifs" package="intelligence">
+    <mission dia-behavior="france.military.platoon.combat.support.artillery.tasks.AcquerirObjectif" dia-type="france.military.platoon.combat.support.artillery.tasks.AcquerirObjectif" id="2487" name="PION ASS EOP Acquerir Objectifs" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1588,7 +1563,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="ficelleDeVol" name="Ficelle de vol" optional="false" type="Path"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.combat.support.artillery.tasks.SuivreEtAcquerirObjectif" dia-type="france.military.platoon.combat.support.artillery.tasks.SuivreEtAcquerirObjectif" id="2490" name="PION ASS Suivre et Acquerir Objectifs" package="intelligence">
+    <mission dia-behavior="france.military.platoon.combat.support.artillery.tasks.SuivreEtAcquerirObjectif" dia-type="france.military.platoon.combat.support.artillery.tasks.SuivreEtAcquerirObjectif" id="2490" name="PION ASS EO Acquerir Objectifs" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1602,7 +1577,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="france.military.platoon.combat.support.artillery.tasks.RATACAcquerirObjectif" dia-type="france.military.platoon.combat.support.artillery.tasks.RATACAcquerirObjectif" id="2491" name="PION RATAC Acquerir Objectifs" package="intelligence">
+    <mission dia-behavior="france.military.platoon.combat.support.artillery.tasks.RATACAcquerirObjectif" dia-type="france.military.platoon.combat.support.artillery.tasks.RATACAcquerirObjectif" id="2491" name="PION ASS RATAC Acquerir Objectifs" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1780,23 +1755,6 @@
       <parameter dia-name="ciblesPrioritaires_" name="Cibles prioritaires" optional="false" type="NatureAtlas"/>
       <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
       <parameter dia-name="plotsRavitaillement_" max-occurs="unbounded" min-occurs="1" name="Plots ravitaillement" optional="false" type="ObjectKnowledge"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ASS_AcquerirObjectifs" dia-type="T_Mission_Automate_ASS_AcquerirObjectifs" id="206" mrt-dia-behavior="MIS_Automate_MRT_ASS_AcquerirObjectifs" name="AUTOMATE ASS Acquerir Objectifs" package="support">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="zonesAObserver_" max-occurs="unbounded" min-occurs="1" name="Zones a observer" optional="false" type="Polygon"/>
-      <parameter dia-name="positionsDeploiement_" max-occurs="unbounded" min-occurs="1" name="Positions deploiement" optional="false" type="Point"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_ASS_AcquerirObjectifsDLO" dia-type="T_Mission_Automate_ASS_AcquerirObjectifsDLO" id="217" mrt-dia-behavior="MIS_Automate_MRT_ASS_AcquerirObjectifsDLO" name="AUTOMATE ASS AcquerirObjectifsDLO" package="intelligence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="zonesAcquisition_" max-occurs="unbounded" min-occurs="1" name="zones acquisition" optional="false" type="Polygon"/>
-      <parameter dia-name="compagniesAAppuyer_" max-occurs="unbounded" min-occurs="1" name="compagnies a appuyer" optional="false" type="Automat"/>
-      <parameter dia-name="bMarcheRetrograde_" name="marche retrograde" optional="false" type="Boolean"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_Decrocher" dia-type="T_Mission_Automate_Decrocher" id="297" mrt-dia-behavior="MIS_Automate_MRT_Decrocher" name="AUTOMATE Decrocher" package="move">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2907,6 +2865,23 @@
       <parameter dia-name="area" name="Zone à renseigner" optional="false" type="Polygon"/>
       <parameter dia-name="byNight" name="de nuit" optional="true" type="Boolean"/>
     </mission>
+    <mission cdt-dia-behavior="france.military.company.combat.support.artillery.tasks.RATACAcquerirObjectifs" dia-type="france.military.company.combat.support.artillery.tasks.RATACAcquerirObjectifs" id="28774" mrt-dia-behavior="france.military.company.combat.support.artillery.tasks.RATACAcquerirObjectifs" name="AUTOMATE ASS RATAC Acquerir Objectifs" package="support">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="zonesAObserver" max-occurs="unbounded" min-occurs="1" name="Zones a observer" optional="false" type="Polygon"/>
+      <parameter dia-name="positionsDeploiement" max-occurs="unbounded" min-occurs="1" name="Positions deploiement" optional="false" type="Point"/>
+    </mission>
+    <mission cdt-dia-behavior="france.military.company.combat.support.artillery.tasks.DLOAcquerirObjectifs" dia-type="france.military.company.combat.support.artillery.tasks.DLOAcquerirObjectifs" id="28775" mrt-dia-behavior="france.military.company.combat.support.artillery.tasks.DLOAcquerirObjectifs" name="AUTOMATE ASS DLO Acquerir Objectifs" package="intelligence">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="zonesAcquisition" max-occurs="unbounded" min-occurs="1" name="zones acquisition" optional="false" type="Polygon"/>
+      <parameter dia-name="compagniesAAppuyer" max-occurs="unbounded" min-occurs="1" name="compagnies a appuyer" optional="false" type="Automat"/>
+      <parameter dia-name="bMarcheRetrograde" name="marche retrograde" optional="false" type="Boolean"/>
+    </mission>
   </automats>
   <populations>
     <mission dia-behavior="france.military.crowd.tasks.Deteriorer" dia-type="france.military.crowd.tasks.Deteriorer" id="3008" name="FOULES Deteriorer" package="attack">
@@ -3142,4 +3117,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_RejoindrePointLancement" id="405" name="Rejoindre point de lancement"/>
   </fragorders>
 </missions>
-<!-- signature="2283158527" -->
+<!-- signature="1548570425" -->
