@@ -79,6 +79,10 @@ void ProfilesModel::Read( xml::xistream& xis )
 {
     xis >> xml::start( "profiles" )
         >> xml::list( "profile", *this, &ProfilesModel::LoadProfile );
+    if( !Exists( "Gestim" ) )
+        CreateProfile( "Gestim", "service-gestim" );
+    if( !Exists( "Analyste" ) )
+        CreateProfile( "Analyste", "analysis" );
 }
 
 // -----------------------------------------------------------------------------
