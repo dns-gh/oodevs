@@ -171,6 +171,21 @@ void FireAttribute::SendFullState( sword::ObjectAttributes& asn ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: FireAttribute::SendUpdate
+// Created: LGY 2012-01-17
+// -----------------------------------------------------------------------------
+bool FireAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
+{
+    if( NeedUpdate( eOnUpdate ) )
+    {
+        SendFullState( asn );
+        Reset( eOnUpdate );
+        return true;
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: FireAttribute::GetWeatherDecreateRate
 // Created: BCI 2010-12-13
 // -----------------------------------------------------------------------------
@@ -220,6 +235,7 @@ FireAttribute& FireAttribute::operator=( const FireAttribute& other )
     {
         pClass_ = other.pClass_;
         maxCombustionEnergy_ = other.maxCombustionEnergy_;
+        NotifyAttributeUpdated( eOnUpdate );
     }
     return *this;
 }

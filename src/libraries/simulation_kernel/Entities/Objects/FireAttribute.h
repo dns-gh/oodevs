@@ -30,6 +30,7 @@ class TerrainData;
 // =============================================================================
 class FireAttribute
     : public ObjectAttribute_ABC
+    , public UpdatableAttribute_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -51,6 +52,7 @@ public:
     //! @name From ObjectAttribute_ABC
     //@{
     virtual void Register( MIL_Object_ABC& object ) const;
+    virtual bool SendUpdate( sword::ObjectAttributes& asn ) const;
     virtual void SendFullState( sword::ObjectAttributes& asn ) const;
     //@}
 
