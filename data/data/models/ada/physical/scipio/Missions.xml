@@ -1554,7 +1554,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="areas" max-occurs="unbounded" min-occurs="1" name="Zones de recherche" optional="false" type="Polygon"/>
+      <parameter dia-name="area" name="Zone de recherche" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.support.rens.tasks.ROIM_RenseignerSur" dia-type="france.military.platoon.combat.support.rens.tasks.ROIM_RenseignerSur" id="2489" name="PION RENS ROIM .Renseigner Sur" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3124,4 +3124,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_RejoindrePointLancement" id="405" name="Rejoindre point de lancement"/>
   </fragorders>
 </missions>
-<!-- signature="3068014571" -->
+<!-- signature="0404719635" -->
