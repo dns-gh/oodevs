@@ -369,27 +369,27 @@
     </message>
     <message>
         <source>waiting for evacuation ambulance</source>
-        <translation>en attente d&apos;ambulance d&apos;évacuation</translation>
+        <translation>en attente d&apos;ambulance de relève</translation>
     </message>
     <message>
         <source>evacuation ambulance coming</source>
-        <translation>ambulance d&apos;évacuation en route</translation>
+        <translation>ambulance de relève en route</translation>
     </message>
     <message>
         <source>evacuation ambulance loading</source>
-        <translation>ambulance d&apos;évacuation en chargement</translation>
+        <translation>ambulance de relève en chargement</translation>
     </message>
     <message>
         <source>waiting for evacuation ambulance loading</source>
-        <translation>en attente de chargement ambulance d&apos;évacuation</translation>
+        <translation>en attente de chargement ambulance de relève</translation>
     </message>
     <message>
         <source>evacuation ambulance going back</source>
-        <translation>ambulance d&apos;évacuation sur le retour</translation>
+        <translation>ambulance de relève sur le retour</translation>
     </message>
     <message>
         <source>evacuation ambulance unloading</source>
-        <translation>ambulance d&apos;évacuation en déchargement</translation>
+        <translation>ambulance de relève en déchargement</translation>
     </message>
     <message>
         <source>waiting for doctor</source>

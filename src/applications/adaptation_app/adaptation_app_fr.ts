@@ -1008,7 +1008,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Ambulance, evacuation</source>
-        <translation>Ambulance, évacuation</translation>
+        <translation>Ambulance, relève</translation>
     </message>
     <message>
         <source>Triage</source>
@@ -1907,7 +1907,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Ambulances - evacuation</source>
-        <translation>Ambulances - évacuation</translation>
+        <translation>Ambulances - relève</translation>
     </message>
     <message>
         <source>Ambulances - collection</source>
