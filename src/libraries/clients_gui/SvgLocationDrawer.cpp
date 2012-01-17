@@ -12,6 +12,7 @@
 #include "DrawingTemplate.h"
 #include "clients_kernel/Location_ABC.h"
 #include <svgl/svgl.h>
+#include <svgl/Opacity.h>
 #include <iterator>
 
 using namespace gui;
@@ -20,14 +21,14 @@ namespace
 {
     QColor Complement( const QColor& color )
     {
-        int h, s, v;
-        color.getHsv( &h, &s, &v );
+        int h, s, v, a;
+        color.getHsv( &h, &s, &v, &a );
         if( h == -1 )
             v = 255 - v;
         else
             h += 180;
         QColor complement;
-        complement.setHsv( h, s, v );
+        complement.setHsv( h, s, v, a );
         return complement;
     }
 }
@@ -168,16 +169,22 @@ void SvgLocationDrawer::DrawShape( const T& shape )
         const geometry::BoundingBox box( viewport_.Left(), viewport_.Bottom(), viewport_.Right(), viewport_.Top() );
         context_->SetViewport( box, 320, 200 ); // $$$$ AGE 2006-09-04:
         svg::Color svgColor( color_.name().ascii() );
+        svg::Opacity opacity( static_cast< float >( color_.alphaF() ) );
         context_->PushProperty( svg::RenderingContext_ABC::color, svgColor );
+        context_->PushProperty( svg::RenderingContext_ABC::fillOpacity, opacity );
+        context_->PushProperty( svg::RenderingContext_ABC::strokeOpacity, opacity );
         style_.Draw( shape, *context_, *tools_ );
+        context_->PopProperty( svg::RenderingContext_ABC::strokeOpacity );
+        context_->PopProperty( svg::RenderingContext_ABC::fillOpacity );
         context_->PopProperty( svg::RenderingContext_ABC::color );
 
         if( overlined_ )
         {
             glLineWidth( 1 );
-            glColor3f( complement_.red()   / 255.f,
+            glColor4f( complement_.red()   / 255.f,
                        complement_.green() / 255.f,
-                       complement_.blue()  / 255.f );
+                       complement_.blue()  / 255.f,
+                       complement_.alpha() / 255.f );
             DrawOverlined( shape );
         }
     glPopAttrib();
