@@ -2554,6 +2554,14 @@ tirador</translation>
         <source>The signatures for the following files do not exist or are invalid : </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Saving error</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Something went wrong during the saving process.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Maintenance_GUI</name>
