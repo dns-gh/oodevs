@@ -3415,7 +3415,7 @@
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
-        <mission name="PION MELEE Renseigner Sur"/>
+        <mission name="PION RENS RASIT .Renseigner Sur"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -6204,6 +6204,7 @@
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
+        <mission name="AUTOMATE RENS RASIT .Renseigner Sur"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -8486,4 +8487,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="4049019646" -->
+<!-- signature="3810802128" -->
