@@ -413,7 +413,7 @@ float UrbanObjectWrapper::GetStructuralHeight() const
     if( const urban::PhysicalAttribute* pPhysical = object_->Retrieve< urban::PhysicalAttribute >() )
         if( const urban::Architecture* architecture = pPhysical->GetArchitecture() )
         {
-            if ( const StructuralCapacity* structuralCapacity = Retrieve< StructuralCapacity >() )    
+            if( const StructuralCapacity* structuralCapacity = Retrieve< StructuralCapacity >() )
                 return float( architecture->GetHeight() ) * structuralCapacity->GetStructuralState();
             else
                 return float( architecture->GetHeight() );

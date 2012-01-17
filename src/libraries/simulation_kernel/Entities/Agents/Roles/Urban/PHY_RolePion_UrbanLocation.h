@@ -75,7 +75,7 @@ public:
     void Execute( moving::SpeedComputer_ABC& algorithm ) const;
     void Execute( location::LocationComputer_ABC& algorithm ) const;
     virtual bool CanMount() const;
-    
+
     virtual void TakeOff();
     virtual void Land();
     //@}

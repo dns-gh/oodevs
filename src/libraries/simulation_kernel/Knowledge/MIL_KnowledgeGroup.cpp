@@ -673,7 +673,7 @@ void MIL_KnowledgeGroup::RegisterKnowledgeGroup( MIL_KnowledgeGroup& knowledgeGr
     assert( std::find( knowledgeGroups_.begin(), knowledgeGroups_.end(), &knowledgeGroup ) == knowledgeGroups_.end() );
     knowledgeGroups_.push_back( &knowledgeGroup );
     for( std::set< unsigned int >::const_iterator it = additionalPerceptions_.begin(); it != additionalPerceptions_.end(); ++it )
-        knowledgeGroup.additionalPerceptions_.insert( *it ); 
+        knowledgeGroup.additionalPerceptions_.insert( *it );
 }
 
 // -----------------------------------------------------------------------------
@@ -982,7 +982,7 @@ void MIL_KnowledgeGroup::HackPerceptionLevelFromParentKnowledgeGroup( MIL_Object
 // Created: MMC 2011-06-14
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::HackPerceptionLevelFromParentKnowledgeGroup( MIL_Population& population, unsigned int perception )
-{    
+{
     additionalPerceptions_.insert( population.GetID() );
     for( MIL_KnowledgeGroup::IT_KnowledgeGroupVector itKG( knowledgeGroups_.begin() ); itKG != knowledgeGroups_.end(); ++itKG )
     {
@@ -1252,7 +1252,7 @@ namespace
           , flows_         ( perceivablePopulationFlow )
         {
         }
-        
+
         virtual void Visit( const MIL_PopulationElement_ABC& element )
         {
             const TER_PopulationConcentration_ABC* concentration = dynamic_cast< const TER_PopulationConcentration_ABC* >( &element );

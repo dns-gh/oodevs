@@ -27,7 +27,6 @@ public:
     typedef T_ComposanteVector::iterator        IT_ComposanteVector;
     typedef T_ComposanteVector::const_iterator CIT_ComposanteVector;
 
-
     struct T_ComposanteUse
     {
         unsigned int nNbrAvailable_;

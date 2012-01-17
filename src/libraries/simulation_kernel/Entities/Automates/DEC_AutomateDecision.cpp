@@ -63,7 +63,7 @@ DEC_AutomateDecision::DEC_AutomateDecision( MIL_Automate& automate, unsigned int
     {
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, e.what() );
     }
-    StartDefaultBehavior(); 
+    StartDefaultBehavior();
 }
 
 // -----------------------------------------------------------------------------
@@ -203,7 +203,7 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::brain::Brain& brain 
         boost::function< void( int ) >( boost::bind( &DEC_AutomateFunctions::NotifyRulesOfEngagementStateChanged, boost::ref( GetAutomate() ), _1 ) );
     brain[ "DEC_Automate_ChangeEtatROEPopulation" ] =
         boost::function< void( int ) >( boost::bind( &DEC_AutomateFunctions::NotifyRulesOfEngagementPopulationStateChanged, boost::ref( GetAutomate() ), _1 ) );
-    
+
     // Debug
     brain[ "DEC_DecisionalState" ] =
         boost::function< void ( const std::string&, const std::string& ) >( boost::bind( &DEC_AutomateFunctions::DecisionalState, boost::ref( GetAutomate() ), _1, _2 ) );
@@ -268,9 +268,9 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::brain::Brain& brain 
     brain[ "DEC_Geometrie_CalculerRetardSurObjectifs" ] =
         boost::function< float( const MIL_Fuseau*, const std::vector< DEC_Decision_ABC* >&, const std::vector< DEC_Objective* >& ) >( boost::bind( &DEC_GeometryFunctions::ComputeDelayFromScheduleAndObjectives< MIL_Automate >, boost::ref( GetAutomate() ), _1, _2, _3 ) );
     brain[ "DEC_Geometrie_AdvanceAlongFuseau" ] =
-        boost::function< double( DEC_Decision_ABC* ) >( boost::bind( &DEC_GeometryFunctions::ComputeAdvanceAlongFuseau, boost::ref( GetAutomate() ), _1 ) );  
+        boost::function< double( DEC_Decision_ABC* ) >( boost::bind( &DEC_GeometryFunctions::ComputeAdvanceAlongFuseau, boost::ref( GetAutomate() ), _1 ) );
     brain[ "DEC_Geometrie_PositionAdvanceAlongFuseauAutomat" ] =
-        boost::function< double( MT_Vector2D* ) >( boost::bind( &DEC_GeometryFunctions::ComputePositionAdvanceAlongFuseauAutomat, boost::ref( GetAutomate() ), _1 ) );  
+        boost::function< double( MT_Vector2D* ) >( boost::bind( &DEC_GeometryFunctions::ComputePositionAdvanceAlongFuseauAutomat, boost::ref( GetAutomate() ), _1 ) );
     brain[ "DEC_Geometrie_GetPointsLimas" ] =
         boost::function< std::vector< std::vector< boost::shared_ptr< MT_Vector2D > > >(int, int) >( boost::bind( &DEC_GeometryFunctions::GetPointsOnLimasInFuseau, boost::ref( GetAutomate() ), _1, _2 ) );
 
@@ -291,7 +291,7 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::brain::Brain& brain 
             boost::function< bool (unsigned int)> ( boost::bind( &DEC_OrdersFunctions::GetMissionLimaFlag < MIL_Automate >, boost::ref( GetAutomate() ), _1 ) );
     brain[ "DEC_SetMissionLimaFlagHoraire" ] =
             boost::function< void (unsigned int, bool)> ( boost::bind( &DEC_OrdersFunctions::AutomateSetMissionLimaScheduleFlag, boost::ref( GetAutomate() ), _1, _2 ) );
-    brain[ "DEC_AssignMissionCrowdParameter" ] = 
+    brain[ "DEC_AssignMissionCrowdParameter" ] =
             boost::function< void( boost::shared_ptr< MIL_Mission_ABC >, const std::string&, int ) >( boost::bind( &MIL_MissionParameterFactory::SetCrowdKnowledgeParameter, this, _1, _2, _3 ) );
 
     // MRT / conduite

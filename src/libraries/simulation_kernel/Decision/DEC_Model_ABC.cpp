@@ -9,7 +9,6 @@
 //
 // *****************************************************************************
 
-
 #include "simulation_kernel_pch.h"
 #include "DEC_Model_ABC.h"
 #include "Entities/Orders/MIL_FragOrderType.h"
@@ -159,7 +158,6 @@ bool DEC_Model_ABC::IsFragOrderAvailableForMission( const MIL_MissionType_ABC& m
         return false;
     return it->second.find( &fragOrderType ) != it->second.end();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: DEC_Model_ABC::IsFragOrderAvailable

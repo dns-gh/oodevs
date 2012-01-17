@@ -109,7 +109,6 @@ protected:
     PHY_MaintenanceComposanteState* pComposanteState_;
 };
 
-
 // -----------------------------------------------------------------------------
 // Name: PHY_MaintenanceConsign_ABC::serialize
 // Created: JVT 2005-04-11

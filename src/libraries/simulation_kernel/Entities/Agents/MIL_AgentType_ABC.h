@@ -10,7 +10,6 @@
 #ifndef __MIL_AgentType_ABC_h_
 #define __MIL_AgentType_ABC_h_
 
-
 namespace xml
 {
     class xistream;

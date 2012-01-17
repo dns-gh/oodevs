@@ -44,7 +44,6 @@ std::pair< T, U > operator+( const std::pair< T, U >& lhs, const std::pair< T, U
     return std::make_pair( lhs.first + rhs.first, lhs.second + rhs.second );
 }
 
-
 #define INTERNAL_BOOST_SAVE_LOAD_CONSTRUCT_DATA_HEADER( BASE_NAME )                                                                                     \
 template< typename Archive > friend void save_construct_data( Archive& archive, const BASE_NAME* role, const unsigned int /*version*/ );     \
 template< typename Archive > friend void load_construct_data( Archive& archive, BASE_NAME* role, const unsigned int /*version*/ );

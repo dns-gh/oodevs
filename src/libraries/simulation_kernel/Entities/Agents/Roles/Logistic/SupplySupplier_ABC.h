@@ -52,7 +52,7 @@ public:
     virtual void   SupplyHandleRequest                ( boost::shared_ptr < logistic::SupplyConsign_ABC > consign ) = 0;
     virtual bool   SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& pConvoyTransporter, MIL_AgentPion*& pConvoyTransporterPion, const PHY_DotationCategory& dotationCategory ) const = 0;
     virtual bool   SupplyGetAvailableConvoyTransporter( PHY_ComposantePion*& pConvoyTransporter, MIL_AgentPion*& pConvoyTransporterPion, const PHY_ComposanteTypePion& transporterType ) const = 0;
-    
+
     virtual MIL_AgentPion* SupplyCreateConvoyPion     ( const MIL_AgentTypePion& type, boost::shared_ptr< logistic::SupplyConvoyReal_ABC > convoy ) = 0;
     virtual void           SupplyDestroyConvoyPion    ( MIL_AgentPion& convoyPion ) = 0;
     //@}

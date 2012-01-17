@@ -145,7 +145,7 @@ bool ConstructionAttribute::Update( const ConstructionAttribute& rhs )
     if( constructionPercentage_.NeedToBeSent() )
         NotifyAttributeUpdated( eOnUpdate );
 
-    if ( density_ != rhs.density_ )
+    if( density_ != rhs.density_ )
     {
         NotifyAttributeUpdated( eOnUpdate );
         density_ = rhs.density_;

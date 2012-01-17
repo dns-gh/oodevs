@@ -1845,7 +1845,6 @@ bool MIL_EntityManager::IsInhabitantsConfined( const TER_Localisation& localisat
     return functor.nbConfined_ > 0 && functor.total_ > 0;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::load
 // Created: JVT 2005-03-23

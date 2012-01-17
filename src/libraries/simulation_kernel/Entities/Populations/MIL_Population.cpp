@@ -1097,7 +1097,7 @@ void MIL_Population::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg
         break;
     case sword::UnitMagicAction::reload_brain:
         CancelAllActions();
-        GetDecision().Reload(); 
+        GetDecision().Reload();
         orderManager_.CancelMission();
         break;
     default:
@@ -1256,11 +1256,11 @@ double MIL_Population::ComputeUrbanBlocDestruction( UrbanObjectWrapper* pUrbanOb
 {
     double densityRef = pType_->GetUrbanDestructionDensity( GetAttitude() );
     double timeRef = pType_->GetUrbanDestructionTime( GetAttitude() ) ;
-    if ( densityRef <= 0.0 && timeRef <= 0.0 )
+    if( densityRef <= 0.0 && timeRef <= 0.0 )
         return 0.0;
 
     double coveredArea = 0.0, currentArea = 0.0, areaDensitySum = 0.0;
-    for ( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end();  ++it )
+    for( CIT_ConcentrationVector it = concentrations_.begin(); it != concentrations_.end();  ++it )
     {
         currentArea = MIL_Geometry::IntersectionArea( pUrbanObjet->GetLocalisation(), (*it)->GetLocation() );
         coveredArea += currentArea;
@@ -1276,12 +1276,12 @@ double MIL_Population::ComputeUrbanBlocDestruction( UrbanObjectWrapper* pUrbanOb
         areaDensitySum += currentArea * (*it)->GetDensity();
     }
     */
-    if ( coveredArea < 0.00001 /*epsilon*/ )
+    if( coveredArea < 0.00001 /*epsilon*/ )
         return 0.0;
 
     double urbanArea = pUrbanObjet->GetLocalisation().GetArea();
     double areaFactor = std::min< double >( 1.0, coveredArea / urbanArea );
-    if ( densityRef <= 0.0 || timeRef <= 0.0 )
+    if( densityRef <= 0.0 || timeRef <= 0.0 )
         return areaFactor;
 
     double averageDensity = areaDensitySum / coveredArea;
@@ -1489,7 +1489,7 @@ MIL_Army_ABC& MIL_Population::GetArmy() const
 void MIL_Population::SetPionMaxSpeed( double rSpeed )
 {
     if( rSpeed < 0. )
-        throw std::runtime_error( "Setting max speed to less than 0" ); 
+        throw std::runtime_error( "Setting max speed to less than 0" );
     bPionMaxSpeedOverloaded_ = true;
     rOverloadedPionMaxSpeed_ = rSpeed;
 }

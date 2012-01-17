@@ -32,7 +32,7 @@ public:
     //@}
 
     //! @name Operations
-    //@{    
+    //@{
     virtual void Dispatch( SupplyRequest_ABC& request ) = 0;
     virtual bool AllowSupply() = 0;
     //@}

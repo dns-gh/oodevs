@@ -64,6 +64,6 @@ void MIL_UrbanCache::Clear()
 // -----------------------------------------------------------------------------
 void MIL_UrbanCache::GetListWithinCircle( const geometry::Point2f& center, float radius, std::vector< const urban::TerrainObject_ABC* >& result ) const
 {
-    urbanModel_.GetListWithinCircle( center, radius, result );    
+    urbanModel_.GetListWithinCircle( center, radius, result );
 }
-    
+

@@ -41,7 +41,7 @@ public:
     virtual void   AddResource( boost::shared_ptr< SupplyResource_ABC > resource, double quantity ) = 0;
     virtual bool   AffectSupplier( SupplySupplier_ABC& supplier ) = 0;
     virtual bool   AffectSupplier( boost::shared_ptr< LogisticLink_ABC > supplier ) = 0;
-    
+
     virtual double Supply          () = 0; // Return the quantity supplied;
     virtual double Convoy          ( double quantity ) = 0; // Return the quantity convoyed
     virtual double RemoveFromConvoy( double quantity ) = 0; // Return the quantity removed
@@ -51,7 +51,7 @@ public:
 
     virtual bool IsComplementary() const = 0;
     //@}
-    
+
     //! @name Accessors
     //@{
     virtual       SupplySupplier_ABC*   GetSupplier        () const = 0;

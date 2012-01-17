@@ -82,7 +82,6 @@ void PHY_MaintenanceConsign_ABC::Cancel()
 {
     assert( pComposanteState_ );
 
-
     SetState( eFinished );
     nTimer_ = 0;
     pComposanteState_ = 0;

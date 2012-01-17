@@ -102,7 +102,6 @@ void SupplyStockManualRequestBuilder_ABC::CreateRequest( MIL_Automate& recipient
         container.AddResource( recipient.GetStockSupplyManager(), boost::shared_ptr< SupplyResource_ABC >( new SupplyResourceStock( *data.first ) ), data.second );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: SupplyStockManualRequestBuilder_ABC::SetTransporters
 // Created: NLD 2011-07-25
