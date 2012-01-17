@@ -56,10 +56,10 @@ public:
 private:
     //! @name Tools
     //@{
-    bool CreateJoiningPath( const MT_Vector2D& lastJoiningPoint, bool forceNextPoint, double minDistance );
+    bool CreateJoiningPath();
     void DestroyJoiningPath();
     MT_Vector2D GetLastPointAndDestroyJoiningPath();
-    void AvoidObstacles();
+    bool AvoidObstacles();
     bool UpdateObjectsToAvoid();
     void CreateFinalPath();
     int CreatePathAfterObjectCollision( boost::shared_ptr< DEC_PathResult > pCurrentPath, MIL_Object_ABC* obstacle );
@@ -81,7 +81,7 @@ private:
     T_KnowledgeObjectVector objectsToAvoid_;
     std::vector< TER_Localisation > geometrySignatures_;
     bool forceNextPoint_;
-    bool isTreatingJoining_;
+    bool hasTreatedJoining_;
     std::pair< std::pair< MT_Vector2D, MT_Vector2D >, unsigned int > lastBlockedPoint_;
     MIL_Object_ABC* obstacle_;
 };

@@ -20,6 +20,7 @@
 // -----------------------------------------------------------------------------
 DEC_Path_KnowledgeObject::DEC_Path_KnowledgeObject( const DEC_Agent_PathClass& pathClass, const DEC_Knowledge_Object& knowledge )
     : localisation_         ( knowledge.GetLocalisation() )
+    , scaledLocalisation_   ( localisation_ )
     , realLocalisation_     ( knowledge.GetObjectKnown() ? knowledge.GetObjectKnown()->GetLocalisation() : localisation_ )
     , rCostIn_              ( 0 )
     , rCostOut_             ( 0 )
@@ -31,6 +32,8 @@ DEC_Path_KnowledgeObject::DEC_Path_KnowledgeObject( const DEC_Agent_PathClass& p
         rCostIn_  = rCost;
     else
         rCostOut_ = -rCost;
+    if( rCost != 0 )
+        scaledLocalisation_.Scale( 100 ); // $$$ LDC arbitrary 100m precision 
 }
 
 // -----------------------------------------------------------------------------
@@ -70,10 +73,13 @@ double DEC_Path_KnowledgeObject::ComputeCost( const MT_Vector2D& from, const MT_
     const MT_Line line( from, to );
     if( realLocalisation_.Intersect2D( line ) || realLocalisation_.IsInside( to ) || realLocalisation_.IsInside( from ) )
     {
-        if( rCostIn_ >= rObstructionThreshold_ ) //$$$$ SLG put the value in pathfind xml
-            return -1;  //$$$$ SLG in order to block the unit if there is an object
-        else
-            return rCostIn_;
+        if( scaledLocalisation_.Intersect2D( line ) || scaledLocalisation_.IsInside( to ) || scaledLocalisation_.IsInside( from ) )
+        {
+            if( rCostIn_ >= rObstructionThreshold_ ) //$$$$ SLG put the value in pathfind xml
+                return -1;  //$$$$ SLG in order to block the unit if there is an object
+            else
+                return rCostIn_;
+        }
     }
     return std::numeric_limits< double >::min();
 }

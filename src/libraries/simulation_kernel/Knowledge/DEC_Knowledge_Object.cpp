@@ -399,7 +399,7 @@ void DEC_Knowledge_Object::UpdateLocalisationPartially( const DEC_Knowledge_Obje
         while( points.size() > 10 )  // $$$$ NLD 2007-05-07: 10 : why not ...
             points.erase( points.begin() );
         points.push_back( collision.GetPosition() );
-        if( points.size() > 2 )
+        if( points.size() >= 2 )
             points.push_back( points.front() );
         localisation_.Reset( points );
         localisation_.Convexify();

@@ -540,22 +540,6 @@ void DEC_Agent_Path::InsertDecPoints()
         InsertPointAvants();
     // Limas
     InsertLimas();
-
-    CIT_PathPointList itTempResult = resultList_.begin();
-    for( CIT_PointVector itPoint = initialPathPoints_.begin(); itPoint != initialPathPoints_.end(); ++itPoint )
-    {
-        MT_Vector2D point( *itPoint );
-        for( CIT_PathPointList itResult = itTempResult; itResult != resultList_.end(); ++itResult )
-        {
-            DEC_PathPoint& result = **itResult;
-            if( point.SquareDistance( result.GetPos() ) < precision_ )
-            {
-                followingPathPoints_.push_back( std::make_pair( point, itResult ) );
-                itTempResult = ++itResult;
-                break;
-            }
-        }
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -643,27 +627,14 @@ bool DEC_Agent_Path::IsDestinationTrafficable() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::GetPointOnPathCloseTo
-// Created: CMA 2011-11-10
-// -----------------------------------------------------------------------------
-MT_Vector2D DEC_Agent_Path::GetPointOnPathCloseTo( const MT_Vector2D& posToTest, const MT_Vector2D& lastJoiningPoint, bool forceNextPoint, double minDistance )
-{
-    if( followingPathPoints_.size() > 1 )
-        return DEC_PathResult::GetPointOnPathCloseTo( posToTest, followingPathPoints_, lastJoiningPoint, forceNextPoint, minDistance );
-    else if( followingPathPoints_.size() == 1 )
-        return followingPathPoints_.front().first;
-    return posToTest;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_Agent_Path::GetNextPointOutsideObstacle
 // Created: LDC 2012-01-12
 // -----------------------------------------------------------------------------
 MT_Vector2D DEC_Agent_Path::GetNextPointOutsideObstacle( const MT_Vector2D& currentPos, MIL_Object_ABC* obstacle ) const
 {
-    if( followingPathPoints_.size() > 1 )
+    if( initialPathPoints_.size() > 1 )
         return DEC_PathResult::GetNextPointOutsideObstacle( currentPos, obstacle );
-    else if( followingPathPoints_.size() == 1 )
-        return followingPathPoints_.front().first;
+    else if( initialPathPoints_.size() == 1 )
+        return initialPathPoints_.front();
     return currentPos;
 }
