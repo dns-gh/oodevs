@@ -8333,6 +8333,7 @@
         <mission name="AUTOMATE COMMUNES Se Faire Decontaminer"/>
         <mission name="AUTOMATE COMMUNES Se Recompleter"/>
         <mission name="AUTOMATE COMMUNES Suivre"/>
+        <mission name="AUTOMATE RENS RADINT .Renseigner Sur"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -8485,4 +8486,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1385540986" -->
+<!-- signature="4049019646" -->

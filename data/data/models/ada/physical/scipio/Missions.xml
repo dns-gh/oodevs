@@ -2889,6 +2889,13 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="area" name="Zone à renseigner" optional="false" type="Polygon"/>
     </mission>
+    <mission cdt-dia-behavior="france.military.company.combat.support.rens.tasks.RADINT_RenseignerSur" dia-type="france.military.company.combat.support.rens.tasks.RADINT_RenseignerSur" id="28777" mrt-dia-behavior="france.military.company.combat.support.rens.tasks.RADINT_RenseignerSur" name="AUTOMATE RENS RADINT .Renseigner Sur" package="intelligence">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="area" name="Zone de recherche" optional="false" type="Polygon"/>
+    </mission>
   </automats>
   <populations>
     <mission dia-behavior="france.military.crowd.tasks.Deteriorer" dia-type="france.military.crowd.tasks.Deteriorer" id="3008" name="FOULES Deteriorer" package="attack">
@@ -3119,4 +3126,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_RejoindrePointLancement" id="405" name="Rejoindre point de lancement"/>
   </fragorders>
 </missions>
-<!-- signature="1960311455" -->
+<!-- signature="1605096206" -->
