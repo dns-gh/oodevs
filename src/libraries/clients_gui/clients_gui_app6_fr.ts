@@ -720,7 +720,7 @@
     </message>
     <message>
         <source>evacuation</source>
-        <translation>évacuation</translation>
+        <translation>relève</translation>
     </message>
     <message>
         <source>ambulance</source>

@@ -301,8 +301,8 @@ QWidget* ADN_Composantes_GUI::BuildHealth( QWidget* pParent, T_ConnectorVector& 
     vInfosConnectors[eHasHealthLog] = & pHealthGroup->GetConnector();
 
     Q3HBox* pAmbulanceHolder = new Q3HBox( pHealthGroup );
-    this->BuildAmbulance( pAmbulanceHolder, tr( "Ambulance, collection" ), vInfosConnectors, eHasAmbulance );
     this->BuildAmbulance( pAmbulanceHolder, tr( "Ambulance, evacuation" ), vInfosConnectors, eHasRAmbulance );
+    this->BuildAmbulance( pAmbulanceHolder, tr( "Ambulance, collection" ), vInfosConnectors, eHasAmbulance );
 
     ADN_GroupBox* pDoctorGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Doctor" ), pHealthGroup );
     vInfosConnectors[eIsDoctor] = & pDoctorGroup->GetConnector();
