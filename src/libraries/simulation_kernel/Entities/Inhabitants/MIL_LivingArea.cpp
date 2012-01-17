@@ -512,6 +512,24 @@ void MIL_LivingArea::Confine( const TER_Localisation& localisation, bool status 
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_LivingArea::Evacuated
+// Created: CCD 2012-01-13
+// -----------------------------------------------------------------------------
+void MIL_LivingArea::Evacuate( const TER_Localisation& localisation, bool status )
+{
+    bool hasBeenConfined = false;
+    BOOST_FOREACH( MIL_LivingAreaBlock* block, blocks_ )
+        if( block->GetObject().IsContainedByLocalisation( localisation ) )
+        {
+            block->SetEvacuated( status );
+            hasBeenConfined = true;
+        }
+    assert( pInhabitant_ );
+    if( hasBeenConfined )
+        pInhabitant_->ReStartMotivation();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_LivingArea::SetEvacuated
 // Created: ABR 2011-03-23
 // -----------------------------------------------------------------------------
@@ -527,6 +545,18 @@ void MIL_LivingArea::SetEvacuated( bool evacuated, UrbanObjectWrapper* pUrbanObj
     assert( pInhabitant_ );
     if( hasBeenEvacuated )
         pInhabitant_->ReStartMotivation();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LivingArea::IsEvacuated
+// Created: CCD 2012-01-13
+// -----------------------------------------------------------------------------
+bool MIL_LivingArea::IsEvacuated( const TER_Localisation& localisation ) const
+{
+    BOOST_FOREACH( const MIL_LivingAreaBlock* block, blocks_ )
+        if( block->IsEvacuated( localisation ) )
+            return true;
+    return false;
 }
 
 // -----------------------------------------------------------------------------

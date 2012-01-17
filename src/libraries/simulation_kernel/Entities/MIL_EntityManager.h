@@ -190,8 +190,10 @@ public:
     void UndoAlertInhabitants( const TER_Localisation& localisation );
     bool IsInhabitantsAlerted( const TER_Localisation& localisation );
     bool IsInhabitantsConfined( const TER_Localisation& localisation );
+    bool IsInhabitantsEvacuated( const TER_Localisation& localisation );
     void ConfineInhabitants( const TER_Localisation& localisation );
     void UndoConfineInhabitants( const TER_Localisation& localisation );
+    void EvacuateInhabitants( const TER_Localisation& localisation );
     //@}
 
     //! @name CheckPoints

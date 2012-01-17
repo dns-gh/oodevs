@@ -461,6 +461,15 @@ void MIL_Inhabitant::NotifyUndoConfined( const TER_Localisation& localisation )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Inhabitant::NotifyEvacuate
+// Created: CCD 2012-01-13
+// -----------------------------------------------------------------------------
+void MIL_Inhabitant::NotifyEvacuated( const TER_Localisation& localisation )
+{
+    pLivingArea_->Evacuate( localisation );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Inhabitant::IsAlerted
 // Created: BCI 2011-02-18
 // -----------------------------------------------------------------------------
@@ -476,6 +485,15 @@ bool MIL_Inhabitant::IsAlerted( const TER_Localisation& localisation ) const
 bool MIL_Inhabitant::IsConfined( const TER_Localisation& localisation ) const
 {
     return pLivingArea_->IsConfined( localisation );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Inhabitant::IsEvacuated
+// Created: CCD 2012-01-13
+// -----------------------------------------------------------------------------
+bool MIL_Inhabitant::IsEvacuated( const TER_Localisation& localisation ) const
+{
+    return pLivingArea_->IsEvacuated( localisation );
 }
 
 // -----------------------------------------------------------------------------

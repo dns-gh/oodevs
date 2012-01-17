@@ -1775,6 +1775,15 @@ void MIL_EntityManager::ConfineInhabitants( const TER_Localisation& localisation
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::EvacuateInhabitants
+// Created: CCD 2012-01-13
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::EvacuateInhabitants( const TER_Localisation& localisation )
+{
+    inhabitantFactory_->Apply( boost::bind( &MIL_Inhabitant::NotifyEvacuated, _1, localisation ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::UndoConfineInhabitants
 // Created: CCD 2012-01-11
 // -----------------------------------------------------------------------------
@@ -1843,6 +1852,37 @@ bool MIL_EntityManager::IsInhabitantsConfined( const TER_Localisation& localisat
     IsInhabitantsConfinedFunctor functor( localisation );
     inhabitantFactory_->Apply( functor );
     return functor.nbConfined_ > 0 && functor.total_ > 0;
+}
+
+struct IsInhabitantsEvacuatedFunctor : boost::noncopyable
+{
+    IsInhabitantsEvacuatedFunctor( const TER_Localisation& localisation )
+        : nbEvacuated_ ( 0 )
+        , total_       ( 0 )
+        , localisation_( localisation )
+    {
+        // NOTHING
+    }
+    void operator()( const MIL_Inhabitant& inhabitant ) const
+    {
+        if( inhabitant.IsEvacuated( localisation_ ) )
+            ++nbEvacuated_;
+        ++total_;
+    }
+    mutable int nbEvacuated_;
+    mutable int total_;
+    const TER_Localisation& localisation_;
+};
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::IsInhabitantsEvacuated
+// Created: CCD 2012-01-13
+// -----------------------------------------------------------------------------
+bool MIL_EntityManager::IsInhabitantsEvacuated( const TER_Localisation& localisation )
+{
+    IsInhabitantsEvacuatedFunctor functor( localisation );
+    inhabitantFactory_->Apply( functor );
+    return functor.nbEvacuated_ > 0 && functor.total_ > 0;
 }
 
 // -----------------------------------------------------------------------------

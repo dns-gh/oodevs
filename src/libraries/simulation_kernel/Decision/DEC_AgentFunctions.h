@@ -172,6 +172,8 @@ public:
     static void UndoConfineInhabitants( const TER_Localisation* location );
     static bool IsInhabitantsConfined( const TER_Localisation* location );
     static bool UrbanBlockIsPopulated( const UrbanObjectWrapper* pUrbanBlock );
+    static void EvacuateInhabitants( const TER_Localisation* location );
+    static bool IsInhabitantsEvacuated( const TER_Localisation* location );
 
     // Perception
     static void IdentifyAllAgentsInZone( MIL_Agent_ABC& callerAgent, const TER_Localisation* location );

@@ -195,6 +195,15 @@ bool MIL_LivingAreaBlock::IsEvacuated() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_LivingAreaBlock::IsEvacuated
+// Created: CCD 2012-01-16
+// -----------------------------------------------------------------------------
+bool MIL_LivingAreaBlock::IsEvacuated( const TER_Localisation& localisation ) const
+{
+    return evacuated_ && urbanObject_->Intersect2DWithLocalisation( localisation );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_LivingAreaBlock::GetPersonsForAccomodation
 // Created: JSR 2011-03-23
 // -----------------------------------------------------------------------------

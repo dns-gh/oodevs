@@ -839,7 +839,29 @@ bool DEC_AgentFunctions::IsInhabitantsConfined( const TER_Localisation* location
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::UrbanBlockIsPopulated( const UrbanObjectWrapper* pUrbanBlock )
 {
-     return pUrbanBlock->GetTotalInhabitants() > 0;
+     assert( pUrbanBlock );
+     if ( pUrbanBlock )
+        return pUrbanBlock->GetTotalInhabitants() > 0;
+     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::EvacuateInhabitants
+// Created: CCD 2012-01-13
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::EvacuateInhabitants( const TER_Localisation* location )
+{
+    assert( location );
+    return MIL_AgentServer::GetWorkspace().GetEntityManager().EvacuateInhabitants( *location );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::IsInhabitantsEvacuated
+// Created: CCD 2012-01-13
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::IsInhabitantsEvacuated( const TER_Localisation* location )
+{
+    return MIL_AgentServer::GetWorkspace().GetEntityManager().IsInhabitantsEvacuated( *location );
 }
 
 // -----------------------------------------------------------------------------
