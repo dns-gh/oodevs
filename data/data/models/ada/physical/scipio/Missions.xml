@@ -2872,7 +2872,7 @@
       <parameter dia-name="area" name="Zone Ã  renseigner" optional="false" type="Polygon"/>
       <parameter dia-name="byNight" name="de nuit" optional="true" type="Boolean"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.combat.support.artillery.tasks.RATACAcquerirObjectifs" dia-type="france.military.company.combat.support.artillery.tasks.RATACAcquerirObjectifs" id="28774" mrt-dia-behavior="france.military.company.combat.support.artillery.tasks.RATACAcquerirObjectifs" name="AUTOMATE ASS RATAC Acquerir Objectifs" package="support">
+    <mission cdt-dia-behavior="france.military.company.combat.support.artillery.tasks.RATACAcquerirObjectifs" dia-type="france.military.company.combat.support.artillery.tasks.RATACAcquerirObjectifs" id="28775" mrt-dia-behavior="france.military.company.combat.support.artillery.tasks.RATACAcquerirObjectifs" name="AUTOMATE ASS RATAC Acquerir Objectifs" package="support">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -2880,7 +2880,7 @@
       <parameter dia-name="zonesAObserver" max-occurs="unbounded" min-occurs="1" name="Zones a observer" optional="false" type="Polygon"/>
       <parameter dia-name="positionsDeploiement" max-occurs="unbounded" min-occurs="1" name="Positions deploiement" optional="false" type="Point"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.combat.support.artillery.tasks.DLOAcquerirObjectifs" dia-type="france.military.company.combat.support.artillery.tasks.DLOAcquerirObjectifs" id="28775" mrt-dia-behavior="france.military.company.combat.support.artillery.tasks.DLOAcquerirObjectifs" name="AUTOMATE ASS DLO Acquerir Objectifs" package="intelligence">
+    <mission cdt-dia-behavior="france.military.company.combat.support.artillery.tasks.DLOAcquerirObjectifs" dia-type="france.military.company.combat.support.artillery.tasks.DLOAcquerirObjectifs" id="28776" mrt-dia-behavior="france.military.company.combat.support.artillery.tasks.DLOAcquerirObjectifs" name="AUTOMATE ASS DLO Acquerir Objectifs" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3124,4 +3124,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_RejoindrePointLancement" id="405" name="Rejoindre point de lancement"/>
   </fragorders>
 </missions>
-<!-- signature="0832018812" -->
+<!-- signature="0882816819" -->
