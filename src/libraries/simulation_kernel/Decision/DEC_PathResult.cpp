@@ -42,87 +42,28 @@ DEC_PathResult::~DEC_PathResult()
 // Name: DEC_PathResult::GetPointOnPathCloseTo
 // Created: CMA 2011-12-06
 //-----------------------------------------------------------------------------
-MT_Vector2D DEC_PathResult::GetPointOnPathCloseTo( const MT_Vector2D& posToTest, T_FollowingPathList& pathPoints, const MT_Vector2D& lastJoiningPoint, bool forceNextPoint, double minDistance ) const
+MT_Vector2D DEC_PathResult::GetPointOnPathCloseTo( const MT_Vector2D& posToTest ) const
 {
-    if( resultList_.empty() )
+    assert( !resultList_.empty() );
+    CIT_PathPointList itStart = resultList_.begin();
+    CIT_PathPointList itEnd   = resultList_.begin();
+    ++itEnd;
+    MT_Vector2D result( (*itStart)->GetPos() );
+    double rDistance = std::numeric_limits< double >::max();
+    for( itStart = resultList_.begin(); itEnd != resultList_.end(); ++itStart, ++itEnd )
     {
-        MT_LOG_ERROR_MSG( "List of path points resulting from pathfind is empty" );
-        return posToTest;
-    }
-    if( pathPoints.size() <= 1 )
-    {
-        MT_LOG_ERROR_MSG( "List of path points requested has not at least 2 elements" );
-        return posToTest;
-    }
-
-    CIT_FollowingPathList itCurrentRequest = pathPoints.begin();
-    CIT_FollowingPathList itNextRequest    = itCurrentRequest;
-    ++itNextRequest;
-
-    CIT_PathPointList itResultStart = itCurrentRequest->second;
-    CIT_PathPointList itResultEnd   = itResultStart;
-    ++itResultEnd;
-
-    bool bNewMin = false;
-    bool hasMoreThanTwoPoints = pathPoints.size() > 2;
-    double rSquareDistance = std::numeric_limits< double >::max();
-    double squareMinDistance = minDistance * minDistance;
-    for( ; itResultEnd != resultList_.end(); ++itResultStart, ++itResultEnd )
-    {
-        if( itNextRequest == pathPoints.end() )
-            break;
-
-        MT_Vector2D endPos = (*itResultEnd)->GetPos();
-        MT_Line vLine( (*itResultStart)->GetPos(), endPos );
+        MT_Line vLine( (*itStart)->GetPos(), (*itEnd)->GetPos() );
         MT_Vector2D vClosest = vLine.ClosestPointOnLine( posToTest );
-        double rCurrentSquareDistance = vClosest.SquareDistance( posToTest );
-        double rSquareDistanceFromCurrentToEnd = endPos.SquareDistance( posToTest );
-        if( rCurrentSquareDistance < rSquareDistance )
+        double rCurrentDistance = vClosest.SquareDistance( posToTest );
+        if( rCurrentDistance < rDistance )
         {
-            rSquareDistance = rCurrentSquareDistance;
-            bNewMin = true;
-        }
-
-        if( itNextRequest->second == itResultEnd )
-        {
-            if( bNewMin )
-            {
-                if( itCurrentRequest != pathPoints.begin() )
-                {
-                    pathPoints.pop_front();
-                    itCurrentRequest = pathPoints.begin();
-                    itNextRequest    = itCurrentRequest;
-                    ++itNextRequest;
-                }
-                itCurrentRequest = itNextRequest;
-                ++itNextRequest;
-                bNewMin = false;
-                if( itCurrentRequest->first.SquareDistance( posToTest ) < squareMinDistance)
-                    rSquareDistance = std::numeric_limits< double >::max();
-                else if( lastJoiningPoint != MT_Vector2D( 0, 0 ) 
-                 && itCurrentRequest->first.SquareDistance( lastJoiningPoint ) < precision_ )
-                    break;
-            }
-            else
-                break;
+            rDistance = rCurrentDistance;
+            result = vClosest;
         }
     }
-
-    if( _isnan( itCurrentRequest->first.rX_ ) || _isnan( itCurrentRequest->first.rY_ ) )
-    {
-        MT_LOG_ERROR_MSG( "Result point is invalid" );
-        return posToTest;
-    }
-
-    if( forceNextPoint )
-    {
-        if( itNextRequest != pathPoints.end() )
-            return itNextRequest->first;
-        else if( !hasMoreThanTwoPoints )
-            return posToTest;
-    }
-
-    return itCurrentRequest->first;
+    assert( !_isnan( result.rX_ ) );
+    assert( !_isnan( result.rY_ ) );
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -137,7 +78,9 @@ MT_Vector2D DEC_PathResult::GetNextPointOutsideObstacle( const MT_Vector2D& posT
     CIT_PathPointList itEnd = resultList_.begin();
     ++itEnd;
     bool currentPositionReached = false;
+    bool obstacleCrossed = false;
     const TER_Localisation& obstacleLocalisation = obstacle->GetLocalisation();
+    MT_Vector2D firstPositionAfterCurrent;
     for( CIT_PathPointList itStart = resultList_.begin(); itEnd != resultList_.end(); ++itStart, ++itEnd )
     {
         MT_Vector2D endPos = (*itEnd)->GetPos();
@@ -145,10 +88,34 @@ MT_Vector2D DEC_PathResult::GetNextPointOutsideObstacle( const MT_Vector2D& posT
         {
             MT_Line vLine( (*itStart)->GetPos(), endPos );
             if( vLine.IsInside( posToTest, rWeldValue ) )
+            {
                 currentPositionReached = true;
+                firstPositionAfterCurrent = endPos;
+            }
         }
-        if( currentPositionReached && !obstacleLocalisation.IsInside( endPos ) )
-            return endPos;
+        if( currentPositionReached )
+        {
+            MT_Line line( endPos, posToTest );
+            obstacleCrossed |= obstacleLocalisation.Intersect2D( line );
+            if( obstacleCrossed && !obstacleLocalisation.IsInside( endPos ) )
+                return endPos;
+        }
+    }
+    // If we are already on a joining path or there is only one position crossing the obstacle:
+    if( currentPositionReached )
+        return firstPositionAfterCurrent;
+    else // jump to the last point after the obstacle. We may skip waypoints this way but at least we are not stuck and don't move backwards.
+    {
+        T_PathPointList::const_reverse_iterator ritEnd = resultList_.rbegin();
+        ++ritEnd;
+        for( T_PathPointList::const_reverse_iterator ritStart = resultList_.rbegin(); ritEnd != resultList_.rend(); ++ritStart, ++ritEnd )
+        {
+            MT_Vector2D endPos = (*ritEnd)->GetPos();
+            MT_Line line( endPos, posToTest );
+            obstacleCrossed |= obstacleLocalisation.Intersect2D( line );
+            if( obstacleCrossed && !obstacleLocalisation.IsInside( endPos ) )
+                return endPos;
+        }
     }
     return posToTest;
 }
@@ -169,14 +136,21 @@ DEC_PathResult::CIT_PathPointList DEC_PathResult::GetCurrentKeyOnPath( const MT_
         return resultList_.end();
     }
     CIT_PathPointList itEnd = resultList_.begin();
+    MT_Vector2D startPos = (*itEnd)->GetPos();
     ++itEnd;
-    for( CIT_PathPointList itStart = resultList_.begin(); itEnd != resultList_.end(); ++itStart, ++itEnd )
+    CIT_PathPointList result = resultList_.end();
+    int size = resultList_.size();
+    int i = 0;
+    for( CIT_PathPointList itStart = resultList_.begin(); itEnd != resultList_.end(); ++itStart, ++itEnd, ++i )
     {
         MT_Line vLine( (*itStart)->GetPos(), (*itEnd)->GetPos() );
         if( vLine.IsInside( vPos, rWeldValue ) ) //$$$ DE LA MERDE EN BOITE
-            return itStart;
+        {
+            if( i != size - 2 || result == resultList_.end() ) // $$$$ LDC Case you want to repeat and loop the movement.
+                result = itStart;
+        }
     }
-    return resultList_.end();
+    return result;
 }
 
 //-----------------------------------------------------------------------------

@@ -41,6 +41,7 @@ private:
     //! @name Member data
     //@{
     TER_Localisation localisation_;
+    TER_Localisation scaledLocalisation_;
     TER_Localisation realLocalisation_;
     double rCostIn_;
     double rCostOut_;
