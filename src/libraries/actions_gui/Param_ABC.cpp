@@ -273,7 +273,7 @@ kernel::ContextMenu::T_MenuVariant Param_ABC::CreateMenu( kernel::ContextMenu& m
 
     CreateInternalMenu( mainMenu );
     ConnectAction();
-    internalMenu_ = mainMenu.InsertVariant( paramInterface_.Title().toStdString(), internalMenu_, true, paramInterface_.GetIndex( this ) );
+    internalMenu_ = mainMenu.InsertVariant( "Parameter", internalMenu_, false, paramInterface_.GetIndex( this ) );
     return internalMenu_;
 }
 

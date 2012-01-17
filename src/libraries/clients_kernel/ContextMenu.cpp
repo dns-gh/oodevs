@@ -50,12 +50,12 @@ void ContextMenu::InitializeBaseCategories()
 {
     if( baseCategories_.size() == 0 )
     {
-        baseCategories_.push_back( "Parameter" );
         baseCategories_.push_back( "Creation" );
         baseCategories_.push_back( "Interface" );
         baseCategories_.push_back( "Order" );
         baseCategories_.push_back( "Command" );
         baseCategories_.push_back( "Helpers" );
+        baseCategories_.push_back( "Parameter" );
     }
 }
 
