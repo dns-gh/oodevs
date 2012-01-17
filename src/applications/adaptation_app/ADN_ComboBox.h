@@ -59,6 +59,8 @@ public:
 
     void setEnabled( bool b );
 
+    virtual void wheelEvent( QWheelEvent* ) {}
+
 protected:
     void*                       pCurData_;
     T_ConnectorVector           vItemConnectors_;

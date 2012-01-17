@@ -16,6 +16,17 @@
 using namespace gui;
 using namespace kernel;
 
+namespace
+{
+    class NoWheelComboBox : public QComboBox
+    {
+    public :
+                 NoWheelComboBox() {}
+        virtual ~NoWheelComboBox() {}
+        virtual void wheelEvent( QWheelEvent * ) {}
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: NatureEditionCategory constructor
 // Created: ABR 2011-11-02
@@ -30,7 +41,7 @@ NatureEditionCategory::NatureEditionCategory( QGridLayout* parentLayout, int row
     , next_        ( 0 )
 {
     label_ = new QLabel();
-    box_ = new QComboBox();
+    box_ = new NoWheelComboBox();
 
     parentLayout->addWidget( label_, row_, 0 );
     parentLayout->addWidget( box_, row_, 1 );
