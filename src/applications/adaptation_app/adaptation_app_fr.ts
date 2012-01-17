@@ -2542,6 +2542,14 @@ du tireur</translation>
         <source>The signatures for the following files do not exist or are invalid : </source>
         <translation>Les signatures des fichiers suivants n&apos;existent pas ou bien sont invalides:</translation>
     </message>
+    <message>
+        <source>Saving error</source>
+        <translation>Erreur de sauvegarde</translation>
+    </message>
+    <message>
+        <source>Something went wrong during the saving process.</source>
+        <translation>Quelque chose s&apos;est mal passé pendant le processus de sauvegarde.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Maintenance_GUI</name>

@@ -296,29 +296,31 @@ void ADN_MainWindow::SaveProject()
 //-----------------------------------------------------------------------------
 void ADN_MainWindow::SaveAsProject()
 {
-    QString strFileName = Q3FileDialog::getSaveFileName( generalConfig_->GetModelsDir().c_str(), tr( "Physical model file (physical.xml)" ) , this, "", tr( "Save project as" ) );
-    if( strFileName.isEmpty() )
+    QString strDirectoryName = QFileDialog::getExistingDirectory( generalConfig_->GetModelsDir().c_str(), this, "", tr( "Save project as" ), true );
+    if( strDirectoryName.isEmpty() )
         return;
 
     QApplication::setOverrideCursor( Qt::waitCursor ); // this might take time
-
+    std::string res = strDirectoryName.toStdString();
+    std::replace( res.begin(), res.end(), '\\', '/' );
+    res += "/physical.xml";
+    bool hasSaved = true;
     try
     {
-        std::string res( strFileName );
-        std::replace( res.begin(), res.end(), '\\', '/' );
-        workspace_.SaveAs( res );
+        hasSaved = workspace_.SaveAs( res );
+        if( !hasSaved )
+            QMessageBox::critical( this, tr( "Saving error" ), tr( "Something went wrong during the saving process." ) );
     }
     catch( ADN_Exception_ABC& exception )
     {
-        QApplication::restoreOverrideCursor();    // restore original cursor
+        hasSaved = false;
         QMessageBox::critical( this, exception.GetExceptionTitle().c_str(), exception.GetExceptionMessage().c_str() );
         return;
     }
 
     QApplication::restoreOverrideCursor();    // restore original cursor
-
-    QString strCaption = tr( "Sword Adaptation Tool - " ) + strFileName;
-    setCaption( strCaption );
+    if( hasSaved )
+        setCaption( tr( "Sword Adaptation Tool - " ) + res.c_str() );
 }
 
 //-----------------------------------------------------------------------------
