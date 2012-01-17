@@ -56,6 +56,12 @@
             <unit command-post="false" id="11" name="ML_Security - Civil Protection - Safety" position="29TNF3521955431" type="ML_Security - Civil Protection - Safety"/>
             <unit command-post="false" id="12" name="ML_Security - Civil Protection - Safety" position="29TNF3544655404" type="ML_Security - Civil Protection - Safety"/>
           </automat>
+          <automat engaged="true" id="28" knowledge-group="8" logistic-level="logistic-base" name="Logistic combat train [28]" type="Logistic combat train">
+            <unit command-post="true" id="29" name="Logistic CT" position="29TNF3547054990" type="Logistic CT"/>
+          </automat>
+          <automat engaged="false" id="32" knowledge-group="8" name="Victims without TC2" type="ML_Security - Civil Protection">
+            <unit command-post="true" id="33" name="ML_Security - Civil Protection - Safety" position="29TNF3652455449" type="ML_Security - Civil Protection - Safety"/>
+          </automat>
         </formation>
       </tactical>
       <communication>
@@ -78,7 +84,11 @@
         </population>
       </populations>
       <inhabitants/>
-      <logistics/>
+      <logistics>
+        <logistic-base id="28">
+          <subordinate id="7"/>
+        </logistic-base>
+      </logistics>
     </party>
     <party id="2" name="Camp 2" type="neutral">
       <objects/>
@@ -90,6 +100,20 @@
             <unit command-post="false" id="17" name="ML_Security - Civil Protection - Safety" position="29TNF3610255241" type="ML_Security - Civil Protection - Safety"/>
             <unit command-post="false" id="18" name="ML_Security - Civil Protection - Safety" position="29TNF3604755324" type="ML_Security - Civil Protection - Safety"/>
           </automat>
+          <automat engaged="true" id="30" knowledge-group="14" logistic-level="logistic-base" name="Logistic combat train [30]" type="Logistic combat train">
+            <unit command-post="true" id="31" name="Logistic CT" position="29TNF3641355745" type="Logistic CT">
+              <stocks>
+                <resource name="12,7-mm Bullet" quantity="3410"/>
+                <resource name="7.62-mm Bullet" quantity="2300"/>
+                <resource name="5.56-mm Bullet" quantity="3480"/>
+                <resource name="Diesel" quantity="2191"/>
+                <resource name="UR NTI1 MOB" quantity="30"/>
+                <resource name="UR NTI1 EA" quantity="6"/>
+                <resource name="Food" quantity="123"/>
+                <resource name="Water" quantity="738"/>
+              </stocks>
+            </unit>
+          </automat>
         </formation>
       </tactical>
       <communication>
@@ -97,7 +121,11 @@
       </communication>
       <populations/>
       <inhabitants/>
-      <logistics/>
+      <logistics>
+        <logistic-base id="30">
+          <subordinate id="13"/>
+        </logistic-base>
+      </logistics>
     </party>
   </parties>
   <diplomacy>
@@ -109,4 +137,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="2070699515" -->
+<!-- signature="2944703948" -->
