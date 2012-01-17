@@ -74,7 +74,7 @@ template< typename ConcreteEntity >
 void Knowledge_ABC< ConcreteEntity >::Serialize( xml::xostream& xos ) const
 {
     Parameter< const ConcreteEntity* >::Serialize( xos );
-    if( IsSet() )
+    if( id_ != 0 )
         xos << xml::attribute( "value", id_ );
 }
 
