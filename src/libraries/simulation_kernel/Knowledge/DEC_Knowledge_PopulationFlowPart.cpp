@@ -29,7 +29,7 @@ DEC_Knowledge_PopulationFlowPart::DEC_Knowledge_PopulationFlowPart()
     : rRelevance_        ( 1. )
     , rLastRelevanceSent_( 1. )
     , nTimeLastUpdate_   ( 0 )
-    , bPerceived_        ( true )
+    , bPerceived_        ( false )
 {
     // NOTHING
 }

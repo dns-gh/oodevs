@@ -269,13 +269,13 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_PopulationFlow
 // Name: PHY_PerceptionView::Execute
 // Created: NLD 2005-10-11
 // -----------------------------------------------------------------------------
-void PHY_PerceptionView::Execute( const TER_PopulationFlow_ABC::T_PopulationFlowVector& perceivableFlows )
+void PHY_PerceptionView::Execute( const TER_PopulationFlow_ABC::T_ConstPopulationFlowVector& perceivableFlows )
 {
     if( bIsEnabled_ )
     {
-        for( TER_PopulationFlow_ABC::CIT_PopulationFlowVector it = perceivableFlows.begin(); it != perceivableFlows.end(); ++it )
+        for( TER_PopulationFlow_ABC::T_ConstPopulationFlowVector::const_iterator it = perceivableFlows.begin(); it != perceivableFlows.end(); ++it )
         {
-            MIL_PopulationFlow& flow = static_cast< MIL_PopulationFlow& >( **it );
+            MIL_PopulationFlow& flow = const_cast< MIL_PopulationFlow& >( static_cast< const MIL_PopulationFlow& >( **it ) ); // $$$ RC LDC Should propagate constness to called methods instead
 
             T_PointVector shape;
             const PHY_PerceptionLevel& level = Compute( flow, shape );
@@ -319,12 +319,12 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_PopulationConc
 // Name: PHY_PerceptionView::Execute
 // Created: NLD 2005-10-11
 // -----------------------------------------------------------------------------
-void PHY_PerceptionView::Execute( const TER_PopulationConcentration_ABC::T_PopulationConcentrationVector perceivableConcentrations )
+void PHY_PerceptionView::Execute( const TER_PopulationConcentration_ABC::T_ConstPopulationConcentrationVector perceivableConcentrations )
 {
     if( bIsEnabled_ )
-        for( TER_PopulationConcentration_ABC::CIT_PopulationConcentrationVector it = perceivableConcentrations.begin(); it != perceivableConcentrations.end(); ++it )
+        for( TER_PopulationConcentration_ABC::T_ConstPopulationConcentrationVector::const_iterator it = perceivableConcentrations.begin(); it != perceivableConcentrations.end(); ++it )
         {
-            MIL_PopulationConcentration& concentration = static_cast< MIL_PopulationConcentration& >( **it );
+            MIL_PopulationConcentration& concentration = const_cast< MIL_PopulationConcentration& >( static_cast< const MIL_PopulationConcentration& >( **it ) ); // $$$ RC LDC Should propagate constness to called methods instead
 
             if ( perceiver_.GetKnowledgeGroup().IsPerceptionDistanceHacked( concentration.GetPopulation() ) )
                 perceiver_.NotifyPerception( concentration, perceiver_.GetKnowledgeGroup().GetPerceptionLevel( concentration.GetPopulation() ) );
