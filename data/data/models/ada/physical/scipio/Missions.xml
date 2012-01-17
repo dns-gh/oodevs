@@ -1610,7 +1610,7 @@
       <parameter dia-name="zone" name="Zone à observer" optional="false" type="Polygon"/>
       <parameter dia-name="position" name="Position d'installation" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.combat.support.rens.tasks.Appuyer" dia-type="france.military.platoon.combat.support.rens.tasks.Appuyer" id="2492" name="PION RENS .ROEM Appuyer" package="intelligence">
+    <mission dia-behavior="france.military.platoon.combat.support.rens.tasks.Appuyer" dia-type="france.military.platoon.combat.support.rens.tasks.Appuyer" id="2492" name="PION RENS ROEM .Appuyer" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2891,13 +2891,21 @@
       </parameter>
       <parameter dia-name="angle" name="Angle" optional="true" type="Integer"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.combat.support.rens.tasks.Appuyer" dia-type="france.military.company.combat.support.rens.tasks.Appuyer" id="28772" mrt-dia-behavior="france.military.company.combat.support.rens.tasks.Appuyer" name="AUTOMATE RENS .ROEM Appuyer">
+    <mission cdt-dia-behavior="france.military.company.combat.support.rens.tasks.Appuyer" dia-type="france.military.company.combat.support.rens.tasks.Appuyer" id="28772" mrt-dia-behavior="france.military.company.combat.support.rens.tasks.Appuyer" name="AUTOMATE RENS ROEM .Appuyer">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="objective" name="Position de déploiement" optional="false" type="Point"/>
       <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
+    </mission>
+    <mission cdt-dia-behavior="france.military.company.combat.support.rens.tasks.ROHUM_RenseignerSur" dia-type="france.military.company.combat.support.rens.tasks.ROHUM_RenseignerSur" id="28773" mrt-dia-behavior="france.military.company.combat.support.rens.tasks.ROHUM_RenseignerSur" name="AUTOMATE RENS ROHUM .Renseigner Sur">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="area" name="Zone à renseigner" optional="false" type="Polygon"/>
+      <parameter dia-name="byNight" name="de nuit" optional="true" type="Boolean"/>
     </mission>
   </automats>
   <populations>
@@ -3134,4 +3142,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_RejoindrePointLancement" id="405" name="Rejoindre point de lancement"/>
   </fragorders>
 </missions>
-<!-- signature="2079998253" -->
+<!-- signature="2283158527" -->
