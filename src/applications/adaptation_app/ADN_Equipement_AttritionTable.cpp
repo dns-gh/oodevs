@@ -39,17 +39,15 @@ public:
         // add a new row & set new values
         ADN_TableItem_Percentage* pItem0 = new ADN_TableItem_Percentage( &tab_, pObj );
         pItem0->UseColor( true );
-        pItem0->SetRangeForColor( 0.0, 100.0 );
         tab_.setItem( i, 0, pItem0 );
         ADN_PercentageValidator* pValidator0 = new ADN_PercentageValidator( pItem0 );
         pValidator0->AddLinkedValue( pAttrition->rRepairWithEvac_ );
-        pValidator0->AddLinkedValue( pAttrition->rRepairNoEvac_ );
+        pValidator0->AddLinkedValue( pAttrition->rDestroy_ );
         pItem0->SetValidator( pValidator0 );
-        pItem0->GetConnector().Connect( & pAttrition->rDestroy_ );
+        pItem0->GetConnector().Connect( & pAttrition->rRepairNoEvac_ );
 
         ADN_TableItem_Percentage* pItem1 = new ADN_TableItem_Percentage( &tab_, pObj );
         pItem1->UseColor( true );
-        pItem1->SetRangeForColor( 0.0, 100.0 );
         tab_.setItem( i, 1, pItem1 );
         ADN_PercentageValidator* pValidator1 = new ADN_PercentageValidator( pItem0 );
         pValidator1->AddLinkedValue( pAttrition->rDestroy_ );
@@ -59,13 +57,12 @@ public:
 
         ADN_TableItem_Percentage* pItem2 = new ADN_TableItem_Percentage( &tab_, pObj );
         pItem2->UseColor( true );
-        pItem2->SetRangeForColor( 0.0, 100.0 );
         tab_.setItem( i, 2, pItem2 );
         ADN_PercentageValidator* pValidator2 = new ADN_PercentageValidator( pItem0 );
-        pValidator2->AddLinkedValue( pAttrition->rDestroy_ );
+        pValidator2->AddLinkedValue( pAttrition->rRepairNoEvac_ );
         pValidator2->AddLinkedValue( pAttrition->rRepairWithEvac_ );
         pItem2->SetValidator( pValidator2 );
-        pItem2->GetConnector().Connect( & pAttrition->rRepairNoEvac_ );
+        pItem2->GetConnector().Connect( & pAttrition->rDestroy_ );
     }
 };
 
@@ -87,9 +84,9 @@ ADN_Equipement_AttritionTable::ADN_Equipement_AttritionTable( QWidget* pParent )
 
     // Set up the columns.
     setNumCols(3);
-    horizontalHeader()->setLabel( 0, tr( "% destroyed" ) );
+    horizontalHeader()->setLabel( 0, tr( "% on site fixable" ) );
     horizontalHeader()->setLabel( 1, tr( "% maintenance support needed" ) );
-    horizontalHeader()->setLabel( 2, tr( "% on site fixable" ) );
+    horizontalHeader()->setLabel( 2, tr( "% destroyed" ) );
     setColumnStretchable( 0, true );
     setColumnStretchable( 1, true );
     setColumnStretchable( 2, true );
