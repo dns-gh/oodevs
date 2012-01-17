@@ -426,7 +426,6 @@
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_kernel\ApproximativeMap.inl" />
     <None Include="..\..\src\libraries\clients_kernel\Displayer_ABC.inl" />
-    <None Include="..\..\src\libraries\clients_kernel\CommunicationHierarchies.inl" />
     <None Include="..\..\src\libraries\clients_kernel\Creatable.inl" />
     <None Include="..\..\src\libraries\clients_kernel\EntityHierarchies.inl" />
     <None Include="..\..\src\libraries\clients_kernel\Hierarchies.inl" />
