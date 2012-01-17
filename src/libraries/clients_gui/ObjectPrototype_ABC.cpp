@@ -273,7 +273,7 @@ void ObjectPrototype_ABC::OnTypeChanged()
         if( !type )
             return;
         locationCreator_->Allow( type->CanBePoint(), type->CanBeLine(), type->CanBePolygon(), type->CanBeCircle(), type->CanBeRectangle() );
-        if( location_ && !location_->IsValid() )
+        if( location_ )
             ResetLocation();
         attributes_->Select( *type );
     }
@@ -297,7 +297,8 @@ void ObjectPrototype_ABC::Handle( Location_ABC& location )
 // -----------------------------------------------------------------------------
 void ObjectPrototype_ABC::ResetLocation()
 {
-    delete location_; location_ = 0;
+    delete location_;
+    location_ = 0;
     locationLabel_->setText( tr( "---" ) );
 }
 

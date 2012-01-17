@@ -122,6 +122,7 @@ bool LocationCreator::Allows( const Location_ABC& location ) const
 // -----------------------------------------------------------------------------
 void LocationCreator::Allow( bool point, bool line, bool polygon, bool circle, bool rectangle )
 {
+    layer_.Reset();
     pointAllowed_ = point;
     lineAllowed_ = line;
     polygonAllowed_ = polygon;
@@ -133,19 +134,19 @@ void LocationCreator::Allow( bool point, bool line, bool polygon, bool circle, b
 // Name: LocationCreator::NotifyContextMenu
 // Created: SBO 2007-03-06
 // -----------------------------------------------------------------------------
-void LocationCreator::NotifyContextMenu( const kernel::Nothing&, kernel::ContextMenu& menu )
+void LocationCreator::NotifyContextMenu( const Nothing&, ContextMenu& menu )
 {
-    if( lineAllowed_ || polygonAllowed_ || circleAllowed_ )
+    if( lineAllowed_ || polygonAllowed_ || circleAllowed_ || rectangleAllowed_ )
     {
-        Q3PopupMenu* subMenu = menu.SubMenu( "Creation", menu_ );
+        ContextMenu* subMenu = menu.SubMenu( "Creation", menu_ );
         if( lineAllowed_ )
-            subMenu->insertItem( tools::translate( "gui::LocationCreator", "Line" ), this, SLOT( StartLine() ) );
+            subMenu->InsertItem( "", tools::translate( "gui::LocationCreator", "Line" ), this, SLOT( StartLine() ) );
         if( polygonAllowed_ )
-            subMenu->insertItem( tools::translate( "gui::LocationCreator", "Polygon" ), this, SLOT( StartPolygon() ) );
+            subMenu->InsertItem( "", tools::translate( "gui::LocationCreator", "Polygon" ), this, SLOT( StartPolygon() ) );
         if( circleAllowed_ )
-            subMenu->insertItem( tools::translate( "gui::LocationCreator", "Circle" ), this, SLOT( StartCircle() ) );
+            subMenu->InsertItem( "", tools::translate( "gui::LocationCreator", "Circle" ), this, SLOT( StartCircle() ) );
         if( rectangleAllowed_ )
-            subMenu->insertItem( tools::translate( "gui::LocationCreator", "Rectangle" ), this, SLOT( StartRectangle() ) );
+            subMenu->InsertItem( "", tools::translate( "gui::LocationCreator", "Rectangle" ), this, SLOT( StartRectangle() ) );
     }
 }
 
@@ -158,8 +159,8 @@ void LocationCreator::NotifyContextMenu( const geometry::Point2f& point, Context
     if( pointAllowed_ )
     {
         popupPoint_ = point;
-        Q3PopupMenu* subMenu = menu.SubMenu( menu_.ascii(), menu_ );
-        subMenu->insertItem( tools::translate( "gui::LocationCreator", "Point" ), this, SLOT( StartPoint() ) );
+        ContextMenu* subMenu = menu.SubMenu( "Creation", menu_ );
+        subMenu->InsertItem( "", tools::translate( "gui::LocationCreator", "Point" ), this, SLOT( StartPoint() ) );
     }
 }
 
@@ -167,7 +168,7 @@ void LocationCreator::NotifyContextMenu( const geometry::Point2f& point, Context
 // Name: LocationCreator::NotifyContextMenu
 // Created: AGE 2008-08-19
 // -----------------------------------------------------------------------------
-void LocationCreator::NotifyContextMenu( const Drawing_ABC& drawing, kernel::ContextMenu& menu )
+void LocationCreator::NotifyContextMenu( const Drawing_ABC& drawing, ContextMenu& menu )
 {
     if( Allows( drawing.GetLocation() ) )
     {
