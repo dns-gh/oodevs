@@ -78,9 +78,9 @@ void TacticalGraphics::NotifyDeleted( const DrawingCategory& category )
 // Name: TacticalGraphics::SetCurrentColor
 // Created: SBO 2009-05-29
 // -----------------------------------------------------------------------------
-void TacticalGraphics::SetCurrentColor( float r, float g, float b, float /*a = 1*/ )
+void TacticalGraphics::SetCurrentColor( float r, float g, float b, float a )
 {
-    color_.setRgb( int( r * 255.f ), int( g * 255.f ), int( b * 255.f ) );
+    color_.setRgb( static_cast< int >( r * 255.f ), static_cast< int >( g * 255.f ), int( b * 255.f ), static_cast< int >( a * 255.f ) );
 }
 
 // -----------------------------------------------------------------------------
