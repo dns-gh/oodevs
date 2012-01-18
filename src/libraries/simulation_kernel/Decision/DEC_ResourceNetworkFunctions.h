@@ -10,6 +10,8 @@
 #ifndef __DEC_ResourceNetworkFunctions_h_
 #define __DEC_ResourceNetworkFunctions_h_
 
+#include "knowledge/DEC_Knowledge_Def.h"
+
 class DEC_Decision_ABC;
 class DEC_Knowledge_Object;
 class DEC_ResourceNetwork;
@@ -35,6 +37,7 @@ public:
     static void DestroyResourceNetworkLink( unsigned int objectResourceID );
     static void IncreaseResourceProduction( boost::shared_ptr< DEC_ResourceNetwork > resourceNetwork, unsigned int production ); 
     static void DecreaseResourceProduction( boost::shared_ptr< DEC_ResourceNetwork > resourceNetwork, unsigned int production );
+    static T_ResourceNetworkVector GetResourceNetworksInZone( DEC_Decision_ABC* caller, const TER_Localisation* pLocalisation );
     //@}
 
 private:

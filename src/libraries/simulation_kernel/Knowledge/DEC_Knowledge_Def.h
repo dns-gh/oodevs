@@ -16,6 +16,7 @@ class DEC_Knowledge_ObjectCollision;
 class DEC_Knowledge_Population;
 class DEC_Knowledge_PopulationCollision;
 class DEC_Knowledge_Urban;
+class DEC_ResourceNetwork;
 class UrbanObjectWrapper;
 class PHY_Volume;
 class DEC_Knowledge_AgentComposante;
@@ -54,6 +55,9 @@ typedef T_KnowledgeComposanteVector::const_iterator CIT_KnowledgeComposanteVecto
 
 typedef std::vector< DEC_Knowledge_Population* >      T_KnowledgePopulationVector;
 typedef T_KnowledgePopulationVector::const_iterator CIT_KnowledgePopulationVector;
+
+typedef std::vector< boost::shared_ptr< DEC_ResourceNetwork > >       T_ResourceNetworkVector;
+typedef T_ResourceNetworkVector::const_iterator                     CIT_ResourceNetworkVector;
 //@}
 
 #endif // __DEC_Knowledge_Def_h_

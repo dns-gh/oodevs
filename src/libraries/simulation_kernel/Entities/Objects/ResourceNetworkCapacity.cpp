@@ -14,6 +14,7 @@
 #include "MIL_AgentServer.h"
 #include "StructuralCapacity.h"
 #include "UrbanObjectWrapper.h"
+#include "Decision/DEC_ResourceNetwork.h"
 #include "protocol/Protocol.h"
 #include "resource_network/NodeProperties.h"
 #include "resource_network/ResourceNetworkModel.h"
@@ -296,4 +297,21 @@ double ResourceNetworkCapacity::AddToStock( const PHY_DotationCategory& dotation
         return nodeProperties_->AddToStock( pType->GetId(), quantity );
     else
         return 0.;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkCapacity::GetDECResourceNetworks
+// Created: JSR 2012-01-17
+// -----------------------------------------------------------------------------
+const T_ResourceNetworkVector& ResourceNetworkCapacity::GetDECResourceNetworks( unsigned int objectId )
+{
+    std::vector< std::string > resources;
+    nodeProperties_->GetAvailableResources( resources );
+    if( resources.size() != DECResourceNetworks_.size() )
+    {
+        DECResourceNetworks_.clear();
+        for( std::vector< std::string >::const_iterator it = resources.begin(); it != resources.end(); ++it )
+            DECResourceNetworks_.push_back( boost::shared_ptr< DEC_ResourceNetwork >( new DEC_ResourceNetwork( objectId, *it ) ) );
+    }
+    return DECResourceNetworks_;
 }

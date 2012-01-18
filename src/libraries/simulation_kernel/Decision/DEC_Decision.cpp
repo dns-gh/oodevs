@@ -264,6 +264,7 @@ void RegisterResourceNetworkFunctions( directia::brain::Brain& brain )
     brain[ "DEC_DetruireObjetResourceSansDelais" ] = &DEC_ResourceNetworkFunctions::DestroyResourceNetworkLink;
     brain[ "DEC_ReseauRessourceAugmenteProduction" ] = &DEC_ResourceNetworkFunctions::IncreaseResourceProduction;
     brain[ "DEC_ReseauRessourceBaisseProduction" ] = &DEC_ResourceNetworkFunctions::DecreaseResourceProduction;
+    brain[ "DEC_ResourceNetwork_NodesInZone" ] = &DEC_ResourceNetworkFunctions::GetResourceNetworksInZone;
     brain.Register( "GetTypeName", &DEC_ResourceNetwork::GetTypeName );
 }
 

@@ -34,6 +34,17 @@ DEC_ResourceNetwork::DEC_ResourceNetwork( const sword::ResourceNetworkElement& m
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_ResourceNetwork constructor
+// Created: JSR 2012-01-17
+// -----------------------------------------------------------------------------
+DEC_ResourceNetwork::DEC_ResourceNetwork( unsigned int objectId, const std::string& resource )
+    : objectId_( objectId )
+    , resource_( resource )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_ResourceNetwork destructor
 // Created: JSR 2011-05-03
 // -----------------------------------------------------------------------------

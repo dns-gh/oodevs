@@ -204,6 +204,15 @@ void NodeElement::Finalize( const ResourceTools_ABC& tools )
 }
 
 // -----------------------------------------------------------------------------
+// Name: NodeElement::AppendResource
+// Created: JSR 2012-01-17
+// -----------------------------------------------------------------------------
+void NodeElement::AppendResource( std::vector< std::string >& resources )
+{
+    resources.push_back( resourceName_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: NodeElement::UpdateImmediateStock
 // Created: JSR 2010-08-16
 // -----------------------------------------------------------------------------

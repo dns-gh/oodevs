@@ -102,6 +102,7 @@ public:
     boost::shared_ptr< DEC_Knowledge_Object > GetClosestObject( const MT_Vector2D& vPos, const MIL_ObjectFilter& filter ) const;
     boost::shared_ptr< DEC_Knowledge_Object > GetClosestFriendObject( const MT_Vector2D& vPos, const MIL_ObjectFilter& filter ) const;
     void GetUrbanObjects( T_UrbanObjectVector& container ) const;
+    void GetResourceNetworksInZone( T_ResourceNetworkVector& container, const TER_Localisation& zone );
     //@}
 
 private:

@@ -13,6 +13,7 @@
 #include "MIL.h"
 #include "ObjectCapacity_ABC.h"
 #include "MIL_StructuralStateNotifier_ABC.h"
+#include "knowledge/DEC_Knowledge_Def.h"
 #include <boost/serialization/export.hpp>
 
 class PHY_DotationCategory;
@@ -101,6 +102,8 @@ public:
     bool SendState( sword::ObjectAttributes& asn ) const;
     void SendFullState( sword::UrbanAttributes& message ) const;
     void SendFullState( sword::ObjectAttributes& asn ) const;
+
+    const T_ResourceNetworkVector& GetDECResourceNetworks( unsigned int objectId );
     //@}
 
 private:
@@ -113,7 +116,8 @@ private:
 private:
     //! @name Member data
     //@{
-    boost::shared_ptr< resource::NodeProperties> nodeProperties_;
+    boost::shared_ptr< resource::NodeProperties > nodeProperties_;
+    T_ResourceNetworkVector DECResourceNetworks_;
     //@}
 };
 

@@ -13,12 +13,14 @@
 #include "MIL_AgentServer.h"
 #include "PHY_ResourceNetworkType.h"
 #include "Decision/DEC_Decision_ABC.h"
+#include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/ResourceNetworkCapacity.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_Army.h"
 
 // -----------------------------------------------------------------------------
 // Name: boost::shared_ptr< MT_Vector2D > DEC_ResourceNetworkFunctions::GetResourceNetworkPosition
@@ -137,10 +139,10 @@ void DEC_ResourceNetworkFunctions::IncreaseResourceProduction( boost::shared_ptr
         return;
     MIL_Object_ABC* object = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( resourceNetwork->GetObjectId() );
     if( !object )
-		return;
+        return;
     ResourceNetworkCapacity* capacity = object->Retrieve< ResourceNetworkCapacity >();
-	if ( !capacity )
-		return;
+    if ( !capacity )
+        return;
     capacity->AddProduction( type->GetId(), production );
 }
 
@@ -157,9 +159,22 @@ void DEC_ResourceNetworkFunctions::DecreaseResourceProduction( boost::shared_ptr
         return;
     MIL_Object_ABC* object = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( resourceNetwork->GetObjectId() );
     if( !object )
-		return;
+        return;
     ResourceNetworkCapacity* capacity = object->Retrieve< ResourceNetworkCapacity >();
-	if ( !capacity )
-		return;
+    if ( !capacity )
+        return;
     capacity->DecreaseProduction( type->GetId(), production );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ResourceNetworkFunctions::GetResourceNetworksInZone
+// Created: JSR 2012-01-17
+// -----------------------------------------------------------------------------
+T_ResourceNetworkVector DEC_ResourceNetworkFunctions::GetResourceNetworksInZone( DEC_Decision_ABC* caller, const TER_Localisation* pLocalisation )
+{
+    T_ResourceNetworkVector result;
+    if( !caller || !pLocalisation )
+        return result;
+    caller->GetPion().GetArmy().GetKnowledge().GetResourceNetworksInZone( result, *pLocalisation );
+    return result;
 }

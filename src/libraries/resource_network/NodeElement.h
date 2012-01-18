@@ -56,6 +56,7 @@ public:
     //@{
     void Update( xml::xistream& xis );
     void Finalize( const ResourceTools_ABC& tools );
+    void AppendResource( std::vector< std::string >& resources );
     void UpdateImmediateStock( float functionalState );
     void AddConsumption( double consumption );
     void Consume( float& functionalState );

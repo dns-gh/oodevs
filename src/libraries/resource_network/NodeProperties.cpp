@@ -94,6 +94,15 @@ void NodeProperties::Initialize( const urban::ResourceNetworkAttribute& urbanAtt
 }
 
 // -----------------------------------------------------------------------------
+// Name: NodeProperties::GetAvailableResources
+// Created: JSR 2012-01-17
+// -----------------------------------------------------------------------------
+void NodeProperties::GetAvailableResources( std::vector< std::string >& resources )
+{
+    Apply( boost::bind( &NodeElement::AppendResource, _1, boost::ref( resources ) ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: NodeProperties::SetTools
 // Created: JSR 2010-11-17
 // -----------------------------------------------------------------------------

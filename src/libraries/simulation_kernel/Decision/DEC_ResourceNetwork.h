@@ -32,6 +32,7 @@ public:
     //@{
              DEC_ResourceNetwork();
     explicit DEC_ResourceNetwork( const sword::ResourceNetworkElement& message );
+             DEC_ResourceNetwork( unsigned int objectId, const std::string& resource );
     virtual ~DEC_ResourceNetwork();
     //@}
 

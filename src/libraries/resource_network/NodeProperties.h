@@ -65,6 +65,7 @@ public:
     //@{
     void SetTools( const ResourceTools_ABC& tools );
     void Initialize( const urban::ResourceNetworkAttribute& urbanAttribute );
+    void GetAvailableResources( std::vector< std::string >& resources );
     void Update( xml::xistream& xis );
     void UpdateState( const ResourceNetworkModel& model );
     void Finalize();
