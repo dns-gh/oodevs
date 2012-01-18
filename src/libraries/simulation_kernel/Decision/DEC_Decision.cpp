@@ -260,11 +260,14 @@ void RegisterResourceNetworkFunctions( directia::brain::Brain& brain )
     brain[ "DEC_ReseauRessource_Position" ] = &DEC_ResourceNetworkFunctions::GetResourceNetworkPosition;
     brain[ "DEC_ReseauRessource_DesactiverElement" ] = &DEC_ResourceNetworkFunctions::DeactivateResourceNetworkElement;
     brain[ "DEC_ReseauRessource_ActiverElement" ] = &DEC_ResourceNetworkFunctions::ActivateResourceNetworkElement;
-    brain[ "DEC_CreerLienObjetVersReseau" ] = &DEC_ResourceNetworkFunctions::CreateResourceNetworkLinkReturn;
-    brain[ "DEC_DetruireObjetResourceSansDelais" ] = &DEC_ResourceNetworkFunctions::DestroyResourceNetworkLink;
+    brain[ "DEC_CreerLienObjetVersReseau" ] = &DEC_ResourceNetworkFunctions::CreateResourceNetworkObjectAndLinkReturn; // obsolete?
+    brain[ "DEC_DetruireObjetResourceSansDelais" ] = &DEC_ResourceNetworkFunctions::DestroyResourceNetworkObjectLink; // obsolete?
     brain[ "DEC_ReseauRessourceAugmenteProduction" ] = &DEC_ResourceNetworkFunctions::IncreaseResourceProduction;
     brain[ "DEC_ReseauRessourceBaisseProduction" ] = &DEC_ResourceNetworkFunctions::DecreaseResourceProduction;
     brain[ "DEC_ResourceNetwork_NodesInZone" ] = &DEC_ResourceNetworkFunctions::GetResourceNetworksInZone;
+    brain[ "DEC_ResourceNetwork_CreateLinkFromObject" ] = &DEC_ResourceNetworkFunctions::CreateResourceNetworkLinkFromObject;
+    brain[ "DEC_ResourceNetwork_CreateLinkFromUrbanBlock" ] = &DEC_ResourceNetworkFunctions::CreateResourceNetworkLinkFromUrbanBlock;
+    brain[ "DEC_ResourceNetwork_DestroyLink" ] = &DEC_ResourceNetworkFunctions::DestroyResourceNetworkLink;
     brain.Register( "GetTypeName", &DEC_ResourceNetwork::GetTypeName );
 }
 

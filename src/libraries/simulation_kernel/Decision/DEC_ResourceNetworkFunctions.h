@@ -15,6 +15,7 @@
 class DEC_Decision_ABC;
 class DEC_Knowledge_Object;
 class DEC_ResourceNetwork;
+class MIL_Object_ABC;
 class MT_Vector2D;
 class TER_Localisation;
 
@@ -32,18 +33,22 @@ public:
     static boost::shared_ptr< MT_Vector2D > GetResourceNetworkPosition( boost::shared_ptr< DEC_ResourceNetwork > resourceNetwork );
     static void DeactivateResourceNetworkElement( boost::shared_ptr< DEC_ResourceNetwork > resourceNetwork );
     static void ActivateResourceNetworkElement( boost::shared_ptr< DEC_ResourceNetwork > resourceNetwork );
-    static void CreateResourceNetworkLink( DEC_Decision_ABC* caller, const std::string& type, const TER_Localisation* pLocalisation, boost::shared_ptr< DEC_ResourceNetwork > target, unsigned int production );
-    static unsigned int CreateResourceNetworkLinkReturn( DEC_Decision_ABC* caller, const std::string& type, const TER_Localisation* pLocalisation, boost::shared_ptr< DEC_ResourceNetwork > target, unsigned int production );
-    static void DestroyResourceNetworkLink( unsigned int objectResourceID );
+    static void CreateResourceNetworkObjectAndLink( DEC_Decision_ABC* caller, const std::string& type, const TER_Localisation* pLocalisation, boost::shared_ptr< DEC_ResourceNetwork > target, unsigned int production );
+    static unsigned int CreateResourceNetworkObjectAndLinkReturn( DEC_Decision_ABC* caller, const std::string& type, const TER_Localisation* pLocalisation, boost::shared_ptr< DEC_ResourceNetwork > target, unsigned int production );
+    static void DestroyResourceNetworkObjectLink( unsigned int objectResourceID );
     static void IncreaseResourceProduction( boost::shared_ptr< DEC_ResourceNetwork > resourceNetwork, unsigned int production ); 
     static void DecreaseResourceProduction( boost::shared_ptr< DEC_ResourceNetwork > resourceNetwork, unsigned int production );
     static T_ResourceNetworkVector GetResourceNetworksInZone( DEC_Decision_ABC* caller, const TER_Localisation* pLocalisation );
+    static bool CreateResourceNetworkLinkFromObject( boost::shared_ptr< DEC_Knowledge_Object > source, boost::shared_ptr< DEC_ResourceNetwork > target );
+    static bool CreateResourceNetworkLinkFromUrbanBlock( UrbanObjectWrapper* source, boost::shared_ptr< DEC_ResourceNetwork > target );
+    static bool DestroyResourceNetworkLink( boost::shared_ptr< DEC_ResourceNetwork > source, boost::shared_ptr< DEC_ResourceNetwork > target );
     //@}
 
 private:
     //! @name Helpers
     //@{
     static void DoActivateResourceNetworkElement( boost::shared_ptr< DEC_ResourceNetwork > resourceNetwork, bool activation );
+    static bool DoCreateResourceNetworkLink( MIL_Object_ABC& source, boost::shared_ptr< DEC_ResourceNetwork > target );
     //@}
 };
 

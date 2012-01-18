@@ -76,6 +76,7 @@ public:
     void SetModifier( float modifier );
     void AddConsumption( unsigned long resourceId, double consumption );
     void RemoveLink( unsigned int nodeId );
+    bool DestroyLink( unsigned long targetId, const std::string& resource );
     bool NeedUpdate() const;
     float GetFunctionalState() const;
     float GetConsumptionState( unsigned long resourceId ) const;

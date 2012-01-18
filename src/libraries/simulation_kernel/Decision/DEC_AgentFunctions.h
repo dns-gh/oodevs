@@ -64,7 +64,7 @@ public:
     static void DisableDiscreteMode( MIL_Agent_ABC& callerAgent );
     static double GetCurrentSpeed( const DEC_Decision_ABC* agent );
 
-	static bool AgentCanConstructObjectWithLoaded( const DEC_Decision_ABC* agent, const std::string& type );
+    static bool AgentCanConstructObjectWithLoaded( const DEC_Decision_ABC* agent, const std::string& type );
     static bool AgentHasDotationForBuilding(const DEC_Decision_ABC* agent, const std::string& type );
     static bool AgentCanDestroyObject( const DEC_Decision_ABC* agent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
     static bool AgentCanBypassObject( const DEC_Decision_ABC* agent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );

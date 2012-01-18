@@ -243,6 +243,15 @@ void ResourceNetworkCapacity::CreateLink( unsigned long targetId, unsigned long 
 }
 
 // -----------------------------------------------------------------------------
+// Name: ResourceNetworkCapacity::DestroyLink
+// Created: JSR 2012-01-18
+// -----------------------------------------------------------------------------
+bool ResourceNetworkCapacity::DestroyLink( unsigned long targetId, const std::string& resource )
+{
+    return nodeProperties_->DestroyLink( targetId, resource );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ResourceNetworkCapacity::AddProduction
 // Created: GGE 2011-08-04
 // -----------------------------------------------------------------------------

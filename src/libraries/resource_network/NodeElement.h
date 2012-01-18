@@ -68,7 +68,7 @@ public:
     void DecreaseProduction( unsigned int production );
     void CreateLink( unsigned long targetId );
     void SetModifier( float modifier );
-    void RemoveLink( unsigned int nodeId );
+    bool RemoveLink( unsigned int nodeId );
     bool NeedUpdate() const;
     float GetFunctionalState() const;
     float GetConsumptionState() const;

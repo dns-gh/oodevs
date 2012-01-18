@@ -67,7 +67,7 @@ public:
     static bool HasReachedDestinationCompletely( const MIL_Population& callerPopulation, const MT_Vector2D* destination );
 
     // security
-    static void ExtractWoundedFromCrowd( MIL_Population& callerPopulation, const MT_Vector2D* position );
+    static bool ExtractWoundedFromCrowd( MIL_Population& callerPopulation, const MT_Vector2D* position );
 
     // Etat decisionnel
     static void NotifyDominationStateChanged( MIL_Population& callerPopulation, double dominationState );

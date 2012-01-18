@@ -384,7 +384,7 @@ int DEC_PopulationFunctions::GetContaminatedHumans( const MIL_Population& caller
 // Name: DEC_PopulationFunctions::ExtractWoundedFromCrowd
 // Created: JSR 2012-01-18
 // -----------------------------------------------------------------------------
-void DEC_PopulationFunctions::ExtractWoundedFromCrowd( MIL_Population& callerPopulation, const MT_Vector2D* position )
+bool DEC_PopulationFunctions::ExtractWoundedFromCrowd( MIL_Population& callerPopulation, const MT_Vector2D* position )
 {
     if( !position )
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
@@ -394,6 +394,10 @@ void DEC_PopulationFunctions::ExtractWoundedFromCrowd( MIL_Population& callerPop
         callerPopulation.ChangeComposition( callerPopulation.GetHealthyHumans(), 0,  callerPopulation.GetContaminatedHumans(), callerPopulation.GetDeadHumans() );
         MIL_Population* newPopulation = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateCrowd( callerPopulation.GetType().GetName(), *position, wounded, callerPopulation.GetName() + " - wounded", callerPopulation.GetArmy() );
         if( newPopulation )
+        {
             newPopulation->ChangeComposition( 0, wounded, 0, 0 );
+            return true;
+        }
     }
+    return false;
 }

@@ -458,15 +458,16 @@ void NodeElement::SetModifier( float modifier )
 // Name: NodeElement::RemoveLink
 // Created: JSR 2011-03-01
 // -----------------------------------------------------------------------------
-void NodeElement::RemoveLink( unsigned int nodeId )
+bool NodeElement::RemoveLink( unsigned int nodeId )
 {
     for( IT_ResourceLinks it = links_.begin(); it != links_.end(); ++it )
         if( ( *it )->GetTarget() == nodeId )
         {
             delete *it;
             links_.erase( it );
-            return;
+            return true;
         }
+    return false;
 }
 
 // -----------------------------------------------------------------------------

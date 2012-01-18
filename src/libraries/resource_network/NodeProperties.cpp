@@ -258,6 +258,25 @@ void NodeProperties::RemoveLink( unsigned int nodeId )
 }
 
 // -----------------------------------------------------------------------------
+// Name: NodeProperties::DestroyLink
+// Created: JSR 2012-01-18
+// -----------------------------------------------------------------------------
+bool NodeProperties::DestroyLink( unsigned long targetId, const std::string& resource )
+{
+    try
+    {
+        NodeElement* element = Find( tools_->GetResourceId( resource ) );
+        if( element )
+            return element->RemoveLink( targetId );
+    }
+    catch( ... )
+    {
+        // NOTHING
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: NodeProperties::NeedUpdate
 // Created: JSR 2010-11-30
 // -----------------------------------------------------------------------------
