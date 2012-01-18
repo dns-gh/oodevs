@@ -847,12 +847,22 @@ bool DEC_AgentFunctions::UrbanBlockIsPopulated( const UrbanObjectWrapper* pUrban
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::EvacuateInhabitants
-// Created: CCD 2012-01-13
+// Created: CCD 2012-01-18
 // -----------------------------------------------------------------------------
 void DEC_AgentFunctions::EvacuateInhabitants( const TER_Localisation* location )
 {
     assert( location );
     return MIL_AgentServer::GetWorkspace().GetEntityManager().EvacuateInhabitants( *location );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::UndoEvacuateInhabitants
+// Created: CCD 2012-01-13
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::UndoEvacuateInhabitants( const TER_Localisation* location )
+{
+    assert( location );
+    return MIL_AgentServer::GetWorkspace().GetEntityManager().UndoEvacuateInhabitants( *location );
 }
 
 // -----------------------------------------------------------------------------

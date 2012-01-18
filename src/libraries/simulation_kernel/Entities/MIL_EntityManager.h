@@ -194,6 +194,7 @@ public:
     void ConfineInhabitants( const TER_Localisation& localisation );
     void UndoConfineInhabitants( const TER_Localisation& localisation );
     void EvacuateInhabitants( const TER_Localisation& localisation );
+    void UndoEvacuateInhabitants( const TER_Localisation& localisation );
     //@}
 
     //! @name CheckPoints

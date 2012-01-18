@@ -470,6 +470,15 @@ void MIL_Inhabitant::NotifyEvacuated( const TER_Localisation& localisation )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Inhabitant::NotifyEvacuate
+// Created: CCD 2012-01-18
+// -----------------------------------------------------------------------------
+void MIL_Inhabitant::NotifyUndoEvacuated( const TER_Localisation& localisation )
+{
+    pLivingArea_->Evacuate( localisation, false );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Inhabitant::IsAlerted
 // Created: BCI 2011-02-18
 // -----------------------------------------------------------------------------

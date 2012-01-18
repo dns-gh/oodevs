@@ -129,6 +129,7 @@ void RegisterPopulationFunctions( directia::brain::Brain& brain )
     brain[ "DEC_Agent_IsConfined" ] = &DEC_AgentFunctions::IsInhabitantsConfined;
     brain[ "DEC_Agent_UrbanBlockIsPopulated" ] = &DEC_AgentFunctions::UrbanBlockIsPopulated;
     brain[ "DEC_Agent_Evacuate" ] = &DEC_AgentFunctions::EvacuateInhabitants;
+    brain[ "DEC_Agent_UndoEvacuate" ] = &DEC_AgentFunctions::UndoEvacuateInhabitants;
     brain[ "DEC_Agent_IsEvacuated" ] = &DEC_AgentFunctions::IsInhabitantsEvacuated;
 }
 

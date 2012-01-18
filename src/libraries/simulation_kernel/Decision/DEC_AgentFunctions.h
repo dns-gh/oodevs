@@ -173,6 +173,7 @@ public:
     static bool IsInhabitantsConfined( const TER_Localisation* location );
     static bool UrbanBlockIsPopulated( const UrbanObjectWrapper* pUrbanBlock );
     static void EvacuateInhabitants( const TER_Localisation* location );
+    static void UndoEvacuateInhabitants( const TER_Localisation* location );
     static bool IsInhabitantsEvacuated( const TER_Localisation* location );
 
     // Perception

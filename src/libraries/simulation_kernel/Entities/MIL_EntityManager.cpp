@@ -1784,6 +1784,15 @@ void MIL_EntityManager::EvacuateInhabitants( const TER_Localisation& localisatio
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::UndoEvacuateInhabitants
+// Created: CCD 2012-01-18
+// -----------------------------------------------------------------------------
+void MIL_EntityManager::UndoEvacuateInhabitants( const TER_Localisation& localisation )
+{
+    inhabitantFactory_->Apply( boost::bind( &MIL_Inhabitant::NotifyUndoEvacuated, _1, localisation ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_EntityManager::UndoConfineInhabitants
 // Created: CCD 2012-01-11
 // -----------------------------------------------------------------------------
