@@ -11,6 +11,8 @@
 #define __MIL_AutomateMission_h_
 
 #include "MIL_Mission_ABC.h"
+#include "protocol/Protocol.h"
+#include <boost/optional.hpp>
 
 namespace sword
 {
@@ -76,8 +78,10 @@ private:
     //! @name Member data
     //@{
     MIL_Automate& automate_;
-    bool          bDIAMrtBehaviorActivated_;
-    bool          bDIACdtBehaviorActivated_;
+    bool bDIAMrtBehaviorActivated_;
+    bool bDIACdtBehaviorActivated_;
+    boost::optional< sword::Location > symbolLocation_;
+    boost::optional< std::string > label_;
     //@}
 };
 

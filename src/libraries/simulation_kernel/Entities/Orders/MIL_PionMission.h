@@ -11,6 +11,8 @@
 #define __MIL_PionMission_h_
 
 #include "MIL_Mission_ABC.h"
+#include "protocol/Protocol.h"
+#include <boost/optional.hpp>
 
 namespace sword
 {
@@ -86,6 +88,8 @@ private:
     //@{
     MIL_AgentPion& pion_;
     bool bDIABehaviorActivated_;
+    boost::optional< sword::Location > symbolLocation_;
+    boost::optional< std::string > label_;
     //@}
 };
 

@@ -33,7 +33,10 @@ MIL_PionMission::MIL_PionMission( const MIL_MissionType_ABC& type, MIL_AgentPion
     , pion_                 ( pion )
     , bDIABehaviorActivated_( false )
 {
-    // NOTHING
+    if( asn.has_symbollocation() )
+        symbolLocation_ = asn.symbollocation();
+    if( asn.has_label() )
+        label_ = asn.label();
 }
 
 // -----------------------------------------------------------------------------
@@ -151,6 +154,10 @@ void MIL_PionMission::Send() const
     asn().mutable_type()->set_id( GetType().GetID() );
     Serialize( *asn().mutable_parameters() );
     NET_ASN_Tools::WriteGDH( MIL_AgentServer::GetWorkspace().GetRealTime(), *asn().mutable_start_time() );
+    if( symbolLocation_ )
+        *asn().mutable_symbollocation() = *symbolLocation_;
+    if( label_ )
+        *asn().mutable_label() = *label_;
     asn.Send( NET_Publisher_ABC::Publisher() );
 }
 
