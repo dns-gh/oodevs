@@ -18,11 +18,11 @@ QuitPage* Page_ABC::quitPage_ = 0;
 
 namespace
 {
-    QPushButton* AddButton( QWidget* parent, Q3HBoxLayout* buttonLayout, Qt::Alignment alignment, const char* slot, int width = 160 )
+    QPushButton* AddButton( QWidget* parent, QHBoxLayout* buttonLayout, Qt::Alignment alignment, const char* slot, int width = 160, int strechFactor = 0 )
     {
         QPushButton* button =  new MenuButton( parent );
         button->setFixedWidth( width );
-        buttonLayout->addWidget( button, 0, alignment );
+        buttonLayout->addWidget( button, strechFactor, alignment );
         QObject::connect( button, SIGNAL( clicked() ), parent, slot );
         return button;
     }
@@ -43,6 +43,7 @@ Page_ABC::Page_ABC( Q3WidgetStack* pages, Page_ABC& previous, unsigned short fla
     , joinButton_    ( 0 )
     , editButton_    ( 0 )
     , applyButton_   ( 0 )
+    , deleteButton_  ( 0 )
     , titleLabel_    ( 0 )
 {
     grid_ = new Q3GridLayout( layout(), 3, 2 );
@@ -50,12 +51,12 @@ Page_ABC::Page_ABC( Q3WidgetStack* pages, Page_ABC& previous, unsigned short fla
     grid_->setRowStretch( 1, 10 );
     grid_->setRowStretch( 2, 2 );
 
-    Q3HBoxLayout* buttonLayout = new Q3HBoxLayout();
+    QHBoxLayout* buttonLayout = new QHBoxLayout();
     buttonLayout->setMargin( 20 );
     grid_->addMultiCellLayout( buttonLayout, 2, 2, 0, 2 );
 
     if( flags & eButtonBack )
-        backButton_ = AddButton( this, buttonLayout, Qt::AlignBottom | Qt::AlignLeft, SLOT( OnBack() ) );
+        backButton_ = AddButton( this, buttonLayout, Qt::AlignBottom | Qt::AlignLeft, SLOT( OnBack() ), 160, 1 );
     else if( flags & eButtonOptions )
         settingsButton_ = AddButton( this, buttonLayout, Qt::AlignBottom | Qt::AlignLeft, SLOT( OnOptions() ) );
 
@@ -65,6 +66,9 @@ Page_ABC::Page_ABC( Q3WidgetStack* pages, Page_ABC& previous, unsigned short fla
             quitPage_ = new QuitPage( pages, *this );
         quitButton_ = AddButton( this, buttonLayout, Qt::AlignBottom | Qt::AlignRight, SLOT( OnQuit() ) );
     }
+
+    if( flags & eButtonDelete )
+        deleteButton_ = AddButton( this, buttonLayout, Qt::AlignBottom | Qt::AlignRight, SLOT( OnDelete() ) );
 
     if( flags & eButtonStart )
         startButton_ = AddButton( this, buttonLayout, Qt::AlignBottom | Qt::AlignRight, SLOT( OnStart() ) );
@@ -108,6 +112,8 @@ void Page_ABC::OnLanguageChanged()
         editButton_->setText(     tools::translate( "Page_ABC", "Edit" ) );
     if( applyButton_ )
         applyButton_->setText(    tools::translate( "Page_ABC", "Apply" ) );
+    if( deleteButton_ )
+        deleteButton_->setText(   tools::translate( "Page_ABC", "Delete" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -174,6 +180,8 @@ void Page_ABC::EnableButton( unsigned short flags, bool enable )
         editButton_->setEnabled( enable );
     if( ( flags & eButtonApply ) && applyButton_ )
         applyButton_->setEnabled( enable );
+    if( ( flags & eButtonDelete ) && deleteButton_ )
+        deleteButton_->setEnabled( enable );
 }
 
 // -----------------------------------------------------------------------------
@@ -188,6 +196,8 @@ void Page_ABC::SetButtonText( unsigned short flags, const QString& text )
         joinButton_->setText( text );
     if( ( flags & eButtonEdit ) && editButton_ )
         editButton_->setText( text );
+    if( ( flags & eButtonDelete ) && deleteButton_ )
+        deleteButton_->setText( text );
 }
 
 // -----------------------------------------------------------------------------

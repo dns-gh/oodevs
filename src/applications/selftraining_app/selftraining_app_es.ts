@@ -434,6 +434,10 @@
         <source>Apply</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ProcessDialogs</name>
@@ -543,6 +547,14 @@
     <message>
         <source>Export</source>
         <translation>Exportar</translation>
+    </message>
+    <message>
+        <source>Delete exercise</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete this exercise?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

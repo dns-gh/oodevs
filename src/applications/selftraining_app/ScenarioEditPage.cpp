@@ -15,6 +15,7 @@
 #include "ExportWidget.h"
 #include "ImportWidget.h"
 #include "ProgressPage.h"
+#include "MessageDialog.h"
 #include "clients_gui/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "frontend/Config.h"
@@ -22,16 +23,20 @@
 #include "frontend/Exercise_ABC.h"
 #include "frontend/ImportExercise.h"
 #include "frontend/ProcessWrapper.h"
+#include <boost/filesystem.hpp>
+
+namespace bfs = boost::filesystem;
 
 // -----------------------------------------------------------------------------
 // Name: ScenarioEditPage constructor
 // Created: RDS 2008-09-09
 // -----------------------------------------------------------------------------
-ScenarioEditPage::ScenarioEditPage( Q3WidgetStack* pages, Page_ABC& previous, const frontend::Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher )
-    : LauncherClientPage( pages, previous, eButtonBack | eButtonEdit, launcher )
-    , config_( config )
-    , fileLoader_( fileLoader )
-    , controllers_( controllers )
+ScenarioEditPage::ScenarioEditPage( QWidget* parent, Q3WidgetStack* pages, Page_ABC& previous, const frontend::Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher )
+    : LauncherClientPage( pages, previous, eButtonBack | eButtonEdit | eButtonDelete, launcher )
+    , parent_      ( parent )
+    , config_      ( config )
+    , fileLoader_  ( fileLoader )
+    , controllers_ ( controllers )
     , progressPage_( new ProgressPage( pages, *this ) )
 {
     Q3VBox* box = new Q3VBox( this );
@@ -62,6 +67,7 @@ ScenarioEditPage::ScenarioEditPage( Q3WidgetStack* pages, Page_ABC& previous, co
             mainTabs_->addTab( exportWidget_, "" );
         }
     }
+    EnableButton( eButtonDelete, false );
     EnableButton( eButtonEdit, false );
     AddContent( box );
 }
@@ -119,6 +125,7 @@ void ScenarioEditPage::Update()
 void ScenarioEditPage::OnEdit()
 {
     EnableButton( eButtonEdit, false );
+    EnableButton( eButtonDelete, false );
     switch( mainTabs_->currentPageIndex() )
     {
     case eTabs_Edit:
@@ -140,7 +147,29 @@ void ScenarioEditPage::OnEdit()
     default:
         break;
     }
+    EnableButton( eButtonDelete, true );
     EnableButton( eButtonEdit, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScenarioEditPage::OnDelete
+// Created: LGY 2012-01-19
+// -----------------------------------------------------------------------------
+void ScenarioEditPage::OnDelete()
+{
+    if( exercise_ )
+    {
+        const std::string path = config_.GetExerciseDir( exercise_->GetName().c_str() );
+        MessageDialog message( parent_, tools::translate( "ScenarioEditPage", "Delete exercise" ), tools::translate( "ScenarioEditPage", "Are you sure you want to delete this exercise?" ), QMessageBox::Yes, QMessageBox::No );
+        if( message.exec() == QMessageBox::Yes )
+        {
+            if( bfs::exists( path ) && bfs::is_directory( path ) )
+            {
+                bfs::remove_all( path );
+                Update();
+            }
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -214,6 +243,7 @@ void ScenarioEditPage::UpdateEditButton()
     {
     case eTabs_Edit:
         enable = exercise_ != 0;
+        SetButtonText( eButtonDelete, tools::translate( "Page_ABC", "Delete" ) );
         SetButtonText( eButtonEdit, tools::translate( "Page_ABC", "Edit" ) );
         break;
     case eTabs_Create:
@@ -231,6 +261,7 @@ void ScenarioEditPage::UpdateEditButton()
     default:
         break;
     }
+    EnableButton( eButtonDelete, enable );
     EnableButton( eButtonEdit, enable );
 }
 

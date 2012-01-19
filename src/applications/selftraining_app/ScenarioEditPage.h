@@ -47,7 +47,7 @@ class ScenarioEditPage : public LauncherClientPage
 public:
     //! @name Constructors/Destructor
     //@{
-             ScenarioEditPage( Q3WidgetStack* pages, Page_ABC& previous, const frontend::Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher );
+             ScenarioEditPage( QWidget* parent, Q3WidgetStack* pages, Page_ABC& previous, const frontend::Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher );
     virtual ~ScenarioEditPage();
     //@}
 
@@ -77,6 +77,7 @@ private slots:
     //! @name Operations
     //@{
     virtual void OnEdit();
+    virtual void OnDelete();
     void Update();
     void OnSelect( const frontend::Exercise_ABC& exercise );
     void ClearSelection();
@@ -89,6 +90,7 @@ private slots:
 private:
     //! @name Member data
     //@{
+    QWidget* parent_;
     const frontend::Config& config_;
     const tools::Loader_ABC& fileLoader_;
     kernel::Controllers& controllers_;

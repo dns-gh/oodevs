@@ -36,6 +36,7 @@ protected:
         eButtonJoin     = 0x10,
         eButtonEdit     = 0x20,
         eButtonApply    = 0x40,
+        eButtonDelete   = 0x80
     };
 
 public:
@@ -77,6 +78,7 @@ private slots:
     virtual void OnJoin() {}
     virtual void OnEdit() {}
     virtual void OnApply() {}
+    virtual void OnDelete() {}
     void OnQuit();
     //@}
 
@@ -101,6 +103,7 @@ private:
     QPushButton* joinButton_;
     QPushButton* editButton_;
     QPushButton* applyButton_;
+    QPushButton* deleteButton_;
     QLabel*      titleLabel_;
     //@}
 };
