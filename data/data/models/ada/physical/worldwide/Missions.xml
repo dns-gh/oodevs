@@ -2165,14 +2165,14 @@ overwhelming force.]]></doctrine>
     </mission>
     <mission dia-behavior="tasks.ConfineUrbanBlocksWithinArea" dia-type="tasks.ConfineUrbanBlocksWithinArea" id="4444" name="ML_Security_Confine population">
       <description>
-        <doctrine><![CDATA[To confine a population into a set of given urban blocks]]></doctrine>
-        <usage><![CDATA[An agent moves to a urban block and when the urban block is reached, the agent confines it. The population into the urban block is confined. When several urban blocks are choosen, the agent moves to each urban block, one by one, by following the order of the user's choice to the select the urban blocks through the interface.]]></usage>
+        <doctrine><![CDATA[To confine a population into a set of given urban blocks located into the given area.]]></doctrine>
+        <usage><![CDATA[An agent moves to a urban block and when the urban block is reached, the agent confines it. The population into the urban block is confined. When several urban blocks are selected, the agent moves to each urban block, one by one, by following a random order.]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="area" name="area to confine" optional="false" type="Polygon">
+      <parameter dia-name="area" name="Area to confine" optional="false" type="Polygon">
         <choice>
           <parameter type="Agent"/>
           <parameter type="AgentKnowledge"/>
@@ -2184,14 +2184,14 @@ overwhelming force.]]></doctrine>
     </mission>
     <mission dia-behavior="tasks.UndoConfineUrbanBlocksWithinArea" dia-type="tasks.UndoConfineUrbanBlocksWithinArea" id="4445" name="ML_Security_Lift confinement">
       <description>
-        <doctrine><![CDATA[To lift the confinement of a population in several urban blocks.]]></doctrine>
-        <usage><![CDATA[An agent moves to a urban block and when the urban block is reached, the agent lifts its confinement. The population into the urban block is no more confined. When several urban blocks are selected, the agent moves to each urban block, one by one, by following the order of the user's choice to select the urban blocks through the interface.]]></usage>
+        <doctrine><![CDATA[To lift the confinement of a population in several urban blocks located into the given area.]]></doctrine>
+        <usage><![CDATA[An agent moves to a urban block and when the urban block is reached, the agent lifts its confinement. The population into the urban block is no more confined. When several urban blocks are selected, the agent moves to each urban block, one by one, by following a random order.]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="area" name="area to lift confinement" optional="false" type="Polygon">
+      <parameter dia-name="area" name="Area to lift confinement" optional="false" type="Polygon">
         <choice>
           <parameter type="Agent"/>
           <parameter type="AgentKnowledge"/>
@@ -2208,6 +2208,44 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="resourceNode" name="Resource node" optional="false" type="ResourceNetwork"/>
       <parameter dia-name="quantity" name="quantity" optional="true" type="Integer"/>
+    </mission>
+    <mission dia-behavior="tasks.EvacuateUrbanBlocksWithinArea" dia-type="tasks.EvacuateUrbanBlocksWithinArea" id="4448" name="ML_Security_Evacuate population">
+      <description>
+        <doctrine><![CDATA[To evacuate a population from several urban blocks located into the given area.]]></doctrine>
+        <usage><![CDATA[An agent moves to a urban block and when the urban block is reached, the agent evacuates it. The population into the urban block is "evacuated". When several urban blocks are selected, the agent moves to each urban block, one by one, by following a random order.]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="area" name="Area to evacuate" optional="false" type="Polygon">
+        <choice>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+          <parameter type="ObjectKnowledge"/>
+          <parameter type="CrowdKnowledge"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
+    <mission dia-behavior="tasks.UndoEvacuateUrbanBlocksWithinArea" dia-type="tasks.UndoEvacuateUrbanBlocksWithinArea" id="4449" name="ML_Security_Lift population evacuation">
+      <description>
+        <doctrine><![CDATA[To lift the evacuation of population from several urban blocks located into the given area.]]></doctrine>
+        <usage><![CDATA[An agent moves to a urban block and when the urban block is reached, the agent lifts the evacuation. The population into the urban block is no more evacuated. When several urban blocks are selected, the agent moves to each urban block, one by one, by following a random order.]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="area" name="Area to evacuate" optional="false" type="Polygon">
+        <choice>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+          <parameter type="ObjectKnowledge"/>
+          <parameter type="CrowdKnowledge"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
     </mission>
   </units>
   <automats>
@@ -3561,4 +3599,4 @@ overwhelming force.]]></doctrine>
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="3609692281" -->
+<!-- signature="1674761525" -->

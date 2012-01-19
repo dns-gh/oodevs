@@ -83,7 +83,24 @@
           </adhesions>
         </population>
       </populations>
-      <inhabitants/>
+      <inhabitants>
+        <inhabitant id="38" name="Ppulation en bas" type="popType2">
+          <composition dead="0" healthy="1000" wounded="0"/>
+          <health-need quantity="1"/>
+          <information></information>
+          <living-area>
+            <urban-block id="7"/>
+            <urban-block id="8"/>
+            <urban-block id="10"/>
+            <urban-block id="48"/>
+            <urban-block id="49"/>
+          </living-area>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </inhabitant>
+      </inhabitants>
       <logistics>
         <logistic-base id="28">
           <subordinate id="7"/>
@@ -120,7 +137,32 @@
         <knowledge-group id="14" name="Groupe de connaissance [14]" type="Standard"/>
       </communication>
       <populations/>
-      <inhabitants/>
+      <inhabitants>
+        <inhabitant id="36" name="Population en haut" type="popType2">
+          <composition dead="0" healthy="1000" wounded="0"/>
+          <health-need quantity="1"/>
+          <information></information>
+          <living-area>
+            <urban-block id="22"/>
+            <urban-block id="28"/>
+            <urban-block id="38"/>
+            <urban-block id="52"/>
+            <urban-block id="71"/>
+            <urban-block id="72"/>
+            <urban-block id="73"/>
+            <urban-block id="74"/>
+            <urban-block id="75"/>
+            <urban-block id="76"/>
+            <urban-block id="102"/>
+            <urban-block id="103"/>
+            <urban-block id="104"/>
+          </living-area>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </inhabitant>
+      </inhabitants>
       <logistics>
         <logistic-base id="30">
           <subordinate id="13"/>
@@ -137,4 +179,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="2944703948" -->
+<!-- signature="1310555576" -->
