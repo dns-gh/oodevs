@@ -56,11 +56,13 @@
             <unit command-post="false" id="11" name="ML_Security - Civil Protection - Safety" position="29TNF3521955431" type="ML_Security - Civil Protection - Safety"/>
             <unit command-post="false" id="12" name="ML_Security - Civil Protection - Safety" position="29TNF3544655404" type="ML_Security - Civil Protection - Safety"/>
           </automat>
-          <automat engaged="true" id="28" knowledge-group="8" logistic-level="logistic-base" name="Logistic combat train [28]" type="Logistic combat train">
+          <automat engaged="false" id="28" knowledge-group="8" logistic-level="logistic-base" name="Logistic combat train [28]" type="Logistic combat train">
             <unit command-post="true" id="29" name="Logistic CT" position="29TNF3547054990" type="Logistic CT"/>
           </automat>
           <automat engaged="false" id="32" knowledge-group="8" name="Victims without TC2" type="ML_Security - Civil Protection">
-            <unit command-post="true" id="33" name="ML_Security - Civil Protection - Safety" position="29TNF3652455449" type="ML_Security - Civil Protection - Safety"/>
+            <unit command-post="true" id="33" name="ML_Security - Civil Protection - Safety" position="29TNF3563954814" type="ML_Security - Civil Protection - Safety"/>
+            <unit command-post="false" id="34" name="ML_Security - Civil Protection - Safety" position="29TNF3571754775" type="ML_Security - Civil Protection - Safety"/>
+            <unit command-post="false" id="35" name="ML_Security - Civil Protection - Safety" position="29TNF3568554823" type="ML_Security - Civil Protection - Safety"/>
           </automat>
         </formation>
       </tactical>
@@ -117,7 +119,7 @@
             <unit command-post="false" id="17" name="ML_Security - Civil Protection - Safety" position="29TNF3610255241" type="ML_Security - Civil Protection - Safety"/>
             <unit command-post="false" id="18" name="ML_Security - Civil Protection - Safety" position="29TNF3604755324" type="ML_Security - Civil Protection - Safety"/>
           </automat>
-          <automat engaged="true" id="30" knowledge-group="14" logistic-level="logistic-base" name="Logistic combat train [30]" type="Logistic combat train">
+          <automat engaged="false" id="30" knowledge-group="14" logistic-level="logistic-base" name="Logistic combat train [30]" type="Logistic combat train">
             <unit command-post="true" id="31" name="Logistic CT" position="29TNF3641355745" type="Logistic CT">
               <stocks>
                 <resource name="12,7-mm Bullet" quantity="3410"/>
@@ -130,6 +132,12 @@
                 <resource name="Water" quantity="738"/>
               </stocks>
             </unit>
+          </automat>
+          <automat engaged="false" id="39" knowledge-group="14" name="ML_Security - Civil Protection [39]" type="ML_Security - Civil Protection">
+            <unit command-post="true" id="40" name="ML_Security - Civil Protection - Safety" position="29TNF3660754960" type="ML_Security - Civil Protection - Safety"/>
+            <unit command-post="false" id="41" name="ML_Security - Civil Protection - Safety" position="29TNF3640154976" type="ML_Security - Civil Protection - Safety"/>
+            <unit command-post="false" id="42" name="ML_Security - Civil Protection - Safety" position="29TNF3648154918" type="ML_Security - Civil Protection - Safety"/>
+            <unit command-post="false" id="43" name="ML_Security - Civil Protection - Safety" position="29TNF3635455026" type="ML_Security - Civil Protection - Safety"/>
           </automat>
         </formation>
       </tactical>
@@ -179,4 +187,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="1310555576" -->
+<!-- signature="1044708306" -->

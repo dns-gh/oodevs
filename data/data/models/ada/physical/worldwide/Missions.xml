@@ -2247,6 +2247,27 @@ overwhelming force.]]></doctrine>
         </choice>
       </parameter>
     </mission>
+    <mission dia-behavior="tasks.EnsureVictimsEvacuation" dia-type="tasks.EnsureVictimsEvacuation" id="4450" name="ML_Security_EnsureVictimsEvacuation">
+      <description>
+        <doctrine><![CDATA[To evacuate wounded victims within an agent, throught a medical unit ]]></doctrine>
+      </description>
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="victimUnits" max-occurs="200" min-occurs="1" name="victim units" optional="false" type="Agent"/>
+      <parameter dia-name="medicalUnit" name="medical unit (TC2)" optional="false" type="Agent"/>
+    </mission>
+    <mission dia-behavior="tasks.EnsureVictimsEvacuation" dia-type="tasks.EnsureVictimsEvacuation" id="4451" name="ML_Security_ExtractVictimsFromACrowd">
+      <description>
+        <doctrine><![CDATA[To evacuate extract victims from a given crowd agent]]></doctrine>
+      </description>
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="crowd" name="crowd" optional="false" type="CrowdKnowledge"/>
+    </mission>
   </units>
   <automats>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_AllerSeRecompleter" dia-type="T_Mission_Automate_ALAT_AllerSeRecompleter" id="189" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AllerSeRecompleter" name="ArmyAviation - resupply">
@@ -3599,4 +3620,4 @@ overwhelming force.]]></doctrine>
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="1674761525" -->
+<!-- signature="2459972706" -->

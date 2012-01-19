@@ -2645,6 +2645,8 @@
         <mission name="ML_Security_IncreaseResourceNodeProduction"/>
         <mission name="ML_Security_Evacuate population"/>
         <mission name="ML_Security_Lift population evacuation"/>
+        <mission name="ML_Security_EnsureVictimsEvacuation"/>
+        <mission name="ML_Security_ExtractVictimsFromACrowd"/>
       </missions>
       <fragorders/>
     </unit>
@@ -3898,4 +3900,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1075927732" -->
+<!-- signature="2253041127" -->
