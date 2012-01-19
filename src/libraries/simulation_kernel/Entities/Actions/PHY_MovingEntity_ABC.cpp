@@ -52,7 +52,7 @@ int PHY_MovingEntity_ABC::Move( boost::shared_ptr< DEC_PathResult > pPath )
 // Name: PHY_MovingEntity_ABC::GetCurrentObstacle
 // Created: LDC 2012-01-12
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* PHY_MovingEntity_ABC::GetCurrentObstacle() const
+int PHY_MovingEntity_ABC::GetCurrentObstacle() const
 {
     return pathWalker_.GetObstacle();
 }

@@ -79,12 +79,14 @@ public:
     const DEC_PathType& GetPathType() const;
     const DEC_Agent_PathClass& GetPathClass() const;
     double GetUnitMajorWeight() const;
-    MT_Vector2D GetNextPointOutsideObstacle( const MT_Vector2D& currentPos, MIL_Object_ABC* obstacle ) const;
+    MT_Vector2D GetNextPointOutsideObstacle( const MT_Vector2D& currentPos, MIL_Object_ABC* obstacle, bool forceNextPoint ) const;
     //@}
 
     //! @name Tools
     //@{
     virtual void InsertDecPoints();
+    virtual void NotifyPointReached( const MT_Vector2D& point );
+    virtual bool IsWaypoint( const MT_Vector2D& point ) const;
     //@}
 
 private:
@@ -127,7 +129,6 @@ private:
     const DEC_Agent_PathClass& pathClass_;
     bool bRefine_;
     T_PointVector initialPathPoints_;
-    T_FollowingPathList followingPathPoints_;
     MIL_Fuseau fuseau_;
     MIL_Fuseau automateFuseau_;
     MT_Vector2D vDirDanger_;

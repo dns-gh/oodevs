@@ -56,7 +56,7 @@ public:
 private:
     //! @name Tools
     //@{
-    bool CreateJoiningPath();
+    bool CreateJoiningPath( const MT_Vector2D* lastJoiningPoint = 0 );
     void DestroyJoiningPath();
     MT_Vector2D GetLastPointAndDestroyJoiningPath();
     bool AvoidObstacles();
@@ -82,8 +82,9 @@ private:
     std::vector< TER_Localisation > geometrySignatures_;
     bool forceNextPoint_;
     bool hasTreatedJoining_;
+    bool mustWaitForKnowledge_;
     std::pair< std::pair< MT_Vector2D, MT_Vector2D >, unsigned int > lastBlockedPoint_;
-    MIL_Object_ABC* obstacle_;
+    int obstacle_;
 };
 
 #endif // __PHY_ActionMove_h_

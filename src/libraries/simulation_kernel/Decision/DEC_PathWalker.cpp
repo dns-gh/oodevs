@@ -149,6 +149,8 @@ DEC_PathWalker::E_ReturnCode DEC_PathWalker::SetCurrentPath( boost::shared_ptr< 
     itCurrentPathPoint_ = pPath->GetCurrentKeyOnPath( movingEntity_.GetPosition() );
     if( itCurrentPathPoint_ == pPath->GetResult().end() )
         return eItineraireMustBeJoined;
+    if( *itCurrentPathPoint_ )
+        pPath->NotifyPointReached( (*itCurrentPathPoint_)->GetPos() );
     if( ( pCurrentPath_->GetState() == DEC_PathResult::ePartial ) && bCanSendTerrainReport )
 	{
         movingEntity_.SendRC( MIL_Report::eReport_DifficultTerrain );
@@ -166,12 +168,12 @@ DEC_PathWalker::E_ReturnCode DEC_PathWalker::SetCurrentPath( boost::shared_ptr< 
 // Last modified: JVT 03-02-04
 //-----------------------------------------------------------------------------
 inline
-bool DEC_PathWalker::GoToNextNavPoint( const DEC_PathResult& path )
+bool DEC_PathWalker::GoToNextNavPoint( DEC_PathResult& path )
 {
     if( ( *itNextPathPoint_ )->GetType() == DEC_PathPoint::eTypePointPath )
     {
         movingEntity_.NotifyMovingOnPathPoint( **itNextPathPoint_ );
-        itCurrentPathPoint_ = itNextPathPoint_;
+        SetCurrentPathPoint( path );
         ++itNextPathPoint_;
         return false;
     }
@@ -179,11 +181,22 @@ bool DEC_PathWalker::GoToNextNavPoint( const DEC_PathResult& path )
     do
     {
         movingEntity_.NotifyMovingOnSpecialPoint( *itNextPathPoint_ );
-        itCurrentPathPoint_ = itNextPathPoint_;
+        SetCurrentPathPoint( path );
     }
     while( ++itNextPathPoint_ != path.GetResult().end() &&
          ( *itNextPathPoint_ )->GetType() != DEC_PathPoint::eTypePointPath && ( *itNextPathPoint_ )->GetPos() == vNewPos_ );
     return true;
+}
+
+//-----------------------------------------------------------------------------
+// Name: DEC_PathWalker::SetCurrentPathPoint
+// Created: LDC 2012-01-18
+//-----------------------------------------------------------------------------
+void DEC_PathWalker::SetCurrentPathPoint( DEC_PathResult& path )
+{
+    itCurrentPathPoint_ = itNextPathPoint_;
+    if( itCurrentPathPoint_ != path.GetResult().end() && *itCurrentPathPoint_ )
+        path.NotifyPointReached( (*itCurrentPathPoint_)->GetPos() );
 }
 
 //-----------------------------------------------------------------------------
@@ -284,7 +297,7 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
                         bTerrainReportSent_ = true;
                     }
                     pathSet_ = eBlockedByObject;
-                    obstacle_ = &object;
+                    obstacle_ = object.GetID();
                     return false;
                 }
             }
@@ -316,7 +329,7 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
                     bTerrainReportSent_ = true;
                 }
                 pathSet_ = eBlockedByObject;
-                obstacle_ = &object;
+                obstacle_ = object.GetID();
                 return false;
             }
         }
@@ -543,7 +556,7 @@ bool DEC_PathWalker::SerializeCurrentPath( sword::Path& asn ) const
 // Name: DEC_PathWalker::GetObstacle
 // Created: NLD 2011-01-12
 // -----------------------------------------------------------------------------
-MIL_Object_ABC* DEC_PathWalker::GetObstacle() const
+int DEC_PathWalker::GetObstacle() const
 {
     return( pathSet_ == eBlockedByObject ) ? obstacle_ : 0;
 }
