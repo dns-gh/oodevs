@@ -79,7 +79,7 @@ public:
     //@{
     bool IsMovingOn                  ( const DEC_Path_ABC& path ) const;
     bool ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, double& rDistanceBefore, double& rDistanceAfter, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) const;
-    MIL_Object_ABC* GetCurrentObstacle() const;
+    int GetCurrentObstacle() const;
     //@}
 
     //! @name Serialization

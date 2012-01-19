@@ -16,6 +16,7 @@
 #include "Entities/Agents/Roles/Deployment/PHY_RoleInterface_Deployment.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/MIL_Army.h"
+#include "Entities/MIL_EntityManager.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Decision/DEC_PathFind_Manager.h"
@@ -44,6 +45,7 @@ PHY_ActionMove::PHY_ActionMove( MIL_AgentPion& pion, boost::shared_ptr< DEC_Path
     , pMainPath_                    ( boost::dynamic_pointer_cast< DEC_Agent_Path >( pPath ) )
     , forceNextPoint_               ( false )
     , hasTreatedJoining_            ( false )
+    , mustWaitForKnowledge_         ( false )
 {
     // NOTHING
 }
@@ -74,13 +76,15 @@ void PHY_ActionMove::StopAction()
 // Name: PHY_ActionMove::CreateJoiningPath
 // Created: NLD 2004-09-29
 // -----------------------------------------------------------------------------
-bool PHY_ActionMove::CreateJoiningPath()
+bool PHY_ActionMove::CreateJoiningPath( const MT_Vector2D* lastJoiningPoint )
 {
     assert( pMainPath_.get() );
     assert( pMainPath_->GetState() != DEC_Path_ABC::eComputing );
     assert( !pJoiningPath_.get() );
     const MT_Vector2D& vPionPos = pion_.GetRole< PHY_RoleInterface_Location >().GetPosition();
-    const MT_Vector2D& vTestPos = pMainPath_->GetPointOnPathCloseTo( vPionPos );
+    MT_Vector2D vTestPos = pMainPath_->GetPointOnPathCloseTo( vPionPos );
+    if( lastJoiningPoint && vTestPos == *lastJoiningPoint )
+        return false; // $$$$ LDC Could try to find a point beyond the obstacle...
     pJoiningPath_.reset( new DEC_Agent_Path( pion_, pMainPath_->GetPointOnPathCloseTo( vPionPos ), pMainPath_->GetPathType() ) );
     MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pJoiningPath_ );
     return( vPionPos != vTestPos );
@@ -196,20 +200,20 @@ bool PHY_ActionMove::AvoidObstacles()
 
     boost::shared_ptr< DEC_Knowledge_Object > obstacle;
     boost::shared_ptr< DEC_PathResult > pCurrentPath( pJoiningPath_.get() ? pJoiningPath_ : pMainPath_ );
-    if( !pCurrentPath || !pCurrentPath->ComputeFutureObjectCollision( pion_.GetRole< PHY_RoleInterface_Location >().GetPosition(), objectsToAvoid_, rDistanceBeforeCollision, rDistanceAfterCollision, obstacle ) )
+    if( !pCurrentPath || DEC_Path_ABC::eComputing == pCurrentPath->GetState() || !pCurrentPath->ComputeFutureObjectCollision( pion_.GetRole< PHY_RoleInterface_Location >().GetPosition(), objectsToAvoid_, rDistanceBeforeCollision, rDistanceAfterCollision, obstacle ) )
         return false;
 
     assert( obstacle && obstacle->IsValid() );
-    obstacle_ = obstacle->GetObjectKnown();
+    obstacle_ = obstacle->GetObjectKnown() ? obstacle->GetObjectKnown()->GetID() : 0;
     const unsigned int nObjectToAvoidDiaID = obstacle->GetID();
     // Le pion à déjà tenté d'éviter l'obstacle - $$$$ RC LDC Si l'obstacle croise 2 branches de pathfind, c'est tres douteux comme optimisation
     if( !mustRecompute && objectAvoidAttempts_.find( nObjectToAvoidDiaID ) != objectAvoidAttempts_.end() )
         return false;
     objectAvoidAttempts_.insert( nObjectToAvoidDiaID );
 
-    DestroyJoiningPath();
-    CreateJoiningPath();
     role_.SendRC( MIL_Report::eReport_DifficultTerrain );
+
+    mustWaitForKnowledge_ = true;
     return true;
 }
 
@@ -231,20 +235,8 @@ void PHY_ActionMove::Execute()
         return;
     }
 
-    bool blockedByObstacle = AvoidObstacles();
-
     boost::shared_ptr< DEC_PathResult > pCurrentPath( pJoiningPath_.get() ? pJoiningPath_ : pMainPath_ );
-    int nReturn = role_.Move( pCurrentPath );
-
-    if( nReturn == DEC_PathWalker::eItineraireMustBeJoined )
-    {
-        role_.MoveSuspended( pCurrentPath );
-        DestroyJoiningPath();
-        CreateJoiningPath ();
-        pCurrentPath = pJoiningPath_;
-        nReturn      = role_.Move( pCurrentPath );
-    }
-    else if( blockedByObstacle || nReturn == DEC_PathWalker::eBlockedByObject )
+    if( mustWaitForKnowledge_ )
     {
         if( ( pCurrentPath != pJoiningPath_ && !pJoiningPath_.get() ) || pCurrentPath == pJoiningPath_ )
         {
@@ -258,11 +250,32 @@ void PHY_ActionMove::Execute()
             }
             else
                 lastBlockedPoint_ = std::make_pair( std::make_pair( vPionPos, lastJoiningPoint ), 1 );
-            if( !blockedByObstacle )
-                obstacle_ = role_.GetCurrentObstacle();
-            nReturn = CreatePathAfterObjectCollision( pCurrentPath, obstacle_ );
+            CreatePathAfterObjectCollision( pCurrentPath, MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( obstacle_ ) );
+            pCurrentPath = pJoiningPath_.get() ? pJoiningPath_ : pMainPath_;
         }
         forceNextPoint_ = false;
+        mustWaitForKnowledge_ = false;
+    }
+    else
+        AvoidObstacles();
+
+    int nReturn = role_.Move( pCurrentPath );
+
+    if( nReturn == DEC_PathWalker::eRunning )
+    { // NOTHING. Pathfind is computing. Just don't try to do anything in this state.
+    }
+    else if( nReturn == DEC_PathWalker::eItineraireMustBeJoined )
+    {
+        role_.MoveSuspended( pCurrentPath );
+        DestroyJoiningPath();
+        CreateJoiningPath ();
+        pCurrentPath = pJoiningPath_;
+        nReturn      = role_.Move( pCurrentPath );
+    }
+    else if( nReturn == DEC_PathWalker::eBlockedByObject )
+    {
+        obstacle_ = role_.GetCurrentObstacle();
+        mustWaitForKnowledge_ = true;
     }
     else if( pCurrentPath == pJoiningPath_ )
     {
@@ -272,11 +285,10 @@ void PHY_ActionMove::Execute()
             DestroyJoiningPath();
             nReturn = DEC_PathWalker::eRunning;
         }
-        else if( nReturn == DEC_PathWalker::ePartialPath )
+        else if( nReturn == DEC_PathWalker::ePartialPath || nReturn == DEC_PathWalker::eNotAllowed )
         {
-            forceNextPoint_ = true;
-            MT_Vector2D lastJoiningPoint = GetLastPointAndDestroyJoiningPath();
-            nReturn = CreateAdaptedPath( pCurrentPath, lastJoiningPoint, forceNextPoint_ );
+            CreateFinalPath(); // Could try a CreatePathAfterObjectCollision( pCurrentPath, obstacle_ ); with forceNextPoint_ to true...
+            nReturn = DEC_PathWalker::eRunning;
         }
     }
     else
@@ -320,26 +332,26 @@ int PHY_ActionMove::CreatePathAfterObjectCollision( boost::shared_ptr< DEC_PathR
 {
     role_.MoveSuspended( pCurrentPath );
     const MT_Vector2D& vPionPos = pion_.GetRole< PHY_RoleInterface_Location >().GetPosition();
-    const MT_Vector2D& vTestPos = pMainPath_->GetNextPointOutsideObstacle( vPionPos, obstacle );
+    const MT_Vector2D& vTestPos = pMainPath_->GetNextPointOutsideObstacle( vPionPos, obstacle, forceNextPoint_ );
     if( vPionPos != vTestPos )
     {
         pJoiningPath_.reset( new DEC_Agent_Path( pion_, vTestPos, pMainPath_->GetPathType() ) );
         MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pJoiningPath_ );
         pCurrentPath = pJoiningPath_;
-        return role_.Move( pCurrentPath );
     }
-    CreateFinalPath();
+    else
+        CreateFinalPath();
     return DEC_PathWalker::eRunning;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_ActionMove::CreatePathAfterObjectCollision
+// Name: PHY_ActionMove::CreateAdaptedPath
 // Bypassd: CMA 2011-11-22
 // -----------------------------------------------------------------------------
 int PHY_ActionMove::CreateAdaptedPath( boost::shared_ptr< DEC_PathResult > pCurrentPath, const MT_Vector2D& lastJoiningPoint, bool forceNextPoint )
 {
     role_.MoveSuspended( pCurrentPath );
-    if( CreateJoiningPath() )
+    if( CreateJoiningPath( &lastJoiningPoint ) )
     {
         pCurrentPath = pJoiningPath_;
         return role_.Move( pCurrentPath );

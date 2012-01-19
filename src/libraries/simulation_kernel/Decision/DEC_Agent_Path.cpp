@@ -630,11 +630,37 @@ bool DEC_Agent_Path::IsDestinationTrafficable() const
 // Name: DEC_Agent_Path::GetNextPointOutsideObstacle
 // Created: LDC 2012-01-12
 // -----------------------------------------------------------------------------
-MT_Vector2D DEC_Agent_Path::GetNextPointOutsideObstacle( const MT_Vector2D& currentPos, MIL_Object_ABC* obstacle ) const
+MT_Vector2D DEC_Agent_Path::GetNextPointOutsideObstacle( const MT_Vector2D& currentPos, MIL_Object_ABC* obstacle, bool forceNextPoint ) const
 {
     if( initialPathPoints_.size() > 1 )
-        return DEC_PathResult::GetNextPointOutsideObstacle( currentPos, obstacle );
+        return DEC_PathResult::GetNextPointOutsideObstacle( currentPos, obstacle, lastWaypoint_, forceNextPoint );
     else if( initialPathPoints_.size() == 1 )
         return initialPathPoints_.front();
     return currentPos;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Agent_Path::NotifyPointReached
+// Created: LDC 2012-01-18
+// -----------------------------------------------------------------------------
+void DEC_Agent_Path::NotifyPointReached( const MT_Vector2D& point )
+{
+    for( T_PointVector::const_iterator it = initialPathPoints_.begin(); it != initialPathPoints_.end(); ++it )
+        if( point == *it )
+        {
+            lastWaypoint_ = &point;
+            break;
+        }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Agent_Path::IsWaypoint
+// Created: LDC 2012-01-18
+// -----------------------------------------------------------------------------
+bool DEC_Agent_Path::IsWaypoint( const MT_Vector2D& point ) const
+{
+    for( T_PointVector::const_iterator it = initialPathPoints_.begin(); it != initialPathPoints_.end(); ++it )
+        if( *it == point )
+            return true;
+    return false;
 }

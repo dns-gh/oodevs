@@ -60,7 +60,7 @@ public:
     void MoveCanceled( boost::shared_ptr< DEC_PathResult > pPath );
     void Apply(); // Called by MIL_Effect_Move
     void Clean();
-    MIL_Object_ABC* GetObstacle() const;
+    int GetObstacle() const;
     //@}
 
     //! @name Tools
@@ -131,8 +131,9 @@ private:
     void ComputeObjectsCollision( const MT_Vector2D& vStart, const MT_Vector2D& vEnd, T_MoveStepSet& moveStepSet );
     void ComputeCurrentSpeed();
     void InitializeEnvironment( const DEC_PathResult& path );
-    bool GoToNextNavPoint( const DEC_PathResult& path );
+    bool GoToNextNavPoint( DEC_PathResult& path );
     E_ReturnCode SetCurrentPath( boost::shared_ptr< DEC_PathResult > pPath );
+    void SetCurrentPathPoint( DEC_PathResult& path );
      //@}
 
 private:
@@ -154,7 +155,7 @@ private:
     bool bTerrainReportSent_;
     boost::shared_ptr< DEC_PathResult > pCurrentPath_;
     E_ReturnCode pathSet_;
-    MIL_Object_ABC* obstacle_;
+    int obstacle_;
     //@}
 };
 

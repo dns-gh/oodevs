@@ -22,6 +22,7 @@
 // -----------------------------------------------------------------------------
 DEC_PathResult::DEC_PathResult()
     : DEC_Path_ABC()
+    , lastWaypoint_( 0 )
     , precision_( 0.0001 )
     , bSectionJustEnded_( false )
 {
@@ -70,16 +71,21 @@ MT_Vector2D DEC_PathResult::GetPointOnPathCloseTo( const MT_Vector2D& posToTest 
 // Name: DEC_PathResult::GetNextPointOutsideObstacle
 // Created: LDC 2011-01-12
 // -----------------------------------------------------------------------------
-MT_Vector2D DEC_PathResult::GetNextPointOutsideObstacle( const MT_Vector2D& posToTest, MIL_Object_ABC* obstacle ) const
+MT_Vector2D DEC_PathResult::GetNextPointOutsideObstacle( const MT_Vector2D& posToTest, MIL_Object_ABC* obstacle, const MT_Vector2D* const lastWaypoint, bool forceNextPoint ) const
 {
-    if( resultList_.size() <= 1 || !obstacle )
+    if( resultList_.size() <= 1 )
         return posToTest;
     static const double rWeldValue = TER_World::GetWorld().GetWeldValue();
     CIT_PathPointList itEnd = resultList_.begin();
     ++itEnd;
     bool currentPositionReached = false;
     bool obstacleCrossed = false;
-    const TER_Localisation& obstacleLocalisation = obstacle->GetLocalisation();
+    boost::shared_ptr< TER_Localisation > obstacleLocalisation;
+    if( obstacle )
+    {
+        TER_Localisation location = obstacle->GetLocalisation();
+        obstacleLocalisation.reset( new TER_Localisation( location ) );
+    }
     MT_Vector2D firstPositionAfterCurrent;
     for( CIT_PathPointList itStart = resultList_.begin(); itEnd != resultList_.end(); ++itStart, ++itEnd )
     {
@@ -91,20 +97,22 @@ MT_Vector2D DEC_PathResult::GetNextPointOutsideObstacle( const MT_Vector2D& posT
             {
                 currentPositionReached = true;
                 firstPositionAfterCurrent = endPos;
+                if( !obstacle )
+                    return endPos;
             }
         }
         if( currentPositionReached )
         {
             MT_Line line( endPos, posToTest );
-            obstacleCrossed |= obstacleLocalisation.Intersect2D( line );
-            if( obstacleCrossed && !obstacleLocalisation.IsInside( endPos ) )
+            obstacleCrossed |= ( obstacleLocalisation && obstacleLocalisation->Intersect2D( line ) );
+            if( obstacleCrossed && ( !obstacleLocalisation || !obstacleLocalisation->IsInside( endPos ) ) )
                 return endPos;
         }
     }
     // If we are already on a joining path or there is only one position crossing the obstacle:
     if( currentPositionReached )
-        return firstPositionAfterCurrent;
-    else // jump to the last point after the obstacle. We may skip waypoints this way but at least we are not stuck and don't move backwards.
+        return forceNextPoint ? posToTest : firstPositionAfterCurrent;
+    else if( !lastWaypoint )// jump to the last point after the obstacle. We may skip waypoints this way but at least we are not stuck and don't move backwards.
     {
         T_PathPointList::const_reverse_iterator ritEnd = resultList_.rbegin();
         ++ritEnd;
@@ -112,8 +120,34 @@ MT_Vector2D DEC_PathResult::GetNextPointOutsideObstacle( const MT_Vector2D& posT
         {
             MT_Vector2D endPos = (*ritEnd)->GetPos();
             MT_Line line( endPos, posToTest );
-            obstacleCrossed |= obstacleLocalisation.Intersect2D( line );
-            if( obstacleCrossed && !obstacleLocalisation.IsInside( endPos ) )
+            obstacleCrossed |= ( obstacleLocalisation && obstacleLocalisation->Intersect2D( line ) );
+            if( obstacleCrossed && ( !obstacleLocalisation || !obstacleLocalisation->IsInside( endPos )  ) )
+                return endPos;
+        }
+    }
+    else
+    {
+        itEnd = resultList_.begin();
+        CIT_PathPointList itStart = itEnd;
+        ++itEnd;
+        while( itEnd != resultList_.end() )
+        {
+            ++itEnd;
+            ++itStart;
+            MT_Line vLine( (*itStart)->GetPos(), (*itEnd)->GetPos() );
+            if( vLine.IsInside( *lastWaypoint, rWeldValue ) )
+                break;
+        }
+        if( itEnd != resultList_.end() )
+            ++itEnd; // Force to go after the way point we reached.
+        for( ; itEnd != resultList_.end(); ++itEnd )
+        {
+            MT_Vector2D endPos = (*itEnd)->GetPos();
+            if( !IsWaypoint( endPos ) )
+                continue;
+            MT_Line line( endPos, posToTest );
+            obstacleCrossed |= ( obstacleLocalisation && obstacleLocalisation->Intersect2D( line ) );
+            if( obstacleCrossed && ( !obstacleLocalisation || !obstacleLocalisation->IsInside( endPos ) ) )
                 return endPos;
         }
     }
@@ -295,4 +329,22 @@ void DEC_PathResult::AddResultPoint( const MT_Vector2D& vPos, const TerrainData&
 void DEC_PathResult::NotifySectionEnded()
 {
     bSectionJustEnded_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathResult::NotifyPointReached
+// Created: LDC 2012-01-18
+// -----------------------------------------------------------------------------
+void DEC_PathResult::NotifyPointReached( const MT_Vector2D& )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathResult::IsWaypoint
+// Created: LDC 2012-01-18
+// -----------------------------------------------------------------------------
+bool DEC_PathResult::IsWaypoint( const MT_Vector2D& ) const
+{
+    return true;
 }

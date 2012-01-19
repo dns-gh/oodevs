@@ -55,10 +55,12 @@ public:
     //@{
     CIT_PathPointList GetCurrentKeyOnPath( const MT_Vector2D& vPos ) const;
     MT_Vector2D       GetPointOnPathCloseTo( const MT_Vector2D& posToTest ) const;
-    MT_Vector2D GetNextPointOutsideObstacle( const MT_Vector2D& posToTest, MIL_Object_ABC* obstacle) const;
+    MT_Vector2D GetNextPointOutsideObstacle( const MT_Vector2D& posToTest, MIL_Object_ABC* obstacle, const MT_Vector2D* const lastWaypoint, bool forceNextPoint ) const;
     MT_Vector2D GetFuturePosition( const MT_Vector2D& vStartPos, double rDist, bool bBoundOnPath ) const;
     bool ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, double& rDistanceBefore, double& rDistanceAfter, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) const;
     virtual void InsertDecPoints() = 0;
+    virtual void NotifyPointReached( const MT_Vector2D& point );
+    virtual bool IsWaypoint( const MT_Vector2D& point ) const;
     //@}
 
     //! @name Network
@@ -78,6 +80,7 @@ protected:
     //! @name Member data
     //@{
     T_PathPointList resultList_; //$$$
+    const MT_Vector2D* lastWaypoint_;
     double precision_;
     //@}
 
