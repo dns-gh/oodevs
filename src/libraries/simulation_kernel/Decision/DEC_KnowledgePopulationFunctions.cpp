@@ -12,11 +12,14 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_KnowledgePopulationFunctions.h"
 #include "DEC_Decision_ABC.h"
+#include "MIL_AgentServer.h"
 #include "Entities/MIL_Army.h"
+#include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Populations/MIL_Population.h"
+#include "Entities/Populations/MIL_PopulationType.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_KnowledgeGroup.h"
@@ -253,4 +256,31 @@ int DEC_KnowledgePopulationFunctions::GetClosestConcentration( const DEC_Decisio
             return concentration->GetID();
     }
     return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgePopulationFunctions::ExtractWoundedFromCrowd
+// Created: JSR 2012-01-18
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgePopulationFunctions::ExtractWoundedFromCrowd( const MIL_AgentPion& callerAgent, unsigned int knowledgeId, const MT_Vector2D* position )
+{
+    if( !position )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+    DEC_Knowledge_Population* pKnowledge = callerAgent.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
+    if( !pKnowledge )
+        return false;
+
+    MIL_Population& population = pKnowledge->GetPopulationKnown();
+    unsigned int wounded = population.GetWoundedHumans();
+    if( wounded > 0 )
+    {
+        population.ChangeComposition( population.GetHealthyHumans(), 0,  population.GetContaminatedHumans(), population.GetDeadHumans() );
+        MIL_Population* newPopulation = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateCrowd( population.GetType().GetName(), *position, wounded, population.GetName() + " - wounded", population.GetArmy() );
+        if( newPopulation )
+        {
+            newPopulation->ChangeComposition( 0, wounded, 0, 0 );
+            return true;
+        }
+    }
+    return false;
 }

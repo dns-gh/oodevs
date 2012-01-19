@@ -66,9 +66,6 @@ public:
     static bool HasReachedBlockBorder( const MIL_Population& callerPopulation, const UrbanObjectWrapper* pUrbanKnowledge );
     static bool HasReachedDestinationCompletely( const MIL_Population& callerPopulation, const MT_Vector2D* destination );
 
-    // security
-    static bool ExtractWoundedFromCrowd( MIL_Population& callerPopulation, const MT_Vector2D* position );
-
     // Etat decisionnel
     static void NotifyDominationStateChanged( MIL_Population& callerPopulation, double dominationState );
     static std::string  GetSzName( MIL_Population& callerPopulation );

@@ -14,7 +14,6 @@
 #include "DEC_FunctionsTools.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
-#include "Entities/Populations/MIL_PopulationType.h"
 #include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Agents/Roles/Population/PHY_RoleInterface_Population.h"
@@ -378,26 +377,4 @@ int DEC_PopulationFunctions::GetActualNumber( const MIL_Population& callerPopula
 int DEC_PopulationFunctions::GetContaminatedHumans( const MIL_Population& callerPopulation )
 {
     return callerPopulation.GetContaminatedHumans();
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_PopulationFunctions::ExtractWoundedFromCrowd
-// Created: JSR 2012-01-18
-// -----------------------------------------------------------------------------
-bool DEC_PopulationFunctions::ExtractWoundedFromCrowd( MIL_Population& callerPopulation, const MT_Vector2D* position )
-{
-    if( !position )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
-    unsigned int wounded = callerPopulation.GetWoundedHumans();
-    if( wounded > 0 )
-    {
-        callerPopulation.ChangeComposition( callerPopulation.GetHealthyHumans(), 0,  callerPopulation.GetContaminatedHumans(), callerPopulation.GetDeadHumans() );
-        MIL_Population* newPopulation = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateCrowd( callerPopulation.GetType().GetName(), *position, wounded, callerPopulation.GetName() + " - wounded", callerPopulation.GetArmy() );
-        if( newPopulation )
-        {
-            newPopulation->ChangeComposition( 0, wounded, 0, 0 );
-            return true;
-        }
-    }
-    return false;
 }
