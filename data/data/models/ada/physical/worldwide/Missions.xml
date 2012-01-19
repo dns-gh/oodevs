@@ -2258,15 +2258,19 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="victimUnits" max-occurs="200" min-occurs="1" name="victim units" optional="false" type="Agent"/>
       <parameter dia-name="medicalUnit" name="medical unit (TC2)" optional="false" type="Agent"/>
     </mission>
-    <mission dia-behavior="tasks.ExtractVictimsFromACrowd" dia-type="tasks.ExtractVictimsFromACrowd" id="4451" name="ML_Security_ExtractVictimsFromACrowd">
+    <mission dia-behavior="tasks.ExtractVictimsFromCrowds" dia-type="tasks.ExtractVictimsFromCrowds" id="4451" name="ML_Security_ExtractVictimsFromCrowds">
       <description>
-        <doctrine><![CDATA[To evacuate extract victims from a given crowd agent]]></doctrine>
+        <doctrine><![CDATA[To extract victims from a set of given crowds agent]]></doctrine>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="crowd" name="crowd" optional="false" type="CrowdKnowledge"/>
+      <parameter dia-name="crowds" max-occurs="200" min-occurs="1" name="crowds" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="CrowdKnowledge"/>
+        </choice>
+      </parameter>
     </mission>
     <mission dia-behavior="tasks.AlertTask" dia-type="tasks.AlertTask" id="4452" name="ML_Security_Alert_Populations">
       <description>
@@ -3680,4 +3684,4 @@ overwhelming force.]]></doctrine>
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="3544050598" -->
+<!-- signature="1344403035" -->
