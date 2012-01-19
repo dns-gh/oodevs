@@ -2625,6 +2625,14 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Profiles</source>
         <translation>Profils</translation>
     </message>
+    <message>
+        <source>Reconnect with...</source>
+        <translation>Se reconnecter avec...</translation>
+    </message>
+    <message>
+        <source>Filter view</source>
+        <translation>Filtrer la vue</translation>
+    </message>
 </context>
 <context>
     <name>ProfilingPanel</name>

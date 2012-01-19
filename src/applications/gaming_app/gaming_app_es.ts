@@ -2625,6 +2625,14 @@ Motivo: %3
         <source>Profiles</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Reconnect with...</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Filter view</source>
+        <translation type="unfinished">Filtrar vista</translation>
+    </message>
 </context>
 <context>
     <name>ProfilingPanel</name>

@@ -69,8 +69,8 @@ ProfilesPanel::ProfilesPanel( QMainWindow* mainWindow, kernel::Controllers& cont
     mainLayout->addWidget( tableView_ );
 
     QHBoxLayout* buttonLayout = new QHBoxLayout();
-    QPushButton* bReconnect = new QPushButton( "Reconnect with..." );
-    QPushButton* bFilter = new QPushButton( "Filter view" );
+    QPushButton* bReconnect = new QPushButton( tools::translate( "Profiles", "Reconnect with..." ) );
+    QPushButton* bFilter = new QPushButton( tools::translate( "Profiles", "Filter view" ) );
     buttonLayout->addWidget( bReconnect );
     buttonLayout->addWidget( bFilter );
     connect( bReconnect, SIGNAL( clicked() ), this, SLOT( Reconnect() ) );
