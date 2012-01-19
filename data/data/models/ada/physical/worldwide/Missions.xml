@@ -2268,6 +2268,66 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="crowd" name="crowd" optional="false" type="CrowdKnowledge"/>
     </mission>
+    <mission dia-behavior="tasks.AlertTask" dia-type="tasks.AlertTask" id="4452" name="ML_Security_Alert_Populations">
+      <description>
+        <doctrine><![CDATA[To alert populations from urban blocks located in the specified area.]]></doctrine>
+        <usage><![CDATA[Agent visits each accessible urban block within the specified area. Order of traversal is not specified. Upon reaching a urban block, in case it is populated agent alerts the populations therein, before moving to the next non visited urban block.  ]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="area" name="Area to alert populations thereof" optional="false" type="Polygon">
+        <choice>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+          <parameter type="ObjectKnowledge"/>
+          <parameter type="CrowdKnowledge"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
+    <mission dia-behavior="tasks.UndoAlertTask" dia-type="tasks.UndoAlertTask" id="4453" name="ML_Security_Lift_Alert">
+      <description>
+        <doctrine><![CDATA[To un-alert populations from urban blocks located in the specified area.]]></doctrine>
+        <usage><![CDATA[Agent visits each accessible urban block within the specified area. Order of traversal is not specified. Upon reaching a urban block, in case it is populated agent un-alerts the populations therein, before moving to the next non visited urban block.  ]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="area" name="Area to alert populations thereof" optional="false" type="Polygon">
+        <choice>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+          <parameter type="ObjectKnowledge"/>
+          <parameter type="CrowdKnowledge"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
+    <mission dia-behavior="tasks.EnableResourceNodesTest" dia-type="tasks.EnableResourceNodesTest" id="4454" name="ML_Security_Enable_ResourceNodes">
+      <description>
+        <doctrine><![CDATA[To enable specified resource nodes in urban blocks.]]></doctrine>
+        <usage><![CDATA[Agent visits each accessible urban block containing specified resource nodes. Order of traversal is that of inputed resource nodes. Upon reaching a urban block, in case the resource nodes of interest are not already activated, agent activates them, before moving to the next urban block containng resource nodes to activate.]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="resourceNode" name="Resource nodes to enable" optional="false" type="ResourceNetwork"/>
+    </mission>
+    <mission dia-behavior="tasks.DisableResourceNodeTest" dia-type="tasks.DisableResourceNodeTest" id="4455" name="ML_Security_Disable_ResourceNodes">
+      <description>
+        <doctrine><![CDATA[To disable specified resource nodes in urban blocks.]]></doctrine>
+        <usage><![CDATA[Agent visits each accessible urban block containing specified resource nodes. Order of traversal is that of inputed resource nodes. Upon reaching a urban block, in case the resource nodes of interest are activated, agent desactivates them, before moving to the next urban block containng resource nodes to desactivate.]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="resourceNode" name="Resource nodes to disable" optional="false" type="ResourceNetwork"/>
+    </mission>
   </units>
   <automats>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_AllerSeRecompleter" dia-type="T_Mission_Automate_ALAT_AllerSeRecompleter" id="189" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AllerSeRecompleter" name="ArmyAviation - resupply">
@@ -3620,4 +3680,4 @@ overwhelming force.]]></doctrine>
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="2900578124" -->
+<!-- signature="3544050598" -->

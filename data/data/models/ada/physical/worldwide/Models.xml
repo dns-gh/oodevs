@@ -2647,6 +2647,10 @@
         <mission name="ML_Security_Lift population evacuation"/>
         <mission name="ML_Security_EnsureVictimsEvacuation"/>
         <mission name="ML_Security_ExtractVictimsFromACrowd"/>
+        <mission name="ML_Security_Alert_Populations"/>
+        <mission name="ML_Security_Lift_Alert"/>
+        <mission name="ML_Security_Enable_ResourceNodes"/>
+        <mission name="ML_Security_Disable_ResourceNodes"/>
       </missions>
       <fragorders/>
     </unit>
@@ -3900,4 +3904,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2253041127" -->
+<!-- signature="2626464326" -->
