@@ -6114,7 +6114,6 @@
         <resource capacity="2" logistic-threshold="30" name="O ECL 155 F1" normalized-consumption="7"/>
         <resource capacity="3" logistic-threshold="30" name="CPLT FUM PH 155" normalized-consumption="8"/>
         <resource capacity="600" logistic-threshold="30" name="CART 5.56 F1A F1" normalized-consumption="240"/>
-        <resource capacity="5" logistic-threshold="30" name="Obus 155 OE CCR F1 GUIDED" normalized-consumption="2"/>
         <resource capacity="6" logistic-threshold="30" name="OE JUPU 155 F2 Kit RTC" normalized-consumption="6"/>
       </category>
       <category name="carburant">
@@ -35322,4 +35321,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="3660796148" -->
+<!-- signature="3264052344" -->

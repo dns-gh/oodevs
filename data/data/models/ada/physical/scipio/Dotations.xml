@@ -2609,38 +2609,6 @@
   <resource category="munition" codeEMAT6="" codeEMAT8="1320-325" codeLFRIL="" codeNNO="" d-type="true" id="118" id-nature="3" name="Obus 155 OFUM PH" nature="Solide" package-mass="0.65" package-size="8" package-volume="0.82" type="Obus">
     <indirect-fire intervention-type="2" life-time="600s" setup-time="60s" type="fumigene" x-dispersion="1000" y-dispersion="1000"/>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="1320-300" codeLFRIL="" codeNNO="" d-type="true" id="119" id-nature="3" name="Obus 155 OE CCR F1 GUIDED" nature="Solide" package-mass="0.65" package-size="8" package-volume="0.82" type="Obus">
-    <guided maintain="false" range="10000"/>
-    <attritions>
-      <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-      <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-      <attrition destruction="0.05" protection="CharLourd" repairable-with-evacuation="0.2" repairable-without-evacuation="0.75"/>
-      <attrition destruction="0.1" protection="CharMoyen" repairable-with-evacuation="0.3" repairable-without-evacuation="0.6"/>
-      <attrition destruction="0.15" protection="BlindeLeger" repairable-with-evacuation="0.4" repairable-without-evacuation="0.45"/>
-      <attrition destruction="0.15" protection="TransportBlinde" repairable-with-evacuation="0.4" repairable-without-evacuation="0.45"/>
-      <attrition destruction="0.3" protection="Aeronef" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
-      <attrition destruction="0.3" protection="VehiculeNonProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
-      <attrition destruction="0.2" protection="Combattant" repairable-with-evacuation="0.8" repairable-without-evacuation="0"/>
-    </attritions>
-    <urban-modifiers>
-      <urban-modifier material-type="Bois" value="0.9"/>
-      <urban-modifier material-type="Beton" value="0.1"/>
-      <urban-modifier material-type="Brique" value="0.6"/>
-      <urban-modifier material-type="Metal" value="0.3"/>
-      <urban-modifier material-type="Torchis" value="0.9"/>
-      <urban-modifier material-type="Prefabrique" value="0.6"/>
-      <urban-modifier material-type="Vegetation" value="0.9"/>
-    </urban-modifiers>
-    <indirect-fire intervention-type="24" neutralization-ratio="3" type="explosif" x-dispersion="200" y-dispersion="200">
-      <ph target-posture="Mouvement" value="0.3"/>
-      <ph target-posture="MouvementDiscret" value="0.3"/>
-      <ph target-posture="Arret" value="0.6"/>
-      <ph target-posture="PosteReflexe" value="0.6"/>
-      <ph target-posture="Poste" value="0.5"/>
-      <ph target-posture="PosteAmenage" value="0.3"/>
-      <ph target-posture="PostePrepareGenie" value="0.1"/>
-    </indirect-fire>
-  </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="120" id-nature="3" name="Grenade offensive" nature="Solide" package-mass="1" package-size="1" package-volume="1" type="ALR">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -2776,4 +2744,4 @@
   <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="151" id-nature="2" name="carburant" nature="Gasoil" package-mass="1" package-size="1" package-volume="1"/>
   <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="152" id-nature="3" name="nourriture" nature="Solide" package-mass="1" package-size="1" package-volume="1"/>
 </resources>
-<!-- signature="3106269367" -->
+<!-- signature="3623506318" -->
