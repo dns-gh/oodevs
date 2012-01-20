@@ -25,7 +25,7 @@
           </shape>
           <attributes>
             <construction completion="1"/>
-            <nbc-agents state="liquid">
+            <nbc-agents danger="0" state="liquid">
               <nbc-agent type="Biologique"/>
             </nbc-agents>
           </attributes>
@@ -159,4 +159,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="1236778148" -->
+<!-- signature="0759508015" -->

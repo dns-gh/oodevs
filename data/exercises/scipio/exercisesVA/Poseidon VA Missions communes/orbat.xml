@@ -97,7 +97,7 @@
             </points>
           </shape>
           <attributes>
-            <nbc-agents state="gaseous">
+            <nbc-agents danger="0" state="gaseous">
               <nbc-agent type="Nucleaire"/>
             </nbc-agents>
           </attributes>
@@ -131,4 +131,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="2733142918" -->
+<!-- signature="3361891033" -->

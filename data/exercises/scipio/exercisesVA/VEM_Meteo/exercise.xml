@@ -10,5 +10,6 @@
   <weather file="weather.xml"/>
   <terrain name="PortoV3Lite"/>
   <model dataset="ada" physical="scipio"/>
+  <drawings file="drawings.xml"/>
 </exercise>
-<!-- signature="3936422856" -->
+<!-- signature="4007296106" -->

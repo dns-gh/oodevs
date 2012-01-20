@@ -1,13 +1,29 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <profiles model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/profiles.xsd">
-  <profile name="Supervisor - anibas" password="" role="supervisor" supervision="true">
+  <profile name="SUPERVISEUR" password="" role="supervisor" supervision="true">
     <rights>
-      <readonly/>
-      <readwrite>
+      <readonly>
         <side id="1"/>
-        <formation id="5"/>
-      </readwrite>
+        <side id="2"/>
+      </readonly>
+      <readwrite/>
+    </rights>
+  </profile>
+  <profile name="SUPERVISEUR Bleu" password="" role="supervisor" supervision="true">
+    <rights>
+      <readonly>
+        <side id="1"/>
+      </readonly>
+      <readwrite/>
+    </rights>
+  </profile>
+  <profile name="SUPERVISEUR Rouge" password="" role="supervisor" supervision="true">
+    <rights>
+      <readonly>
+        <side id="2"/>
+      </readonly>
+      <readwrite/>
     </rights>
   </profile>
 </profiles>
-<!-- signature="4028275252" -->
+<!-- signature="1075194858" -->

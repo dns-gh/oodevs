@@ -1,10 +1,35 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <profiles model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/profiles.xsd">
-  <profile name="Kramber" password="" role="supervisor" supervision="true">
+  <profile name="SUPERVISEUR" password="" role="supervisor" supervision="true">
+    <rights>
+      <readonly>
+        <side id="1"/>
+        <side id="24"/>
+      </readonly>
+      <readwrite/>
+    </rights>
+  </profile>
+  <profile name="SUPERVISEUR Bleu" password="" role="supervisor" supervision="true">
+    <rights>
+      <readonly>
+        <side id="1"/>
+      </readonly>
+      <readwrite/>
+    </rights>
+  </profile>
+  <profile name="SUPERVISEUR DPRE" password="" role="supervisor" supervision="true">
     <rights>
       <readonly>
         <side id="24"/>
+      </readonly>
+      <readwrite/>
+    </rights>
+  </profile>
+  <profile name="Gestim" password="" role="service-gestim" supervision="true">
+    <rights>
+      <readonly>
         <side id="1"/>
+        <side id="24"/>
       </readonly>
       <readwrite>
         <side id="1"/>
@@ -12,5 +37,14 @@
       </readwrite>
     </rights>
   </profile>
+  <profile name="Analyste" password="" role="analysis" supervision="false">
+    <rights>
+      <readonly>
+        <side id="1"/>
+        <side id="24"/>
+      </readonly>
+      <readwrite/>
+    </rights>
+  </profile>
 </profiles>
-<!-- signature="3400608257" -->
+<!-- signature="2996431477" -->
