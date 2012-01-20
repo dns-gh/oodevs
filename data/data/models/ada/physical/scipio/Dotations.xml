@@ -2609,7 +2609,7 @@
   <resource category="munition" codeEMAT6="" codeEMAT8="1320-325" codeLFRIL="" codeNNO="" d-type="true" id="118" id-nature="3" name="Obus 155 OFUM PH" nature="Solide" package-mass="0.65" package-size="8" package-volume="0.82" type="Obus">
     <indirect-fire intervention-type="2" life-time="600s" setup-time="60s" type="fumigene" x-dispersion="1000" y-dispersion="1000"/>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="120" id-nature="3" name="Grenade offensive" nature="Solide" package-mass="1" package-size="1" package-volume="1" type="ALR">
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="119" id-nature="3" name="Grenade offensive" nature="Solide" package-mass="1" package-size="1" package-volume="1" type="ALR">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -2622,10 +2622,10 @@
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0.01"/>
     </attritions>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="1370 408 0020" codeLFRIL="" codeNNO="1370 14 237 0366" id="121" id-nature="3" name="GALIX FLB/AP" nature="Solide" package-mass="0.054" package-size="8" package-volume="0.071" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="1370 408 0020" codeLFRIL="" codeNNO="1370 14 237 0366" id="120" id-nature="3" name="GALIX FLB/AP" nature="Solide" package-mass="0.054" package-size="8" package-volume="0.071" type="Obus">
     <indirect-fire intervention-type="4" life-time="300s" setup-time="18s" type="fumigene" x-dispersion="400" y-dispersion="600"/>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="1315 792 0005" codeLFRIL="" codeNNO="1305 14 511 5288" id="122" id-nature="3" name="Obus 25mm HEI EXPLO." nature="Solide" package-mass="0.03" package-size="60" package-volume="0.026" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="1315 792 0005" codeLFRIL="" codeNNO="1305 14 511 5288" id="121" id-nature="3" name="Obus 25mm HEI EXPLO." nature="Solide" package-mass="0.03" package-size="60" package-volume="0.026" type="Obus">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0.15"/>
       <attrition destruction="0.8" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -2647,7 +2647,7 @@
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="1315 792 0005" codeLFRIL="" codeNNO="1305 14 511 5288" id="123" id-nature="3" name="Obus 25mm APDS PERFO." nature="Solide" package-mass="0.03" package-size="60" package-volume="0.026" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="1315 792 0005" codeLFRIL="" codeNNO="1305 14 511 5288" id="122" id-nature="3" name="Obus 25mm APDS PERFO." nature="Solide" package-mass="0.03" package-size="60" package-volume="0.026" type="Obus">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0.1" repairable-without-evacuation="0.15"/>
       <attrition destruction="0.8" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -2669,7 +2669,7 @@
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
   </resource>
-  <resource category="munition" codeEMAT6="" codeEMAT8="1320 326 0010" codeLFRIL="" codeNNO="1320 14 419 1501" id="124" id-nature="3" name="OE JUPU 155 F2 Kit RTC" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
+  <resource category="munition" codeEMAT6="" codeEMAT8="1320 326 0010" codeLFRIL="" codeNNO="1320 14 419 1501" id="123" id-nature="3" name="OE JUPU 155 F2 Kit RTC" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -2691,10 +2691,10 @@
       <ph target-posture="PostePrepareGenie" value="0.1"/>
     </indirect-fire>
   </resource>
-  <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="9140 14 507 3290" id="125" id-nature="2" name="F-63 1" nature="Gasoil" package-mass="1" package-size="1000" package-volume="1"/>
-  <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="9130 14 310 5441" id="126" id-nature="2" name="F-57 1" nature="Gasoil" package-mass="1" package-size="1000" package-volume="1"/>
-  <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="9130 14 209 3957" id="127" id-nature="1" name="F-35 1" nature="Kerosene" package-mass="1" package-size="1000" package-volume="1"/>
-  <resource category="explosif" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1375 14 235 7101" id="128" id-nature="3" name="PETD 500 G T ID M 1" nature="Solide" package-mass="0.005" package-size="1" package-volume="0.005" type="Obus">
+  <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="9140 14 507 3290" id="124" id-nature="2" name="F-63 1" nature="Gasoil" package-mass="1" package-size="1000" package-volume="1"/>
+  <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="9130 14 310 5441" id="125" id-nature="2" name="F-57 1" nature="Gasoil" package-mass="1" package-size="1000" package-volume="1"/>
+  <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="9130 14 209 3957" id="126" id-nature="1" name="F-35 1" nature="Kerosene" package-mass="1" package-size="1000" package-volume="1"/>
+  <resource category="explosif" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1375 14 235 7101" id="127" id-nature="3" name="PETD 500 G T ID M 1" nature="Solide" package-mass="0.005" package-size="1" package-volume="0.005" type="Obus">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -2707,7 +2707,7 @@
       <attrition destruction="1" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
   </resource>
-  <resource category="mine" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1345 14 235 4213" id="129" id-nature="3" name="mine classique" nature="Solide" package-mass="0.005" package-size="1" package-volume="0.005" type="Obus">
+  <resource category="mine" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1345 14 235 4213" id="128" id-nature="3" name="mine classique" nature="Solide" package-mass="0.005" package-size="1" package-volume="0.005" type="Obus">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="CombattantProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -2720,28 +2720,28 @@
       <attrition destruction="1" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
   </resource>
-  <resource category="barbele" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="5680 14 210 7134" id="130" id-nature="3" name="barbele classique" nature="Solide" package-mass="0.005" package-size="1" package-volume="0.005"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="131" id-nature="3" name="Rechange  NTI1 MOB" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="132" id-nature="3" name="Rechange  NTI2 MOB" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="133" id-nature="3" name="Rechange  NTI3" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="134" id-nature="3" name="Rechange  NTI1 TCT" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="135" id-nature="3" name="Rechange  NTI2 TCT" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="136" id-nature="3" name="Rechange  NTI2 TRS" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="137" id-nature="3" name="Rechange  NTI2 COTAC" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="138" id-nature="3" name="Rechange  NTI2 DEM" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="139" id-nature="3" name="Rechange  ALAT" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="140" id-nature="3" name="Rechange  NTI1 EA" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="141" id-nature="3" name="Rechange NTI 1 glaise" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="142" id-nature="3" name="Rechange NTI 2 glaise" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="143" id-nature="3" name="Rechange NTI 3 glaise" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="8970 14 481 4053" id="144" id-nature="3" name="RATION DE COMBAT 1" nature="Solide" package-mass="0.015" package-size="10" package-volume="0.01"/>
-  <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="8960 14 489 7152" id="145" id-nature="3" name="EAU MINERALE 1L T 1" nature="Solide" package-mass="1" package-size="1000" package-volume="1"/>
-  <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="146" id-nature="3" name="Sac de transport de dépouille mortelle" nature="Solide" package-mass="0.001" package-size="1" package-volume="1"/>
-  <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="147" id-nature="3" name="Conteneur de transport post mortem" nature="Solide" package-mass="0.1" package-size="1" package-volume="2"/>
-  <resource category="agent extincteur" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="148" id-nature="1" name="h2o" nature="Kerosene" package-mass="1" package-size="0.001" package-volume="1"/>
-  <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="149" id-nature="6" name="electricite" nature="Electric" package-mass="1" package-size="1" package-volume="1"/>
-  <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="150" id-nature="5" name="eau courante" nature="Liquid" package-mass="1" package-size="1" package-volume="1"/>
-  <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="151" id-nature="2" name="carburant" nature="Gasoil" package-mass="1" package-size="1" package-volume="1"/>
-  <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="152" id-nature="3" name="nourriture" nature="Solide" package-mass="1" package-size="1" package-volume="1"/>
+  <resource category="barbele" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="5680 14 210 7134" id="129" id-nature="3" name="barbele classique" nature="Solide" package-mass="0.005" package-size="1" package-volume="0.005"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="130" id-nature="3" name="Rechange  NTI1 MOB" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="131" id-nature="3" name="Rechange  NTI2 MOB" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="132" id-nature="3" name="Rechange  NTI3" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="133" id-nature="3" name="Rechange  NTI1 TCT" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="134" id-nature="3" name="Rechange  NTI2 TCT" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="135" id-nature="3" name="Rechange  NTI2 TRS" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="136" id-nature="3" name="Rechange  NTI2 COTAC" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="137" id-nature="3" name="Rechange  NTI2 DEM" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="138" id-nature="3" name="Rechange  ALAT" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="139" id-nature="3" name="Rechange  NTI1 EA" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="140" id-nature="3" name="Rechange NTI 1 glaise" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="141" id-nature="3" name="Rechange NTI 2 glaise" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="142" id-nature="3" name="Rechange NTI 3 glaise" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
+  <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="8970 14 481 4053" id="143" id-nature="3" name="RATION DE COMBAT 1" nature="Solide" package-mass="0.015" package-size="10" package-volume="0.01"/>
+  <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="8960 14 489 7152" id="144" id-nature="3" name="EAU MINERALE 1L T 1" nature="Solide" package-mass="1" package-size="1000" package-volume="1"/>
+  <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="145" id-nature="3" name="Sac de transport de dépouille mortelle" nature="Solide" package-mass="0.001" package-size="1" package-volume="1"/>
+  <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="146" id-nature="3" name="Conteneur de transport post mortem" nature="Solide" package-mass="0.1" package-size="1" package-volume="2"/>
+  <resource category="agent extincteur" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="147" id-nature="1" name="h2o" nature="Kerosene" package-mass="1" package-size="0.001" package-volume="1"/>
+  <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="148" id-nature="6" name="electricite" nature="Electric" package-mass="1" package-size="1" package-volume="1"/>
+  <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="149" id-nature="5" name="eau courante" nature="Liquid" package-mass="1" package-size="1" package-volume="1"/>
+  <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="150" id-nature="2" name="carburant" nature="Gasoil" package-mass="1" package-size="1" package-volume="1"/>
+  <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="151" id-nature="3" name="nourriture" nature="Solide" package-mass="1" package-size="1" package-volume="1"/>
 </resources>
-<!-- signature="3623506318" -->
+<!-- signature="0013760339" -->
