@@ -8433,7 +8433,7 @@
         <mission name="AUTOMATE COMMUNES Se Recompleter"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE COMMUNES Franchir"/>
-        <mission name="AUTOMATE ASS Se Deployer"/>
+        <mission name="AUTOMATE ASS COBRA Se Deployer"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -8487,4 +8487,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3810802128" -->
+<!-- signature="3426660092" -->
