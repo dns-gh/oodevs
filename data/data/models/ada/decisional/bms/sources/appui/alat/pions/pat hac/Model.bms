@@ -11,12 +11,6 @@ include "Common/Pions/Perception.bms"
 include "Appui/Alat/Pions/Common/Motivations.bms"
 include "Appui/Alat/Pions/Pat Hac/Behaviors.bms"
 
-local swordErrorHandler = function( err )
-    DEC_Trace( tostring( err )..debug.traceback() )
-end
-
-errorhandlermanager.installErrorHandler( swordErrorHandler )
-
 local actualConnections = {}
 if connections then
     for i, entry in pairs( connections ) do
