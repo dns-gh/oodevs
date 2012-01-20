@@ -297,7 +297,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ASS.RATAC - COBRA" id="11" name="ASS . Groupe RATAC" type="Pion ASS">
+  <unit decisional-model="Masalife.ASS.RATAC" id="11" name="ASS . Groupe RATAC" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/field artillery/artillery survey"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="VAB RATAC"/>
@@ -441,7 +441,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ASS.RATAC - COBRA" id="16" name="ASS . Station COBRA" type="Pion ASS">
+  <unit decisional-model="Masalife.ASS.RATAC" id="16" name="ASS . Station COBRA" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/field artillery/artillery survey"/>
     <equipments>
       <equipment count="1" crew="5" major="true" type="Radar COBRA"/>
@@ -1346,7 +1346,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ASS.RATAC - COBRA" id="46" name="ASS . PC RATAC" type="Pion ASS">
+  <unit decisional-model="Masalife.ASS.RATAC" id="46" name="ASS . PC RATAC" type="Pion ASS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/artillery survey"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="VTC P4"/>
@@ -19591,4 +19591,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="3243563254" -->
+<!-- signature="1148549471" -->
