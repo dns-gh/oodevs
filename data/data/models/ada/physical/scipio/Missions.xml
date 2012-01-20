@@ -2910,7 +2910,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="area" name="Zone de recherche" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.combat.support.artillery.tasks.COBRASeDeployer" dia-type="france.military.company.combat.support.artillery.tasks.COBRASeDeployer" id="28779" mrt-dia-behavior="france.military.company.combat.support.artillery.tasks.COBRASeDeployer" name="AUTOMATE ASS COBRA Se Deployer">
+    <mission cdt-dia-behavior="france.military.company.combat.support.artillery.tasks.COBRASeDeployer" dia-type="france.military.company.combat.support.artillery.tasks.COBRASeDeployer" id="28780" mrt-dia-behavior="france.military.company.combat.support.artillery.tasks.COBRASeDeployer" name="AUTOMATE ASS COBRA Se Deployer">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3154,4 +3154,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_RejoindrePointLancement" id="405" name="Rejoindre point de lancement"/>
   </fragorders>
 </missions>
-<!-- signature="0973587611" -->
+<!-- signature="2861402126" -->
