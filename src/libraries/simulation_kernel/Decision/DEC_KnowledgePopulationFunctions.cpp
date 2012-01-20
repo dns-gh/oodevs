@@ -284,3 +284,18 @@ bool DEC_KnowledgePopulationFunctions::ExtractWoundedFromCrowd( const MIL_AgentP
     }
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgePopulationFunctions::HasWoundedHumans
+// Created: MIA 2011-01-20
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgePopulationFunctions::HasWoundedHumans( const MIL_AgentPion& caller, int knowledgeId )
+{
+    DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
+    if( pKnowledge )
+    {
+			MIL_Population& population = pKnowledge->GetPopulationKnown();
+            return population.GetWoundedHumans() > 0;
+    }
+    return false;
+}

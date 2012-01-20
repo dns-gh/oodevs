@@ -548,6 +548,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< void( boost::shared_ptr< MIL_Mission_ABC >, const std::string&, int ) >( boost::bind( &MIL_MissionParameterFactory::SetCrowdKnowledgeParameter, this, _1, _2, _3 ) );
     brain[ "DEC_Crowd_ExtractWoundedFromCrowd" ] =
         boost::function< bool( int, const MT_Vector2D* ) >( boost::bind( &DEC_KnowledgePopulationFunctions::ExtractWoundedFromCrowd, boost::ref( GetPion() ), _1, _2 ) );
+	brain[ "DEC_Crowd_HasWoundedHumans" ] =
+        boost::function< bool( int ) >( boost::bind( &DEC_KnowledgePopulationFunctions::HasWoundedHumans, boost::ref( GetPion() ), _1 ) );
 
 
     // Urban knowledges accessors
