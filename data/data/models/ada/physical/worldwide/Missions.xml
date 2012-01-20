@@ -2123,7 +2123,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="pointDebarquement_" name="Debarking point" optional="false" type="Point"/>
       <parameter dia-name="heureDebarquement_" name="Debarking time" optional="false" type="DateTime"/>
     </mission>
-    <mission dia-behavior="tasks.MoveTo" dia-type="tasks.MoveTo" id="4442" name="ML_Security_MoveTo">
+    <mission dia-behavior="tasks.MoveTo" dia-type="tasks.MoveTo" id="4442" name="ML_SECURITY Move to">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2141,7 +2141,11 @@ overwhelming force.]]></doctrine>
       </parameter>
       <parameter dia-name="urgency" name="urgency" optional="true" type="Boolean"/>
     </mission>
-    <mission dia-behavior="tasks.FollowAgents" dia-type="tasks.FollowAgents" id="4443" name="ML_Security_Follow">
+    <mission dia-behavior="tasks.FollowAgents" dia-type="tasks.FollowAgents" id="4443" name="ML_SECURITY Follow">
+      <description>
+        <doctrine><![CDATA[To follow a set of motile agents (unit or crowd). A set of positions can be issued if necessary.]]></doctrine>
+        <usage><![CDATA[Agent will follow the nearest target, try to find position to stay nearby. If positions are issued, agent will choose the position allowing to stay as close as it is possible to the choosen target.]]></usage>
+      </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2163,7 +2167,7 @@ overwhelming force.]]></doctrine>
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="tasks.ConfineUrbanBlocksWithinArea" dia-type="tasks.ConfineUrbanBlocksWithinArea" id="4444" name="ML_Security_Confine population">
+    <mission dia-behavior="tasks.ConfineUrbanBlocksWithinArea" dia-type="tasks.ConfineUrbanBlocksWithinArea" id="4444" name="ML_SECURITY Confine urban blocks within area">
       <description>
         <doctrine><![CDATA[To confine a population into a set of given urban blocks located into the given area.]]></doctrine>
         <usage><![CDATA[An agent moves to a urban block and when the urban block is reached, the agent confines it. The population into the urban block is confined. When several urban blocks are selected, the agent moves to each urban block, one by one, by following a random order.]]></usage>
@@ -2182,7 +2186,7 @@ overwhelming force.]]></doctrine>
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="tasks.UndoConfineUrbanBlocksWithinArea" dia-type="tasks.UndoConfineUrbanBlocksWithinArea" id="4445" name="ML_Security_Lift confinement">
+    <mission dia-behavior="tasks.UndoConfineUrbanBlocksWithinArea" dia-type="tasks.UndoConfineUrbanBlocksWithinArea" id="4445" name="ML_SECURITY Lift urban blocks confinement within area">
       <description>
         <doctrine><![CDATA[To lift the confinement of a population in several urban blocks located into the given area.]]></doctrine>
         <usage><![CDATA[An agent moves to a urban block and when the urban block is reached, the agent lifts its confinement. The population into the urban block is no more confined. When several urban blocks are selected, the agent moves to each urban block, one by one, by following a random order.]]></usage>
@@ -2201,7 +2205,7 @@ overwhelming force.]]></doctrine>
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="tasks.IncreaseResourceNodeProduction" dia-type="tasks.IncreaseResourceNodeProduction" id="4446" name="ML_Security_IncreaseResourceNodeProduction">
+    <mission dia-behavior="tasks.IncreaseResourceNodeProduction" dia-type="tasks.IncreaseResourceNodeProduction" id="4446" name="ML_SECURITY Increase resource node production">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2209,7 +2213,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="resourceNode" name="Resource node" optional="false" type="ResourceNetwork"/>
       <parameter dia-name="quantity" name="quantity" optional="true" type="Integer"/>
     </mission>
-    <mission dia-behavior="tasks.EvacuateUrbanBlocksWithinArea" dia-type="tasks.EvacuateUrbanBlocksWithinArea" id="4448" name="ML_Security_Evacuate population">
+    <mission dia-behavior="tasks.EvacuateUrbanBlocksWithinArea" dia-type="tasks.EvacuateUrbanBlocksWithinArea" id="4448" name="ML_SECURITY Evacuate urban blocks within area ">
       <description>
         <doctrine><![CDATA[To evacuate a population from several urban blocks located into the given area.]]></doctrine>
         <usage><![CDATA[An agent moves to a urban block and when the urban block is reached, the agent evacuates it. The population into the urban block is "evacuated". When several urban blocks are selected, the agent moves to each urban block, one by one, by following a random order.]]></usage>
@@ -2228,7 +2232,7 @@ overwhelming force.]]></doctrine>
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="tasks.UndoEvacuateUrbanBlocksWithinArea" dia-type="tasks.UndoEvacuateUrbanBlocksWithinArea" id="4449" name="ML_Security_Lift population evacuation">
+    <mission dia-behavior="tasks.UndoEvacuateUrbanBlocksWithinArea" dia-type="tasks.UndoEvacuateUrbanBlocksWithinArea" id="4449" name="ML_SECURITY Lift urban blocks evacuation within area">
       <description>
         <doctrine><![CDATA[To lift the evacuation of population from several urban blocks located into the given area.]]></doctrine>
         <usage><![CDATA[An agent moves to a urban block and when the urban block is reached, the agent lifts the evacuation. The population into the urban block is no more evacuated. When several urban blocks are selected, the agent moves to each urban block, one by one, by following a random order.]]></usage>
@@ -2247,18 +2251,18 @@ overwhelming force.]]></doctrine>
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="tasks.EnsureVictimsEvacuation" dia-type="tasks.EnsureVictimsEvacuation" id="4450" name="ML_Security_EnsureVictimsEvacuation">
+    <mission dia-behavior="tasks.EnsureVictimsEvacuation" dia-type="tasks.EnsureVictimsEvacuation" id="4450" name="ML_SECURITY Ensure victims evacuation">
       <description>
-        <doctrine><![CDATA[To evacuate wounded victims within an agent, throught a medical unit ]]></doctrine>
+        <doctrine><![CDATA[To evacuate wounded victims within an agent, throught a medical unit (TC2)]]></doctrine>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="victimUnits" max-occurs="200" min-occurs="1" name="victim units" optional="false" type="Agent"/>
+      <parameter dia-name="victimsUnits" max-occurs="200" min-occurs="1" name="victim units" optional="false" type="Agent"/>
       <parameter dia-name="medicalUnit" name="medical unit (TC2)" optional="false" type="Agent"/>
     </mission>
-    <mission dia-behavior="tasks.ExtractVictimsFromCrowds" dia-type="tasks.ExtractVictimsFromCrowds" id="4451" name="ML_Security_ExtractVictimsFromCrowds">
+    <mission dia-behavior="tasks.ExtractVictimsFromCrowds" dia-type="tasks.ExtractVictimsFromCrowds" id="4451" name="ML_SECURITY Extract victims from crowds">
       <description>
         <doctrine><![CDATA[To extract victims from a set of given crowds agent]]></doctrine>
       </description>
@@ -2272,7 +2276,7 @@ overwhelming force.]]></doctrine>
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="tasks.AlertTask" dia-type="tasks.AlertTask" id="4452" name="ML_Security_Alert_Populations">
+    <mission dia-behavior="tasks.AlertTask" dia-type="tasks.AlertTask" id="4452" name="ML_SECURITY Alert urban blocks within area">
       <description>
         <doctrine><![CDATA[To alert populations from urban blocks located in the specified area.]]></doctrine>
         <usage><![CDATA[Agent visits each accessible urban block within the specified area. Order of traversal is not specified. Upon reaching a urban block, in case it is populated agent alerts the populations therein, before moving to the next non visited urban block.  ]]></usage>
@@ -2291,7 +2295,7 @@ overwhelming force.]]></doctrine>
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="tasks.UndoAlertTask" dia-type="tasks.UndoAlertTask" id="4453" name="ML_Security_Lift_Alert">
+    <mission dia-behavior="tasks.UndoAlertTask" dia-type="tasks.UndoAlertTask" id="4453" name="ML_SECURITY Lift urban blocks alert within area">
       <description>
         <doctrine><![CDATA[To un-alert populations from urban blocks located in the specified area.]]></doctrine>
         <usage><![CDATA[Agent visits each accessible urban block within the specified area. Order of traversal is not specified. Upon reaching a urban block, in case it is populated agent un-alerts the populations therein, before moving to the next non visited urban block.  ]]></usage>
@@ -2310,7 +2314,7 @@ overwhelming force.]]></doctrine>
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="tasks.ActivateResourceNodes" dia-type="tasks.ActivateResourceNodes" id="4454" name="ML_Security_Enable_ResourceNodes">
+    <mission dia-behavior="tasks.ActivateResourceNodes" dia-type="tasks.ActivateResourceNodes" id="4454" name="ML_SECURITY Enable resource nodes within area">
       <description>
         <doctrine><![CDATA[To enable specified resource nodes in urban blocks.]]></doctrine>
         <usage><![CDATA[Agent visits each accessible urban block containing specified resource nodes. Order of traversal is that of inputed resource nodes. Upon reaching a urban block, in case the resource nodes of interest are not already activated, agent activates them, before moving to the next urban block containng resource nodes to activate.]]></usage>
@@ -2321,7 +2325,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="resourceNodes" max-occurs="1000000" min-occurs="1" name="resourceNodes" optional="false" type="ResourceNetwork"/>
     </mission>
-    <mission dia-behavior="tasks.DeactivateResourceNodes" dia-type="tasks.DeactivateResourceNodes" id="4455" name="ML_Security_Disable_ResourceNodes">
+    <mission dia-behavior="tasks.DeactivateResourceNodes" dia-type="tasks.DeactivateResourceNodes" id="4455" name="ML_SECURITY Disable resource nodes wthin area">
       <description>
         <doctrine><![CDATA[To disable specified resource nodes in urban blocks.]]></doctrine>
         <usage><![CDATA[Agent visits each accessible urban block containing specified resource nodes. Order of traversal is that of inputed resource nodes. Upon reaching a urban block, in case the resource nodes of interest are activated, agent desactivates them, before moving to the next urban block containng resource nodes to desactivate.]]></usage>
@@ -2331,6 +2335,24 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="resourceNodes" max-occurs="10000000" min-occurs="1" name="Resource nodes to disable" optional="false" type="ResourceNetwork"/>
+    </mission>
+    <mission dia-behavior="tasks.Patrol" dia-type="tasks.Patrol" id="4456" name="ML_SECURITY Patrol">
+      <description>
+        <doctrine><![CDATA[To visit a given set of entities in a given order.]]></doctrine>
+        <usage><![CDATA[ Agent will move along issued positiojn. When it has visited the last position, the agent starts over with the first one. The set of entities and the order of visit are user defined.]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="destinations" max-occurs="200" min-occurs="1" name="way points" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="ObjectKnowledge"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
     </mission>
   </units>
   <automats>
@@ -3684,4 +3706,4 @@ overwhelming force.]]></doctrine>
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="2186823571" -->
+<!-- signature="1403375210" -->
