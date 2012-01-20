@@ -71,7 +71,7 @@
       </communication>
       <populations>
         <population attitude="calme" id="5" name="Standard Crowd [5]" position="29TNF3511055655" type="Standard Crowd">
-          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <composition contaminated="0" dead="0" healthy="2000" wounded="300"/>
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
@@ -79,6 +79,13 @@
         </population>
         <population attitude="calme" id="6" name="Standard Crowd [6]" position="29TNF3639156019" type="Standard Crowd">
           <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="44" name="Standard Crowd [44]" position="29TNF3611756169" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="1500" wounded="1000"/>
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
@@ -187,4 +194,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="1044708306" -->
+<!-- signature="3525011002" -->
