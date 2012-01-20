@@ -2310,7 +2310,7 @@ overwhelming force.]]></doctrine>
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="tasks.EnableResourceNodesTest" dia-type="tasks.EnableResourceNodesTest" id="4454" name="ML_Security_Enable_ResourceNodes">
+    <mission dia-behavior="tasks.ActivateResourceNodes" dia-type="tasks.ActivateResourceNodes" id="4454" name="ML_Security_Enable_ResourceNodes">
       <description>
         <doctrine><![CDATA[To enable specified resource nodes in urban blocks.]]></doctrine>
         <usage><![CDATA[Agent visits each accessible urban block containing specified resource nodes. Order of traversal is that of inputed resource nodes. Upon reaching a urban block, in case the resource nodes of interest are not already activated, agent activates them, before moving to the next urban block containng resource nodes to activate.]]></usage>
@@ -2319,9 +2319,9 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="resourceNode" name="Resource nodes to enable" optional="false" type="ResourceNetwork"/>
+      <parameter dia-name="resourceNodes" max-occurs="1000000" min-occurs="1" name="resourceNodes" optional="false" type="ResourceNetwork"/>
     </mission>
-    <mission dia-behavior="tasks.DisableResourceNodeTest" dia-type="tasks.DisableResourceNodeTest" id="4455" name="ML_Security_Disable_ResourceNodes">
+    <mission dia-behavior="tasks.DeactivateResourceNodes" dia-type="tasks.DeactivateResourceNodes" id="4455" name="ML_Security_Disable_ResourceNodes">
       <description>
         <doctrine><![CDATA[To disable specified resource nodes in urban blocks.]]></doctrine>
         <usage><![CDATA[Agent visits each accessible urban block containing specified resource nodes. Order of traversal is that of inputed resource nodes. Upon reaching a urban block, in case the resource nodes of interest are activated, agent desactivates them, before moving to the next urban block containng resource nodes to desactivate.]]></usage>
@@ -2330,7 +2330,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="resourceNode" name="Resource nodes to disable" optional="false" type="ResourceNetwork"/>
+      <parameter dia-name="resourceNodes" max-occurs="10000000" min-occurs="1" name="Resource nodes to disable" optional="false" type="ResourceNetwork"/>
     </mission>
   </units>
   <automats>
@@ -3684,4 +3684,4 @@ overwhelming force.]]></doctrine>
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="1344403035" -->
+<!-- signature="2186823571" -->
