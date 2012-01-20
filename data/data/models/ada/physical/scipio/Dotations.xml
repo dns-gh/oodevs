@@ -2768,10 +2768,12 @@
   <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="143" id-nature="3" logistic-supply-class="Pieces" name="Rechange NTI 3 glaise" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
   <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="8970 14 481 4053" id="144" id-nature="3" logistic-supply-class="Unite vivre" name="RATION DE COMBAT 1" nature="Solide" package-mass="0.015" package-size="10" package-volume="0.01"/>
   <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="8960 14 489 7152" id="145" id-nature="3" logistic-supply-class="Unite vivre" name="EAU MINERALE 1L T 1" nature="Solide" package-mass="1" package-size="1000" package-volume="1"/>
+  <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="151" id-nature="3" logistic-supply-class="Unite vivre" name="Conteneur de transport post mortem" nature="Solide" package-mass="0.1" package-size="1" package-volume="2"/>
+  <resource category="ration" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="152" id-nature="3" logistic-supply-class="Unite vivre" name="Sac de transport de dépouille mortelle" nature="Solide" package-mass="0.001" package-size="1" package-volume="1"/>
   <resource category="agent extincteur" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="146" id-nature="1" logistic-supply-class="Unite vivre" name="h2o" nature="Kerosene" package-mass="1" package-size="0.001" package-volume="1"/>
   <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="147" id-nature="6" logistic-supply-class="Unite vivre" name="electricite" nature="Electric" package-mass="1" package-size="1" package-volume="1"/>
   <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="148" id-nature="5" logistic-supply-class="Unite vivre" name="eau courante" nature="Liquid" package-mass="1" package-size="1" package-volume="1"/>
   <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="149" id-nature="2" logistic-supply-class="Unite vivre" name="carburant" nature="Gasoil" package-mass="1" package-size="1" package-volume="1"/>
   <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="150" id-nature="3" logistic-supply-class="Unite vivre" name="nourriture" nature="Solide" package-mass="1" package-size="1" package-volume="1"/>
 </resources>
-<!-- signature="1688797616" -->
+<!-- signature="3672825380" -->

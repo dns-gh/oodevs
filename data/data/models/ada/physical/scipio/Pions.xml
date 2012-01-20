@@ -11787,6 +11787,11 @@
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="3" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="ration">
+        <resource capacity="100" logistic-threshold="10" name="Conteneur de transport post mortem" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <stocks>
       <stock logistic-supply-class="Unite vivre" threshold="10"/>
     </stocks>
@@ -13031,6 +13036,11 @@
       <crew-rank count="7" type="Officier"/>
       <crew-rank count="57" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="ration">
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <stocks>
       <stock logistic-supply-class="Unite essence" threshold="50"/>
       <stock logistic-supply-class="Unite tranche D" threshold="50"/>
@@ -13072,6 +13082,11 @@
       <crew-rank count="3" type="Officier"/>
       <crew-rank count="34" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="ration">
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <stocks>
       <stock logistic-supply-class="Unite essence" threshold="50"/>
       <stock logistic-supply-class="Unite tranche D" threshold="50"/>
@@ -13117,6 +13132,11 @@
       <crew-rank count="6" type="Officier"/>
       <crew-rank count="50" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="ration">
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <stocks>
       <stock logistic-supply-class="Unite essence" threshold="50"/>
       <stock logistic-supply-class="Unite tranche D" threshold="50"/>
@@ -13163,6 +13183,11 @@
       <crew-rank count="9" type="Officier"/>
       <crew-rank count="88" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="ration">
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <stocks>
       <stock logistic-supply-class="Unite essence" threshold="50"/>
       <stock logistic-supply-class="Unite tranche D" threshold="50"/>
@@ -13207,6 +13232,11 @@
       <crew-rank count="21" type="Officier"/>
       <crew-rank count="98" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="ration">
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <stocks>
       <stock logistic-supply-class="Unite essence" threshold="50"/>
       <stock logistic-supply-class="Unite tranche D" threshold="50"/>
@@ -13247,6 +13277,11 @@
       <crew-rank count="8" type="Officier"/>
       <crew-rank count="73" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="ration">
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <stocks>
       <stock logistic-supply-class="Unite essence" threshold="50"/>
       <stock logistic-supply-class="Unite tranche D" threshold="50"/>
@@ -13291,6 +13326,11 @@
       <crew-rank count="6" type="Officier"/>
       <crew-rank count="29" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="ration">
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <stocks>
       <stock logistic-supply-class="Unite essence" threshold="50"/>
       <stock logistic-supply-class="Unite tranche D" threshold="50"/>
@@ -13335,6 +13375,11 @@
       <crew-rank count="10" type="Officier"/>
       <crew-rank count="81" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="ration">
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <stocks>
       <stock logistic-supply-class="Unite essence" threshold="50"/>
       <stock logistic-supply-class="Unite tranche D" threshold="50"/>
@@ -13379,6 +13424,11 @@
       <crew-rank count="3" type="Officier"/>
       <crew-rank count="71" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="ration">
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <stocks>
       <stock logistic-supply-class="Unite essence" threshold="50"/>
       <stock logistic-supply-class="Unite tranche D" threshold="50"/>
@@ -13422,6 +13472,11 @@
       <crew-rank count="8" type="Officier"/>
       <crew-rank count="69" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="ration">
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <stocks>
       <stock logistic-supply-class="Unite essence" threshold="50"/>
       <stock logistic-supply-class="Unite tranche D" threshold="50"/>
@@ -13463,6 +13518,11 @@
       <crew-rank count="6" type="Officier"/>
       <crew-rank count="70" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="ration">
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <stocks>
       <stock logistic-supply-class="Unite essence" threshold="50"/>
       <stock logistic-supply-class="Unite tranche D" threshold="50"/>
@@ -13508,6 +13568,11 @@
       <crew-rank count="18" type="Officier"/>
       <crew-rank count="164" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="ration">
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <stocks>
       <stock logistic-supply-class="Unite essence" threshold="50"/>
       <stock logistic-supply-class="Unite tranche D" threshold="50"/>
@@ -13555,6 +13620,11 @@
       <crew-rank count="16" type="Officier"/>
       <crew-rank count="130" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="ration">
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <stocks>
       <stock logistic-supply-class="Unite essence" threshold="50"/>
       <stock logistic-supply-class="Unite tranche D" threshold="50"/>
@@ -13600,6 +13670,11 @@
       <crew-rank count="7" type="Officier"/>
       <crew-rank count="78" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="ration">
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <stocks>
       <stock logistic-supply-class="Unite essence" threshold="50"/>
       <stock logistic-supply-class="Unite tranche D" threshold="50"/>
@@ -13648,6 +13723,11 @@
       <crew-rank count="8" type="Officier"/>
       <crew-rank count="84" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="ration">
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <stocks>
       <stock logistic-supply-class="Unite essence" threshold="50"/>
       <stock logistic-supply-class="Unite tranche D" threshold="50"/>
@@ -13692,6 +13772,11 @@
       <crew-rank count="6" type="Officier"/>
       <crew-rank count="61" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="ration">
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <stocks>
       <stock logistic-supply-class="Unite essence" threshold="50"/>
       <stock logistic-supply-class="Unite tranche D" threshold="50"/>
@@ -13731,6 +13816,11 @@
       <crew-rank count="2" type="Officier"/>
       <crew-rank count="6" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="ration">
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <stocks>
       <stock logistic-supply-class="Unite essence" threshold="50"/>
       <stock logistic-supply-class="Unite tranche D" threshold="50"/>
@@ -13775,6 +13865,11 @@
       <crew-rank count="10" type="Officier"/>
       <crew-rank count="81" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="ration">
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <stocks>
       <stock logistic-supply-class="Unite essence" threshold="50"/>
       <stock logistic-supply-class="Unite tranche D" threshold="50"/>
@@ -13819,6 +13914,11 @@
       <crew-rank count="3" type="Officier"/>
       <crew-rank count="71" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="ration">
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <stocks>
       <stock logistic-supply-class="Unite essence" threshold="50"/>
       <stock logistic-supply-class="Unite tranche D" threshold="50"/>
@@ -13867,6 +13967,11 @@
       <crew-rank count="7" type="Officier"/>
       <crew-rank count="57" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="ration">
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <stocks>
       <stock logistic-supply-class="Unite essence" threshold="50"/>
       <stock logistic-supply-class="Unite tranche D" threshold="50"/>
@@ -13907,6 +14012,11 @@
       <crew-rank count="8" type="Officier"/>
       <crew-rank count="73" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="ration">
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <stocks>
       <stock logistic-supply-class="Unite essence" threshold="50"/>
       <stock logistic-supply-class="Unite tranche D" threshold="50"/>
@@ -13955,6 +14065,11 @@
       <crew-rank count="8" type="Officier"/>
       <crew-rank count="84" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="ration">
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <stocks>
       <stock logistic-supply-class="Unite essence" threshold="50"/>
       <stock logistic-supply-class="Unite tranche D" threshold="50"/>
@@ -14002,6 +14117,11 @@
       <crew-rank count="9" type="Officier"/>
       <crew-rank count="54" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="ration">
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <stocks>
       <stock logistic-supply-class="Unite essence" threshold="50"/>
       <stock logistic-supply-class="Unite tranche D" threshold="50"/>
@@ -14048,6 +14168,11 @@
       <crew-rank count="7" type="Officier"/>
       <crew-rank count="57" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="ration">
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <stocks>
       <stock logistic-supply-class="Unite essence" threshold="50"/>
       <stock logistic-supply-class="Unite tranche D" threshold="50"/>
@@ -14093,6 +14218,11 @@
       <crew-rank count="7" type="Officier"/>
       <crew-rank count="57" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="ration">
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <stocks>
       <stock logistic-supply-class="Unite essence" threshold="50"/>
       <stock logistic-supply-class="Unite tranche D" threshold="50"/>
@@ -14136,6 +14266,11 @@
       <crew-rank count="16" type="Officier"/>
       <crew-rank count="130" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="ration">
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <stocks>
       <stock logistic-supply-class="Unite essence" threshold="50"/>
       <stock logistic-supply-class="Unite tranche D" threshold="50"/>
@@ -17113,7 +17248,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.INF" id="597" name="GLAISE - INF . masalife.inf BTR 80" type="Pion INF">
+  <unit decisional-model="Masalife.INF" id="597" name="GLAISE - INF . BTR 80" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
       <equipment count="3" crew="3" major="true" type="BTR 80"/>
@@ -18103,6 +18238,11 @@
       <crew-rank count="7" type="Officier"/>
       <crew-rank count="57" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="ration">
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <stocks>
       <stock logistic-supply-class="Unite essence" threshold="50"/>
       <stock logistic-supply-class="Unite tranche D" threshold="50"/>
@@ -19591,4 +19731,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="1148549471" -->
+<!-- signature="3964972455" -->

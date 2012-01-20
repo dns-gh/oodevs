@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <funeral model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/physical/Funeral.xsd">
   <fake-transporter speed="60"/>
-  <packagings/>
+  <packagings>
+    <packaging process-duration="1m" resource="Sac de transport de dépouille mortelle" terminal="false"/>
+    <packaging process-duration="10m" resource="Conteneur de transport post mortem" terminal="true"/>
+  </packagings>
 </funeral>
-<!-- signature="2812546473" -->
+<!-- signature="3197909900" -->
