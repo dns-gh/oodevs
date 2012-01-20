@@ -17248,7 +17248,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.INF" id="597" name="GLAISE - INF . masalife.inf BTR 80" type="Pion INF">
+  <unit decisional-model="Masalife.INF" id="597" name="GLAISE - INF . BTR 80" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
       <equipment count="3" crew="3" major="true" type="BTR 80"/>
@@ -19731,4 +19731,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="2496574861" -->
+<!-- signature="0832096411" -->
