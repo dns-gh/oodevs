@@ -84,7 +84,7 @@ do
         self.listeUnitesPretesPrecedantes = self.listeUnitesPretes
         self.listeUnitesPretes = {}
         self.listeUnitesPretes = S_Cherche_Filtre_TypeMission( self._namedParams.unitesAHelitransporter, "T_Mission_Pion_SeFaireTransporter" )
-        local listelisteUnitesPretesBM = S_Cherche_Filtre_TypeMission( self._namedParams.unitesAHelitransporter, "T_Task_Pion_SeFaireTransporter" )
+        local listelisteUnitesPretesBM = S_Cherche_Filtre_TypeMission( self._namedParams.unitesAHelitransporter, "france.military.platoon.tasks.SeFaireTransporter" )
         for _,xBM in pairs( listelisteUnitesPretesBM or emptyTable ) do
             local _continue = true
             DIA_PushBack( self.listeUnitesPretes, xBM )
