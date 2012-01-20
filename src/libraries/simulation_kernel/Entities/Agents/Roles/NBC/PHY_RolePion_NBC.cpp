@@ -257,7 +257,7 @@ bool PHY_RolePion_NBC::IsContaminated() const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_NBC::IsIntoxicated() const
 {
-    return poisoned_;
+    return lastStatePoisoning_;
 }
 
 // -----------------------------------------------------------------------------
