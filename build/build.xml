@@ -1493,6 +1493,7 @@
             <include name="exercises/scipio/exercisesVA/Poseidon VA AppuiCombat/**"/>
             <include name="exercises/scipio/exercisesVA/Poseidon VA Automates/**"/>
             <include name="exercises/scipio/exercisesVA/Poseidon VA Acteurs Civils/**"/>
+            <include name="exercises/scipio/exercisesVA/Poseidon VA Missions communes/**"/>
             <include name="exercises/scipio/exercisesVA/Poseidon VA Soutien/**"/>
             <include name="exercises/scipio/exercisesVA/Poseidon VA Mix/**"/>
             <include name="exercises/scipio/exercisesVA/VEM_Foule/**"/>
