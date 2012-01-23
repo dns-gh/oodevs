@@ -26,6 +26,7 @@ class MIL_Inhabitant;
 class MIL_Population;
 class KnowledgeVisitor_ABC;
 class MIL_Color;
+class KnowledgesVisitor_ABC;
 
 namespace sword
 {
@@ -111,6 +112,7 @@ public:
     virtual void InitializeDiplomacy( xml::xistream& xis ) = 0;
     virtual void OnReceiveChangeDiplomacy( const sword::MissionParameters& msg ) = 0;
     virtual void ApplyOnKnowledgeGroup( KnowledgeVisitor_ABC& ) = 0;
+    virtual void Accept( KnowledgesVisitor_ABC& visitor ) const = 0;
     //@}
 
     //! @name Accessors

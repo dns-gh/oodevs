@@ -635,3 +635,14 @@ DEC_KS_UrbanKnowledgeSynthetizer& DEC_KnowledgeBlackBoard_Army::GetKsUrbanKnowle
     assert( pKsUrbanKnowledgeSynthetizer_ );
     return *pKsUrbanKnowledgeSynthetizer_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Army::Accept
+// Created: LGY 2012-01-23
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeBlackBoard_Army::Accept( KnowledgesVisitor_ABC& visitor ) const
+{
+    if( pKnowledgeObjectContainer_ )
+        pKnowledgeObjectContainer_->Accept( visitor );
+}
+

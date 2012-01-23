@@ -99,6 +99,7 @@ public:
     virtual void UpdateKnowledges( int currentTimeStep );
     virtual void CleanKnowledges();
     virtual void ApplyOnKnowledgeGroup( KnowledgeVisitor_ABC& );
+    virtual void Accept( KnowledgesVisitor_ABC& visitor ) const;
     //@}
 
     //! @name Hierarchy
