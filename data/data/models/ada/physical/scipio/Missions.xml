@@ -1835,13 +1835,6 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="ami_" name="Ami" optional="false" type="Automat"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_RENS_ROHUM_SExfiltrer" dia-type="T_Mission_Automate_RENS_ROHUM_SExfiltrer" id="322" mrt-dia-behavior="MIS_Automate_MRT_RENS_ROHUM_SExfiltrer" name="AUTOMATE RENS ROHUM SExfiltrer" package="intelligence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="zoneDeRegroupement_" name="Zone de regroupement" optional="false" type="Polygon"/>
-    </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_RENS_ROIM_CL289_RenseignerSur" dia-type="T_Mission_Automate_RENS_ROIM_CL289_RenseignerSur" id="323" mrt-dia-behavior="MIS_Automate_MRT_RENS_ROIM_CL289_RenseignerSur" name="AUTOMATE RENS ROIM CL289 Renseigner Sur" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -2924,6 +2917,13 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="ficelleDeVol" name="Ficelle de vol" optional="false" type="Path"/>
     </mission>
+    <mission cdt-dia-behavior="france.military.company.combat.support.rens.tasks.ROHUM_SExfiltrer" dia-type="france.military.company.combat.support.rens.tasks.ROHUM_SExfiltrer" id="28781" mrt-dia-behavior="france.military.company.combat.support.rens.tasks.ROHUM_SExfiltrer" name="AUTOMATE RENS ROHUM SExfiltrer" package="intelligence">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="area" name="Zone de regroupement" optional="false" type="Polygon"/>
+    </mission>
   </automats>
   <populations>
     <mission dia-behavior="france.military.crowd.tasks.Deteriorer" dia-type="france.military.crowd.tasks.Deteriorer" id="3008" name="FOULES Deteriorer" package="attack">
@@ -3154,4 +3154,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_RejoindrePointLancement" id="405" name="Rejoindre point de lancement"/>
   </fragorders>
 </missions>
-<!-- signature="2825221920" -->
+<!-- signature="1705748974" -->
