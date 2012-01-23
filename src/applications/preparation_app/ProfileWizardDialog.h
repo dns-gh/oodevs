@@ -60,6 +60,7 @@ private:
         eSIDESUPERVISOR,
         eDIREX,
         eANALYSIS,
+        eGESTIM,
         eNbRoles
     };
     //@}

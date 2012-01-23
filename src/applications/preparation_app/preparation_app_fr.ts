@@ -1483,30 +1483,6 @@
         <translation>Sélectionner les profils à générer: </translation>
     </message>
     <message>
-        <source>one ANIBAS profile per low-level friend formation</source>
-        <translation>un profil ANIBAS par formation de plus bas niveau d&apos;un camp AMI</translation>
-    </message>
-    <message>
-        <source>one ENIEX profile per low-level enemy formation</source>
-        <translation>un profil ENIEX par formation de plus bas niveau d&apos;un camp ENNEMI</translation>
-    </message>
-    <message>
-        <source>one global SUPERVISOR profile</source>
-        <translation>un profil SUPERVISEUR global</translation>
-    </message>
-    <message>
-        <source>one SUPERVISOR profile per side</source>
-        <translation>un profil SUPERVISEUR par camp</translation>
-    </message>
-    <message>
-        <source>one DIREX profile</source>
-        <translation>un profil DIREX</translation>
-    </message>
-    <message>
-        <source>one ANALYSIS profile</source>
-        <translation>un profil ANALYSTE</translation>
-    </message>
-    <message>
         <source>Warning</source>
         <translation>Attention</translation>
     </message>
@@ -1517,6 +1493,34 @@
     <message>
         <source>Some profiles have similar names. Please edit them manually.</source>
         <translation>Certains profils ont des noms similaires. Veuillez les éditer manuellement.</translation>
+    </message>
+    <message>
+        <source>one Anibas profile per low-level friend formation</source>
+        <translation>un profil Anibas par formation de plus bas niveau d&apos;un camp Ami</translation>
+    </message>
+    <message>
+        <source>one Eniex profile per low-level enemy formation</source>
+        <translation>un profil Eniex par formation de plus bas niveau d&apos;un camp Ennemi</translation>
+    </message>
+    <message>
+        <source>one global Supervisor profile</source>
+        <translation>un profil Superviseur global</translation>
+    </message>
+    <message>
+        <source>one Supervisor profile per side</source>
+        <translation>un profil Superviseur par camp</translation>
+    </message>
+    <message>
+        <source>one Direx profile</source>
+        <translation>un profil Direx</translation>
+    </message>
+    <message>
+        <source>one Analysis profile</source>
+        <translation>un profil Analyste</translation>
+    </message>
+    <message>
+        <source>one Gestim profile</source>
+        <translation>un profil Gestim</translation>
     </message>
 </context>
 <context>

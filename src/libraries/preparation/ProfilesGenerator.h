@@ -43,6 +43,7 @@ public:
     void GenerateSIDESUPERVISOR();
     void GenerateDIREX();
     void GenerateANALYSIS();
+    void GenerateGESTIM();
     //@}
 
 private:

@@ -1483,30 +1483,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>one ANIBAS profile per low-level friend formation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>one ENIEX profile per low-level enemy formation</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>one global SUPERVISOR profile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>one SUPERVISOR profile per side</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>one DIREX profile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>one ANALYSIS profile</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Warning</source>
         <translation type="unfinished">Alerta</translation>
     </message>
@@ -1516,6 +1492,34 @@
     </message>
     <message>
         <source>Some profiles have similar names. Please edit them manually.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>one Anibas profile per low-level friend formation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>one Eniex profile per low-level enemy formation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>one global Supervisor profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>one Supervisor profile per side</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>one Direx profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>one Analysis profile</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>one Gestim profile</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

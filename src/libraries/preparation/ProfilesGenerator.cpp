@@ -77,7 +77,7 @@ void ProfilesGenerator::GenerateENIEX()
 // -----------------------------------------------------------------------------
 void ProfilesGenerator::GenerateSUPERVISOR()
 {
-    GenerateSUPERVISOR( "SUPERVISEUR", "supervisor" );
+    GenerateSUPERVISOR( "Superviseur", "supervisor" );
 }
 
 namespace
@@ -102,7 +102,7 @@ void ProfilesGenerator::GenerateSIDESUPERVISOR()
     {
         const Entity_ABC& entity = it.NextElement();
 
-        profiles_.CreateProfile( "SUPERVISEUR " + GetEntityName( entity ), "supervisor", entity, true );
+        profiles_.CreateProfile( "Superviseur " + GetEntityName( entity ), "supervisor", entity, true );
     }
 }
 
@@ -112,7 +112,7 @@ void ProfilesGenerator::GenerateSIDESUPERVISOR()
 // -----------------------------------------------------------------------------
 void ProfilesGenerator::GenerateDIREX()
 {
-    GenerateSUPERVISOR( "DIREX", "direx" );
+    GenerateSUPERVISOR( "Direx", "direx" );
 }
 
 // -----------------------------------------------------------------------------
@@ -121,7 +121,16 @@ void ProfilesGenerator::GenerateDIREX()
 // -----------------------------------------------------------------------------
 void ProfilesGenerator::GenerateANALYSIS()
 {
-    GenerateSUPERVISOR( "ANALYSTE", "analysis" );
+    GenerateSUPERVISOR( "Analyste", "analysis" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfilesGenerator::GenerateGESTIM
+// Created: LGY 2012-01-23
+// -----------------------------------------------------------------------------
+void ProfilesGenerator::GenerateGESTIM()
+{
+    GenerateSUPERVISOR( "Gestim", "service-gestim" );
 }
 
 // -----------------------------------------------------------------------------

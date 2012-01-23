@@ -81,12 +81,13 @@ ProfileWizardDialog::ProfileWizardDialog( QWidget* parent, const Model& model, P
             layout->addWidget( checkBoxes_[ i ] );
             connect( checkBoxes_[ i ], SIGNAL( stateChanged( int ) ), SLOT( OnChecked() ) );
         }
-        checkBoxes_[ eANIBAS         ]->setText( tr( "one ANIBAS profile per low-level friend formation" ) );
-        checkBoxes_[ eENIEX          ]->setText( tr( "one ENIEX profile per low-level enemy formation" ) );
-        checkBoxes_[ eSUPERVISOR     ]->setText( tr( "one global SUPERVISOR profile" ) );
-        checkBoxes_[ eSIDESUPERVISOR ]->setText( tr( "one SUPERVISOR profile per side" ) );
-        checkBoxes_[ eDIREX          ]->setText( tr( "one DIREX profile" ) );
-        checkBoxes_[ eANALYSIS       ]->setText( tr( "one ANALYSIS profile" ) );
+        checkBoxes_[ eANIBAS         ]->setText( tr( "one Anibas profile per low-level friend formation" ) );
+        checkBoxes_[ eENIEX          ]->setText( tr( "one Eniex profile per low-level enemy formation" ) );
+        checkBoxes_[ eSUPERVISOR     ]->setText( tr( "one global Supervisor profile" ) );
+        checkBoxes_[ eSIDESUPERVISOR ]->setText( tr( "one Supervisor profile per side" ) );
+        checkBoxes_[ eDIREX          ]->setText( tr( "one Direx profile" ) );
+        checkBoxes_[ eANALYSIS       ]->setText( tr( "one Analysis profile" ) );
+        checkBoxes_[ eGESTIM         ]->setText( tr( "one Gestim profile" ) );
     }
 
     {
@@ -169,6 +170,8 @@ void ProfileWizardDialog::OnConfirmation( int result )
             generator_->GenerateDIREX();
         if( checkBoxes_[ eANALYSIS ]->isChecked() )
             generator_->GenerateANALYSIS();
+        if( checkBoxes_[ eGESTIM ]->isChecked() )
+            generator_->GenerateGESTIM();
         if( profiles_.CheckUnicityAndRename() )
             QMessageBox::warning( this, tr( "Warning" ), tr( "Some profiles have similar names. Please edit them manually.") );
     }
