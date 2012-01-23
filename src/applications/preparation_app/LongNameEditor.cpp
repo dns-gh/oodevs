@@ -174,6 +174,26 @@ std::string LongNameEditor::GetCountryAlias( const std::string& country ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: LongNameEditor::RemoveCountryEnding
+// Created: MMC 2012-01-23
+// -----------------------------------------------------------------------------
+void LongNameEditor::RemoveCountryEnding( const Entity_ABC& entity, QString& name ) const
+{
+    if( DictionaryExtensions* ext = const_cast< Entity_ABC& >( entity ).Retrieve< DictionaryExtensions >() )
+    {
+        std::string country = ext->GetValue( "Nationalite" );
+        if ( country.empty() )
+            return;
+        std::string countryEnding( "." + GetCountryAlias( country ) );
+        if( name.endsWith( countryEnding.c_str() ) )
+        {
+            unsigned int endingLength = static_cast< unsigned int >( countryEnding.length() );
+            name.remove( name.length() - endingLength, endingLength );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: LongNameEditor::TransmitToSubordinates
 // Created: JSR 2011-09-13
 // -----------------------------------------------------------------------------
@@ -182,13 +202,16 @@ void LongNameEditor::TransmitToSubordinates( const Entity_ABC& entity, const QSt
     const TacticalHierarchies* pTactical = entity.Retrieve< TacticalHierarchies >();
     if( pTactical )
     {
+        QString nameNoCountry( name );
+        RemoveCountryEnding( entity, nameNoCountry );
         tools::Iterator< const Entity_ABC& > children = pTactical->CreateSubordinateIterator();
         while( children.HasMoreElements() )
         {
             Entity_ABC& child = const_cast< Entity_ABC& >( children.NextElement() );
             QString childName = GetEntityName( child );
             if( !IsBattalionOrHigher( child ) )
-                childName += "." + name;
+                childName += "." + nameNoCountry;
+
             SetExtension( child, childName, attribute );
             TransmitToSubordinates( child, childName, attribute );
         }
@@ -221,9 +244,11 @@ void LongNameEditor::SetExtension( Entity_ABC& entity, const QString& name, cons
         {
             ext->SetEnabled( true );
             QString longName = name;
-            std::string country = ext->GetValue( "Nationalite" );
-            if( !country.empty() )
-                longName += ( "." + GetCountryAlias( country ) ).c_str();
+            std::string country = ext->GetValue( "Nationalite" );         
+            std::string countryEnding( "." + GetCountryAlias( country ) );
+            if( !country.empty() && !longName.endsWith( countryEnding.c_str() ) )
+                longName += countryEnding.c_str();
+
             longName = longName.remove( ' ' ).replace( 'é', "e", Qt::CaseInsensitive ).replace( 'è', "e", Qt::CaseInsensitive )
                 .replace( 'ç', "c", Qt::CaseInsensitive ).replace( 'à', "a", Qt::CaseInsensitive ).replace( QRegExp( "[^a-zA-Z0-9.]" ), "" )
                 .toUpper();

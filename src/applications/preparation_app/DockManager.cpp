@@ -18,6 +18,7 @@
 #include "PreparationProfile.h"
 #include "PropertiesPanel.h"
 #include "CreationPanels.h"
+#include "ExtensionsPanel.h"
 #include "LivingAreaPanel.h"
 #include "ResourceNetworkDialog.h"
 #include "preparation/Model.h"
@@ -27,7 +28,6 @@
 #include "clients_gui/AggregateToolbar.h"
 #include "clients_gui/EntitySearchBox.h"
 #include "clients_gui/LogisticList.h"
-#include "clients_gui/ExtensionsPanel.h"
 #include "clients_gui/GlProxy.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -122,7 +122,7 @@ DockManager::DockManager( QMainWindow* parent, kernel::Controllers& controllers,
     }
     // Extensions panel
     {
-        pExtensionsPanel_ = new gui::ExtensionsPanel( parent, controllers, staticModel.extensions_, model.agents_, factory, icons, PreparationProfile::GetProfile(), "ExtensionsPanel" );
+        pExtensionsPanel_ = new ExtensionsPanel( parent, controllers, staticModel.extensions_, model.agents_, factory, icons, PreparationProfile::GetProfile(), "ExtensionsPanel" );
         parent->addDockWidget( Qt::LeftDockWidgetArea, pExtensionsPanel_ );
         pExtensionsPanel_->hide();
         dockWidgets_.push_back( pExtensionsPanel_ );
