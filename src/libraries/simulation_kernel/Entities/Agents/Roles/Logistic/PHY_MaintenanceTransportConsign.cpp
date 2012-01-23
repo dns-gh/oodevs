@@ -109,7 +109,7 @@ bool PHY_MaintenanceTransportConsign::DoWaitingForCarrier()
         if( pLogisticManager )
         {
             PHY_RoleInterface_Maintenance* newPion = pLogisticManager->MaintenanceFindAlternativeTransportHandler( *pComposanteState_ );
-            if( newPion != &GetPionMaintenance() && newPion->HandleComposanteForTransport( *pComposanteState_ ) )
+            if( newPion && newPion != &GetPionMaintenance() && newPion->HandleComposanteForTransport( *pComposanteState_ ) )
             {
                 EnterStateFinished();
                 pComposanteState_ = 0; // Crade

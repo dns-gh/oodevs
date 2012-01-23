@@ -101,7 +101,7 @@ void PHY_MedicalCollectionConsign::CreateCollectionAmbulance()
             if( pLogisticManager )
             {
                 PHY_RoleInterface_Medical* newPion = pLogisticManager->MedicalFindAlternativeCollectionHandler( *pHumanState_ );
-                if( newPion != &GetPionMedical() && newPion->HandleHumanForCollection( *pHumanState_ ) )
+                if( newPion && newPion != &GetPionMedical() && newPion->HandleHumanForCollection( *pHumanState_ ) )
                 {
                     EnterStateFinished();
                     pHumanState_ = 0; // Crade

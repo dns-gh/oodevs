@@ -96,7 +96,7 @@ bool PHY_MedicalHealingConsign::DoWaitingForHealing()
         if( pLogisticManager )
         {
             PHY_RoleInterface_Medical* newPion = pLogisticManager->MedicalFindAlternativeHealingHandler( *pHumanState_ );
-            if( newPion != &GetPionMedical() && newPion->HandleHumanForHealing( *pHumanState_ ) )
+            if( newPion && newPion != &GetPionMedical() && newPion->HandleHumanForHealing( *pHumanState_ ) )
             {
                 EnterStateFinished();
                 pHumanState_ = 0; // Crade

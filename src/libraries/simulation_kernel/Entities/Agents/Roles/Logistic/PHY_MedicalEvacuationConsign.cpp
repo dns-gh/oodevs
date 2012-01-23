@@ -129,7 +129,7 @@ void PHY_MedicalEvacuationConsign::CreateEvacuationAmbulance()
             if( pLogisticManager )
             {
                 PHY_RoleInterface_Medical* newPion = pLogisticManager->MedicalFindAlternativeEvacuationHandler( *pHumanState_ );
-                if( newPion != &GetPionMedical() && newPion->HandleHumanForEvacuation( *pHumanState_ ) )
+                if( newPion && newPion != &GetPionMedical() && newPion->HandleHumanForEvacuation( *pHumanState_ ) )
                 {
                     EnterStateFinished();
                     pHumanState_ = 0; // Crade

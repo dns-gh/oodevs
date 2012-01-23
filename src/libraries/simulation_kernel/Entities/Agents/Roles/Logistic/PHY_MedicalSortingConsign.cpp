@@ -100,7 +100,7 @@ bool PHY_MedicalSortingConsign::DoWaitingForSorting()
         if( pLogisticManager )
         {
             PHY_RoleInterface_Medical* newPion = pLogisticManager->MedicalFindAlternativeSortingHandler( *pHumanState_ );
-            if( newPion != &GetPionMedical() )
+            if( newPion && newPion != &GetPionMedical() )
             {
                 newPion->HandleHumanForSorting( *pHumanState_ );
                 EnterStateFinished();
