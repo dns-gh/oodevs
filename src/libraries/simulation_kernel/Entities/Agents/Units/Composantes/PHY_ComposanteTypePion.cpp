@@ -1039,7 +1039,11 @@ double PHY_ComposanteTypePion::GetMaxSpeed( const MIL_Object_ABC& object ) const
     {
         const PHY_ComposanteTypeObjectData* pObjectData = objectData_[ object.GetType().GetID() ];
         if( pObjectData )
-            return pObjectData->GetMaxSpeed( object );
+        {
+            double result = pObjectData->GetMaxSpeed( object );
+            if( result != std::numeric_limits< double >::max() )
+                return result;
+        }
     }
     return object().GetMaxSpeed();
 }
