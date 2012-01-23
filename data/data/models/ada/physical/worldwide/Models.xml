@@ -2649,8 +2649,8 @@
         <mission name="ML_SECURITY Extract victims from crowds"/>
         <mission name="ML_SECURITY Alert urban blocks within area"/>
         <mission name="ML_SECURITY Lift urban blocks alert within area"/>
-        <mission name="ML_SECURITY Enable resource nodes within area"/>
-        <mission name="ML_SECURITY Disable resource nodes wthin area"/>
+        <mission name="ML_SECURITY Enable resource nodes"/>
+        <mission name="ML_SECURITY Disable resource nodes"/>
         <mission name="ML_SECURITY Patrol"/>
       </missions>
       <fragorders/>
@@ -3905,4 +3905,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0631589730" -->
+<!-- signature="3838073722" -->
