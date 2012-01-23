@@ -2276,7 +2276,7 @@ overwhelming force.]]></doctrine>
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="tasks.AlertTask" dia-type="tasks.AlertTask" id="4452" name="ML_SECURITY Alert urban blocks within area">
+    <mission dia-behavior="tasks.AlertUrbanBlocksWithinArea" dia-type="tasks.AlertUrbanBlocksWithinArea" id="4452" name="ML_SECURITY Alert urban blocks within area">
       <description>
         <doctrine><![CDATA[To alert populations from urban blocks located in the specified area.]]></doctrine>
         <usage><![CDATA[Agent visits each accessible urban block within the specified area. Order of traversal is not specified. Upon reaching a urban block, in case it is populated agent alerts the populations therein, before moving to the next non visited urban block.  ]]></usage>
@@ -2295,7 +2295,7 @@ overwhelming force.]]></doctrine>
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="tasks.UndoAlertTask" dia-type="tasks.UndoAlertTask" id="4453" name="ML_SECURITY Lift urban blocks alert within area">
+    <mission dia-behavior="tasks.UndoAlertUrbanBlocksWithinArea" dia-type="tasks.UndoAlertUrbanBlocksWithinArea" id="4453" name="ML_SECURITY Lift urban blocks alert within area">
       <description>
         <doctrine><![CDATA[To un-alert populations from urban blocks located in the specified area.]]></doctrine>
         <usage><![CDATA[Agent visits each accessible urban block within the specified area. Order of traversal is not specified. Upon reaching a urban block, in case it is populated agent un-alerts the populations therein, before moving to the next non visited urban block.  ]]></usage>
@@ -3706,4 +3706,4 @@ overwhelming force.]]></doctrine>
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="1475510369" -->
+<!-- signature="1904921903" -->
