@@ -169,6 +169,24 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsMelee( const MIL
     }
     return result;
 }
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateFunctions::GetPionsMelee
+// Created: LMT 2012-01-18
+// -----------------------------------------------------------------------------
+std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsGenie( const MIL_Automate& callerAutomate )
+{
+    const MIL_Automate::T_PionVector& pions = callerAutomate.GetPions();
+    std::vector< DEC_Decision_ABC* > result;
+    for( MIL_Automate::CIT_PionVector it = pions.begin(); it != pions.end(); ++it )
+    {
+        if( ! (*it) )
+            throw std::runtime_error( "Invalid pion in GetPionsMelee" );
+        const std::string& type = (*it)->GetType().GetMilPionType();
+        if( type == "Pion GEN" )
+            result.push_back( &(**it).GetDecision() );
+    }
+    return result;
+}
 
 
 // -----------------------------------------------------------------------------

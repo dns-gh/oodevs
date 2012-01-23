@@ -36,6 +36,7 @@ public:
     static DEC_Decision_ABC* GetPionPC( const MIL_Automate& callerAutomate );
     static DEC_Decision_ABC* GetPionPCOfAutomate( DEC_Decision_ABC* pAutomate );
     static std::vector< DEC_Decision_ABC* > GetPionsMelee( const MIL_Automate& callerAutomate );
+    static std::vector< DEC_Decision_ABC* > GetPionsGenie( const MIL_Automate& callerAutomate );
     static std::vector< DEC_Decision_ABC* > GetAutomates( const MIL_Automate& callerAutomate );
     static bool IsParentAutomateEngaged( const MIL_Automate& callerAutomate );
 
