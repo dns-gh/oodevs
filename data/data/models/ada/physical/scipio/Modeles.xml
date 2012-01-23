@@ -4730,7 +4730,6 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.Section ROHUM">
       <missions>
-        <mission name="PION RENS ROHUM SExfiltrer"/>
         <mission name="PION RENS ROHUM .Renseigner Sur"/>
         <mission name="PION RENS ROHUM .Orienter Guider"/>
         <mission name="PION RENS SExfiltrer"/>
@@ -4830,7 +4829,6 @@
       <missions>
         <mission name="PION Soutenir En Mesure De"/>
         <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION RENS ROHUM SExfiltrer"/>
         <mission name="PION RENS ROHUM .Renseigner Sur"/>
         <mission name="PION RENS ROHUM .Orienter Guider"/>
         <mission name="PION RENS SExfiltrer"/>
@@ -5016,7 +5014,6 @@
       <missions>
         <mission name="PION Soutenir En Mesure De"/>
         <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION RENS ROHUM SExfiltrer"/>
         <mission name="PION RENS ROHUM .Renseigner Sur"/>
         <mission name="PION RENS ROHUM .Orienter Guider"/>
         <mission name="PION RENS SExfiltrer"/>
@@ -5057,7 +5054,6 @@
       <missions>
         <mission name="PION Soutenir En Mesure De"/>
         <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION RENS ROHUM SExfiltrer"/>
         <mission name="PION RENS ROHUM Orienter Guider"/>
         <mission name="PION RENS ROHUM .Orienter Guider"/>
         <mission name="PION RENS SExfiltrer"/>
@@ -5097,7 +5093,6 @@
       <missions>
         <mission name="PION Soutenir En Mesure De"/>
         <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION RENS ROHUM SExfiltrer"/>
         <mission name="PION RENS ROHUM .Orienter Guider"/>
         <mission name="PION RENS ROHUM .Renseigner Sur"/>
         <mission name="PION Orienter Refugies"/>
@@ -5110,6 +5105,7 @@
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
+        <mission name="PION RENS SExfiltrer"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -5137,7 +5133,6 @@
       <missions>
         <mission name="PION Soutenir En Mesure De"/>
         <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION RENS ROHUM SExfiltrer"/>
         <mission name="PION RENS RASIT .Renseigner Sur"/>
         <mission name="PION RENS SExfiltrer"/>
         <mission name="PION Orienter Refugies"/>
@@ -8079,7 +8074,7 @@
         <mission name="AUTOMATE COMMUNES Se Recompleter"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE COMMUNES Franchir"/>
-        <mission name="AUTOMATE ASS Se Deployer"/>
+        <mission name="AUTOMATE ASS COBRA Se Deployer"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -8532,4 +8527,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3493548663" -->
+<!-- signature="0469836574" -->
