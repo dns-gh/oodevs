@@ -132,9 +132,9 @@ MT_Vector2D DEC_PathResult::GetNextPointOutsideObstacle( const MT_Vector2D& posT
         ++itEnd;
         while( itEnd != resultList_.end() )
         {
-            ++itEnd;
-            ++itStart;
             MT_Line vLine( (*itStart)->GetPos(), (*itEnd)->GetPos() );
+            ++itStart;
+            ++itEnd;
             if( vLine.IsInside( *lastWaypoint, rWeldValue ) )
                 break;
         }
