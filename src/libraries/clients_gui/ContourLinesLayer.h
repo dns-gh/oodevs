@@ -13,64 +13,12 @@
 #include "Layer_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
-#include "tools/WorldParameters.h"
-#include <spatialcontainer/TerrainData.h>
-#include <graphics/GraphicSetup_ABC.h>
-
-class RawShapeLayer;
-class NoVBOShapeLayer;
 
 namespace kernel
 {
     class Controllers;
+    class DetectionMap;
     class ModelLoaded;
-}
-
-namespace
-{
-    class ContourGraphicSetup : public GraphicSetup_ABC
-    {
-    public:
-    //! @name Constructors/Destructor
-    //@{
-    explicit ContourGraphicSetup(){}
-    virtual ~ContourGraphicSetup(){}
-    //@}
-
-    virtual void SetupLineGraphics  ( const Data_ABC* )
-    {
-        glLineWidth( 1. );
-        const float color[4] = { r_, g_, b_, alpha_ };
-        glColor4fv( color );
-    }
-    virtual void SetupLineGraphics  ( unsigned int )
-    {}
-    virtual void SetupBorderGraphics( const Data_ABC* )
-    {}
-    virtual void SetupAreaGraphics  ( const Data_ABC* )
-    {}
-
-    void SetColor( float r, float g, float b )
-    {
-        r_ = r;
-        g_ = g;
-        b_ = b;
-    }
-    //@}
-
-    private:
-        //! @name Copy/Assignment
-        //@{
-        ContourGraphicSetup( const ContourGraphicSetup& );            //!< Copy constructor
-        ContourGraphicSetup& operator=( const ContourGraphicSetup& ); //!< Assignment operator
-        //@}
-
-    public:
-        //! @name Member data
-        //@{
-        float r_, g_, b_, alpha_;
-        //@}
-    };
 }
 
 namespace gui
@@ -83,14 +31,14 @@ namespace gui
 // Created: SBO 2010-03-23
 // =============================================================================
 class ContourLinesLayer : public Layer2d_ABC
-                     , public tools::Observer_ABC
-                     , public tools::ElementObserver_ABC< kernel::ModelLoaded >
-                     , public kernel::OptionsObserver_ABC
+                        , public tools::Observer_ABC
+                        , public tools::ElementObserver_ABC< kernel::ModelLoaded >
+                        , public kernel::OptionsObserver_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             ContourLinesLayer( kernel::Controllers& controllers );
+             ContourLinesLayer( kernel::Controllers& controllers, kernel::DetectionMap& map );
     virtual ~ContourLinesLayer();
     //@}
 
@@ -106,25 +54,20 @@ public:
 private:
     //! @name Helpers
     //@{
-    void LoadGraphics();
+    void Conrec() const;
+    void CreateCallList();
     //@}
 
 private:
     //! @name Member data
     //@{
+    kernel::DetectionMap& map_;
     kernel::Controllers& controllers_;
-    tools::WorldParameters parameters_;
-    bool reset_;
     bool modelLoaded_;
     bool enabled_;
     QColor color_;
-
-    std::auto_ptr< RawShapeLayer >        layer_;
-    std::auto_ptr< NoVBOShapeLayer > noVBOlayer_;
-
-    geometry::Rectangle2f world_;
-    ContourGraphicSetup& setup_;
-
+    unsigned int callListId_;
+    int linesHeight_;
     //@}
 };
 

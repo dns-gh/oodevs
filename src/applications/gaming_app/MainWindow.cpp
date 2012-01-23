@@ -435,7 +435,7 @@ void MainWindow::CreateLayers( MissionPanel& missions, CreationPanels& creationP
     gui::Layer_ABC& fogLayer             = *new FogLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_ );
     gui::Layer_ABC& drawerLayer          = *new gui::DrawerLayer( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile, *simpleFilter_ );
     gui::Layer_ABC& actionsLayer         = *new ActionsLayer( controllers_, *glProxy_ );
-    gui::Layer_ABC& contour              = *new gui::ContourLinesLayer( controllers_ );
+    gui::Layer_ABC& contour              = *new gui::ContourLinesLayer( controllers_, staticModel_.detection_ );
 
     // ordre de dessin
     glProxy_->Register( defaultLayer );

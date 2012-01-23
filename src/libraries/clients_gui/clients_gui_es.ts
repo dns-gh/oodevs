@@ -690,6 +690,10 @@ Please check access permissions or write protection.</source>
         <source>Change contour lines color</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Set contour lines height</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::GradientWidget</name>
