@@ -289,7 +289,7 @@ void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer_ABC&
     Layer_ABC& defaultLayer             = *new DefaultLayer( controllers_ );
     Layer_ABC& drawerLayer              = *new DrawerLayer( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile, *simpleFilter_ );
     Layer_ABC& inhabitantLayer          = *new ::InhabitantLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_, pDockManager_->GetLivingAreaPanel() );
-    Layer_ABC& contour                  = *new ::ContourLinesLayer( controllers_ );
+    Layer_ABC& contour                  = *new ::ContourLinesLayer( controllers_, staticModel_.detection_ );
 
     // ordre de dessin
     glProxy_->Register( defaultLayer );
