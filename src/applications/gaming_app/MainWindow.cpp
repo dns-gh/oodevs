@@ -629,23 +629,20 @@ void MainWindow::NotifyUpdated( const Simulation& simulation )
     const QString modePlanif =  tools::translate( "Application", " - Planning mode on" );
     if( simulation.IsConnected() )
     {
-        if( !connected_ )
+        if( !connected_ && simulation.IsInitialized() )
         {
-            if( simulation.IsInitialized() )
-            {
-                connected_ = true; // we update the caption until Model is totally loaded
-                if( profile_.isEmpty() )
-                    profile_ = tools::translate( "LoginDialog", "Anonymous" );
-            }
-            planifName_ = appName + QString( " - [%1@%2][%3]" )
-                .arg( profile_ )
-                .arg( simulation.GetSimulationHost().c_str() )
-                .arg( ExtractExerciceName( config_.GetExerciseFile() ));
-            if( onPlanif_ )
-              setCaption( planifName_ + modePlanif );
-            else
-             setCaption( planifName_ );
-            // $$$$ SBO 2009-12-18: Use exercise META data
+            connected_ = true; // we update the caption until Model is totally loaded
+            if( profile_.isEmpty() )
+                profile_ = tools::translate( "LoginDialog", "Anonymous" );
+        }
+        QString planifName = appName + QString( " - [%1@%2][%3]" )
+                            .arg( profile_ )
+                            .arg( simulation.GetSimulationHost().c_str() )
+                            .arg( ExtractExerciceName( config_.GetExerciseFile() ));
+        if( planifName_ != planifName )
+        {
+            setCaption( onPlanif_ ? planifName + modePlanif : planifName );
+            planifName_ = planifName;
         }
     }
     else
