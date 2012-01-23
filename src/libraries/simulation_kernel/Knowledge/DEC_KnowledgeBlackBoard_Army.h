@@ -31,6 +31,7 @@ class MIL_Object_ABC;
 class MIL_ObjectFilter;
 class TER_Polygon;
 class TER_Localisation;
+class KnowledgesVisitor_ABC;
 
 // =============================================================================
 /** @class  DEC_KnowledgeBlackBoard_Army
@@ -103,6 +104,7 @@ public:
     boost::shared_ptr< DEC_Knowledge_Object > GetClosestFriendObject( const MT_Vector2D& vPos, const MIL_ObjectFilter& filter ) const;
     void GetUrbanObjects( T_UrbanObjectVector& container ) const;
     void GetResourceNetworksInZone( T_ResourceNetworkVector& container, const TER_Localisation& zone );
+    void Accept( KnowledgesVisitor_ABC& visitor ) const;
     //@}
 
 private:

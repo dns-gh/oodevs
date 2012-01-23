@@ -690,3 +690,12 @@ void DEC_KnowledgeBlackBoard_Army::GetResourceNetworksInZone( T_ResourceNetworkV
     pKnowledgeUrbanContainer_->ApplyOnUrbanBlocks( functor );
     pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Army::Accept
+// Created: LGY 2012-01-23
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeBlackBoard_Army::Accept( KnowledgesVisitor_ABC& visitor ) const
+{
+    pKnowledgeObjectContainer_->Accept( visitor );
+}

@@ -2306,4 +2306,5 @@ MIL_Population* MIL_EntityManager::FindPopulation( UrbanObjectWrapper* urbanObje
 void MIL_EntityManager::Accept( KnowledgesVisitor_ABC& visitor ) const
 {
     knowledgeGroupFactory_->Apply( boost::bind( &MIL_KnowledgeGroup::Accept, _1, boost::ref( visitor ) ) );
+    armyFactory_->Apply( boost::bind( &MIL_Army_ABC::Accept, _1, boost::ref( visitor ) ) );
 }

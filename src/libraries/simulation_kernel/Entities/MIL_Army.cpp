@@ -912,3 +912,13 @@ MIL_AutomateLOG* MIL_Army::FindBrainLogistic( unsigned int nID, AutomateFactory_
         return pAutomate->GetBrainLogistic();
     return 0;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Army::Accept
+// Created: LGY 2012-01-23
+// -----------------------------------------------------------------------------
+void MIL_Army::Accept( KnowledgesVisitor_ABC& visitor ) const
+{
+    if( pKnowledgeBlackBoard_ )
+        pKnowledgeBlackBoard_->Accept( visitor );
+}
