@@ -672,6 +672,9 @@
     <ClInclude Include="..\..\src\applications\preparation_app\LivingAreaEditor_ABC.h">
       <Filter>Source Files\Panels\Living area</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\preparation_app\UserProfileRights_ABC.h">
+      <Filter>Source Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\preparation_app\preparation_app_es.ts">
@@ -903,6 +906,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\LivingAreaPanel.h">
       <Filter>Source Files\Panels\Living area</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\UserProfileUnitRights.h">
+      <Filter>Source Files</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>
