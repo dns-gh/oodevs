@@ -32,6 +32,7 @@ public:
     static std::string GetName( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static const TER_Localisation* GetLocalisation( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static bool IsInAvoidanceArea( boost::shared_ptr< MT_Vector2D > point, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    static bool IsInEffectArea( boost::shared_ptr< MT_Vector2D > point, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static int IsBypassed( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static int IsBreached( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static bool IsReservedObstacleActivated( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );

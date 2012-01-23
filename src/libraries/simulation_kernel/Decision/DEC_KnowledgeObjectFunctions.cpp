@@ -313,6 +313,17 @@ bool DEC_KnowledgeObjectFunctions::IsInAvoidanceArea( boost::shared_ptr< MT_Vect
 }
 
 // -----------------------------------------------------------------------------
+// Name: template< typename T > static void DEC_KnowledgeObjectFunctions::IsInEffectArea
+// Created: LMT 2012-01-23
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgeObjectFunctions::IsInEffectArea( boost::shared_ptr< MT_Vector2D > point, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{
+    if( pKnowledge && pKnowledge->IsValid() )
+        return pKnowledge->GetLocalisation().IsInside( *point );
+    return 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeObjectFunctions::GetType
 // Created: NLD 2004-04-09
 // Modified: JVT 2004-12-17
