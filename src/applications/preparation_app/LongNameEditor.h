@@ -70,6 +70,7 @@ private:
     //@{
     void DoNotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu );
     std::string GetCountryAlias( const std::string& country ) const;
+    void RemoveCountryEnding( const kernel::Entity_ABC& entity, QString& name ) const;
     void TransmitToSubordinates( const kernel::Entity_ABC& entity, const QString& name, const kernel::AttributeType& attribute ) const;
     void SetExtension( kernel::Entity_ABC& entity, const QString& name, const kernel::AttributeType& attribute ) const;
     //@}
