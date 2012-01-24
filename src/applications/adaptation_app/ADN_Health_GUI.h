@@ -14,6 +14,7 @@
 #include "ADN_Enums.h"
 
 class ADN_Health_Data;
+class ADN_Table;
 
 // =============================================================================
 /** @class  ADN_Health_GUI
@@ -34,6 +35,12 @@ public:
     //! @name Operations
     //@{
     void Build();
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    ADN_Table* BuildWoundsTable();
     //@}
 
 private:

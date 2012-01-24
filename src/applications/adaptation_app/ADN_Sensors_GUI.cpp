@@ -1,13 +1,12 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-06-30 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Sensors_GUI.cpp $
-// $Author: Nld $
-// $Modtime: 4/05/05 10:48 $
-// $Revision: 21 $
-// $Workfile: ADN_Sensors_GUI.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2003 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+
 #include "adaptation_app_pch.h"
 #include "ADN_Sensors_GUI.h"
 #include "moc_ADN_Sensors_GUI.cpp"
@@ -19,6 +18,7 @@
 #include "ADN_CommonGfx.h"
 #include "ADN_Sensors_Data.h"
 #include "ADN_ListView_Sensors.h"
+#include "ADN_SearchListView.h"
 #include "ADN_Sensors_Targets_GUI.h"
 #include "ADN_Sensors_Sizes_GUI.h"
 #include "ADN_Sensors_Meteos_GUI.h"
@@ -40,12 +40,12 @@
 // Created: JDY 03-06-30
 //-----------------------------------------------------------------------------
 ADN_Sensors_GUI::ADN_Sensors_GUI( ADN_Sensors_Data& data )
-: ADN_GUI_ABC( "ADN_Sensors_GUI" )
-, data_      ( data )
-, radarGui_  ( *new ADN_Radars_GUI( data.radarData_ ) )
+    : ADN_GUI_ABC( "ADN_Sensors_GUI" )
+    , data_      ( data )
+    , radarGui_  ( *new ADN_Radars_GUI( data.radarData_ ) )
 {
+    // NOTHING
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Sensors_GUI destructor
@@ -53,8 +53,8 @@ ADN_Sensors_GUI::ADN_Sensors_GUI( ADN_Sensors_Data& data )
 //-----------------------------------------------------------------------------
 ADN_Sensors_GUI::~ADN_Sensors_GUI()
 {
+    // NOTHING
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Sensors_GUI::Build
@@ -64,14 +64,17 @@ void ADN_Sensors_GUI::Build()
 {
     assert( pMainWidget_ == 0 );
 
-    // Create the main widget.
-    pMainWidget_ = new QWidget( 0, "sensors main widget" );
-    QTabWidget* pTabWidget = new QTabWidget( pMainWidget_ );
-
+    // Tab management
+    QTabWidget* pTabWidget = new QTabWidget();
     this->BuildSensorListGui( pTabWidget );
     this->BuildSpecificParamsGui( pTabWidget );
-    Q3GridLayout* pMainLayout = new Q3GridLayout( pMainWidget_, 1, 1, 10, 10 );
-    pMainLayout->addWidget( pTabWidget, 0, 0 );
+
+    // Main widget
+    pMainWidget_ = new QWidget();
+    QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_ );
+    pMainLayout->setSpacing( 10 );
+    pMainLayout->setMargin( 10 );
+    pMainLayout->addWidget( pTabWidget );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,26 +83,18 @@ void ADN_Sensors_GUI::Build()
 // -----------------------------------------------------------------------------
 void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
 {
+    // -------------------------------------------------------------------------
+    // Creations
+    // -------------------------------------------------------------------------
     ADN_GuiBuilder builder;
-    QWidget* pPage = new QWidget();
-    pParent->addTab( pPage, tr( "Sensors" ) );
-
-    // Sensor listview.
-    ADN_ListView_Sensors* pListView = new ADN_ListView_Sensors( pPage );
-    pListView->setFixedWidth( 200 );
-    pListView->GetConnector().Connect( &data_.GetSensorsInfos() );
     T_ConnectorVector vConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
 
-    // Sensor parameters
-    QGroupBox* pSensorGroupBox = new QGroupBox( tr( "Sensor" ) );
-
-    QWidget* pNameDelayHolder = builder.AddFieldHolder( pSensorGroupBox );
-
+    // Info holder
+    QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
     // Name
-    builder.AddField<ADN_EditLine_String>( pNameDelayHolder, tr( "Name" ), vConnectors[eName] );
-
+    builder.AddField<ADN_EditLine_String>( pInfoHolder, tr( "Name" ), vConnectors[eName] );
     // Detection delay
-    builder.AddField<ADN_TimeField>( pNameDelayHolder, tr( "Delay" ), vConnectors[eDetectionDelay] );
+    builder.AddField<ADN_TimeField>( pInfoHolder, tr( "Delay" ), vConnectors[eDetectionDelay] );
 
     // Agent detection parameters
     ADN_GroupBox* pAgentParamGroupBox = new ADN_GroupBox( tr( "Can detect units" ) );
@@ -213,22 +208,14 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     vConnectors[ePreviewModifUrbanBlockMaterial] = &pMaterial->GetConnector();
     vConnectors[ePreviewModifStances] = &pStance->GetConnector();
     vConnectors[ePreviewModifTargetStances] = &pTargetStance->GetConnector();
-    connect( pListView, SIGNAL( ItemSelected( void * ) ), algorithmPreview, SLOT( OnSelectSensor( void* ) ) );
 
     // Set the connectors.
     pTargetListView->SetItemConnectors( vTargetConnectors );
-    pListView->SetItemConnectors(vConnectors);
 
-    connect( pAgentParamGroupBox, SIGNAL( toggled( bool ) ), pLimitedToSensorsGroupBox, SLOT( setEnabled( bool ) ) ); // LTO
-
-    // Layout
-    QHBoxLayout* pMainLayout = new QHBoxLayout();
-    pMainLayout->setSpacing( 10 );
-    pMainLayout->setContentsMargins( 10, 10, 10, 10 );
-    pMainLayout->addWidget( pListView );
-    pMainLayout->addWidget( pSensorGroupBox );
-    pPage->setLayout( pMainLayout );
-
+    // -------------------------------------------------------------------------
+    // Layouts
+    // -------------------------------------------------------------------------
+    // Agent param layout
     QGridLayout* pAgentParamGroupLayout = new QGridLayout();
     pAgentParamGroupLayout->setSpacing( 5 );
     pAgentParamGroupLayout->setAlignment( Qt::AlignTop );
@@ -242,12 +229,14 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     pAgentParamGroupLayout->addWidget( pAgentDetectionModifiersGroup, 4, 0, 1, 3 );
     pAgentParamGroupBox->setLayout( pAgentParamGroupLayout );
 
+    // Object param layout
     QHBoxLayout* pObjectParamGroupLayout = new QHBoxLayout();
     pObjectParamGroupLayout->setSpacing( 5 );
     pObjectParamGroupLayout->addWidget( pTargetListView );
     pObjectParamGroupLayout->addWidget( pTargetParamsGroupBox );
     pObjectParamGroupBox->setLayout( pObjectParamGroupLayout );
 
+    // Limited and object layout
     QHBoxLayout* pLimitedAndObjectsGroupLayout = new QHBoxLayout();
     pLimitedAndObjectsGroupLayout->setSpacing( 5 );
     pLimitedAndObjectsGroupLayout->setAlignment( Qt::AlignTop );
@@ -256,12 +245,26 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     pLimitedAndObjectsGroupLayout->setStretchFactor( pLimitedToSensorsGroupBox, 1 );
     pLimitedAndObjectsGroupLayout->setStretchFactor( pObjectParamGroupBox, 2 );
 
-    QVBoxLayout* pSensorGroupLayout = new QVBoxLayout();
-    pSensorGroupLayout->setSpacing( 5 );
-    pSensorGroupLayout->addWidget( pNameDelayHolder );
-    pSensorGroupLayout->addWidget( pAgentParamGroupBox );
-    pSensorGroupLayout->addLayout( pLimitedAndObjectsGroupLayout );
-    pSensorGroupBox->setLayout( pSensorGroupLayout );
+    // Content layout
+    QWidget* pContent = new QWidget();
+    QVBoxLayout* pContentLayout = new QVBoxLayout( pContent );
+    pContentLayout->setMargin( 10 );
+    pContentLayout->setSpacing( 10 );
+    pContentLayout->setAlignment( Qt::AlignTop );
+    pContentLayout->addWidget( pInfoHolder );
+    pContentLayout->addWidget( pAgentParamGroupBox );
+    pContentLayout->addLayout( pLimitedAndObjectsGroupLayout );
+
+    // List view
+    ADN_SearchListView< ADN_ListView_Sensors >* pSearchListView = new ADN_SearchListView< ADN_ListView_Sensors >( data_.GetSensorsInfos(), vConnectors );
+
+    // Main page
+    QWidget* pPage = CreateScrollArea( *pContent, pSearchListView );
+    pParent->addTab( pPage, tr( "Sensors" ) );
+
+    // Connection
+    connect( pSearchListView->GetListView(), SIGNAL( ItemSelected( void * ) ), algorithmPreview, SLOT( OnSelectSensor( void* ) ) );
+    connect( pAgentParamGroupBox, SIGNAL( toggled( bool ) ), pLimitedToSensorsGroupBox, SLOT( setEnabled( bool ) ) ); // LTO
 
     connect( detection, SIGNAL( textChanged( const QString& ) ), algorithmPreview, SLOT( OnDetectionChanged( const QString& ) ) );
     connect( recognition, SIGNAL( textChanged( const QString& ) ), algorithmPreview, SLOT( OnRecognitionChanged( const QString& ) ) );
@@ -284,55 +287,41 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
 // -----------------------------------------------------------------------------
 void ADN_Sensors_GUI::BuildSpecificParamsGui( QTabWidget* pParent )
 {
+    // -------------------------------------------------------------------------
+    // Creations
+    // -------------------------------------------------------------------------
     ADN_GuiBuilder builder;
-    QWidget* pPage = new QWidget( pParent );
-    pParent->addTab( pPage, tr( "Special sensors" ) );
 
     // Alat parameters
-    Q3GroupBox* pAlatGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Army aviation" ), pPage );
-    Q3GroupBox* pAlatGroup1 = new Q3GroupBox( 3, Qt::Horizontal, tr( "Survey durations" ), pAlatGroup );
+    Q3GroupBox* pAlatGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Survey durations for army aviation" ) );
     for( int n = 1; n < eNbrVisionObjects; ++n )
-        builder.AddField<ADN_TimeField>( pAlatGroup1, ADN_Tr::ConvertFromVisionObject( (E_VisionObject)n ).c_str(), data_.GetAlatInfos().surveyTimes_[n-1], tr( "/ha" ) );
+        builder.AddField<ADN_TimeField>( pAlatGroup, ADN_Tr::ConvertFromVisionObject( (E_VisionObject)n ).c_str(), data_.GetAlatInfos().surveyTimes_[n-1], tr( "/ha" ) );
 
     // Cobra parameters
-    Q3GroupBox* pCobraGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Counter battery radar" ), pPage );
+    Q3GroupBox* pCobraGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Counter battery radar" ) );
     builder.AddField<ADN_EditLine_Double>( pCobraGroup, tr( "Range" ), data_.GetCobraInfos().rRange_ , tr( "m" ), eGreaterEqualZero );
 
+    // Radar
     radarGui_.Build();
     QWidget* pRadarWidget = radarGui_.GetMainWidget();
-    pRadarWidget->reparent( pPage, QPoint( 0, 0 ) );
 
-    // Layout
-    Q3VBoxLayout* pMainLayout = new Q3VBoxLayout( pPage, 10, 20 );
+    // -------------------------------------------------------------------------
+    // Layouts
+    // -------------------------------------------------------------------------
+    // Content
+    QWidget* pContent = new QWidget();
+    QVBoxLayout* pContentLayout = new QVBoxLayout( pContent );
+    pContentLayout->setMargin( 10 );
+    pContentLayout->setSpacing( 10 );
+    pContentLayout->setAlignment( Qt::AlignTop );
+    pContentLayout->addWidget( pAlatGroup );
+    pContentLayout->addWidget( pCobraGroup );
+    pContentLayout->addWidget( pRadarWidget, 1 );
 
-//    QHBoxLayout* pLayoutCol1 = new QHBoxLayout( pMainLayout, 20 );
-//    QHBoxLayout* pLayoutCol2 = new QHBoxLayout( pMainLayout, 20 );
-
-    pMainLayout->addWidget( pAlatGroup );
-    pMainLayout->addWidget( pCobraGroup );
-    pMainLayout->addWidget( pRadarWidget );
-//    builder.AddStretcher( pLayoutCol1, Qt::Vertical );
-
-    builder.AddStretcher( pPage, Qt::Vertical );
+    // Main page
+    QWidget* pPage = CreateScrollArea( *pContent );
+    pParent->addTab( pPage, tr( "Special sensors" ) );
 }
-
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Sensors_GUI::BuildDetectTimesWidgets
-// Created: APE 2005-01-19
-// -----------------------------------------------------------------------------
-/*
-void ADN_Sensors_GUI::BuildDetectTimesWidgets( QWidget* pParent, ADN_Sensors_Data::DetectTimes& data )
-{
-    ADN_GuiBuilder builder;
-    QWidget* pHolder = builder.AddFieldHolder( pParent );
-
-    builder.AddOptionnalField<ADN_EditLine_Double>( pHolder, tr( "Detect time" ), data.bDetectTime_, data.rDetectTime_, tr( "s" ), eGreaterEqualZero );
-    builder.AddOptionnalField<ADN_EditLine_Double>( pHolder, tr( "Recognize time" ), data.bRecoTime_, data.rRecoTime_, tr( "s" ), eGreaterEqualZero );
-    builder.AddOptionnalField<ADN_EditLine_Double>( pHolder, tr( "Identification time" ), data.bIdentTime_, data.rIdentTime_, tr( "s" ), eGreaterEqualZero );
-}*/
-
-
 
 // -----------------------------------------------------------------------------
 // Name: AddHeaders
@@ -474,11 +463,9 @@ ADN_Table* ADN_Sensors_GUI::CreateAgentDetectionTable()
 
         ++nRow;
     }
-
     pTable->AdjustColumns( 50 );
     return pTable;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_GUI::CreateObjectDetectionTable
@@ -530,11 +517,9 @@ ADN_Table* ADN_Sensors_GUI::CreateObjectDetectionTable()
 
         nRow += static_cast< int >( sensor.vTargets_.size() );
     }
-
     pTable->AdjustColumns( 50 );
     return pTable;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_GUI::RegisterTable

@@ -27,7 +27,7 @@ ADN_ListView_Units::ADN_ListView_Units( QWidget* pParent, const char* szName, Qt
 {
     // Add one column.
     addColumn( tools::translate( "ADN_ListView_Units", "Units" ) );
-    //setResizeMode( QListView::AllColumns );// $$$$ SBO 2006-02-15: makes content to large for tab (=> scrollbar )...
+
     // Connector creation.
     pConnector_ = new ADN_Connector_ListView<UnitInfos>( *this );
     SetDeletionEnabled( true );

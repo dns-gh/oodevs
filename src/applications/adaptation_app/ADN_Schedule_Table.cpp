@@ -25,6 +25,10 @@ ADN_Schedule_Table::ADN_Schedule_Table( QWidget* pParent )
     : Q3Table( pParent )
 {
     setNumCols( 4 );
+    setColumnStretchable( 0, true );
+    setColumnStretchable( 1, true );
+    setColumnStretchable( 2, true );
+    setColumnStretchable( 3, true );
     horizontalHeader()->setLabel( 0, qApp->translate( "ADN_Schedule_Table", "Day" ) );
     horizontalHeader()->setLabel( 1, qApp->translate( "ADN_Schedule_Table", "From" ) );
     horizontalHeader()->setLabel( 2, qApp->translate( "ADN_Schedule_Table", "To" ) );

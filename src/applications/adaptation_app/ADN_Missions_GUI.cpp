@@ -19,6 +19,7 @@
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_ComboBox_Drawings.h"
 #include "ADN_Drawings_Data.h"
+#include "ADN_SearchListView.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_GUI constructor
@@ -48,150 +49,177 @@ void ADN_Missions_GUI::Build()
 {
     assert( pMainWidget_ == 0 );
 
-    // Create the main widget.
-    pMainWidget_ = new QWidget( 0 );
+    // Tab management
     QTabWidget* pTabWidget = new QTabWidget( pMainWidget_ );
+    pTabWidget->addTab( BuildUnitMissions(), tr( "Unit missions" ) );
+    pTabWidget->addTab( BuildAutomatMissions(), tr( "Automat missions" ) );
+    pTabWidget->addTab( BuildPopulationMissions(), tr( "Crowd missions" ) );
+    pTabWidget->addTab( BuildFragOrders(), tr( "Fragmentary orders" ) );
 
-    pTabWidget->addTab( BuildUnitMissions( pTabWidget ), tr( "Unit missions" ) );
-    pTabWidget->addTab( BuildAutomatMissions( pTabWidget ), tr( "Automat missions" ) );
-    pTabWidget->addTab( BuildPopulationMissions( pTabWidget ), tr( "Crowd missions" ) );
-    pTabWidget->addTab( BuildFragOrders( pTabWidget ), tr( "Fragmentary orders" ) );
-
-    Q3GridLayout* pMainLayout = new Q3GridLayout( pMainWidget_, 1, 1, 10, 10 );
-    pMainLayout->addWidget( pTabWidget, 0, 0 );
+    // Main widget
+    pMainWidget_ = new QWidget();
+    QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_ );
+    pMainLayout->setSpacing( 10 );
+    pMainLayout->setMargin( 10 );
+    pMainLayout->addWidget( pTabWidget );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_GUI::BuildMissions
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-QWidget* ADN_Missions_GUI::BuildMissions( Q3GroupBox*& pGroup, QWidget* parent, ADN_Missions_Data::T_Mission_Vector& missions, ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType )
+QWidget* ADN_Missions_GUI::BuildMissions( QWidget*& pContent, ADN_Missions_Data::T_Mission_Vector& missions, ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType )
 {
+    // -------------------------------------------------------------------------
+    // Creations
+    // -------------------------------------------------------------------------
     ADN_GuiBuilder builder;
-
-    // Create the main widget
-    QWidget* mainWidget = new QWidget( parent );
-
-    // Missions listview
     T_ConnectorVector vInfosConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
-    ADN_ListView_MissionTypes* listMissions = new ADN_ListView_MissionTypes( eEntityType, missions, mainWidget );
-    listMissions->GetConnector().Connect( &missions );
 
-    // Mission data
-    pGroup = new Q3VGroupBox( tr( "Mission" ), mainWidget );
-    QWidget* pParamHolder = builder.AddFieldHolder( pGroup );
-    builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Name" ), vInfosConnectors[eName] );
-    builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Doctrine description" ), vInfosConnectors[eDoctrineDescription] );
-    builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Usage description" ), vInfosConnectors[eUsageDescription] );
-    builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Type" ), vInfosConnectors[eDiaType] );
+    // Info holder
+    QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[eName] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Doctrine description" ), vInfosConnectors[eDoctrineDescription] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Usage description" ), vInfosConnectors[eUsageDescription] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Type" ), vInfosConnectors[eDiaType] );
     if( eEntityType == ADN_Models_Data::ModelInfos::eAutomat )
     {
-        builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "MRT Behavior" ), vInfosConnectors[eMRTBehavior] );
-        builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "CDT Behavior" ), vInfosConnectors[eCDTBehavior] );
+        builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "MRT Behavior" ), vInfosConnectors[eMRTBehavior] );
+        builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "CDT Behavior" ), vInfosConnectors[eCDTBehavior] );
     }
     else
-        builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Behavior" ), vInfosConnectors[eBehavior] );
+        builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Behavior" ), vInfosConnectors[eBehavior] );
 
-    QComboBox* combo = builder.AddField< ADN_ComboBox_Drawings< ADN_Drawings_Data::DrawingInfo > >( pParamHolder, tr( "Symbol" ), vInfosConnectors[ eSymbol ] );
+    QComboBox* combo = builder.AddField< ADN_ComboBox_Drawings< ADN_Drawings_Data::DrawingInfo > >( pInfoHolder, tr( "Symbol" ), vInfosConnectors[ eSymbol ] );
     combo->setMinimumHeight( SYMBOL_PIXMAP_SIZE );
 
-    Q3GroupBox* pParameters = new Q3GroupBox( 2, Qt::Horizontal, tr( "Parameters" ), pGroup );
-    ADN_MissionParameters_Table* paramList = new ADN_MissionParameters_Table( pParameters );
+    // Parameters
+    QGroupBox* pParametersGroup = new QGroupBox( tr( "Parameters" ) );
+    ADN_MissionParameters_Table* paramList = new ADN_MissionParameters_Table();
     vInfosConnectors[eParameters] = &paramList->GetConnector();
-    Q3GroupBox* pEnum = new Q3GroupBox( 1, Qt::Horizontal, tr( "Enumeration values" ), pParameters );
+    Q3GroupBox* pEnum = new Q3GroupBox( 1, Qt::Horizontal, tr( "Enumeration values" ) );
     ADN_MissionParameterValues_Table* valueList = new ADN_MissionParameterValues_Table( pEnum, "" );
     vInfosConnectors[eParameterValues] = &valueList->GetConnector();
 
-    Q3GroupBox* pChoice = new Q3GroupBox( 1, Qt::Horizontal, tr( "Allowed types" ), pParameters );
+    Q3GroupBox* pChoice = new Q3GroupBox( 1, Qt::Horizontal, tr( "Allowed types" ) );
     ADN_MissionTypes_Table* choiceList = new ADN_MissionTypes_Table( pChoice, "" );
     vInfosConnectors[eChoiceValues] = &choiceList->GetConnector();
 
     // Connect the gui to the data.
     paramList->SetItemConnectors( vInfosConnectors );
-    listMissions->SetItemConnectors( vInfosConnectors );
 
-    // Layout
-    Q3BoxLayout* pLayout = new Q3HBoxLayout( mainWidget, 5, 5 );
-    pLayout->addWidget( listMissions, 1 );
-    pLayout->addWidget( pGroup, 5 );
+    // -------------------------------------------------------------------------
+    // Layouts
+    // -------------------------------------------------------------------------
+    // Parameters layout
+    QGridLayout* parameterLayout = new QGridLayout( pParametersGroup, 2, 2 );
+    parameterLayout->setMargin( 10 );
+    parameterLayout->setSpacing( 10 );
+    parameterLayout->addWidget( paramList, 0, 0, 1, 2 );
+    parameterLayout->addWidget( pEnum );
+    parameterLayout->addWidget( pChoice );
 
-    return mainWidget;
+    // Content layout
+    pContent = new QWidget();
+    QVBoxLayout* pContentLayout = new QVBoxLayout( pContent );
+    pContentLayout->setMargin( 10 );
+    pContentLayout->setSpacing( 10 );
+    pContentLayout->setAlignment( Qt::AlignTop );
+    pContentLayout->addWidget( pInfoHolder );
+    pContentLayout->addWidget( pParametersGroup );
+
+    // List view
+    ADN_SearchListView< ADN_ListView_MissionTypes >* pSearchListView = new ADN_SearchListView< ADN_ListView_MissionTypes >( eEntityType, missions, missions, vInfosConnectors );
+
+    // Main page
+    return CreateScrollArea( *pContent, pSearchListView );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_GUI::BuildUnitMissions
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-QWidget* ADN_Missions_GUI::BuildUnitMissions( QWidget* parent )
+QWidget* ADN_Missions_GUI::BuildUnitMissions()
 {
-    return BuildMissions( pUnitMissionsGroup_, parent, data_.unitMissions_, ADN_Models_Data::ModelInfos::ePawn );
+    return BuildMissions( pUnitMissionsWidget_, data_.unitMissions_, ADN_Models_Data::ModelInfos::ePawn );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_GUI::BuildAutomatMissions
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-QWidget* ADN_Missions_GUI::BuildAutomatMissions( QWidget* parent )
+QWidget* ADN_Missions_GUI::BuildAutomatMissions()
 {
-    return BuildMissions( pAutomatMissionsGroup_, parent, data_.automatMissions_, ADN_Models_Data::ModelInfos::eAutomat );
+    return BuildMissions( pAutomatMissionsWidget_, data_.automatMissions_, ADN_Models_Data::ModelInfos::eAutomat );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_GUI::BuildPopulationMissions
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-QWidget* ADN_Missions_GUI::BuildPopulationMissions( QWidget* parent )
+QWidget* ADN_Missions_GUI::BuildPopulationMissions()
 {
-    return BuildMissions( pPopulationMissionsGroup_, parent, data_.populationMissions_, ADN_Models_Data::ModelInfos::ePopulation );
+    return BuildMissions( pPopulationMissionsWidget_, data_.populationMissions_, ADN_Models_Data::ModelInfos::ePopulation );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_GUI::BuildFragOrders
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
-QWidget* ADN_Missions_GUI::BuildFragOrders( QWidget* parent )
+QWidget* ADN_Missions_GUI::BuildFragOrders()
 {
     ADN_GuiBuilder builder;
-
-    // Create the main widget
-    QWidget* mainWidget = new QWidget( parent );
-
-    // FragOrders listview
     T_ConnectorVector vInfosConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
-    ADN_ListView_FragOrderTypes* listFragOrders = new ADN_ListView_FragOrderTypes( data_.fragOrders_, mainWidget );
-    listFragOrders->GetConnector().Connect( &data_.fragOrders_ );
 
-    // Mission data
-    pFragOrderGroup_ = new Q3VGroupBox( tr( "Fragmentary orders" ), mainWidget );
-    QWidget* pParamHolder = builder.AddFieldHolder( pFragOrderGroup_ );
-    builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Name" ), vInfosConnectors[eName] );
-    builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Doctrine description" ), vInfosConnectors[eDoctrineDescription] );
-    builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Usage description" ), vInfosConnectors[eUsageDescription] );
-    builder.AddField< ADN_EditLine_String >( pParamHolder, tr( "Type" ), vInfosConnectors[eDiaType] );
-    QCheckBox* available = builder.AddField< ADN_CheckBox >( pParamHolder, tr( "Available without mission" ) , vInfosConnectors[eFragOrderAvailableWithoutMission] );
-    connect( available, SIGNAL( toggled ( bool ) ), listFragOrders, SLOT( OnToogled( bool ) ) );
+    // Content
+    QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[eName] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Doctrine description" ), vInfosConnectors[eDoctrineDescription] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Usage description" ), vInfosConnectors[eUsageDescription] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Type" ), vInfosConnectors[eDiaType] );
+    QCheckBox* available = builder.AddField< ADN_CheckBox >( pInfoHolder, tr( "Available without mission" ) , vInfosConnectors[eFragOrderAvailableWithoutMission] );
 
-    Q3GroupBox* pParameters = new Q3GroupBox( 2, Qt::Horizontal, tr( "Parameters" ), pFragOrderGroup_ );
-    ADN_MissionParameters_Table* paramList = new ADN_MissionParameters_Table( pParameters );
+    // Parameters
+    QGroupBox* pParametersGroup = new QGroupBox( tr( "Parameters" ) );
+    ADN_MissionParameters_Table* paramList = new ADN_MissionParameters_Table();
     vInfosConnectors[eParameters] = &paramList->GetConnector();
-    Q3GroupBox* pEnum = new Q3GroupBox( 1, Qt::Horizontal, tr( "Enumeration values" ), pParameters );
+    Q3GroupBox* pEnum = new Q3GroupBox( 1, Qt::Horizontal, tr( "Enumeration values" ) );
     ADN_MissionParameterValues_Table* valueList = new ADN_MissionParameterValues_Table( pEnum, "" );
     vInfosConnectors[eParameterValues] = &valueList->GetConnector();
 
-    Q3GroupBox* pChoice = new Q3GroupBox( 1, Qt::Horizontal, tr( "Allowed types" ), pParameters );
+    Q3GroupBox* pChoice = new Q3GroupBox( 1, Qt::Horizontal, tr( "Allowed types" ) );
     ADN_MissionTypes_Table* choiceList = new ADN_MissionTypes_Table( pChoice, "" );
     vInfosConnectors[eChoiceValues] = &choiceList->GetConnector();
 
     // Connect the gui to the data.
     paramList->SetItemConnectors( vInfosConnectors );
-    listFragOrders->SetItemConnectors( vInfosConnectors );
 
-    // Layout
-    Q3BoxLayout* pLayout = new Q3HBoxLayout( mainWidget, 5, 5 );
-    pLayout->addWidget( listFragOrders, 1 );
-    pLayout->addWidget( pFragOrderGroup_, 5 );
+    // -------------------------------------------------------------------------
+    // Layouts
+    // -------------------------------------------------------------------------
+    // Parameters layout
+    QGridLayout* parameterLayout = new QGridLayout( pParametersGroup, 2, 2 );
+    parameterLayout->setMargin( 10 );
+    parameterLayout->setSpacing( 10 );
+    parameterLayout->addWidget( paramList, 0, 0, 1, 2 );
+    parameterLayout->addWidget( pEnum );
+    parameterLayout->addWidget( pChoice );
 
-    return mainWidget;
+    // Content layout
+    pFragOrderWidget_ = new QWidget();
+    QVBoxLayout* pContentLayout = new QVBoxLayout( pFragOrderWidget_ );
+    pContentLayout->setMargin( 10 );
+    pContentLayout->setSpacing( 10 );
+    pContentLayout->setAlignment( Qt::AlignTop );
+    pContentLayout->addWidget( pInfoHolder );
+    pContentLayout->addWidget( pParametersGroup );
+
+    // List view
+    ADN_SearchListView< ADN_ListView_FragOrderTypes >* pSearchListView = new ADN_SearchListView< ADN_ListView_FragOrderTypes >( data_.fragOrders_, data_.fragOrders_, vInfosConnectors );
+    connect( available, SIGNAL( toggled ( bool ) ), pSearchListView->GetListView(), SLOT( OnToogled( bool ) ) );
+
+    // Main page
+    return CreateScrollArea( *pFragOrderWidget_, pSearchListView );
 }
 
 // -----------------------------------------------------------------------------
@@ -200,8 +228,8 @@ QWidget* ADN_Missions_GUI::BuildFragOrders( QWidget* parent )
 // -----------------------------------------------------------------------------
 void ADN_Missions_GUI::Enable( bool enable )
 {
-    pUnitMissionsGroup_->setEnabled( enable );
-    pAutomatMissionsGroup_->setEnabled( enable );
-    pPopulationMissionsGroup_->setEnabled( enable );
-    pFragOrderGroup_->setEnabled( enable );
+    pUnitMissionsWidget_->setEnabled( enable );
+    pAutomatMissionsWidget_->setEnabled( enable );
+    pPopulationMissionsWidget_->setEnabled( enable );
+    pFragOrderWidget_->setEnabled( enable );
 }

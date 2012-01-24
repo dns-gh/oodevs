@@ -6,15 +6,6 @@
 // Copyright (c) 2004 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2004-12-07 $
-// $Archive: /MVW_v10/Build/SDK/ADN2/src/ADN_Weapons_GUI.cpp $
-// $Author: Nld $
-// $Modtime: 4/05/05 15:30 $
-// $Revision: 21 $
-// $Workfile: ADN_Weapons_GUI.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_Weapons_GUI.h"
@@ -44,6 +35,7 @@
 #include "ADN_GraphData.h"
 #include "ADN_GraphValue.h"
 #include "ADN_Connector_Graph_ABC.h"
+#include "ADN_SearchListView.h"
 #include "GQ_PlotAxis.h"
 #include "GQ_PlotCaption.h"
 #include "ENT/ENT_Tr.h"
@@ -161,18 +153,16 @@ private:
     uint nNbrDatas_;
 };
 
-
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_GUI constructor
 // Created: APE 2004-12-13
 // -----------------------------------------------------------------------------
 ADN_Weapons_GUI::ADN_Weapons_GUI( ADN_Weapons_Data& data )
-: ADN_GUI_ABC( "ADN_Weapons_GUI" )
-, data_      ( data )
+    : ADN_GUI_ABC( "ADN_Weapons_GUI" )
+    , data_      ( data )
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_GUI destructor
@@ -180,8 +170,8 @@ ADN_Weapons_GUI::ADN_Weapons_GUI( ADN_Weapons_Data& data )
 // -----------------------------------------------------------------------------
 ADN_Weapons_GUI::~ADN_Weapons_GUI()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_GUI::Build
@@ -189,46 +179,35 @@ ADN_Weapons_GUI::~ADN_Weapons_GUI()
 // -----------------------------------------------------------------------------
 void ADN_Weapons_GUI::Build()
 {
+    // -------------------------------------------------------------------------
+    // Creations
+    // -------------------------------------------------------------------------
     assert( pMainWidget_ == 0 );
-
     ADN_GuiBuilder builder;
-
-    // Create the top widget.
-    pMainWidget_ = new QWidget( 0, "Weapon systems main widget" );
-
-    // Create the weapons listview.
-    pWeaponList_ = new ADN_Weapons_ListView( pMainWidget_ );
-    pWeaponList_->GetConnector().Connect( &data_.GetWeaponInfos() );
     T_ConnectorVector vInfosConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
 
-    // Parameters group
-    Q3GroupBox* pGroup = new Q3GroupBox( 0, Qt::Horizontal, tr( "Weapon system" ), pMainWidget_ );
-
-    QWidget* pParamHolder = builder.AddFieldHolder( pGroup );
-
-    builder.AddField<ADN_EditLine_String>( pParamHolder, tr( "Name" ), vInfosConnectors[eName] );
+    // Info holder
+    QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
+    builder.AddField<ADN_EditLine_String>( pInfoHolder, tr( "Name" ), vInfosConnectors[eName] );
     builder.SetEnabled( false );
-
-    builder.AddField< ADN_ComboBox_Vector<ADN_Launchers_Data::LauncherInfos> >( pParamHolder, tr( "Launcher" ), vInfosConnectors[eLauncher] );
+    builder.AddField< ADN_ComboBox_Vector<ADN_Launchers_Data::LauncherInfos> >( pInfoHolder, tr( "Launcher" ), vInfosConnectors[eLauncher] );
     builder.SetEnabled( false );
-
-    builder.AddField< ADN_ComboBox_Vector<ADN_Equipement_Data::AmmoCategoryInfo> >( pParamHolder, tr( "Ammo" ), vInfosConnectors[eAmmo] );
+    builder.AddField< ADN_ComboBox_Vector<ADN_Equipement_Data::AmmoCategoryInfo> >( pInfoHolder, tr( "Ammo" ), vInfosConnectors[eAmmo] );
     builder.SetEnabled( false );
-
-    builder.AddField<ADN_EditLine_Int>( pParamHolder, tr( "Rounds per burst" ), vInfosConnectors[eRoundsPerBurst], 0, eGreaterZero );
-    ADN_TimeField* burst = builder.AddField<ADN_TimeField>( pParamHolder, tr( "Burst duration" ), vInfosConnectors[eBurstDuration], 0, eGreaterZero );
+    builder.AddField<ADN_EditLine_Int>( pInfoHolder, tr( "Rounds per burst" ), vInfosConnectors[eRoundsPerBurst], 0, eGreaterZero );
+    ADN_TimeField* burst = builder.AddField<ADN_TimeField>( pInfoHolder, tr( "Burst duration" ), vInfosConnectors[eBurstDuration], 0, eGreaterZero );
     burst->SetMinimumValueInSecond( 1 );
-    builder.AddField<ADN_EditLine_Int>( pParamHolder, tr( "Rounds per reload" ), vInfosConnectors[eRoundsPerReload], 0, eGreaterZero );
-    ADN_TimeField* reload = builder.AddField<ADN_TimeField>( pParamHolder, tr( "Reload duration" ), vInfosConnectors[eReloadDuration], 0, eGreaterZero );
+    builder.AddField<ADN_EditLine_Int>( pInfoHolder, tr( "Rounds per reload" ), vInfosConnectors[eRoundsPerReload], 0, eGreaterZero );
+    ADN_TimeField* reload = builder.AddField<ADN_TimeField>( pInfoHolder, tr( "Reload duration" ), vInfosConnectors[eReloadDuration], 0, eGreaterZero );
     reload->SetMinimumValueInSecond( 1 );
 
     // Direct group
-    ADN_GroupBox* pDirectGroup = new ADN_GroupBox( 0, Qt::Horizontal, tr( "Direct fire" ), pGroup );
+    ADN_GroupBox2* pDirectGroup = new ADN_GroupBox2( tr( "Direct fire" ) );
     pDirectGroup->GetConnector().bAutoHide_ = true;
     pDirectGroup->setCheckable( false );
     vInfosConnectors[eDirect] = &pDirectGroup->GetConnector();
 
-    ADN_Graph* pGraph = new ADN_Graph( pDirectGroup );
+    ADN_Graph* pGraph = new ADN_Graph(/* pDirectGroup */);
     pGraph->setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
     pGraph->setMinimumSize( 400, 200 );
     pGraph->YAxis().SetAxisCaption( tr( "Ph (%)" ) );
@@ -240,41 +219,37 @@ void ADN_Weapons_GUI::Build()
     pGraph->XAxis().ShowTicks( 50 );
     pGraph->XAxis().ShowSubTicks( 10 );
     pGraph->XAxis().ShowTicksValue( true );
+
     ADN_GC_PhSize* pGraphConnector = new ADN_GC_PhSize( *pGraph );
     vInfosConnectors[ePhsGraph] = pGraphConnector;
 
-    ADN_Weapons_PhSizeListView* pPhSizeListView = new ADN_Weapons_PhSizeListView( *pGraph, pDirectGroup );
+    ADN_Weapons_PhSizeListView* pPhSizeListView = new ADN_Weapons_PhSizeListView( *pGraph/*, pDirectGroup*/ );
     vInfosConnectors[ePhs] = &pPhSizeListView->GetConnector();
     T_ConnectorVector vPhConnectors( eNbrPhSizeGuiElements, (ADN_Connector_ABC*)0 );
 
-    ADN_Weapons_PhTable* pPhTable = new ADN_Weapons_PhTable( pDirectGroup );
+    ADN_Weapons_PhTable* pPhTable = new ADN_Weapons_PhTable( /*pDirectGroup*/ );
     vPhConnectors[ePhVector] = & pPhTable->GetConnector();
 
     pPhSizeListView->SetItemConnectors( vPhConnectors );
 
-    ADN_GroupBox* pSimulation = new ADN_GroupBox( 0, Qt::Horizontal, tr( "Simulation" ), pDirectGroup );
+    ADN_GroupBox2* pSimulation = new ADN_GroupBox2( tr( "Simulation" ) );
     vInfosConnectors[eSimulation] = &pSimulation->GetConnector();
     connect( pSimulation, SIGNAL( toggled( bool ) ), this, SLOT( ModifiersChanged( bool ) ) );
 
     QWidget* pModifiersHolder = builder.AddFieldHolder( pSimulation );
-
     ADN_ComboBox* pFirePostureCombo = builder.AddEnumField< E_UnitPosture >( pModifiersHolder, tr( "Fire posture" ), vInfosConnectors[eFirePosture], ENT_Tr::ConvertFromUnitPosture );
     connect( pFirePostureCombo, SIGNAL( activated( int ) ), this, SLOT( ModifiersChanged( int ) ) );
-
     ADN_ComboBox* pTargetPostureCombo = builder.AddEnumField< E_UnitPosture >( pModifiersHolder, tr( "Target posture" ), vInfosConnectors[eTargetPosture], ENT_Tr::ConvertFromUnitPosture );
     connect( pTargetPostureCombo, SIGNAL( activated( int ) ), this, SLOT( ModifiersChanged( int ) ) );
-
     ADN_ComboBox* pExperienceCombo = builder.AddEnumField< E_UnitExperience >( pModifiersHolder, tr( "Experience" ), vInfosConnectors[eExperience], ENT_Tr::ConvertFromUnitExperience );
     connect( pExperienceCombo, SIGNAL( activated( int ) ), this, SLOT( ModifiersChanged( int ) ) );
-
     ADN_ComboBox* pTirednessCombo = builder.AddEnumField< E_UnitTiredness >( pModifiersHolder, tr( "Tiredness" ), vInfosConnectors[eTiredness], ENT_Tr::ConvertFromUnitTiredness );
     connect( pTirednessCombo, SIGNAL( activated( int ) ), this, SLOT( ModifiersChanged( int ) ) );
-
     ADN_ComboBox* pStressCombo = builder.AddEnumField< E_UnitStress >( pModifiersHolder, tr( "Stress" ), vInfosConnectors[eStress], ENT_Tr::ConvertFromUnitStress );
     connect( pStressCombo, SIGNAL( activated( int ) ), this, SLOT( ModifiersChanged( int ) ) );
 
     // Indirect group
-    ADN_GroupBox* pIndirectGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Indirect fire" ), pGroup );
+    ADN_GroupBox* pIndirectGroup = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Indirect fire" ) );
     pIndirectGroup->GetConnector().bAutoHide_ = true;
     pIndirectGroup->setCheckable( false );
     vInfosConnectors[eIndirect] = &pIndirectGroup->GetConnector();
@@ -283,38 +258,47 @@ void ADN_Weapons_GUI::Build()
     builder.AddField<ADN_EditLine_Double>( pIndirectGroup, tr( "Min range" ), vInfosConnectors[eMinRange], tr( "m" ), eGreaterEqualZero );
     builder.AddField<ADN_EditLine_Double>( pIndirectGroup, tr( "Max range" ), vInfosConnectors[eMaxRange], tr( "m" ), eGreaterEqualZero );
 
-    pWeaponList_->SetItemConnectors( vInfosConnectors );
 
-
-    // Layout
-    Q3HBoxLayout* pMainLayout = new Q3HBoxLayout( pMainWidget_, 10, 10 );
-    pMainLayout->addWidget( pWeaponList_ );
-    pMainLayout->addWidget( pGroup );
-
-    Q3VBoxLayout* pGroupLayout = new Q3VBoxLayout( pGroup->layout(), 5 );
-    pGroupLayout->setAlignment( Qt::AlignTop );
-    pGroupLayout->addWidget( pParamHolder );
-    pGroupLayout->addWidget( pDirectGroup );
-    pGroupLayout->addWidget( pIndirectGroup);
-
-    { // $$$$ LDC Ciode review: Should be extracted in its own method
+    {
+        // $$$$ LDC Code review: Should be extracted in its own method
         pModifiersHolder->layout()->setAlignment( Qt::AlignTop );
 
-        Q3HBoxLayout* pSimulationLayout = new Q3HBoxLayout( pSimulation->layout(), 2 );
+        QHBoxLayout* pSimulationLayout = new QHBoxLayout( pSimulation );
         pSimulationLayout->addWidget( pModifiersHolder );
 
-        Q3GridLayout* pDirectLayout = new Q3GridLayout( pDirectGroup->layout(), 2, 5, 5 );
+        QGridLayout* pDirectLayout = new QGridLayout( pDirectGroup, 2, 3 );
+        pDirectLayout->setMargin( 10 );
+        pDirectLayout->setSpacing( 10 );
+//        pDirectGroup->setLayout( pDirectLayout );
         pDirectLayout->addWidget( pPhSizeListView, 0, 0 );
         pDirectLayout->addWidget( pPhTable, 0, 1 );
-        pDirectLayout->addMultiCellWidget( pSimulation, 0, 0, 2, 4 );
-        pDirectLayout->addMultiCellWidget( pGraph, 1, 1, 0, 4 );
+        pDirectLayout->addWidget( pSimulation, 0, 2 );
+        pDirectLayout->addMultiCellWidget( pGraph, 1, 1, 0, 2 );
         pDirectLayout->setColStretch( 0, 1 );
         pDirectLayout->setColStretch( 1, 2 );
-        pDirectLayout->setColStretch( 3, 2 );
+        pDirectLayout->setColStretch( 2, 2 );
     }
+
+    // -------------------------------------------------------------------------
+    // Layouts
+    // -------------------------------------------------------------------------
+    // Content layout
+    QWidget* pContent = new QWidget();
+    QVBoxLayout* pContentLayout = new QVBoxLayout( pContent );
+    pContentLayout->setMargin( 10 );
+    pContentLayout->setSpacing( 10 );
+    pContentLayout->setAlignment( Qt::AlignTop );
+    pContentLayout->addWidget( pInfoHolder );
+    pContentLayout->addWidget( pDirectGroup );
+    pContentLayout->addWidget( pIndirectGroup);
+
+    // List view
+    ADN_SearchListView< ADN_Weapons_ListView >* pSearchListView = new ADN_SearchListView< ADN_Weapons_ListView >( data_.GetWeaponInfos(), vInfosConnectors );
+    pListView_ = pSearchListView->GetListView();
+
+    // Main widget
+    pMainWidget_ = CreateScrollArea( *pContent, pSearchListView );
 }
-
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_GUI::CreateWeaponsTable
@@ -359,7 +343,6 @@ ADN_Table* ADN_Weapons_GUI::CreateWeaponsTable()
     pTable->AdjustColumns( 20 );
     return pTable;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_GUI::CreatePHTable
@@ -445,7 +428,6 @@ ADN_Table* ADN_Weapons_GUI::CreatePHTable()
     return pTable;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_GUI::RegisterTable
 // Created: APE 2005-03-29
@@ -468,7 +450,6 @@ void ADN_Weapons_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QStri
     indexBuilder.BeginHtml( tr( "Weapon Systems" ) );
     indexBuilder.BeginList();
 
-
     ADN_Weapons_Data::T_WeaponInfosVector& weapons = data_.weapons_;
     int n = 0;
     for( ADN_Weapons_Data::IT_WeaponInfosVector it = weapons.begin(); it != weapons.end(); ++it, ++n )
@@ -490,7 +471,6 @@ void ADN_Weapons_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QStri
         builder.ListItem( tr( "Rounds per reload" ), weapon.nRoundsPerReload_.GetData() );
         builder.ListItem( tr( "Reload duration" ), weapon.reloadDuration_.GetData().c_str() );
         builder.EndList();
-
 
         // Compute the existing distances
         std::set<int> distancesSet;
@@ -537,10 +517,6 @@ void ADN_Weapons_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QStri
             builder.ListItem( tr( "Max range" ), weapon.rMaxRange_.GetData(), tr( "m" ) );
             builder.EndList();
         }
-
-
-
-
         builder.EndHtml();
         builder.WriteToFile( strLocalPath + strFileName );
     }
@@ -558,7 +534,7 @@ void ADN_Weapons_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QStri
 // -----------------------------------------------------------------------------
 void ADN_Weapons_GUI::UpdateModifiers()
 {
-    ADN_Weapons_Data::WeaponInfos* pInfos = ( ADN_Weapons_Data::WeaponInfos* )pWeaponList_->GetCurrentData();
+    ADN_Weapons_Data::WeaponInfos* pInfos = ( ADN_Weapons_Data::WeaponInfos* )pListView_->GetCurrentData();
     if( pInfos == 0 )
         return;
 
@@ -643,7 +619,6 @@ void ADN_Weapons_GUI::ModifiersChanged( bool )
 {
     UpdateModifiers();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_GUI::ModifiersChanged

@@ -163,7 +163,7 @@ private:
     QComboBox* pSpeedImpactCombo_;
     QWidget* pMaxAgentSpeed_;
     ADN_EditLine_Double* pPointDistance_;
-    Q3GroupBox* pGroup_;
+    QWidget* pContent_;
     //@}
 };
 

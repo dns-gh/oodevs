@@ -62,6 +62,8 @@ ADN_Consumptions_Table::ADN_Consumptions_Table( QWidget* parent /* = 0*/ )
     // tab with 2 columns
     setNumCols( 2 );
     setNumRows( 0 );
+    setColumnStretchable( 0, true );
+    setColumnStretchable( 1, true );
     horizontalHeader()->setLabel( 0, tr( "Resource network" ) );
     horizontalHeader()->setLabel( 1, tr( "Consumption" ) );
     // connector creation

@@ -60,6 +60,8 @@ ADN_AvailabilityWarningTable::ADN_AvailabilityWarningTable( QWidget* pParent )
     setNumCols( 1 );
     setNumRows( 0 );
     setColumnStretchable( 0, true );
+    setFixedHeight( 300 );
+
     horizontalHeader()->setLabel( 0, tr( "Percentage" ) );
 
     // Create the connector.

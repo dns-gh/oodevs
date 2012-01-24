@@ -425,6 +425,27 @@
     <Filter Include="Source Files\Workspace\Logistic\Funeral\Funeral GUI">
       <UniqueIdentifier>{d90fd807-4955-4a27-a3ef-0675a2dea77c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Workspace\Logistic\Logistic">
+      <UniqueIdentifier>{da525033-a158-4b84-b12a-4adba2c1d2fa}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Logistic\Logistic\Logistic data">
+      <UniqueIdentifier>{bd405b4f-b24e-4f08-a1c5-77b883aee6cc}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Logistic\Logistic\Logistic GUI">
+      <UniqueIdentifier>{54ca5fab-1d51-4f61-8c9c-6e47740b88eb}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Common widgets\Search list view">
+      <UniqueIdentifier>{0ff686bc-86c4-4b51-bf0b-184012d6a9f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Container">
+      <UniqueIdentifier>{a93a4e45-d5b8-46ae-8fac-ba7839b6b995}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Container\Container data">
+      <UniqueIdentifier>{c6f0ac78-94f0-4907-b211-45d058b1d4f3}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Source Files\Workspace\Container\Container GUI">
+      <UniqueIdentifier>{372c418f-bfe1-4ee7-990d-0b29db600bf5}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\adaptation_app\adaptation_app_pch.cpp">
@@ -1318,6 +1339,39 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensors_MaterialsTable.cpp">
       <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MainTabWidget.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Logistic_Data.cpp">
+      <Filter>Source Files\Workspace\Logistic\Logistic\Logistic data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Logistic_GUI.cpp">
+      <Filter>Source Files\Workspace\Logistic\Logistic\Logistic GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_SearchLineEdit.cpp">
+      <Filter>Source Files\Common widgets\Search list view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ClearButton.cpp">
+      <Filter>Source Files\Common widgets\Search list view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_BaseEditLine.cpp">
+      <Filter>Source Files\Common widgets\Edit line</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_SearchButton.cpp">
+      <Filter>Source Files\Common widgets\Search list view</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Data_Container.cpp">
+      <Filter>Source Files\Workspace\Container\Container data</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_GUI_Container.cpp">
+      <Filter>Source Files\Workspace\Container\Container GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Tab_Container.cpp">
+      <Filter>Source Files\Workspace\Container\Container GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Linear_Container.cpp">
+      <Filter>Source Files\Workspace\Container\Container GUI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">
@@ -1330,9 +1384,6 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Enums.h">
-      <Filter>Source Files</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Enums_Gen.h">
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Type_ABC.h">
@@ -2022,6 +2073,33 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Sensors_UrbanBlockMaterial_GUI.h">
       <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Logistic_Data.h">
+      <Filter>Source Files\Workspace\Logistic\Logistic\Logistic data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Logistic_GUI.h">
+      <Filter>Source Files\Workspace\Logistic\Logistic\Logistic GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_SearchLineEdit.h">
+      <Filter>Source Files\Common widgets\Search list view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_SearchListView.h">
+      <Filter>Source Files\Common widgets\Search list view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_SearchButton.h">
+      <Filter>Source Files\Common widgets\Search list view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Data_Container.h">
+      <Filter>Source Files\Workspace\Container\Container data</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_GUI_Container.h">
+      <Filter>Source Files\Workspace\Container\Container GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Linear_Container.h">
+      <Filter>Source Files\Workspace\Container\Container GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Tab_Container.h">
+      <Filter>Source Files\Workspace\Container\Container GUI</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\adaptation_app\ADN_Config.inl">
@@ -2419,6 +2497,15 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Sensors_MaterialsTable.h">
       <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_MainTabWidget.h">
+      <Filter>Source Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_BaseEditLine.h">
+      <Filter>Source Files\Common widgets\Edit line</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ClearButton.h">
+      <Filter>Source Files\Common widgets\Search list view</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

@@ -64,7 +64,6 @@ ADN_MissionTypes_Table::ADN_MissionTypes_Table( QWidget* pParent, const char* sz
     setNumRows(0);
     setColumnStretchable(0,true);
     setColumnStretchable(1,true);
-    setMaximumWidth( 300 );
 
     horizontalHeader()->setLabel(0, qApp->translate( "ADN_Missions_GUI", "Type" ) );
     horizontalHeader()->setLabel(1, qApp->translate( "ADN_Missions_GUI", "Allowed" ) );

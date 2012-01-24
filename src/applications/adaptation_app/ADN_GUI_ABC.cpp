@@ -18,6 +18,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_GUI_ABC.h"
+#include <QtGui/qsizepolicy.h>
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GUI_ABC::tr
@@ -31,3 +32,47 @@ QString ADN_GUI_ABC::tr( const char* s, const char* c )
         return QString::fromLatin1( s );
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_GUI_ABC::CreateMainWidget
+// Created: ABR 2012-01-20
+// -----------------------------------------------------------------------------
+QWidget* ADN_GUI_ABC::CreateScrollArea( QWidget& content, QWidget* list /*= 0*/, bool paintSplitter /*= true*/, bool paintBackground /*= false*/, bool showFrameBorder /*= true*/, int margin /*= 10*/, int spacing /*= 10*/ )
+{
+    // Content area
+    QScrollArea* scrollArea = new QScrollArea();
+    scrollArea->setWidget( &content );
+    scrollArea->setWidgetResizable( true );
+
+    // Backup color because splitter's background color applies to his children.
+    QColor color = scrollArea->backgroundColor();
+
+    // MainWidget
+    QWidget* mainWidget = new QWidget( 0 );
+    QHBoxLayout* pMainLayout = new QHBoxLayout( mainWidget );
+    pMainLayout->setMargin( margin );
+    pMainLayout->setSpacing( spacing );
+
+    if( list == 0 )
+        pMainLayout->addWidget( scrollArea, 1 );
+    else
+    {
+        QSplitter* splitter = new QSplitter();
+        pMainLayout->addWidget( splitter, 1 );
+        splitter->setOpaqueResize( false );
+        if( paintSplitter )
+            splitter->setBackgroundColor( Qt::white );
+        splitter->addWidget( list );
+        splitter->addWidget( scrollArea );
+
+        splitter->setCollapsible( list, false );
+        splitter->setCollapsible( scrollArea, false );
+        list->setMinimumWidth( 100 );
+        list->setMaximumWidth( 350 );
+    }
+
+    scrollArea->setBackgroundColor( ( paintBackground ) ? Qt::white : color );
+    if( !showFrameBorder )
+        scrollArea->setFrameShape( QFrame::NoFrame );
+
+    return mainWidget;
+}

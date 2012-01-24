@@ -46,11 +46,11 @@ protected:
 // Created: APE 2005-03-21
 // -----------------------------------------------------------------------------
 ADN_HumanFactors_GUI::ADN_HumanFactors_GUI( ADN_HumanFactors_Data& data )
-: ADN_GUI_ABC( "ADN_HumanFactors_GUI" )
-, data_      ( data )
+    : ADN_GUI_ABC( "ADN_HumanFactors_GUI" )
+    , data_      ( data )
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_HumanFactors_GUI destructor
@@ -58,8 +58,8 @@ ADN_HumanFactors_GUI::ADN_HumanFactors_GUI( ADN_HumanFactors_Data& data )
 // -----------------------------------------------------------------------------
 ADN_HumanFactors_GUI::~ADN_HumanFactors_GUI()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_HumanFactors_GUI::Build
@@ -67,63 +67,70 @@ ADN_HumanFactors_GUI::~ADN_HumanFactors_GUI()
 // -----------------------------------------------------------------------------
 void ADN_HumanFactors_GUI::Build()
 {
-    // Main widget / layout
+    // -------------------------------------------------------------------------
+    // Creations
+    // -------------------------------------------------------------------------
     assert( pMainWidget_ == 0 );
-    pMainWidget_ = new QWidget( 0 );
-    QVBoxLayout* pLayout = new QVBoxLayout( pMainWidget_, 0, 10 );
-    pLayout->setMargin( 10 );
-    pLayout->setAlignment( Qt::AlignTop );
+    ADN_GuiBuilder builder;
 
     // Experience
+    Q3GroupBox* pExperienceBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Experience modifiers" ), pMainWidget_ );
     {
-        Q3GroupBox* box = new Q3GroupBox( 3, Qt::Horizontal, tr( "Experience modifiers" ), pMainWidget_ );
-        BuildModifiers( box, data_.newbieModifiers_, tr( "Newbie" ) );
-        BuildModifiers( box, data_.xpModifiers_, tr( "Experienced" ) );
-        BuildModifiers( box, data_.veteranModifiers_, tr( "Veteran" ) );
-        pLayout->addWidget( box );
+        BuildModifiers( pExperienceBox, data_.newbieModifiers_, tr( "Newbie" ) );
+        BuildModifiers( pExperienceBox, data_.xpModifiers_, tr( "Experienced" ) );
+        BuildModifiers( pExperienceBox, data_.veteranModifiers_, tr( "Veteran" ) );
     }
     // Tiredness
+    Q3GroupBox* pTirednessBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Tiredness modifiers" ), pMainWidget_ );
     {
-        Q3GroupBox* box = new Q3GroupBox( 3, Qt::Horizontal, tr( "Tiredness modifiers" ), pMainWidget_ );
-        BuildModifiers( box, data_.normalModifiers_, tr( "Not tired" ) );
-        BuildModifiers( box, data_.tirednessModifiers_, tr( "Tired" ) );
-        BuildModifiers( box, data_.exhaustedModifiers_, tr( "Exhausted" ) );
-        pLayout->addWidget( box );
+        BuildModifiers( pTirednessBox, data_.normalModifiers_, tr( "Not tired" ) );
+        BuildModifiers( pTirednessBox, data_.tirednessModifiers_, tr( "Tired" ) );
+        BuildModifiers( pTirednessBox, data_.exhaustedModifiers_, tr( "Exhausted" ) );
     }
     // Stress
+    Q3GroupBox* pStressBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Stress modifiers" ), pMainWidget_ );
     {
-        Q3GroupBox* box = new Q3GroupBox( 3, Qt::Horizontal, tr( "Stress modifiers" ), pMainWidget_ );
-        BuildModifiers( box, data_.calmModifiers_, tr( "Calm" ) );
-        BuildModifiers( box, data_.worriedModifiers_, tr( "Worried" ) );
-        BuildModifiers( box, data_.stressedModifiers_, tr( "Stressed" ) );
-        pLayout->addWidget( box );
+        BuildModifiers( pStressBox, data_.calmModifiers_, tr( "Calm" ) );
+        BuildModifiers( pStressBox, data_.worriedModifiers_, tr( "Worried" ) );
+        BuildModifiers( pStressBox, data_.stressedModifiers_, tr( "Stressed" ) );
     }
     // Evolution
+    Q3GroupBox* pEvolutionBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Automatic evolution" ), pMainWidget_ );
     {
-        ADN_GuiBuilder builder;
-        Q3GroupBox* box = new Q3GroupBox( 3, Qt::Horizontal, tr( "Automatic evolution" ), pMainWidget_ );
+        Q3GroupBox* vBox = new Q3GroupBox( 1, Qt::Horizontal, tr( "Tiredness" ), pEvolutionBox );
+        BuildThresholds( vBox, data_.tirednessThresholds_, tr( "Thresholds" ), tr( "Tiredness" ), tr( "Exhaustion" ) );
         {
-            Q3GroupBox* vBox = new Q3GroupBox( 1, Qt::Horizontal, tr( "Tiredness" ), box );
-            BuildThresholds( vBox, data_.tirednessThresholds_, tr( "Thresholds" ), tr( "Tiredness" ), tr( "Exhaustion" ) );
-            {
-                Q3GroupBox* hBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Evolution (per hour)" ), vBox );
-                builder.AddField< ADN_EditLine_Int >( hBox, tr( "Parked, engine stopped" ), data_.tirednessEngineStopped_ );
-                builder.AddField< ADN_EditLine_Int >( hBox, tr( "Parked, engine running" ), data_.tirednessEngineRunning_ );
-                builder.AddField< ADN_EditLine_Int >( hBox, tr( "Moving" ), data_.tirednessMoving_ );
-                builder.AddField< ADN_EditLine_Int >( hBox, tr( "Working" ), data_.tirednessWorking_ );
-            }
+            Q3GroupBox* hBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Evolution (per hour)" ), vBox );
+            builder.AddField< ADN_EditLine_Int >( hBox, tr( "Parked, engine stopped" ), data_.tirednessEngineStopped_ );
+            builder.AddField< ADN_EditLine_Int >( hBox, tr( "Parked, engine running" ), data_.tirednessEngineRunning_ );
+            builder.AddField< ADN_EditLine_Int >( hBox, tr( "Moving" ), data_.tirednessMoving_ );
+            builder.AddField< ADN_EditLine_Int >( hBox, tr( "Working" ), data_.tirednessWorking_ );
         }
+        vBox = new Q3GroupBox( 1, Qt::Horizontal, tr( "Stress" ), pEvolutionBox );
+        BuildThresholds( vBox, data_.stressThresholds_, tr( "Thresholds" ), tr( "Worry" ), tr( "Stress" ) );
         {
-            Q3GroupBox* vBox = new Q3GroupBox( 1, Qt::Horizontal, tr( "Stress" ), box );
-            BuildThresholds( vBox, data_.stressThresholds_, tr( "Thresholds" ), tr( "Worry" ), tr( "Stress" ) );
-            {
-                Q3GroupBox* hBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Evolution" ), vBox );
-                builder.AddField< ADN_EditLine_Int >( hBox, tr( "Increase per fire" ), data_.stressIncPerShot_, 0, eGreaterEqualZero );
-                builder.AddField< ADN_EditLine_Int >( hBox, tr( "Decrease per hour" ), data_.stressDecPerHour_, 0, eLowerEqualZero  );
-            }
+            Q3GroupBox* hBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Evolution" ), vBox );
+            builder.AddField< ADN_EditLine_Int >( hBox, tr( "Increase per fire" ), data_.stressIncPerShot_, 0, eGreaterEqualZero );
+            builder.AddField< ADN_EditLine_Int >( hBox, tr( "Decrease per hour" ), data_.stressDecPerHour_, 0, eLowerEqualZero  );
         }
-        pLayout->addWidget( box );
     }
+
+    // -------------------------------------------------------------------------
+    // Layouts
+    // -------------------------------------------------------------------------
+    // Content layout
+    QWidget* pContent = new QWidget();
+    QVBoxLayout* pContentLayout = new QVBoxLayout( pContent );
+    pContentLayout->setMargin( 10 );
+    pContentLayout->setSpacing( 10 );
+    pContentLayout->setAlignment( Qt::AlignTop );
+    pContentLayout->addWidget( pExperienceBox );
+    pContentLayout->addWidget( pTirednessBox );
+    pContentLayout->addWidget( pStressBox );
+    pContentLayout->addWidget( pEvolutionBox );
+
+    // Main widget
+    pMainWidget_ = CreateScrollArea( *pContent );
 }
 
 // -----------------------------------------------------------------------------
@@ -154,4 +161,3 @@ QWidget* ADN_HumanFactors_GUI::BuildThresholds( QWidget* pParent, ADN_HumanFacto
     builder.AddField<ADN_EditLine_Int>( pGroupBox, secondThresholdName, thresholds.secondThreshold_, 0, eGreaterZero );
     return pGroupBox;
 }
-

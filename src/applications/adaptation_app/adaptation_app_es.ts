@@ -24,10 +24,6 @@
 <context>
     <name>ADN_ActiveProtections_GUI</name>
     <message>
-        <source>Active Protection</source>
-        <translation>Protecciones activas</translation>
-    </message>
-    <message>
         <source>Properties</source>
         <translation>Propiedades</translation>
     </message>
@@ -321,10 +317,6 @@ estacionado con motor encendido</translation>
 <context>
     <name>ADN_Automata_GUI</name>
     <message>
-        <source>Automata</source>
-        <translation>Autómata</translation>
-    </message>
-    <message>
         <source>Name</source>
         <translation>Nombre</translation>
     </message>
@@ -475,10 +467,6 @@ estacionado con motor encendido</translation>
 <context>
     <name>ADN_Breakdowns_GUI</name>
     <message>
-        <source>Breakdown</source>
-        <translation>Fallas</translation>
-    </message>
-    <message>
         <source>Name</source>
         <translation>Nombre</translation>
     </message>
@@ -489,10 +477,6 @@ estacionado con motor encendido</translation>
     <message>
         <source>Required parts</source>
         <translation>Partes requeridas</translation>
-    </message>
-    <message>
-        <source>General parameter</source>
-        <translation>Parámetros generales</translation>
     </message>
     <message>
         <source>Seriousness</source>
@@ -509,6 +493,10 @@ estacionado con motor encendido</translation>
     <message>
         <source>Average diagnostic duration</source>
         <translation>Duración promedio del diagnóstico</translation>
+    </message>
+    <message>
+        <source>General parameters</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -651,6 +639,13 @@ estacionado con motor encendido</translation>
     </message>
 </context>
 <context>
+    <name>ADN_ClearButton</name>
+    <message>
+        <source>Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_ColorNameSelector</name>
     <message>
         <source>Select color</source>
@@ -666,10 +661,6 @@ estacionado con motor encendido</translation>
 </context>
 <context>
     <name>ADN_Communications_GUI</name>
-    <message>
-        <source>Jamming</source>
-        <translation>Interferencia</translation>
-    </message>
     <message>
         <source>Effect on reloading duration</source>
         <translation>Efecto en la duración de recarga</translation>
@@ -1743,10 +1734,6 @@ estacionado con motor encendido</translation>
         <translation type="unfinished">m</translation>
     </message>
     <message>
-        <source>Fire</source>
-        <translation>Fuego</translation>
-    </message>
-    <message>
         <source>Name</source>
         <translation>Nombre</translation>
     </message>
@@ -1878,10 +1865,6 @@ estacionado con motor encendido</translation>
 <context>
     <name>ADN_Health_GUI</name>
     <message>
-        <source>Medical system data</source>
-        <translation>Datos del sistema médico</translation>
-    </message>
-    <message>
         <source>Diagnostic duration</source>
         <translation>Duración de diagnóstico</translation>
     </message>
@@ -1914,20 +1897,16 @@ estacionado con motor encendido</translation>
         <translation>Esperanza de vida</translation>
     </message>
     <message>
-        <source>Equipments availability warnings</source>
-        <translation>Advertencias de disponibilidad de equipos</translation>
+        <source>Doctors availability warnings</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ambulances - evacuation</source>
-        <translation>Ambulancias - evacuación</translation>
+        <source>Ambulances (evacuation) availability warnings</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Ambulances - collection</source>
-        <translation>Ambulancias - recolección</translation>
-    </message>
-    <message>
-        <source>Doctors</source>
-        <translation>Médicos</translation>
+        <source>Ambulances (collection) availability warnings</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2060,10 +2039,6 @@ estacionado con motor encendido</translation>
 <context>
     <name>ADN_KnowledgeGroups_GUI</name>
     <message>
-        <source>Knowledge group</source>
-        <translation>Grupo de conocimiento</translation>
-    </message>
-    <message>
         <source>Name</source>
         <translation>Nombre</translation>
     </message>
@@ -2144,20 +2119,12 @@ estacionado con motor encendido</translation>
 <context>
     <name>ADN_Launchers_GUI</name>
     <message>
-        <source>Launcher</source>
-        <translation>Lanzador</translation>
-    </message>
-    <message>
         <source>Name</source>
         <translation>Nombre</translation>
     </message>
     <message>
         <source>Direct fire</source>
         <translation>Fuego directo</translation>
-    </message>
-    <message>
-        <source>Phs modifiers</source>
-        <translation>Modificadores de PH</translation>
     </message>
     <message>
         <source>Shooter&apos;s
@@ -2180,6 +2147,10 @@ tirador</translation>
     <message>
         <source>Shooter&apos;s stance / Target&apos;s stance</source>
         <translation>Postura de tirador / Postura de blanco</translation>
+    </message>
+    <message>
+        <source>Phs modifiers</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2445,6 +2416,25 @@ tirador</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Logistic_GUI</name>
+    <message>
+        <source>Maintenance</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Supply</source>
+        <translation type="unfinished">Suministro</translation>
+    </message>
+    <message>
+        <source>Health</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Funeral</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_MainWindow</name>
     <message>
         <source>Sword Adaptation Tool - No Project</source>
@@ -2562,25 +2552,17 @@ tirador</translation>
         <source>Something went wrong during the saving process.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Back  (ctrl + left)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Forward (ctrl + right)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Maintenance_GUI</name>
-    <message>
-        <source>Maintenance system data</source>
-        <translation>Sistema de datos de mantenimiento</translation>
-    </message>
-    <message>
-        <source>Equipments availability warnings</source>
-        <translation>Advertencias de disponibilidad de equipos</translation>
-    </message>
-    <message>
-        <source>Repairers</source>
-        <translation>Mecánicos</translation>
-    </message>
-    <message>
-        <source>Tow trucks</source>
-        <translation>Remolques</translation>
-    </message>
     <message>
         <source>Shifts durations</source>
         <translation>Duración de cambios</translation>
@@ -2596,6 +2578,14 @@ tirador</translation>
     <message>
         <source>Warning after</source>
         <translation>Advertencia (después)</translation>
+    </message>
+    <message>
+        <source>Repairers availability warnings</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tow trucks availability warnings</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2709,10 +2699,6 @@ tirador</translation>
         <translation>Ordenes parciales</translation>
     </message>
     <message>
-        <source>Mission</source>
-        <translation>Mision</translation>
-    </message>
-    <message>
         <source>Name</source>
         <translation>Nombre</translation>
     </message>
@@ -2795,10 +2781,6 @@ tirador</translation>
         <translation>Modelos de autómata</translation>
     </message>
     <message>
-        <source>Model</source>
-        <translation>Modelo</translation>
-    </message>
-    <message>
         <source>Name</source>
         <translation>nombre</translation>
     </message>
@@ -2875,10 +2857,6 @@ tirador</translation>
     <message>
         <source>Reloading time modifier</source>
         <translation>Modificador de tiempo de recarga</translation>
-    </message>
-    <message>
-        <source>NBC Agent</source>
-        <translation>Agente NBC</translation>
     </message>
     <message>
         <source>Name</source>
@@ -3453,10 +3431,6 @@ Asegúrese que el archivo existe.</translation>
 <context>
     <name>ADN_People_GUI</name>
     <message>
-        <source>Population</source>
-        <translation>Población</translation>
-    </message>
-    <message>
         <source>Details</source>
         <translation>Detalles</translation>
     </message>
@@ -3674,10 +3648,6 @@ Asegúrese que el archivo existe.</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Crowd</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Armed individuals</source>
         <translation type="unfinished"></translation>
     </message>
@@ -3784,10 +3754,6 @@ Asegúrese que el archivo existe.</translation>
 <context>
     <name>ADN_Radars_GUI</name>
     <message>
-        <source>Special sensor</source>
-        <translation>Sensores especiales</translation>
-    </message>
-    <message>
         <source>Name</source>
         <translation>nombre</translation>
     </message>
@@ -3881,10 +3847,6 @@ Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detecció
 </context>
 <context>
     <name>ADN_ResourceNetworks_GUI</name>
-    <message>
-        <source>Resource network</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
         <source>Name</source>
         <translation>Nombre</translation>
@@ -3986,6 +3948,13 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
     </message>
     <message>
         <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>ADN_SearchLineEdit</name>
+    <message>
+        <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4209,14 +4178,6 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
         <translation>Sensores especiales</translation>
     </message>
     <message>
-        <source>Army aviation</source>
-        <translation>Aviación del ejército</translation>
-    </message>
-    <message>
-        <source>Survey durations</source>
-        <translation>Duración de reconocimiento</translation>
-    </message>
-    <message>
         <source>/ha</source>
         <translation>/ha</translation>
     </message>
@@ -4270,6 +4231,10 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
     </message>
     <message>
         <source>UrbanBlock material modifiers</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Survey durations for army aviation</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4390,10 +4355,6 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
 </context>
 <context>
     <name>ADN_Supply_GUI</name>
-    <message>
-        <source>Supply system data</source>
-        <translation></translation>
-    </message>
     <message>
         <source>Unit type</source>
         <translation></translation>
@@ -5240,10 +5201,6 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
 <context>
     <name>ADN_Units_GUI</name>
     <message>
-        <source>Unit</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Name</source>
         <translation>Nom</translation>
     </message>
@@ -5953,23 +5910,11 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation></translation>
     </message>
     <message>
-        <source>Maintenance</source>
-        <translation></translation>
-    </message>
-    <message>
         <source>Missions</source>
         <translation></translation>
     </message>
     <message>
         <source>Knowledge groups</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Health</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>Supply</source>
         <translation></translation>
     </message>
     <message>
@@ -6054,10 +5999,6 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>UnitSymbols</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Funeral</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

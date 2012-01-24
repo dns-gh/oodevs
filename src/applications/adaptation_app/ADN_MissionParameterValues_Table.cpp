@@ -49,6 +49,7 @@ ADN_MissionParameterValues_Table::ADN_MissionParameterValues_Table( QWidget* pPa
     setNumCols( 1 );
     setNumRows( 0 );
     horizontalHeader()->setLabel( 0, tr( "Name" ) );
+    setColumnStretchable( 0, true );
     pConnector_ = new ADN_CT_MissionParameterValues( *this );
 }
 

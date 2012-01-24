@@ -84,9 +84,9 @@ public:
 // Name: ADN_Composantes_ConsumptionsTable constructor
 // Created: APE 2005-01-07
 // -----------------------------------------------------------------------------
-ADN_Composantes_ConsumptionsTable::ADN_Composantes_ConsumptionsTable(  ADN_ListView_Composantes& composanteListView, QWidget* pParent )
-: ADN_Table2         ( pParent, "ADN_Composantes_ConsumptionsTable" )
-, composanteListView_( composanteListView )
+ADN_Composantes_ConsumptionsTable::ADN_Composantes_ConsumptionsTable( QWidget* pParent )
+    : ADN_Table2( pParent, "ADN_Composantes_ConsumptionsTable" )
+    , composanteListView_( 0 )
 {
     // Selection and sorting.
     setSorting( true );
@@ -125,6 +125,14 @@ ADN_Composantes_ConsumptionsTable::~ADN_Composantes_ConsumptionsTable()
     delete pConnector_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_ConsumptionsTable::SetListView
+// Created: ABR 2012-01-20
+// -----------------------------------------------------------------------------
+void ADN_Composantes_ConsumptionsTable::SetListView( ADN_ListView_Composantes* listView )
+{
+    composanteListView_ = listView;
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Composantes_ConsumptionsTable::OnContextMenu
@@ -136,8 +144,8 @@ void ADN_Composantes_ConsumptionsTable::OnContextMenu( int /*nRow*/, int /*nCol*
     menuParametersList_.clear();
 
     // Get the available category list.
-    assert( composanteListView_.GetCurrentData() != 0 );
-    ADN_Composantes_Data::ComposanteInfos* pComp = (ADN_Composantes_Data::ComposanteInfos*)(composanteListView_.GetCurrentData());
+    assert( composanteListView_ != 0 && composanteListView_->GetCurrentData() != 0 );
+    ADN_Composantes_Data::ComposanteInfos* pComp = (ADN_Composantes_Data::ComposanteInfos*)(composanteListView_->GetCurrentData());
     ADN_Composantes_Data::ResourceInfos& dotation = pComp->resources_;
     ADN_Composantes_Data::T_CategoryInfos_Vector& categories = dotation.categories_;
 

@@ -73,11 +73,9 @@ ADN_MissionParameters_Table::ADN_MissionParameters_Table( QWidget* parent /* = 0
     verticalHeader()->hide();
     setLeftMargin( 0 );
     setNumCols( 6 );
-    setColumnWidth( 1, 170 );
-    setColumnWidth( 2, 170 );
-    setColumnWidth( 3, 60 );
-    setColumnWidth( 4, 60 );
-    setColumnWidth( 5, 60 );
+    setColumnStretchable( 0, true );
+    setColumnStretchable( 1, true );
+    setColumnStretchable( 2, true );
     setNumRows( 0 );
     horizontalHeader()->setLabel( 0, tr( "Name" ) );
     horizontalHeader()->setLabel( 1, tr( "DirectIA name" ) );

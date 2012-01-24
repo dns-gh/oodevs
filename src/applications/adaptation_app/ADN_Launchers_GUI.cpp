@@ -1,13 +1,12 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-07-11 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Launchers_GUI.cpp $
-// $Author: Ape $
-// $Modtime: 21/04/05 11:57 $
-// $Revision: 10 $
-// $Workfile: ADN_Launchers_GUI.cpp $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
+
 #include "adaptation_app_pch.h"
 #include "ADN_Launchers_GUI.h"
 #include "ADN_App.h"
@@ -19,18 +18,18 @@
 #include "ADN_Launchers_ModifPhs_GUI.h"
 #include "ADN_GroupBox.h"
 #include "ADN_HtmlBuilder.h"
-
+#include "ADN_SearchListView.h"
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Launchers_GUI constructor
 // Created: JDY 03-07-11
 //-----------------------------------------------------------------------------
 ADN_Launchers_GUI::ADN_Launchers_GUI( ADN_Launchers_Data& data )
-: ADN_GUI_ABC( "ADN_Launchers_GUI" )
-, data_      ( data )
+    : ADN_GUI_ABC( "ADN_Launchers_GUI" )
+    , data_      ( data )
 {
+    // NOTHING
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Launchers_GUI destructor
@@ -38,8 +37,8 @@ ADN_Launchers_GUI::ADN_Launchers_GUI( ADN_Launchers_Data& data )
 //-----------------------------------------------------------------------------
 ADN_Launchers_GUI::~ADN_Launchers_GUI()
 {
+    // NOTHING
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Launchers_GUI::Build
@@ -47,55 +46,63 @@ ADN_Launchers_GUI::~ADN_Launchers_GUI()
 //-----------------------------------------------------------------------------
 void ADN_Launchers_GUI::Build()
 {
+    // -------------------------------------------------------------------------
+    // Creations
+    // -------------------------------------------------------------------------
     assert( pMainWidget_ == 0 );
-
     ADN_GuiBuilder builder;
-
-    // Create the main widget.
-    pMainWidget_ = new QWidget( 0, "frame launchers" );
-
-    // Launcher listview
-    pLaunchers_ = new ADN_ListView_Launchers( pMainWidget_ );
-    pLaunchers_->GetConnector().Connect(&data_.GetLaunchersInfos());
     T_ConnectorVector vConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
 
-    // Launcher data
-    Q3GroupBox* pGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Launcher" ), pMainWidget_ );
+    // Info holder
+    QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
+    builder.AddField<ADN_EditLine_String>( pInfoHolder, tr( "Name" ), vConnectors[eName] );
 
-    QWidget* pHolder = builder.AddFieldHolder( pGroup );
-    builder.AddField<ADN_EditLine_String>( pHolder, tr( "Name" ), vConnectors[eName] );
+    // Indirect fire
+    builder.AddField< ADN_CheckBox >( pInfoHolder, tr( "Indirect fire" ), vConnectors[eIndirect] );
 
-    // launcher modificator
-    ADN_GroupBox* pDirectGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Direct fire" ), pGroup );
+    // Direct fire
+    ADN_GroupBox* pDirectGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Direct fire" ) );
     vConnectors[eDirect] = &pDirectGroup->GetConnector();
+    QGroupBox* pGroupModificators = new QGroupBox( tr( "Phs modifiers" ), pDirectGroup );
 
-    Q3GroupBox* pGroupModificators = new Q3HGroupBox( tr( "Phs modifiers" ), pDirectGroup );
+    QLabel* pTargetLabel = new QLabel( tr( "Target's stance" ) );
+    pTargetLabel->setAlignment( Qt::AlignHCenter );
 
-    // modificators headers
-    QLabel* pLabel = new QLabel( tr( "Shooter's\nstance" ), pGroupModificators );
-    pLabel->setAlignment( Qt::AlignVCenter );
-    Q3VBox* pBox = new Q3VBox( pGroupModificators );
-    pLabel = new QLabel( tr( "Target's stance" ), pBox );
-    pLabel->setAlignment( Qt::AlignHCenter );
+    QLabel* pShooterLabel = new QLabel( tr( "Shooter's\nstance" ) );
+    //pShooterLabel->setAlignment( Qt::AlignVCenter );
 
     // modificators tab
-    pModifPhs_ = new ADN_Launchers_ModifPhs_GUI( pBox );
+    pModifPhs_ = new ADN_Launchers_ModifPhs_GUI();
     vConnectors[ePhModifiers] = &pModifPhs_->GetConnector();
 
-    ADN_CheckBox* pCheckBox = new ADN_CheckBox( tr( "Indirect fire" ), pGroup );
-    vConnectors[eIndirect] = &pCheckBox->GetConnector();
+    // -------------------------------------------------------------------------
+    // Layouts
+    // -------------------------------------------------------------------------
+    // Modificators layout
+    QGridLayout* pModificatorsLayout = new QGridLayout( pGroupModificators, 2, 2 );
+    pModificatorsLayout->setMargin( 10 );
+    pModificatorsLayout->setSpacing( 10 );
+    pModificatorsLayout->addWidget( pTargetLabel, 0, 1 );
+    pModificatorsLayout->addWidget( pShooterLabel, 1, 0 );
+    pModificatorsLayout->addWidget( pModifPhs_, 1, 1 );
 
-    builder.AddStretcher( pGroup, Qt::Vertical );
+    // Content layout
+    QWidget* pContent = new QWidget();
+    QVBoxLayout* pContentLayout = new QVBoxLayout( pContent );
+    pContentLayout->setMargin( 10 );
+    pContentLayout->setSpacing( 10 );
+    pContentLayout->setAlignment( Qt::AlignTop );
+    pContentLayout->addWidget( pInfoHolder );
+    pContentLayout->addWidget( pDirectGroup );
+    pContentLayout->addStretch( 1 );
 
-    // Connect the gui to the data.
-    pLaunchers_->SetItemConnectors(vConnectors);
+    // ListView
+    ADN_SearchListView< ADN_ListView_Launchers >* pSearchListView = new ADN_SearchListView< ADN_ListView_Launchers >( data_.GetLaunchersInfos(), vConnectors );
+    pListView_ = pSearchListView->GetListView();
 
-    // Layout
-    Q3HBoxLayout* pMainLayout = new Q3HBoxLayout( pMainWidget_, 10, 10 );
-    pMainLayout->addWidget( pLaunchers_, 1 );
-    pMainLayout->addWidget( pGroup, 4 );
+    // Main widget
+    pMainWidget_ = CreateScrollArea( *pContent, pSearchListView );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Launchers_GUI::ExportPHModifiers
@@ -106,7 +113,7 @@ void ADN_Launchers_GUI::ExportPHModifiers( ADN_HtmlBuilder& builder, ADN_Launche
     if( ! infos.bDirect_.GetData() )
         return;
 
-    pLaunchers_->SetCurrentItem( &infos );
+    pListView_->SetCurrentItem( &infos );
     builder.Section( tr( "Phs modificators" ) );
     builder.Stream() << tr( "Shooter's stance / Target's stance" ).ascii();
     builder.CreateTableFrom( *pModifPhs_ );

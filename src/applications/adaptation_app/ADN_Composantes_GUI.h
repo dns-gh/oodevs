@@ -193,7 +193,7 @@ private:
     //@{
     ADN_Composantes_Data& data_;
 
-    ADN_ListView_Composantes* pComposanteList_;
+    ADN_ListView_Composantes* pListView_;
     Q3GroupBox* pBreakdownsGroup_;
     ADN_Composantes_Speeds_GUI* pSpeeds_;
     ADN_Composantes_Sensors_GUI* pSensors_;

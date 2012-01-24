@@ -131,7 +131,7 @@ private:
     //! @name Member data
     //@{
     ADN_Units_Data& data_;
-    ADN_ListView_Units* pListUnits_;
+    ADN_ListView_Units* pListView_;
     ADN_EditLine_Int* pOfficersEditLine_;
     ADN_EditLine_Int* pNCOfficersEditLine_;
     QComboBox* pTypeCombo_;

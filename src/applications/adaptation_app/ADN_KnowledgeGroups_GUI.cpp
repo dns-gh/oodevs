@@ -13,6 +13,7 @@
 #include "ADN_KnowledgeGroups_ListView.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_EditLine.h"
+#include "ADN_SearchListView.h"
 #include "ADN_TimeField.h"
 
 // -----------------------------------------------------------------------------
@@ -25,7 +26,6 @@ ADN_KnowledgeGroups_GUI::ADN_KnowledgeGroups_GUI( ADN_KnowledgeGroups_Data& data
 {
     // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_KnowledgeGroups_GUI destructor
@@ -42,39 +42,45 @@ ADN_KnowledgeGroups_GUI::~ADN_KnowledgeGroups_GUI()
 // -----------------------------------------------------------------------------
 void ADN_KnowledgeGroups_GUI::Build()
 {
-    if( pMainWidget_ != 0 )
-        return;
-
+    // -------------------------------------------------------------------------
+    // Creation
+    // -------------------------------------------------------------------------
+    assert( pMainWidget_ == 0 );
     ADN_GuiBuilder builder;
-
-    // Create the top widget.
-    pMainWidget_ = new QWidget( 0 );
-
-    // Create the listview.
-    ADN_KnowledgeGroups_ListView* pGroupsList = new ADN_KnowledgeGroups_ListView( pMainWidget_ );
-    pGroupsList->GetConnector().Connect( &data_.vGroups_ );
     T_ConnectorVector vInfosConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
 
-    Q3GroupBox* pGroup = new Q3GroupBox( 4, Qt::Vertical, tr( "Knowledge group" ), pMainWidget_ );
+    // Info holder
+    QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
+    builder.AddField<ADN_EditLine_String>( pInfoHolder, tr( "Name" ), vInfosConnectors[eName] );
 
-    QWidget* pHolder = builder.AddFieldHolder( pGroup );
-    builder.AddField<ADN_EditLine_String>( pHolder, tr( "Name" ), vInfosConnectors[eName] );
-
-    Q3GroupBox* pDelayGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Delay Parameters" ), pGroup );
+    Q3GroupBox* pDelayGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Delay Parameters" ) );
     builder.AddField<ADN_TimeField>( pDelayGroup, tr( "Communication Delay" ), vInfosConnectors[eCommunicationDelay] );
 
-    Q3GroupBox* pAgentGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Parameters on known units" ), pGroup );
+    Q3GroupBox* pAgentGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Parameters on known units" ) );
     builder.AddField<ADN_TimeField>( pAgentGroup, tr( "Maximum life span" ), vInfosConnectors[eAgentMaxLifetime] )->SetMinimumValueInSecond( 1 );
     builder.AddField<ADN_EditLine_Double>( pAgentGroup, tr( "Maximum distance between known unit and real unit positions" ), vInfosConnectors[eAgentMaxDistance], 0, eGreaterZero );
     builder.AddOptionnalField<ADN_TimeField>( pAgentGroup, tr( "Extrapolation duration" ), vInfosConnectors[eAgentHasInterpolationTime], vInfosConnectors[eAgentInterpolationTime] );
 
-    Q3GroupBox* pPopulationGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Parameters on known crowds" ), pGroup );
+    Q3GroupBox* pPopulationGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Parameters on known crowds" ) );
     builder.AddField<ADN_TimeField>( pPopulationGroup, tr( "Maximum life span" ), vInfosConnectors[ePopulationMaxLifetime] )->SetMinimumValueInSecond( 1 );
 
-    pGroupsList->SetItemConnectors( vInfosConnectors );
+    // -------------------------------------------------------------------------
+    // Layouts
+    // -------------------------------------------------------------------------
+    // Content layout
+    QWidget* pContent = new QWidget();
+    QVBoxLayout* pContentLayout = new QVBoxLayout( pContent );
+    pContentLayout->setMargin( 10 );
+    pContentLayout->setSpacing( 10 );
+    pContentLayout->setAlignment( Qt::AlignTop );
+    pContentLayout->addWidget( pInfoHolder );
+    pContentLayout->addWidget( pDelayGroup );
+    pContentLayout->addWidget( pAgentGroup );
+    pContentLayout->addWidget( pPopulationGroup );
 
-    // Layout
-    Q3HBoxLayout* pMainLayout = new Q3HBoxLayout( pMainWidget_, 10, 10 );
-    pMainLayout->addWidget( pGroupsList, 1 );
-    pMainLayout->addWidget( pGroup, 4 );
+    // List view
+    ADN_SearchListView< ADN_KnowledgeGroups_ListView >* pSearchListView = new ADN_SearchListView< ADN_KnowledgeGroups_ListView >( data_.vGroups_, vInfosConnectors );
+
+    // Main widget
+    pMainWidget_ = CreateScrollArea( *pContent, pSearchListView );
 }

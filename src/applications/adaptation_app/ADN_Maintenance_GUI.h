@@ -38,7 +38,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void BuildWorkingSchemeTable( QWidget* parent );
+    Q3GroupBox* BuildWorkingSchemeTable();
     //@}
 
 private:

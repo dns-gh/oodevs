@@ -61,7 +61,6 @@ private:
     //! @name Member data
     //@{
     ADN_People_Data& data_;
-    ADN_People_ListView* pPeopleList_;
     //@}
 };
 

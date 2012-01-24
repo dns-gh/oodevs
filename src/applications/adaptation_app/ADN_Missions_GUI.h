@@ -56,21 +56,21 @@ public:
 private:
     //! @name Helpers
     //@{
-    QWidget* BuildMissions( Q3GroupBox*& pGroup, QWidget* parent, ADN_Missions_Data::T_Mission_Vector& missions, ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType );
-    QWidget* BuildUnitMissions( QWidget* parent );
-    QWidget* BuildAutomatMissions( QWidget* parent );
-    QWidget* BuildPopulationMissions( QWidget* parent );
-    QWidget* BuildFragOrders( QWidget* parent );
+    QWidget* BuildMissions( QWidget*& pContent, ADN_Missions_Data::T_Mission_Vector& missions, ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType );
+    QWidget* BuildUnitMissions();
+    QWidget* BuildAutomatMissions();
+    QWidget* BuildPopulationMissions();
+    QWidget* BuildFragOrders();
     //@}
 
 private:
     //! @name Member data
     //@{
     ADN_Missions_Data& data_;
-    Q3GroupBox* pUnitMissionsGroup_;
-    Q3GroupBox* pAutomatMissionsGroup_;
-    Q3GroupBox* pPopulationMissionsGroup_;
-    Q3GroupBox* pFragOrderGroup_;
+    QWidget* pUnitMissionsWidget_;
+    QWidget* pAutomatMissionsWidget_;
+    QWidget* pPopulationMissionsWidget_;
+    QWidget* pFragOrderWidget_;
     //@}
 };
 

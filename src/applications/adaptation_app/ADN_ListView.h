@@ -14,6 +14,7 @@
 
 #include "ADN_Gfx_ABC.h"
 #include "ADN_Connector_ABC.h"
+#include <boost/function.hpp>
 
 class ADN_ListViewItem;
 class ADN_Connector_ListView_ABC;
@@ -51,6 +52,8 @@ public:
 
 public slots:
     void SetCurrentItem( void* pData );
+    void OnFilterChanged( const QString& );
+    void OnFilterChanged( const QStringList& );
 
 protected:
     virtual void ConnectItem( bool /*bConnect*/ ){}// = 0;
@@ -59,6 +62,11 @@ protected:
 
     virtual void OnContextMenu( const QPoint& pt );
     void FillContextMenuWithDefault( Q3PopupMenu& popupMenu, ADN_ObjectCreator_ABC& objectCreator );
+
+private:
+    bool ApplyFilterLine( ADN_ListViewItem* item );
+    bool ApplyFilterList( ADN_ListViewItem* item );
+    void ApplyFilter( boost::function< bool ( ADN_ListViewItem* ) > func );
 
 private slots:
     virtual void ContextMenuNew();
@@ -72,16 +80,15 @@ signals:
     void ItemSelected( void* pData );
 
 protected:
-    void*             pCurData_;
-    T_ConnectorVector vItemConnectors_;
-
-    bool bDeletionEnabled_;
-    bool bDeletionWarning_;
-    bool bPrinting_;
-
-    ADN_ObjectCreator_ABC* pObjectCreator_;
-
-    QRect toolTipRect_;
+    void*                   pCurData_;
+    T_ConnectorVector       vItemConnectors_;
+    ADN_ObjectCreator_ABC*  pObjectCreator_;
+    bool                    bDeletionEnabled_;
+    bool                    bDeletionWarning_;
+    bool                    bPrinting_;
+    QRect                   toolTipRect_;
+    QString                 filterLine_;
+    QStringList             filterList_;
 };
 
 

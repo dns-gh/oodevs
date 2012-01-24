@@ -58,16 +58,16 @@ public:
 private:
     //! @name Helpers
     //@{
-    QWidget* BuildPage( Q3VGroupBox*& pGroup, QWidget* pParent, ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType );
+    QWidget* BuildPage( QWidget*& pGroup, ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType, ADN_Models_Data::T_ModelInfos_Vector& model );
     //@}
 
 private:
     //! @name Member data
     //@{
     ADN_Models_Data& data_;
-    Q3VGroupBox* pGroupPawn_;
-    Q3VGroupBox* pGroupAutomat_;
-    Q3VGroupBox* pGroupPopulation_;
+    QWidget* pPawnWidget_;
+    QWidget* pAutomatWidget_;
+    QWidget* pPopulationWidget_;
     //@}
 };
 

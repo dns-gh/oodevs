@@ -18,6 +18,7 @@
 #include "ADN_TableDialog.h"
 #include "ADN_ListView.h"
 #include "ADN_ListViewDialog.h"
+#include "ADN_MainTabWidget.h"
 #include "ADN_Enums.h"
 #include "ADN_DataException.h"
 #include "ADN_OpenFile_Exception.h"
@@ -125,8 +126,8 @@ void ADN_MainWindow::Build()
     // Main widget
     Q3VBox* pBox = new Q3VBox( this );
     setCentralWidget( pBox );
-    pTab_ = new QTabWidget( pBox );
-    pTab_->hide();
+    mainTabWidget_.reset( new ADN_MainTabWidget( pBox ) );
+    mainTabWidget_->hide();
 
     // Actions
     QAction* pProjectNewAction = new QAction( MAKE_PIXMAP(filenew), tr("&New"), Qt::CTRL + Qt::Key_N, this, "new" );
@@ -135,86 +136,99 @@ void ADN_MainWindow::Build()
     pProjectLoadAction_ = new QAction( MAKE_PIXMAP(fileopen), tr("&Open"), Qt::CTRL + Qt::Key_O, this, "open" );
     connect( pProjectLoadAction_, SIGNAL( activated() ) , this, SLOT( OpenProject() ) );
 
-    QAction* pProjectSaveAction = new QAction( MAKE_PIXMAP(filesave), tr("&Save"), Qt::CTRL + Qt::Key_S, this, "save" );
-    connect( pProjectSaveAction, SIGNAL( activated() ) , this, SLOT( SaveProject() ) );
-    pActionSave_ = pProjectSaveAction;
+    pActionSave_ = new QAction( MAKE_PIXMAP(filesave), tr("&Save"), Qt::CTRL + Qt::Key_S, this, "save" );
+    connect( pActionSave_, SIGNAL( activated() ) , this, SLOT( SaveProject() ) );
 
-/*    QAction* pProjectTestDataAction = new QAction( MAKE_PIXMAP(testdata), tr("&Test data"), CTRL+Key_T, this, "testdata" );
-    connect( pProjectTestDataAction, SIGNAL( activated() ), this, SLOT( TestData() ) );
-*/
-// $$$ UNDO DISABLED
-//    QAction* pUndoAction = QtUndoManager::manager()->createUndoAction( this );
-//    pUndoAction->setAccel( QKeySequence( "Ctrl+Z" ) );
+    QAction* pBack = new QAction( qApp->style()->standardIcon( QStyle::SP_ArrowLeft ), tr( "Back  (ctrl + left)" ), Qt::CTRL + Qt::Key_Left, this, "back" );
+    connect( pBack, SIGNAL( activated() ), mainTabWidget_.get(), SLOT( OnBack() ) );
+    connect( mainTabWidget_.get(), SIGNAL( BackEnabled( bool ) ), pBack, SLOT( setEnabled( bool ) ) );
+    QAction* pForward = new QAction( qApp->style()->standardIcon( QStyle::SP_ArrowRight ), tr( "Forward (ctrl + right)" ), Qt::CTRL + Qt::Key_Right, this, "forward" );
+    connect( pForward, SIGNAL( activated() ), mainTabWidget_.get(), SLOT( OnForward() ) );
+    connect( mainTabWidget_.get(), SIGNAL( ForwardEnabled( bool ) ), pForward, SLOT( setEnabled( bool ) ) );
 
-    // Menu & ToolBars
+    // Test Data
+    //QAction* pProjectTestDataAction = new QAction( MAKE_PIXMAP(testdata), tr("&Test data"), CTRL+Key_T, this, "testdata" );
+    //connect( pProjectTestDataAction, SIGNAL( activated() ), this, SLOT( TestData() ) );
+
+    // Undo
+    //QAction* pUndoAction = QtUndoManager::manager()->createUndoAction( this );
+    //pUndoAction->setAccel( QKeySequence( "Ctrl+Z" ) );
 
     // Project toolbar
-    QToolBar * pToolBar = new QToolBar( this );
-    pProjectNewAction  ->addTo( pToolBar );
-    pProjectLoadAction_->addTo( pToolBar );
-    pProjectSaveAction ->addTo( pToolBar );
-
-    addToolBar( pToolBar );
-//    pProjectTestDataAction->addTo( pToolBar );
-
-// $$$ UNDO DISABLED
-//    pToolBar->addSeparator();
-//    pUndoAction->addTo( pToolBar );
+    {
+        QToolBar * pToolBar = new QToolBar( this );
+        pProjectNewAction->addTo( pToolBar );
+        pProjectLoadAction_->addTo( pToolBar );
+        pActionSave_->addTo( pToolBar );
+        pToolBar->addSeparator();
+        pBack->addTo( pToolBar );
+        pForward->addTo( pToolBar );
+        //pToolBar->addSeparator();
+        //pProjectTestDataAction->addTo( pToolBar );
+        //pUndoAction->addTo( pToolBar );
+        addToolBar( pToolBar );
+    }
 
     // Project menu
-    pProjectMenu_ = new Q3PopupMenu( this );
-    menuBar()->insertItem( tr("&Project"), pProjectMenu_ );
-    pProjectNewAction->addTo( pProjectMenu_ );
-    pProjectLoadAction_->addTo( pProjectMenu_ );
+    {
+        pProjectMenu_ = new Q3PopupMenu( this );
+        menuBar()->insertItem( tr("&Project"), pProjectMenu_ );
+        pProjectNewAction->addTo( pProjectMenu_ );
+        pProjectLoadAction_->addTo( pProjectMenu_ );
 
-    pProjectMenu_->insertSeparator();
-    pProjectSaveAction->addTo( pProjectMenu_ );
-    rIdSaveAs_ = pProjectMenu_->insertItem( tr("Save &As"),  this, SLOT(SaveAsProject()) );
-                 pProjectMenu_->insertItem( tr("&Export HTML"),  this, SLOT(ExportHtml()) );
-    pProjectMenu_->insertSeparator();
-    pProjectMenu_->insertItem( tr("E&xit"),  this, SLOT(close()) );
+        pProjectMenu_->insertSeparator();
+        pActionSave_->addTo( pProjectMenu_ );
+        rIdSaveAs_ = pProjectMenu_->insertItem( tr("Save &As"),  this, SLOT(SaveAsProject()) );
+        pProjectMenu_->insertItem( tr("&Export HTML"),  this, SLOT(ExportHtml()) );
+        pProjectMenu_->insertSeparator();
+        pProjectMenu_->insertItem( tr("E&xit"),  this, SLOT(close()) );
+    }
 
-    // Coherance tables menu
-    pCoheranceTablesMenu_ = new Q3PopupMenu( this );
-    menuBar()->insertItem( tr( "Consistency &tables" ), pCoheranceTablesMenu_ );
+    // Consistency tables menu
+    {
+        pCoheranceTablesMenu_ = new Q3PopupMenu( this );
+        menuBar()->insertItem( tr( "Consistency &tables" ), pCoheranceTablesMenu_ );
+    }
 
     // Configuration menu
-/*    pConfigurationMenu_ = new QPopupMenu( this );
-    menuBar()->insertItem( tr( "Confi&guration" ), pConfigurationMenu_ );
-    pConfigurationMenu_->insertItem( tr( "Data test..." ), this, SLOT( ConfigureDataTest() ) );
-*/
+    //{
+    //    pConfigurationMenu_ = new QPopupMenu( this );
+    //    menuBar()->insertItem( tr( "Confi&guration" ), pConfigurationMenu_ );
+    //    pConfigurationMenu_->insertItem( tr( "Data test..." ), this, SLOT( ConfigureDataTest() ) );
+    //}
+
     // Help menu
-    pHelpMenu_ = new Q3PopupMenu( this );
-    menuBar()->insertItem( tr( "&Help" ), pHelpMenu_ );
-    pHelpMenu_->insertItem( tr( "&About" ), this, SLOT(About()), Qt::CTRL+Qt::Key_F1 );
+    {
+        pHelpMenu_ = new Q3PopupMenu( this );
+        menuBar()->insertItem( tr( "&Help" ), pHelpMenu_ );
+        pHelpMenu_->insertItem( tr( "&About" ), this, SLOT(About()), Qt::CTRL+Qt::Key_F1 );
+    }
 
     // Disable the menus.
     SetMenuEnabled( false );
 
-    // Build all childs interfaces
+    // Build all children interfaces
     workspace_.Build( *this );
 
     // Status Bar
-    QStatusBar* pStatus = statusBar();
-    ADN_ProgressBar* pProgressBar = new ADN_ProgressBar( pStatus );
-    pStatus->addWidget( pProgressBar );
-    workspace_.SetProgressIndicator( pProgressBar );
+    {
+        QStatusBar* pStatus = statusBar();
+        ADN_ProgressBar* pProgressBar = new ADN_ProgressBar( pStatus );
+        pStatus->addWidget( pProgressBar );
+        workspace_.SetProgressIndicator( pProgressBar );
+    }
 
     connect( pCoheranceTablesMenu_, SIGNAL( activated( int ) ), this, SLOT( ShowCoheranceTable( int ) ) );
-    connect( & workspace_.GetUndoStack(), SIGNAL( cleanChanged(bool) ), this, SLOT( ChangeSaveState(bool) ) );
+    connect( &workspace_.GetUndoStack(), SIGNAL( cleanChanged(bool) ), this, SLOT( ChangeSaveState(bool) ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_MainWindow::AddPage
 // Created: APE 2005-03-17
 // -----------------------------------------------------------------------------
-void ADN_MainWindow::AddPage( const QString& strPageName, QWidget& page )
+void ADN_MainWindow::AddPage( E_WorkspaceElements element, QWidget& page, const QString& title )
 {
-    Q3ScrollView* sv = new Q3ScrollView( pTab_ );
-    sv->addChild( &page );
-    sv->setResizePolicy( Q3ScrollView::AutoOneFit );
-    page.reparent( sv->viewport(), QPoint( 0, 0 ) );
-    pTab_->addTab( sv, strPageName );
+    mainTabWidget_->AddPage( element, page, title );
 }
 
 // -----------------------------------------------------------------------------
@@ -315,7 +329,6 @@ void ADN_MainWindow::SaveAsProject()
     {
         hasSaved = false;
         QMessageBox::critical( this, exception.GetExceptionTitle().c_str(), exception.GetExceptionMessage().c_str() );
-        return;
     }
 
     QApplication::restoreOverrideCursor();    // restore original cursor
@@ -340,14 +353,14 @@ void ADN_MainWindow::NewProject()
         return;
 
     SetMenuEnabled(false);
-    pTab_->hide();
+    mainTabWidget_->hide();
 
     std::string res( qfilename );
     std::replace( res.begin(), res.end(), '\\', '/' );
     workspace_.Reset( res );
 
     SetMenuEnabled(true);
-    pTab_->show();
+    mainTabWidget_->show();
     QString strCaption = tr( "Sword Adaptation Tool - " ) + qfilename;
     setCaption( strCaption );
 }
@@ -394,7 +407,7 @@ void ADN_MainWindow::OpenProject( const std::string& szFilename, const bool isAd
         return;
 
     SetMenuEnabled( false );
-    pTab_->hide();
+    mainTabWidget_->hide();
 
     QApplication::setOverrideCursor( Qt::waitCursor ); // this might take time
     if( QString( szFilename.c_str() ).startsWith( "//" ) )
@@ -408,7 +421,7 @@ void ADN_MainWindow::OpenProject( const std::string& szFilename, const bool isAd
     QApplication::restoreOverrideCursor();    // restore original cursor
     setCaption( tr( "Sword Adaptation Tool - %1" ).arg( szFilename.c_str() ) );
     SetMenuEnabled( true );
-    pTab_->show();
+    mainTabWidget_->show();
     if( !isAdminMode && !fileLoaderObserver_->GetInvalidSignedFiles().empty() )
     {
         QSettings settings;
@@ -445,7 +458,7 @@ void ADN_MainWindow::CloseProject()
     if( ! this->OfferToSave() )
         return;
     workspace_.Reset( ADN_Project_Data::FileInfos::szUntitled_ );
-    pTab_->hide();
+    mainTabWidget_->hide();
 }
 
 // -----------------------------------------------------------------------------
@@ -471,8 +484,8 @@ void ADN_MainWindow::TestData()
             if( nResult == QMessageBox::No )
                 return;
         }
-//        else
-//            strCommandLine += " -conffile \"" + workspace_.GetProject().GetFileInfos().GetFileNameFull() + "\"";
+        //  else
+        //      strCommandLine += " -conffile \"" + workspace_.GetProject().GetFileInfos().GetFileNameFull() + "\"";
 
         static ADN_RunProcessDialog* pDialog = new ADN_RunProcessDialog( this, tr( "Running data check" ) );
         pDialog->RunCommand( strCommandLine );

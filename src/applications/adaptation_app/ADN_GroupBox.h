@@ -62,4 +62,37 @@ private slots:
     //@}
 };
 
+// =============================================================================
+/** @class  ADN_GroupBox2
+    @brief  ADN_GroupBox2
+*/
+// Created: ABR 2012-01-18
+// =============================================================================
+class ADN_GroupBox2
+    : public QGroupBox // $$$$ ABR 2012-01-23: QT4 allows layout control
+    , public ADN_Gfx_ABC
+{
+    Q_OBJECT
+
+public:
+    //! @name Constructors/Destructor
+    //@{
+    ADN_GroupBox2( QWidget * parent = 0, const char * name = 0 );
+    ADN_GroupBox2( const QString & title, QWidget * parent = 0, const char * name = 0 );
+    virtual ~ADN_GroupBox2();
+    //@}
+
+    //! @name Operations
+    //@{
+    void setEnabled( bool b );
+    //@}
+
+private slots:
+    //! @name Internal slots
+    //@{
+    void BoolChanged(bool b);
+    void UpdateEnableState();
+    //@}
+};
+
 #endif // __ADN_GroupBox_h_

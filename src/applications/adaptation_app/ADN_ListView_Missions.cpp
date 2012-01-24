@@ -58,9 +58,8 @@ private:
 // Name: ADN_ListView_Missions constructor
 // Created: AGN 2003-11-27
 // -----------------------------------------------------------------------------
-ADN_ListView_Missions::ADN_ListView_Missions( ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType, ADN_ListView_Models* pList, QWidget * parent /* = 0*/, const char * name , Qt::WFlags f )
+ADN_ListView_Missions::ADN_ListView_Missions( ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType, QWidget * parent /* = 0*/, const char * name , Qt::WFlags f )
     : ADN_ListView  ( parent, name, f )
-    , pLVModels_    ( pList )
     , eEntityType_  ( eEntityType )
     , currentMissions_( 0 )
 {

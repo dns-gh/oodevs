@@ -6,15 +6,6 @@
 // Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-//
-// $Created: APE 2005-03-17 $
-// $Archive: /MVW_v10/Build/SDK/ADN2/src/ADN_Breakdowns_GUI.cpp $
-// $Author: Nld $
-// $Modtime: 27/04/05 10:08 $
-// $Revision: 8 $
-// $Workfile: ADN_Breakdowns_GUI.cpp $
-//
-// *****************************************************************************
 
 #include "adaptation_app_pch.h"
 #include "ADN_Breakdowns_GUI.h"
@@ -25,6 +16,7 @@
 #include "ADN_Breakdowns_PartsTable.h"
 #include "ADN_EditLine.h"
 #include "ADN_TimeField.h"
+#include "ADN_SearchListView.h"
 #include "ADN_Tr.h"
 
 // -----------------------------------------------------------------------------
@@ -32,11 +24,11 @@
 // Created: APE 2005-03-17
 // -----------------------------------------------------------------------------
 ADN_Breakdowns_GUI::ADN_Breakdowns_GUI( ADN_Breakdowns_Data& data )
-: ADN_GUI_ABC( "ADN_Breakdowns_GUI" )
-, data_      ( data )
+    : ADN_GUI_ABC( "ADN_Breakdowns_GUI" )
+    , data_      ( data )
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Breakdowns_GUI destructor
@@ -44,8 +36,8 @@ ADN_Breakdowns_GUI::ADN_Breakdowns_GUI( ADN_Breakdowns_Data& data )
 // -----------------------------------------------------------------------------
 ADN_Breakdowns_GUI::~ADN_Breakdowns_GUI()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Breakdowns_GUI::Build
@@ -53,43 +45,61 @@ ADN_Breakdowns_GUI::~ADN_Breakdowns_GUI()
 // -----------------------------------------------------------------------------
 void ADN_Breakdowns_GUI::Build()
 {
+    // -------------------------------------------------------------------------
+    // Creations
+    // -------------------------------------------------------------------------
     assert( pMainWidget_ == 0 );
     ADN_GuiBuilder builder;
-
-    // Create the main widget.
-    pMainWidget_ = new QWidget( 0, "breakdowns main widget" );
-
-    // Breakdown list
     T_ConnectorVector vInfosConnectors( eNbrBreakdownGuiElements, (ADN_Connector_ABC*)0 );
-    ADN_Breakdowns_ListView* pBreakdownsListView = new ADN_Breakdowns_ListView( pMainWidget_ );
-    pBreakdownsListView->GetConnector().Connect( &data_.vBreakdowns_ );
 
-    // Breakdown parameters
-    Q3GroupBox* pBreakdownGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Breakdown" ), pMainWidget_ );
+    // General
+    Q3GroupBox* pGeneralGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "General parameters" ) );
+    //QWidget* pHolder2 = builder.AddFieldHolder( pGeneralGroup );
+    builder.AddField<ADN_TimeField>( pGeneralGroup, tr( "Average diagnostic duration" ), data_.strAverageDiagnosticTime_ );
 
-    QWidget* pHolder = builder.AddFieldHolder( pBreakdownGroup );
+    // Specific parameter
+    // Info holder
+    QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
+    builder.AddField<ADN_EditLine_String>( pInfoHolder, tr( "Name" ), vInfosConnectors[eName] );
+    builder.AddEnumField<E_BreakdownType>( pInfoHolder, tr( "Type" ), vInfosConnectors[eType], ADN_Tr::ConvertFromBreakdownType );
+    builder.AddEnumField<E_BreakdownNTI>( pInfoHolder, tr( "Seriousness" ), vInfosConnectors[eNTI], ADN_Tr::ConvertFromBreakdownNTI );
+    builder.AddField<ADN_TimeField>( pInfoHolder, tr( "Repair duration" ), vInfosConnectors[eRepairTime] );
+    builder.AddField<ADN_TimeField>( pInfoHolder, tr( "Repair duration variance" ), vInfosConnectors[eRepairTimeVariance] );
 
-    builder.AddField<ADN_EditLine_String>( pHolder, tr( "Name" ), vInfosConnectors[eName] );
-    builder.AddEnumField<E_BreakdownType>( pHolder, tr( "Type" ), vInfosConnectors[eType], ADN_Tr::ConvertFromBreakdownType );
-    builder.AddEnumField<E_BreakdownNTI>( pHolder, tr( "Seriousness" ), vInfosConnectors[eNTI], ADN_Tr::ConvertFromBreakdownNTI );
-    builder.AddField<ADN_TimeField>( pHolder, tr( "Repair duration" ), vInfosConnectors[eRepairTime] );
-    builder.AddField<ADN_TimeField>( pHolder, tr( "Repair duration variance" ), vInfosConnectors[eRepairTimeVariance] );
-
-    Q3GroupBox* pPartsGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Required parts" ), pBreakdownGroup );
-    ADN_Breakdowns_PartsTable* pPartsTable = new ADN_Breakdowns_PartsTable( pPartsGroup );
+    // Parts
+    QGroupBox* pPartsGroup = new QGroupBox( tr( "Required parts" ) );
+    QVBoxLayout* pPartsLayout = new QVBoxLayout( pPartsGroup );
+    ADN_Breakdowns_PartsTable* pPartsTable = new ADN_Breakdowns_PartsTable();
     vInfosConnectors[eParts] = & pPartsTable->GetConnector();
+    pPartsLayout->addWidget( pPartsTable );
 
-    builder.AddStretcher( pBreakdownGroup, Qt::Vertical );
+    // -------------------------------------------------------------------------
+    // Layouts
+    // -------------------------------------------------------------------------
+    // Specific layout
+    QWidget* pSpecificContent = new QWidget();
+    QVBoxLayout* pSpecificLayout = new QVBoxLayout( pSpecificContent );
+    pSpecificLayout->setMargin( 10 );
+    pSpecificLayout->setSpacing( 10 );
+    pSpecificLayout->setAlignment( Qt::AlignTop );
+    pSpecificLayout->addWidget( pInfoHolder );
+    pSpecificLayout->addWidget( pPartsGroup, 1 );
 
-    pBreakdownsListView->SetItemConnectors( vInfosConnectors );
+    // List view
+    ADN_SearchListView< ADN_Breakdowns_ListView >* pSearchListView = new ADN_SearchListView< ADN_Breakdowns_ListView >( data_.vBreakdowns_, vInfosConnectors );
 
-    Q3GroupBox* pGeneralGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "General parameter" ), pMainWidget_ );
-    QWidget* pHolder2 = builder.AddFieldHolder( pGeneralGroup );
-    builder.AddField<ADN_TimeField>( pHolder2, tr( "Average diagnostic duration" ), data_.strAverageDiagnosticTime_ );
+    // Sub content
+    QWidget* pSubContent = CreateScrollArea( *pSpecificContent, pSearchListView, false, false, true, 0, 0 );
 
-    // Layout
-    Q3HBoxLayout* pLayout = new Q3HBoxLayout( pMainWidget_, 10, 10 );
-    pLayout->addWidget( pBreakdownsListView, 1 );
-    pLayout->addWidget( pBreakdownGroup, 3 );
-    pLayout->addWidget( pGeneralGroup, 1 );
+    // Content layout
+    QWidget* pContent = new QWidget();
+    QVBoxLayout* pContentLayout = new QVBoxLayout( pContent );
+    pContentLayout->setMargin( 10 );
+    pContentLayout->setSpacing( 10 );
+    pContentLayout->setAlignment( Qt::AlignTop );
+    pContentLayout->addWidget( pGeneralGroup );
+    pContentLayout->addWidget( pSubContent, 1 );
+
+    // Main widget
+    pMainWidget_ = CreateScrollArea( *pContent );
 }

@@ -13,6 +13,7 @@
 #include "ADN_ColorSelector.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_ListView_ResourceNetworks.h"
+#include "ADN_SearchListView.h"
 #include "ADN_ResourceNetworks_Data.h"
 
 // -----------------------------------------------------------------------------
@@ -41,34 +42,35 @@ ADN_ResourceNetworks_GUI::~ADN_ResourceNetworks_GUI()
 // -----------------------------------------------------------------------------
 void ADN_ResourceNetworks_GUI::Build()
 {
-    if( pMainWidget_ != 0 )
-        return;
-
+    // -------------------------------------------------------------------------
+    // Creations
+    // -------------------------------------------------------------------------
+    assert( pMainWidget_ == 0 );
     ADN_GuiBuilder builder;
-
-    // Create the top widget.
-    pMainWidget_ = new QWidget( 0, "Resource Networks" );
-
-    // Create the listview.
-    pResourceNetworks_ = new ADN_ListView_ResourceNetworks( pMainWidget_ );
-    pResourceNetworks_->GetConnector().Connect( &data_.GetResourceNetworksInfos() );
     T_ConnectorVector vInfosConnectors( eNbrGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
-    Q3GroupBox* pResourceNetwork = new Q3GroupBox( 3, Qt::Vertical, tr( "Resource network" ), pMainWidget_ );
-    {
-        QWidget* pHolder = builder.AddFieldHolder( pResourceNetwork );
-        builder.AddField< ADN_EditLine_String >( pHolder, tr( "Name" ), vInfosConnectors[ eName ] );
-    }
-    {
-        QWidget* pHolder = builder.AddFieldHolder( pResourceNetwork );
-        builder.AddField< ADN_ComboBox_Vector< ADN_Equipement_Data::CategoryInfo > >( pHolder, tr( "Category" ), vInfosConnectors[ eCategory ] );
-        builder.AddField< ADN_EditLine_Int >( pHolder, tr( "Default production" ), vInfosConnectors[ eProduction ] );
-        builder.SetValidator( new ADN_IntValidator( 0, INT_MAX, this ) );
-        builder.AddField< ADN_ColorSelector >( pHolder, tr( "Color" ), vInfosConnectors[ eColor ] );
-    }
-    pResourceNetworks_->SetItemConnectors( vInfosConnectors );
-    // Layout
-    Q3HBoxLayout* pMainLayout = new Q3HBoxLayout( pMainWidget_, 10, 10 );
-    pMainLayout->addWidget( pResourceNetworks_, 1 );
-    pMainLayout->addWidget( pResourceNetwork, 4 );
+    // Info holder
+    QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[ eName ] );
+    builder.AddField< ADN_ComboBox_Vector< ADN_Equipement_Data::CategoryInfo > >( pInfoHolder, tr( "Category" ), vInfosConnectors[ eCategory ] );
+    builder.AddField< ADN_EditLine_Int >( pInfoHolder, tr( "Default production" ), vInfosConnectors[ eProduction ] );
+    builder.SetValidator( new ADN_IntValidator( 0, INT_MAX, this ) );
+    builder.AddField< ADN_ColorSelector >( pInfoHolder, tr( "Color" ), vInfosConnectors[ eColor ] );
+
+    // -------------------------------------------------------------------------
+    // Layouts
+    // -------------------------------------------------------------------------
+    // Content layout
+    QWidget* pContent = new QWidget();
+    QVBoxLayout* pContentLayout = new QVBoxLayout( pContent );
+    pContentLayout->setMargin( 10 );
+    pContentLayout->setSpacing( 10 );
+    pContentLayout->setAlignment( Qt::AlignTop );
+    pContentLayout->addWidget( pInfoHolder );
+
+    // Create the list view.
+    ADN_SearchListView< ADN_ListView_ResourceNetworks >* pSearchListView = new ADN_SearchListView< ADN_ListView_ResourceNetworks >( data_.GetResourceNetworksInfos(), vInfosConnectors );
+
+    // Main widget
+    pMainWidget_ = CreateScrollArea( *pContent, pSearchListView );
 }

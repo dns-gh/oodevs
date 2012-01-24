@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-06-30 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Sensors_GUI.h $
-// $Author: Nld $
-// $Modtime: 3/05/05 14:35 $
-// $Revision: 9 $
-// $Workfile: ADN_Sensors_GUI.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2003 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __ADN_Sensors_GUI_h_
 #define __ADN_Sensors_GUI_h_

@@ -16,6 +16,7 @@
 #include "ADN_Consumptions_Table.h"
 #include "ADN_MultiPercentage.h"
 #include "ADN_Schedule_Table.h"
+#include "ADN_SearchListView.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_People_GUI constructor
@@ -43,25 +44,15 @@ ADN_People_GUI::~ADN_People_GUI()
 // -----------------------------------------------------------------------------
 void ADN_People_GUI::Build()
 {
+    // -------------------------------------------------------------------------
+    // Creations
+    // -------------------------------------------------------------------------
     assert( pMainWidget_ == 0 );
-
     ADN_GuiBuilder builder;
-
-    // Create the top widget.
-    pMainWidget_ = new QWidget( 0, "Population main widget" );
-
-    // Create the population listview.
-    pPeopleList_ = new ADN_People_ListView( pMainWidget_ );
-    pPeopleList_->GetConnector().Connect( &data_.GetPeople() );
     T_ConnectorVector vInfosConnectors( eNbrGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
-    Q3VBox* pMainBox = new Q3VBox( pMainWidget_ );
-
     // Population parameters
-    Q3GroupBox* pGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Population" ), pMainBox );
-
-    Q3GroupBox* pPropertiesGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Details" ), pGroup );
-
+    Q3GroupBox* pPropertiesGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Details" ) );
     builder.AddField< ADN_EditLine_String >( pPropertiesGroup, tr( "Name" ), vInfosConnectors[ eName ] );
     builder.AddField< ADN_ComboBox_Vector< ADN_Population_Data::PopulationInfos > >( pPropertiesGroup, tr( "Associated Crowd" ), vInfosConnectors[ eModel ] );
     builder.AddField< ADN_EditLine_String >( pPropertiesGroup, tr( "Angry crowd mission" ), vInfosConnectors[ eAngryCrowdMission ] );
@@ -72,26 +63,45 @@ void ADN_People_GUI::Build()
     pMultiPercentage->AddLine( tr( "Children" ), vInfosConnectors[ eChildren ] );
     pMultiPercentage->AddWarning();
 
-    Q3GroupBox* pSecurityGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Security satisfaction level" ), pGroup );
+    // Security
+    Q3GroupBox* pSecurityGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Security satisfaction level" ) );
     builder.AddField< ADN_EditLine_Double >( pSecurityGroup, tr( "Loss on fire" ), vInfosConnectors[ eLossOnFire ], tr( "%" ), ePercentage );
     builder.AddField< ADN_EditLine_Double >( pSecurityGroup, tr( "Gain per hour" ), vInfosConnectors[ eGainPerHour ], tr( "%" ), ePercentage );
 
-    Q3GroupBox* pHealthGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Health satisfaction" ), pGroup );
+    // Health
+    Q3GroupBox* pHealthGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Health satisfaction" ) );
     builder.AddField< ADN_EditLine_Int >( pHealthGroup, tr( "Number of people per medical infrastructure" ), vInfosConnectors[ eHealthNeed ], 0, eGreaterEqualZero );
 
-    Q3GroupBox* pScheduleGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Moving weekly schedule" ), pGroup );
+    // Schedule
+    Q3GroupBox* pScheduleGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Moving weekly schedule" ) );
     builder.AddField< ADN_TimeField >( pScheduleGroup, tr( "Transfer time" ), vInfosConnectors[ eTransferTime ] );
     ADN_Schedule_Table* pTable = new ADN_Schedule_Table( pScheduleGroup );
-    connect( pPeopleList_, SIGNAL( ItemSelected( void* ) ), pTable, SLOT( OnPeopleChanged( void* ) ) );
 
-    Q3HGroupBox* pConsumptionsGroup = new Q3HGroupBox( tr( "Consumptions" ), pGroup );
+    // Consumptions
+    Q3HGroupBox* pConsumptionsGroup = new Q3HGroupBox( tr( "Consumptions" ) );
     ADN_Consumptions_Table* pConsumptions = new ADN_Consumptions_Table( pConsumptionsGroup );
     vInfosConnectors[ eConsumptions ] = &pConsumptions->GetConnector();
 
-    pPeopleList_->SetItemConnectors( vInfosConnectors );
+    // -------------------------------------------------------------------------
+    // Layouts
+    // -------------------------------------------------------------------------
+    // Content layout
+    QWidget* pContent = new QWidget();
+    //QVBoxLayout* pContentLayout = new QVBoxLayout( pContent );
+    QGridLayout* pContentLayout = new QGridLayout( pContent, 4, 2 );
+    pContentLayout->setMargin( 10 );
+    pContentLayout->setSpacing( 10 );
+    pContentLayout->setAlignment( Qt::AlignTop );
+    pContentLayout->addWidget( pPropertiesGroup, 0, 0, 1, 2 );
+    pContentLayout->addWidget( pSecurityGroup, 1, 0, 1, 2 );
+    pContentLayout->addWidget( pHealthGroup, 3, 0, 1, 2 );
+    pContentLayout->addWidget( pScheduleGroup, 4, 0 );
+    pContentLayout->addWidget( pConsumptionsGroup, 4, 1 );
 
-    // Layout
-    Q3HBoxLayout* pMainLayout = new Q3HBoxLayout( pMainWidget_, 10, 10 );
-    pMainLayout->addWidget( pPeopleList_, 1 );
-    pMainLayout->addWidget( pMainBox, 3 );
+    // List view
+    ADN_SearchListView< ADN_People_ListView >* pSearchListView = new ADN_SearchListView< ADN_People_ListView >( data_.GetPeople(), vInfosConnectors );
+    connect( pSearchListView->GetListView(), SIGNAL( ItemSelected( void* ) ), pTable, SLOT( OnPeopleChanged( void* ) ) );
+
+    // Main widget
+    pMainWidget_ = CreateScrollArea( *pContent, pSearchListView );
 }

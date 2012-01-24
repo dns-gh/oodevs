@@ -75,8 +75,6 @@ ADN_Automata_SubUnitsTable::ADN_Automata_SubUnitsTable( QWidget* pParent )
     setShowGrid( false );
     setLeftMargin( 0 );
 
-    this->setMaximumHeight( 300 );
-
     // Hide the vertical header.
     verticalHeader()->hide();
 
