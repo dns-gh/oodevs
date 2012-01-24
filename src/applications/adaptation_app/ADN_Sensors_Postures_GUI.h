@@ -10,37 +10,80 @@
 #ifndef __ADN_Sensors_Postures_GUI_h_
 #define __ADN_Sensors_Postures_GUI_h_
 
-#include "ADN_CommonGfx.h"
-#include "ENT/ENT_Enums_Gen.h"
-#include <boost/noncopyable.hpp>
+#include "ADN_Connector_Table_ABC.h"
+#include "ADN_Sensors_ModificatorTable.h"
 
-//*****************************************************************************
-// Created: JDY 03-09-29
-//*****************************************************************************
-class ADN_Sensors_Postures_GUI : public ADN_Table2
-                               , private boost::noncopyable
+//-----------------------------------------------------------------------------
+// Internal Table connector
+//-----------------------------------------------------------------------------
+class ADN_CT_Sensors_Postures : public ADN_Connector_Table_ABC
 {
-    Q_OBJECT;
-
 public:
-    //! @name Constructors/Destructor
+    //! @name Constructor / Destructor
     //@{
-    explicit ADN_Sensors_Postures_GUI( const QString& strColCaption, QWidget* pParent = 0 );
+    ADN_CT_Sensors_Postures( ADN_Table& table );
+    //@}
+
+    //! @name Operations
+    //@{
+    void AddSubItems( int i, void *pObj );
+    //@}
+};
+
+// =============================================================================
+/** @class  ADN_Sensors_Postures_GUI
+    @brief  ADN_Sensors_Postures_GUI
+*/
+// Created: ABR 2012-01-16
+// =============================================================================
+class ADN_Sensors_Postures_GUI : public ADN_Sensors_ModificatorTable< ADN_CT_Sensors_Postures >
+{
+public:
+    //! @name Constructor / Destructor
+    //@{
+    explicit ADN_Sensors_Postures_GUI( const QString& strColCaption, QWidget * parent = 0 );
     virtual ~ADN_Sensors_Postures_GUI();
     //@}
 
-signals:
-    //! @name Signals
+private:
+    //! @name ADN_Sensors_MaterialsTable implementation
     //@{
-    void PostureChanged( std::string posture, double coeff );
-    //@}
-
-private slots:
-    //! @name Slots
-    //@{
-    void OnCurrentChanged();
+    virtual void InternalEmit();
     //@}
 };
+
+
+//#include "ADN_CommonGfx.h"
+//#include "ENT/ENT_Enums_Gen.h"
+//#include <boost/noncopyable.hpp>
+//
+////*****************************************************************************
+//// Created: JDY 03-09-29
+////*****************************************************************************
+//class ADN_Sensors_Postures_GUI : public ADN_Table2
+//                               , private boost::noncopyable
+//{
+//    Q_OBJECT;
+//
+//public:
+//    //! @name Constructors/Destructor
+//    //@{
+//    explicit ADN_Sensors_Postures_GUI( const QString& strColCaption, QWidget* pParent = 0 );
+//    virtual ~ADN_Sensors_Postures_GUI();
+//    //@}
+//
+//signals:
+//    //! @name Signals
+//    //@{
+//    void PostureChanged( std::string posture, double coeff );
+//    //@}
+//
+//private slots:
+//    //! @name Slots
+//    //@{
+//    void OnCurrentChanged();
+//    //@}
+//};
 
 
 #endif // __ADN_Sensors_Postures_GUI_h_

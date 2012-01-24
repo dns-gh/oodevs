@@ -52,7 +52,7 @@ void ADN_CT_Sensors_UrbanBlock::AddSubItems(int i,void *obj)
 // Created: ABR 2012-01-16
 // -----------------------------------------------------------------------------
 ADN_Sensors_UrbanBlockMaterial_GUI::ADN_Sensors_UrbanBlockMaterial_GUI( QWidget * parent /*= 0*/ )
-    : ADN_Sensors_MaterialsTable< ADN_CT_Sensors_UrbanBlock >( parent, tr( "ADN_Sensors_UrbanBlockMaterial_GUI" ), tr( "Material" ), tr( "Modifiers" ) )
+    : ADN_Sensors_ModificatorTable< ADN_CT_Sensors_UrbanBlock >( parent, tr( "ADN_Sensors_UrbanBlockMaterial_GUI" ), tr( "Material" ), tr( "Modifiers" ) )
 {
     // NOTHING
 }

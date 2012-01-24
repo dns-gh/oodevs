@@ -51,7 +51,7 @@ void ADN_CT_Sensors_Sizes::AddSubItems(int i,void *obj)
 // Created: ABR 2012-01-16
 // -----------------------------------------------------------------------------
 ADN_Sensors_Sizes_GUI::ADN_Sensors_Sizes_GUI( QWidget * parent /*= 0*/ )
-    : ADN_Sensors_MaterialsTable< ADN_CT_Sensors_Sizes >( parent, tr( "ADN_Sensors_Sizes_GUI" ), tr( "Volumes" ), tr( "Modifiers" ) )
+    : ADN_Sensors_ModificatorTable< ADN_CT_Sensors_Sizes >( parent, tr( "ADN_Sensors_Sizes_GUI" ), tr( "Volumes" ), tr( "Modifiers" ) )
 {
     // NOTHING
 }

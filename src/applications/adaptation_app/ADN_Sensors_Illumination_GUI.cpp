@@ -54,7 +54,7 @@ void ADN_CT_Sensors_Illuminations::AddSubItems( int i, void *obj )
 // Created: ABR 2012-01-16
 // -----------------------------------------------------------------------------
 ADN_Sensors_Illumination_GUI::ADN_Sensors_Illumination_GUI( QWidget * parent /*= 0*/ )
-    : ADN_Sensors_MaterialsTable< ADN_CT_Sensors_Illuminations >( parent, tr( "ADN_Sensors_Illumination_GUI" ), tr( "Illumination" ), tr( "Modifiers" ) )
+    : ADN_Sensors_ModificatorTable< ADN_CT_Sensors_Illuminations >( parent, tr( "ADN_Sensors_Illumination_GUI" ), tr( "Illumination" ), tr( "Modifiers" ) )
 {
     // NOTHING
 }

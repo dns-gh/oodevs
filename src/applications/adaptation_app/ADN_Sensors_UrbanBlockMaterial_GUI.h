@@ -13,7 +13,7 @@
 #define __ADN_Sensors_UrbanBlockMaterial_GUI_h_
 
 #include "ADN_Connector_Table_ABC.h"
-#include "ADN_Sensors_MaterialsTable.h"
+#include "ADN_Sensors_ModificatorTable.h"
 
 //-----------------------------------------------------------------------------
 // Internal Table connector
@@ -38,7 +38,7 @@ public:
 */
 // Created: ABR 2012-01-16
 // =============================================================================
-class ADN_Sensors_UrbanBlockMaterial_GUI : public ADN_Sensors_MaterialsTable< ADN_CT_Sensors_UrbanBlock >
+class ADN_Sensors_UrbanBlockMaterial_GUI : public ADN_Sensors_ModificatorTable< ADN_CT_Sensors_UrbanBlock >
 {
 public:
     //! @name Constructor / Destructor

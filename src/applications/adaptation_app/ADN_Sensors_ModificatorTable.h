@@ -7,26 +7,26 @@
 //
 // *****************************************************************************
 
-#ifndef __ADN_Sensors_MaterialsTable_h_
-#define __ADN_Sensors_MaterialsTable_h_
+#ifndef __ADN_Sensors_ModificatorTable_h_
+#define __ADN_Sensors_ModificatorTable_h_
 
 #include "ADN_CommonGfx.h"
 
 // =============================================================================
-/** @class  ADN_Sensors_MaterialsTable_ABC
-    @brief  ADN_Sensors_MaterialsTable_ABC
+/** @class  ADN_Sensors_ModificatorTable_ABC
+    @brief  ADN_Sensors_ModificatorTable_ABC
 */
 // Created: ABR 2012-01-16
 // =============================================================================
-class ADN_Sensors_MaterialsTable_ABC : public ADN_Table2
+class ADN_Sensors_ModificatorTable_ABC : public ADN_Table2
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_Sensors_MaterialsTable_ABC( QWidget* pParent, const char* szName, const QString& firstColumnName, const QString& secondColumnName );
-    virtual ~ADN_Sensors_MaterialsTable_ABC();
+             ADN_Sensors_ModificatorTable_ABC( QWidget* pParent, const char* szName, const QString& firstColumnName, const QString& secondColumnName );
+    virtual ~ADN_Sensors_ModificatorTable_ABC();
     //@}
 
 signals:
@@ -61,23 +61,23 @@ protected:
 };
 
 // =============================================================================
-/** @class  ADN_Sensors_MaterialsTable
-    @brief  ADN_Sensors_MaterialsTable
+/** @class  ADN_Sensors_ModificatorTable
+    @brief  ADN_Sensors_ModificatorTable
 */
 // Created: ABR 2012-01-16
 // =============================================================================
 template< typename ConnectorType >
-class ADN_Sensors_MaterialsTable : public ADN_Sensors_MaterialsTable_ABC
+class ADN_Sensors_ModificatorTable : public ADN_Sensors_ModificatorTable_ABC
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Sensors_MaterialsTable( QWidget* pParent, const char* szName, const QString& firstColumnName, const QString& secondColumnName );
-    virtual ~ADN_Sensors_MaterialsTable();
+    explicit ADN_Sensors_ModificatorTable( QWidget* pParent, const char* szName, const QString& firstColumnName, const QString& secondColumnName );
+    virtual ~ADN_Sensors_ModificatorTable();
     //@}
 };
 
-#include "ADN_Sensors_MaterialsTable.inl"
+#include "ADN_Sensors_ModificatorTable.inl"
 
-#endif // __ADN_Sensors_MaterialsTable_h_
+#endif // __ADN_Sensors_ModificatorTable_h_
