@@ -100,9 +100,8 @@ void ADN_Rich_ListViewItem::paintCell( QPainter* pPainter, const QColorGroup& cg
         QPen pen;
         pen.setWidth( 1 );
         pPainter->setPen( pen );
-        pPainter->drawLine( 0, 0, nWidth - 1, 0 );
-        pPainter->drawLine( 0, 0, nWidth - 1, height() - 1 );
-        //pPainter->lineTo( 0, height() - 1 );
+        pPainter->drawLine( 0, 0, nWidth - 1, 0 ); // top
+        pPainter->drawLine( nWidth - 1, 0, nWidth - 1, height() - 1 ); // right
     }
 }
 
