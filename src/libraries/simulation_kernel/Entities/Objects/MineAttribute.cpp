@@ -29,7 +29,7 @@ MineAttribute::MineAttribute()
     : dotation_           ( 0 )
     , nFullNbrDotation_   ( 0 )
     , nCurrentNbrDotation_( 0 )
-    , miningPercentage_   ( 0., 0.05, 0., 1.)
+    , miningPercentage_   ( 1., 0.05, 0., 1.)
 {
     // NOTHING
 }
@@ -42,7 +42,7 @@ MineAttribute::MineAttribute( const PHY_DotationCategory& dotation, unsigned int
     : dotation_           ( &dotation )
     , nFullNbrDotation_   ( nDefaultMaxNbrDotation )
     , nCurrentNbrDotation_( nDefaultMaxNbrDotation )
-    , miningPercentage_   ( 0., 0.05, 0., 1.)
+    , miningPercentage_   ( 1., 0.05, 0., 1.)
 {
     // NOTHING
 }
@@ -55,7 +55,7 @@ MineAttribute::MineAttribute( const sword::MissionParameter_Value& attributes  )
     : dotation_           ( 0 )
     , nFullNbrDotation_   ( 0 )
     , nCurrentNbrDotation_( 0 )
-    , miningPercentage_   ( 0., 0.05, 0., 1.)
+    , miningPercentage_   ( 1., 0.05, 0., 1.)
 {
     dotation_ = PHY_DotationType::FindDotationCategory( attributes.list( 1 ).identifier() );
     if( !dotation_ )
