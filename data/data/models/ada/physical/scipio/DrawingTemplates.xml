@@ -418,19 +418,17 @@
                 </g>
             </marker>
         </template>
-        <template code="G*GPGAL---****X" name="Zone d'atterrissage" type="point">
-            <segment/>
-            <marker-start>
-                <g stroke='currentColor' stroke-width='3px'>
-                    <polygon fill="#ffffff" fill-opacity="0.5" points="0,0 -250,300 -250,1000 250,1000 250,300"/>
-                    <line x1='-250' y1='300' x2='250' y2='300'/>
-                    <g font-family="Arial" font-size="220" fill="currentColor">
-                        <g transform="matrix( 1 0 0 -1 0 0 )">
-                            <text x="-100" y="-800">LZ</text>
-                        </g>
+        <template code="G*GPGAL---****X" name="Zone d'atterrissage" type="polygon">
+            <segment unit="%">
+                <line stroke='currentColor' x1='0' x2='1' stroke-width='4px'/>
+            </segment>
+            <marker unit="%">
+                <g font-family="Arial" font-size="0.25" fill="currentColor">
+                    <g transform="matrix( 1 0 0 -1 0 0 )">
+                        <text x="-0.15" y="0.1">LZ</text>
                     </g>
                 </g>
-            </marker-start>
+            </marker>
         </template>
         <template code="G*MPORP---****X" name="Barricade I (planifie)" type="point">
             <marker-start>
@@ -534,21 +532,21 @@
                 </g>
             </marker>
         </template>
-        <template code="G*MPOADU--****X" name="Fosse anti-char (en construction)" type="line">
+        <template code="G*MPOADU--****X" name="Fosse anti-char (en construction)" type="polygon">
             <segment unit="%">
                 <g fill="none" stroke="currentColor" stroke-width="3px">
                     <path d="M0,0 L0.16,0.2 L0.33,0 L0.5,0.2 L0.66,0 L0.83,0.2 L1,0 z"/>
                 </g>
             </segment>
         </template>
-        <template code="G*MPOADC--****X" name="Fosse anti-char (complet)" type="line">
+        <template code="G*MPOADC--****X" name="Fosse anti-char (complet)" type="polygon">
             <segment unit="%">
                 <g fill="currentColor">
                     <path d="M0,0 L0.16,0.2 L0.33,0 L0.5,0.2 L0.66,0 L0.83,0.2 L1,0 z"/>
                 </g>
             </segment>
         </template>
-        <template code="G*MPOAR---****X" name="Fosse anti-char (renforce par des mines)" type="line">
+        <template code="G*MPOAR---****X" name="Fosse anti-char (renforce par des mines)" type="polygon">
             <segment unit="%">
                 <g fill="currentColor">
                     <path d="M0,0 L0.16,0.2 L0.33,0 L0.5,0.2 L0.66,0 L0.83,0.2 L1,0 z"/>
@@ -610,21 +608,19 @@
                 </g>
             </marker-start>
         </template>
-        <template code="G*PLATFORM*****" name="Plateforme" type="point">
-            <segment/>
-            <marker-start>
-                <g stroke='currentColor' stroke-width='3px'>
-                    <polygon fill="#ffffff" fill-opacity="0.5" points="0,0 -250,300 -250,1000 250,1000 250,300"/>
-                    <line x1='-250' y1='300' x2='250' y2='300'/>
-                    <g font-family="Arial" font-size="220" fill="currentColor">
-                        <g transform="matrix( 1 0 0 -1 0 0 )">
-                            <text x="-200" y="-800">PLT</text>
-                        </g>
+        <template code="G*PLATFORM*****" name="Plateforme" type="polygon">
+            <segment unit="%">
+                <line stroke='currentColor' x1='0' x2='1' stroke-width='4px'/>
+            </segment>
+            <marker unit="%">
+                <g font-family="Arial" font-size="0.25" fill="currentColor">
+                    <g transform="matrix( 1 0 0 -1 0 0 )">
+                        <text x="-0.15" y="0.1">PLT</text>
                     </g>
                 </g>
-            </marker-start>
+            </marker>
         </template>
-        <template code="G*MPNDP---****X" name="Point de decontamination" type="polygon">
+        <template code="G*MPNDP---****X" name="Point de decontamination" type="point">
             <segment>
                 <line stroke='currentColor' stroke-width='4px' x2='1'/>
             </segment>
@@ -640,7 +636,7 @@
                 </g>
             </marker-start>
         </template>
-        <template code="G*ROTA*********" name="Site ROTA" type="polygon">
+        <template code="G*ROTA*********" name="Site ROTA" type="point">
             <segment/>
             <marker-start>
                 <g stroke='currentColor' stroke-width='3px'>
@@ -872,4 +868,4 @@
         </template>
     </category>
 </templates>
-<!-- signature="4142516224" -->
+<!-- signature="1253111117" -->
