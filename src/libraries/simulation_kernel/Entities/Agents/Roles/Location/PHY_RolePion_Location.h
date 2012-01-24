@@ -86,8 +86,6 @@ public:
     virtual MIL_Agent_ABC& GetAgent() const;
     virtual double GetCurrentSpeed() const;
     virtual bool HasDoneMagicMove() const;
-    virtual bool HasSpeedChanged() const; // Position or direction or height has changed
-    virtual bool HasLocationChanged() const;
     //@}
 
     //! @name Network
@@ -99,6 +97,8 @@ public:
 private:
     //! @name Tools
     //@{
+    bool HasSpeedChanged() const; // Position or direction or height has changed
+    bool HasLocationChanged() const;
     void SetDirection( const MT_Vector2D& vDirection );
     void SetPosition( const MT_Vector2D& vPosition  );
     void SetCurrentSpeed( double rSpeed );
