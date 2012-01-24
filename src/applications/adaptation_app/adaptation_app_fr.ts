@@ -2433,7 +2433,7 @@ du tireur</translation>
     </message>
     <message>
         <source>Funeral</source>
-        <translation>Funéraire</translation>
+        <translation>Chaîne mortuaire</translation>
     </message>
 </context>
 <context>
