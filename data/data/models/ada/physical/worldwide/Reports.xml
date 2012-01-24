@@ -576,5 +576,27 @@
   <report category="operational" id="404" message="Section undeployed"/>
   <report category="operational" id="405" message="Starting undeploy"/>
   <report category="operational" id="406" message="No population in the urban block"/>
+  <report category="operational" id="407" message="Objective alerted"/>
+  <report category="operational" id="408" message="Objective is no longer alerted"/>
+  <report category="operational" id="409" message="Objective confined"/>
+  <report category="operational" id="410" message="Objective is no longer confined"/>
+  <report category="operational" id="411" message="Objective evacuated"/>
+  <report category="operational" id="412" message="Objective is no longer evacuated"/>
+  <report category="operational" id="413" message="Starting to produce resource"/>
+  <report category="operational" id="414" message="Resource production stopped"/>
+  <report category="operational" id="415" message="Resource node production enhanced"/>
+  <report category="operational" id="416" message="Resource node production damaged"/>
+  <report category="operational" id="417" message="Resource node disabled"/>
+  <report category="operational" id="418" message="Resource node enabled"/>
+  <report category="operational" id="419" message="no resource node within area"/>
+  <report category="operational" id="420" message="no urban blocks within area"/>
+  <report category="operational" id="421" message="no crowds within area"/>
+  <report category="operational" id="422" message="victims evacuated"/>
+  <report category="operational" id="423" message="victims extracted"/>
+  <report category="operational" id="424" message="victims cannot be evacuated"/>
+  <report category="operational" id="425" message="victims cannot be extracted"/>
+  <report category="operational" id="426" message="Starting to decrease resource production"/>
+  <report category="operational" id="427" message="Stop decreasing resource production"/>
+  <report category="operational" id="428" message="No wounded victims"/>
 </reports>
-<!-- signature="3568020320" -->
+<!-- signature="3647850079" -->

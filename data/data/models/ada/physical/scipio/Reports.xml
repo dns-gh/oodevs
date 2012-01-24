@@ -575,5 +575,28 @@
   <report category="operational" id="403" message="Aucune unité ne peut effectuer la mission principale"/>
   <report category="operational" id="404" message="Section repliée"/>
   <report category="operational" id="405" message="Début de repliement"/>
+  <report category="operational" id="406" message="Pas de population dans le block urbain"/>
+  <report category="operational" id="407" message="Objectif alerté"/>
+  <report category="operational" id="408" message="Alerte levée sur l'objectif"/>
+  <report category="operational" id="409" message="Objectif confiné"/>
+  <report category="operational" id="410" message="Confinement levé sur l'objectif"/>
+  <report category="operational" id="411" message="Objectif évacué"/>
+  <report category="operational" id="412" message="L'objectif n'est plus en état d'évacuation"/>
+  <report category="operational" id="413" message="Production de la resource démarrée"/>
+  <report category="operational" id="414" message="Production de la resource arrêtée"/>
+  <report category="operational" id="415" message="Production du noeud améliorée"/>
+  <report category="operational" id="416" message="Production du noeud dégradée"/>
+  <report category="operational" id="417" message="Noeud de resource désactivé"/>
+  <report category="operational" id="418" message="Noeud de resource activé"/>
+  <report category="operational" id="419" message="Pas de noeud de reseau de resource dans la zone"/>
+  <report category="operational" id="420" message="Pas de block urbain dans la zone"/>
+  <report category="operational" id="421" message="Pas de foules dans la zone"/>
+  <report category="operational" id="422" message="Victimes évacuées"/>
+  <report category="operational" id="423" message="Victimes extraites"/>
+  <report category="operational" id="424" message="Victimes non évacuables"/>
+  <report category="operational" id="425" message="Victims impossibles à extraire"/>
+  <report category="operational" id="426" message="Diminution de la production démarrée"/>
+  <report category="operational" id="427" message="Diminution de la production arrêtée"/>
+  <report category="operational" id="428" message="Pas de blessés à évacuer"/>
 </reports>
-<!-- signature="1892350873" -->
+<!-- signature="1865279815" -->

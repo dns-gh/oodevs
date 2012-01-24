@@ -552,8 +552,30 @@ public:
         eRC_NoPEInAutomat,
         eRC_SectionUndeployed,
         eRC_StartUndeploy,
-        eRC_NoPopulationUrbanBlock,
-        eLast
+        eRC_NoPopulationInUrbanBlock,
+		eRC_ObjectiveAlerted,
+		eRC_ObjectiveIsNoLongerAlerted,
+		eRC_ObjectiveConfined,
+		eRC_ObjectiveIsNoLongerConfined, // 410 
+		eRC_ObjectiveEvacuated, 
+		eRC_ObjectiveIsNoLongerEvacuated,
+		eRC_StartingToProduceResource,
+		eRC_ResourceProductionStopped,
+		eRC_ResourceNodeProductionEnhanced,
+		eRC_ResourceNodeProductionDamaged,
+		eRC_ResourceNodeDisabled,
+		eRC_ResourceNodeEnabled,
+		eRC_NoResourceNodesWithinArea,
+		eRC_NoUrbanBlocksWithinArea,
+		eRC_NoCrowdsWithinArea,
+		eRC_VictimsEvacuated,
+		eRC_VictimsExtracted,
+		eRC_VictimsCannotBeEvacuated,
+		eRC_VictimsCannotBeExtracted,
+		eRC_StartingToReduceResourceProduction,
+		eRC_ResourceReductionStopped,
+		eRC_NoWoundedVictims,
+        eLast // 429
     };
     //@}
 public:
