@@ -74,7 +74,7 @@ ADN_Units_Postures_GUI::ADN_Units_Postures_GUI( QWidget* pParent )
     setShowGrid( false );
     setLeftMargin( 0 );
 
-    this->setMaximumHeight( 300 );
+    setFixedHeight( 110 );
 
     // Hide the vertical header.
     verticalHeader()->hide();

@@ -69,8 +69,6 @@ ADN_Breakdowns_PartsTable::ADN_Breakdowns_PartsTable( QWidget* pParent )
     setShowGrid( false );
     setLeftMargin( 0 );
 
-    this->setMaximumHeight( 300 );
-
     // Hide the vertical header.
     verticalHeader()->hide();
 

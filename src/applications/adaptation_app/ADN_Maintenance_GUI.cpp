@@ -24,11 +24,11 @@
 // Created: APE 2005-03-21
 // -----------------------------------------------------------------------------
 ADN_Maintenance_GUI::ADN_Maintenance_GUI( ADN_Maintenance_Data& data )
-: ADN_GUI_ABC( "ADN_Maintenance_GUI" )
-, data_      ( data )
+    : ADN_GUI_ABC( "ADN_Maintenance_GUI" )
+    , data_      ( data )
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Maintenance_GUI destructor
@@ -36,8 +36,8 @@ ADN_Maintenance_GUI::ADN_Maintenance_GUI( ADN_Maintenance_Data& data )
 // -----------------------------------------------------------------------------
 ADN_Maintenance_GUI::~ADN_Maintenance_GUI()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Maintenance_GUI::Build
@@ -45,33 +45,55 @@ ADN_Maintenance_GUI::~ADN_Maintenance_GUI()
 // -----------------------------------------------------------------------------
 void ADN_Maintenance_GUI::Build()
 {
-    pMainWidget_ = new QWidget( 0 );
+    // -------------------------------------------------------------------------
+    // Creations
+    // -------------------------------------------------------------------------
+    assert( pMainWidget_ == 0 );
 
-    Q3HGroupBox* pGroup = new Q3HGroupBox( tr( "Maintenance system data" ), pMainWidget_ );
-    BuildWorkingSchemeTable( pGroup );
+    // Maintenance
+    Q3GroupBox* workingShemeBox = BuildWorkingSchemeTable();
+    workingShemeBox->setFixedHeight( 200 );
 
-    Q3HGroupBox* pWarningGroup = new Q3HGroupBox( tr( "Equipments availability warnings" ), pGroup );
-    Q3HGroupBox* pRepairerGroup = new Q3HGroupBox( tr( "Repairers" ), pWarningGroup );
+    Q3HGroupBox* pRepairerGroup = new Q3HGroupBox( tr( "Repairers availability warnings" ) );
     ADN_AvailabilityWarningTable* pRepairerWarningTable = new ADN_AvailabilityWarningTable( pRepairerGroup );
     pRepairerWarningTable->GetConnector().Connect( & data_.vRepairerWarnings_ );
-    Q3HGroupBox* pHaulerGroup = new Q3HGroupBox( tr( "Tow trucks" ), pWarningGroup );
+    Q3HGroupBox* pHaulerGroup = new Q3HGroupBox( tr( "Tow trucks availability warnings" ) );
     ADN_AvailabilityWarningTable* pHaulerWarningTable = new ADN_AvailabilityWarningTable( pHaulerGroup );
     pHaulerWarningTable->GetConnector().Connect( & data_.vHaulerWarnings_ );
 
-    // Layout
-    Q3VBoxLayout* pLayout = new Q3VBoxLayout( pMainWidget_, 10, 10 );
-    pLayout->addWidget( pGroup );
+    // -------------------------------------------------------------------------
+    // Layouts
+    // -------------------------------------------------------------------------
+    // Bottom layout
+    QHBoxLayout* pBottomLayout = new QHBoxLayout();
+    pBottomLayout->setMargin( 0 );
+    pBottomLayout->setSpacing( 10 );
+    pBottomLayout->addWidget( pRepairerGroup );
+    pBottomLayout->addWidget( pHaulerGroup );
+
+    // Content layout
+    QWidget* pContent = new QWidget();
+    QVBoxLayout* pContentLayout = new QVBoxLayout( pContent );
+    pContentLayout->setMargin( 10 );
+    pContentLayout->setSpacing( 10 );
+    pContentLayout->setAlignment( Qt::AlignTop );
+    pContentLayout->addWidget( workingShemeBox );
+    pContentLayout->addLayout( pBottomLayout );
+    pContentLayout->addStretch( 1 );
+
+    // Main widget
+    pMainWidget_ = CreateScrollArea( *pContent );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Maintenance_GUI::BuildWorkingSchemeTable
 // Created: SBO 2006-08-04
 // -----------------------------------------------------------------------------
-void ADN_Maintenance_GUI::BuildWorkingSchemeTable( QWidget* parent )
+Q3GroupBox* ADN_Maintenance_GUI::BuildWorkingSchemeTable()
 {
     ADN_GuiBuilder builder;
 
-    Q3GroupBox* pGroup = new Q3HGroupBox( tr( "Shifts durations" ), parent );
+    Q3GroupBox* pGroup = new Q3HGroupBox( tr( "Shifts durations" ) );
 
     ADN_Table* pTable = builder.CreateTable( pGroup );
     pTable->setNumCols( static_cast< int >( data_.vWorkingSchemes_.size() ) );
@@ -99,4 +121,6 @@ void ADN_Maintenance_GUI::BuildWorkingSchemeTable( QWidget* parent )
         builder.AddTableCell< ADN_TableItem_TimeField >( pTable, &modifiers, 1, n, modifiers.warningDelay_ );
         ++n;
     }
+
+    return pGroup;
 }

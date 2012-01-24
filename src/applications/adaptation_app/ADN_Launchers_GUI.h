@@ -1,13 +1,11 @@
-//*****************************************************************************
+// *****************************************************************************
 //
-// $Created: JDY 03-07-11 $
-// $Archive: /MVW_v10/Build/SDK/Adn2/src/ADN_Launchers_GUI.h $
-// $Author: Ape $
-// $Modtime: 21/04/05 11:57 $
-// $Revision: 7 $
-// $Workfile: ADN_Launchers_GUI.h $
+// This file is part of a MASA library or program.
+// Refer to the included end-user license agreement for restrictions.
 //
-//*****************************************************************************
+// Copyright (c) 2005 Mathématiques Appliquées SA (MASA)
+//
+// *****************************************************************************
 
 #ifndef __ADN_Launchers_GUI_h_
 #define __ADN_Launchers_GUI_h_
@@ -54,7 +52,7 @@ public:
 
 private:
     ADN_Launchers_Data& data_;
-    ADN_ListView_Launchers* pLaunchers_;
+    ADN_ListView_Launchers* pListView_;
     ADN_Launchers_ModifPhs_GUI* pModifPhs_;
 };
 

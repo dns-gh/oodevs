@@ -41,6 +41,7 @@ ADN_ChangeValueCommand_Int.cpp \
 ADN_ChangeValueCommand_Pointer.cpp \
 ADN_ChangeValueCommand_Pointer.inl \
 ADN_ChangeValueCommand_String.cpp \
+ADN_ClearButton.cpp \
 ADN_ColorSelector.cpp \
 ADN_ColorNameSelector.cpp \
 ADN_Communications_GUI.cpp \
@@ -112,6 +113,7 @@ ADN_ListView_UrbanInfrastructure_Type.cpp \
 ADN_ListView_UrbanMaterial_Type.cpp \
 ADN_ListView_Urban_Type.cpp \
 ADN_ListView_Templates.cpp \
+ADN_Logistic_GUI.cpp \
 ADN_MainWindow.cpp \
 ADN_Maintenance_GUI.cpp \
 ADN_MissionParameterValues_Table.cpp \
@@ -160,6 +162,7 @@ ADN_ResourceNetworks_GUI.cpp \
 ADN_ResourceNetworks_Wizard.cpp \
 ADN_SaveFile_Exception.cpp \
 ADN_Schedule_Table.cpp \
+ADN_SearchLineEdit.cpp \
 ADN_Sensor_Wizard.cpp \
 ADN_Sensors_Data.cpp \
 ADN_Sensors_DetectionAlgorithmPrevision.cpp \

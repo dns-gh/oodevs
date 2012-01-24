@@ -93,7 +93,7 @@ QValidator::State ADN_PercentageValidator::validate( QString& input, int& nPos )
         return Intermediate;
     bool ok = TRUE;
     double entered = input.toDouble( &ok );
-    bool nume = input.contains( 'e', FALSE );
+    bool nume = input.contains( 'e', FALSE ) != 0;
     if( !ok )
     {
         // explicit exponent regexp
@@ -209,7 +209,7 @@ QValidator::State ADN_DoubleValidator::validate( QString& input, int& nPos ) con
         return Intermediate;
     bool ok = TRUE;
     double entered = input.toDouble( &ok );
-    bool nume = input.contains( 'e', FALSE );
+    bool nume = input.contains( 'e', FALSE ) != 0;
     if( !ok )
     {
         // explicit exponent regexp

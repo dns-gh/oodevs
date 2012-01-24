@@ -30,6 +30,7 @@
 #include "ADN_Automata_SubUnitsTable.h"
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_GroupBox.h"
+#include "ADN_SearchListView.h"
 #include "ADN_Tr.h"
 #include "ADN_TimeField.h"
 #include "ADN_ListView.h"
@@ -65,55 +66,53 @@ ADN_Automata_GUI::~ADN_Automata_GUI()
 // -----------------------------------------------------------------------------
 void ADN_Automata_GUI::Build()
 {
+    // -------------------------------------------------------------------------
+    // Creations
+    // -------------------------------------------------------------------------
     assert( pMainWidget_ == 0 );
-
     ADN_GuiBuilder builder;
-
-    // Create the top widget.
-    pMainWidget_ = new QWidget( 0, "Weapon systems main widget" );
-
-    // Create the automata listview.
-    pAutomataList_ = new ADN_Automata_ListView( pMainWidget_ );
-    pAutomataList_->GetConnector().Connect( &data_.GetAutomata() );
     T_ConnectorVector vInfosConnectors( eNbrGuiElements, (ADN_Connector_ABC*)0 );
 
-    Q3GroupBox* pGroup = new Q3GroupBox( 0, Qt::Horizontal, tr( "Automata" ), pMainWidget_ );
-
-    QWidget* pPropertiesGroup = builder.AddFieldHolder( pGroup );
-
+    // Info holder
+    QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
     // Name
-    builder.AddField<ADN_EditLine_String>( pPropertiesGroup, tr( "Name" ), vInfosConnectors[eName] );
-
+    builder.AddField<ADN_EditLine_String>( pInfoHolder, tr( "Name" ), vInfosConnectors[eName] );
     // Automaton type
-    builder.AddEnumField<E_AgentTypeAutomate>( pPropertiesGroup, tr( "Type" ), vInfosConnectors[eAgentType], ADN_Tr::ConvertFromAgentTypeAutomate );
-
+    builder.AddEnumField<E_AgentTypeAutomate>( pInfoHolder, tr( "Type" ), vInfosConnectors[eAgentType], ADN_Tr::ConvertFromAgentTypeAutomate );
     // Model
-    builder.AddField< ADN_ComboBox_Vector<ADN_Models_Data::ModelInfos> >( pPropertiesGroup, tr( "Doctrine model" ), vInfosConnectors[eModel] );
-
+    builder.AddField< ADN_ComboBox_Vector<ADN_Models_Data::ModelInfos> >( pInfoHolder, tr( "Doctrine model" ), vInfosConnectors[eModel] );
     // Unit
-    pFilter_ = builder.AddField< UnitsFilter >( pPropertiesGroup, tr( "Command post" ), vInfosConnectors[eUnit] );
-
+    pFilter_ = builder.AddField< UnitsFilter >( pInfoHolder, tr( "Command post" ), vInfosConnectors[eUnit] );
     // Feedback time
-    builder.AddOptionnalField<ADN_TimeField>( pPropertiesGroup, tr( "Force ratio feedback time" ), vInfosConnectors[eHasFeedbackTime], vInfosConnectors[eFeedbackTime] );
+    builder.AddOptionnalField<ADN_TimeField>( pInfoHolder, tr( "Force ratio feedback time" ), vInfosConnectors[eHasFeedbackTime], vInfosConnectors[eFeedbackTime] );
 
-    Q3GroupBox* pSubUnitsGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Sub-units" ), pGroup );
+    // Sub units
+    QGroupBox* pSubUnitsGroup = new QGroupBox( tr( "Sub-units" ) );
+    QVBoxLayout* pSubUnitsLayout = new QVBoxLayout( pSubUnitsGroup );
     ADN_Automata_SubUnitsTable* pSubUnitsTable = new ADN_Automata_SubUnitsTable( pSubUnitsGroup );
+    pSubUnitsLayout->addWidget( pSubUnitsTable, 1 );
     vInfosConnectors[eSubUnit] = &pSubUnitsTable->GetConnector();
-
-    pAutomataList_->SetItemConnectors( vInfosConnectors );
-
-    // Layout
-    Q3HBoxLayout* pMainLayout = new Q3HBoxLayout( pMainWidget_, 10, 10 );
-    pMainLayout->addWidget( pAutomataList_, 1 );
-    pMainLayout->addWidget( pGroup, 3 );
-
-    Q3VBoxLayout* pGroupLayout = new Q3VBoxLayout( pGroup->layout(), 5 );
-    pGroupLayout->addWidget( pPropertiesGroup, 0, 0 );
-    pGroupLayout->addWidget( pSubUnitsGroup, 1, 0 );
-    builder.AddStretcher( pGroupLayout, Qt::Vertical );
-
     connect( pSubUnitsTable, SIGNAL( AddItem( const std::string& ) ), this, SLOT( OnItemAdded( const std::string& ) ) );
     connect( pSubUnitsTable, SIGNAL( RemoveItem( const std::string& ) ), this, SLOT( OnItemRemoved( const std::string& ) ) );
+
+    // -------------------------------------------------------------------------
+    // Layouts
+    // -------------------------------------------------------------------------
+    // Content layout
+    QWidget* pContent = new QWidget();
+    QVBoxLayout* pContentLayout = new QVBoxLayout( pContent );
+    pContentLayout->setMargin( 10 );
+    pContentLayout->setSpacing( 10 );
+    pContentLayout->setAlignment( Qt::AlignTop );
+    pContentLayout->addWidget( pInfoHolder );
+    pContentLayout->addWidget( pSubUnitsGroup, 1 );
+
+    // List view
+    ADN_SearchListView< ADN_Automata_ListView >* pSearchListView = new ADN_SearchListView< ADN_Automata_ListView >( data_.GetAutomata(), vInfosConnectors );
+    pAutomataList_ = pSearchListView->GetListView();
+
+    // Main widget
+    pMainWidget_ = CreateScrollArea( *pContent, pSearchListView );
 }
 
 // -----------------------------------------------------------------------------

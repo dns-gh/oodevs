@@ -11,6 +11,7 @@
 #include "ADN_Equipement_AttritionGraph.h"
 #include "ADN_Connector_Vector_ABC.h"
 #include "ADN_Equipement_Data.h"
+#include "ADN_Logistic_Data.h"
 #include "ADN_Health_Data.h"
 #include "ADN_Equipement_GUI.h"
 #include "ADN_Tr.h"
@@ -161,7 +162,7 @@ void ADN_Equipement_AttritionGraph::Update()
     helpers::ADN_UrbanAttritionInfos* material = ADN_Workspace::GetWorkspace().GetEquipements().GetGui().GetSelectedMaterial();
     const double urbanProtection = material ? material->rCoeff_.GetData() : 0.;
 
-    ADN_Health_Data::WoundInfo* wounds = ADN_Workspace::GetWorkspace().GetHealth().GetData().wounds;
+    ADN_Health_Data::WoundInfo* wounds = ADN_Workspace::GetWorkspace().GetLogistic().GetData().GetElement< ADN_Health_Data >( eHealth ).wounds;
 
     for( IT_Attritions it = attritions_.begin(); it != attritions_.end(); ++it )
         if( (*it)->ptrArmor_.GetData()->strName_.GetData() == info->strName_.GetData() )

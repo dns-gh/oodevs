@@ -77,6 +77,7 @@ ADN_FuneralPackagingResources_GUI::ADN_FuneralPackagingResources_GUI( QWidget* p
     // Setup the columns.
     setNumRows( 0 );
     setNumCols( 3 );
+    setColumnStretchable( 0, true );
 
     horizontalHeader()->setLabel( 0, tr( "Resource" ) );
     horizontalHeader()->setLabel( 1, tr( "Packaging duration" ) );

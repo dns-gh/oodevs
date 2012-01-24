@@ -79,7 +79,6 @@ private:
     //! @name Member data
     //@{
     ADN_Population_Data& data_;
-    ADN_Population_ListView* pPopulationList_;
 
     ADN_PercentageValidator* pValidatorDestruUnarmed_;
     ADN_PercentageValidator* pValidatorEvacUnarmed_;

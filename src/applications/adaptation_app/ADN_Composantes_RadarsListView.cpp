@@ -31,7 +31,6 @@ ADN_Composantes_RadarsListView::ADN_Composantes_RadarsListView( QWidget* pParent
 {
     // Add one column.
     addColumn( tr( "Special sensors" ) );
-    //setResizeMode( QListView::AllColumns );
 
     setMinimumHeight( 115 );
     setMaximumHeight( 115 );

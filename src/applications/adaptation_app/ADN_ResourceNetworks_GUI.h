@@ -13,7 +13,6 @@
 #include "ADN_GUI_ABC.h"
 #include "ADN_ComboBox_Vector.h"
 
-class ADN_ListView_ResourceNetworks;
 class ADN_ResourceNetworks_Data;
 
 // =============================================================================
@@ -48,17 +47,9 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ADN_ResourceNetworks_GUI( const ADN_ResourceNetworks_GUI& );            //!< Copy constructor
-    ADN_ResourceNetworks_GUI& operator=( const ADN_ResourceNetworks_GUI& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
     ADN_ResourceNetworks_Data& data_;
-    ADN_ListView_ResourceNetworks* pResourceNetworks_;
     //@}
 };
 

@@ -35,8 +35,6 @@
 #include "ADN_FireClass_GUI.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_GuiTools.h"
-#include "ADN_Health_Data.h"
-#include "ADN_Health_GUI.h"
 #include "ADN_HtmlBuilder.h"
 #include "ADN_HumanFactors_Data.h"
 #include "ADN_HumanFactors_GUI.h"
@@ -44,9 +42,9 @@
 #include "ADN_KnowledgeGroups_GUI.h"
 #include "ADN_Launchers_Data.h"
 #include "ADN_Launchers_GUI.h"
+#include "ADN_Logistic_Data.h"
+#include "ADN_Logistic_GUI.h"
 #include "ADN_MainWindow.h"
-#include "ADN_Maintenance_Data.h"
-#include "ADN_Maintenance_GUI.h"
 #include "ADN_Missions_Data.h"
 #include "ADN_Missions_GUI.h"
 #include "ADN_Models_Data.h"
@@ -68,10 +66,6 @@
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_Sensors_Data.h"
 #include "ADN_Sensors_GUI.h"
-#include "ADN_Supply_Data.h"
-#include "ADN_Supply_GUI.h"
-#include "ADN_Funeral_Data.h"
-#include "ADN_Funeral_GUI.h"
 #include "ADN_Symbols_Data.h"
 #include "ADN_Symbols_GUI.h"
 #include "ADN_Units_Data.h"
@@ -132,6 +126,7 @@ ADN_Workspace::ADN_Workspace()
     pWorkspace_ = this;
 
     projectData_ = new ADN_Project_Data();
+    // Creation order
     elements_[eDrawings]          = new ADN_WorkspaceElement< ADN_Drawings_Data, ADN_Drawings_GUI>( tr( "Drawings" ) );
     elements_[eSymbols]           = new ADN_WorkspaceElement< ADN_Symbols_Data, ADN_Symbols_GUI>( tr( "Symbols" ) );
     elements_[eUnitSymbols]       = new ADN_WorkspaceElement< ADN_UnitSymbols_Data, ADN_UnitSymbols_GUI>( tr( "UnitSymbols" ) );
@@ -153,16 +148,13 @@ ADN_Workspace::ADN_Workspace()
     elements_[eBreakdowns]        = new ADN_WorkspaceElement< ADN_Breakdowns_Data, ADN_Breakdowns_GUI >( tr( "Breakdowns" ) );
     elements_[eCommunications]    = new ADN_WorkspaceElement< ADN_Communications_Data, ADN_Communications_GUI>( tr( "Jamming" ) );
     elements_[eHumanFactors]      = new ADN_WorkspaceElement< ADN_HumanFactors_Data, ADN_HumanFactors_GUI>( tr( "Human factors" ) );
-    elements_[eMaintenance]       = new ADN_WorkspaceElement< ADN_Maintenance_Data, ADN_Maintenance_GUI>( tr( "Maintenance" ) );
     elements_[eMissions]          = new ADN_WorkspaceElement< ADN_Missions_Data, ADN_Missions_GUI>( tr( "Missions" ) );
     elements_[eKnowledgeGroups]   = new ADN_WorkspaceElement< ADN_KnowledgeGroups_Data, ADN_KnowledgeGroups_GUI>( tr( "Knowledge groups" ) );
-    elements_[eHealth]            = new ADN_WorkspaceElement< ADN_Health_Data, ADN_Health_GUI>( tr( "Health" ) );
-    elements_[eSupply]            = new ADN_WorkspaceElement< ADN_Supply_Data, ADN_Supply_GUI>( tr( "Supply" ) );
-    elements_[eFuneral]           = new ADN_WorkspaceElement< ADN_Funeral_Data, ADN_Funeral_GUI>( tr( "Funeral" ) );
     elements_[ePopulation]        = new ADN_WorkspaceElement< ADN_Population_Data, ADN_Population_GUI >( tr( "Crowds" ) );
     elements_[ePeople]            = new ADN_WorkspaceElement< ADN_People_Data, ADN_People_GUI >( tr( "Populations" ) );
     elements_[eReports]           = new ADN_WorkspaceElement< ADN_Reports_Data, ADN_Reports_GUI >( tr( "Reports" ) );
     elements_[eFireClasses]       = new ADN_WorkspaceElement< ADN_FireClass_Data, ADN_FireClass_GUI >( tr( "Fires" ) );
+    elements_[eLogistic]          = new ADN_WorkspaceElement< ADN_Logistic_Data, ADN_Logistic_GUI >( tr( "Log" ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -181,65 +173,56 @@ ADN_Workspace::~ADN_Workspace()
 // Name: ADN_Workspace::Build
 // Created: JDY 03-07-04
 //-----------------------------------------------------------------------------
-void ADN_Workspace::Build( ADN_MainWindow& mainWindow )
+void ADN_Workspace::Build( ADN_MainWindow& mainwindow )
 {
-    pUndoStack_ = new QtUndoStack( & mainWindow );
+    pUndoStack_ = new QtUndoStack( & mainwindow );
     pProgressIndicator_->Reset( tr( "Loading GUI..." ) );
     pProgressIndicator_->SetNbrOfSteps( eNbrWorkspaceElements );
 
     for( int n = 0; n < eNbrWorkspaceElements; ++n )
     {
         elements_[n]->GetGuiABC().Build();
-        elements_[n]->GetGuiABC().RegisterTable( mainWindow );
+        elements_[n]->GetGuiABC().RegisterTable( mainwindow );
         pProgressIndicator_->Increment( elements_[n]->GetName().toStdString().c_str() );
     }
 
-    // Force an order for the tabs. Combine some other tabs. Exclude others... All in all, has to be done by hand.
-    mainWindow.AddPage( elements_[eCategories]->GetName(), * elements_[eCategories]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eUrban]->GetName(), * elements_[eUrban]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eEquipement]->GetName(), * elements_[eEquipement]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eResourceNetworks]->GetName(), * elements_[eResourceNetworks]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eLaunchers]->GetName(), * elements_[eLaunchers]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eWeapons]->GetName(), * elements_[eWeapons]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eSensors]->GetName(), * elements_[eSensors]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eActiveProtections]->GetName(), * elements_[eActiveProtections]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eBreakdowns]->GetName(), * elements_[eBreakdowns]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eFireClasses]->GetName(), * elements_[eFireClasses]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eNBC]->GetName(), * elements_[eNBC]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eObjects]->GetName(), * elements_[eObjects]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eMissions]->GetName(), * elements_[eMissions]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eModels]->GetName(), * elements_[eModels]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eComposantes]->GetName(), * elements_[eComposantes]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eUnits]->GetName(), * elements_[eUnits]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eAutomata]->GetName(), * elements_[eAutomata]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[ePopulation]->GetName(), * elements_[ePopulation]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[ePeople]->GetName(), * elements_[ePeople]->GetGuiABC().GetMainWidget() );
-
-    QWidget* pLogPage = new QWidget();
-    Q3VBoxLayout* pLayout = new Q3VBoxLayout( pLogPage );
-
-    elements_[eMaintenance]->GetGuiABC().GetMainWidget()->reparent( pLogPage, QPoint( 0, 0 ) );
-    elements_[eSupply]->GetGuiABC().GetMainWidget()->reparent( pLogPage, QPoint( 0, 0 ) );
-    elements_[eHealth]->GetGuiABC().GetMainWidget()->reparent( pLogPage, QPoint( 0, 0 ) );
-    elements_[eFuneral]->GetGuiABC().GetMainWidget()->reparent( pLogPage, QPoint( 0, 0 ) );
-    pLayout->addWidget( elements_[eMaintenance]->GetGuiABC().GetMainWidget() );
-    pLayout->addWidget( elements_[eSupply]->GetGuiABC().GetMainWidget() );
-    pLayout->addWidget( elements_[eHealth]->GetGuiABC().GetMainWidget() );
-    pLayout->addWidget( elements_[eFuneral]->GetGuiABC().GetMainWidget() );
-    ADN_GuiBuilder builder;
-    builder.AddStretcher( pLayout, Qt::Vertical );
-    mainWindow.AddPage( tr( "Log" ), *pLogPage );
-
-    mainWindow.AddPage( elements_[eCommunications]->GetName(), * elements_[eCommunications]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eKnowledgeGroups]->GetName(), * elements_[eKnowledgeGroups]->GetGuiABC().GetMainWidget() );
-
-    mainWindow.AddPage( elements_[eHumanFactors]->GetName(), * elements_[eHumanFactors]->GetGuiABC().GetMainWidget() );
-    mainWindow.AddPage( elements_[eAiEngine]->GetName(), * elements_[eAiEngine]->GetGuiABC().GetMainWidget() );
-
-    // $$$$ JSR 2012-01-04: TODO : reports à supprimer complètement?
-    // mainWindow.AddPage( elements_[eReports]->GetName(), * elements_[eReports]->GetGuiABC().GetMainWidget() );
+    // Tab order
+    AddPage( mainwindow, eCategories );
+    AddPage( mainwindow, eUrban );
+    AddPage( mainwindow, eEquipement );
+    AddPage( mainwindow, eResourceNetworks );
+    AddPage( mainwindow, eLaunchers );
+    AddPage( mainwindow, eWeapons );
+    AddPage( mainwindow, eSensors );
+    AddPage( mainwindow, eActiveProtections );
+    AddPage( mainwindow, eBreakdowns );
+    AddPage( mainwindow, eFireClasses );
+    AddPage( mainwindow, eNBC );
+    AddPage( mainwindow, eObjects );
+    AddPage( mainwindow, eMissions );
+    AddPage( mainwindow, eModels );
+    AddPage( mainwindow, eComposantes );
+    AddPage( mainwindow, eUnits );
+    AddPage( mainwindow, eAutomata );
+    AddPage( mainwindow, ePopulation );
+    AddPage( mainwindow, ePeople );
+    AddPage( mainwindow, eLogistic );
+    AddPage( mainwindow, eCommunications );
+    AddPage( mainwindow, eKnowledgeGroups );
+    AddPage( mainwindow, eHumanFactors );
+    AddPage( mainwindow, eAiEngine );
+    //AddPage( mainwindow, eReports ); // $$$$ JSR 2012-01-04: TODO : reports à supprimer complètement?
 
     pProgressIndicator_->Reset( tr( "GUI loaded" ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::AddPage
+// Created: ABR 2012-01-18
+// -----------------------------------------------------------------------------
+void ADN_Workspace::AddPage( ADN_MainWindow& mainWindow, E_WorkspaceElements element )
+{
+    mainWindow.AddPage( element, *elements_[ element ]->GetGuiABC().GetMainWidget(), elements_[ element ]->GetName() );
 }
 
 //-----------------------------------------------------------------------------
@@ -287,6 +270,7 @@ void ADN_Workspace::Load( const std::string& filename, const tools::Loader_ABC& 
     projectData_->Load( fileLoader );
     pProgressIndicator_->Increment();
 
+    // Treatment order, ie E_WorkspaceElements order.
     for( int n = 0; n < eNbrWorkspaceElements; ++n )
     {
         pProgressIndicator_->Increment( tr( "Loading: %1..." ).arg( elements_[n]->GetName() ).toStdString().c_str() );

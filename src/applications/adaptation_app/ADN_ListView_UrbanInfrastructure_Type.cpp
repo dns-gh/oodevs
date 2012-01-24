@@ -55,7 +55,7 @@ ADN_ListView_UrbanInfrastructure_Type::ADN_ListView_UrbanInfrastructure_Type(QWi
     // Add a column && disable sorting
     addColumn( tools::translate( "ADN_ListView_UrbanInfrastructure_Type", name ) );
     setSorting( -1, true );
-    setResizeMode( Q3ListView::AllColumns );
+    setResizeMode( Q3ListView::LastColumn );
 
     // Connector creation
     pConnector_ = new ADN_Connector_ListView<ADN_Urban_Data::InfrastructureInfos>(*this);

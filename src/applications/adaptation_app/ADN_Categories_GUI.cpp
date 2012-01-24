@@ -55,24 +55,22 @@ ADN_Categories_GUI::~ADN_Categories_GUI()
 //-----------------------------------------------------------------------------
 void ADN_Categories_GUI::Build()
 {
+    // -------------------------------------------------------------------------
+    // Creations
+    // -------------------------------------------------------------------------
     assert( pMainWidget_ == 0 );
-
     ADN_GuiBuilder builder;
     ADN_EditLine_ABC* pEdit = 0;
 
-    // Create the main widget.
-    pMainWidget_ = new QWidget( 0, "categories main widget" );
-
     // horizontal layout
-    Q3HBoxLayout* pLayout = new Q3HBoxLayout( pMainWidget_ );
-    pLayout->setMargin( 20 );
-    pLayout->setSpacing( 20 );
-    pLayout->setAutoAdd( true );
+    //Q3HBoxLayout* pLayout = new Q3HBoxLayout();
+    //pLayout->setMargin( 20 );
+    //pLayout->setSpacing( 20 );
+    //pLayout->setAutoAdd( true );
 
     /////////////////
     // Armors
-    Q3GroupBox* pArmorGroup = new Q3VGroupBox( tr( "Armor classes" ), pMainWidget_ );
-
+    Q3GroupBox* pArmorGroup = new Q3VGroupBox( tr( "Armor classes" ) );
     Q3HBox* pArmorListViewGroup = new Q3HBox( pArmorGroup );
 
     // Armors listview
@@ -101,8 +99,7 @@ void ADN_Categories_GUI::Build()
     pAttritionEffects_ = new ADN_Categories_AttritionEffect_Table( pAttritionEffectGroup_ );
     vArmorInfosConnectors[eAttritionEffects] = &pAttritionEffects_->GetConnector();
 
-    Q3VBox* pBox = new Q3VBox( pMainWidget_ );
-
+    Q3VBox* pBox = new Q3VBox();
     ///////////////////
     // Sizes
     Q3GroupBox* pGroup = new Q3VGroupBox( tr( "Sizes" ), pBox );
@@ -143,6 +140,21 @@ void ADN_Categories_GUI::Build()
     pListArmor_->SetItemConnectors( vArmorInfosConnectors );
     pListSize_->SetItemConnectors( vSizeInfosConnectors );
     pListDotationNature_->SetItemConnectors( vDotationNatureInfosConnectors );
+
+    // -------------------------------------------------------------------------
+    // Layouts
+    // -------------------------------------------------------------------------
+    // Content layout
+    QWidget* pContent = new QWidget();
+    QHBoxLayout* pContentLayout = new QHBoxLayout( pContent );
+    pContentLayout->setMargin( 10 );
+    pContentLayout->setSpacing( 10 );
+    pContentLayout->setAlignment( Qt::AlignTop );
+    pContentLayout->addWidget( pArmorGroup );
+    pContentLayout->addWidget( pBox );
+
+    // Main widget
+    pMainWidget_ = CreateScrollArea( *pContent );
 }
 
 // -----------------------------------------------------------------------------

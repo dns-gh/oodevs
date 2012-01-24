@@ -35,13 +35,14 @@ class ADN_Composantes_ConsumptionsTable : public ADN_Table2
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit ADN_Composantes_ConsumptionsTable( ADN_ListView_Composantes& composanteListView, QWidget* pParent = 0 );
+    explicit ADN_Composantes_ConsumptionsTable( QWidget* pParent = 0 );
     virtual ~ADN_Composantes_ConsumptionsTable();
     //@}
 
     //! @name Operations
     //@{
     virtual void OnContextMenu( int nRow, int nCol, const QPoint& pt );
+    void SetListView( ADN_ListView_Composantes* listView );
     //@}
 
 private:
@@ -58,7 +59,7 @@ private:
 
 private:
     T_ParametersVector menuParametersList_;
-    ADN_ListView_Composantes& composanteListView_;
+    ADN_ListView_Composantes* composanteListView_;
 };
 
 

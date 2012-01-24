@@ -11,11 +11,12 @@
 #define __ADN_EditLine_ABC_h_
 
 #include "ADN_Gfx_ABC.h"
+#include "ADN_BaseEditLine.h"
 
 //*****************************************************************************
 // Created: JDY 03-07-08
 //*****************************************************************************
-class ADN_EditLine_ABC : public QLineEdit
+class ADN_EditLine_ABC : public ADN_BaseEditLine
                        , public ADN_Gfx_ABC
 {
     Q_OBJECT

@@ -21,6 +21,7 @@
 #include "ADN_GuiTools.h"
 #include "ADN_Wizard_ABC.h"
 #include "ADN_ListViewToolTip.h"
+#include <boost/bind.hpp>
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView constructor
@@ -302,4 +303,64 @@ void ADN_ListView::Print( int nPage, QPainter& painter, const QSize& painterSize
     Q3ListView::drawContentsOffset( &painter, 0, 0, nX * painterSize.width(), nY * painterSize.height(), painterSize.width(), painterSize.height() );
     painter.restore();
     bPrinting_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::OnFilterChanged
+// Created: ABR 2012-01-18
+// -----------------------------------------------------------------------------
+void ADN_ListView::OnFilterChanged( const QString& filterLine )
+{
+    filterLine_ = filterLine.lower();
+    ApplyFilter( boost::bind( &ADN_ListView::ApplyFilterLine, this, _1 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::OnFilterChanged
+// Created: ABR 2012-01-19
+// -----------------------------------------------------------------------------
+void ADN_ListView::OnFilterChanged( const QStringList& filterList )
+{
+    filterList_ = filterList;
+    ApplyFilter( boost::bind( &ADN_ListView::ApplyFilterList, this, _1 ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::ApplyFilterLine
+// Created: ABR 2012-01-18
+// -----------------------------------------------------------------------------
+bool ADN_ListView::ApplyFilterLine( ADN_ListViewItem* item )
+{
+    if( filterLine_.isEmpty() )
+        return true;
+    if( !item )
+        return false;
+    QString text = item->text( 0 ).lower();
+    return text.find( filterLine_ ) != -1;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::ApplyFilterList
+// Created: ABR 2012-01-19
+// -----------------------------------------------------------------------------
+bool ADN_ListView::ApplyFilterList( ADN_ListViewItem* item )
+{
+    if( filterList_.isEmpty() )
+        return true;
+    if( !item )
+        return false;
+    return filterList_.contains( item->text( 0 ), Qt::CaseInsensitive );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::ApplyFilter
+// Created: ABR 2012-01-18
+// -----------------------------------------------------------------------------
+void ADN_ListView::ApplyFilter( boost::function< bool ( ADN_ListViewItem* ) > func )
+{
+    for( Q3ListViewItemIterator it = firstChild(); it.current(); ++it )
+    {
+        ADN_ListViewItem* item = static_cast< ADN_ListViewItem* >( it.current() );
+        item->setVisible( func( item ) ); // Use HasAnyChildVisible( item, func ) if tree view. Cf HierarchyListView_ABC
+    }
 }

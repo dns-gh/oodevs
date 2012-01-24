@@ -13,7 +13,48 @@
 #define __ADN_Enums_h_
 
 #include "ENT/ENT_Enums_Gen.h"
-#include "ADN_Enums_Gen.h"
+
+enum E_WorkspaceElements
+{
+    eCategories,
+    eSymbols, // Must be before eUnits && before eUrban
+    eUnitSymbols,
+    eUrban,
+    eNBC,
+    eLaunchers,
+    eEquipement,
+    eFireClasses,
+    eDrawings, // Must be before eObjects
+    eObjects,
+    eWeapons,
+    eActiveProtections,
+    eSensors,
+    eBreakdowns,
+    eComposantes,
+    eResourceNetworks,
+    eAiEngine,
+    eMissions,
+    eModels,
+    eUnits,
+    eAutomata,
+    eCommunications,
+    eHumanFactors,
+    eKnowledgeGroups,
+    ePopulation,
+    ePeople,
+    eReports,
+    eLogistic, // Gather eMaintenance, eSupply, eHealth and eFuneral in a container
+    eNbrWorkspaceElements
+};
+
+enum E_LogElements
+{
+    eMaintenance    = 0,
+    eSupply         = 1,
+    eHealth         = 2,
+    eFuneral        = 3,
+    eNbrLogElements
+};
 
 enum E_OpenMode
 {

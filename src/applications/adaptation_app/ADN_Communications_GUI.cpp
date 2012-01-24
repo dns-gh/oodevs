@@ -28,11 +28,11 @@
 // Created: APE 2005-03-21
 // -----------------------------------------------------------------------------
 ADN_Communications_GUI::ADN_Communications_GUI( ADN_Communications_Data& data )
-: ADN_GUI_ABC( "ADN_Communications_GUI" )
-, data_      ( data )
+    : ADN_GUI_ABC( "ADN_Communications_GUI" )
+    , data_      ( data )
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Communications_GUI destructor
@@ -40,8 +40,8 @@ ADN_Communications_GUI::ADN_Communications_GUI( ADN_Communications_Data& data )
 // -----------------------------------------------------------------------------
 ADN_Communications_GUI::~ADN_Communications_GUI()
 {
+    // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Communications_GUI::Build
@@ -49,21 +49,29 @@ ADN_Communications_GUI::~ADN_Communications_GUI()
 // -----------------------------------------------------------------------------
 void ADN_Communications_GUI::Build()
 {
-    if( pMainWidget_ != 0 )
-        return;
-
+    // -------------------------------------------------------------------------
+    // Creations
+    // -------------------------------------------------------------------------
+    assert( pMainWidget_ == 0 );
     ADN_GuiBuilder builder;
 
-    // Create the top widget.
-    pMainWidget_ = new QWidget( 0 );
+    // Info holders
+    QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
+    builder.AddField<ADN_EditLine_Double>( pInfoHolder, tr( "Effect on reloading duration" ), data_.rReloadModifier_, 0, eGreaterZero );
+    builder.AddField<ADN_EditLine_Double>( pInfoHolder, tr( "Effect on movement speed" ), data_.rSpeedModifier_, 0, eGreaterEqualZero );
+    builder.AddStretcher( pInfoHolder, Qt::Vertical );
 
-    Q3GroupBox* pGroupBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Jamming" ), pMainWidget_ );
-    builder.AddField<ADN_EditLine_Double>( pGroupBox, tr( "Effect on reloading duration" ), data_.rReloadModifier_, 0, eGreaterZero );
-    builder.AddField<ADN_EditLine_Double>( pGroupBox, tr( "Effect on movement speed" ), data_.rSpeedModifier_, 0, eGreaterEqualZero );
+    // -------------------------------------------------------------------------
+    // Layouts
+    // -------------------------------------------------------------------------
+    // Content layout
+    QWidget* pContent = new QWidget();
+    QHBoxLayout* pContentLayout = new QHBoxLayout( pContent );
+    pContentLayout->setMargin( 10 );
+    pContentLayout->setSpacing( 10 );
+    pContentLayout->setAlignment( Qt::AlignTop );
+    pContentLayout->addWidget( pInfoHolder );
 
-    // Layout
-    Q3VBoxLayout* pLayout = new Q3VBoxLayout( pMainWidget_, 10, 10 );
-    pLayout->setAlignment( Qt::AlignTop );
-    pLayout->addWidget( pGroupBox );
-    builder.AddStretcher( pLayout, Qt::Vertical );
+    // Main widget
+    pMainWidget_ = CreateScrollArea( *pContent );
 }

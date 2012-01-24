@@ -32,7 +32,6 @@ ADN_Funeral_GUI::ADN_Funeral_GUI( ADN_Funeral_Data& data )
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Funeral_GUI destructor
 // Created: APE 2005-03-21
@@ -42,77 +41,61 @@ ADN_Funeral_GUI::~ADN_Funeral_GUI()
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Funeral_GUI::Build
 // Created: APE 2005-03-21
 // -----------------------------------------------------------------------------
 void ADN_Funeral_GUI::Build()
 {
-    if( pMainWidget_ != 0 )
-        return;
-
+    // -------------------------------------------------------------------------
+    // Creations
+    // -------------------------------------------------------------------------
+    assert( pMainWidget_ == 0 );
+    ADN_GuiBuilder builder;
     static const int maxSize = 500;
 
-    ADN_GuiBuilder builder;
-
-    // Create the main widget.
-    pMainWidget_ = new QWidget( 0 );
-    Q3GroupBox* pGroup = new Q3GroupBox( 4, Qt::Vertical, tr( "Funeral system data" ), pMainWidget_ );    
-    QWidget* pHolder = builder.AddFieldHolder( pGroup );
+    // Funeral
+    QWidget* pHolder = builder.AddFieldHolder( 0 );
 
     ADN_EditLine_Int* pTransporterSpeed = builder.AddField<ADN_EditLine_Int>( pHolder, tr( "Fake transporter speed" ), data_.fakeTransporterSpeed_ );
     pTransporterSpeed->GetValidator().setBottom( 1 );
-    pTransporterSpeed->setMaximumWidth( 300 );
+    pHolder->setMaximumWidth( maxSize );
 
-    resourceTable_ = new ADN_FuneralPackagingResources_GUI( pGroup );
+    resourceTable_ = new ADN_FuneralPackagingResources_GUI();
     resourceTable_->GetConnector().Connect( &data_.funeralPackagingResources_ );
     resourceTable_->setMaximumWidth( maxSize );
+    resourceTable_->setFixedHeight( 200 );
     resourceTable_->setSorting( false );
     resourceTable_->setSelectionMode( Q3Table::SingleRow );
 
-    QPushButton* moveUpButton_ = new QPushButton( pGroup );
+    QPushButton* moveUpButton_ = new QPushButton();
     moveUpButton_->setIcon( MAKE_ICON( arrow_up ) );
     moveUpButton_->setMaximumWidth( maxSize );
     
-    QPushButton* moveDownButton_ = new QPushButton( pGroup );
+    QPushButton* moveDownButton_ = new QPushButton();
     moveDownButton_->setIcon( MAKE_ICON( arrow_down ) );
     moveDownButton_->setMaximumWidth( maxSize );
 
     connect( moveUpButton_, SIGNAL( clicked() ), this, SLOT( OnButtonUp() ) );
     connect( moveDownButton_, SIGNAL( clicked() ), this, SLOT( OnButtonDown() ) );
 
-/*
-    builder.AddField< ADN_FuneralUnitSelector >( pHolder, tr( "Unit type" ), data_.infos_.ptrUnit_ );
-    builder.AddField< ADN_ComboBox_Vector< ADN_Missions_Data::Mission > >( pHolder, tr( "Mission" ), missionConnector_ );
-    ConnectMission( true );
+    // -------------------------------------------------------------------------
+    // Layouts
+    // -------------------------------------------------------------------------
+    // Content layout
+    QWidget* pContent = new QWidget();
+    QVBoxLayout* pContentLayout = new QVBoxLayout( pContent );
+    pContentLayout->setMargin( 10 );
+    pContentLayout->setSpacing( 10 );
+    pContentLayout->setAlignment( Qt::AlignTop );
+    pContentLayout->addWidget( pHolder );
+    pContentLayout->addWidget( resourceTable_ );
+    pContentLayout->addWidget( moveUpButton_ );
+    pContentLayout->addWidget( moveDownButton_ );
+    pContentLayout->addStretch( 1 );
 
-    Q3HGroupBox* pTrucksGroup = new Q3HGroupBox( tr( "Convoy setup duration" ), pGroup );
-    ADN_Funeral_TrucksTimeTable* pTrucksTimeTable = new ADN_Funeral_TrucksTimeTable( pTrucksGroup );
-    pTrucksTimeTable->GetConnector().Connect( & data_.infos_.vConvoySetupInfos_ );
-
-    pTrucksGroup = new Q3HGroupBox( tr( "Convoy loading duration" ), pGroup );
-    pTrucksTimeTable = new ADN_Funeral_TrucksTimeTable( pTrucksGroup );
-    pTrucksTimeTable->GetConnector().Connect( & data_.infos_.vConvoyLoadingInfos_ );
-
-    pTrucksGroup = new Q3HGroupBox( tr( "Convoy unloading duration" ), pGroup );
-    pTrucksTimeTable = new ADN_Funeral_TrucksTimeTable( pTrucksGroup );
-    pTrucksTimeTable->GetConnector().Connect( & data_.infos_.vConvoyUnloadingInfos_ );
-
-    pTrucksGroup = new Q3HGroupBox( tr( "Convoy speed modifiers" ), pGroup );
-    ADN_Funeral_TrucksDoubleTable* pTrucksDoubleTable = new ADN_Funeral_TrucksDoubleTable( pTrucksGroup );
-    pTrucksDoubleTable->GetConnector().Connect( & data_.infos_.vConvoySpeedModificatorInfos_ );
-
-    Q3HGroupBox* pVectorGroup = new Q3HGroupBox( tr( "Conveyors availability warnings" ), pGroup );
-    ADN_AvailabilityWarningTable* pWarningTable = new ADN_AvailabilityWarningTable( pVectorGroup );
-    pWarningTable->GetConnector().Connect( & data_.infos_.vVectorWarnings_ );
-*/
-
-    // Layout
-    Q3HBoxLayout* pLayout = new Q3HBoxLayout( pMainWidget_, 10, 10 );
-    pLayout->addWidget( pGroup );
-
-    builder.AddStretcher( pLayout, Qt::Vertical );
+    // Main widget
+    pMainWidget_ = CreateScrollArea( *pContent );
 }
 
 // -----------------------------------------------------------------------------

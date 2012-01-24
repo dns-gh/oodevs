@@ -21,6 +21,7 @@
 #include "ADN_GuiBuilder.h"
 #include "ADN_HtmlBuilder.h"
 #include "ADN_MainWindow.h"
+#include "ADN_SearchListView.h"
 #include "ADN_Tr.h"
 #include "ADN_UrbanModifiersTable.h"
 #include "ENT/ENT_Tr.h"
@@ -72,24 +73,26 @@ ADN_Equipement_GUI::~ADN_Equipement_GUI()
 // -----------------------------------------------------------------------------
 void ADN_Equipement_GUI::Build()
 {
-    if( pMainWidget_ != 0 )
-        return;
-    pMainWidget_ = new QWidget();
+    assert( pMainWidget_ == 0 );
+
+    // Tab management
     QTabWidget* pTabWidget = new QTabWidget();
-    this->BuildAmmunition( pTabWidget );
-    this->BuildGeneric( eDotationFamily_Carburant, pTabWidget );
-    this->BuildGeneric( eDotationFamily_Mine, pTabWidget );
-    this->BuildGeneric( eDotationFamily_Explosif, pTabWidget );
-    this->BuildGeneric( eDotationFamily_Barbele, pTabWidget );
-    this->BuildGeneric( eDotationFamily_Ration, pTabWidget );
-    this->BuildGeneric( eDotationFamily_AgentExtincteur, pTabWidget );
-    this->BuildGeneric( eDotationFamily_Piece, pTabWidget );
-    this->BuildGeneric( eDotationFamily_Energy, pTabWidget );
-    QGridLayout* pMainLayout = new QGridLayout();
+    BuildAmmunition( pTabWidget );
+    BuildGeneric( eDotationFamily_Carburant, pTabWidget );
+    BuildGeneric( eDotationFamily_Mine, pTabWidget );
+    BuildGeneric( eDotationFamily_Explosif, pTabWidget );
+    BuildGeneric( eDotationFamily_Barbele, pTabWidget );
+    BuildGeneric( eDotationFamily_Ration, pTabWidget );
+    BuildGeneric( eDotationFamily_AgentExtincteur, pTabWidget );
+    BuildGeneric( eDotationFamily_Piece, pTabWidget );
+    BuildGeneric( eDotationFamily_Energy, pTabWidget );
+
+    // Main widget
+    pMainWidget_ = new QWidget();
+    QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_ );
     pMainLayout->setSpacing( 10 );
-    pMainLayout->setContentsMargins( 10, 10, 10, 10 );
+    pMainLayout->setMargin( 10 );
     pMainLayout->addWidget( pTabWidget );
-    pMainWidget_->setLayout( pMainLayout );
 }
 
 // -----------------------------------------------------------------------------
@@ -98,39 +101,45 @@ void ADN_Equipement_GUI::Build()
 // -----------------------------------------------------------------------------
 void ADN_Equipement_GUI::BuildGeneric( E_DotationFamily nType, QTabWidget* pParent )
 {
+    // -------------------------------------------------------------------------
+    // Creations
+    // -------------------------------------------------------------------------
     ADN_GuiBuilder builder;
-    QWidget* pPage = new QWidget();
-    pParent->addTab( pPage, ENT_Tr::ConvertFromDotationFamily( nType, ENT_Tr_ABC::eToTr ).c_str() );
-    ADN_Equipement_GenericListView* pListView = new ADN_Equipement_GenericListView( nType, pPage );
-    pListView->GetConnector().Connect( &data_.GetDotation( nType ).categories_ );
     T_ConnectorVector vConnectors( eNbrGenericGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
-    
-    QGroupBox* pGroupBox = new QGroupBox( ENT_Tr::ConvertFromDotationFamily( nType, ENT_Tr_ABC::eToTr ).c_str() );
-    QWidget* pHolder = builder.AddFieldHolder( pGroupBox );
-    builder.AddField< ADN_EditLine_String >( pHolder, tr( "Name" ), vConnectors[ eName ] );
-    builder.AddField< ADN_EditLine_String >( pHolder, tr( "CodeEMAT6" ), vConnectors[ eGenEMAT6Code ] );
-    builder.AddField< ADN_EditLine_String >( pHolder, tr( "CodeEMAT8" ), vConnectors[ eGenEMAT8Code ] );
-    builder.AddField< ADN_EditLine_String >( pHolder, tr( "CodeLFRIL" ), vConnectors[eGenLFRILCode ] );
-    builder.AddField< ADN_EditLine_String >( pHolder, tr( "CodeNNO" ), vConnectors[ eGenNNOCode ] );
-    builder.AddField< ADN_ComboBox_Equipment_Nature >( pHolder, tr( "Nature" ), vConnectors[ eGenNature] );
-    Q3GroupBox* pPackagingGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Packaging" ), pGroupBox );
+
+    // Info holder
+    QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vConnectors[ eName ] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "CodeEMAT6" ), vConnectors[ eGenEMAT6Code ] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "CodeEMAT8" ), vConnectors[ eGenEMAT8Code ] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "CodeLFRIL" ), vConnectors[eGenLFRILCode ] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "CodeNNO" ), vConnectors[ eGenNNOCode ] );
+    builder.AddField< ADN_ComboBox_Equipment_Nature >( pInfoHolder, tr( "Nature" ), vConnectors[ eGenNature] );
+
+    // Packaging
+    Q3GroupBox* pPackagingGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Packaging" ) );
     builder.AddField< ADN_EditLine_Double >( pPackagingGroup, tr( "Nbr per package" ), vConnectors[ ePackageNbr ], 0, eGreaterZero );
     builder.AddField< ADN_EditLine_Double >( pPackagingGroup, tr( "Package weight" ), vConnectors[ ePackageWeight ], tr( "T" ), eGreaterZero );
     builder.AddField< ADN_EditLine_Double >( pPackagingGroup, tr( "Package volume" ), vConnectors[ ePackageVolume ], tr( "m3" ), eGreaterZero );
-    QVBoxLayout* pGroupBoxLayout = new QVBoxLayout();
-    pGroupBoxLayout->addWidget( pHolder );
-    pGroupBoxLayout->addWidget( pPackagingGroup, 1 );
-    pGroupBox->setLayout( pGroupBoxLayout );
 
-    pListView->SetItemConnectors( vConnectors );
-    
-    // Layout
-    QHBoxLayout* pMainLayout = new QHBoxLayout( pPage );
-    pMainLayout->setSpacing( 10 );
-    pMainLayout->setContentsMargins( 10, 10, 10, 10 );
-    pMainLayout->addWidget( pListView, 1 );
-    pMainLayout->addWidget( pGroupBox, 4 );
-    pPage->setLayout( pMainLayout );
+    // -------------------------------------------------------------------------
+    // Layouts
+    // -------------------------------------------------------------------------
+    // Content layout
+    QWidget* pContent = new QWidget();
+    QVBoxLayout* pContentLayout = new QVBoxLayout( pContent );
+    pContentLayout->setMargin( 10 );
+    pContentLayout->setSpacing( 10 );
+    pContentLayout->setAlignment( Qt::AlignTop );
+    pContentLayout->addWidget( pInfoHolder );
+    pContentLayout->addWidget( pPackagingGroup );
+
+    // List view
+    ADN_SearchListView< ADN_Equipement_GenericListView >* pSearchListView = new ADN_SearchListView< ADN_Equipement_GenericListView >( nType, data_.GetDotation( nType ).categories_, vConnectors );
+
+    // Main page
+    QWidget* pPage = CreateScrollArea( *pContent, pSearchListView );
+    pParent->addTab( pPage, ENT_Tr::ConvertFromDotationFamily( nType, ENT_Tr_ABC::eToTr ).c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -139,37 +148,32 @@ void ADN_Equipement_GUI::BuildGeneric( E_DotationFamily nType, QTabWidget* pPare
 // -----------------------------------------------------------------------------
 void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
 {
+    // -------------------------------------------------------------------------
+    // Creations
+    // -------------------------------------------------------------------------
     ADN_GuiBuilder builder;
-    QWidget* pPage = new QWidget();
-    pParent->addTab( pPage, ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Munition, ENT_Tr_ABC::eToTr ).c_str() );
-    
-    pAmmoListView_ = new ADN_Equipement_AmmoListView( pPage );
-    pAmmoListView_->GetConnector().Connect( &data_.GetDotation( eDotationFamily_Munition ).categories_ );
-    
     T_ConnectorVector vConnectors( eNbrAmmoGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
-    
-    QGroupBox* pGroupBox = new QGroupBox( ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Munition, ENT_Tr_ABC::eToTr ).c_str() );
-    
-    // Generic properties
-    QWidget* pHolder = builder.AddFieldHolder( pGroupBox );
-    builder.AddField< ADN_EditLine_String >( pHolder, tr( "Name" ), vConnectors[ eAmmoName ] );
-    builder.AddField< ADN_EditLine_String >( pHolder, tr( "CodeEMAT6" ), vConnectors[ eEMAT6Code ] );
-    builder.AddField< ADN_EditLine_String >( pHolder, tr( "CodeEMAT8" ), vConnectors[ eEMAT8Code ] );
-    builder.AddField< ADN_EditLine_String >( pHolder, tr( "CodeLFRIL" ), vConnectors[ eLFRILCode ] );
-    builder.AddField< ADN_EditLine_String >( pHolder, tr( "CodeNNO" ), vConnectors[ eNNOCode ] );
-    builder.AddEnumField< E_MunitionType >( pHolder, tr( "Type" ), vConnectors[ eType ], ENT_Tr::ConvertFromAmmunitionType );
-    builder.AddField< ADN_ComboBox_Equipment_Nature >( pHolder, tr( "Nature" ), vConnectors[ eNature ] );
-    builder.AddField< ADN_CheckBox >( pHolder, tr( "FieldArtyAmmo" ), vConnectors[ eTrancheD ] );
-    builder.AddField<ADN_CheckBox>( pHolder, tr( "Improvised explosive device" ), vConnectors[ eIsIED ] );
+
+    // Info holder
+    QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vConnectors[ eAmmoName ] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "CodeEMAT6" ), vConnectors[ eEMAT6Code ] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "CodeEMAT8" ), vConnectors[ eEMAT8Code ] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "CodeLFRIL" ), vConnectors[ eLFRILCode ] );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "CodeNNO" ), vConnectors[ eNNOCode ] );
+    builder.AddEnumField< E_MunitionType >( pInfoHolder, tr( "Type" ), vConnectors[ eType ], ENT_Tr::ConvertFromAmmunitionType );
+    builder.AddField< ADN_ComboBox_Equipment_Nature >( pInfoHolder, tr( "Nature" ), vConnectors[ eNature ] );
+    builder.AddField< ADN_CheckBox >( pInfoHolder, tr( "FieldArtyAmmo" ), vConnectors[ eTrancheD ] );
+    builder.AddField<ADN_CheckBox>( pInfoHolder, tr( "Improvised explosive device" ), vConnectors[ eIsIED ] );
 
     // Packaging
-    Q3GroupBox* pPackagingGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Packaging" ), pGroupBox );
+    Q3GroupBox* pPackagingGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Packaging" ) );
     builder.AddField< ADN_EditLine_Double >( pPackagingGroup, tr( "Nbr per package" ), vConnectors[ eAmmoPackageNbr ], 0, eGreaterZero );
     builder.AddField< ADN_EditLine_Double >( pPackagingGroup, tr( "Package weight" ), vConnectors[ eAmmoPackageWeight ], tr( "T" ), eGreaterZero );
     builder.AddField< ADN_EditLine_Double >( pPackagingGroup, tr( "Package volume" ), vConnectors[ eAmmoPackageVolume ], tr( "m3" ), eGreaterZero );
 
     // Direct fire properties
-    ADN_GroupBox* pDirectGroup = new ADN_GroupBox( tr( "Attritions" ), pGroupBox );
+    ADN_GroupBox* pDirectGroup = new ADN_GroupBox( tr( "Attritions" ) );
     vConnectors[ eDirect ] = &pDirectGroup->GetConnector();
     pAttritionTable_ = new ADN_Equipement_AttritionTable( pDirectGroup );
     vConnectors[ eAttritions ] = &pAttritionTable_->GetConnector();
@@ -196,7 +200,7 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     pDirectGroup->setLayout( pDirectGroupLayout );
 
     // Indirect fire properties
-    ADN_GroupBox* pIndirectGroup = new ADN_GroupBox( tr( "Indirect fire" ), pGroupBox );
+    ADN_GroupBox* pIndirectGroup = new ADN_GroupBox( tr( "Indirect fire" ) );
     vConnectors[ eIndirect ] = &pIndirectGroup->GetConnector();
     QWidget* pIndirectGroupHolder = builder.AddFieldHolder( pIndirectGroup );
     pIndirectTypeCombo_ = builder.AddEnumField< E_TypeMunitionTirIndirect >( pIndirectGroupHolder, tr( "Type" ), vConnectors[ eIndirectType ], ADN_Tr::ConvertFromTypeMunitionTirIndirect );
@@ -241,37 +245,40 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     pIndirectGroup->setLayout( pIndirectGroupLayout );
 
     // Illumination
-    ADN_GroupBox* pIlluminationGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Illumination capacity" ), pGroupBox );
+    ADN_GroupBox* pIlluminationGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Illumination capacity" ) );
     vConnectors[ eIlluminating ] = &pIlluminationGroup->GetConnector();
     builder.AddField< ADN_EditLine_Double >( pIlluminationGroup, tr( "Range" ), vConnectors[ eRange ], 0, eGreaterEqualZero );
     builder.AddField< ADN_CheckBox >( pIlluminationGroup, tr( "Must Maintain illumination" ), vConnectors[ eMaintainIllumination ] );
 
     // Guidance
-    ADN_GroupBox* pGuidanceGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Guidance" ), pGroupBox );
+    ADN_GroupBox* pGuidanceGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Guidance" ) );
     vConnectors[ eGuided ] = &pGuidanceGroup->GetConnector();
     builder.AddField< ADN_CheckBox >( pGuidanceGroup, tr( "Must Maintain guidance" ), vConnectors[ eMaintainGuidance ] );
     builder.AddField< ADN_EditLine_Double >( pGuidanceGroup, tr( "Illumination range needed" ), vConnectors[ eGuidanceRange ], 0, eGreaterEqualZero );
 
-    // Properties Layout
-    QVBoxLayout* pGroupBoxLayout = new QVBoxLayout();
-    pGroupBoxLayout->addWidget( pHolder );
-    pGroupBoxLayout->addWidget( pPackagingGroup );
-    pGroupBoxLayout->addWidget( pDirectGroup );
-    pGroupBoxLayout->addWidget( pIndirectGroup );
-    pGroupBoxLayout->addWidget( pIlluminationGroup );
-    pGroupBoxLayout->addWidget( pGuidanceGroup );
-    pGroupBox->setLayout( pGroupBoxLayout );
+    // -------------------------------------------------------------------------
+    // Layouts
+    // -------------------------------------------------------------------------
+    // Content layout
+    QWidget* pContent = new QWidget();
+    QVBoxLayout* pContentLayout = new QVBoxLayout( pContent );
+    pContentLayout->setMargin( 10 );
+    pContentLayout->setSpacing( 10 );
+    pContentLayout->setAlignment( Qt::AlignTop );
+    pContentLayout->addWidget( pInfoHolder );
+    pContentLayout->addWidget( pPackagingGroup );
+    pContentLayout->addWidget( pDirectGroup );
+    pContentLayout->addWidget( pIndirectGroup );
+    pContentLayout->addWidget( pIlluminationGroup );
+    pContentLayout->addWidget( pGuidanceGroup );
 
-    //Connect
-    pAmmoListView_->SetItemConnectors( vConnectors );
-    
-    // Layout
-    QHBoxLayout* pMainLayout = new QHBoxLayout();
-    pMainLayout->setSpacing( 10 );
-    pMainLayout->setContentsMargins( 10, 10, 10, 10 );
-    pMainLayout->addWidget( pAmmoListView_, 1 );
-    pMainLayout->addWidget( pGroupBox, 4 );
-    pPage->setLayout( pMainLayout );
+    // List view
+    ADN_SearchListView< ADN_Equipement_AmmoListView >* pSearchListView = new ADN_SearchListView< ADN_Equipement_AmmoListView >( data_.GetDotation( eDotationFamily_Munition ).categories_, vConnectors );
+    pAmmoListView_ = pSearchListView->GetListView();
+
+    // Main page
+    QWidget* pPage = CreateScrollArea( *pContent, pSearchListView );
+    pParent->addTab( pPage, ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Munition, ENT_Tr_ABC::eToTr ).c_str() );
 }
 
 // -----------------------------------------------------------------------------

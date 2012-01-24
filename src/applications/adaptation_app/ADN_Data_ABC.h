@@ -53,12 +53,9 @@ public:
     virtual void Load( const tools::Loader_ABC& fileLoader );
     virtual void Save();
     virtual bool IsValidDatabase();
-    //@}
-
-protected:
     virtual void ReadArchive( xml::xistream& input );
     virtual void WriteArchive( xml::xostream& output );
-
+    //@}
 };
 
 

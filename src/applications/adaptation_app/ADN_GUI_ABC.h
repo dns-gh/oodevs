@@ -48,6 +48,7 @@ public:
     virtual void ExportHtml( ADN_HtmlBuilder& /*mainIndexBuilder*/, const QString& /*strPath*/ ) {}
 
     QWidget* GetMainWidget() const { return pMainWidget_; }
+    QWidget* CreateScrollArea( QWidget& content, QWidget* list = 0, bool paintSplitter = true, bool paintBackground = false, bool showFrameBorder = true, int margin = 10, int spacing = 10 );
     //@}
 
     //! @name Qt reimplementation.
@@ -57,7 +58,7 @@ public:
 
 protected:
     QWidget* pMainWidget_;
-    QString strClassName_;
+    QString  strClassName_;
 };
 
 

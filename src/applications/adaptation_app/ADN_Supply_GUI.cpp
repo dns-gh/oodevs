@@ -19,7 +19,6 @@
 #include "ADN_Tr.h"
 #include "ADN_SupplyUnitSelector.h"
 #include "ADN_AvailabilityWarningTable.h"
-
 #include "ENT/ENT_Tr.h"
 
 // -----------------------------------------------------------------------------
@@ -33,7 +32,6 @@ ADN_Supply_GUI::ADN_Supply_GUI( ADN_Supply_Data& data )
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Supply_GUI destructor
 // Created: APE 2005-03-21
@@ -43,52 +41,80 @@ ADN_Supply_GUI::~ADN_Supply_GUI()
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Supply_GUI::Build
 // Created: APE 2005-03-21
 // -----------------------------------------------------------------------------
 void ADN_Supply_GUI::Build()
 {
-    if( pMainWidget_ != 0 )
-        return;
-
+    // -------------------------------------------------------------------------
+    // Creations
+    // -------------------------------------------------------------------------
+    assert( pMainWidget_ == 0 );
     ADN_GuiBuilder builder;
 
-    // Create the main widget.
-    pMainWidget_ = new QWidget( 0 );
-    Q3GroupBox* pGroup = new Q3GroupBox( 5, Qt::Horizontal, tr( "Supply system data" ), pMainWidget_ );
-
-    QWidget* pHolder = builder.AddFieldHolder( pGroup );
-
-    builder.AddField< ADN_SupplyUnitSelector >( pHolder, tr( "Unit type" ), data_.infos_.ptrUnit_ );
-    builder.AddField< ADN_ComboBox_Vector< ADN_Missions_Data::Mission > >( pHolder, tr( "Mission" ), missionConnector_ );
+    // Supply
+    QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
+    builder.AddField< ADN_SupplyUnitSelector >( pInfoHolder, tr( "Unit type" ), data_.infos_.ptrUnit_ );
+    builder.AddField< ADN_ComboBox_Vector< ADN_Missions_Data::Mission > >( pInfoHolder, tr( "Mission" ), missionConnector_ );
     ConnectMission( true );
 
-    Q3HGroupBox* pTrucksGroup = new Q3HGroupBox( tr( "Convoy setup duration" ), pGroup );
-    ADN_Supply_TrucksTimeTable* pTrucksTimeTable = new ADN_Supply_TrucksTimeTable( pTrucksGroup );
-    pTrucksTimeTable->GetConnector().Connect( & data_.infos_.vConvoySetupInfos_ );
-
-    pTrucksGroup = new Q3HGroupBox( tr( "Convoy loading duration" ), pGroup );
-    pTrucksTimeTable = new ADN_Supply_TrucksTimeTable( pTrucksGroup );
-    pTrucksTimeTable->GetConnector().Connect( & data_.infos_.vConvoyLoadingInfos_ );
-
-    pTrucksGroup = new Q3HGroupBox( tr( "Convoy unloading duration" ), pGroup );
-    pTrucksTimeTable = new ADN_Supply_TrucksTimeTable( pTrucksGroup );
-    pTrucksTimeTable->GetConnector().Connect( & data_.infos_.vConvoyUnloadingInfos_ );
-
-    pTrucksGroup = new Q3HGroupBox( tr( "Convoy speed modifiers" ), pGroup );
-    ADN_Supply_TrucksDoubleTable* pTrucksDoubleTable = new ADN_Supply_TrucksDoubleTable( pTrucksGroup );
-    pTrucksDoubleTable->GetConnector().Connect( & data_.infos_.vConvoySpeedModificatorInfos_ );
-
-    Q3HGroupBox* pVectorGroup = new Q3HGroupBox( tr( "Conveyors availability warnings" ), pGroup );
+    Q3HGroupBox* pVectorGroup = new Q3HGroupBox( tr( "Conveyors availability warnings" ) );
     ADN_AvailabilityWarningTable* pWarningTable = new ADN_AvailabilityWarningTable( pVectorGroup );
     pWarningTable->GetConnector().Connect( & data_.infos_.vVectorWarnings_ );
 
-    // Layout
-    Q3VBoxLayout* pLayout = new Q3VBoxLayout( pMainWidget_, 10, 10 );
-    pLayout->addWidget( pGroup );
-    builder.AddStretcher( pLayout, Qt::Vertical );
+    Q3HGroupBox* pSetupGroup = new Q3HGroupBox( tr( "Convoy setup duration" ) );
+    ADN_Supply_TrucksTimeTable* pTrucksTimeTable = new ADN_Supply_TrucksTimeTable( pSetupGroup );
+    pTrucksTimeTable->GetConnector().Connect( & data_.infos_.vConvoySetupInfos_ );
+
+    Q3HGroupBox* pLoadingGroup = new Q3HGroupBox( tr( "Convoy loading duration" ) );
+    pTrucksTimeTable = new ADN_Supply_TrucksTimeTable( pLoadingGroup );
+    pTrucksTimeTable->GetConnector().Connect( & data_.infos_.vConvoyLoadingInfos_ );
+
+    Q3HGroupBox* pUnloadingGroup = new Q3HGroupBox( tr( "Convoy unloading duration" ) );
+    pTrucksTimeTable = new ADN_Supply_TrucksTimeTable( pUnloadingGroup );
+    pTrucksTimeTable->GetConnector().Connect( & data_.infos_.vConvoyUnloadingInfos_ );
+
+    Q3HGroupBox* pSpeedGroup = new Q3HGroupBox( tr( "Convoy speed modifiers" ) );
+    ADN_Supply_TrucksDoubleTable* pTrucksDoubleTable = new ADN_Supply_TrucksDoubleTable( pSpeedGroup );
+    pTrucksDoubleTable->GetConnector().Connect( & data_.infos_.vConvoySpeedModificatorInfos_ );
+
+    // -------------------------------------------------------------------------
+    // Layouts
+    // -------------------------------------------------------------------------
+    // Left layout
+    QVBoxLayout* pLeftLayout = new QVBoxLayout();
+    pLeftLayout->setMargin( 0 );
+    pLeftLayout->setSpacing( 10 );
+    pLeftLayout->setAlignment( Qt::AlignTop );
+    pLeftLayout->addWidget( pInfoHolder );
+    pLeftLayout->addWidget( pVectorGroup );
+    pLeftLayout->addStretch( 1 );
+
+    // Grid layout
+    QGridLayout* pGridLayout = new QGridLayout( 0, 2, 2 );
+    pGridLayout->setMargin( 0 );
+    pGridLayout->setSpacing( 10 );
+    pGridLayout->addWidget( pSetupGroup );
+    pGridLayout->addWidget( pSpeedGroup );
+    pGridLayout->addWidget( pLoadingGroup );
+    pGridLayout->addWidget( pUnloadingGroup );
+
+    // Internal content layout
+    QHBoxLayout* pInternalContentLayout = new QHBoxLayout();
+    pInternalContentLayout->setMargin( 0 );
+    pInternalContentLayout->setSpacing( 10 );
+    pInternalContentLayout->addLayout( pLeftLayout );
+    pInternalContentLayout->addLayout( pGridLayout );
+
+    // Content layout
+    QWidget* pContent = new QWidget();
+    QVBoxLayout* pContentLayout = new QVBoxLayout( pContent );
+    pContentLayout->addLayout( pInternalContentLayout );
+    pContentLayout->addStretch( 1 );
+
+    // Main widget
+    pMainWidget_ = CreateScrollArea( *pContent );
 }
 
 // -----------------------------------------------------------------------------

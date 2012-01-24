@@ -18,6 +18,7 @@
 #include "ADN_GroupBox.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_EditLine.h"
+#include "ADN_SearchListView.h"
 #include "ENT/ENT_Tr.h"
 #include "ADN_Tr.h"
 
@@ -38,47 +39,48 @@ ADN_ActiveProtections_GUI::ADN_ActiveProtections_GUI( ADN_ActiveProtections_Data
 // -----------------------------------------------------------------------------
 void ADN_ActiveProtections_GUI::Build()
 {
-    // Create the top widget.
-    if( pMainWidget_ != 0 )
-        return;
-
+    // -------------------------------------------------------------------------
+    // Creations
+    // -------------------------------------------------------------------------
+    assert( pMainWidget_ == 0 );
     ADN_GuiBuilder builder;
-
-    // Create the top widget.
-    pMainWidget_ = new QWidget( 0, "Active Protection" );
-
-    // Create the active protection listview.
-    ADN_ActiveProtectionsListView* pActiveProtectionListView = new ADN_ActiveProtectionsListView( pMainWidget_ );
-    pActiveProtectionListView->GetConnector().Connect( &data_.GetActiveProtectionsInfos() );
     T_ConnectorVector vConnectors( ADN_ActiveProtections_GUI::eNbrActiveProtectionsGuiElements, (ADN_Connector_ABC*)0 );
 
-    Q3GroupBox* pGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Active Protection" ), pMainWidget_ );
-
-    Q3GroupBox* pPropertiesGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Properties" ), pGroup );
-
+    // Properties
+    Q3GroupBox* pPropertiesGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Properties" ) );
     builder.AddField<ADN_EditLine_String>( pPropertiesGroup, tr( "Name" ), vConnectors[eActiveProtectionName] );
     ADN_EditLine_Double* pEdit = builder.AddField<ADN_EditLine_Double>( pPropertiesGroup, tr( "Coefficient" ), vConnectors[eActiveProtectionCoeffiscient], 0, eGreaterEqualZero );
     pEdit->GetValidator().setTop( 1 );
     builder.AddField<ADN_CheckBox>( pPropertiesGroup, tr( "Hard kill" ), vConnectors[eActiveProtectionHardKill] );
 
     // dotations
-    Q3GroupBox* pDotationGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Resource" ), pGroup );
-
+    Q3GroupBox* pDotationGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Resource" ) );
     builder.AddField< ADN_ComboBox_Vector<ADN_Equipement_Data::AmmoCategoryInfo> >( pDotationGroup, tr( "Resource" ), vConnectors[eActiveProtectionDotation] );
     builder.SetEnabled( true );
     builder.AddField<ADN_EditLine_Double>( pDotationGroup, tr( "Usage" ), vConnectors[eActiveProtectionUsage], 0, eGreaterEqualZero );
 
     // Weapons
-    Q3GroupBox* pWeaponsGroup_ = new Q3GroupBox( 1, Qt::Horizontal, tr( "Ammunitions" ), pGroup );
-
+    Q3GroupBox* pWeaponsGroup_ = new Q3GroupBox( 1, Qt::Horizontal, tr( "Ammunitions" ) );
     ADN_ActiveProtections_WeaponsTable* pWeapons = new ADN_ActiveProtections_WeaponsTable( tr( "Ammunitions" ).ascii(), pWeaponsGroup_ );
     vConnectors[eActiveProtectionWeapons] = &pWeapons->GetConnector();
 
-    //Connect
-    pActiveProtectionListView->SetItemConnectors(vConnectors);
+    // -------------------------------------------------------------------------
+    // Layouts
+    // -------------------------------------------------------------------------
+    // Content layout
+    QWidget* pContent = new QWidget();
+    QVBoxLayout* pContentLayout = new QVBoxLayout( pContent );
+    pContentLayout->setMargin( 10 );
+    pContentLayout->setSpacing( 10 );
+    pContentLayout->setAlignment( Qt::AlignTop );
+    pContentLayout->addWidget( pPropertiesGroup );
+    pContentLayout->addWidget( pDotationGroup );
+    pContentLayout->addWidget( pWeaponsGroup_ );
+    pContentLayout->addStretch( 1 );
 
-     // Layout
-    Q3HBoxLayout* pMainLayout = new Q3HBoxLayout( pMainWidget_, 10, 10 );
-    pMainLayout->addWidget( pActiveProtectionListView, 1 );
-    pMainLayout->addWidget( pGroup, 3 );
+    // List view
+    ADN_SearchListView< ADN_ActiveProtectionsListView >* pSearchListView = new ADN_SearchListView< ADN_ActiveProtectionsListView >( data_.GetActiveProtectionsInfos(), vConnectors );
+
+    // Main widget
+    pMainWidget_ = CreateScrollArea( *pContent, pSearchListView );
 }

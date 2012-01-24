@@ -76,6 +76,8 @@ ADN_Units_LogThreshold_GUI::ADN_Units_LogThreshold_GUI( QWidget* pParent )
     // Setup the columns.
     setNumRows( 0 );
     setNumCols( 2 );
+    setColumnStretchable( 0, true );
+    setColumnStretchable( 1, true );
 
     horizontalHeader()->setLabel( 0, tr( "Category" ) );
     horizontalHeader()->setLabel( 1, tr( "Log threshold (%)" ) );

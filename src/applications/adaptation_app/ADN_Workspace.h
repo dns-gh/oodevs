@@ -12,6 +12,7 @@
 #ifndef __ADN_Workspace_h_
 #define __ADN_Workspace_h_
 
+#include "ADN_Enums.h"
 #include "ADN_WorkspaceElement.h"
 #include <boost/noncopyable.hpp>
 
@@ -33,14 +34,14 @@ class ADN_Equipement_Data;
 class ADN_Equipement_GUI;
 class ADN_FireClass_Data;
 class ADN_FireClass_GUI;
-class ADN_Health_Data;
-class ADN_Health_GUI;
 class ADN_HumanFactors_Data;
 class ADN_HumanFactors_GUI;
 class ADN_KnowledgeGroups_Data;
 class ADN_KnowledgeGroups_GUI;
 class ADN_Launchers_Data;
 class ADN_Launchers_GUI;
+class ADN_Logistic_Data;
+class ADN_Logistic_GUI;
 class ADN_MainWindow;
 class ADN_Missions_Data;
 class ADN_Missions_GUI;
@@ -62,8 +63,6 @@ class ADN_ResourceNetworks_Data;
 class ADN_ResourceNetworks_GUI;
 class ADN_Sensors_Data;
 class ADN_Sensors_GUI;
-class ADN_Supply_Data;
-class ADN_Supply_GUI;
 class ADN_Symbols_Data;
 class ADN_Symbols_GUI;
 class ADN_Units_Data;
@@ -130,14 +129,13 @@ public:
     ADN_WorkspaceElement< ADN_People_Data, ADN_People_GUI >& GetPeople();
     ADN_WorkspaceElement< ADN_Reports_Data, ADN_Reports_GUI >& GetReports();
     ADN_WorkspaceElement< ADN_HumanFactors_Data, ADN_HumanFactors_GUI >& GetHumanFactors();
-    ADN_WorkspaceElement< ADN_Health_Data, ADN_Health_GUI >& GetHealth();
-    ADN_WorkspaceElement< ADN_Supply_Data, ADN_Supply_GUI>& GetSupply();
     ADN_WorkspaceElement< ADN_KnowledgeGroups_Data, ADN_KnowledgeGroups_GUI >& GetKnowledgeGroups();
     ADN_WorkspaceElement< ADN_ResourceNetworks_Data, ADN_ResourceNetworks_GUI >& GetResourceNetworks();
     ADN_WorkspaceElement< ADN_FireClass_Data, ADN_FireClass_GUI >& GetFireClasses();
     ADN_WorkspaceElement< ADN_Drawings_Data, ADN_Drawings_GUI >& GetDrawings() const;
     ADN_WorkspaceElement< ADN_Symbols_Data, ADN_Symbols_GUI >& GetSymbols() const;
     ADN_WorkspaceElement< ADN_UnitSymbols_Data, ADN_UnitSymbols_GUI >& GetUnitSymbols() const;
+    ADN_WorkspaceElement< ADN_Logistic_Data, ADN_Logistic_GUI >& GetLogistic();
 
     void SetProgressIndicator( ADN_ProgressIndicator_ABC* pProgressIndicator );
     void ResetProgressIndicator();
@@ -150,49 +148,15 @@ public:
     void SetOpenMode( E_OpenMode nNewMode );
 
 private:
+    void AddPage( ADN_MainWindow& mainWindow, E_WorkspaceElements element );
+
+private:
     explicit ADN_Workspace();
     virtual ~ADN_Workspace();
 
 private:
-    enum E_WorkspaceElements
-    {
-        eCategories,
-        eSymbols, // Must be before eUnits && before eUrban
-        eUnitSymbols,
-        eUrban,
-        eNBC,
-        eLaunchers,
-        eEquipement,
-        eFireClasses,
-        eDrawings, // Must be before eObjects
-        eObjects,
-        eWeapons,
-        eActiveProtections,
-        eSensors,
-        eBreakdowns,
-        eComposantes,
-        eResourceNetworks,
-        eAiEngine,
-        eMissions,
-        eModels,
-        eUnits,
-        eAutomata,
-        eCommunications,
-        eHumanFactors,
-        eMaintenance,
-        eKnowledgeGroups,
-        eSupply,
-        eHealth,
-        ePopulation,
-        ePeople,
-        eReports,
-        eFuneral,
-        eNbrWorkspaceElements
-    };
-
-private:
     ADN_Project_Data* projectData_;
-    ADN_WorkspaceElement_ABC* elements_[eNbrWorkspaceElements];
+    ADN_WorkspaceElement_ABC* elements_[ eNbrWorkspaceElements ];
     ADN_ProgressIndicator_ABC* pProgressIndicator_;
     QtUndoStack* pUndoStack_;
     E_OpenMode nOpenMode_;
@@ -427,23 +391,13 @@ ADN_WorkspaceElement< ADN_HumanFactors_Data, ADN_HumanFactors_GUI >& ADN_Workspa
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Workspace::GetHealth
-// Created: JSR 2010-05-07
+// Name: ADN_WorkspaceElement< ADN_Logistic_Data, ADN_Logistic_GUI >& ADN_Workspace::GetLogistic
+// Created: ABR 2012-01-18
 // -----------------------------------------------------------------------------
 inline
-ADN_WorkspaceElement< ADN_Health_Data, ADN_Health_GUI >& ADN_Workspace::GetHealth()
+ADN_WorkspaceElement< ADN_Logistic_Data, ADN_Logistic_GUI >& ADN_Workspace::GetLogistic()
 {
-    return ( ADN_WorkspaceElement< ADN_Health_Data, ADN_Health_GUI >& )( *elements_[ eHealth ] );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Workspace::GetSupply
-// Created: JSR 2010-05-07
-// -----------------------------------------------------------------------------
-inline
-ADN_WorkspaceElement< ADN_Supply_Data, ADN_Supply_GUI>& ADN_Workspace::GetSupply()
-{
-    return ( ADN_WorkspaceElement< ADN_Supply_Data, ADN_Supply_GUI >& )( *elements_[ eSupply ] );
+    return ( ADN_WorkspaceElement< ADN_Logistic_Data, ADN_Logistic_GUI >& )( *elements_[ eLogistic ] );
 }
 
 // -----------------------------------------------------------------------------

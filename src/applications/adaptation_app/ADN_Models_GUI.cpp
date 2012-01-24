@@ -21,6 +21,7 @@
 #include "ADN_ListView_Orders.h"
 #include "ADN_Project_Data.h"
 #include "ADN_GuiBuilder.h"
+#include "ADN_SearchListView.h"
 
 #define HAL_FILTER "Script files (*.hal)"
 
@@ -52,72 +53,73 @@ void ADN_Models_GUI::Build()
 {
     assert( pMainWidget_ == 0 );
 
-    // Create the main widget.
-    pMainWidget_ = new QWidget( 0 );
+    // Tab management
     QTabWidget* pTabWidget = new QTabWidget( pMainWidget_ );
+    pTabWidget->addTab( BuildPage( pPawnWidget_, ADN_Models_Data::ModelInfos::ePawn, data_.GetUnitModelsInfos() ), tr( "Unit models"       ) );
+    pTabWidget->addTab( BuildPage( pAutomatWidget_, ADN_Models_Data::ModelInfos::eAutomat, data_.GetAutomataModelsInfos() ), tr( "Automata models"   ) );
+    pTabWidget->addTab( BuildPage( pPopulationWidget_, ADN_Models_Data::ModelInfos::ePopulation, data_.GetPopulationModelsInfos() ), tr( "Crowds models" ) );
 
-    pTabWidget->addTab( BuildPage( pGroupPawn_, pTabWidget, ADN_Models_Data::ModelInfos::ePawn       ), tr( "Unit models"       ) );
-    pTabWidget->addTab( BuildPage( pGroupAutomat_, pTabWidget, ADN_Models_Data::ModelInfos::eAutomat    ), tr( "Automata models"   ) );
-    pTabWidget->addTab( BuildPage( pGroupPopulation_, pTabWidget, ADN_Models_Data::ModelInfos::ePopulation ), tr( "Crowds models" ) );
-
-    Q3GridLayout* pMainLayout = new Q3GridLayout( pMainWidget_, 1, 1, 10, 10 );
-    pMainLayout->addWidget( pTabWidget, 0, 0 );
-}
+    // Main widget
+    pMainWidget_ = new QWidget();
+    QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_ );
+    pMainLayout->setSpacing( 10 );
+    pMainLayout->setMargin( 10 );
+    pMainLayout->addWidget( pTabWidget );}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Models_GUI::BuildPage
 // Created: APE 2005-02-09
 // -----------------------------------------------------------------------------
-QWidget* ADN_Models_GUI::BuildPage( Q3VGroupBox*& pGroup, QWidget* pParent, ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType )
+QWidget* ADN_Models_GUI::BuildPage( QWidget*& pContent, ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType, ADN_Models_Data::T_ModelInfos_Vector& model )
 {
+    // -------------------------------------------------------------------------
+    // Creations
+    // -------------------------------------------------------------------------
     ADN_GuiBuilder builder;
-
-    // Create the main widget
-    QWidget* pMainWidget = new QWidget( pParent );
-
-    // Model listview
     T_ConnectorVector vInfosConnectors( eNbrGuiElements,(ADN_Connector_ABC*)0 );
-    ADN_ListView_Models* pListModels = new ADN_ListView_Models( eEntityType, pMainWidget);
-    if( eEntityType == ADN_Models_Data::ModelInfos::eAutomat )
-        pListModels->GetConnector().Connect( &data_.GetAutomataModelsInfos() );
-    else if( eEntityType == ADN_Models_Data::ModelInfos::ePawn )
-        pListModels->GetConnector().Connect( &data_.GetUnitModelsInfos() );
-    else
-        pListModels->GetConnector().Connect( &data_.GetPopulationModelsInfos() );
 
-    // Model data
-    pGroup = new Q3VGroupBox( tr( "Model"), pMainWidget );
-
-    QWidget* pParamHolder = builder.AddFieldHolder( pGroup );
-    builder.AddField<ADN_EditLine_String>( pParamHolder, tr( "Name" ), vInfosConnectors[eName] );
-    builder.AddField<ADN_EditLine_String>( pParamHolder, tr( "DIA type" ), vInfosConnectors[eDiaType] );
-    builder.AddFileField( pParamHolder, tr( "File" ), vInfosConnectors[eFile] );
-    builder.AddField<ADN_CheckBox>( pParamHolder, tr( "Masalife" ), vInfosConnectors[eMasalife] );
+    // Info holder
+    QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
+    builder.AddField<ADN_EditLine_String>( pInfoHolder, tr( "Name" ), vInfosConnectors[eName] );
+    builder.AddField<ADN_EditLine_String>( pInfoHolder, tr( "DIA type" ), vInfosConnectors[eDiaType] );
+    builder.AddFileField( pInfoHolder, tr( "File" ), vInfosConnectors[eFile] );
+    builder.AddField<ADN_CheckBox>( pInfoHolder, tr( "Masalife" ), vInfosConnectors[eMasalife] );
 
     // Missions
-    Q3GroupBox* pMissionsGroup = new Q3HGroupBox( tr( "Missions" ), pGroup );
-    ADN_ListView_Missions* pListMissions = new ADN_ListView_Missions( eEntityType, pListModels, pMissionsGroup );
+    Q3GroupBox* pMissionsGroup = new Q3HGroupBox( tr( "Missions" ) );
+    ADN_ListView_Missions* pListMissions = new ADN_ListView_Missions( eEntityType, pMissionsGroup );
     vInfosConnectors[eMissions] = &pListMissions->GetConnector();
 
     ADN_ListView_Orders* pListOrders = new ADN_ListView_Orders( true, pMissionsGroup );
     T_ConnectorVector vMissionConnector( eNbrMissionGuiElements, (ADN_Connector_ABC*)0 );
     vMissionConnector[eOrders] = &pListOrders->GetConnector();
 
-    Q3GroupBox* pFragOdersGroup = new Q3HGroupBox( tr( "FragOrders" ), pGroup );
+    // Frag order
+    Q3GroupBox* pFragOdersGroup = new Q3HGroupBox( tr( "FragOrders" ) );
     ADN_ListView_Orders* pListFragOrders = new ADN_ListView_Orders( false , pFragOdersGroup );
     vInfosConnectors[eFragOrders] = &pListFragOrders->GetConnector();
 
+    // Connect
     pListMissions->SetItemConnectors( vMissionConnector );
 
-    // Connect the gui to the data.
-    pListModels->SetItemConnectors(vInfosConnectors);
+    // -------------------------------------------------------------------------
+    // Layouts
+    // -------------------------------------------------------------------------
+    // Content layout
+    pContent = new QWidget();
+    QVBoxLayout* pContentLayout = new QVBoxLayout( pContent );
+    pContentLayout->setMargin( 10 );
+    pContentLayout->setSpacing( 10 );
+    pContentLayout->setAlignment( Qt::AlignTop );
+    pContentLayout->addWidget( pInfoHolder );
+    pContentLayout->addWidget( pMissionsGroup );
+    pContentLayout->addWidget( pFragOdersGroup );
 
-    // Layout
-    Q3BoxLayout* pLayout = new Q3HBoxLayout( pMainWidget, 5, 5 );
-    pLayout->addWidget( pListModels, 1 );
-    pLayout->addWidget( pGroup, 5 );
+    // List view
+    ADN_SearchListView< ADN_ListView_Models >* pSearchListView = new ADN_SearchListView< ADN_ListView_Models >( eEntityType, model, vInfosConnectors );
 
-    return pMainWidget;
+    // Main page
+    return CreateScrollArea( *pContent, pSearchListView );
 }
 
 // -----------------------------------------------------------------------------
@@ -126,7 +128,7 @@ QWidget* ADN_Models_GUI::BuildPage( Q3VGroupBox*& pGroup, QWidget* pParent, ADN_
 // -----------------------------------------------------------------------------
 void ADN_Models_GUI::Enable( bool enable )
 {
-    pGroupPawn_->setEnabled( enable );
-    pGroupAutomat_->setEnabled( enable );
-    pGroupPopulation_->setEnabled( enable );
+    pPawnWidget_->setEnabled( enable );
+    pAutomatWidget_->setEnabled( enable );
+    pPopulationWidget_->setEnabled( enable );
 }

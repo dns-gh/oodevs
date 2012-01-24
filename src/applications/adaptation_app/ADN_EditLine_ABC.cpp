@@ -19,8 +19,8 @@
 // Name: ADN_EditLine_ABC constructor
 // Created: JDY 03-07-09
 //-----------------------------------------------------------------------------
-ADN_EditLine_ABC::ADN_EditLine_ABC(QWidget* parent, const char * name)
-    : QLineEdit(parent,name)
+ADN_EditLine_ABC::ADN_EditLine_ABC( QWidget* parent, const char* name )
+    : ADN_BaseEditLine( parent, name )
     , ADN_Gfx_ABC()
 {
     // connect edit line & connector

@@ -11,6 +11,7 @@
 #define __ADN_MainWindow_h_
 
 #include "ADN_Callback.h"
+#include "ADN_Enums.h"
 #include <boost/noncopyable.hpp>
 #include <map>
 
@@ -20,14 +21,14 @@ namespace tools
     class Loader_ABC;
 }
 
-class ADN_Workspace;
 class ADN_Config;
-class ADN_Table;
-class ADN_ListView;
 class ADN_FileLoaderObserver;
+class ADN_ListView;
+class ADN_MainTabWidget;
+class ADN_Table;
+class ADN_Workspace;
 
 class QWidget;
-class QTabWidget;
 class Q3PopupMenu;
 class QAction;
 class QToolButton;
@@ -48,7 +49,8 @@ public:
     virtual ~ADN_MainWindow();
 
     void Build();
-    void AddPage( const QString& strPageName, QWidget& page );
+    void AddPage( E_WorkspaceElements element, QWidget& page, const QString& title );
+    void AddLogPage( const QString& strPageName, QWidget& page );
     void AddTable( const QString& strTableName, ADN_Callback_ABC<ADN_Table*>*    pCallback );
     void AddListView( const QString& strTableName, ADN_Callback_ABC<ADN_ListView*>* pCallback );
 
@@ -99,10 +101,10 @@ private:
     std::auto_ptr< tools::GeneralConfig > generalConfig_;
     std::auto_ptr< ADN_FileLoaderObserver > fileLoaderObserver_;
     std::auto_ptr< tools::Loader_ABC > fileLoader_;
+    std::auto_ptr< ADN_MainTabWidget > mainTabWidget_;
     const QString strAdminPassword_;
     ADN_Workspace& workspace_;
     ADN_Config& config_;
-    QTabWidget* pTab_;
     QAction* pProjectLoadAction_;
     Q3PopupMenu* pProjectMenu_;
     Q3PopupMenu* pCoheranceTablesMenu_;
