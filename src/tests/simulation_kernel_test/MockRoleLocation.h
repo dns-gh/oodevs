@@ -38,8 +38,6 @@ MOCK_BASE_CLASS( MockRoleLocation, PHY_RoleInterface_Location )
     MOCK_METHOD( GetAgent, 0 );
     MOCK_METHOD( GetCurrentSpeed, 0 );
     MOCK_METHOD( HasDoneMagicMove, 0 );
-    MOCK_METHOD( HasSpeedChanged, 0 );
-    MOCK_METHOD( HasLocationChanged, 0 );
 };
 
 #endif // __MockRoleLocation_h_
