@@ -8,14 +8,14 @@
 // *****************************************************************************
 
 #include "adaptation_app_pch.h"
-#include "ADN_Sensors_MaterialsTable.h"
-#include "moc_ADN_Sensors_MaterialsTable.cpp"
+#include "ADN_Sensors_ModificatorTable.h"
+#include "moc_ADN_Sensors_ModificatorTable.cpp"
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Sensors_MaterialsTable_ABC constructor
+// Name: ADN_Sensors_ModificatorTable_ABC constructor
 // Created: ABR 2012-01-16
 // -----------------------------------------------------------------------------
-ADN_Sensors_MaterialsTable_ABC::ADN_Sensors_MaterialsTable_ABC( QWidget* pParent, const char* szName, const QString& firstColumnName, const QString& secondColumnName )
+ADN_Sensors_ModificatorTable_ABC::ADN_Sensors_ModificatorTable_ABC( QWidget* pParent, const char* szName, const QString& firstColumnName, const QString& secondColumnName )
     : ADN_Table2( pParent, szName )
     , lastCurrentRow_( 0 )
 {
@@ -38,19 +38,19 @@ ADN_Sensors_MaterialsTable_ABC::ADN_Sensors_MaterialsTable_ABC( QWidget* pParent
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Sensors_MaterialsTable_ABC destructor
+// Name: ADN_Sensors_ModificatorTable_ABC destructor
 // Created: ABR 2012-01-16
 // -----------------------------------------------------------------------------
-ADN_Sensors_MaterialsTable_ABC::~ADN_Sensors_MaterialsTable_ABC()
+ADN_Sensors_ModificatorTable_ABC::~ADN_Sensors_ModificatorTable_ABC()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Sensors_MaterialsTable_ABC::createEditor
+// Name: ADN_Sensors_ModificatorTable_ABC::createEditor
 // Created: ABR 2012-01-16
 // -----------------------------------------------------------------------------
-QWidget* ADN_Sensors_MaterialsTable_ABC::createEditor( int row, int col, bool initFromCell ) const
+QWidget* ADN_Sensors_ModificatorTable_ABC::createEditor( int row, int col, bool initFromCell ) const
 {
     if( col == 0 )
         return 0;
@@ -59,10 +59,10 @@ QWidget* ADN_Sensors_MaterialsTable_ABC::createEditor( int row, int col, bool in
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Sensors_MaterialsTable_ABC::paintCell
+// Name: ADN_Sensors_ModificatorTable_ABC::paintCell
 // Created: ABR 2012-01-16
 // -----------------------------------------------------------------------------
-void ADN_Sensors_MaterialsTable_ABC::paintCell( QPainter * p, int row, int col, const QRect & cr, bool selected, const QColorGroup & cg )
+void ADN_Sensors_ModificatorTable_ABC::paintCell( QPainter * p, int row, int col, const QRect & cr, bool selected, const QColorGroup & cg )
 {
     QColor backgroundColor;
     if( col == 0 )
@@ -76,10 +76,10 @@ void ADN_Sensors_MaterialsTable_ABC::paintCell( QPainter * p, int row, int col, 
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Sensors_MaterialsTable_ABC::OnCurrentChanged
+// Name: ADN_Sensors_ModificatorTable_ABC::OnCurrentChanged
 // Created: ABR 2012-01-16
 // -----------------------------------------------------------------------------
-void ADN_Sensors_MaterialsTable_ABC::OnCurrentChanged()
+void ADN_Sensors_ModificatorTable_ABC::OnCurrentChanged()
 {
     if( isSelected( lastCurrentRow_, 0 ) )
     {

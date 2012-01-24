@@ -4283,7 +4283,7 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
     <name>ADN_Sensors_Postures_GUI</name>
     <message>
         <source>Modifiers</source>
-        <translation></translation>
+        <translation>Modificadores</translation>
     </message>
 </context>
 <context>

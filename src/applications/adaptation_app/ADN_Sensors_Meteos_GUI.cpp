@@ -54,7 +54,7 @@ void ADN_CT_Sensors_Meteos::AddSubItems( int i, void *obj )
 // Created: ABR 2012-01-16
 // -----------------------------------------------------------------------------
 ADN_Sensors_Meteos_GUI::ADN_Sensors_Meteos_GUI( QWidget * parent /*= 0*/ )
-    : ADN_Sensors_MaterialsTable( parent, tr( "ADN_Sensors_Meteos_GUI" ), tr( "Meteos"), tr( "Modifiers") )
+    : ADN_Sensors_ModificatorTable( parent, tr( "ADN_Sensors_Meteos_GUI" ), tr( "Meteos"), tr( "Modifiers") )
 {
     // NOTHING
 }

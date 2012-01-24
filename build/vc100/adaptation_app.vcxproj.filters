@@ -1336,9 +1336,6 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Objects_Data_ObjectInfos.cpp">
       <Filter>Source Files\Workspace\Object\Objects Data</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensors_MaterialsTable.cpp">
-      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MainTabWidget.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -1371,6 +1368,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Linear_Container.cpp">
       <Filter>Source Files\Workspace\Container\Container GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensors_ModificatorTable.cpp">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -2208,7 +2208,7 @@
     <None Include="..\..\src\applications\adaptation_app\ADN_TextEdit.inl">
       <Filter>Source Files\Common widgets\Edit line</Filter>
     </None>
-    <None Include="..\..\src\applications\adaptation_app\ADN_Sensors_MaterialsTable.inl">
+    <None Include="..\..\src\applications\adaptation_app\ADN_Sensors_ModificatorTable.inl">
       <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
     </None>
   </ItemGroup>
@@ -2495,9 +2495,6 @@
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Funeral_GUI.h">
       <Filter>Source Files\Workspace\Logistic\Funeral\Funeral GUI</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Sensors_MaterialsTable.h">
-      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_MainTabWidget.h">
       <Filter>Source Files</Filter>
     </CustomBuild>
@@ -2506,6 +2503,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ClearButton.h">
       <Filter>Source Files\Common widgets\Search list view</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Sensors_ModificatorTable.h">
+      <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

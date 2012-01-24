@@ -59,7 +59,7 @@ void ADN_CT_Sensors_Environments::AddSubItems( int i ,void *obj )
 // Created: ABR 2012-01-16
 // -----------------------------------------------------------------------------
 ADN_Sensors_Environments_GUI::ADN_Sensors_Environments_GUI( QWidget * parent /*= 0*/ )
-    : ADN_Sensors_MaterialsTable< ADN_CT_Sensors_Environments >( parent, tr( "ADN_Sensors_Environments_GUI" ), tr( "Environments" ), tr( "Modifiers" ) )
+    : ADN_Sensors_ModificatorTable< ADN_CT_Sensors_Environments >( parent, tr( "ADN_Sensors_Environments_GUI" ), tr( "Environments" ), tr( "Modifiers" ) )
 {
     // NOTHING
 }

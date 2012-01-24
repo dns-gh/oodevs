@@ -192,7 +192,7 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Objects_Data_ObjectInfos.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_SearchButton.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_SearchLineEdit.cpp" />
-    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensors_MaterialsTable.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensors_ModificatorTable.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_TableDialog.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Connector_ABC.cpp">
       <Optimization Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Disabled</Optimization>
@@ -2119,7 +2119,10 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Logistic_Data.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Logistic_GUI.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Objects_Data_ObjectInfos.h" />
-    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Sensors_MaterialsTable.h">
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_SearchButton.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_SearchLineEdit.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_SearchListView.h" />
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Sensors_ModificatorTable.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc -i "%(FullPath)" -o "$(IntDir)moc_"%(Filename)".cpp</Command>
@@ -2133,9 +2136,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_SearchButton.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_SearchLineEdit.h" />
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_SearchListView.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Tab_Container.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_TextEdit.h" />
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_TextEdit_ABC.h">
@@ -3874,7 +3874,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\adaptation_app\ADN_Config.inl" />
-    <None Include="..\..\src\applications\adaptation_app\ADN_Sensors_MaterialsTable.inl" />
+    <None Include="..\..\src\applications\adaptation_app\ADN_Sensors_ModificatorTable.inl" />
     <None Include="..\..\src\applications\adaptation_app\ADN_TextEdit.inl" />
     <None Include="..\..\src\applications\adaptation_app\ADN_Type_ABC.inl" />
     <None Include="..\..\src\applications\adaptation_app\ADN_Type_Choice.inl" />
