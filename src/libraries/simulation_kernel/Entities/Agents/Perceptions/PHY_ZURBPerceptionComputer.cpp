@@ -64,7 +64,9 @@ PHY_ZURBPerceptionComputer::~PHY_ZURBPerceptionComputer()
 const PHY_PerceptionLevel& PHY_ZURBPerceptionComputer::ComputePerception( const MIL_Agent_ABC& target ) const
 {
     BestSensorsParameters bestSensorParameters;
-    ComputeParametersPerception( target, bestSensorParameters );
+    if ( !ComputeParametersPerception( target, bestSensorParameters ) )
+        return PHY_PerceptionLevel::notSeen_;
+
     TER_Polygon polygon;
     const PHY_RoleInterface_UrbanLocation& role = target.GetRole< PHY_RoleInterface_UrbanLocation >();
     ComputePerceptionPolygon( bestSensorParameters.detectionDist_, polygon );
@@ -159,8 +161,11 @@ namespace
 // Name: PHY_ZURBPerceptionComputer::ComputeDistancePerception
 // Created: SLG 2010-04-29
 // -----------------------------------------------------------------------------
-void PHY_ZURBPerceptionComputer::ComputeParametersPerception( const MIL_Agent_ABC& target, BestSensorsParameters& sensorsParameters ) const
+bool PHY_ZURBPerceptionComputer::ComputeParametersPerception( const MIL_Agent_ABC& target, BestSensorsParameters& sensorsParameters ) const
 {
+    static const double epsilon = 1e-8;
+    static const double sensorHeight = 2.;
+
     sensorsParameters.delay_ = std::numeric_limits< int >::max();
 
     MT_Vector2D targetPosition = target.GetRole< PHY_RoleInterface_Location >().GetPosition();
@@ -177,9 +182,12 @@ void PHY_ZURBPerceptionComputer::ComputeParametersPerception( const MIL_Agent_AB
     std::auto_ptr< OnComponentComputer_ABC > dataComputer( perceiver_.GetAlgorithms().onComponentFunctorComputerFactory_->Create( dataFunctor ) );
     const_cast< MIL_Agent_ABC&>( perceiver_ ).Execute( *dataComputer );
 
-    double perceiverUrbanBlockHeight = 2; //2 = SensorHeight
+    double perceiverUrbanBlockHeight = sensorHeight;
     if( perceiverUrbanBlock )
         perceiverUrbanBlockHeight += perceiverUrbanBlock->GetStructuralHeight();
+    if( perceiverUrbanBlockHeight < sensorHeight)
+        perceiverUrbanBlockHeight = sensorHeight;
+    assert( perceiverUrbanBlockHeight );
 
     for( std::set< const PHY_SensorTypeAgent* >::const_iterator itSensor = dataFunctor.sensors_.begin(); itSensor != dataFunctor.sensors_.end(); ++itSensor )
     {
@@ -187,19 +195,24 @@ void PHY_ZURBPerceptionComputer::ComputeParametersPerception( const MIL_Agent_AB
         for( std::vector< const urban::TerrainObject_ABC* >::const_iterator it = list.begin(); it != list.end() && worstFactor > 0.; ++it )
             if( perceiverUrbanBlock == 0 || !( perceiverUrbanBlock->Is( **it ) && ( &currentPerceiverPosture == &PHY_Posture::poste_ || &currentPerceiverPosture == &PHY_Posture::posteAmenage_ ) ) )
             {
-                const urban::TerrainObject_ABC& object = **it;                
-                double objectHeight = 2; //2 = SensorHeight
-                double occupation = 1;
+                const urban::TerrainObject_ABC& object = **it;                 
+                double objectHeight = sensorHeight;
+                double occupation = 1.;
+                double structuralState = 1.;
                 if( const urban::PhysicalAttribute* pPhysical = object.Retrieve< urban::PhysicalAttribute >() )
                     if( const urban::Architecture* architecture = pPhysical->GetArchitecture() )
                     {
                         UrbanObjectWrapper& objectUrbanBlock = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( object );
                         objectHeight += objectUrbanBlock.GetStructuralHeight();
+                        structuralState = objectUrbanBlock.GetStructuralState();
                         occupation = architecture->GetOccupation();
                     }
-                double urbanFactor = ( *itSensor )->GetUrbanBlockFactor( object ) * perceiverUrbanBlockHeight / objectHeight;
-                urbanFactor = 1. + occupation * ( urbanFactor - 1. ) ;
-                worstFactor = std::min( worstFactor, urbanFactor );
+                assert( objectHeight );
+                double heightFactor         = perceiverUrbanBlockHeight / objectHeight;
+                double materialVisibility   = std::min( 1., ( *itSensor )->GetUrbanBlockFactor( object ) );
+                double opacityFactor        = std::min( 1., occupation * ( 1. - materialVisibility ) * structuralState );
+                double visibilityFactor     = std::min( 1., ( 1. - opacityFactor ) * heightFactor );
+                worstFactor = std::min( worstFactor, visibilityFactor );
             }
         double identification = 0.;
         double recognition = 0.;
@@ -210,4 +223,6 @@ void PHY_ZURBPerceptionComputer::ComputeParametersPerception( const MIL_Agent_AB
         sensorsParameters.detectionDist_ = std::max( sensorsParameters.detectionDist_, worstFactor * detection );
         sensorsParameters.delay_ = std::min( sensorsParameters.delay_, ( *itSensor )->GetDelay() );
     }
+
+    return !( sensorsParameters.identificationDist_ < epsilon && sensorsParameters.recognitionDist_ < epsilon && sensorsParameters.detectionDist_ < epsilon );
 }

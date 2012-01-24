@@ -59,7 +59,7 @@ private:
     //! @name Helpers
     //@{
     void ComputePerceptionPolygon( double distance, TER_Polygon& polygon ) const;
-    void ComputeParametersPerception( const MIL_Agent_ABC& target, BestSensorsParameters& parameters ) const;
+    bool ComputeParametersPerception( const MIL_Agent_ABC& target, BestSensorsParameters& parameters ) const;
     const PHY_PerceptionLevel& GetLevelWithDelay( unsigned int delay, const PHY_PerceptionLevel& level ) const;
     //@}
 private:
