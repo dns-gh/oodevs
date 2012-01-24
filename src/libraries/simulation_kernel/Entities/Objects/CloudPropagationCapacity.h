@@ -63,6 +63,7 @@ private:
     unsigned int time_;
     double rCurrentCircleRadius_;
     double rCurrentPropagationLenght_;
+    double length_;
     //@}
 };
 

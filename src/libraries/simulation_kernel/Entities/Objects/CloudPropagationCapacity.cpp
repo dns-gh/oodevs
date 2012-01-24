@@ -26,6 +26,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( CloudPropagationCapacity )
 CloudPropagationCapacity::CloudPropagationCapacity()
     : rCurrentCircleRadius_     ( 0.f )
     , rCurrentPropagationLenght_( 0.f )
+    , length_                   ( 0.f )
 {
     // NOTHING
 }
@@ -38,6 +39,7 @@ CloudPropagationCapacity::CloudPropagationCapacity( const CloudPropagationCapaci
     : origin_                   ( capacity.origin_ )
     , rCurrentCircleRadius_     ( capacity.rCurrentCircleRadius_ )
     , rCurrentPropagationLenght_( capacity.rCurrentPropagationLenght_ )
+    , length_                   ( capacity.length_ )
 {
     // NOTHING
 }
@@ -80,7 +82,9 @@ void CloudPropagationCapacity::Finalize( MIL_Object_ABC& object )
 {
     origin_ = object.GetLocalisation().ComputeBarycenter();
     time_ = MIL_AgentServer::GetWorkspace().GetRealTime();
-    rCurrentCircleRadius_ = object.GetLocalisation().GetCircleRadius();
+    TER_Localisation localisation = object.GetLocalisation();
+    rCurrentCircleRadius_ = localisation.GetCircleRadius();
+    length_ = localisation.GetArea();
 }
 
 namespace
@@ -123,6 +127,8 @@ void CloudPropagationCapacity::Update( MIL_Object_ABC& object, unsigned int /*ti
     }
     double angle = GetPropagationAngle( agents );
     if( angle == -1.f )
+        return;
+    if( object.GetLocalisation().GetLength() - length_ > 10000.f ) // $$$$ LGY 2012-01-23: delta hardcoded(10km)
         return;
     TER_Localisation newLocalisation;
     if( UpdateLocalisation( angle, newLocalisation ) )
