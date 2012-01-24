@@ -212,6 +212,8 @@ namespace shield
         CONVERT_ID_TO( tc2, combat_train );
 #endif
         CONVERT( activity_time );
+        CONVERT( activation_time );
+        CONVERT( name );
     }
     template< typename From, typename To >
     void ConvertLogMedicalPriorities( const From& from, To* to )

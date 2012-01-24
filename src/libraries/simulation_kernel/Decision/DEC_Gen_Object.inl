@@ -76,3 +76,23 @@ unsigned int DEC_Gen_Object::GetMinesActivityTime() const
 {
     return nMinesActivityTime_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Gen_Object::GetActivationTime
+// Created: LDC 2012-01-24
+// -----------------------------------------------------------------------------
+inline
+unsigned int DEC_Gen_Object::GetActivationTime() const
+{
+    return nActivationTime_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Gen_Object::GetName
+// Created: LDC 2012-01-24
+// -----------------------------------------------------------------------------
+inline
+const std::string& DEC_Gen_Object::GetName() const
+{
+    return name_;
+}

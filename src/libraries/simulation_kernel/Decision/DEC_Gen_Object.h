@@ -58,6 +58,8 @@ public:
     E_DemolitionTargetType GetObstacleType() const;
     double GetDensity() const;
     unsigned int GetMinesActivityTime() const;
+    unsigned int GetActivationTime() const;
+    const std::string& GetName() const;
     const MIL_Automate* GetTC2() const;
     //@}
 
@@ -83,6 +85,8 @@ private:
     E_DemolitionTargetType pObstacleType_;
     double rDensity_;
     unsigned int nMinesActivityTime_;
+    unsigned int nActivationTime_;
+    std::string name_;
     const MIL_Automate* pTC2_;
     //@}
 };

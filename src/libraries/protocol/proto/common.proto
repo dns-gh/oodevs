@@ -174,13 +174,6 @@ message ClientObjectId {
     required uint32 id = 1; //!< The identifier
 }
 
-/** @struct PlannedWorkId
-    @brief Defines a planned work identifier
-*/
-message PlannedWorkId {
-    required uint32 id = 1; //!< The identifier
-}
-
 /** @struct PopulationId
     @brief Defines a population identifier
 */
@@ -662,13 +655,14 @@ message ObstacleType {
     @brief Defines a planned work
 */
 message PlannedWork {
-   required string                            type          = 1; //!< The work type
-   required Location                          position      = 2; //!< The location of the work
-   optional ObstacleType.DemolitionTargetType type_obstacle = 3; //!< The type of obstacle @todo rename to obstacle
-   optional float                             density       = 4; //!< The obstacle density (for instance density of mines) @todo unit ?
-   optional AutomatId                         combat_train  = 5; //!< The combat train
-   optional int32                             activity_time = 6; //!< The obstacle life time in seconds
-   optional PlannedWorkId                     planned_work  = 7; //!< The planned work identifier
+   required string                            type            = 1; //!< The work type
+   required Location                          position        = 2; //!< The location of the work
+   optional ObstacleType.DemolitionTargetType type_obstacle   = 3; //!< The type of obstacle @todo rename to obstacle
+   optional float                             density         = 4; //!< The obstacle density (for instance density of mines) @todo unit ?
+   optional AutomatId                         combat_train    = 5; //!< The combat train
+   optional int32                             activity_time   = 6; //!< The obstacle life time in seconds
+   optional int32                             activation_time = 7; //!< The time at which the obstacle is to be activated
+   optional string                            name            = 8; //!< The name to be given to the constructed object
 }
 
 /** @struct PlannedWorkList

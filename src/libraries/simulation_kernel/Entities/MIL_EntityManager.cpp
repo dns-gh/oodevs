@@ -576,9 +576,9 @@ void MIL_EntityManager::CreateObject( xml::xistream& xis, MIL_Army_ABC& army )
 // Created: NLD 2006-10-23
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_EntityManager::CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation,
-                                                 ObstacleType_DemolitionTargetType obstacleType, unsigned int externalIdentifier )
+                                                 ObstacleType_DemolitionTargetType obstacleType, unsigned int externalIdentifier, const std::string& name )
 {
-    return pObjectManager_->CreateObject( army, type, pLocalisation, obstacleType, externalIdentifier );
+    return pObjectManager_->CreateObject( army, type, pLocalisation, obstacleType, externalIdentifier, name );
 }
 
 // -----------------------------------------------------------------------------

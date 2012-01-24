@@ -266,11 +266,11 @@ MIL_Object_ABC* MIL_ObjectManager::CreateObject( const std::string& type, MIL_Ar
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
 MIL_Object_ABC* MIL_ObjectManager::CreateObject( MIL_Army_ABC& army, const std::string& type, const TER_Localisation* pLocalisation,
-                                                 sword::ObstacleType_DemolitionTargetType obstacleType, unsigned int externalIdentifier )
+                                                 sword::ObstacleType_DemolitionTargetType obstacleType, unsigned int externalIdentifier, const std::string& name )
 {
     if( pLocalisation )
     {
-        MIL_Object_ABC* pObject = builder_->BuildObject( "", type, army, *pLocalisation, obstacleType, externalIdentifier );
+        MIL_Object_ABC* pObject = builder_->BuildObject( name, type, army, *pLocalisation, obstacleType, externalIdentifier );
         RegisterObject( pObject );
         return pObject;
     }

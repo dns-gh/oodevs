@@ -638,7 +638,7 @@ function DEC_Connaissances_ObjetsDansCercle( position, radius, ... )
 end
 
 function DEC_StartCreerObjet( knowledge, type, localisation )
-    return DEC_StartCreateObject( type, localisation, 0 )
+    return DEC_StartCreateObject( type, localisation, 0, "" )
 end
 
 function DEC_StartPreparerObjet( knowledge, type, localisation )

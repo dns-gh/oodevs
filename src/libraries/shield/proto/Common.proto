@@ -459,6 +459,7 @@ message MsgPlannedWork {
    optional AutomatId                         tc2                   = 5;
    optional int32                             activity_time         = 6;    //in seconds
    optional int32                             activation_time       = 7;    //in seconds
+   optional string                            name                  = 9;
 }
 
 message MsgPlannedWorkList {

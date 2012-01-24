@@ -348,6 +348,8 @@ void RegisterEngineerObjectsFunctions( directia::brain::Brain& brain )
     brain[ "DEC_GenObject_TypeObstacleManoeuvre" ] = &DEC_ObjectFunctions::GetGenObjectReservedObstacle;
     brain[ "DEC_GenObject_TC2" ] = &DEC_ObjectFunctions::GetGenObjectTC2;
     brain.Register( "DEC_GenObject_DelaiActiviteMines", &DEC_Gen_Object::GetMinesActivityTime );
+    brain.Register( "DEC_GenObject_DateActivationMines", &DEC_Gen_Object::GetActivationTime );
+    brain.Register( "DEC_GenObject_Name", &DEC_Gen_Object::GetName );
 }
 
 // -----------------------------------------------------------------------------
