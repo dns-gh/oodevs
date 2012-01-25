@@ -100,9 +100,9 @@
   </urban-block-types>
   <accommodations>
     <accommodation max-capacity="1" nominal-capacity="0.1" role="default"/>
-    <accommodation max-capacity="0.7" nominal-capacity="0.5" role="leisure"/>
-    <accommodation max-capacity="0.07" nominal-capacity="0.03" role="home"/>
-    <accommodation max-capacity="0.3" nominal-capacity="0.2" role="office"/>
+    <accommodation max-capacity="0.7" nominal-capacity="0.5" role="Leisure"/>
+    <accommodation max-capacity="0.07" nominal-capacity="0.03" role="Home"/>
+    <accommodation max-capacity="0.3" nominal-capacity="0.2" role="Office"/>
   </accommodations>
   <infrastructures>
     <infrastructure name="Water Resources" symbol="resource-water">
@@ -177,4 +177,4 @@
     </infrastructure>
   </infrastructures>
 </urban>
-<!-- signature="1018501802" -->
+<!-- signature="4248602223" -->
