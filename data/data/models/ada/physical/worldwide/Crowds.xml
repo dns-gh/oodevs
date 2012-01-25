@@ -358,43 +358,5 @@
     <repartition children="0" female="0" male="1"/>
     <nbc decontaminationDelay="300s"/>
   </population>
-  <population armed-individuals="0" concentration-density="1" decisional-model="security.crowd.roles.Crowd" id="2" moving-base-density="1" moving-speed="6" name="Angry Crowd">
-    <slowing-effects>
-      <slowing-effect population-attitude="calme">
-        <unit max-speed="30" population-density="0.1" unit-size="Heavy"/>
-        <unit max-speed="30" population-density="0.1" unit-size="Medium"/>
-        <unit max-speed="30" population-density="0.1" unit-size="Small"/>
-        <unit max-speed="30" population-density="0.1" unit-size="Personal"/>
-      </slowing-effect>
-      <slowing-effect population-attitude="agitee">
-        <unit max-speed="15" population-density="0.5" unit-size="Heavy"/>
-        <unit max-speed="15" population-density="0.5" unit-size="Medium"/>
-        <unit max-speed="30" population-density="0.5" unit-size="Small"/>
-        <unit max-speed="15" population-density="0.5" unit-size="Personal"/>
-      </slowing-effect>
-      <slowing-effect population-attitude="excitee">
-        <unit max-speed="5" population-density="0.5" unit-size="Heavy"/>
-        <unit max-speed="5" population-density="0.5" unit-size="Medium"/>
-        <unit max-speed="10" population-density="0.5" unit-size="Small"/>
-        <unit max-speed="10" population-density="0.5" unit-size="Personal"/>
-      </slowing-effect>
-      <slowing-effect population-attitude="agressive">
-        <unit max-speed="5" population-density="0.5" unit-size="Heavy"/>
-        <unit max-speed="5" population-density="0.5" unit-size="Medium"/>
-        <unit max-speed="10" population-density="0.5" unit-size="Small"/>
-        <unit max-speed="5" population-density="0.5" unit-size="Personal"/>
-      </slowing-effect>
-    </slowing-effects>
-    <attrition-effects/>
-    <unit-fire-effects/>
-    <urban-destruction-effects>
-      <urban-destruction-effect attitude="calme" density="0" time="0s"/>
-      <urban-destruction-effect attitude="agitee" density="0" time="0s"/>
-      <urban-destruction-effect attitude="excitee" density="0" time="0s"/>
-      <urban-destruction-effect attitude="agressive" density="0" time="0s"/>
-    </urban-destruction-effects>
-    <repartition children="0" female="0" male="1"/>
-    <nbc decontaminationDelay="300s"/>
-  </population>
 </populations>
 <!-- signature="0127060486" -->
