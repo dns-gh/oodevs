@@ -2490,7 +2490,7 @@
     </unit>
     <unit dia-type="security.firefighter.roles.FireFighter" file="BMPionSecurity.bms" masalife="true" name="Security - FireFighter">
       <missions>
-        <mission name="Security - move to"/>
+        <mission name="security - Move to"/>
         <mission name="Security - extinguish fire"/>
         <mission name="Security - evacuate area"/>
         <mission name="Security - supply"/>
@@ -2504,7 +2504,7 @@
     </unit>
     <unit dia-type="security.police.roles.Police" file="BMPionSecurity.bms" masalife="true" name="Security - Police">
       <missions>
-        <mission name="Security - move to"/>
+        <mission name="security - Move to"/>
         <mission name="Security - alert">
           <fragorder name="Security - Stop Mission"/>
         </mission>
@@ -2534,7 +2534,7 @@
     </unit>
     <unit dia-type="security.police.roles.Police" file="BMPionSecurity.bms" masalife="true" name="Security - CityServices">
       <missions>
-        <mission name="Security - move to"/>
+        <mission name="security - Move to"/>
         <mission name="Security - distribute"/>
         <mission name="Security - supply"/>
         <mission name="Security - alert"/>
@@ -2543,14 +2543,14 @@
     </unit>
     <unit dia-type="security.disturbance.roles.Disturbance" file="BMPionSecurity.bms" masalife="true" name="Security - Disturbance">
       <missions>
-        <mission name="Security - move to"/>
+        <mission name="security - Move to"/>
         <mission name="Security - loot"/>
       </missions>
       <fragorders/>
     </unit>
     <unit dia-type="security.Medical.roles.Medical" file="BMPionSecurity.bms" masalife="true" name="Security - Medical">
       <missions>
-        <mission name="Security - move to"/>
+        <mission name="security - Move to"/>
         <mission name="Security - evacuate victim"/>
         <mission name="Security - build"/>
       </missions>
@@ -2638,8 +2638,6 @@
     </unit>
     <unit dia-type="roles.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="ML_SecurityAgent">
       <missions>
-        <mission name="COMMON - Follow"/>
-        <mission name="COMMON - Move to"/>
         <mission name="SECURITY - Confine urban blocks within area"/>
         <mission name="SECURITY - Lift urban blocks confinement within area"/>
         <mission name="SECURITY - Increase resource node production"/>
@@ -2651,7 +2649,9 @@
         <mission name="SECURITY - Lift urban blocks alert within area"/>
         <mission name="SECURITY - Enable resource nodes"/>
         <mission name="SECURITY - Disable resource nodes"/>
-        <mission name="COMMON - Patrol"/>
+        <mission name="SECURITY - Patrol"/>
+        <mission name="SECURITY - Follow"/>
+        <mission name="SECURITY - Move toward"/>
       </missions>
       <fragorders/>
     </unit>
@@ -3905,4 +3905,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2926542484" -->
+<!-- signature="3569443274" -->

@@ -1730,7 +1730,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="uniteAEscorter_" name="Unit to protect" optional="false" type="Agent"/>
     </mission>
-    <mission dia-behavior="security.unit.tasks.MoveTo" dia-type="security.unit.tasks.MoveTo" id="3001" name="Security - move to">
+    <mission dia-behavior="security.unit.tasks.MoveTo" dia-type="security.unit.tasks.MoveTo" id="3001" name="security - Move to">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2123,7 +2123,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="pointDebarquement_" name="Debarking point" optional="false" type="Point"/>
       <parameter dia-name="heureDebarquement_" name="Debarking time" optional="false" type="DateTime"/>
     </mission>
-    <mission dia-behavior="tasks.MoveTo" dia-type="tasks.MoveTo" id="4442" name="COMMON - Move to">
+    <mission dia-behavior="tasks.MoveTo" dia-type="tasks.MoveTo" id="4442" name="SECURITY - Move toward">
       <description>
         <doctrine><![CDATA[To move toward a specified destination. Agent will try to get as close as it is possible to the target destination.]]></doctrine>
         <usage><![CDATA[The agent compute its path toward the issued destination. If urgency mode is set to "true" (optional parameter), agent will try to reach the destination as quick as possible depending on its physical capability.]]></usage>
@@ -2145,7 +2145,7 @@ overwhelming force.]]></doctrine>
       </parameter>
       <parameter dia-name="urgency" name="urgency" optional="true" type="Boolean"/>
     </mission>
-    <mission dia-behavior="tasks.FollowAgents" dia-type="tasks.FollowAgents" id="4443" name="COMMON - Follow">
+    <mission dia-behavior="tasks.FollowAgents" dia-type="tasks.FollowAgents" id="4443" name="SECURITY - Follow">
       <description>
         <doctrine><![CDATA[To follow a set of motile agents (unit or crowd). A set of positions can be issued if necessary.]]></doctrine>
         <usage><![CDATA[Agent will follow the nearest target, try to find position to stay nearby. If positions are issued, agent will choose the position allowing to stay as close as it is possible to the choosen target.]]></usage>
@@ -2346,7 +2346,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="resourceNodes" max-occurs="10000000" min-occurs="1" name="Resource nodes to disable" optional="false" type="ResourceNetwork"/>
     </mission>
-    <mission dia-behavior="tasks.Patrol" dia-type="tasks.Patrol" id="4456" name="COMMON - Patrol">
+    <mission dia-behavior="tasks.Patrol" dia-type="tasks.Patrol" id="4456" name="SECURITY - Patrol">
       <description>
         <doctrine><![CDATA[To visit a given set of entities in a given order.]]></doctrine>
         <usage><![CDATA[Agent will move along issued positions. When it has visited the last position, the agent starts over with the first one. The set of entities and the order of visit are user defined.]]></usage>
@@ -3716,4 +3716,4 @@ overwhelming force.]]></doctrine>
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="1689949293" -->
+<!-- signature="0891294540" -->
