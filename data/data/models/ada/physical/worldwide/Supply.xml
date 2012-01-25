@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <supply model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/physical/Supply.xsd">
-  <convoys mission="Logistics - convey" unit-type="Convoy">
+  <convoys mission="LOG - convey" unit-type="LOG.Convoy">
     <type>
       <dotation-supply type="real"/>
       <stock-supply type="real"/>
@@ -30,4 +30,4 @@
     <resource-availability-alert availability-threshold="0"/>
   </resource-availability-alerts>
 </supply>
-<!-- signature="1758651128" -->
+<!-- signature="0032815931" -->
