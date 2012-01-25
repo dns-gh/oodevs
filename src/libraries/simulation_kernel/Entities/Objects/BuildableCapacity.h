@@ -51,6 +51,7 @@ public:
     //! @name Operations
     //@{
     virtual void Instanciate( MIL_Object_ABC& object ) const;
+    virtual void Finalize( MIL_Object_ABC& object );
     virtual void Register( MIL_Object_ABC& object );
 
     void Construct( MIL_Object_ABC& object );
@@ -63,7 +64,7 @@ public:
     //@{
     const PHY_ConsumptionType&  GetDefaultConsumptionMode() const;
     const PHY_DotationCategory* GetDotationCategory() const;
-    unsigned int                        GetMaxDotation() const;
+    unsigned int GetMaxDotation() const;
     ConstructionCapacity::E_UnitType GetUnit() const;
     //@}
 

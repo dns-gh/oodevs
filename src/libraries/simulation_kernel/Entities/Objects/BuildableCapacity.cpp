@@ -15,6 +15,7 @@
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
+#include "Tools/MIL_Tools.h"
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( BuildableCapacity )
@@ -130,20 +131,31 @@ void BuildableCapacity::Register( MIL_Object_ABC& object )
 }
 
 // -----------------------------------------------------------------------------
+// Name: BuildableCapacity::Finalize
+// Created: LGY 2012-01-25
+// -----------------------------------------------------------------------------
+void BuildableCapacity::Finalize( MIL_Object_ABC& object )
+{
+    TER_Localisation localisation = object.GetLocalisation();
+    if( unitType_ == ConstructionCapacity::eRaw && dotation_ )
+    {
+        nFullNbrDotation_ *= static_cast< unsigned int >( MIL_Tools::ConvertSimToMeter( localisation.GetLength() ) / 1000.f );
+        object.GetAttribute< ConstructionAttribute >() = ConstructionAttribute( *dotation_, nFullNbrDotation_, nFullNbrDotation_ / 1000.f );
+    }
+    else if( unitType_ == ConstructionCapacity::eDensity && dotation_ )
+    {
+        nFullNbrDotation_ = static_cast< unsigned int >( MIL_Tools::ConvertSimToMeter( localisation.GetArea() ) * nFullNbrDotation_ / 1000000.f );
+        object.GetAttribute< ConstructionAttribute >() = ConstructionAttribute( *dotation_, nFullNbrDotation_, nFullNbrDotation_ / 1000000.f );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: BuildableCapacity::Instanciate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
 void BuildableCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
     object.AddCapacity( new BuildableCapacity( *this ) );
-    if( unitType_ == ConstructionCapacity::eRaw && dotation_ )
-        object.GetAttribute< ConstructionAttribute >() = ConstructionAttribute( *dotation_, nFullNbrDotation_ );
-    else if( unitType_ == ConstructionCapacity::eDensity && dotation_ )
-    {
-        const TER_Localisation& location = object.GetLocalisation();
-        float density = location.GetArea() > 1e-6 ? 1.0f / static_cast< float >( location.GetArea() ) : 1.0f;
-        object.GetAttribute< ConstructionAttribute >() = ConstructionAttribute( *dotation_, unsigned int( nFullNbrDotation_ * location.GetArea() ), density );
-    }
 }
 
 // -----------------------------------------------------------------------------
