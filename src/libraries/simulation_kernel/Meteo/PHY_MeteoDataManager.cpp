@@ -20,7 +20,7 @@
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
-unsigned int PHY_MeteoDataManager::localCounter_ = 1;
+unsigned int PHY_MeteoDataManager::localCounter_ = 2;
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MeteoDataManager )
 
