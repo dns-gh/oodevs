@@ -243,24 +243,24 @@ void ADN_Units_GUI::Build()
     // -------------------------------------------------------------------------
     // Content layout
     QWidget* pContent = new QWidget();
-    QGridLayout* pContentLayout = new QGridLayout( pContent, 7, 6, 5 );
+    QGridLayout* pContentLayout = new QGridLayout( pContent, 8, 6, 5 );
     pContentLayout->setMargin( 10 );
     pContentLayout->setSpacing( 10 );
     pContentLayout->setAlignment( Qt::AlignTop );
     pContentLayout->addMultiCellWidget( pInfoHolder, 0, 0, 0, 2 );
     pContentLayout->addMultiCellWidget( pNatureGroup, 0, 0, 3, 5 );
-    pContentLayout->addMultiCellWidget( pDistancesGroup, 1, 2, 0, 1 );
-    pContentLayout->addMultiCellWidget( postureInstallationBox, 1, 2, 2, 3 );
-    pContentLayout->addMultiCellWidget( pReconGroup, 1, 1, 4, 5 );
-    pContentLayout->addMultiCellWidget( pRangeGroup, 2, 2, 4, 5 );
-    pContentLayout->addMultiCellWidget( pCommandGroup, 3, 3, 4, 5 );
+    pContentLayout->addMultiCellWidget( pComposantesGroup, 1, 3, 0, 3 );
+    pContentLayout->addMultiCellWidget( pCommandGroup, 1, 1, 4, 5 );
+    pContentLayout->addMultiCellWidget( pReconGroup, 2, 2, 4, 5 );
+    pContentLayout->addMultiCellWidget( pRangeGroup, 3, 3, 4, 5 );
+    pContentLayout->addMultiCellWidget( pDistancesGroup, 4, 4, 0, 1 );
+    pContentLayout->addMultiCellWidget( postureInstallationBox, 4, 4, 2, 3 );
+    pContentLayout->addMultiCellWidget( pDotationsGroup, 5, 6, 0, 1 );
+    pContentLayout->addMultiCellWidget( pStockGroup_, 5, 6, 2, 3 );
     pContentLayout->addMultiCellWidget( pSkillsGroup, 4, 4, 4, 5 );
-    pContentLayout->addMultiCellWidget( pCivilianGroup, 5, 5, 4, 5 );
-    pContentLayout->addMultiCellWidget( pEfficienciesGroup, 6, 6, 4, 5 );
-    pContentLayout->addMultiCellWidget( pDotationsGroup, 3, 4, 0, 1 );
-    pContentLayout->addMultiCellWidget( pStockGroup_, 3, 4, 2, 3 );
-    pContentLayout->addMultiCellWidget( pComposantesGroup, 5, 5, 0, 3 );
-    pContentLayout->addMultiCellWidget( pTrafficGroup, 6, 6, 0, 3 );
+    pContentLayout->addMultiCellWidget( pEfficienciesGroup, 5, 5, 4, 5 );
+    pContentLayout->addMultiCellWidget( pCivilianGroup, 6, 6, 4, 5 );
+    pContentLayout->addMultiCellWidget( pTrafficGroup, 7, 7, 0, 3 );
 
     // List view
     ADN_SearchListView< ADN_ListView_Units >* pSearchListView = new ADN_SearchListView< ADN_ListView_Units >( data_.GetUnitsInfos(), vInfosConnectors );
