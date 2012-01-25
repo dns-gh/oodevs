@@ -5,7 +5,7 @@
       <missions>
         <mission name="JointAir - air strike"/>
         <mission name="Common - move"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="JointAir - loiter">
           <fragorder name="Execute an air strike"/>
         </mission>
@@ -37,7 +37,7 @@
       <missions>
         <mission name="Common - withdraw"/>
         <mission name="Common - park"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - transport">
           <fragorder name="Modify Disembarking point"/>
         </mission>
@@ -68,7 +68,7 @@
       <missions>
         <mission name="Common - withdraw"/>
         <mission name="Common - park"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -92,7 +92,7 @@
     <unit dia-type="PatrouilleCirculation" file="Appui\Circulation\Pions\Model.bms" masalife="false" name="Circulation Patrol">
       <missions>
         <mission name="Common - move"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - withdraw"/>
         <mission name="Logistics - recon a route"/>
@@ -184,7 +184,7 @@
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
-        <mission name="Common - follow">
+        <mission name="COMMON - Follow">
           <fragorder name="Pause maneuver"/>
           <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
@@ -298,7 +298,7 @@
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
-        <mission name="Common - follow">
+        <mission name="COMMON - Follow">
           <fragorder name="Pause maneuver"/>
           <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
@@ -366,7 +366,7 @@
         <mission name="Common - move"/>
         <mission name="Common - withdraw to initial position"/>
         <mission name="Common - go through decontamination process"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - adopt transportation posture"/>
         <mission name="Common - withdraw"/>
         <mission name="Common - cross"/>
@@ -399,7 +399,7 @@
         <mission name="Common - move"/>
         <mission name="Common - withdraw to initial position"/>
         <mission name="Common - go through decontamination process"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - adopt transportation posture"/>
         <mission name="Common - withdraw"/>
         <mission name="Common - cross"/>
@@ -457,7 +457,7 @@
         <mission name="Common - reconnaissance area hidden"/>
         <mission name="Common - withdraw to initial position"/>
         <mission name="Common - adopt transportation posture"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - withdraw"/>
         <mission name="Common - cross"/>
         <mission name="Common - go through decontamination process"/>
@@ -506,7 +506,7 @@
         <mission name="Common - reconnaissance area hidden"/>
         <mission name="Common - withdraw to initial position"/>
         <mission name="Common - adopt transportation posture"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - withdraw"/>
         <mission name="Common - cross"/>
         <mission name="Common - go through decontamination process"/>
@@ -545,7 +545,7 @@
         <mission name="Common - reconnaissance area hidden"/>
         <mission name="Common - withdraw to initial position"/>
         <mission name="Common - adopt transportation posture"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - withdraw"/>
         <mission name="Common - cross"/>
         <mission name="Common - go through decontamination process"/>
@@ -582,7 +582,7 @@
         <mission name="Common - reconnaissance area hidden"/>
         <mission name="Common - withdraw to initial position"/>
         <mission name="Common - adopt transportation posture"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - withdraw"/>
         <mission name="Common - cross"/>
         <mission name="Common - go through decontamination process"/>
@@ -618,7 +618,7 @@
         <mission name="Common - withdraw to initial position"/>
         <mission name="Common - adopt transportation posture"/>
         <mission name="Common - withdraw"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - cross"/>
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - park"/>
@@ -657,7 +657,7 @@
         <mission name="Common - move"/>
         <mission name="Common - withdraw to initial position"/>
         <mission name="Common - cross"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - park"/>
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - adopt transportation posture"/>
@@ -688,7 +688,7 @@
           <fragorder name="Change reparations priorities"/>
           <fragorder name="Change tactical reparations priorities"/>
         </mission>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - withdraw"/>
         <mission name="Common - adopt transportation posture"/>
@@ -736,7 +736,7 @@
           <fragorder name="Change reparations priorities"/>
           <fragorder name="Change tactical reparations priorities"/>
         </mission>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - withdraw"/>
         <mission name="Common - move"/>
@@ -773,7 +773,7 @@
           <fragorder name="Change tactical wounded treatment priorities"/>
           <fragorder name="Change wounded treatment priorities"/>
         </mission>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - withdraw"/>
         <mission name="Common - adopt transportation posture"/>
@@ -815,7 +815,7 @@
           <fragorder name="Change tactical wounded treatment priorities"/>
           <fragorder name="Change wounded treatment priorities"/>
         </mission>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - withdraw"/>
         <mission name="Common - move"/>
@@ -853,7 +853,7 @@
           <fragorder name="Change tactical wounded treatment priorities"/>
           <fragorder name="Change wounded treatment priorities"/>
         </mission>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - withdraw"/>
         <mission name="Common - adopt transportation posture"/>
@@ -891,7 +891,7 @@
           <fragorder name="Change tactical wounded treatment priorities"/>
           <fragorder name="Change wounded treatment priorities"/>
         </mission>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - withdraw"/>
         <mission name="Common - move"/>
@@ -929,7 +929,7 @@
           <fragorder name="Change tactical wounded treatment priorities"/>
           <fragorder name="Change wounded treatment priorities"/>
         </mission>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - withdraw"/>
         <mission name="Common - adopt transportation posture"/>
@@ -973,7 +973,7 @@
           <fragorder name="Change tactical wounded treatment priorities"/>
           <fragorder name="Change wounded treatment priorities"/>
         </mission>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - withdraw"/>
         <mission name="Common - move"/>
@@ -1003,7 +1003,7 @@
     <unit dia-type="SectionLOGTC2" file="Appui\Log\Pions\Model.bms" masalife="false" name="Logistic unit">
       <missions>
         <mission name="Logistics - deploy"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - withdraw"/>
         <mission name="Common - move"/>
@@ -1034,7 +1034,7 @@
     <unit dia-type="PionConvoi" file="Appui\Log\Pions\Model.bms" masalife="false" name="Truck convoy">
       <missions>
         <mission name="Logistics - convey"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - withdraw"/>
         <mission name="Common - move"/>
@@ -1066,7 +1066,7 @@
       <missions>
         <mission name="Logistics - deploy"/>
         <mission name="Logistics - step up"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - move"/>
         <mission name="Common - withdraw to initial position"/>
@@ -1102,7 +1102,7 @@
       <missions>
         <mission name="Logistics - deploy"/>
         <mission name="Logistics - step up"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - withdraw"/>
         <mission name="Common - move"/>
@@ -1137,7 +1137,7 @@
         </mission>
         <mission name="Common - move"/>
         <mission name="Common - withdraw to initial position"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - withdraw"/>
         <mission name="Common - cross"/>
         <mission name="Common - go through decontamination process"/>
@@ -1172,7 +1172,7 @@
         <mission name="FieldArtillery - collect enemy artillery intelligence"/>
         <mission name="Common - move"/>
         <mission name="Common - withdraw to initial position"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - withdraw"/>
         <mission name="Common - cross"/>
         <mission name="Common - go through decontamination process"/>
@@ -1203,7 +1203,7 @@
         <mission name="FieldArtillery - (Short Range Radar) - collect intelligence on objectives"/>
         <mission name="Common - move"/>
         <mission name="Common - withdraw to initial position"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - adopt transportation posture"/>
         <mission name="Common - park"/>
@@ -1234,7 +1234,7 @@
         <mission name="FieldArtillery - (Surveillance Detachment) - collect intelligence on objectives"/>
         <mission name="Common - move"/>
         <mission name="Common - withdraw to initial position"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - withdraw"/>
         <mission name="Common - cross"/>
         <mission name="Common - go through decontamination process"/>
@@ -1265,7 +1265,7 @@
         <mission name="FieldArtillery - (Long Range Surveillance Detachment) - collect intelligence on objectives"/>
         <mission name="Common - move"/>
         <mission name="Common - withdraw to initial position"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - withdraw"/>
         <mission name="Common - cross"/>
         <mission name="Common - go through decontamination process"/>
@@ -1295,7 +1295,7 @@
       <missions>
         <mission name="Common - move"/>
         <mission name="Common - withdraw to initial position"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - adopt transportation posture"/>
         <mission name="Common - park"/>
@@ -1329,7 +1329,7 @@
         <mission name="Common - reconnaissance area"/>
         <mission name="Common - reconnaissance area hidden"/>
         <mission name="Common - withdraw to initial position"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - withdraw"/>
         <mission name="Common - cross"/>
@@ -1399,7 +1399,7 @@
         <mission name="Common - park"/>
         <mission name="OOTW - manage refugees"/>
         <mission name="OOTW - manage prisoners"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Infantry - monitor"/>
       </missions>
       <fragorders>
@@ -1459,7 +1459,7 @@
         <mission name="Common - reconnaissance area hidden"/>
         <mission name="Common - withdraw to initial position"/>
         <mission name="Common - cross"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - park"/>
         <mission name="OOTW - manage refugees"/>
         <mission name="OOTW - manage prisoners"/>
@@ -1507,7 +1507,7 @@
         <mission name="Common - reconnaissance area hidden"/>
         <mission name="Common - withdraw to initial position"/>
         <mission name="Common - cross"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - park"/>
         <mission name="OOTW - manage refugees"/>
         <mission name="OOTW - manage prisoners"/>
@@ -1558,7 +1558,7 @@
         <mission name="Common - move"/>
         <mission name="Common - withdraw to initial position"/>
         <mission name="Common - cross"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - park"/>
         <mission name="OOTW - manage refugees"/>
         <mission name="OOTW - manage prisoners"/>
@@ -1592,7 +1592,7 @@
         <mission name="Common - reconnaissance area hidden"/>
         <mission name="Common - withdraw to initial position"/>
         <mission name="Common - cross"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - park"/>
         <mission name="OOTW - manage refugees"/>
         <mission name="OOTW - manage prisoners"/>
@@ -1663,7 +1663,7 @@
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - adopt transportation posture"/>
         <mission name="Common - park"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Engineer - activate obstacle"/>
         <mission name="Engineer - enhance mobility"/>
         <mission name="Engineer - bypass"/>
@@ -1708,7 +1708,7 @@
         <mission name="Common - reconnaissance area"/>
         <mission name="Common - reconnaissance area hidden"/>
         <mission name="Common - withdraw to initial position"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="HumanIntelligence - exfiltrate"/>
         <mission name="HumanIntelligence - report information"/>
         <mission name="HumanIntelligence - guide"/>
@@ -1763,7 +1763,7 @@
         <mission name="Common - withdraw"/>
         <mission name="Common - move"/>
         <mission name="Common - withdraw to initial position"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Imagery Intelligence - operate"/>
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - adopt transportation posture"/>
@@ -1793,7 +1793,7 @@
         <mission name="Common - withdraw"/>
         <mission name="Common - move"/>
         <mission name="Common - withdraw to initial position"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="ElectronicIntelligence - report information"/>
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - adopt transportation posture"/>
@@ -1823,7 +1823,7 @@
         <mission name="Common - withdraw"/>
         <mission name="Common - move"/>
         <mission name="Common - withdraw to initial position"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="ElectronicIntelligence - support"/>
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - adopt transportation posture"/>
@@ -1853,7 +1853,7 @@
         <mission name="Common - withdraw"/>
         <mission name="Common - move"/>
         <mission name="Common - withdraw to initial position"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="ElectronicIntelligence - report information"/>
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - adopt transportation posture"/>
@@ -1883,7 +1883,7 @@
         <mission name="Common - withdraw"/>
         <mission name="Common - move"/>
         <mission name="Common - withdraw to initial position"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="HumanIntelligence - exfiltrate"/>
         <mission name="HumanIntelligence - report information"/>
         <mission name="Common - go through decontamination process"/>
@@ -1917,7 +1917,7 @@
         <mission name="Common - reconnaissance area hidden"/>
         <mission name="Common - withdraw to initial position"/>
         <mission name="Common - cross"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - park"/>
         <mission name="NBC - operate a decontamination site"/>
         <mission name="NBC - decontaminate an area"/>
@@ -1951,7 +1951,7 @@
         <mission name="Common - reconnaissance area hidden"/>
         <mission name="Common - withdraw to initial position"/>
         <mission name="Common - cross"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - park"/>
         <mission name="NBC - recon a route"/>
         <mission name="NBC - recon an area"/>
@@ -1985,7 +1985,7 @@
         <mission name="Common - reconnaissance area hidden"/>
         <mission name="Common - withdraw to initial position"/>
         <mission name="Common - cross"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - park"/>
         <mission name="NBC - recon a ROTA site"/>
         <mission name="Common - go through decontamination process"/>
@@ -2017,7 +2017,7 @@
         </mission>
         <mission name="Common - move"/>
         <mission name="Common - withdraw to initial position"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - withdraw"/>
         <mission name="Common - cross"/>
         <mission name="Common - go through decontamination process"/>
@@ -2052,7 +2052,7 @@
         <mission name="FieldArtillery - recon deployment area"/>
         <mission name="Common - move"/>
         <mission name="Common - withdraw to initial position"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - withdraw"/>
         <mission name="Common - cross"/>
         <mission name="Common - go through decontamination process"/>
@@ -2134,7 +2134,7 @@
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
-        <mission name="Common - follow">
+        <mission name="COMMON - Follow">
           <fragorder name="Pause maneuver"/>
           <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
@@ -2210,7 +2210,7 @@
           <fragorder name="Cancel maneuver"/>
           <fragorder name="ArmyAviation - Change mission type"/>
         </mission>
-        <mission name="Common - follow">
+        <mission name="COMMON - Follow">
           <fragorder name="Pause maneuver"/>
           <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
@@ -2273,7 +2273,7 @@
           <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
         </mission>
-        <mission name="Common - follow">
+        <mission name="COMMON - Follow">
           <fragorder name="Pause maneuver"/>
           <fragorder name="Resume maneuver"/>
           <fragorder name="Cancel maneuver"/>
@@ -2337,7 +2337,7 @@
         <mission name="Common - go through decontamination process"/>
         <mission name="Common - adopt transportation posture"/>
         <mission name="Common - park"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Engineer - perform work"/>
       </missions>
       <fragorders>
@@ -2367,7 +2367,7 @@
         <mission name="Common - reconnaissance area hidden"/>
         <mission name="Common - withdraw to initial position"/>
         <mission name="Common - cross"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - park"/>
         <mission name="OOTW - manage refugees"/>
         <mission name="OOTW - manage prisoners"/>
@@ -2431,7 +2431,7 @@
     <unit dia-type="SectionASS_Tir" file="Appui\ArtFdp\Pions\Son TRF1\Model.bms" masalife="false" name="Destroyer">
       <missions>
         <mission name="Common - move"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - withdraw"/>
         <mission name="Common - park"/>
         <mission name="FieldArtillery - operate (on position)">
@@ -2461,7 +2461,7 @@
       <missions>
         <mission name="Common - withdraw"/>
         <mission name="Common - park"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - transport">
           <fragorder name="Modify Disembarking point"/>
         </mission>
@@ -2568,7 +2568,7 @@
         <mission name="Common - reconnaissance area hidden"/>
         <mission name="Common - withdraw to initial position"/>
         <mission name="Common - cross"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - park"/>
         <mission name="Common - adopt transportation posture"/>
         <mission name="Common - go through decontamination process"/>
@@ -2600,7 +2600,7 @@
         <mission name="Common - reconnaissance area hidden"/>
         <mission name="Common - withdraw to initial position"/>
         <mission name="Common - cross"/>
-        <mission name="Common - follow"/>
+        <mission name="COMMON - Follow"/>
         <mission name="Common - park"/>
         <mission name="Common - adopt transportation posture"/>
         <mission name="Common - go through decontamination process"/>
@@ -2638,20 +2638,20 @@
     </unit>
     <unit dia-type="roles.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="ML_SecurityAgent">
       <missions>
-        <mission name="ML_SECURITY Follow"/>
-        <mission name="ML_SECURITY Move to"/>
-        <mission name="ML_SECURITY Confine urban blocks within area"/>
-        <mission name="ML_SECURITY Lift urban blocks confinement within area"/>
-        <mission name="ML_SECURITY Increase resource node production"/>
-        <mission name="ML_SECURITY Evacuate urban blocks within area "/>
-        <mission name="ML_SECURITY Lift urban blocks evacuation within area"/>
-        <mission name="ML_SECURITY Ensure victims evacuation"/>
-        <mission name="ML_SECURITY Extract victims from crowds"/>
-        <mission name="ML_SECURITY Alert urban blocks within area"/>
-        <mission name="ML_SECURITY Lift urban blocks alert within area"/>
-        <mission name="ML_SECURITY Enable resource nodes"/>
-        <mission name="ML_SECURITY Disable resource nodes"/>
-        <mission name="ML_SECURITY Patrol"/>
+        <mission name="COMMON - Follow"/>
+        <mission name="COMMON - Move to"/>
+        <mission name="SECURITY - Confine urban blocks within area"/>
+        <mission name="SECURITY - Lift urban blocks confinement within area"/>
+        <mission name="SECURITY - Increase resource node production"/>
+        <mission name="SECURITY - Evacuate urban blocks within area "/>
+        <mission name="SECURITY - Lift urban blocks evacuation within area"/>
+        <mission name="SECURITY - Ensure victims evacuation"/>
+        <mission name="SECURITY - Extract victims from crowds"/>
+        <mission name="SECURITY - Alert urban blocks within area"/>
+        <mission name="SECURITY - Lift urban blocks alert within area"/>
+        <mission name="SECURITY - Enable resource nodes"/>
+        <mission name="SECURITY - Disable resource nodes"/>
+        <mission name="COMMON - Patrol"/>
       </missions>
       <fragorders/>
     </unit>
@@ -3905,4 +3905,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3838073722" -->
+<!-- signature="2926542484" -->
