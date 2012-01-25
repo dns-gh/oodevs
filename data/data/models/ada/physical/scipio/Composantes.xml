@@ -2957,7 +2957,7 @@
       <object initial-construction-time="900s" type="continuous pontoon bridge"/>
       <object initial-destruction-time="900s" type="road destruction"/>
       <object initial-destruction-time="900s" type="anti tank obstacle"/>
-      <object devalorization-time="300s" initial-destruction-time="900s" type="bridge destruction"/>
+      <object initial-destruction-time="900s" type="bridge destruction"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="Panne MOB 1"/>
@@ -35321,4 +35321,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="3509603062" -->
+<!-- signature="2001467135" -->
