@@ -143,25 +143,25 @@
     <point x="22118.5" y="95833.7"/>
   </shape>
   <shape name="C5_center" category="Markers" color="#000000" template="Flag" type="point">
-    <point x="81062.9" y="95318.8"/>
+    <point latitude="47.3888" longitude="-0.276521"/>
   </shape>
   <shape name="C5_draw_mid" category="Misc." color="#000000" template="TestPolygon" type="polygon">
-    <point x="77270.3" y="93837.3"/>
-    <point x="79700" y="90815.1"/>
-    <point x="82396.2" y="92385.5"/>
-    <point x="79374" y="96267"/>
+    <point latitude="47.3617" longitude="-0.312083"/>
+    <point latitude="47.343" longitude="-0.295993"/>
+    <point latitude="47.4079" longitude="-0.186334"/>
+    <point latitude="47.4409" longitude="-0.212939"/>
   </shape>
   <shape name="C5_draw_mid2" category="Misc." color="#000000" template="TestPolygon" type="polygon">
-    <point x="83966.6" y="98696.6"/>
-    <point x="87403.6" y="95526.2"/>
-    <point x="89240.7" y="98074.4"/>
-    <point x="85359.2" y="100771"/>
+    <point latitude="47.3752" longitude="-0.3459"/>
+    <point latitude="47.4702" longitude="-0.296185"/>
+    <point latitude="47.463" longitude="-0.251781"/>
+    <point latitude="47.3703" longitude="-0.323731"/>
   </shape>
   <shape name="C5_draw_end" category="Misc." color="#000000" template="TestPolygon" type="polygon">
-    <point x="87492.5" y="102045"/>
-    <point x="89299.9" y="100474"/>
-    <point x="90722.2" y="102756"/>
-    <point x="88292.5" y="104178"/>
+    <point latitude="47.382" longitude="-0.390887"/>
+    <point latitude="47.387" longitude="-0.442077"/>
+    <point latitude="47.4964" longitude="-0.41063"/>
+    <point latitude="47.494" longitude="-0.353607"/>
   </shape>
     <shape name="C6_center" category="Markers" color="#000000" template="Flag" type="point">
     <point x="144081" y="94092.8"/>

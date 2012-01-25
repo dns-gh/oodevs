@@ -50,7 +50,7 @@ function Start()
         AtState( "Q2",
             function()
                 local text = "Jump to ?"
-                Dialog( { id = "Q2_choice", message = text, buttons = { "C8", "C4" } } )
+                Dialog( { id = "Q2_choice", message = text, buttons = { "C9", "C8", "C7", "C5", "C4", "C3", "C2", "C1" } } )
             end
         ),
 
@@ -59,13 +59,8 @@ function Start()
             { },
             function( dialog, answer )
                 if dialog == "Q2_choice" then
-                    if answer == "C8" then
                         sim:Resume()
-                        ChangeState( "C8" )
-                    else
-                        ChangeState( "C4" )
-                    end
-
+                        ChangeState( answer )
                 end
             end
         },
@@ -80,7 +75,7 @@ function Start()
                 Display( { message = "Units are controlled using parameterizable missions: danger direction, route, objective, boundary limit, phase line, etc.\n"
                                   .. "Please order this MBT Platoon to attack north" } )
                 Center( { coordinates = drawings:Create( "C1_center" ):GetCoordinates()[1] } )
-                Zoom( { width = 40000 } )
+                Zoom( { width = 50000 } )
                 Select( { target = "id://agent/" .. C1[1].id } )
                 ChangeState( "C1_mid" )
             end
@@ -123,7 +118,7 @@ function Start()
                 actions:IssueOrder( "Armor - attack - C2" )
                 Display( { message = "Boundary limits can be used to restrict the operating range of a mission" } )
                 Center( { coordinates = drawings:Create( "C2_center" ):GetCoordinates()[1] } )
-                Zoom( { width = 40000 } )
+                Zoom( { width = 50000 } )
                 Select( { target = "id://agent/" .. C2[1].id } )
                 ChangeState( "C2_mid2" )
             end
@@ -282,8 +277,8 @@ function Start()
                 for _, v in ipairs( C5 ) do
                     if id == v.id then
                        SetFilter ({ target = "id://automat/" .. C52[1].id } )
-                       Display( { message = "From this company level attack mission, two MBT platoons receive an attack mission, two follow and the mortar supports them.\n"
-                                         .. "This formation will dynamically evolve with the course of action: if an attacking MBT platoon is destroyed, the following one will take its place" } )
+                       Display( { message = "From this company level attack mission, MBT platoons receive an attack mission and create a first <b>echelon</b>, while mechanized infantry platoons create a following second echelon following and mortars support them.\n"
+                                         .. "This formation will dynamically evolve with the course of action: if a unit is destroyed, the following one will take its place" } )
                        ChangeState( "C5_mid2" )
                     end
                 end
@@ -297,7 +292,8 @@ function Start()
                 local id = entity:GetIdentifier()
                 for _, v in ipairs( C5 ) do
                     if id == v.id then
-                       Display( { message = "Units share their knowledge through <b>Knowledge groups.</b> Each unit of a knowledge group shares immediatly its knowledge with every unit included in this knowledge group" } )
+                       Display( { message = "Units share their knowledge through <b>Knowledge groups.</b> Each unit of a knowledge group shares immediatly its knowledge with every unit included in this knowledge group, \n"
+						.. "allowing units to synchronize their actions: if the first echelon encounters a strong resistance, mortars can automatically support them to balance the force ratio and neutralize the threat" } )
                        ChangeState( "C5_end" )
                     end
                 end

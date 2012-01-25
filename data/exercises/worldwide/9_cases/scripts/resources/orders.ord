@@ -127,66 +127,100 @@
 
 <!-- C5 -->
 
-<action id="236" name="C5 - Red - Hold" target="290" time="2008-11-13T16:44:16" type="mission">
-    <parameter name="Danger direction" type="Direction" value="166"/>
-    <parameter name="Phase lines" type="PhaseLineList"/>
-    <parameter name="Boundary limit 1" type="Limit">
+    <action id="236" name="C5 - Red - Hold" target="290" time="2011-09-19T06:35:50" type="mission">
+    <parameter name="Direction dangereuse" type="heading" value="108"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
       <location type="line">
-        <point coordinates="30TXT9206031305"/>
-        <point coordinates="30TXT9793438355"/>
-        <point coordinates="30TYT0201440154"/>
-        <point coordinates="30TYT0516244858"/>
-        <point coordinates="30TYT0830754796"/>
+        <point coordinates="30TYT1238540737"/>
+        <point coordinates="30TYT0508344556"/>
+        <point coordinates="30TYT0273848927"/>
+        <point coordinates="30TXT9745750540"/>
+        <point coordinates="30TXT9112951059"/>
       </location>
     </parameter>
-    <parameter name="Boundary limit 2" type="Limit">
+    <parameter name="Limit 2" type="limit">
       <location type="line">
-        <point coordinates="30TXT9510328321"/>
-        <point coordinates="30TXT9882533734"/>
-        <point coordinates="30TYT0542137321"/>
-        <point coordinates="30TYT0893042221"/>
-        <point coordinates="30TYT1121747813"/>
-        <point coordinates="30TYT1202151101"/>
-        <point coordinates="30TYT1305454398"/>
+        <point coordinates="30TYT1933345663"/>
+        <point coordinates="30TYT1810448269"/>
+        <point coordinates="30TYT1688949561"/>
+        <point coordinates="30TYT1489253941"/>
+        <point coordinates="30TYT1033359271"/>
+        <point coordinates="30TYT0150564010"/>
+        <point coordinates="30TXT9341263907"/>
       </location>
     </parameter>
-    <parameter name="Intelligences" type="IntelligenceList"/>
-    <parameter name="Deployment area" type="Polygon">
+    <parameter name="Deployment area" type="polygon">
       <location type="polygon">
-        <point coordinates="30TYT0487743407"/>
-        <point coordinates="30TYT0680842284"/>
-        <point coordinates="30TYT0721243264"/>
-        <point coordinates="30TYT0528944568"/>
-        <point coordinates="30TYT0487743407"/>
+        <point coordinates="30TXT9906258330"/>
+        <point coordinates="30TXT9777652970"/>
+        <point coordinates="30TYT0140151868"/>
+        <point coordinates="30TYT0217557330"/>
+        <point coordinates="30TXT9906258330"/>
       </location>
     </parameter>
   </action>
-
-
-  <action id="221" name="Armor - attack - C5" target="138" time="2008-11-13T16:10:36" type="mission">
-    <parameter name="Danger direction" type="Direction" value="36"/>
-    <parameter name="Phase lines" type="PhaseLineList"/>
-    <parameter name="Boundary limit 1" type="Limit">
+  <action id="236" name="C5 - Red - Hold" target="1325" time="2011-09-19T06:38:40" type="mission">
+    <parameter name="Direction dangereuse" type="heading" value="107"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
       <location type="line">
-        <point coordinates="30TXT9206031305"/>
-        <point coordinates="30TXT9793438355"/>
-        <point coordinates="30TYT0201440154"/>
-        <point coordinates="30TYT0516244858"/>
-        <point coordinates="30TYT0830754796"/>
+        <point coordinates="30TYT1238540737"/>
+        <point coordinates="30TYT0508344556"/>
+        <point coordinates="30TYT0273848927"/>
+        <point coordinates="30TXT9745750540"/>
+        <point coordinates="30TXT9112951059"/>
       </location>
     </parameter>
-    <parameter name="Boundary limit 2" type="Limit">
+    <parameter name="Limit 2" type="limit">
       <location type="line">
-        <point coordinates="30TXT9510328321"/>
-        <point coordinates="30TXT9882533734"/>
-        <point coordinates="30TYT0542137321"/>
-        <point coordinates="30TYT0893042221"/>
-        <point coordinates="30TYT1121747813"/>
-        <point coordinates="30TYT1202151101"/>
-        <point coordinates="30TYT1305454398"/>
+        <point coordinates="30TYT1933345663"/>
+        <point coordinates="30TYT1810448269"/>
+        <point coordinates="30TYT1688949561"/>
+        <point coordinates="30TYT1489253941"/>
+        <point coordinates="30TYT1033359271"/>
+        <point coordinates="30TYT0150564010"/>
+        <point coordinates="30TXT9341263907"/>
       </location>
     </parameter>
-    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Deployment area" type="polygon">
+      <location type="polygon">
+        <point coordinates="30TXT9948357657"/>
+        <point coordinates="30TYT0266255459"/>
+        <point coordinates="30TYT0468256763"/>
+        <point coordinates="30TYT0458458091"/>
+        <point coordinates="30TYT0776560064"/>
+        <point coordinates="30TYT0458361634"/>
+        <point coordinates="30TYT0087459617"/>
+        <point coordinates="30TXT9936258909"/>
+        <point coordinates="30TXT9948357657"/>
+      </location>
+    </parameter>
+  </action>
+ 
+    <action id="221" name="Armor - attack - C5" target="138" time="2011-09-19T06:03:00" type="mission">
+    <parameter name="Direction dangereuse" type="heading" value="288"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="30TYT1238540737"/>
+        <point coordinates="30TYT0508344556"/>
+        <point coordinates="30TYT0273848927"/>
+        <point coordinates="30TXT9745750540"/>
+        <point coordinates="30TXT9112951059"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="30TYT1933345663"/>
+        <point coordinates="30TYT1810448269"/>
+        <point coordinates="30TYT1688949561"/>
+        <point coordinates="30TYT1489253941"/>
+        <point coordinates="30TYT1033359271"/>
+        <point coordinates="30TYT0150564010"/>
+        <point coordinates="30TXT9341263907"/>
+      </location>
+    </parameter>
   </action>
   
   <!-- C6 -->
