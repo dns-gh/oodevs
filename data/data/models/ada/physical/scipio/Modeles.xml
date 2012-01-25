@@ -7125,7 +7125,7 @@
         <mission name="AUTOMATE Suivre"/>
         <mission name="AUTOMATE Decrocher"/>
         <mission name="AUTOMATE RENS ROHUM SExfiltrer"/>
-        <mission name="AUTOMATE RENS ROHUM Orienter Guider"/>
+        <mission name="AUTOMATE RENS Orienter"/>
         <mission name="AUTOMATE RENS ROHUM Renseigner Sur"/>
         <mission name="AUTOMATE Se Faire Decontaminer"/>
         <mission name="AUTOMATE Se Recompleter"/>
@@ -7610,7 +7610,7 @@
         <mission name="AUTOMATE Faire Mouvement"/>
         <mission name="AUTOMATE Decrocher"/>
         <mission name="AUTOMATE RENS ROHUM SExfiltrer"/>
-        <mission name="AUTOMATE RENS ROHUM Orienter Guider"/>
+        <mission name="AUTOMATE RENS Orienter"/>
         <mission name="AUTOMATE RENS ROHUM Renseigner Sur"/>
         <mission name="AUTOMATE Se Faire Decontaminer"/>
         <mission name="AUTOMATE Se Recompleter"/>
@@ -8329,7 +8329,7 @@
         <mission name="AUTOMATE Soutenir En Mesure De"/>
         <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
         <mission name="AUTOMATE RENS ROHUM SExfiltrer"/>
-        <mission name="AUTOMATE RENS ROHUM Orienter Guider"/>
+        <mission name="AUTOMATE RENS Orienter"/>
         <mission name="AUTOMATE RENS ROHUM .Renseigner Sur"/>
         <mission name="AUTOMATE Orienter Refugies"/>
         <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
@@ -8486,6 +8486,41 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </automat>
+    <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.RENS.Multicapteur">
+      <missions>
+        <mission name="AUTOMATE Soutenir En Mesure De"/>
+        <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
+        <mission name="AUTOMATE RENS ROHUM SExfiltrer"/>
+        <mission name="AUTOMATE RENS Orienter"/>
+        <mission name="AUTOMATE RENS ROHUM .Renseigner Sur"/>
+        <mission name="AUTOMATE Orienter Refugies"/>
+        <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
+        <mission name="AUTOMATE COMMUNES Decrocher"/>
+        <mission name="AUTOMATE COMMUNES Faire Mouvement"/>
+        <mission name="AUTOMATE COMMUNES Franchir"/>
+        <mission name="AUTOMATE COMMUNES Se Faire Decontaminer"/>
+        <mission name="AUTOMATE COMMUNES Se Faire Transporter"/>
+        <mission name="AUTOMATE COMMUNES Se Recompleter"/>
+        <mission name="AUTOMATE COMMUNES Stationner"/>
+        <mission name="AUTOMATE COMMUNES Suivre"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+      </fragorders>
+    </automat>
     <automat dia-type="france.military.batallion.roles.Batallion" file="BMADA.bms" masalife="true" name="Masalife.Automate.ADA">
       <missions>
         <mission name="ADA Faire Mouvement"/>
@@ -8527,4 +8562,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3992773825" -->
+<!-- signature="1567144336" -->
