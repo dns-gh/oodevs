@@ -33,9 +33,11 @@ DEC_Gen_Object::DEC_Gen_Object()
 DEC_Gen_Object::DEC_Gen_Object( const sword::PlannedWork& msg, const MIL_EntityManager_ABC& entityManager )
     : type_              ( &entityManager.FindObjectType( msg.type() )? msg.type(): "" )
     , identifier_        ( 0u )
-    , pObstacleType_     ( msg.type_obstacle() )
-    , rDensity_          ( msg.density() )
-    , nMinesActivityTime_( msg.activity_time() )
+    , pObstacleType_     ( msg.has_type_obstacle() ? msg.type_obstacle() : sword::ObstacleType_DemolitionTargetType_preliminary )
+    , rDensity_          ( msg.has_density() ? msg.density() : 0. )
+    , nMinesActivityTime_( msg.has_activity_time() ? msg.activity_time() : 0 )
+    , nActivationTime_   ( msg.has_activation_time() ? msg.activation_time() : 0 )
+    , name_              ( msg.has_name() ? msg.name() : std::string() )
     , pTC2_              ( 0 )
 {
     if( type_.empty() )
@@ -57,9 +59,11 @@ DEC_Gen_Object::DEC_Gen_Object( const sword::PlannedWork& msg, const MIL_EntityM
 DEC_Gen_Object::DEC_Gen_Object( const sword::PlannedWork& msg, const MIL_EntityManager_ABC& entityManager, unsigned int identifier )
     : type_              ( &entityManager.FindObjectType( msg.type() )? msg.type(): "" )
     , identifier_        ( identifier )
-    , pObstacleType_     ( msg.type_obstacle() )
-    , rDensity_          ( msg.density() )
-    , nMinesActivityTime_( msg.activity_time() )
+    , pObstacleType_     ( msg.has_type_obstacle() ? msg.type_obstacle() : sword::ObstacleType_DemolitionTargetType_preliminary )
+    , rDensity_          ( msg.has_density() ? msg.density() : 0. )
+    , nMinesActivityTime_( msg.has_activity_time() ? msg.activity_time() : 0 )
+    , nActivationTime_   ( msg.has_activation_time() ? msg.activation_time() : 0 )
+    , name_              ( msg.has_name() ? msg.name() : std::string() )
     , pTC2_              ( 0 )
 {
     if( type_.empty() )
@@ -85,6 +89,7 @@ DEC_Gen_Object::DEC_Gen_Object( std::string type, boost::shared_ptr< TER_Localis
     , pObstacleType_     ( preliminary ? sword::ObstacleType_DemolitionTargetType_preliminary : sword::ObstacleType_DemolitionTargetType_reserved )
     , rDensity_          ( 0 )
     , nMinesActivityTime_( 0 )
+    , nActivationTime_   ( 0 )
     , pTC2_              ( 0 )
 {
     if( type_.empty() )
@@ -102,6 +107,8 @@ DEC_Gen_Object::DEC_Gen_Object( const DEC_Gen_Object& rhs )
     , pObstacleType_     ( rhs.pObstacleType_ )
     , rDensity_          ( rhs.rDensity_ )
     , nMinesActivityTime_( rhs.nMinesActivityTime_ )
+    , nActivationTime_   ( rhs.nActivationTime_ )
+    , name_              ( rhs.name_ )
     , pTC2_              ( rhs.pTC2_ )
 {
     // NOTHING
@@ -128,6 +135,8 @@ DEC_Gen_Object& DEC_Gen_Object::operator=( const DEC_Gen_Object& rhs )
     pObstacleType_      = rhs.pObstacleType_;
     rDensity_           = rhs.rDensity_;
     nMinesActivityTime_ = rhs.nMinesActivityTime_;
+    nActivationTime_    = rhs.nActivationTime_;
+    name_               = rhs.name_;
     pTC2_               = rhs.pTC2_;
     return *this;
 }
@@ -143,6 +152,9 @@ void DEC_Gen_Object::Serialize( sword::PlannedWork& msg ) const
     msg.mutable_combat_train()->set_id( pTC2_ ? pTC2_->GetID() : 0 );
     msg.set_density( static_cast< float >( rDensity_ ) );
     msg.set_activity_time( nMinesActivityTime_ );
+    msg.set_activation_time( nActivationTime_ );
+    if( !name_.empty() )
+        msg.set_name( name_ );
     NET_ASN_Tools::WriteLocation( localisation_, *msg.mutable_position() );
 }
 
@@ -158,6 +170,8 @@ void DEC_Gen_Object::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> pObstacleType_
          >> rDensity_
          >> nMinesActivityTime_
+         >> nActivationTime_
+         >> name_
          >> const_cast< MIL_Automate*& >( pTC2_ );
 }
 
@@ -173,5 +187,7 @@ void DEC_Gen_Object::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
          << pObstacleType_
          << rDensity_
          << nMinesActivityTime_
+         << nActivationTime_
+         << name_
          << const_cast< MIL_Automate*& >( pTC2_ );
 }

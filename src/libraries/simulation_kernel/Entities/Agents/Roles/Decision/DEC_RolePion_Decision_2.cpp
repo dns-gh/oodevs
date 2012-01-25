@@ -200,7 +200,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_StartTirIndirectSurConnaissancePtr" ] =
         boost::function< unsigned int( const PHY_DotationCategory*, float, boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionIndirectFire_Knowledge, const PHY_DotationCategory*, float, boost::shared_ptr< DEC_Knowledge_Agent > >, boost::ref( GetPion() ), _1, _2, _3 ) );
     brain[ "DEC_StartCreateObject" ] =
-        boost::function< unsigned int( const std::string&, const TER_Localisation*, unsigned int ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionConstructObject, const std::string&, const TER_Localisation*, unsigned int >, boost::ref( GetPion() ), _1, _2, _3 ) );
+        boost::function< unsigned int( const std::string&, const TER_Localisation*, unsigned int, const std::string& ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionConstructObject, const std::string&, const TER_Localisation*, unsigned int, const std::string& >, boost::ref( GetPion() ), _1, _2, _3, _4 ) );
     brain[ "DEC_StartPrepareObject" ] =
         boost::function< unsigned int( const std::string&, const TER_Localisation* ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionPrepareObject, const std::string&, const TER_Localisation* >, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC_StartDetruireObjet" ] =

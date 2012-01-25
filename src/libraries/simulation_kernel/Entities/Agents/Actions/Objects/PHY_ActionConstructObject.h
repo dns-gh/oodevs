@@ -30,7 +30,7 @@ public:
 
 public:
              PHY_ActionConstructObject( MIL_AgentPion& pion, const std::string& strType, const TER_Localisation* pLocalisation,
-                                        unsigned int externalIdentifier );
+                                        unsigned int externalIdentifier, const std::string& name );
     virtual ~PHY_ActionConstructObject();
 
     //! @name Operations

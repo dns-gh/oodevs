@@ -40,6 +40,18 @@ Object::Object( xml::xistream& xis, const MIL_ObjectBuilder_ABC& builder, MIL_Ar
         pObstacle->SetType( reserved ? sword::ObstacleType_DemolitionTargetType_reserved : sword::ObstacleType_DemolitionTargetType_preliminary );
 }
 
+namespace
+{
+    std::string FormatName( const std::string& name, const MIL_ObjectBuilder_ABC& builder, int id )
+    {
+        if( !name.empty() )
+            return name;
+        std::stringstream stream;
+        stream << builder.GetType().GetRealName() << "[" << id << "]";
+        return stream.str();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Object constructor
 // Created: SBO 2009-12-14
@@ -47,7 +59,7 @@ Object::Object( xml::xistream& xis, const MIL_ObjectBuilder_ABC& builder, MIL_Ar
 Object::Object( const MIL_ObjectBuilder_ABC& builder, MIL_Army_ABC* army, const TER_Localisation* pLocation,
                 unsigned int externalIdentifier, const std::string& name /*= std::string()*/, bool reserved /*= true*/, unsigned int forcedId /*= 0u*/ )
     : MIL_Object( army, builder.GetType(), forcedId )
-    , name_              ( name )
+    , name_( FormatName( name, builder, GetID() ) )
     , externalIdentifier_( externalIdentifier )
 {
     MIL_Object_ABC::Register();
