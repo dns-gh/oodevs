@@ -421,7 +421,7 @@ void ADN_GuiBuilder::SetValidator( ADN_DoubleValidator& validator, E_Validator n
 // -----------------------------------------------------------------------------
 template<>
 inline
-void ADN_GuiBuilder::SetValidator( ADN_PercentageValidator& validator, E_Validator nValidator )
+void ADN_GuiBuilder::SetValidator( ADN_DoublePercentageValidator& validator, E_Validator nValidator )
 {
     if( nValidator == eNone )
         return;
@@ -442,6 +442,32 @@ void ADN_GuiBuilder::SetValidator( ADN_PercentageValidator& validator, E_Validat
     }
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_GuiBuilder::AddValidator
+// Created: APE 2005-04-13
+// -----------------------------------------------------------------------------
+template<>
+inline
+void ADN_GuiBuilder::SetValidator( ADN_IntPercentageValidator& validator, E_Validator nValidator )
+{
+    if( nValidator == eNone )
+        return;
+
+    switch( nValidator )
+    {
+    case ePercentage:
+        validator.setRange( 0, 100 );
+        break;
+    case eGreaterZero:
+    case eGreaterEqualZero:
+    case eLowerZero:
+    case eLowerEqualZero:
+    case eZeroOne:
+    case eDegrees:
+    default:
+        assert( 0 );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiBuilder::SetValidator

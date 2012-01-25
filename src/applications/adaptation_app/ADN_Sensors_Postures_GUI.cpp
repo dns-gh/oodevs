@@ -48,7 +48,7 @@ void ADN_CT_Sensors_Postures::AddSubItems( int i, void *pObj )
     pItemString->setText( ENT_Tr::ConvertFromUnitPosture( static_cast<ModificatorPostureInfos*>( pObj )->eType_, ENT_Tr_ABC::eToTr ).c_str() );
 
     // Setup the value item.
-    pItemDouble->GetValidator().setRange( 0, 1, 2 );
+    pItemDouble->GetValidator().setRange( 0, 1, 3 );
     pItemDouble->GetConnector().Connect( &static_cast<ModificatorPostureInfos*>( pObj )->rCoeff_ );
 }
 

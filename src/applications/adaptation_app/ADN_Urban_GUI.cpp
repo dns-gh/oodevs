@@ -176,7 +176,6 @@ void ADN_Urban_GUI::Build()
         pListTemplate_->setFixedHeight( 180 );
         static_cast< ADN_Connector_Vector_ABC* >( &pListTemplate_->GetConnector() )->Connect( &data_.GetTemplatesInfos() );
         Q3GroupBox* pGroupTemplate = new Q3VGroupBox( tr( "Template" ), pTemplates );
-        QWidget* pHolder = builder.AddFieldHolder( pGroupTemplate );
         Q3HBox* pInfoBox = new Q3HBox( pGroupTemplate );
         pInfoBox->setSpacing( 10 );
         builder.AddField< ADN_EditLine_String >( pInfoBox, tr( "Name" ), vUsageInfosConnectors[ eUrbanUsageName ] );

@@ -45,7 +45,7 @@ void ADN_CT_Sensors_Illuminations::AddSubItems( int i, void *obj )
 
     pItemString->setEnabled( true );
     pItemString->setText( ENT_Tr::ConvertFromLightingType( static_cast< ModificatorIlluminationInfos* >( obj )->eType_, ENT_Tr_ABC::eToTr ).c_str() );
-    pItemDouble->GetValidator().setRange( 0, 1, 2 );
+    pItemDouble->GetValidator().setRange( 0, 1, 3 );
     pItemDouble->GetConnector().Connect( &static_cast< ModificatorIlluminationInfos* >( obj )->rCoeff_ );
 }
 

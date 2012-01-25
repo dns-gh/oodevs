@@ -45,7 +45,7 @@ void ADN_CT_Sensors_Meteos::AddSubItems( int i, void *obj )
 
     pItemString->setEnabled( true );
     pItemString->setText( ADN_Tr::ConvertFromSensorWeatherModifiers( static_cast< ModificatorMeteoInfos* >( obj )->eType_, ENT_Tr_ABC::eToTr ).c_str() );
-    pItemDouble->GetValidator().setRange( 0, 1, 2 );
+    pItemDouble->GetValidator().setRange( 0, 1, 3 );
     pItemDouble->GetConnector().Connect( &static_cast< ModificatorMeteoInfos* >( obj )->rCoeff_ );
 }
 

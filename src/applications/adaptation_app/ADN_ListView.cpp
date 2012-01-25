@@ -349,7 +349,7 @@ bool ADN_ListView::ApplyFilterList( ADN_ListViewItem* item )
         return true;
     if( !item )
         return false;
-    return filterList_.contains( item->text( 0 ), Qt::CaseInsensitive );
+    return filterList_.contains( item->text( 0 ), Qt::CaseInsensitive ) != 0;
 }
 
 // -----------------------------------------------------------------------------

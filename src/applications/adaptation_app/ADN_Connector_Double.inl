@@ -59,8 +59,8 @@ void ADN_Connector_Double<T>::SetDataPrivate(void *data)
 template <class T>
 void  ADN_Connector_Double<T>::SetDataChanged(const QString& string)
 {
-    double newval=atof(string.ascii());
-    emit DataChanged((void*)&newval);
+    double newval = string.toDouble();
+    emit DataChanged( ( void* ) &newval );
 }
 
 

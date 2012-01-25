@@ -80,12 +80,12 @@ private:
     //@{
     ADN_Population_Data& data_;
 
-    ADN_PercentageValidator* pValidatorDestruUnarmed_;
-    ADN_PercentageValidator* pValidatorEvacUnarmed_;
-    ADN_PercentageValidator* pValidatorWithoutUnarmed_;
-    ADN_PercentageValidator* pValidatorDestruArmed_;
-    ADN_PercentageValidator* pValidatorEvacArmed_;
-    ADN_PercentageValidator* pValidatorWithoutArmed_;
+    ADN_DoublePercentageValidator* pValidatorDestruUnarmed_;
+    ADN_DoublePercentageValidator* pValidatorEvacUnarmed_;
+    ADN_DoublePercentageValidator* pValidatorWithoutUnarmed_;
+    ADN_DoublePercentageValidator* pValidatorDestruArmed_;
+    ADN_DoublePercentageValidator* pValidatorEvacArmed_;
+    ADN_DoublePercentageValidator* pValidatorWithoutArmed_;
 
     //@}
 };

@@ -63,12 +63,6 @@ void ADN_Categories_GUI::Build()
     ADN_GuiBuilder builder;
     ADN_EditLine_ABC* pEdit = 0;
 
-    // horizontal layout
-    //Q3HBoxLayout* pLayout = new Q3HBoxLayout();
-    //pLayout->setMargin( 20 );
-    //pLayout->setSpacing( 20 );
-    //pLayout->setAutoAdd( true );
-
     /////////////////
     // Armors
     Q3GroupBox* pArmorGroup = new Q3VGroupBox( tr( "Armor classes" ) );
