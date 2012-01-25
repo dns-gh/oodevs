@@ -52,9 +52,9 @@ MIL_AgentPion* MIL_AgentTypeInjuredHumanPion::InstanciatePion( MIL_Automate& aut
 // Name: MIL_AgentTypeInjuredHumanPion::InstanciatePion
 // Created: RFT 2005-02-08
 // -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypeInjuredHumanPion::InstanciatePion( MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories ) const
+MIL_AgentPion* MIL_AgentTypeInjuredHumanPion::InstanciatePion( MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, const std::string& name ) const
 {
-    return new MIL_AgentInjuredHumanPion( *this, automate, algorithmFactories );
+    return new MIL_AgentInjuredHumanPion( *this, automate, algorithmFactories, name );
 }
 
 // -----------------------------------------------------------------------------

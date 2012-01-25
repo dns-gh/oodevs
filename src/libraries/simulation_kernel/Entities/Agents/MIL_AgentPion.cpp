@@ -111,26 +111,6 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentPion constructor
-// Created: NLD 2005-02-08
-// -----------------------------------------------------------------------------
-MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories )
-    : MIL_Agent_ABC( type.GetName() )
-    , pType_               ( &type )
-    , bIsPC_               ( false )
-    , pAutomate_           ( &automate )
-    , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
-    , pOrderManager_       ( new MIL_PionOrderManager( *this ) )
-    , algorithmFactories_  ( algorithmFactories )
-    , pAffinities_         ( new MIL_AffinitiesMap() )
-    , pExtensions_         ( new MIL_DictionaryExtensions() )
-    , pHumanRepartition_   ( new MIL_HumanRepartition( type.GetHumanRepartition() ) )
-{
-    pColor_.reset( new MIL_Color( automate.GetColor() ) );
-    automate.RegisterPion( *this );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentPion constructor
 // Created: MMC 2011-05-27
 // -----------------------------------------------------------------------------
 MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, const std::string name )

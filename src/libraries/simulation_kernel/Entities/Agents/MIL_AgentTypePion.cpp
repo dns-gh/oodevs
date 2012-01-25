@@ -342,15 +342,6 @@ MIL_AgentPion* MIL_AgentTypePion::InstanciatePion( MIL_Automate& automate, const
 
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePion::InstanciatePion
-// Created: NLD 2005-02-08
-// -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypePion::InstanciatePion( MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories ) const
-{
-    return new MIL_AgentPion( *this, automate, algorithmFactories );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_AgentTypePion::InstanciatePion
 // Created: MMC 2011-05-27
 // -----------------------------------------------------------------------------
 MIL_AgentPion* MIL_AgentTypePion::InstanciatePion( MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, const std::string& name ) const

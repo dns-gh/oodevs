@@ -47,9 +47,9 @@ MIL_AgentPion* MIL_AgentTypePionLOGSupply::InstanciatePion( MIL_Automate& automa
 // Name: MIL_AgentTypePionLOGSupply::InstanciatePion
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypePionLOGSupply::InstanciatePion( MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories ) const
+MIL_AgentPion* MIL_AgentTypePionLOGSupply::InstanciatePion( MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, const std::string& name ) const
 {
-    return new MIL_AgentPionLOGSupply( *this, automate, algorithmFactories );
+    return new MIL_AgentPionLOGSupply( *this, automate, algorithmFactories, name );
 }
 
 // -----------------------------------------------------------------------------
