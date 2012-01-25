@@ -17,10 +17,7 @@
             <pocTelephone>+33 1 55 43 24 62</pocTelephone>
             <pocEmail>silvin.lubecki@masagroup.net</pocEmail>
         </poc>
-        <reference>
-            <type>HLA Evolved Editor Tool</type>
-            <identification>Pitch Visual OMT 1516 v2.1.0</identification>
-        </reference>
+        <reference/>
         <other></other>
     </modelIdentification>
     <objects>
