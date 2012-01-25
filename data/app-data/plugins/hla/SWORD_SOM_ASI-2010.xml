@@ -838,11 +838,11 @@
                         </attribute>
                         <objectClass>
                             <name>Aircraft</name>
-                            <sharing>Neither</sharing>
+                            <sharing>Subscribe</sharing>
                             <semantics></semantics>
                             <objectClass>
                                 <name>NETN_Aircraft</name>
-                                <sharing>Neither</sharing>
+                                <sharing>Subscribe</sharing>
                                 <semantics></semantics>
                                 <attribute>
                                     <name>Callsign</name>
@@ -1312,11 +1312,11 @@
                         </objectClass>
                         <objectClass>
                             <name>SurfaceVessel</name>
-                            <sharing>PublishSubscribe</sharing>
+                            <sharing>Subscribe</sharing>
                             <semantics></semantics>
                             <objectClass>
                                 <name>NETN_SurfaceVessel</name>
-                                <sharing>PublishSubscribe</sharing>
+                                <sharing>Subscribe</sharing>
                                 <semantics></semantics>
                                 <attribute>
                                     <name>Callsign</name>
