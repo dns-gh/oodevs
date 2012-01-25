@@ -21,7 +21,6 @@
       <terrain type="bridge" value="8"/>
       <terrain type="suburb" value="7"/>
     </heuristic>
-    <interact-with-enemy/>
     <interaction-height height="1"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.1"/>
@@ -155,7 +154,6 @@
       </buildable>
       <improvable/>
     </constructor>
-    <interact-with-enemy/>
     <interaction-height height="1"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.1"/>
@@ -174,7 +172,6 @@
       </buildable>
       <improvable/>
     </constructor>
-    <interact-with-enemy/>
     <interaction-height height="1"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.1"/>
@@ -466,7 +463,6 @@
       </buildable>
       <improvable/>
     </constructor>
-    <interact-with-enemy/>
     <interaction-height height="1"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.1"/>
@@ -527,4 +523,4 @@
     <resources/>
   </object>
 </objects>
-<!-- signature="4082723158" -->
+<!-- signature="0101837160" -->
