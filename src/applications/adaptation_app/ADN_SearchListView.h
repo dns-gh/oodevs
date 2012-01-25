@@ -31,9 +31,9 @@ public:
     //@{
              ADN_SearchListView( ADN_Ref_ABC& reference, const T_ConnectorVector& connector, QWidget* parent = 0 );
              template< typename FirstParam >
-             ADN_SearchListView( FirstParam first, ADN_Ref_ABC& reference, const T_ConnectorVector& connector, QWidget* parent = 0 );
+             ADN_SearchListView( FirstParam& first, ADN_Ref_ABC& reference, const T_ConnectorVector& connector, QWidget* parent = 0 );
              template< typename FirstParam, typename SecondParam >
-             ADN_SearchListView( FirstParam first, SecondParam second, ADN_Ref_ABC& reference, const T_ConnectorVector& connector, QWidget* parent = 0 );
+             ADN_SearchListView( FirstParam& first, SecondParam& second, ADN_Ref_ABC& reference, const T_ConnectorVector& connector, QWidget* parent = 0 );
     virtual ~ADN_SearchListView();
     //@}
 
@@ -80,7 +80,7 @@ ADN_SearchListView< ListView >::ADN_SearchListView( ADN_Ref_ABC& reference, cons
 // -----------------------------------------------------------------------------
 template< typename ListView >
 template< typename FirstParam >
-ADN_SearchListView< ListView >::ADN_SearchListView( FirstParam first, ADN_Ref_ABC& reference, const T_ConnectorVector& connector, QWidget* parent /*= 0*/ )
+ADN_SearchListView< ListView >::ADN_SearchListView( FirstParam& first, ADN_Ref_ABC& reference, const T_ConnectorVector& connector, QWidget* parent /*= 0*/ )
     : QWidget( parent )
     , listView_( 0 )
 {
@@ -106,7 +106,7 @@ ADN_SearchListView< ListView >::ADN_SearchListView( FirstParam first, ADN_Ref_AB
 // -----------------------------------------------------------------------------
 template< typename ListView >
 template< typename FirstParam, typename SecondParam >
-ADN_SearchListView< ListView >::ADN_SearchListView( FirstParam first, SecondParam second, ADN_Ref_ABC& reference, const T_ConnectorVector& connector, QWidget* parent /*= 0*/ )
+ADN_SearchListView< ListView >::ADN_SearchListView( FirstParam& first, SecondParam& second, ADN_Ref_ABC& reference, const T_ConnectorVector& connector, QWidget* parent /*= 0*/ )
     : QWidget( parent )
     , listView_( 0 )
 {
