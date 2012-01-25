@@ -1,5 +1,5 @@
 includedFiles = includedFiles or {}
-includedFiles["sources/population/asymetriques/common/automate/missions/commettreexactionssurpopulationdanszone/MRT - CommettreExactionsSurPopulationDansZone.bms"] = true
+includedFiles["sources/population/asymetriques/common/automate/missions/commettreexactions/MRT - CommettreExactionsSurPopulationDansZone.bms"] = true
 
 local emptyTable = emptyTable
 
