@@ -277,20 +277,10 @@ namespace
         std::copy( it, end, out );
     }
 
-    bool IsBinary( const bfs::path& root )
-    {
-        std::string ext = bfs::extension( root );
-        return ext == ".dat" || ext == ".bin" || ext == ".texture" || ext == ".dump";
-    }
-
     void CopyFile( const bfs::path& root, const std::string& name, zip::ozipfile& zos )
     {
         std::string filename( root.file_string() );
-        std::ios_base::openmode openmode = std::ifstream::in;
-        if( IsBinary( root ) )
-            openmode |= std::ifstream::binary;
-
-        std::ifstream file( filename.c_str(), openmode );
+        std::ifstream file( filename.c_str(), std::ifstream::in | std::ifstream::binary );
         if( file.good() )
         {
             zip::ozipstream stream( zos, name.c_str(), std::ios_base::out | std::ios_base::binary );
