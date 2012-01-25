@@ -27,7 +27,7 @@
     ${File} "${RUNDIR}\plugins\hla\" "component.xml"
     ${File} "${RUNDIR}\plugins\hla\" "munition.xml"
     ${File} "${RUNDIR}\plugins\hla\" "ASI_FOM_v2.0.8_2010.xml"
-    ${File} "${RUNDIR}\plugins\hla\" "SWORD_SOM_ASI.xml"
+    ${File} "${RUNDIR}\plugins\hla\" "SWORD_SOM_ASI-2010.xml"
     ${File} "${RUNDIR}\plugins\hla\" "SWORD_CS.txt"
     ${File} "${RUNDIR}\plugins\hla\" "protocols.xml"
     ${File} "${RUNDIR}\plugins\hla\" "configuration.xml"
