@@ -56,8 +56,8 @@
             <unit command-post="false" id="11" name="ML_Security - Civil Protection - Safety" position="29TNF3521955431" type="ML_Security - Civil Protection - Safety"/>
             <unit command-post="false" id="12" name="ML_Security - Civil Protection - Safety" position="29TNF3544655404" type="ML_Security - Civil Protection - Safety"/>
           </automat>
-          <automat engaged="false" id="28" knowledge-group="8" logistic-level="logistic-base" name="Logistic combat train [28]" type="Logistic combat train">
-            <unit command-post="true" id="29" name="Logistic CT" position="29TNF3547054990" type="Logistic CT"/>
+          <automat engaged="false" id="28" knowledge-group="8" logistic-level="logistic-base" name="Logistic combat train [28]" type="LOG.Logistic combat train">
+            <unit command-post="true" id="29" name="Logistic CT" position="29TNF3547054990" type="LOG.Logistic CT"/>
           </automat>
           <automat engaged="false" id="32" knowledge-group="8" name="Victims without TC2" type="ML_Security - Civil Protection">
             <unit command-post="true" id="33" name="ML_Security - Civil Protection - Safety" position="29TNF3563954814" type="ML_Security - Civil Protection - Safety"/>
@@ -126,8 +126,8 @@
             <unit command-post="false" id="17" name="ML_Security - Civil Protection - Safety" position="29TNF3610255241" type="ML_Security - Civil Protection - Safety"/>
             <unit command-post="false" id="18" name="ML_Security - Civil Protection - Safety" position="29TNF3604755324" type="ML_Security - Civil Protection - Safety"/>
           </automat>
-          <automat engaged="false" id="30" knowledge-group="14" logistic-level="logistic-base" name="Logistic combat train [30]" type="Logistic combat train">
-            <unit command-post="true" id="31" name="Logistic CT" position="29TNF3641355745" type="Logistic CT">
+          <automat engaged="false" id="30" knowledge-group="14" logistic-level="logistic-base" name="Logistic combat train [30]" type="LOG.Logistic combat train">
+            <unit command-post="true" id="31" name="Logistic CT" position="29TNF3641355745" type="LOG.Logistic CT">
               <stocks>
                 <resource name="12,7-mm Bullet" quantity="3410"/>
                 <resource name="7.62-mm Bullet" quantity="2300"/>

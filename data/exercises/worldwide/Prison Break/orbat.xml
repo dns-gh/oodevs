@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/exercise/orbat.xsd">
   <parties>
     <party id="1" name="Security" type="friend">
       <objects>
@@ -164,27 +164,18 @@
       </objects>
       <tactical>
         <formation id="3" level="x" name="Formation [3]">
-          <automat engaged="false" id="5" knowledge-group="6" logistic-level="logistic-base" name="Logistic combat train [5]" type="Logistic combat train">
-            <unit command-post="true" id="7" name="Logistic CT" position="31UEQ0202991135" type="Logistic CT"/>
+          <automat engaged="false" id="5" knowledge-group="6" logistic-level="logistic-base" name="Logistic combat train [5]" type="LOG.Logistic combat train">
+            <unit command-post="true" id="7" name="Logistic CT" position="31UEQ0202991135" type="LOG.Logistic CT"/>
           </automat>
-          <automat engaged="false" id="30" knowledge-group="6" name="Jailors [30]" type="Infantry company">
-            <unit command-post="true" id="31" name="Jailors 1" position="31UDQ9942791144" type="Infantry company CP"/>
-            <unit command-post="false" id="32" name="Jailors 2" position="31UEQ0079891035" type="Infantry platoon"/>
-            <unit command-post="false" id="36" name="Jailors 3" position="31UDQ9948692435" type="Infantry platoon"/>
-            <unit command-post="false" id="37" name="Jailors 4" position="31UEQ0054692441" type="Infantry platoon"/>
-            <unit command-post="false" id="59" name="Countermobility platoon" position="31UEQ0096991980" type="Countermobility platoon"/>
+          <automat engaged="false" id="30" knowledge-group="6" name="Jailors [30]" type="INF.Infantry company">
+            <unit command-post="true" id="31" name="Jailors 1" position="31UDQ9942791144" type="INF.Infantry company CP"/>
+            <unit command-post="false" id="32" name="Jailors 2" position="31UEQ0079891035" type="INF.Infantry platoon"/>
+            <unit command-post="false" id="36" name="Jailors 3" position="31UDQ9948692435" type="INF.Infantry platoon"/>
+            <unit command-post="false" id="37" name="Jailors 4" position="31UEQ0054692441" type="INF.Infantry platoon"/>
+            <unit command-post="false" id="59" name="Countermobility platoon" position="31UEQ0096991980" type="ENG.Countermobility platoon"/>
           </automat>
-          <automat engaged="false" id="47" knowledge-group="6" name="HS - Fire Suppression HQ [47]" type="HS - Fire_Suppression_HQ">
-            <unit command-post="true" id="48" name="HS - Fire_Station_CP" position="31UDQ9701389002" type="HS - Fire_Station_CP"/>
-            <unit command-post="false" id="51" name="HS - Fire Suppression" position="31UDQ9651188503" type="HS - Fire_Suppression"/>
-            <unit command-post="false" id="52" name="HS - Fire Suppression" position="31UDQ9715888681" type="HS - Fire_Suppression"/>
-          </automat>
-          <automat engaged="false" id="53" knowledge-group="6" name="HS - Police_HQ [53]" type="HS - Police_HQ">
-            <unit command-post="true" id="54" name="HS - Law_Police_CP" position="31UDQ9600087223" type="HS - Law_Police_CP"/>
-            <unit command-post="false" id="55" name="HS - Law_Police" position="31UDQ9618486863" type="HS - Law_Police"/>
-            <unit command-post="false" id="56" name="HS - Law_Police" position="31UDQ9573286395" type="HS - Law_Police"/>
-            <unit command-post="false" id="58" name="HS - Law_Police" position="31UDQ9607186919" type="HS - Law_Police"/>
-          </automat>
+          <phantom ghost-type="automat" id="47" knowledge-group="6" level="levels/iii" name="HS - Fire Suppression HQ [47]" nature="undefined/undefined/undefined/undefined" position="31UDQ9689488729" type="HS - Fire_Suppression_HQ"/>
+          <phantom ghost-type="automat" id="53" knowledge-group="6" level="levels/iii" name="HS - Police_HQ [53]" nature="undefined/undefined/undefined/undefined" position="31UDQ9599786850" type="HS - Police_HQ"/>
         </formation>
       </tactical>
       <communication>
@@ -198,10 +189,10 @@
       <objects/>
       <tactical>
         <formation id="4" level="x" name="Formation [4]">
-          <automat engaged="false" id="21" knowledge-group="22" name="Artillery firing battery [21]" type="Artillery firing battery">
-            <unit command-post="true" id="23" name="Battery CP" position="31UDR9136300355" type="Battery CP"/>
-            <unit command-post="false" id="24" name="Artillery firing platoon" position="31UDQ9208399870" type="Artillery firing platoon"/>
-            <unit command-post="false" id="25" name="Artillery firing platoon" position="31UDQ9136199356" type="Artillery firing platoon"/>
+          <automat engaged="false" id="21" knowledge-group="22" name="Artillery firing battery [21]" type="ART.Artillery firing battery">
+            <unit command-post="true" id="23" name="Battery CP" position="31UDR9136300355" type="ART.Battery CP"/>
+            <unit command-post="false" id="24" name="Artillery firing platoon" position="31UDQ9208399870" type="ART.Artillery firing platoon"/>
+            <unit command-post="false" id="25" name="Artillery firing platoon" position="31UDQ9136199356" type="ART.Artillery firing platoon"/>
           </automat>
         </formation>
       </tactical>
@@ -230,4 +221,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="2642531131" -->
+<!-- signature="1470926781" -->

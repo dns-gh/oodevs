@@ -22,13 +22,13 @@
       </objects>
       <tactical>
         <formation id="24" level="x" name="Formation [24]">
-          <automat engaged="true" id="39" knowledge-group="26" name="Drones station * [39]" type="Drones station">
-            <unit command-post="true" id="40" name="Drones station * [40]" position="33VWE0498973329" type="Drones station"/>
-            <unit command-post="false" id="43" name="Drone * [43]" position="33VWE0449372824" type="Drone (real time)"/>
+          <automat engaged="true" id="39" knowledge-group="26" name="Drones station * [39]" type="INT.UAV station">
+            <unit command-post="true" id="40" name="Drones station * [40]" position="33VWE0498973329" type="INT.UAV station"/>
+            <unit command-post="false" id="43" name="Drone * [43]" position="33VWE0449372824" type="INT.UAV"/>
           </automat>
-          <automat engaged="false" id="87" knowledge-group="26" name="Ground radar [87]" type="Ground surveillance radar">
-            <unit command-post="true" id="88" name="Ground radar [88]" position="33VVE9820383988" type="Ground surveillance radar"/>
-            <unit command-post="false" id="89" name="Ground radar [89]" position="33VWE1243488902" type="Ground surveillance radar"/>
+          <automat engaged="false" id="87" knowledge-group="26" name="Ground radar [87]" type="INT.Ground surveillance radar">
+            <unit command-post="true" id="88" name="Ground radar [88]" position="33VVE9820383988" type="INT.Ground surveillance radar"/>
+            <unit command-post="false" id="89" name="Ground radar [89]" position="33VWE1243488902" type="INT.Ground surveillance radar"/>
           </automat>
           <limit name="Limit 73">
             <point>33VWE0318170907</point>
@@ -53,67 +53,67 @@
           </limit>
         </formation>
         <formation id="38" level="x" name="Formation [38]">
-          <automat engaged="true" id="46" knowledge-group="26" name="MBT squadron [46]" type="MBT squadron">
-            <unit command-post="true" id="47" name="Armored CP [47]" position="33VWE0861876103" type="Armored squadron CP"/>
-            <unit command-post="false" id="48" name="MBT platoon [48]" position="33VWE0912475608" type="MBT platoon"/>
-            <unit command-post="false" id="49" name="MBT platoon [49]" position="33VWE0862775103" type="MBT platoon"/>
-            <unit command-post="false" id="50" name="MBT platoon [50]" position="33VWE0812275599" type="MBT platoon"/>
-            <unit command-post="false" id="51" name="MBT platoon [51]" position="33VWE0911976108" type="MBT platoon"/>
+          <automat engaged="true" id="46" knowledge-group="26" name="MBT squadron [46]" type="ARMOR.MBT squadron">
+            <unit command-post="true" id="47" name="Armored CP [47]" position="33VWE0861876103" type="ARMOR.Armored squadron CP"/>
+            <unit command-post="false" id="48" name="MBT platoon [48]" position="33VWE0912475608" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="49" name="MBT platoon [49]" position="33VWE0862775103" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="50" name="MBT platoon [50]" position="33VWE0812275599" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="51" name="MBT platoon [51]" position="33VWE0911976108" type="ARMOR.MBT platoon"/>
           </automat>
-          <automat engaged="true" id="52" knowledge-group="26" name="MBT squadron * [52]" type="MBT squadron">
-            <unit command-post="true" id="53" name="Armored CP * [53]" position="33VWE1371581740" type="Armored squadron CP"/>
-            <unit command-post="false" id="54" name="MBT platoon * [54]" position="33VWE1422181244" type="MBT platoon"/>
-            <unit command-post="false" id="55" name="MBT platoon * [55]" position="33VWE1372480739" type="MBT platoon"/>
-            <unit command-post="false" id="56" name="MBT platoon * [56]" position="33VWE1321981235" type="MBT platoon"/>
-            <unit command-post="false" id="57" name="MBT platoon * [57]" position="33VWE1421681744" type="MBT platoon"/>
+          <automat engaged="true" id="52" knowledge-group="26" name="MBT squadron * [52]" type="ARMOR.MBT squadron">
+            <unit command-post="true" id="53" name="Armored CP * [53]" position="33VWE1371581740" type="ARMOR.Armored squadron CP"/>
+            <unit command-post="false" id="54" name="MBT platoon * [54]" position="33VWE1422181244" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="55" name="MBT platoon * [55]" position="33VWE1372480739" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="56" name="MBT platoon * [56]" position="33VWE1321981235" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="57" name="MBT platoon * [57]" position="33VWE1421681744" type="ARMOR.MBT platoon"/>
           </automat>
-          <automat engaged="true" id="58" knowledge-group="26" name="L. armored squ. [58]" type="Light armored squadron">
-            <unit command-post="true" id="59" name="Armored CP [59]" position="33VWE1217078531" type="Armored squadron CP"/>
-            <unit command-post="false" id="60" name="L. armored pl. [60]" position="33VWE1267678036" type="Light armored platoon"/>
-            <unit command-post="false" id="61" name="L. armored pl. [61]" position="33VWE1217977531" type="Light armored platoon"/>
-            <unit command-post="false" id="62" name="L. armored pl. [62]" position="33VWE1167478027" type="Light armored platoon"/>
-            <unit command-post="false" id="63" name="L. armored pl. [63]" position="33VWE1267178536" type="Light armored platoon"/>
+          <automat engaged="true" id="58" knowledge-group="26" name="L. armored squ. [58]" type="ARMOR.Light armored squadron">
+            <unit command-post="true" id="59" name="Armored CP [59]" position="33VWE1217078531" type="ARMOR.Armored squadron CP"/>
+            <unit command-post="false" id="60" name="L. armored pl. [60]" position="33VWE1267678036" type="ARMOR.Light armored platoon"/>
+            <unit command-post="false" id="61" name="L. armored pl. [61]" position="33VWE1217977531" type="ARMOR.Light armored platoon"/>
+            <unit command-post="false" id="62" name="L. armored pl. [62]" position="33VWE1167478027" type="ARMOR.Light armored platoon"/>
+            <unit command-post="false" id="63" name="L. armored pl. [63]" position="33VWE1267178536" type="ARMOR.Light armored platoon"/>
           </automat>
         </formation>
         <formation id="64" level="x" name="Formation [64]">
-          <automat engaged="false" id="65" knowledge-group="26" name="Art. battery [65]" type="Artillery firing battery">
-            <unit command-post="true" id="66" name="Battery CP [66]" position="33VWE1123076340" type="Battery CP"/>
-            <unit command-post="false" id="67" name="Art. platoon [67]" position="33VWE1173575844" type="Artillery firing platoon"/>
-            <unit command-post="false" id="68" name="Art. platoon [68]" position="33VWE1123975340" type="Artillery firing platoon"/>
+          <automat engaged="false" id="65" knowledge-group="26" name="Art. battery [65]" type="ART.Artillery firing battery">
+            <unit command-post="true" id="66" name="Battery CP [66]" position="33VWE1123076340" type="ART.Battery CP"/>
+            <unit command-post="false" id="67" name="Art. platoon [67]" position="33VWE1173575844" type="ART.Artillery firing platoon"/>
+            <unit command-post="false" id="68" name="Art. platoon [68]" position="33VWE1123975340" type="ART.Artillery firing platoon"/>
           </automat>
-          <automat engaged="false" id="69" knowledge-group="26" name="Art. battery [69]" type="Artillery firing battery">
-            <unit command-post="true" id="70" name="Battery CP [70]" position="33VWE1485579593" type="Battery CP"/>
-            <unit command-post="false" id="71" name="Art. platoon * [71]" position="33VWE1536079098" type="Artillery firing platoon"/>
-            <unit command-post="false" id="72" name="Art. platoon [72]" position="33VWE1486478593" type="Artillery firing platoon"/>
+          <automat engaged="false" id="69" knowledge-group="26" name="Art. battery [69]" type="ART.Artillery firing battery">
+            <unit command-post="true" id="70" name="Battery CP [70]" position="33VWE1485579593" type="ART.Battery CP"/>
+            <unit command-post="false" id="71" name="Art. platoon * [71]" position="33VWE1536079098" type="ART.Artillery firing platoon"/>
+            <unit command-post="false" id="72" name="Art. platoon [72]" position="33VWE1486478593" type="ART.Artillery firing platoon"/>
           </automat>
         </formation>
         <formation id="76" level="x" name="Formation [76]">
-          <automat engaged="true" id="77" knowledge-group="26" name="Engineer Recon [77]" type="Countermobility company">
-            <unit command-post="true" id="78" name="Engineer pl. [78]" position="33VWE0318278152" type="Countermobility platoon"/>
-            <unit command-post="false" id="79" name="Engineer pl. [79]" position="33VWE0368777657" type="Countermobility platoon"/>
-            <unit command-post="false" id="80" name="Engineer pl. [80]" position="33VWE0319177152" type="Countermobility platoon"/>
+          <automat engaged="true" id="77" knowledge-group="26" name="Engineer Recon [77]" type="ENG.Countermobility company">
+            <unit command-post="true" id="78" name="Engineer pl. [78]" position="33VWE0318278152" type="ENG.Countermobility platoon"/>
+            <unit command-post="false" id="79" name="Engineer pl. [79]" position="33VWE0368777657" type="ENG.Countermobility platoon"/>
+            <unit command-post="false" id="80" name="Engineer pl. [80]" position="33VWE0319177152" type="ENG.Countermobility platoon"/>
           </automat>
-          <automat engaged="true" id="81" knowledge-group="26" name="Engineer Recon * [81]" type="Countermobility company">
-            <unit command-post="true" id="82" name="Engineer pl. * [82]" position="33VWE1458983690" type="Countermobility platoon"/>
-            <unit command-post="false" id="83" name="Engineer pl. * [83]" position="33VWE1509583194" type="Countermobility platoon"/>
-            <unit command-post="false" id="84" name="Engineer pl. * [84]" position="33VWE1459882690" type="Countermobility platoon"/>
+          <automat engaged="true" id="81" knowledge-group="26" name="Engineer Recon * [81]" type="ENG.Countermobility company">
+            <unit command-post="true" id="82" name="Engineer pl. * [82]" position="33VWE1458983690" type="ENG.Countermobility platoon"/>
+            <unit command-post="false" id="83" name="Engineer pl. * [83]" position="33VWE1509583194" type="ENG.Countermobility platoon"/>
+            <unit command-post="false" id="84" name="Engineer pl. * [84]" position="33VWE1459882690" type="ENG.Countermobility platoon"/>
           </automat>
-          <automat engaged="false" id="95" knowledge-group="26" name="Engineer company [95]" type="Countermobility company">
-            <unit command-post="true" id="96" name="Engineer pl. [96]" position="33VWE0547577835" type="Countermobility platoon"/>
-            <unit command-post="false" id="97" name="Engineer pl. * [97]" position="33VWE0479877541" type="Countermobility platoon"/>
-            <unit command-post="false" id="98" name="Engineer pl. [98]" position="33VWE0432677615" type="Countermobility platoon"/>
-            <unit command-post="false" id="99" name="Engineer pl. [99]" position="33VWE0479178298" type="Countermobility platoon"/>
-            <unit command-post="false" id="100" name="Engineer pl. [100]" position="33VWE0592177760" type="Countermobility platoon"/>
+          <automat engaged="false" id="95" knowledge-group="26" name="Engineer company [95]" type="ENG.Countermobility company">
+            <unit command-post="true" id="96" name="Engineer pl. [96]" position="33VWE0547577835" type="ENG.Countermobility platoon"/>
+            <unit command-post="false" id="97" name="Engineer pl. * [97]" position="33VWE0479877541" type="ENG.Countermobility platoon"/>
+            <unit command-post="false" id="98" name="Engineer pl. [98]" position="33VWE0432677615" type="ENG.Countermobility platoon"/>
+            <unit command-post="false" id="99" name="Engineer pl. [99]" position="33VWE0479178298" type="ENG.Countermobility platoon"/>
+            <unit command-post="false" id="100" name="Engineer pl. [100]" position="33VWE0592177760" type="ENG.Countermobility platoon"/>
           </automat>
         </formation>
         <formation id="139" level="x" name="Formation [139]">
-          <automat engaged="false" id="140" knowledge-group="26" name="Attack Hel. [140]" type="Attack Helicopter squadron">
-            <unit command-post="true" id="141" name="AAC CP [141]" position="33VWE0647375941" type="AAC CP"/>
-            <unit command-post="false" id="142" name="Antitank Hel. [142]" position="33VWE0697875446" type="Antitank Helicopter Patrol"/>
-            <unit command-post="false" id="143" name="L. Hel. [143]" position="33VWE0648274941" type="Light Escort and Close Support Helicopter Patrol"/>
-            <unit command-post="false" id="144" name="H. Hel. [144]" position="33VWE0597675437" type="Heavy Escort and Close Support Helicopter Patrol"/>
-            <unit command-post="false" id="145" name="General Hel. [145]" position="33VWE0697475946" type="General Purpose Helicopter Patrol"/>
-            <unit command-post="false" id="146" name="Air Def. Hel. [146]" position="33VWE0718675447" type="Air Defence Helicopter Patrol"/>
+          <automat engaged="false" id="140" knowledge-group="26" name="Attack Hel. [140]" type="AIR.Attack Helicopter squadron">
+            <unit command-post="true" id="141" name="AAC CP [141]" position="33VWE0647375941" type="AIR.AAC CP"/>
+            <unit command-post="false" id="142" name="Antitank Hel. [142]" position="33VWE0697875446" type="AIR.Antitank Helicopter Patrol"/>
+            <unit command-post="false" id="143" name="L. Hel. [143]" position="33VWE0648274941" type="AIR.Light Escort and Close Support Helicopter Patrol"/>
+            <unit command-post="false" id="144" name="H. Hel. [144]" position="33VWE0597675437" type="AIR.Heavy Escort and Close Support Helicopter Patrol"/>
+            <unit command-post="false" id="145" name="General Hel. [145]" position="33VWE0697475946" type="AIR.General Purpose Helicopter Patrol"/>
+            <unit command-post="false" id="146" name="Air Def. Hel. [146]" position="33VWE0718675447" type="AIR.Air Defence Helicopter Patrol"/>
           </automat>
         </formation>
       </tactical>
@@ -128,19 +128,19 @@
       <objects/>
       <tactical>
         <formation id="3" level="x" name="Formation [3]">
-          <automat engaged="true" id="4" knowledge-group="5" name="Inf. company [4]" type="Infantry company">
-            <unit command-post="true" id="6" name="Inf. company CP [6]" position="33VWE0136189480" type="Infantry company CP"/>
-            <unit command-post="false" id="7" name="Inf. platoon [7]" position="33VWE0186788985" type="Infantry platoon"/>
-            <unit command-post="false" id="10" name="L. armored pl. [10]" position="33VWE0186289485" type="Light armored platoon"/>
-            <unit command-post="false" id="17" name="Inf. platoon [17]" position="33VWE0136688922" type="Infantry platoon"/>
-            <unit command-post="false" id="18" name="Inf. platoon [18]" position="33VWE0163488616" type="Infantry platoon"/>
+          <automat engaged="true" id="4" knowledge-group="5" name="Inf. company [4]" type="INF.Infantry company">
+            <unit command-post="true" id="6" name="Inf. company CP [6]" position="33VWE0136189480" type="INF.Infantry company CP"/>
+            <unit command-post="false" id="7" name="Inf. platoon [7]" position="33VWE0186788985" type="INF.Infantry platoon"/>
+            <unit command-post="false" id="10" name="L. armored pl. [10]" position="33VWE0186289485" type="ARMOR.Light armored platoon"/>
+            <unit command-post="false" id="17" name="Inf. platoon [17]" position="33VWE0136688922" type="INF.Infantry platoon"/>
+            <unit command-post="false" id="18" name="Inf. platoon [18]" position="33VWE0163488616" type="INF.Infantry platoon"/>
           </automat>
-          <automat engaged="true" id="11" knowledge-group="5" name="Inf. company [11]" type="Infantry company">
-            <unit command-post="true" id="12" name="Inf. company CP [12]" position="33VWE0335490335" type="Infantry company CP"/>
-            <unit command-post="false" id="13" name="Inf. platoon [13]" position="33VWE0386089840" type="Infantry platoon"/>
-            <unit command-post="false" id="16" name="L. armored pl. [16]" position="33VWE0385590340" type="Light armored platoon"/>
-            <unit command-post="false" id="19" name="Inf. platoon [19]" position="33VWE0330089835" type="Infantry platoon"/>
-            <unit command-post="false" id="20" name="Inf. platoon [20]" position="33VWE0423890210" type="Infantry platoon"/>
+          <automat engaged="true" id="11" knowledge-group="5" name="Inf. company [11]" type="INF.Infantry company">
+            <unit command-post="true" id="12" name="Inf. company CP [12]" position="33VWE0335490335" type="INF.Infantry company CP"/>
+            <unit command-post="false" id="13" name="Inf. platoon [13]" position="33VWE0386089840" type="INF.Infantry platoon"/>
+            <unit command-post="false" id="16" name="L. armored pl. [16]" position="33VWE0385590340" type="ARMOR.Light armored platoon"/>
+            <unit command-post="false" id="19" name="Inf. platoon [19]" position="33VWE0330089835" type="INF.Infantry platoon"/>
+            <unit command-post="false" id="20" name="Inf. platoon [20]" position="33VWE0423890210" type="INF.Infantry platoon"/>
           </automat>
           <limit name="Limit 21">
             <point>33VVE9827791584</point>
@@ -169,16 +169,16 @@
       <objects/>
       <tactical>
         <formation id="106" level="x" name="Formation [106]">
-          <automat engaged="false" id="122" knowledge-group="123" name="MBT squadron [122]" type="MBT squadron">
-            <unit command-post="true" id="124" name="Armored CP [124]" position="33VWE7047094092" type="Armored squadron CP"/>
-            <unit command-post="false" id="127" name="MBT platoon [127]" position="33VWE7075293284" type="MBT platoon"/>
+          <automat engaged="false" id="122" knowledge-group="123" name="MBT squadron [122]" type="ARMOR.MBT squadron">
+            <unit command-post="true" id="124" name="Armored CP [124]" position="33VWE7047094092" type="ARMOR.Armored squadron CP"/>
+            <unit command-post="false" id="127" name="MBT platoon [127]" position="33VWE7075293284" type="ARMOR.MBT platoon"/>
           </automat>
-          <automat engaged="true" id="129" knowledge-group="123" name="MBT squadron [129]" type="MBT squadron">
-            <unit command-post="true" id="130" name="Armored CP [129]" position="33VWE7463196450" type="Armored squadron CP"/>
-            <unit command-post="false" id="131" name="MBT platoon [131]" position="33VWE7513695954" type="MBT platoon"/>
-            <unit command-post="false" id="132" name="MBT platoon [132]" position="33VWE7464095450" type="MBT platoon"/>
-            <unit command-post="false" id="133" name="MBT platoon [133]" position="33VWE7413495945" type="MBT platoon"/>
-            <unit command-post="false" id="134" name="MBT platoon [134]" position="33VWE7513296454" type="MBT platoon"/>
+          <automat engaged="true" id="129" knowledge-group="123" name="MBT squadron [129]" type="ARMOR.MBT squadron">
+            <unit command-post="true" id="130" name="Armored CP [129]" position="33VWE7463196450" type="ARMOR.Armored squadron CP"/>
+            <unit command-post="false" id="131" name="MBT platoon [131]" position="33VWE7513695954" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="132" name="MBT platoon [132]" position="33VWE7464095450" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="133" name="MBT platoon [133]" position="33VWE7413495945" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="134" name="MBT platoon [134]" position="33VWE7513296454" type="ARMOR.MBT platoon"/>
           </automat>
           <limit name="Limit 135">
             <point>33VWE7230995762</point>
@@ -201,16 +201,16 @@
       <objects/>
       <tactical>
         <formation id="105" level="x" name="Formation [105]">
-          <automat engaged="false" id="107" knowledge-group="108" name="MBT squadron [107]" type="MBT squadron">
-            <unit command-post="true" id="109" name="Armored CP [109]" position="33VWE7749087840" type="Armored squadron CP"/>
-            <unit command-post="false" id="112" name="MBT platoon [112]" position="33VWE7620488420" type="MBT platoon"/>
+          <automat engaged="false" id="107" knowledge-group="108" name="MBT squadron [107]" type="ARMOR.MBT squadron">
+            <unit command-post="true" id="109" name="Armored CP [109]" position="33VWE7749087840" type="ARMOR.Armored squadron CP"/>
+            <unit command-post="false" id="112" name="MBT platoon [112]" position="33VWE7620488420" type="ARMOR.MBT platoon"/>
           </automat>
-          <automat engaged="true" id="114" knowledge-group="108" name="MBT squadron [114]" type="MBT squadron">
-            <unit command-post="true" id="115" name="Armored CP [114]" position="33VWE8559386236" type="Armored squadron CP"/>
-            <unit command-post="false" id="116" name="MBT platoon [116]" position="33VWE8609885740" type="MBT platoon"/>
-            <unit command-post="false" id="117" name="MBT platoon [117]" position="33VWE8560285236" type="MBT platoon"/>
-            <unit command-post="false" id="118" name="MBT platoon [118]" position="33VWE8494185692" type="MBT platoon"/>
-            <unit command-post="false" id="119" name="MBT platoon [119]" position="33VWE8609486240" type="MBT platoon"/>
+          <automat engaged="true" id="114" knowledge-group="108" name="MBT squadron [114]" type="ARMOR.MBT squadron">
+            <unit command-post="true" id="115" name="Armored CP [114]" position="33VWE8559386236" type="ARMOR.Armored squadron CP"/>
+            <unit command-post="false" id="116" name="MBT platoon [116]" position="33VWE8609885740" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="117" name="MBT platoon [117]" position="33VWE8560285236" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="118" name="MBT platoon [118]" position="33VWE8494185692" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="119" name="MBT platoon [119]" position="33VWE8609486240" type="ARMOR.MBT platoon"/>
           </automat>
           <limit name="Limit 120">
             <point>33VWE8025484184</point>

@@ -188,126 +188,126 @@
             <unit command-post="false" id="216" name="HS - Law_Police" position="30UXU2880227190" type="HS - Law_Police"/>
           </automat>
           <formation id="228" level="x" name="Appui">
-            <automat engaged="false" id="89" knowledge-group="6" logistic-level="logistic-base" name="Log [89] [89]" type="Armored battalion combat train">
-              <unit command-post="false" id="13" name="ACA (Medical section)" position="30UXU1965349347" type="Medical section"/>
-              <unit command-post="false" id="27" name="Decontamination NBC (Logistic decontamination section)" position="30UXU3781350902" type="Logistic decontamination section"/>
-              <unit command-post="false" id="37" name="Groupe Maintenance Evacuation (Maintenance evacuation group)" position="30UXU5151954478" type="Maintenance evacuation group"/>
-              <unit command-post="false" id="38" name="Groupe Ramassage (Medical group VAB)" position="30UXU5307653167" type="Medical group VAB"/>
-              <unit command-post="true" id="68" name="PC TC2 (Logistic CT)" position="30UXU2169744605" type="Logistic CT"/>
-              <unit command-post="false" id="69" name="Peloton Transport (Supply group 60m3)" position="30UXU2388744911" type="Supply group 60m3"/>
-              <unit command-post="false" id="71" name="Pion stock (Ammo supply group)" position="30UXU2683645244" type="Ammo supply group"/>
-              <unit command-post="false" id="76" name="Section Maintenance (Repairs section (corps))" position="30UXU3527146299" type="Repairs section (corps)"/>
-              <unit command-post="false" id="77" name="Section Triage Modulaire (Casualty assessment section)" position="30UXU3628946266" type="Casualty assessment section"/>
-              <unit command-post="false" id="86" name="Unite PSY (Psychological section)" position="30UXU5232847729" type="Psychological section"/>
-              <unit command-post="false" id="209" name="Surgical section (modular)" position="30UXU1903950286" type="Surgical section (modular)"/>
+            <automat engaged="false" id="89" knowledge-group="6" logistic-level="logistic-base" name="Log [89] [89]" type="LOG.Armored battalion combat train">
+              <unit command-post="false" id="13" name="ACA (Medical section)" position="30UXU1965349347" type="LOG.Medical section"/>
+              <unit command-post="false" id="27" name="Decontamination NBC (Logistic decontamination section)" position="30UXU3781350902" type="LOG.Logistic decontamination section"/>
+              <unit command-post="false" id="37" name="Groupe Maintenance Evacuation (Maintenance evacuation group)" position="30UXU5151954478" type="LOG.Maintenance evacuation group"/>
+              <unit command-post="false" id="38" name="Groupe Ramassage (Medical group VAB)" position="30UXU5307653167" type="LOG.Medical group VAB"/>
+              <unit command-post="true" id="68" name="PC TC2 (Logistic CT)" position="30UXU2169744605" type="LOG.Logistic CT"/>
+              <unit command-post="false" id="69" name="Peloton Transport (Supply group 60m3)" position="30UXU2388744911" type="LOG.Supply group 60m3"/>
+              <unit command-post="false" id="71" name="Pion stock (Ammo supply group)" position="30UXU2683645244" type="LOG.Ammo supply group"/>
+              <unit command-post="false" id="76" name="Section Maintenance (Repairs section (corps))" position="30UXU3527146299" type="LOG.Repairs section (corps)"/>
+              <unit command-post="false" id="77" name="Section Triage Modulaire (Casualty assessment section)" position="30UXU3628946266" type="LOG.Casualty assessment section"/>
+              <unit command-post="false" id="86" name="Unite PSY (Psychological section)" position="30UXU5232847729" type="LOG.Psychological section"/>
+              <unit command-post="false" id="209" name="Surgical section (modular)" position="30UXU1903950286" type="LOG.Surgical section (modular)"/>
             </automat>
-            <automat engaged="false" id="94" knowledge-group="6" name="Alat [94]" type="Attack Helicopter squadron">
-              <unit command-post="false" id="15" name="Air Defence Helicopter Patrol" position="30UXU2371149730" type="Air Defence Helicopter Patrol"/>
-              <unit command-post="false" id="16" name="Antitank Helicopter Patrol" position="30UXU2522149879" type="Antitank Helicopter Patrol"/>
-              <unit command-post="true" id="84" name="Transport Helicopter Patrol" position="30UXU4917246958" type="Transport Helicopter Patrol"/>
+            <automat engaged="false" id="94" knowledge-group="6" name="Alat [94]" type="AIR.Attack Helicopter squadron">
+              <unit command-post="false" id="15" name="Air Defence Helicopter Patrol" position="30UXU2371149730" type="AIR.Air Defence Helicopter Patrol"/>
+              <unit command-post="false" id="16" name="Antitank Helicopter Patrol" position="30UXU2522149879" type="AIR.Antitank Helicopter Patrol"/>
+              <unit command-post="true" id="84" name="Transport Helicopter Patrol" position="30UXU4917246958" type="AIR.Transport Helicopter Patrol"/>
             </automat>
-            <automat engaged="false" id="105" knowledge-group="6" name="Genie [105]" type="Countermobility company">
-              <unit command-post="true" id="106" name="Countermobility platoon" position="30UXU3845251236" type="Countermobility platoon"/>
+            <automat engaged="false" id="105" knowledge-group="6" name="Genie [105]" type="ENG.Countermobility company">
+              <unit command-post="true" id="106" name="Countermobility platoon" position="30UXU3845251236" type="ENG.Countermobility platoon"/>
             </automat>
             <automat engaged="false" id="122" knowledge-group="6" name="Rens [122]" type="Ground suveillance radar">
-              <unit command-post="false" id="29" name="Drone (Drone (real time))" position="30UXU3706439501" type="Drone (real time)"/>
+              <unit command-post="false" id="29" name="Drone (Drone (real time))" position="30UXU3706439501" type="INT.UAV"/>
               <unit command-post="false" id="47" name="Jamming station" position="30UXU2678647984" type="Jamming station"/>
               <unit command-post="false" id="50" name="Listening Station" position="30UXU3154548598" type="Listening Station"/>
               <unit command-post="false" id="52" name="LRS troop" position="30UXU3425849138" type="LRS troop"/>
               <unit command-post="false" id="72" name="Radar detection station" position="30UXU2857545458" type="Radar detection station"/>
-              <unit command-post="false" id="123" name="Ground surveillance radar" position="30UXU1768842121" type="Ground surveillance radar"/>
-              <unit command-post="true" id="226" name="Drones station" position="30UXU3718040005" type="Drones station"/>
+              <unit command-post="false" id="123" name="Ground surveillance radar" position="30UXU1768842121" type="INT.Ground surveillance radar"/>
+              <unit command-post="true" id="226" name="Drones station" position="30UXU3718040005" type="INT.UAV station"/>
             </automat>
-            <automat engaged="false" id="230" knowledge-group="6" name="AppuiMob [230]" type="Transportation squadron">
-              <unit command-post="true" id="70" name="Heavy transportation platoon" position="30UXU2562845049" type="Heavy transportation platoon"/>
-              <unit command-post="false" id="441" name="Transportation platoon" position="30UXU2564745764" type="Transportation platoon"/>
+            <automat engaged="false" id="230" knowledge-group="6" name="AppuiMob [230]" type="TRANS.Transportation squadron">
+              <unit command-post="true" id="70" name="Heavy transportation platoon" position="30UXU2562845049" type="TRANS.Heavy transportation platoon"/>
+              <unit command-post="false" id="441" name="Transportation platoon" position="30UXU2564745764" type="TRANS.Transportation platoon"/>
             </automat>
-            <automat engaged="false" id="234" knowledge-group="6" name="ArtDsa [234]" type="Artillery firing battery">
-              <unit command-post="true" id="219" name="Surface To Air Battery CP" position="30UXU3314041292" type="Surface To Air Battery CP"/>
-              <unit command-post="false" id="220" name="Surface To Air Defense Troop (Very Short Range)" position="30UXU3354940599" type="Short Range Surface To Air Defense Troop"/>
+            <automat engaged="false" id="234" knowledge-group="6" name="ArtDsa [234]" type="ART.Artillery firing battery">
+              <unit command-post="true" id="219" name="Surface To Air Battery CP" position="30UXU3314041292" type="AAA.Surface To Air Battery CP"/>
+              <unit command-post="false" id="220" name="Surface To Air Defense Troop (Very Short Range)" position="30UXU3354940599" type="AAA.Surface To Air Defense Troop"/>
               <unit command-post="false" id="223" name="Patriot Launcher PLT (Theater High Altitude Defense Troop)" position="30UXU3755942256" type="Patriot Launcher PLT"/>
             </automat>
-            <automat engaged="false" id="238" knowledge-group="6" name="ArtFdp [238]" type="Artillery firing battery">
+            <automat engaged="false" id="238" knowledge-group="6" name="ArtFdp [238]" type="ART.Artillery firing battery">
               <unit command-post="false" id="21" name="Artillery locating radar group" position="30UXU3006550224" type="Artillery locating radar group"/>
-              <unit command-post="false" id="32" name="Field artillery reconnaissance (Artillery reconnaissance platoon)" position="30UXU4466552914" type="Artillery reconnaissance platoon"/>
-              <unit command-post="false" id="33" name="Firefinder radar" position="30UXU4692753723" type="Firefinder radar"/>
-              <unit command-post="false" id="34" name="Firing platoon (Artillery firing platoon)" position="30UXU4834953774" type="Artillery firing platoon"/>
+              <unit command-post="false" id="32" name="Field artillery reconnaissance (Artillery reconnaissance platoon)" position="30UXU4466552914" type="ART.Artillery reconnaissance platoon"/>
+              <unit command-post="false" id="33" name="Firefinder radar" position="30UXU4692753723" type="ART.Firefinder radar"/>
+              <unit command-post="false" id="34" name="Firing platoon (Artillery firing platoon)" position="30UXU4834953774" type="ART.Artillery firing platoon"/>
               <unit command-post="false" id="53" name="LRSD (Artillery LRSD)" position="30UXU3537949315" type="Artillery LRSD"/>
-              <unit command-post="false" id="57" name="MLRS firing platoon" position="30UXU4064650050" type="MLRS firing platoon"/>
+              <unit command-post="false" id="57" name="MLRS firing platoon" position="30UXU4064650050" type="ART.MLRS firing platoon"/>
               <unit command-post="false" id="75" name="SD (Artillery SD)" position="30UXU3364745868" type="Artillery SD"/>
-              <unit command-post="true" id="91" name="Battery CP" position="30UXU2042442264" type="Battery CP"/>
+              <unit command-post="true" id="91" name="Battery CP" position="30UXU2042442264" type="ART.Battery CP"/>
             </automat>
-            <automat engaged="false" id="242" knowledge-group="6" name="NBC [242]" type="NBC reconnaissance platoon">
-              <unit command-post="true" id="61" name="NBC decontamination troop" position="30UXU4554850499" type="NBC decontamination troop"/>
-              <unit command-post="false" id="62" name="NBC reconnaissance troop" position="30UXU4670250711" type="NBC reconnaissance troop"/>
-              <unit command-post="false" id="63" name="NBC ROTA troop" position="30UXU4768850815" type="NBC ROTA troop"/>
+            <automat engaged="false" id="242" knowledge-group="6" name="NBC [242]" type="NBC.Reconnaissance platoon">
+              <unit command-post="true" id="61" name="NBC decontamination troop" position="30UXU4554850499" type="NBC.Decontamination troop"/>
+              <unit command-post="false" id="62" name="NBC reconnaissance troop" position="30UXU4670250711" type="NBC.Reconnaissance troop"/>
+              <unit command-post="false" id="63" name="NBC ROTA troop" position="30UXU4768850815" type="NBC.ROTA troop"/>
             </automat>
             <automat engaged="false" id="246" knowledge-group="6" name="Major units CP [246]" type="Major units CP">
               <unit command-post="true" id="24" name="Command post (Major units command post)" position="30UXU3411950733" type="Major units command post"/>
             </automat>
           </formation>
-          <automat engaged="false" id="229" knowledge-group="6" name="Air [229]" type="Strategic Bomber Squadron">
-            <unit command-post="true" id="14" name="Air CP" position="30UXU2183149577" type="Air CP"/>
-            <unit command-post="false" id="80" name="Strategic Bomber Patrol" position="30UXU4424646705" type="Strategic Bomber Patrol"/>
+          <automat engaged="false" id="229" knowledge-group="6" name="Air [229]" type="JOINT.Strategic Bomber Squadron">
+            <unit command-post="true" id="14" name="Air CP" position="30UXU2183149577" type="AIR.Air CP"/>
+            <unit command-post="false" id="80" name="Strategic Bomber Patrol" position="30UXU4424646705" type="JOINT.Strategic Bomber Patrol"/>
           </automat>
           <automat engaged="false" id="248" knowledge-group="6" name="Secu (DIA5) [248]" type="HS - Fire_Suppression_HQ">
             <unit command-post="true" id="251" name="HS - Fire Suppression" position="30UXU2534541607" type="HS - Fire_Suppression"/>
           </automat>
           <formation id="253" level="x" name="Melee">
-            <automat engaged="false" id="254" knowledge-group="6" name="Abc [254]" type="MBT squadron">
-              <unit command-post="false" id="19" name="Antitank patrol" position="30UXU2681550022" type="Antitank patrol"/>
-              <unit command-post="true" id="20" name="Armored squadron CP" position="30UXU2869650146" type="Armored squadron CP"/>
-              <unit command-post="false" id="55" name="MBT platoon" position="30UXU3795949749" type="MBT platoon"/>
+            <automat engaged="false" id="254" knowledge-group="6" name="Abc [254]" type="ARMOR.MBT squadron">
+              <unit command-post="false" id="19" name="Antitank patrol" position="30UXU2681550022" type="ARMOR.Antitank patrol"/>
+              <unit command-post="true" id="20" name="Armored squadron CP" position="30UXU2869650146" type="ARMOR.Armored squadron CP"/>
+              <unit command-post="false" id="55" name="MBT platoon" position="30UXU3795949749" type="ARMOR.MBT platoon"/>
               <unit command-post="false" id="218" name="Motorized Infantry PLT" position="30UXU3688345007" type="Motorized Infantry PLT"/>
             </automat>
-            <automat engaged="false" id="260" knowledge-group="6" name="Inf [260]" type="Infantry company">
-              <unit command-post="false" id="25" name="Commando troop" position="30UXU3534450638" type="Commando troop"/>
-              <unit command-post="true" id="45" name="Infantry company CP" position="30UXU2375647704" type="Infantry company CP"/>
-              <unit command-post="false" id="46" name="Infantry platoon" position="30UXU2532347829" type="Infantry platoon"/>
+            <automat engaged="false" id="260" knowledge-group="6" name="Inf [260]" type="INF.Infantry company">
+              <unit command-post="false" id="25" name="Commando troop" position="30UXU3534450638" type="INF.Commando troop"/>
+              <unit command-post="true" id="45" name="Infantry company CP" position="30UXU2375647704" type="INF.Infantry company CP"/>
+              <unit command-post="false" id="46" name="Infantry platoon" position="30UXU2532347829" type="INF.Infantry platoon"/>
               <unit command-post="false" id="51" name="LRA infantry platoon" position="30UXU3269149014" type="LRA infantry platoon"/>
-              <unit command-post="false" id="59" name="Mortar troop" position="30UXU4289150301" type="Mortar troop"/>
-              <unit command-post="false" id="60" name="MRA infantry platoon (MRA troop)" position="30UXU4404750445" type="MRA troop"/>
+              <unit command-post="false" id="59" name="Mortar troop" position="30UXU4289150301" type="INF.Mortar troop"/>
+              <unit command-post="false" id="60" name="MRA infantry platoon (MRA troop)" position="30UXU4404750445" type="INF.MRA troop"/>
             </automat>
           </formation>
           <formation id="266" level="x" name="Population">
-            <automat engaged="false" id="121" knowledge-group="6" name="Asym [121]" type="Militias">
-              <unit command-post="true" id="56" name="Militia" position="30UXU3955949875" type="Militia"/>
+            <automat engaged="false" id="121" knowledge-group="6" name="Asym [121]" type="ASY.Militias">
+              <unit command-post="true" id="56" name="Militia" position="30UXU3955949875" type="ASY.Militia"/>
               <unit command-post="false" id="73" name="Refugee" position="30UXU3139445182" type="Refugee"/>
-              <unit command-post="false" id="81" name="Terrorist" position="30UXU4553746676" type="Terrorist"/>
+              <unit command-post="false" id="81" name="Terrorist" position="30UXU4553746676" type="ASY.Terrorist"/>
             </automat>
           </formation>
         </formation>
         <formation id="270" level="xxxx" name="Automates">
           <formation id="271" level="x" name="Melee">
             <formation id="272" level="iii" name="Abc">
-              <automat engaged="true" id="292" knowledge-group="6" name="MBT squadron (Armored squadron) [292]" type="MBT squadron">
-                <unit command-post="true" id="293" name="Armored squadron CP" position="30UXU9710429168" type="Armored squadron CP"/>
-                <unit command-post="false" id="294" name="MBT platoon" position="30UXU9762328687" type="MBT platoon"/>
-                <unit command-post="false" id="295" name="MBT platoon" position="30UXU9714028170" type="MBT platoon"/>
-                <unit command-post="false" id="296" name="MBT platoon" position="30UXU9662228651" type="MBT platoon"/>
-                <unit command-post="false" id="297" name="MBT platoon" position="30UXU9760529186" type="MBT platoon"/>
+              <automat engaged="true" id="292" knowledge-group="6" name="MBT squadron (Armored squadron) [292]" type="ARMOR.MBT squadron">
+                <unit command-post="true" id="293" name="Armored squadron CP" position="30UXU9710429168" type="ARMOR.Armored squadron CP"/>
+                <unit command-post="false" id="294" name="MBT platoon" position="30UXU9762328687" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="295" name="MBT platoon" position="30UXU9714028170" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="296" name="MBT platoon" position="30UXU9662228651" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="297" name="MBT platoon" position="30UXU9760529186" type="ARMOR.MBT platoon"/>
               </automat>
-              <automat engaged="true" id="307" knowledge-group="6" name="Teeth Arms Battalion (Battalion) [307]" type="Teeth Arms Battalion">
-                <unit command-post="true" id="308" name="Armored squadron CP" position="30UXU9885927983" type="Armored squadron CP"/>
+              <automat engaged="true" id="307" knowledge-group="6" name="Teeth Arms Battalion (Battalion) [307]" type="ARMOR.Teeth Arms Battalion">
+                <unit command-post="true" id="308" name="Armored squadron CP" position="30UXU9885927983" type="ARMOR.Armored squadron CP"/>
               </automat>
-              <automat engaged="true" id="450" knowledge-group="6" name="Scout platoon [450]" type="Scout platoon">
-                <unit command-post="false" id="451" name="Antitank patrol" position="30UYU0324741718" type="Antitank patrol"/>
-                <unit command-post="true" id="452" name="Scout patrol" position="30UYU0376541237" type="Scout patrol"/>
-                <unit command-post="false" id="453" name="Scout patrol" position="30UYU0328340719" type="Scout patrol"/>
+              <automat engaged="true" id="450" knowledge-group="6" name="Scout platoon [450]" type="ARMOR.Scout platoon">
+                <unit command-post="false" id="451" name="Antitank patrol" position="30UYU0324741718" type="ARMOR.Antitank patrol"/>
+                <unit command-post="true" id="452" name="Scout patrol" position="30UYU0376541237" type="ARMOR.Scout patrol"/>
+                <unit command-post="false" id="453" name="Scout patrol" position="30UYU0328340719" type="ARMOR.Scout patrol"/>
               </automat>
             </formation>
             <formation id="277" level="iii" name="Inf">
-              <automat engaged="true" id="313" knowledge-group="6" name="Commandos platoon [313]" type="Commandos platoon">
-                <unit command-post="true" id="314" name="Commando troop" position="30UXU9251028045" type="Commando troop"/>
-                <unit command-post="false" id="315" name="Commando troop" position="30UXU9302927563" type="Commando troop"/>
-                <unit command-post="false" id="316" name="Commando troop" position="30UXU9254627046" type="Commando troop"/>
+              <automat engaged="true" id="313" knowledge-group="6" name="Commandos platoon [313]" type="INF.Commandos platoon">
+                <unit command-post="true" id="314" name="Commando troop" position="30UXU9251028045" type="INF.Commando troop"/>
+                <unit command-post="false" id="315" name="Commando troop" position="30UXU9302927563" type="INF.Commando troop"/>
+                <unit command-post="false" id="316" name="Commando troop" position="30UXU9254627046" type="INF.Commando troop"/>
               </automat>
-              <automat engaged="true" id="383" knowledge-group="6" name="Infantry company [383]" type="Infantry company">
-                <unit command-post="true" id="384" name="Infantry company CP" position="31UBP7878135042" type="Infantry company CP"/>
-                <unit command-post="false" id="385" name="Infantry platoon" position="31UBP7926134521" type="Infantry platoon"/>
-                <unit command-post="false" id="386" name="MRA troop" position="31UBP7873934043" type="MRA troop"/>
-                <unit command-post="false" id="387" name="Mortar troop" position="31UBP7826034563" type="Mortar troop"/>
-                <unit command-post="false" id="388" name="Light armored platoon" position="31UBP7928235021" type="Light armored platoon"/>
+              <automat engaged="true" id="383" knowledge-group="6" name="Infantry company [383]" type="INF.Infantry company">
+                <unit command-post="true" id="384" name="Infantry company CP" position="31UBP7878135042" type="INF.Infantry company CP"/>
+                <unit command-post="false" id="385" name="Infantry platoon" position="31UBP7926134521" type="INF.Infantry platoon"/>
+                <unit command-post="false" id="386" name="MRA troop" position="31UBP7873934043" type="INF.MRA troop"/>
+                <unit command-post="false" id="387" name="Mortar troop" position="31UBP7826034563" type="INF.Mortar troop"/>
+                <unit command-post="false" id="388" name="Light armored platoon" position="31UBP7928235021" type="ARMOR.Light armored platoon"/>
               </automat>
               <automat engaged="true" id="399" knowledge-group="6" name="LRA infantry company [399]" type="LRA infantry company">
                 <unit command-post="true" id="400" name="LRA infantry platoon" position="30TYU2060011078" type="LRA infantry platoon"/>
@@ -321,20 +321,20 @@
               <automat engaged="true" id="298" knowledge-group="6" name="Artillery locating radar platoon [298]" type="Artillery locating radar platoon">
                 <unit command-post="true" id="299" name="Artillery locating radar group" position="30UYU0171727461" type="Artillery locating radar group"/>
               </automat>
-              <automat engaged="true" id="334" knowledge-group="6" name="Artillery firing battery (Field Battery) [334]" type="Artillery firing battery">
-                <unit command-post="true" id="335" name="Battery CP" position="30UXU9860039134" type="Battery CP"/>
-                <unit command-post="false" id="336" name="Artillery firing platoon" position="30UXU9911938652" type="Artillery firing platoon"/>
-                <unit command-post="false" id="337" name="Artillery firing platoon" position="30UXU9863738135" type="Artillery firing platoon"/>
+              <automat engaged="true" id="334" knowledge-group="6" name="Artillery firing battery (Field Battery) [334]" type="ART.Artillery firing battery">
+                <unit command-post="true" id="335" name="Battery CP" position="30UXU9860039134" type="ART.Battery CP"/>
+                <unit command-post="false" id="336" name="Artillery firing platoon" position="30UXU9911938652" type="ART.Artillery firing platoon"/>
+                <unit command-post="false" id="337" name="Artillery firing platoon" position="30UXU9863738135" type="ART.Artillery firing platoon"/>
               </automat>
-              <automat engaged="true" id="342" knowledge-group="6" name="Firefinder radar battery [342]" type="Firefinder radar battery">
-                <unit command-post="true" id="343" name="Firefinder radar" position="30UYU0459035695" type="Firefinder radar"/>
-                <unit command-post="false" id="344" name="Firefinder radar" position="30UYU0510935214" type="Firefinder radar"/>
-                <unit command-post="false" id="345" name="Firefinder radar" position="30UYU0462634697" type="Firefinder radar"/>
+              <automat engaged="true" id="342" knowledge-group="6" name="Firefinder radar battery [342]" type="ART.Firefinder radar battery">
+                <unit command-post="true" id="343" name="Firefinder radar" position="30UYU0459035695" type="ART.Firefinder radar"/>
+                <unit command-post="false" id="344" name="Firefinder radar" position="30UYU0510935214" type="ART.Firefinder radar"/>
+                <unit command-post="false" id="345" name="Firefinder radar" position="30UYU0462634697" type="ART.Firefinder radar"/>
               </automat>
-              <automat engaged="true" id="346" knowledge-group="6" name="Firefinder reconnaissance battery [346]" type="Firefinder reconnaissance battery">
-                <unit command-post="true" id="347" name="Firefinder reconnaissance platoon" position="30UYU0767336051" type="Firefinder reconnaissance platoon"/>
-                <unit command-post="false" id="348" name="Firefinder reconnaissance platoon" position="30UYU0819135570" type="Firefinder reconnaissance platoon"/>
-                <unit command-post="false" id="349" name="Firefinder reconnaissance platoon" position="30UYU0770935052" type="Firefinder reconnaissance platoon"/>
+              <automat engaged="true" id="346" knowledge-group="6" name="Firefinder reconnaissance battery [346]" type="ART.Firefinder reconnaissance battery">
+                <unit command-post="true" id="347" name="Firefinder reconnaissance platoon" position="30UYU0767336051" type="ART.Firefinder reconnaissance platoon"/>
+                <unit command-post="false" id="348" name="Firefinder reconnaissance platoon" position="30UYU0819135570" type="ART.Firefinder reconnaissance platoon"/>
+                <unit command-post="false" id="349" name="Firefinder reconnaissance platoon" position="30UYU0770935052" type="ART.Firefinder reconnaissance platoon"/>
               </automat>
               <automat engaged="true" id="350" knowledge-group="6" name="Artillery FIST [350]" type="Artillery FIST">
                 <unit command-post="true" id="351" name="Artillery SD" position="30UYU0307037184" type="Artillery SD"/>
@@ -343,48 +343,48 @@
               </automat>
             </formation>
             <formation id="275" level="iii" name="Alat">
-              <automat engaged="true" id="300" knowledge-group="6" name="Attack Helicopter squadron [300]" type="Attack Helicopter squadron">
-                <unit command-post="true" id="301" name="AAC CP" position="30UYU0536024887" type="AAC CP"/>
-                <unit command-post="false" id="302" name="Antitank Helicopter Patrol" position="30UYU0587924406" type="Antitank Helicopter Patrol"/>
-                <unit command-post="false" id="303" name="Light Escort and Close Support Helicopter Patrol" position="30UYU0539623888" type="Light Escort and Close Support Helicopter Patrol"/>
-                <unit command-post="false" id="304" name="Heavy Escort and Close Support Helicopter Patrol" position="30UYU0487724370" type="Heavy Escort and Close Support Helicopter Patrol"/>
-                <unit command-post="false" id="305" name="General Purpose Helicopter Patrol" position="30UYU0586124905" type="General Purpose Helicopter Patrol"/>
-                <unit command-post="false" id="306" name="Air Defence Helicopter Patrol" position="30UYU0608624413" type="Air Defence Helicopter Patrol"/>
+              <automat engaged="true" id="300" knowledge-group="6" name="Attack Helicopter squadron [300]" type="AIR.Attack Helicopter squadron">
+                <unit command-post="true" id="301" name="AAC CP" position="30UYU0536024887" type="AIR.AAC CP"/>
+                <unit command-post="false" id="302" name="Antitank Helicopter Patrol" position="30UYU0587924406" type="AIR.Antitank Helicopter Patrol"/>
+                <unit command-post="false" id="303" name="Light Escort and Close Support Helicopter Patrol" position="30UYU0539623888" type="AIR.Light Escort and Close Support Helicopter Patrol"/>
+                <unit command-post="false" id="304" name="Heavy Escort and Close Support Helicopter Patrol" position="30UYU0487724370" type="AIR.Heavy Escort and Close Support Helicopter Patrol"/>
+                <unit command-post="false" id="305" name="General Purpose Helicopter Patrol" position="30UYU0586124905" type="AIR.General Purpose Helicopter Patrol"/>
+                <unit command-post="false" id="306" name="Air Defence Helicopter Patrol" position="30UYU0608624413" type="AIR.Air Defence Helicopter Patrol"/>
               </automat>
-              <automat engaged="true" id="473" knowledge-group="6" name="Transport helicopter squadron [473]" type="Transport helicopter squadron">
-                <unit command-post="true" id="474" name="AAC CP" position="30UXU8484944199" type="AAC CP"/>
-                <unit command-post="false" id="475" name="Antitank Helicopter Patrol" position="30UXU8536843718" type="Antitank Helicopter Patrol"/>
-                <unit command-post="false" id="476" name="Light Escort and Close Support Helicopter Patrol" position="30UXU8488543200" type="Light Escort and Close Support Helicopter Patrol"/>
-                <unit command-post="false" id="477" name="Transport Helicopter Patrol" position="30UXU8436743681" type="Transport Helicopter Patrol"/>
-                <unit command-post="false" id="478" name="Heavy Escort and Close Support Helicopter Patrol" position="30UXU8535044217" type="Heavy Escort and Close Support Helicopter Patrol"/>
-                <unit command-post="false" id="479" name="General Purpose Helicopter Patrol" position="30UXU8557543725" type="General Purpose Helicopter Patrol"/>
+              <automat engaged="true" id="473" knowledge-group="6" name="Transport helicopter squadron [473]" type="AIR.Transport helicopter squadron">
+                <unit command-post="true" id="474" name="AAC CP" position="30UXU8484944199" type="AIR.AAC CP"/>
+                <unit command-post="false" id="475" name="Antitank Helicopter Patrol" position="30UXU8536843718" type="AIR.Antitank Helicopter Patrol"/>
+                <unit command-post="false" id="476" name="Light Escort and Close Support Helicopter Patrol" position="30UXU8488543200" type="AIR.Light Escort and Close Support Helicopter Patrol"/>
+                <unit command-post="false" id="477" name="Transport Helicopter Patrol" position="30UXU8436743681" type="AIR.Transport Helicopter Patrol"/>
+                <unit command-post="false" id="478" name="Heavy Escort and Close Support Helicopter Patrol" position="30UXU8535044217" type="AIR.Heavy Escort and Close Support Helicopter Patrol"/>
+                <unit command-post="false" id="479" name="General Purpose Helicopter Patrol" position="30UXU8557543725" type="AIR.General Purpose Helicopter Patrol"/>
               </automat>
             </formation>
             <formation id="276" level="iii" name="Genie">
-              <automat engaged="true" id="309" knowledge-group="6" name="Countermobility company [309]" type="Countermobility company">
-                <unit command-post="true" id="310" name="Countermobility platoon" position="30UXU9266540223" type="Countermobility platoon"/>
-                <unit command-post="false" id="312" name="Countermobility platoon" position="30UXU9334040157" type="Countermobility platoon"/>
-                <unit command-post="false" id="489" name="Bridging troop" position="30UXU9291640830" type="Bridging troop"/>
+              <automat engaged="true" id="309" knowledge-group="6" name="Countermobility company [309]" type="ENG.Countermobility company">
+                <unit command-post="true" id="310" name="Countermobility platoon" position="30UXU9266540223" type="ENG.Countermobility platoon"/>
+                <unit command-post="false" id="312" name="Countermobility platoon" position="30UXU9334040157" type="ENG.Countermobility platoon"/>
+                <unit command-post="false" id="489" name="Bridging troop" position="30UXU9291640830" type="ENG.Bridging troop"/>
               </automat>
-              <automat engaged="true" id="492" knowledge-group="6" name="Object detector [492]" type="Countermobility company">
-                <unit command-post="true" id="493" name="Countermobility platoon" position="30UXU9487043338" type="Countermobility platoon"/>
-                <unit command-post="false" id="494" name="Countermobility platoon" position="30UXU9664947350" type="Countermobility platoon"/>
-                <unit command-post="false" id="495" name="Countermobility platoon" position="30UXU9567345885" type="Countermobility platoon"/>
-                <unit command-post="false" id="496" name="Countermobility platoon" position="30UXU9801848315" type="Countermobility platoon"/>
-                <unit command-post="false" id="497" name="Countermobility platoon" position="30UXU9918149510" type="Countermobility platoon"/>
+              <automat engaged="true" id="492" knowledge-group="6" name="Object detector [492]" type="ENG.Countermobility company">
+                <unit command-post="true" id="493" name="Countermobility platoon" position="30UXU9487043338" type="ENG.Countermobility platoon"/>
+                <unit command-post="false" id="494" name="Countermobility platoon" position="30UXU9664947350" type="ENG.Countermobility platoon"/>
+                <unit command-post="false" id="495" name="Countermobility platoon" position="30UXU9567345885" type="ENG.Countermobility platoon"/>
+                <unit command-post="false" id="496" name="Countermobility platoon" position="30UXU9801848315" type="ENG.Countermobility platoon"/>
+                <unit command-post="false" id="497" name="Countermobility platoon" position="30UXU9918149510" type="ENG.Countermobility platoon"/>
               </automat>
             </formation>
             <formation id="278" level="iii" name="Rens">
-              <automat engaged="true" id="317" knowledge-group="6" name="Drones station [317]" type="Drones station">
-                <unit command-post="true" id="318" name="Drones station" position="30UXU9042433756" type="Drones station"/>
-                <unit command-post="false" id="319" name="Drone (real time)" position="30UXU9094333275" type="Drone (real time)"/>
-                <unit command-post="false" id="320" name="Drone (real time)" position="30UXU9046032758" type="Drone (real time)"/>
-                <unit command-post="false" id="321" name="Drone (real time)" position="30UXU8994233239" type="Drone (real time)"/>
-                <unit command-post="false" id="322" name="Drone (real time)" position="30UXU9092533774" type="Drone (real time)"/>
-                <unit command-post="false" id="323" name="Drone (real time)" position="30UXU9115033283" type="Drone (real time)"/>
+              <automat engaged="true" id="317" knowledge-group="6" name="Drones station [317]" type="INT.UAV station">
+                <unit command-post="true" id="318" name="Drones station" position="30UXU9042433756" type="INT.UAV station"/>
+                <unit command-post="false" id="319" name="Drone (real time)" position="30UXU9094333275" type="INT.UAV"/>
+                <unit command-post="false" id="320" name="Drone (real time)" position="30UXU9046032758" type="INT.UAV"/>
+                <unit command-post="false" id="321" name="Drone (real time)" position="30UXU8994233239" type="INT.UAV"/>
+                <unit command-post="false" id="322" name="Drone (real time)" position="30UXU9092533774" type="INT.UAV"/>
+                <unit command-post="false" id="323" name="Drone (real time)" position="30UXU9115033283" type="INT.UAV"/>
               </automat>
               <automat engaged="true" id="354" knowledge-group="6" name="Ground suveillance radar [354]" type="Ground suveillance radar">
-                <unit command-post="true" id="355" name="Ground surveillance radar" position="30UYU0351629362" type="Ground surveillance radar"/>
+                <unit command-post="true" id="355" name="Ground surveillance radar" position="30UYU0351629362" type="INT.Ground surveillance radar"/>
               </automat>
               <automat engaged="true" id="389" knowledge-group="6" name="Jamming station [389]" type="Jamming station">
                 <unit command-post="true" id="390" name="Jamming station" position="31UBP7917723812" type="Jamming station"/>
@@ -403,61 +403,61 @@
               </automat>
             </formation>
             <formation id="279" level="iii" name="AppuiMob">
-              <automat engaged="true" id="338" knowledge-group="6" name="Transportation squadron (Armored transport squadron) [338]" type="Transportation squadron">
-                <unit command-post="false" id="340" name="Medium transportation platoon" position="30UXU9985135308" type="Medium transportation platoon"/>
-                <unit command-post="false" id="341" name="Heavy transportation platoon" position="30UXU9936934791" type="Heavy transportation platoon"/>
-                <unit command-post="true" id="442" name="Transportation platoon" position="30UXU9939535810" type="Transportation platoon"/>
+              <automat engaged="true" id="338" knowledge-group="6" name="Transportation squadron (Armored transport squadron) [338]" type="TRANS.Transportation squadron">
+                <unit command-post="false" id="340" name="Medium transportation platoon" position="30UXU9985135308" type="TRANS.Medium transportation platoon"/>
+                <unit command-post="false" id="341" name="Heavy transportation platoon" position="30UXU9936934791" type="TRANS.Heavy transportation platoon"/>
+                <unit command-post="true" id="442" name="Transportation platoon" position="30UXU9939535810" type="TRANS.Transportation platoon"/>
               </automat>
             </formation>
             <formation id="281" level="iii" name="Log">
-              <automat engaged="true" id="393" knowledge-group="6" name="Maintenance logistic area (corps) [393]" type="Maintenance logistic area (corps)">
-                <unit command-post="true" id="394" name="Maintenance CP  (division)" position="31UBP8018539870" type="Maintenance CP  (division)"/>
-                <unit command-post="false" id="395" name="Maintenance evacuation group" position="31UBP8066539350" type="Maintenance evacuation group"/>
-                <unit command-post="false" id="396" name="Repairs section (corps)" position="31UBP8014338872" type="Repairs section (corps)"/>
-                <unit command-post="false" id="397" name="Mobility repairs section (corps)" position="31UBP7966339392" type="Mobility repairs section (corps)"/>
-                <unit command-post="false" id="398" name="Firing mobility repairs section (corps)" position="31UBP8068539849" type="Firing mobility repairs section (corps)"/>
+              <automat engaged="true" id="393" knowledge-group="6" name="Maintenance logistic area (corps) [393]" type="LOG.Maintenance logistic area (corps)">
+                <unit command-post="true" id="394" name="Maintenance CP  (division)" position="31UBP8018539870" type="LOG.Maintenance CP  (division)"/>
+                <unit command-post="false" id="395" name="Maintenance evacuation group" position="31UBP8066539350" type="LOG.Maintenance evacuation group"/>
+                <unit command-post="false" id="396" name="Repairs section (corps)" position="31UBP8014338872" type="LOG.Repairs section (corps)"/>
+                <unit command-post="false" id="397" name="Mobility repairs section (corps)" position="31UBP7966339392" type="LOG.Mobility repairs section (corps)"/>
+                <unit command-post="false" id="398" name="Firing mobility repairs section (corps)" position="31UBP8068539849" type="LOG.Firing mobility repairs section (corps)"/>
               </automat>
-              <automat engaged="true" id="465" knowledge-group="6" name="Logistic combat train [465]" type="Logistic combat train">
-                <unit command-post="true" id="466" name="Logistic CT" position="30UXU8565541365" type="Logistic CT"/>
+              <automat engaged="true" id="465" knowledge-group="6" name="Logistic combat train [465]" type="LOG.Logistic combat train">
+                <unit command-post="true" id="466" name="Logistic CT" position="30UXU8565541365" type="LOG.Logistic CT"/>
               </automat>
             </formation>
             <formation id="282" level="iii" name="Trans">
-              <automat engaged="true" id="411" knowledge-group="6" name="Battle group CP [411]" type="Battle group CP">
-                <unit command-post="true" id="412" name="Battle group command post" position="30UYU1857941712" type="Battle group command post"/>
+              <automat engaged="true" id="411" knowledge-group="6" name="Battle group CP [411]" type="CP.Battle group CP">
+                <unit command-post="true" id="412" name="Battle group command post" position="30UYU1857941712" type="CP.Battle group command post"/>
               </automat>
             </formation>
             <formation id="286" level="iii" name="Nbc">
-              <automat engaged="true" id="426" knowledge-group="6" name="NBC decontamination platoon [426]" type="NBC decontamination platoon">
-                <unit command-post="true" id="427" name="NBC decontamination troop" position="30UYU2220340624" type="NBC decontamination troop"/>
-                <unit command-post="false" id="428" name="NBC decontamination troop" position="30UYU2272240143" type="NBC decontamination troop"/>
+              <automat engaged="true" id="426" knowledge-group="6" name="NBC decontamination platoon [426]" type="NBC.Decontamination platoon">
+                <unit command-post="true" id="427" name="NBC decontamination troop" position="30UYU2220340624" type="NBC.Decontamination troop"/>
+                <unit command-post="false" id="428" name="NBC decontamination troop" position="30UYU2272240143" type="NBC.Decontamination troop"/>
               </automat>
-              <automat engaged="true" id="429" knowledge-group="6" name="NBC reconaissance platoon [429]" type="NBC reconnaissance platoon">
-                <unit command-post="true" id="430" name="NBC reconnaissance troop" position="31UBP7912842564" type="NBC reconnaissance troop"/>
-                <unit command-post="false" id="431" name="NBC reconnaissance troop" position="31UBP7960842044" type="NBC reconnaissance troop"/>
-                <unit command-post="false" id="432" name="NBC reconnaissance troop" position="31UBP7908641566" type="NBC reconnaissance troop"/>
+              <automat engaged="true" id="429" knowledge-group="6" name="NBC reconaissance platoon [429]" type="NBC.Reconnaissance platoon">
+                <unit command-post="true" id="430" name="NBC reconnaissance troop" position="31UBP7912842564" type="NBC.Reconnaissance troop"/>
+                <unit command-post="false" id="431" name="NBC reconnaissance troop" position="31UBP7960842044" type="NBC.Reconnaissance troop"/>
+                <unit command-post="false" id="432" name="NBC reconnaissance troop" position="31UBP7908641566" type="NBC.Reconnaissance troop"/>
               </automat>
-              <automat engaged="true" id="433" knowledge-group="6" name="NBC ROTA platoon [433]" type="NBC ROTA platoon">
-                <unit command-post="true" id="434" name="NBC ROTA troop" position="31UBP8219542192" type="NBC ROTA troop"/>
-                <unit command-post="false" id="435" name="NBC ROTA troop" position="31UBP8267441672" type="NBC ROTA troop"/>
-                <unit command-post="false" id="436" name="NBC ROTA troop" position="31UBP8215341194" type="NBC ROTA troop"/>
-                <unit command-post="false" id="437" name="NBC ROTA troop" position="31UBP8167341714" type="NBC ROTA troop"/>
-                <unit command-post="false" id="438" name="NBC ROTA troop" position="31UBP8269542171" type="NBC ROTA troop"/>
+              <automat engaged="true" id="433" knowledge-group="6" name="NBC ROTA platoon [433]" type="NBC.ROTA platoon">
+                <unit command-post="true" id="434" name="NBC ROTA troop" position="31UBP8219542192" type="NBC.ROTA troop"/>
+                <unit command-post="false" id="435" name="NBC ROTA troop" position="31UBP8267441672" type="NBC.ROTA troop"/>
+                <unit command-post="false" id="436" name="NBC ROTA troop" position="31UBP8215341194" type="NBC.ROTA troop"/>
+                <unit command-post="false" id="437" name="NBC ROTA troop" position="31UBP8167341714" type="NBC.ROTA troop"/>
+                <unit command-post="false" id="438" name="NBC ROTA troop" position="31UBP8269542171" type="NBC.ROTA troop"/>
               </automat>
             </formation>
             <formation id="287" level="iii" name="Circulation">
               <automat engaged="true" id="444" knowledge-group="6" name="Circulation platoon [444]" type="Circulation platoon">
-                <unit command-post="true" id="445" name="Transportation platoon" position="30UXU9633335270" type="Transportation platoon"/>
-                <unit command-post="false" id="446" name="Medium transportation platoon" position="30UXU9685234789" type="Medium transportation platoon"/>
-                <unit command-post="false" id="447" name="Heavy transportation platoon" position="30UXU9636934272" type="Heavy transportation platoon"/>
+                <unit command-post="true" id="445" name="Transportation platoon" position="30UXU9633335270" type="TRANS.Transportation platoon"/>
+                <unit command-post="false" id="446" name="Medium transportation platoon" position="30UXU9685234789" type="TRANS.Medium transportation platoon"/>
+                <unit command-post="false" id="447" name="Heavy transportation platoon" position="30UXU9636934272" type="TRANS.Heavy transportation platoon"/>
               </automat>
             </formation>
             <formation id="289" level="iii" name="ArtDsa">
-              <automat engaged="true" id="459" knowledge-group="6" name="Surface To Air Battery [459]" type="Surface To Air Battery">
-                <unit command-post="true" id="460" name="Surface To Air Battery CP" position="30UXU8894538870" type="Surface To Air Battery CP"/>
-                <unit command-post="false" id="461" name="Surface To Air Defense Troop" position="30UXU8946438389" type="Short Range Surface To Air Defense Troop"/>
-                <unit command-post="false" id="462" name="Surface To Air Defense Troop" position="30UXU8898137871" type="Short Range Surface To Air Defense Troop"/>
-                <unit command-post="false" id="463" name="Surface To Air Defense Troop" position="30UXU8846338352" type="Short Range Surface To Air Defense Troop"/>
-                <unit command-post="false" id="464" name="Surface To Air Defense Troop" position="30UXU8944638888" type="Short Range Surface To Air Defense Troop"/>
+              <automat engaged="true" id="459" knowledge-group="6" name="Surface To Air Battery [459]" type="AAA.Surface To Air Battery">
+                <unit command-post="true" id="460" name="Surface To Air Battery CP" position="30UXU8894538870" type="AAA.Surface To Air Battery CP"/>
+                <unit command-post="false" id="461" name="Surface To Air Defense Troop" position="30UXU8946438389" type="AAA.Surface To Air Defense Troop"/>
+                <unit command-post="false" id="462" name="Surface To Air Defense Troop" position="30UXU8898137871" type="AAA.Surface To Air Defense Troop"/>
+                <unit command-post="false" id="463" name="Surface To Air Defense Troop" position="30UXU8846338352" type="AAA.Surface To Air Defense Troop"/>
+                <unit command-post="false" id="464" name="Surface To Air Defense Troop" position="30UXU8944638888" type="AAA.Surface To Air Defense Troop"/>
               </automat>
               <automat engaged="true" id="470" knowledge-group="6" name="Patriot Fire Unit BTY [470]" type="Patriot Fire Unit BTY">
                 <unit command-post="true" id="471" name="Patriot BTY CP" position="30UXU8419447639" type="Patriot BTY CP"/>
@@ -494,21 +494,21 @@
           <formation id="283" level="x" name="Marine">
             <automat engaged="true" id="413" knowledge-group="6" name="Aircraft Carrier [413]" type="Aircraft Carrier">
               <unit command-post="false" id="414" name="Aircraft Carrier" position="30UXU9855723301" type="Aircraft Carrier"/>
-              <unit command-post="false" id="415" name="Strategic Bomber Patrol" position="30UXU9857823313" type="Strategic Bomber Patrol"/>
-              <unit command-post="false" id="416" name="Strategic Bomber Patrol" position="30UXU9857823297" type="Strategic Bomber Patrol"/>
-              <unit command-post="false" id="417" name="Strategic Bomber Patrol" position="30UXU9867323320" type="Strategic Bomber Patrol"/>
-              <unit command-post="false" id="418" name="Strategic Bomber Patrol" position="30UXU9865823368" type="Strategic Bomber Patrol"/>
-              <unit command-post="false" id="419" name="Strategic Bomber Patrol" position="30UXU9862823322" type="Strategic Bomber Patrol"/>
-              <unit command-post="false" id="420" name="Strategic Bomber Patrol" position="30UXU9863123332" type="Strategic Bomber Patrol"/>
-              <unit command-post="false" id="421" name="Strategic Bomber Patrol" position="30UXU9858923303" type="Strategic Bomber Patrol"/>
-              <unit command-post="false" id="422" name="Strategic Bomber Patrol" position="30UXU9862723335" type="Strategic Bomber Patrol"/>
+              <unit command-post="false" id="415" name="Strategic Bomber Patrol" position="30UXU9857823313" type="JOINT.Strategic Bomber Patrol"/>
+              <unit command-post="false" id="416" name="Strategic Bomber Patrol" position="30UXU9857823297" type="JOINT.Strategic Bomber Patrol"/>
+              <unit command-post="false" id="417" name="Strategic Bomber Patrol" position="30UXU9867323320" type="JOINT.Strategic Bomber Patrol"/>
+              <unit command-post="false" id="418" name="Strategic Bomber Patrol" position="30UXU9865823368" type="JOINT.Strategic Bomber Patrol"/>
+              <unit command-post="false" id="419" name="Strategic Bomber Patrol" position="30UXU9862823322" type="JOINT.Strategic Bomber Patrol"/>
+              <unit command-post="false" id="420" name="Strategic Bomber Patrol" position="30UXU9863123332" type="JOINT.Strategic Bomber Patrol"/>
+              <unit command-post="false" id="421" name="Strategic Bomber Patrol" position="30UXU9858923303" type="JOINT.Strategic Bomber Patrol"/>
+              <unit command-post="false" id="422" name="Strategic Bomber Patrol" position="30UXU9862723335" type="JOINT.Strategic Bomber Patrol"/>
               <unit command-post="true" id="423" name="Marine CP" position="30UXU9856723312" type="Marine CP"/>
             </automat>
           </formation>
           <formation id="284" level="x" name="Population">
             <formation id="285" level="iii" name="Milices">
-              <automat engaged="true" id="424" knowledge-group="6" name="Militias [424]" type="Militias">
-                <unit command-post="true" id="425" name="Militia" position="30UYU2082123407" type="Militia"/>
+              <automat engaged="true" id="424" knowledge-group="6" name="Militias [424]" type="ASY.Militias">
+                <unit command-post="true" id="425" name="Militia" position="30UYU2082123407" type="ASY.Militia"/>
               </automat>
             </formation>
             <formation id="288" level="iii" name="Refugies">
@@ -517,18 +517,18 @@
               </automat>
             </formation>
             <formation id="291" level="iii" name="Asymetriques">
-              <automat engaged="true" id="467" knowledge-group="6" name="Terrorists [467]" type="Terrorists">
-                <unit command-post="true" id="468" name="Terrorist" position="30UXU8659247541" type="Terrorist"/>
-                <unit command-post="false" id="469" name="Terrorist Bombmaker" position="30UXU8711147060" type="Terrorist Bombmaker"/>
+              <automat engaged="true" id="467" knowledge-group="6" name="Terrorists [467]" type="ASY.Terrorists">
+                <unit command-post="true" id="468" name="Terrorist" position="30UXU8659247541" type="ASY.Terrorist"/>
+                <unit command-post="false" id="469" name="Terrorist Bombmaker" position="30UXU8711147060" type="ASY.Terrorist Bombmaker"/>
               </automat>
             </formation>
           </formation>
           <formation id="290" level="x" name="Air">
-            <automat engaged="true" id="454" knowledge-group="6" name="Strategic Bomber Squadron [454]" type="Strategic Bomber Squadron">
-              <unit command-post="true" id="455" name="Air CP" position="30UYU0154928744" type="Air CP"/>
-              <unit command-post="false" id="456" name="Strategic Bomber Patrol" position="30UYU0206828262" type="Strategic Bomber Patrol"/>
-              <unit command-post="false" id="457" name="Strategic Bomber Patrol" position="30UYU0158527745" type="Strategic Bomber Patrol"/>
-              <unit command-post="false" id="458" name="Strategic Bomber Patrol" position="30UYU0106628226" type="Strategic Bomber Patrol"/>
+            <automat engaged="true" id="454" knowledge-group="6" name="Strategic Bomber Squadron [454]" type="JOINT.Strategic Bomber Squadron">
+              <unit command-post="true" id="455" name="Air CP" position="30UYU0154928744" type="AIR.Air CP"/>
+              <unit command-post="false" id="456" name="Strategic Bomber Patrol" position="30UYU0206828262" type="JOINT.Strategic Bomber Patrol"/>
+              <unit command-post="false" id="457" name="Strategic Bomber Patrol" position="30UYU0158527745" type="JOINT.Strategic Bomber Patrol"/>
+              <unit command-post="false" id="458" name="Strategic Bomber Patrol" position="30UYU0106628226" type="JOINT.Strategic Bomber Patrol"/>
             </automat>
           </formation>
           <limit name="Limit 324">
@@ -874,15 +874,15 @@
       </objects>
       <tactical>
         <formation id="127" level="x" name="Formation [127]">
-          <automat engaged="false" id="132" knowledge-group="133" name="Attack Helicopter squadron [132]" type="Attack Helicopter squadron">
-            <unit command-post="true" id="134" name="AAC CP" position="30UXU2069743884" type="AAC CP"/>
+          <automat engaged="false" id="132" knowledge-group="133" name="Attack Helicopter squadron [132]" type="AIR.Attack Helicopter squadron">
+            <unit command-post="true" id="134" name="AAC CP" position="30UXU2069743884" type="AIR.AAC CP"/>
           </automat>
-          <automat engaged="true" id="159" knowledge-group="133" name="MBT squadron [159]" type="MBT squadron">
-            <unit command-post="true" id="160" name="Armored squadron CP" position="30UXU3468648288" type="Armored squadron CP"/>
-            <unit command-post="false" id="161" name="MBT platoon" position="30UXU3520547807" type="MBT platoon"/>
-            <unit command-post="false" id="162" name="MBT platoon" position="30UXU3472247290" type="MBT platoon"/>
-            <unit command-post="false" id="163" name="MBT platoon" position="30UXU3420447771" type="MBT platoon"/>
-            <unit command-post="false" id="164" name="MBT platoon" position="30UXU3518648306" type="MBT platoon"/>
+          <automat engaged="true" id="159" knowledge-group="133" name="MBT squadron [159]" type="ARMOR.MBT squadron">
+            <unit command-post="true" id="160" name="Armored squadron CP" position="30UXU3468648288" type="ARMOR.Armored squadron CP"/>
+            <unit command-post="false" id="161" name="MBT platoon" position="30UXU3520547807" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="162" name="MBT platoon" position="30UXU3472247290" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="163" name="MBT platoon" position="30UXU3420447771" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="164" name="MBT platoon" position="30UXU3518648306" type="ARMOR.MBT platoon"/>
           </automat>
         </formation>
       </tactical>
@@ -907,8 +907,8 @@
       <objects/>
       <tactical>
         <formation id="131" level="x" name="Formation [131]">
-          <automat engaged="false" id="140" knowledge-group="141" name="Attack Helicopter squadron [140]" type="Attack Helicopter squadron">
-            <unit command-post="true" id="142" name="AAC CP" position="30UXU2274444085" type="AAC CP"/>
+          <automat engaged="false" id="140" knowledge-group="141" name="Attack Helicopter squadron [140]" type="AIR.Attack Helicopter squadron">
+            <unit command-post="true" id="142" name="AAC CP" position="30UXU2274444085" type="AIR.AAC CP"/>
           </automat>
         </formation>
       </tactical>
@@ -933,8 +933,8 @@
       <objects/>
       <tactical>
         <formation id="130" level="x" name="Formation [130]">
-          <automat engaged="false" id="148" knowledge-group="149" name="Attack Helicopter squadron [148]" type="Attack Helicopter squadron">
-            <unit command-post="true" id="150" name="AAC CP" position="30UXU2539544053" type="AAC CP"/>
+          <automat engaged="false" id="148" knowledge-group="149" name="Attack Helicopter squadron [148]" type="AIR.Attack Helicopter squadron">
+            <unit command-post="true" id="150" name="AAC CP" position="30UXU2539544053" type="AIR.AAC CP"/>
           </automat>
         </formation>
       </tactical>

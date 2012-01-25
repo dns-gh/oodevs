@@ -240,70 +240,70 @@
       <tactical>
         <formation id="5" level="iii" name="Formation [5]">
           <formation id="6" level="ii" name="Formation [6]">
-            <automat engaged="false" id="89" knowledge-group="1125" name="MBT squadron [89]" type="MBT squadron">
-              <unit command-post="true" id="90" name="Armored squadron CP" position="30TXU2771502184" type="Armored squadron CP"/>
-              <unit command-post="false" id="92" name="MBT platoon" position="30TXU9289004114" type="MBT platoon"/>
-              <unit command-post="false" id="93" name="MBT platoon" position="30TXU3170502187" type="MBT platoon"/>
-              <unit command-post="false" id="94" name="MBT platoon" position="31TCP0537604022" type="MBT platoon"/>
-              <unit command-post="false" id="154" name="MBT platoon" position="30TXT3438828534" type="MBT platoon"/>
+            <automat engaged="false" id="89" knowledge-group="1125" name="MBT squadron [89]" type="ARMOR.MBT squadron">
+              <unit command-post="true" id="90" name="Armored squadron CP" position="30TXU2771502184" type="ARMOR.Armored squadron CP"/>
+              <unit command-post="false" id="92" name="MBT platoon" position="30TXU9289004114" type="ARMOR.MBT platoon"/>
+              <unit command-post="false" id="93" name="MBT platoon" position="30TXU3170502187" type="ARMOR.MBT platoon"/>
+              <unit command-post="false" id="94" name="MBT platoon" position="31TCP0537604022" type="ARMOR.MBT platoon"/>
+              <unit command-post="false" id="154" name="MBT platoon" position="30TXT3438828534" type="ARMOR.MBT platoon"/>
             </automat>
-            <automat engaged="true" id="138" knowledge-group="1163" name="MBT squadron [138]" type="MBT squadron">
-              <unit command-post="true" id="139" name="Armored squadron CP" position="30TYT0911549975" type="Armored squadron CP"/>
-              <unit command-post="false" id="140" name="MBT platoon" position="30TYT0713251084" type="MBT platoon"/>
-              <unit command-post="false" id="141" name="MBT platoon" position="30TYT0781951327" type="MBT platoon"/>
-              <unit command-post="false" id="142" name="MBT platoon" position="30TYT0743051163" type="MBT platoon"/>
-              <unit command-post="false" id="143" name="Mortar troop" position="30TYT0903750438" type="Mortar troop"/>
-              <unit command-post="false" id="144" name="MBT platoon" position="30TYT0928551108" type="MBT platoon"/>
-              <unit command-post="false" id="1282" name="Light armored platoon" position="30TYT0909452165" type="Light armored platoon"/>
-              <unit command-post="false" id="1283" name="Light armored platoon" position="30TYT1030451863" type="Light armored platoon"/>
-              <unit command-post="false" id="1340" name="MRA troop" position="30TYT0800849051" type="MRA troop"/>
-              <unit command-post="false" id="1341" name="MRA troop" position="30TYT1143751383" type="MRA troop"/>
-              <unit command-post="false" id="1342" name="Mortar troop" position="30TYT1098751891" type="Mortar troop"/>
-              <unit command-post="false" id="1343" name="Mortar troop" position="30TYT0813349767" type="Mortar troop"/>
-              <unit command-post="false" id="1344" name="Mortar troop" position="30TYT1006851315" type="Mortar troop"/>
-              <unit command-post="false" id="1345" name="Light armored platoon" position="30TYT0879351794" type="Light armored platoon"/>
-              <unit command-post="false" id="1347" name="Mechanized infantry platoon" position="30TYT0749350343" type="Mechanized infantry platoon"/>
-              <unit command-post="false" id="1348" name="Mechanized infantry platoon" position="30TYT0969852219" type="Mechanized infantry platoon"/>
-              <unit command-post="false" id="1349" name="Mechanized infantry platoon" position="30TYT0844151126" type="Mechanized infantry platoon"/>
-              <unit command-post="false" id="1350" name="MRA troop" position="30TYT1003550659" type="MRA troop"/>
+            <automat engaged="true" id="138" knowledge-group="1163" name="MBT squadron [138]" type="ARMOR.MBT squadron">
+              <unit command-post="true" id="139" name="Armored squadron CP" position="30TYT0911549975" type="ARMOR.Armored squadron CP"/>
+              <unit command-post="false" id="140" name="MBT platoon" position="30TYT0713251084" type="ARMOR.MBT platoon"/>
+              <unit command-post="false" id="141" name="MBT platoon" position="30TYT0781951327" type="ARMOR.MBT platoon"/>
+              <unit command-post="false" id="142" name="MBT platoon" position="30TYT0743051163" type="ARMOR.MBT platoon"/>
+              <unit command-post="false" id="143" name="Mortar troop" position="30TYT0903750438" type="INF.Mortar troop"/>
+              <unit command-post="false" id="144" name="MBT platoon" position="30TYT0928551108" type="ARMOR.MBT platoon"/>
+              <unit command-post="false" id="1282" name="Light armored platoon" position="30TYT0909452165" type="ARMOR.Light armored platoon"/>
+              <unit command-post="false" id="1283" name="Light armored platoon" position="30TYT1030451863" type="ARMOR.Light armored platoon"/>
+              <unit command-post="false" id="1340" name="MRA troop" position="30TYT0800849051" type="INF.MRA troop"/>
+              <unit command-post="false" id="1341" name="MRA troop" position="30TYT1143751383" type="INF.MRA troop"/>
+              <unit command-post="false" id="1342" name="Mortar troop" position="30TYT1098751891" type="INF.Mortar troop"/>
+              <unit command-post="false" id="1343" name="Mortar troop" position="30TYT0813349767" type="INF.Mortar troop"/>
+              <unit command-post="false" id="1344" name="Mortar troop" position="30TYT1006851315" type="INF.Mortar troop"/>
+              <unit command-post="false" id="1345" name="Light armored platoon" position="30TYT0879351794" type="ARMOR.Light armored platoon"/>
+              <unit command-post="false" id="1347" name="Mechanized infantry platoon" position="30TYT0749350343" type="INF.Mechanized infantry platoon"/>
+              <unit command-post="false" id="1348" name="Mechanized infantry platoon" position="30TYT0969852219" type="INF.Mechanized infantry platoon"/>
+              <unit command-post="false" id="1349" name="Mechanized infantry platoon" position="30TYT0844151126" type="INF.Mechanized infantry platoon"/>
+              <unit command-post="false" id="1350" name="MRA troop" position="30TYT1003550659" type="INF.MRA troop"/>
             </automat>
-            <automat engaged="true" id="499" knowledge-group="1167" name="MBT squadron [499]" type="MBT squadron">
-              <unit command-post="true" id="500" name="Armored squadron CP" position="30TXS4190062538" type="Armored squadron CP"/>
-              <unit command-post="false" id="501" name="MBT platoon" position="30TXS4241862057" type="MBT platoon"/>
-              <unit command-post="false" id="502" name="MBT platoon" position="30TXS4193561540" type="MBT platoon"/>
-              <unit command-post="false" id="503" name="MBT platoon" position="30TXS4141762022" type="MBT platoon"/>
-              <unit command-post="false" id="504" name="MBT platoon" position="30TXS4240062556" type="MBT platoon"/>
-              <unit command-post="false" id="519" name="MBT platoon" position="30TXS4110962705" type="MBT platoon"/>
-              <unit command-post="false" id="520" name="MBT platoon" position="30TXS4071162166" type="MBT platoon"/>
-              <unit command-post="false" id="521" name="MBT platoon" position="30TXS4110661546" type="MBT platoon"/>
+            <automat engaged="true" id="499" knowledge-group="1167" name="MBT squadron [499]" type="ARMOR.MBT squadron">
+              <unit command-post="true" id="500" name="Armored squadron CP" position="30TXS4190062538" type="ARMOR.Armored squadron CP"/>
+              <unit command-post="false" id="501" name="MBT platoon" position="30TXS4241862057" type="ARMOR.MBT platoon"/>
+              <unit command-post="false" id="502" name="MBT platoon" position="30TXS4193561540" type="ARMOR.MBT platoon"/>
+              <unit command-post="false" id="503" name="MBT platoon" position="30TXS4141762022" type="ARMOR.MBT platoon"/>
+              <unit command-post="false" id="504" name="MBT platoon" position="30TXS4240062556" type="ARMOR.MBT platoon"/>
+              <unit command-post="false" id="519" name="MBT platoon" position="30TXS4110962705" type="ARMOR.MBT platoon"/>
+              <unit command-post="false" id="520" name="MBT platoon" position="30TXS4071162166" type="ARMOR.MBT platoon"/>
+              <unit command-post="false" id="521" name="MBT platoon" position="30TXS4110661546" type="ARMOR.MBT platoon"/>
             </automat>
-            <automat engaged="true" id="551" knowledge-group="1167" name="MBT squadron [551]" type="MBT squadron">
-              <unit command-post="true" id="552" name="Armored squadron CP" position="30TXS3583364314" type="Armored squadron CP"/>
-              <unit command-post="false" id="553" name="MBT platoon" position="30TXS3635163833" type="MBT platoon"/>
-              <unit command-post="false" id="554" name="MBT platoon" position="30TXS3586863316" type="MBT platoon"/>
-              <unit command-post="false" id="555" name="MBT platoon" position="30TXS3535063798" type="MBT platoon"/>
-              <unit command-post="false" id="556" name="MBT platoon" position="30TXS3633364332" type="MBT platoon"/>
-              <unit command-post="false" id="557" name="MBT platoon" position="30TXS3504264481" type="MBT platoon"/>
-              <unit command-post="false" id="558" name="MBT platoon" position="30TXS3464463942" type="MBT platoon"/>
-              <unit command-post="false" id="559" name="MBT platoon" position="30TXS3503963322" type="MBT platoon"/>
+            <automat engaged="true" id="551" knowledge-group="1167" name="MBT squadron [551]" type="ARMOR.MBT squadron">
+              <unit command-post="true" id="552" name="Armored squadron CP" position="30TXS3583364314" type="ARMOR.Armored squadron CP"/>
+              <unit command-post="false" id="553" name="MBT platoon" position="30TXS3635163833" type="ARMOR.MBT platoon"/>
+              <unit command-post="false" id="554" name="MBT platoon" position="30TXS3586863316" type="ARMOR.MBT platoon"/>
+              <unit command-post="false" id="555" name="MBT platoon" position="30TXS3535063798" type="ARMOR.MBT platoon"/>
+              <unit command-post="false" id="556" name="MBT platoon" position="30TXS3633364332" type="ARMOR.MBT platoon"/>
+              <unit command-post="false" id="557" name="MBT platoon" position="30TXS3504264481" type="ARMOR.MBT platoon"/>
+              <unit command-post="false" id="558" name="MBT platoon" position="30TXS3464463942" type="ARMOR.MBT platoon"/>
+              <unit command-post="false" id="559" name="MBT platoon" position="30TXS3503963322" type="ARMOR.MBT platoon"/>
             </automat>
-            <automat engaged="false" id="589" knowledge-group="1165" name="Infantry company [589]" type="Infantry company">
-              <unit command-post="false" id="595" name="Infantry platoon" position="30TYS0822067251" type="Infantry platoon"/>
-              <unit command-post="false" id="596" name="Infantry platoon" position="30TYS0764067558" type="Infantry platoon"/>
-              <unit command-post="false" id="597" name="Infantry platoon" position="30TYS0758567501" type="Infantry platoon"/>
-              <unit command-post="true" id="598" name="Infantry company CP" position="30TYS0834665211" type="Infantry company CP"/>
-              <unit command-post="false" id="630" name="Deployment support platoon" position="30TYS0207963786" type="Deployment support platoon"/>
+            <automat engaged="false" id="589" knowledge-group="1165" name="Infantry company [589]" type="INF.Infantry company">
+              <unit command-post="false" id="595" name="Infantry platoon" position="30TYS0822067251" type="INF.Infantry platoon"/>
+              <unit command-post="false" id="596" name="Infantry platoon" position="30TYS0764067558" type="INF.Infantry platoon"/>
+              <unit command-post="false" id="597" name="Infantry platoon" position="30TYS0758567501" type="INF.Infantry platoon"/>
+              <unit command-post="true" id="598" name="Infantry company CP" position="30TYS0834665211" type="INF.Infantry company CP"/>
+              <unit command-post="false" id="630" name="Deployment support platoon" position="30TYS0207963786" type="ENG.Deployment support platoon"/>
             </automat>
-            <automat engaged="true" id="632" knowledge-group="1165" logistic-level="logistic-base" name="Armored battalion combat train [632]" type="Armored battalion combat train">
-              <unit command-post="true" id="633" name="Teeth arms battalion CT" position="30TYS0079263689" type="Teeth arms battalion CT"/>
+            <automat engaged="true" id="632" knowledge-group="1165" logistic-level="logistic-base" name="Armored battalion combat train [632]" type="LOG.Armored battalion combat train">
+              <unit command-post="true" id="633" name="Teeth arms battalion CT" position="30TYS0079263689" type="LOG.Teeth arms battalion CT"/>
             </automat>
             <formation id="719" level="i" name="Formation [719]">
-              <automat engaged="true" id="699" knowledge-group="1166" name="MBT squadron [699]" type="MBT squadron">
-                <unit command-post="true" id="700" name="Armored squadron CP" position="31TCM0310064466" type="Armored squadron CP"/>
-                <unit command-post="false" id="701" name="MBT platoon" position="31TCM0358063946" type="MBT platoon"/>
-                <unit command-post="false" id="702" name="MBT platoon" position="31TCM0305963468" type="MBT platoon"/>
-                <unit command-post="false" id="703" name="MBT platoon" position="31TCM0257963987" type="MBT platoon"/>
-                <unit command-post="false" id="704" name="MBT platoon" position="31TCM0360064445" type="MBT platoon"/>
+              <automat engaged="true" id="699" knowledge-group="1166" name="MBT squadron [699]" type="ARMOR.MBT squadron">
+                <unit command-post="true" id="700" name="Armored squadron CP" position="31TCM0310064466" type="ARMOR.Armored squadron CP"/>
+                <unit command-post="false" id="701" name="MBT platoon" position="31TCM0358063946" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="702" name="MBT platoon" position="31TCM0305963468" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="703" name="MBT platoon" position="31TCM0257963987" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="704" name="MBT platoon" position="31TCM0360064445" type="ARMOR.MBT platoon"/>
                 <limit name="Limit 815">
                   <point>31TBM9723259524</point>
                   <point>31TCM0028078895</point>
@@ -341,102 +341,102 @@
                   <point>31TCM0298285874</point>
                 </limit>
               </automat>
-              <automat engaged="true" id="705" knowledge-group="1166" name="MBT squadron [705]" type="MBT squadron">
-                <unit command-post="true" id="706" name="Armored squadron CP" position="31TCM0774660377" type="Armored squadron CP"/>
-                <unit command-post="false" id="707" name="MBT platoon" position="31TCM0822759857" type="MBT platoon"/>
-                <unit command-post="false" id="708" name="MBT platoon" position="31TCM0770659379" type="MBT platoon"/>
-                <unit command-post="false" id="709" name="MBT platoon" position="31TCM0722659898" type="MBT platoon"/>
-                <unit command-post="false" id="710" name="MBT platoon" position="31TCM0824760356" type="MBT platoon"/>
+              <automat engaged="true" id="705" knowledge-group="1166" name="MBT squadron [705]" type="ARMOR.MBT squadron">
+                <unit command-post="true" id="706" name="Armored squadron CP" position="31TCM0774660377" type="ARMOR.Armored squadron CP"/>
+                <unit command-post="false" id="707" name="MBT platoon" position="31TCM0822759857" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="708" name="MBT platoon" position="31TCM0770659379" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="709" name="MBT platoon" position="31TCM0722659898" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="710" name="MBT platoon" position="31TCM0824760356" type="ARMOR.MBT platoon"/>
               </automat>
-              <automat engaged="true" id="711" knowledge-group="1166" name="Scout platoon [711]" type="Scout platoon">
-                <unit command-post="false" id="712" name="Antitank patrol" position="31TCM0892663478" type="Antitank patrol"/>
-                <unit command-post="true" id="713" name="Scout patrol" position="31TCM0940662958" type="Scout patrol"/>
-                <unit command-post="false" id="714" name="Scout patrol" position="31TCM0888562480" type="Scout patrol"/>
+              <automat engaged="true" id="711" knowledge-group="1166" name="Scout platoon [711]" type="ARMOR.Scout platoon">
+                <unit command-post="false" id="712" name="Antitank patrol" position="31TCM0892663478" type="ARMOR.Antitank patrol"/>
+                <unit command-post="true" id="713" name="Scout patrol" position="31TCM0940662958" type="ARMOR.Scout patrol"/>
+                <unit command-post="false" id="714" name="Scout patrol" position="31TCM0888562480" type="ARMOR.Scout patrol"/>
               </automat>
-              <automat engaged="true" id="715" knowledge-group="1166" name="Scout platoon [715]" type="Scout platoon">
-                <unit command-post="false" id="716" name="Antitank patrol" position="31TCM0574865457" type="Antitank patrol"/>
-                <unit command-post="true" id="717" name="Scout patrol" position="31TCM0622864938" type="Scout patrol"/>
-                <unit command-post="false" id="718" name="Scout patrol" position="31TCM0570764459" type="Scout patrol"/>
+              <automat engaged="true" id="715" knowledge-group="1166" name="Scout platoon [715]" type="ARMOR.Scout platoon">
+                <unit command-post="false" id="716" name="Antitank patrol" position="31TCM0574865457" type="ARMOR.Antitank patrol"/>
+                <unit command-post="true" id="717" name="Scout patrol" position="31TCM0622864938" type="ARMOR.Scout patrol"/>
+                <unit command-post="false" id="718" name="Scout patrol" position="31TCM0570764459" type="ARMOR.Scout patrol"/>
               </automat>
-              <automat engaged="false" id="720" knowledge-group="1166" name="Countermobility company [720]" type="Countermobility company">
-                <unit command-post="true" id="721" name="Countermobility platoon" position="31TCM0339661904" type="Countermobility platoon"/>
-                <unit command-post="false" id="722" name="Countermobility platoon" position="31TCM0387661385" type="Countermobility platoon"/>
-                <unit command-post="false" id="723" name="Countermobility platoon" position="31TCM0335660906" type="Countermobility platoon"/>
+              <automat engaged="false" id="720" knowledge-group="1166" name="Countermobility company [720]" type="ENG.Countermobility company">
+                <unit command-post="true" id="721" name="Countermobility platoon" position="31TCM0339661904" type="ENG.Countermobility platoon"/>
+                <unit command-post="false" id="722" name="Countermobility platoon" position="31TCM0387661385" type="ENG.Countermobility platoon"/>
+                <unit command-post="false" id="723" name="Countermobility platoon" position="31TCM0335660906" type="ENG.Countermobility platoon"/>
               </automat>
-              <automat engaged="false" id="724" knowledge-group="1166" name="Countermobility company [724]" type="Countermobility company">
-                <unit command-post="true" id="725" name="Countermobility platoon" position="31TCM0917858177" type="Countermobility platoon"/>
-                <unit command-post="false" id="726" name="Countermobility platoon" position="31TCM0965857658" type="Countermobility platoon"/>
-                <unit command-post="false" id="727" name="Countermobility platoon" position="31TCM0913757179" type="Countermobility platoon"/>
+              <automat engaged="false" id="724" knowledge-group="1166" name="Countermobility company [724]" type="ENG.Countermobility company">
+                <unit command-post="true" id="725" name="Countermobility platoon" position="31TCM0917858177" type="ENG.Countermobility platoon"/>
+                <unit command-post="false" id="726" name="Countermobility platoon" position="31TCM0965857658" type="ENG.Countermobility platoon"/>
+                <unit command-post="false" id="727" name="Countermobility platoon" position="31TCM0913757179" type="ENG.Countermobility platoon"/>
               </automat>
-              <automat engaged="true" id="744" knowledge-group="1166" name="Infantry company [744]" type="Infantry company">
-                <unit command-post="true" id="745" name="Infantry company CP" position="31TCM0742459370" type="Infantry company CP"/>
-                <unit command-post="false" id="746" name="Infantry platoon" position="31TCM0790458851" type="Infantry platoon"/>
-                <unit command-post="false" id="747" name="MRA troop" position="31TCM0738358373" type="MRA troop"/>
-                <unit command-post="false" id="748" name="Mortar troop" position="31TCM0690358892" type="Mortar troop"/>
-                <unit command-post="false" id="749" name="Light armored platoon" position="31TCM0792459350" type="Light armored platoon"/>
+              <automat engaged="true" id="744" knowledge-group="1166" name="Infantry company [744]" type="INF.Infantry company">
+                <unit command-post="true" id="745" name="Infantry company CP" position="31TCM0742459370" type="INF.Infantry company CP"/>
+                <unit command-post="false" id="746" name="Infantry platoon" position="31TCM0790458851" type="INF.Infantry platoon"/>
+                <unit command-post="false" id="747" name="MRA troop" position="31TCM0738358373" type="INF.MRA troop"/>
+                <unit command-post="false" id="748" name="Mortar troop" position="31TCM0690358892" type="INF.Mortar troop"/>
+                <unit command-post="false" id="749" name="Light armored platoon" position="31TCM0792459350" type="ARMOR.Light armored platoon"/>
               </automat>
-              <automat engaged="true" id="750" knowledge-group="1166" name="Infantry company [750]" type="Infantry company">
-                <unit command-post="true" id="751" name="Infantry company CP" position="31TCM0165563459" type="Infantry company CP"/>
-                <unit command-post="false" id="752" name="Infantry platoon" position="31TCM0213562939" type="Infantry platoon"/>
-                <unit command-post="false" id="753" name="MRA troop" position="31TCM0161462461" type="MRA troop"/>
-                <unit command-post="false" id="754" name="Mortar troop" position="31TCM0113462980" type="Mortar troop"/>
-                <unit command-post="false" id="755" name="Light armored platoon" position="31TCM0215563438" type="Light armored platoon"/>
+              <automat engaged="true" id="750" knowledge-group="1166" name="Infantry company [750]" type="INF.Infantry company">
+                <unit command-post="true" id="751" name="Infantry company CP" position="31TCM0165563459" type="INF.Infantry company CP"/>
+                <unit command-post="false" id="752" name="Infantry platoon" position="31TCM0213562939" type="INF.Infantry platoon"/>
+                <unit command-post="false" id="753" name="MRA troop" position="31TCM0161462461" type="INF.MRA troop"/>
+                <unit command-post="false" id="754" name="Mortar troop" position="31TCM0113462980" type="INF.Mortar troop"/>
+                <unit command-post="false" id="755" name="Light armored platoon" position="31TCM0215563438" type="ARMOR.Light armored platoon"/>
               </automat>
-              <automat engaged="true" id="974" knowledge-group="1166" name="MBT squadron [974]" type="MBT squadron">
-                <unit command-post="true" id="975" name="Armored squadron CP" position="31TCM1629353877" type="Armored squadron CP"/>
-                <unit command-post="false" id="976" name="MBT platoon" position="31TCM1677453358" type="MBT platoon"/>
-                <unit command-post="false" id="977" name="MBT platoon" position="31TCM1625352879" type="MBT platoon"/>
-                <unit command-post="false" id="978" name="MBT platoon" position="31TCM1577353399" type="MBT platoon"/>
-                <unit command-post="false" id="979" name="MBT platoon" position="31TCM1679453857" type="MBT platoon"/>
-                <unit command-post="false" id="1092" name="MBT platoon" position="31TCM1679252841" type="MBT platoon"/>
-                <unit command-post="false" id="1093" name="MBT platoon" position="31TCM1732753397" type="MBT platoon"/>
+              <automat engaged="true" id="974" knowledge-group="1166" name="MBT squadron [974]" type="ARMOR.MBT squadron">
+                <unit command-post="true" id="975" name="Armored squadron CP" position="31TCM1629353877" type="ARMOR.Armored squadron CP"/>
+                <unit command-post="false" id="976" name="MBT platoon" position="31TCM1677453358" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="977" name="MBT platoon" position="31TCM1625352879" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="978" name="MBT platoon" position="31TCM1577353399" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="979" name="MBT platoon" position="31TCM1679453857" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="1092" name="MBT platoon" position="31TCM1679252841" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="1093" name="MBT platoon" position="31TCM1732753397" type="ARMOR.MBT platoon"/>
               </automat>
-              <automat engaged="true" id="980" knowledge-group="1166" name="MBT squadron [980]" type="MBT squadron">
-                <unit command-post="true" id="981" name="Armored squadron CP" position="31TCM2059852436" type="Armored squadron CP"/>
-                <unit command-post="false" id="982" name="MBT platoon" position="31TCM2107851917" type="MBT platoon"/>
-                <unit command-post="false" id="983" name="MBT platoon" position="31TCM2055751438" type="MBT platoon"/>
-                <unit command-post="false" id="984" name="MBT platoon" position="31TCM2007751958" type="MBT platoon"/>
-                <unit command-post="false" id="985" name="MBT platoon" position="31TCM2109852416" type="MBT platoon"/>
-                <unit command-post="false" id="1090" name="MBT platoon" position="31TCM1997852668" type="MBT platoon"/>
-                <unit command-post="false" id="1091" name="MBT platoon" position="31TCM1944452134" type="MBT platoon"/>
+              <automat engaged="true" id="980" knowledge-group="1166" name="MBT squadron [980]" type="ARMOR.MBT squadron">
+                <unit command-post="true" id="981" name="Armored squadron CP" position="31TCM2059852436" type="ARMOR.Armored squadron CP"/>
+                <unit command-post="false" id="982" name="MBT platoon" position="31TCM2107851917" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="983" name="MBT platoon" position="31TCM2055751438" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="984" name="MBT platoon" position="31TCM2007751958" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="985" name="MBT platoon" position="31TCM2109852416" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="1090" name="MBT platoon" position="31TCM1997852668" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="1091" name="MBT platoon" position="31TCM1944452134" type="ARMOR.MBT platoon"/>
               </automat>
             </formation>
-            <automat engaged="false" id="846" knowledge-group="1166" name="Teeth Arms Battalion [846]" type="Teeth Arms Battalion">
-              <unit command-post="true" id="847" name="Armored squadron CP" position="31TCM2157056721" type="Armored squadron CP"/>
-              <automat engaged="true" id="848" knowledge-group="1166" name="MBT squadron [848]" type="MBT squadron">
-                <unit command-post="true" id="849" name="Armored squadron CP" position="31TCM1712255853" type="Armored squadron CP"/>
-                <unit command-post="false" id="850" name="MBT platoon" position="31TCM1760255334" type="MBT platoon"/>
-                <unit command-post="false" id="851" name="MBT platoon" position="31TCM1708154855" type="MBT platoon"/>
-                <unit command-post="false" id="852" name="MBT platoon" position="31TCM1660155374" type="MBT platoon"/>
-                <unit command-post="false" id="853" name="MBT platoon" position="31TCM1762355832" type="MBT platoon"/>
+            <automat engaged="false" id="846" knowledge-group="1166" name="Teeth Arms Battalion [846]" type="ARMOR.Teeth Arms Battalion">
+              <unit command-post="true" id="847" name="Armored squadron CP" position="31TCM2157056721" type="ARMOR.Armored squadron CP"/>
+              <automat engaged="true" id="848" knowledge-group="1166" name="MBT squadron [848]" type="ARMOR.MBT squadron">
+                <unit command-post="true" id="849" name="Armored squadron CP" position="31TCM1712255853" type="ARMOR.Armored squadron CP"/>
+                <unit command-post="false" id="850" name="MBT platoon" position="31TCM1760255334" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="851" name="MBT platoon" position="31TCM1708154855" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="852" name="MBT platoon" position="31TCM1660155374" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="853" name="MBT platoon" position="31TCM1762355832" type="ARMOR.MBT platoon"/>
               </automat>
-              <automat engaged="true" id="854" knowledge-group="1166" name="MBT squadron [854]" type="MBT squadron">
-                <unit command-post="true" id="855" name="Armored squadron CP" position="31TCM1922254467" type="Armored squadron CP"/>
-                <unit command-post="false" id="856" name="MBT platoon" position="31TCM1970253948" type="MBT platoon"/>
-                <unit command-post="false" id="857" name="MBT platoon" position="31TCM1918153470" type="MBT platoon"/>
-                <unit command-post="false" id="858" name="MBT platoon" position="31TCM1870153989" type="MBT platoon"/>
-                <unit command-post="false" id="859" name="MBT platoon" position="31TCM1972254447" type="MBT platoon"/>
+              <automat engaged="true" id="854" knowledge-group="1166" name="MBT squadron [854]" type="ARMOR.MBT squadron">
+                <unit command-post="true" id="855" name="Armored squadron CP" position="31TCM1922254467" type="ARMOR.Armored squadron CP"/>
+                <unit command-post="false" id="856" name="MBT platoon" position="31TCM1970253948" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="857" name="MBT platoon" position="31TCM1918153470" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="858" name="MBT platoon" position="31TCM1870153989" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="859" name="MBT platoon" position="31TCM1972254447" type="ARMOR.MBT platoon"/>
               </automat>
-              <automat engaged="true" id="860" knowledge-group="1166" name="MBT squadron [860]" type="MBT squadron">
-                <unit command-post="true" id="861" name="Armored squadron CP" position="31TCM2127854483" type="Armored squadron CP"/>
-                <unit command-post="false" id="862" name="MBT platoon" position="31TCM2175853964" type="MBT platoon"/>
-                <unit command-post="false" id="863" name="MBT platoon" position="31TCM2123753485" type="MBT platoon"/>
-                <unit command-post="false" id="864" name="MBT platoon" position="31TCM2075754005" type="MBT platoon"/>
-                <unit command-post="false" id="865" name="MBT platoon" position="31TCM2177954463" type="MBT platoon"/>
+              <automat engaged="true" id="860" knowledge-group="1166" name="MBT squadron [860]" type="ARMOR.MBT squadron">
+                <unit command-post="true" id="861" name="Armored squadron CP" position="31TCM2127854483" type="ARMOR.Armored squadron CP"/>
+                <unit command-post="false" id="862" name="MBT platoon" position="31TCM2175853964" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="863" name="MBT platoon" position="31TCM2123753485" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="864" name="MBT platoon" position="31TCM2075754005" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="865" name="MBT platoon" position="31TCM2177954463" type="ARMOR.MBT platoon"/>
               </automat>
-              <automat engaged="true" id="866" knowledge-group="1166" name="MBT squadron [866]" type="MBT squadron">
-                <unit command-post="true" id="867" name="Armored squadron CP" position="31TCM2118958436" type="Armored squadron CP"/>
-                <unit command-post="false" id="868" name="MBT platoon" position="31TCM2166957916" type="MBT platoon"/>
-                <unit command-post="false" id="869" name="MBT platoon" position="31TCM2114857438" type="MBT platoon"/>
-                <unit command-post="false" id="870" name="MBT platoon" position="31TCM2066857957" type="MBT platoon"/>
-                <unit command-post="false" id="871" name="MBT platoon" position="31TCM2168958415" type="MBT platoon"/>
+              <automat engaged="true" id="866" knowledge-group="1166" name="MBT squadron [866]" type="ARMOR.MBT squadron">
+                <unit command-post="true" id="867" name="Armored squadron CP" position="31TCM2118958436" type="ARMOR.Armored squadron CP"/>
+                <unit command-post="false" id="868" name="MBT platoon" position="31TCM2166957916" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="869" name="MBT platoon" position="31TCM2114857438" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="870" name="MBT platoon" position="31TCM2066857957" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="871" name="MBT platoon" position="31TCM2168958415" type="ARMOR.MBT platoon"/>
               </automat>
-              <automat engaged="true" id="872" knowledge-group="1166" name="MBT squadron [872]" type="MBT squadron">
-                <unit command-post="true" id="873" name="Armored squadron CP" position="31TCM2294254715" type="Armored squadron CP"/>
-                <unit command-post="false" id="874" name="MBT platoon" position="31TCM2342254196" type="MBT platoon"/>
-                <unit command-post="false" id="875" name="MBT platoon" position="31TCM2290153717" type="MBT platoon"/>
-                <unit command-post="false" id="876" name="MBT platoon" position="31TCM2242154237" type="MBT platoon"/>
-                <unit command-post="false" id="877" name="MBT platoon" position="31TCM2344354695" type="MBT platoon"/>
+              <automat engaged="true" id="872" knowledge-group="1166" name="MBT squadron [872]" type="ARMOR.MBT squadron">
+                <unit command-post="true" id="873" name="Armored squadron CP" position="31TCM2294254715" type="ARMOR.Armored squadron CP"/>
+                <unit command-post="false" id="874" name="MBT platoon" position="31TCM2342254196" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="875" name="MBT platoon" position="31TCM2290153717" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="876" name="MBT platoon" position="31TCM2242154237" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="877" name="MBT platoon" position="31TCM2344354695" type="ARMOR.MBT platoon"/>
               </automat>
             </automat>
             <lima name="Lima 100">
@@ -677,46 +677,46 @@
       <tactical>
         <formation id="15" level="iii" name="Formation [15]">
           <formation id="16" level="ii" name="Formation [16]">
-            <automat engaged="false" id="262" knowledge-group="1171" name="Light armored squadron [262]" type="Light armored squadron">
-              <unit command-post="true" id="263" name="Armored squadron CP" position="31TCP1725215546" type="Armored squadron CP"/>
-              <unit command-post="false" id="265" name="Light armored platoon" position="31TCP1448014711" type="Light armored platoon"/>
-              <unit command-post="false" id="268" name="Light armored platoon" position="31TCP1492614276" type="Light armored platoon"/>
-              <unit command-post="false" id="299" name="Light armored platoon" position="31TCP1596115289" type="Light armored platoon"/>
+            <automat engaged="false" id="262" knowledge-group="1171" name="Light armored squadron [262]" type="ARMOR.Light armored squadron">
+              <unit command-post="true" id="263" name="Armored squadron CP" position="31TCP1725215546" type="ARMOR.Armored squadron CP"/>
+              <unit command-post="false" id="265" name="Light armored platoon" position="31TCP1448014711" type="ARMOR.Light armored platoon"/>
+              <unit command-post="false" id="268" name="Light armored platoon" position="31TCP1492614276" type="ARMOR.Light armored platoon"/>
+              <unit command-post="false" id="299" name="Light armored platoon" position="31TCP1596115289" type="ARMOR.Light armored platoon"/>
             </automat>
-            <automat engaged="false" id="279" knowledge-group="1172" name="Light armored squadron [279]" type="Light armored squadron">
-              <unit command-post="true" id="280" name="Armored squadron CP" position="30TXT4522041059" type="Armored squadron CP"/>
-              <unit command-post="false" id="282" name="Light armored platoon" position="30TXT4262939893" type="Light armored platoon"/>
-              <unit command-post="false" id="283" name="Light armored platoon" position="30TXT4297439402" type="Light armored platoon"/>
-              <unit command-post="false" id="298" name="Light armored platoon" position="30TXT4408940523" type="Light armored platoon"/>
+            <automat engaged="false" id="279" knowledge-group="1172" name="Light armored squadron [279]" type="ARMOR.Light armored squadron">
+              <unit command-post="true" id="280" name="Armored squadron CP" position="30TXT4522041059" type="ARMOR.Armored squadron CP"/>
+              <unit command-post="false" id="282" name="Light armored platoon" position="30TXT4262939893" type="ARMOR.Light armored platoon"/>
+              <unit command-post="false" id="283" name="Light armored platoon" position="30TXT4297439402" type="ARMOR.Light armored platoon"/>
+              <unit command-post="false" id="298" name="Light armored platoon" position="30TXT4408940523" type="ARMOR.Light armored platoon"/>
             </automat>
-            <automat engaged="true" id="290" knowledge-group="1173" name="Light armored squadron [290]" type="Light armored squadron">
-              <unit command-post="true" id="291" name="Armored squadron CP" position="30TXT9145053948" type="Armored squadron CP"/>
-              <unit command-post="false" id="293" name="Light armored platoon" position="30TXT9195752632" type="Light armored platoon"/>
-              <unit command-post="false" id="294" name="Light armored platoon" position="30TXT9259752471" type="Light armored platoon"/>
-              <unit command-post="false" id="297" name="Light armored platoon" position="30TXT9329253223" type="Light armored platoon"/>
-              <unit command-post="false" id="1328" name="Light armored platoon" position="30TXT9242853665" type="Light armored platoon"/>
+            <automat engaged="true" id="290" knowledge-group="1173" name="Light armored squadron [290]" type="ARMOR.Light armored squadron">
+              <unit command-post="true" id="291" name="Armored squadron CP" position="30TXT9145053948" type="ARMOR.Armored squadron CP"/>
+              <unit command-post="false" id="293" name="Light armored platoon" position="30TXT9195752632" type="ARMOR.Light armored platoon"/>
+              <unit command-post="false" id="294" name="Light armored platoon" position="30TXT9259752471" type="ARMOR.Light armored platoon"/>
+              <unit command-post="false" id="297" name="Light armored platoon" position="30TXT9329253223" type="ARMOR.Light armored platoon"/>
+              <unit command-post="false" id="1328" name="Light armored platoon" position="30TXT9242853665" type="ARMOR.Light armored platoon"/>
             </automat>
-            <automat engaged="true" id="505" knowledge-group="1174" name="MBT squadron [505]" type="MBT squadron">
-              <unit command-post="true" id="506" name="Armored squadron CP" position="30TXS5099776713" type="Armored squadron CP"/>
-              <unit command-post="false" id="507" name="MBT platoon" position="30TXS5259874504" type="MBT platoon"/>
-              <unit command-post="false" id="508" name="MBT platoon" position="30TXS5062174988" type="MBT platoon"/>
-              <unit command-post="false" id="509" name="MBT platoon" position="30TXS5133774560" type="MBT platoon"/>
-              <unit command-post="false" id="522" name="MBT platoon" position="30TXS4981575441" type="MBT platoon"/>
+            <automat engaged="true" id="505" knowledge-group="1174" name="MBT squadron [505]" type="ARMOR.MBT squadron">
+              <unit command-post="true" id="506" name="Armored squadron CP" position="30TXS5099776713" type="ARMOR.Armored squadron CP"/>
+              <unit command-post="false" id="507" name="MBT platoon" position="30TXS5259874504" type="ARMOR.MBT platoon"/>
+              <unit command-post="false" id="508" name="MBT platoon" position="30TXS5062174988" type="ARMOR.MBT platoon"/>
+              <unit command-post="false" id="509" name="MBT platoon" position="30TXS5133774560" type="ARMOR.MBT platoon"/>
+              <unit command-post="false" id="522" name="MBT platoon" position="30TXS4981575441" type="ARMOR.MBT platoon"/>
             </automat>
-            <automat engaged="true" id="569" knowledge-group="1174" name="MBT squadron [569]" type="MBT squadron">
-              <unit command-post="true" id="570" name="Armored squadron CP" position="30TXS4510681541" type="Armored squadron CP"/>
-              <unit command-post="false" id="571" name="MBT platoon" position="30TXS4670879332" type="MBT platoon"/>
-              <unit command-post="false" id="572" name="MBT platoon" position="30TXS4473179816" type="MBT platoon"/>
-              <unit command-post="false" id="573" name="MBT platoon" position="30TXS4544779388" type="MBT platoon"/>
-              <unit command-post="false" id="576" name="MBT platoon" position="30TXS4330380495" type="MBT platoon"/>
+            <automat engaged="true" id="569" knowledge-group="1174" name="MBT squadron [569]" type="ARMOR.MBT squadron">
+              <unit command-post="true" id="570" name="Armored squadron CP" position="30TXS4510681541" type="ARMOR.Armored squadron CP"/>
+              <unit command-post="false" id="571" name="MBT platoon" position="30TXS4670879332" type="ARMOR.MBT platoon"/>
+              <unit command-post="false" id="572" name="MBT platoon" position="30TXS4473179816" type="ARMOR.MBT platoon"/>
+              <unit command-post="false" id="573" name="MBT platoon" position="30TXS4544779388" type="ARMOR.MBT platoon"/>
+              <unit command-post="false" id="576" name="MBT platoon" position="30TXS4330380495" type="ARMOR.MBT platoon"/>
             </automat>
-            <automat engaged="true" id="1325" knowledge-group="1168" name="Light armored squadron [1325]" type="Light armored squadron">
-              <unit command-post="true" id="1326" name="Armored squadron CP" position="30TXT9345659535" type="Armored squadron CP"/>
-              <unit command-post="false" id="1327" name="Light armored platoon" position="30TXT9536259460" type="Light armored platoon"/>
-              <unit command-post="false" id="1329" name="Light armored platoon" position="30TXT9436159425" type="Light armored platoon"/>
-              <unit command-post="false" id="1330" name="Light armored platoon" position="30TXT9534459959" type="Light armored platoon"/>
-              <unit command-post="false" id="1331" name="Armored RASIT Group" position="30TXT9556959468" type="Armored RASIT Group"/>
-              <unit command-post="false" id="1332" name="Armored direct support group" position="30TXT9538058961" type="Armored direct support group"/>
+            <automat engaged="true" id="1325" knowledge-group="1168" name="Light armored squadron [1325]" type="ARMOR.Light armored squadron">
+              <unit command-post="true" id="1326" name="Armored squadron CP" position="30TXT9345659535" type="ARMOR.Armored squadron CP"/>
+              <unit command-post="false" id="1327" name="Light armored platoon" position="30TXT9536259460" type="ARMOR.Light armored platoon"/>
+              <unit command-post="false" id="1329" name="Light armored platoon" position="30TXT9436159425" type="ARMOR.Light armored platoon"/>
+              <unit command-post="false" id="1330" name="Light armored platoon" position="30TXT9534459959" type="ARMOR.Light armored platoon"/>
+              <unit command-post="false" id="1331" name="Armored RASIT Group" position="30TXT9556959468" type="ARMOR.Armored RASIT Group"/>
+              <unit command-post="false" id="1332" name="Armored direct support group" position="30TXT9538058961" type="ARMOR.Armored direct support group"/>
             </automat>
             <limit name="Limit 577">
               <point>30TXS4813081147</point>
@@ -732,118 +732,118 @@
             </limit>
           </formation>
           <formation id="619" level="ii" name="Formation [619]">
-            <automat engaged="true" id="603" knowledge-group="1168" name="MBT squadron [603]" type="MBT squadron">
-              <unit command-post="true" id="604" name="Armored squadron CP" position="30TYS1371790803" type="Armored squadron CP"/>
-              <unit command-post="false" id="605" name="MBT platoon" position="30TYS1423590321" type="MBT platoon"/>
-              <unit command-post="false" id="606" name="MBT platoon" position="30TYS1375289805" type="MBT platoon"/>
-              <unit command-post="false" id="607" name="MBT platoon" position="30TYS1323490286" type="MBT platoon"/>
-              <unit command-post="false" id="608" name="MBT platoon" position="30TYS1421890821" type="MBT platoon"/>
+            <automat engaged="true" id="603" knowledge-group="1168" name="MBT squadron [603]" type="ARMOR.MBT squadron">
+              <unit command-post="true" id="604" name="Armored squadron CP" position="30TYS1371790803" type="ARMOR.Armored squadron CP"/>
+              <unit command-post="false" id="605" name="MBT platoon" position="30TYS1423590321" type="ARMOR.MBT platoon"/>
+              <unit command-post="false" id="606" name="MBT platoon" position="30TYS1375289805" type="ARMOR.MBT platoon"/>
+              <unit command-post="false" id="607" name="MBT platoon" position="30TYS1323490286" type="ARMOR.MBT platoon"/>
+              <unit command-post="false" id="608" name="MBT platoon" position="30TYS1421890821" type="ARMOR.MBT platoon"/>
             </automat>
-            <automat engaged="true" id="609" knowledge-group="1168" name="Infantry company [609]" type="Infantry company">
-              <unit command-post="true" id="610" name="Infantry company CP" position="30TYS1245992413" type="Infantry company CP"/>
-              <unit command-post="false" id="611" name="Infantry platoon" position="30TYS1297791932" type="Infantry platoon"/>
-              <unit command-post="false" id="612" name="MRA troop" position="30TYS1249491415" type="MRA troop"/>
-              <unit command-post="false" id="613" name="Mortar troop" position="30TYS1197691896" type="Mortar troop"/>
-              <unit command-post="false" id="614" name="Light armored platoon" position="30TYS1295992431" type="Light armored platoon"/>
+            <automat engaged="true" id="609" knowledge-group="1168" name="Infantry company [609]" type="INF.Infantry company">
+              <unit command-post="true" id="610" name="Infantry company CP" position="30TYS1245992413" type="INF.Infantry company CP"/>
+              <unit command-post="false" id="611" name="Infantry platoon" position="30TYS1297791932" type="INF.Infantry platoon"/>
+              <unit command-post="false" id="612" name="MRA troop" position="30TYS1249491415" type="INF.MRA troop"/>
+              <unit command-post="false" id="613" name="Mortar troop" position="30TYS1197691896" type="INF.Mortar troop"/>
+              <unit command-post="false" id="614" name="Light armored platoon" position="30TYS1295992431" type="ARMOR.Light armored platoon"/>
             </automat>
-            <automat engaged="true" id="615" knowledge-group="1168" name="Commandos platoon [615]" type="Commandos platoon">
-              <unit command-post="true" id="616" name="Commando troop" position="30TYS1066691186" type="Commando troop"/>
-              <unit command-post="false" id="617" name="Commando troop" position="30TYS1118590705" type="Commando troop"/>
-              <unit command-post="false" id="618" name="Commando troop" position="30TYS1070290188" type="Commando troop"/>
+            <automat engaged="true" id="615" knowledge-group="1168" name="Commandos platoon [615]" type="INF.Commandos platoon">
+              <unit command-post="true" id="616" name="Commando troop" position="30TYS1066691186" type="INF.Commando troop"/>
+              <unit command-post="false" id="617" name="Commando troop" position="30TYS1118590705" type="INF.Commando troop"/>
+              <unit command-post="false" id="618" name="Commando troop" position="30TYS1070290188" type="INF.Commando troop"/>
             </automat>
           </formation>
           <formation id="666" level="ii" name="Formation [666]">
-            <automat engaged="false" id="667" knowledge-group="1168" name="Militias [667]" type="Militias">
-              <unit command-post="true" id="668" name="Militia" position="30TYS0824282161" type="Militia"/>
-              <unit command-post="false" id="669" name="Militia" position="30TYS1174981930" type="Militia"/>
-              <unit command-post="false" id="670" name="Militia" position="30TYS0803479866" type="Militia"/>
+            <automat engaged="false" id="667" knowledge-group="1168" name="Militias [667]" type="ASY.Militias">
+              <unit command-post="true" id="668" name="Militia" position="30TYS0824282161" type="ASY.Militia"/>
+              <unit command-post="false" id="669" name="Militia" position="30TYS1174981930" type="ASY.Militia"/>
+              <unit command-post="false" id="670" name="Militia" position="30TYS0803479866" type="ASY.Militia"/>
             </automat>
           </formation>
           <formation id="756" level="ii" name="Formation [756]">
-            <automat engaged="false" id="908" knowledge-group="1169" name="Teeth Arms Battalion [908]" type="Teeth Arms Battalion">
-              <unit command-post="true" id="909" name="Armored squadron CP" position="31TCM1393188751" type="Armored squadron CP"/>
-              <automat engaged="true" id="916" knowledge-group="1169" name="MBT squadron [916]" type="MBT squadron">
-                <unit command-post="true" id="917" name="Armored squadron CP" position="31TCM1614989409" type="Armored squadron CP"/>
-                <unit command-post="false" id="918" name="MBT platoon" position="31TCM1662988890" type="MBT platoon"/>
-                <unit command-post="false" id="919" name="MBT platoon" position="31TCM1610888411" type="MBT platoon"/>
-                <unit command-post="false" id="920" name="MBT platoon" position="31TCM1562888931" type="MBT platoon"/>
-                <unit command-post="false" id="921" name="MBT platoon" position="31TCM1664989388" type="MBT platoon"/>
-                <unit command-post="false" id="1081" name="MBT platoon" position="31TCM1685088266" type="MBT platoon"/>
-                <unit command-post="false" id="1082" name="MBT platoon" position="31TCM1753589088" type="MBT platoon"/>
+            <automat engaged="false" id="908" knowledge-group="1169" name="Teeth Arms Battalion [908]" type="ARMOR.Teeth Arms Battalion">
+              <unit command-post="true" id="909" name="Armored squadron CP" position="31TCM1393188751" type="ARMOR.Armored squadron CP"/>
+              <automat engaged="true" id="916" knowledge-group="1169" name="MBT squadron [916]" type="ARMOR.MBT squadron">
+                <unit command-post="true" id="917" name="Armored squadron CP" position="31TCM1614989409" type="ARMOR.Armored squadron CP"/>
+                <unit command-post="false" id="918" name="MBT platoon" position="31TCM1662988890" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="919" name="MBT platoon" position="31TCM1610888411" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="920" name="MBT platoon" position="31TCM1562888931" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="921" name="MBT platoon" position="31TCM1664989388" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="1081" name="MBT platoon" position="31TCM1685088266" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="1082" name="MBT platoon" position="31TCM1753589088" type="ARMOR.MBT platoon"/>
               </automat>
-              <automat engaged="true" id="922" knowledge-group="1169" name="MBT squadron [922]" type="MBT squadron">
-                <unit command-post="true" id="923" name="Armored squadron CP" position="31TCM1361891000" type="Armored squadron CP"/>
-                <unit command-post="false" id="924" name="MBT platoon" position="31TCM1409890481" type="MBT platoon"/>
-                <unit command-post="false" id="925" name="MBT platoon" position="31TCM1357790002" type="MBT platoon"/>
-                <unit command-post="false" id="926" name="MBT platoon" position="31TCM1309790522" type="MBT platoon"/>
-                <unit command-post="false" id="927" name="MBT platoon" position="31TCM1411890979" type="MBT platoon"/>
-                <unit command-post="false" id="1083" name="MBT platoon" position="31TCM1433090021" type="MBT platoon"/>
-                <unit command-post="false" id="1084" name="MBT platoon" position="31TCM1504790392" type="MBT platoon"/>
+              <automat engaged="true" id="922" knowledge-group="1169" name="MBT squadron [922]" type="ARMOR.MBT squadron">
+                <unit command-post="true" id="923" name="Armored squadron CP" position="31TCM1361891000" type="ARMOR.Armored squadron CP"/>
+                <unit command-post="false" id="924" name="MBT platoon" position="31TCM1409890481" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="925" name="MBT platoon" position="31TCM1357790002" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="926" name="MBT platoon" position="31TCM1309790522" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="927" name="MBT platoon" position="31TCM1411890979" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="1083" name="MBT platoon" position="31TCM1433090021" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="1084" name="MBT platoon" position="31TCM1504790392" type="ARMOR.MBT platoon"/>
               </automat>
-              <automat engaged="true" id="952" knowledge-group="1169" name="Infantry company [952]" type="Infantry company">
-                <unit command-post="true" id="953" name="Infantry company CP" position="31TCM1574287584" type="Infantry company CP"/>
-                <unit command-post="false" id="954" name="Infantry platoon" position="31TCM1622287065" type="Infantry platoon"/>
-                <unit command-post="false" id="955" name="MRA troop" position="31TCM1570186586" type="MRA troop"/>
-                <unit command-post="false" id="956" name="Mortar troop" position="31TCM1522187106" type="Mortar troop"/>
-                <unit command-post="false" id="957" name="Light armored platoon" position="31TCM1624387563" type="Light armored platoon"/>
+              <automat engaged="true" id="952" knowledge-group="1169" name="Infantry company [952]" type="INF.Infantry company">
+                <unit command-post="true" id="953" name="Infantry company CP" position="31TCM1574287584" type="INF.Infantry company CP"/>
+                <unit command-post="false" id="954" name="Infantry platoon" position="31TCM1622287065" type="INF.Infantry platoon"/>
+                <unit command-post="false" id="955" name="MRA troop" position="31TCM1570186586" type="INF.MRA troop"/>
+                <unit command-post="false" id="956" name="Mortar troop" position="31TCM1522187106" type="INF.Mortar troop"/>
+                <unit command-post="false" id="957" name="Light armored platoon" position="31TCM1624387563" type="ARMOR.Light armored platoon"/>
               </automat>
-              <automat engaged="true" id="962" knowledge-group="1169" name="Scout platoon [962]" type="Scout platoon">
-                <unit command-post="false" id="963" name="Antitank patrol" position="31TCM0774084460" type="Antitank patrol"/>
-                <unit command-post="true" id="964" name="Scout patrol" position="31TCM0831484610" type="Scout patrol"/>
-                <unit command-post="false" id="965" name="Scout patrol" position="31TCM0774283980" type="Scout patrol"/>
-                <unit command-post="false" id="1068" name="Scout patrol" position="31TCM1105782196" type="Scout patrol"/>
-                <unit command-post="false" id="1069" name="Scout patrol" position="31TCM1141181032" type="Scout patrol"/>
-                <unit command-post="false" id="1070" name="Antitank patrol" position="31TCM1195882159" type="Antitank patrol"/>
+              <automat engaged="true" id="962" knowledge-group="1169" name="Scout platoon [962]" type="ARMOR.Scout platoon">
+                <unit command-post="false" id="963" name="Antitank patrol" position="31TCM0774084460" type="ARMOR.Antitank patrol"/>
+                <unit command-post="true" id="964" name="Scout patrol" position="31TCM0831484610" type="ARMOR.Scout patrol"/>
+                <unit command-post="false" id="965" name="Scout patrol" position="31TCM0774283980" type="ARMOR.Scout patrol"/>
+                <unit command-post="false" id="1068" name="Scout patrol" position="31TCM1105782196" type="ARMOR.Scout patrol"/>
+                <unit command-post="false" id="1069" name="Scout patrol" position="31TCM1141181032" type="ARMOR.Scout patrol"/>
+                <unit command-post="false" id="1070" name="Antitank patrol" position="31TCM1195882159" type="ARMOR.Antitank patrol"/>
               </automat>
-              <automat engaged="true" id="1075" knowledge-group="1169" name="Light armored squadron [1075]" type="Light armored squadron">
-                <unit command-post="true" id="1076" name="Armored squadron CP" position="31TCM1240588010" type="Armored squadron CP"/>
-                <unit command-post="false" id="1077" name="Light armored platoon" position="31TCM1288587491" type="Light armored platoon"/>
-                <unit command-post="false" id="1078" name="Light armored platoon" position="31TCM1236487013" type="Light armored platoon"/>
-                <unit command-post="false" id="1079" name="Light armored platoon" position="31TCM1188487532" type="Light armored platoon"/>
-                <unit command-post="false" id="1080" name="Light armored platoon" position="31TCM1290687990" type="Light armored platoon"/>
+              <automat engaged="true" id="1075" knowledge-group="1169" name="Light armored squadron [1075]" type="ARMOR.Light armored squadron">
+                <unit command-post="true" id="1076" name="Armored squadron CP" position="31TCM1240588010" type="ARMOR.Armored squadron CP"/>
+                <unit command-post="false" id="1077" name="Light armored platoon" position="31TCM1288587491" type="ARMOR.Light armored platoon"/>
+                <unit command-post="false" id="1078" name="Light armored platoon" position="31TCM1236487013" type="ARMOR.Light armored platoon"/>
+                <unit command-post="false" id="1079" name="Light armored platoon" position="31TCM1188487532" type="ARMOR.Light armored platoon"/>
+                <unit command-post="false" id="1080" name="Light armored platoon" position="31TCM1290687990" type="ARMOR.Light armored platoon"/>
               </automat>
             </automat>
-            <automat engaged="false" id="1016" knowledge-group="1169" name="Teeth Arms Battalion [1016]" type="Teeth Arms Battalion">
-              <unit command-post="true" id="1017" name="Armored squadron CP" position="31TCM2346887668" type="Armored squadron CP"/>
-              <automat engaged="true" id="1018" knowledge-group="1169" name="Infantry company [1018]" type="Infantry company">
-                <unit command-post="true" id="1019" name="Infantry company CP" position="31TCM1902986531" type="Infantry company CP"/>
-                <unit command-post="false" id="1020" name="Infantry platoon" position="31TCM1950986011" type="Infantry platoon"/>
-                <unit command-post="false" id="1021" name="MRA troop" position="31TCM1898885533" type="MRA troop"/>
-                <unit command-post="false" id="1022" name="Mortar troop" position="31TCM1850886052" type="Mortar troop"/>
-                <unit command-post="false" id="1023" name="Light armored platoon" position="31TCM1952986510" type="Light armored platoon"/>
+            <automat engaged="false" id="1016" knowledge-group="1169" name="Teeth Arms Battalion [1016]" type="ARMOR.Teeth Arms Battalion">
+              <unit command-post="true" id="1017" name="Armored squadron CP" position="31TCM2346887668" type="ARMOR.Armored squadron CP"/>
+              <automat engaged="true" id="1018" knowledge-group="1169" name="Infantry company [1018]" type="INF.Infantry company">
+                <unit command-post="true" id="1019" name="Infantry company CP" position="31TCM1902986531" type="INF.Infantry company CP"/>
+                <unit command-post="false" id="1020" name="Infantry platoon" position="31TCM1950986011" type="INF.Infantry platoon"/>
+                <unit command-post="false" id="1021" name="MRA troop" position="31TCM1898885533" type="INF.MRA troop"/>
+                <unit command-post="false" id="1022" name="Mortar troop" position="31TCM1850886052" type="INF.Mortar troop"/>
+                <unit command-post="false" id="1023" name="Light armored platoon" position="31TCM1952986510" type="ARMOR.Light armored platoon"/>
               </automat>
-              <automat engaged="true" id="1024" knowledge-group="1169" name="MBT squadron [1024]" type="MBT squadron">
-                <unit command-post="true" id="1025" name="Armored squadron CP" position="31TCM2361786143" type="Armored squadron CP"/>
-                <unit command-post="false" id="1026" name="MBT platoon" position="31TCM2409785623" type="MBT platoon"/>
-                <unit command-post="false" id="1027" name="MBT platoon" position="31TCM2357685145" type="MBT platoon"/>
-                <unit command-post="false" id="1028" name="MBT platoon" position="31TCM2309685664" type="MBT platoon"/>
-                <unit command-post="false" id="1029" name="MBT platoon" position="31TCM2411786122" type="MBT platoon"/>
-                <unit command-post="false" id="1071" name="MBT platoon" position="31TCM2447785210" type="MBT platoon"/>
-                <unit command-post="false" id="1072" name="MBT platoon" position="31TCM2496984990" type="MBT platoon"/>
+              <automat engaged="true" id="1024" knowledge-group="1169" name="MBT squadron [1024]" type="ARMOR.MBT squadron">
+                <unit command-post="true" id="1025" name="Armored squadron CP" position="31TCM2361786143" type="ARMOR.Armored squadron CP"/>
+                <unit command-post="false" id="1026" name="MBT platoon" position="31TCM2409785623" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="1027" name="MBT platoon" position="31TCM2357685145" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="1028" name="MBT platoon" position="31TCM2309685664" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="1029" name="MBT platoon" position="31TCM2411786122" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="1071" name="MBT platoon" position="31TCM2447785210" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="1072" name="MBT platoon" position="31TCM2496984990" type="ARMOR.MBT platoon"/>
               </automat>
-              <automat engaged="true" id="1030" knowledge-group="1169" name="MBT squadron [1030]" type="MBT squadron">
-                <unit command-post="true" id="1031" name="Armored squadron CP" position="31TCM2061187758" type="Armored squadron CP"/>
-                <unit command-post="false" id="1032" name="MBT platoon" position="31TCM2109187239" type="MBT platoon"/>
-                <unit command-post="false" id="1033" name="MBT platoon" position="31TCM2057086760" type="MBT platoon"/>
-                <unit command-post="false" id="1034" name="MBT platoon" position="31TCM2009087280" type="MBT platoon"/>
-                <unit command-post="false" id="1035" name="MBT platoon" position="31TCM2111187737" type="MBT platoon"/>
-                <unit command-post="false" id="1073" name="MBT platoon" position="31TCM2191587073" type="MBT platoon"/>
-                <unit command-post="false" id="1074" name="MBT platoon" position="31TCM2256486997" type="MBT platoon"/>
+              <automat engaged="true" id="1030" knowledge-group="1169" name="MBT squadron [1030]" type="ARMOR.MBT squadron">
+                <unit command-post="true" id="1031" name="Armored squadron CP" position="31TCM2061187758" type="ARMOR.Armored squadron CP"/>
+                <unit command-post="false" id="1032" name="MBT platoon" position="31TCM2109187239" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="1033" name="MBT platoon" position="31TCM2057086760" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="1034" name="MBT platoon" position="31TCM2009087280" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="1035" name="MBT platoon" position="31TCM2111187737" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="1073" name="MBT platoon" position="31TCM2191587073" type="ARMOR.MBT platoon"/>
+                <unit command-post="false" id="1074" name="MBT platoon" position="31TCM2256486997" type="ARMOR.MBT platoon"/>
               </automat>
-              <automat engaged="true" id="1042" knowledge-group="1169" name="Light armored squadron [1042]" type="Light armored squadron">
-                <unit command-post="true" id="1043" name="Armored squadron CP" position="31TCM2100285142" type="Armored squadron CP"/>
-                <unit command-post="false" id="1044" name="Light armored platoon" position="31TCM2148384623" type="Light armored platoon"/>
-                <unit command-post="false" id="1045" name="Light armored platoon" position="31TCM2096284145" type="Light armored platoon"/>
-                <unit command-post="false" id="1046" name="Light armored platoon" position="31TCM2048284664" type="Light armored platoon"/>
-                <unit command-post="false" id="1047" name="Light armored platoon" position="31TCM2150385122" type="Light armored platoon"/>
+              <automat engaged="true" id="1042" knowledge-group="1169" name="Light armored squadron [1042]" type="ARMOR.Light armored squadron">
+                <unit command-post="true" id="1043" name="Armored squadron CP" position="31TCM2100285142" type="ARMOR.Armored squadron CP"/>
+                <unit command-post="false" id="1044" name="Light armored platoon" position="31TCM2148384623" type="ARMOR.Light armored platoon"/>
+                <unit command-post="false" id="1045" name="Light armored platoon" position="31TCM2096284145" type="ARMOR.Light armored platoon"/>
+                <unit command-post="false" id="1046" name="Light armored platoon" position="31TCM2048284664" type="ARMOR.Light armored platoon"/>
+                <unit command-post="false" id="1047" name="Light armored platoon" position="31TCM2150385122" type="ARMOR.Light armored platoon"/>
               </automat>
-              <automat engaged="true" id="1048" knowledge-group="1169" name="Scout platoon [1048]" type="Scout platoon">
-                <unit command-post="false" id="1049" name="Antitank patrol" position="31TCM1693881363" type="Antitank patrol"/>
-                <unit command-post="true" id="1050" name="Scout patrol" position="31TCM1741880844" type="Scout patrol"/>
-                <unit command-post="false" id="1051" name="Scout patrol" position="31TCM1689780365" type="Scout patrol"/>
-                <unit command-post="false" id="1065" name="Antitank patrol" position="31TCM1842680671" type="Antitank patrol"/>
-                <unit command-post="false" id="1066" name="Scout patrol" position="31TCM1835979024" type="Scout patrol"/>
-                <unit command-post="false" id="1067" name="Scout patrol" position="31TCM1918978490" type="Scout patrol"/>
+              <automat engaged="true" id="1048" knowledge-group="1169" name="Scout platoon [1048]" type="ARMOR.Scout platoon">
+                <unit command-post="false" id="1049" name="Antitank patrol" position="31TCM1693881363" type="ARMOR.Antitank patrol"/>
+                <unit command-post="true" id="1050" name="Scout patrol" position="31TCM1741880844" type="ARMOR.Scout patrol"/>
+                <unit command-post="false" id="1051" name="Scout patrol" position="31TCM1689780365" type="ARMOR.Scout patrol"/>
+                <unit command-post="false" id="1065" name="Antitank patrol" position="31TCM1842680671" type="ARMOR.Antitank patrol"/>
+                <unit command-post="false" id="1066" name="Scout patrol" position="31TCM1835979024" type="ARMOR.Scout patrol"/>
+                <unit command-post="false" id="1067" name="Scout patrol" position="31TCM1918978490" type="ARMOR.Scout patrol"/>
               </automat>
             </automat>
           </formation>
@@ -891,8 +891,8 @@
       <objects/>
       <tactical>
         <formation id="581" level="iii" name="Formation [581]">
-          <automat engaged="false" id="585" knowledge-group="580" name="Terrorists [585]" type="Terrorists">
-            <unit command-post="true" id="586" name="Terrorist" position="30TYS0577776354" type="Terrorist"/>
+          <automat engaged="false" id="585" knowledge-group="580" name="Terrorists [585]" type="ASY.Terrorists">
+            <unit command-post="true" id="586" name="Terrorist" position="30TYS0577776354" type="ASY.Terrorist"/>
           </automat>
         </formation>
       </tactical>

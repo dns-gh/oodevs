@@ -5,12 +5,12 @@
       <objects/>
       <tactical>
         <formation id="3" level="x" name="Formation [3]">
-          <automat engaged="false" id="36" knowledge-group="6" name="Surface To Air Battery [36]" type="Surface To Air Battery">
-            <unit command-post="true" id="37" name="Surface To Air Battery CP" position="31UDQ8519450978" type="Surface To Air Battery CP"/>
-            <unit command-post="false" id="38" name="Surface To Air Defense Troop" position="31UDQ8569550478" type="Short Range Surface To Air Defense Troop"/>
-            <unit command-post="false" id="39" name="Surface To Air Defense Troop" position="31UDQ8519349980" type="Short Range Surface To Air Defense Troop"/>
-            <unit command-post="false" id="40" name="Surface To Air Defense Troop" position="31UDQ8385450650" type="Short Range Surface To Air Defense Troop"/>
-            <unit command-post="false" id="41" name="Surface To Air Defense Troop" position="31UDQ8569550978" type="Short Range Surface To Air Defense Troop"/>
+          <automat engaged="false" id="36" knowledge-group="6" name="Surface To Air Battery [36]" type="AAA.Surface To Air Battery">
+            <unit command-post="true" id="37" name="Surface To Air Battery CP" position="31UDQ8519450978" type="AAA.Surface To Air Battery CP"/>
+            <unit command-post="false" id="38" name="Surface To Air Defense Troop" position="31UDQ8569550478" type="AAA.Surface To Air Defense Troop"/>
+            <unit command-post="false" id="39" name="Surface To Air Defense Troop" position="31UDQ8519349980" type="AAA.Surface To Air Defense Troop"/>
+            <unit command-post="false" id="40" name="Surface To Air Defense Troop" position="31UDQ8385450650" type="AAA.Surface To Air Defense Troop"/>
+            <unit command-post="false" id="41" name="Surface To Air Defense Troop" position="31UDQ8569550978" type="AAA.Surface To Air Defense Troop"/>
           </automat>
         </formation>
       </tactical>
@@ -25,23 +25,23 @@
       <objects/>
       <tactical>
         <formation id="4" level="x" name="Formation [4]">
-          <automat engaged="false" id="20" knowledge-group="21" name="Strategic Bomber Squadron [20]" type="Strategic Bomber Squadron">
-            <unit command-post="true" id="22" name="Air CP" position="31UDQ7670260383" type="Air CP"/>
-            <unit command-post="false" id="23" name="Strategic Bomber Patrol" position="31UDQ7720259883" type="Strategic Bomber Patrol"/>
-            <unit command-post="false" id="24" name="Strategic Bomber Patrol" position="31UDQ7670159385" type="Strategic Bomber Patrol"/>
-            <unit command-post="false" id="25" name="Strategic Bomber Patrol" position="31UDQ7620159885" type="Strategic Bomber Patrol"/>
+          <automat engaged="false" id="20" knowledge-group="21" name="Strategic Bomber Squadron [20]" type="JOINT.Strategic Bomber Squadron">
+            <unit command-post="true" id="22" name="Air CP" position="31UDQ7670260383" type="AIR.Air CP"/>
+            <unit command-post="false" id="23" name="Strategic Bomber Patrol" position="31UDQ7720259883" type="JOINT.Strategic Bomber Patrol"/>
+            <unit command-post="false" id="24" name="Strategic Bomber Patrol" position="31UDQ7670159385" type="JOINT.Strategic Bomber Patrol"/>
+            <unit command-post="false" id="25" name="Strategic Bomber Patrol" position="31UDQ7620159885" type="JOINT.Strategic Bomber Patrol"/>
           </automat>
-          <automat engaged="false" id="26" knowledge-group="21" name="Strategic Bomber Squadron [26]" type="Strategic Bomber Squadron">
-            <unit command-post="true" id="27" name="Air CP" position="31UDQ8202961727" type="Air CP"/>
-            <unit command-post="false" id="28" name="Strategic Bomber Patrol" position="31UDQ8252961227" type="Strategic Bomber Patrol"/>
-            <unit command-post="false" id="29" name="Strategic Bomber Patrol" position="31UDQ8202760728" type="Strategic Bomber Patrol"/>
-            <unit command-post="false" id="30" name="Strategic Bomber Patrol" position="31UDQ8152761228" type="Strategic Bomber Patrol"/>
+          <automat engaged="false" id="26" knowledge-group="21" name="Strategic Bomber Squadron [26]" type="JOINT.Strategic Bomber Squadron">
+            <unit command-post="true" id="27" name="Air CP" position="31UDQ8202961727" type="AIR.Air CP"/>
+            <unit command-post="false" id="28" name="Strategic Bomber Patrol" position="31UDQ8252961227" type="JOINT.Strategic Bomber Patrol"/>
+            <unit command-post="false" id="29" name="Strategic Bomber Patrol" position="31UDQ8202760728" type="JOINT.Strategic Bomber Patrol"/>
+            <unit command-post="false" id="30" name="Strategic Bomber Patrol" position="31UDQ8152761228" type="JOINT.Strategic Bomber Patrol"/>
           </automat>
-          <automat engaged="false" id="31" knowledge-group="21" name="Strategic Bomber Squadron [31]" type="Strategic Bomber Squadron">
-            <unit command-post="true" id="32" name="Air CP" position="31UDQ8959460599" type="Air CP"/>
-            <unit command-post="false" id="33" name="Strategic Bomber Patrol" position="31UDQ9009460099" type="Strategic Bomber Patrol"/>
-            <unit command-post="false" id="34" name="Strategic Bomber Patrol" position="31UDQ8959359600" type="Strategic Bomber Patrol"/>
-            <unit command-post="false" id="35" name="Strategic Bomber Patrol" position="31UDQ8909360100" type="Strategic Bomber Patrol"/>
+          <automat engaged="false" id="31" knowledge-group="21" name="Strategic Bomber Squadron [31]" type="JOINT.Strategic Bomber Squadron">
+            <unit command-post="true" id="32" name="Air CP" position="31UDQ8959460599" type="AIR.Air CP"/>
+            <unit command-post="false" id="33" name="Strategic Bomber Patrol" position="31UDQ9009460099" type="JOINT.Strategic Bomber Patrol"/>
+            <unit command-post="false" id="34" name="Strategic Bomber Patrol" position="31UDQ8959359600" type="JOINT.Strategic Bomber Patrol"/>
+            <unit command-post="false" id="35" name="Strategic Bomber Patrol" position="31UDQ8909360100" type="JOINT.Strategic Bomber Patrol"/>
           </automat>
         </formation>
       </tactical>

@@ -62,12 +62,12 @@
       </objects>
       <tactical>
         <formation id="5" level="ii" name="Battalion">
-          <automat engaged="false" id="26" knowledge-group="2" name="MBT squadron [26]" type="MBT squadron">
-            <unit command-post="true" id="27" name="Armored squadron CP" position="31UEP0120685341" type="Armored squadron CP"/>
-            <unit command-post="false" id="28" name="MBT platoon" position="31UEP0156185945" type="MBT platoon"/>
-            <unit command-post="false" id="29" name="MBT platoon" position="31UEP0112486735" type="MBT platoon"/>
-            <unit command-post="false" id="30" name="MBT platoon" position="31UEP0051685913" type="MBT platoon"/>
-            <unit command-post="false" id="31" name="MBT platoon" position="31UEP0189086323" type="MBT platoon"/>
+          <automat engaged="false" id="26" knowledge-group="2" name="MBT squadron [26]" type="ARMOR.MBT squadron">
+            <unit command-post="true" id="27" name="Armored squadron CP" position="31UEP0120685341" type="ARMOR.Armored squadron CP"/>
+            <unit command-post="false" id="28" name="MBT platoon" position="31UEP0156185945" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="29" name="MBT platoon" position="31UEP0112486735" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="30" name="MBT platoon" position="31UEP0051685913" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="31" name="MBT platoon" position="31UEP0189086323" type="ARMOR.MBT platoon"/>
             <unit command-post="false" id="123" name="HS - Med_Ambulance" position="31UEP0092488495" type="HS - Med_Ambulance"/>
           </automat>
           <lima name="Phase line 12">

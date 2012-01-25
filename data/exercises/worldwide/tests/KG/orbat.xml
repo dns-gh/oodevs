@@ -31,28 +31,28 @@
       </objects>
       <tactical>
         <formation id="3" level="x" name="Formation [3]">
-          <automat engaged="false" id="7" knowledge-group="8" name="MBT squadron [7]" type="MBT squadron">
-            <unit command-post="true" id="9" name="Armored squadron CP" position="31UDQ8830230754" type="Armored squadron CP"/>
-            <unit command-post="false" id="10" name="MBT platoon" position="31UDQ8880230254" type="MBT platoon"/>
-            <unit command-post="false" id="11" name="MBT platoon" position="31UDQ8830129755" type="MBT platoon"/>
-            <unit command-post="false" id="12" name="MBT platoon" position="31UDQ8780130255" type="MBT platoon"/>
-            <unit command-post="false" id="13" name="MBT platoon" position="31UDQ8969739563" type="MBT platoon"/>
+          <automat engaged="false" id="7" knowledge-group="8" name="MBT squadron [7]" type="ARMOR.MBT squadron">
+            <unit command-post="true" id="9" name="Armored squadron CP" position="31UDQ8830230754" type="ARMOR.Armored squadron CP"/>
+            <unit command-post="false" id="10" name="MBT platoon" position="31UDQ8880230254" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="11" name="MBT platoon" position="31UDQ8830129755" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="12" name="MBT platoon" position="31UDQ8780130255" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="13" name="MBT platoon" position="31UDQ8969739563" type="ARMOR.MBT platoon"/>
           </automat>
-          <automat engaged="false" id="32" knowledge-group="8" name="MBT squadron [32]" type="MBT squadron">
-            <unit command-post="true" id="33" name="Armored squadron CP" position="31UDQ8039235416" type="Armored squadron CP"/>
-            <unit command-post="false" id="34" name="MBT platoon" position="31UDQ8089234916" type="MBT platoon"/>
-            <unit command-post="false" id="35" name="MBT platoon" position="31UDQ8039134417" type="MBT platoon"/>
-            <unit command-post="false" id="36" name="MBT platoon" position="31UDQ7989034917" type="MBT platoon"/>
-            <unit command-post="false" id="37" name="MBT platoon" position="31UDQ8089335415" type="MBT platoon"/>
+          <automat engaged="false" id="32" knowledge-group="8" name="MBT squadron [32]" type="ARMOR.MBT squadron">
+            <unit command-post="true" id="33" name="Armored squadron CP" position="31UDQ8039235416" type="ARMOR.Armored squadron CP"/>
+            <unit command-post="false" id="34" name="MBT platoon" position="31UDQ8089234916" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="35" name="MBT platoon" position="31UDQ8039134417" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="36" name="MBT platoon" position="31UDQ7989034917" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="37" name="MBT platoon" position="31UDQ8089335415" type="ARMOR.MBT platoon"/>
           </automat>
         </formation>
         <formation id="4" level="x" name="Formation [4]">
-          <automat engaged="false" id="14" knowledge-group="20" name="MBT squadron [14]" type="MBT squadron">
-            <unit command-post="true" id="15" name="Armored squadron CP" position="31UDQ8776431616" type="Armored squadron CP"/>
-            <unit command-post="false" id="16" name="MBT platoon" position="31UDQ8826531116" type="MBT platoon"/>
-            <unit command-post="false" id="17" name="MBT platoon" position="31UDQ8776330618" type="MBT platoon"/>
-            <unit command-post="false" id="18" name="MBT platoon" position="31UDQ8726331118" type="MBT platoon"/>
-            <unit command-post="false" id="19" name="MBT platoon" position="31UDQ8867029841" type="MBT platoon"/>
+          <automat engaged="false" id="14" knowledge-group="20" name="MBT squadron [14]" type="ARMOR.MBT squadron">
+            <unit command-post="true" id="15" name="Armored squadron CP" position="31UDQ8776431616" type="ARMOR.Armored squadron CP"/>
+            <unit command-post="false" id="16" name="MBT platoon" position="31UDQ8826531116" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="17" name="MBT platoon" position="31UDQ8776330618" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="18" name="MBT platoon" position="31UDQ8726331118" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="19" name="MBT platoon" position="31UDQ8867029841" type="ARMOR.MBT platoon"/>
           </automat>
         </formation>
       </tactical>
@@ -94,21 +94,21 @@
       </objects>
       <tactical>
         <formation id="5" level="x" name="Formation [5]">
-          <automat engaged="false" id="22" knowledge-group="21" name="MBT squadron [22]" type="MBT squadron">
-            <unit command-post="true" id="23" name="Armored squadron CP" position="31UDQ9050339595" type="Armored squadron CP"/>
-            <unit command-post="false" id="24" name="MBT platoon" position="31UDQ8278943307" type="MBT platoon"/>
-            <unit command-post="false" id="25" name="MBT platoon" position="31UDQ9050238596" type="MBT platoon"/>
-            <unit command-post="false" id="26" name="MBT platoon" position="31UDQ9000239096" type="MBT platoon"/>
-            <unit command-post="false" id="27" name="MBT platoon" position="31UDQ9100439594" type="MBT platoon"/>
+          <automat engaged="false" id="22" knowledge-group="21" name="MBT squadron [22]" type="ARMOR.MBT squadron">
+            <unit command-post="true" id="23" name="Armored squadron CP" position="31UDQ9050339595" type="ARMOR.Armored squadron CP"/>
+            <unit command-post="false" id="24" name="MBT platoon" position="31UDQ8278943307" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="25" name="MBT platoon" position="31UDQ9050238596" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="26" name="MBT platoon" position="31UDQ9000239096" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="27" name="MBT platoon" position="31UDQ9100439594" type="ARMOR.MBT platoon"/>
           </automat>
         </formation>
         <formation id="6" level="x" name="Formation [6]">
-          <automat engaged="false" id="38" knowledge-group="21" name="MBT squadron [38]" type="MBT squadron">
-            <unit command-post="true" id="39" name="Armored squadron CP" position="31UDQ8039236671" type="Armored squadron CP"/>
-            <unit command-post="false" id="40" name="MBT platoon" position="31UDQ8089236171" type="MBT platoon"/>
-            <unit command-post="false" id="41" name="MBT platoon" position="31UDQ8039035673" type="MBT platoon"/>
-            <unit command-post="false" id="42" name="MBT platoon" position="31UDQ7989036173" type="MBT platoon"/>
-            <unit command-post="false" id="43" name="MBT platoon" position="31UDQ8089236671" type="MBT platoon"/>
+          <automat engaged="false" id="38" knowledge-group="21" name="MBT squadron [38]" type="ARMOR.MBT squadron">
+            <unit command-post="true" id="39" name="Armored squadron CP" position="31UDQ8039236671" type="ARMOR.Armored squadron CP"/>
+            <unit command-post="false" id="40" name="MBT platoon" position="31UDQ8089236171" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="41" name="MBT platoon" position="31UDQ8039035673" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="42" name="MBT platoon" position="31UDQ7989036173" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="43" name="MBT platoon" position="31UDQ8089236671" type="ARMOR.MBT platoon"/>
           </automat>
         </formation>
       </tactical>
