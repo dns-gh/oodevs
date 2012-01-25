@@ -54,7 +54,7 @@ ADN_GuiBuilder::~ADN_GuiBuilder()
 QWidget* ADN_GuiBuilder::AddFieldHolder( QWidget* pParent )
 {
     QWidget* pHolder = new QWidget( pParent );
-    new Q3GridLayout( pHolder, 0, 3, 5, 5 );
+    new Q3GridLayout( pHolder, 0, 3, 5, 10 );
     return pHolder;
 }
 
