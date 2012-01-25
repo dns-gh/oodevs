@@ -164,7 +164,7 @@
   <automat decisional-model="LRS units" id="133" name="ARMOR.LRS units" type="Automate RENS">
     <unit command-post="true" max-occurs="7" min-occurs="7" type="ARMOR.LRS troop"/>
   </automat>
-  <automat decisional-model="Drone station" id="134" name="INT.Drones station" type="Automate RENS">
+  <automat decisional-model="Drone station" id="134" name="INT.UAV station" type="Automate RENS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INT.UAV station"/>
     <unit max-occurs="5" min-occurs="5" type="INT.UAV"/>
   </automat>
@@ -258,4 +258,4 @@
     <unit command-post="true" max-occurs="10" min-occurs="1" type="ML_Security - Civil Protection - Safety"/>
   </automat>
 </automats>
-<!-- signature="3900005178" -->
+<!-- signature="3657294602" -->
