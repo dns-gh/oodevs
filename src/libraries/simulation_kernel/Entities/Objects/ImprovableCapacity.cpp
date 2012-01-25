@@ -14,6 +14,7 @@
 #include "Entities\Agents\Units\Dotations\PHY_DotationType.h"
 #include "Entities\Agents\Units\Dotations\PHY_DotationCategory.h"
 #include "Entities\Agents\Units\Dotations\PHY_ConsumptionType.h"
+#include "Tools/MIL_Tools.h"
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( ImprovableCapacity )
@@ -127,16 +128,31 @@ void ImprovableCapacity::Register( MIL_Object_ABC& object )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ImprovableCapacity::Finalize
+// Created: LGY 2012-01-25
+// -----------------------------------------------------------------------------
+void ImprovableCapacity::Finalize( MIL_Object_ABC& object )
+{
+    TER_Localisation localisation = object.GetLocalisation();
+    if( unitType_ == ConstructionCapacity::eRaw && dotation_ )
+    {
+        nFullNbrDotation_ *= static_cast< unsigned int >( MIL_Tools::ConvertSimToMeter( localisation.GetLength() ) / 1000.f );
+        object.GetAttribute< MineAttribute >() = MineAttribute( *dotation_, nFullNbrDotation_ );
+    }
+    else if( unitType_ == ConstructionCapacity::eDensity && dotation_ )
+    {
+        nFullNbrDotation_ = static_cast< unsigned int >( MIL_Tools::ConvertSimToMeter( localisation.GetArea() ) * nFullNbrDotation_ / 1000000.f );
+        object.GetAttribute< MineAttribute >() = MineAttribute( *dotation_, nFullNbrDotation_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: ImprovableCapacity::Instanciate
 // Created: JCR 2008-06-08
 // -----------------------------------------------------------------------------
 void ImprovableCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
     object.AddCapacity( new ImprovableCapacity( *this ) );
-    if( unitType_ == ConstructionCapacity::eRaw )
-        object.GetAttribute< MineAttribute >() = MineAttribute( *dotation_, nFullNbrDotation_ );
-    if( unitType_ == ConstructionCapacity::eDensity )
-        object.GetAttribute< MineAttribute >() = MineAttribute( *dotation_, static_cast< unsigned int >( nFullNbrDotation_ * object.GetLocalisation().GetArea() ) );
 }
 
 // -----------------------------------------------------------------------------
