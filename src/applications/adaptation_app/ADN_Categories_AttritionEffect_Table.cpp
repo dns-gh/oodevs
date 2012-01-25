@@ -37,19 +37,21 @@ public:
     void AddSubItems( int i, void* pObj )
     {
         assert( pObj );
+        AttritionEffectOnHuman* pAttrition = static_cast< AttritionEffectOnHuman* >( pObj );
+
         // Add a new row.
         ADN_TableItem_String* pItemState = new ADN_TableItem_String( &tab_, pObj );
-        ADN_TableItem_Int* pItemWounded = new ADN_TableItem_Int( &tab_, pObj );
-        ADN_TableItem_Int* pItemDead = new ADN_TableItem_Int( &tab_, pObj );
+        ADN_TableItem_IntPercentage* pItemWounded = new ADN_TableItem_IntPercentage( &tab_, pObj );
+        static_cast< ADN_IntPercentageValidator* >( &pItemWounded->GetValidator() )->AddLinkedValue( pAttrition->nDeadPercentage_ );
+        ADN_TableItem_IntPercentage* pItemDead = new ADN_TableItem_IntPercentage( &tab_, pObj );
+        static_cast< ADN_IntPercentageValidator* >( &pItemDead->GetValidator() )->AddLinkedValue( pAttrition->nInjuredPercentage_ );
         tab_.setItem( i, 0, pItemState );
         tab_.setItem( i, 1, pItemWounded );
         tab_.setItem( i, 2, pItemDead );
         // Connect the items.
-        pItemState->setText( ADN_Tr::ConvertFromEquipmentState( static_cast<AttritionEffectOnHuman*>(pObj)->nEquipmentState_.GetData(), ENT_Tr_ABC::eToTr ).c_str() );
-        pItemWounded->GetConnector().Connect( &static_cast<AttritionEffectOnHuman*>(pObj)->nInjuredPercentage_ );
-        pItemDead->GetConnector().Connect( &static_cast<AttritionEffectOnHuman*>(pObj)->nDeadPercentage_ );
-        pItemWounded->GetValidator().setTop( 100 - pItemDead->text().toInt() );
-        pItemDead->GetValidator().setTop( 100 - pItemWounded->text().toInt() );
+        pItemState->setText( ADN_Tr::ConvertFromEquipmentState( pAttrition->nEquipmentState_.GetData(), ENT_Tr_ABC::eToTr ).c_str() );
+        pItemWounded->GetConnector().Connect( &pAttrition->nInjuredPercentage_ );
+        pItemDead->GetConnector().Connect( &pAttrition->nDeadPercentage_ );
     }
 };
 
@@ -97,20 +99,6 @@ ADN_Categories_AttritionEffect_Table::~ADN_Categories_AttritionEffect_Table()
 // -----------------------------------------------------------------------------
 void ADN_Categories_AttritionEffect_Table::doValueChanged( int row, int col )
 {
-    if( col == 1 || col == 2 )
-        UpdateValidators( row );
     ADN_Table2::doValueChanged( row, col );
     ADN_Workspace::GetWorkspace().GetEquipements().GetGui().UpdateGraph();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Categories_AttritionEffect_Table::UpdateValidators
-// Created: LGY 2010-08-12
-// -----------------------------------------------------------------------------
-void ADN_Categories_AttritionEffect_Table::UpdateValidators( int row )
-{
-    ADN_TableItem_Int* pItemWounded = (ADN_TableItem_Int*)this->item( row, 1 );
-    ADN_TableItem_Int* pItemDead = (ADN_TableItem_Int*)this->item( row, 2 );
-    pItemWounded->GetValidator().setTop( 100 - pItemDead->text().toInt() );
-    pItemDead->GetValidator().setTop( 100 - pItemWounded->text().toInt() );
 }

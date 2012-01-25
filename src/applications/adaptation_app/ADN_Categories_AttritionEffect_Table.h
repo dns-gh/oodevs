@@ -35,12 +35,6 @@ protected slots:
     //@{
     virtual void doValueChanged( int row, int col );
     //@}
-
-private:
-    //! @name Helpers
-    //@{
-    void UpdateValidators( int row );
-    //@}
 };
 
 #endif // __ADN_Categories_AttritionEffect_Table_h_

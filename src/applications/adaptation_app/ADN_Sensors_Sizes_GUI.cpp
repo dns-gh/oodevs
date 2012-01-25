@@ -40,7 +40,7 @@ void ADN_CT_Sensors_Sizes::AddSubItems(int i,void *obj)
     tab_.setItem( i, 0, pItemString = new ADN_TableItem_String( &tab_, obj ) );
     tab_.setItem( i, 1, pItemDouble = new ADN_TableItem_Double( &tab_, obj ) );
 
-    pItemDouble->GetValidator().setRange( 0, 1, 2 );
+    pItemDouble->GetValidator().setRange( 0, 1, 3 );
     pItemString->GetConnector().Connect( static_cast< ModificatorSizeInfos* >( obj )->ptrSize_.GetData() );
     pItemDouble->GetConnector().Connect( &static_cast< ModificatorSizeInfos* >( obj )->rCoeff_ );
 }

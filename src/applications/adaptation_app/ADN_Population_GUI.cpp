@@ -148,9 +148,9 @@ void ADN_Population_GUI::Build()
         ADN_EditLine_Double* pWithEvacField     = builder.AddField< ADN_EditLine_Double >( pFireEffectUnarmedProtectionGroup, tr( "Fixable with evacuation" ), vInfosConnectors[eFireEffectUnarmedFixableWithEvacuation], tr( "%" ) );
         ADN_EditLine_Double* pWithoutEvacField  = builder.AddField< ADN_EditLine_Double >( pFireEffectUnarmedProtectionGroup, tr( "Fixable without evacuation" ), vInfosConnectors[eFireEffectUnarmedFixableWithoutEvacuation], tr( "%" ) );
 
-        pValidatorDestruUnarmed_    = new ADN_PercentageValidator( pDestruField );
-        pValidatorEvacUnarmed_      = new ADN_PercentageValidator( pWithEvacField );
-        pValidatorWithoutUnarmed_   = new ADN_PercentageValidator( pWithoutEvacField );
+        pValidatorDestruUnarmed_    = new ADN_DoublePercentageValidator( pDestruField );
+        pValidatorEvacUnarmed_      = new ADN_DoublePercentageValidator( pWithEvacField );
+        pValidatorWithoutUnarmed_   = new ADN_DoublePercentageValidator( pWithoutEvacField );
 
         pDestruField->setValidator( pValidatorDestruUnarmed_ );
         pWithEvacField->setValidator( pValidatorEvacUnarmed_ );
@@ -161,9 +161,9 @@ void ADN_Population_GUI::Build()
         pWithEvacField     = builder.AddField< ADN_EditLine_Double >( pFireEffectArmedProtectionGroup, tr( "Fixable with evacuation" ), vInfosConnectors[eFireEffectArmedFixableWithEvacuation], tr( "%" ) );
         pWithoutEvacField  = builder.AddField< ADN_EditLine_Double >( pFireEffectArmedProtectionGroup, tr( "Fixable without evacuation" ), vInfosConnectors[eFireEffectArmedFixableWithoutEvacuation], tr( "%" ) );
 
-        pValidatorDestruArmed_  = new ADN_PercentageValidator( pDestruField );
-        pValidatorEvacArmed_    = new ADN_PercentageValidator( pWithEvacField );
-        pValidatorWithoutArmed_ = new ADN_PercentageValidator( pWithoutEvacField );
+        pValidatorDestruArmed_  = new ADN_DoublePercentageValidator( pDestruField );
+        pValidatorEvacArmed_    = new ADN_DoublePercentageValidator( pWithEvacField );
+        pValidatorWithoutArmed_ = new ADN_DoublePercentageValidator( pWithoutEvacField );
 
         pDestruField->setValidator( pValidatorDestruArmed_ );
         pWithEvacField->setValidator( pValidatorEvacArmed_ );

@@ -37,31 +37,25 @@ public:
         tab_.verticalHeader()->setLabel( i, pAttrition->ptrArmor_.GetData()->strName_.GetData().c_str() );
 
         // add a new row & set new values
-        ADN_TableItem_Percentage* pItem0 = new ADN_TableItem_Percentage( &tab_, pObj );
+        ADN_TableItem_DoublePercentage* pItem0 = new ADN_TableItem_DoublePercentage( &tab_, pObj );
         pItem0->UseColor( true );
         tab_.setItem( i, 0, pItem0 );
-        ADN_PercentageValidator* pValidator0 = new ADN_PercentageValidator( pItem0 );
-        pValidator0->AddLinkedValue( pAttrition->rRepairWithEvac_ );
-        pValidator0->AddLinkedValue( pAttrition->rDestroy_ );
-        pItem0->SetValidator( pValidator0 );
+        static_cast< ADN_DoublePercentageValidator* >( &pItem0->GetValidator() )->AddLinkedValue( pAttrition->rRepairWithEvac_ );
+        static_cast< ADN_DoublePercentageValidator* >( &pItem0->GetValidator() )->AddLinkedValue( pAttrition->rDestroy_ );
         pItem0->GetConnector().Connect( & pAttrition->rRepairNoEvac_ );
 
-        ADN_TableItem_Percentage* pItem1 = new ADN_TableItem_Percentage( &tab_, pObj );
+        ADN_TableItem_DoublePercentage* pItem1 = new ADN_TableItem_DoublePercentage( &tab_, pObj );
         pItem1->UseColor( true );
         tab_.setItem( i, 1, pItem1 );
-        ADN_PercentageValidator* pValidator1 = new ADN_PercentageValidator( pItem0 );
-        pValidator1->AddLinkedValue( pAttrition->rDestroy_ );
-        pValidator1->AddLinkedValue( pAttrition->rRepairNoEvac_ );
-        pItem1->SetValidator( pValidator1 );
+        static_cast< ADN_DoublePercentageValidator* >( &pItem1->GetValidator() )->AddLinkedValue( pAttrition->rDestroy_ );
+        static_cast< ADN_DoublePercentageValidator* >( &pItem1->GetValidator() )->AddLinkedValue( pAttrition->rRepairNoEvac_ );
         pItem1->GetConnector().Connect( & pAttrition->rRepairWithEvac_ );
 
-        ADN_TableItem_Percentage* pItem2 = new ADN_TableItem_Percentage( &tab_, pObj );
+        ADN_TableItem_DoublePercentage* pItem2 = new ADN_TableItem_DoublePercentage( &tab_, pObj );
         pItem2->UseColor( true );
         tab_.setItem( i, 2, pItem2 );
-        ADN_PercentageValidator* pValidator2 = new ADN_PercentageValidator( pItem0 );
-        pValidator2->AddLinkedValue( pAttrition->rRepairNoEvac_ );
-        pValidator2->AddLinkedValue( pAttrition->rRepairWithEvac_ );
-        pItem2->SetValidator( pValidator2 );
+        static_cast< ADN_DoublePercentageValidator* >( &pItem2->GetValidator() )->AddLinkedValue( pAttrition->rRepairNoEvac_ );
+        static_cast< ADN_DoublePercentageValidator* >( &pItem2->GetValidator() )->AddLinkedValue( pAttrition->rRepairWithEvac_ );
         pItem2->GetConnector().Connect( & pAttrition->rDestroy_ );
     }
 };

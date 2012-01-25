@@ -44,7 +44,7 @@ void ADN_CT_Sensors_Environments::AddSubItems( int i ,void *obj )
 
     pItemString->setEnabled( true );
     pItemString->setText( ADN_Tr::ConvertFromVisionObject( static_cast< ModificatorEnvironmentInfos* >( obj )->eType_, ENT_Tr_ABC::eToTr ).c_str() );
-    pItemDouble->GetValidator().setRange( 0, 1, 2 );
+    pItemDouble->GetValidator().setRange( 0, 1, 3 );
     pItemDouble->GetConnector().Connect( &static_cast<ModificatorEnvironmentInfos* >( obj )->rCoeff_ );
 
     if( static_cast< ModificatorEnvironmentInfos* >( obj )->eType_ == eVisionEmpty )
