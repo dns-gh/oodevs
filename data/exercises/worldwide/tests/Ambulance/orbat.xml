@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/exercise/orbat.xsd">
   <parties>
     <party id="1" name="Interposition army" type="friend">
       <objects>
@@ -68,7 +68,6 @@
             <unit command-post="false" id="29" name="MBT platoon" position="31UEP0112486735" type="ARMOR.MBT platoon"/>
             <unit command-post="false" id="30" name="MBT platoon" position="31UEP0051685913" type="ARMOR.MBT platoon"/>
             <unit command-post="false" id="31" name="MBT platoon" position="31UEP0189086323" type="ARMOR.MBT platoon"/>
-            <unit command-post="false" id="123" name="HS - Med_Ambulance" position="31UEP0092488495" type="HS - Med_Ambulance"/>
           </automat>
           <lima name="Phase line 12">
             <point>31UEP0932598918</point>
@@ -155,7 +154,6 @@
             <point>31UEQ2029006367</point>
             <point>31UEQ2237112639</point>
           </limit>
-          <intelligence embarked="false" karma="friend" level="i" name="Intelligence [19]" nature="symbols/sfgpucath" position="31UEP0250996210"/>
         </formation>
       </tactical>
       <communication>
@@ -170,4 +168,4 @@
     <party id="1"/>
   </diplomacy>
 </orbat>
-<!-- signature="1581420974" -->
+<!-- signature="3306260525" -->
