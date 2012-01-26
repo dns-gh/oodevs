@@ -48,9 +48,9 @@ MIL_AgentPion* MIL_AgentTypePionLOGMedical::InstanciatePion(MIL_Automate& automa
 // Name: MIL_AgentTypePionLOGMedical::InstanciatePion
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypePionLOGMedical::InstanciatePion( MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories ) const
+MIL_AgentPion* MIL_AgentTypePionLOGMedical::InstanciatePion( MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, const std::string& name ) const
 {
-    return new MIL_AgentPionLOGMedical( *this, automate, algorithmFactories );
+    return new MIL_AgentPionLOGMedical( *this, automate, algorithmFactories, name );
 }
 
 // -----------------------------------------------------------------------------

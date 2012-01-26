@@ -32,7 +32,7 @@ class MIL_AgentPionLOG_ABC : public MIL_AgentPion
 {
 public:
              MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis );
-             MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories );
+             MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, const std::string& name );
              MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories );
     virtual ~MIL_AgentPionLOG_ABC();
 

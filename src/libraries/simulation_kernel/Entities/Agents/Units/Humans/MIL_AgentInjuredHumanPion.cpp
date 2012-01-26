@@ -23,10 +23,12 @@ void save_construct_data( Archive& archive, const MIL_AgentInjuredHumanPion* uni
     const unsigned int nID = unit->GetID() ;
     const MIL_Automate* const pAutomate = &unit->GetAutomate();
     const AlgorithmsFactories* const algorithmFactories = &unit->GetAlgorithms();
+    const std::string& name = unit->GetName();
     archive << nTypeID
             << nID
             << pAutomate
-            << algorithmFactories;
+            << algorithmFactories
+            << name;
 }
 
 template< typename Archive >
@@ -35,13 +37,15 @@ void load_construct_data( Archive& archive, MIL_AgentInjuredHumanPion* unit, con
     unsigned int nTypeID, nID;
     MIL_Automate* pAutomate = 0;
     AlgorithmsFactories* algorithmFactories = 0;
+    std::string name;
     archive >> nTypeID
             >> nID
             >> pAutomate
-            >> algorithmFactories;
+            >> algorithmFactories
+            >> name;
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( nTypeID );
     assert( pType );
-    ::new( unit )MIL_AgentInjuredHumanPion( *pType, *pAutomate, *algorithmFactories );
+    ::new( unit )MIL_AgentInjuredHumanPion( *pType, *pAutomate, *algorithmFactories, name );
 }
 
 
@@ -60,8 +64,8 @@ MIL_AgentInjuredHumanPion::MIL_AgentInjuredHumanPion( const MIL_AgentTypePion& t
 // Name: MIL_AgentInjuredHumanPion constructor
 // Created: RFT 2008-02-08
 // -----------------------------------------------------------------------------
-MIL_AgentInjuredHumanPion::MIL_AgentInjuredHumanPion( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories )
-    : MIL_AgentPion( type, automate, algorithmFactories )
+MIL_AgentInjuredHumanPion::MIL_AgentInjuredHumanPion( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, const std::string& name )
+    : MIL_AgentPion( type, automate, algorithmFactories, name )
 {
     assert( automate.GetType().IsInjuredHuman() );
 }

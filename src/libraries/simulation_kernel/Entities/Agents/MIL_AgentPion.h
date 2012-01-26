@@ -60,7 +60,6 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis );
-             MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories );
              MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, const std::string name );
              MIL_AgentPion( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories );
     virtual ~MIL_AgentPion();

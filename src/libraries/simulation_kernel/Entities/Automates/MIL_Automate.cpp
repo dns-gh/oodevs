@@ -1034,6 +1034,11 @@ void MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitMagicAction& m
         else
             MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, *this, position, nCtx ); // Auto-registration
     }
+    catch( std::runtime_error& e )
+    {
+        MT_LOG_ERROR_MSG( e.what() );
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_unit );
+    }
     catch( ... )
     {
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_unit );

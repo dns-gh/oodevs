@@ -38,8 +38,8 @@ MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, MIL_A
 // Name: MIL_AgentPionLOG_ABC constructor
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
-MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories)
-    : MIL_AgentPion   ( type, automate, algorithmFactories )
+MIL_AgentPionLOG_ABC::MIL_AgentPionLOG_ABC( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, const std::string& name )
+    : MIL_AgentPion   ( type, automate, algorithmFactories, name )
     , pLogisticAction_( new PHY_ActionLogistic< MIL_AgentPionLOG_ABC >( *this ) )
 {
     this->RegisterAction( pLogisticAction_ );

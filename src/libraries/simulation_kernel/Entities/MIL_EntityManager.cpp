@@ -1020,8 +1020,9 @@ void MIL_EntityManager::ProcessAutomatCreationRequest( const UnitMagicAction& ms
 
         MIL_AgentServer::GetWorkspace().GetEntityManager().CreateAutomat( *pType, theGroupId, name, entity, nCtx ); // auto-registration
     }
-    catch( std::runtime_error& )
+    catch( std::runtime_error& e )
     {
+        MT_LOG_ERROR_MSG( e.what() );
         throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_unit );
     }
 }

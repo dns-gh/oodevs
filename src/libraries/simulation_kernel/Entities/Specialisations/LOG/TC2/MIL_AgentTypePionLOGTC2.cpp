@@ -51,9 +51,9 @@ MIL_AgentPion* MIL_AgentTypePionLOGTC2::InstanciatePion( MIL_Automate& automate,
 // Name: MIL_AgentTypePionLOGTC2::InstanciatePion
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
-MIL_AgentPion* MIL_AgentTypePionLOGTC2::InstanciatePion( MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories ) const
+MIL_AgentPion* MIL_AgentTypePionLOGTC2::InstanciatePion( MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, const std::string& name ) const
 {
-    return new MIL_AgentPionLOGTC2( *this, automate, algorithmFactories );
+    return new MIL_AgentPionLOGTC2( *this, automate, algorithmFactories, name );
 }
 
 // -----------------------------------------------------------------------------
