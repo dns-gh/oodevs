@@ -2567,20 +2567,20 @@
     </unit>
     <unit dia-type="roles.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="ML_SecurityAgent">
       <missions>
-        <mission name="ML_SECURITY Follow"/>
-        <mission name="ML_SECURITY Move to"/>
-        <mission name="ML_SECURITY Confine urban blocks within area"/>
-        <mission name="ML_SECURITY Lift urban blocks confinement within area"/>
-        <mission name="ML_SECURITY Increase resource node production"/>
-        <mission name="ML_SECURITY Evacuate urban blocks within area "/>
-        <mission name="ML_SECURITY Lift urban blocks evacuation within area"/>
-        <mission name="ML_SECURITY Ensure victims evacuation"/>
-        <mission name="ML_SECURITY Extract victims from crowds"/>
-        <mission name="ML_SECURITY Alert urban blocks within area"/>
-        <mission name="ML_SECURITY Lift urban blocks alert within area"/>
-        <mission name="ML_SECURITY Enable resource nodes"/>
-        <mission name="ML_SECURITY Disable resource nodes"/>
-        <mission name="ML_SECURITY Patrol"/>
+        <mission name="MLSECURITY - Follow"/>
+        <mission name="MLSECURITY - Move toward"/>
+        <mission name="MLSECURITY - Confine urban blocks within area"/>
+        <mission name="MLSECURITY - Lift urban blocks confinement within area"/>
+        <mission name="MLSECURITY - Increase resource node production"/>
+        <mission name="MLSECURITY - Evacuate urban blocks within area "/>
+        <mission name="MLSECURITY - Lift urban blocks evacuation within area"/>
+        <mission name="MLSECURITY - Ensure victims evacuation"/>
+        <mission name="MLSECURITY - Extract victims from crowds"/>
+        <mission name="MLSECURITY - Alert urban blocks within area"/>
+        <mission name="MLSECURITY - Lift urban blocks alert within area"/>
+        <mission name="MLSECURITY - Enable resource nodes"/>
+        <mission name="MLSECURITY - Disable resource nodes"/>
+        <mission name="MLSECURITY - Patrol"/>
       </missions>
       <fragorders/>
     </unit>
@@ -3809,4 +3809,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3102060317" -->
+<!-- signature="2225678404" -->
