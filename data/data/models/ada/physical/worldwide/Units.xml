@@ -2249,7 +2249,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Listening station" id="72" name="INT.Listening Station" type="Pion RENS">
+  <unit decisional-model="Listening station" id="72" name="INT.Listening station" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/direction finding"/>
     <equipments>
       <equipment count="5" crew="3" major="true" type="INT.Listening Vehicle"/>
@@ -3161,4 +3161,4 @@
     <crossing-height height="1m"/>
   </unit>
 </units>
-<!-- signature="2617204005" -->
+<!-- signature="1777079627" -->

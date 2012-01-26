@@ -169,7 +169,7 @@
     <unit max-occurs="5" min-occurs="5" type="INT.UAV"/>
   </automat>
   <automat decisional-model="Listening station" id="135" name="INT.Listening station" type="Automate RENS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="INT.Listening Station"/>
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="INT.Listening station"/>
   </automat>
   <automat decisional-model="Jamming station" id="136" name="INT.Jamming station" type="Automate RENS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INT.Jamming station"/>
@@ -235,27 +235,24 @@
   <automat decisional-model="TC2" id="153" name="LOG.Brigade Support BN" type="Automate LOG TC2">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="LOG.Brigade Support Battalion CT"/>
   </automat>
-  <automat decisional-model="Drone station" id="154" name="INT.UAV Ground Control Station" type="Automate RENS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="INT.UAV station"/>
-  </automat>
-  <automat decisional-model="Field battery" id="155" name="JOINT.Destroyer squadron" type="Automate ASS">
+  <automat decisional-model="Field battery" id="154" name="JOINT.Destroyer squadron" type="Automate ASS">
     <unit command-post="true" max-occurs="2" min-occurs="2" type="JOINT.Lafayette destroyer"/>
   </automat>
-  <automat decisional-model="Marine Squadron" id="156" name="JOINT.Aircraft Carrier" type="Automate JOINT">
+  <automat decisional-model="Marine Squadron" id="155" name="JOINT.Aircraft Carrier" type="Automate JOINT">
     <unit max-occurs="1" min-occurs="1" type="JOINT.Aircraft Carrier"/>
     <unit max-occurs="8" min-occurs="8" type="JOINT.Strategic Bomber Patrol"/>
     <unit command-post="true" max-occurs="1" min-occurs="1" type="JOINT.Marine CP"/>
   </automat>
-  <automat decisional-model="Refugees" id="157" name="OOTW.Journalists" type="Automate REFUGIE">
+  <automat decisional-model="Refugees" id="156" name="OOTW.Journalists" type="Automate REFUGIE">
     <unit command-post="true" min-occurs="3" type="OOTW.Journalist"/>
   </automat>
-  <automat decisional-model="Circulation Platoon" id="158" name="TRANS.Circulation platoon" type="Automate CIRCULATION">
+  <automat decisional-model="Circulation Platoon" id="157" name="TRANS.Circulation platoon" type="Automate CIRCULATION">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS.Transportation platoon"/>
     <unit max-occurs="1" min-occurs="1" type="TRANS.Medium transportation platoon"/>
     <unit max-occurs="1" min-occurs="1" type="TRANS.Heavy transportation platoon"/>
   </automat>
-  <automat decisional-model="ML_SecurityLeader" id="159" name="ML_Security - Civil Protection" type="Automate Emergency">
+  <automat decisional-model="ML_SecurityLeader" id="158" name="ML_Security - Civil Protection" type="Automate Emergency">
     <unit command-post="true" max-occurs="10" min-occurs="1" type="ML_Security - Civil Protection - Safety"/>
   </automat>
 </automats>
-<!-- signature="3657294602" -->
+<!-- signature="3592735771" -->
