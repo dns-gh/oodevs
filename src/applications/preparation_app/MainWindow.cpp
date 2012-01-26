@@ -430,7 +430,8 @@ bool MainWindow::Load()
     {
         SetProgression( 10, tr( "Loading configuration ..." ) );
         WriteOptions();
-        pDockManager_->Purge();
+        if( pDockManager_.get() )
+            pDockManager_->Purge();
         model_.Purge();
         pScoreDialog_->Load();
         selector_->Close();
@@ -463,7 +464,8 @@ bool MainWindow::Close()
 {
     if( model_.IsLoaded() && !CheckSaving() )
         return false;
-    pDockManager_->Purge();
+    if( pDockManager_.get() )
+        pDockManager_->Purge();
     model_.Purge();
     staticModel_.Purge();
     selector_->Close();
@@ -496,7 +498,8 @@ void MainWindow::LoadExercise()
         loading_ = true;
         SetProgression( 70, tr( "Loading exercise ..." ) );
         model_.Load( config_ );
-        pDockManager_->Load();
+        if( pDockManager_.get() )
+            pDockManager_->Load();
         if( config_.HasGenerateScores() )
         {
             model_.scores_.GenerateScoresFromTemplate( config_.GetLoader() );
@@ -593,8 +596,11 @@ void MainWindow::closeEvent( QCloseEvent* pEvent )
     QSettings settings;
     settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
     settings.beginGroup( "/Gaming" );
-    settings.setValue( "mainWindowGeometry", pDockManager_->SaveGeometry() );
-    settings.setValue( "mainWindowState", pDockManager_->SaveState() );
+    if( pDockManager_.get() )
+    {
+        settings.setValue( "mainWindowGeometry", pDockManager_->SaveGeometry() );
+        settings.setValue( "mainWindowState", pDockManager_->SaveState() );
+    }
 
     WriteOptions();
 
