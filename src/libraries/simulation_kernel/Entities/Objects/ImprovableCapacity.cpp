@@ -144,6 +144,7 @@ void ImprovableCapacity::Finalize( MIL_Object_ABC& object )
         nFullNbrDotation_ = static_cast< unsigned int >( MIL_Tools::ConvertSimToMeter( localisation.GetArea() ) * nFullNbrDotation_ / 1000000.f );
         object.GetAttribute< MineAttribute >() = MineAttribute( *dotation_, nFullNbrDotation_ );
     }
+    nFullNbrDotation_ = std::max( 1u, nFullNbrDotation_ );
 }
 
 // -----------------------------------------------------------------------------

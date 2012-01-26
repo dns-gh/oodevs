@@ -147,6 +147,7 @@ void BuildableCapacity::Finalize( MIL_Object_ABC& object )
         nFullNbrDotation_ = static_cast< unsigned int >( MIL_Tools::ConvertSimToMeter( localisation.GetArea() ) * nFullNbrDotation_ / 1000000.f );
         object.GetAttribute< ConstructionAttribute >() = ConstructionAttribute( *dotation_, nFullNbrDotation_, nFullNbrDotation_ / 1000000.f );
     }
+    nFullNbrDotation_ = std::max( 1u, nFullNbrDotation_ );
 }
 
 // -----------------------------------------------------------------------------
