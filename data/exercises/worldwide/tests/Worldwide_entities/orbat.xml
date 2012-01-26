@@ -679,7 +679,7 @@
             <unit command-post="false" id="152" name="Firefinder reconnaissance platoon" position="31TBN7689307177" type="ART.Firefinder reconnaissance platoon"/>
             <unit command-post="false" id="153" name="Firefinder reconnaissance platoon" position="31TBN7637206699" type="ART.Firefinder reconnaissance platoon"/>
           </automat>
-          <automat engaged="true" id="154" knowledge-group="6" name="Ground suveillance radar [154]" type="Ground suveillance radar">
+          <automat engaged="true" id="154" knowledge-group="6" name="Ground suveillance radar [154]" type="INT.Ground surveillance radar">
             <unit command-post="true" id="155" name="Ground surveillance radar" position="30TXT8301402878" type="INT.Ground surveillance radar"/>
           </automat>
           <automat engaged="true" id="156" knowledge-group="6" name="HS - Fire_Station_HQ [156]" type="HS - Fire_Station_HQ">
@@ -812,8 +812,8 @@
           <automat engaged="true" id="297" knowledge-group="6" name="Radar detection station [297]" type="Radar detection station">
             <unit command-post="true" id="298" name="Radar detection station" position="31TBN7299502577" type="Radar detection station"/>
           </automat>
-          <automat engaged="true" id="299" knowledge-group="6" name="Refugees [299]" type="Refugees">
-            <unit command-post="true" id="300" name="Refugee" position="31TBN7601603072" type="Refugee"/>
+          <automat engaged="true" id="299" knowledge-group="6" name="Refugees [299]" type="OOTW.Refugees">
+            <unit command-post="true" id="300" name="Refugee" position="31TBN7601603072" type="OOTW.Refugee"/>
           </automat>
           <automat engaged="true" id="301" knowledge-group="6" name="Scout platoon [301]" type="ARMOR.Scout platoon">
             <unit command-post="false" id="302" name="Antitank patrol" position="30TXS8369298366" type="ARMOR.Antitank patrol"/>
@@ -1015,11 +1015,11 @@
           <automat engaged="true" id="2142" knowledge-group="6" name="Mech Infantry BN [2142]" type="Mech Infantry BN">
             <unit command-post="true" id="2143" name="Mech Infantry BN HQ" position="30TXS3944385373" type="Mech Infantry BN HQ"/>
           </automat>
-          <automat engaged="true" id="2144" knowledge-group="6" name="Mech Infantry CO (BFV) [2144]" type="Mech Infantry CO (BFV)">
-            <unit command-post="true" id="2145" name="Mech Infantry CO HQ (BFV)" position="30TXS4120787095" type="Mech Infantry CO HQ (BFV)"/>
-            <unit command-post="false" id="2146" name="Mech Infantry PLT (BFV)" position="30TXS4172586614" type="Mech Infantry PLT (BFV)"/>
-            <unit command-post="false" id="2147" name="Mech Infantry PLT (BFV)" position="30TXS4124286097" type="Mech Infantry PLT (BFV)"/>
-            <unit command-post="false" id="2148" name="Mech Infantry PLT (BFV)" position="30TXS4072486578" type="Mech Infantry PLT (BFV)"/>
+          <automat engaged="true" id="2144" knowledge-group="6" name="Mech Infantry CO (BFV) [2144]" type="INF.Infantry company">
+            <unit command-post="true" id="2145" name="Mech Infantry CO HQ (BFV)" position="30TXS4120787095" type="INF.Infantry company CP"/>
+            <unit command-post="false" id="2146" name="Mech Infantry PLT (BFV)" position="30TXS4172586614" type="INF.Mechanized infantry platoon"/>
+            <unit command-post="false" id="2147" name="Mech Infantry PLT (BFV)" position="30TXS4124286097" type="INF.Mechanized infantry platoon"/>
+            <unit command-post="false" id="2148" name="Mech Infantry PLT (BFV)" position="30TXS4072486578" type="INF.Mechanized infantry platoon"/>
           </automat>
           <automat engaged="true" id="2149" knowledge-group="6" name="Motorized Infantry BN [2149]" type="Motorized Infantry BN">
             <unit command-post="true" id="2150" name="Motorized Infantry BN HQ" position="30TXS4473787488" type="Motorized Infantry BN HQ"/>

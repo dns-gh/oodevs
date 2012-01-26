@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<profiles model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/profiles.xsd">
+<profiles model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/exercise/profiles.xsd">
   <profile name="supervision" password="" supervision="true">
     <rights>
       <readonly/>
@@ -11,4 +11,4 @@
     </rights>
   </profile>
 </profiles>
-<!-- signature="1645021433" -->
+<!-- signature="2543543754" -->

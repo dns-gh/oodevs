@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<exercise model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/exercise.xsd">
+<exercise model-version="4.8.2" valid="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/exercise/exercise.xsd">
   <meta>
     <briefing>
       <text lang="en"><![CDATA[<html><head><meta name="qrichtext" content="1" /></head><body style="font-size:8pt;font-family:MS Shell Dlg 2">
@@ -25,5 +25,6 @@
   <weather file="weather.xml"/>
   <terrain name="Paris_Est_en"/>
   <model dataset="ada" physical="worldwide"/>
+  <settings file="settings.xml"/>
 </exercise>
-<!-- signature="2463311969" -->
+<!-- signature="0609578551" -->

@@ -1,5 +1,0 @@
-14:47:12 Report - MasaLife Platoon[14] : mission started
-14:47:12 Mission - MasaLife Platoon[14] : MoveTo
-14:47:12 Report - MasaLife Platoon[14] : phase started : Mouvement vers l'objectif
-14:47:12 Trace - MasaLife Platoon[14] : move to: self.params.entities = 1
-14:47:12 Trace - MasaLife Platoon[14] : Hello

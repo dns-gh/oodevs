@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/exercise/orbat.xsd">
   <parties>
     <party id="1" name="good ones" type="friend">
       <objects/>
@@ -55,4 +55,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="3115463505" -->
+<!-- signature="2292071976" -->

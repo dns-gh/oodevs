@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/exercise/orbat.xsd">
   <parties>
     <party id="1" name="Azules" type="friend">
       <objects>
@@ -88,26 +88,26 @@
             </automat>
           </formation>
           <formation id="35" level="ii" name="Batallón de Infantería Mecanizada">
-            <automat engaged="true" id="36" knowledge-group="6" name="Compañía de Infantería Mecanizada. BMR" type="Mech Infantry CO (BFV)">
-              <unit command-post="true" id="37" name="PM Compañía de Infantería Mecanizada. BMR" position="30SWG2452758875" type="Mech Infantry CO HQ (BFV)"/>
-              <unit command-post="false" id="38" name="Sección de Infantería Mecanizada. BMR" position="30SWG2502858377" type="Mech Infantry PLT (BFV)"/>
-              <unit command-post="false" id="39" name="Sección de Infantería Mecanizada. BMR" position="30SWG2452857878" type="Mech Infantry PLT (BFV)"/>
-              <unit command-post="false" id="40" name="Sección de Infantería Mecanizada. BMR" position="30SWG2402758376" type="Mech Infantry PLT (BFV)"/>
-              <unit command-post="false" id="71" name="Sección de Infantería Mecanizada. BMR" position="30SWG2376557984" type="Mech Infantry PLT (BFV)"/>
+            <automat engaged="true" id="36" knowledge-group="6" name="Compañía de Infantería Mecanizada. BMR" type="INF.Infantry company">
+              <unit command-post="true" id="37" name="PM Compañía de Infantería Mecanizada. BMR" position="30SWG2452758875" type="INF.Infantry company CP"/>
+              <unit command-post="false" id="38" name="Sección de Infantería Mecanizada. BMR" position="30SWG2502858377" type="INF.Mechanized infantry platoon"/>
+              <unit command-post="false" id="39" name="Sección de Infantería Mecanizada. BMR" position="30SWG2452857878" type="INF.Mechanized infantry platoon"/>
+              <unit command-post="false" id="40" name="Sección de Infantería Mecanizada. BMR" position="30SWG2402758376" type="INF.Mechanized infantry platoon"/>
+              <unit command-post="false" id="71" name="Sección de Infantería Mecanizada. BMR" position="30SWG2376557984" type="INF.Mechanized infantry platoon"/>
             </automat>
-            <automat engaged="true" id="41" knowledge-group="6" name="Compañía de Infantería Mecanizada. BMR" type="Mech Infantry CO (BFV)">
-              <unit command-post="true" id="42" name="PM Compañía de Infantería Mecanizada. BMR" position="30SWG2541063262" type="Mech Infantry CO HQ (BFV)"/>
-              <unit command-post="false" id="43" name="Sección de Infantería Mecanizada. BMR" position="30SWG2591162764" type="Mech Infantry PLT (BFV)"/>
-              <unit command-post="false" id="44" name="Sección de Infantería Mecanizada. BMR" position="30SWG2541162265" type="Mech Infantry PLT (BFV)"/>
-              <unit command-post="false" id="45" name="Sección de Infantería Mecanizada. BMR" position="30SWG2491062763" type="Mech Infantry PLT (BFV)"/>
-              <unit command-post="false" id="72" name="Sección de Infantería Mecanizada. BMR" position="30SWG2625262200" type="Mech Infantry PLT (BFV)"/>
+            <automat engaged="true" id="41" knowledge-group="6" name="Compañía de Infantería Mecanizada. BMR" type="INF.Infantry company">
+              <unit command-post="true" id="42" name="PM Compañía de Infantería Mecanizada. BMR" position="30SWG2541063262" type="INF.Infantry company CP"/>
+              <unit command-post="false" id="43" name="Sección de Infantería Mecanizada. BMR" position="30SWG2591162764" type="INF.Mechanized infantry platoon"/>
+              <unit command-post="false" id="44" name="Sección de Infantería Mecanizada. BMR" position="30SWG2541162265" type="INF.Mechanized infantry platoon"/>
+              <unit command-post="false" id="45" name="Sección de Infantería Mecanizada. BMR" position="30SWG2491062763" type="INF.Mechanized infantry platoon"/>
+              <unit command-post="false" id="72" name="Sección de Infantería Mecanizada. BMR" position="30SWG2625262200" type="INF.Mechanized infantry platoon"/>
             </automat>
-            <automat engaged="true" id="46" knowledge-group="6" name="Compañía de Infantería Mecanizada. BMR" type="Mech Infantry CO (BFV)">
-              <unit command-post="true" id="47" name="PM Compañía de Infantería Mecanizada. BMR" position="30SWG2521061019" type="Mech Infantry CO HQ (BFV)"/>
-              <unit command-post="false" id="48" name="Sección de Infantería Mecanizada. BMR" position="30SWG2571260521" type="Mech Infantry PLT (BFV)"/>
-              <unit command-post="false" id="49" name="Sección de Infantería Mecanizada. BMR" position="30SWG2521260022" type="Mech Infantry PLT (BFV)"/>
-              <unit command-post="false" id="50" name="Sección de Infantería Mecanizada. BMR" position="30SWG2471160520" type="Mech Infantry PLT (BFV)"/>
-              <unit command-post="false" id="73" name="Sección de Infantería Mecanizada. BMR" position="30SWG2606859693" type="Mech Infantry PLT (BFV)"/>
+            <automat engaged="true" id="46" knowledge-group="6" name="Compañía de Infantería Mecanizada. BMR" type="INF.Infantry company">
+              <unit command-post="true" id="47" name="PM Compañía de Infantería Mecanizada. BMR" position="30SWG2521061019" type="INF.Infantry company CP"/>
+              <unit command-post="false" id="48" name="Sección de Infantería Mecanizada. BMR" position="30SWG2571260521" type="INF.Mechanized infantry platoon"/>
+              <unit command-post="false" id="49" name="Sección de Infantería Mecanizada. BMR" position="30SWG2521260022" type="INF.Mechanized infantry platoon"/>
+              <unit command-post="false" id="50" name="Sección de Infantería Mecanizada. BMR" position="30SWG2471160520" type="INF.Mechanized infantry platoon"/>
+              <unit command-post="false" id="73" name="Sección de Infantería Mecanizada. BMR" position="30SWG2606859693" type="INF.Mechanized infantry platoon"/>
             </automat>
             <automat engaged="true" id="76" knowledge-group="6" logistic-level="logistic-base" name="Grupo Logístico" type="LOG.Logistic combat train">
               <unit command-post="true" id="77" name="PM Grupo Logístico" position="30SWG1889058743" type="LOG.Logistic CT">
@@ -274,7 +274,7 @@
                 </stocks>
               </unit>
             </automat>
-            <automat engaged="false" id="330" knowledge-group="6" name="Ground suveillance radar [330]" type="Ground suveillance radar">
+            <automat engaged="false" id="330" knowledge-group="6" name="Ground suveillance radar [330]" type="INT.Ground surveillance radar">
               <unit command-post="true" id="331" name="Ground surveillance radar" position="30SWG1687958091" type="INT.Ground surveillance radar"/>
             </automat>
           </formation>
@@ -654,26 +654,26 @@
             </automat>
           </formation>
           <formation id="202" level="ii" name="Batallón de Infantería Mecanizada">
-            <automat engaged="true" id="203" knowledge-group="139" name="Compañía de Infantería Mecanizada. BMR" type="Mech Infantry CO (BFV)">
-              <unit command-post="true" id="204" name="PM Compañía de Infantería Mecanizada. BMR" position="30SWG6008871652" type="Mech Infantry CO HQ (BFV)"/>
-              <unit command-post="false" id="205" name="Sección de Infantería Mecanizada. BMR" position="30SWG6058971154" type="Mech Infantry PLT (BFV)"/>
-              <unit command-post="false" id="206" name="Sección de Infantería Mecanizada. BMR" position="30SWG6008970655" type="Mech Infantry PLT (BFV)"/>
-              <unit command-post="false" id="207" name="Sección de Infantería Mecanizada. BMR" position="30SWG5958871153" type="Mech Infantry PLT (BFV)"/>
-              <unit command-post="false" id="208" name="Sección de Infantería Mecanizada. BMR" position="30SWG5932670760" type="Mech Infantry PLT (BFV)"/>
+            <automat engaged="true" id="203" knowledge-group="139" name="Compañía de Infantería Mecanizada. BMR" type="INF.Infantry company">
+              <unit command-post="true" id="204" name="PM Compañía de Infantería Mecanizada. BMR" position="30SWG6008871652" type="INF.Infantry company CP"/>
+              <unit command-post="false" id="205" name="Sección de Infantería Mecanizada. BMR" position="30SWG6058971154" type="INF.Mechanized infantry platoon"/>
+              <unit command-post="false" id="206" name="Sección de Infantería Mecanizada. BMR" position="30SWG6008970655" type="INF.Mechanized infantry platoon"/>
+              <unit command-post="false" id="207" name="Sección de Infantería Mecanizada. BMR" position="30SWG5958871153" type="INF.Mechanized infantry platoon"/>
+              <unit command-post="false" id="208" name="Sección de Infantería Mecanizada. BMR" position="30SWG5932670760" type="INF.Mechanized infantry platoon"/>
             </automat>
-            <automat engaged="true" id="209" knowledge-group="139" name="Compañía de Infantería Mecanizada. BMR" type="Mech Infantry CO (BFV)">
-              <unit command-post="true" id="210" name="PM Compañía de Infantería Mecanizada. BMR" position="30SWG5727570546" type="Mech Infantry CO HQ (BFV)"/>
-              <unit command-post="false" id="211" name="Sección de Infantería Mecanizada. BMR" position="30SWG5777670048" type="Mech Infantry PLT (BFV)"/>
-              <unit command-post="false" id="212" name="Sección de Infantería Mecanizada. BMR" position="30SWG5727769549" type="Mech Infantry PLT (BFV)"/>
-              <unit command-post="false" id="213" name="Sección de Infantería Mecanizada. BMR" position="30SWG5677570047" type="Mech Infantry PLT (BFV)"/>
-              <unit command-post="false" id="214" name="Sección de Infantería Mecanizada. BMR" position="30SWG5811769484" type="Mech Infantry PLT (BFV)"/>
+            <automat engaged="true" id="209" knowledge-group="139" name="Compañía de Infantería Mecanizada. BMR" type="INF.Infantry company">
+              <unit command-post="true" id="210" name="PM Compañía de Infantería Mecanizada. BMR" position="30SWG5727570546" type="INF.Infantry company CP"/>
+              <unit command-post="false" id="211" name="Sección de Infantería Mecanizada. BMR" position="30SWG5777670048" type="INF.Mechanized infantry platoon"/>
+              <unit command-post="false" id="212" name="Sección de Infantería Mecanizada. BMR" position="30SWG5727769549" type="INF.Mechanized infantry platoon"/>
+              <unit command-post="false" id="213" name="Sección de Infantería Mecanizada. BMR" position="30SWG5677570047" type="INF.Mechanized infantry platoon"/>
+              <unit command-post="false" id="214" name="Sección de Infantería Mecanizada. BMR" position="30SWG5811769484" type="INF.Mechanized infantry platoon"/>
             </automat>
-            <automat engaged="true" id="215" knowledge-group="139" name="Compañía de Infantería Mecanizada. BMR" type="Mech Infantry CO (BFV)">
-              <unit command-post="true" id="216" name="PM Compañía de Infantería Mecanizada. BMR" position="30SWG5429770564" type="Mech Infantry CO HQ (BFV)"/>
-              <unit command-post="false" id="217" name="Sección de Infantería Mecanizada. BMR" position="30SWG5479870066" type="Mech Infantry PLT (BFV)"/>
-              <unit command-post="false" id="218" name="Sección de Infantería Mecanizada. BMR" position="30SWG5430069568" type="Mech Infantry PLT (BFV)"/>
-              <unit command-post="false" id="219" name="Sección de Infantería Mecanizada. BMR" position="30SWG5379870065" type="Mech Infantry PLT (BFV)"/>
-              <unit command-post="false" id="220" name="Sección de Infantería Mecanizada. BMR" position="30SWG5515569239" type="Mech Infantry PLT (BFV)"/>
+            <automat engaged="true" id="215" knowledge-group="139" name="Compañía de Infantería Mecanizada. BMR" type="INF.Infantry company">
+              <unit command-post="true" id="216" name="PM Compañía de Infantería Mecanizada. BMR" position="30SWG5429770564" type="INF.Infantry company CP"/>
+              <unit command-post="false" id="217" name="Sección de Infantería Mecanizada. BMR" position="30SWG5479870066" type="INF.Mechanized infantry platoon"/>
+              <unit command-post="false" id="218" name="Sección de Infantería Mecanizada. BMR" position="30SWG5430069568" type="INF.Mechanized infantry platoon"/>
+              <unit command-post="false" id="219" name="Sección de Infantería Mecanizada. BMR" position="30SWG5379870065" type="INF.Mechanized infantry platoon"/>
+              <unit command-post="false" id="220" name="Sección de Infantería Mecanizada. BMR" position="30SWG5515569239" type="INF.Mechanized infantry platoon"/>
             </automat>
           </formation>
           <formation id="223" level="ii" name="Batallón de Infantería Motorizada">
@@ -741,4 +741,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="0691994246" -->
+<!-- signature="0786644191" -->

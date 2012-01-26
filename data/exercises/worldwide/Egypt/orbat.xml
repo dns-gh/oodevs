@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/exercise/orbat.xsd">
   <parties>
     <party id="1" name="Local militia" type="enemy">
       <objects>
@@ -326,19 +326,19 @@
       <objects/>
       <tactical>
         <formation id="40" level="i" name="Refugees">
-          <automat engaged="false" id="41" knowledge-group="39" name="Refugees [41]" type="Refugees">
-            <unit command-post="true" id="42" name="Refugee" position="35RPP6489687931" type="Refugee"/>
-            <unit command-post="false" id="43" name="Refugee" position="35RPQ7892506123" type="Refugee"/>
-            <unit command-post="false" id="44" name="Refugee" position="35RPQ7982105303" type="Refugee"/>
-            <unit command-post="false" id="45" name="Refugee" position="35RPQ8521303352" type="Refugee"/>
-            <unit command-post="false" id="46" name="Refugee" position="35RPQ7946402023" type="Refugee"/>
-            <unit command-post="false" id="47" name="Refugee" position="35RPQ8273201135" type="Refugee"/>
-            <unit command-post="false" id="48" name="Refugee" position="35RPP8173199517" type="Refugee"/>
-            <unit command-post="false" id="49" name="Refugee" position="35RPP7699998931" type="Refugee"/>
-            <unit command-post="false" id="50" name="Refugee" position="35RPP7586896131" type="Refugee"/>
-            <unit command-post="false" id="51" name="Refugee" position="35RPP7746598560" type="Refugee"/>
-            <unit command-post="false" id="52" name="Refugee" position="35RPP8039398115" type="Refugee"/>
-            <unit command-post="false" id="53" name="Refugee" position="35RPQ8031705351" type="Refugee"/>
+          <automat engaged="false" id="41" knowledge-group="39" name="Refugees [41]" type="OOTW.Refugees">
+            <unit command-post="true" id="42" name="Refugee" position="35RPP6489687931" type="OOTW.Refugee"/>
+            <unit command-post="false" id="43" name="Refugee" position="35RPQ7892506123" type="OOTW.Refugee"/>
+            <unit command-post="false" id="44" name="Refugee" position="35RPQ7982105303" type="OOTW.Refugee"/>
+            <unit command-post="false" id="45" name="Refugee" position="35RPQ8521303352" type="OOTW.Refugee"/>
+            <unit command-post="false" id="46" name="Refugee" position="35RPQ7946402023" type="OOTW.Refugee"/>
+            <unit command-post="false" id="47" name="Refugee" position="35RPQ8273201135" type="OOTW.Refugee"/>
+            <unit command-post="false" id="48" name="Refugee" position="35RPP8173199517" type="OOTW.Refugee"/>
+            <unit command-post="false" id="49" name="Refugee" position="35RPP7699998931" type="OOTW.Refugee"/>
+            <unit command-post="false" id="50" name="Refugee" position="35RPP7586896131" type="OOTW.Refugee"/>
+            <unit command-post="false" id="51" name="Refugee" position="35RPP7746598560" type="OOTW.Refugee"/>
+            <unit command-post="false" id="52" name="Refugee" position="35RPP8039398115" type="OOTW.Refugee"/>
+            <unit command-post="false" id="53" name="Refugee" position="35RPQ8031705351" type="OOTW.Refugee"/>
           </automat>
         </formation>
       </tactical>
@@ -373,4 +373,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="4198009183" -->
+<!-- signature="1400488454" -->

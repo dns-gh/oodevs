@@ -209,7 +209,7 @@
             <automat engaged="false" id="105" knowledge-group="6" name="Genie [105]" type="ENG.Countermobility company">
               <unit command-post="true" id="106" name="Countermobility platoon" position="30UXU3845251236" type="ENG.Countermobility platoon"/>
             </automat>
-            <automat engaged="false" id="122" knowledge-group="6" name="Rens [122]" type="Ground suveillance radar">
+            <automat engaged="false" id="122" knowledge-group="6" name="Rens [122]" type="INT.Ground surveillance radar">
               <unit command-post="false" id="29" name="Drone (Drone (real time))" position="30UXU3706439501" type="INT.UAV"/>
               <unit command-post="false" id="47" name="Jamming station" position="30UXU2678647984" type="Jamming station"/>
               <unit command-post="false" id="50" name="Listening Station" position="30UXU3154548598" type="Listening Station"/>
@@ -272,7 +272,7 @@
           <formation id="266" level="x" name="Population">
             <automat engaged="false" id="121" knowledge-group="6" name="Asym [121]" type="ASY.Militias">
               <unit command-post="true" id="56" name="Militia" position="30UXU3955949875" type="ASY.Militia"/>
-              <unit command-post="false" id="73" name="Refugee" position="30UXU3139445182" type="Refugee"/>
+              <unit command-post="false" id="73" name="Refugee" position="30UXU3139445182" type="OOTW.Refugee"/>
               <unit command-post="false" id="81" name="Terrorist" position="30UXU4553746676" type="ASY.Terrorist"/>
             </automat>
           </formation>
@@ -383,7 +383,7 @@
                 <unit command-post="false" id="322" name="Drone (real time)" position="30UXU9092533774" type="INT.UAV"/>
                 <unit command-post="false" id="323" name="Drone (real time)" position="30UXU9115033283" type="INT.UAV"/>
               </automat>
-              <automat engaged="true" id="354" knowledge-group="6" name="Ground suveillance radar [354]" type="Ground suveillance radar">
+              <automat engaged="true" id="354" knowledge-group="6" name="Ground suveillance radar [354]" type="INT.Ground surveillance radar">
                 <unit command-post="true" id="355" name="Ground surveillance radar" position="30UYU0351629362" type="INT.Ground surveillance radar"/>
               </automat>
               <automat engaged="true" id="389" knowledge-group="6" name="Jamming station [389]" type="Jamming station">
@@ -512,8 +512,8 @@
               </automat>
             </formation>
             <formation id="288" level="iii" name="Refugies">
-              <automat engaged="true" id="448" knowledge-group="6" name="Refugees [448]" type="Refugees">
-                <unit command-post="true" id="449" name="Refugee" position="30UYU0123531983" type="Refugee"/>
+              <automat engaged="true" id="448" knowledge-group="6" name="Refugees [448]" type="OOTW.Refugees">
+                <unit command-post="true" id="449" name="Refugee" position="30UYU0123531983" type="OOTW.Refugee"/>
               </automat>
             </formation>
             <formation id="291" level="iii" name="Asymetriques">
