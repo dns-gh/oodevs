@@ -291,6 +291,7 @@
       <preferred-terrains strength="50">
         <preferred-terrain type="nbc zone"/>
         <preferred-terrain type="nbc cloud"/>
+        <preferred-terrain type="rota area"/>
       </preferred-terrains>
       <avoided-terrains strength="7"/>
       <zone>
@@ -329,7 +330,7 @@
         <object-cost type="decontamination site" value="10"/>
         <object-cost type="logistic support area" value="10"/>
         <object-cost type="jamming area" value="10000"/>
-        <object-cost type="rota area" value="10000"/>
+        <object-cost type="rota area" value="0"/>
         <object-cost type="landing area" value="10"/>
         <object-cost type="trail" value="-5"/>
         <object-cost type="platform" value="10"/>
@@ -403,4 +404,4 @@
     <rule channeling-range="1" cost-out-of-channeling="5000" type="base"/>
   </population-rules>
 </pathfind>
-<!-- signature="4199505867" -->
+<!-- signature="0165313434" -->
