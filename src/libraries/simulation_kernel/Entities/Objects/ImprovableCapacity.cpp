@@ -137,14 +137,15 @@ void ImprovableCapacity::Finalize( MIL_Object_ABC& object )
     if( unitType_ == ConstructionCapacity::eRaw && dotation_ )
     {
         nFullNbrDotation_ *= static_cast< unsigned int >( MIL_Tools::ConvertSimToMeter( localisation.GetLength() ) / 1000.f );
+        nFullNbrDotation_ = std::max( 1u, nFullNbrDotation_ );
         object.GetAttribute< MineAttribute >() = MineAttribute( *dotation_, nFullNbrDotation_ );
     }
     else if( unitType_ == ConstructionCapacity::eDensity && dotation_ )
     {
         nFullNbrDotation_ = static_cast< unsigned int >( MIL_Tools::ConvertSimToMeter( localisation.GetArea() ) * nFullNbrDotation_ / 1000000.f );
+        nFullNbrDotation_ = std::max( 1u, nFullNbrDotation_ );
         object.GetAttribute< MineAttribute >() = MineAttribute( *dotation_, nFullNbrDotation_ );
     }
-    nFullNbrDotation_ = std::max( 1u, nFullNbrDotation_ );
 }
 
 // -----------------------------------------------------------------------------

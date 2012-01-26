@@ -140,14 +140,15 @@ void BuildableCapacity::Finalize( MIL_Object_ABC& object )
     if( unitType_ == ConstructionCapacity::eRaw && dotation_ )
     {
         nFullNbrDotation_ *= static_cast< unsigned int >( MIL_Tools::ConvertSimToMeter( localisation.GetLength() ) / 1000.f );
+        nFullNbrDotation_ = std::max( 1u, nFullNbrDotation_ );
         object.GetAttribute< ConstructionAttribute >() = ConstructionAttribute( *dotation_, nFullNbrDotation_, nFullNbrDotation_ / 1000.f );
     }
     else if( unitType_ == ConstructionCapacity::eDensity && dotation_ )
     {
         nFullNbrDotation_ = static_cast< unsigned int >( MIL_Tools::ConvertSimToMeter( localisation.GetArea() ) * nFullNbrDotation_ / 1000000.f );
+        nFullNbrDotation_ = std::max( 1u, nFullNbrDotation_ );
         object.GetAttribute< ConstructionAttribute >() = ConstructionAttribute( *dotation_, nFullNbrDotation_, nFullNbrDotation_ / 1000000.f );
     }
-    nFullNbrDotation_ = std::max( 1u, nFullNbrDotation_ );
 }
 
 // -----------------------------------------------------------------------------
