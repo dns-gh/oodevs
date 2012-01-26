@@ -314,6 +314,8 @@
         <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
+        <fragorder name="Embarquer"/>
+        <fragorder name="Debarquer"/>
       </fragorders>
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.ASA.SAMP HAWK">
@@ -1150,6 +1152,8 @@
         <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
+        <fragorder name="Embarquer"/>
+        <fragorder name="Debarquer"/>
       </fragorders>
     </unit>
     <unit dia-type="france.military.platoon.terrorism.roles.Individu" file="BMPion.bms" masalife="true" name="Masalife.Individu Isole">
@@ -3325,6 +3329,8 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Deposer Unite Capturee"/>
+        <fragorder name="Embarquer"/>
+        <fragorder name="Debarquer"/>
       </fragorders>
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.ABC.PIR">
@@ -3559,6 +3565,8 @@
         <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
+        <fragorder name="Embarquer"/>
+        <fragorder name="Debarquer"/>
       </fragorders>
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.LOG.Section Maintenance">
@@ -4459,6 +4467,8 @@
         <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
+        <fragorder name="Embarquer"/>
+        <fragorder name="Debarquer"/>
       </fragorders>
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.ASS.RATAC - COBRA">
@@ -4574,6 +4584,8 @@
         <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
+        <fragorder name="Embarquer"/>
+        <fragorder name="Debarquer"/>
       </fragorders>
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.ASS.Equipe Reco">
@@ -4762,6 +4774,8 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Embarquer"/>
+        <fragorder name="Debarquer"/>
       </fragorders>
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.Sections mise en oeuvre DRAC">
@@ -4865,6 +4879,8 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Embarquer"/>
+        <fragorder name="Debarquer"/>
       </fragorders>
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.Groupe BROVAB">
@@ -5050,6 +5066,8 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Embarquer"/>
+        <fragorder name="Debarquer"/>
       </fragorders>
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.Pat recherche moto">
@@ -5089,6 +5107,8 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Embarquer"/>
+        <fragorder name="Debarquer"/>
       </fragorders>
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.Pat recherche nautique">
@@ -5129,6 +5149,8 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Embarquer"/>
+        <fragorder name="Debarquer"/>
       </fragorders>
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.Pat recherche RASIT">
@@ -5168,6 +5190,8 @@
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Embarquer"/>
+        <fragorder name="Debarquer"/>
       </fragorders>
     </unit>
     <unit dia-type="france.military.platoon.combat.support.air.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.Patrouille Viviane">
@@ -5340,6 +5364,46 @@
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Embarquer"/>
         <fragorder name="Debarquer"/>
+      </fragorders>
+    </unit>
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Genie.AD">
+      <missions>
+        <mission name="PION COMMUNES Decrocher"/>
+        <mission name="PION COMMUNES Faire Mouvement"/>
+        <mission name="PION COMMUNES Franchir"/>
+        <mission name="PION COMMUNES Se Faire Decontaminer"/>
+        <mission name="PION COMMUNES Se Faire Transporter"/>
+        <mission name="PION COMMUNES Stationner"/>
+        <mission name="PION COMMUNES Suivre"/>
+        <mission name="PION Activer reseau souterrain"/>
+        <mission name="PION Desactiver reseau souterrain"/>
+        <mission name="PION Produire et alimenter"/>
+        <mission name="PION COMMUNES Renforcer"/>
+        <mission name="PION GENIE Retablir Point Du Reseau"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Rejoindre"/>
+        <fragorder name="Embarquer"/>
+        <fragorder name="Debarquer"/>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
   </units>
@@ -8517,4 +8581,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2382193243" -->
+<!-- signature="2852560963" -->

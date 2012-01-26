@@ -10198,7 +10198,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Genie.Energie et traitement des eaux" id="349" name="GEN . Section Aide au Deploiement" type="Pion GEN">
+  <unit decisional-model="Masalife.Genie.AD" id="349" name="GEN . Section Aide au Deploiement" type="Pion GEN">
     <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat/mechanized"/>
     <equipments>
       <equipment count="2" crew="1" major="true" type="CBH 320"/>
@@ -19731,4 +19731,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="0832096411" -->
+<!-- signature="1256493664" -->
