@@ -80,7 +80,7 @@ void ADN_BaseEditLine::Init()
     leftWidget_->resize( 0, 0 );
     leftLayout_ = new QHBoxLayout( leftWidget_ );
     leftLayout_->setContentsMargins( 0, 0, 0, 0 );
-    if (isRightToLeft())
+    if( isRightToLeft() )
         leftLayout_->setDirection( QBoxLayout::RightToLeft );
     else
         leftLayout_->setDirection( QBoxLayout::LeftToRight );
@@ -89,7 +89,7 @@ void ADN_BaseEditLine::Init()
     rightWidget_ = new ADN_SideWidget( this );
     rightWidget_->resize( 0, 0 );
     rightLayout_ = new QHBoxLayout( rightWidget_ );
-    if (isRightToLeft())
+    if( isRightToLeft() )
         rightLayout_->setDirection( QBoxLayout::RightToLeft );
     else
         rightLayout_->setDirection( QBoxLayout::LeftToRight );
@@ -281,4 +281,18 @@ void ADN_BaseEditLine::UpdateSideWidgetLocations()
     textRect.setY( midHeight - rightWidget_->sizeHint().height() / 2 );
     textRect.setHeight( rightWidget_->sizeHint().height() );
     rightWidget_->setGeometry( textRect );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_BaseEditLine::clear
+// Created: ABR 2012-01-26
+// -----------------------------------------------------------------------------
+void ADN_BaseEditLine::clear()
+{
+    QLineEdit::clear();
+    if( isReadOnly() )
+    {
+        setReadOnly( false );
+        setPaletteForegroundColor( Qt::black );
+    }
 }

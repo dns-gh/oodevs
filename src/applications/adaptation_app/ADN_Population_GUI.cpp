@@ -214,6 +214,7 @@ void ADN_Population_GUI::Build()
 
     // List view
     ADN_SearchListView< ADN_Population_ListView >* pSearchListView = new ADN_SearchListView< ADN_Population_ListView >( data_.GetPopulation(), vInfosConnectors );
+    connect( this, SIGNAL( ApplyFilterList( const ADN_UsedByInfos& ) ), pSearchListView, SLOT( OnApplyFilterList( const ADN_UsedByInfos& ) ) );
 
     // Sub content
     QWidget* pSubContent = CreateScrollArea( *pSpecificContent, pSearchListView );

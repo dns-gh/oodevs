@@ -74,13 +74,24 @@ void ADN_ListView_Models::ConnectItem( bool bConnect )
 //-----------------------------------------------------------------------------
 void ADN_ListView_Models::OnContextMenu( const QPoint& pt )
 {
+    Q3PopupMenu popupMenu( this );
     if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin )
     {
-        Q3PopupMenu popupMenu( this );
         ADN_Model_Wizard wizard( eEntityType_, this );
         FillContextMenuWithDefault( popupMenu, wizard );
-        popupMenu.exec( pt );
     }
+    if( pCurData_ != 0 )
+    {
+        ModelInfos* pCastData = static_cast< ModelInfos* >( pCurData_ );
+        assert( pCastData != 0 );
+        if( eEntityType_ == ModelInfos::ePawn )
+            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsThatUse( *pCastData ), eUnits );
+        else if( eEntityType_ == ModelInfos::eAutomat )
+            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Workspace::GetWorkspace().GetAutomata().GetData().GetAutomataThatUse( *pCastData ), eAutomata );
+        else if( eEntityType_ == ModelInfos::ePopulation )
+            FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Workspace::GetWorkspace().GetPopulation().GetData().GetPopulationsThatUse( *pCastData ), ePopulation );
+    }
+    popupMenu.exec( pt );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,20 +102,12 @@ std::string ADN_ListView_Models::GetToolTipFor( Q3ListViewItem& item )
 {
     void* pData = static_cast<ADN_ListViewItem&>( item ).GetData();
     ModelInfos* pCastData = static_cast< ModelInfos* >( pData );
-    std::string strToolTip = tools::translate( "ADN_ListView_Models", "<b>Used by:</b><br>" ).ascii();
-    switch( eEntityType_ )
-    {
-    case ModelInfos::ePawn:
-        strToolTip += ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsThatUse( *pCastData );
-        break;
-    case ModelInfos::eAutomat:
-        strToolTip += ADN_Workspace::GetWorkspace().GetAutomata().GetData().GetAutomataThatUse( *pCastData );
-        break;
-    case ModelInfos::ePopulation:
-        strToolTip += ADN_Workspace::GetWorkspace().GetPopulation().GetData().GetPopulationsThatUse( *pCastData );
-        break;
-    default:
-        break;
-    }
-    return strToolTip;
+    assert( pCastData != 0 );
+    if( eEntityType_ == ModelInfos::ePawn )
+        return FormatUsersList( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsThatUse( *pCastData ) );
+    else if( eEntityType_ == ModelInfos::eAutomat )
+        return FormatUsersList( ADN_Workspace::GetWorkspace().GetAutomata().GetData().GetAutomataThatUse( *pCastData ) );
+    else if( eEntityType_ == ModelInfos::ePopulation )
+        return FormatUsersList( ADN_Workspace::GetWorkspace().GetPopulation().GetData().GetPopulationsThatUse( *pCastData ) );
+    return "";
 }

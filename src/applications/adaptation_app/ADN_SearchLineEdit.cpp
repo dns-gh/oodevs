@@ -21,16 +21,18 @@ ADN_SearchLineEdit::ADN_SearchLineEdit( QWidget* parent /*= 0*/ )
     : ADN_BaseEditLine( parent )
 {
     // search icon on the left
-    searchButton_ = new ADN_SearchButton( this );
-    AddWidget( searchButton_, ADN_BaseEditLine::LeftSide );
+    AddWidget( new ADN_SearchButton( this ), ADN_BaseEditLine::LeftSide );
 
     // clear button on the right
-    clearButton_ = new ADN_ClearButton( this );
-    connect( clearButton_, SIGNAL( clicked() ), this, SLOT( clear() ) );
-    connect( this, SIGNAL( textChanged( const QString& ) ), clearButton_, SLOT( TextChanged( const QString& ) ) );
-    AddWidget( clearButton_, ADN_BaseEditLine::RightSide );
-    clearButton_->hide();
+    ADN_ClearButton* clearButton = new ADN_ClearButton( this );
+    AddWidget( clearButton, ADN_BaseEditLine::RightSide );
+    clearButton->hide();
 
+    // Connection
+    connect( clearButton, SIGNAL( clicked() ), this, SLOT( clear() ) );
+    connect( this, SIGNAL( textChanged( const QString& ) ), clearButton, SLOT( TextChanged( const QString& ) ) );
+
+    // Initialization
     UpdateTextMargins();
     SetInactiveText( tr("Search") );
 }

@@ -259,8 +259,8 @@ public:
 
     int GetNextId();
 
-    std::string GetUnitsThatUse( ADN_Composantes_Data::ComposanteInfos& composante );
-    std::string GetUnitsThatUse( ADN_Models_Data::ModelInfos& model );
+    QStringList GetUnitsThatUse( ADN_Composantes_Data::ComposanteInfos& composante );
+    QStringList GetUnitsThatUse( ADN_Models_Data::ModelInfos& model );
 
 private:
     void ReadArchive( xml::xistream& input );

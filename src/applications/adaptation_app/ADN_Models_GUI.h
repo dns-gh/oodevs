@@ -53,6 +53,7 @@ public:
     //@{
     void Build();
     void Enable( bool enable );
+    virtual void ChangeCurrentSubTab( int subTab );
     //@}
 
 private:
@@ -64,10 +65,11 @@ private:
 private:
     //! @name Member data
     //@{
-    ADN_Models_Data& data_;
-    QWidget* pPawnWidget_;
-    QWidget* pAutomatWidget_;
-    QWidget* pPopulationWidget_;
+    ADN_Models_Data&    data_;
+    QTabWidget*         pTabWidget_;
+    QWidget*            pPawnWidget_;
+    QWidget*            pAutomatWidget_;
+    QWidget*            pPopulationWidget_;
     //@}
 };
 

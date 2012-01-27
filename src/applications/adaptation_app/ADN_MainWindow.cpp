@@ -127,6 +127,7 @@ void ADN_MainWindow::Build()
     Q3VBox* pBox = new Q3VBox( this );
     setCentralWidget( pBox );
     mainTabWidget_.reset( new ADN_MainTabWidget( pBox ) );
+    connect( this, SIGNAL( ChangeTab( E_WorkspaceElements ) ), mainTabWidget_.get(), SLOT( OnChangeTab( E_WorkspaceElements ) ) );
     mainTabWidget_->hide();
 
     // Actions

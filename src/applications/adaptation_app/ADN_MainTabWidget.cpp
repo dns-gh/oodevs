@@ -43,17 +43,6 @@ void ADN_MainTabWidget::AddPage( E_WorkspaceElements element, QWidget& page, con
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_MainTabWidget::JumpTo
-// Created: ABR 2012-01-18
-// -----------------------------------------------------------------------------
-void ADN_MainTabWidget::JumpTo( E_WorkspaceElements target )
-{
-    CIT_ElementIndexMap it = elementIndexMap_.find( target );
-    assert( it != elementIndexMap_.end() );
-    setCurrentIndex( it->second );
-}
-
-// -----------------------------------------------------------------------------
 // Name: ADN_MainTabWidget::OnBack
 // Created: ABR 2012-01-18
 // -----------------------------------------------------------------------------
@@ -94,4 +83,15 @@ void ADN_MainTabWidget::OnCurrentChanged( int index )
     }
     emit BackEnabled( currentHistoryIndex_ > 0 );
     emit ForwardEnabled( currentHistoryIndex_ < history_.size() - 1 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_MainTabWidget::OnChangeTab
+// Created: ABR 2012-01-26
+// -----------------------------------------------------------------------------
+void ADN_MainTabWidget::OnChangeTab( E_WorkspaceElements target )
+{
+    CIT_ElementIndexMap it = elementIndexMap_.find( target );
+    assert( it != elementIndexMap_.end() );
+    setCurrentIndex( it->second );
 }

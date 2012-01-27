@@ -1366,6 +1366,9 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensors_ModificatorTable.cpp">
       <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_SearchListView.cpp">
+      <Filter>Source Files\Common widgets\Search list view</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">
@@ -2079,14 +2082,14 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_SearchLineEdit.h">
       <Filter>Source Files\Common widgets\Search list view</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_SearchListView.h">
-      <Filter>Source Files\Common widgets\Search list view</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Logistic_Data.h">
       <Filter>Source Files\Workspace\Logistic\Logistic\Logistic data</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Logistic_GUI.h">
       <Filter>Source Files\Workspace\Logistic\Logistic\Logistic GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_UsedByInfos.h">
+      <Filter>Source Files\Common widgets\Search list view</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2488,6 +2491,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Sensors_ModificatorTable.h">
       <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_SearchListView.h">
+      <Filter>Source Files\Common widgets\Search list view</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

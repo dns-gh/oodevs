@@ -62,6 +62,7 @@ protected:
 
 signals:
     void OpenModeToggled();
+    void ChangeTab( E_WorkspaceElements );
 
 private slots:
     //! @name Slots

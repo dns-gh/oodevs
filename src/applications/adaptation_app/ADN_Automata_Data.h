@@ -98,8 +98,8 @@ public:
     T_AutomatonInfosVector&  GetAutomata();
     AutomatonInfos*          FindAutomaton( const std::string& strName );
 
-    std::string GetAutomataThatUse( ADN_Units_Data::UnitInfos& unit );
-    std::string GetAutomataThatUse( ADN_Models_Data::ModelInfos& model );
+    QStringList GetAutomataThatUse( ADN_Units_Data::UnitInfos& unit );
+    QStringList GetAutomataThatUse( ADN_Models_Data::ModelInfos& model );
 
 private:
     void ReadArchive( xml::xistream& input );

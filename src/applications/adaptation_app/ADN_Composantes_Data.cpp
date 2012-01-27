@@ -2342,47 +2342,38 @@ int ADN_Composantes_Data::GetNextId()
 // Name: ADN_Composantes_Data::GetComposantesThatUse
 // Created: APE 2005-04-22
 // -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::GetComposantesThatUse( ADN_Sensors_Data::SensorInfos& sensor )
+QStringList ADN_Composantes_Data::GetComposantesThatUse( ADN_Sensors_Data::SensorInfos& sensor )
 {
-    std::string strResult;
+    QStringList result;
     for( IT_ComposanteInfos_Vector it = vComposantes_.begin(); it != vComposantes_.end(); ++it )
     {
         ComposanteInfos* pComp = *it;
         for( IT_SensorInfos_Vector it2 = pComp->vSensors_.begin(); it2 != pComp->vSensors_.end(); ++it2 )
-        {
             if( (*it2)->ptrSensor_.GetData() == &sensor )
             {
-                if( strResult != "" )
-                    strResult += "<br>";
-                strResult += "<nobr>" + pComp->strName_.GetData() + "</nobr>";
+                result << pComp->strName_.GetData().c_str();
                 break;
             }
-        }
     }
-    return strResult;
+    return result;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Composantes_Data::GetComposantesThatUse
 // Created: APE 2005-04-25
 // -----------------------------------------------------------------------------
-std::string ADN_Composantes_Data::GetComposantesThatUse( ADN_Weapons_Data::WeaponInfos& weapon )
+QStringList ADN_Composantes_Data::GetComposantesThatUse( ADN_Weapons_Data::WeaponInfos& weapon )
 {
-    std::string strResult;
+    QStringList result;
     for( IT_ComposanteInfos_Vector it = vComposantes_.begin(); it != vComposantes_.end(); ++it )
     {
         ComposanteInfos* pComp = *it;
         for( IT_WeaponInfos_Vector it2 = pComp->vWeapons_.begin(); it2 != pComp->vWeapons_.end(); ++it2 )
-        {
             if( (*it2)->ptrWeapon_.GetData() == &weapon )
             {
-                if( strResult != "" )
-                    strResult += "<br>";
-                strResult += "<nobr>" + pComp->strName_.GetData() + "</nobr>";
+                result << pComp->strName_.GetData().c_str();
                 break;
             }
-        }
     }
-    return strResult;
+    return result;
 }

@@ -46,7 +46,7 @@ class ADN_BaseEditLine : public QLineEdit
                        , private boost::noncopyable
 {
     Q_OBJECT
-    Q_PROPERTY( QString InactiveText READ InactiveText WRITE SetInactiveText )
+    Q_PROPERTY( QString InactiveText READ InactiveText WRITE SetInactiveText ) // $$$$ ABR 2012-01-26: Replace placeholder property to be drawn on the right place.
 
 public:
     //! @name Types
@@ -90,6 +90,7 @@ protected slots:
     //! @name Slots
     //@{
     void UpdateTextMargins();
+    void clear();
     //@}
 
 private:

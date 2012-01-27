@@ -105,9 +105,14 @@ void ADN_ListView_Sensors::OnContextMenu( const QPoint& pt)
     Q3PopupMenu popupMenu( this );
     ADN_Sensor_Wizard wizard( this );
     FillContextMenuWithDefault( popupMenu, wizard );
+    if( pCurData_ != 0 )
+    {
+        SensorInfos* pCastData = static_cast< SensorInfos* >( pCurData_ );
+        assert( pCastData != 0 );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ), eComposantes );
+    }
     popupMenu.exec( pt );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_Sensors::GetToolTipFor
@@ -118,9 +123,5 @@ std::string ADN_ListView_Sensors::GetToolTipFor( Q3ListViewItem& item )
     void* pData = static_cast<ADN_ListViewItem&>( item ).GetData();
     SensorInfos* pCastData = (SensorInfos*)pData;
     assert( pCastData != 0 );
-
-    std::string strToolTip = tools::translate( "ADN_ListView_Sensors", "<b>Used by:</b><br>" ).ascii();
-    strToolTip += ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData );
-
-    return strToolTip;
+    return FormatUsersList( ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ) );
 }

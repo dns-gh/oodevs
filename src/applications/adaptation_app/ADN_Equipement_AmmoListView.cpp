@@ -47,7 +47,6 @@ ADN_Equipement_AmmoListView::ADN_Equipement_AmmoListView( QWidget* pParent, cons
     this->SetDeletionEnabled( true );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Equipement_AmmoListView destructor
 // Created: APE 2004-12-29
@@ -133,7 +132,6 @@ void ADN_Equipement_AmmoListView::ConnectItem( bool bConnect )
         ADN_Workspace::GetWorkspace().GetEquipements().GetGui().InitializeSimulationCombos();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Equipement_AmmoListView::OnContextMenu
 // Created: APE 2004-12-29
@@ -144,9 +142,14 @@ void ADN_Equipement_AmmoListView::OnContextMenu( const QPoint& pt )
     ResourceInfos& dotation = ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Munition );
     ADN_Equipement_Wizard wizard( dotation, this );
     FillContextMenuWithDefault( popupMenu, wizard );
+    if( pCurData_ != 0 )
+    {
+        AmmoCategoryInfo* pCastData = static_cast< AmmoCategoryInfo* >( pCurData_ );
+        assert( pCastData != 0 );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Workspace::GetWorkspace().GetWeapons().GetData().GetWeaponThatUse( *pCastData ), eWeapons );
+    }
     popupMenu.exec( pt );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Equipement_AmmoListView::GetToolTipFor
@@ -157,9 +160,5 @@ std::string ADN_Equipement_AmmoListView::GetToolTipFor( Q3ListViewItem& item )
     void* pData = static_cast<ADN_ListViewItem&>( item ).GetData();
     AmmoCategoryInfo* pCastData = (AmmoCategoryInfo*)pData;
     assert( pCastData != 0 );
-
-    std::string strToolTip = tools::translate( "ADN_Equipement_AmmoListView", "<b>Used by:</b><br>" ).ascii();
-    strToolTip += ADN_Workspace::GetWorkspace().GetWeapons().GetData().GetWeaponThatUse( *pCastData );
-
-    return strToolTip;
+    return FormatUsersList( ADN_Workspace::GetWorkspace().GetWeapons().GetData().GetWeaponThatUse( *pCastData ) );
 }

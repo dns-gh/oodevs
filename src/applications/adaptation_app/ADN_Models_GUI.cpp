@@ -54,17 +54,17 @@ void ADN_Models_GUI::Build()
     assert( pMainWidget_ == 0 );
 
     // Tab management
-    QTabWidget* pTabWidget = new QTabWidget( pMainWidget_ );
-    pTabWidget->addTab( BuildPage( pPawnWidget_, ADN_Models_Data::ModelInfos::ePawn, data_.GetUnitModelsInfos() ), tr( "Unit models"       ) );
-    pTabWidget->addTab( BuildPage( pAutomatWidget_, ADN_Models_Data::ModelInfos::eAutomat, data_.GetAutomataModelsInfos() ), tr( "Automata models"   ) );
-    pTabWidget->addTab( BuildPage( pPopulationWidget_, ADN_Models_Data::ModelInfos::ePopulation, data_.GetPopulationModelsInfos() ), tr( "Crowds models" ) );
+    pTabWidget_ = new QTabWidget( pMainWidget_ );
+    pTabWidget_->addTab( BuildPage( pPawnWidget_, ADN_Models_Data::ModelInfos::ePawn, data_.GetUnitModelsInfos() ), tr( "Unit models" ) );
+    pTabWidget_->addTab( BuildPage( pAutomatWidget_, ADN_Models_Data::ModelInfos::eAutomat, data_.GetAutomataModelsInfos() ), tr( "Automata models" ) );
+    pTabWidget_->addTab( BuildPage( pPopulationWidget_, ADN_Models_Data::ModelInfos::ePopulation, data_.GetPopulationModelsInfos() ), tr( "Crowds models" ) );
 
     // Main widget
     pMainWidget_ = new QWidget();
     QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_ );
     pMainLayout->setSpacing( 10 );
     pMainLayout->setMargin( 10 );
-    pMainLayout->addWidget( pTabWidget );}
+    pMainLayout->addWidget( pTabWidget_ );}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Models_GUI::BuildPage
@@ -116,7 +116,9 @@ QWidget* ADN_Models_GUI::BuildPage( QWidget*& pContent, ADN_Models_Data::ModelIn
     pContentLayout->addWidget( pFragOdersGroup );
 
     // List view
-    ADN_SearchListView< ADN_ListView_Models >* pSearchListView = new ADN_SearchListView< ADN_ListView_Models >( eEntityType, model, vInfosConnectors );
+    ADN_SearchListView< ADN_ListView_Models >* pSearchListView = new ADN_SearchListView< ADN_ListView_Models >( eEntityType, model, vInfosConnectors, static_cast< int >( eEntityType ) );
+    connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_UsedByInfos& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_UsedByInfos& ) ) );
+    connect( this, SIGNAL( ApplyFilterList( const ADN_UsedByInfos& ) ), pSearchListView, SLOT( OnApplyFilterList( const ADN_UsedByInfos& ) ) );
 
     // Main page
     return CreateScrollArea( *pContent, pSearchListView );
@@ -131,4 +133,14 @@ void ADN_Models_GUI::Enable( bool enable )
     pPawnWidget_->setEnabled( enable );
     pAutomatWidget_->setEnabled( enable );
     pPopulationWidget_->setEnabled( enable );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Models_GUI::ChangeCurrentSubTab
+// Created: ABR 2012-01-26
+// -----------------------------------------------------------------------------
+void ADN_Models_GUI::ChangeCurrentSubTab( int subTab )
+{
+    assert( subTab >= 0 && subTab < pTabWidget_->count() );
+    pTabWidget_->setCurrentPage( subTab );
 }

@@ -275,7 +275,7 @@ public:
 
     T_PopulationInfosVector& GetPopulation();
     PopulationInfos* FindPopulation( const std::string& strName );
-    std::string GetPopulationsThatUse( ADN_Models_Data::ModelInfos& model );
+    QStringList GetPopulationsThatUse( ADN_Models_Data::ModelInfos& model );
 
 private:
     void ReadArchive( xml::xistream& input );

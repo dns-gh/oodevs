@@ -173,9 +173,14 @@ void ADN_ListView_Composantes::OnContextMenu( const QPoint& pt )
     Q3PopupMenu popupMenu( this );
     ADN_Composante_Wizard wizard( this );
     FillContextMenuWithDefault( popupMenu, wizard );
+    if( pCurData_ != 0 )
+    {
+        ComposanteInfos* pCastData = static_cast< ComposanteInfos* >( pCurData_ );
+        assert( pCastData != 0 );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsThatUse( *pCastData ), eUnits );
+    }
     popupMenu.exec( pt );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_Composantes::GetToolTipFor
@@ -186,9 +191,5 @@ std::string ADN_ListView_Composantes::GetToolTipFor( Q3ListViewItem& item )
     void* pData = static_cast<ADN_ListViewItem&>( item ).GetData();
     ComposanteInfos* pCastData = (ComposanteInfos*)pData;
     assert( pCastData != 0 );
-
-    std::string strToolTip = tools::translate( "ADN_ListView_Composantes", "<b>Used by:</b><br>" ).ascii();
-    strToolTip += ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsThatUse( *pCastData );
-
-    return strToolTip;
+    return FormatUsersList( ADN_Workspace::GetWorkspace().GetUnits().GetData().GetUnitsThatUse( *pCastData ) );
 }

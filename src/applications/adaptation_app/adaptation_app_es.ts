@@ -1317,10 +1317,6 @@ estacionado con motor encendido</translation>
         <source>Ammunition</source>
         <translation>Munición</translation>
     </message>
-    <message>
-        <source>&lt;b&gt;Used by:&lt;/b&gt;&lt;br&gt;</source>
-        <translation>&lt;b&gt;Usado por:&lt;/b&gt;&lt;br&gt;</translation>
-    </message>
 </context>
 <context>
     <name>ADN_Equipement_AttritionGraph</name>
@@ -2145,6 +2141,22 @@ tirador</translation>
         <source>Delete</source>
         <translation>Borrar</translation>
     </message>
+    <message>
+        <source>Search for elements that use</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Unused&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt;b&gt;Used by:&lt;/b&gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&lt; Using: %1 &gt;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_ListViewDialog</name>
@@ -2208,10 +2220,6 @@ tirador</translation>
         <source>Equipments</source>
         <translation>Equipos</translation>
     </message>
-    <message>
-        <source>&lt;b&gt;Used by:&lt;/b&gt;&lt;br&gt;</source>
-        <translation>&lt;b&gt;Usado por:&lt;/b&gt;&lt;br&gt;</translation>
-    </message>
 </context>
 <context>
     <name>ADN_ListView_Composantes_Objects</name>
@@ -2241,20 +2249,12 @@ tirador</translation>
         <source>Launchers</source>
         <translation>Lanzadores</translation>
     </message>
-    <message>
-        <source>&lt;b&gt;Used by:&lt;/b&gt;&lt;br&gt;</source>
-        <translation>&lt;b&gt;Usado por:&lt;/b&gt;&lt;br&gt;</translation>
-    </message>
 </context>
 <context>
     <name>ADN_ListView_MissionTypes</name>
     <message>
         <source>Missions</source>
         <translation>Misiones</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Used by:&lt;/b&gt;&lt;br&gt;</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2285,10 +2285,6 @@ tirador</translation>
     <message>
         <source>Models</source>
         <translation>Modelos</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Used by:&lt;/b&gt;&lt;br&gt;</source>
-        <translation>&lt;b&gt;Usaado por:&lt;/b&gt;&lt;br&gt;</translation>
     </message>
 </context>
 <context>
@@ -2326,10 +2322,6 @@ tirador</translation>
         <source>Sensors</source>
         <translation>Sensores</translation>
     </message>
-    <message>
-        <source>&lt;b&gt;Used by:&lt;/b&gt;&lt;br&gt;</source>
-        <translation>&lt;b&gt;Usado por:&lt;/b&gt;&lt;br&gt;</translation>
-    </message>
 </context>
 <context>
     <name>ADN_ListView_Templates</name>
@@ -2347,10 +2339,6 @@ tirador</translation>
     <message>
         <source>Units</source>
         <translation>Unidades</translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Used by:&lt;/b&gt;&lt;br&gt;</source>
-        <translation>&lt;b&gt;Usado por:&lt;/b&gt;&lt;br&gt;</translation>
     </message>
 </context>
 <context>
@@ -5826,10 +5814,6 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     <message>
         <source>Weapon system</source>
         <translation></translation>
-    </message>
-    <message>
-        <source>&lt;b&gt;Used by:&lt;/b&gt;&lt;br&gt;</source>
-        <translation>&lt;b&gt;Utilisé par:&lt;/b&gt;&lt;br&gt;</translation>
     </message>
 </context>
 <context>

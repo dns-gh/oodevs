@@ -45,7 +45,6 @@ ADN_ListView::ADN_ListView( QWidget* pParent, const char* szName, Qt::WFlags f )
     connect( static_cast< ADN_App* >( qApp )->GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView destructor
 // Created: JDY 03-06-26
@@ -74,7 +73,6 @@ int ADN_ListView::FindNdx(void *data)
     return 0;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView::ItemAt
 // Created: JDY 03-08-27
@@ -90,7 +88,6 @@ ADN_ListViewItem* ADN_ListView::ItemAt(int i)
     }
     return (ADN_ListViewItem*)it.current();
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView::FindItem
@@ -144,7 +141,6 @@ void  ADN_ListView::SetCurrentItem( void* pData )
     emit ItemSelected( pData );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView::OnContextMenu
 // Created: JDY 03-07-28
@@ -164,6 +160,52 @@ void ADN_ListView::FillContextMenuWithDefault( Q3PopupMenu& popupMenu, ADN_Objec
     popupMenu.insertItem( tr( "Create new" ), this, SLOT( ContextMenuNew() ) );
     if( pCurData_ != 0 )
         popupMenu.insertItem( tr( "Delete" ), this, SLOT( ContextMenuDelete() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::FillContextMenuWithUsersList
+// Created: ABR 2012-01-25
+// -----------------------------------------------------------------------------
+void ADN_ListView::FillContextMenuWithUsersList( Q3PopupMenu& popupMenu, QString usingName, QStringList userList, E_WorkspaceElements targetTab, int subTargetTab /*= -1*/ )
+{
+    if( pCurData_ != 0 && !userList.isEmpty() )
+    {
+        usedByInfo_.usersList_.clear();
+        usedByInfo_.usingName_ = tr( "< Using: %1 >" ).arg( usingName );
+        usedByInfo_.usersList_ = userList;
+        usedByInfo_.targetTab_ = targetTab;
+        usedByInfo_.subTargetTab_ = subTargetTab;
+        popupMenu.insertItem( tr( "Search for elements that use" ), this, SLOT( ContextMenuSearchElements() ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::FormatUsersList
+// Created: ABR 2012-01-25
+// -----------------------------------------------------------------------------
+std::string ADN_ListView::FormatUsersList( QStringList usersList )
+{
+    std::string result = "";
+    if( usersList.isEmpty() )
+    {
+        result = tr( "<b>Unused</b>" ).ascii();
+    }
+    else
+    {
+        result = tr( "<b>Used by:</b>" ).ascii();
+        for( QStringList::const_iterator constIterator = usersList.constBegin(); constIterator != usersList.constEnd(); ++constIterator )
+            result += "<br><nobr>" + (*constIterator).toStdString() + "</nobr>";
+    }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::ContextMenuSearchElements
+// Created: ABR 2012-01-25
+// -----------------------------------------------------------------------------
+void ADN_ListView::ContextMenuSearchElements()
+{
+    emit UsersListRequested( usedByInfo_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -311,6 +353,8 @@ void ADN_ListView::Print( int nPage, QPainter& painter, const QSize& painterSize
 // -----------------------------------------------------------------------------
 void ADN_ListView::OnFilterChanged( const QString& filterLine )
 {
+    if( filterLine.size() > 0 && filterLine[ 0 ] == '<' && filterLine[ filterLine.size() - 1 ] == '>' )
+        return;
     filterLine_ = filterLine.lower();
     ApplyFilter( boost::bind( &ADN_ListView::ApplyFilterLine, this, _1 ) );
 }
@@ -321,8 +365,20 @@ void ADN_ListView::OnFilterChanged( const QString& filterLine )
 // -----------------------------------------------------------------------------
 void ADN_ListView::OnFilterChanged( const QStringList& filterList )
 {
+    filterList_.clear();
     filterList_ = filterList;
     ApplyFilter( boost::bind( &ADN_ListView::ApplyFilterList, this, _1 ) );
+
+    // Select first filtered item.
+    for( Q3ListViewItemIterator it = firstChild(); it.current(); ++it )
+    {
+        ADN_ListViewItem* item = static_cast< ADN_ListViewItem* >( it.current() );
+        if( item->isVisible() )
+        {
+            setSelected( item, true );
+            break;
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -335,8 +391,13 @@ bool ADN_ListView::ApplyFilterLine( ADN_ListViewItem* item )
         return true;
     if( !item )
         return false;
+
+    QStringList list = filterLine_.split( ' ' );
+    bool result = true;
     QString text = item->text( 0 ).lower();
-    return text.find( filterLine_ ) != -1;
+    for( QStringList::const_iterator it = list.constBegin(); it != list.constEnd(); ++it )
+        result = result && text.find( *it ) != -1;
+    return result;
 }
 
 // -----------------------------------------------------------------------------

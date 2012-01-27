@@ -23,6 +23,26 @@
 
 class ADN_MainWindow;
 class ADN_HtmlBuilder;
+struct ADN_UsedByInfos;
+
+class ADN_BaseGui_ABC : public QObject
+                      , private boost::noncopyable
+{
+    Q_OBJECT
+
+public:
+    //! @name Constructors/Destructor
+    //@{
+             ADN_BaseGui_ABC() {}
+    virtual ~ADN_BaseGui_ABC() {}
+    //@}
+
+signals:
+    //! @name Signals
+    //@{
+    void ApplyFilterList( const ADN_UsedByInfos& );
+    //@}
+};
 
 // =============================================================================
 /** @class  ADN_GUI_ABC
@@ -30,10 +50,8 @@ class ADN_HtmlBuilder;
 */
 // Created: APE 2004-12-06
 // =============================================================================
-class ADN_GUI_ABC : public QObject
-                  , private boost::noncopyable
+class ADN_GUI_ABC : public ADN_BaseGui_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -46,6 +64,9 @@ public:
     virtual void Build() = 0;
     virtual void RegisterTable( ADN_MainWindow& /*mainWindow*/ ) {}
     virtual void ExportHtml( ADN_HtmlBuilder& /*mainIndexBuilder*/, const QString& /*strPath*/ ) {}
+    virtual void ChangeCurrentSubTab( int /*subTab*/ ) {}
+
+    void ApplyFilter( const ADN_UsedByInfos& usedByInfos );
 
     QWidget* GetMainWidget() const { return pMainWidget_; }
     QWidget* CreateScrollArea( QWidget& content, QWidget* list = 0, bool paintSplitter = true, bool paintBackground = false, bool showFrameBorder = true, int margin = 10, int spacing = 10 );
@@ -57,8 +78,11 @@ public:
     //@}
 
 protected:
+    //! @name Member data
+    //@{
     QWidget* pMainWidget_;
     QString  strClassName_;
+    //@}
 };
 
 
