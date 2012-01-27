@@ -280,12 +280,3 @@ void FederateFacade::AggregateCreated( Agent_ABC& agent, unsigned int identifier
 {
     aggregateClass_->Created( agent, identifier, name, force, type, symbol );
 }
-
-// -----------------------------------------------------------------------------
-// Name: FederateFacade::SurfaceVesselCreated
-// Created: SLI 2011-10-05
-// -----------------------------------------------------------------------------
-void FederateFacade::SurfaceVesselCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type )
-{
-    surfaceVesselClass_->Created( agent, identifier, name, force, type, "" );
-}

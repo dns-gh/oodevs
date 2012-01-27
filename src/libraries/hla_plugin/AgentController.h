@@ -53,8 +53,8 @@ class AgentController : public AgentSubject_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentController( xml::xisubstream xis, dispatcher::Model_ABC& model, const rpr::EntityTypeResolver_ABC& aggregatesResolver,
-                              const rpr::EntityTypeResolver_ABC& surfaceVesselsResolver, const rpr::EntityTypeResolver_ABC& componentTypeResolver, const ComponentTypes_ABC& componentTypes );
+             AgentController( dispatcher::Model_ABC& model, const rpr::EntityTypeResolver_ABC& aggregatesResolver,
+                              const rpr::EntityTypeResolver_ABC& componentTypeResolver, const ComponentTypes_ABC& componentTypes );
     virtual ~AgentController();
     //@}
 
@@ -75,7 +75,6 @@ private:
     //! @name Helpers
     //@{
     void CreateAgent( dispatcher::Agent_ABC& agent );
-    void ReadSurfaceVessel( xml::xistream& xis );
     //@}
 
 private:
@@ -85,7 +84,6 @@ private:
     typedef T_Listeners::const_iterator     CIT_Listeners;
     typedef boost::shared_ptr< Agent_ABC > T_Agent;
     typedef std::vector< T_Agent >         T_Agents;
-    typedef std::set< std::string > T_SurfaceVessels;
     //@}
 
 private:
@@ -93,10 +91,8 @@ private:
     //@{
     dispatcher::Model_ABC& model_;
     const rpr::EntityTypeResolver_ABC& aggregatesResolver_;
-    const rpr::EntityTypeResolver_ABC& surfaceVesselsResolver_;
     const rpr::EntityTypeResolver_ABC& componentTypeResolver_;
     const ComponentTypes_ABC& componentTypes_;
-    T_SurfaceVessels surfaceVessels_;
     T_Listeners listeners_;
     T_Agents agents_;
     //@}

@@ -127,9 +127,6 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\SubordinatesTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportersTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\tests\hla_plugin_test\SideCheckerTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -274,9 +271,6 @@
       <Filter>Source Files\mock</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockSideChecker.h">
-      <Filter>Source Files\mock</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransporters.h">
       <Filter>Source Files\mock</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockAutomatChecker.h">

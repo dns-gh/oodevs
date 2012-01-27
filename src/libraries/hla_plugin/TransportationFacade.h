@@ -53,7 +53,6 @@ namespace hla
     template< typename T > class InteractionSender_ABC;
     class TransportationOfferer;
     class TransportationRequester;
-    class Transporters_ABC;
 
 namespace interactions
 {
@@ -96,7 +95,7 @@ public:
              TransportationFacade( xml::xisubstream xis, const MissionResolver_ABC& missionResolver,
                                    tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                                    const CallsignResolver_ABC& callsignResolver, const Subordinates_ABC& subordinates,
-                                   const InteractionBuilder& builder, const ContextFactory_ABC& contextFactory, const Transporters_ABC& transporters,
+                                   const InteractionBuilder& builder, const ContextFactory_ABC& contextFactory,
                                    dispatcher::SimulationPublisher_ABC& simulationPublisher, dispatcher::ClientPublisher_ABC& clientsPublisher );
     virtual ~TransportationFacade();
     //@}

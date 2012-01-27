@@ -179,7 +179,6 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportationOffererTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportationRequesterTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportationTypesTest.cpp" />
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportersTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\UnicodeStringTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\UniqueIdTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\UnitTeleporterTest.cpp" />
@@ -230,7 +229,6 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTeam.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransportedUnits.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransportedUnitsVisitor.h" />
-    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransporters.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockUnitTypeResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockUpdateFunctor.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\DeserializationTools.h" />

@@ -28,16 +28,13 @@ using namespace plugins::hla;
 // Name: AgentController constructor
 // Created: SBO 2008-02-18
 // -----------------------------------------------------------------------------
-AgentController::AgentController( xml::xisubstream xis, dispatcher::Model_ABC& model, const rpr::EntityTypeResolver_ABC& aggregatesResolver,
-                                  const rpr::EntityTypeResolver_ABC& surfaceVesselsResolver, const rpr::EntityTypeResolver_ABC& componentTypeResolver, const ComponentTypes_ABC& componentTypes )
+AgentController::AgentController( dispatcher::Model_ABC& model, const rpr::EntityTypeResolver_ABC& aggregatesResolver,
+                                  const rpr::EntityTypeResolver_ABC& componentTypeResolver, const ComponentTypes_ABC& componentTypes )
     : model_                 ( model )
     , aggregatesResolver_    ( aggregatesResolver )
-    , surfaceVesselsResolver_( surfaceVesselsResolver )
     , componentTypeResolver_ ( componentTypeResolver )
     , componentTypes_        ( componentTypes )
 {
-    xis >> xml::start( "surfaceVessels" )
-            >> xml::list( "unit", *this, &AgentController::ReadSurfaceVessel );
     model_.RegisterFactory( *this );
 }
 
@@ -98,14 +95,10 @@ void AgentController::CreateAgent( dispatcher::Agent_ABC& agent )
         agents_.push_back( T_Agent( new AgentProxy( agent, componentTypes_, componentTypeResolver_ ) ) );
         const kernel::AgentType& agentType = agent.GetType();
         const std::string typeName = agentType.GetName();
-        const bool isSurfaceVessel = surfaceVessels_.find( typeName ) != surfaceVessels_.end();
-        const rpr::EntityType entityType = isSurfaceVessel ? surfaceVesselsResolver_.Find( typeName ) : aggregatesResolver_.Find( typeName );
+        const rpr::EntityType entityType = aggregatesResolver_.Find( typeName );
         const rpr::ForceIdentifier forceIdentifier = GetForce( agent );
         for( CIT_Listeners it = listeners_.begin(); it != listeners_.end(); ++it )
-            if( isSurfaceVessel )
-                (*it)->SurfaceVesselCreated( *agents_.back(), agent.GetId(), agent.GetName().toStdString(), forceIdentifier, entityType );
-            else
-                (*it)->AggregateCreated( *agents_.back(), agent.GetId(), agent.GetName().toStdString(), forceIdentifier, entityType, agentType.GetSymbol() );
+            (*it)->AggregateCreated( *agents_.back(), agent.GetId(), agent.GetName().toStdString(), forceIdentifier, entityType, agentType.GetSymbol() );
     }
 }
 
@@ -125,15 +118,4 @@ void AgentController::Register( AgentListener_ABC& listener )
 void AgentController::Unregister( AgentListener_ABC& listener )
 {
     listeners_.erase( std::remove( listeners_.begin(), listeners_.end(), &listener ), listeners_.end() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: AgentController::ReadSurfaceVessel
-// Created: SLI 2011-10-04
-// -----------------------------------------------------------------------------
-void AgentController::ReadSurfaceVessel( xml::xistream& xis )
-{
-    std::string unit;
-    xis >> unit;
-    surfaceVessels_.insert( unit );
 }

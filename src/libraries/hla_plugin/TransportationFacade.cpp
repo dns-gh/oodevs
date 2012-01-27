@@ -25,7 +25,7 @@ using namespace plugins::hla;
 TransportationFacade::TransportationFacade( xml::xisubstream xis, const MissionResolver_ABC& missionResolver,
                                             tools::MessageController_ABC< sword::SimToClient_Content >& controller,
                                             const CallsignResolver_ABC& callsignResolver, const Subordinates_ABC& subordinates,
-                                            const InteractionBuilder& builder, const ContextFactory_ABC& contextFactory, const Transporters_ABC& /*transporters*/,
+                                            const InteractionBuilder& builder, const ContextFactory_ABC& contextFactory,
                                             dispatcher::SimulationPublisher_ABC& simulationPublisher, dispatcher::ClientPublisher_ABC& clientsPublisher )
     : pNetnRequestConvoy_            ( new InteractionSender< interactions::NetnRequestConvoy >( *this, builder ) )
     , pNetnOfferConvoy_              ( new InteractionSender< interactions::NetnOfferConvoy >( *this, builder ) )

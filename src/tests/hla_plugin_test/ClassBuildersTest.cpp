@@ -98,7 +98,7 @@ BOOST_FIXTURE_TEST_CASE( surface_vessel_builder_registers_attributes, Fixture )
                                        ( "ForceIdentifier" )
                                        ( "Marking" )
                                        ( "Spatial" );
-    Check( builder, "BaseEntity.PhysicalEntity.Platform.SurfaceVessel", true, true );
+    Check( builder, "BaseEntity.PhysicalEntity.Platform.SurfaceVessel", false, true );
 }
 
 BOOST_FIXTURE_TEST_CASE( netn_surface_vessel_builder_registers_attributes, Fixture )
@@ -112,7 +112,7 @@ BOOST_FIXTURE_TEST_CASE( netn_surface_vessel_builder_registers_attributes, Fixtu
                                        // NETN
                                        ( "UniqueID" )
                                        ( "Callsign" );
-    Check( builder, "BaseEntity.PhysicalEntity.Platform.SurfaceVessel.NETN_SurfaceVessel", true, true );
+    Check( builder, "BaseEntity.PhysicalEntity.Platform.SurfaceVessel.NETN_SurfaceVessel", false, true );
 }
 
 BOOST_FIXTURE_TEST_CASE( aircraft_builder_registers_attributes, Fixture )

@@ -220,9 +220,6 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\AutomatTypeResolver.cpp">
       <Filter>Source Files\Resolvers</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\hla_plugin\Transporters.cpp">
-      <Filter>Source Files\Interactions\Transportation</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\SideChecker.cpp">
       <Filter>Source Files\Resolvers</Filter>
     </ClCompile>
@@ -536,12 +533,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\SideChecker_ABC.h">
       <Filter>Source Files\Resolvers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\Transporters.h">
-      <Filter>Source Files\Interactions\Transportation</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\hla_plugin\Transporters_ABC.h">
-      <Filter>Source Files\Interactions\Transportation</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\SideChecker.h">
       <Filter>Source Files\Resolvers</Filter>

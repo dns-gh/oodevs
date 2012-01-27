@@ -31,7 +31,6 @@
 #include "MissionResolver.h"
 #include "SideChecker.h"
 #include "AutomatChecker.h"
-#include "Transporters.h"
 #include "InteractionBuilder.h"
 #include "ExtentResolver_ABC.h"
 #include "tools/MessageController.h"
@@ -159,7 +158,6 @@ HlaPlugin::HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::Sta
     , pRemoteAgentResolver_       ( 0 )
     , pDetonationFacade_          ( 0 )
     , pSideChecker_               ( 0 )
-    , pTransporters_              ( 0 )
     , pTransportationFacade_      ( 0 )
     , pStepper_                   ( 0 )
 {
@@ -186,7 +184,7 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
         pMessageController_->Dispatch( message.message(), message.has_context() ? message.context() : -1 );
         if( message.message().has_control_end_tick() && !pSimulationFacade_.get() )
         {
-            pSubject_.reset( new AgentController( *pXis_, dynamicModel_, *pAggregateTypeResolver_, *pSurfaceVesselTypeResolver_, *pComponentTypeResolver_, *pComponentTypes_ ) );
+            pSubject_.reset( new AgentController( dynamicModel_, *pAggregateTypeResolver_, *pComponentTypeResolver_, *pComponentTypes_ ) );
             pFederate_.reset( new FederateFacade( *pXis_, *pMessageController_, *pSubject_, *pLocalAgentResolver_,
                                                   pXis_->attribute< bool >( "debug", false ) ? *pDebugRtiFactory_ : *pRtiFactory_,
                                                   pXis_->attribute< bool >( "debug", false ) ? *pDebugFederateFactory_ : *pFederateFactory_,
@@ -196,8 +194,7 @@ void HlaPlugin::Receive( const sword::SimToClient& message )
             pRemoteAgentResolver_.reset( new RemoteAgentResolver( *pFederate_, *pSimulationFacade_ ) );
             pDetonationFacade_.reset( new DetonationFacade( simulationPublisher_, *pMessageController_, *pRemoteAgentResolver_, *pLocalAgentResolver_, *pContextFactory_, *pMunitionTypeResolver_, *pFederate_, pXis_->attribute< std::string >( "name", "SWORD" ), *pInteractionBuilder_ ) );
             pSideChecker_.reset( new SideChecker( *pSubject_, *pFederate_, *pRemoteAgentResolver_ ) );
-            pTransporters_.reset( new Transporters( *pSubject_, *pCallsignResolver_, *pSideChecker_, *pAutomatChecker_ ) );
-            pTransportationFacade_.reset( pXis_->attribute< bool >( "netn", true ) ? new TransportationFacade( *pXis_, *pMissionResolver_, *pMessageController_, *pCallsignResolver_, *pSubordinates_, *pInteractionBuilder_, *pContextFactory_, *pTransporters_, simulationPublisher_, clientsPublisher_ ) : 0 );
+            pTransportationFacade_.reset( pXis_->attribute< bool >( "netn", true ) ? new TransportationFacade( *pXis_, *pMissionResolver_, *pMessageController_, *pCallsignResolver_, *pSubordinates_, *pInteractionBuilder_, *pContextFactory_, simulationPublisher_, clientsPublisher_ ) : 0 );
             pStepper_.reset( new Stepper( *pXis_, *pMessageController_, simulationPublisher_ ) );
             pSubject_->Visit( dynamicModel_ );
         }

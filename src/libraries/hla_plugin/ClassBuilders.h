@@ -120,7 +120,7 @@ namespace hla
     {
     public:
         SurfaceVesselBuilder()
-            : ClassBuilder( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel", true, true
+            : ClassBuilder( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel", false, true
             , boost::assign::list_of( "EntityType" )
                                     ( "EntityIdentifier" )
                                     ( "ForceIdentifier" )
@@ -132,7 +132,7 @@ namespace hla
     {
     public:
         NetnSurfaceVesselBuilder()
-            : NetnClassBuilder( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel.NETN_SurfaceVessel", true, true
+            : NetnClassBuilder( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel.NETN_SurfaceVessel", false, true
             , boost::assign::list_of( "UniqueID" )
                                     ( "Callsign" )
             , std::auto_ptr< ClassBuilder_ABC >( new SurfaceVesselBuilder() ) )
