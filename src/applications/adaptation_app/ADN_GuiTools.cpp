@@ -51,17 +51,17 @@ bool ADN_GuiTools::DeletionWarning()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_GuiTools::WorkInProgressWarning
+// Name: ADN_GuiTools::MissingConvoyWarning
 // Created: PHC 2011-01-19
 // -----------------------------------------------------------------------------
-bool ADN_GuiTools::WorkInProgressWarning()
+bool ADN_GuiTools::MissingConvoyWarning()
 {
-    int nResult = QMessageBox::warning( 0,
+    QApplication::restoreOverrideCursor();
+    QMessageBox::warning( 0,
         qApp->translate( "ADNDatabaseWarnings", "Database Work in progress" ),
-        qApp->translate( "ADNDatabaseWarnings", "Database Work in progress. \n Convoy unit type not defined. \n Do you want to save anyway ?" ),
-        QMessageBox::Yes | QMessageBox::Default,
-        QMessageBox::No  | QMessageBox::Escape );
-    return nResult == QMessageBox::Yes;
+        qApp->translate( "ADNDatabaseWarnings", "Convoy unit type not defined in Log/Supply, database cannot be saved." ),
+        QMessageBox::Ok | QMessageBox::Default );
+    return false;
 }
 
 // -----------------------------------------------------------------------------

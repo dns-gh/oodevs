@@ -8,12 +8,8 @@
         <translation>Enregistrement en cours.</translation>
     </message>
     <message>
-        <source>Database Work in progress. 
- Convoy unit type not defined. 
- Do you want to save anyway ?</source>
-        <translation>Enregistrement en cours.
-Type de convoi non défini.
-Voulez vous sauvegarder malgré tout ?</translation>
+        <source>Convoy unit type not defined in Log/Supply, database cannot be saved.</source>
+        <translation>Le type de pion Convoi n&apos;est pas défini dans Log/Ravitaillement, la base ne peut pas être sauvée.</translation>
     </message>
 </context>
 <context>
