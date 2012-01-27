@@ -52,7 +52,7 @@ namespace
 // -----------------------------------------------------------------------------
 Config::Config()
     : GeneralConfig( GetDefaultRoot( tools::translate( "Application", "SWORD" ).ascii() ) )
-    , launcherPort_( 33000 )
+    , launcherPort_( 33010 )
 {
     po::options_description desc( "Frontend options" );
     desc.add_options()
