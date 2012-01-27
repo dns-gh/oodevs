@@ -419,7 +419,6 @@
     <underground-network/>
     <universal/>
   </object>
-  <object geometry="polygon" name="controle de zone" symbol="G*MPOGZ---****X" type="controle de zone"/>
   <object geometry="point" name="noeud de reseau de ressource" symbol="G*SPPR----****X" type="ressource network element">
     <constructor default-consumption-mode="ArretMoteurAllume" unit-type="raw"/>
     <resources/>
@@ -466,4 +465,4 @@
     <border/>
   </object>
 </objects>
-<!-- signature="0101560036" -->
+<!-- signature="3259456688" -->
