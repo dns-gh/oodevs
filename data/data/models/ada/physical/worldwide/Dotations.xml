@@ -1063,6 +1063,7 @@
       <ph target-posture="PostePrepareGenie" value="0.2"/>
     </indirect-fire>
   </resource>
+  <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="89" id-nature="3" logistic-supply-class="Class V - Ammunition, explosives, and chemical agents of all types" name="Countermeasure" nature="Solid" package-mass="1" package-size="1" package-volume="1" type="Obus"/>
   <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="58" id-nature="15" logistic-supply-class="Class III - Petroleum, oil and lubricants" name="Gasoil" nature="Gasoil" package-mass="1" package-size="1000" package-volume="1"/>
   <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="59" id-nature="2" logistic-supply-class="Class III - Petroleum, oil and lubricants" name="Diesel" nature="Diesel" package-mass="1" package-size="1000" package-volume="1"/>
   <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="60" id-nature="2" logistic-supply-class="Class III - Petroleum, oil and lubricants" name="Gas" nature="Diesel" package-mass="1" package-size="1000" package-volume="1"/>
@@ -1135,4 +1136,4 @@
   <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="87" id-nature="12" logistic-supply-class="Class I - Items of subsistence (food and forage)" name="Running Water" nature="Liquid" package-mass="1" package-size="1" package-volume="1"/>
   <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="88" id-nature="13" logistic-supply-class="Class I - Items of subsistence (food and forage)" name="Natural Gas" nature="Gaseous" package-mass="1" package-size="1" package-volume="1"/>
 </resources>
-<!-- signature="1081499602" -->
+<!-- signature="2651788447" -->
