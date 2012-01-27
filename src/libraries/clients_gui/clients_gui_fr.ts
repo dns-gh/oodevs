@@ -189,11 +189,11 @@
     <name>gui::ActivityTimePrototype_ABC</name>
     <message>
         <source>Activity time</source>
-        <translation>Durée d&apos;activité</translation>
+        <translation>Durée d&apos;existence</translation>
     </message>
     <message>
         <source>Activity time:</source>
-        <translation>Durée d&apos;activité:</translation>
+        <translation>Durée d&apos;existence:</translation>
     </message>
 </context>
 <context>
