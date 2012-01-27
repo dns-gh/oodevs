@@ -465,12 +465,15 @@ void RegisterMissionParametersFunctions( directia::brain::Brain& brain, bool isM
     // Objet
     brain[ "DEC_Agent_AgentPeutConstruireObjetEmbarque" ] = &DEC_AgentFunctions::AgentCanConstructObjectWithLoaded;
     brain[ "DEC_Agent_AgentADotationPourConstruireObjet" ] = &DEC_AgentFunctions::AgentHasDotationForBuilding;
-    brain[ "DEC_Agent_AgentPeutDetruireObjet" ] = &DEC_AgentFunctions::AgentCanDestroyObject;
-    brain[ "DEC_Agent_AgentPeutConstruireContournementObjet" ] = &DEC_AgentFunctions::AgentCanBypassObject;
-    
+	brain[ "DEC_Agent_AgentPeutConstruireObjetEmbarqueSansRenfort" ] = &DEC_AgentFunctions::AgentCanConstructObjectWithOutLoaded;
+    brain[ "DEC_Agent_AgentADotationPourConstruireObjetSansRenfort" ] = &DEC_AgentFunctions::AgentHasDotationForBuildingWithOutLoaded;
+	brain[ "DEC_Agent_AgentPeutDetruireObjet" ] = &DEC_AgentFunctions::AgentCanDestroyObject;
+	brain[ "DEC_Agent_AgentPeutConstruireContournementObjet" ] = &DEC_AgentFunctions::AgentCanBypassObject;
     
     brain[ "DEC_Agent_PeutActiverObjet" ] = &DEC_AgentFunctions::CanActivateObject;
     
+    brain[ "DEC_Agent_GetAgentDotationPourConstruireObjet" ] = &DEC_AgentFunctions::GetAgentDotationForBuilding;
+    brain[ "DEC_Agent_GetAgentDotationManquantePourConstruireObjet" ] = &DEC_AgentFunctions::GetAgentMissingDotationForBuilding;
 }
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::RegisterReportFunctions

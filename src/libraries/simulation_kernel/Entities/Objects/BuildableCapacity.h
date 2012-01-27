@@ -24,6 +24,7 @@ class Deserializer;
 class MIL_Object_ABC;
 class PHY_DotationCategory;
 class PHY_ConsumptionType;
+class TER_Localisation;
 
 // =============================================================================
 /** @class  BuildableCapacity
@@ -53,6 +54,7 @@ public:
     virtual void Instanciate( MIL_Object_ABC& object ) const;
     virtual void Finalize( MIL_Object_ABC& object );
     virtual void Register( MIL_Object_ABC& object );
+    unsigned int GetDotationNumber( const TER_Localisation& location ) const;
 
     void Construct( MIL_Object_ABC& object );
     void Construct( MIL_Object_ABC& object, float rDeltaPercentage );

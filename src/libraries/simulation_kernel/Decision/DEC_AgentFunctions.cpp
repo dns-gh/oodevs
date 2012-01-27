@@ -324,7 +324,16 @@ bool DEC_AgentFunctions::CanConstructObjectWithLoaded( const MIL_Agent_ABC& call
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::HasDotationForBuilding( MIL_Agent_ABC& callerAgent, const std::string& type )
 {
-    return callerAgent.GetRole< PHY_RoleAction_Objects >().EnoughtDotationForBuilding( type, callerAgent );
+    return callerAgent.GetRole< PHY_RoleAction_Objects >().EnoughtDotationForBuilding( type, callerAgent, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::HasDotationForBuildingWithoutReinforcement
+// Created: LMT 2012-01-24
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::HasDotationForBuildingWithoutReinforcement( MIL_Agent_ABC& callerAgent, const std::string& type )
+{
+    return callerAgent.GetRole< PHY_RoleAction_Objects >().EnoughtDotationForBuilding( type, callerAgent, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -1173,7 +1182,52 @@ bool DEC_AgentFunctions::AgentHasDotationForBuilding( const DEC_Decision_ABC* ag
 {
     if( !agent )
         throw std::runtime_error( "Invalid pion in AgentHasDotationForBuilding" );
-    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().EnoughtDotationForBuilding( type, agent->GetPion() );
+    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().EnoughtDotationForBuilding( type, agent->GetPion(), true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::GetAgentDotationForBuilding
+// Created: LMT 2012-01-25
+// -----------------------------------------------------------------------------
+double DEC_AgentFunctions::GetAgentDotationForBuilding( const DEC_Decision_ABC* agent, const std::string& type )
+{
+    if( !agent )
+        throw std::runtime_error( "Invalid pion in GetAgentDotationForBuilding" );
+    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().GetAgentDotationForBuildingObstacle( type, agent->GetPion() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::GetAgentMissingDotationForBuilding
+// Created: LMT 2012-01-25
+// -----------------------------------------------------------------------------
+double DEC_AgentFunctions::GetAgentMissingDotationForBuilding( const DEC_Decision_ABC* agent, const DEC_Gen_Object* object )
+{
+    if( !agent )
+        throw std::runtime_error( "Invalid pion in GetAgentMissingDotationForBuilding" );
+    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().GetAgentMissingDotationForBuildingObstacle( object, agent->GetPion() );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::AgentCanConstructObjectWithOutLoaded
+// Created: LMT 2012-01-25
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::AgentCanConstructObjectWithOutLoaded( const DEC_Decision_ABC* agent, const std::string& type )
+{
+    if( !agent )
+        throw std::runtime_error( "Invalid pion in AgentCanConstructObjectWithOutLoaded" );
+    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanConstructWithReinforcement( type, false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::AgentHasDotationForBuildingWithOutLoaded
+// Created: LMT 2012-01-25
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::AgentHasDotationForBuildingWithOutLoaded( const DEC_Decision_ABC* agent, const std::string& type )
+{
+    if( !agent )
+        throw std::runtime_error( "Invalid pion in AgentHasDotationForBuildingWithOutLoaded" );
+    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().EnoughtDotationForBuilding( type, agent->GetPion(), false );
 }
 
 // -----------------------------------------------------------------------------

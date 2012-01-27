@@ -209,6 +209,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionMineObject, boost::shared_ptr< DEC_Knowledge_Object > >, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Agent_ADotationPourConstruireObjet" ] =
         boost::function< bool ( const std::string& ) >( boost::bind( &DEC_AgentFunctions::HasDotationForBuilding, boost::ref( GetPion() ), _1 ) );
+    brain[ "DEC_Agent_ADotationPourConstruireObjetSansRenforts" ] =
+        boost::function< bool ( const std::string& ) >( boost::bind( &DEC_AgentFunctions::HasDotationForBuildingWithoutReinforcement, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_StartCreerContournementObjet" ] =
         boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionBypassObject, boost::shared_ptr< DEC_Knowledge_Object > >, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC__StartOccuperObjet" ] =

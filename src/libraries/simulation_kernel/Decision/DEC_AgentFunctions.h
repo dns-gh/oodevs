@@ -21,6 +21,7 @@ class PHY_DotationCategory;
 class TER_Localisation;
 class MT_Vector2D;
 class UrbanObjectWrapper;
+class DEC_Gen_Object;
 
 // =============================================================================
 // Created: NLD 2004-03-31
@@ -66,8 +67,15 @@ public:
 
     static bool AgentCanConstructObjectWithLoaded( const DEC_Decision_ABC* agent, const std::string& type );
     static bool AgentHasDotationForBuilding(const DEC_Decision_ABC* agent, const std::string& type );
+	static bool AgentCanConstructObjectWithOutLoaded( const DEC_Decision_ABC* agent, const std::string& type );
+    static bool AgentHasDotationForBuildingWithOutLoaded(const DEC_Decision_ABC* agent, const std::string& type );
+    static bool HasDotationForBuildingWithoutReinforcement( MIL_Agent_ABC& callerAgent, const std::string& type );
     static bool AgentCanDestroyObject( const DEC_Decision_ABC* agent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
     static bool AgentCanBypassObject( const DEC_Decision_ABC* agent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
+
+    // Getter
+    static double GetAgentDotationForBuilding( const DEC_Decision_ABC* agent, const std::string& type );
+    static double GetAgentMissingDotationForBuilding( const DEC_Decision_ABC* agent, const DEC_Gen_Object* object );
 
     // Embarquement / débarquement
     static bool IsLoaded( const MIL_Agent_ABC& callerAgent );
