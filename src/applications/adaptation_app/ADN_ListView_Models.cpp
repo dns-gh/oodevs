@@ -75,9 +75,9 @@ void ADN_ListView_Models::ConnectItem( bool bConnect )
 void ADN_ListView_Models::OnContextMenu( const QPoint& pt )
 {
     Q3PopupMenu popupMenu( this );
+    ADN_Model_Wizard wizard( eEntityType_, this );
     if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin )
     {
-        ADN_Model_Wizard wizard( eEntityType_, this );
         FillContextMenuWithDefault( popupMenu, wizard );
     }
     if( pCurData_ != 0 )
