@@ -21,6 +21,7 @@ class MIL_AgentPion;
 class MIL_Agent_ABC;
 class PHY_DotationCategory;
 class UrbanObjectWrapper;
+class DEC_Gen_Object;
 
 // =============================================================================
 // @class  PHY_RoleAction_Objects
@@ -91,7 +92,11 @@ public:
     bool CanBypassWithReinforcement( const MIL_ObjectType_ABC& object ) const;
     bool CanDestroyWithReinforcement( const MIL_ObjectType_ABC& object ) const;
     bool CanMineWithReinforcement( const MIL_ObjectType_ABC& object ) const;
-    bool EnoughtDotationForBuilding( const std::string& objectType, MIL_Agent_ABC& pion ) const;
+    bool EnoughtDotationForBuilding( const std::string& objectType, MIL_Agent_ABC& pion, bool bWithLoaded ) const;
+
+    //Getter
+    double GetAgentDotationForBuildingObstacle( const std::string& objectType, MIL_Agent_ABC& pion ) const; 
+    double GetAgentMissingDotationForBuildingObstacle( const DEC_Gen_Object* object, MIL_Agent_ABC& pion ) const;
     //@}
 
 private:
