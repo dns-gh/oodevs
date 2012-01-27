@@ -72,7 +72,10 @@ void Diplomacies::CreateDictionary( PropertiesDictionary& dico )
 const Karma& Diplomacies::GetDiplomacy( const Entity_ABC& entity ) const
 {
     // $$$$ SBO 2008-12-09: look into hierarchy
-    return const_cast< T_Diplomacies& >( diplomacies_ )[ &entity.Get< Diplomacies_ABC >() ];
+    CIT_Diplomacies it = diplomacies_.find( &entity.Get< Diplomacies_ABC >() );
+    if( it != diplomacies_.end() )
+        return it->second;
+    return Karma::unknown_;
 }
 
 // -----------------------------------------------------------------------------
