@@ -65,6 +65,7 @@ void DrawingTypes::Read( xml::xistream& xis )
 void DrawingTypes::Purge()
 {
     DeleteAll();
+    renderer_.reset(  new svg::TextRenderer() );
 }
 
 // -----------------------------------------------------------------------------

@@ -252,7 +252,7 @@ void ObjectFactory::Initialize()
 Object_ABC* ObjectFactory::CreateObject( const ObjectType& type, const Team_ABC& team, const QString& name, const Location_ABC& location )
 {
     Object* result = new Object( controllers_.controller_, staticModel_.coordinateConverter_, type, name, idManager_ );
-    result->Attach< Positions >( *new ObjectPositions( staticModel_.coordinateConverter_, result->GetType(), location ) );
+    result->Attach< Positions >( *new ObjectPositions( controllers_.controller_, staticModel_.coordinateConverter_, result->GetType(), location ) );
     result->Attach< kernel::TacticalHierarchies >( *new ::ObjectHierarchies( *result, &team ) );
     const_cast< Team_ABC* >( &team )->Get< Objects >().AddObject( *result );
     // Attributes are commited by ObjectPrototype
@@ -268,7 +268,7 @@ Object_ABC* ObjectFactory::CreateObject( xml::xistream& xis, const Team_ABC& tea
 {
     Object* result = new Object( xis, controllers_.controller_, staticModel_.coordinateConverter_, type, idManager_ );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
-    result->Attach< Positions >( *new ObjectPositions( xis, staticModel_.coordinateConverter_, result->GetType() ) );
+    result->Attach< Positions >( *new ObjectPositions( xis, controllers_.controller_, staticModel_.coordinateConverter_, result->GetType() ) );
     result->Attach< kernel::TacticalHierarchies >( *new ::ObjectHierarchies( *result, &team ) );
     xis >> xml::optional >> xml::start( "attributes" )
             >> xml::list( *this, &ObjectFactory::ReadAttributes, *result, dico )
