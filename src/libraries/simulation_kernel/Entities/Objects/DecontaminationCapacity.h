@@ -78,6 +78,7 @@ private:
     typedef std::deque< MIL_Population* > T_PopulationQueue;
 
     typedef std::vector< MIL_Agent_ABC* > T_Agents;
+    typedef T_Agents::iterator           IT_Agents;
     typedef std::vector< MIL_PopulationElement_ABC* > T_Populations;
     typedef T_Populations::iterator                  IT_Populations;
     //@}
