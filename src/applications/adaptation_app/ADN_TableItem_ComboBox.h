@@ -43,8 +43,6 @@ public:
 
     virtual QWidget *createEditor() const;
     virtual void     setContentFromEditor( QWidget *w );
-    virtual void     paint( QPainter *p, const QColorGroup &cg,
-                            const QRect &cr, bool selected );
     virtual void setCurrentItem( int i );
     virtual void setCurrentItem( const QString &i );
     int currentItem() const;
