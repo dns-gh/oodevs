@@ -2939,6 +2939,28 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="objective" name="Compagnie a soutenir" optional="false" type="Automat"/>
     </mission>
+    <mission cdt-dia-behavior="france.military.company.combat.support.rens.tasks.Reconnaitre" dia-type="france.military.company.combat.support.rens.tasks.Reconnaitre" id="28785" mrt-dia-behavior="france.military.company.combat.support.rens.tasks.Reconnaitre" name="AUTOMATE RENS Reconnaitre" package="intelligence">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="area" name="Zone à reconnaitre" optional="false" type="Polygon"/>
+    </mission>
+    <mission cdt-dia-behavior="france.military.company.combat.support.rens.tasks.ROIM_Reconnaitre" dia-type="france.military.company.combat.support.rens.tasks.ROIM_Reconnaitre" id="28786" mrt-dia-behavior="france.military.company.combat.support.rens.tasks.ROIM_Reconnaitre" name="AUTOMATE RENS ROIM Reconnaitre" package="intelligence">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="ficelleDeVol" name="Ficelle de vol" optional="false" type="Path"/>
+    </mission>
+    <mission cdt-dia-behavior="france.military.company.combat.support.rens.tasks.MultiCapteurs_Reconnaitre" dia-type="france.military.company.combat.support.rens.tasks.MultiCapteurs_Reconnaitre" id="28787" mrt-dia-behavior="france.military.company.combat.support.rens.tasks.MultiCapteurs_Reconnaitre" name="AUTOMATE RENS MultiCapteurs Reconnaitre" package="intelligence">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="area" name="Zone à reconnaitre" optional="false" type="Polygon"/>
+      <parameter dia-name="ficelleDeVol" name="Ficelle de vol" optional="true" type="Path"/>
+    </mission>
   </automats>
   <populations>
     <mission dia-behavior="france.military.crowd.tasks.Deteriorer" dia-type="france.military.crowd.tasks.Deteriorer" id="3008" name="FOULES Deteriorer" package="attack">
@@ -3169,4 +3191,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_RejoindrePointLancement" id="405" name="Rejoindre point de lancement"/>
   </fragorders>
 </missions>
-<!-- signature="1815824823" -->
+<!-- signature="0078875163" -->
