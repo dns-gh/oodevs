@@ -98,6 +98,7 @@ const QColor* UndergroundAttribute::GetOverridenColor() const
 void UndergroundAttribute::OverrideColor( const QColor& color ) const
 {
     undergroundColors_[ network_ ] = color;
+    controller_.Update( *static_cast< const UndergroundAttribute_ABC* >( this ) );
 }
 
 // -----------------------------------------------------------------------------
