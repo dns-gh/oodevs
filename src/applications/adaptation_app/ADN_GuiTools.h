@@ -33,7 +33,7 @@ class ADN_GuiTools
 public:
     static bool MultiRefWarning();
     static bool DeletionWarning();
-    static bool WorkInProgressWarning();
+    static bool MissingConvoyWarning();
     static bool MissingBreakdownWarning( const std::string& name );
 };
 

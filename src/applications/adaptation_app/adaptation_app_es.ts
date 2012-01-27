@@ -8,9 +8,7 @@
         <translation></translation>
     </message>
     <message>
-        <source>Database Work in progress. 
- Convoy unit type not defined. 
- Do you want to save anyway ?</source>
+        <source>Convoy unit type not defined in Log/Supply, database cannot be saved.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -6403,11 +6401,11 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logistic supply system - Invalid unit &apos;%1&apos;</source>
+        <source>Logistic supply system - Invalid mission &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logistic supply system - Invalid mission &apos;%1&apos;</source>
+        <source>Logistic supply system - Invalid unit &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

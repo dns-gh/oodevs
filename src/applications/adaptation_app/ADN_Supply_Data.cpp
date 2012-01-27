@@ -248,7 +248,7 @@ void ADN_Supply_Data::SupplyDataInfos::ReadSpeedModifier( xml::xistream& input )
 bool ADN_Supply_Data::SupplyDataInfos::IsValidDatabase()
 {
     if( ptrUnit_.GetData() == 0 )
-        return ADN_GuiTools::WorkInProgressWarning();
+        return ADN_GuiTools::MissingConvoyWarning();
     return true;
 }
 
