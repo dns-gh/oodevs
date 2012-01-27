@@ -208,9 +208,14 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::
         for( int i = 0; i < message.parameter().size() ; ++i )
         {
             const sword::SessionParameter& parameter = message.parameter( i );
-            action.SetOption( parameter.key(), parameter.value() );
-            if( message.type() == sword::SessionStartRequest::simulation && parameter.key() == "session/config/simulation/dispatcher/@embedded" && parameter.value() == "true")
-                isDispatcher = true;
+            if( parameter.key() == "session/config/dispatcher/saver/@enable" && parameter.value() == "false" )
+                action.RemoveOption( "session/config/dispatcher/plugins/recorder" );
+            else
+            {
+                action.SetOption( parameter.key(), parameter.value() );
+                if( message.type() == sword::SessionStartRequest::simulation && parameter.key() == "session/config/simulation/dispatcher/@embedded" && parameter.value() == "true")
+                    isDispatcher = true;
+            }
         }
         action.Commit();
     }
