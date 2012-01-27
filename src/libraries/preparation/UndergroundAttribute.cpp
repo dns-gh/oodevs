@@ -46,7 +46,7 @@ UndergroundAttribute::UndergroundAttribute( xml::xistream& xis, Controller& cont
         unsigned int color;
         std::stringstream ss( strColor );
         ss >> std::hex >> color;
-        undergroundColors_[ network_ ] = QColor( ( color >> 16 ) & 0xff, ( color >> 8 ) & 0xff, color >> 16 & 0xff );
+        undergroundColors_[ network_ ] = QColor( ( color >> 16 ) & 0xff, ( color >> 8 ) & 0xff, color & 0xff );
     }
     controller_.Update( *static_cast< UndergroundAttribute_ABC* >( this ) );
     CreateDictionary( dico );
