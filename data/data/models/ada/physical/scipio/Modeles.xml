@@ -8136,6 +8136,7 @@
         <mission name="AUTOMATE COMMUNES Se Recompleter"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE COMMUNES Suivre"/>
+        <mission name="AUTOMATE RENS Reconnaitre"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -8202,6 +8203,7 @@
         <mission name="AUTOMATE COMMUNES Se Recompleter"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE COMMUNES Suivre"/>
+        <mission name="AUTOMATE RENS Reconnaitre"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -8235,6 +8237,7 @@
         <mission name="AUTOMATE COMMUNES Se Recompleter"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE COMMUNES Suivre"/>
+        <mission name="AUTOMATE RENS Reconnaitre"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -8267,6 +8270,7 @@
         <mission name="AUTOMATE COMMUNES Se Recompleter"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE COMMUNES Suivre"/>
+        <mission name="AUTOMATE RENS ROIM Reconnaitre"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -8298,6 +8302,7 @@
         <mission name="AUTOMATE COMMUNES Se Recompleter"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE COMMUNES Suivre"/>
+        <mission name="AUTOMATE RENS Reconnaitre"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -8331,6 +8336,7 @@
         <mission name="AUTOMATE COMMUNES Se Recompleter"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE COMMUNES Suivre"/>
+        <mission name="AUTOMATE RENS Reconnaitre"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -8366,6 +8372,7 @@
         <mission name="AUTOMATE COMMUNES Se Recompleter"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE COMMUNES Suivre"/>
+        <mission name="AUTOMATE RENS Reconnaitre"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -8394,6 +8401,7 @@
         <mission name="AUTOMATE COMMUNES Se Recompleter"/>
         <mission name="AUTOMATE COMMUNES Suivre"/>
         <mission name="AUTOMATE RENS RADINT .Renseigner Sur"/>
+        <mission name="AUTOMATE RENS Reconnaitre"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -8428,6 +8436,7 @@
         <mission name="AUTOMATE COMMUNES Se Recompleter"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE COMMUNES Suivre"/>
+        <mission name="AUTOMATE RENS Reconnaitre"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -8528,6 +8537,7 @@
         <mission name="AUTOMATE COMMUNES Se Recompleter"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE COMMUNES Suivre"/>
+        <mission name="AUTOMATE RENS MultiCapteurs Reconnaitre"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -8581,4 +8591,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2852560963" -->
+<!-- signature="1473397082" -->
