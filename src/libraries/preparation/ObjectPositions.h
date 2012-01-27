@@ -17,6 +17,7 @@
 
 namespace kernel
 {
+    class Controller;
     class CoordinateConverter_ABC;
     class Location_ABC;
     class ObjectType;
@@ -40,8 +41,8 @@ class ObjectPositions : public kernel::Moveable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ObjectPositions( const kernel::CoordinateConverter_ABC& converter, const kernel::ObjectType& type, const kernel::Location_ABC& location );
-             ObjectPositions( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const kernel::ObjectType& type );
+             ObjectPositions( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const kernel::ObjectType& type, const kernel::Location_ABC& location );
+             ObjectPositions( xml::xistream& xis, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const kernel::ObjectType& type );
     virtual ~ObjectPositions();
     //@}
 
@@ -64,12 +65,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ObjectPositions( const ObjectPositions& );            //!< Copy constructor
-    ObjectPositions& operator=( const ObjectPositions& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void ReadLocation( xml::xistream& xis );
@@ -86,6 +81,7 @@ private:
 private:
     //! @name Member data
     //@{
+    kernel::Controller& controller_;
     const kernel::CoordinateConverter_ABC& converter_;
     kernel::Location_ABC* location_;
     const std::string symbol_;

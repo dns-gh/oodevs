@@ -11,6 +11,7 @@
 #include "ObjectPositions.h"
 #include "LocationSerializer.h"
 #include "clients_kernel/Circle.h"
+#include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Lines.h"
@@ -25,10 +26,11 @@
 // Name: ObjectPositions constructor
 // Created: AGE 2006-03-22
 // -----------------------------------------------------------------------------
-ObjectPositions::ObjectPositions( const kernel::CoordinateConverter_ABC& converter, const kernel::ObjectType& type, const kernel::Location_ABC& location )
-    : converter_( converter )
-    , location_( &location.Clone() )
-    , symbol_( type.GetSymbol() )
+ObjectPositions::ObjectPositions( kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const kernel::ObjectType& type, const kernel::Location_ABC& location )
+    : controller_( controller)
+    , converter_ ( converter )
+    , location_  ( &location.Clone() )
+    , symbol_    ( type.GetSymbol() )
 {
     Update();
 }
@@ -37,10 +39,11 @@ ObjectPositions::ObjectPositions( const kernel::CoordinateConverter_ABC& convert
 // Name: ObjectPositions constructor
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-ObjectPositions::ObjectPositions( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter, const kernel::ObjectType& type )
-    : converter_( converter )
-    , location_( 0 )
-    , symbol_( type.GetSymbol() )
+ObjectPositions::ObjectPositions( xml::xistream& xis, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const kernel::ObjectType& type )
+    : controller_( controller )
+    , converter_ ( converter )
+    , location_  ( 0 )
+    , symbol_    ( type.GetSymbol() )
 {
     ReadLocation( xis );
     Update();
@@ -175,6 +178,7 @@ void ObjectPositions::Move( const geometry::Point2f& position )
         geometry::Point2f center = boundingBox_.Center();
         location_->Translate( center, ( position - center.ToVector() ).ToVector(), 5.f );
         Update();
+        controller_.Update( *this );
     }
 }
 
@@ -188,6 +192,7 @@ void ObjectPositions::Translate( const geometry::Point2f& position, const geomet
     {
         location_->Translate( position, translation, precision );
         Update();
+        controller_.Update( *this );
     }
 }
 
