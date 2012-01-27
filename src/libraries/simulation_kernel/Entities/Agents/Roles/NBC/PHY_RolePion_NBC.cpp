@@ -237,6 +237,15 @@ bool PHY_RolePion_NBC::IsContaminated() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_NBC::IsIntoxicated
+// Created: LGY 2012-01-13
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_NBC::IsIntoxicated() const
+{
+    return lastStatePoisoning_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_NBC::WearProtectionSuit
 // Created: NLD 2004-04-30
 // -----------------------------------------------------------------------------

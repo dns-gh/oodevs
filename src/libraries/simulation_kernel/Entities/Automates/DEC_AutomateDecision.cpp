@@ -318,6 +318,8 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::brain::Brain& brain 
     // Accesseurs sur les pions
     brain[ "DEC_Automate_PionEstContamine" ] =
         boost::function< bool ( DEC_Decision_ABC* ) >( boost::bind( &DEC_AutomateFunctions::IsPionContaminated, this, _1 ) );
+    brain[ "DEC_Automate_PionEstEmpoisonne" ] =
+        boost::function< bool ( DEC_Decision_ABC* ) >( boost::bind( &DEC_AutomateFunctions::IsPionIntoxicated, this, _1 ) );
     brain[ "DEC_Automate_PionEstNeutralise" ] =
         boost::function< bool ( DEC_Decision_ABC* ) >( boost::bind( &DEC_AutomateFunctions::IsPionNeutralized, this, _1 ) );
     brain[ "DEC_Automate_PionEstTransporte" ] =

@@ -301,6 +301,17 @@ bool DEC_AutomateFunctions::IsPionContaminated( DEC_Decision_ABC* pCallerAutomat
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AutomateFunctions::IsPionIntoxicated
+// Created: PSN 2012-01-20
+// -----------------------------------------------------------------------------
+bool DEC_AutomateFunctions::IsPionIntoxicated( DEC_Decision_ABC* pCallerAutomate, DEC_Decision_ABC* pPion )
+{
+    if( !pPion || !pCallerAutomate || !IsPionInAutomate( pCallerAutomate->GetAutomate(), pPion->GetPion() ) )
+        throw std::runtime_error( "Invalid parameter in IsPionIntoxicated" );
+    return pPion->GetPion().GetRole< nbc::PHY_RoleInterface_NBC >().IsIntoxicated();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::IsPionNeutralized
 // Created: JVT 2004-11-26
 // -----------------------------------------------------------------------------

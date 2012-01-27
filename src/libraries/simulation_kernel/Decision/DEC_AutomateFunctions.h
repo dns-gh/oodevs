@@ -52,6 +52,7 @@ public:
 
     // Accesseurs sur les fonctions Pion
     static bool IsPionContaminated( DEC_Decision_ABC* pCallerAutomate, DEC_Decision_ABC* pPion );
+    static bool IsPionIntoxicated( DEC_Decision_ABC* pCallerAutomate, DEC_Decision_ABC* pPion );
     static bool IsPionNeutralized( DEC_Decision_ABC* pCallerAutomate, DEC_Decision_ABC* pPion );
     static bool IsPionTransported( DEC_Decision_ABC* pCallerAutomate, DEC_Decision_ABC* pPion );
     static bool IsPointInPionFuseau( const MIL_Automate& callerAutomate, MT_Vector2D* pPoint, DEC_Decision_ABC* pPion );
