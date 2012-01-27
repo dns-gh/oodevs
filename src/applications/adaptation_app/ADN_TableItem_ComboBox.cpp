@@ -195,48 +195,16 @@ QWidget *ADN_TableItem_ComboBox::createEditor() const
 //-----------------------------------------------------------------------------
 void ADN_TableItem_ComboBox::setContentFromEditor( QWidget *w )
 {
-    if( w->inherits( "QComboBox" ) ) {
-    QComboBox *cb = (QComboBox*)w;
-    entries.clear();
-    for ( int i = 0; i < cb->count(); ++i )
-        entries << cb->text( i );
-    current = cb->currentItem();
-    QString str = entries.at( current );
-    setText( str );
+    if( w->inherits( "QComboBox" ) )
+    {
+        QComboBox *cb = (QComboBox*)w;
+        entries.clear();
+        for ( int i = 0; i < cb->count(); ++i )
+            entries << cb->text( i );
+        current = cb->currentItem();
+        QString str = entries.at( current );
+        setText( str );
     }
-}
-
-
-//-----------------------------------------------------------------------------
-// Name: ADN_TableItem_ComboBox::paint
-// Created: JDY 03-07-21
-//-----------------------------------------------------------------------------
-void ADN_TableItem_ComboBox::paint( QPainter *p, const QColorGroup &cg,
-               const QRect &cr, bool selected )
-{
-    fakeCombo->resize( cr.width(), cr.height() );
-
-    QColorGroup c( cg );
-    if( selected ) {
-    c.setBrush( QColorGroup::Base, cg.brush( QColorGroup::Highlight ) );
-    c.setColor( QColorGroup::Text, cg.highlightedText() );
-    }
-    QStyleOptionComplex opt;
-    QPalette pal( c, c, c );
-
-    opt.palette = pal;
-    opt.rect = fakeCombo->rect();
-    
-    table()->style()->drawComplexControl( QStyle::CC_ComboBox, &opt, p );
-    
-    p->save();
-    QRect textR = table()->style()->subControlRect(QStyle::CC_ComboBox, &opt,
-                             QStyle::SC_ComboBoxEditField);
-    //QRect textR = table()->style()->querySubControlMetrics(QStyle::CC_ComboBox, fakeCombo,
-    //                       QStyle::SC_ComboBoxEditField);
-    QString str = entries.at( current );
-    p->drawText( textR , wordWrap() ? ( alignment() | Qt::TextWordWrap ) : alignment(), str );
-    p->restore();
 }
 
 
