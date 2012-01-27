@@ -93,7 +93,10 @@ void DecontaminationCapacity::Instanciate( MIL_Object_ABC& object ) const
 void DecontaminationCapacity::ProcessAgentInside( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& agent )
 {
     if( std::find( agentsInside_.begin(), agentsInside_.end(), &agent ) == agentsInside_.end() )
+    {
+        agent.GetRole< nbc::PHY_RoleInterface_NBC >().ImmunizeAgent();
         agentsInside_.push_back( &agent );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -136,6 +139,8 @@ void DecontaminationCapacity::Update( MIL_Object_ABC& object, unsigned int /*tim
         }
     }
     populationsInside_.clear();
+    for( IT_Agents it = agentsInside_.begin(); it != agentsInside_.end(); ++it )
+        (*it)->GetRole< nbc::PHY_RoleInterface_NBC >().StopImmunizeAgent();
     agentsInside_.clear();
 }
 
