@@ -54,6 +54,7 @@ public:
 
     virtual MIL_Object_ABC* CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation ) = 0;
     virtual MIL_Object_ABC* CreateObject( MIL_Army_ABC& army, const MIL_ObjectBuilder_ABC& builder ) = 0;
+    virtual const std::set< MIL_Object_ABC* >& GetUniversalObjects() const = 0;
 
     static MIL_EntityManager_ABC& GetSingleton();
     //@}

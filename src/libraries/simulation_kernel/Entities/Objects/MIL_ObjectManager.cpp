@@ -64,8 +64,12 @@ void MIL_ObjectManager::load( MIL_CheckPointInArchive& file, const unsigned int 
 {
     file >> objects_;
     for( CIT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
+    {
         if( UrbanObjectWrapper* wrapper = dynamic_cast< UrbanObjectWrapper* >( it->second ) )
             urbanObjects_.insert( std::make_pair( &wrapper->GetObject(), wrapper ) );
+        if( it->second->IsUniversal() )
+            universalObjects_.insert( it->second );
+    }
     FinalizeObjects();
 }
 
@@ -127,6 +131,7 @@ void MIL_ObjectManager::UpdateStates()
             {
                 MT_LOG_ERROR_MSG( "Error updating object " << object.GetID() << " before destruction : " << e.what() );
             }
+            universalObjects_.erase( &object );
             delete &object;
             it = objects_.erase( it );
         }
@@ -148,6 +153,8 @@ void MIL_ObjectManager::RegisterObject( MIL_Object_ABC* pObject )
         return;
     if( !objects_.insert( std::make_pair( pObject->GetID(), pObject ) ).second )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
+    if( pObject->IsUniversal() )
+        universalObjects_.insert( pObject );
     pObject->SendCreation();
     if( pObject->GetArmy() )
         pObject->GetArmy()->GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddEphemeralObjectKnowledge( *pObject ); //$$$ A CHANGER DE PLACE QUAND REFACTOR OBJETS -- NB : ne doit pas être fait dans RealObject::InitializeCommon <= crash dans connaissance, si initialisation objet failed
@@ -425,4 +432,13 @@ void MIL_ObjectManager::OnReceiveChangeResourceLinks( const sword::MagicAction& 
     client::MagicActionAck asnReplyMsg;
     asnReplyMsg().set_error_code( nErrorCode );
     asnReplyMsg.Send( NET_Publisher_ABC::Publisher(), nCtx );
+}
+
+// -----------------------------------------------------------------------------
+// Name: std::set< MIL_Object_ABC* >& MIL_ObjectManager::GetUniversalObjects
+// Created: LDC 2012-01-26
+// -----------------------------------------------------------------------------
+const std::set< MIL_Object_ABC* >& MIL_ObjectManager::GetUniversalObjects() const
+{
+    return universalObjects_;
 }

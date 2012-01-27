@@ -21,9 +21,12 @@
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
 #include "Entities/Agents/Units/Categories/PHY_NatureAtlas.h"
 #include "Entities/MIL_Army_ABC.h"
+#include "Entities/MIL_Entity_ABC.h"
+#include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
+#include "Knowledge/DEC_Knowledge_Object.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Tools/MIL_Tools.h"
 #include "Knowledge/QueryValidity.h"
@@ -525,4 +528,24 @@ void DEC_KnowledgeAgentFunctions::SwitchAutomateLogistic( DEC_Decision_ABC& call
         if( logHierarchy )
             logHierarchy->SwitchToHierarchy( callerAgent.GetAutomate().GetLogisticHierarchy() );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeAgentFunctions::IsInObject
+// Created: JSR 2012-01-26
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgeAgentFunctions::IsInObject( const MIL_Entity_ABC& callerAgent, const std::string& objectType, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, int isFriend )
+{
+    if( pKnowledge && pKnowledge->IsValid() )
+    {
+        T_KnowledgeObjectDiaIDVector objectsColliding;
+        pKnowledge->GetAgentKnown().GetKnowledge().GetObjectsColliding( objectsColliding );
+        for( CIT_KnowledgeObjectDiaIDVector it = objectsColliding.begin(); it != objectsColliding.end(); ++it )
+        {
+            const MIL_ObjectType_ABC& type = (*it)->GetType();
+            if( type.GetName() == objectType && static_cast< int >( (*it)->IsAnEnemy( callerAgent.GetArmy() ) ) == isFriend )
+                return true;
+        }
+    }
+    return false;
 }

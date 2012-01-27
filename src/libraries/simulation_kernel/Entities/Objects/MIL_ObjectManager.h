@@ -66,7 +66,6 @@ public:
     void UpdateStates ();
     unsigned long Count() const;
 
-    //@TODO MGD return reference
     MIL_Object_ABC& CreateObject( xml::xistream& xis, MIL_Army_ABC& army );
     MIL_Object_ABC* CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation );
     MIL_Object_ABC* CreateObject( const std::string& type, MIL_Army_ABC& army, const TER_Localisation& localisation, unsigned int forcedId );
@@ -80,6 +79,7 @@ public:
     const MIL_ObjectType_ABC& FindType( const std::string& type ) const;
     UrbanObjectWrapper& GetUrbanObjectWrapper( const urban::TerrainObject_ABC& object );
     unsigned int ConvertUrbanIdToSimId( unsigned int urbanId );
+    const std::set< MIL_Object_ABC* >& GetUniversalObjects() const;
     //@}
 
     //! @name Network
@@ -97,6 +97,8 @@ private:
     typedef std::map< unsigned int, MIL_Object_ABC* > T_ObjectMap;
     typedef T_ObjectMap::iterator                    IT_ObjectMap;
     typedef T_ObjectMap::const_iterator             CIT_ObjectMap;
+
+    typedef std::set< MIL_Object_ABC* > T_ObjectSet;
 
     typedef std::map< const urban::TerrainObject_ABC*, UrbanObjectWrapper* > T_UrbanObjectMap;
     typedef T_UrbanObjectMap::iterator                                      IT_UrbanObjectMap;
@@ -120,6 +122,7 @@ private:
     //! @name
     //@{
     T_ObjectMap objects_;
+    T_ObjectSet universalObjects_;
     T_UrbanObjectMap urbanObjects_;
     std::auto_ptr< MIL_ObjectFactory > builder_;
     //@}

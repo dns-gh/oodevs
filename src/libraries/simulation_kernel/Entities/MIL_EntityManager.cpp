@@ -2239,3 +2239,12 @@ void MIL_EntityManager::Accept( KnowledgesVisitor_ABC& visitor ) const
     knowledgeGroupFactory_->Apply( boost::bind( &MIL_KnowledgeGroup::Accept, _1, boost::ref( visitor ) ) );
     armyFactory_->Apply( boost::bind( &MIL_Army_ABC::Accept, _1, boost::ref( visitor ) ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: std::set< MIL_Object_ABC* > MIL_EntityManager::GetUniversalObjects
+// Created: LDC 2012-01-26
+// -----------------------------------------------------------------------------
+const std::set< MIL_Object_ABC* >& MIL_EntityManager::GetUniversalObjects() const
+{
+    return pObjectManager_->GetUniversalObjects();
+}
