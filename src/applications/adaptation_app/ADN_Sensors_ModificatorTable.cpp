@@ -23,14 +23,14 @@ ADN_Sensors_ModificatorTable_ABC::ADN_Sensors_ModificatorTable_ABC( QWidget* pPa
     setSelectionMode( Q3Table::SingleRow );
     setSizePolicy( QSizePolicy::Preferred, QSizePolicy::MinimumExpanding );
     setShowGrid(false);
-    setMaximumWidth( 300 );
     setLeftMargin(0);
     verticalHeader()->hide();
 
-    setNumCols(2);
-    setNumRows(0);
-    setColumnStretchable(0,true);
-    setColumnStretchable(1,true);
+    setFixedHeight( 200 );
+    setNumCols( 2 );
+    setNumRows( 0 );
+    setColumnStretchable( 0, true );
+    setColumnStretchable( 1, true );
     horizontalHeader()->setLabel(0, firstColumnName );
     horizontalHeader()->setLabel(1, secondColumnName );
 

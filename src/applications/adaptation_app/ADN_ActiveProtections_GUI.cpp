@@ -76,7 +76,6 @@ void ADN_ActiveProtections_GUI::Build()
     pContentLayout->addWidget( pPropertiesGroup );
     pContentLayout->addWidget( pDotationGroup );
     pContentLayout->addWidget( pWeaponsGroup_ );
-    pContentLayout->addStretch( 1 );
 
     // List view
     ADN_SearchListView< ADN_ActiveProtectionsListView >* pSearchListView = new ADN_SearchListView< ADN_ActiveProtectionsListView >( data_.GetActiveProtectionsInfos(), vConnectors );
