@@ -74,6 +74,6 @@ unsigned int AutomatComposition::GetSensibleNumber() const
     if( max_ == min_ )
         return min_;
     if( max_ != std::numeric_limits< unsigned int >::max() )
-        return std::max( ( max_ - min_ ) / 2u, 1u );
+        return std::max( ( max_ + min_ ) / 2u, 1u );
     return std::max( min_, 1u );
 }
