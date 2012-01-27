@@ -886,15 +886,11 @@ void ADN_Population_Data::WriteArchive( xml::xostream& output )
 // Name: ADN_Population_Data::GetPopulationsThatUse
 // Created: SBO 2006-09-11
 // -----------------------------------------------------------------------------
-std::string ADN_Population_Data::GetPopulationsThatUse( ADN_Models_Data::ModelInfos& model )
+QStringList ADN_Population_Data::GetPopulationsThatUse( ADN_Models_Data::ModelInfos& model )
 {
-    std::string result;
+    QStringList result;
     for( IT_PopulationInfosVector it = vPopulation_.begin(); it != vPopulation_.end(); ++it )
         if( (*it)->ptrModel_.GetData() == &model )
-        {
-            if( result != "" )
-                result += "<br>";
-            result += "<nobr>" + (*it)->strName_.GetData() + "</nobr>";
-        }
+            result << (*it)->strName_.GetData().c_str();
     return result;
 }

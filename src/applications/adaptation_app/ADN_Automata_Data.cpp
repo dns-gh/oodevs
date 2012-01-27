@@ -298,49 +298,39 @@ void ADN_Automata_Data::WriteArchive( xml::xostream& output )
 // Name: ADN_Automata_Data::GetAutomataThatUse
 // Created: APE 2005-04-25
 // -----------------------------------------------------------------------------
-std::string ADN_Automata_Data::GetAutomataThatUse( ADN_Units_Data::UnitInfos& unit )
+QStringList ADN_Automata_Data::GetAutomataThatUse( ADN_Units_Data::UnitInfos& unit )
 {
-    std::string strResult;
+    QStringList result;
     for( IT_AutomatonInfosVector it = vAutomata_.begin(); it != vAutomata_.end(); ++it )
     {
         AutomatonInfos* pAutomaton = *it;
         if( pAutomaton->ptrUnit_ == &unit )
-        {
-            if( strResult != "" )
-                strResult += "<br>";
-            strResult += "<nobr>" + pAutomaton->strName_.GetData() + "</nobr>";
-        }
+            result << pAutomaton->strName_.GetData().c_str();
 
         for( IT_UnitInfosVector it2 = pAutomaton->vSubUnits_.begin(); it2 != pAutomaton->vSubUnits_.end(); ++it2 )
         {
             if( (*it2)->ptrUnit_.GetData() == &unit  )
             {
-                if( strResult != "" )
-                    strResult += "<br>";
-                strResult += "<nobr>" + pAutomaton->strName_.GetData() + "</nobr>";
+                result << pAutomaton->strName_.GetData().c_str();
                 break;
             }
         }
     }
-    return strResult;
+    return result;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Automata_Data::GetAutomataThatUse
 // Created: SBO 2006-09-11
 // -----------------------------------------------------------------------------
-std::string ADN_Automata_Data::GetAutomataThatUse( ADN_Models_Data::ModelInfos& model )
+QStringList ADN_Automata_Data::GetAutomataThatUse( ADN_Models_Data::ModelInfos& model )
 {
-    std::string strResult;
+    QStringList result;
     for( IT_AutomatonInfosVector it = vAutomata_.begin(); it != vAutomata_.end(); ++it )
     {
         AutomatonInfos* pAutomaton = *it;
         if( pAutomaton->ptrModel_.GetData() == &model )
-        {
-            if( strResult != "" )
-                strResult += "<br>";
-            strResult += "<nobr>" + pAutomaton->strName_.GetData() + "</nobr>";
-        }
+            result << pAutomaton->strName_.GetData().c_str();
     }
-    return strResult;
+    return result;
 }

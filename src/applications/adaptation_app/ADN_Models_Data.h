@@ -90,10 +90,10 @@ public:
     public:
         enum E_ModelEntityType
         {
-            ePawn,
-            eAutomat,
-            ePopulation,
-            eNbrModelEntityTypes
+            ePawn                = 0,
+            eAutomat             = 1,
+            ePopulation          = 2,
+            eNbrModelEntityTypes = 3
         };
 
     public:
@@ -134,7 +134,7 @@ public:
 
     void            FilesNeeded(T_StringList& l) const;
     void            Reset();
-    std::string     GetModelsThatUse( ModelInfos::E_ModelEntityType type, ADN_Missions_Data::Mission& model );
+    QStringList     GetModelsThatUse( ModelInfos::E_ModelEntityType type, ADN_Missions_Data::Mission& model );
 
     T_ModelInfos_Vector&    GetUnitModelsInfos();
     ModelInfos*             FindUnitModel( const std::string& strName );
@@ -165,9 +165,9 @@ private:
 // Created: ABR 2011-09-29
 // -----------------------------------------------------------------------------
 inline
-std::string ADN_Models_Data::GetModelsThatUse( ModelInfos::E_ModelEntityType type, ADN_Missions_Data::Mission& mission )
+QStringList ADN_Models_Data::GetModelsThatUse( ModelInfos::E_ModelEntityType type, ADN_Missions_Data::Mission& mission )
 {
-    std::string strResult = "";
+    QStringList result;
     T_ModelInfos_Vector* currentVector = 0;
     if( type == ModelInfos::ePawn )
         currentVector = &vUnitModels_;
@@ -183,13 +183,11 @@ std::string ADN_Models_Data::GetModelsThatUse( ModelInfos::E_ModelEntityType typ
         for( IT_MissionInfos_Vector missionIt = pModel->vMissions_.begin(); missionIt != pModel->vMissions_.end(); ++missionIt )
             if( ( *missionIt )->mission_ == &mission )
             {
-                if( strResult != "" )
-                    strResult += "<br>";
-                strResult += "<nobr>" + pModel->strName_.GetData() + "</nobr>";
+                result << pModel->strName_.GetData().c_str();
                 break;
             }
     }
-    return strResult;
+    return result;
 }
 
 //-----------------------------------------------------------------------------

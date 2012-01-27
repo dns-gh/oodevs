@@ -35,7 +35,6 @@ public:
     //! @name Operations
     //@{
     void AddPage( E_WorkspaceElements target, QWidget& page, const QString& title );
-    void JumpTo( E_WorkspaceElements target );
     //@}
 
 signals:
@@ -51,18 +50,15 @@ public slots:
     void OnBack();
     void OnForward();
     void OnCurrentChanged( int index );
+    void OnChangeTab( E_WorkspaceElements target );
     //@}
 
 private:
     //! @name Types
     //@{
     typedef std::map< E_WorkspaceElements, int >    T_ElementIndexMap;
-    typedef T_ElementIndexMap::iterator                           IT_ElementIndexMap;
-    typedef T_ElementIndexMap::const_iterator                    CIT_ElementIndexMap;
-    //@}
-
-    //! @name Helpers
-    //@{
+    typedef T_ElementIndexMap::iterator            IT_ElementIndexMap;
+    typedef T_ElementIndexMap::const_iterator     CIT_ElementIndexMap;
     //@}
 
 private:

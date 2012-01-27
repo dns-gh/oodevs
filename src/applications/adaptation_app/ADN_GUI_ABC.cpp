@@ -18,6 +18,8 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_GUI_ABC.h"
+#include "moc_ADN_GUI_ABC.cpp"
+#include "ADN_UsedByInfos.h"
 #include <QtGui/qsizepolicy.h>
 
 // -----------------------------------------------------------------------------
@@ -75,4 +77,15 @@ QWidget* ADN_GUI_ABC::CreateScrollArea( QWidget& content, QWidget* list /*= 0*/,
         scrollArea->setFrameShape( QFrame::NoFrame );
 
     return mainWidget;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GUI_ABC::ApplyFilter
+// Created: ABR 2012-01-26
+// -----------------------------------------------------------------------------
+void ADN_GUI_ABC::ApplyFilter( const ADN_UsedByInfos& usedByInfos )
+{
+    emit ApplyFilterList( usedByInfos );
+    if( usedByInfos.subTargetTab_ != -1 )
+        ChangeCurrentSubTab( usedByInfos.subTargetTab_ );
 }

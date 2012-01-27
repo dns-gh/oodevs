@@ -74,13 +74,19 @@ void ADN_ListView_MissionTypes::ConnectItem( bool bConnect )
 // -----------------------------------------------------------------------------
 void ADN_ListView_MissionTypes::OnContextMenu( const QPoint& pt )
 {
+    Q3PopupMenu popupMenu( this );
     if( ADN_Workspace::GetWorkspace().GetOpenMode() == eOpenMode_Admin )
     {
-        Q3PopupMenu popupMenu( this );
         ADN_Mission_Wizard wizard( missions_, this );
         FillContextMenuWithDefault( popupMenu, wizard );
-        popupMenu.exec( pt );
     }
+    if( pCurData_ != 0 )
+    {
+        Mission* pCastData = static_cast< Mission* >( pCurData_ );
+        assert( pCastData != 0 );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( eEntityType_, *pCastData ), eModels, static_cast< int >( eEntityType_ ) );
+    }
+    popupMenu.exec( pt );
 }
 
 // -----------------------------------------------------------------------------
@@ -91,7 +97,6 @@ std::string ADN_ListView_MissionTypes::GetToolTipFor( Q3ListViewItem& item )
 {
     void* pData = static_cast<ADN_ListViewItem&>( item ).GetData();
     Mission* pCastData = static_cast< Mission* >( pData );
-    std::string strToolTip = tools::translate( "ADN_ListView_MissionTypes", "<b>Used by:</b><br>" ).ascii()
-        + ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( eEntityType_, *pCastData );
-    return strToolTip;
+    assert( pCastData != 0 );
+    return FormatUsersList( ADN_Workspace::GetWorkspace().GetModels().GetData().GetModelsThatUse( eEntityType_, *pCastData ) );
 }

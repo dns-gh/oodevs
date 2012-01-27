@@ -98,6 +98,7 @@ void ADN_Launchers_GUI::Build()
 
     // ListView
     ADN_SearchListView< ADN_ListView_Launchers >* pSearchListView = new ADN_SearchListView< ADN_ListView_Launchers >( data_.GetLaunchersInfos(), vConnectors );
+    connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_UsedByInfos& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_UsedByInfos& ) ) );
     pListView_ = pSearchListView->GetListView();
 
     // Main widget

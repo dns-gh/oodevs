@@ -237,6 +237,8 @@ void ADN_Weapons_GUI::Build()
     connect( pSimulation, SIGNAL( toggled( bool ) ), this, SLOT( ModifiersChanged( bool ) ) );
 
     QWidget* pModifiersHolder = builder.AddFieldHolder( pSimulation );
+    // $$$$ LDC Code review: Should be extracted in its own method
+    pModifiersHolder->layout()->setAlignment( Qt::AlignTop );
     ADN_ComboBox* pFirePostureCombo = builder.AddEnumField< E_UnitPosture >( pModifiersHolder, tr( "Fire posture" ), vInfosConnectors[eFirePosture], ENT_Tr::ConvertFromUnitPosture );
     connect( pFirePostureCombo, SIGNAL( activated( int ) ), this, SLOT( ModifiersChanged( int ) ) );
     ADN_ComboBox* pTargetPostureCombo = builder.AddEnumField< E_UnitPosture >( pModifiersHolder, tr( "Target posture" ), vInfosConnectors[eTargetPosture], ENT_Tr::ConvertFromUnitPosture );
@@ -258,30 +260,25 @@ void ADN_Weapons_GUI::Build()
     builder.AddField<ADN_EditLine_Double>( pIndirectGroup, tr( "Min range" ), vInfosConnectors[eMinRange], tr( "m" ), eGreaterEqualZero );
     builder.AddField<ADN_EditLine_Double>( pIndirectGroup, tr( "Max range" ), vInfosConnectors[eMaxRange], tr( "m" ), eGreaterEqualZero );
 
-
-    {
-        // $$$$ LDC Code review: Should be extracted in its own method
-        pModifiersHolder->layout()->setAlignment( Qt::AlignTop );
-
-        QHBoxLayout* pSimulationLayout = new QHBoxLayout( pSimulation );
-        pSimulationLayout->addWidget( pModifiersHolder );
-
-        QGridLayout* pDirectLayout = new QGridLayout( pDirectGroup, 2, 3 );
-        pDirectLayout->setMargin( 10 );
-        pDirectLayout->setSpacing( 10 );
-//        pDirectGroup->setLayout( pDirectLayout );
-        pDirectLayout->addWidget( pPhSizeListView, 0, 0 );
-        pDirectLayout->addWidget( pPhTable, 0, 1 );
-        pDirectLayout->addWidget( pSimulation, 0, 2 );
-        pDirectLayout->addMultiCellWidget( pGraph, 1, 1, 0, 2 );
-        pDirectLayout->setColStretch( 0, 1 );
-        pDirectLayout->setColStretch( 1, 2 );
-        pDirectLayout->setColStretch( 2, 2 );
-    }
-
     // -------------------------------------------------------------------------
     // Layouts
     // -------------------------------------------------------------------------
+    // Simulation layout
+    QHBoxLayout* pSimulationLayout = new QHBoxLayout( pSimulation );
+    pSimulationLayout->addWidget( pModifiersHolder );
+
+    // Direct layout
+    QGridLayout* pDirectLayout = new QGridLayout( pDirectGroup, 2, 3 );
+    pDirectLayout->setMargin( 10 );
+    pDirectLayout->setSpacing( 10 );
+    pDirectLayout->addWidget( pPhSizeListView, 0, 0 );
+    pDirectLayout->addWidget( pPhTable, 0, 1 );
+    pDirectLayout->addWidget( pSimulation, 0, 2 );
+    pDirectLayout->addMultiCellWidget( pGraph, 1, 1, 0, 2 );
+    pDirectLayout->setColStretch( 0, 1 );
+    pDirectLayout->setColStretch( 1, 2 );
+    pDirectLayout->setColStretch( 2, 2 );
+
     // Content layout
     QWidget* pContent = new QWidget();
     QVBoxLayout* pContentLayout = new QVBoxLayout( pContent );
@@ -294,6 +291,8 @@ void ADN_Weapons_GUI::Build()
 
     // List view
     ADN_SearchListView< ADN_Weapons_ListView >* pSearchListView = new ADN_SearchListView< ADN_Weapons_ListView >( data_.GetWeaponInfos(), vInfosConnectors );
+    connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_UsedByInfos& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_UsedByInfos& ) ) );
+    connect( this, SIGNAL( ApplyFilterList( const ADN_UsedByInfos& ) ), pSearchListView, SLOT( OnApplyFilterList( const ADN_UsedByInfos& ) ) );
     pListView_ = pSearchListView->GetListView();
 
     // Main widget

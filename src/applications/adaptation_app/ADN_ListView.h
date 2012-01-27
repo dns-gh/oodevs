@@ -14,6 +14,7 @@
 
 #include "ADN_Gfx_ABC.h"
 #include "ADN_Connector_ABC.h"
+#include "ADN_UsedByInfos.h"
 #include <boost/function.hpp>
 
 class ADN_ListViewItem;
@@ -62,6 +63,8 @@ protected:
 
     virtual void OnContextMenu( const QPoint& pt );
     void FillContextMenuWithDefault( Q3PopupMenu& popupMenu, ADN_ObjectCreator_ABC& objectCreator );
+    void FillContextMenuWithUsersList( Q3PopupMenu& popupMenu, QString usingName, QStringList userList, E_WorkspaceElements targetTab, int subTargetTab = -1 );
+    std::string FormatUsersList( QStringList usersList );
 
 private:
     bool ApplyFilterLine( ADN_ListViewItem* item );
@@ -71,6 +74,7 @@ private:
 private slots:
     virtual void ContextMenuNew();
     virtual void ContextMenuDelete();
+    virtual void ContextMenuSearchElements();
 
     void SetCurrentItem( Q3ListViewItem* pItem );
     void OnContextMenuRequested( Q3ListViewItem* pItem, const QPoint& pt, int nCol );
@@ -78,6 +82,7 @@ private slots:
 
 signals:
     void ItemSelected( void* pData );
+    void UsersListRequested( const ADN_UsedByInfos& usedByInfo );
 
 protected:
     void*                   pCurData_;
@@ -87,6 +92,7 @@ protected:
     bool                    bDeletionWarning_;
     bool                    bPrinting_;
     QRect                   toolTipRect_;
+    ADN_UsedByInfos         usedByInfo_;
     QString                 filterLine_;
     QStringList             filterList_;
 };

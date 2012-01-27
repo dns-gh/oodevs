@@ -258,6 +258,8 @@ void ADN_Units_GUI::Build()
 
     // List view
     ADN_SearchListView< ADN_ListView_Units >* pSearchListView = new ADN_SearchListView< ADN_ListView_Units >( data_.GetUnitsInfos(), vInfosConnectors );
+    connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_UsedByInfos& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_UsedByInfos& ) ) );
+    connect( this, SIGNAL( ApplyFilterList( const ADN_UsedByInfos& ) ), pSearchListView, SLOT( OnApplyFilterList( const ADN_UsedByInfos& ) ) );
     pListView_ = pSearchListView->GetListView();
     connect( pListView_, SIGNAL( selectionChanged() ), this, SLOT( OnTypeChanged() ) );
 

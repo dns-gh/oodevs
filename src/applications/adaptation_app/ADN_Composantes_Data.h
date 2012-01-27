@@ -713,9 +713,8 @@ public:
 
     int GetNextId();
 
-    std::string GetComposantesThatUse( ADN_Sensors_Data::SensorInfos& sensor );
-    std::string GetComposantesThatUse( ADN_Weapons_Data::WeaponInfos& weapon );
-
+    QStringList GetComposantesThatUse( ADN_Sensors_Data::SensorInfos& sensor );
+    QStringList GetComposantesThatUse( ADN_Weapons_Data::WeaponInfos& weapon );
 
 private:
     void ReadElement( xml::xistream& input );

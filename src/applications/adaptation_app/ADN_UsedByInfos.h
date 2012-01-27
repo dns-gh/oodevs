@@ -7,26 +7,24 @@
 //
 // *****************************************************************************
 
-#ifndef __ADN_SearchLineEdit_h_
-#define __ADN_SearchLineEdit_h_
+#ifndef __ADN_UsedByInfos_h_
+#define __ADN_UsedByInfos_h_
 
-#include "ADN_BaseEditLine.h"
+#include <boost/noncopyable.hpp>
+#include "ADN_Enums.h"
 
 // =============================================================================
-/** @class  ADN_SearchLineEdit
-    @brief  ADN_SearchLineEdit
+/** @class  ADN_UsedByInfos
+    @brief  ADN_UsedByInfos
 */
 // Created: ABR 2012-01-19
 // =============================================================================
-class ADN_SearchLineEdit : public ADN_BaseEditLine
+struct ADN_UsedByInfos
 {
-
-public:
-    //! @name Constructors/Destructor
-    //@{
-             ADN_SearchLineEdit( QWidget* parent = 0 );
-    virtual ~ADN_SearchLineEdit();
-    //@}
+    QString                 usingName_;
+    QStringList             usersList_;
+    E_WorkspaceElements     targetTab_;
+    int                     subTargetTab_;
 };
 
-#endif // __ADN_SearchLineEdit_h_
+#endif // __ADN_UsedByInfos_h_

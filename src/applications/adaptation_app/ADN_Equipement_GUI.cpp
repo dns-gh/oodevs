@@ -275,6 +275,7 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
 
     // List view
     ADN_SearchListView< ADN_Equipement_AmmoListView >* pSearchListView = new ADN_SearchListView< ADN_Equipement_AmmoListView >( data_.GetDotation( eDotationFamily_Munition ).categories_, vConnectors );
+    connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_UsedByInfos& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_UsedByInfos& ) ) );
     pAmmoListView_ = pSearchListView->GetListView();
 
     // Main page

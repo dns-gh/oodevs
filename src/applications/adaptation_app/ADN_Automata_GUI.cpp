@@ -109,6 +109,7 @@ void ADN_Automata_GUI::Build()
 
     // List view
     ADN_SearchListView< ADN_Automata_ListView >* pSearchListView = new ADN_SearchListView< ADN_Automata_ListView >( data_.GetAutomata(), vInfosConnectors );
+    connect( this, SIGNAL( ApplyFilterList( const ADN_UsedByInfos& ) ), pSearchListView, SLOT( OnApplyFilterList( const ADN_UsedByInfos& ) ) );
     pAutomataList_ = pSearchListView->GetListView();
 
     // Main widget

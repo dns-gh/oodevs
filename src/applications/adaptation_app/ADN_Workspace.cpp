@@ -74,6 +74,7 @@
 #include "ADN_UnitSymbols_GUI.h"
 #include "ADN_Urban_Data.h"
 #include "ADN_Urban_GUI.h"
+#include "ADN_UsedByInfos.h"
 #include "ADN_Weapons_Data.h"
 #include "ADN_Weapons_GUI.h"
 #include "ADN_WorkspaceElement.h"
@@ -214,6 +215,7 @@ void ADN_Workspace::Build( ADN_MainWindow& mainwindow )
     //AddPage( mainwindow, eReports ); // $$$$ JSR 2012-01-04: TODO : reports à supprimer complètement?
 
     pProgressIndicator_->Reset( tr( "GUI loaded" ) );
+    connect( this, SIGNAL( ChangeTab( E_WorkspaceElements ) ), &mainwindow, SIGNAL( ChangeTab( E_WorkspaceElements ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -468,4 +470,14 @@ void ADN_Workspace::ExportHtml( const std::string& strPath )
 void ADN_Workspace::ResetProgressIndicator()
 {
     pProgressIndicator_->Reset();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::OnUsersListRequested
+// Created: ABR 2012-01-26
+// -----------------------------------------------------------------------------
+void ADN_Workspace::OnUsersListRequested( const ADN_UsedByInfos& usedByInfo )
+{
+    emit ChangeTab( usedByInfo.targetTab_ );
+    elements_[ usedByInfo.targetTab_ ]->GetGuiABC().ApplyFilter( usedByInfo );
 }

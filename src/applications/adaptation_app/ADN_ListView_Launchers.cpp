@@ -97,6 +97,12 @@ void ADN_ListView_Launchers::OnContextMenu( const QPoint& pt )
     Q3PopupMenu popupMenu( this );
     ADN_Launcher_Wizard wizard( this );
     FillContextMenuWithDefault( popupMenu, wizard );
+    if( pCurData_ != 0 )
+    {
+        LauncherInfos* pCastData = static_cast< LauncherInfos* >( pCurData_ );
+        assert( pCastData != 0 );
+        FillContextMenuWithUsersList( popupMenu, pCastData->strName_.GetData().c_str(), ADN_Workspace::GetWorkspace().GetWeapons().GetData().GetWeaponThatUse( *pCastData ), eWeapons );
+    }
     popupMenu.exec( pt );
 }
 
@@ -109,9 +115,5 @@ std::string ADN_ListView_Launchers::GetToolTipFor( Q3ListViewItem& item )
     void* pData = static_cast<ADN_ListViewItem&>( item ).GetData();
     LauncherInfos* pCastData = (LauncherInfos*)pData;
     assert( pCastData != 0 );
-
-    std::string strToolTip = tr( "<b>Used by:</b><br>" ).ascii();
-    strToolTip += ADN_Workspace::GetWorkspace().GetWeapons().GetData().GetWeaponThatUse( *pCastData );
-
-    return strToolTip;
+    return FormatUsersList( ADN_Workspace::GetWorkspace().GetWeapons().GetData().GetWeaponThatUse( *pCastData ) );
 }

@@ -71,6 +71,7 @@ class ADN_UnitSymbols_Data;
 class ADN_UnitSymbols_GUI;
 class ADN_Urban_Data;
 class ADN_Urban_GUI;
+struct ADN_UsedByInfos;
 class ADN_Weapons_Data;
 class ADN_Weapons_GUI;
 class QtCommand;
@@ -146,6 +147,12 @@ public:
 
     E_OpenMode GetOpenMode() const;
     void SetOpenMode( E_OpenMode nNewMode );
+
+signals:
+    void ChangeTab( E_WorkspaceElements targetTab );
+
+public slots:
+    void OnUsersListRequested( const ADN_UsedByInfos& usedByInfo );
 
 private:
     void AddPage( ADN_MainWindow& mainWindow, E_WorkspaceElements element );

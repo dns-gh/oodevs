@@ -257,6 +257,7 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
 
     // List view
     ADN_SearchListView< ADN_ListView_Sensors >* pSearchListView = new ADN_SearchListView< ADN_ListView_Sensors >( data_.GetSensorsInfos(), vConnectors );
+    connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_UsedByInfos& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_UsedByInfos& ) ) );
 
     // Main page
     QWidget* pPage = CreateScrollArea( *pContent, pSearchListView );

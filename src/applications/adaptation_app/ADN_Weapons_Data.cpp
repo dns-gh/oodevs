@@ -463,40 +463,32 @@ void ADN_Weapons_Data::WriteArchive( xml::xostream& output )
 // Name: ADN_Weapons_Data::GetWeaponThatUse
 // Created: SBO 2005-09-06
 // -----------------------------------------------------------------------------
-std::string ADN_Weapons_Data::GetWeaponThatUse( ADN_Launchers_Data::LauncherInfos& launcher )
+QStringList ADN_Weapons_Data::GetWeaponThatUse( ADN_Launchers_Data::LauncherInfos& launcher )
 {
-    std::string strResult;
+    QStringList result;
     for( IT_WeaponInfosVector it = weapons_.begin(); it != weapons_.end(); ++it )
     {
         WeaponInfos* pWeapon = *it;
         if( pWeapon->ptrLauncher_ == &launcher )
-        {
-            if( strResult != "" )
-                strResult += "<br>";
-            strResult += "<nobr>" + pWeapon->strName_.GetData() + "</nobr>";
-        }
+            result << pWeapon->strName_.GetData().c_str();
     }
-    return strResult;
+    return result;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_Data::GetWeaponThatUse
 // Created: SBO 2005-09-06
 // -----------------------------------------------------------------------------
-std::string ADN_Weapons_Data::GetWeaponThatUse( ADN_Equipement_Data::AmmoCategoryInfo& ammunition )
+QStringList ADN_Weapons_Data::GetWeaponThatUse( ADN_Equipement_Data::AmmoCategoryInfo& ammunition )
 {
-    std::string strResult;
+    QStringList result;
     for( IT_WeaponInfosVector it = weapons_.begin(); it != weapons_.end(); ++it )
     {
         WeaponInfos* pWeapon = *it;
         if( pWeapon->ptrAmmunition_ == &ammunition )
-        {
-            if( strResult != "" )
-                strResult += "<br>";
-            strResult += "<nobr>" + pWeapon->strName_.GetData() + "</nobr>";
-        }
+            result << pWeapon->strName_.GetData().c_str();
     }
-    return strResult;
+    return result;
 }
 
 // -----------------------------------------------------------------------------

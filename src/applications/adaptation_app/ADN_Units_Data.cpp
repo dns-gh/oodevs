@@ -1007,42 +1007,34 @@ void ADN_Units_Data::WriteArchive( xml::xostream& output )
 // Name: ADN_Units_Data::GetUnitsThatUse
 // Created: APE 2005-04-25
 // -----------------------------------------------------------------------------
-std::string ADN_Units_Data::GetUnitsThatUse( ADN_Composantes_Data::ComposanteInfos& composante )
+QStringList ADN_Units_Data::GetUnitsThatUse( ADN_Composantes_Data::ComposanteInfos& composante )
 {
-    std::string strResult;
+    QStringList result;
     for( IT_UnitInfos_Vector it = vUnits_.begin(); it != vUnits_.end(); ++it )
     {
         UnitInfos* pUnit = *it;
         for( IT_ComposanteInfos_Vector it2 = pUnit->vComposantes_.begin(); it2 != pUnit->vComposantes_.end(); ++it2 )
-        {
             if( (*it2)->ptrComposante_.GetData() == &composante )
             {
-                if( strResult != "" )
-                    strResult += "<br>";
-                strResult += "<nobr>" + pUnit->strName_.GetData() + "</nobr>";
+                result << pUnit->strName_.GetData().c_str();
                 break;
             }
-        }
     }
-    return strResult;
+    return result;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Units_Data::GetUnitsThatUse
 // Created: SBO 2006-09-11
 // -----------------------------------------------------------------------------
-std::string ADN_Units_Data::GetUnitsThatUse( ADN_Models_Data::ModelInfos& model )
+QStringList ADN_Units_Data::GetUnitsThatUse( ADN_Models_Data::ModelInfos& model )
 {
-    std::string strResult;
+    QStringList result;
     for( IT_UnitInfos_Vector it = vUnits_.begin(); it != vUnits_.end(); ++it )
     {
         UnitInfos* pUnit = *it;
         if( (*it)->ptrModel_.GetData() == &model )
-        {
-            if( strResult != "" )
-                strResult += "<br>";
-            strResult += "<nobr>" + pUnit->strName_.GetData() + "</nobr>";
-        }
+            result << pUnit->strName_.GetData().c_str();
     }
-    return strResult;
+    return result;
 }
