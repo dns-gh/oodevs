@@ -492,6 +492,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< DEC_Decision_ABC*( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetAgent, _1 ) );
     brain[ "DEC_ConnaissanceAgent_EstTransporte" ] =
         boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsTransported, boost::cref( GetPion() ), _1 ) );
+    brain[ "DEC_KnowledgeAgent_IsInObject" ] =
+        boost::function< bool( const std::string&, boost::shared_ptr< DEC_Knowledge_Agent >, int ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsInObject, boost::cref( GetPion() ), _1, _2, _3 ) );
 
     // Object knowledges accessors
     brain[ "DEC_ConnaissanceObjet_EstUnEnnemi" ] =

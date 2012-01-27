@@ -124,6 +124,7 @@ public:
     virtual MIL_AgentPion*      FindAgentPion     ( unsigned int nID ) const;
     virtual MIL_Object_ABC*     FindObject        ( unsigned int nID ) const;
     virtual const MIL_ObjectType_ABC& FindObjectType( const std::string& type ) const;
+    virtual const std::set< MIL_Object_ABC* >& GetUniversalObjects() const;
 
     MIL_Population* FindPopulation( UrbanObjectWrapper* urbanObject ) const;
     const tools::Resolver< MIL_Army_ABC >& MIL_EntityManager::GetArmies() const;

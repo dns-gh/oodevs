@@ -1473,39 +1473,16 @@ void PHY_RolePion_Perceiver::NotifyIsUnLoadedInVab()
     bExternalMustChangeRadar_ = true;
 }
 
-namespace
-{
-// -----------------------------------------------------------------------------
-class UniversalObjectsVisitor : public TER_ObjectVisitor_ABC
-{
-public:
-    UniversalObjectsVisitor( TER_Object_ABC::T_ObjectVector& perceivableObjects )
-        : perceivableObjects_( perceivableObjects )
-    {
-        // NOTHING
-    }
-    virtual ~UniversalObjectsVisitor()
-    {
-        // NOTHING
-    }
-    virtual void Visit( TER_Object_ABC& object )
-    {
-        //MIL_Object_ABC* pObjectKnown = dynamic_cast< MIL_Object_ABC* >( &object );
-        if( object.IsUniversal()
-            && std::find( perceivableObjects_.begin(), perceivableObjects_.end(), &object ) == perceivableObjects_.end() )
-            perceivableObjects_.push_back( &object );
-    }
-private:
-    TER_Object_ABC::T_ObjectVector& perceivableObjects_;
-};
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::AppendUniversalObjects
 // Created: JSR 2011-01-07
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Perceiver::AppendUniversalObjects( TER_Object_ABC::T_ObjectVector& perceivableObjects ) const
 {
-    UniversalObjectsVisitor visitor( perceivableObjects );
-    TER_World::GetWorld().GetObjectManager().Accept( visitor );
+    const std::set< MIL_Object_ABC* >& universalObjects = MIL_EntityManager_ABC::GetSingleton().GetUniversalObjects();
+    for( std::set< MIL_Object_ABC* >::const_iterator it = universalObjects.begin(); it != universalObjects.end(); ++it )
+    {
+        if( std::find( perceivableObjects.begin(), perceivableObjects.end(), *it ) == perceivableObjects.end() )
+            perceivableObjects.push_back( *it );
+    }
 }

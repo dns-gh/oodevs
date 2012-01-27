@@ -76,7 +76,6 @@
 #include "Objects/MIL_FireClass.h"
 #include "Objects/MIL_MedicalTreatmentType.h"
 #include "Objects/MIL_NbcAgentType.h"
-#include "Objects/MIL_ObjectManager.h"
 #include "Objects/MIL_ObjectFactory.h"
 #include "Objects/MIL_Object_ABC.h"
 #include "Orders/MIL_LimaFunction.h"

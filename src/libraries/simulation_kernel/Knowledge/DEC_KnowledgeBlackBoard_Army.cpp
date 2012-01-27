@@ -155,10 +155,10 @@ namespace
 
         void operator() ( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
         {
-            if( filter_.Test( knowledge->GetType() )
+            if( knowledge->IsValid()
             && ( !knowledge->IsReservedObstacle() || knowledge->IsReservedObstacleActivated() )
-            && knowledge->GetLocalisation().ComputeBarycenter().Distance( *pCenter_ ) <= rRadius_
-            && knowledge->IsValid() )
+            && filter_.Test( knowledge->GetType() ) 
+            && knowledge->GetLocalisation().ComputeBarycenter().Distance( *pCenter_ ) <= rRadius_ )
                 pContainer_->push_back( knowledge );
         }
 

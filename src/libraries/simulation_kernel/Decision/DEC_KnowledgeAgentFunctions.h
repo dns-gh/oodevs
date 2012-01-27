@@ -15,9 +15,10 @@
 class DEC_Decision_ABC;
 class DEC_Knowledge_Agent;
 class MIL_AgentPion;
+class MIL_Entity_ABC;
+class MIL_Mission_ABC;
 class MT_Vector2D;
 class UrbanObjectWrapper;
-class MIL_Mission_ABC;
 
 // =============================================================================
 // Created: NLD 2004-03-31
@@ -75,6 +76,7 @@ public:
     static void  ShareKnowledgesWith ( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, float minutes );
     static DEC_Decision_ABC* GetAgent( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );	
     static void SwitchAutomateLogistic( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
+    static bool IsInObject( const MIL_Entity_ABC& callerAgent, const std::string& objectType, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, int isFriend );
     //@}
 };
 
