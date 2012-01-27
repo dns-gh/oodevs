@@ -25,7 +25,6 @@ class ADN_CT_ActiveProtections_WeaponsTable : public ADN_Connector_Table_ABC
 public:
     ADN_CT_ActiveProtections_WeaponsTable( ADN_ActiveProtections_WeaponsTable& table )
         : ADN_Connector_Table_ABC( table, false )
-        , weaponsTable_( table )
     {
         // NOTHING
     }
@@ -53,8 +52,6 @@ public:
     }
 
 private:
-    ADN_ActiveProtections_WeaponsTable& weaponsTable_;
-
     ADN_CT_ActiveProtections_WeaponsTable& operator=( const ADN_CT_ActiveProtections_WeaponsTable& );
 };
 
@@ -72,8 +69,6 @@ ADN_ActiveProtections_WeaponsTable::ADN_ActiveProtections_WeaponsTable( const st
     setSelectionMode( Q3Table::Single );
     setShowGrid( false );
 
-    setFixedHeight( 150 );
-
     // hide vertical header
     verticalHeader()->hide();
     setLeftMargin( 0 );
@@ -81,12 +76,14 @@ ADN_ActiveProtections_WeaponsTable::ADN_ActiveProtections_WeaponsTable( const st
     // tab with 2 columns
     setNumCols( 2 );
     setNumRows( 0 );
+    setColumnStretchable( 0, true );
+    setColumnStretchable( 1, true );
 
     horizontalHeader()->setLabel( 0, strName.c_str() );
     horizontalHeader()->setLabel( 1, tr( "Coefficient" ) );
 
     // connector creation
-    pConnector_ = new ADN_CT_ActiveProtections_WeaponsTable(*this);
+    pConnector_ = new ADN_CT_ActiveProtections_WeaponsTable( *this );
 }
 
 

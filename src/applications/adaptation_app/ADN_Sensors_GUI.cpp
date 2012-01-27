@@ -134,7 +134,6 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
     pAgentDetectionModifiersLayout->addWidget( pIllu, 1 );
     pAgentDetectionModifiersLayout->addWidget( pEnv, 1 );
     pAgentDetectionModifiersLayout->addWidget( pMaterial, 1 );
-    pAgentDetectionModifiersLayout->addStrut( 200 ); // $$$$ RBA 2011-08-30: Added because since QT4 port, ADN_Table does not resize automatically when content changes
     pAgentDetectionModifiersGroup->setLayout( pAgentDetectionModifiersLayout );
 
     // Modificators (group 2)
