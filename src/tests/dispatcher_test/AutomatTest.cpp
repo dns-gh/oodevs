@@ -452,6 +452,7 @@ BOOST_AUTO_TEST_CASE( Automat_AttributesCanBeChanged )
             message.set_meeting_engagement( sword::avoiding );
             message.set_operational_state( sword::tactically_destroyed );
             message.set_roe( sword::RulesOfEngagement::retaliation_only );
+            message.set_decisional_model( "brain" );
             BOOST_REQUIRE_MESSAGE( message.IsInitialized(), message.InitializationErrorString() );
             automats.Get( 1 ).Update( message );
 

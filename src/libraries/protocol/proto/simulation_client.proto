@@ -597,7 +597,7 @@ message AutomatAttributes {
    optional EnumOperationalStatus       operational_state     = 5; //!< The automat operational state
    optional RulesOfEngagement.Value     roe                   = 6; //!< The automat rules of engagement
    optional Extension                   extension             = 9;  //!< The extension fields
-   optional string                      decisonal_model       = 10; //!< The decisional model
+   optional string                      decisional_model      = 10; //!< The decisional model
 }
 
 /** @struct AutomatDestruction
@@ -901,7 +901,7 @@ message UnitAttributes {
     optional Extension                   extension                  = 49; //!< The extension fields
     optional EnumUnitStress              stress                     = 50; //!< The stress @see EnumUnitStress
     optional int32                       transported_crowd          = 51; //!< The number of transported humans from a crowd
-    optional string                      decisonal_model            = 52; //!< The decisional model
+    optional string                      decisional_model           = 52; //!< The decisional model
 }
 
 /** @struct UnitPathFind

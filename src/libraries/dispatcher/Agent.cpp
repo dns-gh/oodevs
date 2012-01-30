@@ -313,9 +313,9 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
         statisfaction_.reset( pSatisfaction );
     }
 
-    if( message.has_decisonal_model() )
+    if( message.has_decisional_model() )
     {
-        decisionalModel_ = message.decisonal_model();
+        decisionalModel_ = message.decisional_model();
     }
 
     Observable< sword::UnitAttributes >::Notify( message );
@@ -536,7 +536,7 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
             asn().mutable_satisfaction()->set_safety ( statisfaction_->safety_ );
             asn().mutable_satisfaction()->set_access_to_health_care ( statisfaction_->health_ );
         }
-        asn().set_decisonal_model( decisionalModel_ );
+        asn().set_decisional_model( decisionalModel_ );
 
         asn.Send( publisher );
     }

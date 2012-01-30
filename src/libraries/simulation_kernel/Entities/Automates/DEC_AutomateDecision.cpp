@@ -420,7 +420,7 @@ void DEC_AutomateDecision::SendFullState( client::AutomatAttributes& msg ) const
     msg().set_meeting_engagement( sword::EnumMeetingEngagementStatus( nCloseCombatState_ ) );
     msg().set_operational_state ( sword::EnumOperationalStatus( nOperationalState_ ) );
     msg().set_roe               ( sword::RulesOfEngagement::Value( nRulesOfEngagementState_ ) );
-    msg().set_decisonal_model   ( model_->GetName() );
+    msg().set_decisional_model  ( model_->GetName() );
 }
 
 // -----------------------------------------------------------------------------

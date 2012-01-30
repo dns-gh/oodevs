@@ -243,7 +243,7 @@ void DEC_RolePion_Decision::SendFullState( client::UnitAttributes& msg ) const
     msg().set_indirect_fire_availability( sword::UnitAttributes::FireAvailability( nIndirectFireAvailability_ ) );
     msg().set_roe                       ( sword::RulesOfEngagement::Value( nRulesOfEngagementState_ ) );
     msg().set_roe_crowd                 ( pRoePopulation_->GetAsnID() );
-    msg().set_decisonal_model           ( model_->GetName() );
+    msg().set_decisional_model          ( model_->GetName() );
 }
 
 // -----------------------------------------------------------------------------

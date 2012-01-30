@@ -243,9 +243,9 @@ void Automat::DoUpdate( const sword::AutomatAttributes& msg )
     if( msg.has_extension() )
         for( int i = 0; i < msg.extension().entries_size(); ++i )
             extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
-    if( msg.has_decisonal_model() )
+    if( msg.has_decisional_model() )
     {
-        decisionalModel_ = msg.decisonal_model();
+        decisionalModel_ = msg.decisional_model();
     }
 }
 
@@ -317,7 +317,7 @@ void Automat::SendFullUpdate( ClientPublisher_ABC& publisher ) const
             entry->set_name( it->first );
             entry->set_value( it->second );
         }
-        asn().set_decisonal_model( decisionalModel_ );
+        asn().set_decisional_model( decisionalModel_ );
         asn.Send( publisher );
     }
     if( order_.get() )
