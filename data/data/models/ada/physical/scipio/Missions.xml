@@ -259,64 +259,6 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="point_" name="Point" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_RENS_ROHUM_RenseignerSur" dia-type="T_Mission_Pion_RENS_ROHUM_RenseignerSur" id="157" name="PION RENS ROHUM Renseigner Sur" package="intelligence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="zoneAObserver_" name="Zone a observer" optional="false" type="Polygon"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_RENS_ROHUM_SExfiltrer" dia-type="T_Mission_Pion_RENS_ROHUM_SExfiltrer" id="158" name="PION RENS ROHUM SExfiltrer" package="intelligence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="pointDeRegroupement_" name="Point de regroupement" optional="false" type="Point"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_RENS_ROHUM_OrienterGuider" dia-type="T_Mission_Pion_RENS_ROHUM_OrienterGuider" id="159" name="PION RENS ROHUM Orienter Guider" package="intelligence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="ami_" name="Ami" optional="false" type="Agent"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_RENS_ROEM_Appuyer" dia-type="T_Mission_Pion_RENS_ROEM_Appuyer" id="160" name="PION RENS ROEM Appuyer" package="intelligence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="positionDeploiement_" name="Position deploiement" optional="false" type="Point"/>
-      <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_RENS_ROEM_RenseignerSur" dia-type="T_Mission_Pion_RENS_ROEM_RenseignerSur" id="161" name="PION RENS ROEM Renseigner Sur" package="intelligence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_RENS_RADINT_RenseignerSur" dia-type="T_Mission_Pion_RENS_RADINT_RenseignerSur" id="163" name="PION RENS RADINT Renseigner Sur" package="intelligence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="zonesDeRecherche_" max-occurs="unbounded" min-occurs="1" name="Zones de recherche" optional="false" type="Polygon"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_RENS_ROIM_SDTI_RenseignerSur" dia-type="T_Mission_Pion_RENS_ROIM_SDTI_RenseignerSur" id="166" name="PION RENS ROIM SDTI Renseigner Sur" package="intelligence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="ficelleDeVole_" name="Ficelle de vole" optional="false" type="Path"/>
-    </mission>
-    <mission dia-behavior="MIS_Pion_RENS_ROIM_CL289_RenseignerSur" dia-type="T_Mission_Pion_RENS_ROIM_CL289_RenseignerSur" id="167" name="PION RENS ROIM CL289 Renseigner Sur" package="intelligence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="ficelleDeVole_" name="Ficelle de vole" optional="false" type="Path"/>
-      <parameter dia-name="zonesDeRecherche_" max-occurs="unbounded" min-occurs="1" name="Zones de recherche" optional="false" type="Polygon"/>
-    </mission>
     <mission dia-behavior="MIS_Pion_PrendreEnComptePrisonniers" dia-type="T_Mission_Pion_PrendreEnComptePrisonniers" id="175" name="PION Prendre En Compte Prisonniers" package="none">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -1486,7 +1428,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="position" name="Position de mise en oeuvre" optional="true" type="Point"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.combat.support.rens.tasks.OrienterGuider" dia-type="france.military.platoon.combat.support.rens.tasks.OrienterGuider" id="2481" name="PION RENS ROHUM .Orienter Guider" package="intelligence">
+    <mission dia-behavior="france.military.platoon.combat.support.rens.tasks.OrienterGuider" dia-type="france.military.platoon.combat.support.rens.tasks.OrienterGuider" id="2481" name="PION RENS ROHUM Orienter Guider" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1511,7 +1453,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="france.military.platoon.combat.support.rens.tasks.ROHUM_RenseignerSur" dia-type="france.military.platoon.combat.support.rens.tasks.ROHUM_RenseignerSur" id="2483" name="PION RENS ROHUM .Renseigner Sur" package="intelligence">
+    <mission dia-behavior="france.military.platoon.combat.support.rens.tasks.ROHUM_RenseignerSur" dia-type="france.military.platoon.combat.support.rens.tasks.ROHUM_RenseignerSur" id="2483" name="PION RENS ROHUM Renseigner Sur" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1519,7 +1461,7 @@
       <parameter dia-name="area" name="Zone à renseigner" optional="false" type="Polygon"/>
       <parameter dia-name="byNight" name="de nuit" optional="true" type="Boolean"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.combat.support.rens.tasks.RASIT_RenseignerSur" dia-type="france.military.platoon.combat.support.rens.tasks.RASIT_RenseignerSur" id="2484" name="PION RENS RASIT .Renseigner Sur" package="intelligence">
+    <mission dia-behavior="france.military.platoon.combat.support.rens.tasks.RASIT_RenseignerSur" dia-type="france.military.platoon.combat.support.rens.tasks.RASIT_RenseignerSur" id="2484" name="PION RENS RASIT Renseigner Sur" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1533,7 +1475,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="position" name="Position de mise en oeuvre" optional="true" type="Point"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.combat.support.rens.tasks.ROEM_RenseignerSur" dia-type="france.military.platoon.combat.support.rens.tasks.ROEM_RenseignerSur" id="2486" name="PION RENS ROEM .Renseigner Sur" package="intelligence">
+    <mission dia-behavior="france.military.platoon.combat.support.rens.tasks.ROEM_RenseignerSur" dia-type="france.military.platoon.combat.support.rens.tasks.ROEM_RenseignerSur" id="2486" name="PION RENS ROEM Renseigner Sur" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1549,14 +1491,14 @@
       <parameter dia-name="position" name="Position d'installation" optional="false" type="Point"/>
       <parameter dia-name="positionDebarquement" name="Position de débarquement" optional="true" type="Point"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.combat.support.rens.tasks.RADINT_RenseignerSur" dia-type="france.military.platoon.combat.support.rens.tasks.RADINT_RenseignerSur" id="2488" name="PION RENS RADINT .Renseigner Sur" package="intelligence">
+    <mission dia-behavior="france.military.platoon.combat.support.rens.tasks.RADINT_RenseignerSur" dia-type="france.military.platoon.combat.support.rens.tasks.RADINT_RenseignerSur" id="2488" name="PION RENS RADINT Renseigner Sur" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="area" name="Zone de recherche" optional="false" type="Polygon"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.combat.support.rens.tasks.ROIM_RenseignerSur" dia-type="france.military.platoon.combat.support.rens.tasks.ROIM_RenseignerSur" id="2489" name="PION RENS ROIM .Renseigner Sur" package="intelligence">
+    <mission dia-behavior="france.military.platoon.combat.support.rens.tasks.ROIM_RenseignerSur" dia-type="france.military.platoon.combat.support.rens.tasks.ROIM_RenseignerSur" id="2489" name="PION RENS ROIM Renseigner Sur" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1585,7 +1527,7 @@
       <parameter dia-name="zone" name="Zone à observer" optional="false" type="Polygon"/>
       <parameter dia-name="position" name="Position d'installation" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="france.military.platoon.combat.support.rens.tasks.Appuyer" dia-type="france.military.platoon.combat.support.rens.tasks.Appuyer" id="2492" name="PION RENS ROEM .Appuyer" package="intelligence">
+    <mission dia-behavior="france.military.platoon.combat.support.rens.tasks.Appuyer" dia-type="france.military.platoon.combat.support.rens.tasks.Appuyer" id="2492" name="PION RENS ROEM Appuyer" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -1820,50 +1762,6 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="zoneRavitaillement_" name="Zone ravitaillement" optional="false" type="Polygon"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_RENS_ROHUM_RenseignerSur" dia-type="T_Mission_Automate_RENS_ROHUM_RenseignerSur" id="320" mrt-dia-behavior="MIS_Automate_MRT_RENS_ROHUM_RenseignerSur" name="AUTOMATE RENS ROHUM Renseigner Sur" package="intelligence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="zoneAObserver_" name="Zone a observer" optional="false" type="Polygon"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_RENS_ROIM_CL289_RenseignerSur" dia-type="T_Mission_Automate_RENS_ROIM_CL289_RenseignerSur" id="323" mrt-dia-behavior="MIS_Automate_MRT_RENS_ROIM_CL289_RenseignerSur" name="AUTOMATE RENS ROIM CL289 Renseigner Sur" package="intelligence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="ficelleDeVole_" name="Ficelle de vole" optional="false" type="Path"/>
-      <parameter dia-name="zonesDeRecherche_" max-occurs="unbounded" min-occurs="1" name="Zones de recherche" optional="false" type="Polygon"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_RENS_ROIM_SDTI_RenseignerSur" dia-type="T_Mission_Automate_RENS_ROIM_SDTI_RenseignerSur" id="324" mrt-dia-behavior="MIS_Automate_MRT_RENS_ROIM_SDTI_RenseignerSur" name="AUTOMATE RENS ROIM SDTI Renseigner Sur" package="intelligence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="ficelleDeVole_" name="Ficelle de vole" optional="false" type="Path"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_RENS_ROEM_Appuyer" dia-type="T_Mission_Automate_RENS_ROEM_Appuyer" id="325" mrt-dia-behavior="MIS_Automate_MRT_RENS_ROEM_Appuyer" name="AUTOMATE RENS ROEM Appuyer" package="support">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="positionDeploiement_" name="Position deploiement" optional="false" type="Point"/>
-      <parameter dia-name="pointRegroupement_" name="Point regroupement" optional="false" type="Point"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_RENS_ROEM_RenseignerSur" dia-type="T_Mission_Automate_RENS_ROEM_RenseignerSur" id="326" mrt-dia-behavior="MIS_Automate_MRT_RENS_ROEM_RenseignerSur" name="AUTOMATE RENS ROEM Renseigner Sur" package="intelligence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
-    </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_RENS_RADINT_RenseignerSur" dia-type="T_Mission_Automate_RENS_RADINT_RenseignerSur" id="327" mrt-dia-behavior="MIS_Automate_MRT_RENS_RADINT_RenseignerSur" name="AUTOMATE RENS RADINT Renseigner Sur" package="intelligence">
-      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
-      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
-      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
-      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="zone_" name="Zone" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_PrendreEnComptePrisonniers" dia-type="T_Mission_Automate_PrendreEnComptePrisonniers" id="329" mrt-dia-behavior="MIS_Automate_MRT_PrendreEnComptePrisonniers" name="AUTOMATE Prendre En Compte Prisonniers" package="none">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2835,7 +2733,7 @@
       </parameter>
       <parameter dia-name="angle" name="Angle" optional="true" type="Integer"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.combat.support.rens.tasks.Appuyer" dia-type="france.military.company.combat.support.rens.tasks.Appuyer" id="28772" mrt-dia-behavior="france.military.company.combat.support.rens.tasks.Appuyer" name="AUTOMATE RENS ROEM .Appuyer">
+    <mission cdt-dia-behavior="france.military.company.combat.support.rens.tasks.Appuyer" dia-type="france.military.company.combat.support.rens.tasks.Appuyer" id="28772" mrt-dia-behavior="france.military.company.combat.support.rens.tasks.Appuyer" name="AUTOMATE RENS ROEM Appuyer">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -2843,7 +2741,7 @@
       <parameter dia-name="objective" name="Position de déploiement" optional="false" type="Point"/>
       <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.combat.support.rens.tasks.ROHUM_RenseignerSur" dia-type="france.military.company.combat.support.rens.tasks.ROHUM_RenseignerSur" id="28773" mrt-dia-behavior="france.military.company.combat.support.rens.tasks.ROHUM_RenseignerSur" name="AUTOMATE RENS ROHUM .Renseigner Sur">
+    <mission cdt-dia-behavior="france.military.company.combat.support.rens.tasks.ROHUM_RenseignerSur" dia-type="france.military.company.combat.support.rens.tasks.ROHUM_RenseignerSur" id="28773" mrt-dia-behavior="france.military.company.combat.support.rens.tasks.ROHUM_RenseignerSur" name="AUTOMATE RENS ROHUM Renseigner Sur">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -2868,21 +2766,21 @@
       <parameter dia-name="compagniesAAppuyer" max-occurs="unbounded" min-occurs="1" name="compagnies a appuyer" optional="false" type="Automat"/>
       <parameter dia-name="bMarcheRetrograde" name="marche retrograde" optional="false" type="Boolean"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.combat.support.rens.tasks.ROEM_RenseignerSur" dia-type="france.military.company.combat.support.rens.tasks.ROEM_RenseignerSur" id="28776" mrt-dia-behavior="france.military.company.combat.support.rens.tasks.ROEM_RenseignerSur" name="AUTOMATE RENS ROEM .Renseigner Sur">
+    <mission cdt-dia-behavior="france.military.company.combat.support.rens.tasks.ROEM_RenseignerSur" dia-type="france.military.company.combat.support.rens.tasks.ROEM_RenseignerSur" id="28776" mrt-dia-behavior="france.military.company.combat.support.rens.tasks.ROEM_RenseignerSur" name="AUTOMATE RENS ROEM Renseigner Sur">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="area" name="Zone à renseigner" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.combat.support.rens.tasks.RADINT_RenseignerSur" dia-type="france.military.company.combat.support.rens.tasks.RADINT_RenseignerSur" id="28777" mrt-dia-behavior="france.military.company.combat.support.rens.tasks.RADINT_RenseignerSur" name="AUTOMATE RENS RADINT .Renseigner Sur" package="intelligence">
+    <mission cdt-dia-behavior="france.military.company.combat.support.rens.tasks.RADINT_RenseignerSur" dia-type="france.military.company.combat.support.rens.tasks.RADINT_RenseignerSur" id="28777" mrt-dia-behavior="france.military.company.combat.support.rens.tasks.RADINT_RenseignerSur" name="AUTOMATE RENS RADINT Renseigner Sur" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="area" name="Zone de recherche" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.combat.support.rens.tasks.RASIT_RenseignerSur" dia-type="france.military.company.combat.support.rens.tasks.RASIT_RenseignerSur" id="28778" mrt-dia-behavior="france.military.company.combat.support.rens.tasks.RASIT_RenseignerSur" name="AUTOMATE RENS RASIT .Renseigner Sur" package="intelligence">
+    <mission cdt-dia-behavior="france.military.company.combat.support.rens.tasks.RASIT_RenseignerSur" dia-type="france.military.company.combat.support.rens.tasks.RASIT_RenseignerSur" id="28778" mrt-dia-behavior="france.military.company.combat.support.rens.tasks.RASIT_RenseignerSur" name="AUTOMATE RENS RASIT Renseigner Sur" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -2903,7 +2801,7 @@
         </choice>
       </parameter>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.combat.support.rens.tasks.ROIM_RenseignerSur" dia-type="france.military.company.combat.support.rens.tasks.ROIM_RenseignerSur" id="28780" mrt-dia-behavior="france.military.company.combat.support.rens.tasks.ROIM_RenseignerSur" name="AUTOMATE RENS ROIM .Renseigner Sur" package="intelligence">
+    <mission cdt-dia-behavior="france.military.company.combat.support.rens.tasks.ROIM_RenseignerSur" dia-type="france.military.company.combat.support.rens.tasks.ROIM_RenseignerSur" id="28780" mrt-dia-behavior="france.military.company.combat.support.rens.tasks.ROIM_RenseignerSur" name="AUTOMATE RENS ROIM Renseigner Sur" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -2917,7 +2815,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="area" name="Zone de regroupement" optional="false" type="Polygon"/>
     </mission>
-    <mission cdt-dia-behavior="france.military.company.combat.support.rens.tasks.Appuyer" dia-type="france.military.company.combat.support.rens.tasks.Appuyer2" id="28782" mrt-dia-behavior="france.military.company.combat.support.rens.tasks.Appuyer" name="AUTOMATE RENS ROEM .Brouiller">
+    <mission cdt-dia-behavior="france.military.company.combat.support.rens.tasks.Appuyer" dia-type="france.military.company.combat.support.rens.tasks.Appuyer2" id="28782" mrt-dia-behavior="france.military.company.combat.support.rens.tasks.Appuyer" name="AUTOMATE RENS ROEM Brouiller">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3184,4 +3082,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_RejoindrePointLancement" id="405" name="Rejoindre point de lancement"/>
   </fragorders>
 </missions>
-<!-- signature="3416644030" -->
+<!-- signature="3920967306" -->

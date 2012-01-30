@@ -1587,314 +1587,6 @@
         <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
-    <unit dia-type="PC_ASS" file="Appui\ArtFdp\Pions\PC\model.bms" masalife="false" name="PC ASS Tir">
-      <missions>
-        <mission name="PION Decrocher"/>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Soutenir En Mesure De"/>
-        <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION Franchir"/>
-        <mission name="PION Suivre"/>
-        <mission name="PION Stationner"/>
-        <mission name="PION Se Faire Decontaminer"/>
-        <mission name="PION Se Faire Transporter"/>
-        <mission name="PION Orienter Refugies"/>
-        <mission name="PION Prendre En Compte Prisonniers"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="Patrouille_RBRR_Blindee" file="Appui\Rens\Pions\Rohum\RBRR\Pat recherche blindee\Model.bms" masalife="false" name="Pat recherche blindee">
-      <missions>
-        <mission name="PION Decrocher"/>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Soutenir En Mesure De"/>
-        <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION Suivre"/>
-        <mission name="PION RENS ROHUM SExfiltrer"/>
-        <mission name="PION RENS ROHUM Renseigner Sur"/>
-        <mission name="PION RENS ROHUM Orienter Guider"/>
-        <mission name="PION Se Faire Decontaminer"/>
-        <mission name="PION Se Faire Transporter"/>
-        <mission name="PION Stationner"/>
-        <mission name="PION Orienter Refugies"/>
-        <mission name="PION Prendre En Compte Prisonniers"/>
-        <mission name="PION Franchir"/>
-        <mission name="PION Sinfiltrer"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="Patrouille_RBRR_Moto" file="Appui\Rens\Pions\Rohum\RBRR\Pat recherche motorisee\Model.bms" masalife="false" name="Pat recherche moto">
-      <missions>
-        <mission name="PION Decrocher"/>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Soutenir En Mesure De"/>
-        <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION Suivre"/>
-        <mission name="PION RENS ROHUM SExfiltrer"/>
-        <mission name="PION RENS ROHUM Orienter Guider"/>
-        <mission name="PION RENS ROHUM Renseigner Sur"/>
-        <mission name="PION Se Faire Decontaminer"/>
-        <mission name="PION Se Faire Transporter"/>
-        <mission name="PION Stationner"/>
-        <mission name="PION Orienter Refugies"/>
-        <mission name="PION Prendre En Compte Prisonniers"/>
-        <mission name="PION Sinfiltrer"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="Patrouille_RBRR_Nautique" file="Appui\Rens\Pions\Rohum\RBRR\Pat recherche nautique\Model.bms" masalife="false" name="Pat recherche nautique">
-      <missions>
-        <mission name="PION Decrocher"/>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Soutenir En Mesure De"/>
-        <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION Suivre"/>
-        <mission name="PION RENS ROHUM SExfiltrer"/>
-        <mission name="PION RENS ROHUM Orienter Guider"/>
-        <mission name="PION RENS ROHUM Renseigner Sur"/>
-        <mission name="PION Se Faire Decontaminer"/>
-        <mission name="PION Se Faire Transporter"/>
-        <mission name="PION Stationner"/>
-        <mission name="PION Orienter Refugies"/>
-        <mission name="PION Prendre En Compte Prisonniers"/>
-        <mission name="PION Franchir"/>
-        <mission name="PION Sinfiltrer"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="Patrouille_RBRR_RASIT" file="Appui\Rens\Pions\Rohum\RBRR\Pat recherche RASIT\Model.bms" masalife="false" name="Pat recherche RASIT">
-      <missions>
-        <mission name="PION Decrocher"/>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Soutenir En Mesure De"/>
-        <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION Suivre"/>
-        <mission name="PION RENS ROHUM SExfiltrer"/>
-        <mission name="PION RENS ROHUM Renseigner Sur"/>
-        <mission name="PION Se Faire Decontaminer"/>
-        <mission name="PION Se Faire Transporter"/>
-        <mission name="PION Stationner"/>
-        <mission name="PION Orienter Refugies"/>
-        <mission name="PION Prendre En Compte Prisonniers"/>
-        <mission name="PION Franchir"/>
-        <mission name="PION Sinfiltrer"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="Patrouille_URH" file="Appui\Rens\Pions\Rohum\URH\Pat URH\Model.bms" masalife="false" name="Pat URH">
-      <missions>
-        <mission name="PION Decrocher"/>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Soutenir En Mesure De"/>
-        <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION Suivre"/>
-        <mission name="PION RENS ROHUM SExfiltrer"/>
-        <mission name="PION RENS ROHUM Renseigner Sur"/>
-        <mission name="PION Se Faire Decontaminer"/>
-        <mission name="PION Se Faire Transporter"/>
-        <mission name="PION Stationner"/>
-        <mission name="PION RENS ROHUM Orienter Guider"/>
-        <mission name="PION Orienter Refugies"/>
-        <mission name="PION Prendre En Compte Prisonniers"/>
-        <mission name="PION Franchir"/>
-        <mission name="PION Sinfiltrer"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="Section_Coge" file="Appui\Rens\Pions\Roem\Coge\Model.bms" masalife="false" name="Coge">
-      <missions>
-        <mission name="PION Decrocher"/>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Soutenir En Mesure De"/>
-        <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION Suivre"/>
-        <mission name="PION RENS ROEM Mettre En Oeuvre"/>
-        <mission name="PION Franchir"/>
-        <mission name="PION Se Faire Decontaminer"/>
-        <mission name="PION Se Faire Transporter"/>
-        <mission name="PION Stationner"/>
-        <mission name="PION Orienter Refugies"/>
-        <mission name="PION Prendre En Compte Prisonniers"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="Stations_Lynx" file="Appui\Rens\Pions\Roem\Stations Lynx\Model.bms" masalife="false" name="Stations Linx">
-      <missions>
-        <mission name="PION Decrocher"/>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Soutenir En Mesure De"/>
-        <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION Suivre"/>
-        <mission name="PION RENS ROEM Renseigner Sur"/>
-        <mission name="PION Se Faire Decontaminer"/>
-        <mission name="PION Se Faire Transporter"/>
-        <mission name="PION Stationner"/>
-        <mission name="PION Orienter Refugies"/>
-        <mission name="PION Prendre En Compte Prisonniers"/>
-        <mission name="PION Franchir"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
     <unit dia-type="Stations_Horizon" file="Appui\Rens\Pions\Radint\Stations Horizon\Model.bms" masalife="false" name="Stations Horizon">
       <missions>
         <mission name="PION Decrocher"/>
@@ -1929,343 +1621,6 @@
       </fragorders>
     </unit>
     <unit dia-type="Cougar_Horizon" file="Appui\Rens\Pions\Radint\Cougar Horizon\Model.bms" masalife="false" name="Cougar Horizon">
-      <missions>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Decrocher"/>
-        <mission name="PION Suivre"/>
-        <mission name="PION RENS RADINT Renseigner Sur"/>
-        <mission name="PION Se Faire Decontaminer"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="Section_CL289_MiseEnOeuvre" file="Appui\Rens\Pions\Roim\Son mise en oeuvre CL289\Model.bms" masalife="false" name="Sections mise en oeuvre CL289">
-      <missions>
-        <mission name="PION Decrocher"/>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Soutenir En Mesure De"/>
-        <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION Suivre"/>
-        <mission name="PION RENS ROIM Mettre En Oeuvre"/>
-        <mission name="PION Se Faire Decontaminer"/>
-        <mission name="PION Franchir"/>
-        <mission name="PION Se Faire Transporter"/>
-        <mission name="PION Stationner"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="Drone_CL289" file="Appui\Rens\Pions\Roim\Drone CL289\Model.bms" masalife="false" name="Drone CL289">
-      <missions>
-        <mission name="PION RENS ROIM CL289 Renseigner Sur"/>
-        <mission name="PION Suivre"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="Section_SDTI_MiseEnOeuvre" file="Appui\Rens\Pions\Roim\Son mise en oeuvre SDTI\Model.bms" masalife="false" name="Sections mise en oeuvre SDTI">
-      <missions>
-        <mission name="PION Decrocher"/>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Soutenir En Mesure De"/>
-        <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION Suivre"/>
-        <mission name="PION RENS ROIM Mettre En Oeuvre"/>
-        <mission name="PION Se Faire Decontaminer"/>
-        <mission name="PION Se Faire Transporter"/>
-        <mission name="PION Stationner"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="Drone_SDTI" file="Appui\Rens\Pions\Roim\Drone SDTI\Model.bms" masalife="false" name="Drone SDTI">
-      <missions>
-        <mission name="PION RENS ROIM SDTI Renseigner Sur"/>
-        <mission name="PION Suivre"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="Stations_MrodELodee" file="Appui\Rens\Pions\Roem\Stations MROD_ELODEE\Model.bms" masalife="false" name="Stations MROD_ELODEE">
-      <missions>
-        <mission name="PION Decrocher"/>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Soutenir En Mesure De"/>
-        <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION Suivre"/>
-        <mission name="PION RENS ROEM Renseigner Sur"/>
-        <mission name="PION Se Faire Decontaminer"/>
-        <mission name="PION Se Faire Transporter"/>
-        <mission name="PION Stationner"/>
-        <mission name="PION Franchir"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="Systeme_Stair" file="Appui\Rens\Pions\Roem\Systeme STAIR\Model.bms" masalife="false" name="Systeme STAIR">
-      <missions>
-        <mission name="PION Decrocher"/>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Soutenir En Mesure De"/>
-        <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION Suivre"/>
-        <mission name="PION RENS ROEM Renseigner Sur"/>
-        <mission name="PION Se Faire Decontaminer"/>
-        <mission name="PION Se Faire Transporter"/>
-        <mission name="PION Stationner"/>
-        <mission name="PION Orienter Refugies"/>
-        <mission name="PION Prendre En Compte Prisonniers"/>
-        <mission name="PION Franchir"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="Systeme_Start" file="Appui\Rens\Pions\Roem\Systeme START_\Model.bms" masalife="false" name="Systeme_START">
-      <missions>
-        <mission name="PION Decrocher"/>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Soutenir En Mesure De"/>
-        <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION Suivre"/>
-        <mission name="PION RENS ROEM Renseigner Sur"/>
-        <mission name="PION Se Faire Decontaminer"/>
-        <mission name="PION Se Faire Transporter"/>
-        <mission name="PION Stationner"/>
-        <mission name="PION Orienter Refugies"/>
-        <mission name="PION Prendre En Compte Prisonniers"/>
-        <mission name="PION Franchir"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="section_Elge" file="Appui\Rens\Pions\Roem\ELGE\Model.bms" masalife="false" name="Groupe ELGE">
-      <missions>
-        <mission name="PION Decrocher"/>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Soutenir En Mesure De"/>
-        <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION Suivre"/>
-        <mission name="PION RENS ROEM Appuyer"/>
-        <mission name="PION RENS ROEM Renseigner Sur"/>
-        <mission name="PION Se Faire Decontaminer"/>
-        <mission name="PION Se Faire Transporter"/>
-        <mission name="PION Stationner"/>
-        <mission name="PION Orienter Refugies"/>
-        <mission name="PION Prendre En Compte Prisonniers"/>
-        <mission name="PION Franchir"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="section_Brovab" file="Appui\Rens\Pions\Roem\BROVAB\Model.bms" masalife="false" name="Groupe BROVAB">
-      <missions>
-        <mission name="PION Decrocher"/>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Soutenir En Mesure De"/>
-        <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION Suivre"/>
-        <mission name="PION RENS ROEM Appuyer"/>
-        <mission name="PION Se Faire Decontaminer"/>
-        <mission name="PION Se Faire Transporter"/>
-        <mission name="PION Stationner"/>
-        <mission name="PION Orienter Refugies"/>
-        <mission name="PION Prendre En Compte Prisonniers"/>
-        <mission name="PION Franchir"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="Patrouille_Viviane" file="Appui\Rens\Pions\Radint\Pat Viviane\Model.bms" masalife="false" name="Patrouille Viviane">
       <missions>
         <mission name="PION Faire Mouvement"/>
         <mission name="PION Decrocher"/>
@@ -2333,43 +1688,6 @@
         <fragorder name="Changer Ambiance"/>
         <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Changer Parametres Recompletement ALAT"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="Patrouille_URH" file="Glaise\Glaise_Appui\Rens\Pions\Rohum\URH\Pat URH\Model.bms" masalife="false" name="GLAISE RENS Pat URH">
-      <missions>
-        <mission name="PION Decrocher"/>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Soutenir En Mesure De"/>
-        <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION Suivre"/>
-        <mission name="PION Se Faire Decontaminer"/>
-        <mission name="PION Se Faire Transporter"/>
-        <mission name="PION Stationner"/>
-        <mission name="PION RENS ROHUM SExfiltrer"/>
-        <mission name="PION RENS ROHUM Renseigner Sur"/>
-        <mission name="PION Orienter Refugies"/>
-        <mission name="PION Prendre En Compte Prisonniers"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
     <unit dia-type="TransportHelicopterPatrol" file="glaise\glaise_appui\Alat\Pions\Pat Hm\Model.bms" masalife="false" name="GLAISE ALFT Patrouille UH">
@@ -2558,124 +1876,6 @@
     <unit dia-type="PelotonAppuiMob" file="Appui\AppuiMob\Pions\Model.bms" masalife="false" name="Glaise porteur SCUD">
       <missions>
         <mission name="PION Faire Mouvement"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="Drone_SDTI" file="Appui\Rens\Pions\Roim\Drone DRAC\Model.bms" masalife="false" name="Drone DRAC">
-      <missions>
-        <mission name="PION RENS ROIM SDTI Renseigner Sur"/>
-        <mission name="PION Suivre"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="Section_SDTI_MiseEnOeuvre" file="Appui\Rens\Pions\Roim\Son mise en oeuvre DRAC\Model.bms" masalife="false" name="Sections mise en oeuvre DRAC">
-      <missions>
-        <mission name="PION Decrocher"/>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Suivre"/>
-        <mission name="PION RENS ROIM Mettre En Oeuvre"/>
-        <mission name="PION Se Faire Decontaminer"/>
-        <mission name="PION Se Faire Transporter"/>
-        <mission name="PION Stationner"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="Patrouille_RBRR_Blindee" file="Appui\Rens\Pions\Rohum\URB\Section ROHUM\Model.bms" masalife="false" name="Section ROHUM">
-      <missions>
-        <mission name="PION Decrocher"/>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Suivre"/>
-        <mission name="PION RENS ROHUM SExfiltrer"/>
-        <mission name="PION RENS ROHUM Renseigner Sur"/>
-        <mission name="PION RENS ROHUM Orienter Guider"/>
-        <mission name="PION Se Faire Decontaminer"/>
-        <mission name="PION Se Faire Transporter"/>
-        <mission name="PION Stationner"/>
-        <mission name="PION Orienter Refugies"/>
-        <mission name="PION Prendre En Compte Prisonniers"/>
-        <mission name="PION Franchir"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="Patrouille_RBRR_Blindee" file="Humus\Humus_Rens\Pions\SMP\Model.bms" masalife="false" name="HUMUS RENS SMP">
-      <missions>
-        <mission name="PION Decrocher"/>
-        <mission name="PION Faire Mouvement"/>
-        <mission name="PION Suivre"/>
-        <mission name="PION RENS ROHUM SExfiltrer"/>
-        <mission name="PION RENS ROHUM Renseigner Sur"/>
-        <mission name="PION RENS ROHUM Orienter Guider"/>
-        <mission name="PION Se Faire Decontaminer"/>
-        <mission name="PION Se Faire Transporter"/>
-        <mission name="PION Stationner"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -3421,7 +2621,7 @@
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
-        <mission name="PION RENS RASIT .Renseigner Sur"/>
+        <mission name="PION RENS RASIT Renseigner Sur"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -4663,36 +3863,9 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
-    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.Drone CL289">
-      <missions>
-        <mission name="PION RENS ROIM CL289 Renseigner Sur"/>
-        <mission name="PION COMMUNES Suivre"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Pion Observer"/>
-        <fragorder name="Pion Orienter Capteurs"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
     <unit dia-type="france.military.platoon.combat.support.air.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.Drone DRAC">
       <missions>
-        <mission name="PION RENS ROIM .Renseigner Sur"/>
+        <mission name="PION RENS ROIM Renseigner Sur"/>
         <mission name="PION COMMUNES Suivre"/>
       </missions>
       <fragorders>
@@ -4716,7 +3889,7 @@
     </unit>
     <unit dia-type="france.military.platoon.combat.support.air.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.Drone SDTI">
       <missions>
-        <mission name="PION RENS ROIM .Renseigner Sur">
+        <mission name="PION RENS ROIM Renseigner Sur">
           <fragorder name="Rejoindre point de lancement"/>
         </mission>
         <mission name="PION COMMUNES Suivre"/>
@@ -4744,8 +3917,8 @@
     </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.Section ROHUM">
       <missions>
-        <mission name="PION RENS ROHUM .Renseigner Sur"/>
-        <mission name="PION RENS ROHUM .Orienter Guider"/>
+        <mission name="PION RENS ROHUM Renseigner Sur"/>
+        <mission name="PION RENS ROHUM Orienter Guider"/>
         <mission name="PION RENS SExfiltrer"/>
         <mission name="PION Orienter Refugies"/>
         <mission name="PION Prendre En Compte Prisonniers"/>
@@ -4845,8 +4018,8 @@
       <missions>
         <mission name="PION Soutenir En Mesure De"/>
         <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION RENS ROHUM .Renseigner Sur"/>
-        <mission name="PION RENS ROHUM .Orienter Guider"/>
+        <mission name="PION RENS ROHUM Renseigner Sur"/>
+        <mission name="PION RENS ROHUM Orienter Guider"/>
         <mission name="PION RENS SExfiltrer"/>
         <mission name="PION Orienter Refugies"/>
         <mission name="PION Prendre En Compte Prisonniers"/>
@@ -4887,7 +4060,7 @@
       <missions>
         <mission name="PION Soutenir En Mesure De"/>
         <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION RENS ROEM .Appuyer"/>
+        <mission name="PION RENS ROEM Appuyer"/>
         <mission name="PION Orienter Refugies"/>
         <mission name="PION Prendre En Compte Prisonniers"/>
         <mission name="PION COMMUNES Decrocher"/>
@@ -4929,8 +4102,8 @@
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
-        <mission name="PION RENS ROEM .Appuyer"/>
-        <mission name="PION RENS ROEM .Renseigner Sur"/>
+        <mission name="PION RENS ROEM Appuyer"/>
+        <mission name="PION RENS ROEM Renseigner Sur"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -4958,7 +4131,7 @@
       <missions>
         <mission name="PION Soutenir En Mesure De"/>
         <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION RENS ROEM .Renseigner Sur"/>
+        <mission name="PION RENS ROEM Renseigner Sur"/>
         <mission name="PION Orienter Refugies"/>
         <mission name="PION Prendre En Compte Prisonniers"/>
         <mission name="PION COMMUNES Decrocher"/>
@@ -4995,7 +4168,7 @@
       <missions>
         <mission name="PION Soutenir En Mesure De"/>
         <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION RENS ROEM .Renseigner Sur"/>
+        <mission name="PION RENS ROEM Renseigner Sur"/>
         <mission name="PION Orienter Refugies"/>
         <mission name="PION Prendre En Compte Prisonniers"/>
         <mission name="PION COMMUNES Decrocher"/>
@@ -5032,8 +4205,8 @@
       <missions>
         <mission name="PION Soutenir En Mesure De"/>
         <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION RENS ROHUM .Renseigner Sur"/>
-        <mission name="PION RENS ROHUM .Orienter Guider"/>
+        <mission name="PION RENS ROHUM Renseigner Sur"/>
+        <mission name="PION RENS ROHUM Orienter Guider"/>
         <mission name="PION RENS SExfiltrer"/>
         <mission name="PION Orienter Refugies"/>
         <mission name="PION Prendre En Compte Prisonniers"/>
@@ -5075,7 +4248,6 @@
         <mission name="PION Soutenir En Mesure De"/>
         <mission name="PION Soutenir sur position en mesure de"/>
         <mission name="PION RENS ROHUM Orienter Guider"/>
-        <mission name="PION RENS ROHUM .Orienter Guider"/>
         <mission name="PION RENS SExfiltrer"/>
         <mission name="PION Orienter Refugies"/>
         <mission name="PION Prendre En Compte Prisonniers"/>
@@ -5115,8 +4287,8 @@
       <missions>
         <mission name="PION Soutenir En Mesure De"/>
         <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION RENS ROHUM .Orienter Guider"/>
-        <mission name="PION RENS ROHUM .Renseigner Sur"/>
+        <mission name="PION RENS ROHUM Orienter Guider"/>
+        <mission name="PION RENS ROHUM Renseigner Sur"/>
         <mission name="PION Orienter Refugies"/>
         <mission name="PION Prendre En Compte Prisonniers"/>
         <mission name="PION S'Infiltrer"/>
@@ -5157,7 +4329,7 @@
       <missions>
         <mission name="PION Soutenir En Mesure De"/>
         <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION RENS RASIT .Renseigner Sur"/>
+        <mission name="PION RENS RASIT Renseigner Sur"/>
         <mission name="PION RENS SExfiltrer"/>
         <mission name="PION Orienter Refugies"/>
         <mission name="PION Prendre En Compte Prisonniers"/>
@@ -5196,7 +4368,7 @@
     </unit>
     <unit dia-type="france.military.platoon.combat.support.air.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.Patrouille Viviane">
       <missions>
-        <mission name="PION RENS RADINT .Renseigner Sur"/>
+        <mission name="PION RENS RADINT Renseigner Sur"/>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Se Faire Decontaminer"/>
@@ -5231,7 +4403,7 @@
         <mission name="PION Soutenir En Mesure De"/>
         <mission name="PION Soutenir sur position en mesure de"/>
         <mission name="PION Suivre"/>
-        <mission name="PION RENS ROEM .Renseigner Sur"/>
+        <mission name="PION RENS ROEM Renseigner Sur"/>
         <mission name="PION Se Faire Decontaminer"/>
         <mission name="PION Se Faire Transporter"/>
         <mission name="PION Stationner"/>
@@ -5297,7 +4469,7 @@
       <missions>
         <mission name="PION Soutenir En Mesure De"/>
         <mission name="PION Soutenir sur position en mesure de"/>
-        <mission name="PION RENS ROEM .Renseigner Sur"/>
+        <mission name="PION RENS ROEM Renseigner Sur"/>
         <mission name="PION Orienter Refugies"/>
         <mission name="PION Prendre En Compte Prisonniers"/>
         <mission name="PION COMMUNES Decrocher"/>
@@ -6263,7 +5435,7 @@
         <mission name="AUTOMATE COMMUNES Escorter Refugies Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
-        <mission name="AUTOMATE RENS RASIT .Renseigner Sur"/>
+        <mission name="AUTOMATE RENS RASIT Renseigner Sur"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -7076,339 +6248,6 @@
         <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </automat>
-    <automat dia-type="Cl289" file="Appui\Rens\Automates\Roim\CL289\Model.bms" masalife="false" name="CL289">
-      <missions>
-        <mission name="AUTOMATE Se Faire Transporter"/>
-        <mission name="AUTOMATE Faire Mouvement"/>
-        <mission name="AUTOMATE Soutenir En Mesure De"/>
-        <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
-        <mission name="AUTOMATE Suivre"/>
-        <mission name="AUTOMATE Decrocher"/>
-        <mission name="AUTOMATE RENS ROIM CL289 Renseigner Sur"/>
-        <mission name="AUTOMATE Stationner"/>
-        <mission name="AUTOMATE Orienter Refugies"/>
-        <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
-        <mission name="AUTOMATE Franchir"/>
-        <mission name="AUTOMATE Se Faire Decontaminer"/>
-        <mission name="AUTOMATE Se Recompleter"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </automat>
-    <automat dia-type="Sdti" file="Appui\Rens\Automates\Roim\SDTI\Model.bms" masalife="false" name="SDTI">
-      <missions>
-        <mission name="AUTOMATE Se Faire Transporter"/>
-        <mission name="AUTOMATE Faire Mouvement"/>
-        <mission name="AUTOMATE Soutenir En Mesure De"/>
-        <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
-        <mission name="AUTOMATE Suivre"/>
-        <mission name="AUTOMATE Decrocher"/>
-        <mission name="AUTOMATE RENS ROIM SDTI Renseigner Sur"/>
-        <mission name="AUTOMATE Se Faire Decontaminer"/>
-        <mission name="AUTOMATE Stationner"/>
-        <mission name="AUTOMATE Orienter Refugies"/>
-        <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
-        <mission name="AUTOMATE Se Recompleter"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </automat>
-    <automat dia-type="Cder" file="Appui\Rens\Automates\Rohum\Cder RBRR\Model.bms" masalife="false" name="CDER RBRR">
-      <missions>
-        <mission name="AUTOMATE Se Faire Transporter"/>
-        <mission name="AUTOMATE Faire Mouvement"/>
-        <mission name="AUTOMATE Soutenir En Mesure De"/>
-        <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
-        <mission name="AUTOMATE Suivre"/>
-        <mission name="AUTOMATE Decrocher"/>
-        <mission name="AUTOMATE RENS ROHUM SExfiltrer"/>
-        <mission name="AUTOMATE RENS Orienter"/>
-        <mission name="AUTOMATE RENS ROHUM Renseigner Sur"/>
-        <mission name="AUTOMATE Se Faire Decontaminer"/>
-        <mission name="AUTOMATE Se Recompleter"/>
-        <mission name="AUTOMATE Stationner"/>
-        <mission name="AUTOMATE Orienter Refugies"/>
-        <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
-        <mission name="AUTOMATE Franchir"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </automat>
-    <automat dia-type="Urh" file="Appui\Rens\Automates\Rohum\URH\Model.bms" masalife="false" name="URH">
-      <missions>
-        <mission name="AUTOMATE Se Faire Transporter"/>
-        <mission name="AUTOMATE Faire Mouvement"/>
-        <mission name="AUTOMATE Soutenir En Mesure De"/>
-        <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
-        <mission name="AUTOMATE Suivre"/>
-        <mission name="AUTOMATE Decrocher"/>
-        <mission name="AUTOMATE RENS ROHUM SExfiltrer"/>
-        <mission name="AUTOMATE RENS ROHUM Renseigner Sur"/>
-        <mission name="AUTOMATE Se Faire Decontaminer"/>
-        <mission name="AUTOMATE Se Recompleter"/>
-        <mission name="AUTOMATE Stationner"/>
-        <mission name="AUTOMATE Orienter Refugies"/>
-        <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
-        <mission name="AUTOMATE Franchir"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </automat>
-    <automat dia-type="Brovab" file="Appui\Rens\Automates\Roem\BROVAB\Model.bms" masalife="false" name="BROVAB">
-      <missions>
-        <mission name="AUTOMATE Se Faire Transporter"/>
-        <mission name="AUTOMATE Faire Mouvement"/>
-        <mission name="AUTOMATE Soutenir En Mesure De"/>
-        <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
-        <mission name="AUTOMATE Suivre"/>
-        <mission name="AUTOMATE Decrocher"/>
-        <mission name="AUTOMATE RENS ROEM Appuyer"/>
-        <mission name="AUTOMATE Se Faire Decontaminer"/>
-        <mission name="AUTOMATE Se Recompleter"/>
-        <mission name="AUTOMATE Stationner"/>
-        <mission name="AUTOMATE Orienter Refugies"/>
-        <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
-        <mission name="AUTOMATE Franchir"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </automat>
-    <automat dia-type="Elge" file="Appui\Rens\Automates\Roem\ELGE\Model.bms" masalife="false" name="ELGE">
-      <missions>
-        <mission name="AUTOMATE Se Faire Transporter"/>
-        <mission name="AUTOMATE Faire Mouvement"/>
-        <mission name="AUTOMATE Soutenir En Mesure De"/>
-        <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
-        <mission name="AUTOMATE Suivre"/>
-        <mission name="AUTOMATE Decrocher"/>
-        <mission name="AUTOMATE RENS ROEM Appuyer"/>
-        <mission name="AUTOMATE RENS ROEM Renseigner Sur"/>
-        <mission name="AUTOMATE Se Faire Decontaminer"/>
-        <mission name="AUTOMATE Se Recompleter"/>
-        <mission name="AUTOMATE Stationner"/>
-        <mission name="AUTOMATE Orienter Refugies"/>
-        <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
-        <mission name="AUTOMATE Franchir"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </automat>
-    <automat dia-type="Start_" file="Appui\Rens\Automates\Roem\Systeme START_\Model.bms" masalife="false" name="START_">
-      <missions>
-        <mission name="AUTOMATE Se Faire Transporter"/>
-        <mission name="AUTOMATE Faire Mouvement"/>
-        <mission name="AUTOMATE Soutenir En Mesure De"/>
-        <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
-        <mission name="AUTOMATE Suivre"/>
-        <mission name="AUTOMATE Decrocher"/>
-        <mission name="AUTOMATE RENS ROEM Renseigner Sur"/>
-        <mission name="AUTOMATE Se Faire Decontaminer"/>
-        <mission name="AUTOMATE Se Recompleter"/>
-        <mission name="AUTOMATE Orienter Refugies"/>
-        <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
-        <mission name="AUTOMATE Franchir"/>
-        <mission name="AUTOMATE Stationner"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </automat>
-    <automat dia-type="Stair" file="Appui\Rens\Automates\Roem\Systeme STAIR\Model.bms" masalife="false" name="STAIR">
-      <missions>
-        <mission name="AUTOMATE Se Faire Transporter"/>
-        <mission name="AUTOMATE Faire Mouvement"/>
-        <mission name="AUTOMATE Soutenir En Mesure De"/>
-        <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
-        <mission name="AUTOMATE Suivre"/>
-        <mission name="AUTOMATE Decrocher"/>
-        <mission name="AUTOMATE RENS ROEM Renseigner Sur"/>
-        <mission name="AUTOMATE Se Faire Decontaminer"/>
-        <mission name="AUTOMATE Se Recompleter"/>
-        <mission name="AUTOMATE Stationner"/>
-        <mission name="AUTOMATE Orienter Refugies"/>
-        <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
-        <mission name="AUTOMATE Franchir"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </automat>
-    <automat dia-type="Mrod_Elodee" file="Appui\Rens\Automates\Roem\Stations MROD_ELODEE\Model.bms" masalife="false" name="MROD_ELODEE">
-      <missions>
-        <mission name="AUTOMATE Se Faire Transporter"/>
-        <mission name="AUTOMATE Faire Mouvement"/>
-        <mission name="AUTOMATE Soutenir En Mesure De"/>
-        <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
-        <mission name="AUTOMATE Suivre"/>
-        <mission name="AUTOMATE Decrocher"/>
-        <mission name="AUTOMATE RENS ROEM Renseigner Sur"/>
-        <mission name="AUTOMATE Se Faire Decontaminer"/>
-        <mission name="AUTOMATE Se Recompleter"/>
-        <mission name="AUTOMATE Stationner"/>
-        <mission name="AUTOMATE Orienter Refugies"/>
-        <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
-        <mission name="AUTOMATE Franchir"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </automat>
-    <automat dia-type="Linx" file="Appui\Rens\Automates\Roem\Systeme LINX\Model.bms" masalife="false" name="Systeme Linx">
-      <missions>
-        <mission name="AUTOMATE Se Faire Transporter"/>
-        <mission name="AUTOMATE Faire Mouvement"/>
-        <mission name="AUTOMATE Soutenir En Mesure De"/>
-        <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
-        <mission name="AUTOMATE Suivre"/>
-        <mission name="AUTOMATE Decrocher"/>
-        <mission name="AUTOMATE RENS ROEM Renseigner Sur"/>
-        <mission name="AUTOMATE Se Faire Decontaminer"/>
-        <mission name="AUTOMATE Se Recompleter"/>
-        <mission name="AUTOMATE Stationner"/>
-        <mission name="AUTOMATE Orienter Refugies"/>
-        <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
-        <mission name="AUTOMATE Franchir"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </automat>
     <automat dia-type="Escadrille_Horizon" file="Appui\Rens\Automates\Radint\Esc Horizon\Model.bms" masalife="false" name="Escadrille Horizon">
       <missions>
         <mission name="AUTOMATE Faire Mouvement"/>
@@ -7421,67 +6260,6 @@
         <mission name="AUTOMATE Orienter Refugies"/>
         <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
         <mission name="AUTOMATE Se Faire Decontaminer"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </automat>
-    <automat dia-type="Viviane" file="Appui\Rens\Automates\Radint\Pat Viviane\Model.bms" masalife="false" name="Viviane">
-      <missions>
-        <mission name="AUTOMATE Faire Mouvement"/>
-        <mission name="AUTOMATE Soutenir En Mesure De"/>
-        <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
-        <mission name="AUTOMATE Suivre"/>
-        <mission name="AUTOMATE Decrocher"/>
-        <mission name="AUTOMATE RENS RADINT Renseigner Sur"/>
-        <mission name="AUTOMATE Se Recompleter"/>
-        <mission name="AUTOMATE Se Faire Decontaminer"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </automat>
-    <automat dia-type="Urh" file="Appui\Rens\Automates\Rohum\URH\Model.bms" masalife="false" name="GLAISE URH">
-      <missions>
-        <mission name="AUTOMATE Se Faire Transporter"/>
-        <mission name="AUTOMATE Faire Mouvement"/>
-        <mission name="AUTOMATE Soutenir En Mesure De"/>
-        <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
-        <mission name="AUTOMATE Suivre"/>
-        <mission name="AUTOMATE Decrocher"/>
-        <mission name="AUTOMATE RENS ROHUM SExfiltrer"/>
-        <mission name="AUTOMATE RENS ROHUM Renseigner Sur"/>
-        <mission name="AUTOMATE Se Faire Decontaminer"/>
-        <mission name="AUTOMATE Se Recompleter"/>
-        <mission name="AUTOMATE Stationner"/>
-        <mission name="AUTOMATE Orienter Refugies"/>
-        <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -7582,66 +6360,6 @@
     <automat dia-type="EscadrilleAssaut" file="Air\Automates\Escadrille Assaut\Model.bms" masalife="false" name="GLAISE ASS SCUD">
       <missions>
         <mission name="AUTOMATE Faire Mouvement"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </automat>
-    <automat dia-type="Sdti" file="Appui\Rens\Automates\Roim\DRAC\Model.bms" masalife="false" name="DRAC">
-      <missions>
-        <mission name="AUTOMATE Se Faire Transporter"/>
-        <mission name="AUTOMATE Faire Mouvement"/>
-        <mission name="AUTOMATE Decrocher"/>
-        <mission name="AUTOMATE RENS ROIM SDTI Renseigner Sur"/>
-        <mission name="AUTOMATE Se Faire Decontaminer"/>
-        <mission name="AUTOMATE Stationner"/>
-        <mission name="AUTOMATE Se Recompleter"/>
-        <mission name="AUTOMATE Orienter Refugies"/>
-        <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Passer En Silence Radio Partiel"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </automat>
-    <automat dia-type="Cder" file="Appui\Rens\Automates\Rohum\section ROHUM\Model.bms" masalife="false" name="AutomateSection ROHUM">
-      <missions>
-        <mission name="AUTOMATE Se Faire Transporter"/>
-        <mission name="AUTOMATE Faire Mouvement"/>
-        <mission name="AUTOMATE Decrocher"/>
-        <mission name="AUTOMATE RENS ROHUM SExfiltrer"/>
-        <mission name="AUTOMATE RENS Orienter"/>
-        <mission name="AUTOMATE RENS ROHUM Renseigner Sur"/>
-        <mission name="AUTOMATE Se Faire Decontaminer"/>
-        <mission name="AUTOMATE Se Recompleter"/>
-        <mission name="AUTOMATE Stationner"/>
-        <mission name="AUTOMATE Orienter Refugies"/>
-        <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -8124,8 +6842,8 @@
       <missions>
         <mission name="AUTOMATE Soutenir En Mesure De"/>
         <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
-        <mission name="AUTOMATE RENS ROEM .Appuyer"/>
-        <mission name="AUTOMATE RENS ROEM .Renseigner Sur"/>
+        <mission name="AUTOMATE RENS ROEM Appuyer"/>
+        <mission name="AUTOMATE RENS ROEM Renseigner Sur"/>
         <mission name="AUTOMATE Orienter Refugies"/>
         <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
         <mission name="AUTOMATE COMMUNES Decrocher"/>
@@ -8159,7 +6877,7 @@
       <missions>
         <mission name="AUTOMATE Soutenir En Mesure De"/>
         <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
-        <mission name="AUTOMATE RENS ROEM .Brouiller"/>
+        <mission name="AUTOMATE RENS ROEM Brouiller"/>
         <mission name="AUTOMATE Orienter Refugies"/>
         <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
         <mission name="AUTOMATE COMMUNES Decrocher"/>
@@ -8192,7 +6910,7 @@
       <missions>
         <mission name="AUTOMATE Soutenir En Mesure De"/>
         <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
-        <mission name="AUTOMATE RENS ROEM .Renseigner Sur"/>
+        <mission name="AUTOMATE RENS ROEM Renseigner Sur"/>
         <mission name="AUTOMATE Orienter Refugies"/>
         <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
         <mission name="AUTOMATE COMMUNES Decrocher"/>
@@ -8226,7 +6944,7 @@
       <missions>
         <mission name="AUTOMATE Soutenir En Mesure De"/>
         <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
-        <mission name="AUTOMATE RENS ROEM .Renseigner Sur"/>
+        <mission name="AUTOMATE RENS ROEM Renseigner Sur"/>
         <mission name="AUTOMATE Orienter Refugies"/>
         <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
         <mission name="AUTOMATE COMMUNES Decrocher"/>
@@ -8260,7 +6978,7 @@
       <missions>
         <mission name="AUTOMATE Soutenir En Mesure De"/>
         <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
-        <mission name="AUTOMATE RENS ROIM .Renseigner Sur"/>
+        <mission name="AUTOMATE RENS ROIM Renseigner Sur"/>
         <mission name="AUTOMATE Orienter Refugies"/>
         <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
         <mission name="AUTOMATE COMMUNES Decrocher"/>
@@ -8293,7 +7011,7 @@
       <missions>
         <mission name="AUTOMATE Soutenir En Mesure De"/>
         <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
-        <mission name="AUTOMATE RENS ROEM .Renseigner Sur"/>
+        <mission name="AUTOMATE RENS ROEM Renseigner Sur"/>
         <mission name="AUTOMATE Orienter Refugies"/>
         <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
         <mission name="AUTOMATE COMMUNES Decrocher"/>
@@ -8325,7 +7043,7 @@
       <missions>
         <mission name="AUTOMATE Soutenir En Mesure De"/>
         <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
-        <mission name="AUTOMATE RENS ROEM .Renseigner Sur"/>
+        <mission name="AUTOMATE RENS ROEM Renseigner Sur"/>
         <mission name="AUTOMATE Orienter Refugies"/>
         <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
         <mission name="AUTOMATE COMMUNES Decrocher"/>
@@ -8361,7 +7079,7 @@
         <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
         <mission name="AUTOMATE RENS ROHUM SExfiltrer"/>
         <mission name="AUTOMATE RENS Orienter"/>
-        <mission name="AUTOMATE RENS ROHUM .Renseigner Sur"/>
+        <mission name="AUTOMATE RENS ROHUM Renseigner Sur"/>
         <mission name="AUTOMATE Orienter Refugies"/>
         <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
         <mission name="AUTOMATE COMMUNES Decrocher"/>
@@ -8400,7 +7118,7 @@
         <mission name="AUTOMATE COMMUNES Se Faire Decontaminer"/>
         <mission name="AUTOMATE COMMUNES Se Recompleter"/>
         <mission name="AUTOMATE COMMUNES Suivre"/>
-        <mission name="AUTOMATE RENS RADINT .Renseigner Sur"/>
+        <mission name="AUTOMATE RENS RADINT Renseigner Sur"/>
         <mission name="AUTOMATE RENS Reconnaitre"/>
       </missions>
       <fragorders>
@@ -8425,7 +7143,7 @@
         <mission name="AUTOMATE Soutenir En Mesure De"/>
         <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
         <mission name="AUTOMATE RENS ROHUM SExfiltrer"/>
-        <mission name="AUTOMATE RENS ROHUM .Renseigner Sur"/>
+        <mission name="AUTOMATE RENS ROHUM Renseigner Sur"/>
         <mission name="AUTOMATE Orienter Refugies"/>
         <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
         <mission name="AUTOMATE COMMUNES Decrocher"/>
@@ -8526,7 +7244,7 @@
         <mission name="AUTOMATE Soutenir Sur Position En Mesure De"/>
         <mission name="AUTOMATE RENS ROHUM SExfiltrer"/>
         <mission name="AUTOMATE RENS Orienter"/>
-        <mission name="AUTOMATE RENS ROHUM .Renseigner Sur"/>
+        <mission name="AUTOMATE RENS ROHUM Renseigner Sur"/>
         <mission name="AUTOMATE Orienter Refugies"/>
         <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
         <mission name="AUTOMATE COMMUNES Decrocher"/>
@@ -8591,4 +7309,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1473397082" -->
+<!-- signature="2532220520" -->
