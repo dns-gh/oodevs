@@ -140,9 +140,9 @@ const DecisionalModel& Decisions::GetDecisionalModel() const
 // -----------------------------------------------------------------------------
 void Decisions::DoUpdate( const sword::UnitAttributes& message )
 {
-    if( message.has_decisonal_model() && message.decisonal_model()!=decisionalModel_->GetName() )
+    if( message.has_decisional_model() && message.decisional_model()!=decisionalModel_->GetName() )
     {
-        decisionalModel_ = &modelResolver_.Get( message.decisonal_model() );
+        decisionalModel_ = &modelResolver_.Get( message.decisional_model() );
     }
 }
 

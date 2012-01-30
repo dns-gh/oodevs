@@ -56,8 +56,8 @@ void AutomatDecisions::DoUpdate( const sword::AutomatAttributes& message )
 {
     if( message.has_mode()  )
         bEmbraye_ = ( message.mode() == sword::engaged );
-    if( message.has_decisonal_model() && message.decisonal_model()!=model_->GetName() )
-        model_ = &modelResolver_.Get( message.decisonal_model() );
+    if( message.has_decisional_model() && message.decisional_model()!=model_->GetName() )
+        model_ = &modelResolver_.Get( message.decisional_model() );
     controller_.Update( *this );
 }
 
