@@ -1047,9 +1047,7 @@ void MIL_AgentPion::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg,
         OnReceiveCriticalIntelligence( msg );
         break;
     case sword::UnitMagicAction::reload_brain:
-        CancelAllActions();
-        GetDecision().Reload();
-        pOrderManager_->CancelMission();
+        OnReloadBrain( msg.parameters() );
         break;
     case sword::UnitMagicAction::create_breakdowns:
         OnReceiveCreateBreakdowns( msg.parameters() );
@@ -1647,3 +1645,23 @@ void MIL_AgentPion::OnReceiveUnloadUnit( const sword::MissionParameters& msg )
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     role->MagicUnloadPion( *target );
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::OnReloadBrain
+// Created: SLI 2011-09-20
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::OnReloadBrain( const sword::MissionParameters& msg )
+{
+    CancelAllActions();
+    if( msg.elem_size() == 1 && msg.elem( 0 ).value_size() == 1 && msg.elem( 0 ).value( 0 ).has_acharstr() )
+    {
+        const std::string model = msg.elem( 0 ).value( 0 ).acharstr();
+        const DEC_Model_ABC* pModel = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelPion( model );
+        if( !pModel )
+            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        GetRole< DEC_RolePion_Decision >().SetModel( *pModel );
+    }
+    GetDecision().Reload();
+    pOrderManager_->CancelMission();
+}
+

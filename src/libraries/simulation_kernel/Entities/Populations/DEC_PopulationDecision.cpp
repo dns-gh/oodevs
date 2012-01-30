@@ -286,6 +286,7 @@ void DEC_PopulationDecision::StopMissionBehavior( const boost::shared_ptr< MIL_M
 void DEC_PopulationDecision::SendFullState( client::CrowdUpdate& msg ) const
 {
     msg().set_domination( static_cast< unsigned int >( rDominationState_ * 100. ) );
+    msg().set_decisional_model( model_->GetName() );
 }
 
 // -----------------------------------------------------------------------------
@@ -383,4 +384,15 @@ void DEC_PopulationDecision::RegisterSelf( directia::brain::Brain& brain, bool i
     brain[ "myself" ] = (DEC_Decision_ABC*)this;
     if( isMasalife )
         brain[ "InitMeCrowd" ](  brain[ "integration.ontology.types.body" ], brain[ "myself" ], groupName );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PopulationDecision::Reload
+// Created: AHC 2012-01-25
+// -----------------------------------------------------------------------------
+void DEC_PopulationDecision::Reload()
+{
+    DEC_Decision< MIL_Population >::Reload();
+    bStateHasChanged_ = true;
 }

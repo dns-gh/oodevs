@@ -420,6 +420,7 @@ void DEC_AutomateDecision::SendFullState( client::AutomatAttributes& msg ) const
     msg().set_meeting_engagement( sword::EnumMeetingEngagementStatus( nCloseCombatState_ ) );
     msg().set_operational_state ( sword::EnumOperationalStatus( nOperationalState_ ) );
     msg().set_roe               ( sword::RulesOfEngagement::Value( nRulesOfEngagementState_ ) );
+    msg().set_decisonal_model   ( model_->GetName() );
 }
 
 // -----------------------------------------------------------------------------
@@ -821,4 +822,14 @@ bool DEC_AutomateDecision::PointIsReconnoiteredByMeOrNoOne( DEC_Decision_ABC* pP
             return false;
     }
     return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateDecision::Reload
+// Created:AHC 2012-01-24
+// -----------------------------------------------------------------------------
+void DEC_AutomateDecision::Reload()
+{
+    DEC_Decision< MIL_Automate >::Reload();
+    bStateHasChanged_ = true;
 }

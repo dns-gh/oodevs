@@ -14,6 +14,7 @@
 #include "MIL_AutomateMission.h"
 #include "MIL_FragOrderType.h"
 #include "MIL_FragOrder.h"
+#include "Entities/Automates/DEC_AutomateDecision.h"
 #include "Decision/DEC_Model_ABC.h"
 #include "Decision/DEC_Representations.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -59,7 +60,7 @@ void MIL_AutomateOrderManager::OnReceiveMission( const sword::AutomatOrder& asnM
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_unit_surrendered );
     // Instanciate and check the new mission
     const MIL_MissionType_ABC* pMissionType = MIL_AutomateMissionType::Find( asnMsg.type().id() );
-    if( !pMissionType || !automate_.GetType().GetModel().IsMissionAvailable( *pMissionType ) )
+    if( !pMissionType || !IsMissionAvailable( *pMissionType ) )
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_mission );
     boost::shared_ptr< MIL_Mission_ABC > pMission ( new MIL_AutomateMission( *pMissionType, automate_, asnMsg ) );
     MIL_OrderManager_ABC::ReplaceMission( pMission );
@@ -122,7 +123,7 @@ void MIL_AutomateOrderManager::StopAllMissions()
 // -----------------------------------------------------------------------------
 bool MIL_AutomateOrderManager::IsMissionAvailable( const MIL_MissionType_ABC& missionType ) const
 {
-    return automate_.GetType().GetModel().IsMissionAvailable( missionType );
+    return automate_.GetRole< DEC_AutomateDecision >().GetModel().IsMissionAvailable( missionType );
 }
 
 // -----------------------------------------------------------------------------

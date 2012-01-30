@@ -14,6 +14,7 @@
 #include "MIL_AutomateType.h"
 #include "DEC_AutomateDecision.h"
 #include "Decision/DEC_Representations.h"
+#include "Decision/DEC_Workspace.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_Formation.h"
 #include "Entities/Actions/PHY_ActionLogistic.h"
@@ -1077,9 +1078,7 @@ void MIL_Automate::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, 
         pExtensions_->OnReceiveMsgChangeExtensions( msg );
         break;
     case sword::UnitMagicAction::reload_brain:
-        CancelAllActions();
-        GetDecision().Reload();
-        pOrderManager_->CancelMission();
+        OnReloadBrain( msg.parameters() );
         break;
     default:
         {
@@ -1468,6 +1467,7 @@ void MIL_Automate::UnregisterAutomate( MIL_Automate& automate )
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate::GetBrainLogistic
 // Created: AHC 2010-09-24
+
 // -----------------------------------------------------------------------------
 MIL_AutomateLOG* MIL_Automate::GetBrainLogistic () const
 {
@@ -1494,4 +1494,23 @@ void MIL_Automate::Serialize( sword::ParentEntity& message ) const
 void MIL_Automate::NotifyQuotaThresholdReached( const PHY_DotationCategory& dotationCategory ) const
 {
     MIL_Report::PostEvent( *this, MIL_Report::eReport_QuotaAlmostConsumed, dotationCategory );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::OnReloadBrain
+// Created: AHC 2012-01-24
+// -----------------------------------------------------------------------------
+void MIL_Automate::OnReloadBrain( const sword::MissionParameters& msg )
+{
+    CancelAllActions();
+    if( msg.elem_size() == 1 && msg.elem( 0 ).value_size() == 1 && msg.elem( 0 ).value( 0 ).has_acharstr() )
+    {
+        const std::string model = msg.elem( 0 ).value( 0 ).acharstr();
+        const DEC_Model_ABC* pModel = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelAutomate( model );
+        if( !pModel )
+            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        GetRole< DEC_AutomateDecision >().SetModel( *pModel );
+    }
+    GetDecision().Reload();
+    pOrderManager_->CancelMission();
 }

@@ -27,10 +27,13 @@ using namespace kernel;
 // Name: Decisions constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-Decisions::Decisions( Controller& controller, const Agent_ABC& agent )
+Decisions::Decisions( Controller& controller, const Agent_ABC& agent,
+        const tools::Resolver_ABC< DecisionalModel, std::string >& modelResolver)
     : controller_( controller )
     , agent_( agent )
+    , modelResolver_( modelResolver )
     , current_( 0 )
+    , decisionalModel_( &( agent.GetType().GetDecisionalModel() ) )
 {
     // NOTHING
 }
@@ -128,5 +131,26 @@ void Decisions::DisplayInTooltip( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 const DecisionalModel& Decisions::GetDecisionalModel() const
 {
-    return agent_.GetType().GetDecisionalModel();
+    return *decisionalModel_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Decisions::DoUpdate
+// Created: AHC 2012-01-11
+// -----------------------------------------------------------------------------
+void Decisions::DoUpdate( const sword::UnitAttributes& message )
+{
+    if( message.has_decisonal_model() && message.decisonal_model()!=decisionalModel_->GetName() )
+    {
+        decisionalModel_ = &modelResolver_.Get( message.decisonal_model() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Decisions::ModelName
+// Created: AHC 2012-01-23
+// -----------------------------------------------------------------------------
+std::string Decisions::ModelName() const
+{
+    return GetDecisionalModel().GetName();
 }

@@ -1032,3 +1032,13 @@ void DEC_Decision< T >::Reload()
     InitBrain( model_->GetScriptFile(), model_->GetDIAType(), model_->GetIncludePath(), GetGroupName(), model_->IsMasalife(), true );
     StartDefaultBehavior();
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::GetModel
+// Created: AHC 2012-01-27
+// -----------------------------------------------------------------------------
+template <class T>
+inline const DEC_Model_ABC& DEC_Decision< T >::GetModel() const
+{
+    return *model_;
+}

@@ -25,6 +25,7 @@ PopulationDecisions::PopulationDecisions( kernel::Controller& controller, const 
     : controller_( controller )
     , popu_      ( popu )
     , current_   ( 0 )
+    , decisionalModel_ ( &popu_.GetType().GetDecisionalModel() )
 {
     // NOTHING
 }
@@ -102,5 +103,23 @@ const kernel::Entity_ABC& PopulationDecisions::GetAgent() const
 // -----------------------------------------------------------------------------
 const kernel::DecisionalModel& PopulationDecisions::GetDecisionalModel() const
 {
-    return popu_.GetType().GetDecisionalModel();
+    return *decisionalModel_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationDecisions::ModelName
+// Created: AHC 2012-01-23
+// -----------------------------------------------------------------------------
+std::string PopulationDecisions::ModelName() const
+{
+    return GetDecisionalModel().GetName();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationDecisions::DoUpdate
+// Created: AHC 2012-01-23
+// -----------------------------------------------------------------------------
+void PopulationDecisions::DoUpdate( const sword::CrowdUpdate& message )
+{
+
 }

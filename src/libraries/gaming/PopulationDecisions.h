@@ -24,6 +24,7 @@ namespace kernel
 namespace sword
 {
     class CrowdOrder;
+    class CrowdUpdate;
 }
 
 // =============================================================================
@@ -34,6 +35,7 @@ namespace sword
 // =============================================================================
 class PopulationDecisions : public kernel::Extension_ABC
                           , public kernel::Updatable_ABC< sword::CrowdOrder >
+                          , public kernel::Updatable_ABC< sword::CrowdUpdate >
                           , public Decisions_ABC
 {
 public:
@@ -50,6 +52,7 @@ public:
     virtual tools::Iterator< const kernel::FragOrder& > GetFragOrders() const;
     virtual const kernel::Mission* GetCurrentMission() const;
     virtual const kernel::Entity_ABC& GetAgent() const;
+    std::string ModelName() const;
     //@}
 
 private:
@@ -62,6 +65,7 @@ private:
     //! @name Helpers
     //@{
     virtual void DoUpdate( const sword::CrowdOrder& message );
+    virtual void DoUpdate( const sword::CrowdUpdate& message );
     const kernel::DecisionalModel& GetDecisionalModel() const;
     //@}
 
@@ -71,6 +75,7 @@ private:
     kernel::Controller& controller_;
     const kernel::Population_ABC& popu_;
     const kernel::Mission* current_;
+    const kernel::DecisionalModel* decisionalModel_;
     //@}
 };
 

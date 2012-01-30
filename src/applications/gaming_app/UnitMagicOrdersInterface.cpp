@@ -14,6 +14,7 @@
 #include "actions/ActionTiming.h"
 #include "actions/Army.h"
 #include "actions/Point.h"
+#include "actions/String.h"
 #include "actions/UnitMagicAction.h"
 #include "clients_gui/LocationCreator.h"
 #include "clients_kernel/Controllers.h"
@@ -21,6 +22,7 @@
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Location_ABC.h"
+#include "clients_kernel/DecisionalModel.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Profile_ABC.h"
@@ -28,10 +30,13 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/AgentType.h"
+#include "clients_kernel/AutomatType.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/Point.h"
 #include "gaming/StaticModel.h"
 #include "gaming/MagicOrders.h"
+#include "gaming/Decisions.h"
 #include "gaming/AutomatDecisions.h"
 #include "gaming/Attributes.h"
 #include "protocol/SimulationSenders.h"
@@ -40,10 +45,12 @@
 #include <google/protobuf/descriptor.h>
 #pragma warning( pop )
 #include <boost/foreach.hpp>
+#include <boost/algorithm/string.hpp>
 
 using namespace kernel;
 using namespace gui;
 using namespace actions;
+
 
 // -----------------------------------------------------------------------------
 // Name: UnitMagicOrdersInterface constructor
@@ -89,10 +96,12 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Agent_ABC& agent
         int moveId = AddMagic( tr( "Teleport" ), SLOT( Move() ), magicMenu );
         magicMenu->setItemEnabled( moveId, orders->CanMagicMove() );
         AddSurrenderMenu( magicMenu, agent );
+        AddReloadBrainMenu( magicMenu, static_.types_.unitModels_, 
+        agent.Retrieve<Decisions>() ? agent.Retrieve<Decisions>()->ModelName() : "unknown",
+        agent.GetType().GetDecisionalModel().GetName() );
         if( orders->CanRetrieveTransporters() )
             AddMagic( tr( "Recover - Transporters" ), SLOT( RecoverHumanTransporters() ), magicMenu );
         AddMagic( tr( "Destroy - Component" ),  SLOT( DestroyComponent() ),  magicMenu );;
-        AddMagic( tr( "Reload brain" ), SLOT( ReloadBrain() ), magicMenu );
         FillCommonOrders( magicMenu );
     }
 }
@@ -113,7 +122,9 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Automat_ABC& age
     if( const AutomatDecisions* decisions = agent.Retrieve< AutomatDecisions >() )
         bMoveAllowed = decisions->CanBeOrdered();
     magicMenu->setItemEnabled( moveId, bMoveAllowed );
-    AddMagic( tr( "Reload brain" ), SLOT( ReloadBrain() ), magicMenu );
+    AddReloadBrainMenu( magicMenu, static_.types_.automatModels_,
+        agent.Retrieve<AutomatDecisions>() ? agent.Retrieve<AutomatDecisions>()->ModelName() : "unknown",
+        agent.GetType().GetDecisionalModel().GetName() );
     AddSurrenderMenu( magicMenu, agent );
     FillCommonOrders( magicMenu );
 }
@@ -331,12 +342,15 @@ void UnitMagicOrdersInterface::SurrenderTo( int teamPtr )
 // Name: UnitMagicOrdersInterface::ReloadBrain
 // Created: LDC 2011-08-18
 // -----------------------------------------------------------------------------
-void UnitMagicOrdersInterface::ReloadBrain()
+void UnitMagicOrdersInterface::ReloadBrain( QAction* action )
 {
     if( selectedEntity_ )
     {
+        std::string modelName = action->text();
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "reload_brain" );
         UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Reload brain" ), true );
+        tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+        action->AddParameter( *new parameters::String( it.NextElement(), modelName ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( selectedEntity_, false ) );
         action->RegisterAndPublish( actionsModel_ );
@@ -459,4 +473,40 @@ void UnitMagicOrdersInterface::NotifyDeleted( const kernel::Team_ABC& team )
         std::swap( *it, teams_.back() );
         teams_.pop_back();
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitMagicOrdersInterface::AddReloadBrainMenu
+// Created: AHC 2012-01-13
+// -----------------------------------------------------------------------------
+void UnitMagicOrdersInterface::AddReloadBrainMenu( QMenu* parent, const tools::StringResolver< DecisionalModel >& models, 
+    const std::string& currentModel, const std::string& defaultModel)
+{
+    QMenu* menu = new QMenu( tr( "Reload brain" ), parent );
+    tools::Iterator< const kernel::DecisionalModel& > it( models.CreateIterator() );
+    menu->addAction( currentModel.c_str() ) ;
+    if( defaultModel != currentModel )
+        menu->addAction( defaultModel.c_str() ) ;
+    std::map<char, QMenu*> subMenus;
+    while( it.HasMoreElements() )
+    {
+        const kernel::DecisionalModel& value = it.NextElement();
+        const std::string& name(value.GetName());
+        std::string nameCpy(name);
+        boost::to_lower( nameCpy );
+        char key = nameCpy[0];
+        std::map<char, QMenu*>::iterator subIt = subMenus.find(key);
+        QMenu* sub = 0;
+        if( subMenus.end() == subIt )
+        {
+            sub = new QMenu( QChar(key), menu);
+            menu->addMenu( sub );
+            subMenus[key]=sub;
+        }
+        else
+            sub = subIt->second;
+        sub->addAction( name.c_str() );
+    }
+    connect(menu, SIGNAL( triggered(QAction*) ), this, SLOT( ReloadBrain(QAction*) ) );
+    parent->addMenu( menu );
 }

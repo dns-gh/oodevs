@@ -27,7 +27,7 @@ using namespace dispatcher;
 // Name: Population constructor
 // Created: NLD 2006-10-02
 // -----------------------------------------------------------------------------
-Population::Population( Model_ABC& model, const sword::CrowdCreation& msg )
+Population::Population( Model_ABC& model, const sword::CrowdCreation& msg, const std::string& decisionalModel )
     : dispatcher::Population_ABC( msg.crowd().id(), QString( msg.name().c_str() ) )
     , model_           ( model )
     , nType_           ( msg.type().id() )
@@ -40,6 +40,7 @@ Population::Population( Model_ABC& model, const sword::CrowdCreation& msg )
     , order_           ( 0 )
     , decisionalInfos_ ( model )
     , armedIndividuals_( 0 )
+    , decisionalModel_ ( decisionalModel )
 {
     side_.Register( *this );
     RegisterSelf( *this );
@@ -84,6 +85,8 @@ void Population::DoUpdate( const sword::CrowdUpdate& msg )
     if( msg.has_extension() )
         for( int i = 0; i < msg.extension().entries_size(); ++i )
             extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
+    if( msg.has_decisional_model() )
+        decisionalModel_ = msg.decisional_model();
 }
 
 // -----------------------------------------------------------------------------
@@ -222,6 +225,7 @@ void Population::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     asn().set_wounded( GetWoundedHumans() );
     asn().set_contaminated( GetContaminatedHumans() );
     asn().set_dead( GetDeadHumans() );
+    asn().set_decisional_model( decisionalModel_ );
 
     for( std::map< std::string, std::string >::const_iterator it = extensions_.begin(); it !=  extensions_.end(); ++it )
     {

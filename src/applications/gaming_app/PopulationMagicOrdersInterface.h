@@ -13,6 +13,7 @@
 #include "clients_kernel/ContextMenuObserver_ABC.h"
 #include "clients_kernel/SafePointer.h"
 #include "clients_gui/ShapeHandler_ABC.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -21,6 +22,7 @@ namespace kernel
     class Population_ABC;
     class Profile_ABC;
     class Time_ABC;
+    class DecisionalModel;
 }
 
 namespace actions
@@ -69,7 +71,7 @@ private slots:
     void KillAllPopulation();
     void ChangeArmedIndividuals();
     void ChangePopulationAttitude( int index );
-    void ReloadBrain();
+    void ReloadBrain(QAction*);
     //@}
 
 private:
@@ -83,6 +85,8 @@ private:
     //@{
     int AddMagic( const QString& label, const char* slot, kernel::ContextMenu* menu );
     void AddValuedMagic( kernel::ContextMenu* parent, kernel::ContextMenu& menu, const QString& label, const char* slot );
+    void AddReloadBrainMenu( QMenu* parent, const tools::StringResolver< kernel::DecisionalModel >& models,
+        const std::string& currentModel, const std::string& defaultModel);
     //@}
 
 private:

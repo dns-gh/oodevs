@@ -41,7 +41,8 @@ class AutomatDecisions : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AutomatDecisions( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::Automat_ABC& agent );
+             AutomatDecisions( kernel::Controller& controller, Publisher_ABC& publisher, const kernel::Automat_ABC& agent,
+                               const tools::Resolver_ABC< kernel::DecisionalModel, std::string >& modelResolver);
     virtual ~AutomatDecisions();
     //@}
 
@@ -56,6 +57,8 @@ public:
     virtual const kernel::Entity_ABC& GetAgent() const;
 
     bool IsEmbraye() const; // $$$$ AGE 2006-03-14:
+
+    std::string ModelName() const;
 
     void Engage() const;
     void Disengage() const;
@@ -73,6 +76,7 @@ private:
     virtual void DoUpdate( const sword::AutomatAttributes& message );
     virtual void DoUpdate( const sword::AutomatOrder& message );
     bool HasEngagedSuperior() const;
+    const kernel::DecisionalModel& GetDecisionalModel() const;
     //@}
 
 private:
@@ -81,7 +85,8 @@ private:
     kernel::Controller& controller_;
     Publisher_ABC& publisher_;
     const kernel::Automat_ABC& agent_;
-    const kernel::DecisionalModel& model_;
+    const tools::Resolver_ABC< kernel::DecisionalModel, std::string >& modelResolver_;
+    const kernel::DecisionalModel* model_;
     bool bEmbraye_;
     const kernel::Mission* current_;
     //@}

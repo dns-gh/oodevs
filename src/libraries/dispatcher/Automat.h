@@ -59,7 +59,7 @@ class Automat : public Automat_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Automat( Model_ABC& model, const sword::AutomatCreation& msg );
+             Automat( Model_ABC& model, const sword::AutomatCreation& msg, const std::string& decisionalModel );
     virtual ~Automat();
     //@}
 
@@ -143,6 +143,7 @@ private:
     std::map< std::string, std::string > extensions_;
     std::string app6symbol_;
     std::string symbol_;
+    std::string decisionalModel_;
     //@}
 };
 

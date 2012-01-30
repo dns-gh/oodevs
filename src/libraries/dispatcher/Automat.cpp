@@ -29,7 +29,7 @@ using namespace dispatcher;
 // Name: Automat constructor
 // Created: NLD 2006-09-25
 // -----------------------------------------------------------------------------
-Automat::Automat( Model_ABC& model, const sword::AutomatCreation& msg )
+Automat::Automat( Model_ABC& model, const sword::AutomatCreation& msg, const std::string& decisionalModel )
     : Automat_ABC       ( msg.automat().id(), QString( msg.name().c_str() ) )
     , model_            ( model )
     , decisionalInfos_  ( model )
@@ -47,6 +47,7 @@ Automat::Automat( Model_ABC& model, const sword::AutomatCreation& msg )
     , nRoe_             ( sword::RulesOfEngagement::fire_upon_order )
     , order_            ( 0 )
     , app6symbol_       ( msg.app6symbol() )
+    , decisionalModel_  ( decisionalModel )
 {
     if( ! parentFormation_ && ! parentAutomat_ )
         throw std::runtime_error( __FUNCTION__ ": invalid parent for automat " + msg.name() );
@@ -242,6 +243,10 @@ void Automat::DoUpdate( const sword::AutomatAttributes& msg )
     if( msg.has_extension() )
         for( int i = 0; i < msg.extension().entries_size(); ++i )
             extensions_[ msg.extension().entries( i ).name() ] = msg.extension().entries( i ).value();
+    if( msg.has_decisonal_model() )
+    {
+        decisionalModel_ = msg.decisonal_model();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -312,6 +317,7 @@ void Automat::SendFullUpdate( ClientPublisher_ABC& publisher ) const
             entry->set_name( it->first );
             entry->set_value( it->second );
         }
+        asn().set_decisonal_model( decisionalModel_ );
         asn.Send( publisher );
     }
     if( order_.get() )

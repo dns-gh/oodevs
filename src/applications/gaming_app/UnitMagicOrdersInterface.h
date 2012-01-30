@@ -15,6 +15,7 @@
 #include "clients_gui/ShapeHandler_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "tools/ElementObserver_ABC.h"
+#include "tools/Resolver.h"
 
 namespace kernel
 {
@@ -26,6 +27,7 @@ namespace kernel
     class Profile_ABC;
     class Team_ABC;
     class Time_ABC;
+    class DecisionalModel;
 }
 
 namespace actions
@@ -82,7 +84,7 @@ private slots:
     void Move();
     void RecoverHumanTransporters();
     void SurrenderTo( int );
-    void ReloadBrain();
+    void ReloadBrain( QAction* );
     //@}
 
 private:
@@ -101,6 +103,8 @@ private:
     void CreateAndPublish( const std::string& actionType, const QString& name );
 
     void AddSurrenderMenu( kernel::ContextMenu* parent, const kernel::Entity_ABC& entity );
+    void AddReloadBrainMenu( QMenu* parent, const tools::StringResolver< kernel::DecisionalModel >& models,
+        const std::string& currentModel, const std::string& defaultModel);
     virtual void NotifyCreated( const kernel::Team_ABC& team );
     virtual void NotifyDeleted( const kernel::Team_ABC& team );
     //@}

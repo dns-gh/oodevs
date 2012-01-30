@@ -26,11 +26,13 @@ using namespace kernel;
 // Name: AutomatDecisions constructor
 // Created: AGE 2006-03-14
 // -----------------------------------------------------------------------------
-AutomatDecisions::AutomatDecisions( Controller& controller, Publisher_ABC& publisher, const Automat_ABC& agent )
+AutomatDecisions::AutomatDecisions( Controller& controller, Publisher_ABC& publisher, const Automat_ABC& agent,
+            const tools::Resolver_ABC< kernel::DecisionalModel, std::string >& modelResolver)
     : controller_( controller )
     , publisher_ ( publisher )
     , agent_     ( agent )
-    , model_     ( agent.GetType().GetDecisionalModel() )
+    , modelResolver_ ( modelResolver )
+    , model_     ( &agent.GetType().GetDecisionalModel() )
     , bEmbraye_  ( false )
     , current_   ( 0 )
 {
@@ -54,6 +56,8 @@ void AutomatDecisions::DoUpdate( const sword::AutomatAttributes& message )
 {
     if( message.has_mode()  )
         bEmbraye_ = ( message.mode() == sword::engaged );
+    if( message.has_decisonal_model() && message.decisonal_model()!=model_->GetName() )
+        model_ = &modelResolver_.Get( message.decisonal_model() );
     controller_.Update( *this );
 }
 
@@ -63,7 +67,7 @@ void AutomatDecisions::DoUpdate( const sword::AutomatAttributes& message )
 // -----------------------------------------------------------------------------
 void AutomatDecisions::DoUpdate( const sword::AutomatOrder& message )
 {
-    const tools::Resolver_ABC< Mission >& resolver = model_;
+    const tools::Resolver_ABC< Mission >& resolver = GetDecisionalModel();
     current_ = resolver.Find( message.type().id() );
     controller_.Update( *this );
 }
@@ -94,7 +98,7 @@ bool AutomatDecisions::HasEngagedSuperior() const
 // -----------------------------------------------------------------------------
 tools::Iterator< const Mission& > AutomatDecisions::GetMissions() const
 {
-    const tools::Resolver_ABC< Mission >& resolver = model_;
+    const tools::Resolver_ABC< Mission >& resolver = GetDecisionalModel();
     return resolver.CreateIterator();
 }
 
@@ -104,7 +108,7 @@ tools::Iterator< const Mission& > AutomatDecisions::GetMissions() const
 // -----------------------------------------------------------------------------
 tools::Iterator< const FragOrder& > AutomatDecisions::GetFragOrders() const
 {
-    const tools::Resolver_ABC< FragOrder >& resolver = model_;
+    const tools::Resolver_ABC< FragOrder >& resolver = GetDecisionalModel();
     return resolver.CreateIterator();
 }
 
@@ -166,4 +170,22 @@ void AutomatDecisions::Disengage() const
 void AutomatDecisions::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
     displayer.Display( tools::translate( "Decisions", "Automat mission:" ), current_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatDecisions::GetDecisionalModel
+// Created: AHC 2012-01-17
+// -----------------------------------------------------------------------------
+const DecisionalModel& AutomatDecisions::GetDecisionalModel() const
+{
+    return *model_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatDecisions::ModelName
+// Created: AHC 2012-01-23
+// -----------------------------------------------------------------------------
+std::string AutomatDecisions::ModelName() const
+{
+    return GetDecisionalModel().GetName();
 }

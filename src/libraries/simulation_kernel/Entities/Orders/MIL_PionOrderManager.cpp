@@ -18,6 +18,7 @@
 #include "Decision/DEC_Representations.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
+#include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
@@ -152,7 +153,7 @@ MIL_LimaOrder* MIL_PionOrderManager::FindNextScheduledLima() const
 // -----------------------------------------------------------------------------
 bool MIL_PionOrderManager::IsMissionAvailable( const MIL_MissionType_ABC& missionType ) const
 {
-    return pion_.GetType().GetModel().IsMissionAvailable( missionType );
+    return pion_.GetRole< DEC_RolePion_Decision >().GetModel().IsMissionAvailable( missionType );
 }
 
 // -----------------------------------------------------------------------------

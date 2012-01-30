@@ -192,6 +192,7 @@ private:
     void OnReceiveCreateDirectFireOrder( const sword::MissionParameters& msg );
     void OnReceiveLoadUnit( const sword::MissionParameters& msg );
     void OnReceiveUnloadUnit( const sword::MissionParameters& msg );
+    void OnReloadBrain( const sword::MissionParameters& msg );
     //@}
 
     //! @name Serialization

@@ -196,6 +196,7 @@ private:
     int                                        transportedCrowd_;
     std::auto_ptr< Satisfaction >              statisfaction_;
     std::auto_ptr< HumanRepartition >          humanRepartition_;
+    std::string                                decisionalModel_;
 };
 
 }

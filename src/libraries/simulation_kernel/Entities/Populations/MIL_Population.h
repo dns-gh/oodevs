@@ -21,6 +21,7 @@ namespace sword
     class CrowdOrder;
     class FragOrder;
     class UnitMagicAction;
+    class MissionParameters;
 }
 
 namespace xml
@@ -204,6 +205,7 @@ private:
     void OnReceiveMsgChangeHealthState( const sword::UnitMagicAction& asn );
     void OnReceiveMsgChangeArmedIndividuals( const sword::UnitMagicAction& asn );
     void OnReceiveMsgChangeAttitude( const sword::UnitMagicAction& asn );
+    void OnReloadBrain( const sword::MissionParameters& msg );
     //@}
 
     //! @name Helpers

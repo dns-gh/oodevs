@@ -123,7 +123,7 @@ kernel::Automat_ABC* AgentFactory::Create( const sword::AutomatCreation& message
     result->Attach< kernel::TacticalHierarchies >( *new AutomatTacticalHierarchies( controllers_.controller_, *result, *superior, model_.agents_, model_.teams_ ) );
     result->Attach< Lives_ABC >( *new AutomatLives( *result ) );
     result->Attach( *new LogisticLinks( controllers_.controller_, model_.agents_, model_.teams_, static_.objectTypes_, result->GetLogisticLevel(), dico, *result ) );
-    result->Attach( *new AutomatDecisions( controllers_.controller_, publisher_, *result ) );
+    result->Attach( *new AutomatDecisions( controllers_.controller_, publisher_, *result, static_.types_.automatModels_ ) );
     result->Attach< kernel::Positions >( *new AggregatedPositions( *result, 2.f ) );
     result->Attach( *new Logistics( *result, controllers_.controller_, model_, static_, dico ) );
     result->Attach( *new LogMaintenanceConsigns( controllers_.controller_ ) );
@@ -160,7 +160,7 @@ kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
     result->Attach< Lives_ABC >( *new Lives( controllers_.controller_ ) );
     result->Attach< kernel::Attributes_ABC >( *new Attributes( *result, controllers_.controller_, static_.coordinateConverter_, dico, model_.teams_ ) );
     result->Attach( *new CommandPostAttributes( *result, message, static_.types_ ) );
-    result->Attach( *new Decisions( controllers_.controller_, *result ) );
+    result->Attach( *new Decisions( controllers_.controller_, *result, static_.types_.unitModels_ ) );
     result->Attach< kernel::Positions >( *new AgentPositions( controllers_.controller_, *result, static_.coordinateConverter_ ) );
     result->Attach( *new VisionCones( *result, model_.surfaceFactory_, workers_ ) );
     result->Attach( *new AgentDetections( controllers_.controller_, model_.agents_, *result ) );

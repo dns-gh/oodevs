@@ -243,6 +243,7 @@ void DEC_RolePion_Decision::SendFullState( client::UnitAttributes& msg ) const
     msg().set_indirect_fire_availability( sword::UnitAttributes::FireAvailability( nIndirectFireAvailability_ ) );
     msg().set_roe                       ( sword::RulesOfEngagement::Value( nRulesOfEngagementState_ ) );
     msg().set_roe_crowd                 ( pRoePopulation_->GetAsnID() );
+    msg().set_decisonal_model           ( model_->GetName() );
 }
 
 // -----------------------------------------------------------------------------
@@ -1116,4 +1117,14 @@ const std::string& DEC_RolePion_Decision::GetDIAType() const
 std::vector< DEC_Decision_ABC* > DEC_RolePion_Decision::GetPionsWithPC()
 {
     return DEC_AgentFunctions::GetPionsWithPC( GetPion() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_RolePion_Decision::Reload
+// Created:AHC 2012-01-12
+// -----------------------------------------------------------------------------
+void DEC_RolePion_Decision::Reload()
+{
+    DEC_Decision< MIL_AgentPion >::Reload();
+    NotifyHasChanged();
 }

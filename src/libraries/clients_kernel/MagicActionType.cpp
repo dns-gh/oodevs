@@ -312,4 +312,8 @@ void MagicActionType::Initialize()
         CreateOrderParameter( "Wounds", "list" );
     else if( name == "create_breakdowns")
         CreateOrderParameter( "Breakdowns", "list" );
+    else if( name == "reload_brain" )
+    {
+        CreateOrderParameter( "Model", "string" );
+    }
 }

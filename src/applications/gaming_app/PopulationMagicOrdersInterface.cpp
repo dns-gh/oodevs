@@ -15,16 +15,21 @@
 #include "actions/Enumeration.h"
 #include "actions/Point.h"
 #include "actions/Quantity.h"
+#include "actions/String.h"
 #include "actions/UnitMagicAction.h"
 #include "clients_gui/LocationCreator.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/DecisionalModel.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/MagicActionType.h"
+#include "clients_kernel/PopulationType.h"
 #include "gaming/StaticModel.h"
+#include "gaming/PopulationDecisions.h"
 #include "protocol/SimulationSenders.h"
+#include <boost/algorithm/string.hpp>
 
 using namespace kernel;
 using namespace gui;
@@ -106,6 +111,9 @@ void PopulationMagicOrdersInterface::NotifyContextMenu( const Population_ABC& en
     selectedEntity_ = &entity;
     kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ), false, 1 );
     AddMagic( tr( "Teleport" ), SLOT( Move() ), magicMenu );
+    AddReloadBrainMenu(magicMenu, static_.types_.populationModels_, 
+            entity.Retrieve<PopulationDecisions>() ? entity.Retrieve<PopulationDecisions>()->ModelName() : "unknown",
+            entity.GetType().GetDecisionalModel().GetName() );
     AddMagic( tr( "Reload brain" ), SLOT( ReloadBrain() ), magicMenu );
     AddMagic( tr( "Kill all" ), SLOT( KillAllPopulation() ), magicMenu );
     AddValuedMagic( magicMenu, menu, tr( "Change armed individuals:" ), SLOT( ChangeArmedIndividuals() ) );
@@ -172,12 +180,15 @@ void PopulationMagicOrdersInterface::KillAllPopulation()
 // Name: PopulationMagicOrdersInterface::ReloadBrain
 // Created: LDC 2011-08-18
 // -----------------------------------------------------------------------------
-void PopulationMagicOrdersInterface::ReloadBrain()
+void PopulationMagicOrdersInterface::ReloadBrain(QAction* action)
 {
     if( selectedEntity_ )
     {
+        std::string modelName = action->text();
         MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "reload_brain" );
         UnitMagicAction* action = new UnitMagicAction( *selectedEntity_, actionType, controllers_.controller_, tr( "Reload brain" ), true );
+        tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
+        action->AddParameter( *new parameters::String( it.NextElement(), modelName ) );
         action->Attach( *new ActionTiming( controllers_.controller_, simulation_ ) );
         action->Attach( *new ActionTasker( selectedEntity_, false ) );
         action->RegisterAndPublish( actionsModel_ );
@@ -245,4 +256,40 @@ void PopulationMagicOrdersInterface::AddValuedMagic( kernel::ContextMenu* parent
     QToolTip::add( valueEditor, tr( "Type-in value then press 'Enter'" ) );
     connect( valueEditor, SIGNAL( returnPressed() ), this, slot );
     connect( valueEditor, SIGNAL( returnPressed() ), menu, SLOT( hide() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationMagicOrdersInterface::AddReloadBrainMenu
+// Created: AHC 2012-01-24
+// -----------------------------------------------------------------------------
+void PopulationMagicOrdersInterface::AddReloadBrainMenu( QMenu* parent, const tools::StringResolver< DecisionalModel >& models,
+    const std::string& currentModel, const std::string& defaultModel)
+{
+    QMenu* menu = new QMenu( tr( "Reload brain" ), parent );
+    tools::Iterator< const kernel::DecisionalModel& > it( models.CreateIterator() );
+    menu->addAction( currentModel.c_str() ) ;
+    if( defaultModel != currentModel )
+        menu->addAction( defaultModel.c_str() ) ;
+    std::map<char, QMenu*> subMenus;
+    while( it.HasMoreElements() )
+    {
+        const kernel::DecisionalModel& value = it.NextElement();
+        const std::string& name(value.GetName());
+        std::string nameCpy(name);
+        boost::to_lower( nameCpy );
+        char key = nameCpy[0];
+        std::map<char, QMenu*>::iterator subIt = subMenus.find(key);
+        QMenu* sub = 0;
+        if( subMenus.end() == subIt )
+        {
+            sub = new QMenu( QChar(key), menu);
+            menu->addMenu( sub );
+            subMenus[key]=sub;
+        }
+        else
+            sub = subIt->second;
+        sub->addAction( name.c_str() );
+    }
+    connect(menu, SIGNAL( triggered(QAction*) ), this, SLOT( ReloadBrain(QAction*) ) );
+    parent->addMenu( menu );
 }

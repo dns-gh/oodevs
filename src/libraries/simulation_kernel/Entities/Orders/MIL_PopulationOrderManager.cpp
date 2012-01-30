@@ -75,5 +75,5 @@ void MIL_PopulationOrderManager::OnReceiveFragOrder( const sword::FragOrder& asn
 // -----------------------------------------------------------------------------
 bool MIL_PopulationOrderManager::IsMissionAvailable( const MIL_MissionType_ABC& missionType ) const
 {
-    return population_.GetType().GetModel().IsMissionAvailable( missionType );
+    return population_.GetRole< DEC_PopulationDecision >().GetModel().IsMissionAvailable( missionType );
 }

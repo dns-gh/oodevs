@@ -71,7 +71,7 @@ BOOST_AUTO_TEST_CASE( Automat_CanBeUnderAFormation )
         // creation
         MOCK_EXPECT( formation, RegisterAutomat ).once();
         MOCK_EXPECT( knowledgeGroup, RegisterAutomat ).once();
-        dispatcher::Automat result( model, message );
+        dispatcher::Automat result( model, message, "brain" );
 
         // network serialization
         MockClientPublisher publisher;
@@ -137,7 +137,7 @@ BOOST_AUTO_TEST_CASE( Automat_CanBeUnderAnAutomat )
         // creation
         MOCK_EXPECT( automat, RegisterAutomat ).once();
         MOCK_EXPECT( knowledgeGroup, RegisterAutomat ).once();
-        dispatcher::Automat result( model, message );
+        dispatcher::Automat result( model, message, "brain" );
 
         // network serialization
         MockClientPublisher publisher;
@@ -203,7 +203,7 @@ BOOST_AUTO_TEST_CASE( Automat_SuperiorCanBeChanged )
 
             MOCK_EXPECT( automat, RegisterAutomat ).once();
             MOCK_EXPECT( knowledgeGroup, RegisterAutomat ).once();
-            result.reset( new dispatcher::Automat( model, message ) );
+            result.reset( new dispatcher::Automat( model, message, "brain" ) );
             automats.Register( result->GetId(), *result );
         }
         {
@@ -281,7 +281,7 @@ BOOST_AUTO_TEST_CASE( Automat_KnowledgeGroupCanBeChanged )
 
             MOCK_EXPECT( automat, RegisterAutomat ).once();
             MOCK_EXPECT( knowledgeGroup1, RegisterAutomat ).once();
-            result.reset( new dispatcher::Automat( model, message ) );
+            result.reset( new dispatcher::Automat( model, message, "brain" ) );
             automats.Register( result->GetId(), *result );
         }
         {
@@ -357,7 +357,7 @@ BOOST_AUTO_TEST_CASE( Automat_DecisionalStateCanBeChanged )
 
             MOCK_EXPECT( automat, RegisterAutomat ).once();
             MOCK_EXPECT( knowledgeGroup, RegisterAutomat ).once();
-            result.reset( new dispatcher::Automat( model, message ) );
+            result.reset( new dispatcher::Automat( model, message, "brain" ) );
             automats.Register( result->GetId(), *result );
         }
         {
@@ -438,7 +438,7 @@ BOOST_AUTO_TEST_CASE( Automat_AttributesCanBeChanged )
 
             MOCK_EXPECT( automat, RegisterAutomat ).once();
             MOCK_EXPECT( knowledgeGroup, RegisterAutomat ).once();
-            result.reset( new dispatcher::Automat( model, message ) );
+            result.reset( new dispatcher::Automat( model, message, "brain" ) );
             automats.Register( result->GetId(), *result );
         }
         {
@@ -536,7 +536,7 @@ BOOST_AUTO_TEST_CASE( Automat_LogLinksAndSupplyQuotasCanBeChanged )
 
             MOCK_EXPECT( automat, RegisterAutomat ).once();
             MOCK_EXPECT( knowledgeGroup, RegisterAutomat ).once();
-            result.reset( new dispatcher::Automat( model, message ) );
+            result.reset( new dispatcher::Automat( model, message, "brain" ) );
             automats.Register( result->GetId(), *result );
         }
         {

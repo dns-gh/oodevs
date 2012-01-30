@@ -46,6 +46,9 @@
 #include "clients_kernel/FormationLevels.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/StaticModel.h"
+#include "clients_kernel/AutomatType.h"
+#include "clients_kernel/PopulationType.h"
+#include "clients_kernel/DecisionalModel.h"
 #include "MT_Tools/MT_Logger.h"
 #include <boost/bind.hpp>
 #include <boost/filesystem.hpp>
@@ -285,7 +288,8 @@ void Model::Update( const sword::SimToClient& wrapper )
     else if( message.has_unit_destruction() )
         Destroy( agents_, message.unit_destruction().unit().id(), message.unit_destruction() );
     else if( message.has_automat_creation() )
-        CreateUpdate< Automat >( automats_, message.automat_creation().automat().id(), message.automat_creation() );
+        CreateUpdate< Automat >( automats_, message.automat_creation().automat().id(), message.automat_creation(),
+                static_cast<const tools::Resolver< kernel::AutomatType >& >(staticModel_.types_).Get( message.automat_creation().type().id() ).GetDecisionalModel().GetName() );
     else if( message.has_automat_destruction() )
         Destroy( automats_, message.automat_destruction().automat().id(), message.automat_destruction() );
     else if( message.has_unit_attributes() )
@@ -396,7 +400,8 @@ void Model::Update( const sword::SimToClient& wrapper )
         inhabitants_.Get( message.population_update().id().id() ).Update( message.population_update() );
 
     else if( message.has_crowd_creation() )
-        CreateUpdate< Population >( populations_, message.crowd_creation().crowd().id(), message.crowd_creation() );
+        CreateUpdate< Population >( populations_, message.crowd_creation().crowd().id(), message.crowd_creation(),
+                static_cast<const tools::Resolver< kernel::PopulationType >& >(staticModel_.types_).Get( message.crowd_creation().type().id() ).GetDecisionalModel().GetName());
     else if( message.has_crowd_destruction() )
         Destroy( populations_, message.crowd_destruction().crowd().id(), message.crowd_destruction() );
     else if( message.has_crowd_update() )

@@ -24,6 +24,7 @@
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/DecisionalModel.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 #include "clients_kernel/StaticModel.h"
 #include "protocol/ClientSenders.h"
@@ -88,6 +89,7 @@ Agent::Agent( Model_ABC& model, const sword::UnitCreation& msg, const tools::Res
     , transportedCrowd_           ( -1 )
     , statisfaction_              ( 0 )
     , humanRepartition_           ( 0 )
+    , decisionalModel_            ( type_.GetDecisionalModel().GetName() )
 {
     if( msg.has_repartition() )
         humanRepartition_.reset( new HumanRepartition( msg.repartition().male(), msg.repartition().female(), msg.repartition().children() ) );
@@ -311,6 +313,11 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
         statisfaction_.reset( pSatisfaction );
     }
 
+    if( message.has_decisonal_model() )
+    {
+        decisionalModel_ = message.decisonal_model();
+    }
+
     Observable< sword::UnitAttributes >::Notify( message );
 }
 
@@ -529,6 +536,7 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
             asn().mutable_satisfaction()->set_safety ( statisfaction_->safety_ );
             asn().mutable_satisfaction()->set_access_to_health_care ( statisfaction_->health_ );
         }
+        asn().set_decisonal_model( decisionalModel_ );
 
         asn.Send( publisher );
     }

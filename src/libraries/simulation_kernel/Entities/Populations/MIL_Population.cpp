@@ -16,6 +16,7 @@
 #include "DEC_PopulationDecision.h"
 #include "DEC_PopulationKnowledge.h"
 #include "Decision/DEC_Representations.h"
+#include "Decision/DEC_Workspace.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -1096,9 +1097,7 @@ void MIL_Population::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg
         OnReceiveCriticalIntelligence( msg );
         break;
     case sword::UnitMagicAction::reload_brain:
-        CancelAllActions();
-        GetDecision().Reload();
-        orderManager_.CancelMission();
+        OnReloadBrain( msg.parameters() );
         break;
     default:
         assert( false );
@@ -1669,4 +1668,23 @@ void MIL_Population::OnReceiveCriticalIntelligence( const sword::UnitMagicAction
         throw NET_AsnException< sword::UnitActionAck::ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     criticalIntelligence_ = msg.parameters().elem( 0 ).value( 0 ).acharstr();
     criticalIntelligenceChanged_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::OnReloadBrain
+// Created: AHC 2010-01-25
+// -----------------------------------------------------------------------------
+void MIL_Population::OnReloadBrain( const sword::MissionParameters& msg )
+{
+    CancelAllActions();
+    if( msg.elem_size() == 1 && msg.elem( 0 ).value_size() == 1 && msg.elem( 0 ).value( 0 ).has_acharstr() )
+    {
+        const std::string model = msg.elem( 0 ).value( 0 ).acharstr();
+        const DEC_Model_ABC* pModel = MIL_AgentServer::GetWorkspace().GetWorkspaceDIA().FindModelPopulation( model );
+        if( !pModel )
+            throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+        GetRole< DEC_PopulationDecision >().SetModel( *pModel );
+    }
+    GetDecision().Reload();
+    orderManager_.CancelMission();
 }

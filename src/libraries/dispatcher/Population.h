@@ -56,7 +56,7 @@ class Population : public dispatcher::Population_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Population( Model_ABC& model, const sword::CrowdCreation& msg );
+             Population( Model_ABC& model, const sword::CrowdCreation& msg, const std::string& decisionalModel );
     virtual ~Population();
     //@}
 
@@ -117,6 +117,7 @@ private:
     T_Affinities affinities_;
     std::string criticalIntelligence_;
     float armedIndividuals_;
+    std::string decisionalModel_;
     //@}
 };
 
