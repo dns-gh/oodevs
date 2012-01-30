@@ -313,13 +313,17 @@ bool DEC_KnowledgeObjectFunctions::IsInAvoidanceArea( boost::shared_ptr< MT_Vect
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename T > static void DEC_KnowledgeObjectFunctions::IsInEffectArea
+// Name: template< typename T > static void DEC_KnowledgeObjectFunctions::IsNearEffectArea
 // Created: LMT 2012-01-23
 // -----------------------------------------------------------------------------
-bool DEC_KnowledgeObjectFunctions::IsInEffectArea( boost::shared_ptr< MT_Vector2D > point, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+bool DEC_KnowledgeObjectFunctions::IsNearEffectArea( boost::shared_ptr< MT_Vector2D > point, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, double distance )
 {
     if( pKnowledge && pKnowledge->IsValid() )
-        return pKnowledge->GetLocalisation().IsInside( *point );
+    {
+        TER_Localisation location = pKnowledge->GetLocalisation();
+        location.Scale( distance );
+        return location.IsInside( *point );
+    }
     return 0;
 }
 
