@@ -77,6 +77,7 @@ public:
     //! @name Accessors
     //@{
     virtual bool IsContaminated() const;
+    virtual bool IsIntoxicated() const;
     //@}
 
     //! @name Network
