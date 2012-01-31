@@ -1112,6 +1112,24 @@ bool DEC_AgentFunctions::AgentCanConstructObjectWithLoaded( const DEC_Decision_A
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::RetrieveUnitsAbleToBuild
+// Created: LMT 2012-01-31
+// -----------------------------------------------------------------------------
+std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::RetrieveUnitsAbleToBuild( const std::vector< DEC_Decision_ABC* >& units, const std::string& type )
+{
+    std::vector< DEC_Decision_ABC* > unitsAbleToBuild;
+    std::vector< DEC_Decision_ABC* >::const_iterator it;
+    for( it = units.begin(); it != units.end(); ++it )
+    {
+        if( AgentCanConstructObjectWithOutLoaded( *it, type) )
+        {
+            unitsAbleToBuild.push_back( *it );
+        }
+    }
+    return unitsAbleToBuild;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::AgentHasDotationForBuilding
 // Created: LMT 2011-08-25
 // -----------------------------------------------------------------------------
