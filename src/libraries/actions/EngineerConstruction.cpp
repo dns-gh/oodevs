@@ -124,11 +124,10 @@ EngineerConstruction::~EngineerConstruction()
 // -----------------------------------------------------------------------------
 void EngineerConstruction::ReadParameter( xml::xistream& xis, const CoordinateConverter_ABC& converter, const kernel::EntityResolver_ABC& entities, Controller& controller )
 {
-    std::string type;
-    xis >> xml::attribute( "type", type );
+    std::string type = xis.attribute< std::string >( "type" );
     if( type == "obstacletype" )
         AddParameter( *new ObstacleType( xis ) );
-    else if( type == "location" )
+    else if( type == "location" || type == "circle" || type == "rectangle" || type == "point" || type == "polygon" || type == "line" )
         AddParameter( *new Location( OrderParameter( tools::translate( "Parameter", "Obstacle location" ).ascii(), "location", false ), converter, xis ) );
     else if( type == "tc2" )
         AddParameter( *new Automat( xis, entities, controller ) );
