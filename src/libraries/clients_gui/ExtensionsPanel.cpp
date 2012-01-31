@@ -188,6 +188,8 @@ namespace
                 input = input.left( input.length() - trailing_ );
             trailing_ = 0;
             int len = input.length();
+            if( 0 == len )
+                return Acceptable; // All extensions are optional.
             State state = Acceptable;
             if( validator_ )
                 state = validator_->validate( input, pos );
@@ -442,6 +444,8 @@ void ExtensionsPanel::Commit()
                     const std::string key = GetDictionaryKey( combo->currentText(), *attribute, extensions_ );
                     if( !key.empty() )
                         ext->SetValue( combo->name(), enabled ? key : "" );
+                    else
+                        ext->Reset( combo->name() );
                 }
                 break;
             case AttributeType::ETypeLoosyDictionary:

@@ -39,6 +39,7 @@ DictionaryType::~DictionaryType()
 // -----------------------------------------------------------------------------
 void DictionaryType::GetStringList( QStringList& list, const std::string& kind, const std::string& language ) const
 {
+    list.append( "" );
     tools::Iterator< const DictionaryEntryType& > it = CreateIterator();
     while( it.HasMoreElements() )
         list.append( it.NextElement().GetLabel( kind, language ).c_str() );
