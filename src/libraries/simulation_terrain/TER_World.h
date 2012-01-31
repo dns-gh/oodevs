@@ -40,7 +40,6 @@ class TER_AnalyzerManager;
 class TER_PathFinderThread;
 class MT_Rect;
 
-class TER_PathFindRequest_ABC;
 namespace tools
 {
     namespace thread
