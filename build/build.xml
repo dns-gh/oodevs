@@ -17,7 +17,7 @@
     <property name="version.product" value="Sword"/>
     <property name="version.major" value="4.3.4"/>
     <property name="version.minor" value="${version.major}.${svn.revision}"/>
-    <property name="version.version" value="${version.project}.${svn.revision}"/><!-- required for version extension -->
+    <property name="version.version" value="0.0.0.${svn.revision}"/><!-- required for version extension -->
     <property name="masalife.version" value="2011-1.1.x/sword"/>
 
     <!--
