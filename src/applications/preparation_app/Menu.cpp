@@ -159,7 +159,7 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     addMenu( menu );
     menu->insertItem( tools::translate( "Menu", "Help" ), &help, SLOT( ShowHelp() ), Qt::Key_F1 );
     menu->insertSeparator();
-    AboutDialog* about = new AboutDialog( this, factory, tools::translate( "Application", "Preparation" ) + " " + QString( tools::AppVersion() ), license );
+    AboutDialog* about = new AboutDialog( this, factory, tools::translate( "Application", "Preparation" ) + " " + QString( tools::AppProjectVersion() ), license );
     menu->insertItem( tools::translate( "Menu", "About" ), about, SLOT( open() ) );
     insertItem( tools::translate( "Menu", "&?" ), menu );
     controllers_.Register( *this );

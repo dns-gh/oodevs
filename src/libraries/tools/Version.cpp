@@ -15,6 +15,10 @@
 #   define APP_MAJOR_VERSION 4.3.3
 #endif
 
+#ifndef APP_PROJECT_VERSION
+#   define APP_PROJECT_VERSION 1.0.3
+#endif
+
 #ifndef APP_VERSION
 #   define APP_VERSION APP_MAJOR_VERSION##.dev
 #endif
@@ -51,3 +55,11 @@ const char* tools::AppModelVersion()
     return BOOST_PP_STRINGIZE( APP_MODEL_VERSION );
 }
 
+// -----------------------------------------------------------------------------
+// Name: tools::AppProjectVersion
+// Created: JSR 2012-01-30
+// -----------------------------------------------------------------------------
+const char* tools::AppProjectVersion()
+{
+    return BOOST_PP_STRINGIZE( APP_PROJECT_VERSION );
+}

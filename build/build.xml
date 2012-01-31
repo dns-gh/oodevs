@@ -12,11 +12,12 @@
     <property name="env.PONEY_HOME" value="//install/masa/common/dev/common/poney"/>
     <import file="${env.PONEY_HOME}/poney.xml"/>
 
+    <property name="version.project" value="1.0.3"/>
     <property name="version.company" value="MASA Group"/>
     <property name="version.product" value="Sword"/>
     <property name="version.major" value="4.3.3"/>
     <property name="version.minor" value="${version.major}.${svn.revision}"/>
-    <property name="version.version" value="${version.minor}"/><!-- required for version extension -->
+    <property name="version.version" value="${version.project}.${svn.revision}"/><!-- required for version extension -->
     <property name="masalife.version" value="2011-1.1.x/sword"/>
 
     <!--
@@ -34,6 +35,7 @@
             <defineset>
                 <define name="APP_VERSION" value="${version.minor}"/>
                 <define name="APP_MAJOR_VERSION" value="${version.major}"/>
+                <define name="APP_PROJECT_VERSION" value="${version.project}"/>
             </defineset>
         </build-lib>
     </target>
@@ -1233,7 +1235,7 @@
     <target name="documentation" description="generate SWORD SDK documentation">
         <doxygen-report name="sword" input="${src.dir}/libraries/protocol/proto" outdir="${out.dir}/sdk">
             <property name="PROJECT_NAME" value="SWORD - API Reference"/>
-            <property name="PROJECT_NUMBER" value="${version.major}"/>
+            <property name="PROJECT_NUMBER" value="${version.project}"/>
             <property name="FILE_PATTERNS" value='"*.proto *.dox"'/>
             <property name="EXCLUDE_PATTERNS" value='"*launcher* *dispatcher_simulation*"'/>
             <property name="FILTER_PATTERNS" value="*.proto=protofilter.py"/>
@@ -1254,7 +1256,7 @@
             <property name="ALIASES" value='""rule=@par Rule:\n" "index=@par Index:\n" "default=@par Default value:\n""'/>
             <property name="WARN_LOGFILE" value="${reports.dir}/doxygen.log"/>
             <property name="GENERATE_HTMLHELP" value="YES"/>
-            <property name="CHM_FILE" value="${dist.dir}/SWORD-API_Reference_${version.major}.chm"/>
+            <property name="CHM_FILE" value="${dist.dir}/SWORD-API_Reference_${version.project}.chm"/>
             <property name="EXAMPLE_PATH" value="${data.dir}\app-data\resources\schemas\${version.major}"/>
             <property name="EXAMPLE_RECURSIVE" value="YES"/>
             <property name="EXAMPLE_PATTERN" value="*.h *.cpp *.xsd"/>
@@ -1386,7 +1388,7 @@
                     <description>@{description}</description>
                 </content>
             </echoxml>
-            <zip destfile="${dist.dir}/SWORD_@{name}_${version.major}.otpak" filesonly="true">
+            <zip destfile="${dist.dir}/SWORD_@{name}_${version.project}.otpak" filesonly="true">
                 <fileset dir="${data.dir}">
                     <elements/>
                 </fileset>

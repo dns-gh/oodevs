@@ -24,7 +24,7 @@
 
 namespace po = boost::program_options;
 
-static const std::string szADN_Version   = "ADN - " + std::string( tools::AppVersion() ) + " - " MT_COMPILE_TYPE " - " __TIMESTAMP__;
+static const std::string szADN_Version   = "ADN - " + std::string( tools::AppProjectVersion() ) + " - " MT_COMPILE_TYPE " - " __TIMESTAMP__;
 
 /*
 #pragma init_seg(lib)

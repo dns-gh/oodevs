@@ -13,6 +13,7 @@
 namespace tools
 {
     const char* AppVersion();
+    const char* AppProjectVersion();
     const char* AppMajorVersion();
     const char* AppModelVersion(); //$$$ Crap for thales, à gicler à terme
 }

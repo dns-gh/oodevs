@@ -60,7 +60,7 @@ int Run( HINSTANCE hinstance, HINSTANCE hPrevInstance,LPSTR lpCmdLine, int nCmdS
     // Init logger
     _mkdir( "./Debug" );
     MT_FileLogger           fileLogger     ( "./Debug/Sim.log" );
-    const std::string filename = "./Debug/Crash Version " + std::string( tools::AppVersion() ) + ".log";
+    const std::string filename = "./Debug/Crash Version " + std::string( tools::AppProjectVersion() ) + ".log";
     MT_FileLogger           crashFileLogger( filename.c_str(), MT_Logger_ABC::eLogLevel_Error | MT_Logger_ABC::eLogLevel_FatalError );
     MT_LOG_REGISTER_LOGGER( fileLogger );
     MT_LOG_REGISTER_LOGGER( crashFileLogger );

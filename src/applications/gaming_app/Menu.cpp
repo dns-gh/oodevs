@@ -260,7 +260,7 @@ Menu::Menu( QMainWindow* pParent, kernel::Controllers& controllers, StaticModel&
     addMenu( menu );
     menu->insertItem( tools::translate( "Menu", "Help" ), &help, SLOT( ShowHelp() ), Qt::Key_F1 );
     menu->insertSeparator();
-    menu->insertItem( tools::translate( "Menu", "About" ), new AboutDialog( this, factory, tools::translate( "Application", "Gaming" ) + " " + QString( tools::AppVersion() ), license ), SLOT( exec() ) );
+    menu->insertItem( tools::translate( "Menu", "About" ), new AboutDialog( this, factory, tools::translate( "Application", "Gaming" ) + " " + QString( tools::AppProjectVersion() ), license ), SLOT( exec() ) );
     insertItem( tools::translate( "Menu", "&?" ), menu );
 
     controllers_.Register( *this );
