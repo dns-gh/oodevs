@@ -57,7 +57,7 @@ void CommandLineConfig_ABC::Parse( int argc, char* argv[] )
         throw std::runtime_error( ss.str() );
     }
     if( values_->count( "version" ) )
-        throw std::runtime_error( tools::AppVersion() );
+        throw std::runtime_error( tools::AppProjectVersion() );
 }
 
 // -----------------------------------------------------------------------------

@@ -58,7 +58,7 @@ MainWindow::~MainWindow()
 // -----------------------------------------------------------------------------
 void MainWindow::OnLanguageChanged()
 {
-    setCaption( tools::translate( "Application", "SWORD" ) + tools::translate( "MainWindow", " - release " ) + tools::AppVersion() );
+    setCaption( tools::translate( "Application", "SWORD" ) + tools::translate( "MainWindow", " - release " ) + tools::AppProjectVersion() );
     if( sessionTray_.get() )
         sessionTray_->OnLanguageChanged();
 }
