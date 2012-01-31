@@ -461,6 +461,8 @@ void MIL_Inhabitant::CreateInhabitantMovingObject()
         return;
 
     T_PointVector hull = pLivingArea_->ComputeMovingArea();
+    if( hull.empty() )
+        return;
 
     pPopulationMovingObject_ = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( "population moving", *pArmy_, TER_Localisation( TER_Localisation::ePolygon, hull ) );
     CrowdCapacity* capacity = new CrowdCapacity( type_.GetAssociatedCrowdType(), static_cast< double >( nNbrHealthyHumans_ ) /( nNbrHealthyHumans_ + nNbrWoundedHumans_ + nNbrDeadHumans_ ) );

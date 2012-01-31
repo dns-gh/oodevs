@@ -44,7 +44,7 @@ Level* FormationLevels::AddLevel( Level* root, const QString& name )
     Level* newLevel = new Level( name, root );
     if( root != 0 )
         root->SetPrevious( *newLevel );
-    Register( newLevel->GetId(), newLevel->GetName().toStdString(), *newLevel );
+    Register( newLevel->GetId(), newLevel->GetName().ascii(), *newLevel );
     return newLevel;
 }
 
@@ -63,7 +63,7 @@ const HierarchyLevel_ABC* FormationLevels::GetRoot() const
 // -----------------------------------------------------------------------------
 const HierarchyLevel_ABC* FormationLevels::Resolve( const QString& name ) const
 {
-    return Find( name.toStdString() );
+    return Find( name.ascii() );
 }
 
 // -----------------------------------------------------------------------------

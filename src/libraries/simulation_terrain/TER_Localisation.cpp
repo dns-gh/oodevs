@@ -976,7 +976,7 @@ bool TER_Localisation::IsIntersecting( const TER_Polygon& polygon ) const
 // -----------------------------------------------------------------------------
 bool TER_Localisation::IsIntersecting( const TER_Localisation& localisation ) const
 {
-    if( localisation.GetPoints().empty() ) // Nécessaire au dernier test...
+    if( localisation.GetPoints().empty() || pointVector_.empty() ) // Nécessaire au dernier test...
         return false;
     CIT_PointVector itPoint = pointVector_.begin();
     const MT_Vector2D* pPrevPoint = &*itPoint;
