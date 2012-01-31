@@ -239,6 +239,15 @@ void DictionaryExtensions::SetValue( const std::string& name, const std::string&
 }
 
 // -----------------------------------------------------------------------------
+// Name: DictionaryExtensions::Reset
+// Created: JSR 2012-01-31
+// -----------------------------------------------------------------------------
+void DictionaryExtensions::Reset( const std::string& name )
+{
+    extensions_.erase( name );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DictionaryExtensions::GetValue
 // Created: JSR 2010-10-04
 // -----------------------------------------------------------------------------

@@ -62,6 +62,7 @@ public:
     void SetEnabled( bool enabled );
     bool IsEnabled() const;
     void SetValue( const std::string& name, const std::string& value );
+    void Reset( const std::string& name );
     const std::string& GetValue( const std::string& name ) const;
     const T_Extensions& GetExtensions() const;
     const ExtensionTypes& GetExtensionTypes() const;
