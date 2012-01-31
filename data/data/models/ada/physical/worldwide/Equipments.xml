@@ -10410,7 +10410,9 @@
       <sensor height="2" type="Combat Engineer Sensor"/>
     </sensors>
     <radars/>
-    <transports/>
+    <transports>
+      <crowd capacity="100" man-boarding-time="0s" man-unloading-time="0s"/>
+    </transports>
     <consumptions>
       <consumption status="ArretMoteurAllume">
         <resource category="carburant" name="Gasoil" value="0.4"/>
@@ -10552,5 +10554,83 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Transporter Bus" id="108" name="SECURITY.Bus" protection="UnarmouredVehicle" size="Small" weight="1">
+    <speeds max="90">
+      <speed terrain="unknown" value="5"/>
+      <speed terrain="forest" value="5"/>
+      <speed terrain="orchard" value="20"/>
+      <speed terrain="swamp" value="0"/>
+      <speed terrain="dune" value="0"/>
+      <speed terrain="urban area" value="15"/>
+      <speed terrain="lake" value="0"/>
+      <speed terrain="glacier" value="0"/>
+      <speed terrain="forest edge" value="5"/>
+      <speed terrain="suburb" value="0"/>
+      <speed terrain="waterfront" value="0"/>
+      <speed terrain="orchard edge" value="10"/>
+      <speed terrain="swamp edge" value="0"/>
+      <speed terrain="dune edge" value="0"/>
+      <speed terrain="glacier edge" value="0"/>
+      <speed terrain="country road" value="30"/>
+      <speed terrain="highway" value="120"/>
+      <speed terrain="main road" value="90"/>
+      <speed terrain="secondary road" value="70"/>
+      <speed terrain="stream" value="0"/>
+      <speed terrain="river" value="0"/>
+      <speed terrain="main river" value="0"/>
+      <speed terrain="bridge" value="70"/>
+      <speed terrain="cliff" value="0"/>
+      <speed terrain="railroad" value="0"/>
+      <speed terrain="crossroad" value="30"/>
+      <speed terrain="mountain" value="0"/>
+      <speed terrain="mountain edge" value="0"/>
+    </speeds>
+    <composition>
+      <category name="munition">
+        <resource capacity="120" logistic-threshold="10" name="9.00-mm Bullet" normalized-consumption="10"/>
+      </category>
+      <category name="carburant">
+        <resource capacity="60" logistic-threshold="1" name="Gasoil" normalized-consumption="60"/>
+      </category>
+      <category name="barbele">
+        <resource capacity="30" logistic-threshold="5" name="Standard Barbed Wire" normalized-consumption="30"/>
+      </category>
+    </composition>
+    <sensors>
+      <sensor height="1.8" type="Eye"/>
+      <sensor height="2" type="Combat Engineer Sensor"/>
+    </sensors>
+    <radars/>
+    <transports>
+      <crowd capacity="200" man-boarding-time="50m" man-unloading-time="50m"/>
+    </transports>
+    <consumptions>
+      <consumption status="ArretMoteurAllume">
+        <resource category="carburant" name="Gasoil" value="0.4"/>
+      </consumption>
+      <consumption status="Deplacement">
+        <resource category="carburant" name="Gasoil" value="0.4"/>
+      </consumption>
+    </consumptions>
+    <weapon-systems>
+      <weapon-system launcher="Sig-Sauer SP 2022" munition="9.00-mm Bullet"/>
+    </weapon-systems>
+    <human-protections/>
+    <objects>
+      <object construction-time-factor="0s" destruction-time-factor="0s" initial-construction-time="180s" initial-destruction-time="0s" type="checkpoint"/>
+      <object initial-construction-time="10m" type="secured area"/>
+      <object initial-construction-time="10m" initial-destruction-time="0s" type="road destruction"/>
+    </objects>
+    <breakdowns>
+      <breakdown origin="random" percentage="50" type="Tire flat"/>
+      <breakdown origin="random" percentage="15" type="Heater failure"/>
+      <breakdown origin="random" percentage="15" type="Oil leak"/>
+      <breakdown origin="random" percentage="5" type="Universal joint failure"/>
+      <breakdown origin="random" percentage="5" type="Cylinder head gasket failure"/>
+      <breakdown origin="random" percentage="10" type="Gear failure"/>
+      <breakdown origin="attrition" percentage="100" type="Tire flat"/>
+    </breakdowns>
+    <equipment-category>Autres</equipment-category>
+  </equipment>
 </equipments>
-<!-- signature="3187486564" -->
+<!-- signature="2101749233" -->

@@ -598,5 +598,9 @@
   <report category="operational" id="426" message="Diminution de la production démarrée"/>
   <report category="operational" id="427" message="Diminution de la production arrêtée"/>
   <report category="operational" id="428" message="Pas de blessés à évacuer"/>
+  <report category="operational" id="429" message="Impossible de charger l'élément"/>
+  <report category="operational" id="430" message="Impossible de decharger l'élément"/>
+  <report category="operational" id="431" message="Element chargé"/>
+  <report category="operational" id="432" message="Element déchargé"/>
 </reports>
-<!-- signature="1865279815" -->
+<!-- signature="4267229696" -->

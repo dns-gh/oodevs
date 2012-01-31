@@ -3143,6 +3143,7 @@
     <nature atlas-nature="Indefini" level="none" nature-app6="emergency/public safety"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="SECURITY.Police Car"/>
+      <equipment count="1" crew="2" type="SECURITY.Bus"/>
     </equipments>
     <sensors-range range="0"/>
     <equipments-range range="0"/>
@@ -3161,4 +3162,4 @@
     <crossing-height height="1m"/>
   </unit>
 </units>
-<!-- signature="1777079627" -->
+<!-- signature="2338868443" -->

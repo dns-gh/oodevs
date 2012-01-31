@@ -566,7 +566,7 @@ public:
 		eRC_ResourceNodeDisabled,
 		eRC_ResourceNodeEnabled,
 		eRC_NoResourceNodesWithinArea,
-		eRC_NoUrbanBlocksWithinArea,
+		eRC_NoUrbanBlocksWithinArea, // 420
 		eRC_NoCrowdsWithinArea,
 		eRC_VictimsEvacuated,
 		eRC_VictimsExtracted,
@@ -575,7 +575,11 @@ public:
 		eRC_StartingToReduceResourceProduction,
 		eRC_ResourceReductionStopped,
 		eRC_NoWoundedVictims,
-        eLast // 429
+		eRC_ElementCannotBeLoaded,
+		eRC_ElementCannotBeUnloaded, // 430
+		eRC_ElementLoaded,
+		eRC_ElementUnloaded,
+        eLast // 433
     };
     //@}
 public:
