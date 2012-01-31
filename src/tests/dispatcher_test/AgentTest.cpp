@@ -37,11 +37,12 @@ namespace
         return std::auto_ptr< kernel::DecisionalModel >( new kernel::DecisionalModel( xis, factory, &kernel::MissionFactory::CreateAgentMission, fragOrders ) );
     }
 
+    std::auto_ptr< kernel::DecisionalModel > model( MakeDecisionalModel() );
+
     std::auto_ptr< kernel::AgentType > MakeAgentType()
     {
         const tools::Resolver< kernel::ComponentType, std::string > componentResolver;
         tools::Resolver< kernel::DecisionalModel, std::string > modelResolver;
-        std::auto_ptr< kernel::DecisionalModel > model( MakeDecisionalModel() );
         modelResolver.Register( model->GetName(), *model );
         const kernel::SymbolFactory symbolFactory;
         const std::string xml(

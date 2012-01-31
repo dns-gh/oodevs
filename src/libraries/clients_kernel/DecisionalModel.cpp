@@ -50,9 +50,7 @@ DecisionalModel::~DecisionalModel()
 // -----------------------------------------------------------------------------
 void DecisionalModel::ReadMission( xml::xistream& xis, MissionFactory& factory, const T_Resolver& missionResolver )
 {
-    std::string name;
-    xis >> xml::attribute( "name", name );
-    Mission* mission = (factory.*missionResolver)( name );
+    Mission* mission = (factory.*missionResolver)( xis.attribute< std::string >( "name" ) );
     tools::Resolver< Mission >::Register( mission->GetId(), *mission );
     xis >> xml::list( "fragorder", *this, &DecisionalModel::ReadFragOrder, *mission, factory );
 }
@@ -63,9 +61,7 @@ void DecisionalModel::ReadMission( xml::xistream& xis, MissionFactory& factory, 
 // -----------------------------------------------------------------------------
 void DecisionalModel::ReadFragOrder( xml::xistream& xis, Mission& mission, MissionFactory& factory )
 {
-    std::string name;
-    xis >> xml::attribute( "name", name );
-    FragOrder* order = factory.CreateFragOrder( name );
+    FragOrder* order = factory.CreateFragOrder( xis.attribute< std::string >( "name" ) );
     if( ! mission.Find( order->GetId() ) )
         mission.Register( order->GetId(), *order );
     else
@@ -78,9 +74,7 @@ void DecisionalModel::ReadFragOrder( xml::xistream& xis, Mission& mission, Missi
 // -----------------------------------------------------------------------------
 void DecisionalModel::ReadDefaultFragOrder( xml::xistream& xis, MissionFactory& factory, const tools::Resolver_ABC< FragOrderType >& /*fragorders*/ )
 {
-    std::string name;
-    xis >> xml::attribute( "name", name );
-    FragOrder* order = factory.CreateFragOrder( name );
+    FragOrder* order = factory.CreateFragOrder( xis.attribute< std::string >( "name" ) );
     tools::Resolver< FragOrder >::Register( order->GetId(), *order );
 }
 
@@ -88,7 +82,7 @@ void DecisionalModel::ReadDefaultFragOrder( xml::xistream& xis, MissionFactory& 
 // Name: DecisionalModel::GetName
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-std::string DecisionalModel::GetName() const
+const std::string& DecisionalModel::GetName() const
 {
     return name_;
 }
