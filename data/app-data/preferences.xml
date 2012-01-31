@@ -1,11 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <preferences>
   <terrains>
-    <terrain type="forest">
-      <width>1</width>
-      <color>#648040</color>
-    </terrain>
-    <terrain type="forest edge">
+    <terrain name="forest" type="forest edge">
       <width>1</width>
       <color>#aae2a4</color>
     </terrain>
