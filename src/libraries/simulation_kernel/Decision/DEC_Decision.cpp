@@ -474,6 +474,7 @@ void RegisterMissionParametersFunctions( directia::brain::Brain& brain, bool isM
     
     brain[ "DEC_Agent_GetAgentDotationPourConstruireObjet" ] = &DEC_AgentFunctions::GetAgentDotationForBuilding;
     brain[ "DEC_Agent_GetAgentDotationManquantePourConstruireObjet" ] = &DEC_AgentFunctions::GetAgentMissingDotationForBuilding;
+    brain[ "DEC_GetAgentsPouvantConstruire" ] = &DEC_AgentFunctions::RetrieveUnitsAbleToBuild;
 }
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::RegisterReportFunctions
