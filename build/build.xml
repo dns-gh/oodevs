@@ -1418,7 +1418,7 @@
         </sequential>
     </macrodef>
 
-    <target name="package.otpacks" depends="package.otpack.defense.worldwide,
+    <target name="package.otpacks" depends="package.otpack.defense.worldwide,package.otpack.defense.worldwide.QA,
                                             package.otpack.defense.scipio,package.otpack.defense.scipio.VA,package.otpack.security.worldwide,package.otpack.security.masa,
                                             package.otpack.lossc,package.otpack.trainingML,package.otpack.decisional3,package.otpack.decisional4,package.otpack.decisional5"
                                    description="package the exercise otpacks"/>
@@ -1454,7 +1454,41 @@
             </zipfileset>
         </pack>
     </target>
-
+	<target name="package.otpack.defense.worldwide.QA" description="package du defense-worldwide otpack">
+        <pack name="defense-worldwide-QA" description="defense-worldwide exercises package for QA">
+            <zipfileset dir="${data.dir}">
+                <include name="data/models/ada/physical/worldwide/**"/>
+                <include name="data/terrains/Nord egypt/**"/>
+                <include name="data/terrains/Paris_Est/**"/>
+                <include name="data/terrains/Angers_x9_en/**"/>
+                <include name="data/terrains/Sw_terrain2/**"/>
+            </zipfileset>
+            <zipfileset dir="${data.dir}/exercises/worldwide" prefix="exercises">
+                <include name="Egypt/**"/>
+                <include name="Paris/**"/>
+                <include name="9_cases/**"/>
+                <include name="Musoria Border Defense/**"/>
+                <include name="Tuto_sw/**"/>
+                <include name="tutorials/01 - Generalities/**"/>
+                <include name="tutorials/02 - Gaming/**"/>
+                <include name="tutorials/03 - Missions/**"/>
+                <include name="tutorials/04 - Armor units/**"/>
+                <include name="tutorials/05 - Infantry/**"/>
+                <include name="tutorials/06 - Engineering/**"/>
+                <include name="tutorials/07 - Artillery/**"/>
+                <include name="tutorials/08 - Logistic/**"/>
+                <include name="tutorials/09 - Air units/**"/>
+                <include name="tutorials/10 - NBC/**"/>
+                <include name="tutorials/11 - Preparation/**"/>
+                <include name="tutorials/12 - AAR/**"/>
+                <include name="tutorials/13 - Advanced features/**"/>
+			</zipfileset>
+			<zipfileset dir="${data.dir}/exercises/tests" prefix="exercises">
+                <include name="missing/**"/>
+                <include name="Pathfind/**"/>
+            </zipfileset>
+        </pack>
+    </target>
     <target name="package.otpack.defense.scipio" description="package du defense-scipio Referentiel Simulation otpack">
         <pack name="defense-scipio-RefSim" description="defense-scipio exercises package">
             <zipfileset dir="${data.dir}">
