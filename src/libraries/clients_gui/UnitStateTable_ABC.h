@@ -11,7 +11,7 @@
 #define __gui_UnitStateTable_ABC_h_
 
 #include <boost/noncopyable.hpp>
-//#include <Qt3Support/q3table.h>
+#include <boost/filesystem/path.hpp>
 #include "clients_kernel/Tools.h"
 #include "ComboTableItem.h"
 #include "CommonDelegate.h"
@@ -52,6 +52,7 @@ public:
     virtual void Purge();
     void RecursiveLoad( kernel::Entity_ABC& selected );
     void SetReadOnly( bool readOnly );
+    void Serialize( const boost::filesystem::path& path ) const;
     bool IsReadOnly() const;
     //@}
 

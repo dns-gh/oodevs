@@ -71,6 +71,7 @@ protected:
     kernel::Controllers&                                   controllers_;
     kernel::SafePointer< kernel::Entity_ABC >              selected_;
     QTabWidget*                                            tabWidget_;
+    QGridLayout*                                           buttons_;
     std::vector< boost::shared_ptr< UnitStateTable_ABC > > tabs_;
     QPushButton*                                           resetButton_;
     QPushButton*                                           validateButton_;

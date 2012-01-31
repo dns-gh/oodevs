@@ -47,16 +47,19 @@ UnitStateDialog::UnitStateDialog( QWidget* parent, kernel::Controllers& controll
     // Tabs
     tabWidget_ = new QTabWidget( this, "UnitStateDialog_TabWidget_Tabs" );
     // Buttons
-    Q3HBox* buttons = new Q3HBox( this, "UnitStateDialog_HBox_Buttons" );
-    buttons->setSpacing( 5 );
-    resetButton_             = new QPushButton( tr( "Reset" )   , buttons, "UnitStateDialog_PushButton_Reset" );
-    validateButton_          = new QPushButton( tr( "Validate" ), buttons, "UnitStateDialog_PushButton_Validate" );
-    QPushButton* closeButton = new QPushButton( tr( "Close" )   , buttons, "UnitStateDialog_PushButton_Cancel" );
+    buttons_ = new QGridLayout( 1, 4 );
+    buttons_->setSpacing( 5 );
+    resetButton_             = new QPushButton( tr( "Reset" ) );
+    validateButton_          = new QPushButton( tr( "Validate" ) );
+    QPushButton* closeButton = new QPushButton( tr( "Close" ) );
     validateButton_->setDefault( true );
+    buttons_->addWidget( resetButton_, 0, 0 );
+    buttons_->addWidget( validateButton_, 0, 1 );
+    buttons_->addWidget( closeButton, 0, 3 );
     // Layouts
     mainLayout->add( header );
     mainLayout->add( tabWidget_ );
-    mainLayout->add( buttons );
+    mainLayout->addLayout( buttons_ );
     // Signals
     connect( resetButton_   , SIGNAL( clicked() ), SLOT( Reset() ) );
     connect( validateButton_, SIGNAL( clicked() ), SLOT( Validate() ) );

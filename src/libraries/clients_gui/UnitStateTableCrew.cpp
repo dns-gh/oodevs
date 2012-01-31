@@ -35,26 +35,6 @@ UnitStateTableCrew::UnitStateTableCrew( QWidget* parent )
                        << tr( "Quantity" );
     setAlternatingRowColors( false );
     connect( &dataModel_, SIGNAL( itemChanged( QStandardItem* ) ), SLOT( OnItemChanged( QStandardItem* ) ) );
-    //connect( this, SIGNAL( valueChanged( int, int ) ), SLOT( OnItemChanged( int, int ) ) );
-    //connect( this, SIGNAL( contextMenuRequested( int, int, const QPoint& ) ), SLOT( OnRequestContextMenu( int, int, const QPoint& ) ) );
-
-    //setSelectionMode( NoSelection );
-    //setFocusStyle( FollowStyle );
-    //setColumnStretchable( eRank, true );
-    //setColumnStretchable( eState, true );
-    //setColumnStretchable( eInjuries, true );
-    //adjustColumn( ePsy );
-    //adjustColumn( eContaminated );
-    //adjustColumn( eNumber );
-    //setRowReadOnly( eHumanRank_Officier, true );
-    //setRowReadOnly( eHumanRank_SousOfficer, true );
-    //setRowReadOnly( eHumanRank_Mdr, true );
-    //setColumnReadOnly( eLocation, true );
-
-    //Populate( eNbrHumanRank, humanRanks_ );
-    //Populate( eNbrHumanState, humanStates_ );
-    //Populate( eNbrInjuriesSeriousness, injuriesSeriousness_ );
-    //Populate( eNbrHumanLocation, humanLocations_ );
 }
 
 // -----------------------------------------------------------------------------

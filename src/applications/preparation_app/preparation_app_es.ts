@@ -2201,6 +2201,26 @@
         <source>Display initial state</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Export</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Export unit state</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>crew</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>equipments</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>resources</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>UnitStateTableResource</name>

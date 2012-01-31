@@ -2201,6 +2201,26 @@
         <source>Display initial state</source>
         <translation>Afficher l&apos;état initial</translation>
     </message>
+    <message>
+        <source>Export</source>
+        <translation>Exporter</translation>
+    </message>
+    <message>
+        <source>Export unit state</source>
+        <translation>Export l&apos;état initial</translation>
+    </message>
+    <message>
+        <source>crew</source>
+        <translation>personnel</translation>
+    </message>
+    <message>
+        <source>equipments</source>
+        <translation>equipements</translation>
+    </message>
+    <message>
+        <source>resources</source>
+        <translation>ressources</translation>
+    </message>
 </context>
 <context>
     <name>UnitStateTableResource</name>

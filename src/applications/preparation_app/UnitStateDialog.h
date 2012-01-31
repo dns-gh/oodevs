@@ -59,6 +59,13 @@ private slots:
     //@{
     virtual void Validate() const;
     virtual void Reset();
+    void Export();
+    //@}
+
+private:
+    //! @name Member Data
+    //@{
+    QPushButton* exportButton_;
     //@}
 };
 

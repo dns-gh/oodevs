@@ -89,6 +89,7 @@ UnitStateDialog.cpp \
 UnitStateTableCrew.cpp \
 UnitStateTableEquipment.cpp \
 UnitStateTableResource.cpp \
+UnitStateTable_ABC.cpp \
 Usages.cpp \
 VisualisationScalesPanel.cpp \
 WeatherListView.cpp \

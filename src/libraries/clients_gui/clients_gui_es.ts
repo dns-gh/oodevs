@@ -157,6 +157,21 @@
     </message>
 </context>
 <context>
+    <name>UnitStateTable_ABC</name>
+    <message>
+        <source>No</source>
+        <translation type="unfinished">Non</translation>
+    </message>
+    <message>
+        <source>Location</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Yes</source>
+        <translation type="unfinished">Oui</translation>
+    </message>
+</context>
+<context>
     <name>Urban</name>
     <message>
         <source>Urban block[%1]</source>
