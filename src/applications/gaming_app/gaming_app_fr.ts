@@ -1757,7 +1757,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Communication</source>
-        <translation>Communication</translation>
+        <translation>Groupes de connaissance</translation>
     </message>
     <message>
         <source>Orbat</source>

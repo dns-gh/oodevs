@@ -220,7 +220,7 @@
     </message>
     <message>
         <source>Communication</source>
-        <translation>Communication</translation>
+        <translation>Groupes de connaissance</translation>
     </message>
     <message>
         <source>Logistic</source>
@@ -453,7 +453,7 @@
     </message>
     <message>
         <source>Export orbat, resources, stocks, weather schedule, diplomacy matrix, profiles and logistic links as CSV files.</source>
-        <translation>Exporter l&apos;orbat, les dotations, les stocks, la météo, la diplomatie, les profils, la liste de diffusion ainsi que les liens logistiques en fichier CSV.</translation>
+        <translation>Exporter l&apos;ODB, les dotations, les stocks, la météo, la diplomatie, les profils, la liste de diffusion ainsi que les liens logistiques en fichier CSV.</translation>
     </message>
     <message>
         <source>Select output directory</source>
@@ -532,7 +532,7 @@
     <name>FilterOrbatReIndexer</name>
     <message>
         <source>Load orbat file</source>
-        <translation>Charger le fichier orbat</translation>
+        <translation>Charger le fichier ODB</translation>
     </message>
     <message>
         <source>Error loading file</source>
@@ -544,7 +544,7 @@
     </message>
     <message>
         <source>Enter path to the new orbat here</source>
-        <translation>Entrez le chemin du nouvel orbat ici</translation>
+        <translation>Entrez le chemin du nouvel ODB ici</translation>
     </message>
     <message>
         <source>Browse...</source>
