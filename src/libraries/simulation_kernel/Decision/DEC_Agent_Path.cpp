@@ -548,7 +548,7 @@ void DEC_Agent_Path::InsertDecPoints()
 // -----------------------------------------------------------------------------
 void DEC_Agent_Path::CleanAfterComputation()
 {
-    DEC_Path_ABC::CleanAfterComputation();
+    DEC_Path::CleanAfterComputation();
     for( CIT_PathKnowledgeObjectByTypesVector itTypes = pathKnowledgeObjects_.begin(); itTypes != pathKnowledgeObjects_.end(); ++itTypes )
         for( CIT_PathKnowledgeObjectVector it = itTypes->begin(); it != itTypes->end(); ++it )
             delete *it;
@@ -579,7 +579,7 @@ void DEC_Agent_Path::Execute( TerrainPathfinder& pathfind )
         queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().SendRC( MIL_Report::eReport_DifficultTerrain );
         Cancel();
     }
-    DEC_Path_ABC::Execute( pathfind );
+    DEC_Path::Execute( pathfind );
     DEC_PathResult::E_State nPathState = GetState();
     if( nPathState == DEC_Path_ABC::eImpossible )
         queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().SendRC( MIL_Report::eReport_DifficultTerrain );

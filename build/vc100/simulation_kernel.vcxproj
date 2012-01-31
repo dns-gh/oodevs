@@ -103,6 +103,7 @@
     <Lib />
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_TerrainFunctions.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_ActionLoadCrowd.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_ActionUnloadCrowd.cpp" />
@@ -826,6 +827,7 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\PHY_RoofShapeType.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_TerrainFunctions.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_ActionLoadCrowd.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\CrowdTransport\PHY_ActionUnloadCrowd.h" />
@@ -1645,6 +1647,7 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\PHY_RoofShapeType.h" />
   </ItemGroup>
   <ItemGroup>
+    <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Population_PathClass.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\Network\NET_AsnException.inl" />
     <None Include="..\..\src\libraries\simulation_kernel\entities\agents\units\composantes\PHY_ComposantePion.inl" />

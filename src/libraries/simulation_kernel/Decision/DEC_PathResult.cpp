@@ -21,8 +21,7 @@
 // Created: NLD 2005-09-30
 // -----------------------------------------------------------------------------
 DEC_PathResult::DEC_PathResult()
-    : DEC_Path_ABC()
-    , lastWaypoint_( 0 )
+    : lastWaypoint_( 0 )
     , precision_( 0.0001 )
     , bSectionJustEnded_( false )
 {
@@ -276,7 +275,7 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos,
     // Check intersection with convex hull of path if there are less segments.
     // Worst case: Bounding hull has 1 more segment than the actual path, or Bounding hull has 2 segments (degenerate).
     // Best case: Bounding hull has 3 segments.
-    int hullSize = pathHull.GetBorderPoints().size();
+    std::size_t hullSize = pathHull.GetBorderPoints().size();
     bool hullIntersectionIsFaster = hullSize > 2 && hullSize < hullPoints.size();
     // Determination de tous les objets connus avec lesquels il va y avoir collision dans le déplacement en cours
     for( CIT_KnowledgeObjectVector itKnowledge = objectsToTest.begin(); itKnowledge != objectsToTest.end(); ++itKnowledge )

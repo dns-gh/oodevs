@@ -13,8 +13,8 @@
 #define __DEC_Path_ABC_h_
 
 #include "simulation_terrain/TER_PathFindRequest_ABC.h"
+#include <boost/noncopyable.hpp>
 
-class DEC_PathSection_ABC;
 class TerrainData;
 class MT_Vector2D;
 
@@ -42,20 +42,13 @@ public:
 public:
     //! @name Operations
     //@{
-    virtual void Execute( TerrainPathfinder& pathfind );
-    void Cancel();
-    virtual void CleanAfterComputation();
-
-    double GetLength() const;
-    virtual bool NeedRefine() const = 0;
-    virtual bool UseStrictClosest() const = 0;
-    virtual void AddResultPoint( const MT_Vector2D& vPos, const TerrainData& nObjectTypes, const TerrainData& nObjectTypesToNextPoint ) = 0;
+    virtual double GetLength() const = 0;
     //@}
 
     //! @name Accessors
     //@{
     unsigned int GetID() const;
-    E_State GetState() const;
+    virtual E_State GetState() const = 0;
     //@}
 
     //! @name Operators
@@ -71,29 +64,8 @@ protected:
     virtual ~DEC_Path_ABC();
     //@}
 
-    //! @name Tools
-    //@{
-    void RegisterPathSection( DEC_PathSection_ABC& section );
-    std::string GetStateAsString() const;
-    std::string GetPathAsString() const;
-    virtual void NotifySectionEnded() = 0;
-    void DoExecute( TerrainPathfinder& pathfind );
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef std::vector< DEC_PathSection_ABC* >   T_PathSectionVector;
-    typedef T_PathSectionVector::const_iterator CIT_PathSectionVector;
-    //@}
-
 private:
     const unsigned int nID_;
-    T_PathSectionVector pathSections_;
-    unsigned int nNbrRefs_;              // nb of references on path
-    unsigned int nNbrDIARefs_;           // nb of references by DIA on path
-    E_State nState_;
-    bool bJobCanceled_;
 
 private:
     static unsigned int nIDIdx_;

@@ -2526,6 +2526,9 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\MIL_UrbanCache.cpp">
       <Filter>Source Files\Urban</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path.cpp">
+      <Filter>Source Files\Decision\Path</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL.h">
@@ -4958,6 +4961,9 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL_UrbanCache.h">
       <Filter>Source Files\Urban</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path.h">
+      <Filter>Source Files\Decision\Path</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\simulation_kernel\Network\NET_AsnException.inl">
@@ -5100,6 +5106,9 @@
     </None>
     <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Population_PathClass.inl">
       <Filter>Source Files\Decision\Path\Population\Type</Filter>
+    </None>
+    <None Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path.inl">
+      <Filter>Source Files\Decision\Path</Filter>
     </None>
   </ItemGroup>
   <ItemGroup>

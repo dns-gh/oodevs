@@ -136,7 +136,7 @@ double DEC_Population_Path::GetCostOutsideOfChanneling() const
 // -----------------------------------------------------------------------------
 void DEC_Population_Path::CleanAfterComputation()
 {
-    DEC_Path_ABC::CleanAfterComputation();
+    DEC_Path::CleanAfterComputation();
     channelers_.clear();
 }
 
@@ -156,7 +156,7 @@ void DEC_Population_Path::Execute( TerrainPathfinder& pathfind )
     }
     if( !resultList_.empty() )
         throw std::runtime_error( "List of path points is not empty before running pathfind" );
-    DEC_Path_ABC::Execute( pathfind );
+    DEC_Path::Execute( pathfind );
     if( MIL_AgentServer::GetWorkspace().GetConfig().UsePathDebug() )
     {
         double rComputationTime = profiler_.Stop();

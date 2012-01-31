@@ -12,13 +12,13 @@
 #ifndef __DEC_PathSection_ABC_h_
 #define __DEC_PathSection_ABC_h_
 
+#include "DEC_Path.h"
 #include "tools/thread/Handler_ABC.h"
 #include "MT_Tools/MT_Vector2D.h"
 #include <pathfind/TerrainPathPoint.h>
 #include <pathfind/TerrainPathfinder.h>
 #include <pathfind/AStarManagementCallback_ABC.h>
 
-class DEC_Path_ABC;
 class TerrainRule_ABC;
 
 // =============================================================================
@@ -49,7 +49,7 @@ public:
     //@}
 
 protected:
-    DEC_PathSection_ABC( DEC_Path_ABC& path, const MT_Vector2D& vStartPoint, const MT_Vector2D& vEndPoint );
+    DEC_PathSection_ABC( DEC_Path& path, const MT_Vector2D& vStartPoint, const MT_Vector2D& vEndPoint );
 
     //! @name Accessors
     //@{
@@ -65,7 +65,7 @@ private:
     //@}
 
 private:
-    DEC_Path_ABC& path_;
+    DEC_Path& path_;
     MT_Vector2D startPoint_;
     MT_Vector2D endPoint_;
     unsigned int nComputationEndTime_;
