@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/exercise/orbat.xsd">
+  <parties>
+    <party id="1325" name="Allies" type="friend">
+      <objects>
+        <object id="1342" name="Mine Cluster" type="mines">
+          <shape type="point">
+            <points>
+              <point>31TCN2685244867</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <construction completion="1"/>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="1343" name="Anti-tank" type="anti tank obstacle">
+          <shape type="polygone">
+            <points>
+              <point>31TCN2443239361</point>
+              <point>31TCN2157337626</point>
+              <point>31TCN2433335232</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="1344" name="Genral" type="movement forbidden area">
+          <shape type="polygone">
+            <points>
+              <point>31TCN1769947667</point>
+              <point>31TCN1670745000</point>
+              <point>31TCN2278244393</point>
+              <point>31TCN2233847499</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="1377" name="zae" type="movement forbidden area">
+          <shape type="polygone">
+            <points>
+              <point>30UXU2759928899</point>
+              <point>30UXU2775326000</point>
+              <point>30UXU3231226818</point>
+              <point>30UXU3169229846</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+      </objects>
+      <tactical>
+        <formation id="1328" level="ii" name="Formation [1328]">
+          <automat engaged="false" id="1329" knowledge-group="1330" name="ARMOR.MBT squadron for Automat Test[1329]" type="ARMOR.MBT squadron">
+            <unit command-post="true" id="1331" name="ARMOR.Armored squadron CP" position="31TCN2158042693" type="ARMOR.Armored squadron CP"/>
+            <unit command-post="false" id="1332" name="ARMOR.MBT platoon" position="31TCN2212841916" type="ARMOR.MBT platoon"/>
+          </automat>
+          <automat engaged="true" id="1351" knowledge-group="1330" name="ARMOR.MBT squadron [1351]" type="ARMOR.MBT squadron">
+            <unit command-post="true" id="1352" name="ARMOR.Armored squadron CP" position="30TYT0554649991" type="ARMOR.Armored squadron CP"/>
+            <unit command-post="false" id="1353" name="ARMOR.MBT platoon" position="30TYT0606549510" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="1354" name="ARMOR.MBT platoon" position="30TYT0558248993" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="1355" name="ARMOR.MBT platoon" position="30TYT0506349474" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="1356" name="ARMOR.MBT platoon" position="30TYT0604750009" type="ARMOR.MBT platoon"/>
+          </automat>
+          <automat engaged="false" id="1360" knowledge-group="1330" name="INF.LRA infantry company [1360]" type="INF.LRA infantry company">
+            <unit command-post="true" id="1361" name="INF.LRA infantry company CP" position="30UXU9927530113" type="INF.Infantry company CP"/>
+            <unit command-post="false" id="1365" name="ARMOR.Light armored platoon" position="30UYU0308928240" type="ARMOR.Light armored platoon"/>
+            <unit command-post="false" id="1366" name="INF.Infantry platoon" position="30UYU1356620957" type="INF.Infantry platoon"/>
+          </automat>
+          <automat engaged="false" id="1371" knowledge-group="1330" name="ARMOR.MBT squadron [1371]" type="ARMOR.MBT squadron">
+            <unit command-post="true" id="1372" name="ARMOR.Armored squadron CP" position="30UXU3593626222" type="ARMOR.Armored squadron CP"/>
+            <unit command-post="false" id="1373" name="ARMOR.MBT platoon" position="30UXU3645425741" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="1374" name="ARMOR.MBT platoon" position="30UXU3597225224" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="1375" name="ARMOR.MBT platoon" position="30UXU3545325705" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="1376" name="ARMOR.MBT platoon" position="30UXU3643626240" type="ARMOR.MBT platoon"/>
+          </automat>
+          <automat engaged="true" id="1379" knowledge-group="1330" name="Countermobility company [1379]" type="ENG.Countermobility company">
+            <unit command-post="true" id="1380" name="Countermobility platoon" position="31UCP3150528810" type="ENG.Countermobility platoon"/>
+            <unit command-post="false" id="1381" name="Countermobility platoon" position="31UCP3198528290" type="ENG.Countermobility platoon"/>
+            <unit command-post="false" id="1382" name="Countermobility platoon" position="31UCP3146327812" type="ENG.Countermobility platoon"/>
+          </automat>
+          <automat engaged="true" id="1396" knowledge-group="1330" name="Countermobility company [1396]" type="ENG.Countermobility company">
+            <unit command-post="true" id="1397" name="Countermobility platoon" position="30TXT3536939588" type="ENG.Countermobility platoon"/>
+            <unit command-post="false" id="1398" name="Countermobility platoon" position="30TXT3588739107" type="ENG.Countermobility platoon"/>
+            <unit command-post="false" id="1399" name="Countermobility platoon" position="30TXT3540538590" type="ENG.Countermobility platoon"/>
+          </automat>
+          <automat engaged="true" id="1400" knowledge-group="1330" name="ARMOR.MBT squadron [1400]" type="ARMOR.MBT squadron">
+            <unit command-post="true" id="1401" name="ARMOR.Armored squadron CP" position="30TXT4145670386" type="ARMOR.Armored squadron CP"/>
+            <unit command-post="false" id="1402" name="ARMOR.MBT platoon" position="30TXT4197569905" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="1403" name="ARMOR.MBT platoon" position="30TXT4149269388" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="1404" name="ARMOR.MBT platoon" position="30TXT4097369869" type="ARMOR.MBT platoon"/>
+            <unit command-post="false" id="1405" name="ARMOR.MBT platoon" position="30TXT4195770404" type="ARMOR.MBT platoon"/>
+          </automat>
+          <limit name="Limite 1360">
+            <point>30TYT1121538695</point>
+            <point>30TXT8425253557</point>
+          </limit>
+          <limit name="Limite 1361">
+            <point>30TXT9185467276</point>
+            <point>30TYT2011046926</point>
+          </limit>
+          <limit name="Limite 1383">
+            <point>31UCP0581628977</point>
+            <point>31TCP2757516958</point>
+            <point>31UCP3423329286</point>
+            <point>31UCP3423329286</point>
+          </limit>
+          <limit name="Limite 1384">
+            <point>31UCP3039036257</point>
+            <point>31UCP2533129209</point>
+            <point>31UCP1121834906</point>
+          </limit>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="1330" name="Groupe de connaissance [1330]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party id="1326" name="Enemies" type="friend">
+      <objects>
+        <object id="1346" name="general enemies" type="movement forbidden area">
+          <shape type="polygone">
+            <points>
+              <point>31TCN2585049834</point>
+              <point>31TCN2577446684</point>
+              <point>31TCN3170146956</point>
+              <point>31TCN3046349969</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="1347" name="anti-tank enemies" type="anti tank obstacle">
+          <shape type="polygone">
+            <points>
+              <point>31TCN2759241854</point>
+              <point>31TCN2523239505</point>
+              <point>31TCN3154937994</point>
+              <point>31TCN3019341474</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="1348" name="Mine cluster" type="mines">
+          <shape type="point">
+            <points>
+              <point>31TCN1947149130</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <construction completion="1"/>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="1357" name="Cluster " type="mines">
+          <shape type="point">
+            <points>
+              <point>30TYT0306355653</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <construction completion="1"/>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="1358" name="enemies anti tank" type="anti tank obstacle">
+          <shape type="polygone">
+            <points>
+              <point>30TXT9766558386</point>
+              <point>30TXT9788255674</point>
+              <point>30TYT0067856204</point>
+              <point>30TYT0095259158</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="1359" name="general enemies" type="movement forbidden area">
+          <shape type="polygone">
+            <points>
+              <point>30TXT9053158043</point>
+              <point>30TXT9125252880</point>
+              <point>30TXT9647754787</point>
+              <point>30TXT9480259204</point>
+              <point>30TXT9459459196</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="1367" name="antitank" type="anti tank obstacle">
+          <shape type="polygone">
+            <points>
+              <point>30UYU0708827458</point>
+              <point>30UYU0619124808</point>
+              <point>30UYU0967522316</point>
+              <point>30UYU1477025757</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="1368" name="Mines" type="mines">
+          <shape type="point">
+            <points>
+              <point>30TYU1623717063</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <construction completion="1"/>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="1369" name="aze" type="mines">
+          <shape type="point">
+            <points>
+              <point>30TYU1452119363</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <construction completion="1"/>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="1370" name="sqd" type="movement forbidden area">
+          <shape type="polygone">
+            <points>
+              <point>30UXU9134231710</point>
+              <point>30UXU9140728137</point>
+              <point>30UXU9733730586</point>
+              <point>30UXU9727833105</point>
+              <point>30UXU9634533231</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="1378" name="qsd" type="movement forbidden area">
+          <shape type="polygone">
+            <points>
+              <point>30UXU4547425404</point>
+              <point>30UXU4477221989</point>
+              <point>30UXU4787320842</point>
+              <point>30UXU4767824878</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="1385" name="aze1" type="movement forbidden area">
+          <shape type="polygone">
+            <points>
+              <point>31UCP2569827222</point>
+              <point>31UCP2504923903</point>
+              <point>31UCP2812122132</point>
+              <point>31UCP2935026443</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="1386" name="aze2" type="movement forbidden area">
+          <shape type="polygone">
+            <points>
+              <point>31UCP2477923168</point>
+              <point>31UCP2785021367</point>
+              <point>31UCP2640919157</point>
+              <point>31UCP2394321799</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="1387" name="aze3" type="mines">
+          <shape type="point">
+            <points>
+              <point>31TCP2744018726</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <construction completion="1"/>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="1388" name="aze4" type="mines">
+          <shape type="point">
+            <points>
+              <point>31UCP2287323456</point>
+            </points>
+          </shape>
+          <attributes>
+            <obstacle activated="true" type="preliminary"/>
+            <construction completion="1"/>
+            <activity-time value="0"/>
+          </attributes>
+        </object>
+        <object id="1389" name="aze5" type="anti tank obstacle">
+          <shape type="polygone">
+            <points>
+              <point>31UCP2083825662</point>
+              <point>31UCP1908523853</point>
+              <point>31UCP2414724538</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+      </objects>
+      <tactical>
+        <formation id="1390" level="ii" name="Formation [1390]">
+          <automat engaged="true" id="1410" knowledge-group="1392" name="Scout platoon [1391] [1410]" type="ARMOR.Scout platoon">
+            <unit command-post="false" id="1411" name="ARMOR.Antitank patrol" position="31UCP1742924691" type="ARMOR.Antitank patrol"/>
+            <unit command-post="true" id="1412" name="ARMOR.Scout patrol" position="31UCP1790924171" type="ARMOR.Scout patrol"/>
+            <unit command-post="false" id="1413" name="ARMOR.Scout patrol" position="31UCP1738823693" type="ARMOR.Scout patrol"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="1392" name="Groupe de connaissance [1392]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+    <party id="1327" name="Neutrals" type="friend">
+      <objects/>
+      <tactical/>
+      <communication/>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="1325">
+      <relationship diplomacy="enemy" party="1326"/>
+      <relationship diplomacy="neutral" party="1327"/>
+    </party>
+    <party id="1326">
+      <relationship diplomacy="enemy" party="1325"/>
+      <relationship diplomacy="neutral" party="1327"/>
+    </party>
+    <party id="1327">
+      <relationship diplomacy="neutral" party="1325"/>
+      <relationship diplomacy="neutral" party="1326"/>
+    </party>
+  </diplomacy>
+</orbat>
+<!-- signature="0626976200" -->

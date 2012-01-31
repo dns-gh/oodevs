@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<exercise model-version="4.8.2" valid="true" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/exercise/exercise.xsd">
+  <meta>
+    <briefing>
+      <text lang="en"><![CDATA[<html><head><meta name="qrichtext" content="1" /></head><body style="font-size:8pt;font-family:MS Shell Dlg 2">
+<p style="margin-top:18px" dir="ltr"><span style="font-size:16pt;font-weight:600">Sword's demo in 9 use cases</span></p>
+<p dir="ltr">This demo shows the main features of Sword OT v3.1. The terrain is the 9 times duplication of the same terrain (near Angers).</p>
+<p dir="ltr">Thus, each case is an improvment of the previous one and allow a smooth increase in the demo complexity.</p>
+<p style="margin-top:16px" dir="ltr"><span style="font-size:12pt;font-weight:600">Profiles</span></p>
+<ul type="disc"><li dir="ltr"><span style="font-weight:600">Free demo:</span> freely use this scenario </li>
+<li dir="ltr"><span style="font-weight:600">Scripted demo:</span> a script will interactively drives you towards the scenario with recorded orders and contextual information </li></ul>
+<p style="margin-top:16px" dir="ltr"><span style="font-size:12pt;font-weight:600">Objectives</span></p>
+<ul type="disc"><li dir="ltr">Introduction to Sword's main features </li></ul>
+</body></html>
+]]></text>
+    </briefing>
+    <resources/>
+  </meta>
+  <profiles file="profiles.xml"/>
+  <orbat file="orbat.xml"/>
+  <urbanstate file="urbanstate.xml"/>
+  <weather file="weather.xml"/>
+  <terrain name="Angers_x9_en"/>
+  <model dataset="ada" physical="worldwide"/>
+  <settings file="settings.xml"/>
+</exercise>
+<!-- signature="4009608042" -->
