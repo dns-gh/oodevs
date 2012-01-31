@@ -45,6 +45,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual bool IsIntoxicated() const = 0;
     virtual bool IsContaminated() const = 0;
     virtual bool IsIntoxicated() const = 0;
     virtual void Poison( const MIL_ToxicEffectManipulator& contamination ) = 0;
