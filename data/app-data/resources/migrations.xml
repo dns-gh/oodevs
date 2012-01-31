@@ -148,5 +148,6 @@
     <upgrade schema="schemas/4.3.3/physical/Crowds.xsd" apply="schemas/4.3.4/xsl/crowd_4.3.3-4.3.4.xsl"/>
     <upgrade schema="schemas/4.3.3/exercise/orbat.xsd" apply="schemas/4.3.4/xsl/orbat_4.3.3-4.3.4.xsl"/>
     <upgrade schema="schemas/4.3.3/exercise/exercise.xsd" apply="schemas/4.3.4/xsl/exercise_4.3.3-4.3.4.xsl"/>
+    <upgrade schema="schemas/4.3.3/exercise/settings.xsd" apply="schemas/4.3.4/xsl/settings_4.3.3-4.3.4.xsl"/>
   </migration>
 </migrations>
