@@ -1480,7 +1480,7 @@
     </target>
 
     <target name="package.otpack.defense.scipio" description="package du defense-scipio Referentiel Simulation otpack">
-        <pack name="defense-scipio-RefSim" description="defense-scipio exercises package">
+        <pack name="ScipioStab-RefSim" description="defense-scipio exercises package">
             <include name="data/models/ada/decisional/bms/**"/>
             <include name="data/models/ada/decisional/directia5/**"/>
             <include name="data/models/ada/decisional/decisional.xml"/>
@@ -1489,7 +1489,7 @@
     </target>
 
     <target name="package.otpack.defense.scipio.VA" description="package du defense-scipio Validation Amont otpack">
-        <pack name="defense-scipio-VA" description="defense-scipio Validation Amont exercises package">
+        <pack name="ScipioStab-VA" description="defense-scipio Validation Amont exercises package">
             <include name="exercises/scipio/exercisesVA/Poseidon VA Missions Communes/**"/>
             <include name="exercises/scipio/exercisesVA/Poseidon VA pions/**"/>
             <include name="exercises/scipio/exercisesVA/Poseidon VA AppuiCombat/**"/>
