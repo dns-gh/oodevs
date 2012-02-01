@@ -2581,6 +2581,8 @@
         <mission name="MLSECURITY - Enable resource nodes"/>
         <mission name="MLSECURITY - Disable resource nodes"/>
         <mission name="MLSECURITY - Patrol"/>
+        <mission name="MLSECURITY - Transport"/>
+        <mission name="MLSECURITY - TransportACrowd"/>
       </missions>
       <fragorders/>
     </unit>
@@ -3809,4 +3811,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2225678404" -->
+<!-- signature="2560518081" -->

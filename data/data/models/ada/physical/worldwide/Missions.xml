@@ -1936,6 +1936,60 @@ overwhelming force.]]></doctrine>
         </choice>
       </parameter>
     </mission>
+    <mission dia-behavior="tasks.Transport" dia-type="tasks.Transport" id="4457" name="MLSECURITY - Transport">
+      <description>
+        <doctrine><![CDATA[To transport a set of elements on a target position.]]></doctrine>
+        <usage><![CDATA[To transport entities ( agents, knowledge agents, crowds) on a specified position. 
+Entities are visited in the order of the list and are loaded on agent Unit. Once all elements are loaded (some entities could not be loaded), agent Unit moves toward issued destination and unload transported entities, one by one. ]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="entitiesToTransport" max-occurs="2000" min-occurs="1" name="Entities to transport" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+          <parameter type="CrowdKnowledge"/>
+        </choice>
+      </parameter>
+      <parameter dia-name="destination" name="Target destination" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="ObjectKnowledge"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
+    <mission dia-behavior="tasks.TransportACrowd" dia-type="tasks.TransportACrowd" id="4459" name="MLSECURITY - TransportACrowd">
+      <description>
+        <doctrine><![CDATA[To transport a entire 'Crowd' toward a given destination. 
+]]></doctrine>
+        <usage><![CDATA[Agent transports a Crowd's concentration nearby the loading position paramter. 
+Depending on its crowd transport capacity, agent will make as many round trips as necessary between loading position and target destination, until there is no more Crowd's concentration nearby the loading position.]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="crowd" name="The crowd to transport" optional="false" type="CrowdKnowledge">
+        <choice>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+          <parameter type="CrowdKnowledge"/>
+        </choice>
+      </parameter>
+      <parameter dia-name="targetDestination" name="Target destination" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="ObjectKnowledge"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+      <parameter dia-name="loadingPosition" name="Crowd's concentration position" optional="false" type="Point"/>
+    </mission>
   </units>
   <automats>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_AllerSeRecompleter" dia-type="T_Mission_Automate_ALAT_AllerSeRecompleter" id="189" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AllerSeRecompleter" name="AIR - resupply">
@@ -3259,4 +3313,4 @@ overwhelming force.]]></doctrine>
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="3769381081" -->
+<!-- signature="0955668317" -->

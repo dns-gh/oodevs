@@ -3143,7 +3143,28 @@
     <nature atlas-nature="Indefini" level="none" nature-app6="emergency/public safety"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="SECURITY.Police Car"/>
-      <equipment count="1" crew="2" type="SECURITY.Bus"/>
+    </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="0s"/>
+      <posture name="Poste" setup-time="0s"/>
+      <posture name="PosteAmenage" setup-time="0s"/>
+      <posture name="PostePrepareGenie" setup-time="0s"/>
+    </postures>
+    <nbc decontamination-delay="3600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="1m"/>
+  </unit>
+  <unit decisional-model="ML_SecurityAgent" id="100" name="ML_Security - Crowd transporter" type="Pion Emergency">
+    <nature atlas-nature="Indefini" level="none" nature-app6="emergency/medical/evacuation/ambulance"/>
+    <equipments>
+      <equipment count="1" crew="2" type="SECURITY.Police Car"/>
+      <equipment count="2" crew="2" major="true" type="SECURITY.Bus"/>
     </equipments>
     <sensors-range range="0"/>
     <equipments-range range="0"/>
@@ -3162,4 +3183,4 @@
     <crossing-height height="1m"/>
   </unit>
 </units>
-<!-- signature="2338868443" -->
+<!-- signature="3040795287" -->

@@ -55,6 +55,13 @@
             <unit command-post="false" id="10" name="ML_Security - Civil Protection - Safety" position="29TNF3532755408" type="ML_Security - Civil Protection - Safety"/>
             <unit command-post="false" id="11" name="ML_Security - Civil Protection - Safety" position="29TNF3521955431" type="ML_Security - Civil Protection - Safety"/>
             <unit command-post="false" id="12" name="ML_Security - Civil Protection - Safety" position="29TNF3544655404" type="ML_Security - Civil Protection - Safety"/>
+            <unit command-post="false" id="64" name="ML_Security - Crowd transporter" position="29TNF3532755697" type="ML_Security - Crowd transporter"/>
+            <unit command-post="false" id="65" name="ML_Security - Crowd transporter" position="29TNF3525555777" type="ML_Security - Crowd transporter"/>
+            <unit command-post="false" id="87" name="ML_Security - Crowd transporter" position="29TNF3077755210" type="ML_Security - Crowd transporter"/>
+            <unit command-post="false" id="88" name="ML_Security - Crowd transporter" position="29TNF3064055293" type="ML_Security - Crowd transporter"/>
+            <unit command-post="false" id="89" name="ML_Security - Crowd transporter" position="29TNF3089755119" type="ML_Security - Crowd transporter"/>
+            <unit command-post="false" id="90" name="ML_Security - Civil Protection - Safety" position="29TNF3124654958" type="ML_Security - Civil Protection - Safety"/>
+            <unit command-post="false" id="91" name="ML_Security - Civil Protection - Safety" position="29TNF3106655023" type="ML_Security - Civil Protection - Safety"/>
           </automat>
           <automat engaged="false" id="28" knowledge-group="8" logistic-level="logistic-base" name="Logistic combat train [28]" type="LOG.Logistic combat train">
             <unit command-post="true" id="29" name="Logistic CT" position="29TNF3547054990" type="LOG.Logistic CT"/>
@@ -86,6 +93,83 @@
         </population>
         <population attitude="calme" id="44" name="Standard Crowd [44]" position="29TNF3611756169" type="Standard Crowd">
           <composition contaminated="0" dead="0" healthy="1500" wounded="1000"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="59" name="Standard Crowd [59]" position="29TNF3611255713" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="150" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="60" name="Standard Crowd [60]" position="29TNF3652855901" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="150" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="61" name="Standard Crowd [61]" position="29TNF3642556313" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="50" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="62" name="Standard Crowd [62]" position="29TNF3649355657" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="50" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="66" name="Standard Crowd [66]" position="29TNF3475455870" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="200" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="67" name="Standard Crowd [67]" position="29TNF3460055766" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="200" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="68" name="Standard Crowd [68]" position="29TNF3445455566" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="20" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="69" name="Standard Crowd [69]" position="29TNF3463855460" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="20" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="70" name="Standard Crowd [70]" position="29TNF3480655508" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="20" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="71" name="Standard Crowd [71]" position="29TNF3450255885" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="20" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="72" name="Standard Crowd [72]" position="29TNF3092355500" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="20" wounded="0"/>
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
@@ -125,6 +209,8 @@
             <unit command-post="false" id="16" name="ML_Security - Civil Protection - Safety" position="29TNF3613455316" type="ML_Security - Civil Protection - Safety"/>
             <unit command-post="false" id="17" name="ML_Security - Civil Protection - Safety" position="29TNF3610255241" type="ML_Security - Civil Protection - Safety"/>
             <unit command-post="false" id="18" name="ML_Security - Civil Protection - Safety" position="29TNF3604755324" type="ML_Security - Civil Protection - Safety"/>
+            <unit command-post="false" id="85" name="ML_Security - Crowd transporter" position="29TNF3113455441" type="ML_Security - Crowd transporter"/>
+            <unit command-post="false" id="86" name="ML_Security - Crowd transporter" position="29TNF3112355340" type="ML_Security - Crowd transporter"/>
           </automat>
           <automat engaged="false" id="30" knowledge-group="14" logistic-level="logistic-base" name="Logistic combat train [30]" type="LOG.Logistic combat train">
             <unit command-post="true" id="31" name="Logistic CT" position="29TNF3641355745" type="LOG.Logistic CT">
@@ -145,13 +231,197 @@
             <unit command-post="false" id="41" name="ML_Security - Civil Protection - Safety" position="29TNF3640154976" type="ML_Security - Civil Protection - Safety"/>
             <unit command-post="false" id="42" name="ML_Security - Civil Protection - Safety" position="29TNF3648154918" type="ML_Security - Civil Protection - Safety"/>
             <unit command-post="false" id="43" name="ML_Security - Civil Protection - Safety" position="29TNF3635455026" type="ML_Security - Civil Protection - Safety"/>
+            <unit command-post="false" id="63" name="ML_Security - Crowd transporter" position="29TNF3500855300" type="ML_Security - Crowd transporter"/>
           </automat>
         </formation>
       </tactical>
       <communication>
         <knowledge-group id="14" name="Groupe de connaissance [14]" type="Standard"/>
       </communication>
-      <populations/>
+      <populations>
+        <population attitude="calme" id="45" name="Standard Crowd [45]" position="29TNF3584255884" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="10" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="46" name="Standard Crowd [46]" position="29TNF3597955796" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="10" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="47" name="Standard Crowd [47]" position="29TNF3583155710" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="10" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="48" name="Standard Crowd [48]" position="29TNF3599955821" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="10" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="49" name="Standard Crowd [49]" position="29TNF3579255837" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="10" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="50" name="Standard Crowd [50]" position="29TNF3602055682" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="20" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="51" name="Standard Crowd [51]" position="29TNF3573855587" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="20" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="52" name="Standard Crowd [52]" position="29TNF3626056068" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="20" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="53" name="Standard Crowd [53]" position="29TNF3623855822" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="50" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="54" name="Standard Crowd [54]" position="29TNF3559755715" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="50" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="55" name="Standard Crowd [55]" position="29TNF3594355884" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="50" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="56" name="Standard Crowd [56]" position="29TNF3619755649" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="50" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="57" name="Standard Crowd [57]" position="29TNF3555055538" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="50" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="58" name="Standard Crowd [58]" position="29TNF3583756021" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="150" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="73" name="Standard Crowd [73]" position="29TNF3088955619" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="20" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="74" name="Standard Crowd [74]" position="29TNF3103655321" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="20" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="75" name="Standard Crowd [75]" position="29TNF3061655458" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="20" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="76" name="Standard Crowd [76]" position="29TNF3102955221" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="20" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="77" name="Standard Crowd [77]" position="29TNF3111355258" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="20" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="78" name="Standard Crowd [78]" position="29TNF3112955582" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="20" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="79" name="Standard Crowd [79]" position="29TNF3137455623" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="20" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="80" name="Standard Crowd [80]" position="29TNF3135555532" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="20" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="81" name="Standard Crowd [81]" position="29TNF3162755199" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="20" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="82" name="Standard Crowd [82]" position="29TNF3078455703" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="200" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="83" name="Standard Crowd [83]" position="29TNF3136255248" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="200" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="84" name="Standard Crowd [84]" position="29TNF3115755703" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="200" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+          </adhesions>
+        </population>
+      </populations>
       <inhabitants>
         <inhabitant id="36" name="Population en haut" type="popType2">
           <composition dead="0" healthy="1000" wounded="0"/>
@@ -194,4 +464,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="2424919274" -->
+<!-- signature="3496284258" -->
