@@ -835,5 +835,9 @@
         <source>Gaseous</source>
         <translation>Gazeux</translation>
     </message>
+    <message>
+        <source>funeral</source>
+        <translation>funéraire</translation>
+    </message>
 </context>
 </TS>

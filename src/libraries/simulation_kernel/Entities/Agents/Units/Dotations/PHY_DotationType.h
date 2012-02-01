@@ -40,6 +40,7 @@ public:
     static PHY_DotationType* ration_;
     static PHY_DotationType* agentExtincteur_;
     static PHY_DotationType* energie_;
+    static PHY_DotationType* funeraire_;
     //@}
 
 public:
@@ -71,15 +72,16 @@ private:
     //@{
     enum E_DotationType
     {
-        eMunition  = 0,
-        eCarburant = 1,
-        eExplosif  = 2,
-        eMine      = 3,
-        eBarbele   = 4,
-        ePiece     = 5,
-        eRation    = 6,
+        eMunition        = 0,
+        eCarburant       = 1,
+        eExplosif        = 2,
+        eMine            = 3,
+        eBarbele         = 4,
+        ePiece           = 5,
+        eRation          = 6,
         eAgentExtincteur = 7,
-        eEnergie = 8,
+        eEnergie         = 8,
+        eFuneraire       = 9
     };
 
     typedef std::map< std::string, const PHY_DotationType* > T_DotationTypeMap;
@@ -89,7 +91,7 @@ private:
     typedef T_DotationCategoryMap::const_iterator              CIT_DotationCategoryMap;
 
     typedef std::map< unsigned int, const PHY_DotationCategory* > T_DotationCategoryIDMap;
-    typedef T_DotationCategoryIDMap::const_iterator       CIT_DotationCategoryIDMap;
+    typedef T_DotationCategoryIDMap::const_iterator             CIT_DotationCategoryIDMap;
     //@}
 
 private:

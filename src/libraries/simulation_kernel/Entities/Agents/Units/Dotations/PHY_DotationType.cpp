@@ -28,6 +28,7 @@ PHY_DotationType* PHY_DotationType::piece_ = 0;
 PHY_DotationType* PHY_DotationType::ration_ = 0;
 PHY_DotationType* PHY_DotationType::agentExtincteur_ = 0;
 PHY_DotationType* PHY_DotationType::energie_ = 0;
+PHY_DotationType* PHY_DotationType::funeraire_ = 0;
 
 PHY_DotationType::T_DotationTypeMap       PHY_DotationType::dotationTypes_;
 PHY_DotationType::T_DotationCategoryIDMap PHY_DotationType::dotationCategorieIDs_;
@@ -55,7 +56,8 @@ void PHY_DotationType::Initialize( xml::xistream& xis )
     PHY_DotationType::piece_           = new PHY_DotationType( "piece"            , ePiece          , PHY_DotationLogisticType::pieces_         );
     PHY_DotationType::ration_          = new PHY_DotationType( "ration"           , eRation         , PHY_DotationLogisticType::uniteVivre_     );
     PHY_DotationType::agentExtincteur_ = new PHY_DotationType( "agent extincteur" , eAgentExtincteur, PHY_DotationLogisticType::uniteVivre_     );
-    PHY_DotationType::energie_ = new PHY_DotationType( "energie" , eEnergie, PHY_DotationLogisticType::uniteVivre_ );
+    PHY_DotationType::energie_         = new PHY_DotationType( "energie"          , eEnergie        , PHY_DotationLogisticType::uniteVivre_     );
+    PHY_DotationType::funeraire_       = new PHY_DotationType( "funeraire"        , eFuneraire      , PHY_DotationLogisticType::uniteVivre_     );
 
     dotationTypes_[ munition_       ->GetName() ] = munition_;
     dotationTypes_[ carburant_      ->GetName() ] = carburant_;
@@ -65,7 +67,8 @@ void PHY_DotationType::Initialize( xml::xistream& xis )
     dotationTypes_[ piece_          ->GetName() ] = piece_;
     dotationTypes_[ ration_         ->GetName() ] = ration_;
     dotationTypes_[ agentExtincteur_->GetName() ] = agentExtincteur_;
-    dotationTypes_[ energie_->GetName() ] = energie_;
+    dotationTypes_[ energie_        ->GetName() ] = energie_;
+    dotationTypes_[ funeraire_      ->GetName() ] = funeraire_;
     LoadingWrapper loader;
     xis >> xml::start( "resources" )
             >> xml::list( "resource", loader, &LoadingWrapper::ReadDotation )
@@ -78,17 +81,10 @@ void PHY_DotationType::Initialize( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_DotationType::ReadDotation( xml::xistream& xis )
 {
-    std::string name;
-    std::string category;
-
-    xis >> xml::attribute( "name", name )
-        >> xml::attribute( "category", category );
-
-    CIT_DotationTypeMap it = dotationTypes_.find( category );
+    CIT_DotationTypeMap it = dotationTypes_.find( xis.attribute< std::string >( "category" ) );
     if( it == dotationTypes_.end() )
         xis.error( "Invalid dotation category name" );
-
-    const_cast< PHY_DotationType& >( *it->second ).RegisterDotation( name, xis );
+    const_cast< PHY_DotationType& >( *it->second ).RegisterDotation( xis.attribute< std::string >( "name" ), xis );
 }
 
 //-----------------------------------------------------------------------------

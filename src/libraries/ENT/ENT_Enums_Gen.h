@@ -33,6 +33,7 @@ enum E_DotationFamily
     eDotationFamily_Ration,
     eDotationFamily_AgentExtincteur,
     eDotationFamily_Energy,
+    eDotationFamily_Funeraire,
     eNbrDotationFamily
 };
 
