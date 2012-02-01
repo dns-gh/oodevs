@@ -12,8 +12,12 @@
 #include "LogFactory_ABC.h"
 #include "Log_ABC.h"
 #include <boost/lexical_cast.hpp>
+#include <boost/filesystem/path.hpp>
+#include <boost/filesystem/operations.hpp>
+#include <boost/algorithm/string.hpp>
 
 using namespace dispatcher;
+namespace bfs = boost::filesystem;
 
 // -----------------------------------------------------------------------------
 // Name: RotatingLog constructor
@@ -24,11 +28,17 @@ RotatingLog::RotatingLog( dispatcher::LogFactory_ABC& factory, const std::string
     : factory_ ( factory )
     , filename_( filename )
     , files_   ( files )
-    , file_    ( files )
+    , file_    ( 1 )
     , size_    ( size )
-    , count_   ( size )
+    , count_   ( 0 )
 {
-    // NOTHING
+    bfs::path pathFileName( filename_ );
+    std::string pathName = pathFileName.parent_path().string();
+    if ( pathName.empty() )
+        fileNameNoExtension_ = pathFileName.stem();
+    else
+        fileNameNoExtension_ = pathFileName.parent_path().string() + "/" + pathFileName.stem();
+    extension_ = pathFileName.extension();
 }
 
 // -----------------------------------------------------------------------------
@@ -37,16 +47,23 @@ RotatingLog::RotatingLog( dispatcher::LogFactory_ABC& factory, const std::string
 // -----------------------------------------------------------------------------
 void RotatingLog::DoWrite( const std::string& line )
 {
-    if( count_ == size_ )
+    unsigned int messageSize = static_cast< unsigned int >( line.size() );
+    count_ += messageSize;
+
+    if ( !pLog_.get() )
+        pLog_ = factory_.CreateLog( filename_ );
+    else if( size_ > 0 && count_ > size_ )
     {
-        count_ = 0;
+        count_ = messageSize;
         ++file_;
         if( file_ > files_ )
             file_ = 1;
         pLog_.reset();
-        pLog_ = factory_.CreateLog( filename_ +
-            ( file_ == 1 ? "" : ( "." + boost::lexical_cast< std::string >( file_ ) ) ) );
+        if( file_ == 1 )
+            pLog_ = factory_.CreateLog( filename_ );
+        else
+            pLog_ = factory_.CreateLog( fileNameNoExtension_ + ( "." + boost::lexical_cast< std::string >( file_ - 1 ) ) + extension_ );
     }
+
     pLog_->Write( line );
-    ++count_;
 }

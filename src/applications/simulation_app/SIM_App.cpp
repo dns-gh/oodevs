@@ -64,7 +64,10 @@ SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */ ,LPSTR lpCm
     , dispatcherOk_  ( true )
 {
     startupConfig_->Parse( winArguments_->Argc(), const_cast< char** >( winArguments_->Argv() ) );
-    logger_.reset( new MT_FileLogger( startupConfig_->BuildSessionChildFile( "Sim.log" ).c_str(), MT_Logger_ABC::eLogLevel_All, true ) );
+    logger_.reset( new MT_FileLogger( startupConfig_->BuildSessionChildFile( "Sim.log" ).c_str(), 
+                                      static_cast< tools::ExerciseConfig* >( startupConfig_.get() )->GetLogFiles( "sim" ),
+                                      static_cast< tools::ExerciseConfig* >( startupConfig_.get() )->GetLogSize( "sim" ),
+                                      MT_Logger_ABC::ConvertConfigLevel( static_cast< tools::ExerciseConfig* >( startupConfig_.get() )->GetLogLevel( "sim" ) ), true ) );
     console_.reset( new MT_ConsoleLogger() );
     MT_LOG_REGISTER_LOGGER( *console_ );
     MT_LOG_REGISTER_LOGGER( *logger_ );

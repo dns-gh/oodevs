@@ -69,8 +69,8 @@ BOOST_AUTO_TEST_CASE( rotating_log_switches_to_next_log_when_max_entries_is_reac
     MockLogFactory factory;
     MockLog* pLog = new MockLog();
     const unsigned int size = 3;
-    RotatingLog log( factory, "filename", 2, size );
-    MOCK_EXPECT( factory, CreateLog ).once().with( "filename" ).returns( pLog );
+    RotatingLog log( factory, "filename.log", 2, static_cast< int >( strlen( "some text" ) ) * size );
+    MOCK_EXPECT( factory, CreateLog ).once().with( "filename.log" ).returns( pLog );
     MOCK_EXPECT( pLog, Write ).exactly( size ).with( "some text" );
     log.Write( "some text" );
     log.Write( "some text" );
@@ -79,7 +79,7 @@ BOOST_AUTO_TEST_CASE( rotating_log_switches_to_next_log_when_max_entries_is_reac
     mock::sequence s;
     MOCK_EXPECT( pLog, destructor ).in( s );
     pLog = new MockLog();
-    MOCK_EXPECT( factory, CreateLog ).in( s ).with( "filename.2" ).once().returns( pLog );
+    MOCK_EXPECT( factory, CreateLog ).in( s ).with( "filename.1.log" ).once().returns( pLog );
     MOCK_EXPECT( pLog, Write ).once().with( "some text" );
     log.Write( "some text" );
     MOCK_EXPECT( pLog, destructor );
@@ -90,8 +90,8 @@ BOOST_AUTO_TEST_CASE( rotating_log_goes_back_to_the_first_one_when_max_files_is_
     MockLogFactory factory;
     MockLog* pLog = new MockLog();
     const unsigned int size = 3;
-    RotatingLog log( factory, "filename", 2, size );
-    MOCK_EXPECT( factory, CreateLog ).once().with( "filename" ).returns( pLog );
+    RotatingLog log( factory, "filename.log", 2, static_cast< int >( strlen( "some text" ) ) * size );
+    MOCK_EXPECT( factory, CreateLog ).once().with( "filename.log" ).returns( pLog );
     MOCK_EXPECT( pLog, Write ).exactly( size ).with( "some text" );
     log.Write( "some text" );
     log.Write( "some text" );
@@ -99,7 +99,7 @@ BOOST_AUTO_TEST_CASE( rotating_log_goes_back_to_the_first_one_when_max_files_is_
     mock::verify();
     MOCK_EXPECT( pLog, destructor );
     pLog = new MockLog();
-    MOCK_EXPECT( factory, CreateLog ).once().with( "filename.2" ).returns( pLog );
+    MOCK_EXPECT( factory, CreateLog ).once().with( "filename.1.log" ).returns( pLog );
     MOCK_EXPECT( pLog, Write ).exactly( size ).with( "some text" );
     log.Write( "some text" );
     log.Write( "some text" );
@@ -107,7 +107,7 @@ BOOST_AUTO_TEST_CASE( rotating_log_goes_back_to_the_first_one_when_max_files_is_
     mock::verify();
     MOCK_EXPECT( pLog, destructor );
     pLog = new MockLog();
-    MOCK_EXPECT( factory, CreateLog ).once().with( "filename" ).returns( pLog );
+    MOCK_EXPECT( factory, CreateLog ).once().with( "filename.log" ).returns( pLog );
     MOCK_EXPECT( pLog, Write ).once().with( "some text" );
     log.Write( "some text" );
     MOCK_EXPECT( pLog, destructor );

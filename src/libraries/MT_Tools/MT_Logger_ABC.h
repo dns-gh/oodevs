@@ -73,6 +73,15 @@ public:
     //-------------------------------------------------------------------------
     //@{
     bool IsLogLevelSet( E_LogLevel nLevel ) const;
+
+    static int ConvertConfigLevel( unsigned int configLevel )
+    {
+        if ( configLevel == 0 )
+            return eLogLevel_FatalError | eLogLevel_Error;
+        if ( configLevel == 1 )
+            return eLogLevel_FatalError | eLogLevel_Error | eLogLevel_Warning | eLogLevel_Message | eLogLevel_Info;
+        return eLogLevel_All;
+    }
     //@}
 
 protected:
