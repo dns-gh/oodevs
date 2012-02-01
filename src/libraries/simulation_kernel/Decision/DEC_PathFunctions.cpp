@@ -124,6 +124,33 @@ boost::shared_ptr< MT_Vector2D > DEC_PathFunctions::ExtrapolatePosition( const M
     return pPos;
 }
 
+namespace
+{
+    std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > GetNextObjectOnPath( MIL_ObjectFilter& filter, const MIL_Agent_ABC& callerAgent )
+    {
+        std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > result;
+        boost::shared_ptr< DEC_Knowledge_Object > pObjectColliding;
+        double rDistanceCollision = 0.;
+        double rDistanceAfter = 0.;
+        const PHY_RoleInterface_Location& roleLocation = callerAgent.GetRole< PHY_RoleInterface_Location >();
+        const double rHeight = roleLocation.GetHeight  ();
+        const MT_Vector2D&  position = roleLocation.GetPosition();
+        T_KnowledgeObjectVector knowledges;
+        callerAgent.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledges, rHeight, filter );
+        if( knowledges.empty() || !callerAgent.GetRole< moving::PHY_RoleAction_Moving >().ComputeFutureObjectCollision( position, knowledges, rDistanceCollision, rDistanceAfter, pObjectColliding ) )
+        {
+            result.first = false;
+            return result;
+        }
+        if( !pObjectColliding || !pObjectColliding->IsValid() )
+            throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+        result.first = true;
+        result.second.first = pObjectColliding;
+        result.second.second = MIL_Tools::ConvertSimToMeter( rDistanceCollision );
+        return result;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFunctions::GetNextObjectOnPath
 // Created: NLD 2004-05-04
@@ -131,31 +158,9 @@ boost::shared_ptr< MT_Vector2D > DEC_PathFunctions::ExtrapolatePosition( const M
 std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > DEC_PathFunctions::GetNextObjectOnPath( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > /*oId*/, float /*oDistance*/, const std::vector< std::string >& params )
 {
     MIL_ObjectFilter filter( params );
-    std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > result;
-    boost::shared_ptr< DEC_Knowledge_Object > pObjectColliding;
-    double rDistanceCollision = 0.;
-    double rDistanceAfter = 0.;
-    const PHY_RoleInterface_Location& roleLocation = callerAgent.GetRole< PHY_RoleInterface_Location >();
-    const double rHeight = roleLocation.GetHeight  ();
-    const MT_Vector2D&  position = roleLocation.GetPosition();
-    T_KnowledgeObjectVector knowledges;
-    callerAgent.GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledges, rHeight, filter );
-    if( knowledges.empty() || !callerAgent.GetRole< moving::PHY_RoleAction_Moving >().ComputeFutureObjectCollision( position, knowledges, rDistanceCollision, rDistanceAfter, pObjectColliding ) )
-    {
-        result.first = false;
-        return result;
-    }
-    if( !pObjectColliding || !pObjectColliding->IsValid() )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
-    result.first = true;
-    result.second.first = pObjectColliding;
-    result.second.second = MIL_Tools::ConvertSimToMeter( rDistanceCollision );
-    return result;
+    return ::GetNextObjectOnPath( filter, callerAgent );
 }
 
-struct CanRemoveFromPathException
-{
-};
 class CanRemoveFromPathComputer : public OnComponentComputer_ABC
 {
 public:
@@ -199,26 +204,7 @@ private:
 std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > DEC_PathFunctions::GetNextRemovableObjectOnPath( const DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > oId, float oDistance )
 {
     RemovableFromPathObjectFilter filter( callerAgent.GetPion() );
-    std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > result;
-    boost::shared_ptr< DEC_Knowledge_Object > pObjectColliding;
-    double rDistanceBeforeCollision = 0.;
-    double rDistanceAfterCollision = 0.;
-    const PHY_RoleInterface_Location& roleLocation = callerAgent.GetPion().GetRole< PHY_RoleInterface_Location >();
-    const double rHeight = roleLocation.GetHeight  ();
-    const MT_Vector2D&  position = roleLocation.GetPosition();
-    T_KnowledgeObjectVector knowledges;
-    callerAgent.GetPion().GetArmy().GetKnowledge().GetObjectsAtInteractionHeight( knowledges, rHeight, filter );
-    if( knowledges.empty() || !callerAgent.GetPion().GetRole< moving::PHY_RoleAction_Moving >().ComputeFutureObjectCollision( position, knowledges, rDistanceBeforeCollision, rDistanceAfterCollision, pObjectColliding ) )
-    {
-        result.first = false;
-        return result;
-    }
-    if( !pObjectColliding || !pObjectColliding->IsValid() )
-        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
-    result.first = true;
-    result.second.first = pObjectColliding;
-    result.second.second = MIL_Tools::ConvertSimToMeter( rDistanceBeforeCollision );
-    return result;
+    return ::GetNextObjectOnPath( filter, callerAgent.GetPion() );
 }
 
 // -----------------------------------------------------------------------------
