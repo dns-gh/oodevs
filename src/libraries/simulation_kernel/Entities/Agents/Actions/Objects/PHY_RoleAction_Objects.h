@@ -61,6 +61,7 @@ public:
     int GetFinalReturnCode() const;
     int Construct( MIL_Object_ABC* pObject, boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
     int ResumeWork( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
+    int ResumeWork( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge, bool valorizeIt );
     int ResumeWork( UrbanObjectWrapper* pUrbanBlock );
     int Destroy( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );
     int Mine( boost::shared_ptr< DEC_Knowledge_Object >& objectKnowledge );

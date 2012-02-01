@@ -216,7 +216,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC__StartOccuperObjet" ] =
         boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionOccupyObject, boost::shared_ptr< DEC_Knowledge_Object > >, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_StartReprendreTravauxObjet" ] =
-        boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionResumeWorkObject, boost::shared_ptr< DEC_Knowledge_Object > >, boost::ref( GetPion() ), _1 ) );
+        boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Object >, bool ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionResumeWorkObject, boost::shared_ptr< DEC_Knowledge_Object>, bool >, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC_ReparerBlocUrbain" ] =
         boost::function< unsigned int( UrbanObjectWrapper* ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionResumeWorkUrbanBlock, UrbanObjectWrapper* >, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC__StartAnimerObjet" ] =
