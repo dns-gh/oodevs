@@ -54,7 +54,7 @@ private:
     LogFactory_ABC& factory_;
     std::string filename_;
     std::string fileNameNoExtension_;
-    std::string extenstion_;
+    std::string extension_;
     unsigned int file_, files_, size_, count_;
     std::auto_ptr< Log_ABC > pLog_;
     //@}

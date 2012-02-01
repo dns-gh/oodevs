@@ -34,7 +34,7 @@ RotatingLog::RotatingLog( dispatcher::LogFactory_ABC& factory, const std::string
 {
     bfs::path pathFileName( filename_ );
     fileNameNoExtension_ = pathFileName.parent_path().string() + "/" + pathFileName.stem();
-    extenstion_ = pathFileName.extension();
+    extension_ = pathFileName.extension();
 }
 
 // -----------------------------------------------------------------------------
@@ -57,7 +57,7 @@ void RotatingLog::DoWrite( const std::string& line )
         if( file_ == 1 )
             pLog_ = factory_.CreateLog( filename_ );
         else
-            pLog_ = factory_.CreateLog( fileNameNoExtension_ + ( "." + boost::lexical_cast< std::string >( file_ - 1 ) ) + extenstion_ );
+            pLog_ = factory_.CreateLog( fileNameNoExtension_ + ( "." + boost::lexical_cast< std::string >( file_ - 1 ) ) + extension_ );
     }
     pLog_->Write( line );
 }

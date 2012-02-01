@@ -91,7 +91,7 @@ private:
     //@{
     void ReadExercise( xml::xistream& xis );
     void SetExerciseName( const std::string& file );
-    void ReadLogSetting( const std::string& name, xml::xistream& xis );
+    void ReadLogSettings( const std::string& name, xml::xistream& xis );
     //@}
 
 private:
@@ -102,14 +102,14 @@ private:
     {
         LogSetting();
 
-        enum LogLevel
+        enum eLogLevel
         {
-            logLevel_error,
-            logLevel_info,
-            logLevel_all
+            eLogLevel_error,
+            eLogLevel_info,
+            elogLevel_all
         };
 
-        LogLevel logLevel_;
+        eLogLevel logLevel_;
         int maxFileSize_;
         unsigned int maxFiles_;
     };
@@ -135,7 +135,7 @@ private:
     std::string population_;
     std::string propagations_;
 
-    std::map< std::string, LogSetting > logSetting_;
+    std::map< std::string, LogSetting > logSettings_;
     //@}
 };
 

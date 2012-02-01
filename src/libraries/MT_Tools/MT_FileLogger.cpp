@@ -60,9 +60,9 @@ void MT_FileLogger::OpenNewOfstream( const std::string fileName )
 
     file_.reset( new std::ofstream );
     if( bClearPreviousLog_ )
-        file_->open( fileName, std::ios::out | std::ios::trunc );
+        file_->open( fileName.c_str(), std::ios::out | std::ios::trunc );
     else
-        file_->open( fileName, std::ios::out | std::ios::app );
+        file_->open( fileName.c_str(), std::ios::out | std::ios::app );
 }
 
 //-----------------------------------------------------------------------------
