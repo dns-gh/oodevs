@@ -56,6 +56,7 @@ namespace frontend
             InsertValidatedEntry( dataItem, "data/population/" + population, config.GetRootDir() );
         }
         InsertValidatedEntry( dataItem, "data/models/" + dataset + "/physical/" + physical, config.GetRootDir() );
+        InsertValidatedEntry( dataItem, "data/models/" + dataset + "/decisional", config.GetRootDir() );
         return dataItem;
     }
 
