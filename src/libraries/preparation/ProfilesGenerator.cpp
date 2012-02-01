@@ -77,7 +77,7 @@ void ProfilesGenerator::GenerateENIEX()
 // -----------------------------------------------------------------------------
 void ProfilesGenerator::GenerateSUPERVISOR()
 {
-    GenerateSUPERVISOR( "Superviseur", "supervisor" );
+    GenerateSUPERVISOR( "Superviseur", "supervisor", true );
 }
 
 namespace
@@ -112,7 +112,7 @@ void ProfilesGenerator::GenerateSIDESUPERVISOR()
 // -----------------------------------------------------------------------------
 void ProfilesGenerator::GenerateDIREX()
 {
-    GenerateSUPERVISOR( "Direx", "direx" );
+    GenerateSUPERVISOR( "Direx", "direx", true );
 }
 
 // -----------------------------------------------------------------------------
@@ -121,7 +121,7 @@ void ProfilesGenerator::GenerateDIREX()
 // -----------------------------------------------------------------------------
 void ProfilesGenerator::GenerateANALYSIS()
 {
-    GenerateSUPERVISOR( "Analyste", "analysis" );
+    GenerateSUPERVISOR( "Analyste", "analysis", true );
 }
 
 // -----------------------------------------------------------------------------
@@ -130,14 +130,14 @@ void ProfilesGenerator::GenerateANALYSIS()
 // -----------------------------------------------------------------------------
 void ProfilesGenerator::GenerateGESTIM()
 {
-    GenerateSUPERVISOR( "Gestim", "service-gestim" );
+    GenerateSUPERVISOR( "Gestim", "service-gestim", false );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ProfilesGenerator::GenerateSUPERVISOR
 // Created: JSR 2011-12-08
 // -----------------------------------------------------------------------------
-void ProfilesGenerator::GenerateSUPERVISOR( const QString& name, const std::string& userRole )
+void ProfilesGenerator::GenerateSUPERVISOR( const QString& name, const std::string& userRole, bool readonly )
 {
     std::vector< const Entity_ABC* > entities;
     tools::Iterator< const Team_ABC& > it = model_.GetTeamResolver().CreateIterator();
@@ -146,7 +146,7 @@ void ProfilesGenerator::GenerateSUPERVISOR( const QString& name, const std::stri
         const Entity_ABC& entity = it.NextElement();
         entities.push_back( &entity );
     }
-    profiles_.CreateProfile( name, userRole, entities, true );
+    profiles_.CreateProfile( name, userRole, entities, readonly );
 }
 
 // -----------------------------------------------------------------------------

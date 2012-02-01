@@ -49,7 +49,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void GenerateSUPERVISOR( const QString& name, const std::string& userRole );
+    void GenerateSUPERVISOR( const QString& name, const std::string& userRole, bool readonly );
     void GenerateLowLevelFormations( const kernel::Entity_ABC& entity, const std::string& userRole );
     //@}
 

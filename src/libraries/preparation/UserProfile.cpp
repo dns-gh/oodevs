@@ -167,15 +167,31 @@ void UserProfile::Serialize( xml::xostream& xos ) const
     if( HasProperty( "readAll" ) )
     {
         tools::Iterator< const kernel::Team_ABC& > itReceiver = model_.teams_.CreateIterator();
-        while( itReceiver.HasMoreElements() )
-            readSides.push_back( itReceiver.NextElement().GetId() );
         if( !HasProperty( "noEditable") )
         {
+            while( itReceiver.HasMoreElements() )
+            {
+                long id = itReceiver.NextElement().GetId();
+                bool readwrite = false;
+                for( T_Ids::const_iterator it = writeSides_.begin(); it != writeSides_.end(); ++it )
+                {
+                    if( id == *it )
+                    {
+                        readwrite = true;
+                        break;
+                    }
+                }
+                if( !readwrite )
+                    readSides.push_back( id );
+            }
             writeSides = writeSides_;
             writeFormations = writeFormations_;
             writeAutomats = writeAutomats_;
             writePopulations = writePopulations_;
         }
+        else
+            while( itReceiver.HasMoreElements() )
+                readSides.push_back( itReceiver.NextElement().GetId() );
     }
     else if( HasProperty( "writeAll" ) )
     {
@@ -183,7 +199,6 @@ void UserProfile::Serialize( xml::xostream& xos ) const
         while( itReceiver.HasMoreElements() )
         {
             const unsigned int id = itReceiver.NextElement().GetId();
-            readSides.push_back( id );
             writeSides.push_back( id );
         }
     }
