@@ -3949,7 +3949,7 @@
         <fragorder name="Debarquer"/>
       </fragorders>
     </unit>
-    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.Sections mise en oeuvre DRAC">
+    <unit dia-type="france.military.platoon.combat.support.rens.roles.LanceurDrone" file="BMPion.bms" masalife="true" name="Masalife.RENS.Sections mise en oeuvre DRAC">
       <missions>
         <mission name="PION RENS ROIM Mettre En Oeuvre"/>
         <mission name="PION COMMUNES Decrocher"/>
@@ -3978,7 +3978,7 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </unit>
-    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.Sections mise en oeuvre SDTI">
+    <unit dia-type="france.military.platoon.combat.support.rens.roles.LanceurDrone" file="BMPion.bms" masalife="true" name="Masalife.RENS.Sections mise en oeuvre SDTI">
       <missions>
         <mission name="PION Soutenir En Mesure De"/>
         <mission name="PION Soutenir sur position en mesure de"/>
@@ -7317,4 +7317,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="4259711147" -->
+<!-- signature="4245052021" -->
