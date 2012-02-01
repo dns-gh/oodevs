@@ -133,16 +133,16 @@ void ImprovableCapacity::Register( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void ImprovableCapacity::Finalize( MIL_Object_ABC& object )
 {
-    TER_Localisation localisation = object.GetLocalisation();
-    if( unitType_ == ConstructionCapacity::eRaw && dotation_ )
+    if( dotation_ )
     {
-        nFullNbrDotation_ *= static_cast< unsigned int >( MIL_Tools::ConvertSimToMeter( localisation.GetLength() ) / 1000.f );
-        nFullNbrDotation_ = std::max( 1u, nFullNbrDotation_ );
-        object.GetAttribute< MineAttribute >() = MineAttribute( *dotation_, nFullNbrDotation_ );
-    }
-    else if( unitType_ == ConstructionCapacity::eDensity && dotation_ )
-    {
-        nFullNbrDotation_ = static_cast< unsigned int >( MIL_Tools::ConvertSimToMeter( localisation.GetArea() ) * nFullNbrDotation_ / 1000000.f );
+        TER_Localisation localisation = object.GetLocalisation();
+        if( localisation.GetType() != TER_Localisation::ePoint )
+        {
+            if( unitType_ == ConstructionCapacity::eRaw )
+                nFullNbrDotation_ *= static_cast< unsigned int >( MIL_Tools::ConvertSimToMeter( localisation.GetLength() ) / 1000.f );
+            else if( unitType_ == ConstructionCapacity::eDensity )
+                nFullNbrDotation_ = static_cast< unsigned int >( MIL_Tools::ConvertSimToMeter( localisation.GetArea() ) * nFullNbrDotation_ / 1000000.f );
+        }
         nFullNbrDotation_ = std::max( 1u, nFullNbrDotation_ );
         object.GetAttribute< MineAttribute >() = MineAttribute( *dotation_, nFullNbrDotation_ );
     }
