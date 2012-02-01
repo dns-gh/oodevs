@@ -17,6 +17,7 @@
 #include <boost/filesystem/operations.hpp>
 #pragma warning( pop )
 #include <boost/bind.hpp>
+#include <string>
 
 namespace po = boost::program_options;
 namespace bfs = boost::filesystem;
@@ -54,6 +55,14 @@ void ExerciseConfig::Parse( int argc, char** argv )
     tools::GeneralConfig::Parse( argc, argv );
     if( !GetExerciseName().empty() )
         LoadExercise( GetExerciseFile() );
+
+    std::string debugSettingFile = BuildExerciseChildFile( "debug.xml" );
+    if( boost::filesystem::exists( debugSettingFile ) )
+    {
+        xml::xifstream xis( debugSettingFile );
+        xis >> xml::optional >> xml::start( "debug" )
+                             >> xml::optional >> xml::list( *this, &ExerciseConfig::ReadLogSetting );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -380,4 +389,58 @@ std::string ExerciseConfig::GetPopulationFile() const
 const tools::Loader_ABC& ExerciseConfig::GetLoader() const
 {
     return *fileLoader_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::LogSetting
+// Created: MMC 2012-01-25
+// -----------------------------------------------------------------------------
+ExerciseConfig::LogSetting::LogSetting()
+    : logLevel_( logLevel_all )
+    , maxFileSize_( -1 )
+    , maxFiles_( 1 )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::ReadLogSetting
+// Created: MMC 2012-01-25
+// -----------------------------------------------------------------------------
+void ExerciseConfig::ReadLogSetting( const std::string& name, xml::xistream& xis )
+{
+    LogSetting& setting = logSetting_[ name ];
+    unsigned int logLevel = setting.logLevel_;
+    xis 
+    >> xml::optional >> xml::attribute( "loglevel", logLevel )
+    >> xml::optional >> xml::attribute( "logfiles", setting.maxFiles_  )
+    >> xml::optional >> xml::attribute( "logsize", setting.maxFileSize_ );
+    setting.logLevel_ = static_cast< LogSetting::LogLevel >( logLevel > 2 ? 2 : logLevel );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetLogLevel
+// Created: MMC 2012-01-25
+// -----------------------------------------------------------------------------
+unsigned int ExerciseConfig::GetLogLevel( const std::string& field )
+{
+    return static_cast< unsigned int >( logSetting_[ field ].logLevel_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetLogFiles
+// Created: MMC 2012-01-25
+// -----------------------------------------------------------------------------
+unsigned int ExerciseConfig::GetLogFiles( const std::string& field )
+{
+    return logSetting_[ field ].maxFiles_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetLogSize
+// Created: MMC 2012-01-25
+// -----------------------------------------------------------------------------
+unsigned int ExerciseConfig::GetLogSize( const std::string& field )
+{
+    return logSetting_[ field ].maxFileSize_;
 }
