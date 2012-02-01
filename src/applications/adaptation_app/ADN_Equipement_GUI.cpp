@@ -87,6 +87,7 @@ void ADN_Equipement_GUI::Build()
     BuildGeneric( eDotationFamily_AgentExtincteur, pTabWidget );
     BuildGeneric( eDotationFamily_Piece, pTabWidget );
     BuildGeneric( eDotationFamily_Energy, pTabWidget );
+    BuildGeneric( eDotationFamily_Funeraire, pTabWidget );
 
     // Main widget
     pMainWidget_ = new QWidget();

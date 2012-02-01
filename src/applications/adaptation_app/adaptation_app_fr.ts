@@ -143,7 +143,7 @@
     </message>
     <message>
         <source>Urban combat hit ratio</source>
-        <translation>Proportion d&apos;équipements pouvant tirer �chaque pas de temps</translation>
+        <translation>Proportion d&apos;équipements pouvant tirer à chaque pas de temps</translation>
     </message>
     <message>
         <source>Time to acquire critical intelligence</source>
@@ -1991,7 +1991,7 @@ Arrêt moteur allumé</translation>
     </message>
     <message>
         <source>Evolution (per hour)</source>
-        <translation></translation>
+        <translation>Evolution (par heure)</translation>
     </message>
     <message>
         <source>Parked, engine stopped</source>
