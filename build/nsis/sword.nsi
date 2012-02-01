@@ -13,7 +13,7 @@ RequestExecutionLevel admin
 !insertmacro OT.Initialize
 
 Name "${PRODUCT_NAME}"
-OutFile "${DISTDIR}\${PRODUCT_NAME}_${PLATFORM}_${APP_VERSION_MAJOR}${PRODUCT_EVALUATION}.exe"
+OutFile "${DISTDIR}\${PRODUCT_NAME}_ScipioStab_${PLATFORM}_${APP_VERSION_MAJOR}${PRODUCT_EVALUATION}.exe"
 
 ; ------------------------------------------------------------------------------
 Section "!${PRODUCT_NAME}"
