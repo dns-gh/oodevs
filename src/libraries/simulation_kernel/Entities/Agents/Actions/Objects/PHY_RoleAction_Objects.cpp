@@ -485,6 +485,23 @@ int PHY_RoleAction_Objects::ResumeWork( boost::shared_ptr< DEC_Knowledge_Object 
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Objects::ResumeWork
+// Created: LMT 2012-02-01
+// -----------------------------------------------------------------------------
+int PHY_RoleAction_Objects::ResumeWork( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge, bool valorizeIt )
+{
+    MIL_Object_ABC* pObject = GetObject( pKnowledge );
+    if( !pObject )
+        return eImpossible;
+    MIL_Object_ABC& object = *pObject;
+    if( ! object().IsBuilt() )
+        return Construct( object );
+    else if( valorizeIt && object().CanBeMined() && !object().IsFullyMined() )
+        return Mine( object );
+    return eFinished;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Objects::ResumeWork
 // Created: LGY 2011-03-23
 // -----------------------------------------------------------------------------
 int PHY_RoleAction_Objects::ResumeWork( UrbanObjectWrapper* pUrbanBlock )

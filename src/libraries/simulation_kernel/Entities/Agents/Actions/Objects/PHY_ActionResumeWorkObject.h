@@ -28,7 +28,7 @@ public:
     typedef MIL_AgentPion ActorType;
 
 public:
-             PHY_ActionResumeWorkObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+             PHY_ActionResumeWorkObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, bool valorizeIt );
     virtual ~PHY_ActionResumeWorkObject();
 
     //! @name Operations
@@ -41,6 +41,7 @@ public:
 private:
     PHY_RoleAction_Objects& role_;
     boost::shared_ptr< DEC_Knowledge_Object > pKnowledge_;
+    bool valorizeIt_;
 };
 
 #endif // __PHY_ActionResumeWorkObject_h_
