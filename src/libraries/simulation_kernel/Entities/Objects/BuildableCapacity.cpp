@@ -155,10 +155,12 @@ unsigned int BuildableCapacity::GetDotationNumber( const TER_Localisation& locat
 {
     if( dotation_ )
     {
-        if( unitType_ == ConstructionCapacity::eRaw )
-            return std::max( 1u, nFullNbrDotation_ * static_cast< unsigned int >( MIL_Tools::ConvertSimToMeter( location.GetLength() ) / 1000.f ));
+        if( location.GetType() == TER_Localisation::ePoint )
+            return std::max( 1u, nFullNbrDotation_ );
+        else if( unitType_ == ConstructionCapacity::eRaw )
+            return std::max( 1u, nFullNbrDotation_ * static_cast< unsigned int >( MIL_Tools::ConvertSimToMeter( location.GetLength() ) / 1000.f ) );
         else if( unitType_ == ConstructionCapacity::eDensity )
-            return std::max( 1u, nFullNbrDotation_ * static_cast< unsigned int >( MIL_Tools::ConvertSimToMeter( location.GetArea() ) * nFullNbrDotation_ / 1000000.f ));
+            return std::max( 1u, nFullNbrDotation_ * static_cast< unsigned int >( MIL_Tools::ConvertSimToMeter( location.GetArea() ) * nFullNbrDotation_ / 1000000.f ) );
     }
     return nFullNbrDotation_;
 }
