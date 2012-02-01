@@ -1511,7 +1511,7 @@
     <unit max-occurs="1" min-occurs="1" type="RENS . Section MO SDTI"/>
     <unit command-post="true" max-occurs="6" min-occurs="6" type="RENS . Drone SDTI"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.RENS.ELGE" id="986" name="RENS . Section ROEM " type="Automate RENS">
+  <automat decisional-model="Masalife.Automate.RENS.ELGE" id="986" name="RENS . Section ROEM" type="Automate RENS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="RENS . PC ROEM"/>
     <unit max-occurs="2" min-occurs="2" type="RENS . Groupe ROEM"/>
   </automat>
@@ -1532,4 +1532,4 @@
     <unit max-occurs="1" min-occurs="1" type="GLAISE - RENS . Patrouille URH"/>
   </automat>
 </automats>
-<!-- signature="4248716050" -->
+<!-- signature="3634878288" -->
