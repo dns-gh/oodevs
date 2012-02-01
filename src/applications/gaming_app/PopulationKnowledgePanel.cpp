@@ -39,12 +39,12 @@ PopulationKnowledgePanel::PopulationKnowledgePanel( QWidget* parent, PanelStack_
     , subSelected_ ( controllers )
     , selectedPart_( controllers )
 {
-    Q3VBox* box = new Q3VBox( this );
-    box->setMinimumWidth( 200 );
-    knowledgeList_ = new ListDisplayer< PopulationKnowledgePanel >( box, *this, factory );
+    QVBoxLayout* layout = new QVBoxLayout( this );
+    knowledgeList_ = new ListDisplayer< PopulationKnowledgePanel >( this, *this, factory );
     knowledgeList_->AddColumn( tools::translate( "PopulationKnowledgePanel", "Known crowds" ) );
+    layout->addWidget( knowledgeList_ );
 
-    display_ = new DisplayBuilder( box, factory );
+    display_ = new DisplayBuilder( this, factory );
     display_->AddGroup( tools::translate( "PopulationKnowledgePanel", "Details" ) )
                 .AddLabel( tools::findTranslation( "Crowd", "Identifier:" ) )
                 .AddLabel( tools::findTranslation( "Crowd", "Associated crowd:" ) )
@@ -65,8 +65,6 @@ PopulationKnowledgePanel::PopulationKnowledgePanel( QWidget* parent, PanelStack_
                 .AddLabel( tools::findTranslation( "Crowd", "Dead people:" ) )
                 .AddLabel( tools::findTranslation( "Crowd", "Mood:" ) )
                 .AddLabel( tools::findTranslation( "Crowd", "Perceived:" ) );
-
-    setWidget( box );
 
     connect( knowledgeList_, SIGNAL( selectionChanged( Q3ListViewItem* ) ), this, SLOT( OnSelectionChanged( Q3ListViewItem* ) ) );
     connect( knowledgeList_, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( Q3ListViewItem*, const QPoint& ) ) );

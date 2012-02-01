@@ -105,9 +105,12 @@ ObjectPanel::ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::C
     valorisation_  = dynamic_cast< gui::SpinBoxDisplayer* > ( & infos.Item( tools::findTranslation( "Object", "Mining:" ) ) );
     contournement_ = dynamic_cast< gui::SpinBoxDisplayer* > ( & infos.Item( tools::findTranslation( "Object", "Bypass:" ) ) );
     
-    Q3HBox* pHBox  = new Q3HBox( pWidget_ );
-    QPushButton* pApplyButton_  = new QPushButton( tools::translate( "CreationPanel", "Apply" ), pHBox );
-    QPushButton* pCancelButton_ = new QPushButton( tools::translate( "CreationPanel", "Cancel" ), pHBox );
+    QHBoxLayout* pHBox  = new QHBoxLayout();
+    pLayout_->addLayout( pHBox );
+    QPushButton* pApplyButton_  = new QPushButton( tools::translate( "CreationPanel", "Apply" ) );
+    QPushButton* pCancelButton_ = new QPushButton( tools::translate( "CreationPanel", "Cancel" ) );
+    pHBox->addWidget( pApplyButton_ );
+    pHBox->addWidget( pCancelButton_ );
 
     connect( pApplyButton_,  SIGNAL( clicked() ), this, SLOT( OnApply() ) );
     connect( pCancelButton_, SIGNAL( clicked() ), this, SLOT( OnCancel() ) );

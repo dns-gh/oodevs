@@ -36,7 +36,7 @@ class SpinBoxDisplayer : public kernel::Displayer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SpinBoxDisplayer( QWidget* parent, const QString& name, int min, int max, int step );
+             SpinBoxDisplayer( QBoxLayout* parent, const QString& name, int min, int max, int step );
     virtual ~SpinBoxDisplayer();
     //@}
 

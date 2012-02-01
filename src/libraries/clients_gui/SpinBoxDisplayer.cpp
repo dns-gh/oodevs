@@ -18,11 +18,15 @@ using namespace gui;
 // Name: SpinBoxDisplayer constructor
 // Created: AGE 2006-02-23
 // -----------------------------------------------------------------------------
-SpinBoxDisplayer::SpinBoxDisplayer( QWidget* parent, const QString& name, int min, int max, int step )
+SpinBoxDisplayer::SpinBoxDisplayer( QBoxLayout* parent, const QString& name, int min, int max, int step )
 {
-    parent->layout()->addWidget( new QLabel( name, parent ) );
-    edit_ = new QSpinBox( min, max, step, parent );
-    parent->layout()->addWidget( edit_ );
+    QHBoxLayout* layout = new QHBoxLayout();
+    parent->addLayout( layout );
+    layout->addWidget( new QLabel( name ) );
+    edit_ = new QSpinBox();
+    edit_->setRange( min, max );
+    edit_->setSingleStep( step );
+    layout->addWidget( edit_ );
 }
 
 // -----------------------------------------------------------------------------
