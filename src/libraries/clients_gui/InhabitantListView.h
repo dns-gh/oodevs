@@ -17,7 +17,6 @@ namespace kernel
 {
     class Controllers;
     class Inhabitant_ABC;
-    class Profile_ABC;
 }
 
 namespace gui
@@ -51,8 +50,6 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    ItemFactory_ABC& factory_;
-    const kernel::Profile_ABC& profile_;
     //@}
 };
 

@@ -51,7 +51,6 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    ItemFactory_ABC& factory_;
     //@}
 };
 

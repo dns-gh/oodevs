@@ -81,7 +81,6 @@ private:
     //@{
     kernel::Controllers& controllers_;
     const kernel::Profile_ABC& profile_;
-    ItemFactory_ABC& factory_;
     //@}
 };
 

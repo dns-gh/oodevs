@@ -56,7 +56,6 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    ItemFactory_ABC& factory_;
     const kernel::Profile_ABC& profile_;
     //@}
 };

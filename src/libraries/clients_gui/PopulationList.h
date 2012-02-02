@@ -10,6 +10,8 @@
 #ifndef __PopulationList_h_
 #define __PopulationList_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace kernel
 {
     class Controllers;
@@ -27,19 +29,13 @@ namespace gui
 // Created: AGE 2006-08-10
 // =============================================================================
 class PopulationList : public Q3VBox
+                     , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
              PopulationList( kernel::Controllers& controllers, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile );
     virtual ~PopulationList();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    PopulationList( const PopulationList& );            //!< Copy constructor
-    PopulationList& operator=( const PopulationList& ); //!< Assignment operator
     //@}
 };
 

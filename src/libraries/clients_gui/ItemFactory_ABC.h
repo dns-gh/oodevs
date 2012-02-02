@@ -10,11 +10,11 @@
 #ifndef __ItemFactory_ABC_h_
 #define __ItemFactory_ABC_h_
 
+#include "ValuedListItem.h"
 #include <boost/noncopyable.hpp>
 
 namespace gui
 {
-    class ValuedListItem;
     class RichLabel;
 
 // =============================================================================
@@ -28,14 +28,14 @@ class ItemFactory_ABC : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             ItemFactory_ABC() {};
-    virtual ~ItemFactory_ABC() {};
+             ItemFactory_ABC() {}
+    virtual ~ItemFactory_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual ValuedListItem* CreateItem( Q3ListView * parent ) = 0;
-    virtual ValuedListItem* CreateItem( Q3ListViewItem * parent ) = 0;
+    virtual ValuedListItem* CreateItem( Q3ListView * parent, ValuedListItem::Comparator comparator = 0 ) = 0;
+    virtual ValuedListItem* CreateItem( Q3ListViewItem * parent, ValuedListItem::Comparator comparator = 0 ) = 0;
     virtual ValuedListItem* CreateItem( Q3ListView * parent, Q3ListViewItem * after ) = 0;
     virtual ValuedListItem* CreateItem( Q3ListViewItem * parent, Q3ListViewItem * after ) = 0;
 

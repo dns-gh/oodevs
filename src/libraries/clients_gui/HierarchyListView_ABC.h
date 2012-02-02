@@ -28,7 +28,6 @@ namespace kernel
 
 namespace gui
 {
-    class ValuedListItem;
     class ItemFactory_ABC;
     class EntitySymbols;
 
@@ -91,7 +90,7 @@ protected:
     virtual void DisplayIcon( const kernel::Entity_ABC& entity, ValuedListItem* item );
     virtual void ClearSelection();
     static void SetVisible( Q3ListViewItem* item, bool visible );
-    void ApplyFilter( boost::function< bool ( gui::ValuedListItem* ) > func );
+    void ApplyFilter( boost::function< bool ( ValuedListItem* ) > func );
     void UpdateItem( ValuedListItem* item );
     //@}
 
@@ -118,7 +117,6 @@ protected:
 private:
     //! @name Member data
     //@{
-    ItemFactory_ABC&                          factory_;
     const kernel::Profile_ABC&                profile_;
     const EntitySymbols&                      symbols_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;

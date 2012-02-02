@@ -10,6 +10,8 @@
 #ifndef __ObjectList_h_
 #define __ObjectList_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace kernel
 {
     class Controllers;
@@ -27,19 +29,13 @@ namespace gui
 // Created: AGE 2006-08-10
 // =============================================================================
 class ObjectList : public Q3VBox
+                 , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
              ObjectList( kernel::Controllers& controllers, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile );
     virtual ~ObjectList();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    ObjectList( const ObjectList& );            //!< Copy constructor
-    ObjectList& operator=( const ObjectList& ); //!< Assignment operator
     //@}
 };
 

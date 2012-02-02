@@ -38,18 +38,18 @@ RichItemFactory::~RichItemFactory()
 // Name: RichItemFactory::CreateItem
 // Created: AGE 2006-05-10
 // -----------------------------------------------------------------------------
-ValuedListItem* RichItemFactory::CreateItem( Q3ListView * parent )
+ValuedListItem* RichItemFactory::CreateItem( Q3ListView * parent, ValuedListItem::Comparator comparator /*= 0*/ )
 {
-    return Connect( new ValuedListItem( parent ) );
+    return Connect( new ValuedListItem( parent, comparator ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RichItemFactory::CreateItem
 // Created: AGE 2006-05-10
 // -----------------------------------------------------------------------------
-ValuedListItem* RichItemFactory::CreateItem( Q3ListViewItem * parent )
+ValuedListItem* RichItemFactory::CreateItem( Q3ListViewItem * parent, ValuedListItem::Comparator comparator /*= 0*/ )
 {
-    return Connect( new ValuedListItem( parent ) );
+    return Connect( new ValuedListItem( parent, comparator ) );
 }
 
 // -----------------------------------------------------------------------------

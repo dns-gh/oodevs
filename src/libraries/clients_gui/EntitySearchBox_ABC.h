@@ -10,6 +10,8 @@
 #ifndef __EntitySearchBox_ABC_h_
 #define __EntitySearchBox_ABC_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace kernel
 {
     class Entity_ABC;
@@ -27,8 +29,9 @@ namespace gui
 // Created: SBO 2006-04-20
 // =============================================================================
 class EntitySearchBox_ABC : public Q3HBox
+                          , private boost::noncopyable
 {
-    Q_OBJECT;
+    Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
@@ -59,13 +62,6 @@ protected:
 
     void Find();
     bool Find( CIT_Items begin, CIT_Items end );
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    EntitySearchBox_ABC( const EntitySearchBox_ABC& );
-    EntitySearchBox_ABC& operator=( const EntitySearchBox_ABC& );
     //@}
 
 private:

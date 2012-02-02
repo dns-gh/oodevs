@@ -11,7 +11,6 @@
 #include "PopulationList.h"
 #include "PopulationListView.h"
 #include "EntitySearchBox.h"
-#include "clients_kernel/Population_ABC.h"
 
 using namespace kernel;
 using namespace gui;
@@ -20,7 +19,7 @@ using namespace gui;
 // Name: PopulationList constructor
 // Created: AGE 2006-08-10
 // -----------------------------------------------------------------------------
-PopulationList::PopulationList( Controllers& controllers, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile )
+PopulationList::PopulationList( Controllers& controllers, ItemFactory_ABC& factory, const Profile_ABC& profile )
 {
     new EntitySearchBox< Population_ABC >( this, controllers );
     new PopulationListView( this, controllers, factory, profile );

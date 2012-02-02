@@ -37,12 +37,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    EntitySearchBox( const EntitySearchBox& );            //!< Copy constructor
-    EntitySearchBox& operator=( const EntitySearchBox& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     virtual void NotifyCreated( const Entity& );

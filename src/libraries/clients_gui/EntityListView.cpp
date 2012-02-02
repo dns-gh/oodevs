@@ -10,7 +10,6 @@
 #include "clients_gui_pch.h"
 #include "EntityListView.h"
 #include "moc_EntityListView.cpp"
-#include "ItemFactory_ABC.h"
 #include "ListItemToolTip.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Profile_ABC.h"
@@ -19,21 +18,39 @@
 using namespace gui;
 using namespace kernel;
 
+namespace
+{
+    int ItemComparator( const ValuedListItem& item1, const ValuedListItem& item2, int /*col*/, bool /*ascending*/ )
+    {
+        if( !item1.IsA< const Entity_ABC >() )
+            return 1;
+        if( !item2.IsA< const Entity_ABC >() )
+            return -1;
+        const Entity_ABC* entity1 = item1.GetValue< const Entity_ABC >();
+        if( !entity1 )
+            return -1;
+        const Entity_ABC* entity2 = item2.GetValue< const Entity_ABC >();
+        if( !entity2 )
+            return 1;
+        return entity1->GetId() - entity2->GetId();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: EntityListView constructor
 // Created: LGY 2011-01-05
 // -----------------------------------------------------------------------------
-EntityListView::EntityListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile )
+EntityListView::EntityListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory, const Profile_ABC& profile )
     : ListView< EntityListView >( pParent, *this, factory )
     , controllers_( controllers )
     , profile_    ( profile )
-    , factory_    ( factory )
 {
     viewport()->installEventFilter( new ListItemToolTip( viewport(), *this ) );
     setMinimumSize( 1, 1 );
     setRootIsDecorated( true );
     setResizeMode( Q3ListView::LastColumn );
     header()->hide();
+    SetComparator( &ItemComparator );
 
     connect( this, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ) );
     connect( this, SIGNAL( doubleClicked       ( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnRequestCenter() ) );
@@ -56,7 +73,7 @@ EntityListView::~EntityListView()
 // -----------------------------------------------------------------------------
 void EntityListView::OnContextMenuRequested( Q3ListViewItem* i, const QPoint& pos, int )
 {
-    if( ValuedListItem* value = (ValuedListItem*)( i ) )
+    if( ValuedListItem* value = dynamic_cast< ValuedListItem* >( i ) )
         value->ContextMenu( controllers_.actions_, pos );
 }
 
@@ -66,7 +83,7 @@ void EntityListView::OnContextMenuRequested( Q3ListViewItem* i, const QPoint& po
 // -----------------------------------------------------------------------------
 void EntityListView::OnSelectionChange( Q3ListViewItem* item )
 {
-    if( ValuedListItem* value = (ValuedListItem*)( item ) )
+    if( ValuedListItem* value = dynamic_cast< ValuedListItem* >( item ) )
         value->Select( controllers_.actions_ );
 }
 
@@ -76,18 +93,15 @@ void EntityListView::OnSelectionChange( Q3ListViewItem* item )
 // -----------------------------------------------------------------------------
 void EntityListView::OnRequestCenter()
 {
-    if( selectedItem() )
-    {
-        ValuedListItem* item = (ValuedListItem*)( selectedItem() );
-        item->Activate( controllers_.actions_ );
-    }
+    if( ValuedListItem* value = dynamic_cast< ValuedListItem* >( selectedItem() ) )
+        value->Activate( controllers_.actions_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: EntityListView::NotifySelected
 // Created: LGY 2011-01-05
 // -----------------------------------------------------------------------------
-void EntityListView::NotifySelected( const kernel::Entity_ABC* entity )
+void EntityListView::NotifySelected( const Entity_ABC* entity )
 {
     ValuedListItem* item = entity ? FindItem( entity, firstChild() ) : 0;
     if( item )
@@ -107,7 +121,7 @@ void EntityListView::NotifySelected( const kernel::Entity_ABC* entity )
 // Name: EntityListView::NotifyActivated
 // Created: LGY 2011-01-05
 // -----------------------------------------------------------------------------
-void EntityListView::NotifyActivated( const kernel::Entity_ABC& entity )
+void EntityListView::NotifyActivated( const Entity_ABC& entity )
 {
     ValuedListItem* item = FindItem( &entity, firstChild() );
     if( item )
@@ -118,10 +132,10 @@ void EntityListView::NotifyActivated( const kernel::Entity_ABC& entity )
 // Name: EntityListView::NotifyUpdated
 // Created: LGY 2011-01-05
 // -----------------------------------------------------------------------------
-void EntityListView::NotifyUpdated( const kernel::Profile_ABC& /*profile*/ )
+void EntityListView::NotifyUpdated( const Profile_ABC& /*profile*/ )
 {
     Q3ListViewItemIterator it( this );
-    while( ValuedListItem* item = (ValuedListItem*)( *it ) )
+    while( ValuedListItem* item = dynamic_cast< ValuedListItem* >( *it ) )
     {
         if( item->IsA< const Entity_ABC >() )
         {
@@ -136,7 +150,7 @@ void EntityListView::NotifyUpdated( const kernel::Profile_ABC& /*profile*/ )
 // Name: EntityListView::NotifyUpdated
 // Created: LGY 2011-01-05
 // -----------------------------------------------------------------------------
-void EntityListView::NotifyUpdated( const kernel::Entity_ABC& entity )
+void EntityListView::NotifyUpdated( const Entity_ABC& entity )
 {
     if( ValuedListItem* item = FindItem( &entity, firstChild() ) )
         item->SetNamed( entity );
@@ -146,13 +160,13 @@ void EntityListView::NotifyUpdated( const kernel::Entity_ABC& entity )
 // Name: EntityListView::NotifyCreated
 // Created: LGY 2011-01-05
 // -----------------------------------------------------------------------------
-void EntityListView::NotifyCreated( const kernel::Team_ABC& team )
+void EntityListView::NotifyCreated( const Team_ABC& team )
 {
-    ValuedListItem* teamItem = FindSibling( static_cast< const kernel::Entity_ABC* >( &team ), firstChild() );
+    ValuedListItem* teamItem = FindSibling( static_cast< const Entity_ABC* >( &team ), firstChild() );
     if( ! teamItem )
     {
-        teamItem = factory_.CreateItem( this );
-        teamItem->SetNamed( static_cast< const kernel::Entity_ABC& >( team ) );
+        teamItem = CreateItem( this );
+        teamItem->SetNamed( static_cast< const Entity_ABC& >( team ) );
     }
 }
 
@@ -160,7 +174,7 @@ void EntityListView::NotifyCreated( const kernel::Team_ABC& team )
 // Name: EntityListView::NotifyDeleted
 // Created: LGY 2011-01-05
 // -----------------------------------------------------------------------------
-void EntityListView::NotifyDeleted( const kernel::Team_ABC& team )
+void EntityListView::NotifyDeleted( const Team_ABC& team )
 {
-    delete FindSibling( static_cast< const kernel::Entity_ABC* >( &team ), firstChild() );
+    delete FindSibling( static_cast< const Entity_ABC* >( &team ), firstChild() );
 }

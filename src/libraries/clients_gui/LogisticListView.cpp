@@ -36,7 +36,6 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 LogisticListView::LogisticListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory, const Profile_ABC& profile, const EntitySymbols& symbols, bool renamable /*= false*/ )
     : HierarchyListView_ABC( pParent, controllers, factory, profile, symbols )
-    , factory_    ( factory )
     , profile_    ( profile )
     , droppedUnit_( 0 )
     , renamable_  ( renamable )
@@ -125,7 +124,7 @@ const Hierarchies* LogisticListView::RetrieveHierarchy( const Entity_ABC& /*enti
 // -----------------------------------------------------------------------------
 ValuedListItem* LogisticListView::CreateItem( ValuedListItem& parent, const Entity_ABC& entity )
 {
-    ValuedListItem* item = factory_.CreateItem( &parent );
+    ValuedListItem* item = HierarchyListView_ABC::CreateItem( &parent );
     item->SetNamed( static_cast< const Entity_ABC& >( entity ) );
     item->SetToolTip( QString( "%1 [%2]" ).arg( entity.GetName() ).arg( entity.GetId() ) );
     item->setDragEnabled( true );
@@ -253,16 +252,16 @@ void LogisticListView::NotifyDeleted( const Formation_ABC& formation )
 // -----------------------------------------------------------------------------
 void LogisticListView::NotifyCreated( const Team_ABC& team )
 {
-    ValuedListItem* teamItem = factory_.CreateItem( this );
+    ValuedListItem* teamItem = HierarchyListView_ABC::CreateItem( this );
     teamItem->SetNamed( static_cast< const Entity_ABC& >( team ) );
     teamItem->setDragEnabled( false );
     teamItem->setRenameEnabled( 0, renamable_ && !LongNameHelper::SetItemLongName( team, *teamItem ) );
 
-    ValuedListItem* typeItem = factory_.CreateItem( teamItem );
+    ValuedListItem* typeItem = HierarchyListView_ABC::CreateItem( teamItem );
     typeItem->Set( &LogisticLevel::none_, tools::translate( "gui::LogisticListView", "Unsupported units" ) );
     typeItem->setDragEnabled( false );
     typeItem->setRenameEnabled( 0, false );
-    typeItem = factory_.CreateItem( teamItem );
+    typeItem = HierarchyListView_ABC::CreateItem( teamItem );
     typeItem->Set( &LogisticLevel::logistic_base_, tools::translate( "gui::LogisticListView", "Supported units" ) );
     typeItem->setDragEnabled( false );
     typeItem->setRenameEnabled( 0, false );

@@ -96,7 +96,6 @@ private:
 private:
     //! @name Member data
     //@{
-    ItemFactory_ABC&           factory_;
     const kernel::Profile_ABC& profile_;
     const kernel::Entity_ABC*  droppedUnit_;
     bool                       renamable_;

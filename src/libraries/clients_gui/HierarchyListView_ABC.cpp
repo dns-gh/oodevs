@@ -13,7 +13,6 @@
 #include "HierarchyListView_ABC.h"
 #include "moc_HierarchyListView_ABC.cpp"
 #include "EntitySymbols.h"
-#include "ItemFactory_ABC.h"
 #include "ListItemToolTip.h"
 #include "ValuedDragObject.h"
 #include "ValuedListItem.h"
@@ -38,7 +37,6 @@ using namespace gui;
 HierarchyListView_ABC::HierarchyListView_ABC( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory, const Profile_ABC& profile, const EntitySymbols& symbols )
     : ListView< HierarchyListView_ABC >( pParent, *this, factory, "HierarchyListView" )
     , controllers_( controllers )
-    , factory_    ( factory )
     , profile_    ( profile )
     , symbols_    ( symbols )
     , selected_   ( controllers_ )
@@ -114,7 +112,7 @@ ValuedListItem* HierarchyListView_ABC::FindOrCreate( const Entity_ABC* entity )
     ValuedListItem* item = superiorItem ? FindChild( entity, superiorItem ) : FindSibling( entity, firstChild() );
     if( !item )
     {
-        item = superiorItem ? factory_.CreateItem( superiorItem ) : factory_.CreateItem( this );
+        item = superiorItem ? CreateItem( superiorItem ) : CreateItem( this );
         UpdateItem( item );
     }
     return item;
@@ -171,11 +169,11 @@ void HierarchyListView_ABC::SetVisible( Q3ListViewItem* item, bool visible )
 // Name: HierarchyListView_ABC::ApplyFilter
 // Created: ABR 2011-05-09
 // -----------------------------------------------------------------------------
-void HierarchyListView_ABC::ApplyFilter( boost::function< bool ( gui::ValuedListItem* ) > func )
+void HierarchyListView_ABC::ApplyFilter( boost::function< bool ( ValuedListItem* ) > func )
 {
     for( Q3ListViewItemIterator it = firstChild(); it.current(); ++it )
     {
-        gui::ValuedListItem* item = static_cast< gui::ValuedListItem* >( it.current() );
+        ValuedListItem* item = static_cast< ValuedListItem* >( it.current() );
         item->setVisible( HasAnyChildVisible( item, func ) );
     }
 }
@@ -184,16 +182,16 @@ void HierarchyListView_ABC::ApplyFilter( boost::function< bool ( gui::ValuedList
 // Name: HierarchyListView_ABC::HasAnyChildVisible
 // Created: ABR 2011-05-09
 // -----------------------------------------------------------------------------
-bool HierarchyListView_ABC::HasAnyChildVisible( gui::ValuedListItem* item, boost::function< bool ( gui::ValuedListItem* ) > func )
+bool HierarchyListView_ABC::HasAnyChildVisible( ValuedListItem* item, boost::function< bool ( ValuedListItem* ) > func )
 {
     if( item )
     {
         bool isVisible = func( item );
-        gui::ValuedListItem* child = static_cast< gui::ValuedListItem* >( item->firstChild() );
+        ValuedListItem* child = static_cast< ValuedListItem* >( item->firstChild() );
         if( child )
             for( Q3ListViewItemIterator it = child; it.current(); ++it )
-                if( static_cast< gui::ValuedListItem* >( it.current()->parent() ) == item )
-                    isVisible = isVisible || HasAnyChildVisible( static_cast< gui::ValuedListItem* >( it.current() ), func );
+                if( static_cast< ValuedListItem* >( it.current()->parent() ) == item )
+                    isVisible = isVisible || HasAnyChildVisible( static_cast< ValuedListItem* >( it.current() ), func );
         return isVisible;
     }
     return false;

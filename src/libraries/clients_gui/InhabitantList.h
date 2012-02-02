@@ -10,6 +10,8 @@
 #ifndef __InhabitantList_h_
 #define __InhabitantList_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace kernel
 {
     class Controllers;
@@ -27,19 +29,13 @@ namespace gui
 // Created: SLG 2010-11-30
 // =============================================================================
 class InhabitantList : public Q3VBox
+                     , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
              InhabitantList( kernel::Controllers& controllers, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile );
     virtual ~InhabitantList();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    InhabitantList( const InhabitantList& );            //!< Copy constructor
-    InhabitantList& operator=( const InhabitantList& ); //!< Assignment operator
     //@}
 };
 

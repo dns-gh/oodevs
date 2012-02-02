@@ -49,7 +49,7 @@ const kernel::Hierarchies* HierarchyListView< H >::RetrieveHierarchy( const kern
 template< typename H >
 void HierarchyListView< H >::NotifyCreated( const H& hierarchy )
 {
-    NotifyCreated( ( const kernel::Hierarchies&)( hierarchy ) );
+    NotifyCreated( static_cast< const kernel::Hierarchies& >( hierarchy ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -59,7 +59,7 @@ void HierarchyListView< H >::NotifyCreated( const H& hierarchy )
 template< typename H >
 void HierarchyListView< H >::NotifyUpdated( const H& hierarchy )
 {
-    NotifyUpdated( ( const kernel::Hierarchies&)( hierarchy ) );
+    NotifyUpdated( static_cast< const kernel::Hierarchies& >( hierarchy ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -69,7 +69,7 @@ void HierarchyListView< H >::NotifyUpdated( const H& hierarchy )
 template< typename H >
 void HierarchyListView< H >::NotifyDeleted( const H& hierarchy )
 {
-    NotifyDeleted( ( const kernel::Hierarchies&)( hierarchy ) );
+    NotifyDeleted( static_cast< const kernel::Hierarchies& >( hierarchy ) );
 }
 
 }

@@ -30,13 +30,36 @@
 #include "protocol/SimulationSenders.h"
 
 using namespace actions;
+using namespace gui;
+using namespace kernel;
+
+namespace
+{
+    bool IsCommandPost( const Entity_ABC& entity )
+    {
+        if( const CommandPostAttributes* pAttributes = entity.Retrieve< CommandPostAttributes >() )
+            return pAttributes->IsCommandPost();
+        return false;
+    }
+
+    int ItemComparator( const ValuedListItem& item1, const ValuedListItem& item2, int /*col*/, bool /*ascending*/ )
+    {
+        const Entity_ABC* entity1 = item1.GetValue< const Entity_ABC >();
+        if( !entity1 || IsCommandPost( *entity1 ) )
+            return -1;
+        const Entity_ABC* entity2 = item2.GetValue< const Entity_ABC >();
+        if( !entity2 || IsCommandPost( *entity2 ) )
+            return 1;
+        return entity1->GetId() - entity2->GetId();
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: TacticalListView constructor
 // Created: AGE 2006-11-23
 // -----------------------------------------------------------------------------
-TacticalListView::TacticalListView( QWidget* pParent, kernel::Controllers& controllers, actions::ActionsModel& actionsModel, const StaticModel& staticModel, const kernel::Time_ABC& simulation, gui::ItemFactory_ABC& factory, const kernel::Profile_ABC& profile, gui::EntitySymbols& icons )
-    : gui::HierarchyListView< kernel::TacticalHierarchies >( pParent, controllers, factory, profile, icons )
+TacticalListView::TacticalListView( QWidget* pParent, Controllers& controllers, actions::ActionsModel& actionsModel, const ::StaticModel& staticModel, const Time_ABC& simulation, ItemFactory_ABC& factory, const Profile_ABC& profile, EntitySymbols& icons )
+    : HierarchyListView< TacticalHierarchies >( pParent, controllers, factory, profile, icons )
     , actionsModel_        ( actionsModel )
     , static_              ( staticModel )
     , simulation_          ( simulation )
@@ -47,6 +70,7 @@ TacticalListView::TacticalListView( QWidget* pParent, kernel::Controllers& contr
     controllers_.Register( *this );
     addColumn( "HiddenPuce", 15 );
     setColumnAlignment( 1, Qt::AlignCenter );
+    SetComparator( &ItemComparator );
     controllers.Update( *this );
 }
 
@@ -67,7 +91,7 @@ void TacticalListView::hideEvent( QHideEvent* event )
 {
     if( changeSuperiorDialog_ )
         changeSuperiorDialog_->hide();
-    gui::HierarchyListView< kernel::TacticalHierarchies >::hideEvent( event );
+    HierarchyListView< TacticalHierarchies >::hideEvent( event );
 }
 
 // -----------------------------------------------------------------------------
@@ -93,14 +117,19 @@ void TacticalListView::setColumnWidth( int column, int w )
 // Name: TacticalListView::Display
 // Created: AGE 2006-11-23
 // -----------------------------------------------------------------------------
-void TacticalListView::Display( const kernel::Entity_ABC& entity, gui::ValuedListItem* item )
+void TacticalListView::Display( const Entity_ABC& entity, ValuedListItem* item )
 {
-    if( const AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >() )
-        item->setPixmap( 1, decisions->IsEmbraye() ? lock_ : QPixmap() );
-    else if( const CommandPostAttributes* commandPost = entity.Retrieve< CommandPostAttributes >() )
-        item->setPixmap( 1, commandPost->IsCommandPost() ? commandPost_ : QPixmap() );
+    if( IsCommandPost( entity ) )
+        item->setPixmap( 1, commandPost_ );
+    else
+    {
+        if( const AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >() )
+            item->setPixmap( 1, decisions->IsEmbraye() ? lock_ : QPixmap() );
+        else
+            item->setPixmap( 1, QPixmap() );
+    }
 
-    if( const Attributes* attributes = static_cast< const Attributes* >( entity.Retrieve< kernel::Attributes_ABC >() ) )
+    if( const Attributes* attributes = static_cast< const Attributes* >( entity.Retrieve< Attributes_ABC >() ) )
     {
         QColor color;
         if( attributes->bNeutralized_ )
@@ -112,7 +141,7 @@ void TacticalListView::Display( const kernel::Entity_ABC& entity, gui::ValuedLis
         item->SetBackgroundColor( color );
     }
 
-    gui::HierarchyListView< kernel::TacticalHierarchies >::Display( entity, item );
+    HierarchyListView< TacticalHierarchies >::Display( entity, item );
 }
 
 // -----------------------------------------------------------------------------
@@ -121,8 +150,8 @@ void TacticalListView::Display( const kernel::Entity_ABC& entity, gui::ValuedLis
 // -----------------------------------------------------------------------------
 void TacticalListView::NotifyUpdated( const AutomatDecisions& decisions )
 {
-    const kernel::Entity_ABC* agent = & decisions.GetAgent();
-    gui::ValuedListItem* item = gui::FindItem( agent, firstChild() );
+    const Entity_ABC* agent = & decisions.GetAgent();
+    ValuedListItem* item = FindItem( agent, firstChild() );
     if( item )
         item->setPixmap( 1, decisions.IsEmbraye() ? lock_ : QPixmap() );
 }
@@ -131,12 +160,12 @@ void TacticalListView::NotifyUpdated( const AutomatDecisions& decisions )
 // Name: TacticalListView::NotifyContextMenu
 // Created: JSR 2011-11-08
 // -----------------------------------------------------------------------------
-void TacticalListView::NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
+void TacticalListView::NotifyContextMenu( const Entity_ABC& entity, ContextMenu& menu )
 {
     if( !isVisible() )
         return;
-    if( const kernel::TacticalHierarchies* hierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
-        if( hierarchies->GetSuperior() != 0 && dynamic_cast< const kernel::Object_ABC* >( &entity ) == 0 )
+    if( const TacticalHierarchies* hierarchies = entity.Retrieve< TacticalHierarchies >() )
+        if( hierarchies->GetSuperior() != 0 && dynamic_cast< const Object_ABC* >( &entity ) == 0 )
             menu.InsertItem( "Command", tr( "Change superior" ), this, SLOT( OnChangeSuperior() ) );
 }
 
@@ -146,11 +175,11 @@ void TacticalListView::NotifyContextMenu( const kernel::Entity_ABC& entity, kern
 // -----------------------------------------------------------------------------
 void TacticalListView::OnChangeSuperior()
 {
-    if( gui::ValuedListItem* valuedItem = static_cast< gui::ValuedListItem* >( selectedItem() ) )
+    if( ValuedListItem* valuedItem = static_cast< ValuedListItem* >( selectedItem() ) )
     {
-        kernel::Entity_ABC& entity = *valuedItem->GetValue< kernel::Entity_ABC >();
+        Entity_ABC& entity = *valuedItem->GetValue< Entity_ABC >();
         if( !changeSuperiorDialog_ )
-            changeSuperiorDialog_ = new gui::ChangeSuperiorDialog( this, controllers_, *this, false );
+            changeSuperiorDialog_ = new ChangeSuperiorDialog( this, controllers_, *this, false );
         changeSuperiorDialog_->Show( entity );
     }
 }
@@ -159,12 +188,12 @@ void TacticalListView::OnChangeSuperior()
 // Name: TacticalListView::CanChangeSuperior
 // Created: JSR 2011-11-08
 // -----------------------------------------------------------------------------
-bool TacticalListView::CanChangeSuperior( const kernel::Entity_ABC& entity, const kernel::Entity_ABC& superior ) const
+bool TacticalListView::CanChangeSuperior( const Entity_ABC& entity, const Entity_ABC& superior ) const
 {
-    if( dynamic_cast< const kernel::Agent_ABC* >( &entity ) )
-        return dynamic_cast< const kernel::Automat_ABC* >( &superior ) != 0;
-    if( dynamic_cast< const kernel::Automat_ABC* >( &entity ) )
-        return dynamic_cast< const kernel::Automat_ABC* >( &superior ) != 0 || dynamic_cast< const kernel::Formation_ABC* >( &superior ) != 0;
+    if( dynamic_cast< const Agent_ABC* >( &entity ) )
+        return dynamic_cast< const Automat_ABC* >( &superior ) != 0;
+    if( dynamic_cast< const Automat_ABC* >( &entity ) )
+        return dynamic_cast< const Automat_ABC* >( &superior ) != 0 || dynamic_cast< const Formation_ABC* >( &superior ) != 0;
     return false;
 }
 
@@ -172,7 +201,7 @@ bool TacticalListView::CanChangeSuperior( const kernel::Entity_ABC& entity, cons
 // Name: TacticalListView::DoChangeSuperior
 // Created: JSR 2011-11-08
 // -----------------------------------------------------------------------------
-void TacticalListView::DoChangeSuperior( kernel::Entity_ABC& entity, kernel::Entity_ABC& superior )
+void TacticalListView::DoChangeSuperior( Entity_ABC& entity, Entity_ABC& superior )
 {
     Drop( entity, superior );
 }
@@ -181,16 +210,16 @@ void TacticalListView::DoChangeSuperior( kernel::Entity_ABC& entity, kernel::Ent
 // Name: TacticalListView::Drop
 // Created: SBO 2007-03-30
 // -----------------------------------------------------------------------------
-bool TacticalListView::Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target )
+bool TacticalListView::Drop( const Entity_ABC& item, const Entity_ABC& target )
 {
-    if( const kernel::Agent_ABC* agent = dynamic_cast< const kernel::Agent_ABC* >( &item ) )
-        if( const kernel::Automat_ABC* automat = dynamic_cast< const kernel::Automat_ABC* >( &target ) )
+    if( const Agent_ABC* agent = dynamic_cast< const Agent_ABC* >( &item ) )
+        if( const Automat_ABC* automat = dynamic_cast< const Automat_ABC* >( &target ) )
             return Drop( *agent, *automat );
 
-    if( const kernel::Automat_ABC* automatSource = dynamic_cast< const kernel::Automat_ABC* >( &item ) )
-        if( const kernel::Automat_ABC* automatTarget = dynamic_cast< const kernel::Automat_ABC* >( &target ) )
+    if( const Automat_ABC* automatSource = dynamic_cast< const Automat_ABC* >( &item ) )
+        if( const Automat_ABC* automatTarget = dynamic_cast< const Automat_ABC* >( &target ) )
             return Drop( *automatSource, *automatTarget );
-        else if( const kernel::Formation_ABC* formationTarget = dynamic_cast< const kernel::Formation_ABC* >( &target ) )
+        else if( const Formation_ABC* formationTarget = dynamic_cast< const Formation_ABC* >( &target ) )
             return Drop( *automatSource, *formationTarget );
 
     return false;
@@ -200,14 +229,14 @@ bool TacticalListView::Drop( const kernel::Entity_ABC& item, const kernel::Entit
 // Name: TacticalListView::Drop
 // Created: SBO 2007-03-30
 // -----------------------------------------------------------------------------
-bool TacticalListView::Drop( const kernel::Agent_ABC& item, const kernel::Automat_ABC& target )
+bool TacticalListView::Drop( const Agent_ABC& item, const Automat_ABC& target )
 {
-    if( & item.Get< kernel::TacticalHierarchies >().GetUp() == &target )
+    if( & item.Get< TacticalHierarchies >().GetUp() == &target )
         return false;
 
-    kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "unit_change_superior" );
+    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "unit_change_superior" );
     UnitMagicAction* action = new UnitMagicAction( item, actionType, controllers_.controller_, tr( "Unit Change Superior" ), true );
-    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+    tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Automat( it.NextElement(), target, controllers_.controller_ ) );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new ActionTasker( &item, false ) );
@@ -219,14 +248,14 @@ bool TacticalListView::Drop( const kernel::Agent_ABC& item, const kernel::Automa
 // Name: TacticalListView::Drop
 // Created: NLD 2007-04-12
 // -----------------------------------------------------------------------------
-bool TacticalListView::Drop( const kernel::Automat_ABC& item, const kernel::Automat_ABC& target )
+bool TacticalListView::Drop( const Automat_ABC& item, const Automat_ABC& target )
 {
-    if( & item.Get< kernel::TacticalHierarchies >().GetUp() == &target || &item == &target )
+    if( & item.Get< TacticalHierarchies >().GetUp() == &target || &item == &target )
         return false;
 
-    kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "change_automat_superior" );
+    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_automat_superior" );
     UnitMagicAction* action = new UnitMagicAction( item, actionType, controllers_.controller_, tr( "Change Automat Superior" ), true );
-    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+    tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Automat( it.NextElement(), target, controllers_.controller_ ) );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new ActionTasker( &item, false ) );
@@ -238,14 +267,14 @@ bool TacticalListView::Drop( const kernel::Automat_ABC& item, const kernel::Auto
 // Name: TacticalListView::Drop
 // Created: NLD 2007-04-12
 // -----------------------------------------------------------------------------
-bool TacticalListView::Drop( const kernel::Automat_ABC& item, const kernel::Formation_ABC& target )
+bool TacticalListView::Drop( const Automat_ABC& item, const Formation_ABC& target )
 {
-    if( & item.Get< kernel::TacticalHierarchies >().GetUp() == &target )
+    if( & item.Get< TacticalHierarchies >().GetUp() == &target )
         return false;
 
-    kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( static_.types_ ).Get( "change_formation_superior" );
+    MagicActionType& actionType = static_cast< tools::Resolver< MagicActionType, std::string >& > ( static_.types_ ).Get( "change_formation_superior" );
     UnitMagicAction* action = new UnitMagicAction( item, actionType, controllers_.controller_, tr( "Change Formation Superior" ), true );
-    tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
+    tools::Iterator< const OrderParameter& > it = actionType.CreateIterator();
     action->AddParameter( *new parameters::Formation( it.NextElement(), target, controllers_.controller_ ) );
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
     action->Attach( *new ActionTasker( &item, false ) );
