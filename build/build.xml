@@ -1525,7 +1525,7 @@
     </target>
     
     <target name="package.otpack.decisional45" description="decisional package DIA45">
-        <pack name="decisional45" description="decisional package DIA4&5">
+        <pack name="decisional45" description="decisional package DIA4_5">
             <zipfileset dir="${data.dir}">
 			    <include name="data/models/ada/decisional/bms/**"/>
                 <include name="data/models/ada/decisional/directia5/**"/>
