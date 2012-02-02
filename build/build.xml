@@ -1419,7 +1419,7 @@
     </macrodef>
 
     <target name="package.otpacks" depends="package.otpack.defense.worldwide,package.otpack.defense.worldwide.QA,
-                                            package.otpack.lossc,package.otpack.trainingML,package.otpack.decisional3,package.otpack.decisional45"
+                                            package.otpack.trainingML,package.otpack.decisional3,package.otpack.decisional45"
                                    description="package the exercise otpacks"/>
 
     <target name="package.otpack.defense.worldwide" description="package du defense-worldwide otpack">
