@@ -8,7 +8,17 @@
           <automat engaged="true" id="3" knowledge-group="4" logistic-level="logistic-base" name="Logistic combat train [3]" type="LOG.Logistic combat train">
             <unit command-post="true" id="5" name="Logistic CT" position="31UEQ0390913327" type="LOG.Logistic CT">
               <stocks>
-                <resource name="Diesel" quantity="10000"/>
+                <resource name="12,7-mm Bullet" quantity="5370"/>
+                <resource name="7.62-mm Bullet" quantity="7700"/>
+                <resource name="120-mm Shaped Charge" quantity="80"/>
+                <resource name="5.56-mm Bullet" quantity="5280"/>
+                <resource name="56-mm Smoke Grenade" quantity="16"/>
+                <resource name="120-mm armour-piercing shell" quantity="48"/>
+                <resource name="Diesel" quantity="7415"/>
+                <resource name="UR NTI1 MOB" quantity="30"/>
+                <resource name="UR NTI1 EA" quantity="6"/>
+                <resource name="Food" quantity="183"/>
+                <resource name="Water" quantity="1098"/>
               </stocks>
             </unit>
           </automat>
@@ -26,19 +36,56 @@
         <formation id="6" level="x" logistic-level="logistic-base" name="BLD">
           <automat engaged="true" id="7" knowledge-group="4" name="Supply logistic area  (corps) [7]" type="LOG.Supply logistic area  (corps)">
             <unit command-post="true" id="8" name="Supply CP (division)" position="31UEQ0232706750" type="LOG.Supply CP (division)"/>
-            <unit command-post="false" id="11" name="Water supply group" position="31UEQ0182606251" type="LOG.Water supply group"/>
-            <unit command-post="false" id="12" name="Ammo supply group" position="31UEQ0282806749" type="LOG.Ammo supply group"/>
-            <unit command-post="false" id="14" name="Supply Transportation platoon (PT)" position="31UEQ0282705751" type="LOG.Supply Transportation platoon (PT)"/>
+            <unit command-post="false" id="11" name="Water supply group" position="31UEQ0182606251" type="LOG.Water supply group">
+              <stocks>
+                <resource name="Food" quantity="61"/>
+                <resource name="Water" quantity="366"/>
+              </stocks>
+            </unit>
+            <unit command-post="false" id="12" name="Ammo supply group" position="31UEQ0282806749" type="LOG.Ammo supply group">
+              <stocks>
+                <resource name="12,7-mm Bullet" quantity="5370"/>
+                <resource name="7.62-mm Bullet" quantity="7700"/>
+                <resource name="120-mm Shaped Charge" quantity="80"/>
+                <resource name="5.56-mm Bullet" quantity="5280"/>
+                <resource name="56-mm Smoke Grenade" quantity="16"/>
+                <resource name="120-mm armour-piercing shell" quantity="48"/>
+              </stocks>
+            </unit>
+            <unit command-post="false" id="14" name="Supply Transportation platoon (PT)" position="31UEQ0282705751" type="LOG.Supply Transportation platoon (PT)">
+              <stocks>
+                <resource name="Food" quantity="61"/>
+                <resource name="Water" quantity="366"/>
+              </stocks>
+            </unit>
             <unit command-post="false" id="15" name="Supply platoon (PR)" position="31UEQ0232605544" type="LOG.Supply platoon (PR)"/>
             <unit command-post="false" id="16" name="Supply group 60m3" position="31UEQ0182505752" type="LOG.Supply group 60m3">
               <stocks>
-                <resource name="Diesel" quantity="100000"/>
+                <resource name="Diesel" quantity="2471"/>
               </stocks>
             </unit>
-            <unit command-post="false" id="17" name="Magazin section CAP" position="31UEQ0161906251" type="LOG.Magazin section CAP"/>
-            <unit command-post="false" id="18" name="Supply Transportation platoon" position="31UEQ0182706750" type="LOG.Supply Transportation platoon"/>
-            <unit command-post="false" id="19" name="Supply group 35m3" position="31UEQ0232806956" type="LOG.Supply group 35m3"/>
-            <unit command-post="false" id="20" name="Supply group180m3" position="31UEQ0303506955" type="LOG.Supply group180m3"/>
+            <unit command-post="false" id="17" name="Magazin section CAP" position="31UEQ0161906251" type="LOG.Magazin section CAP">
+              <stocks>
+                <resource name="UR NTI1 MOB" quantity="30"/>
+                <resource name="UR NTI1 EA" quantity="6"/>
+              </stocks>
+            </unit>
+            <unit command-post="false" id="18" name="Supply Transportation platoon" position="31UEQ0182706750" type="LOG.Supply Transportation platoon">
+              <stocks>
+                <resource name="Food" quantity="61"/>
+                <resource name="Water" quantity="366"/>
+              </stocks>
+            </unit>
+            <unit command-post="false" id="19" name="Supply group 35m3" position="31UEQ0232806956" type="LOG.Supply group 35m3">
+              <stocks>
+                <resource name="Diesel" quantity="2471"/>
+              </stocks>
+            </unit>
+            <unit command-post="false" id="20" name="Supply group180m3" position="31UEQ0303506955" type="LOG.Supply group180m3">
+              <stocks>
+                <resource name="Diesel" quantity="2471"/>
+              </stocks>
+            </unit>
           </automat>
           <automat engaged="true" id="27" knowledge-group="4" name="Medical logistic area (corps) [27]" type="LOG.Medical logistic area (corps)">
             <unit command-post="true" id="28" name="Medical CP (division)" position="31UDQ9584109585" type="LOG.Medical CP (division)"/>
@@ -62,18 +109,86 @@
         <formation id="43" level="x" logistic-level="logistic-base" name="BLT">
           <automat engaged="true" id="44" knowledge-group="4" name="Supply logistic area  (corps) [7] [44]" type="LOG.Supply logistic area  (corps)">
             <unit command-post="true" id="45" name="Supply CP (division)" position="31UEP0011494283" type="LOG.Supply CP (division)"/>
-            <unit command-post="false" id="46" name="Ammo supply group SOFF TT - D" position="31UEP0061493783" type="LOG.Ammo supply group"/>
-            <unit command-post="false" id="47" name="Ammo supply group OFF TT- D" position="31UEP0011393284" type="LOG.Ammo supply group"/>
-            <unit command-post="false" id="48" name="Water supply group" position="31UDP9961393784" type="LOG.Water supply group"/>
-            <unit command-post="false" id="49" name="Ammo supply group" position="31UEP0061594282" type="LOG.Ammo supply group"/>
-            <unit command-post="false" id="50" name="Ammo supply group SOFF TD" position="31UEP0082293782" type="LOG.Ammo supply group"/>
-            <unit command-post="false" id="51" name="Supply Transportation platoon (PT)" position="31UEP0061493284" type="LOG.Supply Transportation platoon (PT)"/>
+            <unit command-post="false" id="46" name="Ammo supply group SOFF TT - D" position="31UEP0061493783" type="LOG.Ammo supply group">
+              <stocks>
+                <resource name="12,7-mm Bullet" quantity="1342"/>
+                <resource name="7.62-mm Bullet" quantity="1925"/>
+                <resource name="120-mm Shaped Charge" quantity="20"/>
+                <resource name="5.56-mm Bullet" quantity="1320"/>
+                <resource name="56-mm Smoke Grenade" quantity="4"/>
+                <resource name="120-mm armour-piercing shell" quantity="12"/>
+              </stocks>
+            </unit>
+            <unit command-post="false" id="47" name="Ammo supply group OFF TT- D" position="31UEP0011393284" type="LOG.Ammo supply group">
+              <stocks>
+                <resource name="12,7-mm Bullet" quantity="1342"/>
+                <resource name="7.62-mm Bullet" quantity="1925"/>
+                <resource name="120-mm Shaped Charge" quantity="20"/>
+                <resource name="5.56-mm Bullet" quantity="1320"/>
+                <resource name="56-mm Smoke Grenade" quantity="4"/>
+                <resource name="120-mm armour-piercing shell" quantity="12"/>
+              </stocks>
+            </unit>
+            <unit command-post="false" id="48" name="Water supply group" position="31UDP9961393784" type="LOG.Water supply group">
+              <stocks>
+                <resource name="Food" quantity="61"/>
+                <resource name="Water" quantity="366"/>
+              </stocks>
+            </unit>
+            <unit command-post="false" id="49" name="Ammo supply group" position="31UEP0061594282" type="LOG.Ammo supply group">
+              <stocks>
+                <resource name="12,7-mm Bullet" quantity="1342"/>
+                <resource name="7.62-mm Bullet" quantity="1925"/>
+                <resource name="120-mm Shaped Charge" quantity="20"/>
+                <resource name="5.56-mm Bullet" quantity="1320"/>
+                <resource name="56-mm Smoke Grenade" quantity="4"/>
+                <resource name="120-mm armour-piercing shell" quantity="12"/>
+              </stocks>
+            </unit>
+            <unit command-post="false" id="50" name="Ammo supply group SOFF TD" position="31UEP0082293782" type="LOG.Ammo supply group">
+              <stocks>
+                <resource name="12,7-mm Bullet" quantity="1342"/>
+                <resource name="7.62-mm Bullet" quantity="1925"/>
+                <resource name="120-mm Shaped Charge" quantity="20"/>
+                <resource name="5.56-mm Bullet" quantity="1320"/>
+                <resource name="56-mm Smoke Grenade" quantity="4"/>
+                <resource name="120-mm armour-piercing shell" quantity="12"/>
+              </stocks>
+            </unit>
+            <unit command-post="false" id="51" name="Supply Transportation platoon (PT)" position="31UEP0061493284" type="LOG.Supply Transportation platoon (PT)">
+              <stocks>
+                <resource name="Food" quantity="61"/>
+                <resource name="Water" quantity="366"/>
+              </stocks>
+            </unit>
             <unit command-post="false" id="52" name="Supply platoon (PR)" position="31UEP0011393077" type="LOG.Supply platoon (PR)"/>
-            <unit command-post="false" id="53" name="Supply group 60m3" position="31UDP9961293285" type="LOG.Supply group 60m3"/>
-            <unit command-post="false" id="54" name="Magazin section CAP" position="31UDP9940693784" type="LOG.Magazin section CAP"/>
-            <unit command-post="false" id="55" name="Supply Transportation platoon" position="31UDP9961494283" type="LOG.Supply Transportation platoon"/>
-            <unit command-post="false" id="56" name="Supply group 35m3" position="31UEP0011594489" type="LOG.Supply group 35m3"/>
-            <unit command-post="false" id="57" name="Supply group180m3" position="31UEP0082294488" type="LOG.Supply group180m3"/>
+            <unit command-post="false" id="53" name="Supply group 60m3" position="31UDP9961293285" type="LOG.Supply group 60m3">
+              <stocks>
+                <resource name="Diesel" quantity="2471"/>
+              </stocks>
+            </unit>
+            <unit command-post="false" id="54" name="Magazin section CAP" position="31UDP9940693784" type="LOG.Magazin section CAP">
+              <stocks>
+                <resource name="UR NTI1 MOB" quantity="30"/>
+                <resource name="UR NTI1 EA" quantity="6"/>
+              </stocks>
+            </unit>
+            <unit command-post="false" id="55" name="Supply Transportation platoon" position="31UDP9961494283" type="LOG.Supply Transportation platoon">
+              <stocks>
+                <resource name="Food" quantity="61"/>
+                <resource name="Water" quantity="366"/>
+              </stocks>
+            </unit>
+            <unit command-post="false" id="56" name="Supply group 35m3" position="31UEP0011594489" type="LOG.Supply group 35m3">
+              <stocks>
+                <resource name="Diesel" quantity="2471"/>
+              </stocks>
+            </unit>
+            <unit command-post="false" id="57" name="Supply group180m3" position="31UEP0082294488" type="LOG.Supply group180m3">
+              <stocks>
+                <resource name="Diesel" quantity="2471"/>
+              </stocks>
+            </unit>
           </automat>
           <automat engaged="true" id="58" knowledge-group="4" name="Medical logistic area (corps) [27] [58]" type="LOG.Medical logistic area (corps)">
             <unit command-post="true" id="59" name="Medical CP (division)" position="31UDP9362897117" type="LOG.Medical CP (division)"/>
@@ -125,4 +240,4 @@
     <party id="1"/>
   </diplomacy>
 </orbat>
-<!-- signature="2079147399" -->
+<!-- signature="0069223253" -->
