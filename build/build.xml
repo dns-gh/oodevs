@@ -12,7 +12,7 @@
     <property name="env.PONEY_HOME" value="//install/masa/common/dev/common/poney"/>
     <import file="${env.PONEY_HOME}/poney.xml"/>
 
-    <property name="version.project" value="1.0.3"/>
+    <property name="version.project" value="1.0.4"/>
     <property name="version.company" value="MASA Group"/>
     <property name="version.product" value="Sword"/>
     <property name="version.major" value="4.3.3"/>
