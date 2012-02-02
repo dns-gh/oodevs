@@ -1419,8 +1419,7 @@
     </macrodef>
 
     <target name="package.otpacks" depends="package.otpack.defense.worldwide,package.otpack.defense.worldwide.QA,
-                                            package.otpack.defense.scipio,package.otpack.defense.scipio.VA,package.otpack.security.worldwide,package.otpack.security.masa,
-                                            package.otpack.lossc,package.otpack.trainingML,package.otpack.decisional3,package.otpack.decisional4,package.otpack.decisional5"
+                                            package.otpack.lossc,package.otpack.trainingML,package.otpack.decisional3,package.otpack.decisional45"
                                    description="package the exercise otpacks"/>
 
     <target name="package.otpack.defense.worldwide" description="package du defense-worldwide otpack">
@@ -1431,13 +1430,21 @@
                 <include name="data/terrains/Paris_Est/**"/>
                 <include name="data/terrains/Angers_x9_en/**"/>
                 <include name="data/terrains/Sw_terrain2/**"/>
+			    <include name="data/terrains/lehavre_4.2.0/**"/>
+				<include name="data/terrains/afghan_kabuldist/**"/>
+                <include name="data/terrains/Nord egypt/**"/>
+                <include name="data/terrains/Paris_Est/**"/>
             </zipfileset>
             <zipfileset dir="${data.dir}/exercises/worldwide" prefix="exercises">
                 <include name="Egypt/**"/>
+				<include name="Logistic_example/**"/>
                 <include name="Paris/**"/>
                 <include name="9_cases/**"/>
                 <include name="Musoria Border Defense/**"/>
                 <include name="Tuto_sw/**"/>
+				<include name="LOSSC Scenario 1/**"/>
+                <include name="LOSSC Scenario 2/**"/>
+                <include name="LOSSC Scenario 3/**"/>
                 <include name="tutorials/01 - Generalities/**"/>
                 <include name="tutorials/02 - Gaming/**"/>
                 <include name="tutorials/03 - Missions/**"/>
@@ -1489,67 +1496,7 @@
             </zipfileset>
         </pack>
     </target>
-    <target name="package.otpack.defense.scipio" description="package du defense-scipio Referentiel Simulation otpack">
-        <pack name="defense-scipio-RefSim" description="defense-scipio exercises package">
-            <zipfileset dir="${data.dir}">
-                <include name="data/models/ada/decisional/bms/**"/>
-                <include name="data/models/ada/decisional/directia5/**"/>
-                <include name="data/models/ada/decisional/decisional.xml"/>
-                <include name="data/models/ada/physical/scipio/**"/>
-            </zipfileset>
-        </pack>
-    </target>
 
-    <target name="package.otpack.defense.scipio.VA" description="package du defense-scipio Validation Amont otpack">
-        <pack name="defense-scipio-VA" description="defense-scipio Validation Amont exercises package">
-            <zipfileset dir="${data.dir}">
-                <include name="exercises/scipio/exercisesVA/Poseidon VA Missions Communes/**"/>
-                <include name="exercises/scipio/exercisesVA/Poseidon VA pions/**"/>
-                <include name="exercises/scipio/exercisesVA/Poseidon VA AppuiCombat/**"/>
-                <include name="exercises/scipio/exercisesVA/Poseidon VA Automates/**"/>
-                <include name="exercises/scipio/exercisesVA/Poseidon VA Acteurs Civils/**"/>
-                <include name="exercises/scipio/exercisesVA/Poseidon VA Soutien/**"/>
-                <include name="exercises/scipio/exercisesVA/Poseidon VA Mix/**"/>
-                <include name="data/terrains/PortoV3Lite/**"/>
-            </zipfileset>
-        </pack>
-    </target>
-
-    <target name="package.otpack.security.worldwide" description="package du security-worldwide otpack">
-        <pack name="security-worldwide" description="security-worldwide exercises package">
-            <zipfileset dir="${data.dir}">
-                <include name="data/models/ada/physical/worldwide/**"/>
-                <include name="data/models/ada/physical/security-fr/**"/>
-                <include name="data/propagations/test/**"/>
-                <include name="exercises/security/CODAH_JANUS/**"/>
-                <include name="data/terrains/lehavre_4.2.0/**"/>
-            </zipfileset>
-        </pack>
-    </target>
-
-    <target name="package.otpack.security.masa" description="package du security-masa otpack">
-        <pack name="security-masa" description="security-masa exercises package">
-            <zipfileset dir="${data.dir}">
-                <include name="data/models/ada/physical/security-fr/**"/>
-                <include name="data/propagations/test/**"/>
-                <include name="exercises/security/CODAH_JANUS/**"/>
-                <include name="data/terrains/lehavre_4.2.0/**"/>
-            </zipfileset>
-        </pack>
-    </target>
-
-    <target name="package.otpack.lossc" description="package du LOSSC otpack">
-        <pack name="LOSSC" description="LOSSC exercises package">
-            <zipfileset dir="${data.dir}/exercises/worldwide" prefix="exercises">
-                <include name="LOSSC Scenario 1/**"/>
-                <include name="LOSSC Scenario 2/**"/>
-                <include name="LOSSC Scenario 3/**"/>
-            </zipfileset>
-            <zipfileset dir="${data.dir}">
-                <include name="data/terrains/afghan_kabuldist/**"/>
-            </zipfileset>
-        </pack>
-    </target>
 
     <target name="package.otpack.trainingML" description="package de training MasaLife">
         <pack name="trainingML" description="package de training MasaLife">
@@ -1571,27 +1518,18 @@
     <target name="package.otpack.decisional3" description="decisional package DIA3">
         <pack name="decisional3" description="decisional package DIA3">
             <zipfileset dir="${data.dir}">
-                <include name="data/models/ada/decisional/Sources/**"/>
-                <include name="data/models/ada/decisional/decisional.xml"/>
-            </zipfileset>
-        </pack>
-    </target>
-
-    <target name="package.otpack.decisional4" description="decisional package DIA4">
-        <pack name="decisional4" description="decisional package DIA4">
-            <zipfileset dir="${data.dir}">
-                <include name="data/models/ada/decisional/bms/**"/>
-                <include name="data/models/ada/decisional/directia5/**"/>
-                <exclude name="data/models/ada/decisional/directia5/models/src/france/**"/>
+				<include name="data/models/ada/decisional/Sources/**"/>
                 <include name="data/models/ada/decisional/decisional.xml"/>
             </zipfileset>
         </pack>
     </target>
     
-    <target name="package.otpack.decisional5" description="decisional package DIA5">
-        <pack name="decisional5" description="decisional package DIA5">
+    <target name="package.otpack.decisional45" description="decisional package DIA45">
+        <pack name="decisional45" description="decisional package DIA4&5">
             <zipfileset dir="${data.dir}">
+			    <include name="data/models/ada/decisional/bms/**"/>
                 <include name="data/models/ada/decisional/directia5/**"/>
+                <exclude name="data/models/ada/decisional/directia5/models/src/france/**"/>
                 <include name="data/models/ada/decisional/decisional.xml"/>
             </zipfileset>
         </pack>
