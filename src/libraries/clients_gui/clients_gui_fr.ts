@@ -721,7 +721,7 @@ Please check access permissions or write protection.</source>
     <name>gui::HelpSystem</name>
     <message>
         <source>help/en/Reference Guide.chm</source>
-        <translation>help/fr/Guide de Reference.chm</translation>
+        <translation>help/fr/Guide_Utilisateur_General_Sword.chm</translation>
     </message>
 </context>
 <context>
