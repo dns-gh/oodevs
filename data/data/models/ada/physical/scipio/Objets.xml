@@ -325,7 +325,6 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <lodging/>
     <logistic/>
-    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
   </object>
   <object geometry="polygon" name="camp refugies" symbol="G*SPAH----****X" type="refugees camp">
     <bypassable bypass-speed="-1"/>
@@ -334,9 +333,8 @@
     </constructor>
     <lodging/>
     <logistic/>
-    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
   </object>
-  <object geometry="point" name="poste controle" symbol="G*GPGPPK--****X" type="checkpoint">
+  <object geometry="point" name="poste controle" point-size="100" symbol="G*GPGPPK--****X" type="checkpoint">
     <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <detection>
@@ -357,13 +355,11 @@
   <object geometry="polygon" name="terrain largage" symbol="G*GPGAD---****X" type="dropping area">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <interaction-height height="2"/>
-    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
   </object>
   <object geometry="polygon" name="zone interdite mouvement" symbol="G*MPOGZ---****X" type="movement forbidden area">
     <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <interaction-height height="6000"/>
-    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
   </object>
   <object geometry="polygon" name="zone interdite tir" symbol="G*FPAN----****X" type="firing forbidden area">
@@ -371,11 +367,9 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <fire-forbidden/>
     <interaction-height height="6000"/>
-    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
   </object>
   <object geometry="point" name="zone implantation mortier" symbol="G*FPAP----****X" type="mortar deployment area">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
-    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <protection geniePrepared="false" max-size="1"/>
     <workable max-animator="1"/>
   </object>
@@ -466,4 +460,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="1405847750" -->
+<!-- signature="3422419965" -->
