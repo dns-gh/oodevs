@@ -4522,56 +4522,6 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit can-fly="true" decisional-model="Missile balistique" id="155" name="GLAISE - ASS - SCUD" type="Pion ALAT">
-    <nature atlas-nature="Vehicule" level="o" nature-app6="combat/air defense/missile/heavy"/>
-    <equipments>
-      <equipment count="1" crew="1" major="true" type="Glaise missile SCUD"/>
-    </equipments>
-    <sensors-range range="5000"/>
-    <equipments-range range="5000"/>
-    <crew-ranks>
-      <crew-rank count="0" type="Officier"/>
-      <crew-rank count="0" type="SousOfficier"/>
-    </crew-ranks>
-    <postures>
-      <posture name="PosteReflexe" setup-time="30s"/>
-      <posture name="Poste" setup-time="300s"/>
-      <posture name="PosteAmenage" setup-time="0s"/>
-      <posture name="PostePrepareGenie" setup-time="0s"/>
-    </postures>
-    <nbc decontamination-delay="900s"/>
-    <distance-before-points>
-      <distance-before-point type="forest" value="500"/>
-      <distance-before-point type="urban area" value="500"/>
-      <distance-before-point type="crossroad" value="500"/>
-      <distance-before-point type="bridge" value="500"/>
-    </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
-    <crossing-height height="0m"/>
-  </unit>
-  <unit decisional-model="Glaise porteur SCUD" id="156" name="GLAISE - ASS - Porteur SCUD" type="Pion CIRCULATION">
-    <nature atlas-nature="Log" level="o" nature-app6="combat/air defense/theater missile defense unit"/>
-    <equipments>
-      <equipment count="1" crew="4" major="true" type="MAZ 543"/>
-      <equipment count="3" crew="1" type="ZIL 131"/>
-      <equipment count="1" crew="1" type="KAMAZ 5320"/>
-    </equipments>
-    <sensors-range range="5000"/>
-    <equipments-range range="5000"/>
-    <crew-ranks>
-      <crew-rank count="0" type="Officier"/>
-      <crew-rank count="4" type="SousOfficier"/>
-    </crew-ranks>
-    <postures>
-      <posture name="PosteReflexe" setup-time="900s"/>
-      <posture name="Poste" setup-time="1800s"/>
-      <posture name="PosteAmenage" setup-time="3600s"/>
-      <posture name="PostePrepareGenie" setup-time="5400s"/>
-    </postures>
-    <nbc decontamination-delay="7800s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
-    <crossing-height height="0m"/>
-  </unit>
   <unit can-fly="true" decisional-model="Masalife.AIR.PC" id="157" name="GLAISE - AIR . PC SU 25" type="Pion ALAT">
     <nature atlas-nature="None" level="i" nature-app6="combat/aviation/rotary wing/attack"/>
     <equipments>
@@ -18887,4 +18837,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="2270557185" -->
+<!-- signature="4169396565" -->

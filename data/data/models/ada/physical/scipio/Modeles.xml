@@ -1850,52 +1850,6 @@
         <fragorder name="Changer Parametres Recompletement ALAT"/>
       </fragorders>
     </unit>
-    <unit dia-type="PatrouilleAssaut" file="Air\Pions\Patrouille Assaut\model.bms" masalife="false" name="Missile balistique">
-      <missions>
-        <mission name="PION Faire Mouvement"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
-    <unit dia-type="PelotonAppuiMob" file="Appui\AppuiMob\Pions\Model.bms" masalife="false" name="Glaise porteur SCUD">
-      <missions>
-        <mission name="PION Faire Mouvement"/>
-      </missions>
-      <fragorders>
-        <fragorder name="Mettre Tenue NBC"/>
-        <fragorder name="Enlever Tenue NBC"/>
-        <fragorder name="Arreter Silence Radio"/>
-        <fragorder name="Passer En Silence Radar"/>
-        <fragorder name="Arreter Silence Radar"/>
-        <fragorder name="Recuperer Transporteurs"/>
-        <fragorder name="Attendre Se Poster"/>
-        <fragorder name="Pion Interdire Munition"/>
-        <fragorder name="Pion Autoriser Munition"/>
-        <fragorder name="Pion Autoriser Toutes Munitions"/>
-        <fragorder name="Passer En Silence Radio Total"/>
-        <fragorder name="Poursuivre"/>
-        <fragorder name="Changer les regles d'engagement"/>
-        <fragorder name="Interrompre"/>
-        <fragorder name="Changer Ambiance"/>
-        <fragorder name="Changer Regles Engagement Civils"/>
-      </fragorders>
-    </unit>
     <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Genie.Energie et traitement des eaux">
       <missions>
         <mission name="PION COMMUNES Decrocher"/>
@@ -7309,4 +7263,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2820802086" -->
+<!-- signature="4263092924" -->
