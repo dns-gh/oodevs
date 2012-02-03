@@ -36,6 +36,7 @@ class ModelBuilder;
 // =============================================================================
 class CommunicationListView : public gui::HierarchyListView< kernel::CommunicationHierarchies >
                             , public tools::ElementObserver_ABC< kernel::Entity_ABC >
+                            , public tools::ElementObserver_ABC< kernel::KnowledgeGroup_ABC >
                             , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
                             , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC > // LTO
                             , public kernel::ContextMenuObserver_ABC< kernel::KnowledgeGroup_ABC > // LTO
@@ -67,6 +68,7 @@ private:
     //@{
     virtual void hideEvent( QHideEvent* event );
     virtual void NotifyUpdated( const kernel::Entity_ABC& );
+    virtual void NotifyDeleted( const kernel::KnowledgeGroup_ABC& );
     virtual void NotifyContextMenu( const kernel::Team_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu );
     virtual bool Drop( const kernel::Entity_ABC& draggedEntity, const kernel::Entity_ABC& target );

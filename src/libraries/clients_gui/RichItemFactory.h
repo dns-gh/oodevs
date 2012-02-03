@@ -34,8 +34,8 @@ public:
 
     //! @name Operations
     //@{
-    virtual ValuedListItem* CreateItem( Q3ListView * parent );
-    virtual ValuedListItem* CreateItem( Q3ListViewItem * parent );
+    virtual ValuedListItem* CreateItem( Q3ListView * parent, ValuedListItem::Comparator comparator = 0 );
+    virtual ValuedListItem* CreateItem( Q3ListViewItem * parent, ValuedListItem::Comparator comparator = 0 );
     virtual ValuedListItem* CreateItem( Q3ListView * parent, Q3ListViewItem * after );
     virtual ValuedListItem* CreateItem( Q3ListViewItem * parent, Q3ListViewItem * after );
 

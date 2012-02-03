@@ -36,9 +36,10 @@ public:
     //@{
              ListView( QWidget* parent, ConcreteList& list, ItemFactory_ABC& factory, const char* name = 0 )
                  : Q3ListView( parent, name )
-                 , list_( list )
-                 , factory_( factory )
-                 , toSkip_( 0 )
+                 , list_      ( list )
+                 , factory_   ( factory )
+                 , toSkip_    ( 0 )
+                 , comparator_( 0 )
              {
                  setDefaultRenameAction( Q3ListView::Accept );
                  setBackgroundColor( Qt::white );
@@ -112,6 +113,17 @@ public:
         }
         return factory_.CreateItem( parent, previousItem );
     }
+
+    template< typename Parent >
+    ValuedListItem* CreateItem( Parent* parent )
+    {
+        return factory_.CreateItem( parent, comparator_ );
+    }
+
+    void SetComparator( ValuedListItem::Comparator comparator )
+    {
+        comparator_ = comparator;
+    }
     //@}
 
 private:
@@ -120,6 +132,7 @@ private:
     ConcreteList& list_;
     ItemFactory_ABC& factory_;
     ValuedListItem* toSkip_;
+    ValuedListItem::Comparator comparator_;
     //@}
 };
 

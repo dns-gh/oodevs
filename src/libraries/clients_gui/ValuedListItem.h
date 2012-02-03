@@ -35,11 +35,17 @@ namespace gui
 class ValuedListItem : public RichListItem
 {
 public:
+    //! @name Types
+    //@{
+    typedef int( *Comparator )( const ValuedListItem& item1, const ValuedListItem& item2, int col, bool ascending );
+    //@}
+
+public:
     //! @name Constructors/Destructor
     //@{
-    explicit ValuedListItem( Q3ListView* parent );
+    explicit ValuedListItem( Q3ListView* parent, Comparator comparator = 0 );
              ValuedListItem( Q3ListView* parent, Q3ListViewItem* after );
-    explicit ValuedListItem( Q3ListViewItem* parent );
+    explicit ValuedListItem( Q3ListViewItem* parent, Comparator comparator = 0 );
              ValuedListItem( Q3ListViewItem* parent, Q3ListViewItem* after );
     virtual ~ValuedListItem();
     //@}
@@ -65,6 +71,7 @@ public:
     void SetToolTip( const QString& text );
 
     int rtti() const;
+    virtual int compare( Q3ListViewItem *i, int col, bool ascending ) const;
     QString GetToolTip() const;
 
     void Select( kernel::ActionController& actions );
@@ -76,6 +83,7 @@ protected:
     //! @name Member data
     //@{
     ValueContainer_ABC* container_;
+    Comparator comparator_;
     QString toolTip_;
     //@}
 };

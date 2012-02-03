@@ -10,6 +10,8 @@
 #ifndef __EntitySearchItem_h_
 #define __EntitySearchItem_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace kernel
 {
     class Entity_ABC;
@@ -25,7 +27,7 @@ namespace gui
 */
 // Created: AGE 2006-08-10
 // =============================================================================
-class EntitySearchItem
+class EntitySearchItem : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -39,13 +41,6 @@ public:
     bool Matches( const QString& input ) const;
     bool Matches( const kernel::Entity_ABC& entity ) const;
     void Activate();
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    EntitySearchItem( const EntitySearchItem& );            //!< Copy constructor
-    EntitySearchItem& operator=( const EntitySearchItem& ); //!< Assignment operator
     //@}
 
 private:

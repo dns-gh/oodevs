@@ -26,15 +26,15 @@ namespace
         {
         }
         virtual ~AlternatingItemFactory() {}
-        virtual gui::ValuedListItem* CreateItem( Q3ListView* parent )
+        virtual gui::ValuedListItem* CreateItem( Q3ListView* parent, gui::ValuedListItem::Comparator comparator = 0 )
         {
-            gui::ValuedListItem* item = factory_.CreateItem( parent );
+            gui::ValuedListItem* item = factory_.CreateItem( parent, comparator );
             item->SetBackgroundColor( color1_, color2_ );
             return item;
         }
-        virtual gui::ValuedListItem* CreateItem( Q3ListViewItem* parent )
+        virtual gui::ValuedListItem* CreateItem( Q3ListViewItem* parent, gui::ValuedListItem::Comparator comparator = 0 )
         {
-            gui::ValuedListItem* item = factory_.CreateItem( parent );
+            gui::ValuedListItem* item = factory_.CreateItem( parent, comparator );
             item->SetBackgroundColor( color1_, color2_ );
             return item;
         }

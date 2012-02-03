@@ -11,11 +11,7 @@
 
 #include "clients_gui_pch.h"
 #include "PopulationListView.h"
-#include "clients_kernel/Population_ABC.h"
-#include "clients_kernel/Controllers.h"
 #include "clients_kernel/TacticalHierarchies.h"
-
-#pragma warning( disable : 4355 )
 
 using namespace kernel;
 using namespace gui;
@@ -24,10 +20,9 @@ using namespace gui;
 // Name: PopulationListView constructor
 // Created: HME 2005-10-03
 // -----------------------------------------------------------------------------
-PopulationListView::PopulationListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile )
+PopulationListView::PopulationListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory, const Profile_ABC& profile )
     : EntityListView( pParent, controllers, factory, profile )
     , controllers_( controllers )
-    , factory_    ( factory )
 {
     addColumn( tr( "Crowds" ) );
     setAcceptDrops( true );
@@ -53,11 +48,11 @@ void PopulationListView::NotifyCreated( const Population_ABC& popu )
     ValuedListItem* teamItem = FindSibling( &team, firstChild() );
     if( ! teamItem )
     {
-        teamItem = factory_.CreateItem( this );
+        teamItem = CreateItem( this );
         teamItem->SetNamed( team );
     }
-    ValuedListItem* popItem = factory_.CreateItem( teamItem );
-    popItem->SetNamed( (const Entity_ABC&)popu );
+    ValuedListItem* popItem = CreateItem( teamItem );
+    popItem->SetNamed( static_cast< const Entity_ABC& >( popu ) );
     popItem->setDragEnabled( true );
     popItem->SetToolTip( QString( "%1 [%2]" ).arg( popu.GetName() ).arg( popu.GetId() ) );
 }
@@ -68,5 +63,5 @@ void PopulationListView::NotifyCreated( const Population_ABC& popu )
 // -----------------------------------------------------------------------------
 void PopulationListView::NotifyDeleted( const Population_ABC& element )
 {
-    delete FindItem( (const Entity_ABC*)&element, firstChild() );
+    delete FindItem( static_cast< const Entity_ABC* >( &element ), firstChild() );
 }

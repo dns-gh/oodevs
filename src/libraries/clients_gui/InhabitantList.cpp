@@ -11,7 +11,6 @@
 #include "InhabitantList.h"
 #include "InhabitantListView.h"
 #include "EntitySearchBox.h"
-#include "clients_kernel/Population_ABC.h"
 
 using namespace kernel;
 using namespace gui;
@@ -20,7 +19,7 @@ using namespace gui;
 // Name: InhabitantList constructor
 // Created: SLG 2010-11-30
 // -----------------------------------------------------------------------------
-InhabitantList::InhabitantList( Controllers& controllers, ItemFactory_ABC& factory, const kernel::Profile_ABC& profile )
+InhabitantList::InhabitantList( Controllers& controllers, ItemFactory_ABC& factory, const Profile_ABC& profile )
 {
     new EntitySearchBox< Inhabitant_ABC >( this, controllers );
     new InhabitantListView( this, controllers, factory, profile );

@@ -77,6 +77,36 @@ void CommunicationListView::NotifyUpdated( const kernel::Entity_ABC& entity )
 }
 
 // -----------------------------------------------------------------------------
+// Name: CommunicationListView::NotifyDeleted
+// Created: JSR 2012-02-02
+// -----------------------------------------------------------------------------
+void CommunicationListView::NotifyDeleted( const kernel::KnowledgeGroup_ABC& kg )
+{
+    const Entity_ABC& top = kg.Get< CommunicationHierarchies >().GetTop();
+    const CommunicationHierarchies& teamHierarchy = top.Get< CommunicationHierarchies >();
+    tools::Iterator< const Entity_ABC& > it = teamHierarchy.CreateSubordinateIterator();
+    bool isFirst = false;
+    while( it.HasMoreElements() )
+    {
+        const Entity_ABC* entity = &it.NextElement();
+        if( dynamic_cast< const KnowledgeGroup_ABC* >( entity ) )
+        {
+            if( isFirst )
+            {
+                gui::ValuedListItem* item = gui::FindItem( entity, firstChild() );
+                if( item )
+                    item->SetBold( true );
+                return;
+            }
+            if( entity == &kg )
+                isFirst = true;
+            else
+                return;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: CommunicationListView::Display
 // Created: AGE 2006-10-11
 // -----------------------------------------------------------------------------
@@ -88,6 +118,22 @@ void CommunicationListView::Display( const kernel::Entity_ABC& entity, gui::Valu
     item->SetBackgroundColor( color );
     gui::HierarchyListView< kernel::CommunicationHierarchies >::Display( entity, item );
     item->setRenameEnabled( 0, !gui::LongNameHelper::SetItemLongName( entity, *item ) );
+    item->SetBold( false );
+    if( const KnowledgeGroup_ABC* kg = dynamic_cast< const KnowledgeGroup_ABC* >( &entity ) )
+    {
+        const Entity_ABC& top = kg->Get< CommunicationHierarchies >().GetTop();
+        const CommunicationHierarchies& teamHierarchy = top.Get< CommunicationHierarchies >();
+        tools::Iterator< const Entity_ABC& > it = teamHierarchy.CreateSubordinateIterator();
+        while( it.HasMoreElements() )
+        {
+            const Entity_ABC* entity = &it.NextElement();
+            if( dynamic_cast< const KnowledgeGroup_ABC* >( entity ) )
+            {
+                item->SetBold( kg == entity );
+                return;
+            }
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------

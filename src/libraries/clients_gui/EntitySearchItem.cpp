@@ -20,7 +20,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 EntitySearchItem::EntitySearchItem( ActionController& actions, const Entity_ABC& entity )
     : actions_( actions )
-    , entity_( entity )
+    , entity_ ( entity )
 {
     name_ = ( entity_.GetName() + QString::number( entity_.GetId() ) ).lower();
 }

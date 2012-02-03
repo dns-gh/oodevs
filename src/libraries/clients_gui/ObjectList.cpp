@@ -11,7 +11,6 @@
 #include "ObjectList.h"
 #include "ObjectListView.h"
 #include "EntitySearchBox.h"
-#include "clients_kernel/Object_ABC.h"
 
 using namespace kernel;
 using namespace gui;

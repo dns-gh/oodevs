@@ -34,13 +34,33 @@
 using namespace gui;
 using namespace kernel;
 
+namespace
+{
+    bool IsCommandPost( const kernel::Entity_ABC& entity )
+    {
+        if( const CommandPostAttributes* pAttributes = entity.Retrieve< CommandPostAttributes >() )
+            return pAttributes->IsCommandPost();
+        return false;
+    }
+
+    int ItemComparator( const ValuedListItem& item1, const ValuedListItem& item2, int /*col*/, bool /*ascending*/ )
+    {
+        const Entity_ABC* entity1 = item1.GetValue< const Entity_ABC >();
+        if( !entity1 || IsCommandPost( *entity1 ) )
+            return -1;
+        const Entity_ABC* entity2 = item2.GetValue< const Entity_ABC >();
+        if( !entity2 || IsCommandPost( *entity2 ) )
+            return 1;
+        return entity1->GetId() - entity2->GetId();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: TacticalListView constructor
 // Created: SBO 2006-08-29
 // -----------------------------------------------------------------------------
 TacticalListView::TacticalListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory, EntitySymbols& icons, ModelBuilder& modelBuilder, const FormationLevels& levels )
     : HierarchyListView< kernel::TacticalHierarchies >( pParent, controllers, factory, PreparationProfile::GetProfile(), icons )
-    , factory_             ( factory )
     , modelBuilder_        ( modelBuilder )
     , levels_              ( levels )
     , lock_                ( MAKE_PIXMAP( lock ) )
@@ -51,6 +71,7 @@ TacticalListView::TacticalListView( QWidget* pParent, Controllers& controllers, 
     addColumn( "HiddenPuce", 15 );
     setColumnAlignment( 1, Qt::AlignCenter );
     connect( this, SIGNAL( itemRenamed( Q3ListViewItem*, int, const QString& ) ), &modelBuilder_, SLOT( OnRename( Q3ListViewItem*, int, const QString& ) ) );
+    SetComparator( &ItemComparator );
     controllers.Update( *this );
 }
 
@@ -91,16 +112,6 @@ void TacticalListView::viewportResizeEvent( QResizeEvent* e )
 void TacticalListView::setColumnWidth( int column, int w )
 {
     Q3ListView::setColumnWidth( column, column == 0 ? visibleWidth() - columnWidth( 1 ) : w );
-}
-
-namespace
-{
-    bool IsCommandPost( const kernel::Entity_ABC& entity )
-    {
-        if( const CommandPostAttributes* pAttributes = entity.Retrieve< CommandPostAttributes >() )
-            return pAttributes->IsCommandPost();
-        return false;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -171,6 +182,10 @@ void TacticalListView::NotifyUpdated( const Entity_ABC& entity )
         item->SetNamed( entity );
         UpdatePixmap( entity, item );
         UpdateFormationRenamingText( entity, *item );
+        if( item->parent() )
+            item->parent()->sort();
+        else if( item->listView() )
+            item->listView()->sort();
     }
 }
 

@@ -18,9 +18,10 @@ using namespace gui;
 // Name: ValuedListItem constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-ValuedListItem::ValuedListItem( Q3ListView * parent )
+ValuedListItem::ValuedListItem( Q3ListView * parent, Comparator comparator /*= 0*/ )
     : RichListItem( parent )
-    , container_( 0 )
+    , container_ ( 0 )
+    , comparator_( comparator )
 {
     // NOTHING
 }
@@ -29,9 +30,10 @@ ValuedListItem::ValuedListItem( Q3ListView * parent )
 // Name: ValuedListItem constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-ValuedListItem::ValuedListItem( Q3ListViewItem * parent )
+ValuedListItem::ValuedListItem( Q3ListViewItem * parent, Comparator comparator /*= 0*/ )
     : RichListItem( parent )
-    , container_( 0 )
+    , container_ ( 0 )
+    , comparator_( comparator )
 {
     // NOTHING
 }
@@ -42,7 +44,8 @@ ValuedListItem::ValuedListItem( Q3ListViewItem * parent )
 // -----------------------------------------------------------------------------
 ValuedListItem::ValuedListItem( Q3ListViewItem * parent, Q3ListViewItem* after )
     : RichListItem( parent, after )
-    , container_( 0 )
+    , container_ ( 0 )
+    , comparator_( 0 )
 {
     // NOTHING
 }
@@ -53,7 +56,8 @@ ValuedListItem::ValuedListItem( Q3ListViewItem * parent, Q3ListViewItem* after )
 // -----------------------------------------------------------------------------
 ValuedListItem::ValuedListItem( Q3ListView* parent, Q3ListViewItem* after )
     : RichListItem( parent, after )
-    , container_( 0 )
+    , container_ ( 0 )
+    , comparator_( 0 )
 {
     // NOTHING
 }
@@ -74,6 +78,21 @@ ValuedListItem::~ValuedListItem()
 int ValuedListItem::rtti() const
 {
     return 1000;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ValuedListItem::compare
+// Created: JSR 2012-02-01
+// -----------------------------------------------------------------------------
+int ValuedListItem::compare( Q3ListViewItem *i, int col, bool ascending ) const
+{
+    if( comparator_ )
+    {
+        ValuedListItem* item = dynamic_cast< ValuedListItem* >( i );
+        if( item )
+            return comparator_( *this, *item, col, ascending );
+    }
+    return RichListItem::compare( i, col, ascending );
 }
 
 // -----------------------------------------------------------------------------
