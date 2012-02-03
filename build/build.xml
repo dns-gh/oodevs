@@ -12,8 +12,8 @@
     <property name="env.PONEY_HOME" value="//install/masa/common/dev/common/poney"/>
     <import file="${env.PONEY_HOME}/poney.xml"/>
 
-    <property name="version.project.major" value="1.0"/>
-    <property name="version.project" value="${version.project.major}.4"/>
+    <property name="version.project.major" value="1.1"/>
+    <property name="version.project" value="${version.project.major}.0"/>
     <property name="version.company" value="MASA Group"/>
     <property name="version.product" value="Sword"/>
     <property name="version.major" value="4.3.3"/>
@@ -1591,8 +1591,8 @@
     <target name="configure" description="initialize local project structure with libraries">
         <update name="geometry"/>
         <update name="geocoord"/>
-        <update name="terrain" modules="terrain,graphics,spatialcontainer,pathfind,analysis,vmap,geodata,gdal_ogr,urban"/>
-        <update name="terrain" package="terraintools_${platform}.zip"/>
+        <update name="terrain" version="5.0" modules="terrain,graphics,spatialcontainer,pathfind,analysis,vmap,geodata,gdal_ogr,urban"/>
+        <update name="terrain" version="5.0" package="terraintools_${platform}.zip"/>
         <update name="qt"/>
         <update name="boost"/>
         <update name="boost" package="geometry" todir="${include.dir}"/>
