@@ -12,7 +12,8 @@
     <property name="env.PONEY_HOME" value="//install/masa/common/dev/common/poney"/>
     <import file="${env.PONEY_HOME}/poney.xml"/>
 
-    <property name="version.project" value="trunk"/>
+    <property name="version.project.major" value="trunk"/>
+    <property name="version.project" value="${version.project.major}"/>
     <property name="version.company" value="MASA Group"/>
     <property name="version.product" value="Sword"/>
     <property name="version.major" value="4.3.4"/>
@@ -1294,7 +1295,7 @@
 
     <target name="package.plugin.vrforces" description="create vrforces plugin installer" if="is-vc80">
         <nsis name="sword-plugin" script="sword-plugin.nsi" license="true">
-            <arg value="/DAPP_VERSION_MAJOR=${version.project}"/>
+            <arg value="/DAPP_VERSION_MAJOR=${version.project.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.version}"/>
             <arg value="/DPLUGIN=plugin-vrforces"/>
             <arg value="/DPLUGIN_VERSION=1.0"/>
@@ -1303,7 +1304,7 @@
 
     <target name="package.plugin.hla" description="create hla plugin installer">
         <nsis name="sword-plugin" script="sword-plugin.nsi" license="true">
-            <arg value="/DAPP_VERSION_MAJOR=${version.project}"/>
+            <arg value="/DAPP_VERSION_MAJOR=${version.project.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.version}"/>
             <arg value="/DPLUGIN=plugin-hla"/>
             <arg value="/DPLUGIN_VERSION=1.0"/>
@@ -1312,7 +1313,7 @@
 
     <target name="package.plugin.bml" description="create bml plugin installer">
         <nsis name="sword-plugin" script="sword-plugin.nsi" license="true">
-            <arg value="/DAPP_VERSION_MAJOR=${version.project}"/>
+            <arg value="/DAPP_VERSION_MAJOR=${version.project.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.version}"/>
             <arg value="/DPLUGIN=plugin-bml"/>
             <arg value="/DPLUGIN_VERSION=1.0"/>
@@ -1321,7 +1322,7 @@
 
     <target name="package.plugin.dis" description="create dis plugin installer">
         <nsis name="sword-plugin" script="sword-plugin.nsi" license="true">
-            <arg value="/DAPP_VERSION_MAJOR=${version.project}"/>
+            <arg value="/DAPP_VERSION_MAJOR=${version.project.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.version}"/>
             <arg value="/DPLUGIN=plugin-dis"/>
             <arg value="/DPLUGIN_VERSION=1.0"/>
@@ -1330,7 +1331,7 @@
 
     <target name="package.plugin.timeline" description="create timeline plugin installer">
         <nsis name="sword-plugin" script="sword-plugin.nsi" license="true">
-            <arg value="/DAPP_VERSION_MAJOR=${version.project}"/>
+            <arg value="/DAPP_VERSION_MAJOR=${version.project.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.version}"/>
             <arg value="/DPLUGIN=plugin-timeline"/>
             <arg value="/DPLUGIN_VERSION=1.0"/>
@@ -1339,7 +1340,7 @@
 
     <target name="package.plugin.crossbow" description="create crossbow plugin installer">
         <nsis name="sword-plugin" script="sword-plugin.nsi" license="true">
-            <arg value="/DAPP_VERSION_MAJOR=${version.project}"/>
+            <arg value="/DAPP_VERSION_MAJOR=${version.project.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.version}"/>
             <arg value="/DPLUGIN=plugin-crossbow"/>
             <arg value="/DPLUGIN_VERSION=1.0"/>
@@ -1358,7 +1359,7 @@
     <!-- Package misc -->
     <target name="package.patch" description="create a patch installer">
         <nsis name="sword-patch" script="patchs/sword-patch.nsi" license="true">
-            <arg value="/DAPP_VERSION_MAJOR=${version.project}"/>
+            <arg value="/DAPP_VERSION_MAJOR=${version.project.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.version}"/>
             <arg value="/X!include sword-defense.nsh"/>
         </nsis>
@@ -1384,7 +1385,7 @@
 
     <target name="package.wise-driver" depends="application.wise_driver_dll" description="package the wise driver installer" if="is-vc80">
         <nsis name="sword-wise_driver" script="sword-wise_driver.nsi">
-            <arg value="/DAPP_VERSION_MAJOR=${version.project}"/>
+            <arg value="/DAPP_VERSION_MAJOR=${version.project.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.version}"/>
         </nsis>
     </target>
@@ -1392,7 +1393,7 @@
     <!-- Package Application -->
     <target name="package.app" description="package des applications runtime">
         <nsis name="sword" script="sword.nsi" nsh="config.nsh">
-            <arg value="/DAPP_VERSION_MAJOR=${version.project}"/>
+            <arg value="/DAPP_VERSION_MAJOR=${version.project.major}"/>
             <arg value="/DAPP_VERSION_MINOR=${version.version}"/>
             <arg value="/X!include sword-defense.nsh"/>
         </nsis>
