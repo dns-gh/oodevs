@@ -1493,6 +1493,7 @@
 			<zipfileset dir="${data.dir}/exercises/tests" prefix="exercises">
                 <include name="missing/**"/>
                 <include name="Pathfind/**"/>
+				<include name="TestPlanExercise/**"/>
             </zipfileset>
         </pack>
     </target>
