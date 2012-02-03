@@ -249,3 +249,41 @@ void DEC_BlackBoard_CanContainKnowledgeObject::Accept( KnowledgesVisitor_ABC& vi
 {
     visitor.VisitKnowledgesObject( objectMap_.size() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeObject::Prepare
+// Created: LDC 2012-02-02
+// -----------------------------------------------------------------------------
+void DEC_BlackBoard_CanContainKnowledgeObject::Prepare()
+{
+    obstacleCache_.clear();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeObject::HasObjectsAtInteractionHeightCache
+// Created: LDC 2012-02-02
+// -----------------------------------------------------------------------------
+bool DEC_BlackBoard_CanContainKnowledgeObject::HasObjectsAtInteractionHeightCache( double rHeight ) const
+{
+    return obstacleCache_.find( rHeight ) != obstacleCache_.end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeObject::GetCachedObjectsAtInteractionHeight
+// Created: LDC 2012-02-02
+// -----------------------------------------------------------------------------
+void DEC_BlackBoard_CanContainKnowledgeObject::GetCachedObjectsAtInteractionHeight( T_KnowledgeObjectVector& container, double rHeight ) const
+{
+    std::map< double, T_KnowledgeObjectVector >::const_iterator it = obstacleCache_.find( rHeight );
+    if( it != obstacleCache_.end() )
+        container = it->second;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeObject::SetCachedObjectsAtInteractionHeight
+// Created: LDC 2012-02-02
+// -----------------------------------------------------------------------------
+void DEC_BlackBoard_CanContainKnowledgeObject::SetCachedObjectsAtInteractionHeight( const T_KnowledgeObjectVector& container, double rHeight )
+{
+    obstacleCache_[ rHeight ] = container;
+}

@@ -157,8 +157,16 @@ namespace
 // -----------------------------------------------------------------------------
 std::pair< bool, std::pair< boost::shared_ptr< DEC_Knowledge_Object >, float > > DEC_PathFunctions::GetNextObjectOnPath( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > /*oId*/, float /*oDistance*/, const std::vector< std::string >& params )
 {
-    MIL_ObjectFilter filter( params );
-    return ::GetNextObjectOnPath( filter, callerAgent );
+    if( params.empty() )
+    {
+        MIL_DangerousObjectFilter filter;
+        return ::GetNextObjectOnPath( filter, callerAgent );
+    }
+    else
+    {
+        MIL_ObjectFilter filter( params );
+        return ::GetNextObjectOnPath( filter, callerAgent );
+    }
 }
 
 class CanRemoveFromPathComputer : public OnComponentComputer_ABC

@@ -262,10 +262,18 @@ namespace
 
 void DEC_KnowledgeBlackBoard_Army::GetObjectsAtInteractionHeight( T_KnowledgeObjectVector& container, double rHeight, const MIL_ObjectFilter& filter ) const
 {
+    bool useCache = ( dynamic_cast< const MIL_DangerousObjectFilter* >( &filter ) != 0 );
+    if( useCache && pKnowledgeObjectContainer_->HasObjectsAtInteractionHeightCache( rHeight ) )
+    {
+        pKnowledgeObjectContainer_->GetCachedObjectsAtInteractionHeight( container, rHeight );
+        return ;
+    }
     sObjectKnowledgesFilteredHeightInserter functor( container, rHeight, filter );
 
     assert( pKnowledgeObjectContainer_ );
     pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );
+    if( useCache )
+        pKnowledgeObjectContainer_->SetCachedObjectsAtInteractionHeight( container, rHeight );
 }
 
 namespace
@@ -698,4 +706,15 @@ void DEC_KnowledgeBlackBoard_Army::GetResourceNetworksInZone( T_ResourceNetworkV
 void DEC_KnowledgeBlackBoard_Army::Accept( KnowledgesVisitor_ABC& visitor ) const
 {
     pKnowledgeObjectContainer_->Accept( visitor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Army::Update
+// Created: LDC 2012-02-02
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeBlackBoard_Army::Update( int currentTimeStep )
+{
+    DEC_KnowledgeBlackBoard_ABC::Update( currentTimeStep );
+    if( pKnowledgeObjectContainer_ )
+        pKnowledgeObjectContainer_->Prepare();
 }

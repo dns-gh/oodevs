@@ -32,20 +32,6 @@
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
-namespace
-{
-    class MIL_DangerousObjectFilter : public MIL_ObjectFilter
-    {
-        virtual bool Test( const MIL_ObjectType_ABC& type ) const
-        {
-            return type.GetCapacity< AttritionCapacity >() != 0 ||
-                   type.GetCapacity< ContaminationCapacity >() != 0 ||
-                   type.GetCapacity< InterferenceCapacity >() != 0 ||
-                   type.GetCapacity< AvoidanceCapacity >() != 0;
-        }
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: DEC_PathFind_Manager constructor
 // Created: NLD 2003-08-14

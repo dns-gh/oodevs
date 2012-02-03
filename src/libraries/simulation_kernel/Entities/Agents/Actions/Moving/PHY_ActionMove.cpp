@@ -128,20 +128,6 @@ MT_Vector2D PHY_ActionMove::GetLastPointAndDestroyJoiningPath()
     return point;
 }
 
-namespace
-{
-    class MIL_DangerousObjectFilter : public MIL_ObjectFilter
-    {
-        virtual bool Test( const MIL_ObjectType_ABC& type ) const
-        {
-            return type.GetCapacity< AttritionCapacity >() != 0 ||
-                   type.GetCapacity< ContaminationCapacity >() != 0 ||
-                   type.GetCapacity< InterferenceCapacity >() != 0 ||
-                   type.GetCapacity< AvoidanceCapacity >() != 0;
-        }
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionMove::UpdateObjectsToAvoid
 // Created: NLD 2006-04-28
@@ -200,7 +186,7 @@ bool PHY_ActionMove::AvoidObstacles()
 
     boost::shared_ptr< DEC_Knowledge_Object > obstacle;
     boost::shared_ptr< DEC_PathResult > pCurrentPath( pJoiningPath_.get() ? pJoiningPath_ : pMainPath_ );
-    if( !pCurrentPath || DEC_Path_ABC::eComputing == pCurrentPath->GetState() || !pCurrentPath->ComputeFutureObjectCollision( pion_.GetRole< PHY_RoleInterface_Location >().GetPosition(), objectsToAvoid_, rDistanceBeforeCollision, rDistanceAfterCollision, obstacle ) )
+    if( !pCurrentPath || DEC_Path_ABC::eComputing == pCurrentPath->GetState() || !role_.ComputeFutureObjectCollision( pion_.GetRole< PHY_RoleInterface_Location >().GetPosition(), objectsToAvoid_, rDistanceBeforeCollision, rDistanceAfterCollision, obstacle ) )
         return false;
 
     assert( obstacle && obstacle->IsValid() );

@@ -51,6 +51,10 @@ public:
     void DestroyKnowledgeObject( DEC_Knowledge_Object& knowledge );
     void NotifyKnowledgeObjectDissociatedFromRealObject( const MIL_Object_ABC& objectKnown, DEC_Knowledge_Object& knowledge );
     void Accept( KnowledgesVisitor_ABC& visitor ) const;
+    void Prepare();
+    bool HasObjectsAtInteractionHeightCache( double rHeight ) const;
+    void GetCachedObjectsAtInteractionHeight( T_KnowledgeObjectVector& container, double rHeight ) const;
+    void SetCachedObjectsAtInteractionHeight( const T_KnowledgeObjectVector& container, double rHeight );
     //@}
 
     //! @name Queries
@@ -107,6 +111,7 @@ private:
     T_KnowledgeObjectMap objectMap_;
     T_KnowledgeObjectIDMap knowledgeObjectFromIDMap_;
     MIL_KnowledgeGroup* pKnowledgeGroup_;
+    std::map< double, T_KnowledgeObjectVector > obstacleCache_;
     //@}
 };
 
