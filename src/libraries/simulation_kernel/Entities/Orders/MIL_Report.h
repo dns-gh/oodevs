@@ -141,6 +141,7 @@ public:
         eReport_StartDeploy,
         eReport_SectionUndeployed,
         eReport_StartUndeploy,
+        eReport_DifficultMovementProgression,
         eNbrReport
     };
 
@@ -579,7 +580,8 @@ public:
 		eRC_ElementCannotBeUnloaded, // 430
 		eRC_ElementLoaded,
 		eRC_ElementUnloaded,
-        eLast // 433
+        eRC_DifficultMovementProgression,
+        eLast // 434
     };
     //@}
 public:

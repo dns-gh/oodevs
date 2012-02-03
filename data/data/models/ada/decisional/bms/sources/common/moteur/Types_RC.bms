@@ -422,7 +422,34 @@ eRC_NoPEInAutomat = 403
 eRC_SectionUndeployed = 404
 eRC_StartUndeploy = 405
 eRC_NoPopulationUrbanBlock = 406
-eNbr = 407
+eRC_ObjectiveAlerted = 407
+eRC_ObjectiveIsNoLongerAlerted = 408
+eRC_ObjectiveConfined = 409
+eRC_ObjectiveIsNoLongerConfined = 410 
+eRC_ObjectiveEvacuated = 411
+eRC_ObjectiveIsNoLongerEvacuated = 412
+eRC_StartingToProduceResource = 413
+eRC_ResourceProductionStopped = 414
+eRC_ResourceNodeProductionEnhanced = 415
+eRC_ResourceNodeProductionDamaged = 416
+eRC_ResourceNodeDisabled = 417
+eRC_ResourceNodeEnabled = 418
+eRC_NoResourceNodesWithinArea = 419
+eRC_NoUrbanBlocksWithinArea = 420
+eRC_NoCrowdsWithinArea = 421
+eRC_VictimsEvacuated = 422
+eRC_VictimsExtracted = 423
+eRC_VictimsCannotBeEvacuated = 424
+eRC_VictimsCannotBeExtracted = 425
+eRC_StartingToReduceResourceProduction = 426
+eRC_ResourceReductionStopped = 427
+eRC_NoWoundedVictims = 428
+eRC_ElementCannotBeLoaded = 429
+eRC_ElementCannotBeUnloaded = 430
+eRC_ElementLoaded = 431
+eRC_ElementUnloaded = 432
+eRC_DifficultMovementProgression = 433
+eNbr = 434
 
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : delai (float),

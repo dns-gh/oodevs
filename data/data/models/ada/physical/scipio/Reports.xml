@@ -602,5 +602,8 @@
   <report category="operational" id="430" message="Impossible de decharger l'élément"/>
   <report category="operational" id="431" message="Element chargé"/>
   <report category="operational" id="432" message="Element déchargé"/>
+  <report category="operational" id="433" message="Progression difficile en raison de %1">
+    <parameter type="String"/>
+  </report>
 </reports>
-<!-- signature="4267229696" -->
+<!-- signature="1999930977" -->
