@@ -46,4 +46,9 @@ private:
     T_ObjectStateMap objects_;
 };
 
+class MIL_DangerousObjectFilter : public MIL_ObjectFilter
+{
+    virtual bool Test( const MIL_ObjectType_ABC& type ) const;
+};
+
 #endif // __MIL_ObjectFilter_h_

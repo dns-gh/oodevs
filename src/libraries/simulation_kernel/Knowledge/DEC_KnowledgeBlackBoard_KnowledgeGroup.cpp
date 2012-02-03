@@ -114,6 +114,7 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::Update( int currentTimeStep )
 {
     if( pKnowledgeObjectContainer_ )
     {
+        pKnowledgeObjectContainer_->Prepare();
         std::mem_fun_ref_t< void, DEC_Knowledge_Object > objectFunctor = std::mem_fun_ref( &DEC_Knowledge_Object::Prepare );
         pKnowledgeObjectContainer_->ApplyOnKnowledgesObjectRef( objectFunctor );
     }

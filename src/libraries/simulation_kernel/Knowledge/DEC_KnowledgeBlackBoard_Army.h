@@ -54,6 +54,11 @@ public:
     template< typename Archive > void serialize( Archive&, const unsigned int );
     //@}
 
+    //! @name CheckPoints
+    //@{
+    virtual void Update( int currentTimeStep );
+    //@}
+
     //! @name Accessors
     //@{
     MIL_Army_ABC& GetArmy() const;

@@ -12,6 +12,10 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_ObjectFilter.h"
 #include "MIL_ObjectType_ABC.h"
+#include "AttritionCapacity.h"
+#include "AvoidanceCapacity.h"
+#include "ContaminationCapacity.h"
+#include "InterferenceCapacity.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ObjectFilter constructor
@@ -66,4 +70,16 @@ void MIL_ObjectFilter::Reset( const std::string& type )
 bool MIL_ObjectFilter::Test( const MIL_ObjectType_ABC& type ) const
 {
     return objects_.find( type.GetName() ) != objects_.end();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_DangerousObjectFilter::Test
+// Created: LDC 2012-02-01
+// -----------------------------------------------------------------------------
+bool MIL_DangerousObjectFilter::Test( const MIL_ObjectType_ABC& type ) const
+{
+    return type.GetCapacity< AttritionCapacity >() != 0 ||
+           type.GetCapacity< ContaminationCapacity >() != 0 ||
+           type.GetCapacity< InterferenceCapacity >() != 0 ||
+           type.GetCapacity< AvoidanceCapacity >() != 0;
 }
