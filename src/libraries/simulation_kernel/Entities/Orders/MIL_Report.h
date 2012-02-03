@@ -141,6 +141,7 @@ public:
         eReport_StartDeploy,
         eReport_SectionUndeployed,
         eReport_StartUndeploy,
+        eReport_DifficultMovementProgression,
         eNbrReport
     };
 
@@ -552,6 +553,7 @@ public:
         eRC_NoPEInAutomat,
         eRC_SectionUndeployed,
         eRC_StartUndeploy,
+        eRC_DifficultMovementProgression,
         eLast
     };
     //@}

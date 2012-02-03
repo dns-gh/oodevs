@@ -408,7 +408,16 @@ bool PHY_RoleAction_Moving::HasResources()
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Moving::SendRC( int nReportID ) const
 {
-    MIL_Report::PostEvent( pion_, (MIL_Report::E_EngineReport)nReportID );
+    MIL_Report::PostEvent( pion_, static_cast< MIL_Report::E_EngineReport >( nReportID ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Moving::SendRC
+// Created: CMA 2012-02-02
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Moving::SendRC( int nReportID, const std::string& name ) const
+{
+    MIL_Report::PostEvent( pion_, static_cast< MIL_Report::E_EngineReport >( nReportID ), name );
 }
 
 // -----------------------------------------------------------------------------

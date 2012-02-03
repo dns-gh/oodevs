@@ -14,6 +14,8 @@
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Actions/PHY_MovingEntity_ABC.h"
 #include "Entities/Orders/MIL_Report.h"
+#include "Entities/Objects/MIL_ObjectType_ABC.h"
+#include "Entities/Objects/MIL_ObjectLoader.h"
 #include "protocol/Protocol.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_World.h"
@@ -293,7 +295,8 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
                     movingEntity_.NotifyMovingOutsideObject( object );  // $$$$ NLD 2007-05-07:
                     if( !bTerrainReportSent_ )
                     {
-                        movingEntity_.SendRC( MIL_Report::eReport_DifficultTerrain );
+                        const std::string name = MIL_ObjectLoader::GetLoader().GetType( object.GetType().GetName() ).GetRealName();
+                        movingEntity_.SendRC( MIL_Report::eReport_DifficultMovementProgression, name );
                         bTerrainReportSent_ = true;
                     }
                     pathSet_ = eBlockedByObject;
@@ -325,7 +328,8 @@ bool DEC_PathWalker::TryToMoveToNextStep( CIT_MoveStepSet itCurMoveStep, CIT_Mov
                 movingEntity_.NotifyMovingOutsideObject( object );  // $$$$ NLD 2007-05-07: FOIREUX
                 if( !bTerrainReportSent_ )
                 {
-                    movingEntity_.SendRC( MIL_Report::eReport_DifficultTerrain );
+                    const std::string name = MIL_ObjectLoader::GetLoader().GetType( object.GetType().GetName() ).GetRealName();
+                    movingEntity_.SendRC( MIL_Report::eReport_DifficultMovementProgression, name );
                     bTerrainReportSent_ = true;
                 }
                 pathSet_ = eBlockedByObject;

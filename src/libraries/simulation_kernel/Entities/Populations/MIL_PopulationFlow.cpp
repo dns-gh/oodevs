@@ -536,6 +536,15 @@ void MIL_PopulationFlow::SendRC( int nReportID ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PopulationFlow::SendRC
+// Created: CMA 2012-02-02
+// -----------------------------------------------------------------------------
+void MIL_PopulationFlow::SendRC( int nReportID, const std::string& name ) const
+{
+    MIL_Report::PostEvent( GetPopulation(), static_cast< MIL_Report::E_EngineReport >( nReportID ), name );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PopulationFlow::GetSafetyPosition
 // Created: SBO 2005-12-16
 // -----------------------------------------------------------------------------

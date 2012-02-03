@@ -33,6 +33,7 @@
 #include "Entities/Objects/ContaminationCapacity.h"
 #include "Entities/Objects/InterferenceCapacity.h"
 #include "Entities/Objects/AvoidanceCapacity.h"
+#include "Entities/Objects/MIL_ObjectLoader.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionMove constructor
@@ -200,7 +201,8 @@ bool PHY_ActionMove::AvoidObstacles()
         return false;
     objectAvoidAttempts_.insert( nObjectToAvoidDiaID );
 
-    role_.SendRC( MIL_Report::eReport_DifficultTerrain );
+    const std::string name = MIL_ObjectLoader::GetLoader().GetType( obstacle->GetType().GetName() ).GetRealName();
+    role_.SendRC( MIL_Report::eReport_DifficultMovementProgression, name );
 
     mustWaitForKnowledge_ = true;
     return true;

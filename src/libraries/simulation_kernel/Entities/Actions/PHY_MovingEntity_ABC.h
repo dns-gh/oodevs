@@ -73,6 +73,7 @@ public:
     virtual bool CanObjectInteractWith( const MIL_Object_ABC& object ) const = 0;
     virtual bool HasResources         () = 0;
     virtual void SendRC               ( int nReportID ) const = 0;
+    virtual void SendRC               ( int nReportID, const std::string& name ) const = 0;
     //@}
 
     //! @name Tools

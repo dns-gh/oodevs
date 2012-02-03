@@ -575,5 +575,8 @@
   <report category="operational" id="403" message="No platoon can do the main effect"/>
   <report category="operational" id="404" message="Section undeployed"/>
   <report category="operational" id="405" message="Starting undeploy"/>
+  <report category="operational" id="406" message="Hard to go through %1">
+    <parameter type="String"/>
+  </report>
 </reports>
-<!-- signature="0369016010" -->
+<!-- signature="3382541202" -->

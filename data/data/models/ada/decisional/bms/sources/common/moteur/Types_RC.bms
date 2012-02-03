@@ -421,7 +421,8 @@ eRC_AlreadyDisengaged = 402
 eRC_NoPEInAutomat = 403
 eRC_SectionUndeployed = 404
 eRC_StartUndeploy = 405
-eNbr = 406
+eRC_DifficultMovementProgression = 406
+eNbr = 407
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : delai (float),
 ]]--[[// Parametre : T_Pion

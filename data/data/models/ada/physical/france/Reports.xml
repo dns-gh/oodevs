@@ -575,5 +575,8 @@
   <report category="operational" id="403" message="Aucune unité ne peut effectuer la mission principale"/>
   <report category="operational" id="404" message="Section repliée"/>
   <report category="operational" id="405" message="Début de repliement"/>
+  <report category="operational" id="406" message="Progression difficile en raison de %1">
+    <parameter type="String"/>
+  </report>
 </reports>
-<!-- signature="1102612530" -->
+<!-- signature="3274499513" -->
