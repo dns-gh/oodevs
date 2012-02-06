@@ -26,6 +26,7 @@
 #include "WeatherModel.h"
 #include "ObjectFactory.h"
 #include "ObjectsModel.h"
+#include "PerformanceIndicator.h"
 #include "ProfilesModel.h"
 #include "ProfileFactory.h"
 #include "ScoresModel.h"
@@ -96,6 +97,7 @@ Model::Model( Controllers& controllers, const ::StaticModel& staticModel )
     , drawings_             ( *new gui::DrawerModel( controllers, drawingFactory_, *this ) )
     , ghosts_               ( *new GhostModel( controllers, ghostFactory_ ) )
     , symbolsFactory_       ( *new SymbolFactory() )
+    , performanceIndicator_ ( *new PerformanceIndicator( *this ) )
 {
     // NOTHING
 }
@@ -132,6 +134,7 @@ Model::~Model()
     delete &ghosts_;
     delete &ghostFactory_;
     delete &idManager_;
+    delete &performanceIndicator_;
 }
 
 // -----------------------------------------------------------------------------
@@ -285,6 +288,7 @@ void Model::Load( const tools::ExerciseConfig& config )
     config.GetLoader().LoadFile( config.GetExerciseFile(), boost::bind( &Exercise::Load, &exercise_, _1 ) );
     config.GetLoader().LoadFile( config.GetSettingsFile(), boost::bind( &tools::ExerciseSettings::Load, &exercise_.GetSettings(), _1 ) );
     symbolsFactory_.Load( config );
+    performanceIndicator_.Load( config.GetLoader(), tools::GeneralConfig::BuildResourceChildFile( "PerformanceIndicator.xml" ) );
 
     //$$ LOADING DE FICHIERS A UNIFIER
     const std::string directoryPath = boost::filesystem::path( config.GetTerrainFile() ).branch_path().native_file_string();

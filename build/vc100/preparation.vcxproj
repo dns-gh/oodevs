@@ -97,6 +97,7 @@
     <ClCompile Include="..\..\src\libraries\preparation\GhostPositions.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\LinkGenerator.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\ModelConsistencyChecker.cpp" />
+    <ClCompile Include="..\..\src\libraries\preparation\PerformanceIndicator.cpp" />
     <ClCompile Include="..\..\src\libraries\preparation\preparation_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
@@ -242,6 +243,7 @@
     <ClInclude Include="..\..\src\libraries\preparation\LinkGenerator.h" />
     <ClInclude Include="..\..\src\libraries\preparation\LogisticHierarchiesBase.h" />
     <ClInclude Include="..\..\src\libraries\preparation\ModelConsistencyChecker.h" />
+    <ClInclude Include="..\..\src\libraries\preparation\PerformanceIndicator.h" />
     <ClInclude Include="..\..\src\libraries\preparation\preparation_pch.h" />
     <ClInclude Include="..\..\src\libraries\preparation\Color.h" />
     <ClInclude Include="..\..\src\libraries\preparation\ColorController.h" />

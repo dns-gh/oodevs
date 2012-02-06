@@ -34,6 +34,7 @@
 #include <urban/GeometryAttribute.h>
 #include <urban/ColorAttribute.h>
 #include <urban/TerrainObjectVisitor_ABC.h>
+#include <urban/WorldParameters.h>
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -55,6 +56,7 @@ UrbanModel::UrbanModel( Controllers& controllers, const ::StaticModel& staticMod
     , objects_            ( objects )
     , urbanStateVersion_  ( ::defaultUrbanStateVersion )
     , urbanDisplayOptions_( new gui::UrbanDisplayOptions( controllers, accommodationTypes_ ) )
+    , worldSize_ ( 0. )
 {
     // NOTHING
 }
@@ -118,6 +120,7 @@ namespace
 void UrbanModel::Load( const std::string& directoryPath, urban::WorldParameters& world, ::Model& model )
 {
     Purge();
+    worldSize_ = static_cast< double >( world.GetWidth() ) * static_cast< double >( world.GetHeight() );
     urban::Model::Load( directoryPath, world );
     UrbanSendingCreationVisitor visitor( *this, model, objectTypes_ );
     Accept( visitor );
@@ -254,4 +257,13 @@ void UrbanModel::SendCreation( urban::TerrainObject_ABC& urbanObject )
     pTerrainObject->Polish();
     if( !Resolver< gui::TerrainObjectProxy >::Find( urbanObject.GetId() ) )
         Resolver< gui::TerrainObjectProxy >::Register( urbanObject.GetId(), *pTerrainObject );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::GetWorldSize
+// Created: MMC 2012-02-02
+// -----------------------------------------------------------------------------
+double UrbanModel::GetWorldSize() const
+{
+    return worldSize_;
 }

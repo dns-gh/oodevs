@@ -44,6 +44,7 @@ NewProfileDialog.cpp \
 ObjectCreationPanel.cpp \
 ObjectListView.cpp \
 PeopleAffinitiesDialog.cpp \
+PerformanceDialog.cpp \
 PopulationListView.cpp \
 PopulationRepartitionEditor.cpp \
 PositionEditor.cpp \

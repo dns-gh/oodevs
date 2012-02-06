@@ -58,6 +58,7 @@ public:
     void LoadUrbanState( xml::xistream& xis );
     void Purge();
     void SendCreation( urban::TerrainObject_ABC& urbanObject );
+    double GetWorldSize() const;
     //@}
 
 private:
@@ -84,6 +85,7 @@ private:
     const tools::Resolver< kernel::Object_ABC >& objects_;
     std::string urbanStateVersion_;
     std::auto_ptr< gui::UrbanDisplayOptions > urbanDisplayOptions_;
+    double worldSize_;
     //@}
 };
 

@@ -57,6 +57,7 @@ class ScoreFactory_ABC;
 class SuccessFactorsModel;
 class SuccessFactorFactory_ABC;
 class UrbanModel;
+class PerformanceIndicator;
 
 // =============================================================================
 /** @class  Model
@@ -157,6 +158,7 @@ public:
     UrbanModel& urban_;
     gui::DrawerModel& drawings_;
     GhostModel& ghosts_;
+    PerformanceIndicator& performanceIndicator_;
     //@}
 };
 

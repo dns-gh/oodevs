@@ -1144,6 +1144,10 @@
         <source>Consistency analysis...</source>
         <translation>Analyse de cohérence...</translation>
     </message>
+    <message>
+        <source>Performance...</source>
+        <translation>Performance...</translation>
+    </message>
 </context>
 <context>
     <name>ModelBuilder</name>
@@ -1370,6 +1374,37 @@
     <message>
         <source>Create side</source>
         <translation>Créer un camp</translation>
+    </message>
+</context>
+<context>
+    <name>PerformanceDialog</name>
+    <message>
+        <source>Performance dialog</source>
+        <translation>Performance de l&apos;exercice</translation>
+    </message>
+    <message>
+        <source>Number of units: </source>
+        <translation>Nombre de pions: </translation>
+    </message>
+    <message>
+        <source>Number of urban blocs: </source>
+        <translation>Nombre de blocs urbains: </translation>
+    </message>
+    <message>
+        <source>Number of objects: </source>
+        <translation>Nombre d&apos;objets: </translation>
+    </message>
+    <message>
+        <source>Terrain size: </source>
+        <translation>Taille du terrain: </translation>
+    </message>
+    <message>
+        <source>Number of knowledge groups: </source>
+        <translation>Nombre de groupes de connaissance: </translation>
+    </message>
+    <message>
+        <source>Load level: </source>
+        <translation>Niveau de charge de l&apos;exercice: </translation>
     </message>
 </context>
 <context>
