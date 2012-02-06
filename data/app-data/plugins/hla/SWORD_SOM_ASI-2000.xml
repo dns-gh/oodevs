@@ -15,7 +15,7 @@
             <attribute dataType="EntityTypeStruct" dimensions="NA" name="EntityType" order="Receive"
                        ownership="NoTransfer"
                        semantics="The category of the entity."
-                       sharing="Neither"
+                       sharing="PublishSubscribe"
                        transportation="HLAbestEffort"
                        updateCondition="N/A"
                        updateType="Static"/>
@@ -23,7 +23,7 @@
                        order="Receive"
                        ownership="NoTransfer"
                        semantics="The unique identifier for the entity instance."
-                       sharing="Neither"
+                       sharing="Publish"
                        transportation="HLAbestEffort"
                        updateCondition="N/A"
                        updateType="Static"/>
@@ -39,7 +39,7 @@
                        order="Receive"
                        ownership="NoTransfer"
                        semantics="Spatial state stored in one variant record attribute"
-                       sharing="Neither"
+                       sharing="PublishSubscribe"
                        transportation="HLAbestEffort"
                        updateType="Conditional"/>
             <attribute dataType="SpatialStruct" dimensions="NA" name="RelativeSpatial"
@@ -50,12 +50,12 @@
                        sharing="Neither"
                        transportation="HLAbestEffort"
                        updateType="Conditional"/>
-            <objectClass name="AggregateEntity" sharing="Neither">
+            <objectClass name="AggregateEntity" sharing="PublishSubscribe">
                <attribute dataType="AggregateMarkingStruct" dimensions="NA" name="AggregateMarking"
                           order="Receive"
                           ownership="NoTransfer"
                           semantics="A unique marking or combination of characters used to distinguish the aggregate from other aggregates."
-                          sharing="Neither"
+                          sharing="PublishSubscribe"
                           transportation="HLAbestEffort"
                           updateCondition="N/A"
                           updateType="Static"/>
@@ -63,14 +63,14 @@
                           order="Receive"
                           ownership="NoTransfer"
                           semantics="An indicator of the extent of association of objects form an operating group."
-                          sharing="Neither"
+                          sharing="Publish"
                           transportation="HLAbestEffort"
                           updateCondition="On change"
                           updateType="Conditional"/>
                <attribute dataType="DimensionStruct" dimensions="NA" name="Dimensions" order="Receive"
                           ownership="NoTransfer"
                           semantics="The size of the area covered by the units in the aggregate."
-                          sharing="Neither"
+                          sharing="Publish"
                           transportation="HLAbestEffort"
                           updateCondition="AggSizeChange"
                           updateType="Conditional"/>
@@ -79,7 +79,7 @@
                           order="Receive"
                           ownership="NoTransfer"
                           semantics="The identification of entities that are contained within the aggregate."
-                          sharing="Neither"
+                          sharing="Publish"
                           transportation="HLAbestEffort"
                           updateCondition="On change"
                           updateType="Conditional"/>
@@ -87,14 +87,14 @@
                           order="Receive"
                           ownership="NoTransfer"
                           semantics="The identification of the force that the aggregate belongs to."
-                          sharing="Neither"
+                          sharing="PublishSubscribe"
                           transportation="HLAbestEffort"
                           updateCondition="On change"
                           updateType="Conditional"/>
                <attribute dataType="FormationEnum32" dimensions="NA" name="Formation" order="Receive"
                           ownership="NoTransfer"
                           semantics="The category of positional arrangement of the entities within the aggregate."
-                          sharing="Neither"
+                          sharing="Publish"
                           transportation="HLAbestEffort"
                           updateCondition="On change"
                           updateType="Conditional"/>
@@ -103,7 +103,7 @@
                           order="Receive"
                           ownership="NoTransfer"
                           semantics="The number of elements in the SilentEntities list"
-                          sharing="Neither"
+                          sharing="PublishSubscribe"
                           transportation="HLAbestEffort"
                           updateCondition="On change"
                           updateType="Conditional"/>
@@ -122,7 +122,7 @@
                           order="Receive"
                           ownership="NoTransfer"
                           semantics="The numbers and types, of slient aggregates contained in the aggregate.  Silent aggregates are sub-aggregates that are in the aggregate, but that are not separately represented in the virtual world."
-                          sharing="Neither"
+                          sharing="Publish"
                           transportation="HLAbestEffort"
                           updateCondition="On change"
                           updateType="Conditional"/>
@@ -132,7 +132,7 @@
                           order="Receive"
                           ownership="NoTransfer"
                           semantics="The numbers and types, of silent entities in the aggregate.  Silent entites are entities that are in the aggregate, but that are not separately represented in the virtual world."
-                          sharing="Neither"
+                          sharing="PublishSubscribe"
                           transportation="HLAbestEffort"
                           updateCondition="On change"
                           updateType="Conditional"/>
@@ -142,7 +142,7 @@
                           order="Receive"
                           ownership="NoTransfer"
                           semantics="The identifications of aggregates represented in the virtual world that are contained in the aggregate."
-                          sharing="Neither"
+                          sharing="Publish"
                           transportation="HLAbestEffort"
                           updateCondition="On change"
                           updateType="Conditional"/>
@@ -199,7 +199,7 @@
                   <attribute dataType="HLAunicodeString" dimensions="NA" name="Callsign" order="TimeStamp"
                              ownership="NoTransfer"
                              semantics="The name of the object."
-                             sharing="Neither"
+                             sharing="PublishSubscribe"
                              transportation="HLAbestEffort"
                              updateCondition="N/A"
                              updateType="Static"/>
@@ -228,7 +228,7 @@
                   <attribute dataType="NETN_Float64BE" dimensions="NA" name="Mounted" order="TimeStamp"
                              ownership="NoTransfer"
                              semantics="The percentage of aggregate personnel  traveling on or in their organic transport."
-                             sharing="Neither"
+                             sharing="Publish"
                              transportation="HLAbestEffort"
                              updateCondition="On change"
                              updateType="Conditional"/>
@@ -243,7 +243,7 @@
                              order="TimeStamp"
                              ownership="NoTransfer"
                              semantics="A pointer to the aggregate's superior unit or headquarters. The highest level unit or headquarters on each side will publish its own UniqueID as its HigherHeadquarters value."
-                             sharing="Neither"
+                             sharing="Publish"
                              transportation="HLAbestEffort"
                              updateCondition="On change"
                              updateType="Conditional"/>
@@ -281,7 +281,7 @@
                   <attribute dataType="HLAunicodeString" dimensions="NA" name="Symbol" order="TimeStamp"
                              ownership="NoTransfer"
                              semantics="The APP6A code for the aggregate."
-                             sharing="Neither"
+                             sharing="Publish"
                              transportation="HLAbestEffort"
                              updateCondition="On change"
                              updateType="Conditional"/>
@@ -304,7 +304,7 @@
                   <attribute dataType="EchelonEnum8" dimensions="NA" name="Echelon" order="TimeStamp"
                              ownership="NoTransfer"
                              semantics="The level of command of the aggregate."
-                             sharing="Neither"
+                             sharing="Publish"
                              transportation="HLAbestEffort"
                              updateCondition="N/A"
                              updateType="Static"/>
@@ -351,14 +351,14 @@
                   <attribute dataType="ActiveStatusEnum8" dimensions="NA" name="Status" order="TimeStamp"
                              ownership="NoTransfer"
                              semantics="If an instance shall be taken into account by federates"
-                             sharing="Neither"
+                             sharing="Publish"
                              transportation="HLAbestEffort"
                              updateCondition="On change"
                              updateType="Conditional"/>
                   <attribute dataType="NETN_UniqueID" dimensions="NA" name="UniqueID" order="TimeStamp"
                              ownership="NoTransfer"
                              semantics="The unique identifier of the object."
-                             sharing="Neither"
+                             sharing="PublishSubscribe"
                              transportation="HLAbestEffort"
                              updateCondition="NA"
                              updateType="Static"/>
@@ -442,7 +442,7 @@
                           order="Receive"
                           ownership="NoTransfer"
                           semantics="The identification of the force that the entity belongs to."
-                          sharing="Neither"
+                          sharing="Subscribe"
                           transportation="HLAbestEffort"
                           updateCondition="On change"
                           updateType="Conditional"/>
@@ -510,7 +510,7 @@
                <attribute dataType="MarkingStruct" dimensions="NA" name="Marking" order="Receive"
                           ownership="NoTransfer"
                           semantics="A unique marking or combination of characters used to distinguish the entity from other entities."
-                          sharing="Neither"
+                          sharing="Subscribe"
                           transportation="HLAbestEffort"
                           updateCondition="N/A"
                           updateType="Static"/>
@@ -690,12 +690,12 @@
                              transportation="HLAbestEffort"
                              updateCondition="On change"
                              updateType="Conditional"/>
-                  <objectClass name="Aircraft" sharing="Neither">
+                  <objectClass name="Aircraft" sharing="Subscribe">
                      <objectClass name="NETN_Aircraft" sharing="Subscribe">
                         <attribute dataType="HLAunicodeString" dimensions="NA" name="Callsign" order="TimeStamp"
                                    ownership="NoTransfer"
                                    semantics="The name of the object."
-                                   sharing="Neither"
+                                   sharing="Subscribe"
                                    transportation="HLAbestEffort"
                                    updateCondition="N/A"
                                    updateType="Static"/>
@@ -725,7 +725,7 @@
                         <attribute dataType="NETN_UniqueID" dimensions="NA" name="UniqueID" order="TimeStamp"
                                    ownership="NoTransfer"
                                    semantics="The unique identifier of the object."
-                                   sharing="Neither"
+                                   sharing="Subscribe"
                                    transportation="HLAbestEffort"
                                    updateCondition="NA"
                                    updateType="Static"/>
@@ -1026,12 +1026,12 @@
                         </objectClass>
                      </objectClass>
                   </objectClass>
-                  <objectClass name="SurfaceVessel" sharing="Neither">
+                  <objectClass name="SurfaceVessel" sharing="Subscribe">
                      <objectClass name="NETN_SurfaceVessel" sharing="Subscribe">
                         <attribute dataType="HLAunicodeString" dimensions="NA" name="Callsign" order="TimeStamp"
                                    ownership="NoTransfer"
                                    semantics="The name of the object."
-                                   sharing="Neither"
+                                   sharing="Subscribe"
                                    transportation="HLAbestEffort"
                                    updateCondition="NA"
                                    updateType="Static"/>
@@ -1061,7 +1061,7 @@
                         <attribute dataType="NETN_UniqueID" dimensions="NA" name="UniqueID" order="TimeStamp"
                                    ownership="NoTransfer"
                                    semantics="The unique identifier of the object."
-                                   sharing="Neither"
+                                   sharing="Subscribe"
                                    transportation="HLAbestEffort"
                                    updateCondition="NA"
                                    updateType="Static"/>

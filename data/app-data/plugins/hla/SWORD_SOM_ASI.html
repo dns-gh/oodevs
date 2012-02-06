@@ -59,8 +59,8 @@
             <a href="#HLAobjectRoot.BaseEntity">BaseEntity (N)</a>
           </td>
           <tr>
-            <td rowspan="3" valign="top">
-              <a href="#HLAobjectRoot.BaseEntity.AggregateEntity">AggregateEntity (N)</a>
+            <td bgcolor="#6AFB92" rowspan="3" valign="top">
+              <a href="#HLAobjectRoot.BaseEntity.AggregateEntity">AggregateEntity (PS)</a>
             </td>
             <tr>
               <td rowspan="1" valign="top">
@@ -83,8 +83,8 @@
               <a href="#HLAobjectRoot.BaseEntity.PhysicalEntity.Platform">Platform (N)</a>
             </td>
             <tr>
-              <td rowspan="3" valign="top">
-                <a href="#HLAobjectRoot.BaseEntity.PhysicalEntity.Platform.Aircraft">Aircraft (N)</a>
+              <td bgcolor="#6AFB92" rowspan="3" valign="top">
+                <a href="#HLAobjectRoot.BaseEntity.PhysicalEntity.Platform.Aircraft">Aircraft (S)</a>
               </td>
               <tr>
                 <td bgcolor="#6AFB92" rowspan="2" valign="top">
@@ -174,8 +174,8 @@
             </tr>
           </tr>
           <tr>
-            <td rowspan="3" valign="top">
-              <a href="#HLAobjectRoot.BaseEntity.PhysicalEntity.Platform.SurfaceVessel">SurfaceVessel (N)</a>
+            <td bgcolor="#6AFB92" rowspan="3" valign="top">
+              <a href="#HLAobjectRoot.BaseEntity.PhysicalEntity.Platform.SurfaceVessel">SurfaceVessel (S)</a>
             </td>
             <tr>
               <td bgcolor="#6AFB92" rowspan="2" valign="top">
@@ -1739,7 +1739,7 @@
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -1749,7 +1749,7 @@
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -1769,7 +1769,7 @@
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -1810,7 +1810,7 @@
       <a name="HLAobjectRoot.BaseEntity.AggregateEntity">AggregateEntity</a>
     </h3>Inherits from 
     <a href="#HLAobjectRoot.BaseEntity">HLAobjectRoot.BaseEntity</a>
-    <br></br>Sharing: N
+    <br></br>Sharing: PS
     <h4>Attributes</h4>
     <table border="1" cellspacing="0">
       <tr>
@@ -1821,73 +1821,73 @@
         <th>Order</th>
         <th>Transportation</th>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>AggregateMarking</td>
         <td>
           <a href="#AggregateMarkingStruct">AggregateMarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the aggregate from other aggregates.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>AggregateState</td>
         <td>
           <a href="#AggregateStateEnum8">AggregateStateEnum8</a>
         </td>
         <td>An indicator of the extent of association of objects form an operating group.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>Dimensions</td>
         <td>
           <a href="#DimensionStruct">DimensionStruct</a>
         </td>
         <td>The size of the area covered by the units in the aggregate.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>EntityIdentifiers</td>
         <td>
           <a href="#RTIObjectIdArrayStruct">RTIObjectIdArrayStruct</a>
         </td>
         <td>The identification of entities that are contained within the aggregate.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>ForceIdentifier</td>
         <td>
           <a href="#ForceIdentifierEnum8">ForceIdentifierEnum8</a>
         </td>
         <td>The identification of the force that the aggregate belongs to.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>Formation</td>
         <td>
           <a href="#FormationEnum32">FormationEnum32</a>
         </td>
         <td>The category of positional arrangement of the entities within the aggregate.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>NumberOfSilentEntities</td>
         <td>
           <a href="#HLAinteger16BEN_slsh_Aperfectalways1">HLAinteger16BEN_slsh_Aperfectalways1</a>
         </td>
         <td>The number of elements in the SilentEntities list</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -1901,33 +1901,33 @@
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>SilentAggregates</td>
         <td>
           <a href="#ArrayOfSilentAggregateStructDynamicHLAlengthlessVarArray">ArrayOfSilentAggregateStructDynamicHLAlengthlessVarArray</a>
         </td>
         <td>The numbers and types, of slient aggregates contained in the aggregate.  Silent aggregates are sub-aggregates that are in the aggregate, but that are not separately represented in the virtual world.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>SilentEntities</td>
         <td>
           <a href="#ArrayOfSilentEntityStructDynamicHLAlengthlessVarArray">ArrayOfSilentEntityStructDynamicHLAlengthlessVarArray</a>
         </td>
         <td>The numbers and types, of silent entities in the aggregate.  Silent entites are entities that are in the aggregate, but that are not separately represented in the virtual world.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>SubAggregateIdentifiers</td>
         <td>
           <a href="#RTIObjectIdArrayStruct">RTIObjectIdArrayStruct</a>
         </td>
         <td>The identifications of aggregates represented in the virtual world that are contained in the aggregate.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -1952,23 +1952,23 @@
         <th>Order</th>
         <th>Transportation</th>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>EntityType</td>
         <td>
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>EntityIdentifier</td>
         <td>
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -1982,13 +1982,13 @@
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>Spatial</td>
         <td>
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -2086,7 +2086,7 @@
           <a href="#AggregateMarkingStruct">AggregateMarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the aggregate from other aggregates.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -2096,7 +2096,7 @@
           <a href="#AggregateStateEnum8">AggregateStateEnum8</a>
         </td>
         <td>An indicator of the extent of association of objects form an operating group.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -2106,7 +2106,7 @@
           <a href="#DimensionStruct">DimensionStruct</a>
         </td>
         <td>The size of the area covered by the units in the aggregate.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -2116,7 +2116,7 @@
           <a href="#RTIObjectIdArrayStruct">RTIObjectIdArrayStruct</a>
         </td>
         <td>The identification of entities that are contained within the aggregate.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -2126,7 +2126,7 @@
           <a href="#ForceIdentifierEnum8">ForceIdentifierEnum8</a>
         </td>
         <td>The identification of the force that the aggregate belongs to.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -2136,7 +2136,7 @@
           <a href="#FormationEnum32">FormationEnum32</a>
         </td>
         <td>The category of positional arrangement of the entities within the aggregate.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -2146,7 +2146,7 @@
           <a href="#HLAinteger16BEN_slsh_Aperfectalways1">HLAinteger16BEN_slsh_Aperfectalways1</a>
         </td>
         <td>The number of elements in the SilentEntities list</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -2166,7 +2166,7 @@
           <a href="#ArrayOfSilentAggregateStructDynamicHLAlengthlessVarArray">ArrayOfSilentAggregateStructDynamicHLAlengthlessVarArray</a>
         </td>
         <td>The numbers and types, of slient aggregates contained in the aggregate.  Silent aggregates are sub-aggregates that are in the aggregate, but that are not separately represented in the virtual world.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -2176,7 +2176,7 @@
           <a href="#ArrayOfSilentEntityStructDynamicHLAlengthlessVarArray">ArrayOfSilentEntityStructDynamicHLAlengthlessVarArray</a>
         </td>
         <td>The numbers and types, of silent entities in the aggregate.  Silent entites are entities that are in the aggregate, but that are not separately represented in the virtual world.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -2186,7 +2186,7 @@
           <a href="#RTIObjectIdArrayStruct">RTIObjectIdArrayStruct</a>
         </td>
         <td>The identifications of aggregates represented in the virtual world that are contained in the aggregate.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -2206,7 +2206,7 @@
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -2216,7 +2216,7 @@
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -2236,7 +2236,7 @@
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -2288,13 +2288,13 @@
         <td>TimeStamp</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>Callsign</td>
         <td>
           <a href="#HLAunicodeString">HLAunicodeString</a>
         </td>
         <td>The name of the object.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>TimeStamp</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -2328,13 +2328,13 @@
         <td>TimeStamp</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>Mounted</td>
         <td>
           <a href="#NETN_Float64BE">NETN_Float64BE</a>
         </td>
         <td>The percentage of aggregate personnel  traveling on or in their organic transport.</td>
-        <td>N</td>
+        <td>P</td>
         <td>TimeStamp</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -2348,13 +2348,13 @@
         <td>TimeStamp</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HigherHeadquarters</td>
         <td>
           <a href="#NETN_UniqueID">NETN_UniqueID</a>
         </td>
         <td>A pointer to the aggregate's superior unit or headquarters. The highest level unit or headquarters on each side will publish its own UniqueID as its HigherHeadquarters value.</td>
-        <td>N</td>
+        <td>P</td>
         <td>TimeStamp</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -2398,13 +2398,13 @@
         <td>TimeStamp</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>Symbol</td>
         <td>
           <a href="#HLAunicodeString">HLAunicodeString</a>
         </td>
         <td>The APP6A code for the aggregate.</td>
-        <td>N</td>
+        <td>P</td>
         <td>TimeStamp</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -2428,13 +2428,13 @@
         <td>TimeStamp</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>Echelon</td>
         <td>
           <a href="#EchelonEnum8">EchelonEnum8</a>
         </td>
         <td>The level of command of the aggregate.</td>
-        <td>N</td>
+        <td>P</td>
         <td>TimeStamp</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -2488,23 +2488,23 @@
         <td>TimeStamp</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>Status</td>
         <td>
           <a href="#ActiveStatusEnum8">ActiveStatusEnum8</a>
         </td>
         <td>If an instance shall be taken into account by federates</td>
-        <td>N</td>
+        <td>P</td>
         <td>TimeStamp</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>UniqueID</td>
         <td>
           <a href="#NETN_UniqueID">NETN_UniqueID</a>
         </td>
         <td>The unique identifier of the object.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>TimeStamp</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -2529,73 +2529,73 @@
         <th>Order</th>
         <th>Transportation</th>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>AggregateMarking</td>
         <td>
           <a href="#AggregateMarkingStruct">AggregateMarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the aggregate from other aggregates.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>AggregateState</td>
         <td>
           <a href="#AggregateStateEnum8">AggregateStateEnum8</a>
         </td>
         <td>An indicator of the extent of association of objects form an operating group.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>Dimensions</td>
         <td>
           <a href="#DimensionStruct">DimensionStruct</a>
         </td>
         <td>The size of the area covered by the units in the aggregate.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>EntityIdentifiers</td>
         <td>
           <a href="#RTIObjectIdArrayStruct">RTIObjectIdArrayStruct</a>
         </td>
         <td>The identification of entities that are contained within the aggregate.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>ForceIdentifier</td>
         <td>
           <a href="#ForceIdentifierEnum8">ForceIdentifierEnum8</a>
         </td>
         <td>The identification of the force that the aggregate belongs to.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>Formation</td>
         <td>
           <a href="#FormationEnum32">FormationEnum32</a>
         </td>
         <td>The category of positional arrangement of the entities within the aggregate.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>NumberOfSilentEntities</td>
         <td>
           <a href="#HLAinteger16BEN_slsh_Aperfectalways1">HLAinteger16BEN_slsh_Aperfectalways1</a>
         </td>
         <td>The number of elements in the SilentEntities list</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -2609,33 +2609,33 @@
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>SilentAggregates</td>
         <td>
           <a href="#ArrayOfSilentAggregateStructDynamicHLAlengthlessVarArray">ArrayOfSilentAggregateStructDynamicHLAlengthlessVarArray</a>
         </td>
         <td>The numbers and types, of slient aggregates contained in the aggregate.  Silent aggregates are sub-aggregates that are in the aggregate, but that are not separately represented in the virtual world.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>SilentEntities</td>
         <td>
           <a href="#ArrayOfSilentEntityStructDynamicHLAlengthlessVarArray">ArrayOfSilentEntityStructDynamicHLAlengthlessVarArray</a>
         </td>
         <td>The numbers and types, of silent entities in the aggregate.  Silent entites are entities that are in the aggregate, but that are not separately represented in the virtual world.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>SubAggregateIdentifiers</td>
         <td>
           <a href="#RTIObjectIdArrayStruct">RTIObjectIdArrayStruct</a>
         </td>
         <td>The identifications of aggregates represented in the virtual world that are contained in the aggregate.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -2649,23 +2649,23 @@
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>EntityType</td>
         <td>
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>EntityIdentifier</td>
         <td>
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -2679,13 +2679,13 @@
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>Spatial</td>
         <td>
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -2754,7 +2754,7 @@
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -2764,7 +2764,7 @@
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -2784,7 +2784,7 @@
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -2913,7 +2913,7 @@
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -2923,7 +2923,7 @@
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -2943,7 +2943,7 @@
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -3160,7 +3160,7 @@
           <a href="#MarkingStruct">MarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the entity from other entities.</td>
-        <td>N</td>
+        <td>S</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -3251,7 +3251,7 @@
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -3261,7 +3261,7 @@
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -3281,7 +3281,7 @@
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -3540,7 +3540,7 @@
           <a href="#MarkingStruct">MarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the entity from other entities.</td>
-        <td>N</td>
+        <td>S</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -3620,7 +3620,7 @@
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -3630,7 +3630,7 @@
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -3650,7 +3650,7 @@
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -3868,7 +3868,7 @@
           <a href="#MarkingStruct">MarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the entity from other entities.</td>
-        <td>N</td>
+        <td>S</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -3948,7 +3948,7 @@
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -3958,7 +3958,7 @@
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -3978,7 +3978,7 @@
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -4256,7 +4256,7 @@
           <a href="#MarkingStruct">MarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the entity from other entities.</td>
-        <td>N</td>
+        <td>S</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -4336,7 +4336,7 @@
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -4346,7 +4346,7 @@
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -4366,7 +4366,7 @@
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -4633,7 +4633,7 @@
           <a href="#MarkingStruct">MarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the entity from other entities.</td>
-        <td>N</td>
+        <td>S</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -4713,7 +4713,7 @@
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -4723,7 +4723,7 @@
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -4743,7 +4743,7 @@
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -5061,7 +5061,7 @@
           <a href="#MarkingStruct">MarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the entity from other entities.</td>
-        <td>N</td>
+        <td>S</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -5141,7 +5141,7 @@
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -5151,7 +5151,7 @@
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -5171,7 +5171,7 @@
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -5499,7 +5499,7 @@
           <a href="#MarkingStruct">MarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the entity from other entities.</td>
-        <td>N</td>
+        <td>S</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -5579,7 +5579,7 @@
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -5589,7 +5589,7 @@
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -5609,7 +5609,7 @@
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -5876,7 +5876,7 @@
           <a href="#MarkingStruct">MarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the entity from other entities.</td>
-        <td>N</td>
+        <td>S</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -5956,7 +5956,7 @@
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -5966,7 +5966,7 @@
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -5986,7 +5986,7 @@
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -6304,7 +6304,7 @@
           <a href="#MarkingStruct">MarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the entity from other entities.</td>
-        <td>N</td>
+        <td>S</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -6384,7 +6384,7 @@
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -6394,7 +6394,7 @@
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -6414,7 +6414,7 @@
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -6742,7 +6742,7 @@
           <a href="#MarkingStruct">MarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the entity from other entities.</td>
-        <td>N</td>
+        <td>S</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -6822,7 +6822,7 @@
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -6832,7 +6832,7 @@
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -6852,7 +6852,7 @@
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -7091,7 +7091,7 @@
           <a href="#MarkingStruct">MarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the entity from other entities.</td>
-        <td>N</td>
+        <td>S</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -7171,7 +7171,7 @@
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -7181,7 +7181,7 @@
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -7201,7 +7201,7 @@
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -7589,7 +7589,7 @@
           <a href="#MarkingStruct">MarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the entity from other entities.</td>
-        <td>N</td>
+        <td>S</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -7669,7 +7669,7 @@
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -7679,7 +7679,7 @@
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -7699,7 +7699,7 @@
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -7729,7 +7729,7 @@
       <a name="HLAobjectRoot.BaseEntity.PhysicalEntity.Platform.Aircraft">Aircraft</a>
     </h3>Inherits from 
     <a href="#HLAobjectRoot.BaseEntity.PhysicalEntity.Platform">HLAobjectRoot.BaseEntity.PhysicalEntity.Platform</a>
-    <br></br>Sharing: N
+    <br></br>Sharing: S
     <h4>Inherited attributes</h4>
     <table border="1" cellspacing="0">
       <tr>
@@ -8070,13 +8070,13 @@
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>Marking</td>
         <td>
           <a href="#MarkingStruct">MarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the entity from other entities.</td>
-        <td>N</td>
+        <td>S</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -8150,23 +8150,23 @@
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>EntityType</td>
         <td>
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>EntityIdentifier</td>
         <td>
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -8180,13 +8180,13 @@
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>Spatial</td>
         <td>
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -8227,13 +8227,13 @@
         <th>Order</th>
         <th>Transportation</th>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>Callsign</td>
         <td>
           <a href="#HLAunicodeString">HLAunicodeString</a>
         </td>
         <td>The name of the object.</td>
-        <td>N</td>
+        <td>S</td>
         <td>TimeStamp</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -8267,13 +8267,13 @@
         <td>TimeStamp</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>UniqueID</td>
         <td>
           <a href="#NETN_UniqueID">NETN_UniqueID</a>
         </td>
         <td>The unique identifier of the object.</td>
-        <td>N</td>
+        <td>S</td>
         <td>TimeStamp</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -8618,13 +8618,13 @@
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>Marking</td>
         <td>
           <a href="#MarkingStruct">MarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the entity from other entities.</td>
-        <td>N</td>
+        <td>S</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -8698,23 +8698,23 @@
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>EntityType</td>
         <td>
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>EntityIdentifier</td>
         <td>
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -8728,13 +8728,13 @@
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>Spatial</td>
         <td>
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -8812,7 +8812,7 @@
           <a href="#HLAunicodeString">HLAunicodeString</a>
         </td>
         <td>The name of the object.</td>
-        <td>N</td>
+        <td>S</td>
         <td>TimeStamp</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -8852,7 +8852,7 @@
           <a href="#NETN_UniqueID">NETN_UniqueID</a>
         </td>
         <td>The unique identifier of the object.</td>
-        <td>N</td>
+        <td>S</td>
         <td>TimeStamp</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -9192,7 +9192,7 @@
           <a href="#MarkingStruct">MarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the entity from other entities.</td>
-        <td>N</td>
+        <td>S</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -9272,7 +9272,7 @@
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -9282,7 +9282,7 @@
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -9302,7 +9302,7 @@
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -9679,7 +9679,7 @@
           <a href="#MarkingStruct">MarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the entity from other entities.</td>
-        <td>N</td>
+        <td>S</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -9759,7 +9759,7 @@
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -9769,7 +9769,7 @@
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -9789,7 +9789,7 @@
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -10227,7 +10227,7 @@
           <a href="#MarkingStruct">MarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the entity from other entities.</td>
-        <td>N</td>
+        <td>S</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -10307,7 +10307,7 @@
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -10317,7 +10317,7 @@
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -10337,7 +10337,7 @@
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -10795,7 +10795,7 @@
           <a href="#MarkingStruct">MarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the entity from other entities.</td>
-        <td>N</td>
+        <td>S</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -10875,7 +10875,7 @@
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -10885,7 +10885,7 @@
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -10905,7 +10905,7 @@
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -11282,7 +11282,7 @@
           <a href="#MarkingStruct">MarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the entity from other entities.</td>
-        <td>N</td>
+        <td>S</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -11362,7 +11362,7 @@
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -11372,7 +11372,7 @@
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -11392,7 +11392,7 @@
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -11830,7 +11830,7 @@
           <a href="#MarkingStruct">MarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the entity from other entities.</td>
-        <td>N</td>
+        <td>S</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -11910,7 +11910,7 @@
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -11920,7 +11920,7 @@
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -11940,7 +11940,7 @@
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -12398,7 +12398,7 @@
           <a href="#MarkingStruct">MarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the entity from other entities.</td>
-        <td>N</td>
+        <td>S</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -12478,7 +12478,7 @@
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -12488,7 +12488,7 @@
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -12508,7 +12508,7 @@
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -12885,7 +12885,7 @@
           <a href="#MarkingStruct">MarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the entity from other entities.</td>
-        <td>N</td>
+        <td>S</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -12965,7 +12965,7 @@
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -12975,7 +12975,7 @@
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -12995,7 +12995,7 @@
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -13433,7 +13433,7 @@
           <a href="#MarkingStruct">MarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the entity from other entities.</td>
-        <td>N</td>
+        <td>S</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -13513,7 +13513,7 @@
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -13523,7 +13523,7 @@
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -13543,7 +13543,7 @@
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -14001,7 +14001,7 @@
           <a href="#MarkingStruct">MarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the entity from other entities.</td>
-        <td>N</td>
+        <td>S</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -14081,7 +14081,7 @@
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -14091,7 +14091,7 @@
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -14111,7 +14111,7 @@
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -14488,7 +14488,7 @@
           <a href="#MarkingStruct">MarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the entity from other entities.</td>
-        <td>N</td>
+        <td>S</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -14568,7 +14568,7 @@
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -14578,7 +14578,7 @@
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -14598,7 +14598,7 @@
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -15036,7 +15036,7 @@
           <a href="#MarkingStruct">MarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the entity from other entities.</td>
-        <td>N</td>
+        <td>S</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -15116,7 +15116,7 @@
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -15126,7 +15126,7 @@
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -15146,7 +15146,7 @@
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -15604,7 +15604,7 @@
           <a href="#MarkingStruct">MarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the entity from other entities.</td>
-        <td>N</td>
+        <td>S</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -15684,7 +15684,7 @@
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -15694,7 +15694,7 @@
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -15714,7 +15714,7 @@
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -16091,7 +16091,7 @@
           <a href="#MarkingStruct">MarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the entity from other entities.</td>
-        <td>N</td>
+        <td>S</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -16171,7 +16171,7 @@
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -16181,7 +16181,7 @@
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -16201,7 +16201,7 @@
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -16639,7 +16639,7 @@
           <a href="#MarkingStruct">MarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the entity from other entities.</td>
-        <td>N</td>
+        <td>S</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -16719,7 +16719,7 @@
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -16729,7 +16729,7 @@
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -16749,7 +16749,7 @@
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -17207,7 +17207,7 @@
           <a href="#MarkingStruct">MarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the entity from other entities.</td>
-        <td>N</td>
+        <td>S</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -17287,7 +17287,7 @@
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -17297,7 +17297,7 @@
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -17317,7 +17317,7 @@
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -17347,7 +17347,7 @@
       <a name="HLAobjectRoot.BaseEntity.PhysicalEntity.Platform.SurfaceVessel">SurfaceVessel</a>
     </h3>Inherits from 
     <a href="#HLAobjectRoot.BaseEntity.PhysicalEntity.Platform">HLAobjectRoot.BaseEntity.PhysicalEntity.Platform</a>
-    <br></br>Sharing: N
+    <br></br>Sharing: S
     <h4>Inherited attributes</h4>
     <table border="1" cellspacing="0">
       <tr>
@@ -17688,13 +17688,13 @@
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>Marking</td>
         <td>
           <a href="#MarkingStruct">MarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the entity from other entities.</td>
-        <td>N</td>
+        <td>S</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -17768,23 +17768,23 @@
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>EntityType</td>
         <td>
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>EntityIdentifier</td>
         <td>
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -17798,13 +17798,13 @@
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>Spatial</td>
         <td>
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -17845,13 +17845,13 @@
         <th>Order</th>
         <th>Transportation</th>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>Callsign</td>
         <td>
           <a href="#HLAunicodeString">HLAunicodeString</a>
         </td>
         <td>The name of the object.</td>
-        <td>N</td>
+        <td>S</td>
         <td>TimeStamp</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -17885,13 +17885,13 @@
         <td>TimeStamp</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>UniqueID</td>
         <td>
           <a href="#NETN_UniqueID">NETN_UniqueID</a>
         </td>
         <td>The unique identifier of the object.</td>
-        <td>N</td>
+        <td>S</td>
         <td>TimeStamp</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -18236,13 +18236,13 @@
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>Marking</td>
         <td>
           <a href="#MarkingStruct">MarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the entity from other entities.</td>
-        <td>N</td>
+        <td>S</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -18316,23 +18316,23 @@
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>EntityType</td>
         <td>
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>EntityIdentifier</td>
         <td>
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -18346,13 +18346,13 @@
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>Spatial</td>
         <td>
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -18430,7 +18430,7 @@
           <a href="#HLAunicodeString">HLAunicodeString</a>
         </td>
         <td>The name of the object.</td>
-        <td>N</td>
+        <td>S</td>
         <td>TimeStamp</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -18470,7 +18470,7 @@
           <a href="#NETN_UniqueID">NETN_UniqueID</a>
         </td>
         <td>The unique identifier of the object.</td>
-        <td>N</td>
+        <td>S</td>
         <td>TimeStamp</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -18810,7 +18810,7 @@
           <a href="#MarkingStruct">MarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the entity from other entities.</td>
-        <td>N</td>
+        <td>S</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -18890,7 +18890,7 @@
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -18900,7 +18900,7 @@
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -18920,7 +18920,7 @@
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -19138,7 +19138,7 @@
           <a href="#MarkingStruct">MarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the entity from other entities.</td>
-        <td>N</td>
+        <td>S</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -19218,7 +19218,7 @@
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -19228,7 +19228,7 @@
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -19248,7 +19248,7 @@
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -19527,7 +19527,7 @@
           <a href="#MarkingStruct">MarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the entity from other entities.</td>
-        <td>N</td>
+        <td>S</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -19607,7 +19607,7 @@
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -19617,7 +19617,7 @@
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -19637,7 +19637,7 @@
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -19855,7 +19855,7 @@
           <a href="#MarkingStruct">MarkingStruct</a>
         </td>
         <td>A unique marking or combination of characters used to distinguish the entity from other entities.</td>
-        <td>N</td>
+        <td>S</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -19935,7 +19935,7 @@
           <a href="#EntityTypeStruct">EntityTypeStruct</a>
         </td>
         <td>The category of the entity.</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -19945,7 +19945,7 @@
           <a href="#EntityIdentifierStruct">EntityIdentifierStruct</a>
         </td>
         <td>The unique identifier for the entity instance.</td>
-        <td>N</td>
+        <td>P</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -19965,7 +19965,7 @@
           <a href="#SpatialStruct">SpatialStruct</a>
         </td>
         <td>Spatial state stored in one variant record attribute</td>
-        <td>N</td>
+        <td>PS</td>
         <td>Receive</td>
         <td>HLAbestEffort</td>
       </tr>
@@ -29627,7 +29627,7 @@
         <th>Order</th>
         <th>Transportation</th>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLAfederateHandle</td>
         <td>
           <a href="#HLAhandle">HLAhandle</a>
@@ -29637,7 +29637,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLAfederateType</td>
         <td>
           <a href="#HLAunicodeString">HLAunicodeString</a>
@@ -29647,7 +29647,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLAfederateHost</td>
         <td>
           <a href="#HLAunicodeString">HLAunicodeString</a>
@@ -29657,7 +29657,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLARTIversion</td>
         <td>
           <a href="#HLAunicodeString">HLAunicodeString</a>
@@ -29667,7 +29667,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLAFDDID</td>
         <td>
           <a href="#HLAunicodeString">HLAunicodeString</a>
@@ -29677,7 +29677,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLAtimeConstrained</td>
         <td>
           <a href="#HLAboolean">HLAboolean</a>
@@ -29687,7 +29687,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLAtimeRegulating</td>
         <td>
           <a href="#HLAboolean">HLAboolean</a>
@@ -29697,7 +29697,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLAasynchronousDelivery</td>
         <td>
           <a href="#HLAboolean">HLAboolean</a>
@@ -29707,7 +29707,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLAfederateState</td>
         <td>
           <a href="#HLAfederateState">HLAfederateState</a>
@@ -29717,7 +29717,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLAtimeManagerState</td>
         <td>
           <a href="#HLAtimeState">HLAtimeState</a>
@@ -29727,7 +29727,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLAlogicalTime</td>
         <td>
           <a href="#HLAlogicalTime">HLAlogicalTime</a>
@@ -29737,7 +29737,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLAlookahead</td>
         <td>
           <a href="#HLAtimeInterval">HLAtimeInterval</a>
@@ -29747,7 +29747,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLAGALT</td>
         <td>
           <a href="#HLAlogicalTime">HLAlogicalTime</a>
@@ -29757,7 +29757,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLALITS</td>
         <td>
           <a href="#HLAlogicalTime">HLAlogicalTime</a>
@@ -29767,7 +29767,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLAROlength</td>
         <td>
           <a href="#HLAcount">HLAcount</a>
@@ -29777,7 +29777,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLATSOlength</td>
         <td>
           <a href="#HLAcount">HLAcount</a>
@@ -29787,7 +29787,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLAreflectionsReceived</td>
         <td>
           <a href="#HLAcount">HLAcount</a>
@@ -29797,7 +29797,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLAupdatesSent</td>
         <td>
           <a href="#HLAcount">HLAcount</a>
@@ -29807,7 +29807,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLAinteractionsReceived</td>
         <td>
           <a href="#HLAcount">HLAcount</a>
@@ -29817,7 +29817,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLAinteractionsSent</td>
         <td>
           <a href="#HLAcount">HLAcount</a>
@@ -29827,7 +29827,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLAobjectInstancesThatCanBeDeleted</td>
         <td>
           <a href="#HLAcount">HLAcount</a>
@@ -29837,7 +29837,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLAobjectInstancesUpdated</td>
         <td>
           <a href="#HLAcount">HLAcount</a>
@@ -29847,7 +29847,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLAobjectInstancesReflected</td>
         <td>
           <a href="#HLAcount">HLAcount</a>
@@ -29857,7 +29857,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLAobjectInstancesDeleted</td>
         <td>
           <a href="#HLAcount">HLAcount</a>
@@ -29867,7 +29867,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLAobjectInstancesRemoved</td>
         <td>
           <a href="#HLAcount">HLAcount</a>
@@ -29877,7 +29877,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLAobjectInstancesRegistered</td>
         <td>
           <a href="#HLAcount">HLAcount</a>
@@ -29887,7 +29887,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLAobjectInstancesDiscovered</td>
         <td>
           <a href="#HLAcount">HLAcount</a>
@@ -29897,7 +29897,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLAtimeGrantedTime</td>
         <td>
           <a href="#HLAmsec">HLAmsec</a>
@@ -29907,7 +29907,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLAtimeAdvancingTime</td>
         <td>
           <a href="#HLAmsec">HLAmsec</a>
@@ -29917,7 +29917,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLAconveyRegionDesignatorSets</td>
         <td>
           <a href="#HLAswitch">HLAswitch</a>
@@ -29966,7 +29966,7 @@
         <th>Order</th>
         <th>Transportation</th>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLAfederationName</td>
         <td>
           <a href="#HLAunicodeString">HLAunicodeString</a>
@@ -29976,7 +29976,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLAfederatesInFederation</td>
         <td>
           <a href="#HLAhandleList">HLAhandleList</a>
@@ -29986,7 +29986,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLARTIversion</td>
         <td>
           <a href="#HLAunicodeString">HLAunicodeString</a>
@@ -29996,7 +29996,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLAFDDID</td>
         <td>
           <a href="#HLAunicodeString">HLAunicodeString</a>
@@ -30006,7 +30006,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLAlastSaveName</td>
         <td>
           <a href="#HLAunicodeString">HLAunicodeString</a>
@@ -30016,7 +30016,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLAlastSaveTime</td>
         <td>
           <a href="#HLAlogicalTime">HLAlogicalTime</a>
@@ -30026,7 +30026,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLAnextSaveName</td>
         <td>
           <a href="#HLAunicodeString">HLAunicodeString</a>
@@ -30036,7 +30036,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLAnextSaveTime</td>
         <td>
           <a href="#HLAlogicalTime">HLAlogicalTime</a>
@@ -30046,7 +30046,7 @@
         <td>Receive</td>
         <td>HLAreliable</td>
       </tr>
-      <tr>
+      <tr bgcolor="#6AFB92">
         <td>HLAautoProvide</td>
         <td>
           <a href="#HLAswitch">HLAswitch</a>
