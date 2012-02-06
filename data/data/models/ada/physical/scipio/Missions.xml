@@ -733,7 +733,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Itineraire" optional="false" type="Point"/>
+      <parameter dia-name="objectives" name="Itineraire" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.Construire" dia-type="france.military.platoon.combat.support.engineer.tasks.Construire" id="2076" name="PION GENIE Realiser Travaux" package="support">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -809,7 +809,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Itineraire" optional="false" type="Point"/>
+      <parameter dia-name="objectives" name="Itineraire" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.AppuiMobilite" dia-type="france.military.platoon.combat.support.engineer.tasks.AppuiMobilite" id="2119" name="PION GENIE Appui Mobilite" package="support">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -1063,7 +1063,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Itineraire" optional="false" type="Point"/>
+      <parameter dia-name="objectives" name="Itineraire" optional="false" type="Path"/>
     </mission>
     <mission dia-behavior="france.military.platoon.tasks.Transporter" dia-type="france.military.platoon.tasks.Transporter" id="2142" name="PION LOGISTIQUE Transporter Unites" package="move">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -1366,7 +1366,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Itineraire" optional="false" type="Point"/>
+      <parameter dia-name="objectives" name="Itineraire" optional="false" type="Path"/>
       <parameter dia-name="area" name="Zone" optional="false" type="Polygon"/>
       <parameter dia-name="munitions" name="Munitions" optional="false" type="ResourceType"/>
     </mission>
@@ -2399,7 +2399,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Itineraire" optional="false" type="Point"/>
+      <parameter dia-name="objectives" name="Itineraire" optional="false" type="Path"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.tasks.Produire" dia-type="france.military.company.tasks.Produire" id="1055" mrt-dia-behavior="france.military.company.tasks.Produire" name="AUTOMATE Produire et alimenter" package="none">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2433,7 +2433,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Itineraire" optional="false" type="Point"/>
+      <parameter dia-name="objectives" name="Itineraire" optional="false" type="Path"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.tasks.Boucler" dia-type="france.military.company.tasks.Boucler" id="1059" mrt-dia-behavior="france.military.company.tasks.Boucler" name="AUTOMATE MELEE Boucler" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3090,4 +3090,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_RejoindrePointLancement" id="405" name="Rejoindre point de lancement"/>
   </fragorders>
 </missions>
-<!-- signature="0914594287" -->
+<!-- signature="3158993462" -->
