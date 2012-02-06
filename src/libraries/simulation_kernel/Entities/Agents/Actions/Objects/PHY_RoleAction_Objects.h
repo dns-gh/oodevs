@@ -94,10 +94,14 @@ public:
     bool CanDestroyWithReinforcement( const MIL_ObjectType_ABC& object ) const;
     bool CanMineWithReinforcement( const MIL_ObjectType_ABC& object ) const;
     bool EnoughtDotationForBuilding( const std::string& objectType, MIL_Agent_ABC& pion, bool bWithLoaded ) const;
+    bool CanMineTypeWithReinforcement( const std::string& strType ) const;
+    bool CanDestroyTypeWithReinforcement( const std::string& strType ) const;
+    bool CanBypassTypeWithReinforcement( const std::string& strType ) const;
 
     //Getter
-    double GetAgentDotationForBuildingObstacle( const std::string& objectType, MIL_Agent_ABC& pion ) const; 
-    double GetAgentMissingDotationForBuildingObstacle( const DEC_Gen_Object* object, MIL_Agent_ABC& pion ) const;
+    double GetAgentDotationNumber( MIL_Agent_ABC& pion, const PHY_DotationCategory* pDotationCategory ) const; 
+    std::pair< const PHY_DotationCategory*, double > GetAgentMissingDotationForBuildingObstacle( const DEC_Gen_Object* object, MIL_Agent_ABC& pion ) const;
+    std::pair< const PHY_DotationCategory*, double > GetAgentMissingDotationForMiningObstacle( const boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, MIL_Agent_ABC& pion ) const;
     //@}
 
 private:

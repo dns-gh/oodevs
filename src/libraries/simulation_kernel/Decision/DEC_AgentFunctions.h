@@ -71,12 +71,19 @@ public:
     static bool HasDotationForBuildingWithoutReinforcement( MIL_Agent_ABC& callerAgent, const std::string& type );
     static bool AgentCanDestroyObject( const DEC_Decision_ABC* agent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
     static bool AgentCanBypassObject( const DEC_Decision_ABC* agent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
+    static bool AgentCanDestroyObjectType( const DEC_Decision_ABC* agent, const std::string& type );
+    static bool AgentCanMineObject( const DEC_Decision_ABC* agent, const std::string& type );
+    static bool AgentCanByPassObject( const DEC_Decision_ABC* agent, const std::string& type );
 
     static std::vector< DEC_Decision_ABC* > RetrieveUnitsAbleToBuild( const std::vector< DEC_Decision_ABC* >& units, const std::string& type );
+    static std::vector< DEC_Decision_ABC* > RetrieveUnitsAbleToMine( const std::vector< DEC_Decision_ABC* >& units, const std::string& type );
+    static std::vector< DEC_Decision_ABC* > RetrieveUnitsAbleToDestroy( const std::vector< DEC_Decision_ABC* >& units, const std::string& type );
+    static std::vector< DEC_Decision_ABC* > RetrieveUnitsAbleToByPass( const std::vector< DEC_Decision_ABC* >& units, const std::string& type );
 
     // Getter
-    static double GetAgentDotationForBuilding( const DEC_Decision_ABC* agent, const std::string& type );
-    static double GetAgentMissingDotationForBuilding( const DEC_Decision_ABC* agent, const DEC_Gen_Object* object );
+    static double GetAgentDotationNumber( const DEC_Decision_ABC* agent, const PHY_DotationCategory* pDotationCategory );
+    static std::pair< const PHY_DotationCategory*, double > GetAgentMissingDotationForBuilding( const DEC_Decision_ABC* agent, const DEC_Gen_Object* object );
+    static std::pair< const PHY_DotationCategory*, double > GetAgentMissingDotationForMining( const DEC_Decision_ABC* agent, const boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
 
     // Embarquement / débarquement
     static bool IsLoaded( const MIL_Agent_ABC& callerAgent );
