@@ -159,28 +159,28 @@
                <objectClass name="ASI_PopulationAgregate" sharing="Neither">
                   <attribute dataType="Unsignedinteger32BEperfectalways" dimensions="NA" name="Number"
                              order="TimeStamp"
-                             ownership="DivestAcquire"
+                             ownership="NoTransfer"
                              semantics="The number of persons that are in a group at a specific location and are not involved in military operations."
                              sharing="Neither"
                              transportation="HLAbestEffort"
                              updateType="Conditional"/>
                   <attribute dataType="ASIPopulationStatusEnum" dimensions="NA" name="Status"
                              order="TimeStamp"
-                             ownership="DivestAcquire"
+                             ownership="NoTransfer"
                              semantics="State (of humor) of the population"
                              sharing="Neither"
                              transportation="HLAbestEffort"
                              updateType="Conditional"/>
                   <attribute dataType="RTIObjectIdStruct" dimensions="NA" name="CurrentZone"
                              order="TimeStamp"
-                             ownership="DivestAcquire"
+                             ownership="NoTransfer"
                              semantics="Parking zone of the population. ID of an EnvironmentObject"
                              sharing="Neither"
                              transportation="HLAbestEffort"
                              updateType="Conditional"/>
                   <attribute dataType="ResourceStatusArray" dimensions="NA" name="SupplyList"
                              order="TimeStamp"
-                             ownership="DivestAcquire"
+                             ownership="NoTransfer"
                              semantics="Reserves (water, foods..) of the population"
                              sharing="Neither"
                              transportation="HLAbestEffort"
@@ -190,14 +190,14 @@
                             sharing="PublishSubscribe">
                   <attribute dataType="ResourceStatusArray" dimensions="NA" name="UnitPersonnel"
                              order="TimeStamp"
-                             ownership="DivestAcquire"
+                             ownership="NoTransfer"
                              semantics="This summarizes the health status of personnel comprising the aggregate."
                              sharing="Neither"
                              transportation="HLAbestEffort"
                              updateCondition="On change"
                              updateType="Conditional"/>
                   <attribute dataType="HLAunicodeString" dimensions="NA" name="Callsign" order="TimeStamp"
-                             ownership="DivestAcquire"
+                             ownership="NoTransfer"
                              semantics="The name of the object."
                              sharing="Neither"
                              transportation="HLAbestEffort"
@@ -205,35 +205,35 @@
                              updateType="Static"/>
                   <attribute dataType="VisualSignatureStruct" dimensions="NA" name="VisualSignature"
                              order="TimeStamp"
-                             ownership="DivestAcquire"
+                             ownership="NoTransfer"
                              semantics="Describes the unit's susceptibility to electro-optical detection."
                              sharing="Neither"
                              transportation="HLAbestEffort"
                              updateCondition="On change"
                              updateType="Conditional"/>
                   <attribute dataType="HLAunicodeString" dimensions="NA" name="SourceUnit" order="TimeStamp"
-                             ownership="DivestAcquire"
+                             ownership="NoTransfer"
                              semantics="Aggregate from which this aggregate was spawned."
                              sharing="Neither"
                              transportation="HLAbestEffort"
                              updateCondition="On change"
                              updateType="Conditional"/>
                   <attribute dataType="MissionStruct" dimensions="NA" name="Mission" order="TimeStamp"
-                             ownership="DivestAcquire"
+                             ownership="NoTransfer"
                              semantics="The operational task the aggregate has been ordered to perform."
                              sharing="Neither"
                              transportation="HLAbestEffort"
                              updateCondition="On change"
                              updateType="Conditional"/>
                   <attribute dataType="NETN_Float64BE" dimensions="NA" name="Mounted" order="TimeStamp"
-                             ownership="DivestAcquire"
+                             ownership="NoTransfer"
                              semantics="The percentage of aggregate personnel  traveling on or in their organic transport."
                              sharing="Neither"
                              transportation="HLAbestEffort"
                              updateCondition="On change"
                              updateType="Conditional"/>
                   <attribute dataType="SupplyArray" dimensions="NA" name="UnitSupplies" order="TimeStamp"
-                             ownership="DivestAcquire"
+                             ownership="NoTransfer"
                              semantics="The type and quantities of supplies available (on hand) to the unit."
                              sharing="Neither"
                              transportation="HLAbestEffort"
@@ -241,14 +241,14 @@
                              updateType="Conditional"/>
                   <attribute dataType="NETN_UniqueID" dimensions="NA" name="HigherHeadquarters"
                              order="TimeStamp"
-                             ownership="DivestAcquire"
+                             ownership="NoTransfer"
                              semantics="A pointer to the aggregate's superior unit or headquarters. The highest level unit or headquarters on each side will publish its own UniqueID as its HigherHeadquarters value."
                              sharing="Neither"
                              transportation="HLAbestEffort"
                              updateCondition="On change"
                              updateType="Conditional"/>
                   <attribute dataType="NETN_Float64BE" dimensions="NA" name="CombatValue" order="TimeStamp"
-                             ownership="DivestAcquire"
+                             ownership="NoTransfer"
                              semantics="A summary value (in percent) of unit effectiveness based on level of training, leadership, moral, personnel and equipment operational status, etc."
                              sharing="Neither"
                              transportation="HLAbestEffort"
@@ -256,7 +256,7 @@
                              updateType="Conditional"/>
                   <attribute dataType="WeaponControlOrderEnum8" dimensions="NA" name="WeaponsControlOrder"
                              order="TimeStamp"
-                             ownership="DivestAcquire"
+                             ownership="NoTransfer"
                              semantics="Describes current Weapon Control Order Free, Tight, or Hold."
                              sharing="Neither"
                              transportation="HLAbestEffort"
@@ -264,7 +264,7 @@
                              updateType="Conditional"/>
                   <attribute dataType="SupportRelationshipStruct" dimensions="NA" name="SupportUnit"
                              order="TimeStamp"
-                             ownership="DivestAcquire"
+                             ownership="NoTransfer"
                              semantics="Identifies unit(s) which support the aggregate logistically, or with a specified combat or combat support relationship, e.g. a Direct Support or General Support Artillery unit."
                              sharing="Neither"
                              transportation="HLAbestEffort"
@@ -272,14 +272,14 @@
                              updateType="Conditional"/>
                   <attribute dataType="AggregateMissionEnum16" dimensions="NA" name="Activity"
                              order="TimeStamp"
-                             ownership="DivestAcquire"
+                             ownership="NoTransfer"
                              semantics="The current activity of the aggregate. This may differ from the mission due to casualties, readiness, etc."
                              sharing="Neither"
                              transportation="HLAbestEffort"
                              updateCondition="On change"
                              updateType="Conditional"/>
                   <attribute dataType="HLAunicodeString" dimensions="NA" name="Symbol" order="TimeStamp"
-                             ownership="DivestAcquire"
+                             ownership="NoTransfer"
                              semantics="The APP6A code for the aggregate."
                              sharing="Neither"
                              transportation="HLAbestEffort"
@@ -287,7 +287,7 @@
                              updateType="Conditional"/>
                   <attribute dataType="CaptureStatusEnum8" dimensions="NA" name="CaptureStatus"
                              order="TimeStamp"
-                             ownership="DivestAcquire"
+                             ownership="NoTransfer"
                              semantics="The status of an aggregate with respect to its control or influence over its own activites."
                              sharing="Neither"
                              transportation="HLAbestEffort"
@@ -295,14 +295,14 @@
                              updateType="Conditional"/>
                   <attribute dataType="ResourceStatusArray" dimensions="NA" name="UnitEquipment"
                              order="TimeStamp"
-                             ownership="DivestAcquire"
+                             ownership="NoTransfer"
                              semantics="This summarizes the health status of the equipment comprising the aggregate."
                              sharing="Neither"
                              transportation="HLAbestEffort"
                              updateCondition="On change"
                              updateType="Conditional"/>
                   <attribute dataType="EchelonEnum8" dimensions="NA" name="Echelon" order="TimeStamp"
-                             ownership="DivestAcquire"
+                             ownership="NoTransfer"
                              semantics="The level of command of the aggregate."
                              sharing="Neither"
                              transportation="HLAbestEffort"
@@ -310,7 +310,7 @@
                              updateType="Static"/>
                   <attribute dataType="HUMINTSignatureStruct" dimensions="NA" name="HUMINTSignature"
                              order="TimeStamp"
-                             ownership="DivestAcquire"
+                             ownership="NoTransfer"
                              semantics="Describes the unit's susceptibility to human intelligence (HUMINT), i.e. information collected and provided by human sources."
                              sharing="Neither"
                              transportation="HLAbestEffort"
@@ -318,7 +318,7 @@
                              updateType="Conditional"/>
                   <attribute dataType="ElectronicSignatureStruct" dimensions="NA" name="ElectronicSignature"
                              order="TimeStamp"
-                             ownership="DivestAcquire"
+                             ownership="NoTransfer"
                              semantics="Describes the aggregate's susceptibility to electronic detection both as a summary value and by identifying aggregate sensors together with their operational status."
                              sharing="Neither"
                              transportation="HLAbestEffort"
@@ -326,7 +326,7 @@
                              updateType="Conditional"/>
                   <attribute dataType="WorldLocationStructArray3" dimensions="NA" name="Footprint"
                              order="TimeStamp"
-                             ownership="DivestAcquire"
+                             ownership="NoTransfer"
                              semantics="The region occupied by the aggregate. the region is defined as that bounded by line segments connecting the listed world locations."
                              sharing="Neither"
                              transportation="HLAbestEffort"
@@ -334,7 +334,7 @@
                              updateType="Conditional"/>
                   <attribute dataType="CoverStatusStruct" dimensions="NA" name="CoverStatus"
                              order="TimeStamp"
-                             ownership="DivestAcquire"
+                             ownership="NoTransfer"
                              semantics="Describes the unit's protection from the effects of weapons fire."
                              sharing="Neither"
                              transportation="HLAbestEffort"
@@ -342,21 +342,21 @@
                              updateType="Conditional"/>
                   <attribute dataType="EntityListVariableLengthStruct" dimensions="NA" name="EntityList"
                              order="TimeStamp"
-                             ownership="DivestAcquire"
+                             ownership="NoTransfer"
                              semantics="Provides data on entities comprising the aggregate."
                              sharing="Neither"
                              transportation="HLAbestEffort"
                              updateCondition="On change"
                              updateType="Conditional"/>
                   <attribute dataType="ActiveStatusEnum8" dimensions="NA" name="Status" order="TimeStamp"
-                             ownership="DivestAcquire"
+                             ownership="NoTransfer"
                              semantics="If an instance shall be taken into account by federates"
                              sharing="Neither"
                              transportation="HLAbestEffort"
                              updateCondition="On change"
                              updateType="Conditional"/>
                   <attribute dataType="NETN_UniqueID" dimensions="NA" name="UniqueID" order="TimeStamp"
-                             ownership="DivestAcquire"
+                             ownership="NoTransfer"
                              semantics="The unique identifier of the object."
                              sharing="Neither"
                              transportation="HLAbestEffort"
@@ -364,7 +364,7 @@
                              updateType="Static"/>
                   <attribute dataType="ArrayOfEmbeddedUnit" dimensions="NA" name="EmbeddedUnitList"
                              order="TimeStamp"
-                             ownership="DivestAcquire"
+                             ownership="NoTransfer"
                              semantics="The list of objects carried by this aggregate."
                              sharing="Neither"
                              transportation="HLAbestEffort"
@@ -731,14 +731,14 @@
                                    updateType="Static"/>
                         <objectClass name="ASI_Aircraft" sharing="Neither">
                            <attribute dataType="HLAunicodeString" dimensions="NA" name="Symbol" order="TimeStamp"
-                                      ownership="DivestAcquire"
+                                      ownership="NoTransfer"
                                       semantics="TheAPP6A code for entity object"
                                       sharing="Neither"
                                       transportation="HLAbestEffort"
                                       updateType="Conditional"/>
                            <attribute dataType="ResourceStatusArray" dimensions="NA" name="EntitySupplies"
                                       order="TimeStamp"
-                                      ownership="DivestAcquire"
+                                      ownership="NoTransfer"
                                       semantics="This summarizes the health status of supplies comprising the entity."
                                       sharing="Neither"
                                       transportation="HLAbestEffort"
@@ -787,14 +787,14 @@
                                    updateType="Static"/>
                         <objectClass name="ASI_AmphibiousVehicle" sharing="Neither">
                            <attribute dataType="HLAunicodeString" dimensions="NA" name="Symbol" order="TimeStamp"
-                                      ownership="DivestAcquire"
+                                      ownership="NoTransfer"
                                       semantics="TheAPP6A code for entity object"
                                       sharing="Neither"
                                       transportation="HLAbestEffort"
                                       updateType="Conditional"/>
                            <attribute dataType="ResourceStatusArray" dimensions="NA" name="EntitySupplies"
                                       order="TimeStamp"
-                                      ownership="DivestAcquire"
+                                      ownership="NoTransfer"
                                       semantics="This summarizes the health status of supplies comprising the entity."
                                       sharing="Neither"
                                       transportation="HLAbestEffort"
@@ -843,14 +843,14 @@
                                    updateType="Static"/>
                         <objectClass name="ASI_GroundVehicle" sharing="Neither">
                            <attribute dataType="HLAunicodeString" dimensions="NA" name="Symbol" order="TimeStamp"
-                                      ownership="DivestAcquire"
+                                      ownership="NoTransfer"
                                       semantics="TheAPP6A code for entity object"
                                       sharing="Neither"
                                       transportation="HLAbestEffort"
                                       updateType="Conditional"/>
                            <attribute dataType="ResourceStatusArray" dimensions="NA" name="EntitySupplies"
                                       order="TimeStamp"
-                                      ownership="DivestAcquire"
+                                      ownership="NoTransfer"
                                       semantics="This summarizes the health status of supplies comprising the entity."
                                       sharing="Neither"
                                       transportation="HLAbestEffort"
@@ -899,14 +899,14 @@
                                    updateType="Static"/>
                         <objectClass name="ASI_MultiDomainPlatform" sharing="Neither">
                            <attribute dataType="HLAunicodeString" dimensions="NA" name="Symbol" order="TimeStamp"
-                                      ownership="DivestAcquire"
+                                      ownership="NoTransfer"
                                       semantics="TheAPP6A code for entity object"
                                       sharing="Neither"
                                       transportation="HLAbestEffort"
                                       updateType="Conditional"/>
                            <attribute dataType="ResourceStatusArray" dimensions="NA" name="EntitySupplies"
                                       order="TimeStamp"
-                                      ownership="DivestAcquire"
+                                      ownership="NoTransfer"
                                       semantics="This summarizes the health status of supplies comprising the entity."
                                       sharing="Neither"
                                       transportation="HLAbestEffort"
@@ -955,14 +955,14 @@
                                    updateType="Static"/>
                         <objectClass name="ASI_Spacecraft" sharing="Neither">
                            <attribute dataType="HLAunicodeString" dimensions="NA" name="Symbol" order="TimeStamp"
-                                      ownership="DivestAcquire"
+                                      ownership="NoTransfer"
                                       semantics="TheAPP6A code for entity object"
                                       sharing="Neither"
                                       transportation="HLAbestEffort"
                                       updateType="Conditional"/>
                            <attribute dataType="ResourceStatusArray" dimensions="NA" name="EntitySupplies"
                                       order="TimeStamp"
-                                      ownership="DivestAcquire"
+                                      ownership="NoTransfer"
                                       semantics="This summarizes the health status of supplies comprising the entity."
                                       sharing="Neither"
                                       transportation="HLAbestEffort"
@@ -1011,14 +1011,14 @@
                                    updateType="Static"/>
                         <objectClass name="ASI_SubmersibleVehicle" sharing="Neither">
                            <attribute dataType="HLAunicodeString" dimensions="NA" name="Symbol" order="TimeStamp"
-                                      ownership="DivestAcquire"
+                                      ownership="NoTransfer"
                                       semantics="TheAPP6A code for entity object"
                                       sharing="Neither"
                                       transportation="HLAbestEffort"
                                       updateType="Conditional"/>
                            <attribute dataType="ResourceStatusArray" dimensions="NA" name="EntitySupplies"
                                       order="TimeStamp"
-                                      ownership="DivestAcquire"
+                                      ownership="NoTransfer"
                                       semantics="This summarizes the health status of supplies comprising the entity."
                                       sharing="Neither"
                                       transportation="HLAbestEffort"
@@ -1067,14 +1067,14 @@
                                    updateType="Static"/>
                         <objectClass name="ASI_SurfaceVessel" sharing="Neither">
                            <attribute dataType="HLAunicodeString" dimensions="NA" name="Symbol" order="TimeStamp"
-                                      ownership="DivestAcquire"
+                                      ownership="NoTransfer"
                                       semantics="TheAPP6A code for entity object"
                                       sharing="Neither"
                                       transportation="HLAbestEffort"
                                       updateType="Conditional"/>
                            <attribute dataType="ResourceStatusArray" dimensions="NA" name="EntitySupplies"
                                       order="TimeStamp"
-                                      ownership="DivestAcquire"
+                                      ownership="NoTransfer"
                                       semantics="This summarizes the health status of supplies comprising the entity."
                                       sharing="Neither"
                                       transportation="HLAbestEffort"
@@ -1155,7 +1155,7 @@
                                    updateType="Static"/>
                         <objectClass name="ASI_NonHuman" sharing="Neither">
                            <attribute dataType="HLAunicodeString" dimensions="NA" name="Symbol" order="TimeStamp"
-                                      ownership="DivestAcquire"
+                                      ownership="NoTransfer"
                                       semantics="TheAPP6A code for entity object"
                                       sharing="Neither"
                                       transportation="HLAbestEffort"
@@ -1196,7 +1196,7 @@
                                    updateType="Static"/>
                         <objectClass name="ASI_Human" sharing="Neither">
                            <attribute dataType="HLAunicodeString" dimensions="NA" name="Symbol" order="TimeStamp"
-                                      ownership="DivestAcquire"
+                                      ownership="NoTransfer"
                                       semantics="TheAPP6A code for entity object"
                                       sharing="Neither"
                                       transportation="HLAbestEffort"
@@ -1461,7 +1461,7 @@
                                 updateType="Static"/>
                      <attribute dataType="ResourceStatusArray" dimensions="NA" name="ObjectSupplies"
                                 order="TimeStamp"
-                                ownership="DivestAcquire"
+                                ownership="NoTransfer"
                                 semantics="This summarizes the health status of supplies comprising the entity."
                                 sharing="Neither"
                                 transportation="HLAbestEffort"
@@ -1666,7 +1666,7 @@
                                 updateType="Static"/>
                      <attribute dataType="ResourceStatusArray" dimensions="NA" name="ObjectSupplies"
                                 order="TimeStamp"
-                                ownership="DivestAcquire"
+                                ownership="NoTransfer"
                                 semantics="This summarizes the health status of supplies comprising the entity."
                                 sharing="Neither"
                                 transportation="HLAbestEffort"
@@ -1728,7 +1728,7 @@
                                 updateType="Static"/>
                      <attribute dataType="ResourceStatusArray" dimensions="NA" name="ObjectSupplies"
                                 order="TimeStamp"
-                                ownership="DivestAcquire"
+                                ownership="NoTransfer"
                                 semantics="This summarizes the health status of supplies comprising the entity."
                                 sharing="Neither"
                                 transportation="HLAbestEffort"
@@ -1766,7 +1766,7 @@
                                 updateType="Static"/>
                      <attribute dataType="ResourceStatusArray" dimensions="NA" name="ObjectSupplies"
                                 order="TimeStamp"
-                                ownership="DivestAcquire"
+                                ownership="NoTransfer"
                                 semantics="This summarizes the health status of supplies comprising the entity."
                                 sharing="Neither"
                                 transportation="HLAbestEffort"
@@ -1804,7 +1804,7 @@
                                 updateType="Static"/>
                      <attribute dataType="ResourceStatusArray" dimensions="NA" name="ObjectSupplies"
                                 order="TimeStamp"
-                                ownership="DivestAcquire"
+                                ownership="NoTransfer"
                                 semantics="This summarizes the health status of supplies comprising the entity."
                                 sharing="Neither"
                                 transportation="HLAbestEffort"
