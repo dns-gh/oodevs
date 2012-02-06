@@ -661,7 +661,7 @@ bool PHY_RoleAction_Objects::CanMineWithReinforcement( const MIL_ObjectType_ABC&
 bool PHY_RoleAction_Objects::CanMineTypeWithReinforcement( const std::string& strType ) const
 {
     const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( strType );
-    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eMine, type, false );
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( owner_, eMine, type, false );
     return capabilityComputer.HasCapability();
 }
 
@@ -672,7 +672,7 @@ bool PHY_RoleAction_Objects::CanMineTypeWithReinforcement( const std::string& st
 bool PHY_RoleAction_Objects::CanDestroyTypeWithReinforcement( const std::string& strType ) const
 {
     const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( strType );
-    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eDestroy, type, false );
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( owner_, eDestroy, type, false );
     return capabilityComputer.HasCapability();
 }
 
@@ -683,7 +683,7 @@ bool PHY_RoleAction_Objects::CanDestroyTypeWithReinforcement( const std::string&
 bool PHY_RoleAction_Objects::CanBypassTypeWithReinforcement( const std::string& strType ) const
 {
     const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( strType );
-    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eBypass, type, false );
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( owner_, eBypass, type, false );
     return capabilityComputer.HasCapability();
 }
 
@@ -750,7 +750,7 @@ std::pair< const PHY_DotationCategory*, double > PHY_RoleAction_Objects::GetAgen
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Objects::GetAgentMissingDotationForBuildingObstacle
+// Name: PHY_RoleAction_Objects::GetAgentMissingDotationForMiningObstacle
 // Created: LMT 2012-02-03
 // -----------------------------------------------------------------------------
 std::pair< const PHY_DotationCategory*, double > PHY_RoleAction_Objects::GetAgentMissingDotationForMiningObstacle( const boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, MIL_Agent_ABC& pion ) const
@@ -770,7 +770,7 @@ std::pair< const PHY_DotationCategory*, double > PHY_RoleAction_Objects::GetAgen
     pion.Execute( *dotationComputer );
 
     double number;
-    int dotationNumber =  capacity->GetMaxDotation();
+    int dotationNumber =  capacity->GetDotationNumber( pKnowledge->GetLocalisation() );
     if ( dotationNumber != 0 )
         number = std::max((int) ( dotationNumber - dotationComputer->GetDotationValue( *pDotationCategory )), 0);
     else

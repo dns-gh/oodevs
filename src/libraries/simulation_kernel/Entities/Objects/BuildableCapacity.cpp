@@ -141,10 +141,11 @@ void BuildableCapacity::Finalize( MIL_Object_ABC& object )
     {
         nFullNbrDotation_ = GetDotationNumber( location );
         if( unitType_ == ConstructionCapacity::eRaw )
-            object.GetAttribute< ConstructionAttribute >() = ConstructionAttribute( *dotation_, nFullNbrDotation_, nFullNbrDotation_ / 1000.f );
+            object.GetAttribute< ConstructionAttribute >() = ConstructionAttribute( *dotation_, nFullNbrDotation_, nFullNbrDotation_ * 1000.f );
         else if( unitType_ == ConstructionCapacity::eDensity )
-            object.GetAttribute< ConstructionAttribute >() = ConstructionAttribute( *dotation_, nFullNbrDotation_, nFullNbrDotation_ / 1000000.f );
+            object.GetAttribute< ConstructionAttribute >() = ConstructionAttribute( *dotation_, nFullNbrDotation_, nFullNbrDotation_ * 1000000.f );
     }
+    finalised_ = true; // $$$$ LDC FIXME the nFullNbrDotation_ should be in the object or attribute not the capacity
 }
 
 // -----------------------------------------------------------------------------
@@ -153,6 +154,8 @@ void BuildableCapacity::Finalize( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 unsigned int BuildableCapacity::GetDotationNumber( const TER_Localisation& location ) const
 {
+    if( finalised_ )
+        return nFullNbrDotation_;
     if( dotation_ )
     {
         if( location.GetType() == TER_Localisation::ePoint )
