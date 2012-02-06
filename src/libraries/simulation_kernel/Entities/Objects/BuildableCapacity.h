@@ -89,6 +89,7 @@ private:
     const PHY_DotationCategory* dotation_;
     unsigned int nFullNbrDotation_;
     ConstructionCapacity::E_UnitType unitType_;
+    bool finalised_;
     //@}
 };
 

@@ -765,7 +765,7 @@ std::pair< const PHY_DotationCategory*, double > PHY_RoleAction_Objects::GetAgen
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Objects::GetAgentMissingDotationForBuildingObstacle
+// Name: PHY_RoleAction_Objects::GetAgentMissingDotationForMiningObstacle
 // Created: LMT 2012-02-03
 // -----------------------------------------------------------------------------
 std::pair< const PHY_DotationCategory*, double > PHY_RoleAction_Objects::GetAgentMissingDotationForMiningObstacle( const boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, MIL_Agent_ABC& pion ) const
@@ -785,7 +785,7 @@ std::pair< const PHY_DotationCategory*, double > PHY_RoleAction_Objects::GetAgen
     pion.Execute( *dotationComputer );
 
     double number;
-    int dotationNumber =  capacity->GetMaxDotation();
+    int dotationNumber =  capacity->GetDotationNumber( pKnowledge->GetLocalisation() );
     if ( dotationNumber != 0 )
         number = std::max((int) ( dotationNumber - dotationComputer->GetDotationValue( *pDotationCategory )), 0);
     else

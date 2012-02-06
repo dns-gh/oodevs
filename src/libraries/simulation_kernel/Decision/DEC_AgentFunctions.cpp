@@ -1175,7 +1175,7 @@ std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::RetrieveUnitsAbleToDestroy(
     std::vector< DEC_Decision_ABC* >::const_iterator it;
     for( it = units.begin(); it != units.end(); ++it )
     {
-        if( AgentCanDestroyObjectType( *it, type) ) //TODO a changer
+        if( AgentCanDestroyObjectType( *it, type) )
         {
             unitsAbleToDestroy.push_back( *it );
         }
@@ -1280,7 +1280,7 @@ bool DEC_AgentFunctions::AgentCanDestroyObject( const DEC_Decision_ABC* agent, b
 {
     if( !agent )
         throw std::runtime_error( "Invalid pion in AgentCanDestroyObject" );
-    return objectKnowledge && objectKnowledge->IsValid() && agent && agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanDestroyWithReinforcement( objectKnowledge->GetType() );
+    return objectKnowledge && objectKnowledge->IsValid() && agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanDestroyWithReinforcement( objectKnowledge->GetType() );
 }
 
 // -----------------------------------------------------------------------------
@@ -1302,7 +1302,7 @@ bool DEC_AgentFunctions::AgentCanBypassObject( const DEC_Decision_ABC* agent, bo
 {
     if( !agent )
         throw std::runtime_error( "Invalid pion in AgentCanBypassObject" );
-    return objectKnowledge && objectKnowledge->IsValid() && objectKnowledge->RetrieveAttribute< BypassAttribute >() != 0 && agent && agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanBypassWithReinforcement( objectKnowledge->GetType() );
+    return objectKnowledge && objectKnowledge->IsValid() && objectKnowledge->RetrieveAttribute< BypassAttribute >() != 0 && agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanBypassWithReinforcement( objectKnowledge->GetType() );
 }
 
 // -----------------------------------------------------------------------------

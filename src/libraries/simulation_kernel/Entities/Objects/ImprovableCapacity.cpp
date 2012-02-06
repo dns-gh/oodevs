@@ -74,6 +74,7 @@ ImprovableCapacity::ImprovableCapacity( const ImprovableCapacity& from )
     , unitType_( from.unitType_ )
     , dotation_( from.dotation_ )
     , nFullNbrDotation_( from.nFullNbrDotation_ )
+    , finalised_( false )
 {
     // NOTHING
 }
@@ -136,16 +137,31 @@ void ImprovableCapacity::Finalize( MIL_Object_ABC& object )
     if( dotation_ )
     {
         TER_Localisation localisation = object.GetLocalisation();
-        if( localisation.GetType() != TER_Localisation::ePoint )
-        {
-            if( unitType_ == ConstructionCapacity::eRaw )
-                nFullNbrDotation_ *= static_cast< unsigned int >( MIL_Tools::ConvertSimToMeter( localisation.GetLength() ) / 1000.f );
-            else if( unitType_ == ConstructionCapacity::eDensity )
-                nFullNbrDotation_ = static_cast< unsigned int >( MIL_Tools::ConvertSimToMeter( localisation.GetArea() ) * nFullNbrDotation_ / 1000000.f );
-        }
-        nFullNbrDotation_ = std::max( 1u, nFullNbrDotation_ );
+        nFullNbrDotation_ = GetDotationNumber( localisation );
         object.GetAttribute< MineAttribute >() = MineAttribute( *dotation_, nFullNbrDotation_ );
     }
+    finalised_ = true; // $$$$ LDC FIXME the nFullNbrDotation_ should be in the object or attribute not the capacity
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ImprovableCapacity::GetDotationNumber
+// Created: LMT 2012-01-25
+// -----------------------------------------------------------------------------
+unsigned int ImprovableCapacity::GetDotationNumber( const TER_Localisation& location ) const
+{
+    if( finalised_ )
+        return nFullNbrDotation_;
+    if( dotation_ )
+    {
+        if( location.GetType() == TER_Localisation::ePoint )
+            return std::max( 1u, nFullNbrDotation_ );
+        else if( unitType_ == ConstructionCapacity::eRaw )
+            return std::max( 1u, nFullNbrDotation_ * static_cast< unsigned int >( MIL_Tools::ConvertSimToMeter( location.GetLength() ) / 1000.f ) );
+        else if( unitType_ == ConstructionCapacity::eDensity )
+            return std::max( 1u, nFullNbrDotation_ * static_cast< unsigned int >( MIL_Tools::ConvertSimToMeter( location.GetArea() ) * nFullNbrDotation_ / 1000000.f ) );
+    }
+    return nFullNbrDotation_;
 }
 
 // -----------------------------------------------------------------------------
