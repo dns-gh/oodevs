@@ -86,6 +86,7 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/SymbolHierarchy.h"
+#include "clients_kernel/CommandPostAttributes_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: AgentFactory constructor
@@ -166,7 +167,7 @@ kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
 
     result->Attach< Lives_ABC >( *new Lives( controllers_.controller_ ) );
     result->Attach< kernel::Attributes_ABC >( *new Attributes( *result, controllers_.controller_, static_.coordinateConverter_, dico, model_.teams_ ) );
-    result->Attach( *new CommandPostAttributes( *result, message, static_.types_ ) );
+    result->Attach< kernel::CommandPostAttributes_ABC >( *new CommandPostAttributes( *result, message, static_.types_ ) );
     result->Attach( *new Decisions( controllers_.controller_, *result ) );
     result->Attach< kernel::Positions >( *new AgentPositions( controllers_.controller_, *result, static_.coordinateConverter_ ) );
     result->Attach( *new VisionCones( *result, model_.surfaceFactory_, workers_ ) );

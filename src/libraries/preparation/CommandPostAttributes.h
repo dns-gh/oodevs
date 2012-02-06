@@ -10,16 +10,16 @@
 #ifndef __CommandPostAttributes_h_
 #define __CommandPostAttributes_h_
 
-#include "clients_kernel/Extension_ABC.h"
+#include "clients_kernel/CommandPostAttributes_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Serializable_ABC.h"
-#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
     class Entity_ABC;
     class PropertiesDictionary;
     class AgentType;
+    class Controller;
 }
 
 namespace xml
@@ -33,17 +33,16 @@ namespace xml
 */
 // Created: SBO 2007-03-27
 // =============================================================================
-class CommandPostAttributes : public kernel::Extension_ABC
+class CommandPostAttributes : public kernel::CommandPostAttributes_ABC
                             , public kernel::Drawable_ABC
                             , public kernel::Serializable_ABC
-                            , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             CommandPostAttributes( xml::xistream& xis, const kernel::Entity_ABC& entity, const kernel::AgentType& type,
+             CommandPostAttributes( xml::xistream& xis, kernel::Controller& controller, const kernel::Entity_ABC& entity, const kernel::AgentType& type,
                                     kernel::PropertiesDictionary& dictionary );
-             CommandPostAttributes( const kernel::Entity_ABC& entity, const kernel::AgentType& type,
+             CommandPostAttributes( const kernel::Entity_ABC& entity, kernel::Controller& controller, const kernel::AgentType& type,
                                     kernel::PropertiesDictionary& dictionary, bool commandPost = false );
     virtual ~CommandPostAttributes();
     //@}
@@ -56,18 +55,20 @@ public:
 
     //! @name Accessors
     //@{
-    bool IsCommandPost() const;
+    virtual bool IsCommandPost() const;
     //@}
 
 private:
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::PropertiesDictionary& dictionary );
+    void Update( const bool& commandPost );
     //@}
 
 private:
     //! @name Member data
     //@{
+    kernel::Controller& controller_;
     const kernel::Entity_ABC& entity_;
     const kernel::AgentType& type_;
     bool commandPost_;

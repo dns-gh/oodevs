@@ -16,7 +16,6 @@
 #include "preparation/TacticalHierarchies.h"
 #include "preparation/EntityCommunications.h"
 #include "Preparation/Formation.h"
-#include "preparation/CommandPostAttributes.h"
 #include "preparation/ProfileHierarchies_ABC.h"
 #include "preparation/ProfileHierarchies.h"
 #include "clients_gui/ChangeSuperiorDialog.h"
@@ -29,6 +28,7 @@
 #include "clients_kernel/Options.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
+#include "clients_kernel/CommandPostAttributes_ABC.h"
 #include "icons.h"
 
 using namespace gui;
@@ -38,7 +38,7 @@ namespace
 {
     bool IsCommandPost( const kernel::Entity_ABC& entity )
     {
-        if( const CommandPostAttributes* pAttributes = entity.Retrieve< CommandPostAttributes >() )
+        if( const kernel::CommandPostAttributes_ABC* pAttributes = entity.Retrieve< kernel::CommandPostAttributes_ABC >() )
             return pAttributes->IsCommandPost();
         return false;
     }
@@ -64,7 +64,6 @@ TacticalListView::TacticalListView( QWidget* pParent, Controllers& controllers, 
     , modelBuilder_        ( modelBuilder )
     , levels_              ( levels )
     , lock_                ( MAKE_PIXMAP( lock ) )
-    , commandPost_         ( MAKE_PIXMAP( commandpost ) )
     , changeSuperiorDialog_( 0 )
 {
     controllers_.Register( *this );
@@ -226,17 +225,8 @@ void TacticalListView::NotifyCreated( const kernel::Formation_ABC& entity )
 void TacticalListView::UpdatePixmap( const kernel::Entity_ABC& entity, gui::ValuedListItem* item )
 {
     if( item )
-    {
-        if( IsCommandPost( entity ) )
-            item->setPixmap( 1, commandPost_ );
-        else
-        {
-            if( const AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >() )
-                item->setPixmap( 1, decisions->IsEmbraye() ? lock_ : QPixmap() );
-            else
-                item->setPixmap( 1, QPixmap() );
-        }
-    }
+        if( const AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >() )
+            item->setPixmap( 1, decisions->IsEmbraye() ? lock_ : QPixmap() );
 }
 
 // -----------------------------------------------------------------------------

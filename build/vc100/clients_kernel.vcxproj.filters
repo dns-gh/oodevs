@@ -1032,6 +1032,9 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\XmlDescription.h">
       <Filter>Source Files\XML model</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\CommandPostAttributes_ABC.h">
+      <Filter>Source Files\Model\Extensions</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_kernel\ApproximativeMap.inl">

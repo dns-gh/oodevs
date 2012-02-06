@@ -38,7 +38,6 @@ namespace gui
     class LocationCreator;
     class ParametersLayer;
     class RichLabel;
-    class SymbolIcons;
     class LoadableLineEdit;
 
 // =============================================================================

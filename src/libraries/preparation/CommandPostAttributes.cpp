@@ -10,19 +10,23 @@
 #include "preparation_pch.h"
 #include "CommandPostAttributes.h"
 #include "LogisticBaseStates.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/AgentType.h"
+#include "clients_kernel/Karma.h"
 
 // -----------------------------------------------------------------------------
 // Name: CommandPostAttributes constructor
 // Created: SBO 2007-03-27
 // -----------------------------------------------------------------------------
-CommandPostAttributes::CommandPostAttributes( xml::xistream& xis, const kernel::Entity_ABC& entity, const kernel::AgentType& type,
+CommandPostAttributes::CommandPostAttributes( xml::xistream& xis, kernel::Controller& controller, const kernel::Entity_ABC& entity, const kernel::AgentType& type,
                                               kernel::PropertiesDictionary& dictionary )
-    : entity_     ( entity )
+    : controller_ ( controller ) 
+    , entity_     ( entity )
     , type_       ( type )
     , commandPost_( xis.attribute< bool >( "command-post", false ) )
 {
@@ -33,9 +37,10 @@ CommandPostAttributes::CommandPostAttributes( xml::xistream& xis, const kernel::
 // Name: CommandPostAttributes constructor
 // Created: LGY 2011-11-03
 // -----------------------------------------------------------------------------
-CommandPostAttributes::CommandPostAttributes( const kernel::Entity_ABC& entity, const kernel::AgentType& type,
+CommandPostAttributes::CommandPostAttributes( const kernel::Entity_ABC& entity, kernel::Controller& controller, const kernel::AgentType& type,
                                               kernel::PropertiesDictionary& dictionary, bool commandPost )
-    : entity_     ( entity )
+    : controller_ ( controller ) 
+    , entity_     ( entity )
     , type_       ( type )
     , commandPost_( commandPost )
 {
@@ -57,7 +62,25 @@ CommandPostAttributes::~CommandPostAttributes()
 // -----------------------------------------------------------------------------
 void CommandPostAttributes::CreateDictionary( kernel::PropertiesDictionary& dictionary )
 {
-    dictionary.Register( entity_, tools::translate( "Agent", "Info/Command post" ), commandPost_ );
+    dictionary.Register( entity_, tools::translate( "Agent", "Info/Command post" ), commandPost_, *this, &CommandPostAttributes::Update );
+}
+
+namespace
+{
+    std::string GetExtension( const kernel::Karma& karma )
+    {
+        switch( karma.GetUId() )
+        {
+        case 1:
+            return "F";
+        case 2:
+            return "H";
+        case 3:
+            return "N";
+        default:
+            return "F";
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -69,7 +92,9 @@ void CommandPostAttributes::Draw( const geometry::Point2f& where, const kernel::
     if( commandPost_ )
     {
         if( viewport.IsHotpointVisible() )
-            tools.DrawApp6Symbol( type_.GetHQSymbol(), where, -1.f );
+            if( const kernel::CommunicationHierarchies* pHierarchy = entity_.Retrieve< kernel::CommunicationHierarchies >() )
+                if( const kernel::Diplomacies_ABC* pDiplomacy = pHierarchy->GetTop().Retrieve< kernel::Diplomacies_ABC >() )
+                    tools.DrawApp6Symbol( type_.GetHQSymbol() + GetExtension( pDiplomacy->GetKarma() ), where, -1.f );
 
         const kernel::Entity_ABC& superior = entity_.Get< kernel::TacticalHierarchies >().GetUp();
         if( const LogisticBaseStates* bl = static_cast< const LogisticBaseStates* >( superior.Retrieve< LogisticHierarchiesBase >() ) )
@@ -93,4 +118,15 @@ void CommandPostAttributes::SerializeAttributes( xml::xostream& xos ) const
 bool CommandPostAttributes::IsCommandPost() const
 {
     return commandPost_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: CommandPostAttributes::Update
+// Created: LGY 2012-02-06
+// -----------------------------------------------------------------------------
+void CommandPostAttributes::Update( const bool& commandPost )
+{
+    commandPost_ = commandPost;
+    if( const kernel::Symbol_ABC* symbol = entity_.Retrieve< kernel::TacticalHierarchies >() )
+        controller_.Update( *symbol );
 }

@@ -24,6 +24,7 @@
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/CommandPostAttributes_ABC.h"
 
 #pragma warning( disable : 4355 )
 
@@ -147,7 +148,7 @@ void HierarchyListView_ABC::DisplayIcon( const Entity_ABC& entity, ValuedListIte
         timer_->start( 500, true );
         return;
     }
-    item->setPixmap( 0, pixmap );
+    item->setPixmap( 0, symbols_.GetSymbol( entity, pixmap ) );
     item->invalidateHeight();
 }
 

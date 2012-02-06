@@ -113,7 +113,6 @@ private:
     ModelBuilder& modelBuilder_;
     const kernel::FormationLevels& levels_;
     QPixmap lock_;
-    QPixmap commandPost_;
     gui::ChangeSuperiorDialog* changeSuperiorDialog_;
     //@}
 };

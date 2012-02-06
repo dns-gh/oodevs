@@ -27,7 +27,6 @@
 #include "clients_kernel/Options.h"
 #include "gaming/AutomatDecisions.h"
 #include "gaming/StaticModel.h"
-#include "gaming/CommandPostAttributes.h"
 #include "gaming/Attributes.h"
 #include "icons.h"
 #include "protocol/SimulationSenders.h"
@@ -45,7 +44,6 @@ AgentListView::AgentListView( QWidget* pParent, kernel::Controllers& controllers
     , simulation_          ( simulation )
     , lock_                ( MAKE_PIXMAP( lock ) )
     , scisors_             ( MAKE_PIXMAP( scisors ) ) // LTO
-    , commandPost_         ( MAKE_PIXMAP( commandpost ) )
     , changeSuperiorDialog_( 0 )
 {
     controllers_.Register( *this );
@@ -101,8 +99,6 @@ void AgentListView::Display( const kernel::Entity_ABC& entity, gui::ValuedListIt
     const AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >();
     if( decisions )
         item->setPixmap( 1, decisions->IsEmbraye() ? lock_ : QPixmap() );
-    else if( const CommandPostAttributes* commandPost = entity.Retrieve< CommandPostAttributes >() )
-        item->setPixmap( 1, commandPost->IsCommandPost() ? commandPost_ : QPixmap() );
     // LTO begin
     else if( const kernel::KnowledgeGroup_ABC* kg = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &entity ) ) // $$$$ _RC_ SLG 2009-12-21: TEMP
         item->setPixmap( 1, !kg->IsActivated() ? scisors_ : QPixmap() );

@@ -90,7 +90,7 @@ private:
     actions::ActionsModel& actionsModel_;
     const StaticModel& static_;
     const kernel::Time_ABC& simulation_;
-    QPixmap lock_, commandPost_;
+    QPixmap lock_;
     gui::ChangeSuperiorDialog* changeSuperiorDialog_;
     //@}
 };

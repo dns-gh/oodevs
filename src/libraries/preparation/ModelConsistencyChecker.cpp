@@ -10,7 +10,6 @@
 #include "preparation_pch.h"
 #include "ModelConsistencyChecker.h"
 #include "AgentsModel.h"
-#include "CommandPostAttributes.h"
 #include "Dotation.h"
 #include "FormationModel.h"
 #include "GhostModel.h"
@@ -44,6 +43,7 @@
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/CommandPostAttributes_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "tools/GeneralConfig.h"
 #include "tools/SchemaWriter.h"
@@ -473,7 +473,7 @@ namespace
 {
     bool IsCommandPost( const Entity_ABC& entity )
     {
-        if( const CommandPostAttributes* pAttributes = entity.Retrieve< CommandPostAttributes >() )
+        if( const CommandPostAttributes_ABC* pAttributes = entity.Retrieve< CommandPostAttributes_ABC >() )
             return pAttributes->IsCommandPost();
         return false;
     }

@@ -14,6 +14,10 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Knowledge_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/Karma.h"
+#include "clients_kernel/Diplomacies_ABC.h"
+#include "clients_kernel/CommandPostAttributes_ABC.h"
 
 using namespace gui;
 
@@ -64,4 +68,73 @@ const QPixmap& EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, const
     icon.SetColor( strategy_.FindColor( entity ) );
     icon.SetSize( size );
     return icons_.GetSymbol( icon );
+}
+
+namespace
+{
+    bool IsValid( const kernel::Karma& karma, int x, int y )
+    {
+        switch( karma.GetUId() )
+        {
+        case 1:
+            return ( x == 0 || x == 1 ) && y > 5;
+        case 2:
+            return ( x == 0 || x == 1 ) && y > 14;
+        case 3:
+            return ( x == 3 || x == 4 ) && y > 4;
+        default:
+            return ( x == 0 || x == 1 );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntitySymbols::GetSymbol
+// Created: LGY 2012-02-06
+// -----------------------------------------------------------------------------
+QPixmap EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, const QPixmap& pixmap ) const
+{
+    if( !IsCommandPost( entity ) )
+        return pixmap;
+
+    if( const kernel::CommunicationHierarchies* pHierarchy = entity.Retrieve< kernel::CommunicationHierarchies >() )
+        if( const kernel::Diplomacies_ABC* pDiplomacy = pHierarchy->GetTop().Retrieve< kernel::Diplomacies_ABC >() )
+        {
+            const kernel::Karma& karma= pDiplomacy->GetKarma();
+            QImage symbol = pixmap.toImage();
+            QImage headquarter( 32, 48, QImage::Format_ARGB32 );
+            memcpy( headquarter.bits(), symbol.bits(), symbol.byteCount() );
+            uchar* ptr = headquarter.bits();
+            for( int y = 0; y < 48; ++y )
+                for( int x = 0; x < 32; ++x )
+                {
+                    if( y > 31 )
+                    {
+                        ptr[ 4 * x + y * headquarter.bytesPerLine() ]     = 0xff;
+                        ptr[ 4 * x + y * headquarter.bytesPerLine() + 1 ] = 0xff;
+                        ptr[ 4 * x + y * headquarter.bytesPerLine() + 2 ] = 0xff;
+                        ptr[ 4 * x + y * headquarter.bytesPerLine() + 3 ] = 0x00;
+                    }
+                    if( IsValid( karma, x, y ) )
+                    {
+                        ptr[ 4 * x + y * headquarter.bytesPerLine() ]     = 0x00;
+                        ptr[ 4 * x + y * headquarter.bytesPerLine() + 1 ] = 0x00;
+                        ptr[ 4 * x + y * headquarter.bytesPerLine() + 2 ] = 0x00;
+                        ptr[ 4 * x + y * headquarter.bytesPerLine() + 3 ] = 0xff;
+                    }
+                }
+            return QPixmap( headquarter );
+        }
+    return pixmap;
+}
+
+// -----------------------------------------------------------------------------
+// Name: EntitySymbols::IsCommandPost
+// Created: LGY 2012-02-06
+// -----------------------------------------------------------------------------
+bool EntitySymbols::IsCommandPost( const kernel::Entity_ABC& entity ) const
+{
+    if( const kernel::CommandPostAttributes_ABC* pAttributes = entity.Retrieve< kernel::CommandPostAttributes_ABC >() )
+        return pAttributes->IsCommandPost();
+    return false;
 }

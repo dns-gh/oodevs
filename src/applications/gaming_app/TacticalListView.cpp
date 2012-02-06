@@ -37,7 +37,7 @@ namespace
 {
     bool IsCommandPost( const Entity_ABC& entity )
     {
-        if( const CommandPostAttributes* pAttributes = entity.Retrieve< CommandPostAttributes >() )
+        if( const CommandPostAttributes_ABC* pAttributes = entity.Retrieve< CommandPostAttributes_ABC >() )
             return pAttributes->IsCommandPost();
         return false;
     }
@@ -64,7 +64,6 @@ TacticalListView::TacticalListView( QWidget* pParent, Controllers& controllers, 
     , static_              ( staticModel )
     , simulation_          ( simulation )
     , lock_                ( MAKE_PIXMAP( lock ) )
-    , commandPost_         ( MAKE_PIXMAP( commandpost ) )
     , changeSuperiorDialog_( 0 )
 {
     controllers_.Register( *this );
@@ -119,15 +118,8 @@ void TacticalListView::setColumnWidth( int column, int w )
 // -----------------------------------------------------------------------------
 void TacticalListView::Display( const Entity_ABC& entity, ValuedListItem* item )
 {
-    if( IsCommandPost( entity ) )
-        item->setPixmap( 1, commandPost_ );
-    else
-    {
-        if( const AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >() )
-            item->setPixmap( 1, decisions->IsEmbraye() ? lock_ : QPixmap() );
-        else
-            item->setPixmap( 1, QPixmap() );
-    }
+    if( const AutomatDecisions* decisions = entity.Retrieve< AutomatDecisions >() )
+        item->setPixmap( 1, decisions->IsEmbraye() ? lock_ : QPixmap() );
 
     if( const Attributes* attributes = static_cast< const Attributes* >( entity.Retrieve< Attributes_ABC >() ) )
     {
