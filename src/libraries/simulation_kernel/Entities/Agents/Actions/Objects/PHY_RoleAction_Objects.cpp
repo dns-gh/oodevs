@@ -653,6 +653,40 @@ bool PHY_RoleAction_Objects::CanMineWithReinforcement( const MIL_ObjectType_ABC&
     return capabilityComputer.HasCapability();
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Objects::CanMineTypeWithReinforcement
+// Created: LMT 2012-02-01
+// -----------------------------------------------------------------------------
+bool PHY_RoleAction_Objects::CanMineTypeWithReinforcement( const std::string& strType ) const
+{
+    const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( strType );
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eMine, type, false );
+    return capabilityComputer.HasCapability();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Objects::CanDestroyTypeWithReinforcement
+// Created: LMT 2012-02-01
+// -----------------------------------------------------------------------------
+bool PHY_RoleAction_Objects::CanDestroyTypeWithReinforcement( const std::string& strType ) const
+{
+    const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( strType );
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eDestroy, type, false );
+    return capabilityComputer.HasCapability();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Objects::CanBypassTypeWithReinforcement
+// Created: LMT 2012-02-01
+// -----------------------------------------------------------------------------
+bool PHY_RoleAction_Objects::CanBypassTypeWithReinforcement( const std::string& strType ) const
+{
+    const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( strType );
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eBypass, type, false );
+    return capabilityComputer.HasCapability();
+}
+
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Objects::EnoughtDotationForBuilding
 // Created: LMT 2010-07-07
@@ -679,16 +713,11 @@ bool PHY_RoleAction_Objects::EnoughtDotationForBuilding( const std::string& obje
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Objects::GetAgentDotationForBuildingObstacle
+// Name: PHY_RoleAction_Objects::GetAgentDotationNumber
 // Created: LMT 2012-01-25
 // -----------------------------------------------------------------------------
-double PHY_RoleAction_Objects::GetAgentDotationForBuildingObstacle( const std::string& objectType, MIL_Agent_ABC& pion ) const
+double PHY_RoleAction_Objects::GetAgentDotationNumber( MIL_Agent_ABC& pion, const PHY_DotationCategory* pDotationCategory ) const
 {
-    const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( objectType );
-    const BuildableCapacity* capacity = type.GetCapacity< BuildableCapacity >();
-    if ( capacity == 0   )
-        return -1;
-    const PHY_DotationCategory* pDotationCategory = capacity->GetDotationCategory();
     if ( pDotationCategory  == 0 )
         return -1;
     std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( pion.GetAlgorithms().dotationComputerFactory_->Create() );
@@ -700,24 +729,53 @@ double PHY_RoleAction_Objects::GetAgentDotationForBuildingObstacle( const std::s
 // Name: PHY_RoleAction_Objects::GetAgentMissingDotationForBuildingObstacle
 // Created: LMT 2012-01-25
 // -----------------------------------------------------------------------------
-double PHY_RoleAction_Objects::GetAgentMissingDotationForBuildingObstacle( const DEC_Gen_Object* object, MIL_Agent_ABC& pion ) const
+std::pair< const PHY_DotationCategory*, double > PHY_RoleAction_Objects::GetAgentMissingDotationForBuildingObstacle( const DEC_Gen_Object* object, MIL_Agent_ABC& pion ) const
 {
     const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( object->GetTypeName() );
     const BuildableCapacity* capacity = type.GetCapacity< BuildableCapacity >();
-    if ( capacity == 0   )
-        return -1;
-    const PHY_DotationCategory* pDotationCategory = capacity->GetDotationCategory();
-    if ( pDotationCategory  == 0 )
-        return -1;
+    const PHY_DotationCategory* pDotationCategory = capacity ? capacity->GetDotationCategory() : 0;
+    if ( pDotationCategory == 0 )
+        return std::pair< const PHY_DotationCategory*, double >( pDotationCategory, -1 );
 
     std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( pion.GetAlgorithms().dotationComputerFactory_->Create() );
     pion.Execute( *dotationComputer );
 
+    double number;
     int dotationNumber =  capacity->GetDotationNumber( object->GetLocalisation() );
     if ( dotationNumber != 0 )
-        return std::max((int) ( dotationNumber - dotationComputer->GetDotationValue( *pDotationCategory )), 0);
+        number = std::max((int) ( dotationNumber - dotationComputer->GetDotationValue( *pDotationCategory )), 0);
     else
-        return std::max((int) ( capacity->GetMaxDotation() - dotationComputer->GetDotationValue( *pDotationCategory )), 0);
+        number = std::max((int) ( capacity->GetMaxDotation() - dotationComputer->GetDotationValue( *pDotationCategory )), 0);
+    return std::pair< const PHY_DotationCategory*, double >( pDotationCategory, number );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Objects::GetAgentMissingDotationForBuildingObstacle
+// Created: LMT 2012-02-03
+// -----------------------------------------------------------------------------
+std::pair< const PHY_DotationCategory*, double > PHY_RoleAction_Objects::GetAgentMissingDotationForMiningObstacle( const boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, MIL_Agent_ABC& pion ) const
+{
+    if ( pKnowledge == 0 )
+    {
+        const PHY_DotationCategory* pDotationCategory = 0;
+        return std::pair< const PHY_DotationCategory*, double >( pDotationCategory, -1 );
+    }
+    const MIL_ObjectType_ABC& type = pKnowledge->GetType();
+    const ImprovableCapacity* capacity = type.GetCapacity< ImprovableCapacity >();
+    const PHY_DotationCategory* pDotationCategory = capacity ? capacity->GetDotationCategory() : 0;
+    if ( pDotationCategory == 0 )
+        return std::pair< const PHY_DotationCategory*, double >( pDotationCategory, -1 );
+
+    std::auto_ptr< dotation::DotationComputer_ABC > dotationComputer( pion.GetAlgorithms().dotationComputerFactory_->Create() );
+    pion.Execute( *dotationComputer );
+
+    double number;
+    int dotationNumber =  capacity->GetMaxDotation();
+    if ( dotationNumber != 0 )
+        number = std::max((int) ( dotationNumber - dotationComputer->GetDotationValue( *pDotationCategory )), 0);
+    else
+        number = std::max((int) ( capacity->GetMaxDotation() - dotationComputer->GetDotationValue( *pDotationCategory )), 0);
+    return std::pair< const PHY_DotationCategory*, double >( pDotationCategory, number );
 }
 
 // -----------------------------------------------------------------------------

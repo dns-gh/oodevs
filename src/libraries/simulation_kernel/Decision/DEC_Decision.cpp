@@ -469,12 +469,17 @@ void RegisterMissionParametersFunctions( directia::brain::Brain& brain, bool isM
     brain[ "DEC_Agent_AgentADotationPourConstruireObjetSansRenfort" ] = &DEC_AgentFunctions::AgentHasDotationForBuildingWithOutLoaded;
 	brain[ "DEC_Agent_AgentPeutDetruireObjet" ] = &DEC_AgentFunctions::AgentCanDestroyObject;
 	brain[ "DEC_Agent_AgentPeutConstruireContournementObjet" ] = &DEC_AgentFunctions::AgentCanBypassObject;
-    
+    brain[ "DEC_Agent_AgentPeutDetruireTypeObjet" ] = &DEC_AgentFunctions::AgentCanDestroyObjectType;
+
     brain[ "DEC_Agent_PeutActiverObjet" ] = &DEC_AgentFunctions::CanActivateObject;
     
-    brain[ "DEC_Agent_GetAgentDotationPourConstruireObjet" ] = &DEC_AgentFunctions::GetAgentDotationForBuilding;
-    brain[ "DEC_Agent_GetAgentDotationManquantePourConstruireObjet" ] = &DEC_AgentFunctions::GetAgentMissingDotationForBuilding;
+    brain[ "DEC_Agent_GetAgentDotation" ] = &DEC_AgentFunctions::GetAgentDotationNumber;
+    brain[ "DEC_GetAgentDotationManquantePourConstruireObjet" ] = &DEC_AgentFunctions::GetAgentMissingDotationForBuilding;
+    brain[ "DEC_GetAgentDotationManquantePourValoriserObjet" ] = &DEC_AgentFunctions::GetAgentMissingDotationForMining;
     brain[ "DEC_GetAgentsPouvantConstruire" ] = &DEC_AgentFunctions::RetrieveUnitsAbleToBuild;
+    brain[ "DEC_GetAgentsPouvantValoriser" ] = &DEC_AgentFunctions::RetrieveUnitsAbleToMine;
+    brain[ "DEC_GetAgentsPouvantContourner" ] = &DEC_AgentFunctions::RetrieveUnitsAbleToByPass;
+    brain[ "DEC_GetAgentsPouvantDetruire" ] = &DEC_AgentFunctions::RetrieveUnitsAbleToDestroy;
 }
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::RegisterReportFunctions

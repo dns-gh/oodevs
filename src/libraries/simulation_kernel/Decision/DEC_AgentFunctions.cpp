@@ -1202,6 +1202,60 @@ std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::RetrieveUnitsAbleToBuild( c
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::RetrieveUnitsAbleToMine
+// Created: LMT 2012-02-01
+// -----------------------------------------------------------------------------
+std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::RetrieveUnitsAbleToMine( const std::vector< DEC_Decision_ABC* >& units, const std::string& type )
+{
+    std::vector< DEC_Decision_ABC* > unitsAbleToMine;
+    std::vector< DEC_Decision_ABC* >::const_iterator it;
+    for( it = units.begin(); it != units.end(); ++it )
+    {
+        if( AgentCanMineObject( *it, type) )
+        {
+            unitsAbleToMine.push_back( *it );
+        }
+    }
+    return unitsAbleToMine;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::RetrieveUnitsAbleToByPass
+// Created: LMT 2012-02-01
+// -----------------------------------------------------------------------------
+std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::RetrieveUnitsAbleToByPass( const std::vector< DEC_Decision_ABC* >& units, const std::string& type )
+{
+    std::vector< DEC_Decision_ABC* > unitsAbleToByPass;
+    std::vector< DEC_Decision_ABC* >::const_iterator it;
+    for( it = units.begin(); it != units.end(); ++it )
+    {
+        if( AgentCanByPassObject( *it, type) )
+        {
+            unitsAbleToByPass.push_back( *it );
+        }
+    }
+    return unitsAbleToByPass;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::RetrieveUnitsAbleToDestroy
+// Created: LMT 2012-02-01
+// -----------------------------------------------------------------------------
+std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::RetrieveUnitsAbleToDestroy( const std::vector< DEC_Decision_ABC* >& units, const std::string& type )
+{
+    std::vector< DEC_Decision_ABC* > unitsAbleToDestroy;
+    std::vector< DEC_Decision_ABC* >::const_iterator it;
+    for( it = units.begin(); it != units.end(); ++it )
+    {
+        if( AgentCanDestroyObjectType( *it, type) ) //TODO a changer
+        {
+            unitsAbleToDestroy.push_back( *it );
+        }
+    }
+    return unitsAbleToDestroy;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::AgentHasDotationForBuilding
 // Created: LMT 2011-08-25
 // -----------------------------------------------------------------------------
@@ -1213,25 +1267,36 @@ bool DEC_AgentFunctions::AgentHasDotationForBuilding( const DEC_Decision_ABC* ag
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::GetAgentDotationForBuilding
+// Name: DEC_AgentFunctions::GetAgentDotationNumber
 // Created: LMT 2012-01-25
 // -----------------------------------------------------------------------------
-double DEC_AgentFunctions::GetAgentDotationForBuilding( const DEC_Decision_ABC* agent, const std::string& type )
+double DEC_AgentFunctions::GetAgentDotationNumber( const DEC_Decision_ABC* agent, const PHY_DotationCategory* dotationCategory )
 {
     if( !agent )
         throw std::runtime_error( "Invalid pion in GetAgentDotationForBuilding" );
-    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().GetAgentDotationForBuildingObstacle( type, agent->GetPion() );
+    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().GetAgentDotationNumber( agent->GetPion(), dotationCategory );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::GetAgentMissingDotationForBuilding
 // Created: LMT 2012-01-25
 // -----------------------------------------------------------------------------
-double DEC_AgentFunctions::GetAgentMissingDotationForBuilding( const DEC_Decision_ABC* agent, const DEC_Gen_Object* object )
+std::pair< const PHY_DotationCategory*, double > DEC_AgentFunctions::GetAgentMissingDotationForBuilding( const DEC_Decision_ABC* agent, const DEC_Gen_Object* object )
 {
     if( !agent )
         throw std::runtime_error( "Invalid pion in GetAgentMissingDotationForBuilding" );
     return agent->GetPion().GetRole< PHY_RoleAction_Objects >().GetAgentMissingDotationForBuildingObstacle( object, agent->GetPion() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::GetAgentMissingDotationForMining
+// Created: LMT 2012-02-03
+// -----------------------------------------------------------------------------
+std::pair< const PHY_DotationCategory*, double > DEC_AgentFunctions::GetAgentMissingDotationForMining( const DEC_Decision_ABC* agent, const boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{
+    if( !agent )
+        throw std::runtime_error( "Invalid pion in GetAgentMissingDotationForMining" );
+    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().GetAgentMissingDotationForMiningObstacle( pKnowledge, agent->GetPion() );
 }
 
 
@@ -1244,6 +1309,28 @@ bool DEC_AgentFunctions::AgentCanConstructObjectWithOutLoaded( const DEC_Decisio
     if( !agent )
         throw std::runtime_error( "Invalid pion in AgentCanConstructObjectWithOutLoaded" );
     return agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanConstructWithReinforcement( type, false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::AgentCanMineObject
+// Created: LMT 2012-02-01
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::AgentCanMineObject( const DEC_Decision_ABC* agent, const std::string& type )
+{
+    if( !agent )
+        throw std::runtime_error( "Invalid pion in AgentCanMineObject" );
+    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanMineTypeWithReinforcement( type );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::AgentCanByPassObject
+// Created: LMT 2012-02-01
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::AgentCanByPassObject( const DEC_Decision_ABC* agent, const std::string& type )
+{
+    if( !agent )
+        throw std::runtime_error( "Invalid pion in AgentCanUnmineObject" );
+    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanBypassTypeWithReinforcement( type );
 }
 
 // -----------------------------------------------------------------------------
@@ -1263,7 +1350,20 @@ bool DEC_AgentFunctions::AgentHasDotationForBuildingWithOutLoaded( const DEC_Dec
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::AgentCanDestroyObject( const DEC_Decision_ABC* agent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge )
 {
+    if( !agent )
+        throw std::runtime_error( "Invalid pion in AgentCanDestroyObject" );
     return objectKnowledge && objectKnowledge->IsValid() && agent && agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanDestroyWithReinforcement( objectKnowledge->GetType() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::AgentCanDestroyObjectType
+// Created: LMT 2011-08-25
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::AgentCanDestroyObjectType( const DEC_Decision_ABC* agent, const std::string& type )
+{
+    if( !agent )
+        throw std::runtime_error( "Invalid pion in AgentCanDestroyObjectType" );
+    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanDestroyTypeWithReinforcement( type );
 }
 
 // -----------------------------------------------------------------------------
@@ -1272,6 +1372,8 @@ bool DEC_AgentFunctions::AgentCanDestroyObject( const DEC_Decision_ABC* agent, b
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::AgentCanBypassObject( const DEC_Decision_ABC* agent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge )
 {
+    if( !agent )
+        throw std::runtime_error( "Invalid pion in AgentCanBypassObject" );
     return objectKnowledge && objectKnowledge->IsValid() && objectKnowledge->RetrieveAttribute< BypassAttribute >() != 0 && agent && agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanBypassWithReinforcement( objectKnowledge->GetType() );
 }
 
