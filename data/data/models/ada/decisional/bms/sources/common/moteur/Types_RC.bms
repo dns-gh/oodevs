@@ -449,7 +449,10 @@ eRC_ElementCannotBeUnloaded = 430
 eRC_ElementLoaded = 431
 eRC_ElementUnloaded = 432
 eRC_DifficultMovementProgression = 433
-eNbr = 434
+eRC_ImpossibleToExtinguishFire = 434
+eRC_NoFiresWithinArea = 435
+
+eNbr = 436
 
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : delai (float),
