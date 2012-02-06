@@ -1,6 +1,6 @@
 includedFiles = includedFiles or {}
 includedFiles["sources/population/asymetriques/common/automate/missions/Behaviors.bms"] = true
 
-include "Population/Asymetriques/Common/Automate/Missions/CommettreExactionsSurPopulationDansZone/MRT - CommettreExactionsSurPopulationDansZone.bms"
+include "Population/Asymetriques/Common/Automate/Missions/CommettreExactions/MRT - CommettreExactionsSurPopulationDansZone.bms"
 
-include "Population/Asymetriques/Common/Automate/Missions/CommettreExactionsSurPopulationDansZone/CDT - CommettreExactionsSurPopulationDansZone.bms"
+include "Population/Asymetriques/Common/Automate/Missions/CommettreExactions/CDT - CommettreExactionsSurPopulationDansZone.bms"
