@@ -1490,13 +1490,10 @@
                 <include name="tutorials/11 - Preparation/**"/>
                 <include name="tutorials/12 - AAR/**"/>
                 <include name="tutorials/13 - Advanced features/**"/>
+				<include name="tests/Pathfind/**"/>
+				<include name="tests/TestPlanExercise/**"/>
 			</zipfileset>
-			<zipfileset dir="${data.dir}/exercises/tests" prefix="exercises">
-                <include name="missing/**"/>
-                <include name="Pathfind/**"/>
-				<include name="TestPlanExercise/**"/>
-            </zipfileset>
-        </pack>
+		</pack>
     </target>
 
 
