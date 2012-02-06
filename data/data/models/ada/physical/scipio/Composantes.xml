@@ -5466,6 +5466,8 @@
       <object initial-construction-time="36h" type="mobility enhanced area"/>
       <object initial-construction-time="36h" type="safe zone"/>
       <object initial-construction-time="36h" type="installation"/>
+      <object initial-construction-time="12h" initial-destruction-time="1h" type="metro station"/>
+      <object initial-construction-time="3h" initial-destruction-time="20m" type="sewer entry"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="Panne MOB 1"/>
@@ -35321,4 +35323,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="3264052344" -->
+<!-- signature="1965055147" -->

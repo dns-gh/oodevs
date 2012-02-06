@@ -205,35 +205,35 @@
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ALFT - PC UH"/>
     <unit type="GLAISE - ALFT - UH 5 x MI8"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.Artillerie.Sol Air" id="697" name="GLAISE - ASA . Batterie SA 11" type="Automate ASA">
+  <automat decisional-model="Masalife.Automate.ASA" id="697" name="GLAISE - ASA . Batterie SA 11" type="Automate ASA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASA . PC"/>
     <unit type="GLAISE - ASA . Section SA 11"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.Artillerie.Sol Air" id="698" name="GLAISE - ASA . Batterie SA 13" type="Automate ASA">
+  <automat decisional-model="Masalife.Automate.ASA" id="698" name="GLAISE - ASA . Batterie SA 13" type="Automate ASA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASA . PC"/>
     <unit type="GLAISE - ASA . Section SA 13"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.Artillerie.Sol Air" id="699" name="GLAISE - ASA . Batterie SA 6" type="Automate ASA">
+  <automat decisional-model="Masalife.Automate.ASA" id="699" name="GLAISE - ASA . Batterie SA 6" type="Automate ASA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASA . PC"/>
     <unit type="GLAISE - ASA . Section SA 6"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.Artillerie.Sol Air" id="700" name="GLAISE - ASA . Batterie SA 9" type="Automate ASA">
+  <automat decisional-model="Masalife.Automate.ASA" id="700" name="GLAISE - ASA . Batterie SA 9" type="Automate ASA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASA . PC"/>
     <unit type="GLAISE - ASA . Section SA 9"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.Artillerie.Sol Air" id="701" name="GLAISE - ASA . Section SA 14" type="Automate ASA">
+  <automat decisional-model="Masalife.Automate.ASA" id="701" name="GLAISE - ASA . Section SA 14" type="Automate ASA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASA . PC SA14"/>
     <unit type="GLAISE - ASA . Groupe SA 14"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.Artillerie.Sol Air" id="702" name="GLAISE - ASA . Section SA 16" type="Automate ASA">
+  <automat decisional-model="Masalife.Automate.ASA" id="702" name="GLAISE - ASA . Section SA 16" type="Automate ASA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASA . PC SA14"/>
     <unit type="GLAISE - ASA . Groupe SA 16"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.Artillerie.Sol Air" id="703" name="GLAISE - ASA . Section SA 7" type="Automate ASA">
+  <automat decisional-model="Masalife.Automate.ASA" id="703" name="GLAISE - ASA . Section SA 7" type="Automate ASA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASA . PC Section"/>
     <unit type="GLAISE - ASA . Groupe SA 7"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.Artillerie.Sol Air" id="704" name="GLAISE - ASA . Section ZSU 23 4" type="Automate ASA">
+  <automat decisional-model="Masalife.Automate.ASA" id="704" name="GLAISE - ASA . Section ZSU 23 4" type="Automate ASA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="GLAISE - ASA . PC Section"/>
     <unit max-occurs="2" min-occurs="2" type="GLAISE - ASA . Groupe ZSU 23 4"/>
   </automat>
@@ -493,11 +493,11 @@
     <unit max-occurs="1" min-occurs="1" type="ASS . Section de Tir CAESAR CDS SOFF Pour SIC"/>
     <unit max-occurs="2" min-occurs="2" type="ASS . Equipe de Reco CAESAR"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.INF.Proterre" id="768" name="ALAT . ECL ALAT" type="Automate INF">
+  <automat decisional-model="Masalife.Automate.INF.Cie Proterre" id="768" name="ALAT . ECL ALAT" type="Automate INF">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ALAT . ECL PROTERRE"/>
     <unit max-occurs="3" min-occurs="3" type="INF . Section PROTERRE"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.INF.Proterre" id="769" name="INF . Compagnie PROTERRE" type="Automate INF">
+  <automat decisional-model="Masalife.Automate.INF.Cie Proterre" id="769" name="INF . Compagnie PROTERRE" type="Automate INF">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . Section CDT PROTERRE"/>
     <unit max-occurs="2" min-occurs="2" type="INF . Section PROTERRE"/>
   </automat>
@@ -1033,7 +1033,7 @@
     <unit command-post="true" max-occurs="1" min-occurs="1" type="NRBC . PC Reco"/>
     <unit max-occurs="3" min-occurs="3" type="NRBC . Patrouille Reco"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.NRBC.Section RE" id="875" name="NRBC . Reco ROTA" type="Automate NBC">
+  <automat decisional-model="Masalife.Automate.NRBC.Section reco" id="875" name="NRBC . Reco ROTA" type="Automate NBC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="NRBC . PC Reco ROTA"/>
     <unit max-occurs="3" min-occurs="3" type="NRBC . Equipe Reco ROTA"/>
   </automat>
@@ -1282,11 +1282,11 @@
   <automat decisional-model="Masalife.Automate.TRANS.TAC" id="934" name="NRBC . PC BIE" type="Automate NBC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC BIE NBC"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.Artillerie.Sol Air" id="935" name="ASA . Batterie HAWK" type="Automate ASA">
+  <automat decisional-model="Masalife.Automate.ASA" id="935" name="ASA . Batterie HAWK" type="Automate ASA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ASA . PC Batterie HAWK"/>
     <unit max-occurs="2" min-occurs="2" type="ASA . Section de Tir HAWK"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.Artillerie.Sol Air" id="936" name="ASA . Batterie MISTRAL" type="Automate ASA">
+  <automat decisional-model="Masalife.Automate.ASA" id="936" name="ASA . Batterie MISTRAL" type="Automate ASA">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ASA . PC Batterie MISTRAL"/>
     <unit max-occurs="3" min-occurs="3" type="ASA . Section MISTRAL"/>
   </automat>
@@ -1479,16 +1479,16 @@
     <unit command-post="true" max-occurs="1" min-occurs="1" type="RENS . Coge Linx"/>
     <unit max-occurs="1" min-occurs="1" type="RENS . Stations LINX"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.RENS.START_" id="975" name="RENS . Module Interception START" type="Automate RENS">
+  <automat decisional-model="Masalife.Automate.RENS.START STAIR MROD_ELODEE" id="975" name="RENS . Module Interception START" type="Automate RENS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="RENS . Module Interception START"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.RENS.STAIR" id="976" name="RENS . Module Localisation Radar STAIR" type="Automate RENS">
+  <automat decisional-model="Masalife.Automate.RENS.START STAIR MROD_ELODEE" id="976" name="RENS . Module Localisation Radar STAIR" type="Automate RENS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="RENS . Module STAIR"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.RENS.MROD_ELODEE" id="977" name="RENS . Module Localisation VUHF ELODEE" type="Automate RENS">
+  <automat decisional-model="Masalife.Automate.RENS.START STAIR MROD_ELODEE" id="977" name="RENS . Module Localisation VUHF ELODEE" type="Automate RENS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="RENS . Section ELODEE"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.RENS.START_" id="978" name="RENS . Module Localisation VUHF SPRINT" type="Automate RENS">
+  <automat decisional-model="Masalife.Automate.RENS.START STAIR MROD_ELODEE" id="978" name="RENS . Module Localisation VUHF SPRINT" type="Automate RENS">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="RENS . Module Localisation SPRINT"/>
   </automat>
   <automat decisional-model="Masalife.Automate.RENS.CDER RBRR" id="979" name="RENS . Module RBRR" type="Automate RENS">
@@ -1526,4 +1526,4 @@
     <unit max-occurs="1" min-occurs="1" type="GLAISE - RENS . Patrouille URH"/>
   </automat>
 </automats>
-<!-- signature="0168588520" -->
+<!-- signature="3259326063" -->
