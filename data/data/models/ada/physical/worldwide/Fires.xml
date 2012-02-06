@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <fires model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/physical/Fires.xsd">
   <cell-size value="100"/>
-  <fire decrease-rate="10" increase-rate="20" initial-heat="100" max-heat="1000" name="Wild Fire Class A">
+  <fire decrease-rate="1" increase-rate="20" initial-heat="100" max-heat="1000" name="Wild Fire Class A">
     <extinguisher-agents>
       <extinguisher-agent agent="Extinguisher Agent - Foam" heat-decrease-rate="5"/>
       <extinguisher-agent agent="Extinguisher Agent - Sprayed water" heat-decrease-rate="30"/>
@@ -196,7 +196,7 @@
       <surface ignition-threshold="100000" max-combustion-energy="100000" type="mountain edge"/>
     </surfaces>
   </fire>
-  <fire decrease-rate="10" increase-rate="20" initial-heat="100" max-heat="1000" name="Fire Class A">
+  <fire decrease-rate="1" increase-rate="20" initial-heat="100" max-heat="10000" name="Fire Class A">
     <extinguisher-agents>
       <extinguisher-agent agent="Extinguisher Agent - Foam" heat-decrease-rate="5"/>
       <extinguisher-agent agent="Extinguisher Agent - Sprayed water" heat-decrease-rate="30"/>
@@ -232,4 +232,4 @@
     </urban-modifiers>
   </fire>
 </fires>
-<!-- signature="1978030177" -->
+<!-- signature="0512043660" -->

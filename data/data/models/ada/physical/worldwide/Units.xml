@@ -3182,5 +3182,26 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="1m"/>
   </unit>
+  <unit decisional-model="ML_SecurityAgent" id="101" name="ML_Security FireFigthers" type="Pion Emergency">
+    <nature atlas-nature="Indefini" level="none" nature-app6="emergency/firefighter"/>
+    <equipments>
+      <equipment count="2" crew="8" major="true" type="SECURITY.FireFighter Truck"/>
+    </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="2" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="10s"/>
+      <posture name="Poste" setup-time="30s"/>
+      <posture name="PosteAmenage" setup-time="05m"/>
+      <posture name="PostePrepareGenie" setup-time="5m"/>
+    </postures>
+    <nbc decontamination-delay="3600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height=">1m"/>
+  </unit>
 </units>
-<!-- signature="3040795287" -->
+<!-- signature="0932956021" -->

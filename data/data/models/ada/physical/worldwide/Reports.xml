@@ -605,5 +605,7 @@
   <report category="operational" id="433" message="Hard to go through %1">
     <parameter type="String"/>
   </report>
+  <report category="operational" id="434" message="Fire cannot be extinguished"/>
+  <report category="operational" id="435" message="No fires within area"/>
 </reports>
-<!-- signature="0689883466" -->
+<!-- signature="2808529366" -->

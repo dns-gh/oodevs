@@ -2583,6 +2583,8 @@
         <mission name="MLSECURITY - Patrol"/>
         <mission name="MLSECURITY - Transport"/>
         <mission name="MLSECURITY - TransportACrowd"/>
+        <mission name="MLSECURITY - ExtinguishAFire"/>
+        <mission name="MLSECURITY - ExtinguishFiresWithinArea"/>
       </missions>
       <fragorders/>
     </unit>
@@ -3811,4 +3813,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2560518081" -->
+<!-- signature="1475098688" -->

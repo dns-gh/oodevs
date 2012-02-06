@@ -1953,7 +1953,7 @@ Entities are visited in the order of the list and are loaded on agent Unit. Once
           <parameter type="CrowdKnowledge"/>
         </choice>
       </parameter>
-      <parameter dia-name="destination" name="Target destination" optional="false" type="LocationComposite">
+      <parameter dia-name="destination" name="Position (target destination)" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
           <parameter type="Polygon"/>
@@ -1989,6 +1989,28 @@ Depending on its crowd transport capacity, agent will make as many round trips a
         </choice>
       </parameter>
       <parameter dia-name="loadingPosition" name="Crowd's concentration position" optional="false" type="Point"/>
+    </mission>
+    <mission dia-behavior="tasks.ExtinguishAFire" dia-type="tasks.ExtinguishAFire" id="4460" name="MLSECURITY - ExtinguishAFire">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="fire" name="Fire to extinguish" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="garagePosition" max-occurs="2332" min-occurs="1" name="Garage position" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="ObjectKnowledge"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
+    <mission dia-behavior="tasks.ExtinguishFiresWithinArea" dia-type="tasks.ExtinguishFiresWithinArea" id="4461" name="MLSECURITY - ExtinguishFiresWithinArea">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="area" name="area" optional="false" type="Polygon"/>
     </mission>
   </units>
   <automats>
@@ -3313,4 +3335,4 @@ Depending on its crowd transport capacity, agent will make as many round trips a
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="0955668317" -->
+<!-- signature="3581057957" -->

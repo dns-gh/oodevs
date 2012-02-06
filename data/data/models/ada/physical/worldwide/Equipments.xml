@@ -10632,5 +10632,69 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="109" name="SECURITY.FireFighter Truck" protection="UnarmouredVehicle" size="Heavy" weight="12">
+    <speeds max="90">
+      <speed terrain="unknown" value="15"/>
+      <speed terrain="forest" value="45"/>
+      <speed terrain="orchard" value="5"/>
+      <speed terrain="swamp" value="5"/>
+      <speed terrain="dune" value="5"/>
+      <speed terrain="urban area" value="45"/>
+      <speed terrain="lake" value="0"/>
+      <speed terrain="glacier" value="5"/>
+      <speed terrain="forest edge" value="35"/>
+      <speed terrain="suburb" value="45"/>
+      <speed terrain="waterfront" value="5"/>
+      <speed terrain="orchard edge" value="5"/>
+      <speed terrain="swamp edge" value="5"/>
+      <speed terrain="dune edge" value="5"/>
+      <speed terrain="glacier edge" value="5"/>
+      <speed terrain="country road" value="50"/>
+      <speed terrain="highway" value="70"/>
+      <speed terrain="main road" value="65"/>
+      <speed terrain="secondary road" value="65"/>
+      <speed terrain="stream" value="5"/>
+      <speed terrain="river" value="0"/>
+      <speed terrain="main river" value="0"/>
+      <speed terrain="bridge" value="65"/>
+      <speed terrain="cliff" value="0"/>
+      <speed terrain="railroad" value="5"/>
+      <speed terrain="crossroad" value="65"/>
+      <speed terrain="mountain" value="0"/>
+      <speed terrain="mountain edge" value="0"/>
+    </speeds>
+    <composition>
+      <category name="agent extincteur">
+        <resource capacity="10" logistic-threshold="0" name="Extinguisher Agent - CO2" normalized-consumption="0"/>
+        <resource capacity="12" logistic-threshold="0" name="Extinguisher Agent - Foam" normalized-consumption="0"/>
+        <resource capacity="1" logistic-threshold="0" name="Extinguisher Agent - Hydrocarbures Halogenes" normalized-consumption="0"/>
+        <resource capacity="2" logistic-threshold="0" name="Extinguisher Agent - Powder" normalized-consumption="0"/>
+        <resource capacity="5" logistic-threshold="0" name="Extinguisher Agent - Sand" normalized-consumption="0"/>
+        <resource capacity="10" logistic-threshold="0" name="Extinguisher Agent - Sprayed water" normalized-consumption="0"/>
+      </category>
+    </composition>
+    <sensors>
+      <sensor height="2" type="Eye"/>
+    </sensors>
+    <radars/>
+    <transports/>
+    <consumptions/>
+    <weapon-systems>
+      <weapon-system launcher="Fire Hose" munition="Fire extinguisher - Sprayed water"/>
+      <weapon-system launcher="Fire Hose" munition="Fire extinguisher - CO2"/>
+      <weapon-system launcher="Fire Hose" munition="Fire extinguisher - Foam"/>
+      <weapon-system launcher="Fire Hose" munition="Fire extinguisher - Sand"/>
+      <weapon-system launcher="Fire Hose" munition="Fire extinguisher - Powder"/>
+      <weapon-system launcher="Fire Hose" munition="Fire extinguisher - Hydrocarbures Halogenes"/>
+    </weapon-systems>
+    <human-protections/>
+    <objects/>
+    <breakdowns>
+      <breakdown origin="random" percentage="50" type="Oil leak"/>
+      <breakdown origin="random" percentage="50" type="Gear failure"/>
+      <breakdown origin="attrition" percentage="100" type="Tire flat"/>
+    </breakdowns>
+    <equipment-category>Autres</equipment-category>
+  </equipment>
 </equipments>
-<!-- signature="2101749233" -->
+<!-- signature="0922256888" -->

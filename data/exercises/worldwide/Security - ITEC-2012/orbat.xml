@@ -47,6 +47,36 @@
             </resources>
           </attributes>
         </object>
+        <object id="106" name="Arson/Fire [106]" type="fire">
+          <shape type="point">
+            <points>
+              <point>29TNF3404152848</point>
+            </points>
+          </shape>
+          <attributes>
+            <fire class="Fire Class A" max-combustion-energy="0"/>
+          </attributes>
+        </object>
+        <object id="107" name="Arson/Fire [107]" type="fire">
+          <shape type="point">
+            <points>
+              <point>29TNF3340453421</point>
+            </points>
+          </shape>
+          <attributes>
+            <fire class="Fire Class A" max-combustion-energy="0"/>
+          </attributes>
+        </object>
+        <object id="108" name="Arson/Fire [108]" type="fire">
+          <shape type="point">
+            <points>
+              <point>29TNF3331953129</point>
+            </points>
+          </shape>
+          <attributes>
+            <fire class="Fire Class A" max-combustion-energy="0"/>
+          </attributes>
+        </object>
       </objects>
       <tactical>
         <formation id="3" level="iii" name="Formation [3]">
@@ -201,7 +231,48 @@
       </logistics>
     </party>
     <party id="2" name="Camp 2" type="neutral">
-      <objects/>
+      <objects>
+        <object id="109" name="Arson/Fire [109]" type="fire">
+          <shape type="point">
+            <points>
+              <point>29TNF3290252882</point>
+            </points>
+          </shape>
+          <attributes>
+            <fire class="Fire Class A" max-combustion-energy="0"/>
+          </attributes>
+        </object>
+        <object id="110" name="Arson/Fire [110]" type="fire">
+          <shape type="point">
+            <points>
+              <point>29TNF3286953582</point>
+            </points>
+          </shape>
+          <attributes>
+            <fire class="Fire Class A" max-combustion-energy="0"/>
+          </attributes>
+        </object>
+        <object id="111" name="Arson/Fire [111]" type="fire">
+          <shape type="point">
+            <points>
+              <point>29TNF3407952620</point>
+            </points>
+          </shape>
+          <attributes>
+            <fire class="Fire Class A" max-combustion-energy="0"/>
+          </attributes>
+        </object>
+        <object id="112" name="Arson/Fire [112]" type="fire">
+          <shape type="point">
+            <points>
+              <point>29TNF3310852452</point>
+            </points>
+          </shape>
+          <attributes>
+            <fire class="Fire Class A" max-combustion-energy="0"/>
+          </attributes>
+        </object>
+      </objects>
       <tactical>
         <formation id="4" level="iii" name="Formation [4]">
           <automat engaged="false" id="13" knowledge-group="14" name="ML_Security - Civil Protection [13]" type="ML_Security - Civil Protection">
@@ -232,6 +303,14 @@
             <unit command-post="false" id="42" name="ML_Security - Civil Protection - Safety" position="29TNF3648154918" type="ML_Security - Civil Protection - Safety"/>
             <unit command-post="false" id="43" name="ML_Security - Civil Protection - Safety" position="29TNF3635455026" type="ML_Security - Civil Protection - Safety"/>
             <unit command-post="false" id="63" name="ML_Security - Crowd transporter" position="29TNF3500855300" type="ML_Security - Crowd transporter"/>
+          </automat>
+          <automat engaged="false" id="92" knowledge-group="14" name="ML_Security - Civil Protection [92]" type="ML_Security - Civil Protection">
+            <unit command-post="true" id="93" name="ML_Security - Civil Protection - Safety" position="29TNF3378353522" type="ML_Security - Civil Protection - Safety"/>
+            <unit command-post="false" id="99" name="ML_Security FireFigthers" position="29TNF3374152710" type="ML_Security FireFigthers"/>
+            <unit command-post="false" id="100" name="ML_Security FireFigthers" position="29TNF3380952719" type="ML_Security FireFigthers"/>
+            <unit command-post="false" id="101" name="ML_Security FireFigthers" position="29TNF3376453005" type="ML_Security FireFigthers"/>
+            <unit command-post="false" id="102" name="ML_Security FireFigthers" position="29TNF3380752949" type="ML_Security FireFigthers"/>
+            <unit command-post="false" id="103" name="ML_Security FireFigthers" position="29TNF3375052849" type="ML_Security FireFigthers"/>
           </automat>
         </formation>
       </tactical>
@@ -454,6 +533,30 @@
         </logistic-base>
       </logistics>
     </party>
+    <no-party>
+      <objects>
+        <object id="104" name="Arson/Fire [104]" type="fire">
+          <shape type="point">
+            <points>
+              <point>29TNF3411353166</point>
+            </points>
+          </shape>
+          <attributes>
+            <fire class="Fire Class A" max-combustion-energy="0"/>
+          </attributes>
+        </object>
+        <object id="105" name="Arson/Fire [105]" type="fire">
+          <shape type="point">
+            <points>
+              <point>29TNF3438353050</point>
+            </points>
+          </shape>
+          <attributes>
+            <fire class="Fire Class A" max-combustion-energy="0"/>
+          </attributes>
+        </object>
+      </objects>
+    </no-party>
   </parties>
   <diplomacy>
     <party id="1">
@@ -464,4 +567,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="3496284258" -->
+<!-- signature="0818859641" -->

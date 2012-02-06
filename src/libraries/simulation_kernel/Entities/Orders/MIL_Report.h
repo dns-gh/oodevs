@@ -581,7 +581,9 @@ public:
 		eRC_ElementLoaded,
 		eRC_ElementUnloaded,
         eRC_DifficultMovementProgression,
-        eLast // 434
+		eRC_ImpossibleToExtinguishFire,
+		eRC_NoFiresWithinArea,
+        eLast // 436
     };
     //@}
 public:
