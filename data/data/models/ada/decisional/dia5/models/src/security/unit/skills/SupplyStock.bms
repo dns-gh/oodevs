@@ -1,0 +1,37 @@
+rootnode
+{
+    connections = { skill.links.moveTo },
+ 
+    -- -------------------------------------------------------------------------------- 
+    -- Init
+    -- --------------------------------------------------------------------------------
+    create = function( self )
+        self.arrived = false
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Feedbacks
+    -- --------------------------------------------------------------------------------
+    done = function( self, params ) -- element is reached
+        if not self.arrived then
+            self.arrived = true
+            meKnowledge:RC( eRC_SupplyStock_Arrived )
+        end
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- If element is reached and if agent can supply stock, supply.
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+       if self.arrived then
+           if self.params.stock:isSupplyPossible( self.params.resourceTypes ) == true then
+               self.params.stock:supply( self.params.resourceTypes )
+           else
+               meKnowledge:RC( eRC_SupplyStock_Supplied )
+               Feedback( self.feedbacks.done, { reason = "supplied" } )
+           end           
+       else
+            Activate( skill.links.moveTo, 1, { element = self.params.stock } )
+        end
+    end
+}

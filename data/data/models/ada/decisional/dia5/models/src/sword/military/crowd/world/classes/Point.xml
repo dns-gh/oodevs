@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.crowd.world.classes.Point" source-version="1.0.0" extends="sword.military.crowd.world.classes.LocalizedElement">
+    <methods>
+        <method name="getPosition"/>
+    </methods>
+</class>

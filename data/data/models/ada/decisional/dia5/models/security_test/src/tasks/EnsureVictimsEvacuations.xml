@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="tasks.EnsureVictimsEvacuations" source-version="1.0.0">
+    <parameters>
+        <parameter name="victimsUnits">
+            <type>
+                <list>
+                    <class name="agent.ontology.interfaces.Victims"/>
+                </list>
+            </type>
+        </parameter>
+        <parameter name="medicalUnit">
+            <type>
+                <class name="agent.ontology.interfaces.Medical"/>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Move toward victims" disable-when-done="true">
+            <skills>
+                <skill name="behaviors.skills.primitives.EnsureEvacuation" main="true">
+                    <parameter name="victimsUnits">
+                        <value>
+                            <parameter>victimsUnits</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="medicalUnit">
+                        <value>
+                            <parameter>medicalUnit</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>

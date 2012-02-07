@@ -1,0 +1,61 @@
+-- **************************************************************************** 
+-- GetDecon
+-- Usue motoward
+-- ****************************************************************************
+rootnode
+{
+    connections = { skill.links.moveToward, skill.nodes.RequestDecontamination },
+
+    -- -------------------------------------------------------------------------------- 
+    -- feedback from moveToward
+    -- --------------------------------------------------------------------------------
+    done = function( self, params, additionnalParams )
+        self.arrived = true
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Init 
+    -- --------------------------------------------------------------------------------
+    create = function( self )
+        self.arrived = false
+        self.plots = {}
+        for _, plot in pairs( self.params.objectives ) do
+            self.plots[ plot ] = true
+        end
+    end,
+    -- -------------------------------------------------------------------------------- 
+    -- Select nearest plot and move toward it, asking for decontamination
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        local Activate = Activate
+
+        -- main effect is done: beeing decontaminated.
+        if not meKnowledge:isContaminated() then
+            Feedback( self.feedbacks.done )
+            return
+        end
+
+        -- Find nearest decontamination plot
+        local nearestPlot = next( self.plots )
+        for plot in pairs( self.plots ) do  -- select the nearest element
+            nearestPlot = plot:proximityLevel() > nearestPlot:proximityLevel() and plot or nearestPlot
+        end
+
+        -- Movetoward nearest plot, and ask for decontamination if arrived.
+        if self.arrived then
+            Activate( skill.nodes.RequestDecontamination, 1, { entity = nearestPlot } )
+        end
+        Activate( skill.links.moveToward, 1, { entities = { nearestPlot } } )
+        self.arrived = false
+    end
+}
+
+-- **************************************************************************** 
+-- Ask for decontamination
+-- ****************************************************************************
+node "RequestDecontamination"
+{
+    select = function( self )
+        self.params.entity:requestDecontamination()
+    end
+}

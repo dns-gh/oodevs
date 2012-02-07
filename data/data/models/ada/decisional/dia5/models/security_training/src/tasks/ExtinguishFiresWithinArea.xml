@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="tasks.ExtinguishFiresWithinArea" source-version="1.0.0">
+    <description/>
+    <parameters>
+        <parameter name="area">
+            <description/>
+            <type>
+                <class name="ontology.classes.concretes.Area"/>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Moving toward fires" disable-when-done="true">
+            <description/>
+            <skills>
+                <skill name="behaviors.skills.primitives.Extinguish" main="true">
+                    <parameter name="fires">
+                        <value>
+                            <call method="ontology.queries.GetFiresWithinArea">
+                                <parameter name="area">
+                                    <value>
+                                        <parameter>area</parameter>
+                                    </value>
+                                </parameter>
+                            </call>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>

@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.classes.concretes.Object" source-version="1.0.0" extends="ontology.classes.concretes.PlannedWork">
+    <description>Represents anything world entity that is not a: &#xD;
+- Agent&#xD;
+- Crowd&#xD;
+- Urban block&#xD;
+- Area&#xD;
+- Position&#xD;
+- Planned work&#xD;
+&#xD;
+</description>
+    <realizes>ontology.interfaces.Terrain</realizes>
+    <realizes>ontology.interfaces.Camp</realizes>
+    <realizes>agent.ontology.interfaces.Fire</realizes>
+    <realizes>agent.ontology.interfaces.ResourceNode</realizes>
+    <methods>
+        <method name="getPosition">
+            <return name="simPosition">
+                <type>
+                    <any/>
+                </type>
+            </return>
+        </method>
+        <method name="reachIt" abstract="false">
+            <description>For the agent to enact the decision to move towards this object, along some path.&#xD;
+Returns true once the agent has reached the end-point of the path (please note that this end-point may be distinct from the target position to reach). &#xD;
+</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="isCreated" abstract="false">
+            <description>Returns true if this element is entierly built.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="createIt" abstract="false"/>
+        <method name="getPositions" abstract="false">
+            <return>
+                <type>
+                    <list>
+                        <any/>
+                    </list>
+                </type>
+            </return>
+        </method>
+        <method name="canBeExtinguished" abstract="false">
+            <description>Returns true if this entity can be extinguished by agent Unit.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="extinguishIt" abstract="false">
+            <description>An agent's physical ability to extinguish this 'Fire' object.</description>
+            <return>
+                <description>Returns true once action completion is done.</description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="isExtinguished" abstract="false">
+            <description>Returns true once this entity is extinguished.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+    </methods>
+</class>

@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.tasks.EquipNBCOutfit" source-version="1.0.0" knowledge-class="sword.military.platoon.tasks.knowledges.MoveToward">
+  <description>Ordre de conduite demandant de mettre les équipements NBC</description>
+  <parameters/>
+  <goal>
+    <description>Mettre en place les équipements NBC</description>
+  </goal>
+  <stages>
+    <stage label="Equiper les tenues NBC" permanent="true">
+      <description>Passer en alerte NBC et mettre les équipements sauf contre ordre</description>
+      <goal>
+        <description>Mettre les tenues NBC et passer en alerte niveau 4</description>
+      </goal>
+      <skills>
+        <skill name="sword.military.platoon.skills.actions.EquipNBCOutfit" priority="1000.0"/>
+      </skills>
+    </stage>
+  </stages>
+</task>

@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.skills.TakePrisoner" source-version="1.0.0">
+    <parameters>
+        <parameter name="unit">
+            <description>Unite a prendre en otage.</description>
+            <type>
+                <class name="sword.military.world.Platoon"/>
+            </type>
+        </parameter>
+    </parameters>
+    <links>
+        <link name="load" skill="sword.military.platoon.skills.primitives.Load"/>
+    </links>
+</skill>

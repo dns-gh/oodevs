@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.skills.Improve" source-version="1.0.0">
+  <parameters>
+    <parameter name="entities">
+      <description>Les éléments à valoriser</description>
+      <type>
+        <list>
+          <class name="sword.military.knowledge.decisional.Improvable"/>
+        </list>
+      </type>
+    </parameter>
+  </parameters>
+  <goal>
+    <description>Valoriser des objets tactiques</description>
+  </goal>
+  <links>
+    <link name="improve" skill="sword.military.platoon.skills.primitives.Improve"/>
+  </links>
+</skill>

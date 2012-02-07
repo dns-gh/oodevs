@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="tasks.Transport" source-version="1.0.0">
+    <parameters>
+        <parameter name="entitiesToTransport">
+            <type>
+                <list>
+                    <class name="agent.ontology.interfaces.Transportable"/>
+                </list>
+            </type>
+        </parameter>
+        <parameter name="destination">
+            <type>
+                <class name="agent.ontology.interfaces.Destination"/>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Transport skill test start" disable-when-done="true">
+            <skills>
+                <skill name="behaviors.skills.Transport" main="true">
+                    <parameter name="entitiesToTransport">
+                        <value>
+                            <parameter>entitiesToTransport</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="destination">
+                        <value>
+                            <parameter>destination</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>

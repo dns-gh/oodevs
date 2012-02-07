@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="tasks.Patrol" source-version="1.0.0">
+    <parameters>
+        <parameter name="destinations">
+            <description>The set of position that agent will move along.</description>
+            <type>
+                <list>
+                    <class name="agent.ontology.interfaces.Destination"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Patrolling" permanent="true">
+            <description>Patrolling around the issued &quot;destinations&quot;.</description>
+            <skills>
+                <skill name="behaviors.skills.Patrol">
+                    <parameter name="entities">
+                        <value>
+                            <parameter>destinations</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>

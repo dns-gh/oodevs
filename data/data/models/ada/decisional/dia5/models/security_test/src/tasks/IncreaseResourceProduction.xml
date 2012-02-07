@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="tasks.IncreaseResourceProduction" source-version="1.0.0">
+    <parameters>
+        <parameter name="resourceNode">
+            <type>
+                <class name="ontology.classes.concretes.ResourceNode"/>
+            </type>
+        </parameter>
+        <parameter name="quantity">
+            <type>
+                <simple name="numeric"/>
+            </type>
+            <default>
+                <number>100.0</number>
+            </default>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="production is on the way" permanent="true">
+            <skills>
+                <skill name="behaviors.skills.primitives.IncreaseResourceProduction">
+                    <parameter name="quantity">
+                        <value>
+                            <parameter>quantity</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="resourceNode">
+                        <value>
+                            <parameter>resourceNode</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>

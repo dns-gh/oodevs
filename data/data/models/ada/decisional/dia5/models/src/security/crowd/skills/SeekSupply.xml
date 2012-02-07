@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="security.crowd.skills.SeekSupply" source-version="1.0.0">
+  <parameters>
+    <parameter name="supplyPoints">
+      <type>
+        <list>
+          <class name="security.ontologies.interfaces.Stock"/>
+        </list>
+      </type>
+      <default>
+        <call method="security.ontologies.queries.getSupplyPoints"/>
+      </default>
+    </parameter>
+  </parameters>
+  <modifiers/>
+  <body-type>
+    <class name="security.crowd.body.Crowd"/>
+  </body-type>
+  <links>
+    <link name="moveTo" skill="security.unit.skills.MoveTo"/>
+  </links>
+  <resources/>
+</skill>

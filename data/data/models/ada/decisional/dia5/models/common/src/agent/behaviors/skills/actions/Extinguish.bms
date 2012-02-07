@@ -1,0 +1,15 @@
+-- ****************************************************************************
+-- To extinguish a given fire with appropriate means
+-- @params self.params.fire, a 'Fire' ML object.
+-- @return extinguishActionCompleted once action is completed
+-- ****************************************************************************
+rootnode
+{
+    feedbacks = { "extinguishActionCompleted" },
+
+    select = function( self )
+        if meKnowledge:extinguish( self.params.fire ) then
+            Feedback( self.feedbacks.extinguishActionCompleted )
+        end
+    end
+}

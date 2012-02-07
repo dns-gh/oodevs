@@ -3,7 +3,7 @@
     <RepertoireBinaires>Binaires</RepertoireBinaires>
     <RepertoiresSources>
       <RepertoireSources namespace="none" directory="bms/sources"/>
-      <RepertoireSources namespace="net.masagroup" directory="directia5"/>
+      <RepertoireSources namespace="net.masagroup" directory="dia5"/>
     </RepertoiresSources>
     <DIATypes>Common/Types.hal</DIATypes>
     <DIAWorkspace>Common/Moteur/Workspace.hal</DIAWorkspace>

@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.classes.concretes.Crowd" source-version="1.0.0" extends="ontology.classes.Human">
+    <description>Represents a set of entities viewed as a compound.&#xD;
+A crowd has a a density that evolves during locomotion.&#xD;
+A crowd is oriented. It has three sections: front, middle, back.&#xD;
+A crowd can be calm or upset.&#xD;
+A crowd can victims. &#xD;
+</description>
+    <realizes>agent.ontology.interfaces.Victims</realizes>
+    <realizes>agent.ontology.interfaces.Transportable</realizes>
+    <methods>
+        <method name="getPosition">
+            <return name="simPosition">
+                <type>
+                    <any/>
+                </type>
+            </return>
+        </method>
+        <method name="reachIt" abstract="false">
+            <description>For the agent to enact the decision to move towards this object, along some path.&#xD;
+Returns true once the agent has reached the end-point of the path (please note that this end-point may be distinct from the target position to reach). &#xD;
+</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="getPositions">
+            <return>
+                <type>
+                    <list>
+                        <any/>
+                    </list>
+                </type>
+            </return>
+        </method>
+        <method name="canVictimsBeEvacuated" abstract="false">
+            <description>Returns true if wounded elements within this &quot;victims&quot; can be evacuated.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canVictimsBeExtracted" abstract="false">
+            <description>Returns true if wounded elements within this &quot;victims&quot; can be extracted.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="extractVictimsFromIt" abstract="false">
+            <description>To extract wounded victims from this element.&#xD;
+This implementation create a new crowd with wounded elements on a near position. New crowd created contains as many elements as there are wounded victims within this crowd.</description>
+            <return>
+                <description>Returns true once all wounded victims have been extracted from this element.&#xD;
+This implementation returns true once a new crowd of wounded elements have been created.</description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canBeLoaded" abstract="false">
+            <description>Returns true if this entity can be loaded on agent Unit.&#xD;
+&#xD;
+This implementation returns 'true' if 'this' entity is reached (entity is acessible) by agent Unit and if entity is not already loaded (transported).</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canBeUnloaded" abstract="false">
+            <description>Returns true if 'this' entity can be unloaded from agent Unit.&#xD;
+&#xD;
+This implementation returns 'true' if 'this' entity is loaded (transported) by agent Unit.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="isLoaded" abstract="false">
+            <description>Returns 'true' if this entity is 100% loaded in agent Unit.&#xD;
+&#xD;
+This implementation returns 'true' if entity is transported by agent Unit.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="loadIt" abstract="false">
+            <description>Action of loading this element on agent Unit.&#xD;
+&#xD;
+This implementation makes agent Unit &quot;magically&quot; load 'this' entity after a defined delay (in minutes). This action is not dealing with realistic transport of troops. No special  physical capabilities is needed to execute this action.</description>
+            <return>
+                <description>Returns 'true' on action completion,  'false' otherwise.</description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="unloadIt" abstract="false">
+            <description>Action of unloading this element from agent Unit.&#xD;
+&#xD;
+This implementation makes agent Unit magically unload 'this' entity after a defined delay (in minutes).</description>
+            <return>
+                <description>Returns 'true' on action completion,  'false' otherwise.&#xD;
+&#xD;
+This implementation makes agent Unit &quot;magically&quot; unload 'this' entity after a defined delay (in minutes).</description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="hasConcentration">
+            <description>Returns 'true' this Crowd has a concentration on the issued position (a crowd may have few concentrations). If no contration of this Crowd exists nearby the given 'Position', this méthod returns false.</description>
+            <argument name="position">
+                <description/>
+                <type>
+                    <class name="ontology.classes.concretes.Position"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+    </methods>
+</class>

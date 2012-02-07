@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.engineer.tasks.ExecuterVariantement" source-version="1.0.0">
+	<parameters>
+		<parameter name="typePontage">
+			<type>
+				<simple name="numeric"/>
+			</type>
+		</parameter>
+		<parameter name="siteFranchissement">
+			<type>
+				<class name="sword.military.world.Object"/>
+			</type>
+		</parameter>
+	</parameters>
+	<stages>
+		<stage label="Exécuter variantement" permanent="true">
+			<skills>
+				<skill name="france.military.platoon.combat.support.engineer.skills.EquiperExploiterSite">
+					<parameter name="siteFranchissement">
+						<value>
+							<parameter>siteFranchissement</parameter>
+						</value>
+					</parameter>
+					<parameter name="typePontage">
+						<value>
+							<parameter>typePontage</parameter>
+						</value>
+					</parameter>
+				</skill>
+			</skills>
+		</stage>
+	</stages>
+</task>

@@ -1,0 +1,13 @@
+-- **************************************************************************** 
+-- Switch radio broadcasts off (partially) 
+-- ****************************************************************************
+rootnode
+{
+    acquire = { [ skill.resources.radio ] = 1 },
+
+    done = function( self ) end,
+
+    select = function( self )
+        meKnowledge:switchRadioPartialOff()
+    end
+}

@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<role xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.roles.Agent" source-version="1.0.0" abstract="false">
+    <description>The role of a generic Security Unit. &#xD;
+</description>
+    <body-type>
+        <class name="ontology.classes.concretes.MeKnowledge"/>
+    </body-type>
+    <skills>
+        <skill name="behaviors.skills.primitives.Alert"/>
+        <skill name="behaviors.skills.primitives.Confine"/>
+        <skill name="behaviors.skills.primitives.Create"/>
+        <skill name="behaviors.skills.primitives.Disable"/>
+        <skill name="behaviors.skills.primitives.EnsureEvacuation"/>
+        <skill name="behaviors.skills.primitives.Evacuate"/>
+        <skill name="behaviors.skills.primitives.ExtractVictims"/>
+        <skill name="behaviors.skills.primitives.Reach"/>
+        <skill name="behaviors.skills.primitives.UndoConfine"/>
+        <skill name="behaviors.skills.primitives.UndoEvacuate"/>
+        <skill name="behaviors.skills.MoveAlong"/>
+        <skill name="behaviors.skills.Patrol"/>
+        <skill name="behaviors.skills.Follow"/>
+        <skill name="agent.behaviors.skills.actions.UndoConfine"/>
+        <skill name="agent.behaviors.skills.actions.Alert"/>
+        <skill name="agent.behaviors.skills.actions.Confine"/>
+        <skill name="agent.behaviors.skills.actions.UndoAlert"/>
+        <skill name="behaviors.skills.primitives.UndoAlert"/>
+        <skill name="agent.behaviors.skills.actions.Evacuate"/>
+        <skill name="agent.behaviors.skills.actions.RestrainProduction"/>
+        <skill name="behaviors.skills.primitives.RestrainResourceProduction"/>
+        <skill name="agent.behaviors.skills.actions.EnhanceProduction"/>
+        <skill name="behaviors.skills.primitives.EnhanceResourceProduction"/>
+        <skill name="agent.behaviors.skills.actions.DamageProduction"/>
+        <skill name="behaviors.skills.primitives.DamageResourceProduction"/>
+        <skill name="agent.behaviors.skills.actions.EnsureVictimsEvacuation"/>
+        <skill name="behaviors.skills.primitives.Enable"/>
+        <skill name="agent.behaviors.skills.actions.Disable"/>
+        <skill name="agent.behaviors.skills.actions.Enable"/>
+        <skill name="agent.behaviors.skills.actions.UndoEvacuate"/>
+        <skill name="agent.behaviors.skills.actions.ExtractVictims"/>
+        <skill name="agent.behaviors.skills.actions.IncreaseProduction"/>
+        <skill name="behaviors.skills.primitives.IncreaseResourceProduction"/>
+        <skill name="agent.behaviors.skills.actions.Load"/>
+        <skill name="agent.behaviors.skills.actions.Unload"/>
+        <skill name="behaviors.skills.primitives.Load"/>
+        <skill name="behaviors.skills.primitives.Unload"/>
+        <skill name="behaviors.skills.Transport"/>
+        <skill name="agent.behaviors.skills.actions.DecontaminateArea"/>
+        <skill name="behaviors.skills.primitives.DecontaminateArea"/>
+        <skill name="behaviors.skills.TransportACrowd"/>
+        <skill name="agent.behaviors.skills.actions.Extinguish"/>
+        <skill name="behaviors.skills.primitives.Extinguish"/>
+    </skills>
+    <resources>
+        <resource name="agent.behaviors.resources.Motion"/>
+        <resource name="agent.behaviors.resources.Launcher"/>
+        <resource name="agent.behaviors.resources.Extinguisher"/>
+    </resources>
+</role>

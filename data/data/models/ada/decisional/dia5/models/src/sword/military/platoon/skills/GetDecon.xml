@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.skills.GetDecon" source-version="1.0.0">
+    <parameters>
+        <parameter name="objectives">
+            <description>Comportement de décontamination spécifique à tout objet qui le permet (ex:plot de décontamination).</description>
+            <type>
+                <list>
+                    <class name="sword.military.world.Object"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <links>
+        <link name="moveToward" skill="sword.military.platoon.skills.MoveToward"/>
+    </links>
+</skill>

@@ -1,0 +1,70 @@
+-- **************************************************************************** 
+-- To makes all victims beeing evacuated by the issued medical unit.
+-- @params self.params.medicalUnit, a list of entities designated as resource nodes.
+-- @params self.params.victimsUnits, the list of entities to evacuate victims within
+-- @returns "done" when all Victims have been taken into account by medical unit.
+-- ****************************************************************************
+rootnode 
+{
+    connections = { skill.links.reach, skill.links.ensureEvacuation },
+    feedbacks   = { "evacuated", "notEvacuated" },
+
+    -- --------------------------------------------------------------------------------
+    -- Feedbacks
+    -- --------------------------------------------------------------------------------
+    done = function( self, params ) -- from reach skill
+        self.arrived = true
+    end,
+
+    evacuationActionCompleted = function( self, params ) -- called skill.links.ensureEvacuation
+        Feedback( self.feedbacks.evacuated, params )
+        self.arrived = false
+        self.nextTargetIndex = self.nextTargetIndex + 1
+        if self.nextTargetIndex > #self.params.victimsUnits then
+            Feedback( self.feedbacks.done )
+        end
+    end,
+
+    evacuationImpossible = function( self, params )
+        Feedback( self.feedbacks.notEvacuated, { victimsUnit = params.victimsUnit } )
+        self.arrived = false
+        self.nextTargetIndex = self.nextTargetIndex + 1
+        if self.nextTargetIndex > #self.params.victimsUnits then
+            Feedback( self.feedbacks.done )
+        end
+    end,
+
+    -- --------------------------------------------------------------------------------
+    -- Init
+    -- --------------------------------------------------------------------------------
+    create = function( self )
+        self.arrived = false
+        self.nextTargetIndex = 1
+    end,
+
+    -- --------------------------------------------------------------------------------
+    -- Behavior execution
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        local Activate = Activate
+
+        local paramsSize = #self.params.victimsUnits
+        if self.nextTargetIndex <= paramsSize then
+            if paramsSize > 0 then
+                self.victimsUnit = self.params.victimsUnits[ self.nextTargetIndex ]
+                if self.arrived then
+                    if self.victimsUnit:canVictimsBeEvacuated() then
+                        Activate( skill.links.ensureEvacuation, 1, 
+                              { victimsUnit = self.victimsUnit, medicalUnit = self.params.medicalUnit } )
+                    else
+                        self:evacuationImpossible( { victimsUnit = self.params.victimsUnit } ) -- impossible to evacuate, get next victims unit
+                    end
+                else
+                    Activate( skill.links.reach, 1, { destination = self.victimsUnit } )
+                end
+            else
+                Feedback( self.feedbacks.failed )
+            end
+        end
+    end
+}

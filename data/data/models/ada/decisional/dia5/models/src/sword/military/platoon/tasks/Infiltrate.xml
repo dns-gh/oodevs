@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.tasks.Infiltrate" source-version="1.0.0" knowledge-class="sword.military.platoon.tasks.knowledges.Infiltrate">
+    <parameters>
+        <parameter name="objectives">
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Reachable"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Infiltration" disable-when-done="true">
+            <skills>
+                <skill name="sword.military.platoon.skills.MoveAlong" main="true">
+                    <parameter name="infiltrationMode">
+                        <value>
+                            <boolean>true</boolean>
+                        </value>
+                    </parameter>
+                    <parameter name="entities">
+                        <value>
+                            <parameter>objectives</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>

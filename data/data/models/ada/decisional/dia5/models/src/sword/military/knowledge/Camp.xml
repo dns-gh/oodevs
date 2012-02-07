@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.knowledge.Camp" source-version="1.0.0" extends="sword.military.knowledge.decisional.Reachable">
+    <description>Représente tout élement de connaissance qu'un agent peut charger/embarquer ou décharger.
+
+    Le chargement d'une connaissance s'effectue si les conditions sont réunies, c'est-à-dire que l'élément à charger est
+    à une distance suffisante par rapport aux capacités d'embarquement de l'entité.
+    </description>
+    <methods>
+        <method name="dischargeInIt">
+            <description>Action de déchargement d'un élément transporté, dans un conteneur.&#xD;
+            </description>
+            <argument name="transportedElement">
+                <type>
+                    <class name="sword.military.knowledge.decisional.Loadable"/>
+                </type>
+            </argument>
+        </method>
+    </methods>
+</interface>

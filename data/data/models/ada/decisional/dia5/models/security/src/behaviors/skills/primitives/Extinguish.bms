@@ -1,0 +1,71 @@
+-- **************************************************************************** 
+-- To extinguish a given set of fires
+-- @params self.params.fires, a list of entities designated as fires.
+-- @returns "done" when all fires are extinguished.
+--
+-- /!\ The extinguish order is defined by the order of the elements in the parameters list.
+-- ****************************************************************************
+rootnode 
+{
+    connections = { skill.links.reach, skill.links.extinguish },
+    feedbacks   = { "extinguished", "notExtinguished" },
+
+    -- --------------------------------------------------------------------------------
+    -- Feedbacks
+    -- --------------------------------------------------------------------------------
+    done = function( self, params ) -- from reach skill
+        self.arrived = true
+    end,
+
+    extinguishActionCompleted = function( self, params ) -- from extinguish skill
+        Feedback( self.feedbacks.extinguished, { fire = params.fire } )
+        self.arrived = false
+        if self.nextTargetIndex + 1 > #self.params.fires then
+            Feedback( self.feedbacks.done )
+        end
+        self.nextTargetIndex = self.nextTargetIndex + 1
+    end,
+
+    impossibleToExtinguish = function( self, params ) -- called within this skill
+        Feedback( self.feedbacks.notExtinguished, { fire = params.fire } )
+        self.arrived = false
+        if self.nextTargetIndex > #self.params.fires then
+            Feedback( self.feedbacks.done )
+        end
+        self.nextTargetIndex = self.nextTargetIndex + 1
+    end,
+
+    -- --------------------------------------------------------------------------------
+    -- Init
+    -- --------------------------------------------------------------------------------
+    create = function( self )
+        self.arrived = false
+        self.nextTargetIndex = 1
+    end,
+
+    -- --------------------------------------------------------------------------------
+    -- Feedbacks
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        local Activate = Activate
+
+        local paramsSize = #self.params.fires
+        if self.nextTargetIndex <= paramsSize then
+            if paramsSize > 0 then
+                self.fire = self.params.fires[ self.nextTargetIndex ]
+                if self.arrived then
+                    if self.fire:canBeExtinguished() then
+                        Activate( skill.links.extinguish, 1, { fire = self.fire } )
+                    elseif not self.fire:isExtinguished() then -- agent cannot and fire burns...
+                        self:impossibleToExtinguish( { fire = self.fire } )
+                    end
+                else
+                    -- local position = ontology.queries.GetPositionsOutsideObject[ "execute" ]( { object = self.fire } )
+                    Activate( skill.links.reach, 1, { destination = self.fire } )
+                end
+            else
+                Feedback( self.feedbacks.failed )
+            end
+        end
+    end
+}

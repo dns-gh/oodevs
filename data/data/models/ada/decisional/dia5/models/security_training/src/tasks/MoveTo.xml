@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="tasks.MoveTo" source-version="1.0.0">
+    <parameters>
+        <parameter name="destination">
+            <type>
+                <class name="agent.ontology.interfaces.Destination"/>
+            </type>
+        </parameter>
+        <parameter name="urgency">
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Starting to reach the destination" disable-when-done="true">
+            <skills>
+                <skill name="behaviors.skills.primitives.Reach" main="true">
+                    <parameter name="destination">
+                        <value>
+                            <parameter>destination</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="urgency">
+                        <value>
+                            <parameter>urgency</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>

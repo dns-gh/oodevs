@@ -1,0 +1,43 @@
+-- ****************************************************************************************** 
+-- ManageDomination: find the real domination
+-- $$$ MIA TODO: à revoir. Mettre dans la sim ou dans l'intagration (getDomination ) définie 
+-- sur les foules
+-- ******************************************************************************************
+local emptyTable = emptyTable
+rootnode
+{
+    connections = { skill.nodes.CR_PopulationTemporairementControlee },
+
+    done = function( self ) end,
+
+    create = function( self )
+        myself.domination = myself.domination or {}
+        myself.domination.default = 1
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        integration.FouleEstSecurisee(skill.modifiers.nonLethalWeaponsAuthorized, skill.modifiers.lethalWeaponsAuthorized)
+        local number = 0
+        local finalDomination = 0
+        -- la domination global de la foule est la moyenne des dominations
+        -- appliquées par les agents
+        for i, domination in pairs( myself.domination ) do
+            finalDomination = finalDomination + domination
+            number = number + 1
+        end
+        finalDomination = finalDomination / number
+        meKnowledge:setDomination( finalDomination )
+        if finalDomination == 0 then
+          Activate( skill.nodes.CR_PopulationTemporairementControlee, 1 )
+       end
+    end
+}
+
+node "CR_PopulationTemporairementControlee"
+{
+    create = function( self )
+        meKnowledge:RC( eRC_PopulationTemporairementControlee )
+        Feedback( self.feedbacks.done, emptyTable )
+    end
+}

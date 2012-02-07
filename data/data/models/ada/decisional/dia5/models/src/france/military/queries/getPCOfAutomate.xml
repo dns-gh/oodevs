@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.queries.getPCOfAutomate" source-version="1.0.0">
+  <parameters>
+    <parameter name="automate">
+      <type>
+        <class name="sword.military.world.Company"/>
+      </type>
+    </parameter>
+  </parameters>
+  <target>
+    <type>
+      <class name="sword.military.world.PlatoonAlly"/>
+    </type>
+  </target>
+</query>

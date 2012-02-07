@@ -1,0 +1,9 @@
+rootnode
+{
+    done = function( self ) end,
+
+    destroy = function( self )
+        DEC_Agent_ForcerSilenceRadio( self.params.unit.source, false )
+        self.params.unit:unloadIt()
+    end,
+}

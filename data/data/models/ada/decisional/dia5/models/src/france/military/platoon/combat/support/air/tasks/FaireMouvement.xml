@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.air.tasks.FaireMouvement" source-version="1.0.0"  knowledge-class="sword.military.platoon.tasks.knowledges.MoveAlong">
+	<parameters>
+		<parameter name="objectives">
+			<type>
+				<list>
+					<class name="sword.military.knowledge.decisional.Reachable"/>
+				</list>
+			</type>
+		</parameter>
+	</parameters>
+	<stages>
+		<stage label="Decoller" permanent="false">
+			<skills>
+				<skill name="france.military.platoon.combat.support.air.skills.Decoller" main="true">
+					<parameter name="HauteurDeVol">
+						<value>
+							<number>6500.0</number>
+						</value>
+					</parameter>
+				</skill>
+			</skills>
+		</stage>
+		<stage label="Déplacement" permanent="false">
+			<skills>
+				<skill name="sword.military.platoon.skills.MoveAlong" main="true">
+					<parameter name="entities">
+						<value>
+							<parameter>objectives</parameter>
+						</value>
+					</parameter>
+				</skill>
+			</skills>
+		</stage>
+		<stage label="Atterrissage" disable-when-done="true">
+			<skills>
+				<skill name="france.military.platoon.combat.support.air.skills.Atterrir" main="true"/>
+			</skills>
+		</stage>
+	</stages>
+</task>

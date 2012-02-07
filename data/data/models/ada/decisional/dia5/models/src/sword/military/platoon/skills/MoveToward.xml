@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.skills.MoveToward" source-version="1.0.0">
+    <parameters>
+        <parameter name="entities">
+            <description>Les éléments que l'on veut rejoindre.</description>
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Reachable"/>
+                </list>
+            </type>
+        </parameter>
+        <parameter name="infiltrationMode">
+            <description>Définit le mode de déplacement, infiltration ou normal (valeur par défaut).</description>
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
+        </parameter>
+        <parameter name="avoidObstacles" nullable="true">
+            <description>Définit le mode de déplacement, en évitant les obstacles ou normal (valeur par défaut).</description>
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>true</boolean>
+            </default>
+        </parameter>
+        <parameter name="criminalMoving">
+            <description>Defini le mode de déplacement criminel ou normal. Evite les check points, evite les grands axes et prefere les terrains urbains et forestiers.</description>
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
+        </parameter>
+    </parameters>
+    <links>
+        <link name="moveToward" skill="sword.military.platoon.skills.primitives.MoveToward"/>
+    </links>
+</skill>

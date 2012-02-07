@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="tasks.TestDecontaminateArea" source-version="1.0.0">
+    <parameters>
+        <parameter name="areas">
+            <description>A list of areas. </description>
+            <type>
+                <list>
+                    <class name="agent.ontology.interfaces.ContaminationArea"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="DecontaminateArea" disable-when-done="true">
+            <skills>
+                <skill name="behaviors.skills.primitives.DecontaminateArea" main="true">
+                    <parameter name="areas">
+                        <value>
+                            <parameter>areas</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>

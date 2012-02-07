@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="security.ontologies.classes.Zone" source-version="1.0.0" abstract="false" extends="sword.military.world.Area">
+  <realizes>security.ontologies.interfaces.Evacuable</realizes>
+  <methods>
+    <method name="canEvacuateIt" abstract="false">
+      <description>Renvoie 'vrai' si l'élément peut être évacué. 'Faux' sinon.</description>
+    </method>
+  </methods>
+</class>

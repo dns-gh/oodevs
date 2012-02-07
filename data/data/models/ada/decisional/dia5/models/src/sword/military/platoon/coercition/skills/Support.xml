@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.coercition.skills.Support" source-version="1.0.0">
+	<description>Soutenir les éléments passés en paramètre.&#xD;
+S'enregistre auprès des éléments soutenus pour recevoir la valeur de leur rapport de force.</description>
+	<parameters>
+		<parameter name="entities">
+			<description>Les entités à soutenir.</description>
+			<type>
+				<list>
+					<class name="sword.military.knowledge.decisional.Supportable"/>
+				</list>
+			</type>
+		</parameter>
+		<parameter name="context" nullable="true">
+			<description>Le contexte peut etre offensif, défensif ou statique</description>
+			<type>
+				<simple name="numeric"/>
+			</type>
+			<default>
+				<number>0.0</number>
+			</default>
+		</parameter>
+	</parameters>
+	<body-type>
+		<class name="sword.military.world.PlatoonAlly"/>
+	</body-type>
+	<links>
+		<link name="support" skill="sword.military.platoon.coercition.skills.primitives.Support"/>
+	</links>
+</skill>

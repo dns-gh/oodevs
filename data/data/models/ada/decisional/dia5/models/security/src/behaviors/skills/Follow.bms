@@ -1,0 +1,42 @@
+-- **************************************************************************** 
+-- To fallow a set of specified agents
+-- @params: self.params.Agents, a masalife list of Agents
+-- @returns: followed agent
+-- ****************************************************************************
+rootnode
+{
+    connections = { skill.links.reach },
+
+    -- -------------------------------------------------------------------------------- 
+    -- Follow the nearest agent
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        local Activate = Activate
+
+        -- get position to follow agents if not issued
+        if self.params.positions == NIL then
+            self.positions = ontology.queries.GetPositionsToFollow[ "execute" ]( 
+                                                       { agents = self.params.agents } )
+        else
+            self.positions = self.params.positions
+        end
+
+        -- Find nearest agent
+        local nearestAgent = self.params.agents[ 1 ]
+        for _, agent in pairs( self.params.agents ) do  -- select the nearest element
+            nearestAgent = agent:getProximity( meKnowledge )
+             > nearestAgent:getProximity( meKnowledge ) and agent or nearestAgent
+        end
+
+        -- find nearest position
+        local nearestPosition = self.positions[ 1 ]
+        for _, position in pairs( self.positions ) do  -- select the nearest element
+            nearestPosition = position:getProximity( nearestAgent )
+             > nearestPosition:getProximity( nearestAgent ) and position or nearestPosition
+        end
+
+        -- MoveToward nearest position from nearest agent
+        Activate( skill.links.reach, 1, { destination = nearestPosition, 
+                                          distanceMin = self.params.distanceMin } )
+    end
+}

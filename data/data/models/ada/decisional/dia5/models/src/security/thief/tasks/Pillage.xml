@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="security.thief.tasks.Pillage" source-version="1.0.0" knowledge-class="security.unit.tasks.UnitTask">
+  <parameters>
+    <parameter name="zone">
+      <type>
+        <class name="security.ontologies.classes.Zone"/>
+      </type>
+    </parameter>
+    <parameter name="garagePosition">
+      <type>
+        <class name="sword.military.knowledge.decisional.Reachable"/>
+      </type>
+    </parameter>
+  </parameters>
+  <stages>
+    <stage label="pillage">
+      <skills>
+        <skill name="security.thief.skills.Pillage" main="true">
+          <parameter name="objectives">
+            <value>
+              <call method="security.ontologies.queries.getUrbanBlocksInZone">
+                <parameter name="zone">
+                  <value>
+                    <parameter>zone</parameter>
+                  </value>
+                </parameter>
+              </call>
+            </value>
+          </parameter>
+        </skill>
+      </skills>
+    </stage>
+    <stage label="moveToGaragePosition" disable-when-done="true">
+      <skills>
+        <skill name="security.unit.skills.MoveToGaragePosition" main="true">
+          <parameter name="element">
+            <value>
+              <parameter>garagePosition</parameter>
+            </value>
+          </parameter>
+        </skill>
+      </skills>
+    </stage>
+  </stages>
+</task>

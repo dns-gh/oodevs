@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.ontology.interfaces.Work" source-version="1.0.0">
+    <methods>
+        <method name="isCreated">
+            <description>Returns true if this element is entierly built.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="createIt"/>
+    </methods>
+</interface>

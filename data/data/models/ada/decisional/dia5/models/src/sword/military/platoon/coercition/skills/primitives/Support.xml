@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.coercition.skills.primitives.Support" source-version="1.0.0">
+	<description>Rejoindre une position permettant de soutenir les entités passées en paramètre.</description>
+	<parameters>
+		<parameter name="entities">
+			<description>Les éléments à appuyer.</description>
+			<type>
+				<list>
+					<class name="sword.military.knowledge.decisional.Supportable"/>
+				</list>
+			</type>
+		</parameter>
+	</parameters>
+	<goal>
+		<description>Soutenir les entités par le feu et le mouvement.</description>
+	</goal>
+	<links>
+		<link name="moveAndTakePosition" skill="sword.military.platoon.skills.actions.MoveAndTakePosition">
+			<description>Lien vers le skill MoveAndTakePosition</description>
+		</link>
+		<link name="observe" skill="sword.military.platoon.skills.actions.Observe">
+			<description>Lien vers le skill Observe</description>
+		</link>
+	</links>
+	<feedbacks>
+		<feedback name="done">
+			<argument name="lastPosition">
+				<type>
+					<class name="sword.military.knowledge.decisional.Positionable"/>
+				</type>
+			</argument>
+			<argument name="reason">
+				<type>
+					<simple name="string"/>
+				</type>
+			</argument>
+		</feedback>
+	</feedbacks>
+</skill>

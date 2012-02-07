@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.skills.RemoveWithReinforcement" source-version="1.0.0">
+	<description>Dégager un ensemble d'objets tactique</description>
+	<parameters>
+		<parameter name="obstacles">
+			<description>Les éléments à dégager.</description>
+			<type>
+				<list>
+					<class name="sword.military.knowledge.decisional.Removable"/>
+				</list>
+			</type>
+		</parameter>
+	</parameters>
+	<goal>
+		<description>Dégager les éléments.</description>
+	</goal>
+	<modifiers/>
+	<links>
+		<link name="remove" skill="sword.military.platoon.skills.primitives.Remove"/>
+	</links>
+</skill>

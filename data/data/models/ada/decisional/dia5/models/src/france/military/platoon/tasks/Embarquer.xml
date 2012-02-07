@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Embarquer" source-version="1.0.0">
+  <next-task name="sword.military.platoon.tasks.frago.Mount"/>
+</task>

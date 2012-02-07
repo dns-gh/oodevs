@@ -1,0 +1,32 @@
+-- **************************************************************************** 
+-- MoveAlong
+-- ****************************************************************************
+rootnode
+{
+    connections = { skill.links.reach },
+
+    -- -------------------------------------------------------------------------------- 
+    -- Once first element is reached, get the next one by incrementing iterator.
+    -- --------------------------------------------------------------------------------
+    done = function( self )
+        self.nextTargetIndex = self.nextTargetIndex + 1
+        if self.nextTargetIndex > #self.params.entities then
+            Feedback( self.feedbacks.done )
+        end
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Init
+    -- --------------------------------------------------------------------------------
+    create = function( self )
+        self.nextTargetIndex = 1
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Move toward the current element.
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        local Activate = Activate
+        Activate( skill.links.reach, 1, { destination  = self.params.entities[ self.nextTargetIndex ] } )
+    end
+}

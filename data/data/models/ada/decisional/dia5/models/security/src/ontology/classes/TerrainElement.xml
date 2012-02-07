@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.classes.TerrainElement" source-version="1.0.0" abstract="true" extends="ontology.classes.LocalizedElement">
+    <realizes>ontology.interfaces.Terrain</realizes>
+    <realizes>ontology.interfaces.Target</realizes>
+</class>

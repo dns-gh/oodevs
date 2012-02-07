@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.interfaces.HumanTarget" source-version="1.0.0" extends="ontology.interfaces.Target">
+    <description>The property for some entity to be human and to be a potential target for other humans that could harm him.  </description>
+    <methods/>
+</interface>

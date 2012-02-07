@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.company.skills.Relieve" source-version="1.0.0">
+  <parameters>
+    <parameter name="objectives">
+      <description>Les entités du groupe servant à la résolution de la tâche.</description>
+      <type>
+        <list>
+          <class name="sword.military.knowledge.decisional.Supportable"/>
+        </list>
+      </type>
+    </parameter>
+    <parameter name="automateParameters">
+      <description>Les paramètres de la tâche.</description>
+      <type>
+        <list>
+          <class name="directia.core.Object"/>
+        </list>
+      </type>
+    </parameter>
+    <parameter name="commandingEntities">
+      <type>
+        <list>
+          <class name="sword.military.knowledge.decisional.Commanding"/>
+        </list>
+      </type>
+    </parameter>
+    <parameter name="objective">
+      <type>
+        <class name="sword.military.world.Company"/>
+      </type>
+    </parameter>
+    <parameter name="followTask">
+      <description>La mission que l'on donne par défaut aux pions relevés afin qu'ils suivent l'autoamte qui l'a relevé.</description>
+      <type>
+        <simple name="string"/>
+      </type>
+    </parameter>
+  </parameters>
+  <modifiers/>
+  <resources/>
+</skill>

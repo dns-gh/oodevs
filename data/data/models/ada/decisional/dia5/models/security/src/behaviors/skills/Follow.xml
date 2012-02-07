@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.skills.Follow" source-version="1.0.0">
+    <description>For an agent to know how to follow the nearest agent belonging to a set of moving agents.</description>
+    <parameters>
+        <parameter name="agents">
+            <description>The agents to follow. </description>
+            <type>
+                <list>
+                    <class name="ontology.classes.Agent"/>
+                </list>
+            </type>
+        </parameter>
+        <parameter name="positions" nullable="true">
+            <description>Optional positions to follow an agent. </description>
+            <type>
+                <list>
+                    <class name="agent.ontology.interfaces.Destination"/>
+                </list>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+    </parameters>
+    <links>
+        <link name="reach" skill="behaviors.skills.primitives.Reach"/>
+    </links>
+</skill>

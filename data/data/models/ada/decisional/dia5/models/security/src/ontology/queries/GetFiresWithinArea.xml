@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.queries.GetFiresWithinArea" source-version="1.0.0">
+    <parameters>
+        <parameter name="area">
+            <type>
+                <class name="ontology.classes.concretes.Area"/>
+            </type>
+        </parameter>
+    </parameters>
+    <target name="fire">
+        <type>
+            <class name="agent.ontology.interfaces.Fire"/>
+        </type>
+    </target>
+</query>

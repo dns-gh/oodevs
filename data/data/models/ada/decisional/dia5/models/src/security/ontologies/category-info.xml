@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<category xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontologies" source-version="1.0.0">
+  <description>La représentation du monde vue par les entités de la sécurité. &#xD;
+&#xD;
+     L'hypothèse est faite que tous les agents simulés évoluants dans leur environnement (victimes, pompiers, médecins etc.) perçoivent le monde de manière commune.&#xD;
+Par exemple, une victime et un medecin ont une représentation identique d'un poste médical avancé, même si, dans la réalité, un médecin a une perception différente (plus précise) qu'une victime (qui n e connaît pas forcément&#xD;
+les détails de son fonctionnement).&#xD;
+</description>
+</category>

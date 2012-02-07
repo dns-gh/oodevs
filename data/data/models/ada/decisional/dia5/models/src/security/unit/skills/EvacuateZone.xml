@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="security.unit.skills.EvacuateZone" source-version="1.0.0">
+  <parameters>
+    <parameter name="zone">
+      <type>
+        <class name="security.ontologies.classes.Zone"/>
+      </type>
+    </parameter>
+  </parameters>
+  <modifiers/>
+  <body-type>
+    <class name="security.unit.body.Unit"/>
+  </body-type>
+  <links>
+    <link name="moveTo" skill="security.unit.skills.MoveTo"/>
+  </links>
+  <resources/>
+</skill>

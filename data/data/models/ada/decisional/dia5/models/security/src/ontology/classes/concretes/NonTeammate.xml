@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.classes.concretes.NonTeammate" source-version="1.0.0" extends="ontology.classes.Agent">
+    <description>Represents an unknown agent. </description>
+    <realizes>ontology.interfaces.Guilty</realizes>
+    <realizes>agent.ontology.interfaces.Transportable</realizes>
+    <methods>
+        <method name="getPosition">
+            <return name="simPosition">
+                <type>
+                    <any/>
+                </type>
+            </return>
+        </method>
+        <method name="reachIt" abstract="false">
+            <description>For the agent to enact the decision to move towards this object, along some path.&#xD;
+Returns true once the agent has reached the end-point of the path (please note that this end-point may be distinct from the target position to reach). &#xD;
+</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="getPositions">
+            <return>
+                <type>
+                    <list>
+                        <any/>
+                    </list>
+                </type>
+            </return>
+        </method>
+        <method name="canBeLoaded" abstract="false">
+            <description>Returns true if this entity can be loaded on agent Unit.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canBeUnloaded" abstract="false">
+            <description>Returns true if THIS entity can be unloaded from agent Unit.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="isLoaded" abstract="false">
+            <description>Returns 'true' if this entity is 100% loaded in agent Unit.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="loadIt" abstract="false">
+            <description>Action of loading this element on agent Unit.</description>
+            <return>
+                <description>Returns 'true' on action completion,  'false' otherwise.</description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="unloadIt" abstract="false">
+            <description>Action of unloading this element from agent Unit.</description>
+            <return>
+                <description>Returns 'true' on action completion,  'false' otherwise.</description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+    </methods>
+</class>

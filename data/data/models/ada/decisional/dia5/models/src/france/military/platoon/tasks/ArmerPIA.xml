@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.ArmerPIA" source-version="1.0.0" knowledge-class="france.military.platoon.tasks.knowledges.ArmerPIA">
+	<description>Surveiller une direction</description>
+	<parameters>
+		<parameter name="objective">
+			<type>
+				<class name="sword.military.knowledge.decisional.Observable"/>
+			</type>
+		</parameter>
+		<parameter name="positions">
+			<type>
+				<list>
+					<class name="sword.military.knowledge.decisional.Observing"/>
+				</list>
+			</type>
+		</parameter>
+	</parameters>
+	<goal>
+		<description>Obtenir du renseignement</description>
+	</goal>
+	<stages/>
+	<next-task name="sword.military.platoon.coercition.tasks.Monitor">
+		<parameter name="objective">
+			<value>
+				<parameter>objective</parameter>
+			</value>
+		</parameter>
+		<parameter name="positions">
+			<value>
+				<parameter>positions</parameter>
+			</value>
+		</parameter>
+	</next-task>
+</task>

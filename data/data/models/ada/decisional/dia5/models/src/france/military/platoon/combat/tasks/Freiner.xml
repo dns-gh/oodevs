@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.tasks.Freiner" source-version="1.0.0" knowledge-class="sword.military.platoon.tasks.knowledges.Delay">
+  <description>Se déplacer sur des positions en engageant l'ennemi pour le ralentir, face à des objectifs.</description>
+  <parameters>
+    <parameter name="positions">
+      <type>
+        <list>
+          <class name="sword.military.knowledge.decisional.Destroying"/>
+        </list>
+      </type>
+    </parameter>
+  </parameters>
+  <stages/>
+  <next-task name="sword.military.platoon.coercition.tasks.Delay">
+    <parameter name="positions">
+      <value>
+        <parameter>positions</parameter>
+      </value>
+    </parameter>
+  </next-task>
+</task>

@@ -1,0 +1,35 @@
+-- **************************************************************************** 
+-- Support
+-- ****************************************************************************
+rootnode
+{
+    connections = {  skill.links.support },
+
+    done = function( self ) end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Init: register entities to get their force ratio value.
+    -- --------------------------------------------------------------------------------
+    create = function( self )
+        if self.params.context == eContexte_Retrograde then
+            myself.desactiveSelfProtection = true
+        end
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Link to primitive support skill 
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        local Activate = Activate
+        Activate( skill.links.support, 1, { entities  = self.params.entities } )
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Unregister entities when skill is destroyed
+    -- --------------------------------------------------------------------------------
+    destroy = function( self )
+        if self.params.context == eContexte_Retrograde then
+            myself.desactiveSelfProtection = false
+        end
+    end,
+}

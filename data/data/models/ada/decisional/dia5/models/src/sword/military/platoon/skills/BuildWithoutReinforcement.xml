@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.skills.BuildWithoutReinforcement" source-version="1.0.0">
+    <description></description>
+    <parameters>
+        <parameter name="entities" nullable="true">
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Buildable"/>
+                </list>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+        <parameter name="positions" nullable="true">
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Building"/>
+                </list>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+        <parameter name="withImprovement">
+            <description>Si la valeur est vraie, on continue la construction en valorisant l'objectif.</description>
+            <type>
+                <simple name="boolean"/>
+            </type>
+        </parameter>
+    </parameters>
+    <links>
+        <link name="build" skill="sword.military.platoon.skills.primitives.Build"/>
+        <link name="improve" skill="sword.military.platoon.skills.primitives.Improve"/>
+    </links>
+</skill>

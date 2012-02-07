@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="security.deprecated.ontologies.classes.AMP" source-version="1.0.0" abstract="true">
+  <realizes>security.deprecated.ontologies.interfaces.Treating</realizes>
+  <realizes>security.ontologies.interfaces.Installable</realizes>
+  <realizes>security.deprecated.ontologies.interfaces.Animatable</realizes>
+  <methods>
+    <method name="getScoreAsMeanToTreat" abstract="false">
+      <return>
+        <type>
+          <simple name="numeric"/>
+        </type>
+      </return>
+    </method>
+    <method name="canAnimateIt" abstract="false">
+      <description>Renvoie 'vrai' si l'agent peut animer l'élément.</description>
+      <return>
+        <type>
+          <simple name="boolean"/>
+        </type>
+      </return>
+    </method>
+    <method name="animateIt" abstract="true">
+      <description>[INTEGRATOR]</description>
+      <return>
+        <type>
+          <simple name="boolean"/>
+        </type>
+      </return>
+    </method>
+    <method name="canInstallIt" abstract="false">
+      <description>Renvoie 'vrai' si l'élément est installable.</description>
+      <return>
+        <type>
+          <simple name="boolean"/>
+        </type>
+      </return>
+    </method>
+    <method name="installIt" abstract="true">
+      <description>[INTEGRATOR]</description>
+      <return>
+        <type>
+          <simple name="boolean"/>
+        </type>
+      </return>
+    </method>
+    <method name="canDischargeInIt" abstract="false">
+      <return>
+        <type>
+          <simple name="boolean"/>
+        </type>
+      </return>
+    </method>
+    <method name="dischargeInIt" abstract="true">
+      <description>[INTEGRATOR]</description>
+      <return>
+        <type>
+          <simple name="boolean"/>
+        </type>
+      </return>
+    </method>
+  </methods>
+</class>

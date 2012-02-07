@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.skills.primitives.Create" source-version="1.0.0">
+    <description>For an gent to know how to build a construction. </description>
+    <parameters>
+        <parameter name="works">
+            <description>The construction to build. </description>
+            <type>
+                <list>
+                    <class name="agent.ontology.interfaces.Work"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <body-type>
+        <class name="agent.ontology.interfaces.Body"/>
+    </body-type>
+    <links>
+        <link name="reach" skill="behaviors.skills.primitives.Reach">
+            <description>To go to the location whereto build the construction. </description>
+        </link>
+    </links>
+    <feedbacks>
+        <feedback name="created">
+            <description>Sent upon completion of the simulation action.</description>
+            <argument name="work">
+                <type>
+                    <list>
+                        <class name="agent.ontology.interfaces.Work"/>
+                    </list>
+                </type>
+            </argument>
+        </feedback>
+    </feedbacks>
+</skill>

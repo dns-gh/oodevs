@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Stationner" source-version="1.0.0" knowledge-class="sword.military.platoon.tasks.knowledges.Park">
+  <description>Stationnement sur un objectif.</description>
+  <parameters>
+    <parameter name="position">
+      <description>L'élément ou stationner.</description>
+      <type>
+        <class name="sword.military.knowledge.decisional.Positionable"/>
+      </type>
+    </parameter>
+  </parameters>
+  <next-task name="sword.military.platoon.tasks.MoveToward">
+    <parameter name="objectives">
+      <value>
+        <list>
+          <parameter>position</parameter>
+        </list>
+      </value>
+    </parameter>
+  </next-task>
+</task>

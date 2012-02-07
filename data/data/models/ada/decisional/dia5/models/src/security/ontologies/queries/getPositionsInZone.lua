@@ -1,0 +1,1 @@
+-- $$$ MIA TODO: renvoyer les carrefours ou des positions au hasard. Mais attention au BU non traficables.

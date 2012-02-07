@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.company.tasks.knowledges.FixEffect" source-version="1.0.0" extends="sword.military.company.tasks.knowledges.DefendEffect">
+  <methods>
+    <method name="getReachable">
+      <return>
+        <type>
+          <list>
+            <class name="directia.core.Object"/>
+          </list>
+        </type>
+      </return>
+    </method>
+    <method name="getEntities">
+      <return>
+        <type>
+          <list>
+            <class name="directia.core.Object"/>
+          </list>
+        </type>
+      </return>
+    </method>
+  </methods>
+</class>

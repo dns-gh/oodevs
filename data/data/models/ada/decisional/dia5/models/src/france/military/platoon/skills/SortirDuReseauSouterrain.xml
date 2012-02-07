@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.skills.SortirDuReseauSouterrain" source-version="1.0.0">
+    <description>Comportement de déplacement dans un réseau souterrain. L'agent décide de se déplacer vers un réseau souterrain et de s'y cacher. Ce skill utilise la logique décisionnelle du skill moveToward (cf. définition) car un réseau est explicitement atteignable par le mouvement (il réalise l'interface &quot;reachable&quot;).</description>
+    <parameters>
+        <parameter name="objective">
+            <type>
+                <class name="sword.military.knowledge.decisional.Reachable"/>
+            </type>
+        </parameter>
+    </parameters>
+    <body-type>
+        <class name="sword.military.world.PlatoonAlly"/>
+    </body-type>
+    <links>
+        <link name="moveToward" skill="sword.military.platoon.skills.MoveToward"/>
+        <link name="dismount" skill="sword.military.platoon.skills.actions.Dismount"/>
+    </links>
+</skill>

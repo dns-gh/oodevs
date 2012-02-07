@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.company.combat.tasks.knowledges.CombatSupportEffect" source-version="1.0.0" extends="sword.military.company.tasks.knowledges.CompanyTask">
+    <methods>
+        <method name="getEntitiesToSupport">
+            <return>
+                <type>
+                    <list>
+                        <class name="directia.core.Object"/>
+                    </list>
+                </type>
+            </return>
+        </method>
+        <method name="getNbrFront">
+          <return>
+            <type>
+              <simple name="numeric"/>
+            </type>
+          </return>
+        </method>
+        <method name="getSupportingPosition">
+            <return>
+                <type>
+                    <class name="sword.military.knowledge.decisional.Neutralizing"/>
+                    <class name="sword.military.knowledge.decisional.Destroying"/>
+                    <class name="sword.military.knowledge.decisional.Observing"/>
+                </type>
+            </return>
+        </method>
+        <method name="getDirection">
+            <return>
+                <type>
+                    <class name="sword.military.knowledge.decisional.Observable"/>
+                </type>
+            </return>
+        </method>
+    </methods>
+</class>

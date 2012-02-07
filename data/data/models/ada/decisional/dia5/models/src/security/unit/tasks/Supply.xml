@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="security.unit.tasks.Supply" source-version="1.0.0" knowledge-class="security.unit.tasks.UnitTask">
+  <parameters>
+    <parameter name="supplyPoint">
+      <type>
+        <class name="security.ontologies.interfaces.Stock"/>
+      </type>
+    </parameter>
+    <parameter name="resourceTypes">
+      <type>
+        <list>
+          <any/>
+        </list>
+      </type>
+    </parameter>
+    <parameter name="sourcePoints">
+      <type>
+        <list>
+          <class name="security.ontologies.interfaces.Stock"/>
+        </list>
+      </type>
+    </parameter>
+    <parameter name="garagePosition">
+      <type>
+        <class name="sword.military.knowledge.decisional.Reachable"/>
+      </type>
+    </parameter>
+    <parameter name="waitForStockAvailable">
+      <type>
+        <simple name="boolean"/>
+      </type>
+      <default>
+        <boolean>false</boolean>
+      </default>
+    </parameter>
+  </parameters>
+  <stages>
+    <stage label="extractThenSupply">
+      <skills>
+        <skill name="security.unit.skills.ExtractThenSupply" main="true">
+          <parameter name="supplyPoint">
+            <value>
+              <parameter>supplyPoint</parameter>
+            </value>
+          </parameter>
+          <parameter name="resourceTypes">
+            <value>
+              <parameter>resourceTypes</parameter>
+            </value>
+          </parameter>
+          <parameter name="sourcePoints">
+            <value>
+              <parameter>sourcePoints</parameter>
+            </value>
+          </parameter>
+          <parameter name="waitForStockAvailable">
+            <value>
+              <parameter>waitForStockAvailable</parameter>
+            </value>
+          </parameter>
+        </skill>
+      </skills>
+    </stage>
+    <stage label="moveToGaragePosition" disable-when-done="true">
+      <skills>
+        <skill name="security.unit.skills.MoveToGaragePosition" main="true">
+          <parameter name="element">
+            <value>
+              <parameter>garagePosition</parameter>
+            </value>
+          </parameter>
+        </skill>
+      </skills>
+    </stage>
+  </stages>
+</task>

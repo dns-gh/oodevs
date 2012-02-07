@@ -1,0 +1,31 @@
+pragma "once"
+--@TODO mutualiser les parties indépendantes  du modèle
+include "Integration.lua"
+
+local libPath = select(1,...)
+local role    = select(2,...)
+masalife.brain.core.loadModel( role, { libPath .. "/models/directia.core/directia.core.bml", libPath .. "/models/common/src", libPath .. "/models/security/src", libPath .. "/models/security_training/src" } )
+                                       
+integration.ontology = {
+    types = {
+        body = ontology.classes.concretes.MeKnowledge,
+        point = ontology.classes.concretes.Position,
+        area = ontology.classes.concretes.Area,
+        urbanBlock = ontology.classes.concretes.UrbanBlock,
+        population = ontology.classes.concretes.Crowd,
+        object = ontology.classes.concretes.Object,
+        agent = ontology.classes.concretes.Teammate,
+        agentKnowledge = ontology.classes.concretes.NonTeammate,
+        resourceNetwork = ontology.classes.concretes.ResourceNode,
+        genObject = ontology.classes.concretes.PlannedWork,
+
+        --- Type exists only the test library, the CRTaskListener crashs if this knowledge does not exists
+        automat = ontology.classes.concretes.CompanyBody,
+        }
+}
+
+local swordErrorHandler = function( err )
+    DEC_Trace( tostring( err )..debug.traceback() )
+end
+
+errorhandlermanager.installErrorHandler( swordErrorHandler )

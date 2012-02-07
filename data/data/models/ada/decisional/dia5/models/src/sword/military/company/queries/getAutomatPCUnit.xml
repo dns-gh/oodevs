@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.company.queries.getAutomatPCUnit" source-version="1.0.0">
+  <description>Retourne le PC inclus d'un automate.</description>
+  <parameters/>
+  <target name="PCUnit">
+    <type>
+      <class name="sword.military.knowledge.decisional.Commanding"/>
+    </type>
+  </target>
+</query>

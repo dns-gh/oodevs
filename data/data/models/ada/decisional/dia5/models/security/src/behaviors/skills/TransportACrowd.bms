@@ -1,0 +1,116 @@
+-- **************************************************************************** 
+-- To transport a MasaLife 'Crowd' object toward a given destination
+-- Specific skills that make a agent transport an entire crowd using round trips
+-- ****************************************************************************
+rootnode 
+{
+    connections = 
+    {
+        skill.links.reach, 
+        skill.nodes.LoadCrowdConcentration ,
+        skill.nodes.UnloadCrowdConcentration 
+    },
+
+    -- -------------------------------------------------------------------------------- 
+    -- Feedbacks from reach skill
+    -- --------------------------------------------------------------------------------
+    done = function( self, params )
+        self.arrived = true
+        if params.destination == self.params.loadingPosition then
+            self.loadConcentration = true
+            if not self.params.crowd:hasConcentration( self.params.loadingPosition ) then
+                Feedback( self.feedbacks.done ) -- no concentration nearby
+            end
+        end
+        if params.destination == self.params.finalPosition then
+            self.loadConcentration = false
+        end
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Feedbacks from action node LoadCrowdConcentration
+    -- Call when agent has finished to load humans of the crowd concentration
+    -- --------------------------------------------------------------------------------
+    loaded = function( self ) -- from skill.nodes.LoadCrowdConcentration
+        self.arrived = false
+        self.loadConcentration  = false
+        self.currentDestination = self.params.finalDestination
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Feedbacks from action node LoadCrowdConcentration
+    -- Call when gent has finished to unload loaded humans on the final destination
+    -- --------------------------------------------------------------------------------
+    unloaded = function( self ) -- from skill.nodes.UnloadCrowdConcentration
+        self.arrived = false
+        self.currentDestination = self.params.loadingPosition
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Init
+    -- --------------------------------------------------------------------------------
+    create = function( self )
+        self.arrived = false
+        self.currentDestination = self.params.loadingPosition
+        self.loadConcentration = true
+        if not meKnowledge:canTransportCrowd( self.params.crowd ) then
+            Feedback( self.feedbacks.failed ) -- agent has not the capability to transport crowds
+        end
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Load entities and the unload them on the destination
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        local Activate = Activate
+
+        if not self.arrived then -- agent is moving toward loading position or target position
+            -- Try to load all issued entities
+            Activate( skill.links.reach,1, { destination = self.currentDestination } )
+        else -- max entities are loaded, unload them on the destination.
+            if self.loadConcentration then
+                Activate( skill.nodes.LoadCrowdConcentration, 1, { 
+                          crowd = self.params.crowd, position = self.params.loadingPosition } )
+            else
+                Activate( skill.nodes.UnloadCrowdConcentration, 1, { 
+                          crowd = self.params.crowd, position = self.params.finalDestination } )
+            end
+        end
+    end
+}
+
+-- **************************************************************************** 
+-- To load a crowd concentration on a position
+-- ****************************************************************************
+node "LoadCrowdConcentration"
+{
+    feedbacks = { "loaded" },
+
+    -- -------------------------------------------------------------------------------- 
+    -- Load entities and the unload them on the destination
+    -- --------------------------------------------------------------------------------
+    select = function( self )
+        local Activate = Activate
+        if meKnowledge:loadCrowdConcentration( self.params.crowd, self.params.position ) then
+            Feedback( self.feedbacks.loaded )
+        end
+    end
+}
+
+-- **************************************************************************** 
+-- To unload a crowd concentration on a position
+-- ****************************************************************************
+node "UnloadCrowdConcentration"
+{
+    feedbacks = { "unloaded" },
+
+    -- -------------------------------------------------------------------------------- 
+    -- Load entities and the unload them on the destination
+    -- --------------------------------------------------------------------------------
+    select = function( self )
+        local Activate = Activate
+        if meKnowledge:unloadCrowdConcentration( self.params.crowd, self.params.position ) then
+            Feedback( self.feedbacks.unloaded )
+        end
+    end
+}

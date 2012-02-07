@@ -1,0 +1,10 @@
+rootnode
+{
+    done = function( self ) end,
+
+    activate = function( self )
+        if meKnowledge:isDeployed() then
+            meKnowledge:sortInjured()
+        end
+    end,
+}

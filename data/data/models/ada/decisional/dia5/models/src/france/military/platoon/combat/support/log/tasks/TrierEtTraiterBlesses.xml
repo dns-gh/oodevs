@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.log.tasks.TrierEtTraiterBlesses" source-version="1.0.0" knowledge-class="sword.military.platoon.tasks.knowledges.Deploy">
+    <parameters>
+        <parameter name="objective" nullable="true">
+            <type>
+                <class name="sword.military.knowledge.decisional.Reachable"/>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+        <parameter name="InjuriesTreated" nullable="true">
+            <description>Le type de blessures à prendre en charge par la chaîne logistique santé</description>
+            <type>
+                <list>
+                    <class name="sword.military.world.HumanWound"/>
+                </list>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Tri et traitement des blessés" permanent="true">
+            <skills>
+                <skill name="sword.military.platoon.skills.Deploy">
+                    <parameter name="objective">
+                        <value>
+                            <parameter>objective</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+                <skill name="france.military.platoon.combat.support.log.skills.TrierBlesses"/>
+                <skill name="france.military.platoon.combat.support.log.skills.TraiterBlesses">
+                    <parameter name="blessuresTraitees">
+                        <value>
+                            <parameter>InjuriesTreated</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>

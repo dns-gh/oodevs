@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="security.crowd.tasks.SeekSupply" source-version="1.0.0">
+  <parameters/>
+  <stages>
+    <stage label="seek" disable-when-done="true">
+      <skills>
+        <skill name="security.crowd.skills.SeekSupply" main="true"/>
+      </skills>
+    </stage>
+  </stages>
+</task>

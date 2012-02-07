@@ -1,0 +1,51 @@
+-- **************************************************************************** 
+-- DischargeIn: move toward the element and transport it.
+-- ****************************************************************************
+rootnode
+{
+    connections = { skill.links.moveTo, skill.nodes.dischargeIn },
+
+    -- -------------------------------------------------------------------------------- 
+    -- Init
+    -- --------------------------------------------------------------------------------
+    create = function( self )
+        self.arrived = false
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Feedbacks
+    -- --------------------------------------------------------------------------------
+    done = function( self, params ) -- element is reached
+        self.arrived = true
+    end,
+    discharged = function( self, params ) -- element is dischargeInd
+        Feedback( self.feedbacks.done, params )
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- If element is reached and if agent can dischargeIn it then dischargeIn it.
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        if self.params.element:candischargeInIt() and self.arrived then
+            Activate( skill.nodes.dischargeIn, 1, { element = self.params.element } )
+        end
+        Activate( skill.links.moveTo, 1, { element = self.params.element } )
+        self.arrived = false
+    end
+}
+
+-- **************************************************************************** 
+-- Simple action of transporting an element
+-- ****************************************************************************
+node "dischargeIn"
+{
+    feedbacks = { "discharged" },
+
+    acquire = { [ skill.resources.transportCapacity ] = 1 },
+
+    select = function( self )
+        if masalife.brain.knowledge.me.body:dischargeIn( self.params.element ) then
+            Feedback( self.feedbacks.discharged, { element = self.params.element } )
+        end
+    end
+}

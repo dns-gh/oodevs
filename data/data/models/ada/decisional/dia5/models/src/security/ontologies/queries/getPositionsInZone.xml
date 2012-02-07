@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query xmlns="http://www.masagroup.net/directia/schemas/bm" name="security.ontologies.queries.getPositionsInZone" source-version="1.0.0">
+  <description>Renvoie les connaissances de positions dans une connaissance de zone.</description>
+  <parameters>
+    <parameter name="zone">
+      <description>La zone dans laquelle on veut récupérer les positions.</description>
+      <type>
+        <class name="security.ontologies.classes.Zone"/>
+      </type>
+    </parameter>
+  </parameters>
+  <target>
+    <type>
+      <class name="sword.military.knowledge.decisional.Reachable"/>
+    </type>
+  </target>
+</query>

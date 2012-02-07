@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="security.ontologies.interfaces.Installable" source-version="1.0.0" extends="sword.military.knowledge.decisional.Reachable">
+  <description>Cette interface représente la notion d'installation d'un élément. &#xD;
+&#xD;
+    Par intallation, il faut comprendre, placer et disposer cet élement.  le mettre quelque part,  en faisant les travaux nécessaires ( installer un barrage routier ou une poste de contrôle par exemple).&#xD;
+</description>
+  <methods>
+    <method name="canInstallIt">
+      <description>Renvoie 'vrai' si l'élément est installable.</description>
+      <return>
+        <type>
+          <simple name="boolean"/>
+        </type>
+      </return>
+    </method>
+  </methods>
+</interface>

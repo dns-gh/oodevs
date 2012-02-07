@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<role xmlns="http://www.masagroup.net/directia/schemas/bm" name="roles.RoleTest" source-version="1.0.0" extends="behaviors.roles.Agent">
+    <body-type>
+        <class name="ontology.classes.concretes.MeKnowledge"/>
+    </body-type>
+</role>

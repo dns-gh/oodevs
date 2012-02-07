@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.terrorism.tasks.Renseigner" source-version="1.0.0" knowledge-class="france.military.platoon.terrorism.tasks.knowledges.Renseigner">
+    <parameters>
+        <parameter name="destinataire">
+            <description>L'unite avec laquelle on partage les information.</description>
+            <type>
+                <class name="sword.military.world.Platoon"/>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Transmission des informations au destinataire." disable-when-done="true">
+            <skills>
+                <skill name="france.military.platoon.terrorism.skills.Renseigner" main="true">
+                    <parameter name="destinataire">
+                        <value>
+                            <parameter>destinataire</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>

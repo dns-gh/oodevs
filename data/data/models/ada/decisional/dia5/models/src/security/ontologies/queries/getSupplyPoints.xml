@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query name="security.ontologies.queries.getSupplyPoints" source-version="1.0.0" xmlns="http://www.masagroup.net/directia/schemas/bm">
+	<parameters/>
+	<target>
+		<type>
+			<class name="security.ontologies.interfaces.Stock"/>
+		</type>
+	</target>
+</query>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="tasks.CreateTest" source-version="1.0.0">
+    <parameters>
+        <parameter name="works">
+            <type>
+                <list>
+                    <class name="agent.ontology.interfaces.Work"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Starting works" disable-when-done="true">
+            <skills>
+                <skill name="behaviors.skills.primitives.Create" main="true">
+                    <parameter name="works">
+                        <value>
+                            <parameter>works</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>

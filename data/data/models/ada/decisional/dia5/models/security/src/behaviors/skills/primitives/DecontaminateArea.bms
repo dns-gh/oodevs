@@ -1,0 +1,57 @@
+-- ****************************************************************************
+-- To decontaminate a specified set of areas
+-- @params: self.params.areas, a masalife list of Area objects
+-- @returns: "done" when there is no more area to decontamiante OR if the list of areas is empty.
+--
+-- /!\ order is determined by elements' insertion in the table
+-- ****************************************************************************
+rootnode 
+{
+    connections = { skill.links.reach, skill.links.decontaminate },
+    feedbacks   = { "decontaminated" },
+
+    -- --------------------------------------------------------------------------------
+    -- Feedbacks
+    -- --------------------------------------------------------------------------------
+    done = function( self, params ) -- from reach skill
+        self.arrived = true
+    end,
+
+    decontaminateActionCompleted = function( self, params ) -- from decontaminate skill
+        Feedback( self.feedbacks.decontaminated, { area = params.area } )
+        self.nextTargetIndex = self.nextTargetIndex + 1
+        self.arrived = false
+        if self.nextTargetIndex > #self.params.areas then
+            Feedback( self.feedbacks.done )
+        end
+    end,
+
+    -- --------------------------------------------------------------------------------
+    -- Init
+    -- --------------------------------------------------------------------------------
+    create = function( self )
+        self.arrived = false
+        self.nextTargetIndex = 1
+    end,
+
+    -- --------------------------------------------------------------------------------
+    -- Feedbacks
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        local Activate = Activate
+        
+        local paramsSize = #self.params.areas
+        if self.nextTargetIndex <= paramsSize then
+            if paramsSize > 0 then
+                self.area = self.params.areas[ self.nextTargetIndex ]
+                if self.arrived then
+                    Activate( skill.links.decontaminate, 1, { area = self.area } )
+                else
+                    Activate( skill.links.reach, 1, { destination = self.area, false, eTypeItiNBC } )
+                end
+            else
+                Feedback( self.feedbacks.failed )
+            end
+         end
+    end
+}

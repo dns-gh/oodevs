@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.skills.MoveAlong" source-version="1.0.0">
+    <description>To follow a path defined as an ordered set of entities by the user. The skill performs by activating the MoveToward skill with one entity at a time, in the specified order. </description>
+    <parameters>
+        <parameter name="entities">
+            <description>The list of entities defining the path. The list must be ordered such a way that its nth element represents the nth entity on the agent’s path</description>
+            <type>
+                <list>
+                    <class name="agent.ontology.interfaces.Destination"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <goal>
+        <description>Reach each objectives in a specific order.</description>
+    </goal>
+    <links>
+        <link name="reach" skill="behaviors.skills.primitives.Reach"/>
+    </links>
+</skill>

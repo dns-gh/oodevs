@@ -1,0 +1,20 @@
+-------------------------------------------------------------------------------
+-- Resupply
+-- @author DDA
+-- @created 2010-07-22
+--
+-- This file is part of a MASA library or program.
+-- Refer to the included end-user license agreement for restrictions.
+--
+-- Copyright (c) 2010 MASA Group
+-------------------------------------------------------------------------------
+rootnode
+{
+    done = function( self ) end,
+
+    create = function ( self )
+        DEC_DemandeDeRavitaillement()
+        DEC_RC( eRC_DemandeRavitaillementDotations )
+        Feedback( self.feedbacks.done )
+    end
+}

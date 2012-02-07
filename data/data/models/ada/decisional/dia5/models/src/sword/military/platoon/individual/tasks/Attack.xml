@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.individual.tasks.Attack" source-version="1.0.0" knowledge-class="sword.military.platoon.individual.tasks.knowledges.Attack">
+  <parameters>
+    <parameter name="objective">
+      <description>Cible contre laquelle l'attentat est commis.</description>
+      <type>
+        <class name="sword.military.knowledge.Attackable"/>
+      </type>
+    </parameter>
+    <parameter name="dotation">
+      <description>Munition utilisee pour commettre l'attentat.</description>
+      <type>
+        <simple name="numeric"/>
+      </type>
+    </parameter>
+    <parameter name="position">
+      <description>Position vers laquelle on se replie apres avoir commis l'attentat.</description>
+      <type>
+        <class name="sword.military.knowledge.decisional.Reachable"/>
+      </type>
+    </parameter>
+  </parameters>
+  <stages>
+    <stage label="Mouvement vers la cible">
+      <description>Commettre l'attentat</description>
+      <skills>
+        <skill name="sword.military.platoon.individual.skills.Attack" main="true">
+          <parameter name="objective">
+            <value>
+              <parameter>objective</parameter>
+            </value>
+          </parameter>
+          <parameter name="dotation">
+            <value>
+              <parameter>dotation</parameter>
+            </value>
+          </parameter>
+          <parameter name="suicide">
+            <value>
+              <boolean>false</boolean>
+            </value>
+          </parameter>
+        </skill>
+      </skills>
+    </stage>
+    <stage label="Mouvement vers la position de repli" disable-when-done="true">
+      <description>Mouvement vers la position de repli</description>
+      <skills>
+        <skill name="sword.military.platoon.skills.MoveToward" main="true">
+          <parameter name="entities">
+            <value>
+              <list>
+                <parameter>position</parameter>
+              </list>
+            </value>
+          </parameter>
+        </skill>
+      </skills>
+    </stage>
+  </stages>
+</task>

@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.classes.concretes.ResourceNode" source-version="1.0.0" extends="ontology.classes.LocalizedElement">
+    <description>Represents a resource network node. A node is part of a distribution network. it can consume and produce resources. &#xD;
+A resource network node can be enabled and disabled by simulated units.&#xD;
+A resource network node can be supplied with resources from another node or by a supply plot.&#xD;
+</description>
+    <realizes>agent.ontology.interfaces.System</realizes>
+    <realizes>agent.ontology.interfaces.ResourceNode</realizes>
+    <methods>
+        <method name="getPosition">
+            <return name="simPosition">
+                <type>
+                    <any/>
+                </type>
+            </return>
+        </method>
+        <method name="reachIt" abstract="false">
+            <description>For the agent to enact the decision to move towards this object, along some path.&#xD;
+Returns true once the agent has reached the end-point of the path (please note that this end-point may be distinct from the target position to reach). &#xD;
+</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="getPositions">
+            <return>
+                <type>
+                    <list>
+                        <any/>
+                    </list>
+                </type>
+            </return>
+        </method>
+        <method name="enableIt" abstract="false">
+            <description>Must be called on a system that requires activation in order to be used. </description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="disableIt" abstract="false">
+            <description>Stops a system from being activated. A deactivated system can't be used. </description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+    </methods>
+</class>

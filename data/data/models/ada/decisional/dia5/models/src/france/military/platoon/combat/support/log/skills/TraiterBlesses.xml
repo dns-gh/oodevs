@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.log.skills.TraiterBlesses" source-version="1.0.0">
+    <parameters>
+        <parameter name="blessuresTraitees" nullable="true">
+            <type>
+                <list>
+                    <class name="sword.military.world.HumanWound"/>
+                </list>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+    </parameters>
+    <body-type>
+        <class name="sword.military.world.PlatoonAlly"/>
+    </body-type>
+</skill>

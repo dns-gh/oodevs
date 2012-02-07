@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<role xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.rens.roles.LanceurDrone" source-version="1.0.0" extends="france.military.platoon.roles.Pion">
+    <skills>
+        <skill name="france.military.platoon.combat.support.rens.skills.primitives.GererDrones"/>
+    </skills>
+    <resources/>
+    <default-task permanent="true">
+        <skills>
+            <skill name="france.military.platoon.combat.support.rens.skills.primitives.GererDrones"/>
+        </skills>
+    </default-task>
+</role>

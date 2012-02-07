@@ -1,0 +1,142 @@
+-------------------------------------------------------------------------------
+-- Queries Predicate Tools Implementation :
+-- @author DDA
+-- @created 2010-06-16
+--
+-- This file is part of a MASA library or program.
+-- Refer to the included end-user license agreement for restrictions.
+--
+-- Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
+-------------------------------------------------------------------------------
+integration.setStealth = function( beStealth )
+    local stealthFactor = beStealth and 0 or 1
+    if myself.lastStealth ~= stealthFactor then
+        DEC_Perception_Furtivite( stealthFactor )
+        myself.lastStealth = stealthFactor
+    end
+ end
+
+integration.isStealth = function( self )
+    return DEC_Perception_EstFurtif()
+end
+
+integration.porteePourAttentat = function( dotation )
+    myself[dotation] = myself[dotation] or {}
+    myself[dotation].portee = myself[dotation].portee or DEC_Tir_PorteeMaxTirIndirect( dotation )
+    return myself[dotation].portee
+end
+
+--Terrorist attack integration
+integration.startAttackIt = function( target, suicide, dotation )
+    target[myself] = target[myself] or {}
+    local nbIntervention = 1
+    if suicide then nbIntervention = 10 end -- $$$$ Hard coded value (same as max amout of ammo)
+    meKnowledge:RC( eRC_ExecutionAttentat )
+    target[myself].attackAction = DEC_StartTirIndirectSurPosition( dotation, nbIntervention, target:getPosition() )
+    actionCallbacks[ target[myself].attackAction ] = function( arg ) target[myself].attackState = arg end
+    return true
+end
+
+integration.updateAttackIt = function( target, suicide, dotation )
+    target[myself] = target[myself] or {}
+    if target[myself].attackState then
+        if target[myself].attackState == eIndirectFireState_Running then
+            return false
+        elseif target[myself].attackState == eIndirectFireState_Finished or target[myself].attackState == eIndirectFireState_NoAmmo then
+            if suicide then DEC_Suicide() end
+            return true
+        else
+            meKnowledge:RC( eRC_MissionImpossibleReason, "Attentat impossible" )
+            return true
+        end
+    end
+    return false
+end
+
+integration.stopAttackIt = function( target, suicide, dotation )
+    target[myself] = target[myself] or {}
+    target[myself].attackAction = DEC__StopAction( target[myself].attackAction )
+    target[myself].attackState = nil
+    return true
+end
+
+--Terrorist Officer assassination integration
+integration.killOfficers = function( unit )
+    DEC_ConnaissanceAgent_TuerOfficiers( unit.source )
+    meKnowledge:RC( eRC_ExecutionAttentat )
+    return true
+end
+
+--Firing Range for specific dotation
+integration.isInFiringRangeForDotation = function( target, dotation )
+    return integration.distance( meKnowledge, target ) < DEC_Tir_PorteeMaxPourTirerSurUniteAvecMunition( target.source, 0.9, dotation )
+end
+
+--Suicide
+integration.selfDestruct = function( agent )
+    DEC_Suicide()
+end
+
+--hostage
+integration.takeAsHostage = function( unit )
+    DEC_Agent_ForcerSilenceRadio( unit.source, true )
+    DEC_UnitDecisionalState( unit.source, "hostage", "true" )
+    return true
+end
+
+--refugee
+integration.takeAsRefugee = function( unit )
+    -- $$$ MIA TODO
+    DEC_RC( eRC_OrientationPopulationVersCampRefugies )
+    return true
+end
+
+--prisoner
+integration.takeAsPrisoner = function( unit )
+    -- $$$ MIA TODO
+    DEC_RC( eRC_OrientationEnnemiRenduVersCampPrisonniers )
+    return true
+end
+
+integration.attackReport = function( self )
+    meKnowledge:RC( eRC_ExecutionAttentat )
+end
+
+-- capture de terroristes détectés
+-- changemement de leur état en "otage"
+
+integration.captureTerrorists = function( terrorists )
+    if not myself.CR_TerroristsFounded then return end
+    for _, terrorist in pairs( terrorists ) do
+        if not myself.CR_TerroristsFounded[terrorist] then
+            DEC_Agent_ForcerSilenceRadio( terrorist.source, true )
+            DEC_UnitDecisionalState( terrorist.source, "hostage", "true" )
+            DEC_Connaissance_Transporter( myself, terrorist.source )
+            meKnowledge:RC( eRC_TerroristCaptured, terrorist.source )
+            myself.CR_TerroristsFounded[ terrorist ] = true
+            terrorist.capture = true
+            integration.SendMessage( "terroristCaught", integration.getAgentFromKnowledge( terrorist ), { element = myself }, { type = "dynamic" } )
+            DEC_ChangerSuperieurLogistiqueConnaissance( myself, terrorist.source )
+        end
+    end
+end
+
+integration.dropUnit = function( unit )
+    DEC_Prisonniers_Debarquer(unit.source)
+    return true
+end
+
+integration.shareKnowledge = function( dest, delay )
+    meKnowledge:RC( eRC_DebutLiaison )
+    DEC_Connaissances_PartageConnaissancesAvecConnaissanceAgent( myself, dest.source, delay )
+end
+
+integration.shareKnowledgeAgent = function( dest, delay )
+    meKnowledge:RC( eRC_DebutLiaison )
+    DEC_Connaissances_PartageConnaissancesAvec(DEC_GetAutomate( dest.source ), delay )
+end
+
+integration.shareKnowledgeAgentFromAutomat = function( dest, delay )
+    meKnowledge:RC( eRC_DebutLiaison )
+    DEC_Connaissances_PartageConnaissancesAvec(dest.source, delay )
+end

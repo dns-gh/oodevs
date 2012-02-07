@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.ontology.interfaces.Medical" source-version="1.0.0">
+    <description>Define all simulation entity able to ensure evacuation of victims through a medical chain.</description>
+    <methods>
+        <method name="evacuateVictims">
+            <description>To evacuate victims through a medical logistic chain.</description>
+            <argument name="victims">
+                <description>The &quot;victims&quot; entity to ensure evacuation.</description>
+                <type>
+                    <class name="agent.ontology.interfaces.Victims"/>
+                </type>
+            </argument>
+            <return>
+                <description>Returns true once evacuation has started.</description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canEvacuateVictims">
+            <description>Check if &quot;victims&quot; entity can be evacuated.</description>
+            <argument name="victims">
+                <description>The &quot;victims&quot; entity to ensure evacuation.</description>
+                <type>
+                    <class name="agent.ontology.interfaces.Victims"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+    </methods>
+</interface>

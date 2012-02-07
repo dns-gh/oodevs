@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.tasks.MoveAlong" source-version="1.0.0" knowledge-class="sword.military.platoon.tasks.knowledges.MoveAlong">
+    <description>Mouvement simple le long d'un itinéraire composer de point de passage obligés.</description>
+    <parameters>
+        <parameter name="objectives">
+            <description>Le ou les élements composant l'itinéraire.</description>
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Reachable"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="mouvement" permanent="false" disable-when-done="true">
+            <description>La mission &quot;MoveTo&quot; n'est pas une mission &quot;opérationnelle&quot; à proprement parler. Cette mission peut être utilisée
+      par divers entités pour suivre un itinéraire.</description>
+            <skills>
+                <skill name="sword.military.platoon.skills.MoveAlong" main="true">
+                    <parameter name="entities">
+                        <value>
+                            <parameter>objectives</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>

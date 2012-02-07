@@ -1,0 +1,385 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.ontology.interfaces.Body" source-version="1.0.0" extends="directia.core.model.RoleBody">
+    <description>$$$ TODO</description>
+    <methods>
+        <method name="moveTo">
+            <description>Returns true upon simulation method completion, false otherwise. </description>
+            <argument name="destination">
+                <description>The destination to move to. </description>
+                <type>
+                    <class name="agent.ontology.interfaces.Destination"/>
+                </type>
+            </argument>
+            <argument name="urgency">
+                <description>Whether the agent is in hurry or not. Affects the agent's pace. &#xD;
+&#xD;
+</description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </argument>
+            <return>
+                <description>Returns true upon simulation method completion, false otherwise. </description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="stopMovement">
+            <description>To call when the movement of the agent is stopped for a given target.</description>
+            <argument name="destination">
+                <description>The destination to stop moving to. </description>
+                <type>
+                    <class name="agent.ontology.interfaces.Destination"/>
+                </type>
+            </argument>
+        </method>
+        <method name="create">
+            <description>An agent's physical ability to build a specified construction. </description>
+            <argument name="work">
+                <description>The construction to build. </description>
+                <type>
+                    <class name="agent.ontology.interfaces.Work"/>
+                </type>
+            </argument>
+            <return>
+                <description>Returns true upon simulation method completion, false otherwise. </description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canCreate">
+            <description>To check if the agent has the material resources required to build a specific construction. </description>
+            <argument name="work">
+                <description>The construction to build. </description>
+                <type>
+                    <class name="agent.ontology.interfaces.Work"/>
+                </type>
+            </argument>
+            <return>
+                <description>Returns true upon simulation method completion, false otherwise. </description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="confine">
+            <description>To confine a population located into a populated area.&#xD;
+&#xD;
+This action can take time (depending on the current status of the population, e.g. if the population is alerted, the confinement is done more quickly).</description>
+            <argument name="populatedArea">
+                <description>The populated area in which the population should be confined.&#xD;
+</description>
+                <type>
+                    <class name="agent.ontology.interfaces.PopulatedArea"/>
+                </type>
+            </argument>
+            <return name="confinement">
+                <description>True if the confinement is completed or if the populated area does not contain population to confine, false otherwise.</description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="undoConfine">
+            <description>To lift the confinement of a population into the populated area.</description>
+            <argument name="populatedArea">
+                <description>The populated area in which the population is confined.</description>
+                <type>
+                    <class name="agent.ontology.interfaces.PopulatedArea"/>
+                </type>
+            </argument>
+            <return name="undoConfinement">
+                <description>True if the confinement is lifted or if the populated area does not contain confined population, false otherwise.</description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="alert">
+            <description>An agent's physical ability to alert a specified populated area. </description>
+            <argument name="populatedArea">
+                <description>The area whose population must be alerted. </description>
+                <type>
+                    <class name="agent.ontology.interfaces.PopulatedArea"/>
+                </type>
+            </argument>
+            <return>
+                <description>Returns true upon simulation method completion, false otherwise. </description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="sendReport">
+            <description>To send a decisional report corresponding to the given type.&#xD;
+&#xD;
+Display a message.</description>
+            <argument name="typeId">
+                <description>The id of the report.</description>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </argument>
+        </method>
+        <method name="increaseResourceProduction">
+            <description>To increase the production of a resource node, with a specifed quantity.</description>
+            <argument name="resourceNode">
+                <description>The resource node to enact on.</description>
+                <type>
+                    <class name="agent.ontology.interfaces.ResourceNode"/>
+                </type>
+            </argument>
+            <argument name="quantity">
+                <description>The quantity of resource to add to the resource node.</description>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </argument>
+            <return>
+                <description>Returns true upon simulation method completion, false otherwise. </description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="decreaseResourceProduction">
+            <description>To decrease the resource production of a production node, with a specified quantity.</description>
+            <argument name="resourceNode">
+                <description>The resource node to enact on.</description>
+                <type>
+                    <class name="agent.ontology.interfaces.ResourceNode"/>
+                </type>
+            </argument>
+            <argument name="quantity">
+                <description>The quantity of resource to remove from the production of the node.</description>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </argument>
+            <return>
+                <description>Returns true upon simulation method completion, false otherwise. </description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="evacuate">
+            <description>An agent's physical ability to evacuate the populations of a specified populated area. </description>
+            <argument name="populatedArea">
+                <description>The populated area whose populations must be evacuated. </description>
+                <type>
+                    <class name="agent.ontology.interfaces.PopulatedArea"/>
+                </type>
+            </argument>
+            <return name="evacuation">
+                <description>Returns true upon simulation method completion, false otherwise. &#xD;
+</description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="enhanceResourceProductionCapability">
+            <description>To enhance the resource node capability of production, with a specifed quantity.</description>
+            <argument name="resourceNode">
+                <description>The resource node to act on.</description>
+                <type>
+                    <class name="agent.ontology.interfaces.ResourceNode"/>
+                </type>
+            </argument>
+            <argument name="quantity">
+                <description>The amount of additional resource to increase the node's production by.</description>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </argument>
+            <return>
+                <description>Returns true upon simulation method completion, false otherwise. &#xD;
+</description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="damageResourceProductionCapability">
+            <description>To damage the resource node capability of production, with a specifed quantity.</description>
+            <argument name="resourceNode">
+                <description>The resource node to enact on.</description>
+                <type>
+                    <class name="agent.ontology.interfaces.ResourceNode"/>
+                </type>
+            </argument>
+            <argument name="quantity">
+                <description>The quantity of resource to remove from the node capability of production.</description>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </argument>
+            <return>
+                <description>Returns true upon simulation method completion, false otherwise. </description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="ensureVictimsEvacuation">
+            <description>To ensure the evacuation of wounded elements within the &quot;victimsUnit&quot;. Wounded elements will be evacuated by the given &quot;medicalUnit&quot;.</description>
+            <argument name="victims">
+                <description>The victims to evacuate. </description>
+                <type>
+                    <class name="agent.ontology.interfaces.Victims"/>
+                </type>
+            </argument>
+            <argument name="medicalUnit">
+                <description>The medical unit to evacuate victims with. </description>
+                <type>
+                    <class name="agent.ontology.interfaces.Medical"/>
+                </type>
+            </argument>
+            <return>
+                <description>Returns true upon simulation method completion, false otherwise. </description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="undoEvacuate">
+            <description>To lift the evacuation of a population from a populated area.</description>
+            <argument name="populatedArea">
+                <description>The populated area from which the populated is evacuated.</description>
+                <type>
+                    <class name="agent.ontology.interfaces.PopulatedArea"/>
+                </type>
+            </argument>
+            <return name="evacuation">
+                <description>True if the evacuation is lifted or if the populated area does not contain evacuated population, false otherwise.</description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="extractVictims">
+            <description>To extract wounded elements within the &quot;victimsUnit&quot;.</description>
+            <argument name="victimsUnit">
+                <description>The &quot;victimsUnit&quot; to extract wounded elements from.</description>
+                <type>
+                    <class name="agent.ontology.interfaces.Victims"/>
+                </type>
+            </argument>
+            <return>
+                <description>Returns true upon simulation method completion, false otherwise. </description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="enable">
+            <description>An agent's physical ability to activate a specified system. </description>
+            <argument name="system">
+                <description>The system to activate. </description>
+                <type>
+                    <class name="agent.ontology.interfaces.System"/>
+                </type>
+            </argument>
+            <return>
+                <description>Returns true upon simulation method completion, false otherwise. &#xD;
+</description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="disable">
+            <description>An agent's physical ability to deactivate a specified system. </description>
+            <argument name="system">
+                <description>The system to deactivate. </description>
+                <type>
+                    <class name="agent.ontology.interfaces.System"/>
+                </type>
+            </argument>
+            <return>
+                <description>Returns true upon simulation method completion, false otherwise. &#xD;
+</description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="undoAlert">
+            <description>An agent's physical ability to revert alert on a specified populated area. </description>
+            <argument name="populatedArea">
+                <description>The populated area whose populations must be un-alerted. </description>
+                <type>
+                    <class name="agent.ontology.interfaces.PopulatedArea"/>
+                </type>
+            </argument>
+            <return>
+                <description>Returns true upon simulation method completion, false otherwise. &#xD;
+</description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="decontaminate">
+            <description>An agent's physical ability to decontaminate a specified area. </description>
+            <argument name="area">
+                <description>The area to decontaminate. </description>
+                <type>
+                    <class name="agent.ontology.interfaces.ContaminationArea"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="load">
+            <description>For this element (agent Unit) to load the given entity (A loaded entity is ready to be transported).</description>
+            <argument name="entity">
+                <description>The entity to load.</description>
+                <type>
+                    <class name="agent.ontology.interfaces.Transportable"/>
+                </type>
+            </argument>
+            <return>
+                <description>Returns true upon simulation method completion, false otherwise. </description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="unload">
+            <description>For this element (agent Unit) to unload the given entity.</description>
+            <argument name="entity">
+                <description>The transported unit to unload.</description>
+                <type>
+                    <class name="agent.ontology.interfaces.Transportable"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="extinguish">
+            <description>An agent's physical ability to extinguish a specified 'Fire' object.</description>
+            <argument name="fire">
+                <description>The fire to extinguish.</description>
+                <type>
+                    <class name="agent.ontology.interfaces.Fire"/>
+                </type>
+            </argument>
+            <return>
+                <description>Returns true upon simulation method completion, false otherwise. </description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+    </methods>
+</interface>
