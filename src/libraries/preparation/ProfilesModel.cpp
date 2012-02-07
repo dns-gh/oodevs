@@ -171,6 +171,29 @@ void ProfilesModel::DeleteProfile( const UserProfile& profile )
     }
 }
 
+namespace
+{
+    bool Find( const QString& name, const UserProfile* value )
+    {
+        return name == value->GetLogin();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfilesModel::DeleteProfile
+// Created: LGY 2012-02-07
+// -----------------------------------------------------------------------------
+void ProfilesModel::DeleteProfile( const QString& name )
+{
+    T_UserProfiles::iterator it = std::find_if( userProfiles_.begin(), userProfiles_.end(), boost::bind( &::Find, name, _1 ) );
+    if( it != userProfiles_.end() )
+    {
+        const UserProfile* element = *it;
+        userProfiles_.erase( it );
+        delete element;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ProfilesModel::CheckUnicityAndRename
 // Created: JSR 2011-12-12
@@ -285,40 +308,44 @@ const UserProfile* ProfilesModel::Find( const QString& name ) const
 // Name: ProfilesModel::NotifyDeleted
 // Created: MMC 2011-06-24
 // -----------------------------------------------------------------------------
-void ProfilesModel::NotifyDeleted( const kernel::Team_ABC& team)
+void ProfilesModel::NotifyDeleted( const kernel::Team_ABC& team )
 {
     for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         (*it)->NotifyTeamDeleted( team.GetId() );
+    RemoveEmptyProfile();
 }
 
 // -----------------------------------------------------------------------------
 // Name: ProfilesModel::NotifyDeleted
 // Created: MMC 2011-06-24
 // -----------------------------------------------------------------------------
-void ProfilesModel::NotifyDeleted( const kernel::Formation_ABC& formation)
+void ProfilesModel::NotifyDeleted( const kernel::Formation_ABC& formation )
 {
     for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         (*it)->NotifyFormationDeleted( formation.GetId() );
+    RemoveEmptyProfile();
 }
 
 // -----------------------------------------------------------------------------
 // Name: ProfilesModel::NotifyDeleted
 // Created: MMC 2011-06-24
 // -----------------------------------------------------------------------------
-void ProfilesModel::NotifyDeleted( const kernel::Automat_ABC& automat)
+void ProfilesModel::NotifyDeleted( const kernel::Automat_ABC& automat )
 {
     for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         (*it)->NotifyAutomatDeleted( automat.GetId() );
+    RemoveEmptyProfile();
 }
 
 // -----------------------------------------------------------------------------
 // Name: ProfilesModel::NotifyDeleted
 // Created: MMC 2011-06-24
 // -----------------------------------------------------------------------------
-void ProfilesModel::NotifyDeleted( const kernel::Population_ABC& population)
+void ProfilesModel::NotifyDeleted( const kernel::Population_ABC& population )
 {
     for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         (*it)->NotifyPopulationDeleted( population.GetId() );
+    RemoveEmptyProfile();
 }
 
 // -----------------------------------------------------------------------------
@@ -345,4 +372,18 @@ void ProfilesModel::Visit( T_Profiles& profiles ) const
 {
     for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         profiles.insert( (*it)->GetLogin() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ProfilesModel::RemoveEmptyProfile
+// Created: LGY 2012-02-07
+// -----------------------------------------------------------------------------
+void ProfilesModel::RemoveEmptyProfile()
+{
+    std::vector< QString > emptyProfiles;
+    for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+        if( (*it)->Count() == 0 )
+            emptyProfiles.push_back( (*it)->GetLogin() );
+    BOOST_FOREACH( const QString& profile, emptyProfiles )
+        DeleteProfile( profile );
 }
