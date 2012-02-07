@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="security.unit.tasks.StopAlert" source-version="1.0.0" knowledge-class="security.unit.tasks.UnitTask">
+  <parameters/>
+  <stages>
+    <stage>
+      <skills>
+        <skill name="security.unit.skills.StopAlert" main="true"/>
+      </skills>
+    </stage>
+  </stages>
+</task>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.engineer.tasks.DegagerObstacles" source-version="1.0.0" knowledge-class="france.military.platoon.combat.support.engineer.tasks.knowledges.DegagerObstacles">
+    <parameters>
+        <parameter name="obstacles">
+            <description>Les éléments à dégager.</description>
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Removable"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <stages/>
+    <next-task name="sword.military.platoon.tasks.RemoveObstacles">
+        <parameter name="obstacles">
+            <value>
+                <parameter>obstacles</parameter>
+            </value>
+        </parameter>
+    </next-task>
+</task>

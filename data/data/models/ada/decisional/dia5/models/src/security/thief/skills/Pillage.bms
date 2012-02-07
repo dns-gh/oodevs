@@ -1,0 +1,41 @@
+-- **************************************************************************** 
+-- Pillage
+-- ****************************************************************************
+rootnode
+{
+    connections = { skill.links.moveTo };
+
+    -- -------------------------------------------------------------------------------- 
+    -- If all objectives has been reached, begin the node node once 
+    -- again.
+    -- --------------------------------------------------------------------------------
+    done = function( self, params )
+        if params.element ~= nil then
+            self.objectives[ params.element ] = nil
+            params.element:pillage()
+        end
+
+        if next( self.objectives ) == nil then
+            Feedback( self.feedbacks.done, { reason = "pillage done" } )
+        end   
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Node begins
+    -- --------------------------------------------------------------------------------
+    create = function( self )
+        self.objectives = {}
+        for _, v in pairs( self.params.objectives ) do
+            self.objectives[ v ] = v
+        end
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Select next element in objectives and move toward it. 
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        for _, objective in pairs( self.objectives ) do
+            Activate( skill.links.moveTo, objective:proximityLevel(), { element = objective } )
+        end
+    end
+}

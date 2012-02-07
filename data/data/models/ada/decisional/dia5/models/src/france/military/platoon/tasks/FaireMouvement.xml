@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.FaireMouvement" source-version="1.0.0" knowledge-class="sword.military.platoon.tasks.knowledges.MoveAlong">
+    <description>Mouvement simple le long d'un itinéraire.</description>
+    <parameters>
+        <parameter name="objectives">
+            <description>Le ou les élements à rejoindre</description>
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Reachable"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Mouvement" disable-when-done="true">
+            <skills>
+                <skill name="france.military.platoon.skills.MoveAlong" main="true">
+                    <parameter name="entities">
+                        <value>
+                            <parameter>objectives</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>

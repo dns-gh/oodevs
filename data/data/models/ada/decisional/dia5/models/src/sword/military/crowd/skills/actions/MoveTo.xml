@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.crowd.skills.actions.MoveTo" source-version="1.0.0">
+    <description>Déplacement simple vers l'élement passé en paramètre.</description>
+    <parameters>
+        <parameter name="entity">
+            <type>
+                <class name="sword.military.crowd.world.interfaces.Reachable"/>
+            </type>
+        </parameter>
+        <parameter name="pathType" nullable="true">
+            <type>
+                <simple name="numeric"/>
+            </type>
+            <default>
+                <number>0.0</number>
+            </default>
+        </parameter>
+    </parameters>
+    <resources>
+        <resource name="sword.military.crowd.ressources.Move" variable="move"/>
+    </resources>
+</skill>

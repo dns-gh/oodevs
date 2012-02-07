@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.skills.Activate" source-version="1.0.0">
+  <description></description>
+  <parameters>
+    <parameter name="entities" nullable="true">
+      <description>The obstacles to activate.</description>
+      <type>
+        <list>
+          <class name="sword.military.knowledge.decisional.Activable"/>
+        </list>
+      </type>
+      <default>
+        <nil/>
+      </default>
+    </parameter>
+    <parameter name="positions">
+      <description>Positions permettant d'activer les elements.</description>
+      <type>
+        <list>
+          <class name="sword.military.knowledge.decisional.Activating"/>
+        </list>
+      </type>
+    </parameter>
+  </parameters>
+  <goal>
+    <description>Activate obstacle</description>
+  </goal>
+  <modifiers/>
+  <links>
+    <link name="Activate" skill="sword.military.platoon.skills.primitives.Activate"/>
+  </links>
+  <resources/>
+</skill>

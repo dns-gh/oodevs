@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.engineer.skills.ValoriserReparation" source-version="1.0.0">
+  <description>Valoriser des objets
+</description>
+  <parameters>
+    <parameter name="entities">
+      <description>Les éléments à valoriser</description>
+      <type>
+        <list>
+          <class name="sword.military.knowledge.decisional.Improvable"/>
+        </list>
+      </type>
+    </parameter>
+  </parameters>
+  <goal>
+    <description>Valoriser des objets tactiques</description>
+  </goal>
+  <body-type>
+    <class name="sword.military.world.PlatoonAlly"/>
+  </body-type>
+  <links>
+    <link name="moveAndTakePosition" skill="sword.military.platoon.skills.actions.MoveAndTakePosition"/>
+    <link name="observe" skill="sword.military.platoon.skills.actions.Observe"/>
+    <link name="dismount" skill="sword.military.platoon.skills.actions.Dismount"/>
+  </links>
+  <resources>
+    <resource name="sword.military.platoon.resources.BuildCapacity" variable="buildCapacity"/>
+  </resources>
+  <feedbacks>
+    <feedback name="elementFailed">
+      <description>L'element element n'a pas pue etre valorise.</description>
+      <argument name="element">
+        <type>
+          <class name="sword.military.knowledge.decisional.Improvable"/>
+        </type>
+      </argument>
+      <argument name="reason">
+        <description>Le compte rendu indiquant pourquoi on n'a pas pu valoriser.</description>
+        <type>
+          <simple name="numeric"/>
+        </type>
+      </argument>
+    </feedback>
+    <feedback name="elementImproved">
+      <description>L'element element a ete valorise.</description>
+      <argument name="element">
+        <type>
+          <class name="sword.military.knowledge.decisional.Improvable"/>
+        </type>
+      </argument>
+    </feedback>
+    <feedback name="elementNotImprovable">
+      <description>L'element n'est pas valorisable</description>
+      <argument name="element">
+        <type>
+          <class name="sword.military.knowledge.decisional.Buildable"/>
+        </type>
+      </argument>
+    </feedback>
+  </feedbacks>
+</skill>

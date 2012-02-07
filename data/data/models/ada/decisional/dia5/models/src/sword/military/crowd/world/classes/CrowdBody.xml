@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.crowd.world.classes.CrowdBody" source-version="1.0.0" abstract="false">
+    <description>Repr�sente l'agent physique foule. En d'autres termes, cette classe repr�sente la perception par la foule de son propre coprs et de ses capacit�s.</description>
+    <realizes>directia.core.model.RoleBody</realizes>
+    <realizes>common.PhysicalBody</realizes>
+    <methods>
+        <method name="getPosition" abstract="false">
+            <description>Renvoie la position SIM de l'agent.</description>
+        </method>
+        <method name="getMyPosition" abstract="false">
+            <description>Fonction d'intégration retournant un Point qui a pour coordonnées ma position.</description>
+        </method>
+        <method name="moveToItIntegration" abstract="false">
+            <description>INTEGRATION de l'action de mouvement sp�cifique � une foule</description>
+            <argument name="entity">
+                <description>L'entit� � rejoindre</description>
+                <type>
+                    <class name="sword.military.knowledge.decisional.Reachable"/>
+                </type>
+            </argument>
+            <argument name="pathType">
+                <description>Le param�trage du calcul de l'itin�raire</description>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </argument>
+        </method>
+        <method name="destroyMoveToItIntegration" abstract="false">
+            <description>INTEGRATION de la destruction de l'action de mouvement sp�cifique � un platoon</description>
+            <argument name="entity">
+                <description>L'entit� � rejoindre</description>
+                <type>
+                    <class name="sword.military.knowledge.decisional.Reachable"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="RC">
+            <description>Action de rendre compte.</description>
+            <argument>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </argument>
+            <argument>
+                <type>
+                    <class name="directia.core.Object"/>
+                </type>
+            </argument>
+            <argument>
+                <type>
+                    <class name="directia.core.Object"/>
+                </type>
+            </argument>
+        </method>
+        <method name="computeMovementCapability" abstract="false">
+            <description>M�thode d'int�gration qui retourne la valeur des capacit�s de mouvement de l'agent vers une position.</description>
+            <argument name="position">
+                <description>La position que l'agent souhaite rejoindre.</description>
+                <type>
+                    <class name="sword.military.knowledge.decisional.Positionable"/>
+                </type>
+            </argument>
+            <return>
+                <description>Retourne la capacit� de l'agent � utiliser et occuper la position, entre 0 et 100. La capacit� vaut 0 si l'agent ne peut pas utiliser&#xD;
+cette position pour le d�placement et l'occupation, renvoie 100 s'il peut parfaitement l'utiliser.&#xD;
+&#xD;
+L'impl�mentation par d�faut proposer pour cette m�thode utilise le module d'analyse terrain.&#xD;
+D'une point de vue g�n�rale, toutes positions du terrain est une position utilisable par une Unit�.&#xD;
+ </description>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="getTasks" abstract="false">
+            <return>
+                <type>
+                    <list>
+                        <class name="common.Task"/>
+                    </list>
+                </type>
+            </return>
+        </method>
+        <method name="orientateSensor" abstract="false">
+            <description>INTEGRATION de l'action d'observation sp�cifique � un platoon</description>
+            <argument name="entity">
+                <description>L'entit� � observer</description>
+                <type>
+                    <class name="sword.military.knowledge.decisional.Observable"/>
+                </type>
+            </argument>
+        </method>
+        <method name="adoptAgressiveAttitude">
+            <description>M�thode sp�cifique � la classe de foule. Chaque population peut avoir une attidude plus ou moins agressive. Cette attitude peut �tre modifi�e par ordre de conduite ou par la foule elle-m�me (cf. mission &quot;Attack&quot;).</description>
+        </method>
+        <method name="getDomination">
+          <return>
+            <description>Renvoir le domination de la foule.</description>
+            <type>
+              <simple name="numeric"/>
+            </type>
+          </return>
+        </method>
+        <method name="setDomination">
+            <argument>
+                <description>Change la domination de la foule.</description>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </argument>
+        </method>
+        <method name="demonstrate">
+            <description>Action de manifestation d'une foule. L'intensité avec laquelle la foule manifeste dépend de son attitude. Plus l'attitude est agressive, plus l'intensité de la manifestation est grande. L'effet de manifester se traduit par une prise à partie automatique de tous les agents se trouvant dans la foule. C'est cette prise à partie qui sera plus ou moins intense, en fonction de l'attitude.</description>
+        </method>
+         <method name="isContaminated">
+            <description>Indique si l'unité est contaminée</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+    </methods>
+    <predicates>
+        <predicate name="isAgressive" abstract="false">
+            <description>retourne vrai si l'attitude de la foule est agressive.</description>
+        </predicate>
+        <predicate name="isDominated" abstract="false">
+            <description>retourne vrai si la foule est dominée par un contrôle de foule.</description>
+        </predicate>
+    </predicates>
+    <attributes>
+        <attribute name="tasks">
+            <type>
+                <list>
+                    <class name="sword.military.crowd.tasks.knowldege.CrowdTask"/>
+                </list>
+            </type>
+        </attribute>
+    </attributes>
+</class>

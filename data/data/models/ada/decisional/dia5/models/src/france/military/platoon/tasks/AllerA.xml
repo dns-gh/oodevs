@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.AllerA" source-version="1.0.0" knowledge-class="sword.military.platoon.tasks.knowledges.MoveToward">
+  <description>Mouvement simple vers un objectif désigné sur le terrain.</description>
+  <parameters>
+    <parameter name="objectif">
+      <type>
+        <class name="sword.military.knowledge.decisional.Reachable"/>
+      </type>
+    </parameter>
+  </parameters>
+  <next-task name="sword.military.platoon.tasks.MoveToward">
+    <parameter name="objectives">
+      <value>
+        <list>
+          <parameter>objectif</parameter>
+        </list>
+      </value>
+    </parameter>
+  </next-task>
+</task>

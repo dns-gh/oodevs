@@ -1,0 +1,11 @@
+-- **************************************************************************** 
+-- Goes to Mount state
+-- ****************************************************************************
+rootnode 
+{
+    acquire = { [ skill.resources.mount ] = 1 },
+
+    select = function( self )
+        meKnowledge:mount()
+    end,
+}

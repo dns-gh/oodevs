@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.support.rens.tasks.ROHUM_RenseignerSur" source-version="1.0.0" knowledge-class="france.military.company.combat.support.rens.tasks.knowledges.ROHUM_RenseignerSurEffect">
+    <parameters>
+        <parameter name="area">
+            <description>Zone à surveiller.</description>
+            <type>
+                <class name="sword.military.world.Area"/>
+            </type>
+        </parameter>
+        <parameter name="byNight" nullable="true">
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Renseignement sur la zone" disable-when-done="true">
+            <skills>
+                <skill name="sword.military.company.skills.Lead" main="true">
+                    <parameter name="companyTask">
+                        <value>
+                            <string>france.military.company.combat.support.rens.tasks.ROHUM_RenseignerSur</string>
+                        </value>
+                    </parameter>
+                    <parameter name="mainTasks">
+                        <value>
+                            <string>france.military.platoon.combat.support.rens.tasks.ROHUM_RenseignerSur</string>
+                        </value>
+                    </parameter>
+                    <parameter name="supportTasks">
+                        <value>
+                            <string>france.military.platoon.tasks.Suivre</string>
+                        </value>
+                    </parameter>
+                    <parameter name="defaultTask">
+                        <value>
+                            <string>france.military.platoon.tasks.Suivre</string>
+                        </value>
+                    </parameter>
+                    <parameter name="taskForSupporting">
+                        <value>
+                            <string>france.military.platoon.tasks.Renforcer</string>
+                        </value>
+                    </parameter>
+                    <parameter name="withPC">
+                        <value>
+                            <boolean>false</boolean>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>

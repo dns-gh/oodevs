@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="security.deprecated.behaviors.tasks.Animate" source-version="1.0.0" knowledge-class="security.unit.tasks.UnitTask">
+  <parameters>
+    <parameter name="elementToAnimate">
+      <type>
+        <class name="security.deprecated.ontologies.interfaces.Animatable"/>
+      </type>
+    </parameter>
+  </parameters>
+  <stages>
+    <stage label="animation" permanent="true">
+      <skills>
+        <skill name="security.deprecated.behaviors.skills.generic.Operate">
+          <parameter name="element">
+            <value>
+              <parameter>elementToAnimate</parameter>
+            </value>
+          </parameter>
+        </skill>
+      </skills>
+    </stage>
+  </stages>
+</task>

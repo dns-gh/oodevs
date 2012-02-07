@@ -1,0 +1,11 @@
+rootnode 
+{
+    -- -------------------------------------------------------------------------------- 
+    -- Init
+    -- --------------------------------------------------------------------------------
+    create = function( self )
+        myself.altitude = self.params.HauteurDeVol
+        DEC_Agent_HauteurDeVol( myself.altitude )
+        Feedback( self.feedbacks.done, additionalParams )
+    end,
+}

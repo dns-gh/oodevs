@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="security.ontologies.classes.Object" source-version="1.0.0" abstract="false" extends="sword.military.world.Object">
+  <realizes>security.ontologies.interfaces.Extinguishable</realizes>
+  <realizes>security.ontologies.interfaces.Stock</realizes>
+  <methods>
+    <method name="canExtinguishIt" abstract="false">
+      <description>Renvoie 'vrai' si l'agent peut agir sur l'élément pour l'éteindre.</description>
+      <return>
+        <type>
+          <simple name="boolean"/>
+        </type>
+      </return>
+    </method>
+    <method name="extinguishIt" abstract="false">
+      <return>
+        <type>
+          <simple name="boolean"/>
+        </type>
+      </return>
+    </method>
+    <method name="burningLevel" abstract="false">
+      <description>Returns 0-100 value. 0 means extinguished.</description>
+      <return>
+        <type>
+          <simple name="numeric"/>
+        </type>
+      </return>
+    </method>
+    <method name="areFlamesNearby" abstract="false">
+      <return>
+        <type>
+          <simple name="boolean"/>
+        </type>
+      </return>
+    </method>
+    <method name="supply" abstract="false">
+      <description>Alimente le stock.</description>
+      <argument name="resourceTypes">
+        <type>
+          <list>
+            <any/>
+          </list>
+        </type>
+      </argument>
+      <return>
+        <description>Vrai le chargement a pu être déposé.</description>
+        <type>
+          <simple name="boolean"/>
+        </type>
+      </return>
+    </method>
+    <method name="extract" abstract="false">
+      <description>Vide le stock.</description>
+      <argument name="resourceTypes">
+        <type>
+          <list>
+            <any/>
+          </list>
+        </type>
+      </argument>
+      <return>
+        <description>Vrai si le chargement a pu être retiré.</description>
+        <type>
+          <simple name="boolean"/>
+        </type>
+      </return>
+    </method>
+    <method name="isExtractPossible" abstract="false">
+      <argument name="resourceTypes">
+        <type>
+          <list>
+            <any/>
+          </list>
+        </type>
+      </argument>
+      <return>
+        <type>
+          <simple name="boolean"/>
+        </type>
+      </return>
+    </method>
+    <method name="isSupplyPossible" abstract="false">
+      <argument name="resourceTypes">
+        <type>
+          <list>
+            <any/>
+          </list>
+        </type>
+      </argument>
+      <return>
+        <type>
+          <simple name="boolean"/>
+        </type>
+      </return>
+    </method>
+    <method name="isDistributePossible" abstract="false">
+      <argument name="population">
+        <type>
+          <class name="security.ontologies.classes.Crowd"/>
+        </type>
+      </argument>
+      <return>
+        <type>
+          <simple name="boolean"/>
+        </type>
+      </return>
+    </method>
+    <method name="distribute" abstract="false">
+      <description>Distribute stock to population.</description>
+    </method>
+  </methods>
+  <predicates>
+    <predicate name="isExtinguished" abstract="false"/>
+  </predicates>
+</class>

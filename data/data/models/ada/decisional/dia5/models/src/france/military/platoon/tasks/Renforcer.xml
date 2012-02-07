@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Renforcer" source-version="1.0.0" knowledge-class="sword.military.platoon.tasks.knowledges.Reinforce">
+    <parameters>
+        <parameter name="objective">
+            <description>L'éléments à renforcer.</description>
+            <type>
+                <class name="sword.military.knowledge.decisional.Reinforcable"/>
+            </type>
+        </parameter>
+        <parameter name="positions" nullable="true">
+            <description>Les positions de renforcement.</description>
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Reinforcing"/>
+                </list>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+    </parameters>
+    <next-task name="sword.military.platoon.tasks.Reinforce">
+        <parameter name="objective">
+            <value>
+                <parameter>objective</parameter>
+            </value>
+        </parameter>
+        <parameter name="positions">
+            <value>
+                <parameter>positions</parameter>
+            </value>
+        </parameter>
+    </next-task>
+</task>

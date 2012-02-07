@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.skills.primitives.Unload" source-version="1.0.0">
+    <description>Aller déposer/débarquer les élements passés en paramètre.</description>
+    <parameters>
+        <parameter name="entities">
+            <description>Les éléments à débarquer.</description>
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Loadable"/>
+                </list>
+            </type>
+        </parameter>
+        <parameter name="positions" nullable="true">
+            <description>Les positions possibles de débarquement.</description>
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Loading"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <goal>
+        <description>Débarquer/décharger des éléments.</description>
+    </goal>
+    <links>
+        <link name="moveAndTakePosition" skill="sword.military.platoon.skills.actions.MoveAndTakePosition"/>
+        <link name="observe" skill="sword.military.platoon.skills.actions.Observe"/>
+    </links>
+</skill>

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.crowd.world.classes.UrbanBlock" source-version="1.0.0" extends="sword.military.crowd.world.classes.LocalizedElement">
+  <realizes>sword.military.crowd.world.interfaces.Damageable</realizes>
+  <methods>
+    <method name="getPosition">
+      <description>Renvoie la position (sim) de l'objet simul�. Cette impl�mentation renvoie le barycentre du bloc.</description>
+    </method>
+    <method name="damageIt" abstract="false">
+      <description>Renvoie VRAI quand le block urbain est complètement déteriorer, vis à vis des capacités de la foule.</description>
+      <return>
+        <type>
+          <simple name="boolean"/>
+        </type>
+      </return>
+    </method>
+    <method name="structuralState" abstract="false">
+      <description>Renvoie l'état structurel du bloc urbain: 0 pour complètement détruit et 1 pour un très bon état.</description>
+      <return>
+        <type>
+          <simple name="numeric"/>
+        </type>
+      </return>
+    </method>
+    <method name="isReached">
+      <description>Retourne vrai si le bord du bloc urbain est atteint par au moins un flux de la foule.</description>
+      <return>
+        <type>
+          <simple name="boolean"/>
+        </type>
+      </return>
+    </method>
+  </methods>
+  <predicates>
+    <predicate name="isDestroyed">
+      <description>Retourne vrai si le bloc urbain est détruit.</description>
+    </predicate>
+  </predicates>
+</class>

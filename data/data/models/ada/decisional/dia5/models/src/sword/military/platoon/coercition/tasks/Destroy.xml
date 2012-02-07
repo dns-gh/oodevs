@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.coercition.tasks.Destroy" source-version="1.0.0" knowledge-class="sword.military.platoon.coercition.tasks.knowledges.Destroy">
+	<parameters>
+		<parameter name="entities">
+			<type>
+				<list>
+					<class name="sword.military.knowledge.decisional.Destroyable"/>
+				</list>
+			</type>
+		</parameter>
+	</parameters>
+	<stages>
+		<stage label="Destruction" disable-when-done="true">
+			<skills>
+				<skill name="sword.military.platoon.coercition.skills.primitives.Destroy" main="true">
+					<parameter name="entities">
+						<value>
+							<parameter>entities</parameter>
+						</value>
+					</parameter>
+					<parameter name="positions">
+						<value>
+							<call method="sword.military.queries.tactical.getPositionsToDestroy">
+								<parameter name="elementsToDestroy">
+									<value>
+										<parameter>entities</parameter>
+									</value>
+								</parameter>
+							</call>
+						</value>
+					</parameter>
+				</skill>
+			</skills>
+		</stage>
+	</stages>
+</task>

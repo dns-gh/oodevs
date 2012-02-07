@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.knowledges.ProduireEffect" source-version="1.0.0" extends="sword.military.company.tasks.knowledges.CompanyTask">
+	<methods>
+		<method name="getObjective">
+			<return>
+				<type>
+					<list>
+						<class name="directia.core.Object"/>
+					</list>
+				</type>
+			</return>
+		</method>
+	</methods>
+</class>

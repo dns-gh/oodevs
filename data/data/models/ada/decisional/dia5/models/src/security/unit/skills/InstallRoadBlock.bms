@@ -1,0 +1,50 @@
+-- **************************************************************************** 
+-- Install: move toward the installing positions and install the road block.
+-- ****************************************************************************
+rootnode
+{
+    connections = { skill.links.build, skill.links.animate };
+
+    -- -------------------------------------------------------------------------------- 
+    -- Movement is done
+    -- --------------------------------------------------------------------------------
+    done = function( self, params )
+        if self.builded == true then
+            Feedback( self.feedbacks.done, { reason = "mission completed" } )
+        else
+            self.builded = true
+        end
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Node begins, get installing position for the roadblock
+    -- --------------------------------------------------------------------------------
+    create = function( self )
+        self.builded = false
+        self.genRoadBlocks = {}
+        for _, zone in pairs( self.params.roadblockPositions ) do
+            self.genRoadBlocks[ #self.genRoadBlocks + 1 ] = CreateKnowledge( integration.ontology.types.genObject, DEC_CreateDynamicGenObject( "Barrage", zone.source, true ) )
+        end
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Select nearest element in objectives and move toward it. 
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        if meKnowledge.mustStopAndGotoGarage == true then
+            meKnowledge.mustStopAndGotoGarage = nil
+            Feedback( self.feedbacks.done, { reason = "stopped" } )
+        end
+
+    
+        if not self.builded then
+            Activate( skill.links.build, 1, { entities   = self.genRoadBlocks, 
+                                              positions = self.genRoadBlocks } )
+   	    else
+	          for _, genRoadBlock in ipairs( self.genRoadBlocks ) do
+	            Activate( skill.links.animate, genRoadBlock:animationPriority(), { entities   = { genRoadBlock }, 
+                                                                                   positions  = { genRoadBlock } } )
+            end
+        end
+    end
+}

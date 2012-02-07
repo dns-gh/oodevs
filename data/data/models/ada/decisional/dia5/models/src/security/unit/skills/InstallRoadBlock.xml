@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="security.unit.skills.InstallRoadBlock" source-version="1.0.0">
+    <parameters>
+        <parameter name="roadblockPositions">
+            <type>
+                <list>
+                    <class name="security.ontologies.classes.Zone"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <links>
+        <link name="build" skill="sword.military.platoon.skills.primitives.Build"/>
+        <link name="animate" skill="sword.military.platoon.skills.primitives.Animate"/>
+    </links>
+    <resources>
+        <resource name="security.deprecated.behaviors.ressources.InstallCapacity" variable="installCapacity"/>
+    </resources>
+</skill>

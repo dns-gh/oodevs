@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.crowd.world.classes.LocalizedElement" source-version="1.0.0" abstract="true">
+  <realizes>sword.military.crowd.world.interfaces.Reachable</realizes>
+  <methods>
+    <method name="destroyMoveToIt" abstract="false">
+      <return>
+        <type>
+          <simple name="boolean"/>
+        </type>
+      </return>
+    </method>
+    <method name="moveToIt" abstract="false">
+      <description>Action de se déplacer vers l'élément.&#xD;
+          Cette action permet à la foule de se déplacer de façon simple vers l'élément.&#xD;
+          </description>
+      <argument name="pathType">
+        <description>Le paramètrage du calcul de l'itinéraire</description>
+        <type>
+          <simple name="numeric"/>
+        </type>
+      </argument>
+      <return>
+        <type>
+          <simple name="boolean"/>
+        </type>
+      </return>
+    </method>
+    <method name="isReached">
+      <description>Retourne vrai si la connaissance est atteinte par au moins une partie de la foule (flux ou concentration).</description>
+      <return>
+        <type>
+          <simple name="boolean"/>
+        </type>
+      </return>
+    </method>
+  </methods>
+</class>

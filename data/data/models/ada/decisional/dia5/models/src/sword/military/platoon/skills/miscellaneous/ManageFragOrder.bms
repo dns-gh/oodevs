@@ -1,0 +1,48 @@
+-- **************************************************************************** 
+-- Force ratio skill
+-- ****************************************************************************
+rootnode
+{
+    connections =
+    {
+        skill.nodes.UpdateROE,
+        skill.nodes.StartMission
+    },
+
+    done = function( self ) end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Apply the frag order 
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        local Activate = Activate
+        for _, fragOrder in ipairs( self.params.fragOrders ) do
+            if fragOrder:isROE() then
+              Activate( skill.nodes.UpdateROE, 1, { fragOrder = fragOrder } )
+            elseif fragOrder:isTask() then
+              Activate( skill.nodes.StartMission, 1, { fragOrder = fragOrder } )
+            end
+        end          
+        -- DDA : complete with other frag orders
+    end
+}
+
+-- -------------------------------------------------------------------------------- 
+-- Update frag order
+-- --------------------------------------------------------------------------------
+node "UpdateROE"
+{
+    select = function( self )
+        self.params.fragOrder:updateROE()
+    end
+}
+
+-- -------------------------------------------------------------------------------- 
+-- Start frag order
+-- --------------------------------------------------------------------------------
+node "StartMission"
+{
+    select = function( self )
+        self.params.fragOrder:startTask()
+    end
+}

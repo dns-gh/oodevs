@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="security.unit.skills.ExtractThenSupply" source-version="1.0.0">
+  <parameters>
+    <parameter name="supplyPoint">
+      <type>
+        <class name="security.ontologies.interfaces.Stock"/>
+      </type>
+    </parameter>
+    <parameter name="resourceTypes">
+      <type>
+        <list>
+          <any/>
+        </list>
+      </type>
+    </parameter>
+    <parameter name="sourcePoints">
+      <type>
+        <list>
+          <class name="security.ontologies.interfaces.Stock"/>
+        </list>
+      </type>
+    </parameter>
+    <parameter name="waitForStockAvailable">
+      <type>
+        <simple name="boolean"/>
+      </type>
+    </parameter>
+  </parameters>
+  <modifiers/>
+  <body-type>
+    <class name="security.unit.body.Unit"/>
+  </body-type>
+  <links>
+    <link name="extract" skill="security.unit.skills.ExtractFromStock"/>
+    <link name="supply" skill="security.unit.skills.SupplyStock"/>
+  </links>
+  <resources/>
+</skill>

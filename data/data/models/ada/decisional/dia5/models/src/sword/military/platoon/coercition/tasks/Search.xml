@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.coercition.tasks.Search" source-version="1.0.0" knowledge-class="sword.military.platoon.coercition.tasks.knowledges.Search">
+	<description>
+        Ratisser des objectifs par ordre de priorité.
+    </description>
+	<parameters>
+		<parameter name="objectives">
+			<description>Les objectifs à fouiller.</description>
+			<type>
+				<list>
+					<class name="sword.military.knowledge.Searchable"/>
+					<class name="sword.military.knowledge.decisional.Reconnoitring"/>
+				</list>
+			</type>
+		</parameter>
+	</parameters>
+	<goal>
+		<description>Fouiller les objectifs passés en paramètre.</description>
+	</goal>
+	<stages>
+		<stage label="Fouille des objectifs" disable-when-done="true">
+			<description>Mouvement tactique et reonnaissance des objectifs. Détection des ennemis, prise de contact si possible.</description>
+			<goal>
+				<description>Obtenir des informations sur les objectifs avec agressivité.</description>
+			</goal>
+			<let name="entitiesToEngage">
+				<value>
+					<call method="sword.military.queries.enemies.getEnemiesInRange">
+						<parameter name="probabilityToHit">
+							<value>
+								<number>0.5</number>
+							</value>
+						</parameter>
+					</call>
+				</value>
+			</let>
+			<skills>
+				<skill name="sword.military.platoon.coercition.skills.primitives.Search" main="true" priority="0.9">
+					<parameter name="entities">
+						<value>
+							<parameter>objectives</parameter>
+						</value>
+					</parameter>
+					<parameter name="positions">
+						<value>
+							<parameter>objectives</parameter>
+						</value>
+					</parameter>
+				</skill>
+				<skill name="sword.military.platoon.coercition.skills.Engage" priority="0.1">
+					<parameter name="entities">
+						<value>
+							<parameter>entitiesToEngage</parameter>
+						</value>
+					</parameter>
+					<parameter name="positions">
+						<value>
+							<call method="sword.military.queries.tactical.getPositionsToDestroy">
+								<parameter name="elementsToDestroy">
+									<value>
+										<parameter>entitiesToEngage</parameter>
+									</value>
+								</parameter>
+							</call>
+						</value>
+					</parameter>
+				</skill>
+			</skills>
+		</stage>
+	</stages>
+</task>

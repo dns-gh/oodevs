@@ -1,0 +1,138 @@
+-- **************************************************************************** 
+-- TransportLoad.
+-- self.params.units: units to transport
+-- self.params.loadingPoint: loading area
+-- self.params.destination: destination where 
+-- ****************************************************************************
+rootnode
+{
+    connections = {
+        skill.links.moveToward,
+        skill.nodes.QueueForLoad,
+        skill.nodes.LoadQueue,
+        skill.nodes.UnloadQueue,
+        skill.nodes.Reports },
+
+    -- unite arrivee a destination
+    done = function( self, params, additionalParams )
+        if additionalParams.element == self.params.destination then
+            self.arrivedDestination = true
+        elseif additionalParams.element == self.params.loadingPoint then
+            self.arrivedLoadPoint = true
+        end
+    end,
+    --element ajoute a la queue
+    queued = function( self, params, additionalParams )
+        self.loadableUnits[ additionalParams.element ] = nil
+        self.newqueued = true
+        if not next(self.loadableUnits) then
+            self.everybodyQueued = true
+        end
+    end,
+    
+    -- changement de destination quand le (de)chargement est fini
+    loaded = function( self )
+        self.position = self.params.destination
+    end,
+    unloaded = function( self )
+        self.position = self.params.loadingPoint
+         if meKnowledge:isTransportFinished() then
+            self.newqueued = false
+            if self.everybodyQueued then
+                Feedback( self.feedbacks.done )
+            end
+        end
+    end,
+
+    -- init
+    create = function( self )
+        -- filtrer les unites transportables
+        self.loadableUnits = {}
+        for _, unit in pairs( self.params.units ) do
+            if unit:canTransportIt( self.params.onlyLoadable ) then
+                self.loadableUnits[ unit ] = true
+            end
+        end
+        if not next(self.loadableUnits) then
+            Activate( skill.nodes.Reports, 1, { RC = eRC_TransportImpossiblePasDeMoyens } )
+            Feedback( self.feedbacks.done )
+        end
+        self.position = self.params.loadingPoint
+        self.arrivedLoadPoint = false
+        self.arrivedDestination = false
+        self.everybodyQueued = false
+        self.newqueued = false
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+        local emptyTable = emptyTable
+
+        --liste des unites a transporter
+        if self.arrivedLoadPoint then
+            for unit, _ in pairs( self.loadableUnits ) do
+                if unit:readyForBeingTransported() then
+                    Activate( skill.nodes.QueueForLoad, 1, { unit = unit } )
+                end
+            end
+        end
+
+        --charger
+        if self.newqueued and self.arrivedLoadPoint then
+            Activate( skill.nodes.LoadQueue, 1, emptyTable )
+        end
+
+        --decharger
+        if self.arrivedDestination then
+            Activate( skill.nodes.UnloadQueue, 1, emptyTable )
+        end
+
+        -- deplacements
+        Activate( skill.links.moveToward, 1, { entities = { self.position } } )
+        self.arrivedLoadPoint = false
+        self.arrivedDestination = false
+    end,
+}
+
+node "QueueForLoad"
+{
+    feedbacks = { "queued" },
+
+    create = function( self )
+        self.params.unit:addToTransport( self.params.onlyLoadable )
+        Feedback( self.feedbacks.queued, { element = self.params.unit } )
+    end,
+}
+
+node "LoadQueue"
+{
+    feedbacks = { "loaded" },
+    
+    acquire = { [ skill.resources.loadcapacity ] = 1 },
+    
+    select = function( self )
+        if meKnowledge:transportTroups() then
+            Feedback( self.feedbacks.loaded )
+        end
+    end,
+}
+
+node "UnloadQueue"
+{
+    feedbacks = { "unloaded" },
+    
+    acquire = { [ skill.resources.loadcapacity ] = 1 },
+    
+    select = function( self )
+        if meKnowledge:dropTroups() then
+            Feedback( self.feedbacks.unloaded )
+        end
+    end,
+}
+
+node "Reports"
+{
+    create = function( self )
+        meKnowledge:RC( self.params.RC )
+    end,
+}

@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.tasks.Recueillir" source-version="1.0.0" knowledge-class="sword.military.platoon.tasks.knowledges.MoveToward">
+    <description>Recueillir</description>
+    <parameters>
+        <parameter name="objectives">
+            <description>L'objectif : l'entité amie à recueillir.</description>
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Positionable"/>
+                </list>
+            </type>
+        </parameter>
+        <parameter name="positions">
+            <description>Les postions : postion permettant d'observer l'unité alliée et d'engager les ennemis.</description>
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Destroying"/>
+                    <class name="sword.military.knowledge.decisional.Observing"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <goal>
+        <description>Se déplacer sur une position afin d'observer l'unité alliée à recueillir et engager les ennemis à côté de l'unité alliée.</description>
+    </goal>
+    <stages/>
+    <next-task name="sword.military.platoon.coercition.tasks.Assist">
+        <parameter name="objectives">
+            <value>
+                <parameter>objectives</parameter>
+            </value>
+        </parameter>
+        <parameter name="positions">
+            <value>
+                <parameter>positions</parameter>
+            </value>
+        </parameter>
+    </next-task>
+</task>

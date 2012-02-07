@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.coercition.skills.primitives.Destroy" source-version="1.0.0">
+    <description>Atteindre une position de tir et engager un élément par le feu (tir offensif) et de le détruire totalement</description>
+    <parameters>
+        <parameter name="entities">
+            <description>Les éléments à détruire.</description>
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Destroyable"/>
+                </list>
+            </type>
+        </parameter>
+        <parameter name="positions" nullable="true">
+            <description>Positions possibles de destruction.</description>
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Destroying"/>
+                </list>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+    </parameters>
+    <goal>
+        <description>Détruire les éléments.</description>
+    </goal>
+    <modifiers/>
+    <links>
+        <link name="moveAndTakePosition" skill="sword.military.platoon.skills.actions.MoveAndTakePosition">
+            <description>Lien vers le skill MoveAndTakePosition</description>
+        </link>
+        <link name="observe" skill="sword.military.platoon.skills.actions.Observe">
+            <description>Lien vers le skill Observe</description>
+        </link>
+    </links>
+    <resources>
+        <resource name="sword.military.platoon.resources.EngageCapacity" variable="engage">
+            <description>Capacité physiques d'engagement</description>
+        </resource>
+    </resources>
+</skill>

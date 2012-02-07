@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="security.deprecated.behaviors.skills.generic.Operate" source-version="1.0.0">
+    <parameters>
+        <parameter name="element">
+            <type>
+                <class name="security.deprecated.ontologies.interfaces.Animatable"/>
+            </type>
+        </parameter>
+    </parameters>
+    <body-type>
+        <class name="security.deprecated.ontologies.interfaces.body.Animater"/>
+        <class name="security.ontologies.interfaces.body.Motional"/>
+    </body-type>
+    <links>
+        <link name="moveTo" skill="security.unit.skills.MoveTo"/>
+    </links>
+    <resources>
+        <resource name="security.deprecated.behaviors.ressources.AnimationCapacity" variable="animateCapacity"/>
+    </resources>
+</skill>

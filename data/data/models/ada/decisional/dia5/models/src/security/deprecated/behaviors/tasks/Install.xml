@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="security.deprecated.behaviors.tasks.Install" source-version="1.0.0" knowledge-class="security.unit.tasks.UnitTask">
+  <parameters>
+    <parameter name="element">
+      <type>
+        <class name="security.ontologies.interfaces.Installable"/>
+        <class name="security.deprecated.ontologies.interfaces.Animatable"/>
+      </type>
+    </parameter>
+  </parameters>
+  <stages>
+    <stage label="installation" disable-when-done="true">
+      <skills>
+        <skill name="security.deprecated.behaviors.skills.generic.Install" main="true">
+          <parameter name="element">
+            <value>
+              <parameter>element</parameter>
+            </value>
+          </parameter>
+        </skill>
+      </skills>
+    </stage>
+  </stages>
+</task>

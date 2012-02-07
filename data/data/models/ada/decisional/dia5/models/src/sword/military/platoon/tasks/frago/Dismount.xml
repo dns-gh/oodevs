@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.tasks.frago.Dismount" source-version="1.0.0">
+  <description>Ordre simple de débarquer.</description>
+  <stages>
+    <stage label="Debarquement" permanent="true">
+      <skills>
+        <skill name="sword.military.platoon.skills.actions.Dismount" priority="1000.0"/>
+      </skills>
+    </stage>
+  </stages>
+</task>

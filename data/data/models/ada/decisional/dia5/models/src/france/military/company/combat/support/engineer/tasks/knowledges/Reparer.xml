@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.support.engineer.tasks.knowledges.Reparer" source-version="1.0.0" extends="sword.military.company.tasks.knowledges.CompanyTask">
+    <methods>
+        <method name="getObstaclesPlan">
+            <return>
+                <type>
+                    <list>
+                        <class name="sword.military.knowledge.decisional.Buildable"/>
+                    </list>
+                </type>
+            </return>
+        </method>
+        <method name="getWithImprovement">
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="getPositions">
+            <return>
+                <type>
+                    <list>
+                        <class name="sword.military.knowledge.decisional.Reachable"/>
+                    </list>
+                </type>
+            </return>
+        </method>
+        <method name="getFinalMeetingPoint">
+            <return>
+                <type>
+                    <class name="sword.military.knowledge.decisional.Reachable"/>
+                </type>
+            </return>
+        </method>
+        <method name="getMeetingPoint">
+            <return>
+                <type>
+                    <list>
+                        <class name="sword.military.knowledge.decisional.Reachable"/>
+                    </list>
+                </type>
+            </return>
+        </method>
+        <method name="getObstaclesParameter">
+            <description>Retourne la liste d'obstacles passé en parametre de l'automate.</description>
+            <return name="obstacles">
+                <type>
+                    <list>
+                        <class name="directia.core.Object"/>
+                    </list>
+                </type>
+            </return>
+        </method>
+    </methods>
+</class>

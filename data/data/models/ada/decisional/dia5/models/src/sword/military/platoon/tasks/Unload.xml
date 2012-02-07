@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.tasks.Unload" source-version="1.0.0">
+  <parameters>
+    <parameter name="elements">
+      <type>
+        <list>
+          <class name="sword.military.knowledge.decisional.Loadable"/>
+        </list>
+      </type>
+    </parameter>
+    <parameter name="position">
+      <type>
+        <class name="sword.military.knowledge.decisional.Loading"/>
+      </type>
+    </parameter>
+  </parameters>
+  <stages>
+    <stage label="Debarquement des unités" disable-when-done="true">
+      <skills>
+        <skill name="sword.military.platoon.skills.primitives.Unload" main="true">
+          <parameter name="entities">
+            <value>
+              <parameter>elements</parameter>
+            </value>
+          </parameter>
+          <parameter name="positions">
+            <value>
+              <list>
+                <parameter>position</parameter>
+              </list>
+            </value>
+          </parameter>
+        </skill>
+      </skills>
+    </stage>
+  </stages>
+</task>

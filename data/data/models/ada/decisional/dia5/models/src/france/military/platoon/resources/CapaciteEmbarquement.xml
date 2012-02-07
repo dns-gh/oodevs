@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.resources.CapaciteEmbarquement" source-version="1.0.0">
+  <description>Capacite de charger quelqu'un pour l'ammener à une destination. On ne peut pas charger et decharger en meme temps.</description>
+</resource>

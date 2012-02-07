@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.crowd.world.interfaces.Reachable" source-version="1.0.0">
+    <methods>
+        <method name="moveToIt">
+            <description>Représente les propriétés de toute élément atteignable par un agent foule.&#xD;
+          </description>
+            <argument name="pathType">
+                <description>Le paramètrage du calcul de l'itinéraire</description>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="destroyMoveToIt">
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+    </methods>
+</interface>

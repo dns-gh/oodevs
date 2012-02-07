@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.tasks.Fouiller" source-version="1.0.0" knowledge-class="sword.military.platoon.coercition.tasks.knowledges.Search">
+    <description>Fouiller les objectifs pour détecter des éléments cachés (comme des individus isolés cachés dans un bloc par exemple).</description>
+    <parameters>
+        <parameter name="objectifs">
+            <description>Les objectifs à fouiller.</description>
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.Searchable"/>
+                    <class name="sword.military.knowledge.decisional.Reconnoitring"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <goal>
+        <description>Se déplacer tactiquement vers l'objectif et le fouiller.</description>
+    </goal>
+    <next-task name="sword.military.platoon.coercition.tasks.Search">
+        <parameter name="objectives">
+            <value>
+                <parameter>objectifs</parameter>
+            </value>
+        </parameter>
+    </next-task>
+</task>

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="security.ontologies.interfaces.Pillable" source-version="1.0.0" extends="sword.military.knowledge.decisional.Reachable">
+  <methods>
+    <method name="pillage"/>
+  </methods>
+</interface>

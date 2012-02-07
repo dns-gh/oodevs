@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.company.queries.getDefaultEntitiesToLeadWithoutPC" source-version="1.0.0">
+  <description>Retourne tout élément de groupe non PC que l'on peut commander.</description>
+  <parameters/>
+  <target name="UnitsWithoutPC">
+    <type>
+      <class name="sword.military.knowledge.decisional.Commanding"/>
+    </type>
+  </target>
+</query>

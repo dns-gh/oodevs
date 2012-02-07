@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.skills.actions.Mount" source-version="1.0.0">
+  <description>Ce skill fait embarquer l'entité.</description>
+  <body-type>
+    <class name="sword.military.knowledge.Mountable"/>
+  </body-type>
+  <resources>
+    <resource name="sword.military.platoon.resources.MountCapacity" variable="mount"/>
+  </resources>
+</skill>

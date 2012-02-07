@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="security.deprecated.ontologies.interfaces.body.Animater" source-version="1.0.0" extends="directia.core.model.RoleBody">
+  <description>Représente la capacité d'action de l'agent simulé à animer un élement pour activer une propriété particulière de ce dernier.&#xD;
+</description>
+  <methods>
+    <method name="animate">
+      <description>Animer un élément pour activer une propriété particulière de ce dernier.</description>
+      <argument name="element">
+        <type>
+          <class name="security.deprecated.ontologies.interfaces.Animatable"/>
+        </type>
+      </argument>
+      <return>
+        <description>Renvoie 'vrai' si l'action d'animation de l'élément est effective, c'est à dire que la propriété de l'élément est activée. Renvoie 'faux' sinon (par exemple si un délai de mise en oeuvre est nécéssaire au niveau de l'agent simulé).</description>
+        <type>
+          <simple name="boolean"/>
+        </type>
+      </return>
+    </method>
+  </methods>
+</interface>

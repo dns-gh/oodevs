@@ -1,0 +1,33 @@
+-- **************************************************************************** 
+-- MoveAlong
+-- This action uses "moveTo" on each objectives. 
+-- ****************************************************************************
+rootnode
+{
+    connections = { skill.links.moveTo },
+
+    -- -------------------------------------------------------------------------------- 
+    -- Once first element is reached, get the next one by incrementing iterator.
+    -- --------------------------------------------------------------------------------
+    done = function( self, params )
+        self.nextTargetIndex = self.nextTargetIndex + 1
+        if self.nextTargetIndex > #self.params.entities then
+            Feedback( self.feedbacks.done )
+        end
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Init
+    -- --------------------------------------------------------------------------------
+    create = function( self )
+        self.nextTargetIndex = 1
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Move toward the current element.
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        local Activate = Activate
+        Activate( skill.links.moveTo, 1, { entity  =  self.params.entities[ self.nextTargetIndex ] } )
+    end
+}

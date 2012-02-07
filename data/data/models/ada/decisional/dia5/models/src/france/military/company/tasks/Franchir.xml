@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.Franchir" source-version="1.0.0" knowledge-class="sword.military.company.tasks.knowledges.PassThrough">
+  <parameters>
+    <parameter name="crossingSite">
+      <description>Le site de franchissement</description>
+      <type>
+        <class name="sword.military.world.Object"/>
+      </type>
+    </parameter>
+    <parameter name="objective">
+      <description>L'élement à rejoindre</description>
+      <type>
+        <class name="sword.military.knowledge.decisional.Reaching"/>
+      </type>
+    </parameter>
+  </parameters>
+  <stages/>
+  <next-task name="sword.military.company.tasks.PassThrough">
+    <parameter name="companyTask">
+      <value>
+        <string>france.military.company.tasks.Franchir</string>
+      </value>
+    </parameter>
+    <parameter name="mainTasks">
+      <value>
+        <string>france.military.platoon.tasks.Franchir</string>
+      </value>
+    </parameter>
+    <parameter name="supportTasks">
+      <value>
+        <string>france.military.platoon.tasks.Franchir</string>
+      </value>
+    </parameter>
+    <parameter name="crossingSite">
+      <value>
+        <parameter>crossingSite</parameter>
+      </value>
+    </parameter>
+    <parameter name="objective">
+      <value>
+        <parameter>objective</parameter>
+      </value>
+    </parameter>
+    <parameter name="defaultTask">
+      <value>
+        <string>france.military.platoon.tasks.Suivre</string>
+      </value>
+    </parameter>
+    <parameter name="taskForSupporting">
+      <value>
+        <string>france.military.platoon.tasks.Appuyer</string>
+      </value>
+    </parameter>
+  </next-task>
+</task>

@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.skills.MobilitySupport" source-version="1.0.0">
+	<description></description>
+	<parameters>
+		<parameter name="entities">
+			<description>Les éléments à suivre.</description>
+			<type>
+				<list>
+					<class name="sword.military.knowledge.decisional.Reachable"/>
+				</list>
+			</type>
+		</parameter>
+	</parameters>
+	<goal>
+		<description>Appui à la mobilité : dégager ou contourner les obstacles rencontrés.</description>
+	</goal>
+	<modifiers/>
+	<links>
+		<link name="StayClose" skill="sword.military.platoon.skills.primitives.StayClose"/>
+		<link name="ByPass" skill="sword.military.platoon.skills.Bypass"/>
+	</links>
+</skill>
