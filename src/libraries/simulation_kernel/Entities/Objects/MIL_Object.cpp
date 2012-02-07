@@ -167,10 +167,12 @@ void MIL_Object::Finalize()
 // -----------------------------------------------------------------------------
 bool MIL_Object::CanInteractWith( const MIL_Agent_ABC& agent ) const
 {
+    if( !MIL_Object_ABC::CanInteractWith( agent ) )
+        return false;
     bool canInteract = true;
     for( T_InteractiveCapacities::const_iterator it = interactives_.begin(); canInteract && it != interactives_.end(); ++it )
         (*it)->CanInteractWith( *this, agent, canInteract );
-    return canInteract && MIL_Object_ABC::CanInteractWith( agent );
+    return canInteract;
 }
 
 // -----------------------------------------------------------------------------
