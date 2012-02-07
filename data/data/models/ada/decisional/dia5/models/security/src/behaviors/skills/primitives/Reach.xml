@@ -26,5 +26,4 @@
             <description>An agent cannot move to more than one destination at once. </description>
         </resource>
     </resources>
-    <feedbacks/>
 </skill>

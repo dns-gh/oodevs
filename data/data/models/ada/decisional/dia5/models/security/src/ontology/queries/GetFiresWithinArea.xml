@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <query xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.queries.GetFiresWithinArea" source-version="1.0.0">
+    <description>Returns a set of 'Fire' element located into the given area.</description>
     <parameters>
         <parameter name="area">
+            <description>The area to find fires within.</description>
             <type>
                 <class name="ontology.classes.concretes.Area"/>
             </type>

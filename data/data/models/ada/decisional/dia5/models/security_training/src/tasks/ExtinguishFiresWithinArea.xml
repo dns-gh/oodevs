@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="tasks.ExtinguishFiresWithinArea" source-version="1.0.0">
-    <description/>
+    <description>To extinguish fires located into a a given area.&#xD;
+&#xD;
+If no fires exists in the area, the mission failed and terminates.</description>
     <parameters>
         <parameter name="area">
-            <description/>
+            <description>The area in which fires are retreived to be extinguished.</description>
             <type>
                 <class name="ontology.classes.concretes.Area"/>
             </type>
@@ -11,7 +13,7 @@
     </parameters>
     <stages>
         <stage label="Moving toward fires" disable-when-done="true">
-            <description/>
+            <description>Visit all fires within the area and extinguish them.</description>
             <skills>
                 <skill name="behaviors.skills.primitives.Extinguish" main="true">
                     <parameter name="fires">

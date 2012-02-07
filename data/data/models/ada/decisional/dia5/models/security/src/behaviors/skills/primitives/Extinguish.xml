@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.skills.primitives.Extinguish" source-version="1.0.0">
-    <description>To extinguish several fires.</description>
+    <description>To extinguish a set of 'Fire'.&#xD;
+&#xD;
+When several fires should be extinguished, the agent acts on each fire by following the order of the elements into the 'fires' list. &#xD;
+&#xD;
+A visited fire won't be extinguished if it is already extinguished or if it doesn't exist anymore.</description>
     <parameters>
         <parameter name="fires">
             <description>An ordered list of fires that need to be extinguished.</description>
@@ -24,7 +28,7 @@
     </links>
     <feedbacks>
         <feedback name="extinguished">
-            <description>Sent when a fire is extinguished.</description>
+            <description>Sent when a 'Fire' is extinguished.</description>
             <argument name="fire">
                 <description>The fire that has been extinguished.</description>
                 <type>
@@ -33,7 +37,7 @@
             </argument>
         </feedback>
         <feedback name="notExtinguished">
-            <description>Sent each time a 'Fire' is extinguished.</description>
+            <description>Sent each time a 'Fire' cannot be extinguished (no pysical capability for instance).</description>
             <argument name="fire">
                 <type>
                     <class name="agent.ontology.interfaces.Fire"/>
@@ -42,9 +46,6 @@
         </feedback>
         <feedback name="done">
             <description>Sent when all &quot;Fires&quot; have been visited.</description>
-        </feedback>
-        <feedback name="failed">
-            <description>Sent if the set of 'Fires'  is empty (no 'Fire' to act on).</description>
         </feedback>
     </feedbacks>
 </skill>

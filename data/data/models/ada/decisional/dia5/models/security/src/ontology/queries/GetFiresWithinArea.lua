@@ -6,15 +6,12 @@ queryImplementation "GetFiresWithinArea"
 { 
     [ "execute" ] = function ( params )
         local allRes = {}
-        local simfires = DEC_ObjectKnowledgesInZone( params.area.source, { "Feu urbain", "Arson/Fire" } ) -- $$$ MIA TEMP
-        for _, simFire in pairs( simfires ) do
-            allRes[ #allRes + 1 ] = CreateKnowledge( ontology.classes.concretes.Object, simFire )
+        local simFires = DEC_ObjectKnowledgesInZone( params.area.source, { "fire" } ) -- $$$ MIA TEMP
+        for i = 1, #simFires do
+            allRes[ i ] = CreateKnowledge( ontology.classes.concretes.Object, simFires[ i ] )
         end
-
-        -- affichePositions( allRes ) -- $$$ MIA: to debug. Remove for release
-        -- NO Crowds in the area
+        -- NO fires in the area
         if not next( allRes ) then
-            DEC_Trace( "Hello girls!" )
             meKnowledge:sendReport( eRC_NoFiresWithinArea )
         end
         return allRes

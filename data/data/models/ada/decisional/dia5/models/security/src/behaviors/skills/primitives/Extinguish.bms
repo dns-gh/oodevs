@@ -20,18 +20,12 @@ rootnode
     extinguishActionCompleted = function( self, params ) -- from extinguish skill
         Feedback( self.feedbacks.extinguished, { fire = params.fire } )
         self.arrived = false
-        if self.nextTargetIndex + 1 > #self.params.fires then
-            Feedback( self.feedbacks.done )
-        end
         self.nextTargetIndex = self.nextTargetIndex + 1
     end,
 
     impossibleToExtinguish = function( self, params ) -- called within this skill
         Feedback( self.feedbacks.notExtinguished, { fire = params.fire } )
         self.arrived = false
-        if self.nextTargetIndex > #self.params.fires then
-            Feedback( self.feedbacks.done )
-        end
         self.nextTargetIndex = self.nextTargetIndex + 1
     end,
 
@@ -50,8 +44,8 @@ rootnode
         local Activate = Activate
 
         local paramsSize = #self.params.fires
-        if self.nextTargetIndex <= paramsSize then
-            if paramsSize > 0 then
+        if paramsSize > 0 then 
+            if self.nextTargetIndex <= paramsSize then
                 self.fire = self.params.fires[ self.nextTargetIndex ]
                 if self.arrived then
                     if self.fire:canBeExtinguished() then
@@ -60,12 +54,14 @@ rootnode
                         self:impossibleToExtinguish( { fire = self.fire } )
                     end
                 else
-                    -- local position = ontology.queries.GetPositionsOutsideObject[ "execute" ]( { object = self.fire } )
+                    -- $$$ MIA TODO local position = ontology.queries.GetPositionsOutsideObject[ "execute" ]( { object = self.fire } )
                     Activate( skill.links.reach, 1, { destination = self.fire } )
                 end
             else
-                Feedback( self.feedbacks.failed )
+                Feedback( self.feedbacks.done )
             end
+        else
+            Feedback( self.feedbacks.done ) -- if no fires issued, we assume that fires have been extinguished
         end
     end
 }

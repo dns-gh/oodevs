@@ -1,9 +1,6 @@
 -- --------------------------------------------------------------------------------
--- Actions
+-- Movement
 -- --------------------------------------------------------------------------------
--- We introduce a local "reachIt" which is the same as moveToItGeneric but
--- the return of the result is missing in the latter.
--- We set the default value 0 for the pathType. The agent moves directly to the destination
 method "reachIt" ( masalife.brain.integration.startStopAction( 
 { 
     start   = function( self )

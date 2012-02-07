@@ -124,10 +124,10 @@ This action can take time (depending on the current status of the population, e.
                     <class name="agent.ontology.interfaces.Destination"/>
                 </type>
             </argument>
-            <argument name="pace">
+            <argument name="urgency">
                 <description>The pace at which to move to the specified destination. </description>
                 <type>
-                    <simple name="numeric"/>
+                    <simple name="boolean"/>
                 </type>
             </argument>
             <return>

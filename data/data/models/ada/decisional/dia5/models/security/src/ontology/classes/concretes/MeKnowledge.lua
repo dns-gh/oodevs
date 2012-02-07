@@ -208,10 +208,12 @@ method "canTransportCrowd" (
 -- --------------------------------------------------------------------------------
 -- Reports
 -- --------------------------------------------------------------------------------
-method "sendReport" ( 
-    function( self, ... )
+method "sendReport" ( masalife.brain.integration.startStopAction( 
+{ 
+    start = function( self, ... )
         self:RC( ... )
-    end )
+    end
+} ) )
 
 method "RC" ( 
     function ( self, ... ) -- $$$ MIA:To remove
