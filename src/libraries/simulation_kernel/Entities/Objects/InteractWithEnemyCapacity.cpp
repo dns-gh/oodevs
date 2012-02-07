@@ -43,23 +43,12 @@ InteractWithEnemyCapacity::~InteractWithEnemyCapacity()
 }
 
 // -----------------------------------------------------------------------------
-// Name: InteractWithEnemyCapacity::CanInteractWith
-// Created: LDC 2009-03-06
-// -----------------------------------------------------------------------------
-void InteractWithEnemyCapacity::CanInteractWith( const MIL_Object_ABC& object, const MIL_Agent_ABC& agent, bool& canInteract )
-{
-    if( &agent.GetArmy() == object.GetArmy() )
-        canInteract = false;
-}
-
-// -----------------------------------------------------------------------------
 // Name: InteractWithEnemyCapacity::serialize
 // Created: LDC 2009-03-06
 // -----------------------------------------------------------------------------
 template< typename Archive > void InteractWithEnemyCapacity::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-         & boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this );
+    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -69,7 +58,6 @@ template< typename Archive > void InteractWithEnemyCapacity::serialize( Archive&
 void InteractWithEnemyCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
-    object.Register( static_cast< MIL_InteractiveContainer_ABC *>( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -80,5 +68,4 @@ void InteractWithEnemyCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
     InteractWithEnemyCapacity* capacity = new InteractWithEnemyCapacity( *this );
     object.AddCapacity( capacity );
-    object.Register( static_cast< MIL_InteractiveContainer_ABC *>( capacity ) );
 }

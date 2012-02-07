@@ -18,8 +18,10 @@
 #include "DEC_Knowledge_Object.h"
 #include "DEC_Knowledge_ObjectCollision.h"
 #include "DEC_Knowledge_Urban.h"
+#include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/ResourceNetworkCapacity.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
+#include "Entities/Objects/InteractWithEnemyCapacity.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "protocol/Protocol.h"
@@ -237,19 +239,23 @@ namespace
     class sObjectKnowledgesFilteredHeightInserter
     {
     public:
-        sObjectKnowledgesFilteredHeightInserter( T_KnowledgeObjectVector& container, double rHeight, const MIL_ObjectFilter& filter )
+        sObjectKnowledgesFilteredHeightInserter( T_KnowledgeObjectVector& container, double rHeight, const MIL_ObjectFilter& filter, const MIL_Army_ABC* army )
             : pContainer_( &container )
             , rHeight_   ( rHeight )
             , filter_    ( filter )
+            , army_      ( army )
         {
             // NOTHING
         }
 
         void operator()( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
         {
+            if( !knowledge->IsValid() )
+                return;
+            if( knowledge->GetType().GetCapacity< InteractWithEnemyCapacity >() != 0 && knowledge->GetArmy() == army_ )
+                return;
             if( filter_.Test( knowledge->GetType() )
-            && rHeight_ <= knowledge->GetMaxInteractionHeight() ///$$$ A ENCAPSULER DEC_Knowledge_Object::CanInteractWith()
-            && knowledge->IsValid() )
+                && rHeight_ <= knowledge->GetMaxInteractionHeight() )///$$$ A ENCAPSULER DEC_Knowledge_Object::CanInteractWith()
                 pContainer_->push_back( knowledge );
         }
 
@@ -257,6 +263,7 @@ namespace
         T_KnowledgeObjectVector*  pContainer_;
         const double rHeight_;
         const MIL_ObjectFilter& filter_;
+        const MIL_Army_ABC* army_;
     };
 }
 
@@ -268,7 +275,7 @@ void DEC_KnowledgeBlackBoard_Army::GetObjectsAtInteractionHeight( T_KnowledgeObj
         pKnowledgeObjectContainer_->GetCachedObjectsAtInteractionHeight( container, rHeight );
         return ;
     }
-    sObjectKnowledgesFilteredHeightInserter functor( container, rHeight, filter );
+    sObjectKnowledgesFilteredHeightInserter functor( container, rHeight, filter, pArmy );
 
     assert( pKnowledgeObjectContainer_ );
     pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );

@@ -99,7 +99,7 @@ void AvoidanceCapacity::Finalize( MIL_Object_ABC& object )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AvoidanceCapacity::GetAvoidanceLocalisation
+// Name: AvoidanceCapacity::GetLocalisation
 // Created: JCR 2008-06-04
 // -----------------------------------------------------------------------------
 const TER_Localisation& AvoidanceCapacity::GetLocalisation() const

@@ -23,6 +23,7 @@
 #include "DetectionCapacity.h"
 #include "ExtinguishableCapacity.h"
 #include "ImprovableCapacity.h"
+#include "InteractWithEnemyCapacity.h"
 #include "MineAttribute.h"
 #include "MobilityCapacity.h"
 #include "ObstacleAttribute.h"
@@ -327,8 +328,11 @@ bool MIL_ObjectManipulator::IsTrafficable( const MIL_Agent_ABC& agent ) const
     {
         if( const TrafficabilityAttribute* pTrafficability = object_.RetrieveAttribute< TrafficabilityAttribute >() )
         {
-            double weight = agent.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight();
-            return ( pTrafficability->GetMaxValue() > weight );
+            if( object_.Retrieve< InteractWithEnemyCapacity >() == 0 || &agent.GetArmy() != object_.GetArmy() )
+            {   
+                double weight = agent.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight();
+                return ( pTrafficability->GetMaxValue() > weight );
+            }
         }
     }
     return true;
@@ -407,7 +411,10 @@ double MIL_ObjectManipulator::ApplySpeedPolicy( double rAgentSpeedWithinObject, 
     const MobilityCapacity* capacity = object_.Retrieve< MobilityCapacity >();
     const StructuralCapacity* structuralcapacity = object_.Retrieve< StructuralCapacity >();
     if( capacity )
-        speed =  std::min( speed, capacity->ApplySpeedPolicy( rAgentSpeedWithinObject, rAgentSpeedWithinEnvironment, rAgentMaxSpeed, structuralcapacity ? structuralcapacity->GetStructuralState() : 1. ) );
+    {
+        if( object_.Retrieve< InteractWithEnemyCapacity >() == 0 || &agent.GetArmy() != object_.GetArmy() )
+            speed =  std::min( speed, capacity->ApplySpeedPolicy( rAgentSpeedWithinObject, rAgentSpeedWithinEnvironment, rAgentMaxSpeed, structuralcapacity ? structuralcapacity->GetStructuralState() : 1. ) );
+    }
     const CrowdCapacity* crowdcapacity = object_.Retrieve< CrowdCapacity >();
     if( crowdcapacity )
         speed = std::min( speed, crowdcapacity->ApplySpeedPolicy( agent ) );

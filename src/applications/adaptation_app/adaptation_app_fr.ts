@@ -3176,7 +3176,7 @@ du tireur</translation>
     </message>
     <message>
         <source>InteractWithEnemy</source>
-        <translation>Interagit uniquement avec les ennemis</translation>
+        <translation>Gêne uniquement les ennemis</translation>
     </message>
     <message>
         <source>AttitudeModifier</source>

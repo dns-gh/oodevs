@@ -287,40 +287,6 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Supply, ObjectCapacity
 }
 
 // -----------------------------------------------------------------------------
-/* Name: Test VerifyObjectCapacity_Interaction_InteractWithEnemy
-    Create an object prototype with interact-with-enemy capacity and checks it "can interact with"
-    only with other armies.
-*/
-// Created: LDC 2009-03-06
-// -----------------------------------------------------------------------------
-BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_InteractWithEnemy, ObjectCapacityFixture )
-{
-    MIL_ObjectLoader loader;
-    {
-        xml::xistringstream xis( "<objects>"
-                                 "    <object geometry='line' type='barricade'>"
-                                 "        <interact-with-enemy/>"
-                                 "    </object>"
-                                 "</objects>" );
-        BOOST_CHECK_NO_THROW( loader.Initialize( xis ) );
-    }
-    const MIL_ObjectType_ABC& type = loader.GetType( "barricade" );
-
-    MockArmy army;
-    MockArmy enemyArmy;
-    MOCK_EXPECT( army, RegisterObject ).once();
-    std::auto_ptr< MIL_Object_ABC > pObject( CreateObject( type, army, loader ) );
-    CheckCapacity< InteractWithEnemyCapacity >( *pObject );
-
-    MockAgent agent;
-    MOCK_EXPECT( agent, GetArmy ).once().returns( boost::ref( army ) );
-    BOOST_CHECK_EQUAL( false, pObject->CanInteractWith( agent ) );
-    MOCK_EXPECT( agent, GetArmy ).once().returns( boost::ref( enemyArmy ) );
-    BOOST_CHECK_EQUAL( true, pObject->CanInteractWith( agent ) );
-    MOCK_EXPECT( army, UnregisterObject ).once();
-}
-
-// -----------------------------------------------------------------------------
 // Name: VerifyObjectCapacity_Interaction_Detection
 // Created: SBO 2009-06-08
 // -----------------------------------------------------------------------------
