@@ -862,6 +862,24 @@ void PHY_ComposanteTypePion::InstanciateProtections( std::back_insert_iterator <
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::HasConstructionSpeeds
+// Created: JSR 2012-02-07
+// -----------------------------------------------------------------------------
+bool PHY_ComposanteTypePion::HasConstructionSpeeds() const
+{
+    return speeds_.HasConstructionSpeeds();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposanteTypePion::GetConstructionSpeed
+// Created: JSR 2012-02-03
+// -----------------------------------------------------------------------------
+double PHY_ComposanteTypePion::GetConstructionSpeed( const TerrainData& data ) const
+{
+    return speeds_.GetConstructionSpeed( data );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ComposanteTypePion::CanConstruct
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------

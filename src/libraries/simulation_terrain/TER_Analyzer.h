@@ -44,6 +44,7 @@ public:
     std::vector< boost::shared_ptr< MT_Vector2D > > FindAllPositions( const MT_Vector2D& center, float radius );
 
     TerrainData FindTerrainDataWithinCircle( const MT_Vector2D& center, float radius );
+    TerrainData FindTerrainDataWithinPolygon( const TER_Polygon& polygon );
     TerrainData Pick( const MT_Vector2D& pos );
     //@}
 

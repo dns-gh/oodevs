@@ -11,16 +11,18 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleAction_Objects_DataComputerPionData.h"
-#include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
-#include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
-#include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
-#include "Entities/Agents/MIL_Agent_ABC.h"
-#include "Entities/Objects/MIL_Object_ABC.h"
-#include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "AlgorithmsFactories.h"
+#include "ConsumeDotationNotificationHandler_ABC.h"
 #include "DotationComputer_ABC.h"
 #include "DotationComputerFactory_ABC.h"
-#include "ConsumeDotationNotificationHandler_ABC.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
+#include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
+#include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
+#include "Entities/Agents/Units/Dotations/PHY_ConsumptionType.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
+#include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
+#include "simulation_terrain/TER_AnalyzerManager.h"
+#include <spatialcontainer/TerrainData.h>
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Objects_DataComputerPionData
@@ -67,7 +69,47 @@ void PHY_RoleAction_Objects_DataComputerPionData::operator() ( const PHY_Composa
     //@TODO MGD rDeltaTime can be negative to accelerate work with EBG, need to replace algorithm
     if( rDeltaTime == std::numeric_limits< double >::max() )
         return;
-    workingComposantes_.push_back( std::make_pair( &composante, rDeltaTime ) );
+
+    double constructionSpeed = 1.;
+    if( composante.HasConstructionSpeeds() )
+    {
+        TerrainData data;
+        const TER_Localisation& localisation = pObject_->GetLocalisation();
+        switch( localisation.GetType() )
+        {
+        case TER_Localisation::eCircle :
+            data = TER_AnalyzerManager::GetAnalyzerManager().FindTerrainDataWithinCircle( localisation.GetCircleCenter(), static_cast< float >( localisation.GetCircleRadius() ) );
+            break;
+        case TER_Localisation::eLine :
+            {
+                TER_Localisation tmp = localisation;
+                tmp.Scale( 100. );
+                TER_Polygon polygon;
+                polygon.Reset( tmp.GetPoints() );
+                data = TER_AnalyzerManager::GetAnalyzerManager().FindTerrainDataWithinPolygon( polygon );
+            }
+            break;
+        case TER_Localisation::ePolygon :
+            {
+                TER_Polygon polygon;
+                polygon.Reset( localisation.GetPoints() );
+                data = TER_AnalyzerManager::GetAnalyzerManager().FindTerrainDataWithinPolygon( polygon );
+            }
+            break;
+        case TER_Localisation::ePoint :
+            data = TER_AnalyzerManager::GetAnalyzerManager().Pick( localisation.ComputeBarycenter() );
+            break;
+        default:
+            assert( false );
+            break;
+        }
+
+        constructionSpeed = composante.GetConstructionSpeed( data );
+        if( constructionSpeed == 0 )
+            return;
+    }
+
+    workingComposantes_.push_back( std::make_pair( &composante, rDeltaTime / constructionSpeed ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -10,6 +10,8 @@
 #ifndef __PHY_Speeds_h_
 #define __PHY_Speeds_h_
 
+#include <boost/noncopyable.hpp>
+
 namespace xml
 {
     class xistream;
@@ -28,7 +30,7 @@ class TerrainData;
 */
 // Created: AGE 2005-02-02
 // =============================================================================
-class PHY_Speeds
+class PHY_Speeds : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -44,6 +46,8 @@ public:
     double GetMaxSpeed() const;
     double GetMaxSpeed( const TerrainData& data ) const;
     bool   IsPassable ( const TerrainData& data ) const;
+    bool HasConstructionSpeeds() const;
+    double GetConstructionSpeed( const TerrainData& data ) const;
     //@}
 
     //! @name Accessors
@@ -52,14 +56,9 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    PHY_Speeds( const PHY_Speeds& );            //!< Copy constructor
-    PHY_Speeds& operator=( const PHY_Speeds& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
+    void Initialize( const moving::PHY_RoleAction_Moving& role );
     void ReadSpeed          ( xml::xistream& xis, unsigned int timeStepDuration );
     void ReadTerrain        ( xml::xistream& xis );
     void CheckInitialization( xml::xistream& xis, unsigned int timeStepDuration );
@@ -68,13 +67,26 @@ private:
     //@}
 
 private:
+    //!@name Types
+    //@{
+    typedef std::vector< double >     T_Speed;
+    typedef T_Speed::iterator        IT_Speed;
+    typedef T_Speed::const_iterator CIT_Speed;
+
+    typedef std::map< std::string, double >       T_ConstructionSpeed;
+    typedef T_ConstructionSpeed::iterator        IT_ConstructionSpeed;
+    typedef T_ConstructionSpeed::const_iterator CIT_ConstructionSpeed;
+    //@}
+
+private:
     //! @name Member data
     //@{
     double rMaxSpeed_;
     double rBaseSpeed_;
-    double* rAreaSpeeds_  ;
-    double* rBorderSpeeds_;
-    double* rLinearSpeeds_;
+    T_Speed rAreaSpeeds_;
+    T_Speed rBorderSpeeds_;
+    T_Speed rLinearSpeeds_;
+    T_ConstructionSpeed rConstructionSpeeds_;
 
     unsigned short nLinearPassabilityMask_;
     unsigned short nLinearImpassabilityMask_;

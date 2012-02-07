@@ -256,6 +256,7 @@ public:
     public:
         E_Location          nTypeTerrain_;
         ADN_Type_Double     rSpeed_;
+        ADN_Type_Int        nConstruction_;
 
     public:
         class Cmp : public std::unary_function< SpeedInfos* , bool >

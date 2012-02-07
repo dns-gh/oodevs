@@ -20,20 +20,17 @@
 // Created: AGE 2005-02-03
 // -----------------------------------------------------------------------------
 PHY_Speeds::PHY_Speeds( xml::xistream& xis, unsigned int timeStepDuration )
-    : rMaxSpeed_                ( -1. )
-    , rBaseSpeed_               ( -1. )
-    , rAreaSpeeds_              ( new double[ 8  ] ) // $$$$ AGE 2005-02-03: Use a vector
-    , rBorderSpeeds_            ( new double[ 8  ] )
-    , rLinearSpeeds_            ( new double[ 11 ] )
-    , nLinearPassabilityMask_   ( 0 )
-    , nAreaPassabilityMask_     ( 0 )
-    , nAreaImpassabilityMask_   ( 0 )
-    , nBorderImpassabilityMask_ ( 0 )
-    , nLinearImpassabilityMask_ ( 0 )
+    : rMaxSpeed_               ( -1. )
+    , rBaseSpeed_              ( -1. )
+    , nLinearPassabilityMask_  ( 0 )
+    , nAreaPassabilityMask_    ( 0 )
+    , nAreaImpassabilityMask_  ( 0 )
+    , nBorderImpassabilityMask_( 0 )
+    , nLinearImpassabilityMask_( 0 )
 {
-    std::fill( rAreaSpeeds_,   rAreaSpeeds_   + 8, -1. );
-    std::fill( rBorderSpeeds_, rBorderSpeeds_ + 8, -1. );
-    std::fill( rLinearSpeeds_, rLinearSpeeds_ + 11, -1. );
+    rAreaSpeeds_.resize( TerrainData::nAreaTypes, -1. );
+    rBorderSpeeds_.resize( TerrainData::nBorderTypes, -1. );
+    rLinearSpeeds_.resize( TerrainData::nLinearTypes, -1. );
 
     xis >> xml::optional
         >> xml::list( "speeds", *this, &PHY_Speeds::ReadSpeed, timeStepDuration );
@@ -47,36 +44,15 @@ PHY_Speeds::PHY_Speeds( xml::xistream& xis, unsigned int timeStepDuration )
 // Created: AGE 2005-02-03
 // -----------------------------------------------------------------------------
 PHY_Speeds::PHY_Speeds( const moving::PHY_RoleAction_Moving& role )
-    : rMaxSpeed_                ( role.GetMaxSpeedWithReinforcement() )
-    , rBaseSpeed_               ( role.GetSpeedWithReinforcement( TerrainData() ) )
-    , rAreaSpeeds_              ( new double[ 8  ] )
-    , rBorderSpeeds_            ( new double[ 8  ] )
-    , rLinearSpeeds_            ( new double[ 11 ] )
-    , nLinearPassabilityMask_   ( 0 )
-    , nAreaPassabilityMask_     ( 0 )
-    , nAreaImpassabilityMask_   ( 0 )
-    , nBorderImpassabilityMask_ ( 0 )
-    , nLinearImpassabilityMask_ ( 0 )
+    : rMaxSpeed_               ( role.GetMaxSpeedWithReinforcement() )
+    , rBaseSpeed_              ( role.GetSpeedWithReinforcement( TerrainData() ) )
+    , nLinearPassabilityMask_  ( 0 )
+    , nAreaPassabilityMask_    ( 0 )
+    , nAreaImpassabilityMask_  ( 0 )
+    , nBorderImpassabilityMask_( 0 )
+    , nLinearImpassabilityMask_( 0 )
 {
-    static const TerrainData areas[]   = {
-        TerrainData::Forest(), TerrainData::Plantation(), TerrainData::Swamp(), TerrainData::Urban(),
-        TerrainData::Water(), TerrainData::Dune(), TerrainData::Ice(), TerrainData::Mountain() };
-    static const TerrainData borders[] = {
-        TerrainData::ForestBorder(), TerrainData::PlantationBorder(), TerrainData::SwampBorder(), TerrainData::UrbanBorder(),
-        TerrainData::WaterBorder(), TerrainData::DuneBorder(), TerrainData::IceBorder(), TerrainData::MountainBorder() };
-    static const TerrainData linears[] = {
-        TerrainData::Cliff(), TerrainData::Motorway(), TerrainData::LargeRoad(), TerrainData::MediumRoad(),
-        TerrainData::SmallRoad(), TerrainData::Bridge(), TerrainData::Railroad(), TerrainData::LargeRiver(),
-        TerrainData::MediumRiver(), TerrainData::SmallRiver(), TerrainData::Crossroad() };
-
-    for( unsigned int nOffset = 0; nOffset != 8; ++nOffset )
-        rAreaSpeeds_[ nOffset ] = role.GetSpeedWithReinforcement( areas[ nOffset ] );
-    for( unsigned int nOffset = 0; nOffset != 8; ++nOffset )
-        rBorderSpeeds_[ nOffset ] = role.GetSpeedWithReinforcement( borders[ nOffset ] );
-    for( unsigned int nOffset = 0; nOffset != 11; ++nOffset )
-        rLinearSpeeds_[ nOffset ] = role.GetSpeedWithReinforcement( linears[ nOffset ] );
-
-    GenerateMasks();
+    Initialize( role );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,36 +60,15 @@ PHY_Speeds::PHY_Speeds( const moving::PHY_RoleAction_Moving& role )
 // Created: LMT 2010-05-04
 // -----------------------------------------------------------------------------
 PHY_Speeds::PHY_Speeds( const moving::PHY_RoleAction_Moving& role, bool loaded )
-    : rMaxSpeed_                ( role.GetTheoricMaxSpeed( loaded ) )
-    , rBaseSpeed_               ( role.GetSpeedWithReinforcement( TerrainData() ) )
-    , rAreaSpeeds_              ( new double[ 8  ] )
-    , rBorderSpeeds_            ( new double[ 8  ] )
-    , rLinearSpeeds_            ( new double[ 11 ] )
-    , nLinearPassabilityMask_   ( 0 )
-    , nAreaPassabilityMask_     ( 0 )
-    , nAreaImpassabilityMask_   ( 0 )
-    , nBorderImpassabilityMask_ ( 0 )
-    , nLinearImpassabilityMask_ ( 0 )
+    : rMaxSpeed_               ( role.GetTheoricMaxSpeed( loaded ) )
+    , rBaseSpeed_              ( role.GetSpeedWithReinforcement( TerrainData() ) )
+    , nLinearPassabilityMask_  ( 0 )
+    , nAreaPassabilityMask_    ( 0 )
+    , nAreaImpassabilityMask_  ( 0 )
+    , nBorderImpassabilityMask_( 0 )
+    , nLinearImpassabilityMask_( 0 )
 {
-    static const TerrainData areas[]   = {
-        TerrainData::Forest(), TerrainData::Plantation(), TerrainData::Swamp(), TerrainData::Urban(),
-        TerrainData::Water(), TerrainData::Dune(), TerrainData::Ice(), TerrainData::Mountain() };
-    static const TerrainData borders[] = {
-        TerrainData::ForestBorder(), TerrainData::PlantationBorder(), TerrainData::SwampBorder(), TerrainData::UrbanBorder(),
-        TerrainData::WaterBorder(), TerrainData::DuneBorder(), TerrainData::IceBorder(), TerrainData::MountainBorder() };
-    static const TerrainData linears[] = {
-        TerrainData::Cliff(), TerrainData::Motorway(), TerrainData::LargeRoad(), TerrainData::MediumRoad(),
-        TerrainData::SmallRoad(), TerrainData::Bridge(), TerrainData::Railroad(), TerrainData::LargeRiver(),
-        TerrainData::MediumRiver(), TerrainData::SmallRiver(), TerrainData::Crossroad() };
-
-    for( unsigned int nOffset = 0; nOffset != 8; ++nOffset )
-        rAreaSpeeds_[ nOffset ] = role.GetSpeedWithReinforcement( areas[ nOffset ] );
-    for( unsigned int nOffset = 0; nOffset != 8; ++nOffset )
-        rBorderSpeeds_[ nOffset ] = role.GetSpeedWithReinforcement( borders[ nOffset ] );
-    for( unsigned int nOffset = 0; nOffset != 11; ++nOffset )
-        rLinearSpeeds_[ nOffset ] = role.GetSpeedWithReinforcement( linears[ nOffset ] );
-
-    GenerateMasks();
+    Initialize( role );
 }
 
 // -----------------------------------------------------------------------------
@@ -122,9 +77,29 @@ PHY_Speeds::PHY_Speeds( const moving::PHY_RoleAction_Moving& role, bool loaded )
 // -----------------------------------------------------------------------------
 PHY_Speeds::~PHY_Speeds()
 {
-    delete[] rAreaSpeeds_;
-    delete[] rBorderSpeeds_;
-    delete[] rLinearSpeeds_;
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Speeds::Initialize
+// Created: JSR 2012-02-02
+// -----------------------------------------------------------------------------
+void PHY_Speeds::Initialize( const moving::PHY_RoleAction_Moving& role )
+{
+    std::vector< std::string > allTypes = TerrainData::GetAllTypes();
+    const unsigned int size = TerrainData::nAreaTypes + TerrainData::nBorderTypes + TerrainData::nLinearTypes;
+    assert( allTypes.size() - 1 == size ); // sans unknown
+    for( unsigned int nOffset = 0; nOffset < size; ++nOffset )
+    {
+        double speed = role.GetSpeedWithReinforcement( TerrainData::FromString( allTypes[ nOffset ] ) );
+        if( nOffset < TerrainData::nAreaTypes )
+            rAreaSpeeds_.push_back( speed );
+        else if( nOffset < TerrainData::nAreaTypes + TerrainData::nBorderTypes )
+            rBorderSpeeds_.push_back( speed );
+        else
+            rLinearSpeeds_.push_back( speed );
+    }
+    GenerateMasks();
 }
 
 // -----------------------------------------------------------------------------
@@ -133,10 +108,9 @@ PHY_Speeds::~PHY_Speeds()
 // -----------------------------------------------------------------------------
 void PHY_Speeds::ReadSpeed( xml::xistream& xis, unsigned int timeStepDuration )
 {
-    xis >> xml::attribute( "max", rMaxSpeed_ );
+    rMaxSpeed_ = xis.attribute< double >( "max" );
     if( rMaxSpeed_ <= 0 )
         xis.error( "speeds: max <= 0" );
-
     rMaxSpeed_ *= 1000. * timeStepDuration / 3600.;
     xis >> xml::list( "speed", *this, &PHY_Speeds::ReadTerrain );
 }
@@ -147,23 +121,18 @@ void PHY_Speeds::ReadSpeed( xml::xistream& xis, unsigned int timeStepDuration )
 // -----------------------------------------------------------------------------
 void PHY_Speeds::ReadTerrain( xml::xistream& xis )
 {
-    std::string strTerrainType;
-
-    xis >> xml::attribute( "terrain", strTerrainType );
-
+    std::string strTerrainType = xis.attribute< std::string >( "terrain" );
     const TerrainData data = TerrainData::FromString( strTerrainType );
     if( data.Area() == 0xFF )
         xis.error( "Unknown terrain type '" + strTerrainType + "'" );
-
     double& speed = SpeedFor( data );
-
-    xis >> xml::attribute( "value", speed );
-
+    speed = xis.attribute< double >( "value" );
     if( speed < 0 )
         xis.error( "speed: terrain < 0" );
-
     speed = MIL_Tools::ConvertSpeedMosToSim( speed );
     rMaxSpeed_ = std::max( rMaxSpeed_, speed );
+    if( xis.has_attribute( "construction-speed" ) )
+        rConstructionSpeeds_[ strTerrainType ] = xis.attribute< unsigned int >( "construction-speed" ) * 0.01;
 }
 
 namespace
@@ -180,37 +149,36 @@ namespace
 // -----------------------------------------------------------------------------
 void PHY_Speeds::CheckInitialization( xml::xistream& xis, unsigned int timeStepDuration )
 {
-    for( unsigned nOffset = 0; nOffset < 8; ++nOffset )
+    for( unsigned int i = 0; i < rAreaSpeeds_.size(); ++i )
     {
-        double& speed = *( rAreaSpeeds_ + nOffset );
-        if( speed == -1 )
+        if( rAreaSpeeds_[ i ] == -1 )
         {
-            speed = 0;
-            MT_LOG_WARNING_MSG( "Speed for " << MIL_Tools::GetLandTypeName( TerrainData( (unsigned char)(1<<nOffset), 0, 0, 0 ) ) << " not initialized. Defaulted to 0 km/h." );
+            rAreaSpeeds_[ i ] = 0;
+            MT_LOG_WARNING_MSG( "Speed for " << MIL_Tools::GetLandTypeName( TerrainData( static_cast< unsigned char >( 1 << i ), 0, 0, 0 ) ) << " not initialized. Defaulted to 0 km/h." );
         }
     }
-    for( unsigned nOffset = 0; nOffset < 8; ++nOffset )
+    for( unsigned int i = 0; i < rBorderSpeeds_.size(); ++i )
     {
-        double& speed = *( rBorderSpeeds_ + nOffset );
-        if( speed == -1 )
+        if( rBorderSpeeds_[ i ] == -1 )
         {
-            speed = *( rAreaSpeeds_ + nOffset );
-            MT_LOG_WARNING_MSG( "Speed for " << MIL_Tools::GetLandTypeName( TerrainData( 0, (unsigned char)(1<<nOffset), 0, 0 ) ) << " not initialized. Defaulted to " << ConvertSpeedToMOS( speed, timeStepDuration ) << " km/h." );
+            assert( i < rAreaSpeeds_.size() );
+            rBorderSpeeds_[ i ] = rAreaSpeeds_[ i ];
+            MT_LOG_WARNING_MSG( "Speed for " << MIL_Tools::GetLandTypeName( TerrainData( 0, static_cast< unsigned char >( 1 << i ), 0, 0 ) ) << " not initialized. Defaulted to " << ConvertSpeedToMOS( rBorderSpeeds_[ i ], timeStepDuration ) << " km/h." );
         }
     }
-    for( unsigned nOffset = 0; nOffset < 10; ++nOffset )
+    for( unsigned int i = 0; i < rLinearSpeeds_.size() - 1; ++i )
     {
-        double& speed = *( rLinearSpeeds_ + nOffset );
-        if( speed == -1 )
+        if( rLinearSpeeds_[ i ] == -1 )
         {
-            speed = 0;
-            MT_LOG_WARNING_MSG( "Speed for " << MIL_Tools::GetLandTypeName( TerrainData( 0, 0, 0, (unsigned short)(1<<nOffset) ) ) << " not initialized. Defaulted to 0 km/h." );
+            rLinearSpeeds_[ i ] = 0;
+            MT_LOG_WARNING_MSG( "Speed for " << MIL_Tools::GetLandTypeName( TerrainData( 0, 0, 0, static_cast< unsigned short >( 1 << i ) ) ) << " not initialized. Defaulted to 0 km/h." );
         }
     }
-    if( *( rLinearSpeeds_ + 10 ) == -1 )
+    const std::size_t lastIndex = rLinearSpeeds_.size() - 1;
+    if( rLinearSpeeds_[ lastIndex ] == -1 )
     {
-        *( rLinearSpeeds_ + 10 ) = SpeedFor( TerrainData::SmallRoad() );
-        MT_LOG_WARNING_MSG( "Speed for " << MIL_Tools::GetLandTypeName( TerrainData( 0, 0, 0, (unsigned short)(1<<10) ) ) << " not initialized. Defaulted to " <<  ConvertSpeedToMOS( *( rLinearSpeeds_ + 10 ), timeStepDuration ) << " km/h." );
+        rLinearSpeeds_[ lastIndex ] = SpeedFor( TerrainData::SmallRoad() );
+        MT_LOG_WARNING_MSG( "Speed for " << MIL_Tools::GetLandTypeName( TerrainData( 0, 0, 0, static_cast< unsigned short >( 1 << lastIndex ) ) ) << " not initialized. Defaulted to " <<  ConvertSpeedToMOS( rLinearSpeeds_[ lastIndex ], timeStepDuration ) << " km/h." );
 
     }
     if( rMaxSpeed_ == 0. )
@@ -238,22 +206,22 @@ double PHY_Speeds::GetMaxSpeed( const TerrainData& data ) const
     {
         unsigned int nOffset = 0;
         const unsigned char area = data.Area();
-        for( double* it = rAreaSpeeds_; it != rAreaSpeeds_ + 8; ++it, ++nOffset )
-            if( area & (1<<nOffset) && *it > rMax )
+        for( CIT_Speed it = rAreaSpeeds_.begin(); it != rAreaSpeeds_.end(); ++it, ++nOffset )
+            if( area & ( 1 << nOffset ) && *it > rMax )
                 rMax = *it;
     }
     {
         unsigned int nOffset = 0;
         const unsigned char border = data.Border();
-        for( double* it = rBorderSpeeds_; it != rBorderSpeeds_ + 8; ++it, ++nOffset )
-            if( border & (1<<nOffset) && *it > rMax )
+        for( CIT_Speed it = rBorderSpeeds_.begin(); it != rBorderSpeeds_.end(); ++it, ++nOffset )
+            if( border & ( 1 << nOffset ) && *it > rMax )
                 rMax = *it;
     }
     {
         unsigned nOffset = 0;
         const unsigned short linear = data.Linear();
-        for( double* it = rLinearSpeeds_; it != rLinearSpeeds_ + 11; ++it, ++nOffset )
-            if( linear & (1<<nOffset) && *it > rMax )
+        for( CIT_Speed it = rLinearSpeeds_.begin(); it != rLinearSpeeds_.end(); ++it, ++nOffset )
+            if( linear & ( 1 << nOffset ) && *it > rMax )
                 rMax = *it;
     }
     return rMax;
@@ -278,6 +246,28 @@ bool PHY_Speeds::IsPassable( const TerrainData& data ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_Speeds::HasConstructionSpeeds
+// Created: JSR 2012-02-07
+// -----------------------------------------------------------------------------
+bool PHY_Speeds::HasConstructionSpeeds() const
+{
+    return !rConstructionSpeeds_.empty();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Speeds::GetConstructionSpeed
+// Created: JSR 2012-02-03
+// -----------------------------------------------------------------------------
+double PHY_Speeds::GetConstructionSpeed( const TerrainData& data ) const
+{
+    double ret = 1.;
+    for( CIT_ConstructionSpeed it = rConstructionSpeeds_.begin(); it != rConstructionSpeeds_.end(); ++it )
+        if( data.ContainsOne( TerrainData::FromString( it->first ) ) )
+            ret = std::min( ret, it->second );
+    return ret;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_Speeds::GenerateMasks
 // Created: AGE 2005-02-03
 // -----------------------------------------------------------------------------
@@ -287,36 +277,36 @@ void PHY_Speeds::GenerateMasks()
         nLinearPassabilityMask_ = 0;
         nLinearImpassabilityMask_ = 0;
         unsigned int nOffset = 0;
-        for( double* it = rLinearSpeeds_; it != rLinearSpeeds_ + 11; ++it, ++nOffset )
+        for( CIT_Speed it = rLinearSpeeds_.begin(); it != rLinearSpeeds_.end(); ++it, ++nOffset )
         {
             if( *it == 0. )
-                nLinearImpassabilityMask_ |= (1<<nOffset);
+                nLinearImpassabilityMask_ |= ( 1 << nOffset );
             else
-                nLinearPassabilityMask_ |= (1<<nOffset);
+                nLinearPassabilityMask_ |= ( 1 << nOffset );
         }
     }
     {
         nBorderPassabilityMask_ = 0;
         nBorderImpassabilityMask_ = 0;
         unsigned int nOffset = 0;
-        for( double* it = rBorderSpeeds_; it != rBorderSpeeds_ + 8; ++it, ++nOffset )
+        for( CIT_Speed it = rBorderSpeeds_.begin(); it != rBorderSpeeds_.end(); ++it, ++nOffset )
         {
             if( *it == 0. )
-                nBorderImpassabilityMask_ |= (1<<nOffset);
+                nBorderImpassabilityMask_ |= ( 1 << nOffset );
             else
-                nBorderPassabilityMask_ |= (1<<nOffset);
+                nBorderPassabilityMask_ |= ( 1 << nOffset );
         }
     }
     {
         nAreaPassabilityMask_ = 0;
         nAreaImpassabilityMask_ = 0;
         unsigned int nOffset = 0;
-        for( double* it = rAreaSpeeds_; it != rAreaSpeeds_ + 8; ++it, ++nOffset )
+        for( CIT_Speed it = rAreaSpeeds_.begin(); it != rAreaSpeeds_.end(); ++it, ++nOffset )
         {
             if( *it == 0. )
-                nAreaImpassabilityMask_ |= (1<<nOffset);
+                nAreaImpassabilityMask_ |= ( 1 << nOffset );
             else
-                nAreaPassabilityMask_ |= (1<<nOffset);
+                nAreaPassabilityMask_ |= ( 1 << nOffset );
         }
     }
 }
@@ -328,11 +318,11 @@ void PHY_Speeds::GenerateMasks()
 double& PHY_Speeds::SpeedFor( const TerrainData& data )
 {
     if( data.Area() )
-        return *( rAreaSpeeds_ + data.ExtractAreaOffset() );
+        return rAreaSpeeds_[ data.ExtractAreaOffset() ];
     if( data.Border() )
-        return *( rBorderSpeeds_ + data.ExtractBorderOffset() );
+        return rBorderSpeeds_[ data.ExtractBorderOffset() ];
     if( data.Linear() )
-        return *( rLinearSpeeds_ + data.ExtractLinearOffset() );
+        return rLinearSpeeds_[ data.ExtractLinearOffset() ];
     return rBaseSpeed_;
 }
 

@@ -96,6 +96,15 @@ TerrainData TER_AnalyzerManager::FindTerrainDataWithinCircle( const MT_Vector2D&
 }
 
 // -----------------------------------------------------------------------------
+// Name: TER_AnalyzerManager::FindTerrainDataWithinPolygon
+// Created: JSR 2012-02-06
+// -----------------------------------------------------------------------------
+TerrainData TER_AnalyzerManager::FindTerrainDataWithinPolygon( const TER_Polygon& polygon )
+{
+    return pAnalyzer_->FindTerrainDataWithinPolygon( polygon );
+}
+
+// -----------------------------------------------------------------------------
 // Name: TER_AnalyzerManager::Pick
 // Created: CMA 2011-08-29
 // -----------------------------------------------------------------------------

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- edited with XMLSpy v2008 rel. 2 (http://www.altova.com) by mazuki (darksiderg) -->
-<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.2">
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.3">
 	<xs:include schemaLocation="tools.xsd"/>
 	<xs:element name="equipments">
 		<xs:complexType>
@@ -70,6 +70,7 @@
 				<xs:complexType>
 					<xs:attribute name="terrain" type="xs:string" use="required"/>
 					<xs:attribute name="value" type="T_NonNegativeDouble" use="required"/>
+					<xs:attribute name="construction-speed" type="xs:nonNegativeInteger"/>
 				</xs:complexType>
 			</xs:element>
 		</xs:sequence>

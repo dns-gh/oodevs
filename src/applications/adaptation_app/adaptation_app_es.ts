@@ -1270,6 +1270,10 @@ estacionado con motor encendido</translation>
         <source>Ground type</source>
         <translation>Tipo de terreno</translation>
     </message>
+    <message>
+        <source>Construction (%)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Composantes_WeaponsListView</name>

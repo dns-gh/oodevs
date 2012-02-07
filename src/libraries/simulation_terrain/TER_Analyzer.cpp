@@ -152,6 +152,19 @@ TerrainData TER_Analyzer::FindTerrainDataWithinCircle( const MT_Vector2D& center
 }
 
 // -----------------------------------------------------------------------------
+// Name: TER_Analyzer::FindTerrainDataWithinPolygon
+// Created: JSR 2012-02-03
+// -----------------------------------------------------------------------------
+TerrainData TER_Analyzer::FindTerrainDataWithinPolygon( const TER_Polygon& polygon )
+{
+    TerrainData result;
+    std::vector< spatialcontainer::Node< TerrainData >* > nodes = pAnalyzer_->FindNodesWithinPolygon( MakePolygon( polygon ) );
+    for( std::vector< spatialcontainer::Node< TerrainData >* >::const_iterator iterator = nodes.begin(); iterator != nodes.end(); ++iterator )
+        result.Merge( TerrainData::BuildData( **iterator ) );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
 // Name: TER_Analyzer::Pick
 // Created: BCI 2011-03-04
 // -----------------------------------------------------------------------------

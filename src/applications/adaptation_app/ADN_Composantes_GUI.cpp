@@ -217,21 +217,21 @@ void ADN_Composantes_GUI::Build()
     pDataPageLayout->setSpacing( 10 );
     pDataPageLayout->setAlignment( Qt::AlignTop );
 
-    pDataPageLayout->addMultiCellWidget( pInfoHolder      , 0, 0, 0, 0 );
+    pDataPageLayout->addMultiCellWidget( pInfoHolder       , 0, 0, 0, 0 );
     pDataPageLayout->addMultiCellWidget( pIdGroupBox       , 1, 1, 0, 0 );
     pDataPageLayout->addMultiCellWidget( pInfoGroupBox     , 2, 2, 0, 0 );
-    pDataPageLayout->addMultiCellWidget( pSpeedGroup       , 3, 5, 0, 0 );
+    pDataPageLayout->addMultiCellWidget( pConsumptionsGroup, 3, 3, 0, 0 );
+    pDataPageLayout->addMultiCellWidget( pBreakdownsGroup_ , 4, 6, 0, 0 );
 
-    pDataPageLayout->addMultiCellWidget( pTroopGroupBox          , 0, 3, 1, 1 );
-    pDataPageLayout->addMultiCellWidget( pSensorsGroup           , 3, 3, 1, 1 );
-    pDataPageLayout->addMultiCellWidget( pRadarsGroup            , 4, 4, 1, 1 );
-    pDataPageLayout->addMultiCellWidget( pWeaponsGroup           , 5, 5, 1, 1 );
-    pDataPageLayout->addMultiCellWidget( pActiveProtectionsGroup , 6, 6, 1, 1 );
-    pDataPageLayout->addMultiCellWidget( pConsumptionsGroup      , 6, 6, 0, 0 );
+    pDataPageLayout->addMultiCellWidget( pTroopGroupBox         , 0, 3, 1, 1 );
+    pDataPageLayout->addMultiCellWidget( pSensorsGroup          , 3, 3, 1, 1 );
+    pDataPageLayout->addMultiCellWidget( pRadarsGroup           , 4, 4, 1, 1 );
+    pDataPageLayout->addMultiCellWidget( pWeaponsGroup          , 5, 5, 1, 1 );
+    pDataPageLayout->addMultiCellWidget( pActiveProtectionsGroup, 6, 6, 1, 1 );
 
-    pDataPageLayout->addMultiCellWidget( pBreakdownsGroup_ , 0, 2, 2, 2 );
-    pDataPageLayout->addMultiCellWidget( pDotationGroup    , 3, 4, 2, 2 );
-    pDataPageLayout->addMultiCellWidget( pObjectsGroup     , 5, 6, 2, 2 );
+    pDataPageLayout->addMultiCellWidget( pSpeedGroup   , 0, 2, 2, 2 );
+    pDataPageLayout->addMultiCellWidget( pDotationGroup, 3, 4, 2, 2 );
+    pDataPageLayout->addMultiCellWidget( pObjectsGroup , 5, 6, 2, 2 );
 
     // List view
     ADN_SearchListView< ADN_ListView_Composantes >* pSearchListView = new ADN_SearchListView< ADN_ListView_Composantes >( data_.GetComposantes(), vInfosConnectors );

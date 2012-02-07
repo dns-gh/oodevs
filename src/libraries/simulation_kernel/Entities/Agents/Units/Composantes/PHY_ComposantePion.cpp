@@ -1282,6 +1282,26 @@ bool PHY_ComposantePion::CanBeTransported() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::HasConstructionSpeeds
+// Created: JSR 2012-02-07
+// -----------------------------------------------------------------------------
+bool PHY_ComposantePion::HasConstructionSpeeds() const
+{
+    assert( pType_ );
+    return pType_->HasConstructionSpeeds();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_ComposantePion::GetConstructionSpeed
+// Created: JSR 2012-02-03
+// -----------------------------------------------------------------------------
+double PHY_ComposantePion::GetConstructionSpeed( const TerrainData& data ) const
+{
+    assert( pType_ );
+    return pType_->GetConstructionSpeed( data );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_ComposantePion::CanConstruct
 // Created: NLD 2004-09-15
 // -----------------------------------------------------------------------------
