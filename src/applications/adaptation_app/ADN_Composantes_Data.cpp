@@ -791,11 +791,14 @@ void ADN_Composantes_Data::BreakdownGroupInfos::WriteArchive( xml::xostream& out
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
 ADN_Composantes_Data::SpeedInfos::SpeedInfos( E_Location nTypeTerrain )
-: nTypeTerrain_(nTypeTerrain)
-, rSpeed_(0.0)
+    : nTypeTerrain_ ( nTypeTerrain )
+    , rSpeed_       (0)
+    , nConstruction_( 100 )
 {
     rSpeed_.SetDataName( "la vitesse" );
     rSpeed_.SetParentNode( *this );
+    nConstruction_.SetDataName( "la vitesse de construction" );
+    nConstruction_.SetParentNode( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -823,7 +826,8 @@ std::string ADN_Composantes_Data::SpeedInfos::GetItemName()
 // -----------------------------------------------------------------------------
 void ADN_Composantes_Data::SpeedInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::attribute( "value", rSpeed_ );
+    input >> xml::attribute( "value", rSpeed_ )
+          >> xml::optional >> xml::attribute( "construction-speed", nConstruction_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -834,8 +838,10 @@ void ADN_Composantes_Data::SpeedInfos::WriteArchive( xml::xostream& output ) con
 {
     output << xml::start( "speed" )
             << xml::attribute( "terrain", ADN_Tr::ConvertFromLocation( nTypeTerrain_ ) )
-            << xml::attribute( "value", rSpeed_ )
-           << xml::end;
+            << xml::attribute( "value", rSpeed_ );
+    if( nConstruction_ != 100 )
+        output << xml::attribute( "construction-speed", nConstruction_ );
+    output << xml::end;
 }
 
 //-----------------------------------------------------------------------------
@@ -1831,8 +1837,10 @@ ADN_Composantes_Data::ComposanteInfos* ADN_Composantes_Data::ComposanteInfos::Cr
     pCopy->rMaxSpeed_ = rMaxSpeed_.GetData();
 
     for( int iTerrain = 0; iTerrain < eNbrLocation; ++iTerrain )
-        pCopy->vSpeeds_[ iTerrain ]->rSpeed_ = vSpeeds_[ iTerrain ]->rSpeed_.GetData();
-
+    {
+        pCopy->vSpeeds_[ iTerrain ]->rSpeed_        = vSpeeds_[ iTerrain ]->rSpeed_.GetData();
+        pCopy->vSpeeds_[ iTerrain ]->nConstruction_ = vSpeeds_[ iTerrain ]->nConstruction_.GetData();
+    }
 
     for( IT_WeaponInfos_Vector itWeapon = vWeapons_.begin(); itWeapon != vWeapons_.end(); ++itWeapon )
     {

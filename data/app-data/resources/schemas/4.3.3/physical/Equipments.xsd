@@ -70,6 +70,7 @@
 				<xs:complexType>
 					<xs:attribute name="terrain" type="xs:string" use="required"/>
 					<xs:attribute name="value" type="T_NonNegativeDouble" use="required"/>
+					<xs:attribute name="construction-speed" type="xs:nonNegativeInteger"/>
 				</xs:complexType>
 			</xs:element>
 		</xs:sequence>

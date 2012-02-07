@@ -211,6 +211,9 @@ public:
 
     //! @name Objects
     //@{
+    double GetConstructionSpeed( const TerrainData& data ) const;
+    bool HasConstructionSpeeds() const;
+
     bool CanConstruct( const MIL_ObjectType_ABC& objectType, bool bWithLoaded ) const;
     bool CanDestroy( const MIL_ObjectType_ABC& objectType ) const;
     bool CanMine( const MIL_ObjectType_ABC& objectType ) const;

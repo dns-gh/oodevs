@@ -1218,6 +1218,10 @@ Arrêt moteur allumé</translation>
         <source>Ground type</source>
         <translation>Type de terrain</translation>
     </message>
+    <message>
+        <source>Construction (%)</source>
+        <translation>Construction (%)</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Composantes_WeaponsListView</name>
