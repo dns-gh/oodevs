@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="security.ontologies.interfaces.body.Extinguisher" source-version="1.0.0" extends="directia.core.model.RoleBody">
-  <description>Représente la capacité d'action de l'agent simulé pour éteindre un élément sous l'emprise des flammes. &#xD;
-    &#xD;
-    Un élément éteignable peut être  un incendie, un bâtiment en feu etc.</description>
-</interface>

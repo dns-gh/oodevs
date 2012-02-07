@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<role xmlns="http://www.masagroup.net/directia/schemas/bm" name="security.company.roles.PoliceCompany" source-version="1.0.0" extends="security.company.roles.Company">
-  <skills/>
-  <resources/>
-</role>

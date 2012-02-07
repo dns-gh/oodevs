@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<role xmlns="http://www.masagroup.net/directia/schemas/bm" name="security.company.roles.Company" source-version="1.0.0">
-  <body-type>
-    <class name="security.integration.Company"/>
-  </body-type>
-  <resources/>
-</role>

@@ -1,4 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<category xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.individual" source-version="1.0.0">
-    <description>Modélisation de kla prise de décision d'unités représentant des individus à partir des modèles décisionnels de peloton d'armée régulière. Potentiellement, cela signifie qu'ils possèdent les skills de peloton. Il s'agit avant tout de modéliser des acteurs asymétriques pour animer et stimuler les agents décisionnels standards (pelotons armée interarmes). Certains skills définis à ce niveau font l'hypothèse que l'agent simulé sera composer que d'un seul individus. A ce titre, certains effets sont spécifiques et fortement liés à cette hypothèse, comme par exemple le skill &quot;GoUndetecded&quot; qui modélise le fait qu'un individu est capable, lorsqu'il le souhaite ou lors de certaines missions, de passer inaperçu.</description>
-</category>

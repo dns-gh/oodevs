@@ -1,3 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.crowd.tasks.knowldege.CrowdTask" source-version="1.0.0" extends="common.PionTask">
-</class>

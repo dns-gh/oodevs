@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<skill name="security.unit.skills.StopAlert" source-version="1.0.0" xmlns="http://www.masagroup.net/directia/schemas/bm">
-	<parameters/>
-	<modifiers/>
-	<links/>
-	<resources/>
-</skill>
