@@ -604,6 +604,18 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
+        <object detection-distance="500" type="fire">
+          <population-modifier density="0" modifier="0"/>
+          <source-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Arret" value="1"/>
+            <distance-modifier type="PosteReflexe" value="1"/>
+            <distance-modifier type="Poste" value="1"/>
+            <distance-modifier type="PosteAmenage" value="1"/>
+            <distance-modifier type="PostePrepareGenie" value="1"/>
+          </source-posture-modifiers>
+        </object>
       </object-detection>
     </sensor>
     <sensor detection-delay="0h" name="Oeil ALAT Vers Sol">
@@ -898,6 +910,18 @@
         </object>
         <object detection-distance="500" type="platform">
           <population-modifier density="2" modifier="0.5"/>
+          <source-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Arret" value="1"/>
+            <distance-modifier type="PosteReflexe" value="1"/>
+            <distance-modifier type="Poste" value="1"/>
+            <distance-modifier type="PosteAmenage" value="1"/>
+            <distance-modifier type="PostePrepareGenie" value="1"/>
+          </source-posture-modifiers>
+        </object>
+        <object detection-distance="1000" type="fire">
+          <population-modifier density="0" modifier="0"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
             <distance-modifier type="MouvementDiscret" value="1"/>
@@ -1547,6 +1571,18 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
+        <object detection-distance="100" type="fire">
+          <population-modifier density="0" modifier="0"/>
+          <source-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Arret" value="1"/>
+            <distance-modifier type="PosteReflexe" value="1"/>
+            <distance-modifier type="Poste" value="1"/>
+            <distance-modifier type="PosteAmenage" value="1"/>
+            <distance-modifier type="PostePrepareGenie" value="1"/>
+          </source-posture-modifiers>
+        </object>
       </object-detection>
     </sensor>
     <sensor detection-delay="0h" name="Lunette Tir Char">
@@ -1889,6 +1925,18 @@
         </object>
         <object detection-distance="0" type="platform">
           <population-modifier density="2" modifier="0.5"/>
+          <source-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Arret" value="1"/>
+            <distance-modifier type="PosteReflexe" value="1"/>
+            <distance-modifier type="Poste" value="1"/>
+            <distance-modifier type="PosteAmenage" value="1"/>
+            <distance-modifier type="PostePrepareGenie" value="1"/>
+          </source-posture-modifiers>
+        </object>
+        <object detection-distance="400" type="fire">
+          <population-modifier density="0" modifier="0"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
             <distance-modifier type="MouvementDiscret" value="1"/>
@@ -2497,6 +2545,18 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
+        <object detection-distance="1500" type="fire">
+          <population-modifier density="0" modifier="0"/>
+          <source-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Arret" value="1"/>
+            <distance-modifier type="PosteReflexe" value="1"/>
+            <distance-modifier type="Poste" value="1"/>
+            <distance-modifier type="PosteAmenage" value="1"/>
+            <distance-modifier type="PostePrepareGenie" value="1"/>
+          </source-posture-modifiers>
+        </object>
       </object-detection>
     </sensor>
     <sensor detection-delay="0h" name="Jumelle Optique Gx8">
@@ -2863,6 +2923,18 @@
         </object>
         <object detection-distance="0" type="mortar deployment area">
           <population-modifier density="2" modifier="0.5"/>
+          <source-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Arret" value="1"/>
+            <distance-modifier type="PosteReflexe" value="1"/>
+            <distance-modifier type="Poste" value="1"/>
+            <distance-modifier type="PosteAmenage" value="1"/>
+            <distance-modifier type="PostePrepareGenie" value="1"/>
+          </source-posture-modifiers>
+        </object>
+        <object detection-distance="1000" type="fire">
+          <population-modifier density="0" modifier="0"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
             <distance-modifier type="MouvementDiscret" value="1"/>
@@ -3292,6 +3364,18 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
+        <object detection-distance="500" type="fire">
+          <population-modifier density="0" modifier="0"/>
+          <source-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Arret" value="1"/>
+            <distance-modifier type="PosteReflexe" value="1"/>
+            <distance-modifier type="Poste" value="1"/>
+            <distance-modifier type="PosteAmenage" value="1"/>
+            <distance-modifier type="PostePrepareGenie" value="1"/>
+          </source-posture-modifiers>
+        </object>
       </object-detection>
     </sensor>
     <sensor detection-delay="0h" name="Camera SDTI">
@@ -3608,6 +3692,18 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
+        <object detection-distance="150" type="fire">
+          <population-modifier density="0" modifier="0"/>
+          <source-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Arret" value="1"/>
+            <distance-modifier type="PosteReflexe" value="1"/>
+            <distance-modifier type="Poste" value="1"/>
+            <distance-modifier type="PosteAmenage" value="1"/>
+            <distance-modifier type="PostePrepareGenie" value="1"/>
+          </source-posture-modifiers>
+        </object>
       </object-detection>
     </sensor>
     <sensor detection-delay="0h" name="Camera Viviane">
@@ -3838,6 +3934,18 @@
             <distance-modifier type="Poste" value="0"/>
             <distance-modifier type="PosteAmenage" value="0"/>
             <distance-modifier type="PostePrepareGenie" value="0"/>
+          </source-posture-modifiers>
+        </object>
+        <object detection-distance="2000" type="fire">
+          <population-modifier density="0" modifier="0"/>
+          <source-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Arret" value="1"/>
+            <distance-modifier type="PosteReflexe" value="1"/>
+            <distance-modifier type="Poste" value="1"/>
+            <distance-modifier type="PosteAmenage" value="1"/>
+            <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
       </object-detection>
@@ -4328,6 +4436,18 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
+        <object detection-distance="100" type="fire">
+          <population-modifier density="0" modifier="0"/>
+          <source-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Arret" value="1"/>
+            <distance-modifier type="PosteReflexe" value="1"/>
+            <distance-modifier type="Poste" value="1"/>
+            <distance-modifier type="PosteAmenage" value="1"/>
+            <distance-modifier type="PostePrepareGenie" value="1"/>
+          </source-posture-modifiers>
+        </object>
       </object-detection>
     </sensor>
     <sensor detection-delay="0h" name="Lunette Observation VOA">
@@ -4704,6 +4824,18 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
+        <object detection-distance="400" type="fire">
+          <population-modifier density="0" modifier="0"/>
+          <source-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Arret" value="1"/>
+            <distance-modifier type="PosteReflexe" value="1"/>
+            <distance-modifier type="Poste" value="1"/>
+            <distance-modifier type="PosteAmenage" value="1"/>
+            <distance-modifier type="PostePrepareGenie" value="1"/>
+          </source-posture-modifiers>
+        </object>
       </object-detection>
     </sensor>
     <sensor detection-delay="0h" name="Lunette Observation">
@@ -5056,6 +5188,18 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
+        <object detection-distance="400" type="fire">
+          <population-modifier density="0" modifier="0"/>
+          <source-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Arret" value="1"/>
+            <distance-modifier type="PosteReflexe" value="1"/>
+            <distance-modifier type="Poste" value="1"/>
+            <distance-modifier type="PosteAmenage" value="1"/>
+            <distance-modifier type="PostePrepareGenie" value="1"/>
+          </source-posture-modifiers>
+        </object>
       </object-detection>
     </sensor>
     <sensor detection-delay="0h" name="Camera CL 289">
@@ -5372,6 +5516,18 @@
             <distance-modifier type="PostePrepareGenie" value="0"/>
           </source-posture-modifiers>
         </object>
+        <object detection-distance="2500" type="fire">
+          <population-modifier density="0" modifier="0"/>
+          <source-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Arret" value="1"/>
+            <distance-modifier type="PosteReflexe" value="1"/>
+            <distance-modifier type="Poste" value="1"/>
+            <distance-modifier type="PosteAmenage" value="1"/>
+            <distance-modifier type="PostePrepareGenie" value="1"/>
+          </source-posture-modifiers>
+        </object>
       </object-detection>
     </sensor>
     <sensor detection-delay="0h" name="Oeil Avion">
@@ -5510,6 +5666,18 @@
         </object>
         <object detection-distance="500" type="trail">
           <population-modifier density="2" modifier="0.5"/>
+          <source-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Arret" value="1"/>
+            <distance-modifier type="PosteReflexe" value="1"/>
+            <distance-modifier type="Poste" value="1"/>
+            <distance-modifier type="PosteAmenage" value="1"/>
+            <distance-modifier type="PostePrepareGenie" value="1"/>
+          </source-posture-modifiers>
+        </object>
+        <object detection-distance="1000" type="fire">
+          <population-modifier density="0" modifier="0"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
             <distance-modifier type="MouvementDiscret" value="1"/>
@@ -6046,6 +6214,18 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
+        <object detection-distance="400" type="fire">
+          <population-modifier density="0" modifier="0"/>
+          <source-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Arret" value="1"/>
+            <distance-modifier type="PosteReflexe" value="1"/>
+            <distance-modifier type="Poste" value="1"/>
+            <distance-modifier type="PosteAmenage" value="1"/>
+            <distance-modifier type="PostePrepareGenie" value="1"/>
+          </source-posture-modifiers>
+        </object>
       </object-detection>
     </sensor>
     <sensor detection-delay="0h" name="Lunette Thermique XL">
@@ -6436,6 +6616,18 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
+        <object detection-distance="150" type="fire">
+          <population-modifier density="0" modifier="0"/>
+          <source-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Arret" value="1"/>
+            <distance-modifier type="PosteReflexe" value="1"/>
+            <distance-modifier type="Poste" value="1"/>
+            <distance-modifier type="PosteAmenage" value="1"/>
+            <distance-modifier type="PostePrepareGenie" value="1"/>
+          </source-posture-modifiers>
+        </object>
       </object-detection>
     </sensor>
     <sensor detection-delay="0h" name="Oeil ALAT HM vers Sol">
@@ -6730,6 +6922,18 @@
         </object>
         <object detection-distance="500" type="platform">
           <population-modifier density="2" modifier="0.5"/>
+          <source-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Arret" value="1"/>
+            <distance-modifier type="PosteReflexe" value="1"/>
+            <distance-modifier type="Poste" value="1"/>
+            <distance-modifier type="PosteAmenage" value="1"/>
+            <distance-modifier type="PostePrepareGenie" value="1"/>
+          </source-posture-modifiers>
+        </object>
+        <object detection-distance="1000" type="fire">
+          <population-modifier density="0" modifier="0"/>
           <source-posture-modifiers>
             <distance-modifier type="Mouvement" value="1"/>
             <distance-modifier type="MouvementDiscret" value="1"/>
@@ -7178,6 +7382,18 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
+        <object detection-distance="1500" type="fire">
+          <population-modifier density="0" modifier="0"/>
+          <source-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Arret" value="1"/>
+            <distance-modifier type="PosteReflexe" value="1"/>
+            <distance-modifier type="Poste" value="1"/>
+            <distance-modifier type="PosteAmenage" value="1"/>
+            <distance-modifier type="PostePrepareGenie" value="1"/>
+          </source-posture-modifiers>
+        </object>
       </object-detection>
     </sensor>
     <sensor detection-delay="0h" name="MOP">
@@ -7542,8 +7758,20 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
+        <object detection-distance="1500" type="fire">
+          <population-modifier density="0" modifier="0"/>
+          <source-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Arret" value="1"/>
+            <distance-modifier type="PosteReflexe" value="1"/>
+            <distance-modifier type="Poste" value="1"/>
+            <distance-modifier type="PosteAmenage" value="1"/>
+            <distance-modifier type="PostePrepareGenie" value="1"/>
+          </source-posture-modifiers>
+        </object>
       </object-detection>
     </sensor>
   </sensors>
 </sensors>
-<!-- signature="1861318796" -->
+<!-- signature="3903112567" -->
