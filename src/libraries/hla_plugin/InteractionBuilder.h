@@ -29,6 +29,11 @@ namespace hla
 namespace interactions
 {
     struct MunitionDetonation;
+    struct ServiceRequest;
+    struct ResupplyCancel;
+    struct ResupplyOffer;
+    struct ResupplyReceived;
+    struct TransferControl;
     struct NetnRequestConvoy;
     struct NetnOfferConvoy;
     struct NetnAcceptOffer;
@@ -61,7 +66,17 @@ public:
 
     //! @name Operations
     //@{
+    //! @name RPR
+    //@{
     void Build( ::hla::Interaction< interactions::MunitionDetonation >& interaction ) const;
+    void Build( ::hla::Interaction< interactions::ServiceRequest >& interaction ) const;
+    void Build( ::hla::Interaction< interactions::ResupplyCancel >& interaction ) const;
+    void Build( ::hla::Interaction< interactions::ResupplyOffer >& interaction ) const;
+    void Build( ::hla::Interaction< interactions::ResupplyReceived >& interaction ) const;
+    void Build( ::hla::Interaction< interactions::TransferControl >& interaction ) const;
+    //@}
+    //! @name NETN
+    //@{
     void Build( ::hla::Interaction< interactions::NetnRequestConvoy >& interaction ) const;
     void Build( ::hla::Interaction< interactions::NetnOfferConvoy >& interaction ) const;
     void Build( ::hla::Interaction< interactions::NetnAcceptOffer >& interaction ) const;
@@ -74,6 +89,7 @@ public:
     void Build( ::hla::Interaction< interactions::NetnConvoyDestroyedEntities >& interaction ) const;
     void Build( ::hla::Interaction< interactions::NetnServiceComplete >& interaction ) const;
     void Build( ::hla::Interaction< interactions::NetnServiceReceived >& interaction ) const;
+    //@}
     //@}
 
 private:

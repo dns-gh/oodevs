@@ -69,6 +69,54 @@ BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_a
     CheckBuild< interactions::MunitionDetonation >( name, parameters );
 }
 
+BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_service_request, Fixture )
+{
+    const std::string name = "ServiceRequest";
+    const std::vector< std::string > parameters = boost::assign::list_of( "ReceivingObject" )
+                                                                        ( "ServicingObject" )
+                                                                        ( "ServiceType" )
+                                                                        ( "SuppliesData" );
+    CheckBuild< interactions::ServiceRequest >( name, parameters );
+}
+
+BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_resupply_cancel, Fixture )
+{
+    const std::string name = "ResupplyCancel";
+    const std::vector< std::string > parameters = boost::assign::list_of( "ReceivingObject" )
+                                                                        ( "SupplyingObject" );
+    CheckBuild< interactions::ResupplyCancel >( name, parameters );
+}
+
+BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_resupply_offer, Fixture )
+{
+    const std::string name = "ResupplyOffer";
+    const std::vector< std::string > parameters = boost::assign::list_of( "ReceivingObject" )
+                                                                        ( "SupplyingObject" )
+                                                                        ( "SuppliesData" );
+    CheckBuild< interactions::ResupplyOffer >( name, parameters );
+}
+
+BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_resupply_received, Fixture )
+{
+    const std::string name = "ResupplyReceived";
+    const std::vector< std::string > parameters = boost::assign::list_of( "ReceivingObject" )
+                                                                        ( "SupplyingObject" )
+                                                                        ( "SuppliesData" );
+    CheckBuild< interactions::ResupplyReceived >( name, parameters );
+}
+
+BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_transfer_control, Fixture )
+{
+    const std::string name = "TransferControl";
+    const std::vector< std::string > parameters = boost::assign::list_of( "OriginatingEntity" )
+                                                                        ( "ReceivingEntity" )
+                                                                        ( "RequestIdentifier" )
+                                                                        ( "TransferType" )
+                                                                        ( "TransferEntity" )
+                                                                        ( "RecordSetData" );
+    CheckBuild< interactions::TransferControl >( name, parameters );
+}
+
 BOOST_FIXTURE_TEST_CASE( transportation_interaction_builder_registers_name_and_attributes_for_netn_request_convoy, Fixture )
 {
     const std::string name = "NETN_Service.NETN_RequestService.NETN_RequestConvoy";

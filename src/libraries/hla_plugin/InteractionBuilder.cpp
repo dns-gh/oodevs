@@ -260,3 +260,71 @@ void InteractionBuilder::Build( ::hla::Interaction< interactions::NetnServiceRec
     RegisterNetnService( interaction, name, logger_ );
     federate_.Register( ::hla::InteractionIdentifier( name ), interaction, true, true );
 }
+
+// -----------------------------------------------------------------------------
+// Name: InteractionBuilder::Build
+// Created: AHC 2012-02-06
+// -----------------------------------------------------------------------------
+void InteractionBuilder::Build( ::hla::Interaction< interactions::ResupplyCancel >& interaction ) const
+{
+    const std::string name = "ResupplyCancel";
+    REGISTER( "ReceivingObject"           , &interactions::ResupplyCancel::receivingObject );
+    REGISTER( "SupplyingObject"           , &interactions::ResupplyCancel::supplyingObject );
+    federate_.Register( ::hla::InteractionIdentifier( name ), interaction, true, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InteractionBuilder::Build
+// Created: AHC 2012-02-06
+// -----------------------------------------------------------------------------
+void InteractionBuilder::Build( ::hla::Interaction< interactions::ResupplyOffer >& interaction ) const
+{
+    const std::string name = "ResupplyOffer";
+    REGISTER( "ReceivingObject"           , &interactions::ResupplyOffer::receivingObject );
+    REGISTER( "SupplyingObject"           , &interactions::ResupplyOffer::supplyingObject );
+    REGISTER( "SuppliesData"              , &interactions::ResupplyOffer::suppliesData );
+    federate_.Register( ::hla::InteractionIdentifier( name ), interaction, true, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InteractionBuilder::Build
+// Created: AHC 2012-02-06
+// -----------------------------------------------------------------------------
+void InteractionBuilder::Build( ::hla::Interaction< interactions::ResupplyReceived >& interaction ) const
+{
+    const std::string name = "ResupplyReceived";
+    REGISTER( "ReceivingObject"           , &interactions::ResupplyReceived::receivingObject );
+    REGISTER( "SupplyingObject"           , &interactions::ResupplyReceived::supplyingObject );
+    REGISTER( "SuppliesData"              , &interactions::ResupplyReceived::suppliesData );
+    federate_.Register( ::hla::InteractionIdentifier( name ), interaction, true, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InteractionBuilder::Build
+// Created: AHC 2012-02-06
+// -----------------------------------------------------------------------------
+void InteractionBuilder::Build( ::hla::Interaction< interactions::ServiceRequest >& interaction ) const
+{
+    const std::string name = "ServiceRequest";
+    REGISTER( "ReceivingObject"           , &interactions::ServiceRequest::receivingObject );
+    REGISTER( "ServicingObject"           , &interactions::ServiceRequest::servicingObject );
+    REGISTER( "ServiceType"               , &interactions::ServiceRequest::serviceType );
+    REGISTER( "SuppliesData"              , &interactions::ServiceRequest::suppliesData );
+    federate_.Register( ::hla::InteractionIdentifier( name ), interaction, true, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: InteractionBuilder::Build
+// Created: AHC 2012-02-07
+// -----------------------------------------------------------------------------
+void InteractionBuilder::Build( ::hla::Interaction< interactions::TransferControl >& interaction ) const
+{
+    const std::string name = "TransferControl";
+    REGISTER( "OriginatingEntity"         , &interactions::TransferControl::originatingEntity );
+    REGISTER( "ReceivingEntity"           , &interactions::TransferControl::receivingEntity );
+    REGISTER( "RequestIdentifier"         , &interactions::TransferControl::requestIdentifier );
+    REGISTER( "TransferType"              , &interactions::TransferControl::transferType );
+    REGISTER( "TransferEntity"            , &interactions::TransferControl::transferEntity );
+    REGISTER( "RecordSetData"             , &interactions::TransferControl::recordSetData );
+    federate_.Register( ::hla::InteractionIdentifier( name ), interaction, true, true );
+}

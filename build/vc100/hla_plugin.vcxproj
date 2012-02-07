@@ -162,6 +162,7 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\ObjectResolver.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\AttributesSerializer.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\AggregateEntity.cpp" />
+    <ClCompile Include="..\..\src\libraries\hla_plugin\UnitModelReloader.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\UnitTeleporter.cpp" />
     <ClCompile Include="..\..\src\libraries\hla_plugin\UnitTypeResolver.cpp" />
   </ItemGroup>
@@ -204,6 +205,8 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\IndirectFireSender.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\InteractionBuilder.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\Interactions.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\InteractionsRpr.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\InteractionsNetn.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\InteractionSender.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\InteractionSender_ABC.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\LocalAgentResolver.h" />
@@ -273,6 +276,7 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\SerializationTools.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\AggregateEntity.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\EventListener_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\hla_plugin\UnitModelReloader.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\UnitTeleporter.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\UnitTypeResolver.h" />
     <ClInclude Include="..\..\src\libraries\hla_plugin\UnitTypeResolver_ABC.h" />

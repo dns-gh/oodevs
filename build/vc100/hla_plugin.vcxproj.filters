@@ -136,6 +136,9 @@
     <ClCompile Include="..\..\src\libraries\hla_plugin\FormationCreater.cpp">
       <Filter>Source Files\Dispatcher\Simulation</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\hla_plugin\UnitModelReloader.cpp">
+      <Filter>Source Files\Dispatcher\Simulation</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\libraries\hla_plugin\UnitTeleporter.cpp">
       <Filter>Source Files\Dispatcher\Simulation</Filter>
     </ClCompile>
@@ -390,6 +393,9 @@
     <ClInclude Include="..\..\src\libraries\hla_plugin\FormationCreater.h">
       <Filter>Source Files\Dispatcher\Simulation</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\UnitModelReloader.h">
+      <Filter>Source Files\Dispatcher\Simulation</Filter>
+    </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\UnitTeleporter.h">
       <Filter>Source Files\Dispatcher\Simulation</Filter>
     </ClInclude>
@@ -584,6 +590,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\hla_plugin\ExtentResolver_ABC.h">
       <Filter>Source Files\Resolvers</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\InteractionsRpr.h">
+      <Filter>Source Files\Interactions</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\hla_plugin\InteractionsNetn.h">
+      <Filter>Source Files\Interactions</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
