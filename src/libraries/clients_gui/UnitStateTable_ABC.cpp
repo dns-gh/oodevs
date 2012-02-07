@@ -106,7 +106,7 @@ void UnitStateTable_ABC::Serialize( const boost::filesystem::path& path ) const
     std::ofstream file( path.string().c_str() );
     for( QStringList::const_iterator it = horizontalHeaders_.constBegin(); it != horizontalHeaders_.constEnd(); ++it )
         if( *it != tools::translate( "UnitStateTable_ABC", "Location" ) )
-            file << *it << separator;
+            file << *it << ( it + 1 != horizontalHeaders_.constEnd() ? separator : "" );
     file  << std::endl;
     for( int i = 0; i < dataModel_.rowCount(); ++i )
     {
@@ -125,7 +125,7 @@ void UnitStateTable_ABC::Serialize( const boost::filesystem::path& path ) const
                     else
                         text = item->text();
                 }
-                file << text << separator;
+                file << text << ( j != dataModel_.columnCount() - 1 ? separator : "" );
             }
         }
         file << std::endl;
