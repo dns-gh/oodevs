@@ -294,7 +294,7 @@ void DEC_Knowledge_Object::UpdateLocalisations()
 {
     if( !pObjectKnown_ )
         return;
-    const TER_Localisation& localisation = pObjectKnown_->GetLocalisation();
+    const TER_Localisation& localisation = const_cast< const MIL_Object_ABC* >( pObjectKnown_ )->GetLocalisation(); 
     if( !( localisation_ == localisation ) )
     {
         localisation_.Reset( localisation );
