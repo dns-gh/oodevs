@@ -4182,20 +4182,20 @@
                </interactionClass>
             </interactionClass>
             <interactionClass dimensions="NA" name="NETN_ServiceStarted" order="Receive"
-                              sharing="Neither"
+                              sharing="PublishSubscribe"
                               transportation="HLAreliable">
                <interactionClass dimensions="NA" name="NETN_StorageStarted" order="Receive"
                                  semantics="NETN_StorageStarted is used by a service provider to indicate that the (partial) storage of the requested material has started."
-                                 sharing="PublishSubscribe"
+                                 sharing="Neither"
                                  transportation="HLAreliable">
                   <parameter dataType="SupplyArray" name="SuppliesData"/>
                </interactionClass>
             </interactionClass>
             <interactionClass dimensions="NA" name="NETN_ServiceComplete" order="Receive"
-                              sharing="Neither"
+                              sharing="PublishSubscribe"
                               transportation="HLAreliable">
                <interactionClass dimensions="NA" name="NETN_SupplyComplete" order="Receive"
-                                 sharing="PublishSubscribe"
+                                 sharing="Neither"
                                  transportation="HLAreliable">
                   <parameter dataType="SupplyArray" name="SuppliesData"
                              semantics="The amount of supplies, by type, that were transferred from provider to consumer."/>
