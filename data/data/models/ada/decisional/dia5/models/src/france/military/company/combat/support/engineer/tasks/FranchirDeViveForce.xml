@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.support.engineer.tasks.FranchirDeViveForce" source-version="1.0.0" knowledge-class="france.military.company.combat.support.engineer.tasks.knowledges.FranchirDeViveForce">
+	<parameters>
+		<parameter name="obstacles">
+			<description>Les obstacles à contourner</description>
+			<type>
+				<list>
+					<class name="sword.military.world.Object"/>
+				</list>
+			</type>
+		</parameter>
+		<parameter name="meetingPoint">
+			<description>Point de regroupement vers lequel se déplacera l'unité en fin de mission.</description>
+			<type>
+				<class name="sword.military.world.Point"/>
+			</type>
+		</parameter>
+	</parameters>
+	<stages>
+		<stage label="Contourner obstacles" disable-when-done="true">
+			<skills>
+				<skill name="sword.military.company.skills.LeadGEN" main="true">
+					<parameter name="companyTask">
+						<value>
+							<string>france.military.company.combat.support.engineer.tasks.FranchirDeViveForce</string>
+						</value>
+					</parameter>
+					<parameter name="mainTasks">
+						<value>
+							<string>france.military.platoon.combat.support.engineer.tasks.ContournerObstacles</string>
+						</value>
+					</parameter>
+					<parameter name="supportTasks">
+						<value>
+							<string>france.military.platoon.tasks.Renforcer</string>
+						</value>
+					</parameter>
+					<parameter name="taskForSupporting">
+						<value>
+							<string>france.military.platoon.tasks.Renforcer</string>
+						</value>
+					</parameter>
+					<parameter name="defaultTask">
+						<value>
+							<string>france.military.platoon.tasks.Suivre</string>
+						</value>
+					</parameter>
+				</skill>
+			</skills>
+		</stage>
+	</stages>
+</task>

@@ -1,0 +1,42 @@
+rootnode
+{
+    connections = { skill.links.moveTo },
+
+    -- -------------------------------------------------------------------------------- 
+    -- Init
+    -- --------------------------------------------------------------------------------
+    create = function( self )
+        self.stock = nil
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Feedbacks
+    -- --------------------------------------------------------------------------------
+    done = function( self, params ) -- element is reached
+	    if not self.stock then
+            self.stock = params.element
+            meKnowledge:RC( eRC_ExtractFromStock_Arrived )
+        end
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- If element is reached and if agent can extract stock, extract.
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+       if self.stock ~= nil then
+           self.stock:extract( self.params.resourceTypes )
+           if not self.stock:isExtractPossible( self.params.resourceTypes ) then
+               self.stock = nil
+               meKnowledge:RC( eRC_ExtractFromStock_Extracted )
+           end
+       else
+           for _, stock in pairs( self.params.stocks ) do
+               if stock:isExtractPossible( self.params.resourceTypes ) == true then
+                   Activate( skill.links.moveTo, stock:proximityLevel(), { element = stock } )
+                   return
+               end
+            end
+            Feedback( self.feedbacks.done, { reason = "extracted" } )
+        end
+    end
+}

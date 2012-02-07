@@ -1,0 +1,27 @@
+-- **************************************************************************** 
+-- $$$$
+-- ****************************************************************************
+rootnode
+{
+    connections = { skill.links.Activate },
+
+    done = function( self, params, additionnalParams )
+        Feedback( self.feedbacks.done )
+    end;
+
+    failed = function( self, params, additionnalParams )
+        if additionnalParams.state == "Can't be activated" then
+            meKnowledge:RC( eRC_ObstacleNonActivable )
+        end
+        Feedback( self.feedbacks.failed )
+    end;
+
+    activate = function( self )
+        local Activate = Activate
+        if ( not self.params.entities ) or ( #self.params.entities == 0 ) then
+            Feedback( self.feedbacks.done )
+        else
+           Activate( skill.links.Activate, 1, {entities = self.params.entities, positions = self.params.positions})
+        end
+    end
+}

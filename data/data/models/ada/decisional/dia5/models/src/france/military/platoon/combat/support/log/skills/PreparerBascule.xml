@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.log.skills.PreparerBascule" source-version="1.0.0">
+  <parameters>
+    <parameter name="position" nullable="true">
+      <type>
+        <class name="sword.military.knowledge.decisional.Reachable"/>
+      </type>
+      <default>
+        <nil/>
+      </default>
+    </parameter>
+    <parameter name="automat">
+      <type>
+        <class name="sword.military.world.Company"/>
+      </type>
+    </parameter>
+  </parameters>
+  <links>
+    <link name="moveToward" skill="sword.military.platoon.skills.MoveToward"/>
+  </links>
+</skill>

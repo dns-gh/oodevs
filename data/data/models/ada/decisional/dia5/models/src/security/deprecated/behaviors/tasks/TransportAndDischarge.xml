@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="security.deprecated.behaviors.tasks.TransportAndDischarge" source-version="1.0.0" knowledge-class="security.unit.tasks.UnitTask">
+  <parameters>
+    <parameter name="elementToTransport">
+      <type>
+        <class name="security.deprecated.ontologies.interfaces.Transportable"/>
+      </type>
+    </parameter>
+    <parameter name="treatingElements">
+      <type>
+        <list>
+          <class name="security.deprecated.ontologies.interfaces.Treating"/>
+        </list>
+      </type>
+    </parameter>
+    <parameter name="garagePosition">
+      <type>
+        <class name="sword.military.knowledge.decisional.Reachable"/>
+      </type>
+    </parameter>
+  </parameters>
+  <stages>
+    <stage label="Prise en charge de l'unité">
+      <skills>
+        <skill name="security.deprecated.behaviors.skills.generic.Transport" main="true">
+          <parameter name="element">
+            <value>
+              <parameter>elementToTransport</parameter>
+            </value>
+          </parameter>
+        </skill>
+      </skills>
+    </stage>
+    <stage label="Evacuation de l'unité">
+      <skills>
+        <skill name="security.deprecated.behaviors.skills.DischargeIn" main="true">
+          <parameter name="treatingElements">
+            <value>
+              <parameter>treatingElements</parameter>
+            </value>
+          </parameter>
+        </skill>
+      </skills>
+    </stage>
+    <stage label="Déplacement vers position de garrage" disable-when-done="true">
+      <skills>
+        <skill name="security.unit.skills.MoveTo" main="true">
+          <parameter name="element">
+            <value>
+              <parameter>garagePosition</parameter>
+            </value>
+          </parameter>
+        </skill>
+      </skills>
+    </stage>
+  </stages>
+</task>

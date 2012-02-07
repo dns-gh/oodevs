@@ -1,0 +1,20 @@
+-- ****************************************************************************
+-- Simple action to movement
+-- self.params.entity: the reachable element
+-- ****************************************************************************
+rootnode
+{
+    acquire = { [ skill.resources.move ] = 1 },
+
+    done = function( self ) end,
+
+    select = function( self )
+        if self.params.entity:moveToIt( self.params.pathType ) then
+            Feedback( self.feedbacks.done, { element = self.params.entity } )
+        end
+    end,
+
+    destroy = function( self )
+        self.params.entity:destroyMoveToIt()
+    end
+}

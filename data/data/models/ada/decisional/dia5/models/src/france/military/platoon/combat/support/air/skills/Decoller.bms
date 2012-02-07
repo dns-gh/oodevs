@@ -1,0 +1,14 @@
+rootnode 
+{
+    -- -------------------------------------------------------------------------------- 
+    -- Init
+    -- --------------------------------------------------------------------------------
+    create = function( self )
+        if not DEC_Agent_EstEnVol() then
+            myself.altitude = self.params.HauteurDeVol
+            DEC_Agent_HauteurDeVol( myself.altitude )
+        end
+        integration.activateSensors()
+        Feedback( self.feedbacks.done, additionalParams )
+    end,
+}

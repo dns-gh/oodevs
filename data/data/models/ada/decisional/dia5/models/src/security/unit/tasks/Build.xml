@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="security.unit.tasks.Build" source-version="1.0.0" knowledge-class="security.unit.tasks.UnitTask">
+  <parameters>
+    <parameter name="entities">
+      <description>elements to build</description>
+      <type>
+        <list>
+          <class name="sword.military.knowledge.decisional.Buildable"/>
+          <class name="sword.military.knowledge.decisional.Building"/>
+        </list>
+      </type>
+    </parameter>
+    <parameter name="garagePosition">
+      <type>
+        <class name="sword.military.knowledge.decisional.Reachable"/>
+      </type>
+    </parameter>
+  </parameters>
+  <stages>
+    <stage label="build">
+      <skills>
+        <skill name="sword.military.platoon.skills.primitives.Build" main="true">
+          <parameter name="entities">
+            <value>
+              <parameter>entities</parameter>
+            </value>
+          </parameter>
+          <parameter name="positions">
+            <value>
+              <parameter>entities</parameter>
+            </value>
+          </parameter>
+        </skill>
+      </skills>
+    </stage>
+  </stages>
+  <next-task name="security.unit.tasks.MoveTo">
+    <parameter name="elementToReach">
+      <value>
+        <parameter>garagePosition</parameter>
+      </value>
+    </parameter>
+  </next-task>
+</task>

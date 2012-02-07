@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="security.deprecated.ontologies.interfaces.Transportable" source-version="1.0.0" extends="sword.military.knowledge.decisional.Reachable">
+  <methods>
+    <method name="canTransportIt">
+      <return>
+        <type>
+          <simple name="boolean"/>
+        </type>
+      </return>
+    </method>
+  </methods>
+</interface>

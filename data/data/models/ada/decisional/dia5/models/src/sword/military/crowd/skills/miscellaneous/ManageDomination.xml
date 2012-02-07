@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.crowd.skills.miscellaneous.ManageDomination" source-version="1.0.0">
+  <description>Calcule le niveau de contrôle de la foule.</description>
+  <modifiers>
+    <modifier name="nonLethalWeaponsAuthorized">
+      <description>Effet de la règle d'engagement &quot;armes non létales autorisées&quot; sur le niveau de controle.</description>
+      <type>
+        <range>
+          <min value="1.0"/>
+          <max value="10.0"/>
+        </range>
+      </type>
+      <value>2</value>
+    </modifier>
+    <modifier name="lethalWeaponsAuthorized">
+      <description>Effet de la règle d'engagement &quot;armes létales autorisées&quot; sur le niveau de controle.</description>
+      <type>
+        <range>
+          <min value="1.0"/>
+          <max value="10.0"/>
+        </range>
+      </type>
+      <value>4</value>
+    </modifier>
+  </modifiers>
+  <body-type>
+    <class name="sword.military.crowd.world.classes.CrowdBody"/>
+  </body-type>
+</skill>

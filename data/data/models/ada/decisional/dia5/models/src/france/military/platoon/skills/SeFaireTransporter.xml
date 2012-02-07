@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.skills.SeFaireTransporter" source-version="1.0.0">
+  <parameters>
+    <parameter name="position">
+      <type>
+        <class name="sword.military.world.Point"/>
+      </type>
+    </parameter>
+  </parameters>
+  <body-type>
+    <class name="sword.military.world.PlatoonAlly"/>
+  </body-type>
+  <links>
+    <link name="moveToward" skill="sword.military.platoon.skills.MoveToward"/>
+  </links>
+</skill>

@@ -1,0 +1,17 @@
+rootnode {
+
+    connections = { skill.links.build };
+    
+    done = function( self )
+	    Feedback( self.feedbacks.done, { reason = "secured", zone = self.params.zone } )
+    end,
+    
+    create = function( self )
+        self.securedZoneGenObject = CreateKnowledge( integration.ontology.types.genObject, DEC_CreateDynamicGenObject( "Zone securisee", self.params.zone.source, true ) )
+    end,
+    
+    activate = function( self )
+	    Activate( skill.links.build, 1, { entities = { self.securedZoneGenObject }, positions = { self.securedZoneGenObject } } )
+    end,
+
+}

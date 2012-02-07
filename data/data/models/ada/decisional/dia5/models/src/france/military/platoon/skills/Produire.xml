@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.skills.Produire" source-version="1.0.0">
+    <parameters>
+        <parameter name="resource">
+            <type>
+               <class name="sword.military.world.ResourceNetwork"/>
+            </type>
+        </parameter>
+    </parameters>
+    <body-type>
+        <class name="sword.military.world.PlatoonAlly"/>
+    </body-type>
+    <links>
+        <link name="moveToward" skill="sword.military.platoon.skills.MoveToward"/>
+        <link name="dismount" skill="sword.military.platoon.skills.actions.Dismount"/>
+    </links>
+</skill>

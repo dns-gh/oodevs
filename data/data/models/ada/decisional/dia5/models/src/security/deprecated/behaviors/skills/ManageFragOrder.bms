@@ -1,0 +1,58 @@
+-------------------------------------------------------------------------------
+-- Skill: ManageFragOrder
+-- Regroup function to manage art field
+-- @author DDA
+-- @created 2010-02-05
+-- @modified MGD 2010-04-22
+--
+-- This file is part of a MASA library or program.
+-- Refer to the included end-user license agreement for restrictions.
+--
+-- Copyright (c) 2010 Math�matiques Appliqu�es SA (MASA)
+-------------------------------------------------------------------------------
+
+rootnode
+{
+    connections =
+    {
+        skill.nodes.UpdateROE,
+        skill.nodes.StartMission
+    },
+
+    done = function( self ) end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Apply the frag order 
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        local Activate = Activate
+        for _, fragOrder in ipairs( self.params.fragOrders ) do
+            if fragOrder:isROE() then
+              Activate( skill.nodes.UpdateROE, 1, { fragOrder = fragOrder } )
+            elseif fragOrder:isTask() then
+              Activate( skill.nodes.StartMission, 1, { fragOrder = fragOrder } )
+            end
+        end          
+        -- DDA : complete with other frag orders
+    end
+}
+
+-- -------------------------------------------------------------------------------- 
+-- Update frag order
+-- --------------------------------------------------------------------------------
+node "UpdateROE"
+{
+    select = function( self )
+        self.params.fragOrder:updateROE()
+    end
+}
+
+-- -------------------------------------------------------------------------------- 
+-- Start frag order
+-- --------------------------------------------------------------------------------
+node "StartMission"
+{
+    select = function( self )
+        self.params.fragOrder:startTask()
+    end
+}

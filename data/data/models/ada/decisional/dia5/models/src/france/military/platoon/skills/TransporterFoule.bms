@@ -1,0 +1,119 @@
+-- **************************************************************************** 
+-- TransportCrowd.
+-- self.params.crowd: crowd to transport
+-- self.params.loadingPoint: loading area
+-- self.params.destination: destination where 
+-- ****************************************************************************
+rootnode
+{
+    connections = {
+        skill.links.moveToward,
+        skill.nodes.LoadCrowd,
+        skill.nodes.UnloadCrowd
+        },
+
+    -- unite arrivee a destination
+    done = function( self, params, additionalParams )
+        if additionalParams.element == self.params.destination then
+            self.arrivedDestination = true
+        else
+            self.arrivedLoadPoint = true
+        end
+    end,
+
+    loaded = function( self )
+        -- après le chargement, se diriger vers la destination
+        self.loadFinished = true
+        self.position = self.params.destination
+        if not meKnowledge:isTransportingCrowd() then
+            Feedback( self.feedbacks.done )
+        end
+    end,
+
+    unloaded = function( self )
+        -- après le déchargement, se diriger vers la position d'embarquement
+        self.unloadFinished = true
+        self.position = self.positionInit
+    end,
+
+    -- init
+    create = function( self )
+        -- init crowd's concentration information
+        self.crowd = self.params.crowd
+        self.concentration = integration.getNearbyConcentration( self.crowd, self.params.loadingPoint )
+        self.position = integration.getPositionConcentration( self.crowd, self.concentration )
+        self.positionInit = self.position
+        
+        self.arrivedLoadPoint = false
+        self.arrivedDestination = false
+        self.loadFinished = false
+        self.unloadFinished = false
+    end,
+
+    activate = function( self )
+        local Activate = Activate
+
+        if self.concentration == 0 then
+            Feedback( self.feedbacks.done )
+            return
+        end
+
+        if not meKnowledge:canTransportCrowd() then
+            meKnowledge:RC( eRC_TransportImpossiblePasDeMoyens )
+            Feedback( self.feedbacks.done )
+        end
+
+        -- deplacement
+        Activate( skill.links.moveToward, 1, { entities = { self.position } } )
+
+        if self.arrivedDestination and not self.unloadFinished then
+            -- Unload Crowd
+            Activate( skill.nodes.UnloadCrowd, 1, { crowd = self.crowd, position = self.position } )
+        end
+ 
+        if self.arrivedLoadPoint and not self.loadFinished then
+            -- Load Crowd
+            Activate( skill.nodes.LoadCrowd, 1, { crowd = self.crowd, concentration = self.concentration } )
+        end
+
+        if self.unloadFinished then
+            local concentration = integration.getNearbyConcentration( self.crowd, self.params.loadingPoint )
+            if concentration == 0 or concentration ~= self.concentration then
+                Feedback( self.feedbacks.done )
+            end
+           
+        end
+        
+        self.loadFinished = false
+        self.unloadFinished = false
+        self.arrivedLoadPoint = false
+        self.arrivedDestination = false
+    end,
+}
+
+node "LoadCrowd"
+{
+    feedbacks = { "loaded" },
+
+    acquire = { [ skill.resources.loadcapacity ] = 1 },
+
+    select = function( self )
+        if self.params.crowd:loadIt( self.params.concentration ) then
+            Feedback( self.feedbacks.loaded )
+        end
+    end,
+}
+
+node "UnloadCrowd"
+{
+    feedbacks = { "unloaded" },
+    
+    acquire = { [ skill.resources.loadcapacity ] = 1 },
+    
+    select = function( self )
+        if self.params.crowd:unloadIt( self.params.position ) then
+            Feedback( self.feedbacks.unloaded )
+        end
+    end,
+}
+

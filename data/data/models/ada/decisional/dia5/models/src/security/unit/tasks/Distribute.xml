@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="security.unit.tasks.Distribute" source-version="1.0.0" knowledge-class="security.unit.tasks.UnitTask">
+  <parameters>
+    <parameter name="supplyPoint">
+      <type>
+        <class name="security.ontologies.interfaces.Stock"/>
+      </type>
+    </parameter>
+    <parameter name="garagePosition">
+      <type>
+        <class name="sword.military.knowledge.decisional.Reachable"/>
+      </type>
+    </parameter>
+    <parameter name="waitForStockAvailable">
+      <type>
+        <simple name="boolean"/>
+      </type>
+      <default>
+        <boolean>false</boolean>
+      </default>
+    </parameter>
+  </parameters>
+  <stages>
+    <stage label="move">
+      <skills>
+        <skill name="security.unit.skills.MoveTo" main="true">
+          <parameter name="element">
+            <value>
+              <parameter>supplyPoint</parameter>
+            </value>
+          </parameter>
+        </skill>
+      </skills>
+    </stage>
+    <stage label="distribute">
+      <skills>
+        <skill name="security.unit.skills.DistributeStock" main="true">
+          <parameter name="stock">
+            <value>
+              <parameter>supplyPoint</parameter>
+            </value>
+          </parameter>
+          <parameter name="waitForStockAvailable">
+            <value>
+              <parameter>waitForStockAvailable</parameter>
+            </value>
+          </parameter>
+        </skill>
+      </skills>
+    </stage>
+    <stage label="garage" disable-when-done="true">
+      <skills>
+        <skill name="security.unit.skills.MoveToGaragePosition" main="true">
+          <parameter name="element">
+            <value>
+              <parameter>garagePosition</parameter>
+            </value>
+          </parameter>
+        </skill>
+      </skills>
+    </stage>
+  </stages>
+</task>

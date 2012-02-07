@@ -1,0 +1,68 @@
+-- **************************************************************************** 
+-- Extinguish: move toward the element and build it.
+-- ****************************************************************************
+rootnode
+{
+    connections = { skill.links.moveTo, skill.nodes.Extinguish },
+
+    -- -------------------------------------------------------------------------------- 
+    -- Init
+    -- --------------------------------------------------------------------------------
+    create = function( self )
+        self.arrived = false
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Feedbacks
+    -- --------------------------------------------------------------------------------
+    done = function( self, params ) -- element is reached
+        if not self.arrived then
+        	self.arrived = true
+        	meKnowledge:RC( eRC_ArrivedOnExtinguishableObject )
+        end
+    end,
+    
+--    needAdditionalForces = function( self, params )
+  --      meKnowledge:RC( eRC_ArrivedOnExtinguishableObject )
+    --end
+
+    -- -------------------------------------------------------------------------------- 
+    -- If element is reached and if agent can build it then build it.
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        if self.params.element:isExtinguished() then
+	        Feedback( self.feedbacks.done, { reason = "extinguished", element = self.params.element } )
+            return
+        end
+        
+        if self.params.element:areFlamesNearby() then
+            if not self.arrived then
+            	self.arrived = true
+            	meKnowledge:RC( eRC_ArrivedOnExtinguishableObject )
+            end
+            if self.params.element:canExtinguishIt() then
+                Activate( skill.nodes.Extinguish, 1, { element = self.params.element } )
+            end
+	    end
+        
+        if not self.arrived then
+            Activate( skill.links.moveTo, 1, { element = self.params.element } )
+        end
+    end
+}
+
+-- **************************************************************************** 
+-- Simple action of extinguishing an element
+-- ****************************************************************************
+node "Extinguish"
+{
+    feedbacks = { "needAdditionalForces" },
+
+    acquire = { [ skill.resources.extinguishCapacity ] = 1 },
+
+    select = function( self )
+     if not masalife.brain.knowledge.me.body:extinguish( self.params.element ) then
+            Feedback( self.feedbacks.needAdditionalForces , { element = self.params.element } )
+        end
+    end,   
+}

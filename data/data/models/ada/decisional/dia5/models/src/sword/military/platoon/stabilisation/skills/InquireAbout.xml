@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.stabilisation.skills.InquireAbout" source-version="1.0.0">
+  <description>Recueillir du renseignement sur la foule passée en paramètre (nombre, agressivité,...)</description>
+  <parameters>
+    <parameter name="crowd">
+      <type>
+        <class name="sword.military.world.Crowd"/>
+      </type>
+    </parameter>
+  </parameters>
+  <links>
+    <link name="moveToward" skill="sword.military.platoon.skills.MoveToward">
+      <description>Lien vers le skill MoveToward</description>
+    </link>
+  </links>
+</skill>

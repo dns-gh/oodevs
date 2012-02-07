@@ -1,0 +1,10 @@
+rootnode
+{
+    done = function( self ) end,
+
+    activate = function( self )
+        if self.params.destinataire:shareKnowledge( eTempsReportInfo ) then
+            Feedback( self.feedbacks.done )
+        end
+    end,
+}

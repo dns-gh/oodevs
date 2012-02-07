@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<role xmlns="http://www.masagroup.net/directia/schemas/bm" name="security.firefighter.roles.FireFighter" source-version="1.0.0" extends="security.unit.roles.Unit">
+  <skills>
+    <skill name="security.firefighter.skills.Extinguish"/>
+  </skills>
+  <resources>
+    <resource name="security.deprecated.behaviors.ressources.ExtinguishCapacity" initial-capacity="1"/>
+  </resources>
+    <default-task permanent="true">
+    <skills>
+      <skill name="security.deprecated.behaviors.skills.ManageFragOrder">
+        <parameter name="fragOrders">
+          <value>
+            <call method="sword.military.queries.miscellaneous.getFragOrders"/>
+          </value>
+        </parameter>
+      </skill>
+    </skills>
+  </default-task>
+</role>

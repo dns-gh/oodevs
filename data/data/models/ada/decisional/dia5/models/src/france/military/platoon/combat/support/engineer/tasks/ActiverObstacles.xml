@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.engineer.tasks.ActiverObstacles" source-version="1.0.0" knowledge-class="sword.military.platoon.tasks.knowledges.MoveToward">
+    <parameters>
+        <parameter name="obstacles">
+            <description>Les Obstacles à activer</description>
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Activable"/>
+                    <class name="sword.military.knowledge.decisional.Activating"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Activation des obstacles" permanent="false" disable-when-done="true">
+            <skills>
+                <skill name="sword.military.platoon.skills.Activate" main="true">
+                    <parameter name="entities">
+                        <value>
+                            <parameter>obstacles</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="positions">
+                        <value>
+                            <parameter>obstacles</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>

@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="security.integration.Company" source-version="1.0.0" extends="security.company.body.Company">
+  <description>Compagnie</description>
+  <realizes>directia.core.model.RoleBody</realizes>
+  <realizes>common.Body</realizes>
+  <methods>
+    <method name="RC" abstract="false">
+      <description>Action de rendre compte.</description>
+      <argument>
+        <type>
+          <simple name="numeric"/>
+        </type>
+      </argument>
+      <argument>
+        <type>
+          <class name="directia.core.Object"/>
+        </type>
+      </argument>
+      <argument>
+        <type>
+          <class name="directia.core.Object"/>
+        </type>
+      </argument>
+    </method>
+    <method name="getTasks" abstract="false">
+      <return>
+        <type>
+          <list>
+            <class name="common.Task"/>
+          </list>
+        </type>
+      </return>
+    </method>
+    <method name="getPosition" abstract="false">
+      <description>Fonction d'intégration</description>
+    </method>
+  </methods>
+  <attributes>
+    <attribute name="tasks">
+      <type>
+        <list>
+          <class name="common.Task"/>
+        </list>
+      </type>
+    </attribute>
+  </attributes>
+</class>

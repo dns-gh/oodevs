@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="security.unit.tasks.Alert" source-version="1.0.0" knowledge-class="security.unit.tasks.UnitTask">
+  <description>L'unité patrouillent afin d'alerter la population. </description>
+  <parameters>
+    <parameter name="zone">
+      <type>
+        <class name="security.ontologies.classes.Zone"/>
+      </type>
+    </parameter>
+    <parameter name="garagePosition">
+      <type>
+        <class name="sword.military.knowledge.decisional.Reachable"/>
+      </type>
+    </parameter>
+  </parameters>
+  <stages>
+    <stage label="alert">
+      <skills>
+        <skill name="security.unit.skills.AlertZone" main="true">
+          <parameter name="zone">
+            <value>
+              <parameter>zone</parameter>
+            </value>
+          </parameter>
+        </skill>
+      </skills>
+    </stage>
+  </stages>
+  <next-task name="security.unit.tasks.MoveTo">
+    <parameter name="elementToReach">
+      <value>
+        <parameter>garagePosition</parameter>
+      </value>
+    </parameter>
+  </next-task>
+</task>

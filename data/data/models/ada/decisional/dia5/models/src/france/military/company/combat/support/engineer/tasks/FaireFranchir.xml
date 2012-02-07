@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.support.engineer.tasks.FaireFranchir" source-version="1.0.0" knowledge-class="france.military.company.combat.support.engineer.tasks.knowledges.FaireFranchir">
+	<parameters>
+		<parameter name="entities">
+			<type>
+				<list>
+					<class name="sword.military.world.Object"/>
+				</list>
+			</type>
+		</parameter>
+		<parameter name="typePontage">
+			<type>
+				<simple name="numeric"/>
+			</type>
+		</parameter>
+	</parameters>
+	<stages>
+		<stage label="Reconnaissance">
+			<skills>
+				<skill name="sword.military.company.skills.Lead" main="true">
+					<parameter name="companyTask">
+						<value>
+							<string>france.military.company.combat.support.engineer.tasks.FaireFranchir</string>
+						</value>
+					</parameter>
+					<parameter name="mainTasks">
+						<value>
+							<string>france.military.platoon.combat.support.engineer.tasks.ReconnaitreSite</string>
+						</value>
+					</parameter>
+					<parameter name="supportTasks">
+						<value>
+							<string>france.military.platoon.tasks.Renforcer</string>
+						</value>
+					</parameter>
+					<parameter name="taskForSupporting">
+						<value>
+							<string>france.military.platoon.tasks.Renforcer</string>
+						</value>
+					</parameter>
+					<parameter name="defaultTask">
+						<value>
+							<string>france.military.platoon.tasks.Suivre</string>
+						</value>
+					</parameter>
+				</skill>
+			</skills>
+		</stage>
+		<stage label="Construction">
+			<skills>
+				<skill name="sword.military.company.skills.LeadGEN" main="true">
+					<parameter name="companyTask">
+						<value>
+							<string>france.military.company.combat.support.engineer.tasks.FaireFranchir</string>
+						</value>
+					</parameter>
+					<parameter name="mainTasks">
+						<value>
+							<string>france.military.platoon.combat.support.engineer.tasks.EquiperExploiterSite</string>
+						</value>
+					</parameter>
+					<parameter name="supportTasks">
+						<value>
+							<string>france.military.platoon.tasks.Renforcer</string>
+						</value>
+					</parameter>
+					<parameter name="taskForSupporting">
+						<value>
+							<string>france.military.platoon.tasks.Renforcer</string>
+						</value>
+					</parameter>
+					<parameter name="defaultTask">
+						<value>
+							<string>france.military.platoon.tasks.Suivre</string>
+						</value>
+					</parameter>
+				</skill>
+			</skills>
+		</stage>
+	</stages>
+</task>

@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.support.art.tasks.knowledges.RATACAcquerirObjectifs" source-version="1.0.0" extends="sword.military.company.tasks.knowledges.ReachingEffect">
+    <description>Interface des connaissances de mission de niveau compagnie </description>
+    <methods>
+        <method name="getPosition">
+            <return>
+                <type>
+                    <list>
+                        <class name="directia.core.Object"/>
+                    </list>
+                </type>
+            </return>
+        </method>
+        <method name="getZone">
+            <return>
+                <type>
+                    <class name="directia.core.Object"/>
+                </type>
+            </return>
+        </method>
+        <method name="init" abstract="false">
+            <description>Methode d'initialisation appelée une seule fois</description>
+        </method>
+    </methods>
+</class>

@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.combat.support.engineer.tasks.Reparer" source-version="1.0.0" knowledge-class="france.military.company.combat.support.engineer.tasks.knowledges.Reparer">
+    <parameters>
+        <parameter name="objectives">
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Buildable"/>
+                </list>
+            </type>
+        </parameter>
+        <parameter name="meetingPoint">
+            <type>
+                <class name="sword.military.knowledge.decisional.Reachable"/>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Réparation des objectifs">
+            <skills>
+                <skill name="sword.military.company.skills.LeadGEN" main="true">
+                    <parameter name="companyTask">
+                        <value>
+                            <string>france.military.company.combat.support.engineer.tasks.Reparer</string>
+                        </value>
+                    </parameter>
+                    <parameter name="mainTasks">
+                        <value>
+                            <string>france.military.platoon.combat.support.engineer.tasks.Reparer</string>
+                        </value>
+                    </parameter>
+                    <parameter name="supportTasks">
+                        <value>
+                            <string>france.military.platoon.tasks.Renforcer</string>
+                        </value>
+                    </parameter>
+                    <parameter name="defaultTask">
+                        <value>
+                            <string>france.military.platoon.tasks.Suivre</string>
+                        </value>
+                    </parameter>
+                    <parameter name="taskForSupporting">
+                        <value>
+                            <string>france.military.platoon.tasks.Renforcer</string>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+        <stage label="Rejoindre la position de regroupement" disable-when-done="true">
+            <skills>
+                <skill name="sword.military.company.skills.Lead" main="true">
+                    <parameter name="companyTask">
+                        <value>
+                            <string>france.military.company.combat.support.engineer.tasks.Reparer</string>
+                        </value>
+                    </parameter>
+                    <parameter name="mainTasks">
+                        <value>
+                            <string>france.military.platoon.tasks.FaireMouvement</string>
+                        </value>
+                    </parameter>
+                    <parameter name="supportTasks">
+                        <value>
+                            <string>france.military.platoon.tasks.FaireMouvement</string>
+                        </value>
+                    </parameter>
+                    <parameter name="taskForSupporting">
+                        <value>
+                            <string>france.military.platoon.tasks.Appuyer</string>
+                        </value>
+                    </parameter>
+                    <parameter name="defaultTask">
+                        <value>
+                            <string>france.military.platoon.tasks.Suivre</string>
+                        </value>
+                    </parameter>
+                    <parameter name="allInFront">
+                        <value>
+                            <boolean>true</boolean>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>

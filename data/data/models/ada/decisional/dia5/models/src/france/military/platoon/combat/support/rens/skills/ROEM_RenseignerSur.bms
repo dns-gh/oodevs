@@ -1,0 +1,18 @@
+rootnode
+{
+    connections = { skill.links.observeToward,  skill.links.activateRadar },
+  
+    create = function( self ) 
+       self.hasTappingRadar = meKnowledge:hasRadar( eRadarType_EcouteRadar )
+    end,
+    
+    activate = function( self )
+        if meKnowledge:isPosted() then
+            if self.hasTappingRadar then
+                Activate( skill.links.activateRadar, 1, { area = self.params.area, typeRadar = eRadarType_EcouteRadar } )
+            else
+                Activate( skill.links.activateRadar, 1, { area = self.params.area, typeRadar = eRadarType_Ecoute } )
+            end
+        end
+    end,
+}

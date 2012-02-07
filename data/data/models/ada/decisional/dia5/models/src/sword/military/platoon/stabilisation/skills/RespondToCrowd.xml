@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.stabilisation.skills.RespondToCrowd" source-version="1.0.0">
+  <parameters>
+    <parameter name="crowd">
+      <type>
+        <class name="sword.military.world.Crowd"/>
+      </type>
+    </parameter>
+  </parameters>
+</skill>

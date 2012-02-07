@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.skills.miscellaneous.ReactToObstacles" source-version="1.0.0">
+    <description>Gere le comportement face à un obstacle et la demande d'appui à la mobilité</description>
+    <body-type>
+        <class name="sword.military.world.PlatoonAlly"/>
+    </body-type>
+</skill>

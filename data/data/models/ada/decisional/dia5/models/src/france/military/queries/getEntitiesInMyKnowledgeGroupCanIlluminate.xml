@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.queries.getEntitiesInMyKnowledgeGroupCanIlluminate" source-version="1.0.0">
+	<description>Retourne les unités du groupe de connaissance pouvant illuminer une cible;
+    </description>
+	<target>
+		<type>
+			<class name="sword.military.world.PlatoonAlly"/>
+		</type>
+	</target>
+</query>

@@ -1,0 +1,25 @@
+-- **************************************************************************** 
+-- Discharge in elements.
+-- 
+-- ****************************************************************************
+rootnode 
+{
+    connections = { skill.links.discharge },
+
+    -- -------------------------------------------------------------------------------- 
+    -- Main effect is reached: send feedback when agent has discharged in the best 
+    -- adaptated treating element
+    -- --------------------------------------------------------------------------------
+    done = function( self, params )
+        Feedback( self.feedbacks.done )
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- For each objective of the skill, reconnoiter it. 
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        for _, element in pairs( self.params.treatingElements ) do
+            Activate( skill.links.discharge, element:getScoreAsMeanToTreat(),{ element = element } )
+        end
+    end
+}

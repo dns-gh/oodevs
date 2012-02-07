@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.skills.primitives.Illuminate" source-version="1.0.0">
+	<description>LTO - Illuminer une cible en vue d'un tir indirect</description>
+	<parameters>
+		<parameter name="entities">
+			<description>Les éléments à illuminer.</description>
+			<type>
+				<list>
+					<class name="sword.military.knowledge.decisional.Illuminatable"/>
+				</list>
+			</type>
+		</parameter>
+		<parameter name="allies">
+			<description>Les batteries alliées chargée des tirs.</description>
+			<type>
+				<list>
+					<class name="sword.military.world.PlatoonAlly"/>
+				</list>
+			</type>
+		</parameter>
+	</parameters>
+	<goal>
+		<description>Illuminer les éléments.</description>
+	</goal>
+	<modifiers/>
+	<links>
+		<link name="moveAndTakePosition" skill="sword.military.platoon.skills.actions.MoveAndTakePosition">
+			<description>Lien vers le skill MoveAndTakePosition</description>
+		</link>
+		<link name="observe" skill="sword.military.platoon.skills.actions.Observe">
+			<description>Lien vers le skill Observe</description>
+		</link>
+	</links>
+	<resources>
+		<resource name="sword.military.platoon.resources.IlluminationCapacity" variable="illuminatingCapacity">
+			<description>Capacité physiques d'animations d'un object tactique</description>
+		</resource>
+	</resources>
+</skill>

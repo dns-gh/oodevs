@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resource xmlns="http://www.masagroup.net/directia/schemas/bm" name="security.deprecated.behaviors.ressources.TransportCapacity" source-version="1.0.0">
+  <description>Ressource(s) utilisée(s) pour transporter un élement.</description>
+</resource>

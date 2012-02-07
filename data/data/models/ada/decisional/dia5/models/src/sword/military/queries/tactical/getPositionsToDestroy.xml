@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.queries.tactical.getPositionsToDestroy" source-version="1.0.0">
+	<parameters>
+		<parameter name="elementsToDestroy">
+			<type>
+				<list>
+					<class name="sword.military.knowledge.decisional.Destroyable"/>
+				</list>
+			</type>
+		</parameter>
+	</parameters>
+	<target name="Destroying">
+		<type>
+			<class name="sword.military.knowledge.decisional.Destroying"/>
+		</type>
+	</target>
+</query>

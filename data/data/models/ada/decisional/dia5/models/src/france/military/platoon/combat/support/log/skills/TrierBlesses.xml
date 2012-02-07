@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.log.skills.TrierBlesses" source-version="1.0.0">
+    <parameters/>
+    <modifiers/>
+</skill>

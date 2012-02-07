@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.skills.miscellaneous.ManageFragOrder" source-version="1.0.0">
+  <description>Distribution des ordres de conduite</description>
+  <parameters>
+    <parameter name="fragOrders">
+      <description>L'ordre de conduite à appliquer</description>
+      <type>
+        <list>
+          <class name="sword.military.knowledge.FragOrder"/>
+        </list>
+      </type>
+    </parameter>
+  </parameters>
+</skill>

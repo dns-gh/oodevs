@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.art.tasks.SuivreEtAcquerirObjectif" source-version="1.0.0" knowledge-class="france.military.platoon.combat.support.art.tasks.knowledges.SuivreEtAcquerirObjectif">
+    <parameters>
+        <parameter name="zone">
+            <type>
+                <class name="sword.military.world.Area"/>
+            </type>
+        </parameter>
+        <parameter name="positionDebarquement" nullable="true">
+            <type>
+                <class name="sword.military.knowledge.decisional.Reachable"/>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+        <parameter name="entity">
+            <type>
+                <class name="sword.military.world.Platoon"/>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Suivre et acquerir des objectifs">
+            <skills>
+                <skill name="france.military.platoon.combat.support.art.skills.OrienterCapteurOuSenseur">
+                    <parameter name="zone">
+                        <value>
+                            <parameter>zone</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+                <skill name="sword.military.platoon.skills.primitives.StayClose" main="true">
+                    <parameter name="entities">
+                        <value>
+                            <list>
+                                <parameter>entity</parameter>
+                            </list>
+                        </value>
+                    </parameter>
+                    <parameter name="positions">
+                        <value>
+                            <call method="sword.military.queries.tactical.getPositionsToFollow">
+                                <parameter name="elementsToFollow">
+                                    <value>
+                                        <list>
+                                            <parameter>entity</parameter>
+                                        </list>
+                                    </value>
+                                </parameter>
+                                <parameter name="dynamic">
+                                    <value>
+                                        <boolean>true</boolean>
+                                    </value>
+                                </parameter>
+                                <parameter name="distanceMin">
+                                    <value>
+                                        <number>50.0</number>
+                                    </value>
+                                </parameter>
+                            </call>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>

@@ -1,0 +1,110 @@
+-- **************************************************************************** 
+-- Confine a zone.
+-- ****************************************************************************
+
+rootnode
+{
+    connections = { skill.links.moveTo };
+
+    -- -------------------------------------------------------------------------------- 
+    -- If all objectives has been reached, begin the node node once 
+    -- again.
+    -- --------------------------------------------------------------------------------
+    done = function( self, params )
+    
+        local updateReachedSubZone = function()
+            local subZone = self.subZones[ self.nextTargetIndex ]
+            if subZone ~= nil then
+                subZone.reachedTimes = subZone.reachedTimes + 1
+                local reachTimesNeededToConfine = DEC_Agent_IsAlerted( subZone.localisation ) and 1 or 3
+                if subZone.reachedTimes >= reachTimesNeededToConfine then
+                    subZone.isConfined = true
+                end
+            end
+        end
+
+        local findNextSubZoneIndex = function()
+            for i=self.nextTargetIndex+1,#self.subZones do
+            	local subZone =  self.subZones[ i ]
+            	if subZone ~= nil and subZone.isConfined ~= true then
+            	    return i
+            	end
+            end
+            for i=1,self.nextTargetIndex do
+            	local subZone =  self.subZones[ i ]
+            	if subZone ~= nil and subZone.isConfined ~= true then
+            	    return i
+            	end
+            end
+            return nil
+        end
+        
+        local checkAndReportFirstRound = function()
+            for i=1,#self.subZones do
+            	if self.subZones[ i ].reachedTimes ~= 1 then
+            	    return
+            	end
+            end
+            meKnowledge:RC( eRC_FirstTourOfZoneConfinementDone )
+        end
+        
+        updateReachedSubZone()
+        checkAndReportFirstRound()
+        self.nextTargetIndex = findNextSubZoneIndex()
+        
+        if self.nextTargetIndex == nil then
+            DEC_Agent_Confine( self.params.zone.source )
+            DEC_ModulationVitesseMax( 1.0 )
+            meKnowledge:RC( eRC_ZoneConfined )
+            Feedback( self.feedbacks.done, { reason = "confined", zone = self.params.zone } )
+        else
+            if not self.isArrivedOnZone then
+                meKnowledge:RC( eRC_ArrivedOnConfinedZone )
+                self.isArrivedOnZone = true
+            end
+            DEC_ModulationVitesseMax( 0.5 )
+        end
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Node begins, get positions in zone
+    -- --------------------------------------------------------------------------------
+    create = function( self )
+        local subLocalisations = DEC_Geometry_RecursiveSplitLocalisationSurface( self.params.zone.source, 1000000 ).first
+        self.subZones = {}
+        --local debugPoints = {}
+        for _, subLocalisation in pairs( subLocalisations ) do
+            local pos = DEC_Geometrie_CalculerBarycentreLocalisation( subLocalisation )
+            --debugPoints[ #debugPoints + 1 ] = pos
+            local positionKnowledge = CreateKnowledge( sword.military.world.Point, pos )
+            self.subZones[ #self.subZones + 1 ] = { positionKnowledge = positionKnowledge, localisation = subLocalisation, reachedTimes = 0, isConfined = false }
+        end
+        --DEC_DebugAffichePoints( debugPoints )
+        if #self.subZones == 0 then
+            DEC_Agent_Confine( self.params.zone.source )
+            Feedback( self.feedbacks.done, { reason = "confined", zone = self.params.zone } )
+        end
+        self.nextTargetIndex = 1
+        self.isArrivedOnZone = false
+        self.nextReportTime = DEC_GetTimeInSeconds() + 10 * 60
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Select next element in objectives and move toward it. 
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        if meKnowledge.mustStopAndGotoGarage == true then
+            meKnowledge.mustStopAndGotoGarage = nil
+            Feedback( self.feedbacks.done, { reason = "stopped", zone = self.params.zone } )
+        end
+        
+        local currentTime = DEC_GetTimeInSeconds()
+        if self.nextReportTime < currentTime then
+            meKnowledge:RC( eRC_ZoneConfinementInProgress )
+            self.nextReportTime = currentTime + 10 * 60            
+        end
+
+        local subZone = self.subZones[ self.nextTargetIndex ]
+        Activate( skill.links.moveTo, 1, { element = subZone.positionKnowledge } )
+    end
+}

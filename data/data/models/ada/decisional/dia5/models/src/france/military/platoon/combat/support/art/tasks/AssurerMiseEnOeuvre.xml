@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.art.tasks.AssurerMiseEnOeuvre" source-version="1.0.0" knowledge-class="france.military.platoon.combat.support.art.tasks.knowledges.Deploy">
+    <parameters>
+        <parameter name="firePositions" nullable="true">
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Reaching"/>
+                </list>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+        <parameter name="retreatPosition" nullable="true">
+            <description>Position de sauvegarde optionnelle pour un mouvement post tir</description>
+            <type>
+                <class name="sword.military.knowledge.decisional.Reachable"/>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Deploiement sur les positions">
+            <skills>
+                <skill name="france.military.platoon.skills.EnsureIndirectFire" main="true">
+                    <parameter name="firePositions">
+                        <value>
+                            <parameter>firePositions</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="retreatPosition">
+                        <value>
+                            <parameter>retreatPosition</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>

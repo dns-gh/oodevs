@@ -1,0 +1,34 @@
+rootnode
+{
+connections = { skill.links.moveToward, skill.nodes.RC },
+
+    done = function( self )
+        Feedback( self.feedbacks.done )
+    end, 
+    
+    create = function( self )
+        meKnowledge:becomeStealthy( true )
+    end,
+
+    activate = function( self )
+        if DEC_Nuit() then
+            Activate( skill.links.moveToward, 1, { entities  = { self.params.entity }, 
+                                               infiltrationMode = true } )
+            Activate( skill.nodes.RC, 1, { RC = eRC_EnExfiltration } )
+        else
+            Activate( skill.nodes.RC, 1, { RC = eRC_AttenteConditionFavorablePourInfiltration } )
+            Feedback( self.feedbacks.done )
+        end
+    end,
+    
+   destroy = function( self )
+        meKnowledge:becomeStealthy( false )
+    end,
+}
+-- noeud permettant de renvoyer un compte rendu
+node "RC"
+{
+    create = function( self )
+        meKnowledge:RC( self.params.RC )
+    end,
+}

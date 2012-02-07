@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.tasks.Load" source-version="1.0.0">
+	<parameters>
+		<parameter name="elements">
+			<type>
+				<list>
+					<class name="sword.military.knowledge.decisional.Loadable"/>
+				</list>
+			</type>
+		</parameter>
+	</parameters>
+	<stages>
+		<stage label="Embarquement des unités">
+			<skills>
+				<skill name="sword.military.platoon.skills.primitives.Load" main="true">
+					<parameter name="entities">
+						<value>
+							<parameter>elements</parameter>
+						</value>
+					</parameter>
+				</skill>
+			</skills>
+		</stage>
+	</stages>
+</task>

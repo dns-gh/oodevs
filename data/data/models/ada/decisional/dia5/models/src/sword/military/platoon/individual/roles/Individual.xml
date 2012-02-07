@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<role xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.individual.roles.Individual" source-version="1.0.0" extends="sword.military.platoon.roles.Platoon">
+  <description>Modèle décisionnel d'un individu isolé.</description>
+  <skills>
+    <skill name="sword.military.platoon.individual.skills.GoUndetected"/>
+  </skills>
+  <default-task label="Prise en compte des ordres de conduite et autres actions par defaut." permanent="true">
+    <description>Gestion par défaut des ordres de conduite</description>
+    <goal>
+      <description>Gestion et affectation des ordres de conduite</description>
+    </goal>
+    <let name="fragOrdersToManage">
+      <value>
+        <call method="sword.military.queries.miscellaneous.getFragOrders"/>
+      </value>
+    </let>
+    <skills>
+      <skill name="sword.military.platoon.skills.miscellaneous.Default"/>
+      <skill name="sword.military.platoon.skills.miscellaneous.ReactToObstacles"/>
+      <skill name="sword.military.platoon.skills.miscellaneous.SetPace"/>
+      <skill name="sword.military.platoon.skills.miscellaneous.ManageFragOrder">
+        <parameter name="fragOrders">
+          <value>
+            <parameter>fragOrdersToManage</parameter>
+          </value>
+        </parameter>
+      </skill>
+    </skills>
+  </default-task>
+</role>

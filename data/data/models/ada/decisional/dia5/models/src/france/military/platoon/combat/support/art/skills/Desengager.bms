@@ -1,0 +1,29 @@
+-- **************************************************************************** 
+-- Goes to Disengaged state
+-- ****************************************************************************
+rootnode 
+{
+    connections = { skill.nodes.CR },
+
+    done = function( self ) end,
+
+    create = function( self )
+        local Activate = Activate
+        if meKnowledge:isEngaged() then
+            Activate( skill.nodes.CR, 1, { RC = eRC_Disengaged } )
+            meKnowledge:setEngaged( false )
+        else
+            Activate( skill.nodes.CR, 1, { RC = eRC_AlreadyDisengaged } )
+        end
+        Feedback( self.feedbacks.done )
+    end,
+}
+-- **************************************************************************** 
+-- CR 
+-- ****************************************************************************
+node "CR"
+{
+    create = function( self )
+        meKnowledge:RC( self.params.RC )
+    end,
+}

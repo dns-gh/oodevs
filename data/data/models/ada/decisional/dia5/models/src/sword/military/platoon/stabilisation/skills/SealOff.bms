@@ -1,0 +1,46 @@
+-- **************************************************************************** 
+-- Seal Off
+-- ****************************************************************************
+rootnode
+{
+    connections = {skill.links.moveToward, skill.nodes.SealOff },
+
+    -- -------------------------------------------------------------------------------- 
+    -- Feeback from moveToward
+    -- --------------------------------------------------------------------------------
+    done = function( self, params, additionnalParams )
+        self.arrived = true
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Init
+    -- --------------------------------------------------------------------------------
+    create = function( self, params )
+        self.arrived = false
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Once arrived on objective, seal it off
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        local Activate = Activate
+
+        if self.arrived then
+            Activate( skill.nodes.SealOff, 1, { objective = self.params.objective } )
+        end
+        Activate( skill.links.moveToward, 1, { entities = { self.params.objective } } )
+        self.arrived = false
+    end
+}
+
+
+-- **************************************************************************** 
+-- Seal Off
+-- Simple action to seal an element off.
+-- ****************************************************************************
+node "SealOff"
+{
+    select = function( self )
+        self.params.objective:sealOffIt()
+    end
+}

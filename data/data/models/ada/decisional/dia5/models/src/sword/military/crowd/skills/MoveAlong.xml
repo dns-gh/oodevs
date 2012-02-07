@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.crowd.skills.MoveAlong" source-version="1.0.0">
+    <description>Parcourir dans l'ordre tous les élements passés en paramètre.</description>
+    <parameters>
+        <parameter name="entities">
+            <description>Le ou les élements à parcourir</description>
+            <type>
+                <list>
+                    <class name="sword.military.crowd.world.interfaces.Reachable"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <goal>
+        <description>Se déplacer vers tous les objectifs. Les objectifs sont parcourus dans l'ordre.</description>
+    </goal>
+    <links>
+        <link name="moveTo" skill="sword.military.crowd.skills.actions.MoveTo"/>
+    </links>
+</skill>

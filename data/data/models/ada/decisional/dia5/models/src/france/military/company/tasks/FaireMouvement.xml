@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.FaireMouvement" source-version="1.0.0" knowledge-class="sword.military.company.tasks.knowledges.ReachingEffect">
+  <parameters>
+    <parameter name="objectives">
+      <type>
+        <list>
+          <class name="sword.military.knowledge.decisional.Reachable"/>
+        </list>
+      </type>
+    </parameter>
+  </parameters>
+  <stages/>
+  <next-task name="sword.military.company.tasks.MoveAlong">
+    <parameter name="companyTask">
+      <value>
+        <string>france.military.company.tasks.FaireMouvement</string>
+      </value>
+    </parameter>
+    <parameter name="mainTasks">
+      <value>
+        <string>france.military.platoon.tasks.FaireMouvement</string>
+      </value>
+    </parameter>
+    <parameter name="supportTasks">
+      <value>
+        <string>france.military.platoon.tasks.FaireMouvement</string>
+      </value>
+    </parameter>
+    <parameter name="objectives">
+      <value>
+        <parameter>objectives</parameter>
+      </value>
+    </parameter>
+    <parameter name="defaultTask">
+      <value>
+        <string>france.military.platoon.tasks.Suivre</string>
+      </value>
+    </parameter>
+    <parameter name="taskForSupporting">
+      <value>
+        <string>france.military.platoon.tasks.Appuyer</string>
+      </value>
+    </parameter>
+  </next-task>
+</task>

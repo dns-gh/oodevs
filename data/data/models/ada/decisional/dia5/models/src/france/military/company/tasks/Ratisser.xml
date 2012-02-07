@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.company.tasks.Ratisser" source-version="1.0.0" knowledge-class="sword.military.company.tasks.knowledges.SearchEffect">
+  <parameters>
+    <parameter name="objective">
+      <type>
+        <class name="sword.military.knowledge.decisional.Reconnoitrable"/>
+        <class name="sword.military.knowledge.Sealable"/>
+      </type>
+    </parameter>
+  </parameters>
+  <next-task name="sword.military.company.tasks.Search">
+    <parameter name="companyTask">
+      <value>
+        <string>france.military.company.tasks.Ratisser</string>
+      </value>
+    </parameter>
+    <parameter name="mainTasks">
+      <value>
+        <string>france.military.platoon.tasks.Reconnaitre</string>
+      </value>
+    </parameter>
+    <parameter name="supportTasks">
+      <value>
+        <string>france.military.platoon.stabilisation.tasks.Boucler;france.military.platoon.combat.support.engineer.tasks.AppuiMobilite</string>
+      </value>
+    </parameter>
+    <parameter name="objective">
+      <value>
+        <parameter>objective</parameter>
+      </value>
+    </parameter>
+    <parameter name="peiTasks">
+      <value>
+        <string>france.military.platoon.tasks.Surveiller</string>
+      </value>
+    </parameter>
+    <parameter name="defaultTask">
+      <value>
+        <string>france.military.platoon.tasks.Suivre</string>
+      </value>
+    </parameter>
+    <parameter name="taskForSupporting">
+      <value>
+        <string>france.military.platoon.tasks.Appuyer</string>
+      </value>
+    </parameter>
+  </next-task>
+</task>

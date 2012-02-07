@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.world.HumanWound" source-version="1.0.0">
+    <methods>
+        <method name="changePriority"/>
+    </methods>
+</class>

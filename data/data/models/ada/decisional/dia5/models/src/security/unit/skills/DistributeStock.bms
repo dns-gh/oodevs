@@ -1,0 +1,39 @@
+rootnode
+{
+    connections = {},
+ 
+    -- -------------------------------------------------------------------------------- 
+    -- Init
+    -- --------------------------------------------------------------------------------
+    create = function( self )
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Feedbacks
+    -- --------------------------------------------------------------------------------
+    done = function( self, params ) -- element is reached
+        if not self.arrived then
+            self.arrived = true
+            meKnowledge:RC( eRC_SupplyStock_Arrived )
+        end
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- If element is reached and if agent can supply stock, supply.
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+    
+        if meKnowledge.mustStopAndGotoGarage == true then
+            meKnowledge.mustStopAndGotoGarage = nil
+            Feedback( self.feedbacks.done, { reason = "stopped" } )
+        end
+    
+
+       if self.params.stock:isDistributePossible( self.params.population ) == true then
+           self.params.stock:distribute()
+       elseif not self.params.waitForStockAvailable then
+           meKnowledge:RC( eRC_SupplyStock_Distributed )
+           Feedback( self.feedbacks.done, { reason = "distributed" } )
+       end           
+    end
+}
