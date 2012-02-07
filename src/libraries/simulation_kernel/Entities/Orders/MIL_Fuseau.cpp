@@ -381,7 +381,7 @@ void MIL_Fuseau::InitializeMiddleLimit()
 
     InsertPointProjection( pLeftLimit_ ->GetPoints(), rightPointVectorTmp );
     InsertPointProjection( pRightLimit_->GetPoints(), leftPointVectorTmp  );
-    if( leftPointVectorTmp.size() == rightPointVectorTmp.size() )
+    if( leftPointVectorTmp.size() != rightPointVectorTmp.size() )
         throw std::runtime_error( "Error InitializeMiddleLimit" );
     assert( !leftPointVectorTmp.empty() );
     ///
