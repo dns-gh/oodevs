@@ -407,6 +407,7 @@
     <workable max-animator="10"/>
   </object>
   <object geometry="point" name="incendie" symbol="O*VPA-----*****" type="fire">
+    <avoidable distance="20"/>
     <burn/>
     <interaction-height height="100"/>
   </object>
@@ -422,6 +423,7 @@
   <object geometry="point" name="noeud de reseau de ressource" symbol="G*SPPR----****X" type="ressource network element">
     <constructor default-consumption-mode="ArretMoteurAllume" unit-type="raw"/>
     <resources/>
+    <universal/>
     <workable max-animator="3"/>
   </object>
   <object geometry="point" name="souterrain egout" symbol="G*EXIT*********" type="sewer entry">
@@ -465,4 +467,4 @@
     <border/>
   </object>
 </objects>
-<!-- signature="3259456688" -->
+<!-- signature="0311429363" -->
