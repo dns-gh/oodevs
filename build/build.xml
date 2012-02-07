@@ -1127,7 +1127,7 @@
     </target>
 
     <target name="application.integration_decisionnal_test" description="build Sword Integration DIA5 test executable">
-        <build-test name="integration_decisionnal" depends="boost" libs="directia-${platform}-mt-4_6" dir="../../data/data/models/ada/decisional/directia5">
+        <build-test name="integration_decisionnal" depends="boost" libs="directia-${platform}-mt-4_6" dir="../../data/data/models/ada/decisional/dia5">
             <includepath path="${libraries.dir}/simulation_kernel"/>
             <defineset>
                 <define name="PLATFORM" value="${platform}"/>
@@ -1527,8 +1527,8 @@
         <pack name="decisional45" description="decisional package DIA4_5">
             <zipfileset dir="${data.dir}">
 			    <include name="data/models/ada/decisional/bms/**"/>
-                <include name="data/models/ada/decisional/directia5/**"/>
-                <exclude name="data/models/ada/decisional/directia5/models/src/france/**"/>
+                <include name="data/models/ada/decisional/dia5/**"/>
+                <exclude name="data/models/ada/decisional/dia5/models/src/france/**"/>
                 <include name="data/models/ada/decisional/decisional.xml"/>
             </zipfileset>
         </pack>
