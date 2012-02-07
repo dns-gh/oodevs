@@ -275,7 +275,7 @@ void DEC_KnowledgeBlackBoard_Army::GetObjectsAtInteractionHeight( T_KnowledgeObj
         pKnowledgeObjectContainer_->GetCachedObjectsAtInteractionHeight( container, rHeight );
         return ;
     }
-    sObjectKnowledgesFilteredHeightInserter functor( container, rHeight, filter, pArmy );
+    sObjectKnowledgesFilteredHeightInserter functor( container, rHeight, filter, pArmy_ );
 
     assert( pKnowledgeObjectContainer_ );
     pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );
