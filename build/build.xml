@@ -1113,7 +1113,7 @@
     </target>
 
     <target name="application.integration_decisionnal_test" description="build Sword Integration DIA5 test executable">
-        <build-test name="integration_decisionnal" depends="boost" libs="directia-${platform}-mt-4_6" dir="../../data/data/models/ada/decisional/directia5">
+        <build-test name="integration_decisionnal" depends="boost" libs="directia-${platform}-mt-4_6" dir="../../data/data/models/ada/decisional/dia5">
             <includepath path="${libraries.dir}/simulation_kernel"/>
             <defineset>
                 <define name="PLATFORM" value="${platform}"/>
@@ -1483,7 +1483,7 @@
     <target name="package.otpack.defense.scipio" description="package du defense-scipio Referentiel Simulation otpack">
         <pack name="ScipioStab-RefSim" description="defense-scipio exercises package">
             <include name="data/models/ada/decisional/bms/**"/>
-            <include name="data/models/ada/decisional/directia5/**"/>
+            <include name="data/models/ada/decisional/dia5/**"/>
             <include name="data/models/ada/decisional/decisional.xml"/>
             <include name="data/models/ada/physical/scipio/**"/>
         </pack>
@@ -1561,15 +1561,15 @@
     <target name="package.otpack.decisional4" description="decisional package DIA4">
         <pack name="decisional4" description="decisional package DIA4">
             <include name="data/models/ada/decisional/bms/**"/>
-            <include name="data/models/ada/decisional/directia5/**"/>
-            <exclude name="data/models/ada/decisional/directia5/models/src/france/**"/>
+            <include name="data/models/ada/decisional/dia5/**"/>
+            <exclude name="data/models/ada/decisional/dia5/models/src/france/**"/>
             <include name="data/models/ada/decisional/decisional.xml"/>
         </pack>
     </target>
     
     <target name="package.otpack.decisional5" description="decisional package DIA5">
         <pack name="decisional5" description="decisional package DIA5">
-            <include name="data/models/ada/decisional/directia5/**"/>
+            <include name="data/models/ada/decisional/dia5/**"/>
             <include name="data/models/ada/decisional/decisional.xml"/>
         </pack>
     </target>
