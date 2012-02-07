@@ -71,8 +71,8 @@
 				</skill>
 			</skills>
 		</stage>
-		<stage label="Barrer des objetifs" permanent="true" disable-when-done="false">
-			<description>Interdiction des objetifs</description>
+		<stage label="Barrer des objectifs" permanent="true" disable-when-done="false">
+			<description>Interdiction des objectifs</description>
 			<goal>
 				<description>Engaging enemies approaching the objectives.</description>
 			</goal>
