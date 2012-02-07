@@ -69,17 +69,13 @@ namespace
 {
     std::string GetExtension( const kernel::Karma& karma )
     {
-        switch( karma.GetUId() )
-        {
-        case 1:
+        if( karma == kernel::Karma::friend_ )
             return "F";
-        case 2:
+        else if( karma == kernel::Karma::enemy_ )
             return "H";
-        case 3:
+        else if( karma == kernel::Karma::neutral_ )
             return "N";
-        default:
-            return "F";
-        }
+        return "F";
     }
 }
 

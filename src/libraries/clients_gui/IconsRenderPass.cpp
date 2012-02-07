@@ -20,7 +20,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 IconsRenderPass::IconsRenderPass( kernel::GlTools_ABC& tools )
     : tools_    ( tools )
-    , viewport_ ( 0, 0, 600, 600 )
+    , viewport_ ( 0, 0, 600, 600 * RENDER_FACTOR )
     , firstPass_( true )
 {
     // NOTHING
@@ -81,26 +81,31 @@ void IconsRenderPass::Render( MapWidget_ABC& )
 // -----------------------------------------------------------------------------
 void IconsRenderPass::RenderIcon( const T_IconTask& task )
 {
-    glClear( GL_COLOR_BUFFER_BIT );
-    glClear( GL_DEPTH_BUFFER_BIT );
-    glRectf( viewport_.Left() - 50, viewport_.Bottom() - 50, viewport_.Right() + 50, viewport_.Top() + 50 );
     const SymbolIcon& symbol = task.first;
+    glClear( GL_DEPTH_BUFFER_BIT );
+    glClearColor( symbol.color_.red() / 255.f, symbol.color_.green() / 255.f, symbol.color_.blue() / 255.f, 1.f );
+    glClear( GL_COLOR_BUFFER_BIT );
     tools_.SetCurrentColor( symbol.color_.red() / 255.f, symbol.color_.green() / 255.f, symbol.color_.blue() / 255.f );
     const float thickness = viewport_.Width() * 1.5f / iconSide_;
-    const geometry::Point2f center( 300, 100 );
+    const geometry::Point2f symbolCenter( 300, 150 );
+    const geometry::Point2f levelCenter( 300, symbol.karmaFactor_ );
     if( ! symbol.symbol_.empty() )
-        tools_.DrawApp6Symbol( symbol.symbol_, center, 1.f, thickness );
+        tools_.DrawApp6Symbol( symbol.symbol_, symbolCenter, 1.f, thickness );
     if( ! symbol.level_.empty() )
-        tools_.DrawApp6Symbol( symbol.level_, center, 1.f );
+        tools_.DrawApp6Symbol( symbol.level_, levelCenter, 1.5f, 3.f );
 
     glFlush();
-    QImage image( iconSide_, iconSide_, 32 );
-    glReadPixels( 0, 0, iconSide_, iconSide_, GL_BGRA_EXT, GL_UNSIGNED_BYTE, image.bits() );
+    QImage image( iconSide_, static_cast< unsigned int >( iconSide_ * RENDER_FACTOR ), QImage::Format_ARGB32 );
+    glReadPixels( 0, 0, iconSide_, static_cast< unsigned int >( iconSide_ * RENDER_FACTOR ), GL_BGRA_EXT, GL_UNSIGNED_BYTE, image.bits() );
     glFlush();
 
-    QPixmap result( image.mirror().smoothScale( symbol.size_ ) );
+    QPixmap result( image.mirrored() );
     result.setMask( result.createHeuristicMask( true ) );
-    task.second->AddIcon( task.first, result );
+
+    glClearColor( 0.f, 0.f, 0.f, 0.f );
+
+    QSize size( symbol.size_.width(), static_cast< unsigned int >( symbol.size_.height() * RENDER_FACTOR ) );
+    task.second->AddIcon( task.first, QPixmap( result.toImage().scaled( size, Qt::IgnoreAspectRatio, Qt::SmoothTransformation ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,7 +123,7 @@ unsigned int IconsRenderPass::Width() const
 // -----------------------------------------------------------------------------
 unsigned int IconsRenderPass::Height() const
 {
-    return iconSide_;
+    return static_cast< unsigned int >( iconSide_ * RENDER_FACTOR );
 }
 
 // -----------------------------------------------------------------------------

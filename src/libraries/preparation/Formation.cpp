@@ -22,6 +22,7 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Diplomacies_ABC.h"
+#include "clients_kernel/Karma.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "LogisticLevelAttritube.h"
 #include "clients_kernel/App6Symbol.h"
@@ -37,8 +38,9 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 Formation::Formation( kernel::Controller& controller, const HierarchyLevel_ABC& level, const FormationLevels& levels, IdManager& idManager )
     : EntityImplementation< Formation_ABC >( controller, idManager.GetNextId(), "" )
-    , level_( &level )
-    , levels_( levels )
+    , level_      ( &level )
+    , levels_     ( levels )
+    , karmaFactor_( 0.f )
 {
     RegisterSelf( *this );
     name_ = tools::translate( "Formation", "Formation [%1]" ).arg( id_ );
@@ -51,7 +53,8 @@ Formation::Formation( kernel::Controller& controller, const HierarchyLevel_ABC& 
 // -----------------------------------------------------------------------------
 Formation::Formation( xml::xistream& xis, Controller& controller, const FormationLevels& levels, IdManager& idManager )
     : EntityImplementation< Formation_ABC >( controller, 0, "" )
-    , levels_( levels )
+    , levels_     ( levels )
+    , karmaFactor_( 0.f )
 {
     std::string level, name;
     xis >> xml::attribute( "id", ( int& ) id_ )
@@ -101,6 +104,21 @@ const HierarchyLevel_ABC& Formation::GetLevel() const
     return *level_;
 }
 
+namespace
+{
+    // $$$$ LGY 2012-02-07 : hardcoded for displaying !!!
+    float GetFactor( const kernel::Karma& karma )
+    {
+        if( karma == kernel::Karma::friend_ )
+            return 0.f;
+        else if( karma == kernel::Karma::enemy_ )
+            return 200.f;
+        else if( karma == kernel::Karma::neutral_ )
+            return 40.f;
+        return 0.f;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Formation::InitializeSymbol
 // Created: LGY 2011-03-04
@@ -114,7 +132,9 @@ void Formation::InitializeSymbol() const
         return;
     symbolPath_ = symbol;
     levelPath_ = level;
-    kernel::App6Symbol::SetKarma( symbolPath_, hierarchies.GetTop().Get< kernel::Diplomacies_ABC >().GetKarma() );
+    const kernel::Karma& karma = hierarchies.GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
+    karmaFactor_ = GetFactor( karma );
+    kernel::App6Symbol::SetKarma( symbolPath_, karma );
 }
 
 // -----------------------------------------------------------------------------
@@ -127,7 +147,8 @@ void Formation::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC
     {
         InitializeSymbol();
         tools.DrawApp6Symbol( symbolPath_, where, 4 );
-        tools.DrawApp6Symbol( levelPath_, where, 4 );
+        const geometry::Point2f center( where.X(), where.Y() + karmaFactor_ );
+        tools.DrawApp6Symbol( levelPath_, center, 4 );
     }
 }
 

@@ -10,6 +10,11 @@
 #ifndef __SymbolIcon_h_
 #define __SymbolIcon_h_
 
+namespace kernel
+{
+    class Karma;
+}
+
 namespace gui
 {
 
@@ -31,10 +36,12 @@ public:
     //! @name Construction
     //@{
     void AddLevel( const std::string& level );
+    void UpdateSymbol( const std::string& symbol );
     void SetColor( const QColor& color );
     void SetSize( const QSize& size );
     void SetSize( unsigned size );
     void SetSize( unsigned width, unsigned height );
+    void SetKarmaFactor( const kernel::Karma& karma );
     //@}
 
     //! @name Operators
@@ -49,6 +56,7 @@ public:
     std::string level_;
     QColor color_;
     QSize size_;
+    float karmaFactor_;
     //@}
 };
 

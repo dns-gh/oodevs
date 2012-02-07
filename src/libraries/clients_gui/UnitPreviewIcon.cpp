@@ -157,13 +157,18 @@ void UnitPreviewIcon::UpdateSymbol()
     }
     else
     {
+        SymbolIcon icon( symbol_, level_ );
         if( selectedParent_ )
         {
             const TacticalHierarchies* pHierarchy = selectedParent_->Retrieve< TacticalHierarchies >();
             if( pHierarchy )
-                kernel::App6Symbol::SetKarma( symbol_, pHierarchy->GetTop().Get< kernel::Diplomacies_ABC >().GetKarma() );
+            {
+                const kernel::Karma& kama = pHierarchy->GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
+                kernel::App6Symbol::SetKarma( symbol_, kama );
+                icon.UpdateSymbol( symbol_ );
+                icon.SetKarmaFactor( kama );
+            }
         }
-        SymbolIcon icon( symbol_, level_ );
         if( selectedParent_ )
             icon.SetColor( colorStrategy_.FindColor( *selectedParent_ ) );
         icon.SetSize( 128 );

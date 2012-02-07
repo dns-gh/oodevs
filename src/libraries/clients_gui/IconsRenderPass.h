@@ -13,6 +13,8 @@
 #include "GlRenderPass_ABC.h"
 #include "SymbolIcon.h"
 
+#define RENDER_FACTOR 1.5f
+
 namespace kernel
 {
     class GlTools_ABC;

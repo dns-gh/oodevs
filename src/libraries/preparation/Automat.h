@@ -82,6 +82,7 @@ private:
     const kernel::AutomatType& type_;
     mutable std::string symbol_;
     mutable std::string level_;
+    mutable float karmaFactor_;
     //@}
 };
 

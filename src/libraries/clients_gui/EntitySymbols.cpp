@@ -11,6 +11,7 @@
 #include "EntitySymbols.h"
 #include "SymbolIcons.h"
 #include "ColorStrategy_ABC.h"
+#include "IconsRenderPass.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/Knowledge_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -57,6 +58,21 @@ const QPixmap& EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, const
     return GetSymbol( entity, symbolName, levelName, size );
 }
 
+namespace
+{
+    // $$$$ LGY 2012-02-07 : hardcoded for displaying !!!
+    bool IsValid( const kernel::Karma& karma, int x, int y )
+    {
+        if( karma == kernel::Karma::friend_ )
+            return ( x == 0 || x == 1 ) && y > 20;
+        else if( karma == kernel::Karma::enemy_ )
+            return ( x == 0 || x == 1 ) && y > 29;
+        else if( karma == kernel::Karma::neutral_ )
+            return ( x == 3 || x == 4 ) && y > 19;
+        return ( x == 0 || x == 1 );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: EntitySymbols::GetSymbol
 // Created: LGY 2011-07-22
@@ -67,25 +83,10 @@ const QPixmap& EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, const
     SymbolIcon icon( symbolName, levelName );
     icon.SetColor( strategy_.FindColor( entity ) );
     icon.SetSize( size );
+    if( const kernel::CommunicationHierarchies* pHierarchy = entity.Retrieve< kernel::CommunicationHierarchies >() )
+        if( const kernel::Diplomacies_ABC* pDiplomacy = pHierarchy->GetTop().Retrieve< kernel::Diplomacies_ABC >() )
+            icon.SetKarmaFactor( pDiplomacy->GetKarma() );
     return icons_.GetSymbol( icon );
-}
-
-namespace
-{
-    bool IsValid( const kernel::Karma& karma, int x, int y )
-    {
-        switch( karma.GetUId() )
-        {
-        case 1:
-            return ( x == 0 || x == 1 ) && y > 5;
-        case 2:
-            return ( x == 0 || x == 1 ) && y > 14;
-        case 3:
-            return ( x == 3 || x == 4 ) && y > 4;
-        default:
-            return ( x == 0 || x == 1 );
-        }
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -102,25 +103,27 @@ QPixmap EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, const QPixma
         {
             const kernel::Karma& karma= pDiplomacy->GetKarma();
             QImage symbol = pixmap.toImage();
-            QImage headquarter( 32, 48, QImage::Format_ARGB32 );
+            unsigned int height = static_cast< unsigned int >( 32 * RENDER_FACTOR ) + headquarterSize_;
+            QImage headquarter( 32, height, QImage::Format_ARGB32 );
             memcpy( headquarter.bits(), symbol.bits(), symbol.byteCount() );
             uchar* ptr = headquarter.bits();
-            for( int y = 0; y < 48; ++y )
-                for( int x = 0; x < 32; ++x )
+            for( unsigned int y = 0; y < height; ++y )
+                for( unsigned int x = 0; x < 32; ++x )
                 {
-                    if( y > 31 )
+                    int value = 4 * x + y * headquarter.bytesPerLine() ;
+                    if( y > height - headquarterSize_ - 1 )
                     {
-                        ptr[ 4 * x + y * headquarter.bytesPerLine() ]     = 0xff;
-                        ptr[ 4 * x + y * headquarter.bytesPerLine() + 1 ] = 0xff;
-                        ptr[ 4 * x + y * headquarter.bytesPerLine() + 2 ] = 0xff;
-                        ptr[ 4 * x + y * headquarter.bytesPerLine() + 3 ] = 0x00;
+                        ptr[ value     ] = 0xff;
+                        ptr[ value + 1 ] = 0xff;
+                        ptr[ value + 2 ] = 0xff;
+                        ptr[ value + 3 ] = 0x00;
                     }
                     if( IsValid( karma, x, y ) )
                     {
-                        ptr[ 4 * x + y * headquarter.bytesPerLine() ]     = 0x00;
-                        ptr[ 4 * x + y * headquarter.bytesPerLine() + 1 ] = 0x00;
-                        ptr[ 4 * x + y * headquarter.bytesPerLine() + 2 ] = 0x00;
-                        ptr[ 4 * x + y * headquarter.bytesPerLine() + 3 ] = 0xff;
+                        ptr[ value     ] = 0x00;
+                        ptr[ value + 1 ] = 0x00;
+                        ptr[ value + 2 ] = 0x00;
+                        ptr[ value + 3 ] = 0xff;
                     }
                 }
             return QPixmap( headquarter );

@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "SymbolIcon.h"
+#include "clients_kernel/Karma.h"
 #include <boost/tuple/tuple_comparison.hpp>
 
 using namespace gui;
@@ -18,10 +19,11 @@ using namespace gui;
 // Created: AGE 2007-10-31
 // -----------------------------------------------------------------------------
 SymbolIcon::SymbolIcon( const std::string& symbol, const std::string& level /* = std::string()*/ )
-    : symbol_( symbol )
-    , level_ ( level )
-    , color_ ( Qt::white )
-    , size_  ( 32, 32 )
+    : symbol_     ( symbol )
+    , level_      ( level )
+    , color_      ( Qt::white )
+    , size_       ( 32, 32 )
+    , karmaFactor_( 1.f )
 {
     // NOTHING
 }
@@ -42,6 +44,15 @@ SymbolIcon::~SymbolIcon()
 void SymbolIcon::AddLevel( const std::string& level )
 {
     level_ = level;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SymbolIcon::UpdateSymbol
+// Created: LGY 2012-02-07
+// -----------------------------------------------------------------------------
+void SymbolIcon::UpdateSymbol( const std::string& symbol )
+{
+    symbol_ = symbol;
 }
 
 // -----------------------------------------------------------------------------
@@ -78,6 +89,30 @@ void SymbolIcon::SetSize( unsigned width, unsigned height )
 void SymbolIcon::SetSize( const QSize& size )
 {
     size_ = size;
+}
+
+namespace
+{
+    // $$$$ LGY 2012-02-07: factor hardcoded for displaying
+    float GetKarmaFactor( const kernel::Karma& karma )
+    {
+        if( karma == kernel::Karma::friend_ )
+            return 1.f;
+        else if( karma == kernel::Karma::enemy_ )
+            return 80.f;
+        else if( karma == kernel::Karma::neutral_ )
+            return 1.f;
+        return 1.f;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: SymbolIcon::SetKarmaFactor
+// Created: LGY 2012-02-07
+// -----------------------------------------------------------------------------
+void SymbolIcon::SetKarmaFactor( const kernel::Karma& karma )
+{
+    karmaFactor_ = GetKarmaFactor( karma );
 }
 
 // -----------------------------------------------------------------------------

@@ -71,7 +71,6 @@ private:
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::Controller& controller );
-    void InitializeSymbol() const;
     //@}
 
 private:

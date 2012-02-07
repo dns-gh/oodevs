@@ -54,6 +54,12 @@ private:
     //@}
 
 private:
+    //! @name Statics
+    //@{
+    static const unsigned int headquarterSize_ = 8;
+    //@}
+
+private:
     //! @name Member data
     //@{
     SymbolIcons& icons_;

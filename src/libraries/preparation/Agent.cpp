@@ -78,6 +78,21 @@ Agent::~Agent()
     Destroy();
 }
 
+namespace
+{
+    // $$$$ LGY 2012-02-07 : hardcoded for displaying !!!
+    float GetFactor( const kernel::Karma& karma )
+    {
+        if( karma == kernel::Karma::friend_ )
+            return 5.f;
+        else if( karma == kernel::Karma::enemy_ )
+            return 16.f;
+        else if( karma == kernel::Karma::neutral_ )
+            return 7.f;
+        return 0.f;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Agent::Draw
 // Created: SBO 2006-03-20
@@ -86,19 +101,12 @@ void Agent::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& vi
 {
     if( viewport.IsHotpointVisible() )
     {
-        InitializeSymbol();
+        const kernel::Karma& karma = Get< CommunicationHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
+        kernel::App6Symbol::SetKarma( symbol_,karma );
         tools.DrawApp6Symbol( symbol_, where, -1.f );
-        tools.DrawApp6Symbol( type_.GetLevelSymbol(), where, -1.f );
+        geometry::Point2f center( where.X(), where.Y() + GetFactor( karma ) );
+        tools.DrawApp6Symbol( type_.GetLevelSymbol(), center, -1.f );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::InitializeSymbol
-// Created: AGE 2006-10-25
-// -----------------------------------------------------------------------------
-void Agent::InitializeSymbol() const
-{
-    kernel::App6Symbol::SetKarma( symbol_, Get< CommunicationHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma() );
 }
 
 // -----------------------------------------------------------------------------
