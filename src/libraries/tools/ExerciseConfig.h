@@ -12,7 +12,6 @@
 
 #include "GeneralConfig.h"
 #include <memory>
-#include <map>
 
 namespace xml
 {
@@ -75,10 +74,6 @@ public:
     virtual std::string GetPropagationFile( const std::string& path ) const;
     virtual std::string BuildPropagationChildFile( const std::string& path, const std::string& file ) const;
 
-    virtual unsigned int GetLogLevel( const std::string& field );
-    virtual unsigned int GetLogFiles( const std::string& field );
-    virtual unsigned int GetLogSize( const std::string& field );
-
     virtual void Parse( int argc, char** argv );
     void LoadExercise( const std::string& file ); //$$$ Rien à foutre la ...
     void SetExerciseName( const std::string& file );
@@ -93,30 +88,9 @@ private:
     //! @name Helpers
     //@{
     void ReadExercise( xml::xistream& xis );
-    void ReadLogSettings( const std::string& name, xml::xistream& xis );
     //@}
 
 private:
-
-    //! @name Types
-    //@{
-    struct LogSetting
-    {
-        LogSetting();
-
-        enum eLogLevel
-        {
-            eLogLevel_error,
-            eLogLevel_info,
-            elogLevel_all
-        };
-
-        eLogLevel logLevel_;
-        int maxFileSize_;
-        unsigned int maxFiles_;
-    };
-    //@}
-
     //! @name Member data
     //@{
     std::auto_ptr< tools::Loader_ABC > fileLoader_;
@@ -138,7 +112,6 @@ private:
     std::string population_;
     std::string propagations_;
 
-    std::map< std::string, LogSetting > logSettings_;
     //@}
 };
 
