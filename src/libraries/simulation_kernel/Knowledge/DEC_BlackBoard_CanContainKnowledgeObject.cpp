@@ -15,7 +15,9 @@
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_Object.h"
 #include "KnowledgesVisitor_ABC.h"
+#include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/MIL_Army_ABC.h"
+#include "Entities/MIL_EntityManager_ABC.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include <boost/serialization/export.hpp>
@@ -286,4 +288,22 @@ void DEC_BlackBoard_CanContainKnowledgeObject::GetCachedObjectsAtInteractionHeig
 void DEC_BlackBoard_CanContainKnowledgeObject::SetCachedObjectsAtInteractionHeight( const T_KnowledgeObjectVector& container, double rHeight )
 {
     obstacleCache_[ rHeight ] = container;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeObject::UpdateUniversalObjects
+// Created: LDC 2012-02-07
+// -----------------------------------------------------------------------------
+void DEC_BlackBoard_CanContainKnowledgeObject::UpdateUniversalObjects( const MIL_Army_ABC& team )
+{
+    const std::set< MIL_Object_ABC* >& universalObjects = MIL_EntityManager_ABC::GetSingleton().GetUniversalObjects();
+    for( std::set< MIL_Object_ABC* >::const_iterator it = universalObjects.begin(); it != universalObjects.end(); ++it )
+    {
+        if( !HasKnowledgeObject( **it ) )
+        {
+            boost::shared_ptr< DEC_Knowledge_Object > knowledge = CreateKnowledgeObject( team, **it );
+            knowledge->Update( PHY_PerceptionLevel::identified_ );
+            knowledge->SkipPreparation();
+        }
+    }
 }

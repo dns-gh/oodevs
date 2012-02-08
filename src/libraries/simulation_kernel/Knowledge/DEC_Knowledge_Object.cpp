@@ -66,7 +66,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_Army_ABC& armyKnowing, MIL
     , rRelevance_              ( 1. )
     , bValid_                  ( true )
     , bPerceptionDistanceHacked_ ( false )
-    , bHackedPrepared_         ( false )
+    , bSkipPreparation_        ( false )
 {
     if( sendCreation )
         SendMsgCreation();
@@ -94,7 +94,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const MIL_KnowledgeGroup& groupKnowi
     , rRelevance_              ( 1. )
     , bValid_                  ( true )
     , bPerceptionDistanceHacked_ ( false )
-    , bHackedPrepared_         ( false )
+    , bSkipPreparation_        ( false )
 {
     SendMsgCreation();
 }
@@ -121,7 +121,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object()
     , rRelevance_              ( 0. )
     , bValid_                  ( true )
     , bPerceptionDistanceHacked_ ( false )
-    , bHackedPrepared_         ( false )
+    , bSkipPreparation_        ( false )
 {
     // NOTHING
 }
@@ -152,7 +152,7 @@ DEC_Knowledge_Object::DEC_Knowledge_Object( const DEC_Knowledge_Object& copy, co
     , rRelevance_                      ( copy.rRelevance_ )
     , bValid_                          ( copy.bValid_ )
     , bPerceptionDistanceHacked_       ( copy.bPerceptionDistanceHacked_ )
-    , bHackedPrepared_                 ( false )
+    , bSkipPreparation_                ( false )
 {
     SendMsgCreation();
 }
@@ -200,7 +200,7 @@ void DEC_Knowledge_Object::load( MIL_CheckPointInArchive& file, const unsigned i
          >> rRelevance_
          >> bValid_
          >> bPerceptionDistanceHacked_
-         >> bHackedPrepared_;
+         >> bSkipPreparation_;
 
     // récupération des noms des types
     std::size_t nSize;
@@ -250,7 +250,7 @@ void DEC_Knowledge_Object::save( MIL_CheckPointOutArchive& file, const unsigned 
          << rRelevance_
          << bValid_
          << bPerceptionDistanceHacked_
-         << bHackedPrepared_;
+         << bSkipPreparation_;
     // On stocke les types selon leur nom
     std::size_t size = reconByAgentTypes_.size();
     file << size;
@@ -274,9 +274,9 @@ void DEC_Knowledge_Object::save( MIL_CheckPointOutArchive& file, const unsigned 
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Object::Prepare()
 {
-    if( bPerceptionDistanceHacked_ && !bHackedPrepared_ )
+    if( bSkipPreparation_ )
     {
-        bHackedPrepared_ = true;
+        bSkipPreparation_ = false;
         return;
     }
     nAttributesUpdated_ = eAttr_Nothing;
@@ -969,7 +969,7 @@ void DEC_Knowledge_Object::HackPerceptionLevel( const PHY_PerceptionLevel* pPerc
     {
         rRelevance_ = 1.0;
         bPerceptionDistanceHacked_ = true;
-        bHackedPrepared_ = false;
+        bSkipPreparation_ = true;
         pCurrentPerceptionLevel_ = pPerceptionLevel;
         UpdateLocalisations();
         nTimeLastUpdate_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
@@ -998,4 +998,13 @@ double DEC_Knowledge_Object::GetMaxTrafficability() const
             return pTrafficability->GetMaxValue();
     }
     return 0.;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::SkipPreparation
+// Created: JSR 2012-02-07
+// -----------------------------------------------------------------------------
+void DEC_Knowledge_Object::SkipPreparation()
+{
+    bSkipPreparation_ = true;
 }

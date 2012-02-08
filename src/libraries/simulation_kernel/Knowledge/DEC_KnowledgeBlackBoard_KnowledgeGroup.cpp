@@ -147,6 +147,16 @@ void DEC_KnowledgeBlackBoard_KnowledgeGroup::SendObjectChangedState() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::UpdateUniversalObjects
+// Created: LDC 2012-02-07
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeBlackBoard_KnowledgeGroup::UpdateUniversalObjects()
+{
+    if( pKnowledgeGroup_ && pKnowledgeObjectContainer_ )
+        pKnowledgeObjectContainer_->UpdateUniversalObjects( pKnowledgeGroup_->GetArmy() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_KnowledgeGroup::IsKnown
 // Created: NLD 2004-04-01
 // -----------------------------------------------------------------------------

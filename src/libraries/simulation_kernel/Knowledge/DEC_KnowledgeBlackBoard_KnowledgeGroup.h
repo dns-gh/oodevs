@@ -139,6 +139,7 @@ public:
     void TranslateKnowledges( const T_ConstKnowledgeAgentVector& sourceKnowledges, const MIL_KnowledgeGroup& sourceKnowledgeGroup, T_ConstKnowledgeAgentVector& translatedKnowledges ) const;
     boost::shared_ptr< DEC_Knowledge_Object > CreateKnowledgeObject( const MIL_Army_ABC& teamKnowing, MIL_Object_ABC& objectKnown );
     void ApplyOnKnowledgesPerception( int currentTimeStep );
+    void UpdateUniversalObjects();
 
     template < class UnaryFunction >
     void ApplyOnKnowledgesAgent( UnaryFunction& fct ) const
