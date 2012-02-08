@@ -4,7 +4,7 @@ local result =
         return ePionEfficiencyEngineeringSupport
     end,
 
-    fillParameters = function( self, companyTask, params, entity, context, objectif )
+    fillParameters = function( self, companyTask, params, entity, marcheRetrograde, objectif )
         return { objective = companyTask:getEntityToReinforce( params ) }
     end
 }

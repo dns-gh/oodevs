@@ -11,13 +11,13 @@ S'enregistre auprès des éléments soutenus pour recevoir la valeur de leur rap
 				</list>
 			</type>
 		</parameter>
-		<parameter name="context" nullable="true">
-			<description>Le contexte peut etre offensif, défensif ou statique</description>
+		<parameter name="marcheRetrograde" nullable="true">
+			<description>En marche retrograde (false par défaut)</description>
 			<type>
-				<simple name="numeric"/>
+				<simple name="boolean"/>
 			</type>
 			<default>
-				<number>0.0</number>
+				<boolean>false</boolean>
 			</default>
 		</parameter>
 	</parameters>

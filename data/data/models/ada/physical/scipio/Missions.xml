@@ -410,7 +410,7 @@
           <parameter type="Agent"/>
         </choice>
       </parameter>
-      <parameter dia-name="context" name="Contexte retrograde" optional="true" type="Integer"/>
+      <parameter dia-name="marcheRetrograde" name="marche retrograde" optional="true" type="Boolean"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.tasks.Detruire" dia-type="france.military.platoon.combat.tasks.Detruire" id="2013" name="PION MELEE Detruire" package="defence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3090,4 +3090,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_RejoindrePointLancement" id="405" name="Rejoindre point de lancement"/>
   </fragorders>
 </missions>
-<!-- signature="2392459284" -->
+<!-- signature="1713314956" -->

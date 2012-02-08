@@ -44,7 +44,7 @@ end
 local function giveSupport( self, tasks, nbrFront, echelon, entities )
     local tasks = explode( ";", tasks )
     entities = entities or self.entitiesWithoutMission
-    local bestUnits = findBests( entities, tasks, self.companyTask, self.parameters, nbrFront, eContexte_Retrograde )
+    local bestUnits = findBests( entities, tasks, self.companyTask, self.parameters, nbrFront, true )
     self.entitiesWithoutMission = removeFromListForLead( bestUnits, self.entitiesWithoutMission )
     setEchelon( bestUnits, echelon )
     return bestUnits
@@ -200,7 +200,7 @@ create = function( self )
       
       if self.sendSupport then 
         for _, supportingEntity in pairs( echelons[4] ) do
-          meKnowledge:sendTaskToPion( supportingEntity , self.params.taskForSupporting , { objectives = tableObjectives, context = eContexte_Retrograde } , eEtatEchelon_Reserve )  
+          meKnowledge:sendTaskToPion( supportingEntity , self.params.taskForSupporting , { objectives = tableObjectives, marcheRetrograde = true } , eEtatEchelon_Reserve )  
         end
         self.sendSupport = false
       end

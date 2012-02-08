@@ -4,14 +4,14 @@ local result =
         return ePionEfficiencyCombatSupport
     end,
 
-    fillParameters = function( self, companyTask, params, entity, context, objectif )
-        if context == eContexte_Retrograde then
-            return { objectives = companyTask:getEntitiesToSupport( params ), context = context }
+    fillParameters = function( self, companyTask, params, entity, marcheRetrograde, objectif )
+        if marcheRetrograde then
+            return { objectives = companyTask:getEntitiesToSupport( params ), marcheRetrograde = true }
         end
         if objectif and objectif ~= NIL then
-            return { objectives = { objectif }, context = 0 }
+            return { objectives = { objectif }, marcheRetrograde = false }
         else
-            return { objectives = companyTask:getEntitiesToSupport( params ), context = 0 }
+            return { objectives = companyTask:getEntitiesToSupport( params ), marcheRetrograde = false }
         end
     end
 }
