@@ -34,7 +34,7 @@ This implementation returns true if this element's proximity is equal to 100%.</
                 </type>
             </return>
         </method>
-        <method name="reachIt" abstract="true">
+        <method name="reachIt" abstract="false">
             <description>For the agent to enact the decision to move towards this object, along some path.&#xD;
 Returns true once the agent has reached the end-point of the path (please note that this end-point may be distinct from the target position to reach). &#xD;
 </description>

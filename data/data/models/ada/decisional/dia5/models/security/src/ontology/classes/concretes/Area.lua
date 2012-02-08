@@ -4,22 +4,6 @@
 local decontaminationDelays = 2 -- min
 
 -- --------------------------------------------------------------------------------
--- Movement
--- --------------------------------------------------------------------------------
-method "reachIt" ( masalife.brain.integration.startStopAction( 
-{ 
-    start = function( self )
-        return integration.startMoveToIt( self, pathType ) 
-    end,
-    started = function( self )
-        return integration.updateMoveToIt( self, pathType )
-    end, 
-    stop = function( self )
-        return integration.deselectMoveToIt( self )
-    end,
-} ) )
-
--- --------------------------------------------------------------------------------
 -- Decontamination area
 -- --------------------------------------------------------------------------------
 method "decontaminateIt" ( masalife.brain.integration.startStopAction( 

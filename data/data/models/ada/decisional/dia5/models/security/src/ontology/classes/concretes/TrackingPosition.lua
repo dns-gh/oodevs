@@ -3,9 +3,15 @@
 -- --------------------------------------------------------------------------------
 method "reachIt" ( masalife.brain.integration.startStopAction( 
 {
-    start   = integration.startMoveToIt, 
-    started = integration.updateMoveToItArea, 
-    stop    = integration.deselectMoveToIt
+    start = function( self )
+        return integration.startMoveToItArea( self, pathType ) 
+    end,
+    started = function( self )
+        return integration.updateMoveToItArea( self, pathType )
+    end, 
+    stop = function( self )
+        return integration.stopMoveToIt( self )
+    end,
  } ) )
 
 -- --------------------------------------------------------------------------------

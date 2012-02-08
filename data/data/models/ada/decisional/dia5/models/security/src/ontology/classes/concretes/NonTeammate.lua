@@ -5,22 +5,6 @@ local loadingActionDelays   = 2 --min
 local unloadingActionDelays = 2 --min
 
 -- --------------------------------------------------------------------------------
--- Movement
--- --------------------------------------------------------------------------------
-method "reachIt" ( masalife.brain.integration.startStopAction( 
-{ 
-    start = function( self )
-        return integration.startMoveToIt( self, pathType ) 
-    end,
-    started = function( self )
-        return integration.updateMoveToIt( self, pathType )
-    end, 
-    stop = function( self )
-        return integration.deselectMoveToIt( self )
-    end,
-} ) )
-
--- --------------------------------------------------------------------------------
 -- Transport
 -- --------------------------------------------------------------------------------
 method "canBeLoaded" ( 
