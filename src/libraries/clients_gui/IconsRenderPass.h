@@ -13,7 +13,7 @@
 #include "GlRenderPass_ABC.h"
 #include "SymbolIcon.h"
 
-#define RENDER_FACTOR 1.5f
+#define RENDER_FACTOR 1.3f
 
 namespace kernel
 {

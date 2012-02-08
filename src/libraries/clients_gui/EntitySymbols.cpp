@@ -64,11 +64,11 @@ namespace
     bool IsValid( const kernel::Karma& karma, int x, int y )
     {
         if( karma == kernel::Karma::friend_ )
-            return ( x == 0 || x == 1 ) && y > 20;
+            return ( x == 0 || x == 1 ) && y > 11;
         else if( karma == kernel::Karma::enemy_ )
-            return ( x == 0 || x == 1 ) && y > 29;
+            return ( x == 0 || x == 1 ) && y > 21;
         else if( karma == kernel::Karma::neutral_ )
-            return ( x == 3 || x == 4 ) && y > 19;
+            return ( x == 3 || x == 4 ) && y > 10;
         return ( x == 0 || x == 1 );
     }
 }

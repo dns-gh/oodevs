@@ -97,11 +97,11 @@ namespace
     float GetKarmaFactor( const kernel::Karma& karma )
     {
         if( karma == kernel::Karma::friend_ )
-            return 1.f;
+            return -50.f;
         else if( karma == kernel::Karma::enemy_ )
-            return 80.f;
+            return 0.f;
         else if( karma == kernel::Karma::neutral_ )
-            return 1.f;
+            return -50.f;
         return 1.f;
     }
 }
