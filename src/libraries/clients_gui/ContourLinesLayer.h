@@ -62,7 +62,7 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::vector< std::auto_ptr< T_PointVector> > T_Contours[ 4 ];
+    typedef std::vector< boost::shared_ptr< T_PointVector> > T_Contours[ 4 ];
     //@}
 
     //! @name Helpers

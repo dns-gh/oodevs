@@ -251,9 +251,9 @@ void ContourLinesLayer::Conrec()
     const float cellSize = static_cast< float >( elevation.GetCellSize() );
 
     int nc = elevation.MaximumElevation() / linesHeight_;
-    std::vector< std::auto_ptr< T_PointVector > > points;
+    std::vector< boost::shared_ptr< T_PointVector > > points;
     for( int i = 0; i < nc; ++i )
-        points.push_back( std::auto_ptr< T_PointVector >( new T_PointVector() ) );
+        points.push_back( boost::shared_ptr< T_PointVector >( new T_PointVector() ) );
 
     int sh[ 5 ];
     float h[ 5 ];
@@ -410,8 +410,8 @@ void ContourLinesLayer::Conrec()
         observer_.SetPercentage( static_cast< short >( 10 + 90.f * k / nc ) );
         controllers_.controller_.Update( observer_ );
         bool large = ( k +1 ) % 5 == 0;
-        std::deque< std::auto_ptr< sContour > > contours;
-        register int counter = 0;
+        std::deque< boost::shared_ptr< sContour > > contours;
+        register std::size_t counter = 0;
         const T_PointVector* vector = points[ k ].get();
         const std::size_t vectorsize = vector->size();
         while( counter + 2 < vectorsize )
@@ -457,21 +457,21 @@ void ContourLinesLayer::Conrec()
                     if( contour->loop_ )
                     {
                         T_PointVector* v = new T_PointVector( contour->points_.begin(), contour->points_.end() );
-                        loops_[ large ? 0 : 2 ].push_back( std::auto_ptr< T_PointVector >( v ) );
+                        loops_[ large ? 0 : 2 ].push_back( boost::shared_ptr< T_PointVector >( v ) );
                         contours.erase( contours.begin() + index );
                     }
                     break;
                 }
             }
             if( !found )
-                contours.push_back( std::auto_ptr< sContour >( new sContour( p1, p2 ) ) );
+                contours.push_back( boost::shared_ptr< sContour >( new sContour( p1, p2 ) ) );
         }
         const std::size_t size = contours.size();
         for( register std::size_t nn = 0; nn < size; ++nn )
         {
             const sContour* contour = contours[ nn ].get();
             T_PointVector* v = new T_PointVector( contour->points_.begin(), contour->points_.end() );
-            loops_[ large ? 1 : 3 ].push_back( std::auto_ptr< T_PointVector >( v ) );
+            loops_[ large ? 1 : 3 ].push_back( boost::shared_ptr< T_PointVector >( v ) );
         }
     }
     if( !valid_ )
@@ -485,7 +485,7 @@ void ContourLinesLayer::Conrec()
 
 namespace
 {
-    void CreateGLArrays( GLenum mode, const std::vector< std::auto_ptr< T_PointVector > >& contours )
+    void CreateGLArrays( GLenum mode, const std::vector< boost::shared_ptr< T_PointVector > >& contours )
     {
         const std::size_t size = contours.size();
         for( register std::size_t i = 0; i < size; ++i )
@@ -514,8 +514,6 @@ void ContourLinesLayer::CreateCallList()
                 loops_[ 1 ].clear();
                 loops_[ 2 ].clear();
                 loops_[ 3 ].clear();
-                for( int i = 0; i < 3; ++i )
-                    loops_[ i ].push_back( std::auto_ptr< T_PointVector>( new T_PointVector() ) );
                 thread_->Enqueue( boost::bind( &ContourLinesLayer::Conrec, this ) );
             }
             return;
