@@ -124,9 +124,9 @@ double PHY_RolePion_Population::GetCollidingPopulationDensity() const
         for( CIT_KnowledgePopulationCollisionVector it = populationsColliding.begin(); it != populationsColliding.end(); ++it )
             rPopulationDensity_ = std::max( rPopulationDensity_, (**it).GetMaxPopulationDensity() );
 
-        std::vector< const TER_Object_ABC* > objects;
-        TER_World::GetWorld().GetObjectManager().GetListWithinCircle2( pion_.GetRole< PHY_RoleInterface_Location >().GetPosition(), 500, objects );
-        for( std::vector< const TER_Object_ABC* >::const_iterator it = objects.begin(); it != objects.end(); ++it )
+        std::vector< TER_Object_ABC* > objects;
+        TER_World::GetWorld().GetObjectManager().GetListAt( pion_.GetRole< PHY_RoleInterface_Location >().GetPosition(), objects );
+        for( std::vector< TER_Object_ABC* >::const_iterator it = objects.begin(); it != objects.end(); ++it )
         {
             const MIL_Object_ABC* object = static_cast< const MIL_Object_ABC* >( *it );
             const CrowdCapacity* capacity = object->Retrieve< CrowdCapacity >();

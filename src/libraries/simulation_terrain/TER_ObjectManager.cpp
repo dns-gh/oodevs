@@ -67,23 +67,6 @@ void TER_ObjectManager::GetListWithinCircle( const MT_Vector2D& vCenter, double 
 }
 
 // -----------------------------------------------------------------------------
-// Name: TER_ObjectManager::GetListWithinCircle
-// Created: SLG 2010-06-15
-// -----------------------------------------------------------------------------
-void TER_ObjectManager::GetListWithinCircle2( const MT_Vector2D& vCenter, double rRadius, std::vector< const TER_Object_ABC* >& objects ) const
-{
-    objects.reserve( 10 );
-    spatialcontainer::PointIntersecter< double > intersecter( geometry::Point2< double >( vCenter.rX_, vCenter.rY_ ), rRadius );
-    T_Objects::View view = objects_.CreateView( intersecter );
-    while( view.HasMoreElements() )
-    {
-        const TER_Object_ABC* pObject = view.NextElement();
-        if( pObject && pObject->GetLocalisation().GetArea() && pObject->Intersect2DWithCircle( vCenter, rRadius ) )
-            objects.push_back( pObject );
-    }
-}
-
-// -----------------------------------------------------------------------------
 // Name: TER_ObjectManager::GetListWithinLocalisation
 // Created: NLD 2005-11-09
 // -----------------------------------------------------------------------------
