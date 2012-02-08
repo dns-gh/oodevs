@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.classes.concretes.TrackingPosition" source-version="1.0.0" extends="ontology.classes.concretes.Position">
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.classes.TrackingPosition" source-version="1.0.0" extends="ontology.classes.Position">
     <description>Represents a special type of position that can be used to follow a moving entity. </description>
     <methods>
         <method name="getPosition" abstract="false">

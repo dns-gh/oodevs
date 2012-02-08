@@ -3,7 +3,7 @@
     <parameters>
         <parameter name="resourceNode">
             <type>
-                <class name="ontology.classes.concretes.ResourceNode"/>
+                <class name="ontology.classes.ResourceNode"/>
             </type>
         </parameter>
         <parameter name="quantity">

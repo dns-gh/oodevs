@@ -1,7 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.classes.concretes.Teammate" source-version="1.0.0" extends="ontology.classes.Agent">
-    <description>Represents a known agent. </description>
-    <realizes>agent.ontology.interfaces.Medical</realizes>
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.classes.Crowd" source-version="1.0.0" extends="ontology.classes.Human">
+    <description>Represents a set of entities viewed as a compound.&#xD;
+A crowd has a a density that evolves during locomotion.&#xD;
+A crowd is oriented. It has three sections: front, middle, back.&#xD;
+A crowd can be calm or upset.&#xD;
+A crowd can victims. &#xD;
+</description>
     <realizes>agent.ontology.interfaces.Victims</realizes>
     <realizes>agent.ontology.interfaces.Transportable</realizes>
     <methods>
@@ -22,21 +26,7 @@
             </return>
         </method>
         <method name="canVictimsBeEvacuated" abstract="false">
-            <description>Returns true if victims within this entity can be evacuated.</description>
-            <return>
-                <type>
-                    <simple name="boolean"/>
-                </type>
-            </return>
-        </method>
-        <method name="canEvacuateVictims" abstract="false">
-            <description>Check if &quot;victims&quot; entity can be evacuated.</description>
-            <argument name="victims">
-                <description>The &quot;victims&quot; entity to ensure evacuation.</description>
-                <type>
-                    <class name="agent.ontology.interfaces.Victims"/>
-                </type>
-            </argument>
+            <description>Returns true if wounded elements within this &quot;victims&quot; can be evacuated.</description>
             <return>
                 <type>
                     <simple name="boolean"/>
@@ -53,24 +43,10 @@
         </method>
         <method name="extractVictimsFromIt" abstract="false">
             <description>To extract wounded victims from this element.&#xD;
-This implement returns true. Extraction is not released for teammate unit.</description>
+This implementation create a new crowd with wounded elements on a near position. New crowd created contains as many elements as there are wounded victims within this crowd.</description>
             <return>
-                <description>Returns true once all wounded victims have been extracted from this element.</description>
-                <type>
-                    <simple name="boolean"/>
-                </type>
-            </return>
-        </method>
-        <method name="evacuateVictims" abstract="false">
-            <description>To evacuate victims through a medical logistic chain.</description>
-            <argument name="victims">
-                <description>The &quot;victims&quot; entity to ensure evacuation.</description>
-                <type>
-                    <class name="agent.ontology.interfaces.Victims"/>
-                </type>
-            </argument>
-            <return>
-                <description>Returns true once evacuation has started.</description>
+                <description>Returns true once all wounded victims have been extracted from this element.&#xD;
+This implementation returns true once a new crowd of wounded elements have been created.</description>
                 <type>
                     <simple name="boolean"/>
                 </type>
@@ -125,6 +101,20 @@ This implementation makes agent Unit magically unload 'this' entity after a defi
                 <description>Returns 'true' on action completion,  'false' otherwise.&#xD;
 &#xD;
 This implementation makes agent Unit &quot;magically&quot; unload 'this' entity after a defined delay (in minutes).</description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="hasConcentration">
+            <description>Returns 'true' this Crowd has a concentration on the issued position (a crowd may have few concentrations). If no contration of this Crowd exists nearby the given 'Position', this méthod returns false.</description>
+            <argument name="position">
+                <description></description>
+                <type>
+                    <class name="ontology.classes.Position"/>
+                </type>
+            </argument>
+            <return>
                 <type>
                     <simple name="boolean"/>
                 </type>

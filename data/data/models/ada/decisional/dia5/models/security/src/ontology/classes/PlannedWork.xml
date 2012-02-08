@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.classes.concretes.PlannedWork" source-version="1.0.0" extends="ontology.classes.LocalizedElement">
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.classes.PlannedWork" source-version="1.0.0" extends="ontology.classes.LocalizedElement">
     <description>Represents the idea of a human construction to come. Contains all the specifics required for construction. </description>
     <realizes>agent.ontology.interfaces.Work</realizes>
     <methods>

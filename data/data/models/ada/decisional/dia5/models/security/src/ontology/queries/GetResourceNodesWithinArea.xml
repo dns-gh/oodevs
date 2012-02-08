@@ -5,13 +5,13 @@
         <parameter name="area">
             <description>The area to find resource nodes in.</description>
             <type>
-                <class name="ontology.classes.concretes.Area"/>
+                <class name="ontology.classes.Area"/>
             </type>
         </parameter>
     </parameters>
     <target name="resourceNodes">
         <type>
-            <class name="ontology.classes.concretes.ResourceNode"/>
+            <class name="ontology.classes.ResourceNode"/>
         </type>
     </target>
 </query>

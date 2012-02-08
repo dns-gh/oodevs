@@ -3,7 +3,7 @@
     <description>The role of a generic Security Unit. &#xD;
 </description>
     <body-type>
-        <class name="ontology.classes.concretes.MeKnowledge"/>
+        <class name="ontology.classes.MeKnowledge"/>
     </body-type>
     <skills>
         <skill name="behaviors.skills.primitives.Alert"/>

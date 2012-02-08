@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.classes.concretes.ResourceNode" source-version="1.0.0" extends="ontology.classes.LocalizedElement">
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.classes.ResourceNode" source-version="1.0.0" extends="ontology.classes.LocalizedElement">
     <description>Represents a resource network node. A node is part of a distribution network. it can consume and produce resources. &#xD;
 A resource network node can be enabled and disabled by simulated units.&#xD;
 A resource network node can be supplied with resources from another node or by a supply plot.&#xD;

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.classes.concretes.Object" source-version="1.0.0" extends="ontology.classes.concretes.PlannedWork">
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.classes.Object" source-version="1.0.0" extends="ontology.classes.PlannedWork">
     <description>Represents anything world entity that is not a: &#xD;
 - Agent&#xD;
 - Crowd&#xD;

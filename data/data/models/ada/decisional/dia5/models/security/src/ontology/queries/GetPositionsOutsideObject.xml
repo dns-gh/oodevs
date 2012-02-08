@@ -3,7 +3,7 @@
     <parameters>
         <parameter name="object">
             <type>
-                <class name="ontology.classes.concretes.Object"/>
+                <class name="ontology.classes.Object"/>
             </type>
         </parameter>
     </parameters>

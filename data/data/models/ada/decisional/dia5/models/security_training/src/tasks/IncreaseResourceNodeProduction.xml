@@ -7,7 +7,7 @@ This mission is active until another mission is issued. When the mission stops, 
         <parameter name="resourceNode">
             <description>The resource node to enact on. Production of this node will be increased with specified quantity.</description>
             <type>
-                <class name="ontology.classes.concretes.ResourceNode"/>
+                <class name="ontology.classes.ResourceNode"/>
             </type>
         </parameter>
         <parameter name="quantity">

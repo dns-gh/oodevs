@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.classes.concretes.MeKnowledge" source-version="1.0.0">
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.classes.MeKnowledge" source-version="1.0.0">
     <description>Represents agent knowledge of its physical abilities. </description>
     <realizes>agent.ontology.interfaces.Body</realizes>
     <methods>
@@ -366,7 +366,7 @@ Maximum elements of the cencontration are loaded, depending on agent Unit physic
             <argument name="crowd">
                 <description>$$$ TODO</description>
                 <type>
-                    <class name="ontology.classes.concretes.Crowd"/>
+                    <class name="ontology.classes.Crowd"/>
                 </type>
             </argument>
             <argument name="destination">
@@ -381,7 +381,7 @@ Maximum elements of the cencontration are loaded, depending on agent Unit physic
             <argument name="crowd">
                 <description>$$$ TODO</description>
                 <type>
-                    <class name="ontology.classes.concretes.Crowd"/>
+                    <class name="ontology.classes.Crowd"/>
                 </type>
             </argument>
             <argument name="destination">
@@ -397,7 +397,7 @@ Returns true if agent Unit has physical capabilities to loasd a 'Crowd' object.<
             <argument name="crowd">
                 <description>Returns true if this agent has the physical capacties to transport the given crowd.</description>
                 <type>
-                    <class name="ontology.classes.concretes.Crowd"/>
+                    <class name="ontology.classes.Crowd"/>
                 </type>
             </argument>
             <return>

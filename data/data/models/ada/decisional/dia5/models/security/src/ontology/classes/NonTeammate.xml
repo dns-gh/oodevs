@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.classes.concretes.NonTeammate" source-version="1.0.0" extends="ontology.classes.Agent">
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.classes.NonTeammate" source-version="1.0.0" extends="ontology.classes.Agent">
     <description>Represents an unknown agent. </description>
     <realizes>agent.ontology.interfaces.Transportable</realizes>
     <methods>

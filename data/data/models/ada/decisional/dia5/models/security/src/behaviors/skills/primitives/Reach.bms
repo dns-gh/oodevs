@@ -12,8 +12,6 @@ rootnode
     -- Send a feedback when the destination is reached
     -- --------------------------------------------------------------------------------
     select = function( self )
-        DEC_Trace( "self.params.urgency = "..tostring( self.params.urgency ) )
-        DEC_Trace( "self.params.pathType = "..tostring( self.params.pathType ) )
         if meKnowledge:moveTo( self.params.destination, self.params.urgency, self.params.pathType ) then
             Feedback( self.feedbacks.done )
         end

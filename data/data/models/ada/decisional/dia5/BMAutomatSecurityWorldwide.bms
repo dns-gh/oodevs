@@ -9,16 +9,16 @@ masalife.brain.core.loadModel( role, { libPath .. "/models/directia.core/directi
 integration.ontology = {
     types = {
         --- Type exists only the test library, necessary to test the tasks of the Unit
-        body = ontology.classes.concretes.CompanyBody,
+        body = ontology.classes.CompanyBody,
 
-        point = ontology.classes.concretes.Position,
-        area = ontology.classes.concretes.Area,
-        urbanBlock = ontology.classes.concretes.UrbanBlock,
-        population = ontology.classes.concretes.Crowd,
-        object = ontology.classes.concretes.Object,
-        agent = ontology.classes.concretes.Teammate,
-        agentKnowledge = ontology.classes.concretes.NonTeammate,
-        resourceNetwork = ontology.classes.concretes.ResourceNode,
-        genObject = ontology.classes.concretes.PlannedWork,
+        point = ontology.classes.Position,
+        area = ontology.classes.Area,
+        urbanBlock = ontology.classes.UrbanBlock,
+        population = ontology.classes.Crowd,
+        object = ontology.classes.Object,
+        agent = ontology.classes.Teammate,
+        agentKnowledge = ontology.classes.NonTeammate,
+        resourceNetwork = ontology.classes.ResourceNode,
+        genObject = ontology.classes.PlannedWork,
     }
 }

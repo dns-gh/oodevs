@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.classes.concretes.UrbanBlock" source-version="1.0.0" extends="ontology.classes.TerrainElement">
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.classes.UrbanBlock" source-version="1.0.0" extends="ontology.classes.TerrainElement">
     <description>Represents a terrain area comprising a set of buildings and roads, that can accommodate populations, units and crowds.&#xD;
 An agent can go inside an urban block.&#xD;
 A urban block can be evacuated, alerted or confined. These states have an impact on the hosted population behavior.&#xD;

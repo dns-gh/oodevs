@@ -3,7 +3,7 @@
     <parameters>
         <parameter name="crowd">
             <type>
-                <class name="ontology.classes.concretes.Crowd"/>
+                <class name="ontology.classes.Crowd"/>
             </type>
         </parameter>
         <parameter name="loadingPosition">

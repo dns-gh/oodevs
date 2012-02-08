@@ -3,7 +3,7 @@
     <parameters>
         <parameter name="area">
             <type>
-                <class name="ontology.classes.concretes.Area"/>
+                <class name="ontology.classes.Area"/>
             </type>
         </parameter>
     </parameters>

@@ -7,7 +7,7 @@ If no fires exists in the area, the mission failed and terminates.</description>
         <parameter name="area">
             <description>The area in which fires are retreived to be extinguished.</description>
             <type>
-                <class name="ontology.classes.concretes.Area"/>
+                <class name="ontology.classes.Area"/>
             </type>
         </parameter>
     </parameters>

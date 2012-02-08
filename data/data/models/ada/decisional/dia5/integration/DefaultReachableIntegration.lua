@@ -494,6 +494,8 @@ end
 -- comments: used to move toward agent
 -- ****************************************************************************
 integration.updateMoveToItArea = function( objective, pathType )
+    
+    DEC_Trace( "hello" )
 
     if objective.destination and objective.initialeDestination then
         -- -------------------------------------------------------------------------------- 

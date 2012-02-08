@@ -4,7 +4,7 @@
         <parameter name="crowds">
             <type>
                 <list>
-                    <class name="ontology.classes.concretes.Crowd"/>
+                    <class name="ontology.classes.Crowd"/>
                 </list>
             </type>
         </parameter>

@@ -7,7 +7,7 @@ If no urban block exists in the area, the mission failed.</description>
         <parameter name="area">
             <description>The area in which urban blocks are retreived to lift the confinement of population.</description>
             <type>
-                <class name="ontology.classes.concretes.Area"/>
+                <class name="ontology.classes.Area"/>
             </type>
         </parameter>
     </parameters>

@@ -6,14 +6,14 @@
             <description>The area to find resource nodes in.</description>
             <type>
                 <list>
-                    <class name="ontology.classes.concretes.UrbanBlock"/>
+                    <class name="ontology.classes.UrbanBlock"/>
                 </list>
             </type>
         </parameter>
     </parameters>
     <target name="resourceNodes">
         <type>
-            <class name="ontology.classes.concretes.ResourceNode"/>
+            <class name="ontology.classes.ResourceNode"/>
         </type>
     </target>
 </query>

@@ -5,13 +5,13 @@
         <parameter name="area">
             <description>The area to find urban blocks in.</description>
             <type>
-                <class name="ontology.classes.concretes.Area"/>
+                <class name="ontology.classes.Area"/>
             </type>
         </parameter>
     </parameters>
     <target name="urbanBlocks">
         <type>
-            <class name="ontology.classes.concretes.UrbanBlock"/>
+            <class name="ontology.classes.UrbanBlock"/>
         </type>
     </target>
 </query>

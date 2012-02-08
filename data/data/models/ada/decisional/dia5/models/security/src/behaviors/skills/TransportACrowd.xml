@@ -7,7 +7,7 @@ Depending on its crowd transport capacity, agent will make as many round trips a
         <parameter name="crowd">
             <description>The crowd to transport.</description>
             <type>
-                <class name="ontology.classes.concretes.Crowd"/>
+                <class name="ontology.classes.Crowd"/>
             </type>
         </parameter>
         <parameter name="finalDestination">
@@ -23,7 +23,7 @@ Depending on its crowd transport capacity, agent will make as many round trips a
         </parameter>
     </parameters>
     <body-type>
-        <class name="ontology.classes.concretes.MeKnowledge"/>
+        <class name="ontology.classes.MeKnowledge"/>
     </body-type>
     <links>
         <link name="reach" skill="behaviors.skills.primitives.Reach">

@@ -5,7 +5,7 @@
         <parameter name="area">
             <description>The area to find fires within.</description>
             <type>
-                <class name="ontology.classes.concretes.Area"/>
+                <class name="ontology.classes.Area"/>
             </type>
         </parameter>
     </parameters>

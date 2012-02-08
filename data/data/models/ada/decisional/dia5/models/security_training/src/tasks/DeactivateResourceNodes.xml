@@ -5,7 +5,7 @@
             <description>starting to deactivate resource nodes</description>
             <type>
                 <list>
-                    <class name="ontology.classes.concretes.ResourceNode"/>
+                    <class name="ontology.classes.ResourceNode"/>
                 </list>
             </type>
         </parameter>

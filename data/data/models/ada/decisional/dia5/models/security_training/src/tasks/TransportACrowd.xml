@@ -6,7 +6,7 @@ Depending on its crowd transport capacity, agent will make as many round trips a
         <parameter name="crowd">
             <description>The crowd to transport.</description>
             <type>
-                <class name="ontology.classes.concretes.Crowd"/>
+                <class name="ontology.classes.Crowd"/>
             </type>
         </parameter>
         <parameter name="loadingPosition">

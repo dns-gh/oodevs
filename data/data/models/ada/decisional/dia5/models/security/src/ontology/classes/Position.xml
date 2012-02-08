@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.classes.concretes.Position" source-version="1.0.0" extends="ontology.classes.TerrainElement">
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.classes.Position" source-version="1.0.0" extends="ontology.classes.TerrainElement">
     <description>Represents a terrain element that simulated agents can &#xD;
 - reach and occupy&#xD;
 - build on&#xD;
