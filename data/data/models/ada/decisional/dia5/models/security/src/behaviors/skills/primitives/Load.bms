@@ -17,21 +17,15 @@ rootnode
 
     loadActionCompleted = function( self, params ) -- called be skill.links.extractVictims
         Feedback( self.feedbacks.loaded, { transportableEntity = params.transportableEntity } )
-        self.arrived = false
         self.nextTargetIndex = self.nextTargetIndex + 1
-        if self.nextTargetIndex > #self.params.transportableEntities then
-            Feedback( self.feedbacks.done, { sender = "load" } )
-        end
+        self.arrived = false
     end,
 
     impossibleToLoad = function( self, params )
         meKnowledge:sendReport( eRC_ElementCannotBeLoaded )
         Feedback( self.feedbacks.notLoaded, { transportableEntity = params.transportableEntity } )
-        self.arrived = false
         self.nextTargetIndex = self.nextTargetIndex + 1
-        if self.nextTargetIndex > #self.params.transportableEntities then
-            Feedback( self.feedbacks.done, { sender = "load" } )
-        end
+        self.arrived = false
     end,
 
     -- --------------------------------------------------------------------------------
@@ -49,8 +43,8 @@ rootnode
         local Activate = Activate
 
         local paramsSize = #self.params.transportableEntities
-        if self.nextTargetIndex <= paramsSize then
-            if paramsSize > 0 then
+        if paramsSize > 0 then 
+            if self.nextTargetIndex <= paramsSize then
                 self.transportableEntity = self.params.transportableEntities[ self.nextTargetIndex ]
                 if self.arrived then
                     if self.transportableEntity:canBeLoaded() then
@@ -62,8 +56,10 @@ rootnode
                     Activate( skill.links.reach, 1, { destination = self.transportableEntity } )
                 end
             else
-                Feedback( self.feedbacks.failed )
+                Feedback( self.feedbacks.done, { sender = "load" } )
             end
-        end
+         else 
+            Feedback( self.feedbacks.failed, { sender = "load" } )
+         end
     end
 }

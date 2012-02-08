@@ -17,21 +17,15 @@ rootnode
 
     unloadActionCompleted = function( self, params ) -- called be skill.links.unload
         Feedback( self.feedbacks.unloaded, params )
-        self.arrived = false
         self.nextTargetIndex = self.nextTargetIndex + 1
-        if self.nextTargetIndex > #self.params.loadedEntities then
-            Feedback( self.feedbacks.done, { sender = "unload" } )
-        end
+        self.arrived = false
     end,
 
     impossibleToUnload = function( self, params )
         meKnowledge:sendReport( eRC_ElementCannotBeUnloaded )
         Feedback( self.feedbacks.notUnloaded, { transportableEntity = params.transportableEntity } )
-        self.arrived = false
         self.nextTargetIndex = self.nextTargetIndex + 1
-        if self.nextTargetIndex > #self.params.loadedEntities then
-            Feedback( self.feedbacks.done, { sender = "unload" } )
-        end
+        self.arrived = false
     end,
 
     -- --------------------------------------------------------------------------------
@@ -49,8 +43,8 @@ rootnode
         local Activate = Activate
 
         local paramsSize = #self.params.loadedEntities
-        if self.nextTargetIndex <= paramsSize then
-            if paramsSize > 0 then
+        if paramsSize > 0 then 
+            if self.nextTargetIndex <= paramsSize then
                 self.transportableEntity = self.params.loadedEntities[ self.nextTargetIndex ]
                 if self.arrived then
                     if self.transportableEntity:canBeUnloaded() then
@@ -62,8 +56,10 @@ rootnode
                     Activate( skill.links.reach, 1, { destination = self.params.destination } )
                 end
             else
-                Feedback( self.feedbacks.failed )
+                Feedback( self.feedbacks.done, { sender = "unload" } )
             end
-        end
+         else
+            Feedback( self.feedbacks.failed, { sender = "unload" } )
+         end
     end
 }

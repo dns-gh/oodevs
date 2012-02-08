@@ -28,10 +28,6 @@ rootnode
         self.arrived = false
     end,
 
-    equipActionCompleted = function( self ) -- from EquipNBCOutfit skill
-        self.protected = true
-    end,
-
     -- --------------------------------------------------------------------------------
     -- Init
     -- --------------------------------------------------------------------------------
