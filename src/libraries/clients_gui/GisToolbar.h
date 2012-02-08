@@ -34,6 +34,7 @@ namespace gui
 {
     class ColorButton;
     class TerrainProfilerLayer;
+    class ContourLinesObserver;
 
 // =============================================================================
 /** @class  GisToolbar
@@ -45,6 +46,7 @@ class GisToolbar : public QToolBar
                  , public tools::Observer_ABC
                  , public kernel::OptionsObserver_ABC
                  , public tools::ElementObserver_ABC< kernel::ModelLoaded >
+                 , public tools::ElementObserver_ABC< ContourLinesObserver >
 {
     Q_OBJECT;
 
@@ -79,6 +81,7 @@ private:
     //! @name Helpers
     //@{
     virtual void NotifyUpdated( const kernel::ModelLoaded& model );
+    virtual void NotifyUpdated( const ContourLinesObserver& observer );
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
     //@}
 
@@ -95,6 +98,7 @@ private:
     ColorButton* color_;
     QCheckBox* contourBoxEnabled_;
     ColorButton* colorContourLines_;
+    QLabel* progress_;
     //@}
 };
 

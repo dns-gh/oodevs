@@ -11,8 +11,12 @@
 #define __ContourLinesLayer_h_
 
 #include "Layer_ABC.h"
+#include "ContourLinesObserver.h"
 #include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
+#include "clients_kernel/Types.h"
+#include <tools/thread/ThreadPool.h>
+#include <boost/thread/mutex.hpp>
 
 namespace kernel
 {
@@ -52,9 +56,14 @@ public:
     //@}
 
 private:
+    //! @name Types
+    //@{
+    typedef std::vector< std::auto_ptr< T_PointVector> > T_Contours[ 4 ];
+    //@}
+
     //! @name Helpers
     //@{
-    void Conrec() const;
+    void Conrec();
     void CreateCallList();
     //@}
 
@@ -68,6 +77,14 @@ private:
     QColor color_;
     unsigned int callListId_;
     int linesHeight_;
+    std::auto_ptr< tools::thread::ThreadPool > thread_;
+    T_Contours loops_;
+    boost::mutex mutex_;
+    bool stopThread_;
+    bool threadRunning_;
+    bool computed_;
+    ContourLinesObserver observer_;
+    static bool valid_;
     //@}
 };
 

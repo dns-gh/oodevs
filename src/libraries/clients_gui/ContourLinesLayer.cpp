@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "ContourLinesLayer.h"
 #include "clients_kernel/Controllers.h"
+#include "clients_kernel/Controller.h"
 #include "clients_kernel/OptionVariant.h"
 #include "clients_kernel/DetectionMap.h"
 #include <deque>
@@ -17,20 +18,27 @@
 using namespace kernel;
 using namespace gui;
 
+// $$$$ JSR 2012-02-08: hack parce qu'on ne peux pas tuer le process
+bool ContourLinesLayer::valid_ =  true;
+
 // -----------------------------------------------------------------------------
 // Name: ContourLinesLayer constructor
 // Created: SBO 2010-03-23
 // -----------------------------------------------------------------------------
 ContourLinesLayer::ContourLinesLayer( Controllers& controllers, DetectionMap& map )
-    : controllers_( controllers )
-    , map_        ( map )
-    , modelLoaded_( false )
-    , enabled_    ( false )
-    , color_      ( 245, 245, 220 )
-    , callListId_ ( 0 )
-    , linesHeight_( 20 )
+    : controllers_  ( controllers )
+    , map_          ( map )
+    , modelLoaded_  ( false )
+    , enabled_      ( false )
+    , color_        ( 245, 245, 220 )
+    , callListId_   ( 0 )
+    , linesHeight_  ( 20 )
+    , stopThread_   ( false )
+    , threadRunning_( false )
+    , computed_     ( false )
 {
     controllers_.Register( *this );
+    thread_.reset( new tools::thread::ThreadPool( 1 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -39,6 +47,8 @@ ContourLinesLayer::ContourLinesLayer( Controllers& controllers, DetectionMap& ma
 // -----------------------------------------------------------------------------
 ContourLinesLayer::~ContourLinesLayer()
 {
+    valid_ =  false;
+    stopThread_ = true;
     controllers_.Unregister( *this );
 }
 
@@ -94,7 +104,10 @@ void ContourLinesLayer::Paint( const geometry::Rectangle2f& /*viewport*/ )
     if( !modelLoaded_ )
         return;
     if( callListId_ == 0 )
+    {
         CreateCallList();
+        return;
+    }
 
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT | GL_STENCIL_BUFFER_BIT );
 
@@ -111,7 +124,11 @@ void ContourLinesLayer::Paint( const geometry::Rectangle2f& /*viewport*/ )
 // -----------------------------------------------------------------------------
 void ContourLinesLayer::Reset()
 {
+    boost::mutex::scoped_lock locker( mutex_ );
     modelLoaded_ = false;
+    computed_ = false;
+    if( threadRunning_ )
+        stopThread_ = true;
     if( callListId_ )
     {
         glDeleteLists( callListId_, 1 );
@@ -133,58 +150,63 @@ namespace
             points_.push_back( p2 );
         }
 
-        int Insert( const geometry::Point2f& p1, const geometry::Point2f& p2 )
+        bool Insert( const geometry::Point2f& p1, const geometry::Point2f& p2, bool& ret )
         {
-            if( p1 == points_.front() )
+            const geometry::Point2f& front = points_.front();
+            const geometry::Point2f& back = points_.back();
+            if( p1 == front )
             {
-                if( p2 == points_.back() )
+                if( p2 == back )
                     loop_ = true;
                 else
-                    points_.insert( points_.begin(), p2 );
-                return 1;
+                    points_.push_front( p2 );
+                ret = true;
+                return true;
             }
-            if( p1 == points_.back() )
+            if( p1 == back )
             {
-                if( p2 == points_.front() )
+                if( p2 == front )
                     loop_ = true;
                 else
                     points_.push_back( p2 );
-                return 2;
+                ret = false;
+                return true;
             }
-            if( p2 == points_.front() )
+            if( p2 == front )
             {
-                if( p1 == points_.back() )
+                if( p1 == back )
                     loop_ = true;
                 else
-                    points_.insert( points_.begin(), p1 );
-                return 3;
+                    points_.push_front( p1 );
+                ret = true;
+                return true;
             }
-            if( p2 == points_.back() )
+            if( p2 == back )
             {
-                if( p1 == points_.front() )
+                if( p1 == front )
                     loop_ = true;
                 else
                     points_.push_back( p1 );
-                return 4;
+                ret = false;
+                return true;
             }
-            return 0;
+            return false;
         }
 
-        bool Concatenate( sContour& contour, int ret )
+        bool Concatenate( const sContour& contour, bool ret )
         {
             bool found = false;
-            if( ret == 1 || ret == 3)
+            if( ret )
             {
                 const geometry::Point2f& p = points_.front();
                 if( p == contour.points_.front() )
                 {
-                    std::reverse( contour.points_.begin(), contour.points_.end() );
-                    points_.insert( points_.begin(), contour.points_.begin(), contour.points_.end() );
+                    points_.insert( points_.begin(), contour.points_.rbegin(), contour.points_.rend() - 1);
                     found = true;
                 }
                 else if( p == contour.points_.back() )
                 {
-                    points_.insert( points_.begin(), contour.points_.begin(), contour.points_.end() );
+                    points_.insert( points_.begin(), contour.points_.begin(), contour.points_.end() - 1 );
                     found = true;
                 }
             }
@@ -193,13 +215,12 @@ namespace
                 const geometry::Point2f& p = points_.back();
                 if( p == contour.points_.front() )
                 {
-                    points_.insert( points_.end(), contour.points_.begin(), contour.points_.end() );
+                    points_.insert( points_.end(), contour.points_.begin() + 1, contour.points_.end() );
                     found = true;
                 }
                 else if( p == contour.points_.back() )
                 {
-                    std::reverse( contour.points_.begin(), contour.points_.end() );
-                    points_.insert( points_.end(), contour.points_.begin(), contour.points_.end() );
+                    points_.insert( points_.end(), contour.points_.rbegin() + 1, contour.points_.rend() );
                     found = true;
                 }
             }
@@ -220,12 +241,9 @@ namespace
 // Name: ContourLinesLayer::Conrec
 // Created: JSR 2012-01-19
 // -----------------------------------------------------------------------------
-void ContourLinesLayer::Conrec() const
+void ContourLinesLayer::Conrec()
 {
     // Adapted from http://paulbourke.net/papers/conrec/
-
-    std::map< int, std::deque< sContour > > allContours;
-
     const ElevationMap& elevation = map_.GetMap();
     const short* data  = elevation.Data();
     const unsigned int width = elevation.Width();
@@ -233,9 +251,9 @@ void ContourLinesLayer::Conrec() const
     const float cellSize = static_cast< float >( elevation.GetCellSize() );
 
     int nc = elevation.MaximumElevation() / linesHeight_;
-    std::vector< std::vector< geometry::Point2f > > points;
+    std::vector< std::auto_ptr< T_PointVector > > points;
     for( int i = 0; i < nc; ++i )
-        points.push_back( std::vector< geometry::Point2f >() );
+        points.push_back( std::auto_ptr< T_PointVector >( new T_PointVector() ) );
 
     int sh[ 5 ];
     float h[ 5 ];
@@ -263,6 +281,12 @@ void ContourLinesLayer::Conrec() const
 
     for( register int j = height - 2; j >= 0 ; --j )
     {
+        if( !valid_ )
+            return;
+
+        observer_.SetPercentage( static_cast< short >( 10.f * ( height - j ) / height ) );
+        controllers_.controller_.Update( observer_ );
+
         for( register unsigned int i = 0; i <= width - 2; ++i )
         {
             short temp1;
@@ -369,8 +393,8 @@ void ContourLinesLayer::Conrec() const
                                     assert( false );
                                     break;
                                 }
-                                points[ k ].push_back( geometry::Point2f( x1, y1 ) );
-                                points[ k ].push_back( geometry::Point2f( x2, y2 ) );
+                                points[ k ].get()->push_back( geometry::Point2f( x1, y1 ) );
+                                points[ k ].get()->push_back( geometry::Point2f( x2, y2 ) );
                             }
                         }
                     }
@@ -381,55 +405,94 @@ void ContourLinesLayer::Conrec() const
 
     for( int k = 0; k < nc; ++k )
     {
-        glLineWidth( ( k +1 ) % 5 != 0 ? 1.f : 2.f );
-        std::deque< sContour > contours;
-        int counter = 0;
-        while( counter + 2 < points[ k ].size() )
+        if( !valid_ )
+            return;
+        observer_.SetPercentage( static_cast< short >( 10 + 90.f * k / nc ) );
+        controllers_.controller_.Update( observer_ );
+        bool large = ( k +1 ) % 5 == 0;
+        std::deque< std::auto_ptr< sContour > > contours;
+        register int counter = 0;
+        const T_PointVector* vector = points[ k ].get();
+        const std::size_t vectorsize = vector->size();
+        while( counter + 2 < vectorsize )
         {
-            const geometry::Point2f& p1 = points[ k ][ counter++ ];
-            const geometry::Point2f& p2 = points[ k ][ counter++ ];
+            const geometry::Point2f& p1 = vector->at( counter++ );
+            const geometry::Point2f& p2 = vector->at( counter++ );
             bool found = false;
-            for( register std::size_t index = 0; index < contours.size(); ++index )
+            const size_t size = contours.size();
+            for( register std::size_t index = 0; index < size; ++index )
             {
-                sContour& contour = contours[ index ];
-                int result = contour.Insert( p1, p2 );
-                if( result )
+                sContour* contour = contours[ index ].get();
+                bool result;
+                if( contour->Insert( p1, p2, result ) )
                 {
                     found = true;
-                    if( !contour.loop_ )
+                    if( !contour->loop_ )
                     {
-                        for( register std::size_t index2 = 0; index2 < contours.size(); ++index2 )
+                        for( register std::size_t index2 = index + 1; index2 < size; ++index2 )
                         {
-                            if( index != index2 )
+                            if( !valid_ )
+                                return;
+                            if( stopThread_ )
                             {
-                                sContour& contour2 = contours[ index2 ];
-                                if( contour.Concatenate( contour2, result ) )
-                                {
-                                    contours.erase( contours.begin() + index2 );
-                                    break;
-                                }
+                                boost::mutex::scoped_lock locker( mutex_ );
+                                loops_[ 0 ].clear();
+                                loops_[ 1 ].clear();
+                                loops_[ 2 ].clear();
+                                loops_[ 3 ].clear();
+                                stopThread_ = false;
+                                threadRunning_ = false;
+                                observer_.SetPercentage( 0 );
+                                controllers_.controller_.Update( observer_ );
+                                return;
+                            }
+                            sContour* contour2 = contours[ index2 ].get();
+                            if( contour->Concatenate( *contour2, result ) )
+                            {
+                                contours.erase( contours.begin() + index2 );
+                                break;
                             }
                         }
                     }
-                    if( contour.loop_ )
+                    if( contour->loop_ )
                     {
-                        std::vector< geometry::Point2f > lineTmp( contour.points_.begin(), contour.points_.end() );
-                        glVertexPointer( 2, GL_FLOAT, 0, &lineTmp[ 0 ] );
-                        glDrawArrays( GL_LINE_LOOP, 0, static_cast< GLsizei >( lineTmp.size() ) );
+                        T_PointVector* v = new T_PointVector( contour->points_.begin(), contour->points_.end() );
+                        loops_[ large ? 0 : 2 ].push_back( std::auto_ptr< T_PointVector >( v ) );
                         contours.erase( contours.begin() + index );
                     }
                     break;
                 }
             }
             if( !found )
-                contours.push_back( sContour( p1, p2 ) );
+                contours.push_back( std::auto_ptr< sContour >( new sContour( p1, p2 ) ) );
         }
-        for( register std::size_t i = 0; i < contours.size(); ++i )
+        const std::size_t size = contours.size();
+        for( register std::size_t nn = 0; nn < size; ++nn )
         {
-            const sContour& contour = contours[ i ];
-            std::vector< geometry::Point2f > lineTmp( contour.points_.begin(), contour.points_.end() );
-            glVertexPointer( 2, GL_FLOAT, 0, &lineTmp[ 0 ] );
-            glDrawArrays( GL_LINE_STRIP, 0, static_cast< GLsizei >( lineTmp.size() ) );
+            const sContour* contour = contours[ nn ].get();
+            T_PointVector* v = new T_PointVector( contour->points_.begin(), contour->points_.end() );
+            loops_[ large ? 1 : 3 ].push_back( std::auto_ptr< T_PointVector >( v ) );
+        }
+    }
+    if( !valid_ )
+        return;
+    observer_.SetPercentage( 0 );
+    controllers_.controller_.Update( observer_ );
+    boost::mutex::scoped_lock locker( mutex_ );
+    computed_ = true;
+    threadRunning_ = false;
+}
+
+namespace
+{
+    void CreateGLArrays( GLenum mode, const std::vector< std::auto_ptr< T_PointVector > >& contours )
+    {
+        const std::size_t size = contours.size();
+        for( register std::size_t i = 0; i < size; ++i )
+        {
+            const T_PointVector* l = contours[ i ].get();
+            glVertexPointer( 2, GL_FLOAT, 0, &( *l )[ 0 ] );
+            glDrawArrays( mode, 0, static_cast< GLsizei >( l->size() ) );
         }
     }
 }
@@ -440,11 +503,39 @@ void ContourLinesLayer::Conrec() const
 // -----------------------------------------------------------------------------
 void ContourLinesLayer::CreateCallList()
 {
+    {
+        boost::mutex::scoped_lock locker( mutex_ );
+        if( !computed_ )
+        {
+            if( !threadRunning_ )
+            {
+                threadRunning_  = true;
+                loops_[ 0 ].clear();
+                loops_[ 1 ].clear();
+                loops_[ 2 ].clear();
+                loops_[ 3 ].clear();
+                for( int i = 0; i < 3; ++i )
+                    loops_[ i ].push_back( std::auto_ptr< T_PointVector>( new T_PointVector() ) );
+                thread_->Enqueue( boost::bind( &ContourLinesLayer::Conrec, this ) );
+            }
+            return;
+        }
+    }
+    
     callListId_ = glGenLists( 1 );
     glNewList( callListId_, GL_COMPILE );
     glHint( GL_LINE_SMOOTH_HINT, GL_NICEST );
     glEnableClientState( GL_VERTEX_ARRAY );
-    Conrec();
+    glLineWidth( 2.f );
+    CreateGLArrays( GL_LINE_LOOP, loops_[ 0 ] );
+    CreateGLArrays( GL_LINE_STRIP, loops_[ 1 ] );
+    glLineWidth( 1.f );
+    CreateGLArrays( GL_LINE_LOOP, loops_[ 2 ] );
+    CreateGLArrays( GL_LINE_STRIP, loops_[ 3 ] );
     glDisableClientState( GL_VERTEX_ARRAY );
     glEndList();
+    loops_[ 0 ].clear();
+    loops_[ 1 ].clear();
+    loops_[ 2 ].clear();
+    loops_[ 3 ].clear();
 }
