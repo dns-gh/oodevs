@@ -46,7 +46,6 @@ public:
     //@{
     void GetListAt( const MT_Vector2D& vPos, T_ObjectVector& objects ) const;
     void GetListWithinCircle( const MT_Vector2D& vCenter, double rRadius, T_ObjectVector& objects ) const;
-    void GetListWithinCircle2( const MT_Vector2D& vCenter, double rRadius, std::vector< const TER_Object_ABC* >& objects ) const;
     void GetListWithinLocalisation( const TER_Localisation& localisation, T_ObjectVector& objects ) const;
     TER_Object_ABC::T_Hint UpdatePosition( TER_Object_ABC& object, const TER_Object_ABC::T_Hint& hint );
     bool Remove( TER_Object_ABC& object, const TER_Object_ABC::T_Hint& hint );

@@ -79,12 +79,12 @@ void PHY_RolePion_UrbanLocation::MagicMove( MT_Vector2D vPosition )
 {
     urbanObject_ = 0;
     isInCity_ = false;
-    std::vector< const TER_Object_ABC* > objects;
-    TER_World::GetWorld().GetObjectManager().GetListWithinCircle2( vPosition, 500, objects );
-    for( std::vector< const TER_Object_ABC* >::const_iterator it = objects.begin(); it != objects.end(); ++it )
+    std::vector< TER_Object_ABC* > objects;
+    TER_World::GetWorld().GetObjectManager().GetListAt( vPosition, objects );
+    for( std::vector< TER_Object_ABC* >::const_iterator it = objects.begin(); it != objects.end(); ++it )
     {
         const UrbanObjectWrapper* urbanObject = dynamic_cast< const UrbanObjectWrapper* >( *it );
-        if( urbanObject && urbanObject->IsInside( vPosition ) )
+        if( urbanObject )
         {
             isInCity_ = true;
             if( !urbanObject->HasChild() )
