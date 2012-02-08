@@ -91,6 +91,14 @@
 				<boolean>true</boolean>
 			</default>
 		</parameter>
+	    <parameter name="disableWhenDone">
+			<type>
+				<simple name="boolean"/>
+			</type>
+			<default>
+				<boolean>false</boolean>
+			</default>
+		</parameter>
 	</parameters>
 	<modifiers/>
 	<links>

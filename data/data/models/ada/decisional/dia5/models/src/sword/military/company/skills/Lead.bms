@@ -46,7 +46,7 @@ local function manageFeedback ( frontElement )
           nbUnitInOtherAutomat = nbUnitInOtherAutomat + 1
       end
     end
-    -- si tous les pions ont changer d'automate (par exemple pour la mission preparer bascule), on remonte un fin de mission
+    -- si tous les pions ont changé d'automate (par exemple pour la mission preparer bascule), on remonte une fin de mission
     if nbUnitInOtherAutomat == #frontElement then
         myself.feedback = true
     end
@@ -95,6 +95,7 @@ done = function( self ) end,
 
 create = function( self )
         myself.newTask = false
+        myself.hasSentFinMission = false
         self.parameters = myself.taskParams
         self.parameters.commandingEntities = integration.getEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
         self.operationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
@@ -162,7 +163,12 @@ activate = function( self )
     local pionsEE =  echelons[3]
 
     if myself.feedback then
-        Feedback( self.feedbacks.done )
+        if self.params.disableWhenDone then
+           Feedback( self.feedbacks.done )
+        else
+           meKnowledge:RC( eRC_FinMission )
+           myself.hasSentFinMission = true           
+        end
         myself.feedback = false
     end
     -- Gestion du CR quand les pions PE arrivent sur les limas de type LC ou LD
@@ -172,7 +178,13 @@ activate = function( self )
     Activate( skill.links.supportManager, 1, { companyTask = self.companyTask, parameters = self.parameters, PE = pionsPE, SE = pionsSE, taskForSupporting = self.params.taskForSupporting })
 
     if not self.params.noCoordination then
-            
+
+        local fuseau = meKnowledge:getFuseau()
+        
+        if fuseau ~= NIL or fuseau ~= nil then
+            return
+        end
+
         -- Gestion de l'élongation   
         -- tous les pions sont projeté sur un des deux fuseaux de l'automate
         -- self.progressionInAOR: contient les valeurs de progression sur l'axe de progression
@@ -195,7 +207,6 @@ activate = function( self )
         local automatePosition = meKnowledge:getPosition()
         local inCity = integration.pointIsInCity(automatePosition)
     
-        local fuseau = meKnowledge:getFuseau()
         local largeurFuseau = fuseau:getWidth()
         
         
