@@ -32,6 +32,7 @@ public:
     static const DEC_PathType mineClearance_;
     static const DEC_PathType logistic_;
     static const DEC_PathType criminal_;
+    static const DEC_PathType nbc_;
 
     typedef std::map< std::string, const DEC_PathType* > T_PathTypeMap;
     typedef T_PathTypeMap::const_iterator              CIT_PathTypeMap;
@@ -67,7 +68,8 @@ private:
         eBackup,
         eMineClearance,
         eLogistic,
-        eCriminal
+        eCriminal,
+        eNBC
     };
 
     typedef std::vector< const DEC_PathType* >  T_PathTypeFromIDVector;

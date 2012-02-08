@@ -33,6 +33,7 @@
         <skill name="sword.military.platoon.skills.miscellaneous.ManageFragOrder"/>
         <skill name="sword.military.platoon.skills.miscellaneous.SetPace"/>
         <skill name="sword.military.platoon.skills.actions.EquipNBCOutfit"/>
+        <skill name="sword.military.platoon.skills.actions.UnequipNBCOutfit"/>
         <skill name="sword.military.platoon.skills.primitives.Animate"/>
         <skill name="sword.military.platoon.skills.primitives.Illuminate"/>
         <skill name="sword.military.platoon.skills.ApplyIndirectFire"/>

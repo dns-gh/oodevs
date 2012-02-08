@@ -36,6 +36,15 @@
                 <boolean>false</boolean>
             </default>
         </parameter>
+        <parameter name="nbcMove">
+            <description>Defini le mode de déplacement NBC ou normal. N'évite pas les zones et les nuages NBC.</description>
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
+        </parameter>
     </parameters>
     <links>
         <link name="moveToward" skill="sword.military.platoon.skills.primitives.MoveToward"/>

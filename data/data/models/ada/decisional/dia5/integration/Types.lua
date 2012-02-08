@@ -146,6 +146,7 @@ eTypeItiAppui = 5
 eTypeItiDeminage = 6
 eTypeItiLogistique = 7
 eTypeItiCriminal = 8
+eTypeItiNBC = 9
 
 eEtatActionDeplacement_EnCours = 0
 eEtatActionDeplacement_Termine = 1

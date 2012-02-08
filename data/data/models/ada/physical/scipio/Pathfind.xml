@@ -350,7 +350,6 @@
         <object-cost type="nbc cloud" value="0"/>
       </object-costs>
     </rule>
-    <rule autonomous="false" flying="true" inherits="base" type="nbc"/>
     <rule autonomous="true" flying="false" type="base">
       <optimisation shortest="true"/>
       <preferred-terrains/>
@@ -379,6 +378,9 @@
       <enemies cost-at-security-range="0" cost-on-contact="0"/>
     </rule>
     <rule autonomous="false" flying="true" inherits="base" type="criminal"/>
+    <rule autonomous="false" flying="true" inherits="base" type="nbc"/>
+    <rule autonomous="true" flying="false" inherits="base" type="nbc"/>
+    <rule autonomous="true" flying="true" inherits="base" type="nbc"/>
     <rule autonomous="true" flying="false" inherits="base" type="movement"/>
     <rule autonomous="true" flying="true" inherits="base" type="movement"/>
     <rule autonomous="true" flying="false" inherits="base" type="recon"/>
@@ -402,4 +404,4 @@
     <rule channeling-range="1" cost-out-of-channeling="5000" type="base"/>
   </population-rules>
 </pathfind>
-<!-- signature="3708138125" -->
+<!-- signature="0652631035" -->

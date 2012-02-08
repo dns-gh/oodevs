@@ -31,6 +31,7 @@ rootnode
         Activate( skill.links.moveToward, 1, { entities  = { self.params.entities[ self.nextTargetIndex ] }, 
                                                infiltrationMode = self.params.infiltrationMode,
                                                avoidObstacles = self.params.avoidObstacles,
+                                               nbcMove = self.params.NBCMove,
                                                criminalMoving = self.params.criminalMoving } )
     end
 }

@@ -37,6 +37,15 @@
                 <boolean>false</boolean>
             </default>
         </parameter>
+        <parameter name="NBCMove">
+            <description>Defini le mode de déplacement NBC ou normal. N'évite pas les zones et les nuages NBC.</description>
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
+        </parameter>
     </parameters>
     <goal>
         <description>Se déplacer vers tous les objectifs. Les objectifs sont parcourus de proche en proche.</description>

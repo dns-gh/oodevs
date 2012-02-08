@@ -524,15 +524,15 @@ return
     } ),
     equipNBCOutfit = masalife.brain.integration.startStopAction( 
     {
-        start = integration.equipNBCOutfit,
-        stop = integration.unequipNBCOutfit
+        start = integration.equipNBCOutfit
     } ),
     equipProtectionNBC = function ( self )
         integration.equipNBCOutfit()
     end,
-    unequipProtectionNBC = function ( self )
-        integration.unequipNBCOutfit()
-    end,
+    unequipProtectionNBC = masalife.brain.integration.startStopAction( 
+    {
+        start = integration.unequipNBCOutfit
+    } ),
     alertNBC = masalife.brain.integration.startStopAction(
     {
         start = integration.goOnNBCAlert,

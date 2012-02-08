@@ -24,13 +24,13 @@ rootnode
 
     activate = function( self )
         Activate( skill.nodes.ScoutElement, 1, { entity  = self.params.entities[ self.nextTargetIndex ],
-                                                 positions = self.params.entities[ self.nextTargetIndex ]:getPositionsToReconnoiter() } )
+                                                 positions = self.params.entities[ self.nextTargetIndex ]:getPositionsToReconnoiter(), NBCmove = self.params.NBCmove } )
     end
 }
 
 node "ScoutElement"
 {
-    connections = {skill.links.moveAndTakePosition, skill.links.observe,
+    connections = {skill.links.moveToward, skill.links.observe,
                    skill.nodes.Scout },
 
     feedbacks = { "scouted" },
@@ -67,8 +67,9 @@ node "ScoutElement"
             Activate( skill.nodes.Scout, 1, { target = self.params.entity } )
         end
         for _, position in pairs( self.params.positions ) do
-            Activate( skill.links.moveAndTakePosition,
-                position:reconnaissanceEfficiency( self.params.entity ), { entity = position } )
+            Activate( skill.links.moveToward,
+                position:reconnaissanceEfficiency( self.params.entity ), { entities = { position },
+                                                                           nbcMove = self.params.NBCmove } )
         end
         self.movementDone = false
     end

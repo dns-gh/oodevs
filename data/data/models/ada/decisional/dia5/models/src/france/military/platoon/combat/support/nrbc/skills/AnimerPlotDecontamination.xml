@@ -19,6 +19,7 @@
     <links>
         <link name="moveToward" skill="sword.military.platoon.skills.MoveToward"/>
         <link name="dismount" skill="sword.military.platoon.skills.actions.Dismount"/>
+        <link name="manageFragOrder" skill="sword.military.platoon.skills.miscellaneous.ManageFragOrder"/>
     </links>
     <resources>
         <resource name="sword.military.platoon.resources.AnimationCapacity" variable="animator">

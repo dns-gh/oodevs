@@ -22,6 +22,7 @@ const DEC_PathType DEC_PathType::backup_       ( eBackup       , "backup"       
 const DEC_PathType DEC_PathType::mineClearance_( eMineClearance, "minesweep"    );
 const DEC_PathType DEC_PathType::logistic_     ( eLogistic     , "logistic"     );
 const DEC_PathType DEC_PathType::criminal_     ( eCriminal     , "criminal"     );
+const DEC_PathType DEC_PathType::nbc_          ( eNBC          , "nbc"          );
 
 
 
@@ -47,6 +48,7 @@ void DEC_PathType::Initialize()
     pathTypes_[ mineClearance_.GetName() ] = &mineClearance_;
     pathTypes_[ logistic_     .GetName() ] = &logistic_;
     pathTypes_[ criminal_     .GetName() ] = &criminal_;
+    pathTypes_[ nbc_          .GetName() ] = &nbc_;
 
     pathTypesFromID_.assign( pathTypes_.size(), 0 );
     for( CIT_PathTypeMap it = pathTypes_.begin(); it != pathTypes_.end(); ++it )

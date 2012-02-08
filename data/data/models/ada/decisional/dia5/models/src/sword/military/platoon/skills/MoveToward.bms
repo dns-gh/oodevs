@@ -25,6 +25,8 @@ rootnode
             self.pathType = eTypeItiInfiltration 
         elseif self.params.criminalMoving then
             self.pathType = eTypeItiCriminal
+        elseif self.params.nbcMove then
+            self.pathType = eTypeItiNBC
         else
             self.pathType = eTypeItiMouvement
         end
