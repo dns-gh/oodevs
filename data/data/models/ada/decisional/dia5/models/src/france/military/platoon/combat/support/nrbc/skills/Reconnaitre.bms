@@ -89,7 +89,7 @@ node "ReconnoiterElement"
         end
 
         -- Moving toward the entity
-        Activate( skill.links.moveAndTakePosition, 1, { entity = self.params.entity, NBCmove = true } )
+        Activate( skill.links.moveAndTakePosition, 1, { entity = self.params.entity, pathType = eTypeItiNBC } )
     end
 }
 
