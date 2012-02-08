@@ -114,6 +114,7 @@ end
 
 -- Decontamination
 integration.decontaminateUrbanBlock = function( urbanBlock )            
-    DEC_DecontaminerZone( DEC_PolygoneBlocUrbain( urbanBlock.source ) )           
+    DEC_DecontaminerZone( DEC_PolygoneBlocUrbain( urbanBlock.source ) )
+    ntegration.pionRC( eRC_DecontaminationDone )        
     return true
 end
