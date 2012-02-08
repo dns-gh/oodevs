@@ -10,7 +10,7 @@ return
          if masalife.brain.core.class.isOfType( objective, sword.military.world.Area ) then
            if not myself.leadData.currentPosition then
               myself.leadData.currentPosition = 0 
-              integration.splitArea( params.objective, math.min( self:getNbrFront(), params.maxNbrFront ) )
+              integration.splitArea( objective, math.min( self:getNbrFront(), params.maxNbrFront ) )
            end
           myself.leadData.currentPosition = myself.leadData.currentPosition % #myself.leadData.subAreas + 1
           return myself.leadData.subAreas[myself.leadData.currentPosition]
