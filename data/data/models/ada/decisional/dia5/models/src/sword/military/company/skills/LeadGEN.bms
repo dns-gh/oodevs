@@ -230,6 +230,7 @@ done = function( self ) end,
 
 create = function( self )
         myself.newTask = false
+        myself.hasSentFinMission = false
         myself.leadData = {}
         myself.leadData.workMap = {}
         self.parameters = myself.taskParams
@@ -314,7 +315,12 @@ activate = function( self )
     local pionsSE =  echelons[2]
     local pionsEE =  echelons[3]
     if myself.feedback then
-        Feedback( self.feedbacks.done )
+        if self.params.disableWhenDone then
+           Feedback( self.feedbacks.done )
+        else
+           meKnowledge:RC( eRC_FinMission )
+           myself.hasSentFinMission = true
+        end
         myself.feedback = false
     end
 
@@ -324,6 +330,12 @@ activate = function( self )
     if self.params.noCoordination then
         return
     end
+    local fuseau = meKnowledge:getFuseau()
+    
+    if fuseau ~= NIL or fuseau ~= nil then
+       return
+    end
+    
     -- Gestion de l'élongation   
     -- tous les pions sont projeté sur un des deux fuseaux de l'automate
     -- self.progressionInAOR: contient les valeurs de progression sur l'axe de progression
@@ -348,7 +360,6 @@ activate = function( self )
     local automatePosition = meKnowledge:getPosition()
     local inCity = integration.pointIsInCity(automatePosition)
 
-    local fuseau = meKnowledge:getFuseau()
     local largeurFuseau = fuseau:getWidth()
     
     
