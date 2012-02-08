@@ -13,6 +13,7 @@
 #include "GisToolbar.h"
 #include "moc_GisToolbar.cpp"
 #include "ColorButton.h"
+#include "ContourLinesObserver.h"
 #include "TerrainProfiler.h"
 #include "Tools.h"
 #include "clients_kernel/Controllers.h"
@@ -86,6 +87,9 @@ GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, c
         colorContourLines_ = new ColorButton( this );
         colorContourLines_->SetColor( QColor( 245, 245, 220 ) ); // $$$$ SBO 2010-03-23: default from layer
         QToolTip::add( colorContourLines_, tools::translate( "gui::GisToolBar", "Change contour lines color" ) );
+
+        progress_ = new QLabel( contourBox );
+
         connect( contourBoxEnabled_, SIGNAL( toggled( bool ) ), SLOT( OnToggleContourLinesEnabled( bool ) ) );
         connect( linesHeight_, SIGNAL( editingFinished() ), SLOT( OnLinesHeightChanged() ) );
         connect( colorContourLines_, SIGNAL( ColorChanged( const QColor& ) ), SLOT( OnColorContourChanged( const QColor& ) ) );
@@ -98,6 +102,7 @@ GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, c
         addWidget( contourBoxEnabled_ );
         addWidget( linesHeight_ );
         addWidget( colorContourLines_ );
+        addWidget( progress_ );
     }
     OnToggleWatershedEnabled( false );
     OnToggleContourLinesEnabled( false );
@@ -120,6 +125,16 @@ GisToolbar::~GisToolbar()
 void GisToolbar::NotifyUpdated( const kernel::ModelLoaded& /*model*/ )
 {
     height_->setMaxValue( detection_.MaximumElevation() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: GisToolbar::NotifyUpdated
+// Created: JSR 2012-02-08
+// -----------------------------------------------------------------------------
+void GisToolbar::NotifyUpdated( const ContourLinesObserver& observer )
+{
+    short percentage = observer.GetPercentage();
+    progress_->setText( percentage == 0 ? QString() : QString::number( percentage ) + "% " );
 }
 
 // -----------------------------------------------------------------------------
