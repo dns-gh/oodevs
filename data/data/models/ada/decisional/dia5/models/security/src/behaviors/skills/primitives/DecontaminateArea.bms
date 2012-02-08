@@ -50,10 +50,6 @@ rootnode
         -- NBC protection management
         if self.params.equipNRBCProtection then
             Activate( skill.links.selfprotect, 1, {} )
-            if not self.protected then
-                DEC_Trace( "waiting for NBC protection to be equiped by agent")
-                return -- wiating to be protected before going on decontamination area
-            end
         end
 
         -- Decontamination begins
@@ -64,7 +60,7 @@ rootnode
                 if self.arrived then
                     Activate( skill.links.decontaminate, 1, { area = self.area } )
                 else
-                    Activate( skill.links.reach, 1, { destination = self.area, false, eTypeItiNBC } )
+                    Activate( skill.links.reach, 1, { destination = self.area, false, pathType = eTypeItiNBC } )
                 end
             else
                 Feedback( self.feedbacks.done )

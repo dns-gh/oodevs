@@ -21,16 +21,6 @@
                 </type>
             </return>
         </method>
-        <method name="reachIt" abstract="false">
-            <description>For the agent to enact the decision to move towards this object, along some path.&#xD;
-Returns true once the agent has reached the end-point of the path (please note that this end-point may be distinct from the target position to reach). &#xD;
-</description>
-            <return>
-                <type>
-                    <simple name="boolean"/>
-                </type>
-            </return>
-        </method>
         <method name="isCreated" abstract="false">
             <description>Returns true if this element is entierly built.</description>
             <return>
@@ -68,6 +58,22 @@ Returns true once the agent has reached the end-point of the path (please note t
         </method>
         <method name="isExtinguished" abstract="false">
             <description>Returns true once this entity is extinguished.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="reachIt" abstract="false">
+            <description>For the agent to enact the decision to move towards this object, along some path.&#xD;
+Returns true once the agent has reached the end-point of the path (please note that this end-point may be distinct from the target position to reach). &#xD;
+</description>
+            <argument name="pathType">
+                <description>The path type used by agent Unit to reach the given destination.</description>
+                <type>
+                    <any/>
+                </type>
+            </argument>
             <return>
                 <type>
                     <simple name="boolean"/>

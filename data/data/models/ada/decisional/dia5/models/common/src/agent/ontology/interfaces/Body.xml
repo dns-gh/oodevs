@@ -18,6 +18,12 @@
                     <simple name="boolean"/>
                 </type>
             </argument>
+            <argument name="pathType">
+                <description>The pat type used by subject Agent to reach the given destination.</description>
+                <type>
+                    <any/>
+                </type>
+            </argument>
             <return>
                 <description>Returns true upon simulation method completion, false otherwise. </description>
                 <type>

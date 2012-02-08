@@ -2,11 +2,11 @@
 -- Movement
 -- --------------------------------------------------------------------------------
 method "reachIt" ( masalife.brain.integration.startStopAction( 
-    {
-        start   = integration.startMoveToIt, 
-        started = integration.updateMoveToItArea, 
-        stop    = integration.deselectMoveToIt
-     } ) )
+{
+    start   = integration.startMoveToIt, 
+    started = integration.updateMoveToItArea, 
+    stop    = integration.deselectMoveToIt
+ } ) )
 
 -- --------------------------------------------------------------------------------
 -- Destination

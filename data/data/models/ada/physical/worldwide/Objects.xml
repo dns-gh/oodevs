@@ -57,9 +57,8 @@
   </object>
   <object geometry="polygon" name="NBC Contaminated Area" symbol="G*MPNR----****X" type="nbc zone">
     <avoidable distance="100"/>
-    <contamination max-toxic="1"/>
+    <contamination max-toxic="3"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
-    <propagation model="cloud"/>
   </object>
   <object geometry="polygon" name="NBC Cloud" symbol="G*MPNL----****X" type="nbc cloud">
     <avoidable distance="100"/>
@@ -70,6 +69,7 @@
     <propagation model="cloud"/>
   </object>
   <object geometry="point" name="Arson/Fire" symbol="O*VPA-----*****" type="fire">
+    <avoidable distance="50"/>
     <burn/>
     <extinguishable/>
     <universal/>
@@ -523,4 +523,4 @@
     <resources/>
   </object>
 </objects>
-<!-- signature="0101837160" -->
+<!-- signature="1204840279" -->

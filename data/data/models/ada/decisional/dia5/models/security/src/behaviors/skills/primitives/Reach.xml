@@ -17,6 +17,15 @@
                 <boolean>false</boolean>
             </default>
         </parameter>
+        <parameter name="pathType" nullable="true">
+            <description>Type of path that agent can use to reach its target.</description>
+            <type>
+                <any/>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
     </parameters>
     <body-type>
         <class name="agent.ontology.interfaces.Body"/>

@@ -77,6 +77,21 @@
             <fire class="Fire Class A" max-combustion-energy="0"/>
           </attributes>
         </object>
+        <object id="132" name="NBC Contaminated Area [132]" type="nbc zone">
+          <shape type="polygone">
+            <points>
+              <point>29TNF3083552813</point>
+              <point>29TNF3052652717</point>
+              <point>29TNF3056952981</point>
+              <point>29TNF3083552935</point>
+            </points>
+          </shape>
+          <attributes>
+            <nbc-agents danger="2" state="liquid">
+              <nbc-agent type="Chimical"/>
+            </nbc-agents>
+          </attributes>
+        </object>
       </objects>
       <tactical>
         <formation id="3" level="iii" name="Formation [3]">
@@ -112,6 +127,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="6" name="Standard Crowd [6]" position="29TNF3639156019" type="Standard Crowd">
@@ -119,6 +135,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="44" name="Standard Crowd [44]" position="29TNF3611756169" type="Standard Crowd">
@@ -126,6 +143,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="59" name="Standard Crowd [59]" position="29TNF3611255713" type="Standard Crowd">
@@ -133,6 +151,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="60" name="Standard Crowd [60]" position="29TNF3652855901" type="Standard Crowd">
@@ -140,6 +159,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="61" name="Standard Crowd [61]" position="29TNF3642556313" type="Standard Crowd">
@@ -147,6 +167,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="62" name="Standard Crowd [62]" position="29TNF3649355657" type="Standard Crowd">
@@ -154,6 +175,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="66" name="Standard Crowd [66]" position="29TNF3475455870" type="Standard Crowd">
@@ -161,6 +183,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="67" name="Standard Crowd [67]" position="29TNF3460055766" type="Standard Crowd">
@@ -168,6 +191,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="68" name="Standard Crowd [68]" position="29TNF3445455566" type="Standard Crowd">
@@ -175,6 +199,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="69" name="Standard Crowd [69]" position="29TNF3463855460" type="Standard Crowd">
@@ -182,6 +207,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="70" name="Standard Crowd [70]" position="29TNF3480655508" type="Standard Crowd">
@@ -189,6 +215,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="71" name="Standard Crowd [71]" position="29TNF3450255885" type="Standard Crowd">
@@ -196,6 +223,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="72" name="Standard Crowd [72]" position="29TNF3092355500" type="Standard Crowd">
@@ -203,6 +231,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
       </populations>
@@ -221,6 +250,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </inhabitant>
       </inhabitants>
@@ -270,6 +300,44 @@
           </shape>
           <attributes>
             <fire class="Fire Class A" max-combustion-energy="0"/>
+          </attributes>
+        </object>
+        <object id="133" name="NBC Contaminated Area [133]" type="nbc zone">
+          <shape type="polygone">
+            <points>
+              <point>29TNF3097152653</point>
+              <point>29TNF3085652474</point>
+              <point>29TNF3090752342</point>
+              <point>29TNF3106252220</point>
+              <point>29TNF3118252155</point>
+              <point>29TNF3135252099</point>
+              <point>29TNF3141552093</point>
+              <point>29TNF3143352332</point>
+              <point>29TNF3150252385</point>
+              <point>29TNF3154952518</point>
+              <point>29TNF3149852640</point>
+            </points>
+          </shape>
+          <attributes>
+            <nbc-agents danger="2" state="liquid">
+              <nbc-agent type="Chimical"/>
+            </nbc-agents>
+          </attributes>
+        </object>
+        <object id="137" name="NBC Contaminated Area [137]" type="nbc zone">
+          <shape type="polygone">
+            <points>
+              <point>29TNF3143553580</point>
+              <point>29TNF3163252939</point>
+              <point>29TNF3110452826</point>
+              <point>29TNF3108853306</point>
+              <point>29TNF3120753621</point>
+            </points>
+          </shape>
+          <attributes>
+            <nbc-agents danger="2" state="liquid">
+              <nbc-agent type="Chimical"/>
+            </nbc-agents>
           </attributes>
         </object>
       </objects>
@@ -323,6 +391,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="46" name="Standard Crowd [46]" position="29TNF3597955796" type="Standard Crowd">
@@ -330,6 +399,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="47" name="Standard Crowd [47]" position="29TNF3583155710" type="Standard Crowd">
@@ -337,6 +407,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="48" name="Standard Crowd [48]" position="29TNF3599955821" type="Standard Crowd">
@@ -344,6 +415,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="49" name="Standard Crowd [49]" position="29TNF3579255837" type="Standard Crowd">
@@ -351,6 +423,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="50" name="Standard Crowd [50]" position="29TNF3602055682" type="Standard Crowd">
@@ -358,6 +431,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="51" name="Standard Crowd [51]" position="29TNF3573855587" type="Standard Crowd">
@@ -365,6 +439,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="52" name="Standard Crowd [52]" position="29TNF3626056068" type="Standard Crowd">
@@ -372,6 +447,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="53" name="Standard Crowd [53]" position="29TNF3623855822" type="Standard Crowd">
@@ -379,6 +455,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="54" name="Standard Crowd [54]" position="29TNF3559755715" type="Standard Crowd">
@@ -386,6 +463,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="55" name="Standard Crowd [55]" position="29TNF3594355884" type="Standard Crowd">
@@ -393,6 +471,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="56" name="Standard Crowd [56]" position="29TNF3619755649" type="Standard Crowd">
@@ -400,6 +479,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="57" name="Standard Crowd [57]" position="29TNF3555055538" type="Standard Crowd">
@@ -407,6 +487,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="58" name="Standard Crowd [58]" position="29TNF3583756021" type="Standard Crowd">
@@ -414,6 +495,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="73" name="Standard Crowd [73]" position="29TNF3088955619" type="Standard Crowd">
@@ -421,6 +503,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="74" name="Standard Crowd [74]" position="29TNF3103655321" type="Standard Crowd">
@@ -428,6 +511,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="75" name="Standard Crowd [75]" position="29TNF3061655458" type="Standard Crowd">
@@ -435,6 +519,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="76" name="Standard Crowd [76]" position="29TNF3102955221" type="Standard Crowd">
@@ -442,6 +527,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="77" name="Standard Crowd [77]" position="29TNF3111355258" type="Standard Crowd">
@@ -449,6 +535,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="78" name="Standard Crowd [78]" position="29TNF3112955582" type="Standard Crowd">
@@ -456,6 +543,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="79" name="Standard Crowd [79]" position="29TNF3137455623" type="Standard Crowd">
@@ -463,6 +551,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="80" name="Standard Crowd [80]" position="29TNF3135555532" type="Standard Crowd">
@@ -470,6 +559,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="81" name="Standard Crowd [81]" position="29TNF3162755199" type="Standard Crowd">
@@ -477,6 +567,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="82" name="Standard Crowd [82]" position="29TNF3078455703" type="Standard Crowd">
@@ -484,6 +575,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="83" name="Standard Crowd [83]" position="29TNF3136255248" type="Standard Crowd">
@@ -491,6 +583,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
         <population attitude="calme" id="84" name="Standard Crowd [84]" position="29TNF3115755703" type="Standard Crowd">
@@ -498,6 +591,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </population>
       </populations>
@@ -524,6 +618,7 @@
           <adhesions>
             <adhesion party="1" value="0"/>
             <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
           </adhesions>
         </inhabitant>
       </inhabitants>
@@ -532,6 +627,79 @@
           <subordinate id="13"/>
         </logistic-base>
       </logistics>
+    </party>
+    <party id="113" name="Camp 113" type="friend">
+      <objects>
+        <object id="134" name="NBC Contaminated Area [134]" type="nbc zone">
+          <shape type="polygone">
+            <points>
+              <point>29TNF3003952684</point>
+              <point>29TNF3011652534</point>
+              <point>29TNF2977852382</point>
+              <point>29TNF2971352538</point>
+              <point>29TNF2991752631</point>
+            </points>
+          </shape>
+          <attributes>
+            <nbc-agents danger="2" state="liquid">
+              <nbc-agent type="Chimical"/>
+            </nbc-agents>
+          </attributes>
+        </object>
+        <object id="135" name="NBC Contaminated Area [135]" type="nbc zone">
+          <shape type="polygone">
+            <points>
+              <point>29TNF3183753184</point>
+              <point>29TNF3205752756</point>
+              <point>29TNF3184852429</point>
+              <point>29TNF3202451829</point>
+              <point>29TNF3213751893</point>
+              <point>29TNF3198452407</point>
+              <point>29TNF3226552776</point>
+              <point>29TNF3199553286</point>
+            </points>
+          </shape>
+          <attributes>
+            <nbc-agents danger="2" state="liquid">
+              <nbc-agent type="Chimical"/>
+            </nbc-agents>
+          </attributes>
+        </object>
+        <object id="136" name="NBC Contaminated Area [136]" type="nbc zone">
+          <shape type="polygone">
+            <points>
+              <point>29TNF3141351735</point>
+              <point>29TNF3139451526</point>
+              <point>29TNF3167051446</point>
+              <point>29TNF3166951619</point>
+              <point>29TNF3160251761</point>
+              <point>29TNF3153151756</point>
+            </points>
+          </shape>
+          <attributes>
+            <nbc-agents danger="2" state="liquid">
+              <nbc-agent type="Chimical"/>
+            </nbc-agents>
+          </attributes>
+        </object>
+      </objects>
+      <tactical>
+        <formation id="114" level="iii" name="Formation [114]">
+          <automat engaged="false" id="115" knowledge-group="116" name="ML_Security - Civil Protection [115]" type="ML_Security - Civil Protection">
+            <unit command-post="true" id="117" name="ML_Security - Civil Protection - Safety" position="29TNF2973952040" type="ML_Security - Civil Protection - Safety"/>
+            <unit command-post="false" id="124" name="ML_Security NBC Decontamination" position="29TNF2976552150" type="ML_Security NBC Decontamination"/>
+            <unit command-post="false" id="125" name="ML_Security NBC Decontamination" position="29TNF2968852228" type="ML_Security NBC Decontamination"/>
+            <unit command-post="false" id="126" name="ML_Security NBC Decontamination" position="29TNF3013651938" type="ML_Security NBC Decontamination"/>
+            <unit command-post="false" id="127" name="ML_Security NBC Decontamination" position="29TNF3007251847" type="ML_Security NBC Decontamination"/>
+          </automat>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="116" name="Groupe de connaissance [116]" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics/>
     </party>
     <no-party>
       <objects>
@@ -561,10 +729,16 @@
   <diplomacy>
     <party id="1">
       <relationship diplomacy="neutral" party="2"/>
+      <relationship diplomacy="neutral" party="113"/>
     </party>
     <party id="2">
       <relationship diplomacy="neutral" party="1"/>
+      <relationship diplomacy="enemy" party="113"/>
+    </party>
+    <party id="113">
+      <relationship diplomacy="neutral" party="1"/>
+      <relationship diplomacy="enemy" party="2"/>
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="0818859641" -->
+<!-- signature="0013761257" -->

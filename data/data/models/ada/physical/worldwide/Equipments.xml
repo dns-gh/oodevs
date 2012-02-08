@@ -2807,6 +2807,7 @@
       <sensor height="2" type="Eye"/>
       <sensor height="2" type="Light Intensifier Device"/>
       <sensor height="2" type="x8 Optical Binoculars"/>
+      <sensor height="2" type="Nuclear Bacteriological and Chimical Sensor"/>
     </sensors>
     <radars/>
     <transports/>
@@ -10697,4 +10698,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="0922256888" -->
+<!-- signature="3027196083" -->

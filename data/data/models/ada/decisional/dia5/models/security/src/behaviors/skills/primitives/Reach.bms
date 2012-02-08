@@ -12,7 +12,7 @@ rootnode
     -- Send a feedback when the destination is reached
     -- --------------------------------------------------------------------------------
     select = function( self )
-        if meKnowledge:moveTo( self.params.destination, self.params.urgency ) then
+        if meKnowledge:moveTo( self.params.destination, self.params.urgency, self.params.pathType ) then
             Feedback( self.feedbacks.done )
         end
     end,

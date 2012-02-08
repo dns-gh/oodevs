@@ -2,9 +2,9 @@
 -- Movement
 -- --------------------------------------------------------------------------------
 method "moveTo" (
-    function( self, destination, urgency )
+    function( self, destination, urgency, pathType )
         integration.setPace( urgency ) -- determine pace depending on urgency.
-        return destination:reachIt()   -- movement toward destination
+        return destination:reachIt( pathType )   -- movement toward destination
     end )
 
 method "stopMovement" (

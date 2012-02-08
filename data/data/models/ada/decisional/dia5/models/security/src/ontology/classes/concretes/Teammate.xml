@@ -12,16 +12,6 @@
                 </type>
             </return>
         </method>
-        <method name="reachIt" abstract="false">
-            <description>For the agent to enact the decision to move towards this object, along some path.&#xD;
-Returns true once the agent has reached the end-point of the path (please note that this end-point may be distinct from the target position to reach). &#xD;
-</description>
-            <return>
-                <type>
-                    <simple name="boolean"/>
-                </type>
-            </return>
-        </method>
         <method name="getPositions">
             <return>
                 <type>
@@ -135,6 +125,22 @@ This implementation makes agent Unit magically unload 'this' entity after a defi
                 <description>Returns 'true' on action completion,  'false' otherwise.&#xD;
 &#xD;
 This implementation makes agent Unit &quot;magically&quot; unload 'this' entity after a defined delay (in minutes).</description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="reachIt" abstract="false">
+            <description>For the agent to enact the decision to move towards this object, along some path.&#xD;
+Returns true once the agent has reached the end-point of the path (please note that this end-point may be distinct from the target position to reach). &#xD;
+</description>
+            <argument name="pathType">
+                <description>The path type used by agent Unit to reach the given destination.</description>
+                <type>
+                    <any/>
+                </type>
+            </argument>
+            <return>
                 <type>
                     <simple name="boolean"/>
                 </type>

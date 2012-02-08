@@ -2022,6 +2022,23 @@ When several fires should be extinguished, the agent acts on each fire by follow
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="area" name="area" optional="false" type="Polygon"/>
     </mission>
+    <mission dia-behavior="tasks.Decontaminate" dia-type="tasks.Decontaminate" id="4462" name="MLSECURITY - Decontaminate">
+      <description>
+        <doctrine><![CDATA[For an agent to know how to decontaminate a set of elements.
+Elements are visited in the order of the list. Agent will protect itself with NBC protection equipement before moving toward decontamination sites. Each decontamination may take time.]]></doctrine>
+        <usage><![CDATA[Decontaminating a site ("contaminated site") prevent units from being contaminated. It prevents the creation and the dispersion of a contaminated cloud that can cause injuries on units.]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="contaminatedElements" max-occurs="1220212" min-occurs="1" name="Elements to decontaminate" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Polygon"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
   </units>
   <automats>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_AllerSeRecompleter" dia-type="T_Mission_Automate_ALAT_AllerSeRecompleter" id="189" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AllerSeRecompleter" name="AIR - resupply">
@@ -3345,4 +3362,4 @@ When several fires should be extinguished, the agent acts on each fire by follow
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="3451843774" -->
+<!-- signature="2739348197" -->

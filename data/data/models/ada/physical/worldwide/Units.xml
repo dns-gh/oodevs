@@ -3203,5 +3203,32 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height=">1m"/>
   </unit>
+  <unit decisional-model="ML_SecurityAgent" id="102" name="ML_Security NBC Decontamination" type="Pion NBC">
+    <nature atlas-nature="None" level="oo" nature-app6="emergency/nbc/biological/recon equipped"/>
+    <equipments>
+      <equipment count="2" crew="3" major="true" type="NBC.RSV decontamination"/>
+    </equipments>
+    <sensors-range range="0"/>
+    <equipments-range range="0"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="1" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="500s"/>
+    </postures>
+    <nbc decontamination-delay="300s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="300"/>
+      <distance-before-point type="urban area" value="400"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
 </units>
-<!-- signature="0932956021" -->
+<!-- signature="0706494103" -->
