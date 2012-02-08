@@ -11,7 +11,7 @@ rootnode
     -- Init: register entities to get their force ratio value.
     -- --------------------------------------------------------------------------------
     create = function( self )
-        if self.params.context == eContexte_Retrograde then
+        if self.params.marcheRetrograde then
             myself.desactiveSelfProtection = true
         end
     end,
@@ -28,7 +28,7 @@ rootnode
     -- Unregister entities when skill is destroyed
     -- --------------------------------------------------------------------------------
     destroy = function( self )
-        if self.params.context == eContexte_Retrograde then
+        if self.params.marcheRetrograde then
             myself.desactiveSelfProtection = false
         end
     end,

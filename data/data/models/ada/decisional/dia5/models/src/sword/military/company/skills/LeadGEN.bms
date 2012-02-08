@@ -26,13 +26,13 @@ end
 -- @param nbrFront The number of element that we want in this echelon
 -- @author MGD
 -- @release 2010-12-03
-local function fillParameters( bestList, companyTask, params, nbrFront, context, isMain, objectif )
+local function fillParameters( bestList, companyTask, params, nbrFront, marcheRetrograde, isMain, objectif )
     local bestListNbrFront = {}
     local findFront = 1
     local current = 1
     params.maxNbrFront = math.min( #bestList, nbrFront )
     while findFront <= nbrFront and current <= params.maxNbrFront do
-       local paramsPion = bestList[current].task:fillParameters( companyTask, params, bestList[current].entity, context, objectif, bestList[current].taskName ) -- Save the parameter needed for the platoon task
+       local paramsPion = bestList[current].task:fillParameters( companyTask, params, bestList[current].entity, marcheRetrograde, objectif, bestList[current].taskName ) -- Save the parameter needed for the platoon task
        if paramsPion then
           if isMain then          
               F_Pion_SeteEtatEchelon( bestList[current].entity.source, eEtatEchelon_First )
@@ -109,7 +109,7 @@ end
 -- @author MGD
 -- @modifier LMT
 -- @release 2010-12-03
-findBestsGEN = function( entities, tasks, companyTask , params, nbrFront, context, isMain, objectif )
+findBestsGEN = function( entities, tasks, companyTask , params, nbrFront, marcheRetrograde, isMain, objectif )
     local bestList = {}
     local size = 1
     local bestTask = nil
@@ -181,7 +181,7 @@ findBestsGEN = function( entities, tasks, companyTask , params, nbrFront, contex
             optimizeWorkMap( params.maxNbrFront, myself.leadData.nbrTotalObstacle )
         end
     end
-    return fillParameters( bestList, companyTask, params, nbrFront, context, isMain, objectif )
+    return fillParameters( bestList, companyTask, params, nbrFront, marcheRetrograde, isMain, objectif )
 end
 
 -- Find which unit will do the task

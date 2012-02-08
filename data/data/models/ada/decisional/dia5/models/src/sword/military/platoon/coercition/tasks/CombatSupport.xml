@@ -10,13 +10,13 @@
 				</list>
 			</type>
 		</parameter>
-		<parameter name="context" nullable="true">
+		<parameter name="marcheRetrograde" nullable="true">
 			<description>Contexte de la mission de soutien. Peut etre: offensif, défensif ou statique</description>
 			<type>
-				<simple name="numeric"/>
+				<simple name="boolean"/>
 			</type>
 			<default>
-				<number>0.0</number>
+				<boolean>false</boolean>
 			</default>
 		</parameter>
 	</parameters>
@@ -52,9 +52,9 @@
 							<parameter>objectives</parameter>
 						</value>
 					</parameter>
-					<parameter name="context">
+					<parameter name="marcheRetrograde">
 						<value>
-							<parameter>context</parameter>
+							<parameter>marcheRetrograde</parameter>
 						</value>
 					</parameter>
 				</skill>
