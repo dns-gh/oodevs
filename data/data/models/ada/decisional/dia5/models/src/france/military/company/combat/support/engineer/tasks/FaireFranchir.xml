@@ -43,6 +43,11 @@
 							<string>france.military.platoon.tasks.Suivre</string>
 						</value>
 					</parameter>
+					<parameter name="disableWhenDone">
+						<value>
+							<boolean>true</boolean>
+						</value>
+					</parameter>
 				</skill>
 			</skills>
 		</stage>
