@@ -1990,13 +1990,17 @@ Depending on its crowd transport capacity, agent will make as many round trips a
       </parameter>
       <parameter dia-name="loadingPosition" name="Crowd's concentration position" optional="false" type="Point"/>
     </mission>
-    <mission dia-behavior="tasks.ExtinguishAFire" dia-type="tasks.ExtinguishAFire" id="4460" name="MLSECURITY - ExtinguishAFire">
+    <mission dia-behavior="tasks.ExtinguishAFire" dia-type="tasks.ExtinguishAFire" id="4460" name="MLSECURITY - Extinguish a fire">
+      <description>
+        <doctrine><![CDATA[To extinguish  a given arson/fire, and then move to  a garage position.]]></doctrine>
+        <usage><![CDATA[The fiire won't be extinguished (agent unit won't act on it) if it is already extinguished or if it doesn't exist anymore.]]></usage>
+      </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="fire" name="Fire to extinguish" optional="false" type="ObjectKnowledge"/>
-      <parameter dia-name="garagePosition" max-occurs="2332" min-occurs="1" name="Garage position" optional="false" type="LocationComposite">
+      <parameter dia-name="garagePosition" name="Garage position" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
           <parameter type="Polygon"/>
@@ -2005,7 +2009,13 @@ Depending on its crowd transport capacity, agent will make as many round trips a
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="tasks.ExtinguishFiresWithinArea" dia-type="tasks.ExtinguishFiresWithinArea" id="4461" name="MLSECURITY - ExtinguishFiresWithinArea">
+    <mission dia-behavior="tasks.ExtinguishFiresWithinArea" dia-type="tasks.ExtinguishFiresWithinArea" id="4461" name="MLSECURITY - Extinguish fires within area">
+      <description>
+        <doctrine><![CDATA[To extinguish a set of  arson/fire retrieved in the issued area.]]></doctrine>
+        <usage><![CDATA[To extinguish a set of 'Fire' in a specified zone.
+
+When several fires should be extinguished, the agent acts on each fire by following the order of the elements into the 'fires' list (the one returned by the query used in this task to retrieve fires in the given area). A visited fie won't be extinguished if it is already extinguished or if it doesn't exist anymore.]]></usage>
+      </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -3335,4 +3345,4 @@ Depending on its crowd transport capacity, agent will make as many round trips a
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="3581057957" -->
+<!-- signature="3451843774" -->

@@ -1,9 +1,11 @@
 -- --------------------------------------------------------------------------------
--- Actions
--- ------------------------------------------------------------------------------------------
--- We introduce a local "reachIt" which is the same as moveToItGeneric but
--- the return of the result is missing in the latter.
--- We set the default value 0 for the pathType. The agent moves directly to the destination
+-- Delays for magic actions in MINUTES
+-- --------------------------------------------------------------------------------
+local decontaminationDelays = 2 -- min
+
+-- --------------------------------------------------------------------------------
+-- Movement
+-- --------------------------------------------------------------------------------
 method "reachIt" ( masalife.brain.integration.startStopAction( 
 { 
     start   = function( self )
@@ -17,6 +19,10 @@ method "reachIt" ( masalife.brain.integration.startStopAction(
               end,
 } ) )
 
+
+-- --------------------------------------------------------------------------------
+-- Populated area
+-- --------------------------------------------------------------------------------
 method "alertIt" ( 
     function( self )
         return integration.alertUrbanBlock( self )
@@ -47,9 +53,6 @@ method "undoEvacuateIt" (
         return integration.undoEvacuateUrbanBlock( self )
     end )
 
--- --------------------------------------------------------------------------------
--- Informations
--- --------------------------------------------------------------------------------
 method "isAlerted" (
     function( self )
         return integration.isUrbanBlockAlerted( self )
@@ -65,6 +68,22 @@ method "isEvacuated" (
         local result = integration.isUrbanBlockEvacuated( self )
         return result
     end )
+
+-- --------------------------------------------------------------------------------
+-- Contamination area
+-- --------------------------------------------------------------------------------
+method "decontaminateIt" ( masalife.brain.integration.startStopAction( 
+{ 
+    started = function( self )
+        if waitInMin( self, decontaminationDelays ) then -- $$$ temp
+            meKnowledge:sendReport( eRC_DecontaminationDone )
+            return integration.decontaminateUrbanBlock( self )
+        end
+        meKnowledge:sendReport( eRC_StartingToDecontaminate )
+        return false
+    end
+} ) )
+
 
 -- --------------------------------------------------------------------------------
 -- Specific classes methods

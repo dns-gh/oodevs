@@ -78,7 +78,6 @@ method "isLoaded" (
         return integration.isFriendTranported( self )
     end )
 
-
 method "loadIt" ( masalife.brain.integration.startStopAction(
 { 
     started = function( self )

@@ -159,10 +159,25 @@ method "extinguish" (
 -- Contamination areas
 -- --------------------------------------------------------------------------------
 method "decontaminate" (
-		function( self, area )
-        return area:decontaminateIt()
+    function( self, area )
+        return area:decontaminateIt() -- immplemention depends on object type
     end )
 
+-- --------------------------------------------------------------------------------
+-- Specific methods on body
+-- --------------------------------------------------------------------------------
+method "equipNRBCProtection" ( masalife.brain.integration.startStopAction(
+{ 
+    start = function( self )
+        integration.equipNBCOutfit()
+    end,
+    started = function( self )
+        return true
+    end,
+    stop = function( self )
+        integration.unequipNBCOutfit()
+    end
+} ) )
 
 
 -- --------------------------------------------------------------------------------

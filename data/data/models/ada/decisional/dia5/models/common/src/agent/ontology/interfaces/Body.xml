@@ -381,5 +381,14 @@ Display a message.</description>
                 </type>
             </return>
         </method>
+        <method name="equipNRBCProtection">
+            <description>To take all necessary steps to get protected against NRBC agents.</description>
+            <return>
+                <description>Returns true once protection is complete.</description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
     </methods>
 </interface>

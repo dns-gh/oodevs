@@ -607,5 +607,7 @@
   </report>
   <report category="operational" id="434" message="Fire cannot be extinguished"/>
   <report category="operational" id="435" message="No fires within area"/>
+  <report category="operational" id="436" message="Starting to decontaminate"/>
+  <report category="operational" id="437" message="Decontamination done"/>
 </reports>
-<!-- signature="2808529366" -->
+<!-- signature="3194112119" -->

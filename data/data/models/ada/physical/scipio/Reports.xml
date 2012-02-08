@@ -607,5 +607,7 @@
   </report>
   <report category="operational" id="434" message="L'incendie ne peut pas être éteind"/>
   <report category="operational" id="435" message="Pas d'incendie dans la zone"/>
+  <report category="operational" id="436" message="Début de la décontamination de la zone"/>
+  <report category="operational" id="437" message="Fin de la décontamination de la zone"/>
 </reports>
-<!-- signature="2649944736" -->
+<!-- signature="3414195085" -->

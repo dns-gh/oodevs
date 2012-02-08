@@ -35,7 +35,7 @@ end
 -- @author MGD
 -- @release 2010-04-27
 integration.equipNBCOutfit = function()
-    meKnowledge:RC( eRC_TenueProtectionNBCMise )
+    meKnowledge:sendReport( eRC_TenueProtectionNBCMise )
     DEC_Agent_MettreTenueProtectionNBC()
 end
 
@@ -43,7 +43,7 @@ end
 -- @author MGD
 -- @release 2010-04-27
 integration.unequipNBCOutfit = function()
-    meKnowledge:RC( eRC_TenueProtectionNBCEnlevee )
+    meKnowledge:sendReport( eRC_TenueProtectionNBCEnlevee )
     DEC_Agent_EnleverTenueProtectionNBC()
 end
 

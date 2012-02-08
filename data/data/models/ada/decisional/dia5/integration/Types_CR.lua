@@ -447,4 +447,6 @@ eRC_ElementUnloaded = 432
 eRC_DifficultMovementProgression = 433
 eRC_ImpossibleToExtinguishFire = 434
 eRC_NoFiresWithinArea = 435
-eNbr = 436
+eRC_StartingToDecontaminate = 436
+eRC_DecontaminationDone = 437
+eNbr = 438

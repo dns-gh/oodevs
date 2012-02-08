@@ -4,12 +4,21 @@
 Areas are visited in the order of the list. </description>
     <parameters>
         <parameter name="areas">
-            <description>A list of areas. </description>
+            <description>A list of areas to decontaminate.</description>
             <type>
                 <list>
                     <class name="agent.ontology.interfaces.ContaminationArea"/>
                 </list>
             </type>
+        </parameter>
+        <parameter name="equipNRBCProtection">
+            <description>If this parameter is set tot 'false', agent won't equip itself with NBC protection to decontaminate the given areas.</description>
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>true</boolean>
+            </default>
         </parameter>
     </parameters>
     <body-type>
@@ -22,6 +31,9 @@ Areas are visited in the order of the list. </description>
         <link name="decontaminate" skill="agent.behaviors.skills.actions.DecontaminateArea">
             <description>To enact the decision to &quot;decontaminate&quot; an area. </description>
         </link>
+        <link name="selfprotect" skill="agent.behaviors.skills.actions.EquipNBCOutfit">
+            <description>To take all necessary steps to selfProtect against NRBC contamination or intoxication.</description>
+        </link>
     </links>
     <feedbacks>
         <feedback name="decontaminated">
@@ -31,6 +43,12 @@ Areas are visited in the order of the list. </description>
                     <class name="agent.ontology.interfaces.ContaminationArea"/>
                 </type>
             </argument>
+        </feedback>
+        <feedback name="done">
+            <description>Sent when all &quot;areas&quot; have been visited.</description>
+        </feedback>
+        <feedback name="failed">
+            <description>Sent if the set of &quot;area&quot; is empty (no area to act on).</description>
         </feedback>
     </feedbacks>
 </skill>

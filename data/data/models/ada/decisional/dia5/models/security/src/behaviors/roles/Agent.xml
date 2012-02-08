@@ -49,6 +49,7 @@
         <skill name="behaviors.skills.TransportACrowd"/>
         <skill name="agent.behaviors.skills.actions.Extinguish"/>
         <skill name="behaviors.skills.primitives.Extinguish"/>
+        <skill name="agent.behaviors.skills.actions.EquipNBCOutfit"/>
     </skills>
     <resources>
         <resource name="agent.behaviors.resources.Motion"/>

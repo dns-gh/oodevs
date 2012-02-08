@@ -111,3 +111,9 @@ end
 integration.isUrbanBlockEvacuated = function( urbanBlock )
     return DEC_Agent_IsEvacuated( DEC_PolygoneBlocUrbain( urbanBlock.source ) )
 end
+
+-- Decontamination
+integration.decontaminateUrbanBlock = function( urbanBlock )            
+    DEC_DecontaminerZone( DEC_PolygoneBlocUrbain( urbanBlock.source ) )           
+    return true
+end

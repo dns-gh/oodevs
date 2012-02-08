@@ -1,8 +1,8 @@
 -- --------------------------------------------------------------------------------
 -- Delays for magic actions in MINUTES
 -- --------------------------------------------------------------------------------
-local loadingActionDelays   = 2
-local unloadingActionDelays = 2
+local loadingActionDelays   = 2 --min
+local unloadingActionDelays = 2 --min
 
 -- --------------------------------------------------------------------------------
 -- Movement

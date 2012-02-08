@@ -7,7 +7,12 @@
 -- ****************************************************************************
 rootnode 
 {
-    connections = { skill.links.reach, skill.links.decontaminate },
+    connections = 
+    {
+        skill.links.reach,
+        skill.links.decontaminate,
+        skill.links.selfprotect
+    },
     feedbacks   = { "decontaminated" },
 
     -- --------------------------------------------------------------------------------
@@ -21,9 +26,10 @@ rootnode
         Feedback( self.feedbacks.decontaminated, { area = params.area } )
         self.nextTargetIndex = self.nextTargetIndex + 1
         self.arrived = false
-        if self.nextTargetIndex > #self.params.areas then
-            Feedback( self.feedbacks.done )
-        end
+    end,
+
+    equipActionCompleted = function( self ) -- from EquipNBCOutfit skill
+        self.protected = true
     end,
 
     -- --------------------------------------------------------------------------------
@@ -31,6 +37,7 @@ rootnode
     -- --------------------------------------------------------------------------------
     create = function( self )
         self.arrived = false
+        self.protected = false
         self.nextTargetIndex = 1
     end,
 
@@ -39,10 +46,20 @@ rootnode
     -- --------------------------------------------------------------------------------
     activate = function( self )
         local Activate = Activate
-        
+
+        -- NBC protection management
+        if self.params.equipNRBCProtection then
+            Activate( skill.links.selfprotect, 1, {} )
+            if not self.protected then
+                DEC_Trace( "waiting for NBC protection to be equiped by agent")
+                return -- wiating to be protected before going on decontamination area
+            end
+        end
+
+        -- Decontamination begins
         local paramsSize = #self.params.areas
-        if self.nextTargetIndex <= paramsSize then
-            if paramsSize > 0 then
+        if paramsSize > 0 then 
+            if self.nextTargetIndex <= paramsSize then
                 self.area = self.params.areas[ self.nextTargetIndex ]
                 if self.arrived then
                     Activate( skill.links.decontaminate, 1, { area = self.area } )
@@ -50,8 +67,10 @@ rootnode
                     Activate( skill.links.reach, 1, { destination = self.area, false, eTypeItiNBC } )
                 end
             else
-                Feedback( self.feedbacks.failed )
+                Feedback( self.feedbacks.done )
             end
+         else 
+            Feedback( self.feedbacks.failed )
          end
     end
 }

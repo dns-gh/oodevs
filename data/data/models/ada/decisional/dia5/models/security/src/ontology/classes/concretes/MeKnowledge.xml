@@ -441,5 +441,14 @@ Returns true if agent Unit has physical capabilities to loasd a 'Crowd' object.<
                 </type>
             </return>
         </method>
+        <method name="equipNRBCProtection" abstract="false">
+            <description>To take all necessary steps to get protected against NRBC agents.</description>
+            <return>
+                <description>Returns true once protection is complete.</description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
     </methods>
 </class>

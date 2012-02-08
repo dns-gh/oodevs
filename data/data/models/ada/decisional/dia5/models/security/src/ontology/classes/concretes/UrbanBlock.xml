@@ -5,6 +5,7 @@ An agent can go inside an urban block.&#xD;
 A urban block can be evacuated, alerted or confined. These states have an impact on the hosted population behavior.&#xD;
 </description>
     <realizes>agent.ontology.interfaces.PopulatedArea</realizes>
+    <realizes>agent.ontology.interfaces.ContaminationArea</realizes>
     <methods>
         <method name="getPosition">
             <return name="simPosition">
@@ -106,6 +107,14 @@ This action can take time (depending on the current status of the population, e.
         </method>
         <method name="undoAlertIt" abstract="false">
             <description>To revert the effect of &quot;alert&quot; on the populations contained in the populated area. </description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="decontaminateIt" abstract="false">
+            <description>To decontaminate the area</description>
             <return>
                 <type>
                     <simple name="boolean"/>

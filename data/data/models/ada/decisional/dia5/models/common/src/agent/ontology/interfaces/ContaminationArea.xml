@@ -10,12 +10,5 @@
                 </type>
             </return>
         </method>
-        <method name="isContaminated">
-            <return>
-                <type>
-                    <simple name="boolean"/>
-                </type>
-            </return>
-        </method>
     </methods>
 </interface>
