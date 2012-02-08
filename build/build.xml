@@ -1278,7 +1278,7 @@
     <target name="package" depends="package.app,package.debug,package.otpacks,package.wise-driver,package.ts,package.plugins" description="package the installers and packs"/>
 
     <!-- Package plugins -->
-    <target name="package.plugins" depends="package.plugin.vrforces,package.plugin.hla,package.plugin.bml,package.plugin.dis,package.plugin.timeline,package.plugin.crossbow" description="package plugin individual installers"/>
+    <target name="package.plugins" depends="package.plugin.hla,package.plugin.bml,package.plugin.dis" description="package plugin individual installers"/>
 
     <target name="package.plugin.vrforces" description="create vrforces plugin installer" if="is-vc80">
         <nsis name="sword-plugin" script="sword-plugin.nsi" license="true">
@@ -1389,7 +1389,7 @@
                     <description>@{description}</description>
                 </content>
             </echoxml>
-            <zip destfile="${dist.dir}/SWORD_@{name}_${version.project}.otpak" filesonly="true">
+            <zip destfile="${dist.dir}/SWORD_@{name}_${version.project.major}.otpak" filesonly="true">
                 <fileset dir="${data.dir}">
                     <elements/>
                 </fileset>
@@ -1399,9 +1399,7 @@
         </sequential>
     </macrodef>
 
-    <target name="package.otpacks" depends="package.otpack.defense.worldwide,package.otpack.defense.france,
-                                            package.otpack.defense.scipio,package.otpack.defense.scipio.VA,package.otpack.security.worldwide,package.otpack.security.masa,
-                                            package.otpack.lossc,package.otpack.trainingML,package.otpack.decisional3,package.otpack.decisional4,package.otpack.decisional5"
+    <target name="package.otpacks" depends="package.otpack.defense.scipio,package.otpack.defense.scipio.VA"
                                    description="package the exercise otpacks"/>
 
     <target name="package.otpack.defense.worldwide" description="package du defense-worldwide otpack">
