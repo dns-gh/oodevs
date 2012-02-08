@@ -583,7 +583,9 @@ public:
         eRC_DifficultMovementProgression,
 		eRC_ImpossibleToExtinguishFire,
 		eRC_NoFiresWithinArea,
-        eLast // 436
+		eRC_StartingToDecontaminate,
+		eRC_DecontaminationDone,
+        eLast // 438
     };
     //@}
 public:
