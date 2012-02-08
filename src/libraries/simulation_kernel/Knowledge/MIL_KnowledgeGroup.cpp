@@ -322,6 +322,7 @@ void MIL_KnowledgeGroup::UpdateKnowledges(int currentTimeStep)
 // -----------------------------------------------------------------------------
 void MIL_KnowledgeGroup::UpdateObjectKnowledges(int currentTimeStep)
 {
+    knowledgeBlackBoard_->UpdateUniversalObjects();
     for( CIT_KnowledgeGroupVector it = knowledgeGroups_.begin(); it != knowledgeGroups_.end(); ++it ) // LTO
         (**it).UpdateObjectKnowledges( currentTimeStep );
     knowledgeBlackBoard_->SendObjectChangedState();

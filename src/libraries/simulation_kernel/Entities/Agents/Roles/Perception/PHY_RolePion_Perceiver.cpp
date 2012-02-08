@@ -941,7 +941,6 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
             (**itPerception).Execute( perceivableAgents, *owner_.GetAlgorithms().detectionComputerFactory_ );
 
         TER_World::GetWorld().GetObjectManager().GetListWithinCircle( *perceiverPosition_, maxPerceptionDistance, perceivableObjects );
-        AppendUniversalObjects( perceivableObjects );
         for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
             (**itPerception).Execute( perceivableObjects );
 
@@ -1471,18 +1470,4 @@ void PHY_RolePion_Perceiver::NotifyIsUnLoadedInVab()
 {
     bExternalMustChangePerception_ = true;
     bExternalMustChangeRadar_ = true;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_RolePion_Perceiver::AppendUniversalObjects
-// Created: JSR 2011-01-07
-// -----------------------------------------------------------------------------
-void PHY_RolePion_Perceiver::AppendUniversalObjects( TER_Object_ABC::T_ObjectVector& perceivableObjects ) const
-{
-    const std::set< MIL_Object_ABC* >& universalObjects = MIL_EntityManager_ABC::GetSingleton().GetUniversalObjects();
-    for( std::set< MIL_Object_ABC* >::const_iterator it = universalObjects.begin(); it != universalObjects.end(); ++it )
-    {
-        if( std::find( perceivableObjects.begin(), perceivableObjects.end(), *it ) == perceivableObjects.end() )
-            perceivableObjects.push_back( *it );
-    }
 }

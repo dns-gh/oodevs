@@ -100,6 +100,7 @@ public:
     //@{
     virtual void UpdateOnNetwork();
     virtual void SendStateToNewClient();
+    void SkipPreparation();
     //@}
 
     //! @name Accessors
@@ -212,7 +213,7 @@ private:
     double rRelevance_;
     bool bValid_;
     bool bPerceptionDistanceHacked_;
-    bool bHackedPrepared_;
+    bool bSkipPreparation_;
     T_AgentTypeSet reconByAgentTypes_;
     static MIL_IDManager idManager_;
     //@}
