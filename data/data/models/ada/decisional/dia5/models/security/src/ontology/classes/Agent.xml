@@ -6,5 +6,4 @@ A Unit can have, in certain condition, a specific status, such as:&#xD;
 •	Prisoner, Terrorist and offender, who can be jailed, arrested, destroyed.&#xD;
 •	Medical unit (such as TC2 for Military units) who can evacuate victims.&#xD;
 </description>
-    <realizes>ontology.interfaces.HumanTarget</realizes>
 </class>

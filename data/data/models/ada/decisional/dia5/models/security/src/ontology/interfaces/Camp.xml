@@ -1,5 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.interfaces.Camp" source-version="1.0.0">
-    <description>The property for some entity to be used as a camp for displaced persons. </description>
-    <methods/>
-</interface>

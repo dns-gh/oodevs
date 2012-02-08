@@ -1,7 +1,0 @@
-<?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.classes.Body" source-version="1.0.0" abstract="true">
-    <realizes>agent.ontology.interfaces.Body</realizes>
-    <methods/>
-    <predicates/>
-    <attributes/>
-</class>

@@ -12,7 +12,6 @@ method "canBeLoaded" (
         if self:isReached()and not self:isLoaded() then
             return true
         else
-           --  meKnowledge:sendReport( eRC_ElementCannotBeLoaded )
             return false
         end
     end )
@@ -22,7 +21,6 @@ method "canBeUnloaded" (
         if self:isLoaded() then
             return true
         else
-            -- meKnowledge:sendReport( eRC_ElementCannotBeLoaded )
             return false
         end
     end )

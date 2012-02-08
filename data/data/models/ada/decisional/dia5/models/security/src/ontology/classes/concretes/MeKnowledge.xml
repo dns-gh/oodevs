@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.classes.concretes.MeKnowledge" source-version="1.0.0" extends="ontology.classes.Body">
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.classes.concretes.MeKnowledge" source-version="1.0.0">
     <description>Represents agent knowledge of its physical abilities. </description>
+    <realizes>agent.ontology.interfaces.Body</realizes>
     <methods>
         <method name="getPosition">
             <return name="simPosition">

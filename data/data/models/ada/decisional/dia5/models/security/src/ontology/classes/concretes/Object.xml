@@ -9,8 +9,6 @@
 - Planned work&#xD;
 &#xD;
 </description>
-    <realizes>ontology.interfaces.Terrain</realizes>
-    <realizes>ontology.interfaces.Camp</realizes>
     <realizes>agent.ontology.interfaces.Fire</realizes>
     <realizes>agent.ontology.interfaces.ResourceNode</realizes>
     <methods>
