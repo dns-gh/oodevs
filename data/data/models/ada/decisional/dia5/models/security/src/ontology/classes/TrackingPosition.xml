@@ -44,6 +44,12 @@ Returns a percentage, where 0% means &quot;this object is very far from destinat
             <description>For the agent to enact the decision to move towards this object, along some path.&#xD;
 Returns true once the agent has reached the end-point of the path (please note that this end-point may be distinct from the target position to reach). &#xD;
 </description>
+            <argument name="pathType">
+                <description>The path type used by agent Unit to reach the given destination.</description>
+                <type>
+                    <any/>
+                </type>
+            </argument>
             <return>
                 <type>
                     <simple name="boolean"/>

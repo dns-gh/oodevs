@@ -6,6 +6,7 @@ A urban block can be evacuated, alerted or confined. These states have an impact
 </description>
     <realizes>agent.ontology.interfaces.PopulatedArea</realizes>
     <realizes>agent.ontology.interfaces.ContaminationArea</realizes>
+    <realizes>agent.ontology.interfaces.Work</realizes>
     <methods>
         <method name="getPosition">
             <return name="simPosition">
@@ -105,6 +106,31 @@ This action can take time (depending on the current status of the population, e.
         </method>
         <method name="decontaminateIt" abstract="false">
             <description>To decontaminate the area</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canBeCreated" abstract="false">
+            <description>Returns 'True' if agent has the physical capability to create and build this element.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="createIt" abstract="false">
+            <description>To create and build this element.</description>
+            <argument name="builtWork">
+                <description>The work that has been built. </description>
+                <type>
+                    <class name="agent.ontology.interfaces.Work"/>
+                </type>
+            </argument>
+        </method>
+        <method name="isBuilt" abstract="false">
+            <description>Returns true if this element is entierly built.</description>
             <return>
                 <type>
                     <simple name="boolean"/>

@@ -5,61 +5,64 @@
 --
 -- /!\ order is determined by elements' insertion in the table
 -- ****************************************************************************
-rootnode
+rootnode 
 {
-    connections = { skill.links.reach, skill.nodes.Create },
+    connections = { skill.links.reach, skill.links.create },
     feedbacks   = { "created" },
 
-    -- -------------------------------------------------------------------------------- 
-    -- Once first element is reached, get the next one by incrementing iterator.
     -- --------------------------------------------------------------------------------
-    done = function( self ) -- from skill Reach
+    -- Feedbacks
+    -- --------------------------------------------------------------------------------
+    done = function( self, params ) -- from reach skill
         self.arrived = true
     end,
-    created = function( self, params, additionalParams ) -- from node Alert
-        Feedback( self.feedbacks.created, params, additionalParams )
-        self.createdWorks[ self.nextTargetIndex ] = additionalParams.work
+
+    creationActionCompleted = function( self, params ) -- from decontaminate skill
+        Feedback( self.feedbacks.created, { work = params.work } )
         self.nextTargetIndex = self.nextTargetIndex + 1
-        if self.nextTargetIndex > #self.params.works then
-            Feedback( self.feedbacks.done, self.createdWorks )
-        end
+        self.arrived = false
     end,
 
-    -- -------------------------------------------------------------------------------- 
+    impossibleToCreate = function( self, params ) -- called within this skill
+        Feedback( self.feedbacks.notCreated, { work = params.work } )
+        self.arrived = false
+        self.nextTargetIndex = self.nextTargetIndex + 1
+    end,
+
+    -- --------------------------------------------------------------------------------
     -- Init
     -- --------------------------------------------------------------------------------
     create = function( self )
         self.arrived = false
-        self.createdWorks = {}
         self.nextTargetIndex = 1
     end,
 
-    -- -------------------------------------------------------------------------------- 
-    -- Move toward the current element.
+    -- --------------------------------------------------------------------------------
+    -- Feedbacks
     -- --------------------------------------------------------------------------------
     activate = function( self )
         local Activate = Activate
 
-        if self.arrived then -- build the object
-            Activate( skill.nodes.Create, 1, { work = self.params.works[ self.nextTargetIndex ] } )
-        end -- try to reach populated area
-        Activate( skill.links.reach, 1, { destination = self.params.works[ self.nextTargetIndex ] } )
-        self.arrived = false
-    end
-}
-
--- ****************************************************************************
--- Action of creating an object
--- ****************************************************************************
-node "Create"
-{
-    feedbacks = { "created" },
-
-    select = function( self )
-        if not self.params.work:isCreated() then
-            self.createdWork = meKnowledge:create( self.params.work )
-        else
-            Feedback( self.feedbacks.created, { work = self.createdWork } )
-        end
+        -- Decontamination begins
+        local paramsSize = #self.params.works
+        if paramsSize > 0 then 
+            if self.nextTargetIndex <= paramsSize then
+                self.work = self.params.works[ self.nextTargetIndex ]
+                if self.arrived then
+                    if self.work:canBeCreated() then
+                        Activate( skill.links.create, 1, { work = self.work } )
+                    elseif not self.params.waitForReinforcement then
+                        self:impossibleToCreate( { work = self.work } )
+                    end
+                else
+                    -- MIA $$$ TODO: add a position outside work.
+                    Activate( skill.links.reach, 1, { destination = self.work, urgency = false, pathType = eTypeItiDeminage } )
+                end
+            else
+                Feedback( self.feedbacks.done )
+            end
+         else 
+            Feedback( self.feedbacks.failed )
+         end
     end
 }

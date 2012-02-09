@@ -47,5 +47,6 @@ A visited fire won't be extinguished if it is already extinguished or if it does
         <feedback name="done">
             <description>Sent when all &quot;Fires&quot; have been visited.</description>
         </feedback>
+        <feedback name="failed"/>
     </feedbacks>
 </skill>

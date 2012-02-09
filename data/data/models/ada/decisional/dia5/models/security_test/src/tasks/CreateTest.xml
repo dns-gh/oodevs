@@ -8,11 +8,24 @@
                 </list>
             </type>
         </parameter>
+        <parameter name="waitForReinforcement" nullable="true">
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
+        </parameter>
     </parameters>
     <stages>
         <stage label="Starting works" disable-when-done="true">
             <skills>
                 <skill name="behaviors.skills.primitives.Create" main="true">
+                    <parameter name="waitForReinforcement">
+                        <value>
+                            <parameter>waitForReinforcement</parameter>
+                        </value>
+                    </parameter>
                     <parameter name="works">
                         <value>
                             <parameter>works</parameter>

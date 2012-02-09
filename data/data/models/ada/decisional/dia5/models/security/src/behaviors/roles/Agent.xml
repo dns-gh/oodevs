@@ -45,11 +45,12 @@
         <skill name="behaviors.skills.primitives.Unload"/>
         <skill name="behaviors.skills.Transport"/>
         <skill name="agent.behaviors.skills.actions.DecontaminateArea"/>
-        <skill name="behaviors.skills.primitives.DecontaminateArea"/>
+        <skill name="behaviors.skills.primitives.DecontaminateAreas"/>
         <skill name="behaviors.skills.TransportACrowd"/>
         <skill name="agent.behaviors.skills.actions.Extinguish"/>
         <skill name="behaviors.skills.primitives.Extinguish"/>
-        <skill name="agent.behaviors.skills.actions.EquipNBCOutfit"/>
+        <skill name="agent.behaviors.skills.actions.EquipWithNBCProtection"/>
+        <skill name="agent.behaviors.skills.actions.Create"/>
     </skills>
     <resources>
         <resource name="agent.behaviors.resources.Motion"/>

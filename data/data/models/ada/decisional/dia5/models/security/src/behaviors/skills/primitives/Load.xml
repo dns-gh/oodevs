@@ -30,9 +30,9 @@ Entities won't be loaded if:&#xD;
     </links>
     <feedbacks>
         <feedback name="loaded">
-            <description>Sent each time an entity have been  loaded.</description>
+            <description>Sent each time an entity has been  loaded.</description>
             <argument name="transportableEntity">
-                <description>The &quot;transportable&quot; entity that is beeing loaded.</description>
+                <description>The &quot;transportable&quot; entity that has been loaded.</description>
                 <type>
                     <class name="agent.ontology.interfaces.Transportable"/>
                 </type>
@@ -41,13 +41,14 @@ Entities won't be loaded if:&#xD;
         <feedback name="notLoaded">
             <description>Sent each time a &quot;transportableEntity&quot; cannot be loaded.</description>
             <argument name="transportableEntity">
+                <description>The entity that cannot be loaded.</description>
                 <type>
                     <class name="agent.ontology.interfaces.Transportable"/>
                 </type>
             </argument>
         </feedback>
         <feedback name="done">
-            <description>Sent when all &quot;transportableEntities&quot; have been visited.</description>
+            <description>Sent when all &quot;transportableEntities&quot; have been visited. Even if one of them haven't be loaded.</description>
             <argument name="sender">
                 <type>
                     <simple name="string"/>

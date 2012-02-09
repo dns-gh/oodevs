@@ -16,7 +16,7 @@ Areas are visited in the order of the list. </description>
         <stage label="Decontamination started" disable-when-done="true">
             <description>Decontaminate each of issued areas.</description>
             <skills>
-                <skill name="behaviors.skills.primitives.DecontaminateArea" main="true">
+                <skill name="behaviors.skills.primitives.DecontaminateAreas" main="true">
                     <parameter name="areas">
                         <value>
                             <parameter>contaminatedElements</parameter>

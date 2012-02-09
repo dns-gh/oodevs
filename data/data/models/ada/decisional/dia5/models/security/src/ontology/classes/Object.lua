@@ -1,5 +1,5 @@
 -- --------------------------------------------------------------------------------
---  Creation
+--  Work
 -- --------------------------------------------------------------------------------
 method "createIt" ( masalife.brain.integration.startStopAction( 
 { 
@@ -17,9 +17,15 @@ method "createIt" ( masalife.brain.integration.startStopAction(
     end
 } ) )
 
-method "isCreated" ( 
+method "isBuilt" (
     function( self )
         return integration.buildLevel( self ) == 100
+    end )
+
+method "canBeCreated" (
+    function( self )
+        return integration.canBuildNowObjectType( DEC_ConnaissanceObjet_Type( self.source ) ) 
+        and integration.hasEnoughtDotationForObjectType( DEC_ConnaissanceObjet_Type( self.source ) )
     end )
 
 -- --------------------------------------------------------------------------------

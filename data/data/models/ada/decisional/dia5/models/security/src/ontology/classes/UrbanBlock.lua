@@ -53,6 +53,37 @@ method "isEvacuated" (
     end )
 
 -- --------------------------------------------------------------------------------
+--  Work
+-- --------------------------------------------------------------------------------
+method "createIt" ( masalife.brain.integration.startStopAction( 
+{ 
+    start = function( self )
+        integration.startBuildItUrbanBlock( self )
+        return self
+    end,
+    started = function( self )
+        integration.updateBuildIt( self )
+        return self
+    end, 
+    stop = function( self )
+        integration.stopBuildItUrbanBlock( self )
+        return self
+    end
+} ) )
+
+method "isBuilt" (
+    function( self )
+        return integration.buildLevelUrbanBlock( self ) == 1
+    end )
+
+method "canBeCreated" (
+    function( self )
+        local urbanBlockType = integration.getTypeUrbanBlock( self )
+        return integration.canBuildNowObjectType( urbanBlockType ) 
+        and integration.hasEnoughtDotationForObjectType( urbanBlockType )
+    end )
+
+-- --------------------------------------------------------------------------------
 -- Contamination area
 -- --------------------------------------------------------------------------------
 method "decontaminateIt" ( masalife.brain.integration.startStopAction( 

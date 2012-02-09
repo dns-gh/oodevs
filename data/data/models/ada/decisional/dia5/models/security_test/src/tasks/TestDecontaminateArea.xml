@@ -13,7 +13,7 @@
     <stages>
         <stage label="DecontaminateArea" disable-when-done="true">
             <skills>
-                <skill name="behaviors.skills.primitives.DecontaminateArea" main="true">
+                <skill name="behaviors.skills.primitives.DecontaminateAreas" main="true">
                     <parameter name="areas">
                         <value>
                             <parameter>areas</parameter>

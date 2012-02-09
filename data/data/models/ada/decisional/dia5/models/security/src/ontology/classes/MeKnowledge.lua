@@ -20,11 +20,6 @@ method "create" (
         return work:createIt()
     end )
 
-method "canCreate" (
-    function( self, work )
-        return true --$$$ MIA: TODO
-    end )
-
 -- --------------------------------------------------------------------------------
 -- Populated area
 -- --------------------------------------------------------------------------------
@@ -166,7 +161,7 @@ method "decontaminate" (
 -- --------------------------------------------------------------------------------
 -- Specific methods on body
 -- --------------------------------------------------------------------------------
-method "equipNRBCProtection" ( masalife.brain.integration.startStopAction(
+method "equipWithNBCProtection" ( masalife.brain.integration.startStopAction(
 { 
     start = function( self )
         integration.equipNBCOutfit()

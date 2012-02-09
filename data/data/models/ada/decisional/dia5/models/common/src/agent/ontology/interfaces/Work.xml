@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.ontology.interfaces.Work" source-version="1.0.0">
     <methods>
-        <method name="isCreated">
+        <method name="isBuilt">
             <description>Returns true if this element is entierly built.</description>
             <return>
                 <type>
@@ -9,6 +9,22 @@
                 </type>
             </return>
         </method>
-        <method name="createIt"/>
+        <method name="createIt">
+            <description>To create and build this element.</description>
+            <argument name="builtWork">
+                <description>The work that has been built. </description>
+                <type>
+                    <class name="agent.ontology.interfaces.Work"/>
+                </type>
+            </argument>
+        </method>
+        <method name="canBeCreated">
+            <description>Returns 'True' if agent has the physical capability to create and build this element.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
     </methods>
 </interface>

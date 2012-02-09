@@ -48,25 +48,10 @@
                     <class name="agent.ontology.interfaces.Work"/>
                 </type>
             </argument>
-            <return>
-                <description>Returns true upon simulation method completion, false otherwise. </description>
-                <type>
-                    <simple name="boolean"/>
-                </type>
-            </return>
-        </method>
-        <method name="canCreate">
-            <description>To check if the agent has the material resources required to build a specific construction. </description>
-            <argument name="work">
-                <description>The construction to build. </description>
+            <return name="builtWork">
+                <description>Returns the work built upon simulation method completion. </description>
                 <type>
                     <class name="agent.ontology.interfaces.Work"/>
-                </type>
-            </argument>
-            <return>
-                <description>Returns true upon simulation method completion, false otherwise. </description>
-                <type>
-                    <simple name="boolean"/>
                 </type>
             </return>
         </method>
@@ -387,7 +372,7 @@ Display a message.</description>
                 </type>
             </return>
         </method>
-        <method name="equipNRBCProtection">
+        <method name="equipWithNBCProtection">
             <description>To take all necessary steps to get protected against NRBC agents.</description>
             <return>
                 <description>Returns true once protection is complete.</description>

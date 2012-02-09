@@ -49,7 +49,7 @@ integration.startBuildIt = function( object, type )
     actionCallbacks[ object[myself].actionBuild ] = function( arg ) object[myself].actionBuildState = arg end
     actionKnowledgeCallbacks[ object[myself].actionBuild ] = function( arg )
         if arg and DEC_ConnaissanceObjet_NiveauConstruction( arg ) > 0 then
-            object.knowledge = CreateKnowledge( sword.military.world.Object, arg )
+            object.knowledge = CreateKnowledge( type, arg )
         end
     end
 end
@@ -92,18 +92,19 @@ integration.updateBuildIt = function( object )
 end
 
 integration.stopBuildIt = function( object )
+
     object[myself] = object[myself] or {}
     local result
-    if object[myself].actionBuildState == eActionObjetTerminee then
-        if( object.knowledge ~= nil ) then
-            meKnowledge:RC( eRC_FinTravauxObjet, object.knowledge.source )
-        end
+    if object[ myself ].actionBuildState == eActionObjetTerminee then
+       -- if( object.knowledge ~= nil ) then
+       --     meKnowledge:RC( eRC_FinTravauxObjet, object.knowledge.source )
+       -- end
         result = eRC_RAS
     else
         DEC_Trace( "pause work build" )
         result = eRC_ConstructionObjetImpossible
     end
-    
+    meKnowledge:RC( eRC_FinTravauxObjet )
     object[myself].actionBuild = DEC__StopAction( object[myself].actionBuild )
     object[myself].actionBuildState = nil
     return result

@@ -3,10 +3,10 @@
 -- --------------------------------------------------------------------------------
 method "reachIt" ( masalife.brain.integration.startStopAction( 
 { 
-    start = function( self )
+    start = function( self, pathType )
         return integration.startMoveToIt( self, pathType ) 
     end,
-    started = function( self )
+    started = function( self, pathType )
         return integration.updateMoveToIt( self, pathType )
     end, 
     stop = function( self )

@@ -25,7 +25,9 @@ Populated areas are visited in the order of the list. </description>
     </links>
     <feedbacks>
         <feedback name="undoAlerted">
+            <description>Sent each time the alert is left on a populated area.</description>
             <argument name="populatedArea">
+                <description>The area that is no more alerted.</description>
                 <type>
                     <class name="agent.ontology.interfaces.PopulatedArea"/>
                 </type>

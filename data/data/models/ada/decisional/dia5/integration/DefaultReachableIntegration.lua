@@ -261,7 +261,10 @@ integration.startMoveToIt = function( objective, pathType )
     -- -------------------------------------------------------------------------------- 
     -- Compute path and start moving along.
     -- --------------------------------------------------------------------------------
-    local pathType = pathType or eTypeItiMouvement
+    if pathType == NIL  or pathType == nil then -- pathType can have the MASA Life 'NIL' value
+        pathType = eTypeItiMouvement
+    end
+
     local it = DEC_CreerItineraireBM( objective.destination, pathType )
     F_Pion_SetitMvt( meKnowledge.source, it )
     objective[ myself ].moveAction = DEC_StartDeplacement( it )
@@ -315,7 +318,9 @@ integration.updateMoveToIt = function( objective, pathType )
                 -- Once unit is dismounted, move to the real objective
                 objective.destination = DEC_Geometrie_CopiePoint( objective:getPosition() )
                 objective.initialeDestination = objective.destination -- for updateMoveToItArea
-                local pathType = pathType or eTypeItiMouvement
+                if pathType == NIL  or pathType == nil then -- pathType can have the MASA Life 'NIL' value
+                    pathType = eTypeItiMouvement
+                end
                 local it = DEC_CreerItineraireBM( objective.destination, pathType )
                 F_Pion_SetitMvt( meKnowledge.source, it )
                 local escort = F_Pion_GetpionEnEscorte( meKnowledge.source )
@@ -475,7 +480,9 @@ integration.startMoveToItArea = function( objective, pathType )
     -- -------------------------------------------------------------------------------- 
     -- Compute path and start moving along.
     -- --------------------------------------------------------------------------------
-    local pathType = pathType or eTypeItiMouvement
+    if pathType == NIL  or pathType == nil then -- pathType can have the MASA Life 'NIL' value 
+        pathType = eTypeItiMouvement
+    end
     local it = DEC_CreerItineraireBM( objective.destination, pathType )
     F_Pion_SetitMvt( meKnowledge.source, it )
     objective[ myself ] = {}
@@ -494,9 +501,6 @@ end
 -- comments: used to move toward agent
 -- ****************************************************************************
 integration.updateMoveToItArea = function( objective, pathType )
-    
-    DEC_Trace( "hello" )
-
     if objective.destination and objective.initialeDestination then
         -- -------------------------------------------------------------------------------- 
         -- Objective has moved: compute a new path if moving distance is greater than

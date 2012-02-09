@@ -7,7 +7,7 @@ rootnode
 {
     feedbacks = { "equipActionCompleted" },
     select = function( self )
-        if meKnowledge:equipNRBCProtection() then
+        if meKnowledge:equipWithNBCProtection() then
             Feedback( self.feedbacks.equipActionCompleted )
         end
     end

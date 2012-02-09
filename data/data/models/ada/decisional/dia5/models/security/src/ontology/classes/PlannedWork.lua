@@ -4,7 +4,7 @@
 method "createIt" ( masalife.brain.integration.startStopAction( 
 { 
     start = function( self )
-        integration.startBuildIt( self, ontology.classes.concretes.Object )
+        integration.startBuildIt( self, ontology.classes.Object ) -- $$$ MIA TEMP
         return self.knowledge
     end, 
     started = function( self )
@@ -17,13 +17,19 @@ method "createIt" ( masalife.brain.integration.startStopAction(
     end,
 } ) )
 
-method "isCreated" ( 
+method "isBuilt" ( 
     function( self )
         if self.knowledge ~= nil then
             return integration.buildLevel( self.knowledge ) == 100
         else
             return false
         end
+    end )
+
+method "canBeCreated" ( 
+    function( self )
+        return integration.canBuildNowObjectType( DEC_GenObject_Type( self.source ) ) 
+           and integration.hasEnoughtDotationForObjectType( DEC_GenObject_Type( self.source ) )
     end )
 
 -- --------------------------------------------------------------------------------
