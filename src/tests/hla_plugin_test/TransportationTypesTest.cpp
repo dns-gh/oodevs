@@ -164,18 +164,22 @@ BOOST_FIXTURE_TEST_CASE( netn_datat_struct_deserialization, SerializationFixture
 BOOST_FIXTURE_TEST_CASE( netn_dataed_struct_deserialization, SerializationFixture )
 {
     std::vector< NetnObjectDefinitionStruct > objectToManage;
-    objectToManage.push_back( NetnObjectDefinitionStruct() );
+    std::string callsign("callsign3");
+    objectToManage.push_back( NetnObjectDefinitionStruct(callsign, "42", NetnObjectFeatureStruct() ) );
     const NetnAppointmentStruct appointment;
     const NetnDataEDStruct serializedNetnDataEDStruct( objectToManage, appointment );
     const unsigned int padding = sizeof( int8 );
     const unsigned int objectToManageVectorSize = sizeof( int32 );
-    const unsigned int objectDefinitionStructSize = sizeof( int32 ) + 11 * sizeof( int8 ) + padding + sizeof( int32 );
+    const unsigned int objectDefinitionStructSize = sizeof( int32 ) + callsign.size() * sizeof( int16 )
+                                                  + 11 * sizeof( int8 ) + padding + 2 * padding + sizeof( int32 );
     const unsigned int appointmentStructSize = sizeof( int64 ) + 3 * sizeof( real64 );
-    ::hla::Deserializer deserializer = Serialize( serializedNetnDataEDStruct, objectToManageVectorSize + 1 * objectDefinitionStructSize + appointmentStructSize );
+    const unsigned int alignment  = ( ( objectToManageVectorSize + 1 * objectDefinitionStructSize) % sizeof( int64 ) ) * padding;
+    ::hla::Deserializer deserializer = Serialize( serializedNetnDataEDStruct, objectToManageVectorSize + 1 * objectDefinitionStructSize + alignment + appointmentStructSize );
     NetnDataEDStruct deserializedNetnDataEDStruct;
     deserializedNetnDataEDStruct.Deserialize( deserializer );
     BOOST_CHECK_EQUAL( deserializedNetnDataEDStruct.objectToManage.size(), 1u );
     BOOST_CHECK_EQUAL( deserializedNetnDataEDStruct.appointment.dateTime, 0u );
+    BOOST_CHECK_EQUAL( deserializedNetnDataEDStruct.objectToManage[0].callsign.str(), callsign );
 }
 
 BOOST_FIXTURE_TEST_CASE( netn_event_identifier_deserialization, SerializationFixture )
