@@ -165,7 +165,7 @@ InfoStatusWidget::InfoStatusWidget( QWidget* parent, kernel::Controllers& contro
         reinforcing_->setPixmap( MAKE_PIXMAP( reinforcing ) );
         reinforcing_->setBackgroundOrigin( QWidget::AncestorOrigin );
         icon_ = new QLabel( box );
-        icon_->setFixedSize( 90, 65 );
+        icon_->setFixedSize( 90, 90 );
         icon_->setPixmap( csword_ );
         icon_->setAlignment( Qt::AlignCenter );
         icon_->setBackgroundOrigin( QWidget::AncestorOrigin );
