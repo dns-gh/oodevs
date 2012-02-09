@@ -590,6 +590,36 @@
             <fire class="Wild Fire Class A" max-combustion-energy="300000"/>
           </attributes>
         </object>
+        <object id="2193" name="Border [2193]" type="Border">
+          <shape type="ligne">
+            <points>
+              <point>30UXU1581229157</point>
+              <point>30UXU1955431432</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="2194" name="Airfield Zone [2194]" type="trail">
+          <shape type="polygone">
+            <points>
+              <point>30UXU1882225802</point>
+              <point>30UXU2068326141</point>
+              <point>30UXU2093024711</point>
+              <point>30UXU1886924481</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
+        <object id="2195" name="Arson/Fire [2195]" type="fire">
+          <shape type="point">
+            <points>
+              <point>30UXU2245325738</point>
+            </points>
+          </shape>
+          <attributes>
+            <fire class="Fire Class A" max-combustion-energy="1000000000"/>
+          </attributes>
+        </object>
       </objects>
       <tactical>
         <formation id="93" level="xx" name="Test all">
@@ -939,4 +969,4 @@
     <party id="1"/>
   </diplomacy>
 </orbat>
-<!-- signature="3466777993" -->
+<!-- signature="0265405557" -->
