@@ -2039,7 +2039,7 @@ Elements are visited in the order of the list. Agent will protect itself with NB
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="MIS_Pion_SeFaireTransporter" dia-type="T_Mission_Pion_SeFaireTransporter" id="4464" name="COMMON - request embark">
+    <mission dia-behavior="MIS_Pion_SeFaireTransporter" dia-type="T_Mission_Pion_SeFaireTransporter4" id="4464" name="COMMON - request embark">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2047,7 +2047,7 @@ Elements are visited in the order of the list. Agent will protect itself with NB
       <parameter dia-name="pointEmbarquement_" name="Embarking point" optional="false" type="Point"/>
       <parameter dia-name="heureEmbarquement_" name="Embarking time" optional="false" type="DateTime"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_SeFaireTransporter" dia-type="T_Mission_Pion_SeFaireTransporter" id="4465" name="COMMON - request disembark">
+    <mission dia-behavior="MIS_Pion_SeFaireTransporter" dia-type="T_Mission_Pion_SeFaireTransporter3" id="4465" name="COMMON - request disembark">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2055,7 +2055,7 @@ Elements are visited in the order of the list. Agent will protect itself with NB
       <parameter dia-name="pointEmbarquement_" name="Debarking point" optional="false" type="Point"/>
       <parameter dia-name="heureDebarquement_" name="Debarking time" optional="false" type="DateTime"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_SeFaireTransporter" dia-type="T_Mission_Pion_SeFaireTransporter" id="4468" name="COMMON - request take off">
+    <mission dia-behavior="MIS_Pion_SeFaireTransporter" dia-type="T_Mission_Pion_SeFaireTransporter6" id="4468" name="COMMON - request take off">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -2063,7 +2063,7 @@ Elements are visited in the order of the list. Agent will protect itself with NB
       <parameter dia-name="pointEmbarquement_" name="Takeoff point" optional="false" type="Point"/>
       <parameter dia-name="heureDebarquement_" name="Takeoff time" optional="false" type="DateTime"/>
     </mission>
-    <mission dia-behavior="MIS_Pion_SeFaireTransporter" dia-type="T_Mission_Pion_SeFaireTransporter" id="4469" name="COMMON - request landing">
+    <mission dia-behavior="MIS_Pion_SeFaireTransporter" dia-type="T_Mission_Pion_SeFaireTransporter5" id="4469" name="COMMON - request landing">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -3426,4 +3426,4 @@ Elements are visited in the order of the list. Agent will protect itself with NB
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="3672146171" -->
+<!-- signature="3810319977" -->
