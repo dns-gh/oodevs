@@ -214,21 +214,21 @@ BOOST_FIXTURE_TEST_CASE( netn_transport_struct_transport_deserialization, Serial
 BOOST_FIXTURE_TEST_CASE( netn_transport_struct_embarkment_deserialization, SerializationFixture )
 {
     const NetnDataEDStruct dataEmbarkment;
-    const NetnTransportStruct serializedTransport( dataEmbarkment, 1 );
+    const NetnTransportStruct serializedTransport( dataEmbarkment, NetnTransportStruct::E_Embarkment );
     BOOST_CHECK_EQUAL( serializedTransport.convoyType, 1 );
     ::hla::Deserializer deserializer = Serialize( serializedTransport );
     NetnTransportStruct deserializedTransport;
     deserializedTransport.Deserialize( deserializer );
-    BOOST_CHECK_EQUAL( deserializedTransport.convoyType, 1 );
+    BOOST_CHECK_EQUAL( deserializedTransport.convoyType, NetnTransportStruct::E_Embarkment );
 }
 
 BOOST_FIXTURE_TEST_CASE( netn_transport_struct_disembarkment_deserialization, SerializationFixture )
 {
     const NetnDataEDStruct dataDisembarkment;
-    const NetnTransportStruct serializedTransport( dataDisembarkment, 2 );
+    const NetnTransportStruct serializedTransport( dataDisembarkment, NetnTransportStruct::E_Disembarkment );
     BOOST_CHECK_EQUAL( serializedTransport.convoyType, 2 );
     ::hla::Deserializer deserializer = Serialize( serializedTransport );
     NetnTransportStruct deserializedTransport;
     deserializedTransport.Deserialize( deserializer );
-    BOOST_CHECK_EQUAL( deserializedTransport.convoyType, 2 );
+    BOOST_CHECK_EQUAL( deserializedTransport.convoyType, NetnTransportStruct::E_Disembarkment );
 }

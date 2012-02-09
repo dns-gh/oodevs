@@ -23,6 +23,7 @@
 namespace xml
 {
     class xisubstream;
+    class xistream;
 }
 
 namespace dispatcher
@@ -117,13 +118,19 @@ private:
     void Pause( unsigned int entity );
     void Resume( unsigned int entity );
     void Cancel( unsigned int entity );
+    void ReadMission(xml::xistream& xis, std::vector<unsigned int>& v,  const MissionResolver_ABC& resolver) const;
+    template <typename T>
+    void ProcessTransport(const T& message, bool isAutomaton);
+    template <typename T>
+    void ProcessEmbark(const T& message, bool isAutomaton, const std::vector< unsigned int >& missions, bool embark);
     //@}
 
 private:
     //! @name Member data
     //@{
-    const unsigned int transportAutomatId_;
-    const unsigned int transportUnitId_;
+    std::vector<unsigned int> transportIds_;
+    std::vector<unsigned int> embarkmentIds_;
+    std::vector<unsigned int> disembarkmentIds_;
     const unsigned int missionCompleteReportId_;
     const unsigned int pauseId_;
     const unsigned int resumeId_;

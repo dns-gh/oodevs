@@ -16,6 +16,10 @@
         </fragOrders>
         <request>
             <transport>COMMON - request transport</transport>
+            <embarkment>COMMON - request embark</embarkment>
+            <disembarkment>COMMON - request take off</disembarkment>
+            <embarkment>COMMON - request land</embarkment>
+            <disembarkment>COMMON - request disembark</disembarkment>
         </request>
         <offer>
             <transport>COMMON - offer transport</transport>

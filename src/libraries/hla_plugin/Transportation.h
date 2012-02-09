@@ -519,11 +519,18 @@ public:
 class NetnTransportStruct
 {
 public:
+    enum ConvoyType
+    {
+        E_Transport     = 0,
+        E_Embarkment    = 1,
+        E_Disembarkment = 2
+    };
+
     //! @name Constructors/Destructor
     //@{
              NetnTransportStruct();
     explicit NetnTransportStruct( const NetnDataTStruct& dataTransport );
-             NetnTransportStruct( const NetnDataEDStruct& data, int32 convoyType );
+             NetnTransportStruct( const NetnDataEDStruct& data, ConvoyType convoyType );
     virtual ~NetnTransportStruct();
     //@}
 
@@ -533,24 +540,26 @@ public:
     void Serialize( Archive& archive ) const
     {
         const uint32 padding = 0;
-        archive << convoyType << padding;
-        if( convoyType == 0 )
+        archive << static_cast<int32>(convoyType) << padding;
+        if( convoyType == E_Transport )
             archive << dataTransport;
-        if( convoyType == 1 )
+        if( convoyType == E_Embarkment )
             archive << dataEmbarkment;
-        if( convoyType == 2 )
+        if( convoyType == E_Disembarkment )
             archive << dataDisembarkment;
     }
     template< typename Archive >
     void Deserialize( Archive& archive )
     {
         uint32 padding = 0;
-        archive >> convoyType >> padding;
-        if( convoyType == 0 )
+        int32 convoy;
+        archive >> convoy >> padding;
+        convoyType = static_cast<ConvoyType>( convoy );
+        if( convoyType == E_Transport )
             archive >> dataTransport;
-        if( convoyType == 1 )
+        if( convoyType == E_Embarkment )
             archive >> dataEmbarkment;
-        if( convoyType == 2 )
+        if( convoyType == E_Disembarkment )
             archive >> dataDisembarkment;
     }
     //@}
@@ -558,7 +567,7 @@ public:
 public:
     //! @name Member data
     //@{
-    int32 convoyType;
+    ConvoyType convoyType;
     NetnDataTStruct dataTransport;
     NetnDataEDStruct dataEmbarkment;
     NetnDataEDStruct dataDisembarkment;

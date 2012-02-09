@@ -111,9 +111,7 @@ TransportationRequester::TransportationRequester( xml::xisubstream xis, const Mi
                                                   InteractionSender_ABC< interactions::NetnRejectOfferConvoy >& rejectSender,
                                                   InteractionSender_ABC< interactions::NetnReadyToReceiveService >& readySender,
                                                   InteractionSender_ABC< interactions::NetnServiceReceived >& receivedSender )
-    : transportAutomatId_     ( resolver.ResolveAutomat( GetName( xis, "request", "transport" ) ) )
-    , transportUnitId_        ( resolver.ResolveUnit( GetName( xis, "request", "transport" ) ) )
-    , missionCompleteReportId_( ResolveReportId( xis ) )
+    : missionCompleteReportId_( ResolveReportId( xis ) )
     , pauseId_                ( resolver.ResolveAutomat( GetName( xis, "fragOrders", "pause" ) ) )
     , resumeId_               ( resolver.ResolveAutomat( GetName( xis, "fragOrders", "resume" ) ) )
     , cancelId_               ( resolver.ResolveAutomat( GetName( xis, "fragOrders", "cancel" ) ) )
@@ -130,6 +128,10 @@ TransportationRequester::TransportationRequester( xml::xisubstream xis, const Mi
     CONNECT( controller, *this, automat_order );
     CONNECT( controller, *this, unit_order );
     CONNECT( controller, *this, report );
+    xis >> xml::start("missions") >> xml::start("request")
+        >> xml::list( "transport", *this, &TransportationRequester::ReadMission, transportIds_, resolver )
+        >> xml::list( "embarkment", *this, &TransportationRequester::ReadMission, embarkmentIds_, resolver )
+        >> xml::list( "disembarkment", *this, &TransportationRequester::ReadMission, disembarkmentIds_, resolver );
 }
 
 // -----------------------------------------------------------------------------
@@ -163,8 +165,21 @@ namespace
 // Created: SLI 2011-10-06
 // -----------------------------------------------------------------------------
 void TransportationRequester::Notify( const sword::AutomatOrder& message, int /*context*/ )
+{   
+    ProcessTransport(message, true);
+    ProcessEmbark(message, true, embarkmentIds_, true);
+    ProcessEmbark(message, true, disembarkmentIds_, false);
+}
+
+// -----------------------------------------------------------------------------
+// Name: TransportationRequester::ProcessTransport
+// Created: AHC 2012-02-09
+// -----------------------------------------------------------------------------
+template <typename T>
+void TransportationRequester::ProcessTransport(const T& message, bool isAutmaton)
 {
-    if( message.type().id() == transportAutomatId_ && message.parameters().elem_size() == 8 )
+   if( message.parameters().elem_size() == 8 &&
+        std::find( transportIds_.begin(), transportIds_.end(), message.type().id() ) != transportIds_.end() )
     {
         const geometry::Point2d embarkmentPoint = ReadLocation( message.parameters().elem( 4 ) );
         const long long embarkmentTime = ReadTime( message.parameters().elem( 5 ) );
@@ -182,9 +197,53 @@ void TransportationRequester::Notify( const sword::AutomatOrder& message, int /*
         NetnDataTStruct transport;
         transport.appointment = NetnAppointmentStruct( embarkmentTime, rpr::WorldLocation( embarkmentPoint.X(), embarkmentPoint.Y(), 0. ) );
         transport.finalAppointment = NetnAppointmentStruct( debarkmentTime, rpr::WorldLocation( debarkmentPoint.X(), debarkmentPoint.Y(), 0. ) );
-        SubordinatesVisitor subordinatesVisitor( transport.objectToManage );
-        subordinates_.Apply( message.tasker().id(), subordinatesVisitor );
+        if( isAutmaton )
+        {
+            SubordinatesVisitor subordinatesVisitor( transport.objectToManage );
+            subordinates_.Apply( message.tasker().id(), subordinatesVisitor );
+        }
+        else
+            transport.objectToManage.push_back( NetnObjectDefinitionStruct( callsignResolver_.ResolveCallsign( message.tasker().id() ), callsignResolver_.ResolveUniqueId( message.tasker().id() ), NetnObjectFeatureStruct() ) );
         request.transportData = NetnTransportStruct( transport );
+        CopyService( request, contextRequests_[ context ] );
+        contextRequests_[ context ].transportData = request.transportData;
+        requestSender_.Send( request );
+        Pause( message.tasker().id() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TransportationRequester::ProcessTransport
+// Created: AHC 2012-02-09
+// -----------------------------------------------------------------------------
+template <typename T>
+void TransportationRequester::ProcessEmbark(const T& message, bool isAutomaton, const std::vector< unsigned int >& missions, bool embark)
+{
+    if( message.parameters().elem_size() == 6 &&
+        std::find( missions.begin(), missions.end(), message.type().id() ) != missions.end() )
+    {
+        const NetnTransportStruct::ConvoyType transportType = embark ? NetnTransportStruct::E_Embarkment : NetnTransportStruct::E_Disembarkment ;
+        const geometry::Point2d embarkmentPoint = ReadLocation( message.parameters().elem( 4 ) );
+        const long long embarkmentTime = ReadTime( message.parameters().elem( 5 ) );
+        const unsigned int context = contextFactory_.Create();
+        pendingRequests_.right.erase( message.tasker().id() );
+        pendingRequests_.insert( T_Requests::value_type( context, message.tasker().id() ) );
+        interactions::NetnRequestConvoy request;
+        request.serviceId = NetnEventIdentifier( context, "SWORD" );
+        request.consumer = UnicodeString( "SWORD" );
+        request.provider = UnicodeString(); // Empty provider
+        request.serviceType = 4; // convoy
+        request.requestTimeOut = 0; // no timeout
+        NetnDataEDStruct transport;
+        transport.appointment = NetnAppointmentStruct( embarkmentTime, rpr::WorldLocation( embarkmentPoint.X(), embarkmentPoint.Y(), 0. ) );
+        if( isAutomaton )
+        {
+            SubordinatesVisitor subordinatesVisitor( transport.objectToManage );
+            subordinates_.Apply( message.tasker().id(), subordinatesVisitor );
+        }
+        else
+            transport.objectToManage.push_back( NetnObjectDefinitionStruct( callsignResolver_.ResolveCallsign( message.tasker().id() ), callsignResolver_.ResolveUniqueId( message.tasker().id() ), NetnObjectFeatureStruct() ) );
+        request.transportData = NetnTransportStruct( transport, transportType );
         CopyService( request, contextRequests_[ context ] );
         contextRequests_[ context ].transportData = request.transportData;
         requestSender_.Send( request );
@@ -198,31 +257,9 @@ void TransportationRequester::Notify( const sword::AutomatOrder& message, int /*
 // -----------------------------------------------------------------------------
 void TransportationRequester::Notify( const sword::UnitOrder& message, int /*context*/ )
 {
-    if( message.type().id() == transportUnitId_ && message.parameters().elem_size() == 8 )
-    {
-        const geometry::Point2d embarkmentPoint = ReadLocation( message.parameters().elem( 4 ) );
-        const long long embarkmentTime = ReadTime( message.parameters().elem( 5 ) );
-        const geometry::Point2d debarkmentPoint = ReadLocation( message.parameters().elem( 6 ) );
-        const long long debarkmentTime = ReadTime( message.parameters().elem( 7 ) );
-        const unsigned int context = contextFactory_.Create();
-        pendingRequests_.right.erase( message.tasker().id() );
-        pendingRequests_.insert( T_Requests::value_type( context, message.tasker().id() ) );
-        interactions::NetnRequestConvoy request;
-        request.serviceId = NetnEventIdentifier( context, "SWORD" );
-        request.consumer = UnicodeString( "SWORD" );
-        request.provider = UnicodeString(); // Empty provider
-        request.serviceType = 4; // convoy
-        request.requestTimeOut = 0; // no timeout
-        NetnDataTStruct transport;
-        transport.appointment = NetnAppointmentStruct( embarkmentTime, rpr::WorldLocation( embarkmentPoint.X(), embarkmentPoint.Y(), 0. ) );
-        transport.finalAppointment = NetnAppointmentStruct( debarkmentTime, rpr::WorldLocation( debarkmentPoint.X(), debarkmentPoint.Y(), 0. ) );
-        transport.objectToManage.push_back( NetnObjectDefinitionStruct( callsignResolver_.ResolveCallsign( message.tasker().id() ), callsignResolver_.ResolveUniqueId( message.tasker().id() ), NetnObjectFeatureStruct() ) );
-        request.transportData = NetnTransportStruct( transport );
-        CopyService( request, contextRequests_[ context ] );
-        contextRequests_[ context ].transportData = request.transportData;
-        requestSender_.Send( request );
-        Pause( message.tasker().id() );
-    }
+    ProcessTransport(message, false);
+    ProcessEmbark(message, false, embarkmentIds_, true);
+    ProcessEmbark(message, false, disembarkmentIds_, false);
 }
 
 namespace
@@ -244,8 +281,6 @@ void TransportationRequester::Receive( interactions::NetnOfferConvoy& interactio
 {
     if( ! CheckService( interaction ) )
         return;
-    if( interaction.transportData.convoyType != 0 )
-        return;
     if( !interaction.isOffering )
         return;
     const unsigned int context = interaction.serviceId.eventCount;
@@ -262,7 +297,16 @@ void TransportationRequester::Receive( interactions::NetnOfferConvoy& interactio
     acceptSender_.Send( accept );
     Resume( pendingRequests_.left.find( context )->second );
     contextRequests_[ context ] = interaction;
-    Transfer( pendingRequests_, acceptedRequests_, context );
+    if( interaction.transportData.convoyType == NetnTransportStruct::E_Disembarkment )
+    {
+        interactions::NetnReadyToReceiveService ready;
+        CopyService( contextRequests_[ context ], ready );
+        readySender_.Send( ready );
+        Transfer( pendingRequests_, readyToReceiveRequests_, context );
+    }
+    else
+        Transfer( pendingRequests_, acceptedRequests_, context );
+
 }
 
 // -----------------------------------------------------------------------------
@@ -443,4 +487,15 @@ void TransportationRequester::Resume( unsigned int entity )
 void TransportationRequester::Cancel( unsigned int entity )
 {
     SendFragOrder( entity, cancelId_, publisher_ );
+}
+// -----------------------------------------------------------------------------
+// Name: TransportationRequester::Cancel
+// Created: AHC 2012-02-09
+// -----------------------------------------------------------------------------
+void TransportationRequester::ReadMission(xml::xistream& xis, std::vector<unsigned int>& v,  const MissionResolver_ABC& resolver) const
+{
+    std::string name;
+    xis >> name;
+    v.push_back( resolver.ResolveAutomat( name ) );
+    v.push_back( resolver.ResolveUnit( name ) );
 }

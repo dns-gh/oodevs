@@ -37,6 +37,8 @@ BOOST_AUTO_TEST_CASE( transportation_requester_reads_transportation_mission_name
                              "        </fragOrders>"
                              "        <request>"
                              "            <transport>transportation mission name</transport>"
+                             "            <embarkment>embarkment mission name</embarkment>"
+                             "            <disembarkment>disembarkment mission name</disembarkment>"
                              "        </request>"
                              "    </missions>"
                              "    <reports>"
@@ -57,6 +59,10 @@ BOOST_AUTO_TEST_CASE( transportation_requester_reads_transportation_mission_name
     MockInteractionSender< interactions::NetnServiceReceived > receivedSender;
     MOCK_EXPECT( resolver, ResolveAutomat ).once().with( "transportation mission name" ).returns( 42 );
     MOCK_EXPECT( resolver, ResolveUnit ).once().with( "transportation mission name" ).returns( 42 );
+    MOCK_EXPECT( resolver, ResolveAutomat ).once().with( "embarkment mission name" ).returns( 42 );
+    MOCK_EXPECT( resolver, ResolveUnit ).once().with( "embarkment mission name" ).returns( 42 );
+    MOCK_EXPECT( resolver, ResolveAutomat ).once().with( "disembarkment mission name" ).returns( 42 );
+    MOCK_EXPECT( resolver, ResolveUnit ).once().with( "disembarkment mission name" ).returns( 42 );
     MOCK_EXPECT( resolver, ResolveAutomat ).once().with( "pause" ).returns( 43 );
     MOCK_EXPECT( resolver, ResolveAutomat ).once().with( "resume" ).returns( 44 );
     MOCK_EXPECT( resolver, ResolveAutomat ).once().with( "cancel" ).returns( 45 );
@@ -78,6 +84,8 @@ namespace
                    "        </fragOrders>"
                    "        <request>"
                    "            <transport>transport</transport>"
+                   "            <embarkment>embarkment</embarkment>"
+                   "            <disembarkment>disembarkment</disembarkment>"
                    "        </request>"
                    "    </missions>"
                    "    <reports>"
@@ -86,6 +94,10 @@ namespace
                    "</configuration>" )
             , transportAutomatId( 42 )
             , transportUnitId   ( 43 )
+            , embarkmentAutomatId( 52 )
+            , embarkmentUnitId   ( 53 )
+            , disembarkmentAutomatId( 54 )
+            , disembarkmentUnitId   ( 55 )
             , pauseId           ( 44 )
             , resumeId          ( 45 )
             , cancelId          ( 46 )
@@ -95,6 +107,10 @@ namespace
             xis >> xml::start( "configuration" );
             MOCK_EXPECT( missionResolver, ResolveAutomat ).once().with( "transport" ).returns( transportAutomatId );
             MOCK_EXPECT( missionResolver, ResolveUnit ).once().with( "transport" ).returns( transportUnitId );
+            MOCK_EXPECT( missionResolver, ResolveAutomat ).once().with( "embarkment" ).returns( embarkmentAutomatId );
+            MOCK_EXPECT( missionResolver, ResolveUnit ).once().with( "embarkment" ).returns( embarkmentUnitId );
+            MOCK_EXPECT( missionResolver, ResolveAutomat ).once().with( "disembarkment" ).returns( disembarkmentAutomatId );
+            MOCK_EXPECT( missionResolver, ResolveUnit ).once().with( "disembarkment" ).returns( disembarkmentUnitId );
             MOCK_EXPECT( missionResolver, ResolveAutomat ).once().with( "pause" ).returns( pauseId );
             MOCK_EXPECT( missionResolver, ResolveAutomat ).once().with( "resume" ).returns( resumeId );
             MOCK_EXPECT( missionResolver, ResolveAutomat ).once().with( "cancel" ).returns( cancelId );
@@ -109,6 +125,10 @@ namespace
         xml::xistringstream xis;
         unsigned int transportAutomatId;
         unsigned int transportUnitId;
+        unsigned int embarkmentAutomatId;
+        unsigned int embarkmentUnitId;
+        unsigned int disembarkmentAutomatId;
+        unsigned int disembarkmentUnitId;
         unsigned int pauseId;
         unsigned int resumeId;
         unsigned int cancelId;
@@ -184,7 +204,6 @@ BOOST_FIXTURE_TEST_CASE( transportation_requester_listens_to_automat_transportat
     BOOST_CHECK_EQUAL( pauseMessage.message().frag_order().type().id(), pauseId );
     const int convoyServiceType = 4;
     const unsigned int noTimeout = 0;
-    const int convoyTransportType = 0;
     const int noDetail = 0;
     BOOST_CHECK_EQUAL( convoy.serviceId.eventCount, 1337 );
     BOOST_CHECK_EQUAL( convoy.serviceId.issuingObjectIdentifier.str(), "SWORD" );
@@ -192,7 +211,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_requester_listens_to_automat_transportat
     BOOST_CHECK( convoy.provider.str().empty() );
     BOOST_CHECK_EQUAL( convoy.serviceType, convoyServiceType );
     BOOST_CHECK_EQUAL( convoy.requestTimeOut, noTimeout );
-    BOOST_CHECK_EQUAL( convoy.transportData.convoyType, convoyTransportType );
+    BOOST_CHECK_EQUAL( convoy.transportData.convoyType, NetnTransportStruct::E_Transport );
     BOOST_CHECK_EQUAL( convoy.transportData.dataTransport.appointment.dateTime, embarkingTime );
     BOOST_CHECK_CLOSE( convoy.transportData.dataTransport.appointment.location.Latitude(), embarkingPoint.X(), 0.00001 );
     BOOST_CHECK_CLOSE( convoy.transportData.dataTransport.appointment.location.Longitude(), embarkingPoint.Y(), 0.00001 );
@@ -203,6 +222,98 @@ BOOST_FIXTURE_TEST_CASE( transportation_requester_listens_to_automat_transportat
     BOOST_CHECK_EQUAL( convoy.transportData.dataTransport.objectToManage[ 0 ].callsign.str(), subordinateCallsign );
     BOOST_CHECK_EQUAL( convoy.transportData.dataTransport.objectToManage[ 0 ].uniqueId.str(), subordinateNetnUniqueId );
     BOOST_CHECK_EQUAL( convoy.transportData.dataTransport.objectToManage[ 0 ].objectFeature.featureLevel, noDetail );
+}
+
+BOOST_FIXTURE_TEST_CASE( transportation_requester_listens_to_automat_embarkment_mission_and_notifies_listener_and_pauses_mission, Fixture )
+{
+    TransportationRequester requester( xis, missionResolver, messageController, callsignResolver, subordinates, factory, publisher, requestSender, acceptSender, rejectSender, readySender, receivedSender );
+    const geometry::Point2d embarkingPoint;
+    const long long embarkingTime = 1;
+    const std::string subordinateCallsign = "subordinate callsign";
+    const std::string subordinateNetnUniqueId = "143";
+    const std::string transportingUnitCallsign = "transporting callsign";
+    sword::SimToClient_Content message = MakeTransportationMessage( embarkmentAutomatId );
+    sword::AutomatOrder* automatOrder = message.mutable_automat_order();
+    automatOrder->mutable_tasker()->set_id( automatId );
+    sword::MissionParameters* parameters = automatOrder->mutable_parameters();
+    parameters->add_elem();// danger direction
+    parameters->add_elem();// phase lines
+    parameters->add_elem();// limit 1
+    parameters->add_elem();// limit 2
+    AddLocation( *parameters, embarkingPoint ); // embarking point
+    parameters->add_elem()->add_value()->mutable_datetime()->set_data( "19700101T000001" ); // embarking time
+    interactions::NetnRequestConvoy convoy;
+    sword::ClientToSim pauseMessage;
+    MOCK_EXPECT( subordinates, Apply ).once().with( automatId, mock::any ).calls( boost::bind( &TransportedUnitsVisitor_ABC::Notify, _2, subordinateCallsign, subordinateNetnUniqueId ) );
+    MOCK_EXPECT( requestSender, Send ).once().with( mock::retrieve( convoy ) );
+    MOCK_EXPECT( factory, Create ).once().returns( 1337 );
+    MOCK_EXPECT( publisher, SendClientToSim ).once().with( mock::retrieve( pauseMessage ) );
+    messageController.Dispatch( message );
+    BOOST_CHECK( pauseMessage.message().has_frag_order() );
+    BOOST_CHECK_EQUAL( pauseMessage.message().frag_order().type().id(), pauseId );
+    const int convoyServiceType = 4;
+    const unsigned int noTimeout = 0;
+    const int noDetail = 0;
+    BOOST_CHECK_EQUAL( convoy.serviceId.eventCount, 1337 );
+    BOOST_CHECK_EQUAL( convoy.serviceId.issuingObjectIdentifier.str(), "SWORD" );
+    BOOST_CHECK_EQUAL( convoy.consumer.str(), "SWORD" );
+    BOOST_CHECK( convoy.provider.str().empty() );
+    BOOST_CHECK_EQUAL( convoy.serviceType, convoyServiceType );
+    BOOST_CHECK_EQUAL( convoy.requestTimeOut, noTimeout );
+    BOOST_CHECK_EQUAL( convoy.transportData.convoyType, NetnTransportStruct::E_Embarkment );
+    BOOST_CHECK_EQUAL( convoy.transportData.dataEmbarkment.appointment.dateTime, embarkingTime );
+    BOOST_CHECK_CLOSE( convoy.transportData.dataEmbarkment.appointment.location.Latitude(), embarkingPoint.X(), 0.00001 );
+    BOOST_CHECK_CLOSE( convoy.transportData.dataEmbarkment.appointment.location.Longitude(), embarkingPoint.Y(), 0.00001 );
+    BOOST_CHECK_EQUAL( convoy.transportData.dataEmbarkment.objectToManage.size(), 1u );
+    BOOST_CHECK_EQUAL( convoy.transportData.dataEmbarkment.objectToManage[ 0 ].callsign.str(), subordinateCallsign );
+    BOOST_CHECK_EQUAL( convoy.transportData.dataEmbarkment.objectToManage[ 0 ].uniqueId.str(), subordinateNetnUniqueId );
+    BOOST_CHECK_EQUAL( convoy.transportData.dataEmbarkment.objectToManage[ 0 ].objectFeature.featureLevel, noDetail );
+}
+
+BOOST_FIXTURE_TEST_CASE( transportation_requester_listens_to_automat_disembarkment_mission_and_notifies_listener_and_pauses_mission, Fixture )
+{
+    TransportationRequester requester( xis, missionResolver, messageController, callsignResolver, subordinates, factory, publisher, requestSender, acceptSender, rejectSender, readySender, receivedSender );
+    const geometry::Point2d disembarkingPoint;
+    const long long disembarkingTime = 1;
+    const std::string subordinateCallsign = "subordinate callsign";
+    const std::string subordinateNetnUniqueId = "143";
+    const std::string transportingUnitCallsign = "transporting callsign";
+    sword::SimToClient_Content message = MakeTransportationMessage( disembarkmentAutomatId );
+    sword::AutomatOrder* automatOrder = message.mutable_automat_order();
+    automatOrder->mutable_tasker()->set_id( automatId );
+    sword::MissionParameters* parameters = automatOrder->mutable_parameters();
+    parameters->add_elem();// danger direction
+    parameters->add_elem();// phase lines
+    parameters->add_elem();// limit 1
+    parameters->add_elem();// limit 2
+    AddLocation( *parameters, disembarkingPoint ); // disembarking point
+    parameters->add_elem()->add_value()->mutable_datetime()->set_data( "19700101T000001" ); // disembarking time
+    interactions::NetnRequestConvoy convoy;
+    sword::ClientToSim pauseMessage;
+    MOCK_EXPECT( subordinates, Apply ).once().with( automatId, mock::any ).calls( boost::bind( &TransportedUnitsVisitor_ABC::Notify, _2, subordinateCallsign, subordinateNetnUniqueId ) );
+    MOCK_EXPECT( requestSender, Send ).once().with( mock::retrieve( convoy ) );
+    MOCK_EXPECT( factory, Create ).once().returns( 1337 );
+    MOCK_EXPECT( publisher, SendClientToSim ).once().with( mock::retrieve( pauseMessage ) );
+    messageController.Dispatch( message );
+    BOOST_CHECK( pauseMessage.message().has_frag_order() );
+    BOOST_CHECK_EQUAL( pauseMessage.message().frag_order().type().id(), pauseId );
+    const int convoyServiceType = 4;
+    const unsigned int noTimeout = 0;
+    const int noDetail = 0;
+    BOOST_CHECK_EQUAL( convoy.serviceId.eventCount, 1337 );
+    BOOST_CHECK_EQUAL( convoy.serviceId.issuingObjectIdentifier.str(), "SWORD" );
+    BOOST_CHECK_EQUAL( convoy.consumer.str(), "SWORD" );
+    BOOST_CHECK( convoy.provider.str().empty() );
+    BOOST_CHECK_EQUAL( convoy.serviceType, convoyServiceType );
+    BOOST_CHECK_EQUAL( convoy.requestTimeOut, noTimeout );
+    BOOST_CHECK_EQUAL( convoy.transportData.convoyType, NetnTransportStruct::E_Disembarkment );
+    BOOST_CHECK_EQUAL( convoy.transportData.dataDisembarkment.appointment.dateTime, disembarkingTime );
+    BOOST_CHECK_CLOSE( convoy.transportData.dataDisembarkment.appointment.location.Latitude(), disembarkingPoint.X(), 0.00001 );
+    BOOST_CHECK_CLOSE( convoy.transportData.dataDisembarkment.appointment.location.Longitude(), disembarkingPoint.Y(), 0.00001 );
+    BOOST_CHECK_EQUAL( convoy.transportData.dataDisembarkment.objectToManage.size(), 1u );
+    BOOST_CHECK_EQUAL( convoy.transportData.dataDisembarkment.objectToManage[ 0 ].callsign.str(), subordinateCallsign );
+    BOOST_CHECK_EQUAL( convoy.transportData.dataDisembarkment.objectToManage[ 0 ].uniqueId.str(), subordinateNetnUniqueId );
+    BOOST_CHECK_EQUAL( convoy.transportData.dataDisembarkment.objectToManage[ 0 ].objectFeature.featureLevel, noDetail );
 }
 
 BOOST_FIXTURE_TEST_CASE( transportation_requester_listens_to_unit_transportation_mission_and_notifies_listener_and_pauses_mission, Fixture )

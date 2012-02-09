@@ -72,7 +72,7 @@ BOOST_FIXTURE_TEST_CASE( netn_offer_convoy_sender_sends_announce_offer_to_client
     request.provider = UnicodeString( "provider" );
     request.serviceId.eventCount = 42;
     request.serviceId.issuingObjectIdentifier = UnicodeString( "objectIdentifier" );
-    request.transportData.convoyType = 0; // Transport
+    request.transportData.convoyType = NetnTransportStruct::E_Transport;
     request.transportData.dataTransport.appointment = NetnAppointmentStruct( 1, rpr::WorldLocation( 1., 2., 3. ) );
     request.transportData.dataTransport.finalAppointment = NetnAppointmentStruct( 2, rpr::WorldLocation( 4., 5., 6. ) );
     request.transportData.dataTransport.objectToManage.push_back( NetnObjectDefinitionStruct( "transported", "unique", NetnObjectFeatureStruct() ) );
