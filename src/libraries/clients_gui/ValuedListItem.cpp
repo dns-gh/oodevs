@@ -42,10 +42,10 @@ ValuedListItem::ValuedListItem( Q3ListViewItem * parent, Comparator comparator /
 // Name: ValuedListItem constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-ValuedListItem::ValuedListItem( Q3ListViewItem * parent, Q3ListViewItem* after )
+ValuedListItem::ValuedListItem( Q3ListViewItem * parent, Q3ListViewItem* after, Comparator comparator /*= 0*/ )
     : RichListItem( parent, after )
     , container_ ( 0 )
-    , comparator_( 0 )
+    , comparator_( comparator )
 {
     // NOTHING
 }
@@ -54,10 +54,10 @@ ValuedListItem::ValuedListItem( Q3ListViewItem * parent, Q3ListViewItem* after )
 // Name: ValuedListItem constructor
 // Created: AGE 2006-02-15
 // -----------------------------------------------------------------------------
-ValuedListItem::ValuedListItem( Q3ListView* parent, Q3ListViewItem* after )
+ValuedListItem::ValuedListItem( Q3ListView* parent, Q3ListViewItem* after, Comparator comparator /*= 0*/ )
     : RichListItem( parent, after )
     , container_ ( 0 )
-    , comparator_( 0 )
+    , comparator_( comparator )
 {
     // NOTHING
 }

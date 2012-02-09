@@ -38,15 +38,15 @@ namespace
             item->SetBackgroundColor( color1_, color2_ );
             return item;
         }
-        virtual gui::ValuedListItem* CreateItem( Q3ListView* parent, Q3ListViewItem* after )
+        virtual gui::ValuedListItem* CreateItem( Q3ListView* parent, Q3ListViewItem* after, gui::ValuedListItem::Comparator comparator = 0 )
         {
-            gui::ValuedListItem* item = factory_.CreateItem( parent, after );
+            gui::ValuedListItem* item = factory_.CreateItem( parent, after, comparator );
             item->SetBackgroundColor( color1_, color2_ );
             return item;
         }
-        virtual gui::ValuedListItem* CreateItem( Q3ListViewItem* parent, Q3ListViewItem* after )
+        virtual gui::ValuedListItem* CreateItem( Q3ListViewItem* parent, Q3ListViewItem* after, gui::ValuedListItem::Comparator comparator = 0 )
         {
-            gui::ValuedListItem* item = factory_.CreateItem( parent, after );
+            gui::ValuedListItem* item = factory_.CreateItem( parent, after, comparator );
             item->SetBackgroundColor( color1_, color2_ );
             return item;
         }
