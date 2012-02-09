@@ -44,9 +44,9 @@ public:
     //! @name Constructors/Destructor
     //@{
     explicit ValuedListItem( Q3ListView* parent, Comparator comparator = 0 );
-             ValuedListItem( Q3ListView* parent, Q3ListViewItem* after );
+             ValuedListItem( Q3ListView* parent, Q3ListViewItem* after, Comparator comparator = 0 );
     explicit ValuedListItem( Q3ListViewItem* parent, Comparator comparator = 0 );
-             ValuedListItem( Q3ListViewItem* parent, Q3ListViewItem* after );
+             ValuedListItem( Q3ListViewItem* parent, Q3ListViewItem* after, Comparator comparator = 0 );
     virtual ~ValuedListItem();
     //@}
 

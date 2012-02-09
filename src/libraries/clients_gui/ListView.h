@@ -111,7 +111,7 @@ public:
             toSkip_ = 0;
             return previousItem;
         }
-        return factory_.CreateItem( parent, previousItem );
+        return factory_.CreateItem( parent, previousItem, comparator_ );
     }
 
     template< typename Parent >

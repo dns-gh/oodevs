@@ -36,8 +36,8 @@ public:
     //@{
     virtual ValuedListItem* CreateItem( Q3ListView * parent, ValuedListItem::Comparator comparator = 0 );
     virtual ValuedListItem* CreateItem( Q3ListViewItem * parent, ValuedListItem::Comparator comparator = 0 );
-    virtual ValuedListItem* CreateItem( Q3ListView * parent, Q3ListViewItem * after );
-    virtual ValuedListItem* CreateItem( Q3ListViewItem * parent, Q3ListViewItem * after );
+    virtual ValuedListItem* CreateItem( Q3ListView * parent, Q3ListViewItem * after, ValuedListItem::Comparator comparator = 0 );
+    virtual ValuedListItem* CreateItem( Q3ListViewItem * parent, Q3ListViewItem * after, ValuedListItem::Comparator comparator = 0 );
 
     virtual RichLabel*      CreateLabel( QWidget* parent = 0, const char* name = 0 );
     virtual RichLabel*      CreateLabel( const QString& text, QWidget* parent = 0, const char* name = 0 );
