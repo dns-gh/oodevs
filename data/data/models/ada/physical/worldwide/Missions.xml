@@ -3212,7 +3212,7 @@ Elements are visited in the order of the list. Agent will protect itself with NB
       <parameter dia-name="zoneDebarquement_" name="Debarking point" optional="false" type="Location"/>
       <parameter dia-name="heureDebarquement_" name="Debarking time" optional="false" type="DateTime"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_SeFaireTransporter" dia-type="T_Mission_Automate_SeFaireTransporter" id="4466" mrt-dia-behavior="MIS_Automate_MRT_SeFaireTransporter" name="COMMON - request embark">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_SeFaireTransporter" dia-type="T_Mission_Automate_SeFaireTransporter4" id="4466" mrt-dia-behavior="MIS_Automate_MRT_SeFaireTransporter" name="COMMON - request embark">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3220,7 +3220,7 @@ Elements are visited in the order of the list. Agent will protect itself with NB
       <parameter dia-name="zoneEmbarquement_" name="Embarking point" optional="false" type="Location"/>
       <parameter dia-name="heureEmbarquement_" name="Embarking time" optional="false" type="DateTime"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_SeFaireTransporter" dia-type="T_Mission_Automate_SeFaireTransporter" id="4467" mrt-dia-behavior="MIS_Automate_MRT_SeFaireTransporter" name="COMMON - request disembark">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_SeFaireTransporter" dia-type="T_Mission_Automate_SeFaireTransporter3" id="4467" mrt-dia-behavior="MIS_Automate_MRT_SeFaireTransporter" name="COMMON - request disembark">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3228,7 +3228,7 @@ Elements are visited in the order of the list. Agent will protect itself with NB
       <parameter dia-name="zoneEmbarquement_" name="Debarking point" optional="false" type="Location"/>
       <parameter dia-name="heureDebarquement_" name="Debarking time" optional="false" type="DateTime"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_SeFaireTransporter" dia-type="T_Mission_Automate_SeFaireTransporter" id="4470" mrt-dia-behavior="MIS_Automate_MRT_SeFaireTransporter" name="COMMON - request take off">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_SeFaireTransporter" dia-type="T_Mission_Automate_SeFaireTransporter6" id="4470" mrt-dia-behavior="MIS_Automate_MRT_SeFaireTransporter" name="COMMON - request take off">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3236,7 +3236,7 @@ Elements are visited in the order of the list. Agent will protect itself with NB
       <parameter dia-name="zoneEmbarquement_" name="Takeoff point" optional="false" type="Location"/>
       <parameter dia-name="heureDebarquement_" name="Takeoff time" optional="false" type="DateTime"/>
     </mission>
-    <mission cdt-dia-behavior="MIS_Automate_CDT_SeFaireTransporter" dia-type="T_Mission_Automate_SeFaireTransporter" id="4471" mrt-dia-behavior="MIS_Automate_MRT_SeFaireTransporter" name="COMMON - request landing">
+    <mission cdt-dia-behavior="MIS_Automate_CDT_SeFaireTransporter" dia-type="T_Mission_Automate_SeFaireTransporter5" id="4471" mrt-dia-behavior="MIS_Automate_MRT_SeFaireTransporter" name="COMMON - request landing">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
@@ -3426,4 +3426,4 @@ Elements are visited in the order of the list. Agent will protect itself with NB
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="3810319977" -->
+<!-- signature="3561173460" -->
