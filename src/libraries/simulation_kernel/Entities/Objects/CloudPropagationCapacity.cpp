@@ -84,7 +84,7 @@ void CloudPropagationCapacity::Finalize( MIL_Object_ABC& object )
     time_ = MIL_AgentServer::GetWorkspace().GetRealTime();
     TER_Localisation localisation = object.GetLocalisation();
     rCurrentCircleRadius_ = localisation.GetCircleRadius();
-    length_ = localisation.GetArea();
+    length_ = localisation.GetLength();
 }
 
 namespace
