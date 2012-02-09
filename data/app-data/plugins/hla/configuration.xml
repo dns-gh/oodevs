@@ -15,10 +15,10 @@
             <cancel>Cancel maneuver</cancel>
         </fragOrders>
         <request>
-            <transport>Common - request transport</transport>
+            <transport>COMMON - request transport</transport>
         </request>
         <offer>
-            <transport>Common - offer transport</transport>
+            <transport>COMMON - offer transport</transport>
         </offer>
     </missions>
     <reports>
