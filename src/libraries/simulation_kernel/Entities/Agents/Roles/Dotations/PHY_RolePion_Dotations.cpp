@@ -257,7 +257,7 @@ bool PHY_RolePion_Dotations::SetConsumptionMode( const PHY_ConsumptionType& cons
     if( func.bReservationOK_ )
     {
         pPreviousConsumptionMode_ = pCurrentConsumptionMode_;
-        pCurrentConsumptionMode_  = &consumptionMode;
+        pCurrentConsumptionMode_ = &consumptionMode;
         return true;
     }
 
@@ -407,7 +407,7 @@ void PHY_RolePion_Dotations::Update( bool bIsDead )
 
     pDotations_->ConsumeConsumptionReservations();
     pPreviousConsumptionMode_ = pCurrentConsumptionMode_;
-    pCurrentConsumptionMode_  = 0;
+    pCurrentConsumptionMode_ = 0;
 
     pDotations_->ConsumeFireReservations();
 

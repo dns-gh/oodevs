@@ -93,6 +93,7 @@ private:
     const PHY_DotationCategory* pCategory_;
     PHY_DotationGroup* pGroup_;
     double rValue_;
+    double rLastValueSent_;
     double rCapacity_;
     double rConsumptionReservation_;
     double rFireReservation_;

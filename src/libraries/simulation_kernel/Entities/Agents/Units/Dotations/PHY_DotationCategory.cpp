@@ -36,8 +36,8 @@ PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const 
     , pIndirectFireData_    ( 0 )
     , rWeight_              ( 0. )
     , rVolume_              ( 0. )
-    , bIlluminating_        ( false )
     , fRange_               ( 0.)
+    , bIlluminating_        ( false )
     , bMaintainIllumination_( false )
     , bGuided_              ( false )
     , bMaintainGuidance_    ( false )
@@ -456,4 +456,20 @@ float PHY_DotationCategory::GetIlluminatingRange( ) const
 double PHY_DotationCategory::FindUrbanAttritionScore( const PHY_MaterialCompositionType& material )
 {
     return PHY_UrbanAttritionData::GetGlobalScore( material );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::IsSignificantChange
+// Created: LDC 2012-02-08
+// -----------------------------------------------------------------------------
+bool PHY_DotationCategory::IsSignificantChange( double oldValue, double newValue, double capacity ) const
+{
+    if( &type_ == PHY_DotationType::munition_ || 
+        &type_ == PHY_DotationType::mine_ ||
+        &type_ == PHY_DotationType::explosif_ ||
+        &type_ == PHY_DotationType::agentExtincteur_ ||
+        0. == capacity )
+        return ( (unsigned int)oldValue != (unsigned int)newValue );
+    double delta = std::abs( oldValue - newValue );
+    return ( delta/capacity ) >= 0.1;
 }

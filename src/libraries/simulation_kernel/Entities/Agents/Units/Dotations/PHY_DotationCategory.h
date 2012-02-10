@@ -87,7 +87,11 @@ public:
            double GetUrbanAttritionScore( const PHY_MaterialCompositionType& material ) const;
     static double FindUrbanAttritionScore( const PHY_MaterialCompositionType& material ); // Get global score
     //@}
-
+    
+    //! @name 
+    //@{
+    bool IsSignificantChange( double oldValue, double newValue, double capacity ) const;
+    //@}
     
 
 private:
@@ -135,8 +139,8 @@ private:
     PHY_DotationCategory_IndirectFire_ABC* pIndirectFireData_;
 
     //Illumination capacity
-    bool  bIlluminating_;
     float fRange_;
+    bool  bIlluminating_;
     bool  bMaintainIllumination_;
     //Guidance
     bool bGuided_;
