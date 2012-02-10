@@ -71,6 +71,7 @@ private:
     QTimer* timer_;
     int x_;
     int y_;
+    bool terrainPickChange_;
     geometry::Point2f terrainCoordinates_;
     //@}
 };

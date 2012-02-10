@@ -76,8 +76,10 @@ private:
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
     T_PointVector points_;
-    geometry::Rectangle2f boundingBox_;
     std::auto_ptr< kernel::Location_ABC > location_;
+
+protected:
+    geometry::Rectangle2f boundingBox_;
     //@}
 };
 
