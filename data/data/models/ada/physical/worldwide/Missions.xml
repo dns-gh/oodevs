@@ -2091,7 +2091,7 @@ Elements are visited in the order of the list. Agent will protect itself with NB
       <parameter dia-name="requestIssuingObjectIdentifier_" name="Request identifier" optional="false" type="String"/>
       <parameter dia-name="isPartialOffer_" name="Is partial offer" optional="false" type="Boolean"/>
     </mission>
-    <mission dia-behavior="tasks.PerformWorks" dia-type="tasks.PerformWorks" id="4473" name="MLSECURITY - Perform public works">
+    <mission dia-behavior="tasks.PerformWorks" dia-type="tasks.PerformWorks" id="4474" name="MLSECURITY - Perform public works">
       <description>
         <doctrine><![CDATA[To create and build public works.]]></doctrine>
         <usage><![CDATA[For an gent to know how to create and build a set of given objects or planned objects. When several elements  should be created, the agent acts on each object by following the order of the elements into the list. 
@@ -2111,7 +2111,7 @@ A visited object won't be created and build if agent doesn't have the physical c
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="tasks.PerformWorks" dia-type="tasks.PerformWorks2" id="4474" name="MLSECURITY - Resume public works">
+    <mission dia-behavior="tasks.PerformWorks" dia-type="tasks.PerformWorks2" id="4475" name="MLSECURITY - Resume public works">
       <description>
         <doctrine><![CDATA[To fix and/or resume already existing works.]]></doctrine>
         <usage><![CDATA[For an gent to know how to create and build a set of given objects or planned objects. When several elements  should be created, the agent acts on each object by following the order of the elements into the list. 
@@ -2131,7 +2131,7 @@ A visited object won't be created and build if agent doesn't have the physical c
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="tasks.BuildAnObjectFromAPosition" dia-type="tasks.BuildAnObjectFromAPosition" id="4475" name="MLSECURITY - Plan an attack">
+    <mission dia-behavior="tasks.BuildAnObjectFromAPosition" dia-type="tasks.BuildAnObjectFromAPosition" id="4476" name="MLSECURITY - Plan an attack">
       <description>
         <doctrine><![CDATA[To create arsons/plant a bomb on specific location]]></doctrine>
         <usage><![CDATA[For an gent to know how to plan an attack. The agent will move to planned attack, then reach the meeting position before activating the attack.]]></usage>
@@ -2158,7 +2158,7 @@ A visited object won't be created and build if agent doesn't have the physical c
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="tasks.PerformWorks" dia-type="tasks.PerformWorks3" id="4476" name="MLSECURITY - Plan a multiple attack">
+    <mission dia-behavior="tasks.PerformWorks" dia-type="tasks.PerformWorks3" id="4477" name="MLSECURITY - Plan a multiple attack">
       <description>
         <doctrine><![CDATA[To create and build public works.]]></doctrine>
         <usage><![CDATA[For an gent to know how to create and build a set of given objects or planned objects. When several elements  should be created, the agent acts on each object by following the order of the elements into the list. 
@@ -3533,4 +3533,4 @@ A visited object won't be created and build if agent doesn't have the physical c
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="0210712145" -->
+<!-- signature="3467838273" -->
