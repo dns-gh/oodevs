@@ -10,7 +10,7 @@ local unloadingActionDelays = 1
 method "canVictimsBeEvacuated" (
     function( self )
         if not self:isReached() then
-            meKnowledge:sendReport( eRC_VictimsCannotBeEvacuated )
+            meKnowledge:sendReport( eRC_VictimsCannotBeEvacuated ) -- $$$ MIA not the right place to do this report
             return false -- $$$ MIA Add rule: "hasVictims"
         else
             return true

@@ -62,7 +62,7 @@ method "createIt" ( masalife.brain.integration.startStopAction(
         return self
     end,
     started = function( self )
-        integration.updateBuildIt( self )
+        integration.updateBuildItSecu( self )
         return self
     end, 
     stop = function( self )
@@ -79,8 +79,12 @@ method "isBuilt" (
 method "canBeCreated" (
     function( self )
         local urbanBlockType = integration.getTypeUrbanBlock( self )
-        return integration.canBuildNowObjectType( urbanBlockType ) 
+        local result = integration.canBuildNowObjectType( urbanBlockType ) 
         and integration.hasEnoughtDotationForObjectType( urbanBlockType )
+        if not result then -- $$$ MIA not the right place to do this report
+            meKnowledge:sendReport( eRC_ConstructionObjetImpossible )
+        end
+        return result
     end )
 
 -- --------------------------------------------------------------------------------

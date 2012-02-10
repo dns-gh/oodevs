@@ -8,11 +8,11 @@ method "createIt" ( masalife.brain.integration.startStopAction(
         return self.knowledge
     end, 
     started = function( self )
-        integration.updateBuildIt( self )
+        integration.updateBuildItSecu( self )
         return self.knowledge
     end, 
     stop = function( self )
-        integration.stopBuildIt( self )
+        integration.stopBuildItSecu( self )
         return self.knowledge
     end,
 } ) )
@@ -28,8 +28,12 @@ method "isBuilt" (
 
 method "canBeCreated" ( 
     function( self )
-        return integration.canBuildNowObjectType( DEC_GenObject_Type( self.source ) ) 
+        local result = integration.canBuildNowObjectType( DEC_GenObject_Type( self.source ) )
            and integration.hasEnoughtDotationForObjectType( DEC_GenObject_Type( self.source ) )
+        if not result then -- $$$ MIA not the right place to do this report
+            meKnowledge:sendReport( eRC_ConstructionObjetImpossible )
+        end
+        return result
     end )
 
 -- --------------------------------------------------------------------------------

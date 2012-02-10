@@ -36,39 +36,59 @@ integration.getTypeUrbanBlock = function( urbanBlock )
     return DEC_BlocUrbain_Type( urbanBlock.source )
 end
 
+-- ============================================================================
+-- Object creation for object
+-- comments: -- $$$ MIA TODO merge with security
+-- ============================================================================
 integration.startBuildIt = function( object, type )
-    object[myself] = object[myself] or {}
+    object[ myself ] = object[ myself ] or {}
     local typeObject = DEC_GenObject_Type( object.source )
     local externalIdentifier = DEC_GenObject_ExternalIdentifier( object.source )
     local name = object.source:DEC_GenObject_Name()
     if DEC_GenObject_TypeObstacleManoeuvre( object.source ) then
-        object[myself].actionBuild = DEC_StartPrepareObject( typeObject, DEC_GenObject_Localisation( object.source ) )
+        object[ myself ].actionBuild = DEC_StartPrepareObject( typeObject, DEC_GenObject_Localisation( object.source ) )
     else
-        object[myself].actionBuild = DEC_StartCreateObject( typeObject, DEC_GenObject_Localisation( object.source ), externalIdentifier, name )
+        object[ myself ].actionBuild = DEC_StartCreateObject( typeObject, DEC_GenObject_Localisation( object.source ), externalIdentifier, name )
     end
-    actionCallbacks[ object[myself].actionBuild ] = function( arg ) object[myself].actionBuildState = arg end
-    actionKnowledgeCallbacks[ object[myself].actionBuild ] = function( arg )
+    actionCallbacks[ object[ myself ].actionBuild ] = function( arg ) 
+        object[ myself ].actionBuildState = arg
+    end
+    actionKnowledgeCallbacks[ object[ myself ].actionBuild ] = function( arg )
         if arg and DEC_ConnaissanceObjet_NiveauConstruction( arg ) > 0 then
             object.knowledge = CreateKnowledge( type, arg )
         end
     end
+    integration.pionRC( eRC_DebutTravaux )
 end
 
+-- -----------------------------------------------------------------------------
+-- Start the creation of pre-existing object
+-- -----------------------------------------------------------------------------
 integration.startBuildItKnowledge = function( objectKnowledge )
-    objectKnowledge[myself] = objectKnowledge[myself] or {}
-    objectKnowledge[myself].actionBuild = DEC_StartReprendreTravauxObjet( objectKnowledge.source, false )
+    objectKnowledge[ myself ] = objectKnowledge[ myself ] or {}
+    objectKnowledge[ myself ].actionBuild = DEC_StartReprendreTravauxObjet( objectKnowledge.source, false )
     objectKnowledge.knowledge = objectKnowledge
-    actionCallbacks[ objectKnowledge[myself].actionBuild ] = function( arg ) objectKnowledge[myself].actionBuildState = arg end
-    meKnowledge:RC( eRC_DebutTravaux )
+    actionCallbacks[ objectKnowledge[ myself ].actionBuild ] = function( arg ) 
+        objectKnowledge[myself].actionBuildState = arg 
+    end
+    integration.pionRC( eRC_DebutTravaux )
 end
 
+-- -----------------------------------------------------------------------------
+-- Start the creation of pre-existing urban block
+-- -----------------------------------------------------------------------------
 integration.startBuildItUrbanBlock = function( urbanBlock )  
-    urbanBlock[myself] = urbanBlock[myself] or {}
-    urbanBlock[myself].actionBuild = DEC_ReparerBlocUrbain( urbanBlock.source )
-    actionCallbacks[ urbanBlock[myself].actionBuild ] = function( arg ) urbanBlock[myself].actionBuildState = arg end
-    meKnowledge:RC( eRC_DebutTravaux )
+    urbanBlock[ myself ] = urbanBlock[ myself ] or {}
+    urbanBlock[ myself ].actionBuild = DEC_ReparerBlocUrbain( urbanBlock.source )
+    actionCallbacks[ urbanBlock[ myself ].actionBuild ] = function( arg ) 
+        urbanBlock[ myself ].actionBuildState = arg
+    end
+    integration.pionRC( eRC_DebutTravaux )
 end
 
+-- -----------------------------------------------------------------------------
+-- Update the object creation (object, urban block) 
+-- -----------------------------------------------------------------------------
 integration.updateBuildIt = function( object )
     if object[myself].actionBuildState == eActionObjetTerminee then --on a fini de construire un obstacle de manoeuvre mais on ne renvoie pas de feedback done sans l'avoir activé
         if( object.knowledge ~= nil ) then
@@ -90,26 +110,29 @@ integration.updateBuildIt = function( object )
     end
     return eRC_RAS
 end
-
+-- -----------------------------------------------------------------------------
+-- Update the object creation
+-- -----------------------------------------------------------------------------
 integration.stopBuildIt = function( object )
-
-    object[myself] = object[myself] or {}
+    object[ myself ] = object[ myself ] or {}
     local result
     if object[ myself ].actionBuildState == eActionObjetTerminee then
-       -- if( object.knowledge ~= nil ) then
-       --     meKnowledge:RC( eRC_FinTravauxObjet, object.knowledge.source )
-       -- end
+    if( object.knowledge ~= nil ) then
+            meKnowledge:RC( eRC_FinTravauxObjet, object.knowledge.source )
+        end
         result = eRC_RAS
     else
-        DEC_Trace( "pause work build" )
         result = eRC_ConstructionObjetImpossible
     end
-    meKnowledge:RC( eRC_FinTravauxObjet )
-    object[myself].actionBuild = DEC__StopAction( object[myself].actionBuild )
-    object[myself].actionBuildState = nil
+    integration.pionRC( eRC_FinTravauxObjet )
+    object[ myself ].actionBuild = DEC__StopAction( object[ myself ].actionBuild )
+    object[ myself ].actionBuildState = nil
     return result
 end
 
+-- -----------------------------------------------------------------------------
+-- Update the object creation
+-- -----------------------------------------------------------------------------
 integration.stopBuildItUrbanBlock = function( urbanBlock )
     urbanBlock[myself] = urbanBlock[myself] or {}
     if urbanBlock[myself].actionBuildState == eActionObjetTerminee then
@@ -119,6 +142,56 @@ integration.stopBuildItUrbanBlock = function( urbanBlock )
     end
     urbanBlock[myself].actionBuild = DEC__StopAction( urbanBlock[myself].actionBuild )
     urbanBlock[myself].actionBuildState = nil
+end
+
+
+-- ============================================================================
+-- Object creation SECU
+-- comments: -- $$$ MIA TEMP SECURITY 
+-- return bool and report enum is not returned by method
+-- ============================================================================
+-- -----------------------------------------------------------------------------
+-- Update the object creation
+-- -----------------------------------------------------------------------------
+integration.updateBuildItSecu = function( object )
+    if object[ myself ].actionBuildState == eActionObjetTerminee then --on a fini de construire un obstacle de manoeuvre mais on ne renvoie pas de feedback done sans l'avoir activé
+        if( object.knowledge ~= nil ) then
+            integration.pionRC( eRC_FinTravauxObjet, object.knowledge.source )
+        end
+        object[ myself ].actionBuild = DEC__StopAction( object[ myself ].actionBuild )
+        object[ myself ].actionBuildState = nil
+        return true
+    else
+        if object[ myself ].actionBuildState == eActionObjetImpossible then
+            DEC_Trace( "impossible works" )
+            integration.pionRC( eRC_ConstructionObjetImpossible, object.knowledge.source )
+        elseif object[ myself ].actionBuildState == eActionObjetManqueDotation then
+            DEC_Trace( "not enough dotation" )
+            integration.pionRC( eRC_PasDotationConstructionObjet, object.knowledge.source )
+        elseif object[ myself ].actionBuildState == eActionObjetPasDeCapacite then
+            DEC_Trace( "no capacity" ) 
+            integration.pionRC( eRC_PasDotationConstructionObjet, object.knowledge.source )
+        end
+    end
+    return false
+end
+-- -----------------------------------------------------------------------------
+-- Stop the creation
+-- -----------------------------------------------------------------------------
+integration.stopBuildItSecu = function( object )
+    object[ myself ] = object[ myself ] or {}
+    local result
+    if object[ myself ].actionBuildState == eActionObjetTerminee then
+        result = true
+    else
+        result = false
+    end
+    object[ myself ].actionBuild = DEC__StopAction( object[ myself ].actionBuild )
+    object[ myself ].actionBuildState = nil
+    if( object.knowledge ~= nil ) then
+        integration.pionRC( eRC_FinTravauxObjet, object.knowledge.source )
+    end
+    return result
 end
 
 integration.obtenirObjetProcheDePosition = function( ptRef, lstObjets, rDistMax )

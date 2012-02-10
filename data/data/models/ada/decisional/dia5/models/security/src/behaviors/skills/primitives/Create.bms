@@ -53,6 +53,8 @@ rootnode
                         Activate( skill.links.create, 1, { work = self.work } )
                     elseif not self.params.waitForReinforcement then
                         self:impossibleToCreate( { work = self.work } )
+                    else
+                        meKnowledge:sendReport( eRC_AttenteRenforcement )
                     end
                 else
                     -- MIA $$$ TODO: add a position outside work.
