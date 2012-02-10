@@ -11,6 +11,7 @@
 #include "ObjectPositions.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/ObjectType.h"
+#include "clients_kernel/Viewport_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectPositions constructor
@@ -55,8 +56,11 @@ void ObjectPositions::DoUpdate( const sword::ObjectCreation& message )
 // Name: ObjectPositions::Draw
 // Created: SBO 2009-05-29
 // -----------------------------------------------------------------------------
-void ObjectPositions::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& /*viewport*/, const kernel::GlTools_ABC& tools ) const
+void ObjectPositions::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
     if( const kernel::Location_ABC* location = GetLocation() )
-        tools.DrawTacticalGraphics( symbol_, *location, tools.ShouldDisplay() );
+    {
+        if( viewport.IsVisible( boundingBox_ ) )
+            tools.DrawTacticalGraphics( symbol_, *location, tools.ShouldDisplay() );
+    }
 }

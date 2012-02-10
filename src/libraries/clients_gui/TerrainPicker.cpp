@@ -68,6 +68,7 @@ void TerrainPicker::RegisterLayer( ObjectsLayer& objects )
 // -----------------------------------------------------------------------------
 void TerrainPicker::Pick( int x, int y, const geometry::Point2f& terrainCoordinates )
 {
+    terrainPickChange_ = true;
     x_ = x;
     y_ = y;
     terrainCoordinates_ = terrainCoordinates;
@@ -80,7 +81,7 @@ void TerrainPicker::Pick( int x, int y, const geometry::Point2f& terrainCoordina
 // -----------------------------------------------------------------------------
 void TerrainPicker::OnTimeOut()
 {
-    if( terrain_ )
+    if( terrainPickChange_ && terrain_ )
     {
         const TerrainData data = terrain_->Pick( x_, y_ );
         emit TerrainPicked( data.ToString().c_str() );
@@ -101,6 +102,7 @@ void TerrainPicker::OnTimeOut()
         emit ObjectPicked( infos );
         timer_->start( 250, true );
     }
+    terrainPickChange_ = false;
 }
 
 // -----------------------------------------------------------------------------
