@@ -6,7 +6,7 @@
         <munition>munition.xml</munition>
     </mappings>
     <types>
-        <automat>MBT squadron</automat>
+        <automat>ARMOR.MBT squadron</automat>
     </types>
     <missions>
         <fragOrders>
