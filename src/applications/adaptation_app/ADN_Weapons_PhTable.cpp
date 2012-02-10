@@ -42,7 +42,7 @@ public:
         assert( pObj );
         ADN_TableItem_Int *pItemDistance = new ADN_TableItem_Int( &tab_, pObj );
         ADN_TableItem_Double *pItemPerc = new ADN_TableItem_Double( &tab_, pObj );
-        pItemPerc->UseColor( true );
+        pItemPerc->SetUseColor( true );
         pItemPerc->SetRangeForColor( 0.0, 100.0 );
 
         // add a new row & set new values

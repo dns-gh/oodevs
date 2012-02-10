@@ -417,7 +417,7 @@ ADN_Table* ADN_Weapons_GUI::CreatePHTable()
                 std::set<int>::iterator itFound = distancesSet.find( (*it3)->nDistance_.GetData() );
                 int nIndex = static_cast< int >( std::distance( distancesSet.begin(), itFound ) );
                 ADN_TableItem_Double* pItem = builder.AddTableCell<ADN_TableItem_Double>( pTable, *it, nRow + nSubRow, 2 + nIndex, (*it3)->rPerc_, ePercentage );
-                pItem->UseColor( true );
+                pItem->SetUseColor( true );
             }
         }
         nRow += static_cast< int >( phsSizeInfos.size() );

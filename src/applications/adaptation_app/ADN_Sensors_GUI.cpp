@@ -373,7 +373,7 @@ void AddCells( ADN_Table* pTable, void* pData, int nRow, int& nCol, T& vVector, 
     for( uint n = 0; n < nVectorSize; ++n )
     {
         pCell = builder.AddTableCell<ADN_TableItem_Double>( pTable, pData, nRow, nCol + n, vVector[n]->rCoeff_, eZeroOne );
-        pCell->UseColor( true );
+        pCell->SetUseColor( true );
         pCell->SetRangeForColor( 0.0, 1.0 );
     }
 

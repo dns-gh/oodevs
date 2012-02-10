@@ -135,11 +135,20 @@ void ADN_TableItem_Edit<Connector,Validator>::paint( QPainter *p, const QColorGr
 // Created: APE 2004-12-28
 // -----------------------------------------------------------------------------
 template <class Connector,class Validator>
-void ADN_TableItem_Edit<Connector,Validator>::UseColor( bool bUseColor )
+void ADN_TableItem_Edit<Connector,Validator>::SetUseColor( bool bUseColor )
 {
     bUseColor_ = bUseColor;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_TableItem_Edit::GetUserColor
+// Created: ABR 2012-02-09
+// -----------------------------------------------------------------------------
+template <class Connector,class Validator>
+bool ADN_TableItem_Edit<Connector,Validator>::UseColor() const
+{
+    return bUseColor_;
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_TableItem_Edit::SetRangeForColor
@@ -153,6 +162,15 @@ void ADN_TableItem_Edit<Connector,Validator>::SetRangeForColor( double rMin, dou
     rMax_ = rMax;
 }
 
+// -----------------------------------------------------------------------------
+// Name: std::pair< double, double > ADN_TableItem_Edit::GetRangeForColor
+// Created: ABR 2012-02-09
+// -----------------------------------------------------------------------------
+template <class Connector,class Validator>
+std::pair< double, double > ADN_TableItem_Edit<Connector,Validator>::GetRangeForColor() const
+{
+    return std::pair< double, double >( rMin_, rMax_ );
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_TableItem_Edit::SetAlignment

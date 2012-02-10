@@ -18,6 +18,9 @@
 #include "ADN_App.h"
 #include "ADN_MainWindow.h"
 #include "ADN_Connector_Table_ABC.h"
+#include "excel/ExcelFormat.h"
+
+using namespace ExcelFormat;
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Table constructor
@@ -266,4 +269,153 @@ QWidget *ADN_Table::createEditor( int nRow, int nCol, bool bInitFromCell ) const
         }
     }
     return e;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::SaveToXls
+// Created: ABR 2012-02-06
+// -----------------------------------------------------------------------------
+void ADN_Table::SaveToXls( const QString& path, const QString& sheetName ) const
+{
+    BasicExcel xls;
+    xls.New(1);
+    xls.RenameWorksheet( 0, sheetName.ascii() );
+    BasicExcelWorksheet* sheet = xls.GetWorksheet(0);
+    XLSFormatManager fmt_mgr(xls);
+    Workbook::Palette& palette = xls.workbook_.palette_;
+    std::vector< std::vector < bool > > mergedCells( numRows(), std::vector< bool >( numCols(), false ) );
+    std::vector< int > columnMaxContentSize( numCols(), 0 );
+
+    // Colors
+    palette.SetColor( 0, 200, 200, 200 ); // Header colors
+    std::pair< double, double > minMax( 0.f, 0.f );
+    bool useColor = false;
+    for( int row = 0; row < numRows() && !useColor; ++row )
+        for( int col = 0; col < numCols() && !useColor; ++col )
+        {
+            Q3TableItem* qItem = item( row, col );
+            if( dynamic_cast< ADN_TableItem_ABC* >( qItem ) != 0 )
+            {
+                ADN_TableItem_ABC* tableItem = static_cast< ADN_TableItem_ABC* >( qItem );
+                if( tableItem->UseColor() )
+                {
+                    minMax = tableItem->GetRangeForColor();
+                    //if( minMax.first != minMax.second )
+                    useColor = true;
+                }
+            }
+        }
+    double gap = ( useColor ) ? ( minMax.second - minMax.first ) / static_cast< double >( PALETTE_SIZE - 1 ) : 0.f;
+    if( useColor )   // Color found, overload palette color with the same algorithm used in ADN_TableItem_Edit
+    {
+        double value = minMax.first;
+        // 55 colors available, from 1 to 55 (0 is taken by header background)
+        for( USHORT i = 1; i < PALETTE_SIZE; ++i, value += gap )
+        {
+            double rRatio = ( value - minMax.first ) / ( minMax.second - minMax.first );
+            rRatio = std::max< double >( 0.0, rRatio );
+            rRatio = std::min< double >( 1.0, rRatio );
+
+            QColor color;
+            color.setHsv( int( 120 * rRatio ), 30, 255 );
+            palette.SetColor( i, static_cast< USHORT >( color.blue() ), static_cast< USHORT >( color.green() ), static_cast< USHORT >( color.red() ) );
+        }
+    }
+
+    // Fill table
+    for( int row = 0; row < numRows(); ++row )
+    {
+        for( int col = 0; col < numCols(); ++col )
+        {
+            // Border
+            CellFormat format( fmt_mgr );
+            ExcelFormat::EXCEL_LS left   = EXCEL_LS_THIN;
+            ExcelFormat::EXCEL_LS right  = EXCEL_LS_THIN;
+            ExcelFormat::EXCEL_LS top    = EXCEL_LS_THIN;
+            ExcelFormat::EXCEL_LS bottom = EXCEL_LS_THIN;
+            if( col == numCols() - 1 )
+                right = EXCEL_LS_MEDIUM;
+            if( row == numRows() - 1 )
+                bottom = EXCEL_LS_MEDIUM;
+            if( vBoldGridRowIndexes_.find( row ) != vBoldGridRowIndexes_.end() || row == 0 )
+                top = EXCEL_LS_MEDIUM;
+            if( vBoldGridColIndexes_.find( col ) != vBoldGridColIndexes_.end() || col == 0 )
+                left = EXCEL_LS_MEDIUM;
+            format.set_borderlines( left, right, top, bottom, EGA_BLACK, EGA_BLACK );
+
+            // If Merged, apply border and continue
+            Q3TableItem* qItem = item( row, col );
+            if( mergedCells[ row ][ col ] || !qItem )
+            {
+                BasicExcelCell* cell = sheet->Cell(row, col);
+                cell->SetFormat( format );
+                continue;
+            }
+
+            ADN_TableItem_ABC* tableItem = 0;
+            if( dynamic_cast< ADN_TableItem_ABC* >( qItem ) != 0 )
+                tableItem = static_cast< ADN_TableItem_ABC* >( qItem );
+            BasicExcelCell* cell = sheet->Cell(row, col);
+            // Content
+            QString content = qItem->text();
+            bool ok = false;
+            content.toInt( &ok );
+            if( ok )
+                cell->Set( content.toInt() );
+            else
+            {
+                content.toDouble( &ok );
+                if( ok )
+                    cell->Set( content.toDouble() );
+                else
+                    cell->Set( content.ascii() );
+            }
+
+            // Column size
+            if( columnMaxContentSize[ col ] < content.size() )
+                columnMaxContentSize[ col ] = content.size();
+
+            // Merge
+            if( qItem->rowSpan() != 1  || qItem->colSpan() != 1 )
+            {
+                sheet->MergeCells( row, col, qItem->rowSpan(), qItem->colSpan() );
+                format.set_alignment( EXCEL_VALIGN_CENTRED );
+                for( int i = 0; i < qItem->rowSpan(); ++i )
+                    for( int j = 0; j < qItem->colSpan(); ++j )
+                        mergedCells[ row + i ][ col + j ] = true;
+            }
+
+            // Header
+            if( col == 0 && verticalHeader()->isVisible() || row == 0 && horizontalHeader()->isVisible() )
+            {
+                format.set_font(ExcelFont().set_weight(FW_BOLD));
+                format.set_alignment( EXCEL_HALIGN_CENTRED | EXCEL_VALIGN_CENTRED );
+                format.set_background( palette.GetColor( 0 ) );
+            }
+
+            // Color
+            if( useColor && tableItem && tableItem->UseColor() )
+            {
+                bool ok = false;
+                USHORT index = static_cast< USHORT >( content.toDouble( &ok ) / gap ) + 1;
+                //assert( ok && index > 0 && index < PALETTE_SIZE );
+                assert( ok );
+                if( index == 0 )
+                    index = 1;
+                else if( index >= PALETTE_SIZE )
+                    index = PALETTE_SIZE - 1;
+                format.set_background( palette.GetColor( index ) );
+            }
+
+            cell->SetFormat( format );
+        }
+    }
+
+    // Columns width
+    static int charactereSize = 300;
+    static int minimumSize = 1000;
+    for( int col = 0; col < numCols(); ++col )
+        sheet->SetColWidth( col, static_cast< USHORT >( std::max( columnMaxContentSize[ col ] * charactereSize, minimumSize ) ) );
+
+    xls.SaveAs( path.ascii() );
 }

@@ -38,21 +38,21 @@ public:
 
         // add a new row & set new values
         ADN_TableItem_DoublePercentage* pItem0 = new ADN_TableItem_DoublePercentage( &tab_, pObj );
-        pItem0->UseColor( true );
+        pItem0->SetUseColor( true );
         tab_.setItem( i, 0, pItem0 );
         static_cast< ADN_DoublePercentageValidator* >( &pItem0->GetValidator() )->AddLinkedValue( pAttrition->rRepairWithEvac_ );
         static_cast< ADN_DoublePercentageValidator* >( &pItem0->GetValidator() )->AddLinkedValue( pAttrition->rDestroy_ );
         pItem0->GetConnector().Connect( & pAttrition->rRepairNoEvac_ );
 
         ADN_TableItem_DoublePercentage* pItem1 = new ADN_TableItem_DoublePercentage( &tab_, pObj );
-        pItem1->UseColor( true );
+        pItem1->SetUseColor( true );
         tab_.setItem( i, 1, pItem1 );
         static_cast< ADN_DoublePercentageValidator* >( &pItem1->GetValidator() )->AddLinkedValue( pAttrition->rDestroy_ );
         static_cast< ADN_DoublePercentageValidator* >( &pItem1->GetValidator() )->AddLinkedValue( pAttrition->rRepairNoEvac_ );
         pItem1->GetConnector().Connect( & pAttrition->rRepairWithEvac_ );
 
         ADN_TableItem_DoublePercentage* pItem2 = new ADN_TableItem_DoublePercentage( &tab_, pObj );
-        pItem2->UseColor( true );
+        pItem2->SetUseColor( true );
         tab_.setItem( i, 2, pItem2 );
         static_cast< ADN_DoublePercentageValidator* >( &pItem2->GetValidator() )->AddLinkedValue( pAttrition->rRepairNoEvac_ );
         static_cast< ADN_DoublePercentageValidator* >( &pItem2->GetValidator() )->AddLinkedValue( pAttrition->rRepairWithEvac_ );

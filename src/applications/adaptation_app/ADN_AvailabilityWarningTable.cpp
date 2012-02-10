@@ -26,7 +26,7 @@ public:
     {
         assert( pObj );
         ADN_TableItem_Int *pItem = new ADN_TableItem_Int( &tab_, pObj );
-        pItem->UseColor( true );
+        pItem->SetUseColor( true );
         pItem->SetRangeForColor( 0, 100 );
 
         // add a new row & set new values

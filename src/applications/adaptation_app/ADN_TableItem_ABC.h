@@ -36,6 +36,13 @@ public:
     virtual void DoValueChanged() = 0;
     //@}
 
+    //! @name Colors
+    //@{
+    virtual bool UseColor() const;
+    virtual void SetUseColor( bool );
+    virtual std::pair< double, double > GetRangeForColor() const;
+    //@}
+
 protected:
     //! @name Member data
     //@{
@@ -52,6 +59,36 @@ inline
 void* ADN_TableItem_ABC::GetData()
 {
     return pData_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TableItem_ABC::GetUserColor
+// Created: ABR 2012-02-09
+// -----------------------------------------------------------------------------
+inline
+bool ADN_TableItem_ABC::UseColor() const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TableItem_ABC::SetUseColor
+// Created: ABR 2012-02-09
+// -----------------------------------------------------------------------------
+inline
+void ADN_TableItem_ABC::SetUseColor( bool )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: std::pair< double, double > ADN_TableItem_ABC::GetRangeForColor
+// Created: ABR 2012-02-09
+// -----------------------------------------------------------------------------
+inline
+std::pair< double, double > ADN_TableItem_ABC::GetRangeForColor() const
+{
+    return std::pair< double, double >( 0.f, 0.f );
 }
 
 #endif // __ADN_TableItem_ABC_h_

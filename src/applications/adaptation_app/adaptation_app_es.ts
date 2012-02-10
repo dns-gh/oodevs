@@ -2170,6 +2170,14 @@ tirador</translation>
         <source>Close</source>
         <translation>Cerrar</translation>
     </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Excel files (*.xls)</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_ListView_Categories_Armor</name>
@@ -4418,6 +4426,14 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
     <message>
         <source>Close</source>
         <translation></translation>
+    </message>
+    <message>
+        <source>Save</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Excel files (*.xls)</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

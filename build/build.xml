@@ -554,7 +554,7 @@
 
     <target name="application.adaptation_app" depends="library.ENT,library.clients_gui" description="build Sword Adaptation executable">
         <build-app name="adaptation_app" depends="qt4,xerces,xalan,boost,flexlm" excludes="**/XmlResources.cpp"
-                   libs="svgl,zipstream,
+                   libs="svgl,zipstream,excel@{suffix},
                          Qt3Support4,
                          lib${ant.project.name}_ENT-${platform}-mt,
                          lib${ant.project.name}_clients_gui-${platform}-mt,
@@ -1615,6 +1615,7 @@
         <update name="protobuf" version="2.3.0"/>
         <update name="vcredist" package="vcredist"/>
         <update name="openssl"/>
+        <update name="excel"/>
         <update name="mak" package="include" todir="${include.dir}"/>
         <update name="mak" package="lib" todir="${lib.dir}"/>
         <update name="mak" package="dll" todir="${run.dir}/plugins/vrforces"/>

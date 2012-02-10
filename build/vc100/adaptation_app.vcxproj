@@ -108,22 +108,22 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
     <Link>
-      <AdditionalDependencies>glu32.lib;svgl.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>excel.lib;glu32.lib;svgl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
     <Link>
-      <AdditionalDependencies>glu32.lib;svgl.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>excel.lib;glu32.lib;svgl.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
     <Link>
-      <AdditionalDependencies>glu32.lib;svgl_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>excel_d.lib;glu32.lib;svgl_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
     <Link>
-      <AdditionalDependencies>glu32.lib;svgl_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>excel_d.lib;glu32.lib;svgl_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>

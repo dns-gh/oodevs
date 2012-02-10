@@ -607,7 +607,8 @@ void ADN_MainWindow::ShowCoheranceTable( int nId )
         ADN_Callback_ABC<ADN_Table*>* pCallback = item.second;
 
         ADN_Table* pTable = (*pCallback)();
-        ADN_TableDialog* pDialog = new ADN_TableDialog( this, item.first, pTable );
+        assert( pTable != 0 );
+        ADN_TableDialog* pDialog = new ADN_TableDialog( this, item.first, *pTable );
 
         pDialog->exec();
         delete pDialog;
