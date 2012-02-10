@@ -21,6 +21,15 @@
                 <nil/>
             </default>
         </parameter>
+        <parameter name="minDistance">
+            <description>The miminum distance (meters) to stay close to the currents followed agent.</description>
+            <type>
+                <simple name="numeric"/>
+            </type>
+            <default>
+                <number>0.0</number>
+            </default>
+        </parameter>
     </parameters>
     <links>
         <link name="reach" skill="behaviors.skills.primitives.Reach"/>

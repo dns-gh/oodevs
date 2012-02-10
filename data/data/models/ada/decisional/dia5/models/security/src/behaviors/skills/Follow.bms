@@ -16,7 +16,7 @@ rootnode
         -- get position to follow agents if not issued
         if self.params.positions == NIL then
             self.positions = ontology.queries.GetPositionsToFollow[ "execute" ]( 
-                                      { agents = self.params.agents, distanceMin = 100 } )
+                 { agents = self.params.agents, distanceMin = self.params.minDistance } )
         else
             self.positions = self.params.positions
         end
