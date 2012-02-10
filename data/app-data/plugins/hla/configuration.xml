@@ -23,6 +23,8 @@
         </request>
         <offer>
             <transport>COMMON - offer transport</transport>
+            <embarkment>COMMON - offer embark</embarkment>
+            <disembarkment>COMMON - offer disembark</disembarkment>
         </offer>
     </missions>
     <reports>
