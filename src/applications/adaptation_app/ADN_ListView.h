@@ -21,6 +21,16 @@ class ADN_ListViewItem;
 class ADN_Connector_ListView_ABC;
 class ADN_ObjectCreator_ABC;
 
+namespace YExcel
+{
+    class BasicExcel;
+    class BasicExcelWorksheet;
+}
+namespace ExcelFormat
+{
+    struct XLSFormatManager;
+}
+
 // =============================================================================
 /** @class  ADN_ListView
     @brief  ADN_ListView
@@ -36,11 +46,11 @@ public:
     explicit ADN_ListView( QWidget* pParent = 0, const char* szName = 0, Qt::WFlags f = 0 );
     virtual ~ADN_ListView();
 
-    ADN_ListViewItem*     ItemAt( int i );
-    ADN_ListViewItem*     FindItem( void* pData );
-    int                   FindNdx( void* pData );
-    void*                 GetCurrentData();
-    void                  SetItemConnectors( const T_ConnectorVector& v );
+    ADN_ListViewItem*   ItemAt( int i );
+    ADN_ListViewItem*   FindItem( void* pData );
+    int                 FindNdx( void* pData );
+    void*               GetCurrentData();
+    void                SetItemConnectors( const T_ConnectorVector& v );
 
     void setEnabled( bool b );
 
@@ -50,6 +60,7 @@ public:
     void Print( int nPage, QPainter& painter, const QSize& painterSize );
 
     virtual std::string GetToolTipFor( Q3ListViewItem& item );
+    void SaveToXls( const QString& path, const QString& sheetName ) const;
 
 public slots:
     void SetCurrentItem( void* pData );
@@ -70,6 +81,9 @@ private:
     bool ApplyFilterLine( ADN_ListViewItem* item );
     bool ApplyFilterList( ADN_ListViewItem* item );
     void ApplyFilter( boost::function< bool ( ADN_ListViewItem* ) > func );
+    void SaveToSheet( YExcel::BasicExcel& xls, const char* sheetName, int sheetNumber, Q3ListViewItem* item, int maxDepth, int nbRow ) const;
+    void RecursiveFillSheetFromItem( Q3ListViewItem* qItem, YExcel::BasicExcelWorksheet& sheet, ExcelFormat::XLSFormatManager& fmt_mgr, int depth, int maxDepth, int& row, std::vector< int >& columnMaxContentSize, int nbRow ) const;
+    void FillSheetFromItem( Q3ListViewItem* qItem, YExcel::BasicExcelWorksheet& sheet, ExcelFormat::XLSFormatManager& fmt_mgr, int depth, int maxDepth, int& row, std::vector< int >& columnMaxContentSize, int nbRow ) const;
 
 private slots:
     virtual void ContextMenuNew();

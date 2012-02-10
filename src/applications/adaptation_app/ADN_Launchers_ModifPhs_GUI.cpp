@@ -43,7 +43,7 @@ public:
         {
             // add a new row & set new values
             pItemDouble = new ADN_TableItem_Double(&tab_,obj);
-            pItemDouble->UseColor( true );
+            pItemDouble->SetUseColor( true );
             pItemDouble->SetRangeForColor( 0.0, 100.0 );
             tab_.setItem(i,j, pItemDouble );
             pItemDouble->GetValidator().setRange( 0, 100, 5 );

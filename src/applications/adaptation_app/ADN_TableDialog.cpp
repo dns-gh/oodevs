@@ -27,24 +27,26 @@
 // Name: ADN_TableDialog constructor
 // Created: APE 2005-04-04
 // -----------------------------------------------------------------------------
-ADN_TableDialog::ADN_TableDialog( QWidget* pParent, const QString& strCaption, ADN_Table* pTable )
+ADN_TableDialog::ADN_TableDialog( QWidget* pParent, const QString& strCaption, ADN_Table& table )
     : QDialog( pParent, strCaption )
-    , pTable_( pTable )
+    , caption_( strCaption )
+    , table_( table )
 {
-    assert( pTable != 0 );
     this->setCaption( strCaption );
- 
-    pTable->reparent( this, QPoint(0,0) );
-    connect( pTable, SIGNAL( contextMenuRequested( int, int, const QPoint& ) ), this, SLOT( OnContextMenu() ) );
+
+    table_.reparent( this, QPoint(0,0) );
+    connect( &table_, SIGNAL( contextMenuRequested( int, int, const QPoint& ) ), this, SLOT( OnContextMenu() ) );
 
     Q3HBox* pHBox = new Q3HBox( this );
+    QPushButton* pSaveButton = new QPushButton( tr( "Save" ), pHBox );
     QPushButton* pPrintButton = new QPushButton( tr( "Print" ), pHBox );
     QPushButton* pCloseButton = new QPushButton( tr( "Close" ), pHBox );
+    connect( pSaveButton, SIGNAL( clicked() ), this, SLOT( SaveTable() ) );
     connect( pPrintButton, SIGNAL( clicked() ), this, SLOT( PrintTable() ) );
     connect( pCloseButton, SIGNAL( clicked() ), this, SLOT( reject() ) );
 
     Q3VBoxLayout* pLayout = new Q3VBoxLayout( this );
-    pLayout->addWidget( pTable );
+    pLayout->addWidget( &table_ );
     pLayout->addWidget( pHBox );
 
     QMainWindow* pMainWindow = ADN_App::pApplication_->GetMainWindow();
@@ -93,11 +95,11 @@ void ADN_TableDialog::PrintTable()
         return;
 
     // Hide headers, show first line (headers as "table cells")
-    bool bHeadersShown = !pTable_->horizontalHeader()->isHidden();
+    bool bHeadersShown = !table_.horizontalHeader()->isHidden();
     if( bHeadersShown )
     {
-        pTable_->horizontalHeader()->hide();
-        pTable_->showRow( 0 );
+        table_.horizontalHeader()->hide();
+        table_.showRow( 0 );
     }
 
     // Compute the printing rectangle.
@@ -115,19 +117,32 @@ void ADN_TableDialog::PrintTable()
     painter.scale( rScale, rScale );
     QSize painterSize( static_cast< int >( pageRect.width() / rScale ) + 1, static_cast< int >( pageRect.height() / rScale ) + 1 );
 
-    const int nNbrPages = pTable_->ComputeNbrPrintPages( painterSize );
+    const int nNbrPages = table_.ComputeNbrPrintPages( painterSize );
 
     for( int n = 0; n < nNbrPages; ++n )
     {
         if( n != 0 )
             printer.newPage();
-        pTable_->Print( n, painter, painterSize );
+        table_.Print( n, painter, painterSize );
     }
 
     // Show headers if needed, hide first line (headers as "table cells")
     if( bHeadersShown )
     {
-        pTable_->horizontalHeader()->show();
-        pTable_->hideRow( 0 );
+        table_.horizontalHeader()->show();
+        table_.hideRow( 0 );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_TableDialog::SaveTable
+// Created: ABR 2012-01-27
+// -----------------------------------------------------------------------------
+void ADN_TableDialog::SaveTable()
+{
+    QString path = QFileDialog::getSaveFileName( this, tr( "Save" ), QString(), tr("Excel files (*.xls)") );
+    if( path.isEmpty() )
+        return;
+    table_.SaveToXls( path, caption_ );
+    ShellExecute(0, NULL, path, NULL, NULL, SW_NORMAL);
 }

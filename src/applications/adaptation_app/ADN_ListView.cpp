@@ -22,6 +22,9 @@
 #include "ADN_Wizard_ABC.h"
 #include "ADN_ListViewToolTip.h"
 #include <boost/bind.hpp>
+#include "excel/ExcelFormat.h"
+
+using namespace ExcelFormat;
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView constructor
@@ -108,7 +111,7 @@ ADN_ListViewItem* ADN_ListView::FindItem(void* data)
 
 inline void SetAutoClear(T_ConnectorVector& v,bool b)
 {
-    for ( T_ConnectorVector::iterator itConnector=v.begin();itConnector!=v.end();++itConnector)
+    for(  T_ConnectorVector::iterator itConnector=v.begin();itConnector!=v.end();++itConnector)
         (*itConnector)->SetAutoClear(b);
 }
 
@@ -424,4 +427,195 @@ void ADN_ListView::ApplyFilter( boost::function< bool ( ADN_ListViewItem* ) > fu
         ADN_ListViewItem* item = static_cast< ADN_ListViewItem* >( it.current() );
         item->setVisible( func( item ) ); // Use HasAnyChildVisible( item, func ) if tree view. Cf HierarchyListView_ABC
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::SaveToXls
+// Created: ABR 2012-02-09
+// -----------------------------------------------------------------------------
+void ADN_ListView::SaveToXls( const QString& path, const QString& sheetName ) const
+{
+    BasicExcel xls;
+
+    // Compute numer of rows and max depth
+    int nbRow = 0;
+    int maxDepth = 0;
+    for( Q3ListViewItemIterator it = firstChild(); it.current(); ++it, ++nbRow )
+        maxDepth = std::max( maxDepth, it.current()->depth() );
+
+    // Excel allow only numeric_limits< USHORT >::max() rows, so if we need more row, we split first level items into multiple sheets.
+    // TODO: check if there are not more columns than allowed (255), and check the same for sheets. In both cases -> multiple files.
+    if( nbRow < numeric_limits< USHORT >::max() )
+    {
+        xls.New( 1 );
+        SaveToSheet( xls, sheetName.ascii(), 0, firstChild(), maxDepth, nbRow );
+    }
+    else
+    {
+        int sheet = 0;
+        for( Q3ListViewItem* item = firstChild(); item; item = item->nextSibling(), ++sheet );
+        xls.New( sheet );
+        sheet = 0;
+        for( Q3ListViewItem* item = firstChild(); item; item = item->nextSibling(), ++sheet )
+            SaveToSheet( xls, item->text( 0 ).ascii(), sheet, item->firstChild(), maxDepth - 1, nbRow );
+    }
+
+    xls.SaveAs( path.ascii() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::SaveToSheet
+// Created: ABR 2012-02-10
+// -----------------------------------------------------------------------------
+void ADN_ListView::SaveToSheet( BasicExcel& xls, const char* sheetName, int sheetNumber, Q3ListViewItem* qItem, int maxDepth, int nbRow ) const
+{
+    // Initialize sheet
+    xls.RenameWorksheet( sheetNumber, sheetName );
+    BasicExcelWorksheet* sheet = xls.GetWorksheet( sheetNumber );
+    if( !sheet )
+        return;
+    XLSFormatManager fmt_mgr( xls );
+    Workbook::Palette& palette = xls.workbook_.palette_;
+    palette.SetColor( 0, 200, 200, 200 ); // Header colors
+
+    // Header
+    std::vector< int > columnMaxContentSize( columns(), 0 );
+    int row = 0;
+    if( header()->isVisible() )
+    {
+        assert( header()->count() == columns() );
+        CellFormat format( fmt_mgr );
+        format.set_borderlines( EXCEL_LS_MEDIUM, EXCEL_LS_MEDIUM, EXCEL_LS_MEDIUM, EXCEL_LS_MEDIUM, EGA_BLACK, EGA_BLACK );
+        format.set_font( ExcelFont().set_weight(FW_BOLD) );
+        format.set_alignment( EXCEL_HALIGN_CENTRED | EXCEL_VALIGN_CENTRED );
+        format.set_background( palette.GetColor( 0 ) );
+
+        for( int col = 0; col < header()->count(); ++col )
+        {
+            int xlsCol = ( col == 0 ) ? 0 : col + maxDepth;
+            BasicExcelCell* cell = sheet->Cell( row, xlsCol );
+            if( !cell )
+                return;
+            QString content = header()->label( col );
+            cell->Set( content.ascii() );
+            cell->SetFormat( format );
+            if( col == 0 )
+            {
+                sheet->MergeCells( row, col, 1, maxDepth + 1 );
+                for( int ghostCol = 1; ghostCol < maxDepth + 1; ++ghostCol )
+                {
+                    BasicExcelCell* ghostCell = sheet->Cell( row, ghostCol );
+                    if( !ghostCell )
+                        return;
+                    ghostCell->SetFormat( format );
+                }
+            }
+            if( columnMaxContentSize[ col ] < content.size() )
+                columnMaxContentSize[ col ] = content.size();
+        }
+        ++row;
+    }
+
+    // Fill table from qItem
+    RecursiveFillSheetFromItem( qItem, *sheet, fmt_mgr, 0, maxDepth, row, columnMaxContentSize, nbRow );
+
+    // Bottom border
+    if( row < std::numeric_limits< USHORT >::max() )
+        for( int col = 0; col < columns() + maxDepth; ++col )
+        {
+            BasicExcelCell* cell = sheet->Cell( row, col );
+            CellFormat bottom_format( fmt_mgr );
+            bottom_format.set_borderlines( EXCEL_LS_NO_LINE, EXCEL_LS_NO_LINE, EXCEL_LS_MEDIUM, EXCEL_LS_NO_LINE, EGA_BLACK, EGA_BLACK );
+            cell->SetFormat( bottom_format );
+        }
+
+    // Columns width
+    static int ghostColumnSize = 1000;
+    static int charactereSize = 300;
+    static int minimumSize = 1000;
+    for( int col = 0; col < columns() + maxDepth; ++col )
+    {
+        USHORT columnSize = 0;
+        if( col < maxDepth ) // Ghost column
+            columnSize = static_cast< USHORT >( ghostColumnSize );
+        else if( col == maxDepth )
+            columnSize = static_cast< USHORT >( std::max( columnMaxContentSize[ col - maxDepth ] * charactereSize - maxDepth * ghostColumnSize, minimumSize ) );
+        else
+            columnSize = static_cast< USHORT >( std::max( columnMaxContentSize[ col - maxDepth ] * charactereSize, minimumSize ) );
+        sheet->SetColWidth( col, columnSize );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::RecursiveFillSheetFromItem
+// Created: ABR 2012-02-10
+// -----------------------------------------------------------------------------
+void ADN_ListView::RecursiveFillSheetFromItem( Q3ListViewItem* qItem, BasicExcelWorksheet& sheet, XLSFormatManager& fmt_mgr, int depth, int maxDepth, int& row, std::vector< int >& columnMaxContentSize, int nbRow ) const
+{
+    for( Q3ListViewItem* item = qItem; item; item = item->nextSibling() )
+    {
+        FillSheetFromItem( item, sheet, fmt_mgr, depth, maxDepth, row, columnMaxContentSize, nbRow );
+        RecursiveFillSheetFromItem( item->firstChild(), sheet, fmt_mgr, depth + 1, maxDepth, row, columnMaxContentSize, nbRow );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::FillSheetFromItem
+// Created: ABR 2012-02-10
+// -----------------------------------------------------------------------------
+void ADN_ListView::FillSheetFromItem( Q3ListViewItem* qItem, BasicExcelWorksheet& sheet, XLSFormatManager& fmt_mgr, int depth, int maxDepth, int& row, std::vector< int >& columnMaxContentSize, int nbRow ) const
+{
+    for( int col = 0; col < columns(); ++col )
+    {
+        int xlsCol = ( col == 0 ) ? depth : col + maxDepth;
+        BasicExcelCell* cell = sheet.Cell( row, xlsCol );
+
+        // Content
+        QString content = qItem->text( col );
+        bool ok = false;
+        content.toInt( &ok );
+        if( ok )
+            cell->Set( content.toInt() );
+        else
+        {
+            content.toDouble( &ok );
+            if( ok )
+                cell->Set( content.toDouble() );
+            else
+                cell->Set( content.ascii() );
+        }
+
+        // Column size
+        if( columnMaxContentSize[ col ] < content.size() )
+            columnMaxContentSize[ col ] = content.size();
+
+        // Border
+        CellFormat format( fmt_mgr );
+        format.set_borderlines( ( xlsCol == 0 ) ? EXCEL_LS_MEDIUM : EXCEL_LS_THIN, ( col == columns() - 1 ) ? EXCEL_LS_MEDIUM : EXCEL_LS_THIN, EXCEL_LS_THIN, EXCEL_LS_THIN, EGA_BLACK, EGA_BLACK );
+        if( col == 0 )
+        {
+            // Update left
+            for( int i = 0; i < xlsCol; ++i )
+            {
+                BasicExcelCell* cell = sheet.Cell( row, i );
+                CellFormat ghost_format( fmt_mgr );
+                ghost_format.set_borderlines( ( i == 0 ) ? EXCEL_LS_MEDIUM : EXCEL_LS_DOTTED, EXCEL_LS_NO_LINE, EXCEL_LS_NO_LINE, EXCEL_LS_NO_LINE, EGA_BLACK, EGA_BLACK );
+                cell->SetFormat( ghost_format );
+            }
+
+            // Update right
+            for( int i = depth + 1; i < maxDepth + 1; ++i )
+            {
+                BasicExcelCell* cell = sheet.Cell( row, i );
+                CellFormat ghost_format( fmt_mgr );
+                ghost_format.set_borderlines( EXCEL_LS_NO_LINE, EXCEL_LS_NO_LINE, EXCEL_LS_THIN, EXCEL_LS_THIN, EGA_BLACK, EGA_BLACK );
+                cell->SetFormat( ghost_format );
+            }
+
+            // Merge with right
+            sheet.MergeCells( row, xlsCol, 1, maxDepth + 1 - depth );
+        }
+        cell->SetFormat( format );
+    }
+    ++row;
 }

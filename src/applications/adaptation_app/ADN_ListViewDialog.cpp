@@ -20,15 +20,18 @@
 // -----------------------------------------------------------------------------
 ADN_ListViewDialog::ADN_ListViewDialog( QWidget* pParent, const QString& strCaption, ADN_ListView* pListView )
     : QDialog( pParent, strCaption )
-    , pListView_( pListView )
+    , pListView_ ( pListView )
+    , strCaption_( strCaption )
 {
     assert( pListView != 0 );
     this->setCaption( strCaption );
     pListView->reparent( this, QPoint(0,0) );
     connect( pListView, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenu() ) );
     Q3HBox* pHBox = new Q3HBox( this );
+    QPushButton* pSaveButton = new QPushButton( tr( "Save" ), pHBox );
     QPushButton* pPrintButton = new QPushButton( tr( "Print" ), pHBox );
     QPushButton* pCloseButton = new QPushButton( tr( "Close" ), pHBox );
+    connect( pSaveButton, SIGNAL( clicked() ), this, SLOT( SaveListView() ) );
     connect( pPrintButton, SIGNAL( clicked() ), this, SLOT( PrintListView() ) );
     connect( pCloseButton, SIGNAL( clicked() ), this, SLOT( reject() ) );
     Q3VBoxLayout* pLayout = new Q3VBoxLayout( this );
@@ -93,4 +96,19 @@ void ADN_ListViewDialog::PrintListView()
             printer.newPage();
         pListView_->Print( n, painter, painterSize );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListViewDialog::SaveListView
+// Created: ABR 2012-02-09
+// -----------------------------------------------------------------------------
+void ADN_ListViewDialog::SaveListView()
+{
+    if( !pListView_ )
+        return;
+    QString path = QFileDialog::getSaveFileName( this, tr( "Save" ), QString(), tr("Excel files (*.xls)") );
+    if( path.isEmpty() )
+        return;
+    pListView_->SaveToXls( path, strCaption_ );
+    ShellExecute(0, NULL, path, NULL, NULL, SW_NORMAL);
 }

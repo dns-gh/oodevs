@@ -32,6 +32,7 @@ public:
 
     int ComputeNbrPrintPages( const QSize& painterSize ) const;
     void Print( int nPage, QPainter& painter, const QSize& painterSize );
+    void SaveToXls( const QString& path, const QString& sheetName ) const;
 
     void AddBoldGridRow( int nIndex );
     void AddBoldGridCol( int nIndex );

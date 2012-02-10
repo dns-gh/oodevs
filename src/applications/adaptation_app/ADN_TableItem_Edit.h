@@ -41,8 +41,10 @@ public:
     Validator& GetValidator();
     void SetValidator( Validator* pValidator );
 
-    void UseColor( bool bUseColor );
+    virtual bool UseColor() const;
+    virtual void SetUseColor( bool bUseColor );
     void SetRangeForColor( double rMin, double rMax );
+    virtual std::pair< double, double > GetRangeForColor() const;
     virtual void paint( QPainter *p, const QColorGroup &cg, const QRect &cr, bool selected );
 
     void SetAlignment( int nAlignment );

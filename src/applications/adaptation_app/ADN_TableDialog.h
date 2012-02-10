@@ -28,7 +28,7 @@ class ADN_TableDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_TableDialog( QWidget* pParent, const QString& strCaption, ADN_Table* pTable );
+             ADN_TableDialog( QWidget* pParent, const QString& strCaption, ADN_Table& pTable );
     virtual ~ADN_TableDialog();
     //@}
 
@@ -37,12 +37,14 @@ private slots:
     //@{
     void OnContextMenu();
     void PrintTable();
+    void SaveTable();
     //@}
 
 private:
     //! @name Member data
     //@{
-    ADN_Table* pTable_;
+    ADN_Table&     table_;
+    const QString& caption_;
     //@}
 };
 

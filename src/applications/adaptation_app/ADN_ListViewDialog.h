@@ -35,6 +35,7 @@ public:
 private slots:
     //! @name Helpers
     //@{
+    void SaveListView();
     void OnContextMenu();
     void PrintListView();
     //@}
@@ -43,6 +44,7 @@ private:
     //! @name Member data
     //@{
     ADN_ListView* pListView_;
+    const QString& strCaption_;
     //@}
 };
 
