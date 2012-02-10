@@ -2595,6 +2595,20 @@
         <mission name="MLSECURITY - Extinguish a fire"/>
         <mission name="MLSECURITY - Extinguish fires within area"/>
         <mission name="MLSECURITY - Decontaminate"/>
+        <mission name="MLSECURITY - Perform public works"/>
+        <mission name="MLSECURITY - Resume public works"/>
+      </missions>
+      <fragorders/>
+    </unit>
+    <unit dia-type="roles.Agent" file="BMPionSecurityWorldwide.bms" masalife="true" name="ML_Terrorist">
+      <missions>
+        <mission name="MLSECURITY - Follow"/>
+        <mission name="MLSECURITY - Move toward"/>
+        <mission name="MLSECURITY - Enable resource nodes"/>
+        <mission name="MLSECURITY - Disable resource nodes"/>
+        <mission name="MLSECURITY - Patrol"/>
+        <mission name="MLSECURITY - Plan a multiple attack"/>
+        <mission name="MLSECURITY - Plan an attack"/>
       </missions>
       <fragorders/>
     </unit>
@@ -3831,4 +3845,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3640481268" -->
+<!-- signature="2303902582" -->

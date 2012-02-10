@@ -2091,6 +2091,93 @@ Elements are visited in the order of the list. Agent will protect itself with NB
       <parameter dia-name="requestIssuingObjectIdentifier_" name="Request identifier" optional="false" type="String"/>
       <parameter dia-name="isPartialOffer_" name="Is partial offer" optional="false" type="Boolean"/>
     </mission>
+    <mission dia-behavior="tasks.PerformWorks" dia-type="tasks.PerformWorks" id="4473" name="MLSECURITY - Perform public works">
+      <description>
+        <doctrine><![CDATA[To create and build public works.]]></doctrine>
+        <usage><![CDATA[For an gent to know how to create and build a set of given objects or planned objects. When several elements  should be created, the agent acts on each object by following the order of the elements into the list. 
+A visited object won't be created and build if agent doesn't have the physical capability or if it hasn't enough resources to do it. In that specific case, agent will decide to visit the next one. The mission is done when all works have been visited (even if one one the objects could be built).]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="works" max-occurs="12554" min-occurs="1" name="works to perform" optional="false" type="PlannedWork">
+        <choice>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+          <parameter type="ObjectKnowledge"/>
+          <parameter type="CrowdKnowledge"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
+    <mission dia-behavior="tasks.PerformWorks" dia-type="tasks.PerformWorks2" id="4474" name="MLSECURITY - Resume public works">
+      <description>
+        <doctrine><![CDATA[To fix and/or resume already existing works.]]></doctrine>
+        <usage><![CDATA[For an gent to know how to create and build a set of given objects or planned objects. When several elements  should be created, the agent acts on each object by following the order of the elements into the list. 
+A visited object won't be created and build if agent doesn't have the physical capability or if it hasn't enough resources to do it. In that specific case, agent will decide to visit the next one. The mission is done when all works have been visited (even if one one the objects could be built).]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="works" max-occurs="12554" min-occurs="1" name="Elements to build" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+          <parameter type="ObjectKnowledge"/>
+          <parameter type="CrowdKnowledge"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
+    <mission dia-behavior="tasks.BuildAnObjectFromAPosition" dia-type="tasks.BuildAnObjectFromAPosition" id="4475" name="MLSECURITY - Plan an attack">
+      <description>
+        <doctrine><![CDATA[To create arsons/plant a bomb on specific location]]></doctrine>
+        <usage><![CDATA[For an gent to know how to plan an attack. The agent will move to planned attack, then reach the meeting position before activating the attack.]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="plannedWork" name="Planned attack" optional="false" type="PlannedWork">
+        <choice>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+          <parameter type="ObjectKnowledge"/>
+          <parameter type="CrowdKnowledge"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+      <parameter dia-name="position" name="Position of attack activation" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="AgentKnowledge"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
+    <mission dia-behavior="tasks.PerformWorks" dia-type="tasks.PerformWorks3" id="4476" name="MLSECURITY - Plan a multiple attack">
+      <description>
+        <doctrine><![CDATA[To create and build public works.]]></doctrine>
+        <usage><![CDATA[For an gent to know how to create and build a set of given objects or planned objects. When several elements  should be created, the agent acts on each object by following the order of the elements into the list. 
+A visited object won't be created and build if agent doesn't have the physical capability or if it hasn't enough resources to do it. In that specific case, agent will decide to visit the next one. The mission is done when all works have been visited (even if one one the objects could be built).]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="works" max-occurs="12554" min-occurs="1" name="Plan of attack" optional="false" type="PlannedWork">
+        <choice>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+          <parameter type="ObjectKnowledge"/>
+          <parameter type="CrowdKnowledge"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
   </units>
   <automats>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_AllerSeRecompleter" dia-type="T_Mission_Automate_ALAT_AllerSeRecompleter" id="189" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AllerSeRecompleter" name="AIR - resupply">
@@ -3446,4 +3533,4 @@ Elements are visited in the order of the list. Agent will protect itself with NB
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="1928671369" -->
+<!-- signature="0210712145" -->

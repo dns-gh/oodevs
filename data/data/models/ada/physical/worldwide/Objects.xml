@@ -68,7 +68,7 @@
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
     <propagation model="cloud"/>
   </object>
-  <object geometry="point" name="Arson/Fire" symbol="O*VPA-----*****" type="fire">
+  <object geometry="point" name="Fire" symbol="O*VPA-----*****" type="fire">
     <avoidable distance="50"/>
     <burn/>
     <extinguishable/>
@@ -373,10 +373,20 @@
   </object>
   <object geometry="point" name="Dirty bomb" symbol="O*VPA-----*****" type="dirty bomb">
     <activable/>
-    <attrition attrition-surface="0" category="Standard Landmine" ph="0"/>
+    <attrition attrition-surface="10000" category="Standard Landmine" ph="0.5"/>
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <contamination max-toxic="1"/>
     <interaction-height height="100"/>
     <intoxication max-toxic="1"/>
+    <urban-destruction>
+      <urban-modifier material-type="Wood" value="0"/>
+      <urban-modifier material-type="Concrete" value="0.2"/>
+      <urban-modifier material-type="Brick" value="0.5"/>
+      <urban-modifier material-type="Metal" value="0.1"/>
+      <urban-modifier material-type="Cob" value="0.1"/>
+      <urban-modifier material-type="Prefab" value="0.8"/>
+      <urban-modifier material-type="Vegetation" value="0.7"/>
+    </urban-destruction>
   </object>
   <object geometry="point" name="Hospital" symbol="G*GEHOSP--****X" type="hospital">
     <decontamination/>
@@ -522,5 +532,33 @@
     <constructor default-consumption-mode="ArretMoteurAllume" unit-type="raw"/>
     <resources/>
   </object>
+  <object geometry="point" name="Arson" symbol="O*VPA-----*****" type="Arson">
+    <avoidable distance="50"/>
+    <burn/>
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw">
+      <buildable>
+        <resources>
+          <resource count="1" name="Kerosene"/>
+        </resources>
+      </buildable>
+    </constructor>
+    <extinguishable/>
+    <universal/>
+  </object>
+  <object geometry="point" name="Destruction Bomb" symbol="O*VPA-----*****" type="Destruction Bomb">
+    <attrition attrition-surface="10000" category="Standard Landmine" ph="0.5"/>
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <interaction-height height="100"/>
+    <time-limited/>
+    <urban-destruction>
+      <urban-modifier material-type="Wood" value="0"/>
+      <urban-modifier material-type="Concrete" value="0.2"/>
+      <urban-modifier material-type="Brick" value="0.5"/>
+      <urban-modifier material-type="Metal" value="0.1"/>
+      <urban-modifier material-type="Cob" value="0.1"/>
+      <urban-modifier material-type="Prefab" value="0.8"/>
+      <urban-modifier material-type="Vegetation" value="0.7"/>
+    </urban-destruction>
+  </object>
 </objects>
-<!-- signature="1204840279" -->
+<!-- signature="4052689105" -->
