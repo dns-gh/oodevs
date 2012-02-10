@@ -32,6 +32,23 @@ method "canBeCreated" (
         return result
     end )
 
+method "canBeDeconstructed" (
+    function( self )
+        return integration.canRemoveIt( self )
+    end )
+
+method "deconstructIt" ( masalife.brain.integration.startStopAction( 
+{ 
+    start = integration.startRemoveIt, 
+    started = integration.updateRemoveIt, 
+    stop = integration.stopRemoveIt
+} ) )
+
+method "removeIt" (
+    function( self )
+        return integration.removeObjectInstantaneously( self )
+    end )
+
 -- --------------------------------------------------------------------------------
 --  Fire
 -- --------------------------------------------------------------------------------

@@ -87,6 +87,21 @@ method "canBeCreated" (
         return result
     end )
 
+method "canBeDeconstructed" ( 
+    function( self )
+        return false -- $$$ MIA TODO
+    end )
+
+method "deconstructIt" ( 
+    function( self )
+        return false -- $$$ MIA TODO
+    end )
+
+method "removeIt" (
+    function( self )
+        return false -- A urban block cannot be removed  instantaneously
+    end )
+
 -- --------------------------------------------------------------------------------
 -- Contamination area
 -- --------------------------------------------------------------------------------

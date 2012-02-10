@@ -144,6 +144,15 @@ integration.stopBuildItUrbanBlock = function( urbanBlock )
     urbanBlock[myself].actionBuildState = nil
 end
 
+-- -----------------------------------------------------------------------------
+-- Destroy an object magically (no delays, no ressource)
+-- -----------------------------------------------------------------------------
+integration.removeObjectInstantaneously = function( object )
+    DEC_DetruireObjetSansDelai( object.source )
+    return true
+end
+
+
 
 -- ============================================================================
 -- Object creation SECU
@@ -164,13 +173,13 @@ integration.updateBuildItSecu = function( object )
     else
         if object[ myself ].actionBuildState == eActionObjetImpossible then
             DEC_Trace( "impossible works" )
-            integration.pionRC( eRC_ConstructionObjetImpossible, object.knowledge.source )
+            integration.pionRC( eRC_ConstructionObjetImpossible )
         elseif object[ myself ].actionBuildState == eActionObjetManqueDotation then
             DEC_Trace( "not enough dotation" )
-            integration.pionRC( eRC_PasDotationConstructionObjet, object.knowledge.source )
+            integration.pionRC( eRC_PasDotationConstructionObjet )
         elseif object[ myself ].actionBuildState == eActionObjetPasDeCapacite then
             DEC_Trace( "no capacity" ) 
-            integration.pionRC( eRC_PasDotationConstructionObjet, object.knowledge.source )
+            integration.pionRC( eRC_PasDotationConstructionObjet )
         end
     end
     return false

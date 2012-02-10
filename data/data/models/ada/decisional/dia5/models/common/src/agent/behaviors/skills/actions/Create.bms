@@ -1,0 +1,17 @@
+-- ****************************************************************************
+-- To create and build a work (existing work or planned work).
+-- @params self.params.work, a ML Life work object.
+-- @return creationActionCompleted once action is completed
+-- ****************************************************************************
+rootnode
+{
+    feedbacks = { "creationActionCompleted" },
+
+    select = function( self )
+        if not self.params.work:isBuilt() then
+            self.createdWork = meKnowledge:create( self.params.work )
+        else
+            Feedback( self.feedbacks.creationActionCompleted, { work = self.createdWork } )
+        end
+    end
+}

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.behaviors.skills.actions.Create" source-version="1.0.0">
+    <description>To create or build a given work object.</description>
+    <parameters>
+        <parameter name="work">
+            <description>The work to create or build.</description>
+            <type>
+                <class name="agent.ontology.interfaces.Work"/>
+            </type>
+        </parameter>
+    </parameters>
+    <feedbacks>
+        <feedback name="creationActionCompleted">
+            <description>Sent once the work is done.</description>
+            <argument name="work">
+                <description>The work that has been built and/or crated.</description>
+                <type>
+                    <class name="agent.ontology.interfaces.Work"/>
+                </type>
+            </argument>
+        </feedback>
+    </feedbacks>
+</skill>

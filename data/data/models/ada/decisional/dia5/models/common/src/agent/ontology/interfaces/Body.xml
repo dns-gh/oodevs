@@ -381,5 +381,37 @@ Display a message.</description>
                 </type>
             </return>
         </method>
+        <method name="deconstruct">
+            <description>An agent's physical ability to deconstruct a work. </description>
+            <argument name="work">
+                <description>The work that must be deconstructed. </description>
+                <type>
+                    <class name="agent.ontology.interfaces.Work"/>
+                </type>
+            </argument>
+            <return>
+                <description>Returns true upon simulation method completion, false otherwise. &#xD;
+</description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="remove">
+            <description>To remove instantaneously a existing work (Physical capabilities are not checked, no delays). </description>
+            <argument name="work">
+                <description>The work that must be removed.</description>
+                <type>
+                    <class name="agent.ontology.interfaces.Work"/>
+                </type>
+            </argument>
+            <return>
+                <description>Returns true upon simulation method completion, false otherwise. &#xD;
+</description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
     </methods>
 </interface>

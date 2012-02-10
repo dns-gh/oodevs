@@ -20,6 +20,16 @@ method "create" (
         return work:createIt()
     end )
 
+method "deconstruct" (
+    function( self, work )
+        return work:deconstructIt()
+    end )
+
+method "remove" (
+    function( self, work )
+        return work:removeIt() -- remove object instantaneously
+    end )
+
 -- --------------------------------------------------------------------------------
 -- Populated area
 -- --------------------------------------------------------------------------------

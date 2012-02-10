@@ -27,15 +27,6 @@
                 </type>
             </return>
         </method>
-        <method name="createIt" abstract="false">
-            <description>To create and build this element.</description>
-            <argument name="builtWork">
-                <description>The work that has been built. </description>
-                <type>
-                    <class name="agent.ontology.interfaces.Work"/>
-                </type>
-            </argument>
-        </method>
         <method name="canBeCreated" abstract="false">
             <description>Returns 'True' if agent has the physical capability to create and build this element.&#xD;
 &#xD;
@@ -43,6 +34,15 @@ This implementation returns true if agent has the physical capability and has th
             <return>
                 <type>
                     <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="createIt" abstract="false">
+            <description>To create and build this element.</description>
+            <return name="work">
+                <description>The created work.</description>
+                <type>
+                    <class name="agent.ontology.interfaces.Work"/>
                 </type>
             </return>
         </method>

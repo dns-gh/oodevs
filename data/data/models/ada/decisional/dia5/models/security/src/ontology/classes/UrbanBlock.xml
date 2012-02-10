@@ -120,17 +120,44 @@ This action can take time (depending on the current status of the population, e.
                 </type>
             </return>
         </method>
+        <method name="isBuilt" abstract="false">
+            <description>Returns true if this element is entierly built.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
         <method name="createIt" abstract="false">
             <description>To create and build this element.</description>
-            <argument name="builtWork">
-                <description>The work that has been built. </description>
+            <return name="work">
+                <description>The created work.</description>
                 <type>
                     <class name="agent.ontology.interfaces.Work"/>
                 </type>
-            </argument>
+            </return>
         </method>
-        <method name="isBuilt" abstract="false">
-            <description>Returns true if this element is entierly built.</description>
+        <method name="removeIt" abstract="false">
+            <description>To remove instantaneously an existing work without any physical capability considerations.&#xD;
+&#xD;
+This implementation returns false. A urban block cannot be removed instantaneously.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canBeDeconstructed" abstract="false">
+            <description>Returns 'True' if agent has the physical capability to deconstruct this element.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="deconstructIt" abstract="false">
+            <description>To deconstruct (and then remove) this element.&#xD;
+Returns 'true' when element is deconstructed.</description>
             <return>
                 <type>
                     <simple name="boolean"/>

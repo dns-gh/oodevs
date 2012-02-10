@@ -11,15 +11,40 @@
         </method>
         <method name="createIt">
             <description>To create and build this element.</description>
-            <argument name="builtWork">
-                <description>The work that has been built. </description>
+            <return name="work">
+                <description>The created work.</description>
                 <type>
                     <class name="agent.ontology.interfaces.Work"/>
                 </type>
-            </argument>
+            </return>
         </method>
         <method name="canBeCreated">
             <description>Returns 'True' if agent has the physical capability to create and build this element.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canBeDeconstructed">
+            <description>Returns 'True' if agent has the physical capability to deconstruct this element.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="deconstructIt">
+            <description>To deconstruct (and then remove) this element.&#xD;
+Returns 'true' when element is deconstructed.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="removeIt">
+            <description>To remove instantaneously an existing work without any physical capability considerations.</description>
             <return>
                 <type>
                     <simple name="boolean"/>

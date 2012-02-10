@@ -1,6 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.skills.primitives.Create" source-version="1.0.0">
-    <description>For an gent to know how to build a construction. </description>
+    <description>For an gent to know how to create and build a set of given 'Works'. &#xD;
+&#xD;
+When several works should be created, the agent acts on each work by following the order of the elements into the 'works' list. &#xD;
+&#xD;
+A visited work won't be created and build if agent doesn't have the physical capability or if it hasn't enough resources. In that specific case, agent will decide to visit the next one.</description>
     <parameters>
         <parameter name="works">
             <description>The set of construction to build. </description>
