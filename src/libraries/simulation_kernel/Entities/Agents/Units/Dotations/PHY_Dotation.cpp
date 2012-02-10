@@ -124,22 +124,25 @@ void PHY_Dotation::ReadValue( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void PHY_Dotation::SetValue( double rValue )
 {
+    if( rValue == rValue_ )
+        return;
     if( bDotationBlocked_ )
         return;
     if( bInfiniteDotations_ && rValue < rSupplyThreshold_ )
         rValue = rCapacity_;
     rValue = std::min( rValue, maxCapacity_ );
-    if( (unsigned int)rValue_ != (unsigned int)rValue )
+    const bool bSupplyThresholdAlreadyReached = HasReachedSupplyThreshold();
+    assert( pCategory_ );
+    if( pCategory_->IsSignificantChange( rValue, rLastValueSent_, rCapacity_ ) || ( rValue < rSupplyThreshold_ ) != bSupplyThresholdAlreadyReached )
     {
         assert( pGroup_ );
         pGroup_->NotifyDotationChanged( *this );
+        rLastValueSent_ = rValue;
     }
-    const bool bSupplyThresholdAlreadyReached = HasReachedSupplyThreshold();
     rValue_ = rValue;
     if( HasReachedSupplyThreshold() )
     {
         assert( pGroup_ );
-        assert( pCategory_ );
         pGroup_->NotifySupplyNeeded( *pCategory_, !bSupplyThresholdAlreadyReached );
     }
 }
@@ -154,20 +157,14 @@ void PHY_Dotation::AddCapacity( const PHY_DotationCapacity& capacity )
     if( bInfiniteDotations_ && MT_IsZero( rCapacity_ ) )
     {
         rCapacity_ = maxCapacity_;
-        if( !bDotationBlocked_ )
-            rValue_ = maxCapacity_;
+        SetValue( maxCapacity_ );
     }
     else
     {
-        rCapacity_ += capacity.GetCapacity();
-        if( !bDotationBlocked_ )
-            rValue_ += capacity.GetCapacity();
+        rCapacity_ = std::min( rCapacity_ + capacity.GetCapacity(), maxCapacity_ );
+        SetValue( std::min( rValue_ + capacity.GetCapacity(), maxCapacity_ ) );
     }
-    rCapacity_ = std::min( rCapacity_, maxCapacity_ );
-    rValue_ = std::min( rValue_, maxCapacity_ );
     rSupplyThreshold_ += capacity.GetSupplyThreshold();
-    assert( pGroup_ );
-    pGroup_->NotifyDotationChanged( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -182,26 +179,15 @@ void PHY_Dotation::RemoveCapacity( const PHY_DotationCapacity& capacity )
     if( rFireReservation_ > rCapacity_ )
     {
         rFireReservation_ = rCapacity_;
-        rValue_           = 0;
-
-        assert( pGroup_ );
-        pGroup_->NotifyDotationChanged( *this );
+        SetValue( 0. );
     }
     else if( rConsumptionReservation_ + rFireReservation_ > rCapacity_ )
     {
         rConsumptionReservation_ = rCapacity_;
-        rValue_                  = 0;
-
-        assert( pGroup_ );
-        pGroup_->NotifyDotationChanged( *this );
+        SetValue( 0. );
     }
     else if( rFireReservation_ + rConsumptionReservation_ + rValue_ > rCapacity_ )
-    {
-        rValue_ = rCapacity_ - rConsumptionReservation_;
-
-        assert( pGroup_ );
-        pGroup_->NotifyDotationChanged( *this );
-    }
+        SetValue( rCapacity_ - rConsumptionReservation_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -216,6 +202,7 @@ void PHY_Dotation::NotifyCaptured()
     bDotationBlocked_        = true;
     assert( pGroup_ );
     pGroup_->NotifyDotationChanged( *this );
+    rLastValueSent_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -343,6 +330,7 @@ void PHY_Dotation::ChangeDotation( unsigned int number, float thresholdPercentag
     rSupplyThreshold_ = rCapacity_ * thresholdPercentage / 100.f;
     assert( pGroup_ );
     pGroup_->NotifyDotationChanged( *this );
+    rLastValueSent_ = 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -381,7 +369,7 @@ bool PHY_Dotation::NeedSupply() const
 {
     if( bDotationBlocked_ )
         return false;
-    return rCapacity_ - rValue_ > 0;
+    return rCapacity_ > rValue_;
 }
 
 // -----------------------------------------------------------------------------
