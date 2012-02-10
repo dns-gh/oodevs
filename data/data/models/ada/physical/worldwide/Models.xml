@@ -46,6 +46,8 @@
         <mission name="COMMON - transport embark"/>
         <mission name="COMMON - transport disembark"/>
         <mission name="COMMON - offer transport"/>
+        <mission name="COMMON - offer disembark"/>
+        <mission name="COMMON - offer embark"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -2473,6 +2475,8 @@
         <mission name="COMMON - transport embark"/>
         <mission name="COMMON - transport disembark"/>
         <mission name="COMMON - offer transport"/>
+        <mission name="COMMON - offer disembark"/>
+        <mission name="COMMON - offer embark"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3827,4 +3831,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0434762386" -->
+<!-- signature="3640481268" -->

@@ -2071,6 +2071,26 @@ Elements are visited in the order of the list. Agent will protect itself with NB
       <parameter dia-name="pointEmbarquement_" name="Landing point" optional="false" type="Point"/>
       <parameter dia-name="heureEmbarquement_" name="Landing time" optional="false" type="DateTime"/>
     </mission>
+    <mission dia-behavior="MIS_Pion_TransportEmbarquer" dia-type="T_Mission_Pion_TransportEmbarquer2" id="4472" name="COMMON - offer embark">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="unitesATransporter_" max-occurs="unbounded" min-occurs="1" name="Units to embark" optional="false" type="Agent"/>
+      <parameter dia-name="pointEmbarquement_" name="Embarking point" optional="false" type="Point"/>
+      <parameter dia-name="requestIssuingObjectIdentifier_" name="Request identifier" optional="false" type="String"/>
+      <parameter dia-name="isPartialOffer_" name="Is partial offer" optional="false" type="Boolean"/>
+    </mission>
+    <mission dia-behavior="MIS_Pion_TransportDebarquer" dia-type="T_Mission_Pion_TransportDebarquer2" id="4473" name="COMMON - offer disembark">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="unitesADebarquer_" max-occurs="unbounded" min-occurs="1" name="Units to disembark" optional="false" type="Agent"/>
+      <parameter dia-name="pointDebarquement_" name="Disembarking point" optional="false" type="Point"/>
+      <parameter dia-name="requestIssuingObjectIdentifier_" name="Request identifier" optional="false" type="String"/>
+      <parameter dia-name="isPartialOffer_" name="Is partial offer" optional="false" type="Boolean"/>
+    </mission>
   </units>
   <automats>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_AllerSeRecompleter" dia-type="T_Mission_Automate_ALAT_AllerSeRecompleter" id="189" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AllerSeRecompleter" name="AIR - resupply">
@@ -3426,4 +3446,4 @@ Elements are visited in the order of the list. Agent will protect itself with NB
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="3561173460" -->
+<!-- signature="1928671369" -->

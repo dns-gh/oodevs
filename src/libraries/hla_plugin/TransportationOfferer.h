@@ -139,7 +139,9 @@ private:
     const ContextFactory_ABC& factory_;
     const CallsignResolver_ABC& callsignResolver_;
     dispatcher::ClientPublisher_ABC& clientsPublisher_;
-    const unsigned int transportIdentifier_;
+    unsigned int transportIdentifier_;
+    unsigned int embarkIdentifier_;
+    unsigned int disembarkIdentifier_;
     const unsigned int missionCompleteReportId_;
     T_Offers pendingOffers_;
     T_Offers offeredOffers_;

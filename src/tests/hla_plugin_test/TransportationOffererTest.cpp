@@ -33,6 +33,8 @@ namespace
                            "    <missions>"
                            "        <offer>"
                            "            <transport>transport</transport>"
+                           "            <embarkment>embarkment</embarkment>"
+                           "            <disembarkment>disembarkment</disembarkment>"
                            "        </offer>"
                            "    </missions>"
                            "    <reports>"
@@ -40,12 +42,18 @@ namespace
                            "    </reports>"
                            "</configuration>" )
             , transportId( 42 )
+            , embarkId( 43 )
+            , disembarkId( 44 )
         {
             xis >> xml::start( "configuration" );
             MOCK_EXPECT( missionResolver, ResolveUnit ).once().with( "transport" ).returns( transportId );
+            MOCK_EXPECT( missionResolver, ResolveUnit ).once().with( "embarkment" ).returns( embarkId );
+            MOCK_EXPECT( missionResolver, ResolveUnit ).once().with( "disembarkment" ).returns( disembarkId );
         }
         xml::xistringstream xis;
         unsigned int transportId;
+        unsigned int embarkId;
+        unsigned int disembarkId;
         MockMissionResolver missionResolver;
         MockInteractionSender< interactions::NetnOfferConvoy > offerInteractionSender;
         MockInteractionSender< interactions::NetnServiceStarted > serviceStartedInteractionSender;
@@ -88,3 +96,4 @@ BOOST_FIXTURE_TEST_CASE( netn_offer_convoy_sender_sends_announce_offer_to_client
     BOOST_CHECK( flag.message().has_shape_creation() );
 }
 
+// TODO add protocol test

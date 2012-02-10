@@ -489,7 +489,7 @@ void TransportationRequester::Cancel( unsigned int entity )
     SendFragOrder( entity, cancelId_, publisher_ );
 }
 // -----------------------------------------------------------------------------
-// Name: TransportationRequester::Cancel
+// Name: TransportationRequester::ReadMission
 // Created: AHC 2012-02-09
 // -----------------------------------------------------------------------------
 void TransportationRequester::ReadMission(xml::xistream& xis, std::vector<unsigned int>& v,  const MissionResolver_ABC& resolver) const
