@@ -13,14 +13,14 @@ queryImplementation "GetPositionsToFollow"
         -- --------------------------------------------------------------------------------
         for _, agent in pairs( params.agents ) do
             local trackingPosition = CreateProxyKnowledge( 
-                ontology.classes.concretes.TrackingPosition, agent, 
+                ontology.classes.TrackingPosition, agent, 
                 { distanceMin = params.distanceMin } )
             if trackingPosition:isAccessible() then
                 allRes[ #allRes + 1 ] = trackingPosition
             else -- find close positions around element to follow
                 local simlocalisations = agent:getPositions()  -- Sim localisations, not reaching elements
                 for _, localisation in pairs ( simlocalisations ) do -- create point as reaching elements
-                    point = CreateKnowledge( ontology.classes.concretes.Position, localisation )
+                    point = CreateKnowledge( ontology.classes.Position, localisation )
                    if point:isAccessible() then
                         allRes[ #allRes + 1 ] = point
                     end

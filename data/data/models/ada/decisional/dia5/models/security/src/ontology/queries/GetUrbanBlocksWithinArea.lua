@@ -8,7 +8,7 @@ queryImplementation "GetUrbanBlocksWithinArea"
         local allRes = {}
         local urbanBlocks = DEC_Connaissances_BlocUrbainDansZone( params.area.source )
         for _, urbanBlock in pairs( urbanBlocks ) do
-            allRes[ #allRes + 1 ] = CreateKnowledge( ontology.classes.concretes.UrbanBlock, urbanBlock )
+            allRes[ #allRes + 1 ] = CreateKnowledge( ontology.classes.UrbanBlock, urbanBlock )
         end
         -- affichePositions( allRes ) -- $$$ MIA: to debug. Remove for release
         if not next( allRes ) then

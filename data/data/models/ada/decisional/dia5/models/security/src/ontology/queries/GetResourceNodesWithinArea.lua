@@ -10,7 +10,7 @@ queryImplementation "GetResourceNodesWithinArea"
         local allRes = {}
         local resourceNodes = DEC_ResourceNetwork_NodesInZone( params.area.source )
         for _, resourceNode in pairs( resourceNodes ) do
-            allRes[ #allRes + 1 ] = CreateKnowledge( ontology.classes.concretes.ResourceNode, resourceNode )
+            allRes[ #allRes + 1 ] = CreateKnowledge( ontology.classes.ResourceNode, resourceNode )
         end
         -- affichePositions( allRes ) -- $$$ MIA: to debug. Remove for release
         if not next( allRes ) then

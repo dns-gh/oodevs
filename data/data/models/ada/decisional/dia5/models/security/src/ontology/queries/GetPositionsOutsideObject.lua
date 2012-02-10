@@ -10,7 +10,7 @@ queryImplementation "GetPositionsOutsideObjects"
         -- $$$ MIA TODO
 
         -- $$$ MIA TEMPORARY IMPLEM:
-        local trackingPosition = CreateProxyKnowledge( ontology.classes.concretes.TrackingPosition, params.object, { distanceMin = 300 } )
+        local trackingPosition = CreateProxyKnowledge( ontology.classes.TrackingPosition, params.object, { distanceMin = 300 } )
         allRes[ #allRes + 1 ] = trackingPosition
 
         -- affichePositions( allRes ) -- $$$ MIA: to debug. Remove for release

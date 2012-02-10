@@ -10,7 +10,7 @@ queryImplementation "GetResourceNodesWithinUrbanBlocks"
             local simUrbanBlockArea = DEC_PolygoneBlocUrbain( urbanBlock.source )
             local simResourceNodes = DEC_ResourceNetwork_NodesInZone( simUrbanBlockArea )
             for _, simResourceNode in pairs( simResourceNodes ) do
-                allRes[ #allRes + 1 ] = CreateKnowledge( ontology.classes.concretes.ResourceNode, simResourceNode )
+                allRes[ #allRes + 1 ] = CreateKnowledge( ontology.classes.ResourceNode, simResourceNode )
             end
         end
 

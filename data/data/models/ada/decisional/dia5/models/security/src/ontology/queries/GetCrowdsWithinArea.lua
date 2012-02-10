@@ -11,7 +11,7 @@ queryImplementation "GetCrowdsWithinArea"
         for _, simCrowd in pairs( simCrowds ) do
             local simCrowdPosition = integration.getHeadPosition( simCrowd )
             if DEC_Geometrie_EstPointDansLocalisation( simCrowdPosition , params.area.source ) then
-                allRes[ #allRes + 1 ] = CreateKnowledge( ontology.classes.concretes.Crowd, simCrowd )
+                allRes[ #allRes + 1 ] = CreateKnowledge( ontology.classes.Crowd, simCrowd )
             end
         end
         -- affichePositions( allRes ) -- $$$ MIA: to debug. Remove for release

@@ -79,7 +79,7 @@ method "loadIt" ( masalife.brain.integration.startStopAction(
 method "unloadIt" ( masalife.brain.integration.startStopAction( 
 { 
     start = function( self, position )
-        local bodyPosition = CreateKnowledge( ontology.classes.concretes.Position, meKnowledge:getPosition() )
+        local bodyPosition = CreateKnowledge( ontology.classes.Position, meKnowledge:getPosition() )
         return integration.startUnloadCrowd( self, bodyPosition )
     end,
     started = function( self )
