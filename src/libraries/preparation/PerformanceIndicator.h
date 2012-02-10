@@ -14,7 +14,7 @@
 
 namespace tools
 {
-    class Loader_ABC;
+    class ExerciseConfig;
 }
 
 namespace xml
@@ -56,7 +56,7 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const tools::Loader_ABC& fileLoader, const std::string& file );
+    void Load( const tools::ExerciseConfig& config, const std::string& file );
     float ComputeLoadIndicator();
     float ComputeLoadIndicator( PerformanceIndicator::IndicatorValues& values );
     bool IsLoaded();
@@ -79,6 +79,7 @@ private:
     float knowledge_;
     float unitknowledge_;
     bool  loaded_;
+    float terrainMemorySizeIndicator_;
 };
 
 #endif // __PerformanceIndicator_h_

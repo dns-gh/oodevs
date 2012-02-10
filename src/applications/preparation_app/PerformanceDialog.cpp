@@ -33,9 +33,12 @@ PerformanceDialog::PerformanceDialog( QWidget* parent, Model& model, const Stati
     , terrainLoad_( new QLabel( this ) )
     , knowledges_( new QLabel( this ) )
     , loadLevel_( new QLabel( this ) )
+    , limitValue_( new QLabel( this ) )
+    , limitLine_ ( new QLabel( this ) )
+    , progressLimit_( 40 )
 {
     setCaption( tr( "Performance dialog" ) );
-    setFixedSize( 450, 150 );
+    setFixedSize( 350, 200 );
 
     QGridLayout* layout = new QGridLayout( this, 6, 2 );
     layout->setMargin( 15 );
@@ -47,8 +50,12 @@ PerformanceDialog::PerformanceDialog( QWidget* parent, Model& model, const Stati
     layout->addWidget( terrainLoad_, 3, 0 );
     layout->addWidget( knowledges_, 4, 0 );
     layout->addWidget( loadLevel_, 5, 0 );
-    layout->addWidget( progressValue_ , 5, 1 );
-    loadLevel_->setMinimumHeight( 50 );
+    layout->addWidget( progressValue_ , 0, 1, 6, 1 );
+    loadLevel_->setMinimumWidth( 280 );
+    loadLevel_->setMinimumHeight( 40 );
+    loadLevel_->setAlignment( Qt::AlignBottom );
+    progressValue_->setOrientation( Qt::Vertical );
+    limitLine_->setText( "<b>____<\b>" );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,26 +88,27 @@ void PerformanceDialog::UpdateDisplay()
     units_      ->setText( tr( "Number of units: " )            + QString::number( values.units_ ) );
     urbanBlocs_ ->setText( tr( "Number of urban blocs: " )      + QString::number( values.blocs_ ) );
     objects_    ->setText( tr( "Number of objects: " )          + QString::number( values.objects_ ) );
-    terrainLoad_->setText( tr( "Terrain size: " )               + QString::number( values.terrainLoad_ ) + QString( " km²" ) ) ;
+    terrainLoad_->setText( tr( "Terrain size: " ) + QString::number( values.terrainLoad_ ) + QString( " Mo" ) ) ;
     knowledges_ ->setText( tr( "Number of knowledge groups: " ) + QString::number( values.knowledges_ ) );
     loadLevel_  ->setText( "<b>" + tr( "Load level: " )         + QString::number( static_cast< unsigned int >( loadLevel ) ) + " / " + QString::number( values.limit_ ) + "<\b>" );
+    limitValue_ ->setText( "<b>" + QString::number( values.limit_ ) + "<\b>" );
+    limitLine_->move( progressValue_->pos().x() - 3,
+                      progressValue_->pos().y() + progressValue_->size().height() * ( 100 - progressLimit_ ) / 100 - limitLine_->size().height() / 2 - 6 );
+    limitValue_->move( progressValue_->pos().x() + progressValue_->size().width() + 6,
+                       progressValue_->pos().y() + progressValue_->size().height() * ( 100 - progressLimit_ ) / 100 - limitValue_->size().height() / 2 );
 
     assert( values.limit_ > 0 );
-    float factor = loadLevel/ static_cast< float >( values.limit_ );
-    if ( factor > 1.f )
-        factor = 1.f;
+    float factor = loadLevel / static_cast< float >( values.limit_ ); 
+    bool aboveLimit = factor > 1.f;
+    float limitFactor = aboveLimit ? 1.f - 1.f / factor  : 0.f;
+    float fProgressLimit = static_cast< float >( progressLimit_ );
+    float progressValue = aboveLimit ? fProgressLimit + ( 100.f - fProgressLimit ) * limitFactor : fProgressLimit * factor;
 
     QColor barColor;
-    barColor.setRed( static_cast< int >( factor * 255.f ) );
-    barColor.setGreen( static_cast< int >( ( 1.f- factor ) * 255.f ) );
-    barColor.setBlue( 0 );
-
+    barColor.setRed( aboveLimit ? 155 + static_cast< int >( 100.f * limitFactor ) : 0 );
+    barColor.setGreen( !aboveLimit ? 200 : 0 );
     QPalette pal = progressValue_->palette();
-    pal.setColor( QColorGroup::Highlight, barColor );    
+    pal.setColor( QColorGroup::Highlight, barColor );
     progressValue_->setPalette( pal );
-    progressValue_->setValue( static_cast< unsigned int >( factor * 100.f ) );
-
-    bool indicatorLoaded = model_.performanceIndicator_.IsLoaded();
-    loadLevel_->setVisible( indicatorLoaded );
-    progressValue_->setVisible( indicatorLoaded );
+    progressValue_->setValue( static_cast< int >( progressValue ) );
 }

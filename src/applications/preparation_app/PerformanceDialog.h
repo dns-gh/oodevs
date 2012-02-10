@@ -57,6 +57,9 @@ private:
     QLabel* terrainLoad_;
     QLabel* knowledges_;
     QLabel* loadLevel_;
+    QLabel* limitValue_;
+    QLabel* limitLine_;
+    const int progressLimit_;
 };
 
 #endif // __PerformanceDialog_h_

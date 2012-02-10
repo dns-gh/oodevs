@@ -288,7 +288,7 @@ void Model::Load( const tools::ExerciseConfig& config )
     config.GetLoader().LoadFile( config.GetExerciseFile(), boost::bind( &Exercise::Load, &exercise_, _1 ) );
     config.GetLoader().LoadFile( config.GetSettingsFile(), boost::bind( &tools::ExerciseSettings::Load, &exercise_.GetSettings(), _1 ) );
     symbolsFactory_.Load( config );
-    performanceIndicator_.Load( config.GetLoader(), tools::GeneralConfig::BuildResourceChildFile( "PerformanceIndicator.xml" ) );
+    performanceIndicator_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "PerformanceIndicator.xml" ) );
 
     //$$ LOADING DE FICHIERS A UNIFIER
     const std::string directoryPath = boost::filesystem::path( config.GetTerrainFile() ).branch_path().native_file_string();
