@@ -122,7 +122,7 @@ private:
     bool bLastPerceived_;
     bool bCurrentProgressUpdated_;
     bool bMaxProgressUpdated_;
-    float rLastProgressSent_;
+    int nLastProgressSent_;
     static MIL_IDManager idManager_;
     //@}
 };
