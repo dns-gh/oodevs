@@ -39,7 +39,7 @@ DEC_Knowledge_Urban::DEC_Knowledge_Urban( const MIL_Army_ABC& army, const UrbanO
     , bCurrentProgressUpdated_( false )
     , bMaxProgressUpdated_    ( false )
     , bLastPerceived_         ( false )
-    , rLastProgressSent_      ( 0. )
+    , nLastProgressSent_      ( 0 )
 {
     // NOTHING
 }
@@ -59,7 +59,7 @@ DEC_Knowledge_Urban::DEC_Knowledge_Urban()
     , bCurrentProgressUpdated_( false )
     , bMaxProgressUpdated_    ( false )
     , bLastPerceived_         ( false )
-    , rLastProgressSent_      ( 0. )
+    , nLastProgressSent_      ( 0 )
 {
     // NOTHING
 }
@@ -205,12 +205,12 @@ void DEC_Knowledge_Urban::SendChangedState()
 {
     client::UrbanKnowledgeUpdate message;
     bool bMustSend = false;
-    if( std::abs( rLastProgressSent_ - rProgressPercent_ ) >= 0.05 )
+    int progress = static_cast< int >( 100.f * rProgressPercent_ );
+    if( std::abs( nLastProgressSent_ - progress ) > 0 )
     {
-        float rProgress = static_cast< float >( rProgressPercent_ * 100 ) / 5 * 0.05f; // $$$$ MCO : ^c^v bloc from SendFullState + WTF magic numbers + WTF float computations and casts !
-        message().set_progress( static_cast< int >( rProgress * 100 ) );
-        message().set_max_progress( static_cast< int >( rMaxProgressPercent_ * 100 ) / 5 * 5 );
-        rLastProgressSent_ = rProgress;
+        message().set_progress( progress );
+        message().set_max_progress( static_cast< int >( rMaxProgressPercent_ * 100 ) );
+        nLastProgressSent_ = progress;
         bMustSend = true;
     }
     if( perceivedByAutomate_.size() == 0 && bLastPerceived_ )
@@ -250,10 +250,10 @@ void DEC_Knowledge_Urban::SendFullState()
     message().mutable_knowledge()->set_id( GetID() );
     message().mutable_party()->set_id( armyId_ );
     message().mutable_object()->set_id( GetObjectKnown()->GetID() );
-    float rProgress = static_cast< float >( rProgressPercent_ * 100 ) / 5 * 0.05f; // $$$$ MCO : WTF ^c^v bloc from SendChangedState + WTF magic numbers + WTF float computations and casts !
-    message().set_progress( static_cast< int >( rProgress * 100 ) );
-    message().set_max_progress( static_cast< int >( rMaxProgressPercent_ * 100 ) / 5 * 5 );
-    rLastProgressSent_ = rProgress;
+    int progress = static_cast< int >( rProgressPercent_ * 100 );
+    message().set_progress( progress );
+    message().set_max_progress( static_cast< int >( rMaxProgressPercent_ * 100 ) );
+    nLastProgressSent_ = progress;
     message().set_perceived( bLastPerceived_ );
     WriteMsgPerceptionSources( message() );
     message.Send( NET_Publisher_ABC::Publisher() );
