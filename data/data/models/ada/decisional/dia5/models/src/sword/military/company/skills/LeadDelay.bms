@@ -216,9 +216,6 @@ create = function( self )
           self.progressionInAOR[ entity ] = proj
       end
 
-      if fuseau ~= NIL or fuseau ~= nil then
-          return
-      end
       largeurFuseau = fuseau:getWidth()
 
       Activate( skill.links.coordinationManager , 1, { enititesFromEchelon = myself.leadData.pionsLima1, progressionInAOR = self.progressionInAOR, distance = largeurFuseau/2 } )

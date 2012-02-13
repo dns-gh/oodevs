@@ -95,7 +95,6 @@ done = function( self ) end,
 
 create = function( self )
         myself.newTask = false
-        myself.hasSentFinMission = false
         self.parameters = myself.taskParams
         self.parameters.commandingEntities = integration.getEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
         self.operationnalEntities = integration.getOperationnalEntitiesFromAutomat( meKnowledge, "none", self.params.withPC )
@@ -167,7 +166,6 @@ activate = function( self )
            Feedback( self.feedbacks.done )
         else
            meKnowledge:RC( eRC_FinMission )
-           myself.hasSentFinMission = true           
         end
         myself.feedback = false
     end
@@ -181,9 +179,6 @@ activate = function( self )
 
         local fuseau = meKnowledge:getFuseau()
         
-        if fuseau ~= NIL or fuseau ~= nil then
-            return
-        end
 
         -- Gestion de l'élongation   
         -- tous les pions sont projeté sur un des deux fuseaux de l'automate
