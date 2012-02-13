@@ -114,7 +114,6 @@ void PopulationMagicOrdersInterface::NotifyContextMenu( const Population_ABC& en
     AddReloadBrainMenu(magicMenu, static_.types_.populationModels_, 
             entity.Retrieve<PopulationDecisions>() ? entity.Retrieve<PopulationDecisions>()->ModelName() : "unknown",
             entity.GetType().GetDecisionalModel().GetName() );
-    AddMagic( tr( "Reload brain" ), SLOT( ReloadBrain() ), magicMenu );
     AddMagic( tr( "Kill all" ), SLOT( KillAllPopulation() ), magicMenu );
     AddValuedMagic( magicMenu, menu, tr( "Change armed individuals:" ), SLOT( ChangeArmedIndividuals() ) );
     kernel::ContextMenu* choiceMenu = new kernel::ContextMenu( magicMenu );
@@ -275,6 +274,8 @@ void PopulationMagicOrdersInterface::AddReloadBrainMenu( QMenu* parent, const to
     {
         const kernel::DecisionalModel& value = it.NextElement();
         const std::string& name(value.GetName());
+        if( name==currentModel || name==defaultModel )
+            continue;
         std::string nameCpy(name);
         boost::to_lower( nameCpy );
         char key = nameCpy[0];
