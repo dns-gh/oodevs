@@ -43,7 +43,6 @@ rootnode
     activate = function( self )
         local Activate = Activate
 
-        -- Decontamination begins
         local paramsSize = #self.params.works
         if paramsSize > 0 then 
             if self.nextTargetIndex <= paramsSize then

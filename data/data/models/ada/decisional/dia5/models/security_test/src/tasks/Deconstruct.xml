@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="tasks.Deconstruct" source-version="1.0.0">
+    <parameters>
+        <parameter name="objects">
+            <type>
+                <list>
+                    <class name="ontology.classes.Object"/>
+                </list>
+            </type>
+        </parameter>
+        <parameter name="instantaneously">
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
+        </parameter>
+        <parameter name="waitForReinforcement">
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage disable-when-done="true">
+            <skills>
+                <skill name="behaviors.skills.primitives.Deconstruct" main="true">
+                    <parameter name="works">
+                        <value>
+                            <parameter>objects</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="waitForReinforcement">
+                        <value>
+                            <parameter>waitForReinforcement</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="instantaneously">
+                        <value>
+                            <parameter>instantaneously</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>
