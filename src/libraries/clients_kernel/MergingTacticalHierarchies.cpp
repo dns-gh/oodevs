@@ -22,7 +22,8 @@ using namespace kernel;
 MergingTacticalHierarchies::MergingTacticalHierarchies( Controller& controller, Entity_ABC& entity, Entity_ABC* superior )
      : EntityHierarchies< TacticalHierarchies >( controller, entity, superior )
      , controller_( controller )
-     , entity_    ( entity )
+     , entity_( entity )
+     , symbolCanBeUpdated_( false )
 {
     // NOTHING
 }
@@ -52,7 +53,11 @@ std::string MergingTacticalHierarchies::GetSymbol() const
 void MergingTacticalHierarchies::UpdateSymbol( bool up /* = true*/ )
 {
     if( up )
+    {
+        if( !symbolCanBeUpdated_ )
+            return;
         entity_.Get< SymbolHierarchy_ABC >().PrepareForMerge();
+    }
     else
     {
         tools::Iterator< const Entity_ABC& > it = CreateSubordinateIterator();
@@ -62,6 +67,8 @@ void MergingTacticalHierarchies::UpdateSymbol( bool up /* = true*/ )
             if( child )
                 const_cast< TacticalHierarchies* >( child )->UpdateSymbol( false );
         }
+        if( !symbolCanBeUpdated_ )
+            return;
     }
     const std::string oldSymbol = GetSymbol();
     const std::string oldLevel = GetLevel();
@@ -98,6 +105,16 @@ void MergingTacticalHierarchies::UnregisterSubordinate( const kernel::Entity_ABC
 {
     EntityHierarchies< TacticalHierarchies >::UnregisterSubordinate( entity );
     UpdateSymbol();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MergingTacticalHierarchies::DoUpdate
+// Created: LDC 2012-02-13
+// -----------------------------------------------------------------------------
+void MergingTacticalHierarchies::DoUpdate( const kernel::InstanciationComplete& ic )
+{
+    EntityHierarchies< TacticalHierarchies >::DoUpdate( ic );
+    symbolCanBeUpdated_ = true;
 }
 
 // -----------------------------------------------------------------------------
