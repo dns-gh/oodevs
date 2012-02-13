@@ -15,6 +15,14 @@
                 </list>
             </type>
         </parameter>
+        <parameter name="minDistance">
+            <type>
+                <simple name="numeric"/>
+            </type>
+            <default>
+                <number>0.0</number>
+            </default>
+        </parameter>
     </parameters>
     <stages>
         <stage label="following agents" permanent="true">
@@ -28,6 +36,11 @@
                     <parameter name="positions">
                         <value>
                             <parameter>positions</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="minDistance">
+                        <value>
+                            <parameter>minDistance</parameter>
                         </value>
                     </parameter>
                 </skill>

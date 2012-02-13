@@ -13,6 +13,7 @@ rootnode
     -- --------------------------------------------------------------------------------
     select = function( self )
         if meKnowledge:moveTo( self.params.destination, self.params.urgency, self.params.pathType ) then
+            DEC_Trace( "Doneeeeee" )
             Feedback( self.feedbacks.done )
         end
     end,

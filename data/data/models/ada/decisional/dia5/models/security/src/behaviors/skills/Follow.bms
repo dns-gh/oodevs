@@ -23,19 +23,21 @@ rootnode
 
         -- Find nearest agent
         local nearestAgent = self.params.agents[ 1 ]
-        for _, agent in pairs( self.params.agents ) do  -- select the nearest element
+        for _, agent in pairs( self.params.agents ) do  -- select the nearest agent
             nearestAgent = agent:getProximity( meKnowledge )
              > nearestAgent:getProximity( meKnowledge ) and agent or nearestAgent
         end
 
         -- find nearest position
         local nearestPosition = self.positions[ 1 ]
-        for _, position in pairs( self.positions ) do  -- select the nearest element
+        for _, position in pairs( self.positions ) do  -- select the nearest position
             nearestPosition = position:getProximity( nearestAgent )
              > nearestPosition:getProximity( nearestAgent ) and position or nearestPosition
         end
 
         -- MoveToward nearest position from nearest agent
-        Activate( skill.links.reach, 1, { destination = nearestPosition } )
+        if not nearestPosition:isReached() then
+            Activate( skill.links.reach, 1, { destination = nearestPosition } )
+        end
     end
 }

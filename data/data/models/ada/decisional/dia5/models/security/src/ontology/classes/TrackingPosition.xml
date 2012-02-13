@@ -56,5 +56,15 @@ Returns true once the agent has reached the end-point of the path (please note t
                 </type>
             </return>
         </method>
+        <method name="isReached" abstract="false">
+            <description>Returns true if this object has a proximity level of 100% and should be considered as being reached by the agent, false otherwise.&#xD;
+&#xD;
+This implementation returns true if this element's proximity is equal to 100%.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
     </methods>
 </class>

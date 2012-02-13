@@ -35,6 +35,7 @@ rootnode
     create = function( self )
         self.arrived = false
         self.nextTargetIndex = 1
+        self.position = {}
     end,
 
     -- --------------------------------------------------------------------------------
@@ -47,15 +48,15 @@ rootnode
         if paramsSize > 0 then 
             if self.nextTargetIndex <= paramsSize then
                 self.fire = self.params.fires[ self.nextTargetIndex ]
-                if self.arrived then
+                self.position = ontology.queries.GetPositionsOutsideObject[ "execute" ]( { object = self.fire } )
+                if self.position[ 1 ]:isReached() then
                     if self.fire:canBeExtinguished() then
                         Activate( skill.links.extinguish, 1, { fire = self.fire } )
                     elseif not self.fire:isExtinguished() then -- agent cannot and fire burns...
                         self:impossibleToExtinguish( { fire = self.fire } )
                     end
                 else
-                    -- $$$ MIA TODO local position = ontology.queries.GetPositionsOutsideObject[ "execute" ]( { object = self.fire } )
-                    Activate( skill.links.reach, 1, { destination = self.fire } )
+                    Activate( skill.links.reach, 1, { destination = self.position[ 1 ] } )
                 end
             else
                 Feedback( self.feedbacks.done )
