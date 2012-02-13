@@ -51,6 +51,8 @@
         <skill name="behaviors.skills.primitives.Extinguish"/>
         <skill name="agent.behaviors.skills.actions.EquipWithNBCProtection"/>
         <skill name="agent.behaviors.skills.actions.Create"/>
+        <skill name="agent.behaviors.skills.actions.Deconstruct"/>
+        <skill name="behaviors.skills.primitives.Deconstruct"/>
     </skills>
     <resources>
         <resource name="agent.behaviors.resources.Motion"/>

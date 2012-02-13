@@ -72,7 +72,7 @@ method "extinguishIt" ( masalife.brain.integration.startStopAction(
 
 method "canBeExtinguished" ( 
     function( self )
-        return true -- $$$ MIA TODO
+        return true -- $$$ MIA TODO check physcal capability
     end )
 
 -- --------------------------------------------------------------------------------

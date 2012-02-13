@@ -1,0 +1,22 @@
+-- **************************************************************************** 
+-- Create a work (create it and/or build it)
+-- ****************************************************************************
+rootnode
+{
+    connections = { skill.links.create },
+
+    -- -------------------------------------------------------------------------------- 
+    -- feeback from create action
+    -- --------------------------------------------------------------------------------
+    creationActionCompleted = function( self )
+        Feedback( self.feedbacks.done )
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Create and build the work.
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        local Activate = Activate
+        Activate( skill.links.create, 1, { work  = self.params.work } )
+    end
+}

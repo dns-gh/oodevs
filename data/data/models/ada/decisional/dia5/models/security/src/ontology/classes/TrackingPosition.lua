@@ -16,7 +16,6 @@ method "reachIt" ( masalife.brain.integration.startStopAction(
 
 method "isReached" (
     function( self )
-        DEC_Trace( "self.distanceMin = "..tostring( self.distanceMin ) )
         return integration.distance( self.proxy, meKnowledge ) < self.distanceMin
     end )
 

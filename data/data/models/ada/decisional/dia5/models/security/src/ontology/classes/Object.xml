@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.classes.Object" source-version="1.0.0" extends="ontology.classes.PlannedWork">
+<class xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.classes.Object" source-version="1.0.0">
     <description>Represents anything world entity that is not a: &#xD;
 - Agent&#xD;
 - Crowd&#xD;
@@ -11,6 +11,7 @@
 </description>
     <realizes>agent.ontology.interfaces.Fire</realizes>
     <realizes>agent.ontology.interfaces.ResourceNode</realizes>
+    <realizes>agent.ontology.interfaces.Work</realizes>
     <methods>
         <method name="getPosition">
             <return name="simPosition">
@@ -80,17 +81,17 @@ This implementation returns true if agent has the physical capability and has th
                 </type>
             </return>
         </method>
-        <method name="canBeDeconstructed" abstract="false">
-            <description>Returns 'True' if agent has the physical capability to deconstruct this element.</description>
+        <method name="deconstructIt" abstract="false">
+            <description>To deconstruct (and then remove) this element.&#xD;
+Returns 'true' when element is deconstructed.</description>
             <return>
                 <type>
                     <simple name="boolean"/>
                 </type>
             </return>
         </method>
-        <method name="deconstructIt" abstract="false">
-            <description>To deconstruct (and then remove) this element.&#xD;
-Returns 'true' when element is deconstructed.</description>
+        <method name="canBeDeconstructed" abstract="false">
+            <description>Returns 'True' if agent has the physical capability to deconstruct this element.</description>
             <return>
                 <type>
                     <simple name="boolean"/>

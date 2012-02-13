@@ -41,7 +41,7 @@
         </stage>
         <stage label="object creation" disable-when-done="true">
             <skills>
-                <skill name="agent.behaviors.skills.actions.Create" main="true">
+                <skill name="skills.CreateAWork" main="true">
                     <parameter name="work">
                         <value>
                             <parameter>plannedWork</parameter>

@@ -36,6 +36,11 @@ method "canBeCreated" (
         return result
     end )
 
+-- Decontruction method: cannot deconstruct an object that is not existing
+method "canBeDeconstructed" ( function( self ) return false end )
+method "deconstructIt" ( function( self ) return false end )
+method "removeIt" ( function( self ) return false end )
+
 -- --------------------------------------------------------------------------------
 -- Specific methods
 -- --------------------------------------------------------------------------------

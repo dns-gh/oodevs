@@ -41,8 +41,7 @@ method "alert" (
 method "undoAlert" (
     function( self, populatedArea )
         return populatedArea:undoAlertIt()
-    end
-)
+    end )
 
 method "confine" (
     function( self, populatedArea )

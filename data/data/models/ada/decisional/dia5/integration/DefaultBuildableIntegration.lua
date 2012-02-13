@@ -148,7 +148,7 @@ end
 -- Destroy an object magically (no delays, no ressource)
 -- -----------------------------------------------------------------------------
 integration.removeObjectInstantaneously = function( object )
-    DEC_DetruireObjetSansDelai( object.source )
+    DEC_DetruireObjetSansDelais( object.source )
     return true
 end
 
@@ -163,7 +163,7 @@ end
 -- Update the object creation
 -- -----------------------------------------------------------------------------
 integration.updateBuildItSecu = function( object )
-    if object[ myself ].actionBuildState == eActionObjetTerminee then --on a fini de construire un obstacle de manoeuvre mais on ne renvoie pas de feedback done sans l'avoir activé
+    if object[ myself ].actionBuildState == eActionObjetTerminee then
         if( object.knowledge ~= nil ) then
             integration.pionRC( eRC_FinTravauxObjet, object.knowledge.source )
         end
@@ -172,14 +172,17 @@ integration.updateBuildItSecu = function( object )
         return true
     else
         if object[ myself ].actionBuildState == eActionObjetImpossible then
-            DEC_Trace( "impossible works" )
-            integration.pionRC( eRC_ConstructionObjetImpossible )
+            DEC_Trace( "impossible work" )
+            meKnowledge:sendReport( eRC_ConstructionObjetImpossible )
+            return true
         elseif object[ myself ].actionBuildState == eActionObjetManqueDotation then
             DEC_Trace( "not enough dotation" )
-            integration.pionRC( eRC_PasDotationConstructionObjet )
+            meKnowledge:sendReport( eRC_PasDotationConstructionObjet )
+            return true
         elseif object[ myself ].actionBuildState == eActionObjetPasDeCapacite then
             DEC_Trace( "no capacity" ) 
-            integration.pionRC( eRC_PasDotationConstructionObjet )
+            meKnowledge:sendReport( eRC_PasDotationConstructionObjet )
+            return true
         end
     end
     return false

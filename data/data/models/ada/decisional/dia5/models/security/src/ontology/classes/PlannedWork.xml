@@ -46,5 +46,30 @@ This implementation returns true if agent has the physical capability and has th
                 </type>
             </return>
         </method>
+        <method name="canBeDeconstructed" abstract="false">
+            <description>Returns 'True' if agent has the physical capability to deconstruct this element.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="deconstructIt" abstract="false">
+            <description>To deconstruct (and then remove) this element.&#xD;
+Returns 'true' when element is deconstructed.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="removeIt" abstract="false">
+            <description>To remove instantaneously an existing work without any physical capability considerations.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
     </methods>
 </class>

@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="skills.CreateThenRemoveObject" source-version="1.0.0">
+    <description>To create, build and then remove an object without any movement considerations (agent won't move toward the object to create).</description>
+    <parameters>
+        <parameter name="work">
+            <description>The element to create and build.</description>
+            <type>
+                <class name="agent.ontology.interfaces.Work"/>
+            </type>
+        </parameter>
+        <parameter name="instantaneously">
+            <type>
+                <simple name="boolean"/>
+            </type>
+        </parameter>
+    </parameters>
+    <links>
+        <link name="create" skill="agent.behaviors.skills.actions.Create">
+            <description>To create and build the work.</description>
+        </link>
+        <link name="deconstruct" skill="agent.behaviors.skills.actions.Deconstruct">
+            <description>To deconstruct the work.</description>
+        </link>
+    </links>
+    <feedbacks>
+        <feedback name="done">
+            <description>Sent when the given work has been created, built and then removed.</description>
+        </feedback>
+    </feedbacks>
+</skill>

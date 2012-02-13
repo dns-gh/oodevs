@@ -17,8 +17,8 @@ rootnode
         self.arrived = true
     end,
 
-    creationActionCompleted = function( self, params ) -- from decontaminate skill
-        Feedback( self.feedbacks.created, { work = params.work } )
+    creationActionCompleted = function( self, params, additionalParams ) -- from decontaminate skill
+        Feedback( self.feedbacks.created, { work = additionalParams.work } ) -- return the object created
         self.nextTargetIndex = self.nextTargetIndex + 1
         self.arrived = false
     end,

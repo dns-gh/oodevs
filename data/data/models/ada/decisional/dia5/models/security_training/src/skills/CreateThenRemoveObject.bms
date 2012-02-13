@@ -1,0 +1,48 @@
+-- **************************************************************************** 
+-- Create a work and then remove it(create it and/or build it)
+-- ****************************************************************************
+rootnode
+{
+    connections = { skill.links.create, skill.links.deconstruct },
+
+    -- -------------------------------------------------------------------------------- 
+    -- feeback from create action
+    -- --------------------------------------------------------------------------------
+    creationActionCompleted = function( self, params, additionalParams )
+        self.createdWork = additionalParams.work
+        Feedback( self.feedbacks.done )
+    end,
+
+    deconstructActionCompleted = function( self, params )
+        Feedback( self.feedbacks.done )
+        self.done = true
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Init
+    -- --------------------------------------------------------------------------------
+    create = function( self )
+        self.createdWork = nil
+        self.done = false
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Create and build the work.
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        local Activate = Activate
+
+        -- The job is done don't need to evaluate the skill anymore
+        if self.done then 
+            return 
+        end
+
+        -- If not created, create the object, the deonctruct it
+        if not self.createdWork  then
+            Activate( skill.links.create, 1, { work  = self.params.work } )
+        else
+            Activate( skill.links.deconstruct, 1, 
+              { work  = self.createdWork, instantaneously = self.params.instantaneously } )
+        end
+    end
+}
