@@ -5880,7 +5880,7 @@
              conveyRegionDesignatorSets="Disabled"
              interactionRelevanceAdvisory="Disabled"
              objectClassRelevanceAdvisory="Disabled"
-             serviceReporting="Disabled"/>
+             serviceReporting="Enabled"/>
    <dataTypes>
       <basicDataRepresentations>
          <basicData encoding="32-bit IEEE normalized single-precision format. See IEEE       Std 754-1985"
