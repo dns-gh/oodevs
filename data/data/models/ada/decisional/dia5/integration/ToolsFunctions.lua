@@ -17,9 +17,6 @@ rawset( getfenv(), "StartEvent", function( task, params )
 end )
 
 rawset( getfenv(), "StopEvents", function( ... )
-  if not myself.hasSentFinMission then
-     return
-  end
   masalife.brain.core.stopTasks() --Stop all tasks, main task and fragOrder
   myself.currentMission = nil
   myself.taskParams = {}

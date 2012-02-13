@@ -332,10 +332,6 @@ activate = function( self )
     end
     local fuseau = meKnowledge:getFuseau()
     
-    if fuseau ~= NIL or fuseau ~= nil then
-       return
-    end
-    
     -- Gestion de l'élongation   
     -- tous les pions sont projeté sur un des deux fuseaux de l'automate
     -- self.progressionInAOR: contient les valeurs de progression sur l'axe de progression
