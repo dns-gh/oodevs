@@ -138,7 +138,12 @@ ADN_Units_Composantes_GUI::ADN_Units_Composantes_GUI( QWidget * parent )
     // tab with 4 columns
     setNumCols( 6 );
     setNumRows( 0 );
-    setColumnStretchable( 0, true );
+    setColumnStretchable( 0, false );
+    setColumnStretchable( 1, true );
+    setColumnStretchable( 2, true );
+    setColumnStretchable( 3, true );
+    setColumnStretchable( 4, true );
+    setColumnStretchable( 5, true );
 
     horizontalHeader()->setLabel( 0, tr( "Equipments" ) );
     horizontalHeader()->setLabel( 1, tr( "Qty" ) );
