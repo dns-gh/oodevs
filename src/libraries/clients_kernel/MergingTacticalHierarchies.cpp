@@ -22,7 +22,8 @@ using namespace kernel;
 MergingTacticalHierarchies::MergingTacticalHierarchies( Controller& controller, Entity_ABC& entity, Entity_ABC* superior )
      : EntityHierarchies< TacticalHierarchies >( controller, entity, superior )
      , controller_( controller )
-     , entity_    ( entity )
+     , entity_( entity )
+     , symbolCanBeUpdated_( false )
 {
     // NOTHING
 }
