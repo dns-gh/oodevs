@@ -41,6 +41,7 @@ public:
     //! @name Accessors
     //@{
     virtual MIL_AgentPion& GetPion() const;
+    virtual unsigned int GetOwnerId() const;
     //@}
 
     //! @name Operations

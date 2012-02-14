@@ -16,6 +16,7 @@
 class MIL_Mission_ABC;
 class MIL_AgentPion;
 class AgentFactory_ABC;
+class PopulationFactory_ABC;
 
 // =============================================================================
 /** @class  MissionController_ABC
@@ -34,7 +35,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Initialize( AgentFactory_ABC& factory ) = 0;
+    virtual void Initialize( AgentFactory_ABC& factory, PopulationFactory_ABC& populationFactory ) = 0;
     virtual void SendFullState() = 0;
     virtual void Start( boost::shared_ptr< MIL_Mission_ABC > mission ) = 0;
     virtual void Stop( boost::shared_ptr< MIL_Mission_ABC > mission ) = 0;

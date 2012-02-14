@@ -172,6 +172,15 @@ MIL_AgentPion& MIL_PionMission::GetPion() const
     return pion_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_PionMission::GetOwnerId
+// Created: ABR 2012-02-13
+// -----------------------------------------------------------------------------
+unsigned int MIL_PionMission::GetOwnerId() const
+{
+    return pion_.GetID();
+}
+
 template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_PionMission* mission, const unsigned int /*version*/ )
 {

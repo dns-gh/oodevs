@@ -1688,3 +1688,12 @@ void MIL_Population::OnReloadBrain( const sword::MissionParameters& msg )
     GetDecision().Reload();
     orderManager_.CancelMission();
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::Register
+// Created: ABR 2012-02-13
+// -----------------------------------------------------------------------------
+void MIL_Population::Register( MissionController_ABC& pController )
+{
+    orderManager_.Register( pController );
+}
