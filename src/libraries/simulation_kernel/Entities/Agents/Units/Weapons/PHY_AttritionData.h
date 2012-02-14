@@ -38,6 +38,9 @@ public:
     //@{
     PHY_AttritionData& operator=( const PHY_AttritionData& rhs );
     double GetScore() const;
+    double GetDestroyed() const;
+    double GetReparableWithEvacuation() const;
+    double GetReparableWithoutEvacuation() const;
     const PHY_ComposanteState& ComputeComposanteState( double urbanProtection ) const;
     //@}
 

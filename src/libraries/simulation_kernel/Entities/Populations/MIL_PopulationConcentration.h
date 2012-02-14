@@ -23,6 +23,7 @@ namespace xml
 class MIL_Population;
 class MIL_PopulationFlow;
 class MIL_Object_ABC;
+class MIL_AttackController;
 
 // =============================================================================
 // Created: NLD 2005-09-28
@@ -52,6 +53,7 @@ public:
     //@{
     void MagicMove( const MT_Vector2D& destination );
     void Move( const MT_Vector2D& destination );
+    void Attack( MIL_Population& population );
     //@}
 
     //! @name Flows management
@@ -116,6 +118,7 @@ private:
     MIL_PopulationFlow* pPullingFlow_;
     T_FlowSet pushingFlows_;
     const MIL_Object_ABC* pSplittingObject_;
+    std::auto_ptr< MIL_AttackController > pAttackController_;
     double rPullingFlowsDensity_;
     static MIL_IDManager idManager_;
     //@}

@@ -2523,6 +2523,15 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\MIL_UrbanCache.cpp">
       <Filter>Source Files\Urban</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_AttackController.cpp">
+      <Filter>Source Files\Entities\Populations</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Effects\MIL_Effect_AttackPopulation.cpp">
+      <Filter>Source Files\Entities\Effects</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Populations\Actions\PHY_Population_ActionBattle.cpp">
+      <Filter>Source Files\Entities\Populations\Actions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL.h">
@@ -4951,6 +4960,15 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL_UrbanCache.h">
       <Filter>Source Files\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_AttackController.h">
+      <Filter>Source Files\Entities\Populations</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Effects\MIL_Effect_AttackPopulation.h">
+      <Filter>Source Files\Entities\Effects</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Populations\Actions\PHY_Population_ActionBattle.h">
+      <Filter>Source Files\Entities\Populations\Actions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

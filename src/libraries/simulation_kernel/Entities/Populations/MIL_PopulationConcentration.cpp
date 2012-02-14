@@ -13,9 +13,11 @@
 #include "MIL_PopulationFlow.h"
 #include "MIL_Population.h"
 #include "MIL_PopulationType.h"
+#include "MIL_AttackController.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Objects/AnimatorAttribute.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
@@ -25,6 +27,7 @@
 #include "protocol/ClientSenders.h"
 #include "simulation_kernel/PopulationCollisionNotificationHandler_ABC.h"
 #include "simulation_terrain/TER_World.h"
+#include "simulation_terrain/TER_PopulationManager.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "Tools/MIL_Tools.h"
 #include "Tools/MIL_IDManager.h"
@@ -63,6 +66,8 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     , pPullingFlow_        ( 0 )
     , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
     , pSplittingObject_    ( 0 )
+    , pAttackController_   ( new MIL_AttackController( TER_World::GetWorld().GetPopulationManager().GetConcentrationManager(),
+                                                       MIL_EffectManager::GetEffectManager() ) )
 {
     // NOTHING
 }
@@ -76,6 +81,8 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     , pPullingFlow_        ( 0 )
     , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
     , pSplittingObject_    ( 0 )
+    , pAttackController_   ( new MIL_AttackController( TER_World::GetWorld().GetPopulationManager().GetConcentrationManager(),
+                                                       MIL_EffectManager::GetEffectManager() ) )
 {
     // Position
     MIL_Tools::ConvertCoordMosToSim( xis.attribute< std::string >( "position" ), position_ );
@@ -96,6 +103,8 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     , pPullingFlow_        ( 0 )
     , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
     , pSplittingObject_    ( 0 )
+    , pAttackController_   ( new MIL_AttackController( TER_World::GetWorld().GetPopulationManager().GetConcentrationManager(),
+                                                       MIL_EffectManager::GetEffectManager() ) )
 {
     PushHumans( MIL_PopulationHumans( nHumans ) );
     UpdateLocation();
@@ -462,4 +471,13 @@ bool MIL_PopulationConcentration::CanBePerceived() const
 double MIL_PopulationConcentration::GetDefaultDensity( const MIL_PopulationType& type ) const
 {
     return type.GetConcentrationDensity();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::Attack
+// Created: LGY 2012-02-14
+// -----------------------------------------------------------------------------
+void MIL_PopulationConcentration::Attack( MIL_Population& population )
+{
+    pAttackController_->Attack( *this, population );
 }

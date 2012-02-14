@@ -245,6 +245,32 @@ unsigned int MIL_PopulationHumans::ApplyNumberOfDead( unsigned int dead )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PopulationHumans::KillHumans
+// Created: LGY 2012-02-13
+// -----------------------------------------------------------------------------
+void MIL_PopulationHumans::KillHumans( unsigned int human )
+{
+    unsigned int dead = human;
+    if( healthy_ < dead )
+        dead = healthy_;
+    healthy_ -= dead;
+    dead_ += dead;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationHumans::WoundHumans
+// Created: LGY 2012-02-13
+// -----------------------------------------------------------------------------
+void MIL_PopulationHumans::WoundHumans( unsigned int human )
+{
+    unsigned int wounded = human;
+    if( healthy_ < wounded )
+        wounded = healthy_;
+    healthy_ -= wounded;
+    wounded_ += wounded;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PopulationHumans::ApplyWounds
 // Created: LDC 2011-05-09
 // -----------------------------------------------------------------------------

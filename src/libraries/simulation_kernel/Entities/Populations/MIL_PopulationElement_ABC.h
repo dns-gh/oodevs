@@ -60,6 +60,8 @@ public:
     void PushHumans( const MIL_PopulationHumans& humans );
     MIL_PopulationHumans PullHumans( unsigned int nNbr );
     void KillAllHumans();
+    void KillHumans( unsigned int humans );
+    void WoundHumans( unsigned int humans );
     void ReintegrateUrbanBlock();
     double Exterminate( double rSurface );
     //@}
@@ -77,6 +79,7 @@ public:
     void ApplyContamination( const MIL_NbcAgentType& type );
     void ApplyIntoxication( const MIL_NbcAgentType& type );
     void ApplyDecontamination( double rRatioWorkers );
+    void Attack( MIL_PopulationElement_ABC& element );
     //@}
 
     //! @name Accessors
