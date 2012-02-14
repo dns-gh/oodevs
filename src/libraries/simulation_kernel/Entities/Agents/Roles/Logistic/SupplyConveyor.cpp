@@ -81,8 +81,6 @@ double SupplyConveyor::Convoy( SupplyConvoyEventsObserver_ABC& eventsObserver, c
     volumeCapacity_ -= volumeToConvoy;
     weightCapacity_ -= weightToConvoy;
 
-    assert( weightToConvoy / dotationCategory.GetWeight() == volumeToConvoy / dotationCategory.GetVolume() );
-
     const double quantityConvoyed = std::min( quantity, std::max( weightToConvoy / dotationCategory.GetWeight(), volumeToConvoy / dotationCategory.GetVolume() ) );
     resourcesConvoyed_[ &dotationCategory ] += quantityConvoyed;
     eventsObserver.OnResourceAssignedToConvoy( dotationCategory, quantityConvoyed );
