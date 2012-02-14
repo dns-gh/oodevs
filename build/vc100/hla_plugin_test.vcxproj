@@ -100,7 +100,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
     <ClCompile />
     <Link>
-      <AdditionalDependencies>hla_d.lib;wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>hla_d.lib;graphics_d.lib;wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent />
   </ItemDefinitionGroup>
@@ -117,7 +117,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
     <ClCompile />
     <Link>
-      <AdditionalDependencies>hla.lib;wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>hla.lib;graphics.lib;wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent />
     <PostBuildEvent />
@@ -159,6 +159,7 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\IndirectFireReceiverTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\IndirectFireSenderTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\InteractionBuilderTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\MappingsTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnAggregateTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRemoteAggregateTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRemoteCallsignListenerTest.cpp" />
@@ -252,6 +253,12 @@
     </ProjectReference>
     <ProjectReference Include="rpr.vcxproj">
       <Project>{70a0412c-1716-4034-bf76-39f8dd7d817f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="simulation_terrain.vcxproj">
+      <Project>{6b144816-9773-40f9-ade6-0acbc2eae516}</Project>
+    </ProjectReference>
+    <ProjectReference Include="tools.vcxproj">
+      <Project>{c11d1c79-d437-4299-a75a-98dd97036d5b}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
