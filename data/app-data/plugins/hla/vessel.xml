@@ -4,5 +4,5 @@
     <!-- surface vessels -->
 	<entry name="JOINT.Aircraft Carrier" dis="1 3 71 1 1 1 0"/>
     <entry name="JOINT.Marine CP" dis="1 3 71 6 1 1 0"/>
-    <entry name="JOINT.Landing craft" dis="1 3 71 11 1 1 0"/>
+    <entry name="JOINT.Landing Crafts" dis="1 3 71 11 1 1 0"/>
 </dis-mapping>
