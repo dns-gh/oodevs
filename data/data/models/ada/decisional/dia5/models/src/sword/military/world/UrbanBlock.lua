@@ -247,7 +247,8 @@ return
         end,
         
         started = function( self )
-            integration.captureTerrorists( integration.getDestroyableInObjective( self ) )
+            integration.startedSearchUrbanBlock( self )
+            integration.captureTerrorists(integration.getDestroyableInObjective( self ) ) 
         end,
         stop = integration.stopSearchUrbanBlock
     } ),

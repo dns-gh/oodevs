@@ -48,11 +48,17 @@ integration.startSearchUrbanBlock = function( urbanBlock )
     urbanBlock.bActionSearchFinished = false
     perceptionReconnaissanceCallbacks[ urbanBlock.actionSearch ] = function( arg )
         urbanBlock.bActionSearchFinished = true
-        DEC_Connaissances_IdentifierToutesUnitesDansZone( urbanBlock.area )
     end
     meKnowledge:RC( eRC_DebutFouilleBlocUrbain )
     return true
 end
+
+integration.startedSearchUrbanBlock = function( urbanBlock )
+    if urbanBlock.bActionSearchFinished then
+        DEC_Connaissances_IdentifierToutesUnitesDansZone( urbanBlock.area )
+    end
+end
+
 integration.stopSearchUrbanBlock = function( urbanBlock )
     perceptionReconnaissanceCallbacks[ urbanBlock.actionSearch ] = nil
     DEC_Perception_DesactiverReconnaissanceLocalisation( urbanBlock.actionSearch )
