@@ -170,7 +170,7 @@ void DEC_PopulationDecision::RegisterUserFunctions( sword::Brain& brain )
     brain.RegisterFunction( "DEC_EtatBlocUrbain",
         boost::function< float( MIL_UrbanObject_ABC* )>( boost::bind( &DEC_UrbanObjectFunctions::GetStateUrbanBlock, _1 ) ) );
     brain.RegisterFunction( "DEC__StartAgresserFoule",
-        boost::function< unsigned int( unsigned int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionBattle, unsigned int >, boost::ref( GetPopulation() ), _1 ) ) );
+        boost::function< unsigned int( unsigned int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionBattle >, boost::ref( GetPopulation() ) ) ) );
 
 
     // Self

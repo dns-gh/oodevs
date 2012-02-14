@@ -55,7 +55,7 @@ public:
     //@{
     void MagicMove( const MT_Vector2D& destination );
     void Move( const MT_Vector2D& destination );
-    void Attack( MIL_Population& population );
+    void Attack();
     //@}
 
     //! @name Flows management
