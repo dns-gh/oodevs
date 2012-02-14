@@ -21,6 +21,7 @@
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+#include "simulation_terrain/TER_Localisation.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PionMission )
 
@@ -179,6 +180,15 @@ MIL_AgentPion& MIL_PionMission::GetPion() const
     return pion_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_PionMission::GetOwnerId
+// Created: ABR 2012-02-13
+// -----------------------------------------------------------------------------
+unsigned int MIL_PionMission::GetOwnerId() const
+{
+    return pion_.GetID();
+}
+
 template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_PionMission* mission, const unsigned int /*version*/ )
 {
@@ -207,6 +217,24 @@ void load_construct_data( Archive& archive, MIL_PionMission* mission, const unsi
 void MIL_PionMission::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< MIL_Mission_ABC >( *this );
+
+    bool hasLabel;
+    file >> hasLabel;
+    if( hasLabel )
+    {
+        std::string label;
+        file >> label;
+        label_ = label;
+    }
+
+    bool hasLocation;
+    file >> hasLocation;
+    if( hasLocation )
+    {
+        TER_Localisation localisation;
+        file >> localisation;
+        NET_ASN_Tools::WriteLocation( localisation, *symbolLocation_ );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -216,4 +244,18 @@ void MIL_PionMission::load( MIL_CheckPointInArchive& file, const unsigned int )
 void MIL_PionMission::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< MIL_Mission_ABC >( *this );
+
+    bool hasLabel = label_;
+    file << hasLabel;
+    if( hasLabel )
+        file << *label_;
+
+    bool hasLocation = symbolLocation_;
+    file << hasLocation;
+    if( hasLocation )
+    {
+        TER_Localisation localisation;
+        NET_ASN_Tools::ReadLocation( *symbolLocation_, localisation );
+        file << localisation;
+    }
 }

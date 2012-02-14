@@ -216,9 +216,9 @@ MIL_EntityManager::MIL_EntityManager( const MIL_Time_ABC& time, MIL_EffectManage
     , rStatesTime_                  ( 0. )
     , idManager_                    ( new MIL_IDManager() )
     , pObjectManager_               ( new MIL_ObjectManager() )
-    , populationFactory_            ( new PopulationFactory( gcPause, gcMult ) )
-    , inhabitantFactory_            ( new InhabitantFactory() )
     , missionController_            ( new MissionController() )
+    , inhabitantFactory_            ( new InhabitantFactory() )
+    , populationFactory_            ( new PopulationFactory( *missionController_, gcPause, gcMult ) )
     , agentFactory_                 ( new AgentFactory( *idManager_, *missionController_, gcPause, gcMult ) )
     , automateFactory_              ( new AutomateFactory( *idManager_, gcPause, gcMult ) )
     , formationFactory_             ( new FormationFactory( *automateFactory_ ) )
@@ -1861,8 +1861,9 @@ void MIL_EntityManager::load( MIL_CheckPointInArchive& file, const unsigned int 
     inhabitantFactory_.reset( inhabitantFactory );
     pObjectManager_.reset( objectManager );
     missionController_.reset( missionController );
-    missionController_->Initialize( *agentFactory );
+    missionController_->Initialize( *agentFactory, *populationFactory );
     agentFactory_->Apply( boost::bind( &MIL_AgentPion::Register, _1, boost::ref( *missionController_ ) ) );
+    populationFactory_->Apply( boost::bind( &MIL_Population::Register, _1, boost::ref( *missionController_ ) ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d automates"  , automateFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d pions"      , agentFactory_->Count() ) );
     MT_LOG_INFO_MSG( MT_FormatString( " => %d populations", populationFactory_->Count() ) );

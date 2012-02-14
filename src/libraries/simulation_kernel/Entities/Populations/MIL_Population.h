@@ -132,6 +132,7 @@ public:
     void UpdateDecision( float duration );
     void UpdateState();
     void Clean();
+    void Register( MissionController_ABC& pController );
     //@}
 
     //! @name Actions

@@ -1670,3 +1670,12 @@ void MIL_Population::OnReceiveCriticalIntelligence( const sword::UnitMagicAction
     criticalIntelligence_ = msg.parameters().elem( 0 ).value( 0 ).acharstr();
     criticalIntelligenceChanged_ = true;
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Population::Register
+// Created: ABR 2012-02-13
+// -----------------------------------------------------------------------------
+void MIL_Population::Register( MissionController_ABC& pController )
+{
+    orderManager_.Register( pController );
+}

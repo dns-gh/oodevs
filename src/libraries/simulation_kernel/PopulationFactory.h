@@ -12,6 +12,8 @@
 
 #include "PopulationFactory_ABC.h"
 
+class MissionController_ABC;
+
 // =============================================================================
 /** @class  PopulationFactory
     @brief  PopulationFactory
@@ -23,7 +25,7 @@ class PopulationFactory : public PopulationFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationFactory( unsigned int gcPause, unsigned int gcMult );
+             PopulationFactory( MissionController_ABC& missionController, unsigned int gcPause, unsigned int gcMult );
     virtual ~PopulationFactory();
     //@}
 
@@ -50,6 +52,7 @@ private:
 private:
     //! @name Member data
     //@{
+    MissionController_ABC& missionController_;
     unsigned int gcPause_;
     unsigned int gcMult_;
     //@}
@@ -60,17 +63,21 @@ BOOST_CLASS_EXPORT_KEY( PopulationFactory )
 template< typename Archive >
 void save_construct_data( Archive& archive, const PopulationFactory* factory, const unsigned int /*version*/ )
 {
-    archive << factory->gcPause_
+    const MissionController_ABC* const missionController = &factory->missionController_;
+    archive << missionController
+            << factory->gcPause_
             << factory->gcMult_;
 }
 template< typename Archive >
 void load_construct_data( Archive& archive, PopulationFactory* factory, const unsigned int /*version*/ )
 {
+    MissionController_ABC* missionController;
     unsigned int gcPause;
     unsigned int gcMult;
-    archive >> gcPause
+    archive >> missionController
+            >> gcPause
             >> gcMult;
-    ::new( factory )PopulationFactory( gcPause, gcMult );
+    ::new( factory )PopulationFactory( *missionController, gcPause, gcMult );
 }
 
 #endif // __PopulationFactory_h_

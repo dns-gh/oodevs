@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "PopulationFactory.h"
 #include "FormationFactory_ABC.h"
+#include "MissionController_ABC.h"
 #include "Entities/Populations/MIL_PopulationType.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include <boost/serialization/map.hpp>
@@ -22,9 +23,10 @@ BOOST_CLASS_EXPORT_IMPLEMENT( PopulationFactory )
 // Name: PopulationFactory constructor
 // Created: MGD 2009-10-24
 // -----------------------------------------------------------------------------
-PopulationFactory::PopulationFactory( unsigned int gcPause, unsigned int gcMult )
-    : gcPause_( gcPause )
-    , gcMult_ ( gcMult )
+PopulationFactory::PopulationFactory( MissionController_ABC& missionController, unsigned int gcPause, unsigned int gcMult )
+    : gcPause_          ( gcPause )
+    , gcMult_           ( gcMult )
+    , missionController_( missionController )
 {
     // NOTHING
 }
@@ -49,6 +51,7 @@ MIL_Population& PopulationFactory::Create( xml::xistream& xis, MIL_Army_ABC& arm
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Unknown population type" );
     MIL_Population& population = *new MIL_Population( xis, *pType, army, gcPause_, gcMult_ );
     Register( population.GetID(), population );
+    population.Register( missionController_ );
     return population;
 }
 
@@ -65,6 +68,7 @@ MIL_Population& PopulationFactory::Create( const std::string& type, const MT_Vec
     Register( population.GetID(), population );
     if( pUrbanObject )
         populationFromUrbanObjectResolver_.Register( pUrbanObject, population );
+    population.Register( missionController_ );
     return population;
 }
 

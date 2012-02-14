@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "MissionController.h"
 #include "AgentFactory_ABC.h"
+#include "PopulationFactory_ABC.h"
 #include "Entities/Orders/MIL_Mission_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Checkpoints/SerializationTools.h"
@@ -65,8 +66,12 @@ void MissionController::Start( boost::shared_ptr< MIL_Mission_ABC > mission )
 {
     if( mission.get() )
     {
-        Stop( mission );
-        missions_[ mission->GetPion().GetID() ] = mission ;
+        unsigned int id = mission->GetOwnerId();
+        if( id != 0 )
+        {
+            Stop( mission );
+            missions_[ id ] = mission ;
+        }
     }
 }
 
@@ -77,18 +82,24 @@ void MissionController::Start( boost::shared_ptr< MIL_Mission_ABC > mission )
 void MissionController::Stop( boost::shared_ptr< MIL_Mission_ABC > mission )
 {
     if( mission.get() )
-        missions_.erase( mission->GetPion().GetID() );
+    {
+        unsigned int id = mission->GetOwnerId();
+        if( id != 0 )
+            missions_.erase( id );
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: MissionController::Initialize
 // Created: LGY 2011-06-14
 // -----------------------------------------------------------------------------
-void MissionController::Initialize( AgentFactory_ABC& factory )
+void MissionController::Initialize( AgentFactory_ABC& factory, PopulationFactory_ABC& populationFactory )
 {
     BOOST_FOREACH( const T_Missions::value_type& mission, missions_ )
         if( MIL_AgentPion* pion = factory.Find( mission.first ) )
             pion->GetOrderManager().ReplaceMission( mission.second );
+        else if( MIL_Population* population = populationFactory.Find( mission.first ) )
+            population->GetOrderManager().ReplaceMission( mission.second );
 }
 
 // -----------------------------------------------------------------------------

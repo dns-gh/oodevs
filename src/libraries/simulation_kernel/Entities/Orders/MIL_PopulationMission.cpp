@@ -16,9 +16,12 @@
 #include "Entities/Populations/MIL_PopulationType.h"
 #include "Entities/Populations/DEC_PopulationDecision.h"
 #include "Entities/Populations/DEC_PopulationKnowledge.h"
+#include "Entities/Orders/MIL_PopulationMissionType.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
+
+BOOST_CLASS_EXPORT_IMPLEMENT( MIL_PopulationMission )
 
 // -----------------------------------------------------------------------------
 // Name: MIL_PopulationMission constructor
@@ -33,6 +36,18 @@ MIL_PopulationMission::MIL_PopulationMission( const MIL_MissionType_ABC& type, M
         symbolLocation_ = asn.symbollocation();
     if( asn.has_label() )
         label_ = asn.label();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationMission constructor
+// Created: ABR 2012-02-13
+// -----------------------------------------------------------------------------
+MIL_PopulationMission::MIL_PopulationMission( const MIL_MissionType_ABC& type, MIL_Population& population )
+    : MIL_Mission_ABC       ( type, population.GetKnowledge() )
+    , population_           ( population )
+    , bDIABehaviorActivated_( false )
+{
+        // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -109,4 +124,84 @@ void MIL_PopulationMission::Send() const
     if( label_ )
         *asn().mutable_label() = *label_;
     asn.Send( NET_Publisher_ABC::Publisher() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationMission::GetOwnerId
+// Created: ABR 2012-02-13
+// -----------------------------------------------------------------------------
+unsigned int MIL_PopulationMission::GetOwnerId() const
+{
+    return population_.GetID();
+}
+
+template< typename Archive >
+void save_construct_data( Archive& archive, const MIL_PopulationMission* mission, const unsigned int /*version*/ )
+{
+    const MIL_Population* const population = &mission->population_;
+    unsigned int id = mission->type_.GetID();
+    archive << population
+            << id;
+}
+
+template< typename Archive >
+void load_construct_data( Archive& archive, MIL_PopulationMission* mission, const unsigned int /*version*/ )
+{
+    MIL_Population* population = 0;
+    unsigned int id = 0;
+    archive >> population
+            >> id;
+    const MIL_MissionType_ABC* type = MIL_PopulationMissionType::Find( id );
+    assert( type );
+    ::new( mission )MIL_PopulationMission( *type, *population );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationMission::load
+// Created: ABR 2012-02-13
+// -----------------------------------------------------------------------------
+void MIL_PopulationMission::load( MIL_CheckPointInArchive& file, const unsigned int )
+{
+    file >> boost::serialization::base_object< MIL_Mission_ABC >( *this );
+
+    bool hasLabel;
+    file >> hasLabel;
+    if( hasLabel )
+    {
+        std::string label;
+        file >> label;
+        label_ = label;
+    }
+
+    bool hasLocation;
+    file >> hasLocation;
+    if( hasLocation )
+    {
+        TER_Localisation localisation;
+        file >> localisation;
+        NET_ASN_Tools::WriteLocation( localisation, *symbolLocation_ );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationMission::save
+// Created: ABR 2012-02-13
+// -----------------------------------------------------------------------------
+void MIL_PopulationMission::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << boost::serialization::base_object< MIL_Mission_ABC >( *this );
+
+    bool hasLabel = label_;
+    file << hasLabel;
+    if( hasLabel )
+        file << *label_;
+
+    bool hasLocation = symbolLocation_;
+    file << hasLocation;
+    if( hasLocation )
+    {
+        TER_Localisation localisation;
+        NET_ASN_Tools::ReadLocation( *symbolLocation_, localisation );
+        file << localisation;
+    }
 }

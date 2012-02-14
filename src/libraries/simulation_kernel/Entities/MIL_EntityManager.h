@@ -277,17 +277,18 @@ private:
     double rEffectsTime_;
     double rStatesTime_;
 
-    std::auto_ptr< MIL_IDManager > idManager_;
-    std::auto_ptr< MIL_ObjectManager > pObjectManager_;
+    // Order is important here
+    std::auto_ptr< MIL_IDManager >          idManager_;         // have to be declared before agentFactory & automatFactory
+    std::auto_ptr< MIL_ObjectManager >      pObjectManager_;    // have to be declared before armyFactory
+    std::auto_ptr< MissionController_ABC >  missionController_; // have to be declared before populationFactory and agentFactory
 
     // Factories
-    std::auto_ptr< PopulationFactory_ABC >     populationFactory_;
-    std::auto_ptr< InhabitantFactory_ABC >     inhabitantFactory_;
-    std::auto_ptr< MissionController_ABC >     missionController_;
-    std::auto_ptr< AgentFactory_ABC >          agentFactory_;
-    std::auto_ptr< AutomateFactory_ABC >       automateFactory_;
-    std::auto_ptr< FormationFactory_ABC >      formationFactory_;
-    std::auto_ptr< KnowledgeGroupFactory_ABC > knowledgeGroupFactory_;
+    std::auto_ptr< PopulationFactory_ABC >     populationFactory_;      // have to be declared before armyFactory
+    std::auto_ptr< InhabitantFactory_ABC >     inhabitantFactory_;      // have to be declared before armyFactory
+    std::auto_ptr< AgentFactory_ABC >          agentFactory_;           // have to be declared before armyFactory
+    std::auto_ptr< AutomateFactory_ABC >       automateFactory_;        // have to be declared before armyFactory & formation factory
+    std::auto_ptr< FormationFactory_ABC >      formationFactory_;       // have to be declared before armyFactory
+    std::auto_ptr< KnowledgeGroupFactory_ABC > knowledgeGroupFactory_;  // have to be declared before armyFactory
     std::auto_ptr< ArmyFactory_ABC >           armyFactory_;
     unsigned int  gcPause_;
     unsigned int  gcMult_;

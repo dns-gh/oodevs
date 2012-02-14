@@ -43,6 +43,7 @@ public:
     //! @name Accessors
     //@{
     virtual MIL_AgentPion& GetPion() const;
+    virtual unsigned int GetOwnerId() const;
     //@}
 
     //! @name Operations
@@ -89,7 +90,7 @@ private:
     MIL_AgentPion& pion_;
     bool bDIABehaviorActivated_;
     boost::optional< sword::Location > symbolLocation_;
-    boost::optional< std::string > label_;
+    boost::optional< std::string >     label_;
     //@}
 };
 

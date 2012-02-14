@@ -32,8 +32,15 @@ class MIL_PopulationMission : public MIL_Mission_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_PopulationMission( const MIL_MissionType_ABC& type, MIL_Population& population, const sword::CrowdOrder& asn );
+            MIL_PopulationMission( const MIL_MissionType_ABC& type, MIL_Population& population, const sword::CrowdOrder& asn );
+            MIL_PopulationMission( const MIL_MissionType_ABC& type, MIL_Population& population );
     virtual ~MIL_PopulationMission();
+    //@}
+
+
+    //! @name Accessors
+    //@{
+    virtual unsigned int GetOwnerId() const;
     //@}
 
     //! @name Operations
@@ -44,7 +51,20 @@ public:
     virtual void Send() const;
     //@}
 
+    //! @name Serialization
+    //@{
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+    void load( MIL_CheckPointInArchive& file, const unsigned int );
+    void save( MIL_CheckPointOutArchive& file, const unsigned int ) const;
+    //@}
+
 private:
+    //! @name Serialization
+    //@{
+    template< typename Archive > friend void save_construct_data( Archive& archive, const MIL_PopulationMission* mission, const unsigned int version );
+    template< typename Archive > friend void load_construct_data( Archive& archive, MIL_PopulationMission* mission, const unsigned int version );
+    //@}
+
     //! @name Helpers
     //@{
     static void SendNoMission( const MIL_Population& population );
@@ -59,5 +79,7 @@ private:
     boost::optional< std::string > label_;
     //@}
 };
+
+BOOST_CLASS_EXPORT_KEY( MIL_PopulationMission )
 
 #endif // __MIL_PopulationMission_h_

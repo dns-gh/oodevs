@@ -40,7 +40,7 @@ public:
     virtual ~MIL_Mission_ABC();
     //@}
 
-     //! @name Operations
+    //! @name Operations
     //@{
     virtual void Start               ( boost::shared_ptr< MIL_Mission_ABC > self ) = 0;
     virtual void Stop                ( boost::shared_ptr< MIL_Mission_ABC > self ) = 0;
@@ -57,6 +57,7 @@ public:
 
     virtual MIL_AgentPion& GetPion() const;
     virtual MIL_Automate&  GetAutomate() const;
+    virtual unsigned int GetOwnerId() const;
 
     virtual void Send() const = 0;
 
