@@ -937,10 +937,10 @@ void MIL_Population::FireOnPion( double rIntensity, MIL_Agent_ABC& target, PHY_F
 // Name: MIL_Population::Attack
 // Created: LGY 2012-02-14
 // -----------------------------------------------------------------------------
-void MIL_Population::Attack( MIL_Population& population )
+void MIL_Population::Attack()
 {
     for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
-        ( **itConcentration ).Attack( population );
+        ( **itConcentration ).Attack();
 }
 
 // -----------------------------------------------------------------------------
@@ -1689,20 +1689,6 @@ void MIL_Population::OnReceiveCriticalIntelligence( const sword::UnitMagicAction
         throw NET_AsnException< sword::UnitActionAck::ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     criticalIntelligence_ = msg.parameters().elem( 0 ).value( 0 ).acharstr();
     criticalIntelligenceChanged_ = true;
-}
-
-
-// -----------------------------------------------------------------------------
-// Name:  MIL_Population::GetConcentration
-// Created: LGY 2012-02-14
-// -----------------------------------------------------------------------------
-MIL_Population::T_ConcentrationVector MIL_Population::GetConcentration( const TER_Localisation& localisation ) const
-{
-    T_ConcentrationVector result;
-    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
-        if( (*itConcentration)->GetLocation().IsIntersecting( localisation ) )
-            result.push_back( *itConcentration );
-    return result;
 }
 
 // -----------------------------------------------------------------------------

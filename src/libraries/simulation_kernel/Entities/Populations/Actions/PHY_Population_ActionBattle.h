@@ -28,7 +28,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_Population_ActionBattle( MIL_Population& attacker, unsigned int nID );
+             PHY_Population_ActionBattle( MIL_Population& attacker );
     virtual ~PHY_Population_ActionBattle();
     //@}
 
@@ -43,7 +43,6 @@ private:
     //! @name Member Data
     //@{
     MIL_Population& attacker_;
-    MIL_Population* defender_;
     //@}
 };
 

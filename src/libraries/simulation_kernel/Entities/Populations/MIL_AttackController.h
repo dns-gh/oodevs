@@ -18,7 +18,6 @@ class MIL_Effect_AttackPopulation;
 class MIL_PopulationElement_ABC;
 class TER_PopulationConcentrationManager;
 class MIL_EffectManager;
-class MIL_Population;
 
 // =============================================================================
 /** @class  MIL_AttackController
@@ -38,7 +37,7 @@ public:
 
     //! @name Operations
     //@{
-    void Attack( MIL_PopulationElement_ABC& attacking, MIL_Population& population );
+    void Attack( MIL_PopulationElement_ABC& attacking );
     //@}
 
 private:

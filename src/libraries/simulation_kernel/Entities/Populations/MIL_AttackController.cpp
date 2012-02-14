@@ -41,18 +41,20 @@ MIL_AttackController::~MIL_AttackController()
 // Name: MIL_AttackController::Attack
 // Created: LGY 2012-02-14
 // -----------------------------------------------------------------------------
-void MIL_AttackController::Attack( MIL_PopulationElement_ABC& attacking, MIL_Population& defender )
+void MIL_AttackController::Attack( MIL_PopulationElement_ABC& attacking )
 {
     T_Effects updated;
-    MIL_Population::T_ConcentrationVector result = defender.GetConcentration( attacking.GetLocation() );
-    for( MIL_Population::CIT_ConcentrationVector it = result.begin(); it != result.end(); ++it )
+    TER_PopulationConcentration_ABC::T_PopulationConcentrationVector concentrations;
+    concentrationManager_.GetListWithinLocalisation( attacking.GetLocation(), concentrations );
+    for( TER_PopulationConcentration_ABC::CIT_PopulationConcentrationVector it = concentrations.begin(); it != concentrations.end(); ++it )
     {
-        if( *it && (*it)->GetID() != attacking.GetID() )
+        MIL_PopulationConcentration* pElement = static_cast< MIL_PopulationConcentration* >( *it );
+        if( pElement && pElement->GetID() != attacking.GetID() )
         {
-            const unsigned int id = (*it)->GetID();
+            const unsigned int id = pElement->GetID();
             T_Effect& effect = effects_[ id ];
             if( !effect )
-                effect.reset( new MIL_Effect_AttackPopulation( attacking, **it ) );
+                effect.reset( new MIL_Effect_AttackPopulation( attacking, *pElement ) );
             effectManager_.Register( *effect );
             updated[ id ] = effect;
         }
