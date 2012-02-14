@@ -1,0 +1,59 @@
+-- ****************************************************************************
+-- To launch a projectile from a position, on a specified target
+-- @params: self.params.target, a masalife ResourceNode object
+-- @params: self.params.launchPosition, a masalife 'Destination' object
+-- @params: self.params.quantity, the quantity to add to resource nodes production.
+-- @params: self.params.dotationType, the quantity to add to resource nodes production.
+-- @returns: "done", when production is effective.
+-- ****************************************************************************
+rootnode 
+{
+    connections = { skill.links.reach, skill.links.launchProjectile },
+
+    -- --------------------------------------------------------------------------------
+    -- Feedbacks
+    -- --------------------------------------------------------------------------------
+    done = function( self, params ) -- from reach skill
+        self.arrived = true
+    end,
+
+    launchActionCompleted = function( self ) -- from Launch action skill
+        Feedback( self.feedbacks.done )
+    end,
+
+    -- --------------------------------------------------------------------------------
+    -- Init
+    -- --------------------------------------------------------------------------------
+    create = function( self )
+        self.arrived = false
+    end,
+
+    -- --------------------------------------------------------------------------------
+    -- Feedbacks
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        local Activate = Activate
+
+        -- if no position issued, then move toward target until it can be hit.
+        if self.params.launchPosition == NIL then
+            if self.params.target:canBeHit( self.params.dotationType ) then
+                Activate( skill.links.launchProjectile, 1, { target = self.params.target, 
+                      quantity = self.params.quantity, dotationType = self.params.dotationType } )
+            else
+                Activate( skill.links.reach, 1, { destination = self.params.target } )
+            end
+        else -- a position is issued
+            if not self.arrived then
+                Activate( skill.links.reach, 1, { destination = self.params.launchPosition } )
+             else
+                if self.params.target:canBeHit( self.params.dotationType ) then
+                    Activate( skill.links.launchProjectile, 1, { target = self.params.target, 
+                      quantity = self.params.quantity, dotationType = self.params.dotationType } )
+                else -- the issued position is not a good position regarding to the given dotation type 
+                    meKnowledge:sendReport( eRC_TirHorsDePortee )
+                    Feedback( self.feedbacks.done )
+                end
+             end
+        end
+    end
+}

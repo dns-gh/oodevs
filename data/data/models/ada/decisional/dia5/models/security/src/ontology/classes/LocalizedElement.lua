@@ -32,4 +32,25 @@ method "isReached" (
         return self:getProximity( meKnowledge ) == 100
     end )
 
+-- --------------------------------------------------------------------------------
+--  Target default implementation
+-- --------------------------------------------------------------------------------
+method "canBeHit" (
+    function( self, dotation )
+        return integration.distance( meKnowledge, self ) 
+              < integration.porteePourAttentat( dotation )
+    end )
+
+method "launchProjectileOnIt" ( masalife.brain.integration.startStopAction( 
+{ 
+    start = function( self, dotation, quantity )
+        return integration.startLaunchProjectile( self, dotation, quantity )
+    end,
+    started = function( self, dotation )
+        return integration.updateLaunchProjectile( self, dotation )
+    end,
+    stop = function( self, dotation )
+        return integration.stopLaunchProjectile( self, dotation )
+    end
+} ) )
 return {}

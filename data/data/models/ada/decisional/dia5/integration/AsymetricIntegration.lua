@@ -53,6 +53,10 @@ integration.updateAttackIt = function( target, suicide, dotation )
     return false
 end
 
+integration.commitSuicide = function( self )
+    DEC_Suicide()
+end
+
 integration.stopAttackIt = function( target, suicide, dotation )
     target[myself] = target[myself] or {}
     target[myself].attackAction = DEC__StopAction( target[myself].attackAction )
@@ -139,4 +143,50 @@ end
 integration.shareKnowledgeAgentFromAutomat = function( dest, delay )
     meKnowledge:RC( eRC_DebutLiaison )
     DEC_Connaissances_PartageConnaissancesAvec(dest.source, delay )
+end
+
+
+-- --------------------------------------------------------------------------------
+--  Launch projectile on a target 
+-- $$$ MIA: same thing than the "integration.startAttackIt" for terrorist but without 
+-- the terrorist attack conotation.
+-- $$$ MIA : to merge with militaty
+-- --------------------------------------------------------------------------------
+integration.startLaunchProjectile = function( target, dotation, quantity )
+    target[ myself ] = target[ myself ] or {}
+    local nbIntervention = quantity
+    target[ myself ].attackAction = DEC_StartTirIndirectSurPosition( dotation, quantity, target:getPosition() )
+    actionCallbacks[ target[ myself ].attackAction ] = function( arg ) 
+        target[ myself ].attackState = arg 
+    end
+    return false
+end
+
+integration.updateLaunchProjectile = function( target, dotation )
+    target[ myself ] = target[ myself ] or {}
+    if target[ myself ].attackState then
+        if target[ myself ].attackState == eIndirectFireState_Running then
+            return false
+        elseif target[ myself ].attackState == eIndirectFireState_Finished then
+            meKnowledge:sendReport( eRC_TirExecute )
+            return true
+        elseif target[ myself ].attackState == eIndirectFireState_NoAmmo then
+            meKnowledge:sendReport( eRC_TirImpossiblePlusDeMunitions )
+            return true
+        elseif eIndirectFireState_Impossible then
+            meKnowledge:sendReport( eRC_TirIndirectImpossible )
+            return true
+        elseif eIndirectFireState_NoCapacity then
+            meKnowledge:sendReport( eRC_TirIndirectNoCapacity )
+            return true
+        end
+    end
+    return false
+end
+
+integration.stopLaunchProjectile = function( target, dotation )
+    target[ myself ] = target[ myself ] or {}
+    target[ myself ].attackAction = DEC__StopAction( target[ myself ].attackAction )
+    target[ myself ].attackState = nil
+    return true
 end

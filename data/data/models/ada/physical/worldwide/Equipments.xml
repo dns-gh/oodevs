@@ -10762,6 +10762,7 @@
       <object construction-time-factor="1s" initial-construction-time="120s" type="urban block"/>
       <object initial-construction-time="120s" type="ressource node"/>
       <object construction-time-factor="0s" initial-construction-time="120s" type="decontamination site"/>
+      <object initial-construction-time="30s" type="Arson"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="50" type="Tire flat"/>
@@ -10774,7 +10775,7 @@
     </breakdowns>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Truck that can perform works (barrage, dyke etc.)" id="111" name="SECURITY.Terrorist" protection="UnarmouredVehicle" size="Medium" weight="2">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Terrorist that can perform arson etc." id="111" name="SECURITY.Terrorist" protection="UnarmouredVehicle" size="Small" weight="0.5">
     <speeds max="90">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="20"/>
@@ -10808,10 +10809,13 @@
     <composition>
       <category name="carburant">
         <resource capacity="60" logistic-threshold="1" name="Gasoil" normalized-consumption="60"/>
-        <resource capacity="100" logistic-threshold="80" name="Kerosene" normalized-consumption="0.001"/>
+        <resource capacity="100" logistic-threshold="10" name="Kerosene" normalized-consumption="0.001"/>
+      </category>
+      <category name="explosif">
+        <resource capacity="200" logistic-threshold="10" name="Standard Explosive" normalized-consumption="0"/>
       </category>
       <category name="barbele">
-        <resource capacity="200" logistic-threshold="10" name="Standard Barbed Wire" normalized-consumption="1"/>
+        <resource capacity="200" logistic-threshold="10" name="Standard Barbed Wire" normalized-consumption="0"/>
       </category>
     </composition>
     <sensors>
@@ -10831,8 +10835,9 @@
     <weapon-systems/>
     <human-protections/>
     <objects>
-      <object initial-construction-time="10s" type="Arson"/>
-      <object initial-construction-time="10s" type="Destruction Bomb"/>
+      <object initial-construction-time="60s" type="Destruction Bomb"/>
+      <object initial-construction-time="60s" type="Arson"/>
+      <object initial-construction-time="120s" type="barricade"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="50" type="Tire flat"/>
@@ -10846,4 +10851,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="1201366144" -->
+<!-- signature="1962579920" -->

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.behaviors.skills.actions.ExtractVictims" source-version="1.0.0">
-    <description>To extract victims (wounded components)  from an simulation entity (crowd or agent).</description>
+    <description>To extract victims (wounded components)  from a simulation entity (crowd or agent).</description>
     <parameters>
         <parameter name="victimsUnit">
             <description>The 'victimsUnit' to act on. Wounded components within this 'victimsUnit' will be extracted.</description>

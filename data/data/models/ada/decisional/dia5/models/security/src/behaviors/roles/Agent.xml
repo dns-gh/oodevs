@@ -53,6 +53,8 @@
         <skill name="agent.behaviors.skills.actions.Create"/>
         <skill name="agent.behaviors.skills.actions.Deconstruct"/>
         <skill name="behaviors.skills.primitives.Deconstruct"/>
+        <skill name="agent.behaviors.skills.actions.LaunchProjectile"/>
+        <skill name="behaviors.skills.primitives.LaunchProjectile"/>
     </skills>
     <resources>
         <resource name="agent.behaviors.resources.Motion"/>

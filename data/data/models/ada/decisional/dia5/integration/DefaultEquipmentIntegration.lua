@@ -588,3 +588,7 @@ integration.disable = function( resourceNode )
     DEC_ReseauRessource_DesactiverElement( resourceNode.source ) 
     return true
 end
+
+integration.isDead = function( self )
+    return DEC_Agent_EstMort()
+end

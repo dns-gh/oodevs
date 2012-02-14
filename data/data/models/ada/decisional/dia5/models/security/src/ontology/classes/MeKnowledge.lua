@@ -223,6 +223,26 @@ method "canTransportCrowd" (
         return integration.canTransportCrowd()
     end )
 
+-- --------------------------------------------------------------------------------
+-- Hit target with projectile
+-- --------------------------------------------------------------------------------
+method "launchProjectile" ( 
+    function( self, target, dotationType, quantity )
+        return target:launchProjectileOnIt( dotationType, quantity )
+    end )
+
+-- --------------------------------------------------------------------------------
+-- Life level
+-- --------------------------------------------------------------------------------
+method "commitSuicide" ( 
+    function( self )
+        return integration.commitSuicide()
+    end )
+
+method "isDead" ( 
+    function( self )
+        return integration.isDead()
+    end )
 
 -- --------------------------------------------------------------------------------
 -- Reports

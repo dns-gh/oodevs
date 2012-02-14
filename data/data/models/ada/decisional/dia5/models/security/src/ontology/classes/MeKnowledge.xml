@@ -477,5 +477,44 @@ Returns true if agent Unit has physical capabilities to loasd a 'Crowd' object.<
                 </type>
             </return>
         </method>
+        <method name="launchProjectile" abstract="false">
+            <description>To launch a specific type of projectile on a given target. Returns 'true' upon action  completion.</description>
+            <argument name="target">
+                <description>The target to hit.</description>
+                <type>
+                    <class name="agent.world.Target"/>
+                </type>
+            </argument>
+            <argument name="typeOfResource">
+                <description>The type of resource to launch on the target.</description>
+                <type>
+                    <any/>
+                </type>
+            </argument>
+            <argument name="quantity">
+                <description>The quatity of resource to use.</description>
+                <type>
+                    <any/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="commitSuicide" abstract="false">
+            <description>To commit suicide instanteneously. Agent life level is set to 0%, means that it is dead.</description>
+        </method>
+        <method name="isDead" abstract="false">
+            <description>Returns true if this element is dead.&#xD;
+&#xD;
+This implementation returns 'true' if life level of this element is stricly equal to 0%. </description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
     </methods>
 </class>

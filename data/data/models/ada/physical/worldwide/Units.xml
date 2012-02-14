@@ -3254,7 +3254,7 @@
   <unit decisional-model="ML_Terrorist" id="104" name="ML_Security - Agressor" type="Pion Emergency">
     <nature atlas-nature="Indefini" level="none" nature-app6="combat"/>
     <equipments>
-      <equipment count="2" crew="2" major="true" type="SECURITY.Terrorist"/>
+      <equipment count="4" crew="4" major="true" type="SECURITY.Terrorist"/>
     </equipments>
     <sensors-range range="0"/>
     <equipments-range range="0"/>
@@ -3273,4 +3273,4 @@
     <crossing-height height="1m"/>
   </unit>
 </units>
-<!-- signature="4002336226" -->
+<!-- signature="1185268001" -->

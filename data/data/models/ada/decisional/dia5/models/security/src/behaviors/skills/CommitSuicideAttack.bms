@@ -1,0 +1,33 @@
+-- ****************************************************************************
+-- To launch a projectile from a position, on a specified target
+-- @params: self.params.target, a masalife ResourceNode object
+-- @params: self.params.quantity, the quantity to add to resource nodes production.
+-- @params: self.params.dotationType, the quantity to add to resource nodes production.
+-- @returns: "produce", when production is effective.
+-- ****************************************************************************
+rootnode 
+{
+    connections = { skill.links.follow, skill.links.launchProjectile },
+
+    -- --------------------------------------------------------------------------------
+    -- Feedbacks
+    -- --------------------------------------------------------------------------------
+    launchActionCompleted = function( self ) -- from Launch action skill
+        meKnowledge:commitSuicide() -- agent unit must die
+        Feedback( self.feedbacks.done )
+    end,
+
+    -- --------------------------------------------------------------------------------
+    -- Follow target agent in order to launch projectil on it.
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        local Activate = Activate
+
+        if self.params.agent:isReached() then
+            Activate( skill.links.launchProjectile, 1, { target = self.params.target, 
+                      quantity = self.params.quantity, dotationType = self.params.dotationType } )
+        else -- target is not reached reached, follow it
+           Activate( skill.links.follow, 1, { agents = { self.params.agent }, positions = NIL , minDistance = 0 } )
+        end
+    end
+}

@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.skills.primitives.LaunchProjectile" source-version="1.0.0">
+    <description>For an agent to launch a specified quantity of projectile on a given target, with a specified type of dotation, from a position.</description>
+    <parameters>
+        <parameter name="target">
+            <description>The target to launch projectile on.</description>
+            <type>
+                <class name="agent.world.Target"/>
+            </type>
+        </parameter>
+        <parameter name="launchPosition" nullable="true">
+            <description>The position from which agent unit launch the projectile.</description>
+            <type>
+                <class name="agent.world.Destination"/>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+        <parameter name="quantity">
+            <description>The quantity of resourse to use per time unit.</description>
+            <type>
+                <simple name="numeric"/>
+            </type>
+            <default>
+                <number>10.0</number>
+            </default>
+        </parameter>
+        <parameter name="dotationType">
+            <description>The type of projectile (resource dotation type) to launch to hit the target.</description>
+            <type>
+                <any/>
+            </type>
+        </parameter>
+    </parameters>
+    <body-type>
+        <class name="agent.world.Body"/>
+    </body-type>
+    <links>
+        <link name="reach" skill="behaviors.skills.primitives.Reach">
+            <description>To reach the launch position or the target.</description>
+        </link>
+        <link name="launchProjectile" skill="agent.behaviors.skills.actions.LaunchProjectile">
+            <description>To launch projectile on the specified target.</description>
+        </link>
+    </links>
+    <resources>
+        <resource name="agent.behaviors.resources.Launcher" variable="launcher">
+            <description>An agent cannot launch projectile at more than one target at once. </description>
+        </resource>
+    </resources>
+    <feedbacks>
+        <feedback name="done">
+            <description>Sent once simulation action is completed (projectile with specifier quantity of resource dotationn has been launched).</description>
+        </feedback>
+    </feedbacks>
+</skill>

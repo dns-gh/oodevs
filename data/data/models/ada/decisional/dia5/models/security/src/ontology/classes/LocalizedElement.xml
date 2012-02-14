@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.classes.LocalizedElement" source-version="1.0.0" abstract="true">
     <realizes>agent.world.Destination</realizes>
+    <realizes>agent.world.Target</realizes>
     <methods>
         <method name="getProximity" abstract="false">
             <description>For the agent to get the proximity of this entity. &#xD;
@@ -42,6 +43,44 @@ Returns true once the agent has reached the end-point of the path (please note t
                 <description>The path type used by agent Unit to reach the given destination.</description>
                 <type>
                     <any/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canBeHit" abstract="false">
+            <description>Returns 'true' if this element can be hit with the given type of dotation.&#xD;
+&#xD;
+This implementation  returns 'true' if the distance between agent unit and this element (the target) is smaller than the maximum firing distance allowed by the given dotation.</description>
+            <argument name="typeOfResource">
+                <description>Type of resource (dotation) to launch on this element.</description>
+                <type>
+                    <any/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="launchProjectileOnIt" abstract="false">
+            <description>To launch a specific type of projectile on this element. Returns 'true' upon action  completion.&#xD;
+&#xD;
+This implementation returns 'true' even if the action failed (no capacity or no dotations for instance).</description>
+            <argument name="typeOfResource">
+                <description>The type of resource to launch on this element.</description>
+                <type>
+                    <any/>
+                </type>
+            </argument>
+            <argument name="quantity">
+                <description>The quatity of resource to use.</description>
+                <type>
+                    <simple name="numeric"/>
                 </type>
             </argument>
             <return>

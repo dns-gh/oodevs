@@ -3425,6 +3425,18 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
+        <object detection-distance="0" type="Arson">
+          <population-modifier density="0" modifier="0"/>
+          <source-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Arret" value="1"/>
+            <distance-modifier type="PosteReflexe" value="1"/>
+            <distance-modifier type="Poste" value="1"/>
+            <distance-modifier type="PosteAmenage" value="1"/>
+            <distance-modifier type="PostePrepareGenie" value="1"/>
+          </source-posture-modifiers>
+        </object>
       </object-detection>
     </sensor>
     <sensor detection-delay="0h" name="Radar RASIT">
@@ -4095,4 +4107,4 @@
     </sensor>
   </sensors>
 </sensors>
-<!-- signature="0564373025" -->
+<!-- signature="2100984625" -->
