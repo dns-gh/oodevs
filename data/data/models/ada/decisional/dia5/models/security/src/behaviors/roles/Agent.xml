@@ -55,6 +55,7 @@
         <skill name="behaviors.skills.primitives.Deconstruct"/>
         <skill name="agent.behaviors.skills.actions.LaunchProjectile"/>
         <skill name="behaviors.skills.primitives.LaunchProjectile"/>
+        <skill name="behaviors.skills.CommitSuicideAttack"/>
     </skills>
     <resources>
         <resource name="agent.behaviors.resources.Motion"/>

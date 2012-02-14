@@ -23,11 +23,11 @@ rootnode
     activate = function( self )
         local Activate = Activate
 
-        if self.params.agent:isReached() then
-            Activate( skill.links.launchProjectile, 1, { target = self.params.target, 
+        if self.params.targetAgent:isReached() then
+            Activate( skill.links.launchProjectile, 1, { target = self.params.targetAgent, 
                       quantity = self.params.quantity, dotationType = self.params.dotationType } )
         else -- target is not reached reached, follow it
-           Activate( skill.links.follow, 1, { agents = { self.params.agent }, positions = NIL , minDistance = 0 } )
+           Activate( skill.links.follow, 1, { agents = { self.params.targetAgent }, positions = NIL , minDistance = 0 } )
         end
     end
 }
