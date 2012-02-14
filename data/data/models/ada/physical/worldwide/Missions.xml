@@ -3314,9 +3314,9 @@ A visited object won't be created and build if agent doesn't have the physical c
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="zoneEmbarquement_" name="Embarking point" optional="false" type="Location"/>
+      <parameter dia-name="zoneEmbarquement_" name="Embarking point" optional="false" type="Polygon"/>
       <parameter dia-name="heureEmbarquement_" name="Embarking time" optional="false" type="DateTime"/>
-      <parameter dia-name="zoneDebarquement_" name="Debarking point" optional="false" type="Location"/>
+      <parameter dia-name="zoneDebarquement_" name="Debarking point" optional="false" type="Point"/>
       <parameter dia-name="heureDebarquement_" name="Debarking time" optional="false" type="DateTime"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_SeFaireTransporter" dia-type="T_Mission_Automate_SeFaireTransporter4" id="4466" mrt-dia-behavior="MIS_Automate_MRT_SeFaireTransporter" name="COMMON - request embark">
@@ -3324,7 +3324,7 @@ A visited object won't be created and build if agent doesn't have the physical c
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="zoneEmbarquement_" name="Embarking point" optional="false" type="Location"/>
+      <parameter dia-name="zoneEmbarquement_" name="Embarking point" optional="false" type="Polygon"/>
       <parameter dia-name="heureEmbarquement_" name="Embarking time" optional="false" type="DateTime"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_SeFaireTransporter" dia-type="T_Mission_Automate_SeFaireTransporter3" id="4467" mrt-dia-behavior="MIS_Automate_MRT_SeFaireTransporter" name="COMMON - request disembark">
@@ -3332,7 +3332,7 @@ A visited object won't be created and build if agent doesn't have the physical c
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="zoneEmbarquement_" name="Debarking point" optional="false" type="Location"/>
+      <parameter dia-name="zoneEmbarquement_" name="Debarking point" optional="false" type="Polygon"/>
       <parameter dia-name="heureDebarquement_" name="Debarking time" optional="false" type="DateTime"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_SeFaireTransporter" dia-type="T_Mission_Automate_SeFaireTransporter6" id="4470" mrt-dia-behavior="MIS_Automate_MRT_SeFaireTransporter" name="COMMON - request take off">
@@ -3340,7 +3340,7 @@ A visited object won't be created and build if agent doesn't have the physical c
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="zoneEmbarquement_" name="Takeoff point" optional="false" type="Location"/>
+      <parameter dia-name="zoneEmbarquement_" name="Takeoff point" optional="false" type="Polygon"/>
       <parameter dia-name="heureDebarquement_" name="Takeoff time" optional="false" type="DateTime"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_SeFaireTransporter" dia-type="T_Mission_Automate_SeFaireTransporter5" id="4471" mrt-dia-behavior="MIS_Automate_MRT_SeFaireTransporter" name="COMMON - request landing">
@@ -3348,7 +3348,7 @@ A visited object won't be created and build if agent doesn't have the physical c
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="zoneEmbarquement_" name="Landing point" optional="false" type="Location"/>
+      <parameter dia-name="zoneEmbarquement_" name="Landing point" optional="false" type="Polygon"/>
       <parameter dia-name="heureEmbarquement_" name="Landing time" optional="false" type="DateTime"/>
     </mission>
   </automats>
@@ -3533,4 +3533,4 @@ A visited object won't be created and build if agent doesn't have the physical c
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="3467838273" -->
+<!-- signature="1971528629" -->

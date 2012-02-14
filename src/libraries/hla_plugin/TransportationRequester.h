@@ -94,6 +94,7 @@ public:
     virtual void Receive( interactions::NetnConvoyDisembarkmentStatus& interaction );
     virtual void Receive( interactions::NetnServiceComplete& interaction );
     virtual void Receive( interactions::NetnConvoyDestroyedEntities& interaction );
+    virtual void Receive( interactions::NetnCancelConvoy& interaction );
     //@}
 
 private:
@@ -150,6 +151,7 @@ private:
     T_Requests serviceStartedRequests_;
     T_Requests completeRequests_;
     T_ContextRequests contextRequests_;
+    const std::string federateName_;
     //@}
 };
 

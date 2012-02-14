@@ -71,6 +71,20 @@ namespace
        to.serviceType = from.serviceType;
     }
 
+    geometry::Point2d ReadLocation( const sword::MissionParameter_Value& value )
+    {
+        if( value.has_location() )
+            return geometry::Point2d( value.location().coordinates().elem( 0 ).latitude(),
+                                      value.location().coordinates().elem( 0 ).longitude() );
+        if( value.has_point() )
+            return geometry::Point2d( value.point().location().coordinates().elem( 0 ).latitude(),
+                                      value.point().location().coordinates().elem( 0 ).longitude() );
+        if( value.has_area() ) // FIXME: compute barycenter
+            return geometry::Point2d( value.area().location().coordinates().elem( 0 ).latitude(),
+                                      value.area().location().coordinates().elem( 0 ).longitude() );
+        return geometry::Point2d();
+    }
+
     geometry::Point2d ReadLocation( const sword::MissionParameter& parameter )
     {
         if( parameter.value( 0 ).has_location() )
@@ -92,9 +106,9 @@ namespace
         return parameter.value( 0 ).agent().id();
     }
 
-    bool CheckService( const interactions::NetnService& service )
+    bool CheckService( const interactions::NetnService& service, const std::string& federateName )
     {
-        return service.serviceType == 4 && service.serviceId.issuingObjectIdentifier.str() == "SWORD";
+        return service.serviceType == 4 && service.serviceId.issuingObjectIdentifier.str() == federateName;
     }
 }
 
@@ -124,6 +138,7 @@ TransportationRequester::TransportationRequester( xml::xisubstream xis, const Mi
     , rejectSender_           ( rejectSender )
     , readySender_            ( readySender )
     , receivedSender_         ( receivedSender )
+    , federateName_           ( xis.attribute<std::string>( "name", "SWORD" ) )
 {
     CONNECT( controller, *this, automat_order );
     CONNECT( controller, *this, unit_order );
@@ -181,16 +196,16 @@ void TransportationRequester::ProcessTransport(const T& message, bool isAutmaton
    if( message.parameters().elem_size() == 8 &&
         std::find( transportIds_.begin(), transportIds_.end(), message.type().id() ) != transportIds_.end() )
     {
-        const geometry::Point2d embarkmentPoint = ReadLocation( message.parameters().elem( 4 ) );
+        const geometry::Point2d embarkmentPoint = ReadLocation( message.parameters().elem( 4 ).value( 0 ) );
         const long long embarkmentTime = ReadTime( message.parameters().elem( 5 ) );
-        const geometry::Point2d debarkmentPoint = ReadLocation( message.parameters().elem( 6 ) );
+        const geometry::Point2d debarkmentPoint = ReadLocation( message.parameters().elem( 6 ).value( 0 ) );
         const long long debarkmentTime = ReadTime( message.parameters().elem( 7 ) );
         const unsigned int context = contextFactory_.Create();
         pendingRequests_.right.erase( message.tasker().id() );
         pendingRequests_.insert( T_Requests::value_type( context, message.tasker().id() ) );
         interactions::NetnRequestConvoy request;
-        request.serviceId = NetnEventIdentifier( context, "SWORD" );
-        request.consumer = UnicodeString( "SWORD" );
+        request.serviceId = NetnEventIdentifier( context, federateName_ );
+        request.consumer = UnicodeString( federateName_ );
         request.provider = UnicodeString(); // Empty provider
         request.serviceType = 4; // convoy
         request.requestTimeOut = 0; // no timeout
@@ -223,14 +238,14 @@ void TransportationRequester::ProcessEmbark(const T& message, bool isAutomaton, 
         std::find( missions.begin(), missions.end(), message.type().id() ) != missions.end() )
     {
         const NetnTransportStruct::ConvoyType transportType = embark ? NetnTransportStruct::E_Embarkment : NetnTransportStruct::E_Disembarkment ;
-        const geometry::Point2d embarkmentPoint = ReadLocation( message.parameters().elem( 4 ) );
+        const geometry::Point2d embarkmentPoint = ReadLocation( message.parameters().elem( 4 ).value( 0 ) );
         const long long embarkmentTime = ReadTime( message.parameters().elem( 5 ) );
         const unsigned int context = contextFactory_.Create();
         pendingRequests_.right.erase( message.tasker().id() );
         pendingRequests_.insert( T_Requests::value_type( context, message.tasker().id() ) );
         interactions::NetnRequestConvoy request;
-        request.serviceId = NetnEventIdentifier( context, "SWORD" );
-        request.consumer = UnicodeString( "SWORD" );
+        request.serviceId = NetnEventIdentifier( context, federateName_ );
+        request.consumer = UnicodeString( federateName_ );
         request.provider = UnicodeString(); // Empty provider
         request.serviceType = 4; // convoy
         request.requestTimeOut = 0; // no timeout
@@ -279,7 +294,7 @@ namespace
 // -----------------------------------------------------------------------------
 void TransportationRequester::Receive( interactions::NetnOfferConvoy& interaction )
 {
-    if( ! CheckService( interaction ) )
+    if( ! CheckService( interaction, federateName_ ) )
         return;
     if( !interaction.isOffering )
         return;
@@ -336,7 +351,7 @@ void TransportationRequester::Notify( const sword::Report& message, int /*contex
 // -----------------------------------------------------------------------------
 void TransportationRequester::Receive( interactions::NetnServiceStarted& interaction )
 {
-    if( ! CheckService( interaction ) )
+    if( ! CheckService( interaction, federateName_ ) )
         return;
     const unsigned int context = interaction.serviceId.eventCount;
     if( readyToReceiveRequests_.left.find( context ) == readyToReceiveRequests_.left.end() )
@@ -394,7 +409,7 @@ void TransportationRequester::SendTransportMagicAction( unsigned int context, co
 // -----------------------------------------------------------------------------
 void TransportationRequester::Receive( interactions::NetnConvoyEmbarkmentStatus& interaction )
 {
-    if( ! CheckService( interaction ) )
+    if( ! CheckService( interaction, federateName_ ) )
         return;
     const unsigned int context = interaction.serviceId.eventCount;
     SendTransportMagicAction( context, interaction.transportUnitIdentifier.str(), interaction.listOfObjectEmbarked, sword::UnitMagicAction::load_unit, false );
@@ -406,7 +421,7 @@ void TransportationRequester::Receive( interactions::NetnConvoyEmbarkmentStatus&
 // -----------------------------------------------------------------------------
 void TransportationRequester::Receive( interactions::NetnConvoyDisembarkmentStatus& interaction )
 {
-    if( ! CheckService( interaction ) )
+    if( ! CheckService( interaction, federateName_ ) )
         return;
     const unsigned int context = interaction.serviceId.eventCount;
     SendTransportMagicAction( context, interaction.transportUnitIdentifier.str(), interaction.listOfObjectDisembarked, sword::UnitMagicAction::unload_unit, true );
@@ -418,7 +433,7 @@ void TransportationRequester::Receive( interactions::NetnConvoyDisembarkmentStat
 // -----------------------------------------------------------------------------
 void TransportationRequester::Receive( interactions::NetnServiceComplete& interaction )
 {
-    if( ! CheckService( interaction ) )
+    if( ! CheckService( interaction, federateName_ ) )
         return;
     const unsigned int context = interaction.serviceId.eventCount;
     if( serviceStartedRequests_.left.find( context ) == serviceStartedRequests_.left.end() )
@@ -435,7 +450,7 @@ void TransportationRequester::Receive( interactions::NetnServiceComplete& intera
 // -----------------------------------------------------------------------------
 void TransportationRequester::Receive( interactions::NetnConvoyDestroyedEntities& interaction )
 {
-    if( ! CheckService( interaction ) )
+    if( ! CheckService( interaction, federateName_ ) )
         return;
     const unsigned int context = interaction.serviceId.eventCount;
     if( serviceStartedRequests_.left.find( context ) == serviceStartedRequests_.left.end() )
@@ -498,4 +513,22 @@ void TransportationRequester::ReadMission(xml::xistream& xis, std::vector<unsign
     xis >> name;
     v.push_back( resolver.ResolveAutomat( name ) );
     v.push_back( resolver.ResolveUnit( name ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TransportationRequester::Receive
+// Created: AHC 2012-02-10
+// -----------------------------------------------------------------------------
+void TransportationRequester::Receive( interactions::NetnCancelConvoy& interaction )
+{    
+    if( ! CheckService( interaction, federateName_ ) )
+        return;
+
+    const unsigned int context = interaction.serviceId.eventCount;
+    if( pendingRequests_.left.find( context ) != pendingRequests_.left.end() )
+    {
+        Resume( pendingRequests_.left.find( context )->second );
+        return;
+    }
+    
 }

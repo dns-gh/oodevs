@@ -96,6 +96,7 @@ public:
     virtual void Receive( interactions::NetnAcceptOffer& accept );
     virtual void Receive( interactions::NetnReadyToReceiveService& readyToReceive );
     virtual void Receive( interactions::NetnServiceReceived& serviceReceived );
+    virtual void Receive( interactions::NetnCancelConvoy& interaction );
     //@}
 
 private:

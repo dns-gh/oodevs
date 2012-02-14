@@ -79,7 +79,7 @@ TransportationOfferer::TransportationOfferer( xml::xisubstream xis, const Missio
     , serviceCompleteSender_          ( serviceCompleteSender )
     , messageController_              ( messageController )
     , factory_                        ( factory )
-    , callsignResolver_                ( callsignRevoler )
+    , callsignResolver_               ( callsignRevoler )
     , clientsPublisher_               ( clientsPublisher )
     , missionCompleteReportId_        ( ResolveReportId( xis ) )
 {
@@ -154,7 +154,9 @@ void TransportationOfferer::Receive( interactions::NetnRequestConvoy& request )
 {
     if( request.serviceType != 4 ) // Convoy service type
         return;
-    if( request.transportData.dataTransport.objectToManage.empty() )
+    if( request.transportData.dataTransport.objectToManage.empty() && 
+        request.transportData.dataEmbarkment.objectToManage.empty() &&
+        request.transportData.dataDisembarkment.objectToManage.empty() )
         return;
     sword::MessengerToClient message;
     sword::TextMessage* text = message.mutable_message()->mutable_text_message();
@@ -507,4 +509,12 @@ void TransportationOfferer::SendDisembarkmentStatus( unsigned int transporter, u
     const interactions::NetnOfferConvoy& offer = startedOffers_[ it->second ];
     interactions::NetnConvoyDisembarkmentStatus disembarkmentStatus;
     Send( disembarkmentStatus, disembarkmentStatus.listOfObjectDisembarked, untransported, convoyDisembarkmentStatusSender_, offer, transporter, callsignResolver_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TransportationOfferer::Receive
+// Created: AHC 2012-02-10
+// -----------------------------------------------------------------------------
+void TransportationOfferer::Receive( interactions::NetnCancelConvoy& )
+{
 }
