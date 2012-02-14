@@ -164,6 +164,10 @@ eIndirectFireState_Finished = 2
 eIndirectFireState_Impossible = 3
 eIndirectFireState_NoAmmo = 4
 
+--- IndirectFire disponibility
+eFireAvailability_PretAuTir = 1
+eFireAvailability_Indisponible = 2
+
 --Transport
 eActionTransport_Running = 0
 eActionTransport_Finished = 1

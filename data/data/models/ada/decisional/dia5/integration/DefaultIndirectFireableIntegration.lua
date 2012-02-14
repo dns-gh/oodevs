@@ -149,3 +149,11 @@ integration.stopApplyFireOnPoint = function( point )
   point[myself].actionIndirectFire = DEC__StopAction( point[myself].actionIndirectFire )
   point[myself].eIndirectFireState = nil
 end
+
+integration.sendfireAvailable = function( bAvailable )
+    if bAvailable then
+        DEC_Agent_ChangeDisponibiliteAuTirIndirect( eFireAvailability_PretAuTir )
+    else
+        DEC_Agent_ChangeDisponibiliteAuTirIndirect( eFireAvailability_Indisponible )
+    end
+end
