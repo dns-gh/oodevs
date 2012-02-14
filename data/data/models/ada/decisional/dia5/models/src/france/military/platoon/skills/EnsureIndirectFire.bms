@@ -71,16 +71,24 @@ rootnode
                 self.order = integration.query.getFirstFireOrder()
             end
             if meKnowledge:isDeployed() then --or self.params.canReceiveUnexpectedOrder then
+                integration.sendfireAvailable(true)
                 Activate( skill.nodes.CR_ReadyToFire, 1 )
                 if self.order then
                     Activate( skill.nodes.CR_ReceiveFireOrder, 1 )
                     Activate( skill.links.indirectFire, 1, self.order )
                 end
-            elseif self.order then
-                Activate( skill.nodes.CR_NotDeployedIndirectFireImpossible, 1 )
+            else
+                integration.sendfireAvailable(false)
+                if self.order then
+                  Activate( skill.nodes.CR_NotDeployedIndirectFireImpossible, 1 )
+                end
             end
         end
     end,
+  
+    destroy = function( self )
+      integration.sendfireAvailable(false)
+    end
 }
 
 node "CR_ReceiveFireOrder"
