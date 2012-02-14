@@ -6,7 +6,7 @@
             <description>The list of entities to defining a patrol round. The list must be ordered such a way that its nth element represents the nth entity to visit on the agent’s round.</description>
             <type>
                 <list>
-                    <class name="agent.ontology.interfaces.Destination"/>
+                    <class name="agent.world.Destination"/>
                 </list>
             </type>
         </parameter>

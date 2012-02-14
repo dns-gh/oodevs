@@ -4,7 +4,7 @@
         <parameter name="fires">
             <type>
                 <list>
-                    <class name="agent.ontology.interfaces.Fire"/>
+                    <class name="agent.world.Fire"/>
                 </list>
             </type>
         </parameter>

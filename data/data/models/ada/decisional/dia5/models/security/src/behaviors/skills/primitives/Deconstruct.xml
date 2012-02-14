@@ -11,7 +11,7 @@ Contrariwise (&quot;instantaneously&quot; parameter is set to 'false'), visited 
             <description>The set of construction to deconstruct and remove. </description>
             <type>
                 <list>
-                    <class name="agent.ontology.interfaces.Work"/>
+                    <class name="agent.world.Work"/>
                 </list>
             </type>
         </parameter>
@@ -35,7 +35,7 @@ Contrariwise (&quot;instantaneously&quot; parameter is set to 'false'), visited 
         </parameter>
     </parameters>
     <body-type>
-        <class name="agent.ontology.interfaces.Body"/>
+        <class name="agent.world.Body"/>
     </body-type>
     <links>
         <link name="reach" skill="behaviors.skills.primitives.Reach">
@@ -50,7 +50,7 @@ Contrariwise (&quot;instantaneously&quot; parameter is set to 'false'), visited 
             <description>Sent each time a 'Work' cannot be deconstructed (no pysical capability for instance).</description>
             <argument name="work">
                 <type>
-                    <class name="agent.ontology.interfaces.Work"/>
+                    <class name="agent.world.Work"/>
                 </type>
             </argument>
         </feedback>

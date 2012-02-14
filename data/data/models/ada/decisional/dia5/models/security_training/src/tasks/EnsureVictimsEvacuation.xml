@@ -10,14 +10,14 @@ Wounded human victims won't be evacuated if:&#xD;
             <description>The units whose victims (wounded humans) need to be evacuated through the medical unit (TC2).</description>
             <type>
                 <list>
-                    <class name="agent.ontology.interfaces.Victims"/>
+                    <class name="agent.world.Victims"/>
                 </list>
             </type>
         </parameter>
         <parameter name="medicalUnit">
             <description>The medical unit linked to medical logistic chain (as TC2 for military units). This unit will be notified to evcuate wounded humans of 'victims Units'.</description>
             <type>
-                <class name="agent.ontology.interfaces.Medical"/>
+                <class name="agent.world.Medical"/>
             </type>
         </parameter>
     </parameters>

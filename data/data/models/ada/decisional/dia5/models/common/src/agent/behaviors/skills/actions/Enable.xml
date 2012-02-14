@@ -5,13 +5,13 @@
         <parameter name="system">
             <description>The resource node to act on. </description>
             <type>
-                <class name="agent.ontology.interfaces.System"/>
+                <class name="agent.world.System"/>
             </type>
         </parameter>
     </parameters>
     <modifiers/>
     <body-type>
-        <class name="agent.ontology.interfaces.Body"/>
+        <class name="agent.world.Body"/>
     </body-type>
     <links/>
     <resources/>

@@ -5,12 +5,12 @@
         <parameter name="transportableEntity">
             <description>The entity to load.</description>
             <type>
-                <class name="agent.ontology.interfaces.Transportable"/>
+                <class name="agent.world.Transportable"/>
             </type>
         </parameter>
     </parameters>
     <body-type>
-        <class name="agent.ontology.interfaces.Body"/>
+        <class name="agent.world.Body"/>
     </body-type>
     <feedbacks>
         <feedback name="loadActionCompleted">

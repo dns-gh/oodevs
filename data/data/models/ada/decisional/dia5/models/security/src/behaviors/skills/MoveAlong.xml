@@ -6,7 +6,7 @@
             <description>The list of entities defining the path. The list must be ordered such a way that its nth element represents the nth entity on the agent’s path</description>
             <type>
                 <list>
-                    <class name="agent.ontology.interfaces.Destination"/>
+                    <class name="agent.world.Destination"/>
                 </list>
             </type>
         </parameter>

@@ -5,7 +5,7 @@
         <parameter name="work">
             <description>The element to create and build.</description>
             <type>
-                <class name="agent.ontology.interfaces.Work"/>
+                <class name="agent.world.Work"/>
             </type>
         </parameter>
     </parameters>

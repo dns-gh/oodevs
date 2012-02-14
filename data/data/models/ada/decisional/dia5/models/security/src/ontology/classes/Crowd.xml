@@ -6,8 +6,8 @@ A crowd is oriented. It has three sections: front, middle, back.&#xD;
 A crowd can be calm or upset.&#xD;
 A crowd can victims. &#xD;
 </description>
-    <realizes>agent.ontology.interfaces.Victims</realizes>
-    <realizes>agent.ontology.interfaces.Transportable</realizes>
+    <realizes>agent.world.Victims</realizes>
+    <realizes>agent.world.Transportable</realizes>
     <methods>
         <method name="getPosition">
             <return name="simPosition">

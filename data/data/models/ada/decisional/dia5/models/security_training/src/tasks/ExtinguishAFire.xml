@@ -5,13 +5,13 @@
         <parameter name="fire">
             <description>The fire to act on.</description>
             <type>
-                <class name="agent.ontology.interfaces.Fire"/>
+                <class name="agent.world.Fire"/>
             </type>
         </parameter>
         <parameter name="garagePosition">
             <description>The destination to reach once the fire is extinguished.</description>
             <type>
-                <class name="agent.ontology.interfaces.Destination"/>
+                <class name="agent.world.Destination"/>
             </type>
         </parameter>
     </parameters>

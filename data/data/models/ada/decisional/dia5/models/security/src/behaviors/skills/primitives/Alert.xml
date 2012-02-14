@@ -7,13 +7,13 @@ Populated areas are visited in the order of the list. </description>
             <description>A list of populated areas. </description>
             <type>
                 <list>
-                    <class name="agent.ontology.interfaces.PopulatedArea"/>
+                    <class name="agent.world.PopulatedArea"/>
                 </list>
             </type>
         </parameter>
     </parameters>
     <body-type>
-        <class name="agent.ontology.interfaces.Body"/>
+        <class name="agent.world.Body"/>
     </body-type>
     <links>
         <link name="reach" skill="behaviors.skills.primitives.Reach">
@@ -28,7 +28,7 @@ Populated areas are visited in the order of the list. </description>
             <description>Sent upon completion of the simulation action.</description>
             <argument name="populatedArea">
                 <type>
-                    <class name="agent.ontology.interfaces.PopulatedArea"/>
+                    <class name="agent.world.PopulatedArea"/>
                 </type>
             </argument>
         </feedback>

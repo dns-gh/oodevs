@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.ontology.interfaces.Destination" source-version="1.0.0">
+<interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.world.Destination" source-version="1.0.0">
     <description>Any simulation entity towards which an agent may move to, should realize this interface.</description>
     <methods>
         <method name="reachIt">
@@ -31,7 +31,7 @@ Returns true once the agent has reached the end-point of the path (please note t
 Returns a percentage, where 0% means &quot;this object is very far from destination&quot; and 100% means &quot;this entity is very close to destination&quot;.</description>
             <argument name="destination">
                 <type>
-                    <class name="agent.ontology.interfaces.Destination"/>
+                    <class name="agent.world.Destination"/>
                 </type>
             </argument>
             <return>

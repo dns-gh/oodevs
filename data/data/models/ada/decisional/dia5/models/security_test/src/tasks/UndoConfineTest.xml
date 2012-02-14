@@ -4,7 +4,7 @@
         <parameter name="populatedAreas">
             <type>
                 <list>
-                    <class name="agent.ontology.interfaces.PopulatedArea"/>
+                    <class name="agent.world.PopulatedArea"/>
                 </list>
             </type>
         </parameter>

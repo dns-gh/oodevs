@@ -12,13 +12,13 @@ Depending on its crowd transport capacity, agent will make as many round trips a
         <parameter name="loadingPosition">
             <description>The crowd's concentration position where to load the elements of the crowd.</description>
             <type>
-                <class name="agent.ontology.interfaces.Destination"/>
+                <class name="agent.world.Destination"/>
             </type>
         </parameter>
         <parameter name="targetDestination">
             <description>The position where to transport the crowd.</description>
             <type>
-                <class name="agent.ontology.interfaces.Destination"/>
+                <class name="agent.world.Destination"/>
             </type>
         </parameter>
     </parameters>

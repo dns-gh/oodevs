@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.classes.PlannedWork" source-version="1.0.0" extends="ontology.classes.LocalizedElement">
     <description>Represents the idea of a human construction to come. Contains all the specifics required for construction. </description>
-    <realizes>agent.ontology.interfaces.Work</realizes>
+    <realizes>agent.world.Work</realizes>
     <methods>
         <method name="getPosition">
             <return name="simPosition">
@@ -42,7 +42,7 @@ This implementation returns true if agent has the physical capability and has th
             <return name="work">
                 <description>The created work.</description>
                 <type>
-                    <class name="agent.ontology.interfaces.Work"/>
+                    <class name="agent.world.Work"/>
                 </type>
             </return>
         </method>

@@ -4,7 +4,7 @@
 An area allows an agent to retrieve the set of elements of a specific type, enclosed within it. &#xD;
 An area can be secured $$$ Explain Secure effect (see VGS)&#xD;
 </description>
-    <realizes>agent.ontology.interfaces.ContaminationArea</realizes>
+    <realizes>agent.world.ContaminationArea</realizes>
     <methods>
         <method name="getPosition">
             <return name="simPosition">

@@ -1,4 +1,4 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class xmlns="http://www.masagroup.net/directia/schemas/bm" name="knowledge.CompanyBody" source-version="1.0.0" abstract="false">
-    <realizes>agent.ontology.interfaces.Body</realizes>
+    <realizes>agent.world.Body</realizes>
 </class>

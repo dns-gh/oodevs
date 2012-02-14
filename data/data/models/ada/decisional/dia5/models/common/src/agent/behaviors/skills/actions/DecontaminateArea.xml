@@ -5,12 +5,12 @@
         <parameter name="area">
             <description>The contaminated area to act on. </description>
             <type>
-                <class name="agent.ontology.interfaces.ContaminationArea"/>
+                <class name="agent.world.ContaminationArea"/>
             </type>
         </parameter>
     </parameters>
     <body-type>
-        <class name="agent.ontology.interfaces.Body"/>
+        <class name="agent.world.Body"/>
     </body-type>
     <feedbacks>
         <feedback name="decontaminateActionCompleted">

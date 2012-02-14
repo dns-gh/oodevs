@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.ontology.interfaces.Body" source-version="1.0.0" extends="directia.core.model.RoleBody">
-    <description>$$$ TODO</description>
+<interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.world.Body" source-version="1.0.0" extends="directia.core.model.RoleBody">
     <methods>
         <method name="moveTo">
             <description>Returns true upon simulation method completion, false otherwise. </description>
             <argument name="destination">
                 <description>The destination to move to. </description>
                 <type>
-                    <class name="agent.ontology.interfaces.Destination"/>
+                    <class name="agent.world.Destination"/>
                 </type>
             </argument>
             <argument name="urgency">
@@ -36,7 +35,7 @@
             <argument name="destination">
                 <description>The destination to stop moving to. </description>
                 <type>
-                    <class name="agent.ontology.interfaces.Destination"/>
+                    <class name="agent.world.Destination"/>
                 </type>
             </argument>
         </method>
@@ -45,13 +44,13 @@
             <argument name="work">
                 <description>The construction to build. </description>
                 <type>
-                    <class name="agent.ontology.interfaces.Work"/>
+                    <class name="agent.world.Work"/>
                 </type>
             </argument>
             <return name="builtWork">
                 <description>Returns the work built upon simulation method completion. </description>
                 <type>
-                    <class name="agent.ontology.interfaces.Work"/>
+                    <class name="agent.world.Work"/>
                 </type>
             </return>
         </method>
@@ -63,7 +62,7 @@ This action can take time (depending on the current status of the population, e.
                 <description>The populated area in which the population should be confined.&#xD;
 </description>
                 <type>
-                    <class name="agent.ontology.interfaces.PopulatedArea"/>
+                    <class name="agent.world.PopulatedArea"/>
                 </type>
             </argument>
             <return name="confinement">
@@ -78,7 +77,7 @@ This action can take time (depending on the current status of the population, e.
             <argument name="populatedArea">
                 <description>The populated area in which the population is confined.</description>
                 <type>
-                    <class name="agent.ontology.interfaces.PopulatedArea"/>
+                    <class name="agent.world.PopulatedArea"/>
                 </type>
             </argument>
             <return name="undoConfinement">
@@ -93,7 +92,7 @@ This action can take time (depending on the current status of the population, e.
             <argument name="populatedArea">
                 <description>The area whose population must be alerted. </description>
                 <type>
-                    <class name="agent.ontology.interfaces.PopulatedArea"/>
+                    <class name="agent.world.PopulatedArea"/>
                 </type>
             </argument>
             <return>
@@ -119,7 +118,7 @@ Display a message.</description>
             <argument name="resourceNode">
                 <description>The resource node to enact on.</description>
                 <type>
-                    <class name="agent.ontology.interfaces.ResourceNode"/>
+                    <class name="agent.world.ResourceNode"/>
                 </type>
             </argument>
             <argument name="quantity">
@@ -140,7 +139,7 @@ Display a message.</description>
             <argument name="resourceNode">
                 <description>The resource node to enact on.</description>
                 <type>
-                    <class name="agent.ontology.interfaces.ResourceNode"/>
+                    <class name="agent.world.ResourceNode"/>
                 </type>
             </argument>
             <argument name="quantity">
@@ -161,7 +160,7 @@ Display a message.</description>
             <argument name="populatedArea">
                 <description>The populated area whose populations must be evacuated. </description>
                 <type>
-                    <class name="agent.ontology.interfaces.PopulatedArea"/>
+                    <class name="agent.world.PopulatedArea"/>
                 </type>
             </argument>
             <return name="evacuation">
@@ -177,7 +176,7 @@ Display a message.</description>
             <argument name="resourceNode">
                 <description>The resource node to act on.</description>
                 <type>
-                    <class name="agent.ontology.interfaces.ResourceNode"/>
+                    <class name="agent.world.ResourceNode"/>
                 </type>
             </argument>
             <argument name="quantity">
@@ -199,7 +198,7 @@ Display a message.</description>
             <argument name="resourceNode">
                 <description>The resource node to enact on.</description>
                 <type>
-                    <class name="agent.ontology.interfaces.ResourceNode"/>
+                    <class name="agent.world.ResourceNode"/>
                 </type>
             </argument>
             <argument name="quantity">
@@ -220,13 +219,13 @@ Display a message.</description>
             <argument name="victims">
                 <description>The victims to evacuate. </description>
                 <type>
-                    <class name="agent.ontology.interfaces.Victims"/>
+                    <class name="agent.world.Victims"/>
                 </type>
             </argument>
             <argument name="medicalUnit">
                 <description>The medical unit to evacuate victims with. </description>
                 <type>
-                    <class name="agent.ontology.interfaces.Medical"/>
+                    <class name="agent.world.Medical"/>
                 </type>
             </argument>
             <return>
@@ -241,7 +240,7 @@ Display a message.</description>
             <argument name="populatedArea">
                 <description>The populated area from which the populated is evacuated.</description>
                 <type>
-                    <class name="agent.ontology.interfaces.PopulatedArea"/>
+                    <class name="agent.world.PopulatedArea"/>
                 </type>
             </argument>
             <return name="evacuation">
@@ -256,7 +255,7 @@ Display a message.</description>
             <argument name="victimsUnit">
                 <description>The &quot;victimsUnit&quot; to extract wounded elements from.</description>
                 <type>
-                    <class name="agent.ontology.interfaces.Victims"/>
+                    <class name="agent.world.Victims"/>
                 </type>
             </argument>
             <return>
@@ -271,7 +270,7 @@ Display a message.</description>
             <argument name="system">
                 <description>The system to activate. </description>
                 <type>
-                    <class name="agent.ontology.interfaces.System"/>
+                    <class name="agent.world.System"/>
                 </type>
             </argument>
             <return>
@@ -287,7 +286,7 @@ Display a message.</description>
             <argument name="system">
                 <description>The system to deactivate. </description>
                 <type>
-                    <class name="agent.ontology.interfaces.System"/>
+                    <class name="agent.world.System"/>
                 </type>
             </argument>
             <return>
@@ -303,7 +302,7 @@ Display a message.</description>
             <argument name="populatedArea">
                 <description>The populated area whose populations must be un-alerted. </description>
                 <type>
-                    <class name="agent.ontology.interfaces.PopulatedArea"/>
+                    <class name="agent.world.PopulatedArea"/>
                 </type>
             </argument>
             <return>
@@ -319,7 +318,7 @@ Display a message.</description>
             <argument name="area">
                 <description>The area to decontaminate. </description>
                 <type>
-                    <class name="agent.ontology.interfaces.ContaminationArea"/>
+                    <class name="agent.world.ContaminationArea"/>
                 </type>
             </argument>
             <return>
@@ -333,7 +332,7 @@ Display a message.</description>
             <argument name="entity">
                 <description>The entity to load.</description>
                 <type>
-                    <class name="agent.ontology.interfaces.Transportable"/>
+                    <class name="agent.world.Transportable"/>
                 </type>
             </argument>
             <return>
@@ -348,7 +347,7 @@ Display a message.</description>
             <argument name="entity">
                 <description>The transported unit to unload.</description>
                 <type>
-                    <class name="agent.ontology.interfaces.Transportable"/>
+                    <class name="agent.world.Transportable"/>
                 </type>
             </argument>
             <return>
@@ -362,7 +361,7 @@ Display a message.</description>
             <argument name="fire">
                 <description>The fire to extinguish.</description>
                 <type>
-                    <class name="agent.ontology.interfaces.Fire"/>
+                    <class name="agent.world.Fire"/>
                 </type>
             </argument>
             <return>
@@ -386,7 +385,7 @@ Display a message.</description>
             <argument name="work">
                 <description>The work that must be deconstructed. </description>
                 <type>
-                    <class name="agent.ontology.interfaces.Work"/>
+                    <class name="agent.world.Work"/>
                 </type>
             </argument>
             <return>
@@ -402,7 +401,7 @@ Display a message.</description>
             <argument name="work">
                 <description>The work that must be removed.</description>
                 <type>
-                    <class name="agent.ontology.interfaces.Work"/>
+                    <class name="agent.world.Work"/>
                 </type>
             </argument>
             <return>

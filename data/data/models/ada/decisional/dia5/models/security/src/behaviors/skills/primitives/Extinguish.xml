@@ -10,13 +10,13 @@ A visited fire won't be extinguished if it is already extinguished or if it does
             <description>An ordered list of fires that need to be extinguished.</description>
             <type>
                 <list>
-                    <class name="agent.ontology.interfaces.Fire"/>
+                    <class name="agent.world.Fire"/>
                 </list>
             </type>
         </parameter>
     </parameters>
     <body-type>
-        <class name="agent.ontology.interfaces.Body"/>
+        <class name="agent.world.Body"/>
     </body-type>
     <links>
         <link name="reach" skill="behaviors.skills.primitives.Reach">
@@ -32,7 +32,7 @@ A visited fire won't be extinguished if it is already extinguished or if it does
             <argument name="fire">
                 <description>The fire that has been extinguished.</description>
                 <type>
-                    <class name="agent.ontology.interfaces.Fire"/>
+                    <class name="agent.world.Fire"/>
                 </type>
             </argument>
         </feedback>
@@ -40,7 +40,7 @@ A visited fire won't be extinguished if it is already extinguished or if it does
             <description>Sent each time a 'Fire' cannot be extinguished (no pysical capability for instance).</description>
             <argument name="fire">
                 <type>
-                    <class name="agent.ontology.interfaces.Fire"/>
+                    <class name="agent.world.Fire"/>
                 </type>
             </argument>
         </feedback>

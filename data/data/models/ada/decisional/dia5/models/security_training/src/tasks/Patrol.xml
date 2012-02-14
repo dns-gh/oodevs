@@ -5,7 +5,7 @@
             <description>The set of position that agent will move along.</description>
             <type>
                 <list>
-                    <class name="agent.ontology.interfaces.Destination"/>
+                    <class name="agent.world.Destination"/>
                 </list>
             </type>
         </parameter>

@@ -6,7 +6,7 @@ Once this action is complete, the resource node production will be definitely de
         <parameter name="resourceNode">
             <description>The resource node to act on. </description>
             <type>
-                <class name="agent.ontology.interfaces.ResourceNode"/>
+                <class name="agent.world.ResourceNode"/>
             </type>
         </parameter>
         <parameter name="quantity">
@@ -20,7 +20,7 @@ Once this action is complete, the resource node production will be definitely de
         </parameter>
     </parameters>
     <body-type>
-        <class name="agent.ontology.interfaces.Body"/>
+        <class name="agent.world.Body"/>
     </body-type>
     <feedbacks>
         <feedback name="damageProductionActionCompleted">

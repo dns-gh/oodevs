@@ -5,12 +5,12 @@
         <parameter name="fire">
             <description>A fire that can be extinguished.</description>
             <type>
-                <class name="agent.ontology.interfaces.Fire"/>
+                <class name="agent.world.Fire"/>
             </type>
         </parameter>
     </parameters>
     <body-type>
-        <class name="agent.ontology.interfaces.Body"/>
+        <class name="agent.world.Body"/>
     </body-type>
     <resources>
         <resource name="agent.behaviors.resources.Extinguisher" variable="extinguisher"/>

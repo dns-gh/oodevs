@@ -7,14 +7,14 @@ Entities are visited in the order of the list and are loaded on agent Unit. Once
             <description>The transportable entities to transport toward the given destination.</description>
             <type>
                 <list>
-                    <class name="agent.ontology.interfaces.Transportable"/>
+                    <class name="agent.world.Transportable"/>
                 </list>
             </type>
         </parameter>
         <parameter name="destination">
             <description>The destination where to bring 'entitiesToTransport'.</description>
             <type>
-                <class name="agent.ontology.interfaces.Destination"/>
+                <class name="agent.world.Destination"/>
             </type>
         </parameter>
     </parameters>

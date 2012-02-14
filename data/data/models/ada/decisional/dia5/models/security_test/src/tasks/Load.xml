@@ -4,7 +4,7 @@
         <parameter name="entitiesToLoad">
             <type>
                 <list>
-                    <class name="agent.ontology.interfaces.Transportable"/>
+                    <class name="agent.world.Transportable"/>
                 </list>
             </type>
         </parameter>

@@ -4,7 +4,7 @@
 &#xD;
 No parameter is required for this skill, because action is done the agent body.</description>
     <body-type>
-        <class name="agent.ontology.interfaces.Body"/>
+        <class name="agent.world.Body"/>
     </body-type>
     <feedbacks>
         <feedback name="equipActionCompleted">

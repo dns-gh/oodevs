@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.interfaces.Fire" source-version="1.0.0">
+<interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.world.Fire" source-version="1.0.0">
     <description>This element represents a fire (in Sword, two different fire models are used punctual fires, and surface fires).  A fire can be extinguished by specific units.&#xD;
 A 'Fire' object has a life time cycle (increase and decrease rate depending on a combustion energy ). &#xD;
 </description>

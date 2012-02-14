@@ -14,13 +14,13 @@ Specific behavior for crowd agents:&#xD;
         <parameter name="entitiesToTransport">
             <type>
                 <list>
-                    <class name="agent.ontology.interfaces.Transportable"/>
+                    <class name="agent.world.Transportable"/>
                 </list>
             </type>
         </parameter>
         <parameter name="destination">
             <type>
-                <class name="agent.ontology.interfaces.Destination"/>
+                <class name="agent.world.Destination"/>
             </type>
         </parameter>
     </parameters>

@@ -4,8 +4,8 @@
 A resource network node can be enabled and disabled by simulated units.&#xD;
 A resource network node can be supplied with resources from another node or by a supply plot.&#xD;
 </description>
-    <realizes>agent.ontology.interfaces.System</realizes>
-    <realizes>agent.ontology.interfaces.ResourceNode</realizes>
+    <realizes>agent.world.System</realizes>
+    <realizes>agent.world.ResourceNode</realizes>
     <methods>
         <method name="getPosition">
             <return name="simPosition">

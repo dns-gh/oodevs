@@ -11,7 +11,7 @@
     </parameters>
     <target name="fire">
         <type>
-            <class name="agent.ontology.interfaces.Fire"/>
+            <class name="agent.world.Fire"/>
         </type>
     </target>
 </query>

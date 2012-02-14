@@ -5,7 +5,7 @@
         <parameter name="work">
             <description>The work to deconstruct. A decontructed work disapears.</description>
             <type>
-                <class name="agent.ontology.interfaces.Work"/>
+                <class name="agent.world.Work"/>
             </type>
         </parameter>
         <parameter name="instantaneously">
@@ -18,6 +18,9 @@
             </default>
         </parameter>
     </parameters>
+    <body-type>
+        <class name="agent.world.Body"/>
+    </body-type>
     <feedbacks>
         <feedback name="deconstructActionCompleted">
             <description>Sent once the work is deconstructed</description>

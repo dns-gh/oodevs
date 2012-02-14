@@ -17,7 +17,7 @@
     </parameters>
     <target name="positions">
         <type>
-            <class name="agent.ontology.interfaces.Destination"/>
+            <class name="agent.world.Destination"/>
         </type>
     </target>
 </query>

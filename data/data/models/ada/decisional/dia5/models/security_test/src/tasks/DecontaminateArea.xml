@@ -5,7 +5,7 @@
             <description>A list of areas. </description>
             <type>
                 <list>
-                    <class name="agent.ontology.interfaces.ContaminationArea"/>
+                    <class name="agent.world.ContaminationArea"/>
                 </list>
             </type>
         </parameter>

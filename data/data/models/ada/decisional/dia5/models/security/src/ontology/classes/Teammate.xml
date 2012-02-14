@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.classes.Teammate" source-version="1.0.0" extends="ontology.classes.Agent">
     <description>Represents a known agent. </description>
-    <realizes>agent.ontology.interfaces.Medical</realizes>
-    <realizes>agent.ontology.interfaces.Victims</realizes>
-    <realizes>agent.ontology.interfaces.Transportable</realizes>
+    <realizes>agent.world.Medical</realizes>
+    <realizes>agent.world.Victims</realizes>
+    <realizes>agent.world.Transportable</realizes>
     <methods>
         <method name="getPosition">
             <return name="simPosition">
@@ -34,7 +34,7 @@
             <argument name="victims">
                 <description>The &quot;victims&quot; entity to ensure evacuation.</description>
                 <type>
-                    <class name="agent.ontology.interfaces.Victims"/>
+                    <class name="agent.world.Victims"/>
                 </type>
             </argument>
             <return>
@@ -66,7 +66,7 @@ This implement returns true. Extraction is not released for teammate unit.</desc
             <argument name="victims">
                 <description>The &quot;victims&quot; entity to ensure evacuation.</description>
                 <type>
-                    <class name="agent.ontology.interfaces.Victims"/>
+                    <class name="agent.world.Victims"/>
                 </type>
             </argument>
             <return>

@@ -5,18 +5,18 @@
         <parameter name="victimsUnit">
             <description>The victimsUnit to act on.</description>
             <type>
-                <class name="agent.ontology.interfaces.Victims"/>
+                <class name="agent.world.Victims"/>
             </type>
         </parameter>
         <parameter name="medicalUnit">
             <description>The medical unit that evacuate wounded elements within the 'victimsUnit'.</description>
             <type>
-                <class name="agent.ontology.interfaces.Medical"/>
+                <class name="agent.world.Medical"/>
             </type>
         </parameter>
     </parameters>
     <body-type>
-        <class name="agent.ontology.interfaces.Body"/>
+        <class name="agent.world.Body"/>
     </body-type>
     <feedbacks>
         <feedback name="evacuationActionCompleted">

@@ -4,7 +4,7 @@
         <parameter name="works">
             <type>
                 <list>
-                    <class name="agent.ontology.interfaces.Work"/>
+                    <class name="agent.world.Work"/>
                 </list>
             </type>
         </parameter>

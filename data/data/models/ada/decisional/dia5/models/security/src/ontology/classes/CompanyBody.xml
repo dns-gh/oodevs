@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.classes.CompanyBody" source-version="1.0.0" abstract="false">
     <description>Represents for a company the knowledge of its physical abilities. </description>
-    <realizes>agent.ontology.interfaces.Body</realizes>
+    <realizes>agent.world.Body</realizes>
 </class>

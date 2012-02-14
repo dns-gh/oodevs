@@ -12,13 +12,13 @@ Entities won't be loaded if:&#xD;
             <description>The set of elements to load.</description>
             <type>
                 <list>
-                    <class name="agent.ontology.interfaces.Transportable"/>
+                    <class name="agent.world.Transportable"/>
                 </list>
             </type>
         </parameter>
     </parameters>
     <body-type>
-        <class name="agent.ontology.interfaces.Body"/>
+        <class name="agent.world.Body"/>
     </body-type>
     <links>
         <link name="reach" skill="behaviors.skills.primitives.Reach">
@@ -34,7 +34,7 @@ Entities won't be loaded if:&#xD;
             <argument name="transportableEntity">
                 <description>The &quot;transportable&quot; entity that has been loaded.</description>
                 <type>
-                    <class name="agent.ontology.interfaces.Transportable"/>
+                    <class name="agent.world.Transportable"/>
                 </type>
             </argument>
         </feedback>
@@ -43,7 +43,7 @@ Entities won't be loaded if:&#xD;
             <argument name="transportableEntity">
                 <description>The entity that cannot be loaded.</description>
                 <type>
-                    <class name="agent.ontology.interfaces.Transportable"/>
+                    <class name="agent.world.Transportable"/>
                 </type>
             </argument>
         </feedback>

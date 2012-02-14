@@ -7,7 +7,7 @@ Areas are visited in the order of the list. </description>
             <description>The elements to decontaminate (areas or urban blocks).</description>
             <type>
                 <list>
-                    <class name="agent.ontology.interfaces.ContaminationArea"/>
+                    <class name="agent.world.ContaminationArea"/>
                 </list>
             </type>
         </parameter>

@@ -4,13 +4,13 @@
         <parameter name="victimsUnits">
             <type>
                 <list>
-                    <class name="agent.ontology.interfaces.Victims"/>
+                    <class name="agent.world.Victims"/>
                 </list>
             </type>
         </parameter>
         <parameter name="medicalUnit">
             <type>
-                <class name="agent.ontology.interfaces.Medical"/>
+                <class name="agent.world.Medical"/>
             </type>
         </parameter>
     </parameters>
