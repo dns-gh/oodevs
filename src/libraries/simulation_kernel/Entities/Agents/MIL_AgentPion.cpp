@@ -426,7 +426,9 @@ void MIL_AgentPion::UpdateDecision( float duration )
     }
     catch( std::exception& e )
     {
-        GetRole< DEC_Decision_ABC >().LogError( &e );
+        DEC_Decision_ABC* role = RetrieveRole< DEC_Decision_ABC >();
+        if( role )
+            role->LogError( &e );
         MIL_Report::PostEvent( *this, MIL_Report::eReport_MissionImpossible_ );
     }
 }
@@ -552,7 +554,9 @@ void MIL_AgentPion::Clean()
     GetRole< PHY_RoleAction_InterfaceFlying >().Clean();
     GetRole< firing::PHY_RoleAction_DirectFiring >().Clean();
     GetRole< firing::PHY_RoleAction_IndirectFiring >().Clean();
-    GetRole< DEC_RolePion_Decision >().Clean();
+    DEC_RolePion_Decision* roleDec = RetrieveRole< DEC_RolePion_Decision >();
+    if( roleDec )
+        roleDec->Clean();
     GetRole< PHY_RoleAction_FolkInfluence >().Clean();
     GetRole< PHY_RoleAction_MovingUnderground >().Clean();
     PHY_RoleInterface_Maintenance* role = RetrieveRole< PHY_RoleInterface_Maintenance >();//@TODO Add an interface for role with clean, update
@@ -726,7 +730,9 @@ void MIL_AgentPion::MagicMove( const MT_Vector2D& vNewPos )
     GetRole< PHY_RolePion_Location >().MagicMove( vNewPos );
     GetRole< PHY_RolePion_UrbanLocation >().MagicMove( vNewPos );
     CancelAllActions();
-    GetRole< DEC_RolePion_Decision >().Reset( GetAutomate().GetName() );
+    DEC_RolePion_Decision* roleDec = RetrieveRole< DEC_RolePion_Decision >();
+    if( roleDec )
+        roleDec->Reset( GetAutomate().GetName() );
     pOrderManager_->CancelMission();
 }
 
