@@ -74,6 +74,7 @@
 #include "Knowledge/DEC_Knowledge_RapFor_ABC.h"
 
 #include "MT_Tools/MT_Logger.h"
+#include "MT_Tools/MT_ScipioException.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/xmlcodecs.h"
 #include <xeumeuleu/xml.hpp>
@@ -384,7 +385,14 @@ void MIL_AgentTypePion::RegisterRoles( MIL_AgentPion& pion, unsigned int gcPause
     pion.RegisterRole( *new firing::PHY_RoleAction_DirectFiring( pion ) );
     pion.RegisterRole( *new firing::PHY_RoleAction_IndirectFiring( pion ) );
     pion.RegisterRole( *new PHY_RolePion_Illumination( pion ) ); // LTO
-    pion.RegisterRole( *new DEC_RolePion_Decision( pion, gcPause, gcMult ) );
+    try
+    {
+        pion.RegisterRole( *new DEC_RolePion_Decision( pion, gcPause, gcMult ) );
+    }
+    catch( MT_ScipioException& e )
+    {
+        e.SendToLogger();
+    }
     pion.RegisterRole( *new PHY_RoleAction_FolkInfluence() );
     pion.RegisterRole( *new DEC_Representations() );
     pion.RegisterRole( *new PHY_RolePion_TerrainAnalysis( pion ) );

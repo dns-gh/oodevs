@@ -645,7 +645,9 @@ void MIL_Automate::Clean()
     bAutomateModeChanged_ = false;
     pDotationSupplyManager_->Clean();
     pStockSupplyManager_->Clean();
-    GetRole< DEC_AutomateDecision >().Clean();
+    DEC_AutomateDecision* roleDec = RetrieveRole< DEC_AutomateDecision >();
+    if( roleDec )
+        roleDec->Clean();
 }
 
 // -----------------------------------------------------------------------------
@@ -913,7 +915,9 @@ void MIL_Automate::SendFullState( unsigned int contex ) const
     client::AutomatAttributes message;
     message().mutable_automat()->set_id( nID_ );
     message().set_mode( bEngaged_ ? sword::engaged : sword::disengaged );
-    GetRole< DEC_AutomateDecision >().SendFullState( message );
+    const DEC_AutomateDecision* roleDec = RetrieveRole< DEC_AutomateDecision >();
+    if( roleDec )
+        roleDec->SendFullState( message );
     pExtensions_->SendFullState( message );
     message.Send( NET_Publisher_ABC::Publisher() );
 
@@ -1135,7 +1139,9 @@ void MIL_Automate::OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& msg
     const MT_Vector2D vTranslation( vPosTmp - pPionPC_->GetRole< PHY_RoleInterface_Location >().GetPosition() );
     for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
         ( **itPion ).OnReceiveMagicActionMoveTo( ( **itPion ).GetRole< PHY_RoleInterface_Location >().GetPosition() + vTranslation );
-    GetRole< DEC_AutomateDecision >().Reset( GetName() );
+    DEC_AutomateDecision* roleDec = RetrieveRole< DEC_AutomateDecision >();
+    if( roleDec )
+        roleDec->Reset( GetName() );
     pOrderManager_->CancelMission();
 }
 

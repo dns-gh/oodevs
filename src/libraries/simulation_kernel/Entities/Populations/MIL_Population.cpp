@@ -418,8 +418,10 @@ void MIL_Population::UpdateDecision( float duration )
         GetRole< DEC_Decision_ABC >().UpdateDecision( duration );
     }
     catch( std::exception& e )
-    {
-        GetRole< DEC_Decision_ABC >().LogError( &e );
+    {        
+        DEC_Decision_ABC* role = RetrieveRole< DEC_Decision_ABC >();
+        if( role )
+            role->LogError( &e );
         MIL_Report::PostEvent( *this, MIL_Report::eReport_MissionImpossible_ );
     }
 }
@@ -475,7 +477,9 @@ void MIL_Population::UpdateState()
 // -----------------------------------------------------------------------------
 void MIL_Population::Clean()
 {
-    GetRole< DEC_PopulationDecision >().Clean();
+    DEC_PopulationDecision* roleDec = RetrieveRole< DEC_PopulationDecision >();
+    if( roleDec )
+        roleDec->Clean();
     for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
         ( **itConcentration ).Clean();
     for( CIT_FlowVector itFlow = flows_.begin(); itFlow != flows_.end(); ++itFlow )
@@ -1141,7 +1145,9 @@ void MIL_Population::OnReceiveCrowdMagicActionMoveTo( const sword::UnitMagicActi
     // merge all flows into new concentration
     for( IT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
         ( **it ).MagicMove( vPosTmp );
-    GetRole< DEC_PopulationDecision >().Reset();
+    DEC_PopulationDecision* roleDec = RetrieveRole< DEC_PopulationDecision >();
+    if( roleDec )
+        roleDec->Reset();
     orderManager_.CancelMission();
     bHasDoneMagicMove_ = true;
 }
@@ -1156,7 +1162,9 @@ void MIL_Population::OnReceiveMsgDestroyAll()
         ( **it ).KillAllHumans();
     for( IT_FlowVector it = flows_.begin(); it != flows_.end(); ++it )
         ( **it ).KillAllHumans();
-    GetRole< DEC_PopulationDecision >().Reset();
+    DEC_PopulationDecision* roleDec = RetrieveRole< DEC_PopulationDecision >();
+    if( roleDec )
+        roleDec->Reset();
     orderManager_.CancelMission();
 }
 
@@ -1347,7 +1355,9 @@ void MIL_Population::SendFullState() const
 {
     client::CrowdUpdate asnMsg;
     asnMsg().mutable_crowd()->set_id( nID_ );
-    GetRole< DEC_PopulationDecision >().SendFullState( asnMsg );
+    const DEC_PopulationDecision* roleDec = RetrieveRole< DEC_PopulationDecision >();
+    if( roleDec )
+        roleDec->SendFullState( asnMsg );
     if( !criticalIntelligence_.empty() )
         asnMsg().set_critical_intelligence( criticalIntelligence_ );
     asnMsg().set_armed_individuals( static_cast< float >( rArmedIndividuals_ ) );
