@@ -5521,6 +5521,7 @@
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Camp"/>
         <mission name="AUTOMATE COMMUNES Escorter Prisonniers Vers Position"/>
         <mission name="AUTOMATE MELEE Animer Postes De Controle"/>
+        <mission name="AUTOMATE RENS RASIT Renseigner Sur"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -7263,4 +7264,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3611857355" -->
+<!-- signature="1559446898" -->
