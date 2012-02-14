@@ -1077,7 +1077,7 @@ void SimulationToClient::Convert( const sword::UnitVisionCones& from, MsgsSimToC
 // -----------------------------------------------------------------------------
 void SimulationToClient::Convert( const sword::UnitOrder& from, Common::MsgUnitOrder* to )
 {
-    ConvertOrder( from, to );
+    ConvertOrder( from, to, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -1086,7 +1086,7 @@ void SimulationToClient::Convert( const sword::UnitOrder& from, Common::MsgUnitO
 // -----------------------------------------------------------------------------
 void SimulationToClient::Convert( const sword::AutomatOrder& from, Common::MsgAutomatOrder* to )
 {
-    ConvertOrder( from, to );
+    ConvertOrder( from, to, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -1095,7 +1095,7 @@ void SimulationToClient::Convert( const sword::AutomatOrder& from, Common::MsgAu
 // -----------------------------------------------------------------------------
 void SimulationToClient::Convert( const sword::CrowdOrder& from, Common::MsgCrowdOrder* to )
 {
-    ConvertOrder( from, to );
+    ConvertOrder( from, to, true );
 }
 
 namespace

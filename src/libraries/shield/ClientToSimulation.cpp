@@ -90,7 +90,7 @@ void ClientToSimulation::Convert( const MsgsClientToSim::MsgControlEnableVisionC
 // -----------------------------------------------------------------------------
 void ClientToSimulation::Convert( const Common::MsgUnitOrder& from, sword::UnitOrder* to )
 {
-    ConvertOrder( from, to );
+    ConvertOrder( from, to, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -99,7 +99,7 @@ void ClientToSimulation::Convert( const Common::MsgUnitOrder& from, sword::UnitO
 // -----------------------------------------------------------------------------
 void ClientToSimulation::Convert( const Common::MsgAutomatOrder& from, sword::AutomatOrder* to )
 {
-    ConvertOrder( from, to );
+    ConvertOrder( from, to, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -108,7 +108,7 @@ void ClientToSimulation::Convert( const Common::MsgAutomatOrder& from, sword::Au
 // -----------------------------------------------------------------------------
 void ClientToSimulation::Convert( const Common::MsgCrowdOrder& from, sword::CrowdOrder* to )
 {
-    ConvertOrder( from, to );
+    ConvertOrder( from, to, false );
 }
 
 // -----------------------------------------------------------------------------

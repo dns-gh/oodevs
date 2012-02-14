@@ -259,7 +259,7 @@ namespace shield
                                       ( sword::PhaseLineOrder::recognition_and_reception_line, Common::MsgLimaOrder::ligne_identification_accueil ) );
     }
     template< typename From, typename To >
-    void ConvertValue( const From& from, To* to )
+    void ConvertValue( const From& from, To* to, bool realToInt )
     {
         CONVERT( booleanvalue );
         CONVERT( intvalue );
@@ -288,7 +288,13 @@ namespace shield
         CONVERT_LIST( logmaintenancepriorities, elem, ConvertIdentifier );
         CONVERT_CB( logmedicalpriorities, ConvertLogMedicalPriorities );
         CONVERT_CB( resourcenetwork, ConvertResourceNetworkElement );
-        CONVERT( areal );
+        if( from.has_areal() )
+        {
+            if( realToInt )
+                to->set_intvalue( static_cast< int >( from.areal() ) );
+            else
+                to->set_areal( from.areal() );
+        }
         CONVERT_LIST( pathlist, elem, ConvertLocationElem );
         CONVERT_LIST( pointlist, elem, ConvertLocationElem );
         CONVERT_LIST( polygonlist, elem, ConvertLocationElem );
@@ -318,22 +324,36 @@ namespace shield
         CONVERT_CB( push_flow_parameters, ConvertPushFlow );
         CONVERT_CB( pull_flow_parameters, ConvertPullFlow );
         for( int i = 0; i < from.list().size(); ++i )
-            ConvertValue( from.list( i ), to->add_list() );
+            ConvertValue( from.list( i ), to->add_list(), false );
         CONVERT( external_identifier );
+    }
+    template< typename From, typename To >
+    void ConvertMissionParameterRealToInt( const From& from, To* to )
+    {
+        CONVERT( null_value );
+        for( int i = 0; i < from.value().size(); ++i )
+            ConvertValue( from.value( i ), to->add_value(), true );
     }
     template< typename From, typename To >
     void ConvertMissionParameter( const From& from, To* to )
     {
         CONVERT( null_value );
         for( int i = 0; i < from.value().size(); ++i )
-            ConvertValue( from.value( i ), to->add_value() );
+            ConvertValue( from.value( i ), to->add_value(), false );
     }
     template< typename From, typename To >
-    void ConvertOrder( const From& from, To* to )
+    void ConvertOrder( const From& from, To* to, bool realToInt )
     {
         CONVERT_ID( tasker );
         CONVERT_ID( type );
-        CONVERT_LIST( parameters, elem, ConvertMissionParameter );
+        if( realToInt )
+        {
+            CONVERT_LIST( parameters, elem, ConvertMissionParameterRealToInt );
+        }
+        else
+        {
+            CONVERT_LIST( parameters, elem, ConvertMissionParameter );
+        }
         CONVERT( label );
         CONVERT_CB( symbollocation, ConvertLocation );
         CONVERT_DATE( start_time );
