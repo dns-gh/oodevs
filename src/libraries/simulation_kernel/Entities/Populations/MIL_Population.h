@@ -149,6 +149,7 @@ public:
     void CancelMove();
     void FireOnPions( double rIntensity, PHY_FireResults_Population& fireResult );
     void FireOnPion( double rIntensity, MIL_Agent_ABC& target, PHY_FireResults_Population& fireResult );
+    void Attack( MIL_Population& population );
     double GetDangerosity( const MIL_AgentPion& target ) const;
     void SetAttitude( const MIL_PopulationAttitude& attitude );
     void SetBlinded( bool blinded );
@@ -166,11 +167,19 @@ public:
     bool GetDemonstrationState();
     //@}
 
+    //! @name Types
+    //@{
+    typedef std::vector< MIL_PopulationConcentration* > T_ConcentrationVector;
+    typedef T_ConcentrationVector::iterator            IT_ConcentrationVector;
+    typedef T_ConcentrationVector::const_iterator     CIT_ConcentrationVector;
+    //@}
+
     //! @name Tools
     //@{
     MIL_PopulationFlow& CreateFlow( MIL_PopulationConcentration& concentration );
     MIL_PopulationFlow& CreateFlow( const MIL_PopulationFlow& source, const MT_Vector2D& splitPoint );
     MIL_PopulationConcentration& GetConcentration( const MT_Vector2D& position );
+    T_ConcentrationVector GetConcentration( const TER_Localisation& localisation ) const;
     MIL_PopulationConcentration* RetrieveConcentration( unsigned int concentrationId ) const;
     //@}
 

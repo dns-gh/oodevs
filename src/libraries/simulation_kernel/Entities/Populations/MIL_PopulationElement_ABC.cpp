@@ -11,6 +11,7 @@
 #include "MIL_PopulationElement_ABC.h"
 #include "MIL_PopulationAttitude.h"
 #include "MIL_Population.h"
+#include "MIL_AgentServer.h"
 #include "MIL_PopulationType.h"
 #include "MIL_IntoxicationEffect.h"
 #include "MIL_ContaminationEffect.h"
@@ -21,6 +22,7 @@
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Population/PHY_RoleInterface_Population.h"
+#include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "Entities/Objects/AttritionCapacity.h"
 #include "Entities/Effects/MIL_Effect_PopulationFire.h"
@@ -532,6 +534,24 @@ void MIL_PopulationElement_ABC::KillAllHumans()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_PopulationElement_ABC::KillHumans
+// Created: LGY 2012-02-13
+// -----------------------------------------------------------------------------
+void MIL_PopulationElement_ABC::KillHumans( unsigned int humans )
+{
+    humans_.KillHumans( humans );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationElement_ABC::WoundHumans
+// Created: LGY 2012-02-13
+// -----------------------------------------------------------------------------
+void MIL_PopulationElement_ABC::WoundHumans( unsigned int humans )
+{
+    humans_.WoundHumans( humans );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_PopulationElement_ABC::ReintegrateUrbanBlock
 // Created: BCI 2011-03-21
 // -----------------------------------------------------------------------------
@@ -725,4 +745,42 @@ void MIL_PopulationElement_ABC::ClearCollidingAttackingAgents()
     collidingAttackingAgents_.erase( std::remove_if( collidingAttackingAgents_.begin(), collidingAttackingAgents_.end(),
                                                      boost::bind( &CheckCollidingAttackingAgents, _1, boost::cref( collidingAgents_ ) ) ),
                                      collidingAttackingAgents_.end() );
+}
+
+namespace
+{
+    const PHY_Protection* GetHumanProtection( const PHY_Protection::T_ProtectionMap& protections )
+    {
+        for( PHY_Protection::CIT_ProtectionMap it = protections.begin(); it != protections.end(); ++it )
+            if( it->second->IsHuman() )
+                return it->second;
+        return 0;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationElement_ABC::Attack
+// Created: LGY 2012-02-10
+// -----------------------------------------------------------------------------
+void MIL_PopulationElement_ABC::Attack( MIL_PopulationElement_ABC& element )
+{
+    if( GetHealthyHumans() != 0u && element.GetHealthyHumans() != 0u )
+        if( const PHY_Protection* protection = GetHumanProtection( PHY_Protection::GetProtections() ) )
+        {
+            const double rPH = GetPopulation().GetType().GetPH( *pAttitude_, rDensity_ );
+            if( !( 1. - MIL_Random::rand_io( MIL_Random::eFire ) <= rPH ) )
+                return;
+
+            const MIL_PopulationType& populationType = pPopulation_->GetType();
+            double battleArea = MIL_Geometry::IntersectionArea( GetLocation(), element.GetLocation() );
+            double densityAttacker = populationType.GetConcentrationDensity();
+            unsigned int humanAttacker = std::min( GetHealthyHumans(), static_cast< unsigned int >( densityAttacker * battleArea ) );
+
+            const PHY_AttritionData attritionData = populationType.GetAttritionData( *pAttitude_, *protection, pPopulation_->GetArmedIndividuals() );
+            element.KillHumans( static_cast< unsigned int >( humanAttacker * attritionData.GetDestroyed() ) );
+            if( element.GetHealthyHumans() != 0u )
+                element.WoundHumans( static_cast< unsigned int >( humanAttacker *
+                                   ( attritionData.GetReparableWithEvacuation() + attritionData.GetReparableWithoutEvacuation() ) ) );
+            bHumansUpdated_ = true;
+        }
 }

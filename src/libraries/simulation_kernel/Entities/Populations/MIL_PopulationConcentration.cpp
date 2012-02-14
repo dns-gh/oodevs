@@ -13,9 +13,11 @@
 #include "MIL_PopulationFlow.h"
 #include "MIL_Population.h"
 #include "MIL_PopulationType.h"
+#include "MIL_AttackController.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Objects/AnimatorAttribute.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
@@ -60,6 +62,8 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     , pSplittingObject_( 0 )
     , hasDoneMagicMove_( false )
     , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
+    , pAttackController_   ( new MIL_AttackController( TER_World::GetWorld().GetPopulationManager().GetConcentrationManager(),
+                                                       MIL_EffectManager::GetEffectManager() ) )
 {
     // NOTHING
 }
@@ -74,6 +78,8 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     , pSplittingObject_    ( 0 )
     , hasDoneMagicMove_( false )
     , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
+    , pAttackController_   ( new MIL_AttackController( TER_World::GetWorld().GetPopulationManager().GetConcentrationManager(),
+                                                       MIL_EffectManager::GetEffectManager() ) )
 {
     // Position
     MIL_Tools::ConvertCoordMosToSim( xis.attribute< std::string >( "position" ), position_ );
@@ -95,6 +101,8 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     , pSplittingObject_    ( 0 )
     , hasDoneMagicMove_( false )
     , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
+    , pAttackController_   ( new MIL_AttackController( TER_World::GetWorld().GetPopulationManager().GetConcentrationManager(),
+                                                       MIL_EffectManager::GetEffectManager() ) )
 {
     PushHumans( MIL_PopulationHumans( nHumans ) );
     UpdateLocation();
@@ -478,4 +486,13 @@ double MIL_PopulationConcentration::GetDefaultDensity( const MIL_PopulationType&
 bool MIL_PopulationConcentration::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius, std::vector< MT_Vector2D >& /*shape*/ ) const
 {
     return TER_PopulationConcentration_ABC::Intersect2DWithCircle( vCircleCenter, rRadius );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationConcentration::Attack
+// Created: LGY 2012-02-14
+// -----------------------------------------------------------------------------
+void MIL_PopulationConcentration::Attack( MIL_Population& population )
+{
+    pAttackController_->Attack( *this, population );
 }

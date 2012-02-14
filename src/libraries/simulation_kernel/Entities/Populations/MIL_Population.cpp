@@ -1080,6 +1080,16 @@ void MIL_Population::FireOnPion( double rIntensity, MIL_Agent_ABC& target, PHY_F
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Population::Attack
+// Created: LGY 2012-02-14
+// -----------------------------------------------------------------------------
+void MIL_Population::Attack( MIL_Population& population )
+{
+    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
+        ( **itConcentration ).Attack( population );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Population::GetDangerosity
 // Created: NLD 2005-11-10
 // -----------------------------------------------------------------------------
@@ -1860,6 +1870,20 @@ void MIL_Population::OnReceiveCriticalIntelligence( const sword::MissionParamete
     protocol::CheckCount( msg, 1 );
     criticalIntelligence_ = protocol::GetString( msg, 0 );
     criticalIntelligenceChanged_ = true;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name:  MIL_Population::GetConcentration
+// Created: LGY 2012-02-14
+// -----------------------------------------------------------------------------
+MIL_Population::T_ConcentrationVector MIL_Population::GetConcentration( const TER_Localisation& localisation ) const
+{
+    T_ConcentrationVector result;
+    for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
+        if( (*itConcentration)->GetLocation().IsIntersecting( localisation ) )
+            result.push_back( *itConcentration );
+    return result;
 }
 
 // -----------------------------------------------------------------------------
