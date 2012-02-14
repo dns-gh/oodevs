@@ -3,19 +3,28 @@ return
     init = function( self, params )
         myself.leadData.fuseaux = {}
         myself.leadData.scoutPoints = {}
-        local nbPions = integration.nbPlatoonsHaveTask( integration.getEntitiesFromAutomat( meKnowledge, "none", false ), params.mainTasks )
-        local fuseaux = DEC_DecouperFuseau( nbPions )
+        myself.leadData.pionsLima1 = {}
+        myself.leadData.pionsLima2 = {}
+        meKnowledge.nbPionsMain = meKnowledge.nbPionsMain or 0
+
+        self.numberEchelons = myself.taskParams.echelonNumber or 0
+        if self.numberEchelons == 0 then
+            self.numberEchelons = 1 -- par défaut les pions décrochent sur 1 échelon
+        end
+
+        local fuseaux = DEC_DecouperFuseau( meKnowledge.nbPionsMain )
         for _, fuseau in pairs( fuseaux ) do
             myself.leadData.fuseaux[ #myself.leadData.fuseaux + 1 ] = fuseau
         end
-        local pointsOnLimas = DEC_Geometrie_GetPointsLimas( eTypeLima_LCAR, nbPions )
-        for _, points in pairs( pointsOnLimas ) do
-            for _, point in pairs( points ) do
+
+        -- Organisation du dsipositif initial à 300 metres devant la LCAR
+        local LimaId = DEC_GetLima( eTypeLima_LCAR )
+        if LimaId > 0 and meKnowledge.nbPionsMain > 0 then
+            pointsBeforeLimas = DEC_Geometrie_CalculerPositionsParRapportALima( LimaId, 300, meKnowledge.nbPionsMain)
+        for _, point in pairs( pointsBeforeLimas ) do
                 myself.leadData.scoutPoints[ #myself.leadData.scoutPoints + 1 ]= CreateKnowledge( sword.military.world.Point, point )
             end
         end
-        myself.leadData.pionsLima1 = {}
-        myself.leadData.pionsLima2 = {}
     end,
 
     getReachable = function( self, params, entity )  
@@ -36,8 +45,25 @@ return
                 positions[ #positions + 1 ] = point
             end
         end
+
+       --Ajout de la destination finale
         positions[ #positions + 1 ] = params.meetingPoint
-        return positions, CreateKnowledge( sword.military.world.Fuseau, fuseau )
+
+        if not myself.leadData.currentMoveToPosition then
+            myself.leadData.currentMoveToPosition = 0
+        end
+        myself.leadData.currentMoveToPosition = myself.leadData.currentMoveToPosition + 1
+
+        -- Mise à jour des echelons: A revoir pour un nombre d'échelons > 2
+        if myself.leadData.currentMoveToPosition <= ( meKnowledge.nbPionsMain + meKnowledge.nbPionsMain%2)/self.numberEchelons  then
+            myself.leadData.pionsLima1[entity] = entity
+            F_Pion_SeteEtatEchelon( entity.source, eEtatEchelon_First )
+        else
+            myself.leadData.pionsLima2[entity] = entity
+            F_Pion_SeteEtatEchelon( entity.source, eEtatEchelon_Second )
+        end
+      
+        return positions
     end,
 
     getObstacles = function( self, params )

@@ -93,6 +93,16 @@ local function manageAddedAndDeletedUnits( self )
     self.parameters.commandingEntities = newEntities
 end
 
+local function managePositionsToScreen( self )
+        -- Pour la mission jalonner on force le décrochage juste devant la LCAR si elle est présente comme position de début de mission
+        if self.params.companyTask == "france.military.company.tasks.Jalonner" then
+            local pointsOnLimas = DEC_Geometrie_GetPointsLimas( eTypeLima_LCAR, meKnowledge.nbPionsMain )
+            if #pointsOnLimas > 0 then
+                self.screenPosition  = true
+            end
+        end	
+end
+
 rootnode {
 
 connections = { skill.links.manageFragOrder, skill.links.coordinationManager, skill.nodes.RC, skill.links.AssignSETask },
@@ -123,6 +133,7 @@ create = function( self )
         
         meKnowledge.pionsToAwait = {}
         self.sendSupport = true
+        self.screenPosition  = false
 
         self.progressionInAOR = {}
         if self.nbrFront == 0 then
@@ -157,6 +168,9 @@ create = function( self )
 
         -- Ceux qui n'ont toujours pas de mission recoivent la mission par défaut
         giveMission ( self, self.params.defaultTask, #self.entitiesWithoutMission, eEtatEchelon_None )
+
+        -- Pour la mission jalonner on force le décrochage juste devant la LCAR si elle est présente
+        managePositionsToScreen( self )		
     end,
 
  activate = function( self )  
@@ -180,7 +194,7 @@ create = function( self )
 
       -- L'automate donne l'ordre de conduite Decrocher à tout le premier echelon si au moins 1 pion du premier échelon est en danger
       -- Decrocher comporte l'embarquement du premier echelon et le débarquement à l'arrivée 
-      if not self.decrocher and meKnowledge:hasPionsInDanger( myself.leadData.pionsLima1 ) then
+      if ( not self.decrocher and meKnowledge:hasPionsInDanger( myself.leadData.pionsLima1 ) ) or self.screenPosition then
         local fragOrder = CreateFragOrder("Rep_OrderConduite_Decrocher")
         local fragOrderKn = CreateKnowledge( sword.military.world.FragOrder, fragOrder )
 
@@ -189,13 +203,18 @@ create = function( self )
         Activate( skill.links.manageFragOrder, 1, { fragOrders = { fragOrderKn } , entities = myself.leadData.pionsLima1 } )
 
         self.decrocher = true
+        self.screenPosition = false
       end
       local echelons = integration.getPionsInEchelons( self.parameters.commandingEntities )
 
        -- Gestion de l'appui: les pions d'appui, appuient toujours le premier échelon  
       local tableObjectives = {}
-      for _, entity in pairs( myself.leadData.pionsLima1 ) do
-        tableObjectives[ #tableObjectives + 1 ] = entity
+      if not next( tableObjectives ) then
+          tableObjectives = echelons[1]
+      else
+          for _, entity in pairs( myself.leadData.pionsLima1 ) do
+              tableObjectives[ #tableObjectives + 1 ] = entity
+          end
       end
       
       if self.sendSupport then 

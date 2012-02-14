@@ -5,9 +5,9 @@ local result =
     end,
     
     fillParameters = function( self, companyTask, params, entity )
-        local positions, fuseau = companyTask:getScreenPositions( params, entity )
+        local positions = companyTask:getScreenPositions( params, entity )
         if next( positions ) then   
-            return {positions = positions, fuseau = fuseau }
+            return { positions = positions }
         end
         return nil --use by keepBest in Lead skill
     end
