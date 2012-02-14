@@ -35,7 +35,8 @@
 #include "protocol/ClientSenders.h"
 #include "protocol/MessengerSenders.h"
 #include <boost/foreach.hpp>
-#include <boost/filesystem/path.hpp>
+#include <boost/filesystem/convenience.hpp>
+#include <boost/filesystem/operations.hpp>
 #include <windows.h>
 #include <tlhelp32.h>
 #include <fstream>
@@ -185,6 +186,25 @@ namespace
     }
 }
 
+namespace
+{
+    void CopyDirectory( const bfs::path& from, const bfs::path& to )
+    {
+        bfs::directory_iterator end;
+        for( bfs::directory_iterator it( from ); it != end; ++it )
+        {
+            if( bfs::is_directory( *it ) )
+            {
+                bfs::path dest( to / it->leaf() );
+                bfs::create_directories( dest );
+                CopyDirectory( *it, dest );
+            }
+            else
+                bfs::copy_file( *it, to / it->leaf() );
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ProcessService::StartExercise
 // Created: SBO 2010-10-07
@@ -201,6 +221,29 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::
         return sword::SessionStartResponse::session_already_running;
     if( message.has_checkpoint() && ! frontend::commands::CheckpointExists( config_, exercise, session, checkpoint ) )
         return sword::SessionStartResponse::invalid_checkpoint;
+
+    if( !message.has_checkpoint() && ( message.type() == sword::SessionStartRequest::simulation || message.type() == sword::SessionStartRequest::dispatch ) )
+    {
+        const bfs::path dir( config_.BuildSessionDir( exercise, session ), bfs::native );
+        try
+        {
+            if( bfs::exists( dir ) )
+            {
+                // backup and remove old session
+                const bfs::path dirBackup( config_.BuildSessionDir( exercise, "backup" ), bfs::native ) / session;
+                if( bfs::exists( dirBackup ) )
+                    bfs::remove_all( dirBackup );
+                bfs::create_directories( dirBackup );
+                CopyDirectory( dir, dirBackup );
+                bfs::remove_all( dir );
+            }
+        }
+        catch( ... )
+        {
+            // NOTHING
+        }
+    }
+
     bool isDispatcher = ( message.type() == sword::SessionStartRequest::dispatch );
     {
         frontend::CreateSession action( config_, exercise, session );
@@ -219,6 +262,7 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::
         }
         action.Commit();
     }
+
     boost::shared_ptr< frontend::SpawnCommand > command;
     if( message.type() == sword::SessionStartRequest::simulation )
         command.reset( new frontend::StartExercise( config_, exercise.c_str(), session.c_str(), checkpoint.c_str(), false, false, endpoint, true ) );

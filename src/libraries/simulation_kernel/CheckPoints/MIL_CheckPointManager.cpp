@@ -27,6 +27,9 @@
 #include <direct.h>
 
 namespace bpt = boost::posix_time;
+namespace bfs = boost::filesystem;
+
+MIL_CheckPointManager::T_CheckPointsQueue MIL_CheckPointManager::currentCheckPoints_;
 
 // -----------------------------------------------------------------------------
 // Name: MIL_CheckPointManager constructor
@@ -51,7 +54,7 @@ MIL_CheckPointManager::MIL_CheckPointManager( const MIL_Config& config )
     , nLastCheckPointTick_  ( 0 )
     , nNextCheckPointTick_  ( 0 )
 {
-    boost::filesystem::create_directories( config.BuildSessionChildFile( "checkpoints" ) );
+    bfs::create_directories( config.BuildSessionChildFile( "checkpoints" ) );
     MT_LOG_INFO_MSG( MT_FormatString( "Automatic checkpoint every %d seconds", nCheckPointsFrequency_ ) );
     MT_LOG_INFO_MSG( MT_FormatString( "Automatic checkpoint max number is %d", nMaxCheckPointNbr_ ) );
     UpdateNextCheckPointTick();
@@ -75,7 +78,31 @@ void MIL_CheckPointManager::LoadCheckPoint( const MIL_Config& config )
     MT_LOG_STARTUP_MESSAGE( "------------------------------" );
     MT_LOG_STARTUP_MESSAGE( "----  Loading Checkpoint  ----" );
     MT_LOG_STARTUP_MESSAGE( "------------------------------" );
-    MT_LOG_INFO_MSG( MT_FormatString( "Loading SIM state from checkpoint '%s'", config.BuildCheckpointChildFile( "" ).c_str() ) )
+    MT_LOG_INFO_MSG( MT_FormatString( "Loading SIM state from checkpoint '%s'", config.BuildCheckpointChildFile( "" ).c_str() ) );
+
+    try
+    {
+        const bfs::path checkpointsRoot = bfs::path( config.GetCheckpointsDirectory(), bfs::native );
+        if( bfs::exists( checkpointsRoot ) )
+        {
+            bfs::recursive_directory_iterator end;
+            for( bfs::recursive_directory_iterator it( checkpointsRoot ); it != end; ++it )
+            {
+                const bfs::path child = *it;
+                if( bfs::is_directory( child ) )
+                {
+                    bfs::path autoPath( child / "auto" );
+                    if( bfs::exists( autoPath ) )
+                        currentCheckPoints_.push( child.leaf().c_str() );
+                }
+            }
+        }
+    }
+    catch( ... )
+    {
+        // NOTHING
+    }
+
     if( config.UseCheckPointCRC() )
         CheckCRC( config );
     std::ifstream file( config.BuildCheckpointChildFile( "data" ).c_str(), std::ios::in | std::ios::binary );
@@ -84,6 +111,7 @@ void MIL_CheckPointManager::LoadCheckPoint( const MIL_Config& config )
     MIL_CheckPointInArchive* pArchive = new MIL_CheckPointInArchive( file );
     MIL_AgentServer::GetWorkspace().load( *pArchive );
     file.close();
+
 #ifndef _DEBUG //$$$$ boost + nedmalloc + binary_ioarchive + std::locale = crash
     delete pArchive;
 #endif
@@ -98,7 +126,7 @@ void MIL_CheckPointManager::SaveCheckPointDirectory( const std::string& name, co
 {
     client::ControlCheckPointSaveNowAck asnReplyMsg;
     asnReplyMsg.Send( NET_Publisher_ABC::Publisher() );
-    SaveCheckPoint( name, userName );
+    SaveCheckPoint( false, name, userName );
 }
 
 // -----------------------------------------------------------------------------
@@ -110,7 +138,7 @@ void MIL_CheckPointManager::Update()
     if( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() < nNextCheckPointTick_ )
         return;
     const std::string name = BuildCheckPointName();
-    if( SaveCheckPoint( name ) )
+    if( SaveCheckPoint( true, name ) )
         RotateCheckPoints( name );
     nLastCheckPointTick_ = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     UpdateNextCheckPointTick();
@@ -260,10 +288,10 @@ void MIL_CheckPointManager::RotateCheckPoints( const std::string& newName )
         {
             std::string oldName = currentCheckPoints_.front();
             std::string oldFile = MIL_AgentServer::GetWorkspace().GetConfig().BuildCheckpointChildFile( "", oldName );
-            const boost::filesystem::path oldPath( oldFile, boost::filesystem::native );
-            if( boost::filesystem::exists( oldPath ) )
+            const bfs::path oldPath( oldFile, bfs::native );
+            if( bfs::exists( oldPath ) )
             {
-                boost::filesystem::remove_all( oldPath );
+                bfs::remove_all( oldPath );
                 client::ControlCheckPointSaveDelete message;
                 message().set_name( oldName );
                 message.Send( NET_Publisher_ABC::Publisher() );
@@ -340,12 +368,21 @@ bool MIL_CheckPointManager::SaveFullCheckPoint( const std::string& name, const s
 // Name: MIL_CheckPointManager::SaveCheckPoint
 // Created: JVT 2005-04-13
 // -----------------------------------------------------------------------------
-bool MIL_CheckPointManager::SaveCheckPoint( const std::string& name, const std::string userName /*= ""*/ )
+bool MIL_CheckPointManager::SaveCheckPoint( bool automatic, const std::string& name, const std::string userName /*= ""*/ )
 {
     std::string checkpointName = userName.empty()? name : userName;
     MT_LOG_INFO_MSG( "Begin save checkpoint " << checkpointName );
     client::ControlCheckPointSaveBegin().Send( NET_Publisher_ABC::Publisher() );
     ::_mkdir( MIL_AgentServer::GetWorkspace().GetConfig().BuildCheckpointChildFile( "", checkpointName ).c_str() );
+
+    if( automatic )
+    {
+        const MIL_Config& config = MIL_AgentServer::GetWorkspace().GetConfig();
+        const std::string autoFileName = config.BuildCheckpointChildFile( "auto", checkpointName );
+        std::ofstream file( autoFileName.c_str(), std::ios::out | std::ios::binary );
+        file.close();
+    }
+
     const bool bNotOk = !SaveOrbatCheckPoint( checkpointName ) || !SaveFullCheckPoint( checkpointName, userName );
     MT_LOG_INFO_MSG( "End save checkpoint" );
     client::ControlCheckPointSaveEnd msg;
@@ -386,8 +423,8 @@ void MIL_CheckPointManager::OnReceiveMsgCheckPointDeleteRequest( const sword::Co
     try
     {
         std::string path = MIL_AgentServer::GetWorkspace().GetConfig().BuildCheckpointChildFile( "", msg.checkpoint() );
-        const boost::filesystem::path bfsPath( path, boost::filesystem::native );
-        boost::filesystem::remove_all( bfsPath );
+        const bfs::path bfsPath( path, bfs::native );
+        bfs::remove_all( bfsPath );
     }
     catch( std::exception& exception )
     {

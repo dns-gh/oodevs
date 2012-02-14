@@ -74,7 +74,7 @@ private:
     //! @name Tools
     //@{
     void RotateCheckPoints       ( const std::string& newName );
-    bool SaveCheckPoint          ( const std::string& name, const std::string userName = "" );
+    bool SaveCheckPoint          ( bool automatic, const std::string& name, const std::string userName = "" );
     bool SaveOrbatCheckPoint     ( const std::string& name );
     bool SaveFullCheckPoint      ( const std::string& name, const std::string userName = "" );
 
@@ -98,11 +98,11 @@ private:
     //@}
 
 private:
-    unsigned int         nMaxCheckPointNbr_;
-    unsigned int         nCheckPointsFrequency_;
-    unsigned int         nLastCheckPointTick_;
-    unsigned int         nNextCheckPointTick_;
-    T_CheckPointsQueue   currentCheckPoints_;
+    unsigned int              nMaxCheckPointNbr_;
+    unsigned int              nCheckPointsFrequency_;
+    unsigned int              nLastCheckPointTick_;
+    unsigned int              nNextCheckPointTick_;
+    static T_CheckPointsQueue currentCheckPoints_;
 };
 
 #endif // __MIL_CheckPointManager_h_
