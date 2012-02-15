@@ -49,7 +49,7 @@ rootnode
             if self.nextTargetIndex <= paramsSize then
                 self.fire = self.params.fires[ self.nextTargetIndex ]
                 self.position = ontology.queries.GetPositionsOutsideObject[ "execute" ]( { object = self.fire } )
-                if self.position[ 1 ]:isReached() then
+                if self.position[ 1 ]:isReached() or self.arrived then
                     if self.fire:canBeExtinguished() then
                         Activate( skill.links.extinguish, 1, { fire = self.fire } )
                     elseif not self.fire:isExtinguished() then -- agent cannot and fire burns...
