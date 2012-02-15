@@ -230,7 +230,7 @@ sword::SessionStartResponse::ErrorCode ProcessService::StartSession( const std::
             if( bfs::exists( dir ) )
             {
                 // backup and remove old session
-                const bfs::path dirBackup( config_.BuildSessionDir( exercise, "backup" ), bfs::native ) / session;
+                const bfs::path dirBackup = bfs::path( config_.BuildSessionDir( exercise, "backup" ), bfs::native ) / bfs::path( session, bfs::native );
                 if( bfs::exists( dirBackup ) )
                     bfs::remove_all( dirBackup );
                 bfs::create_directories( dirBackup );
