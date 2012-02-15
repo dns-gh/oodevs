@@ -79,7 +79,7 @@ public:
     void ApplyContamination( const MIL_NbcAgentType& type );
     void ApplyIntoxication( const MIL_NbcAgentType& type );
     void ApplyDecontamination( double rRatioWorkers );
-    void Attack( MIL_PopulationElement_ABC& element, float intensity );
+    void Attack( MIL_PopulationElement_ABC& element );
     //@}
 
     //! @name Accessors
