@@ -55,5 +55,19 @@ eTypeItiLogistique = 7</description>
                 </type>
             </argument>
         </feedback>
+        <feedback name="elementFailed">
+            <description>L'element element n'a pas pu etre atteind.</description>
+            <argument name="element">
+                <type>
+                    <class name="sword.military.knowledge.decisional.Positionable"/>
+                </type>
+            </argument>
+            <argument name="reason">
+                <description>Raison pour laquelle on n'a pas pu atteindre l'objectif.</description>
+                <type>
+                    <simple name="string"/>
+                </type>
+            </argument>
+        </feedback>
     </feedbacks>
 </skill>
