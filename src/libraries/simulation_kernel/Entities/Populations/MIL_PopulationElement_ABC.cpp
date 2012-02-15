@@ -764,13 +764,13 @@ namespace
 // Name: MIL_PopulationElement_ABC::Attack
 // Created: LGY 2012-02-10
 // -----------------------------------------------------------------------------
-void MIL_PopulationElement_ABC::Attack( MIL_PopulationElement_ABC& element, float intensity )
+void MIL_PopulationElement_ABC::Attack( MIL_PopulationElement_ABC& element )
 {
     if( GetHealthyHumans() != 0u && element.GetHealthyHumans() != 0u )
         if( const PHY_Protection* protection = GetHumanProtection( PHY_Protection::GetProtections() ) )
         {
             const double rPH = GetPopulation().GetType().GetPH( *pAttitude_, rDensity_ );
-            if( !( 1. - MIL_Random::rand_io( MIL_Random::eFire ) <= rPH * intensity ) )
+            if( !( 1. - MIL_Random::rand_io( MIL_Random::eFire ) <= rPH ) )
                 return;
 
             const MIL_PopulationType& populationType = pPopulation_->GetType();

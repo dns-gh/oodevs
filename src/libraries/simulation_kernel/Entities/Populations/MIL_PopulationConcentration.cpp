@@ -492,7 +492,7 @@ bool MIL_PopulationConcentration::Intersect2DWithCircle( const MT_Vector2D& vCir
 // Name: MIL_PopulationConcentration::Attack
 // Created: LGY 2012-02-14
 // -----------------------------------------------------------------------------
-void MIL_PopulationConcentration::Attack( float intensity )
+void MIL_PopulationConcentration::Attack()
 {
-    pAttackController_->Attack( *this, intensity );
+    pAttackController_->Attack( *this );
 }

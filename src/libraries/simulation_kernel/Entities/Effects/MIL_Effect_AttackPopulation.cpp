@@ -15,10 +15,9 @@
 // Name: MIL_Effect_AttackPopulation constructor
 // Created: LGY 2012-02-10
 // -----------------------------------------------------------------------------
-MIL_Effect_AttackPopulation::MIL_Effect_AttackPopulation( MIL_PopulationElement_ABC& attacker, MIL_PopulationElement_ABC& defender, float intensity )
+MIL_Effect_AttackPopulation::MIL_Effect_AttackPopulation( MIL_PopulationElement_ABC& attacker, MIL_PopulationElement_ABC& defender )
     : attacker_ ( attacker )
     , defender_ ( defender )
-    , intensity_( intensity )
 {
     // NOTHING
 }
@@ -38,6 +37,6 @@ MIL_Effect_AttackPopulation::~MIL_Effect_AttackPopulation()
 // -----------------------------------------------------------------------------
 bool MIL_Effect_AttackPopulation::Execute()
 {
-    attacker_.Attack( defender_, intensity_ );
+    attacker_.Attack( defender_ );
     return false;
 }

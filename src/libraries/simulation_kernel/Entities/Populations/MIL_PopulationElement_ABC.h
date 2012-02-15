@@ -93,7 +93,7 @@ public:
     void NotifyUrbanDestructionStart();
     void NotifyObjectCollision( MIL_Object_ABC& object );
     void ClearObjectCollisions();
-    void Attack( MIL_PopulationElement_ABC& element, float intensity );
+    void Attack( MIL_PopulationElement_ABC& element );
     //@}
 
     //! @name Accessors
