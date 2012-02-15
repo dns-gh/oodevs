@@ -2581,7 +2581,6 @@ message SimToClient {
         optional LogFuneralHandlingCreation             log_funeral_handling_creation             = 143;  //!< @copybrief LogFuneralHandlingCreation
         optional LogFuneralHandlingUpdate               log_funeral_handling_update               = 144;  //!< @copybrief LogLogFuneralHandlingUpdateMedicalHandlingUpdate
         optional LogFuneralHandlingDestruction          log_funeral_handling_destruction          = 145;  //!< @copybrief LogFuneralHandlingDestruction
-//        optional LogFuneralState                        log_funeral_state                         = 146;  //!< @copybrief LogFuneralState
     }
     /** @property context
         @brief Identifies the request matching the response
