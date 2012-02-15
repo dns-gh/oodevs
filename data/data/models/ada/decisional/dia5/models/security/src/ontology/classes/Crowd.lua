@@ -92,6 +92,24 @@ method "unloadIt" ( masalife.brain.integration.startStopAction(
 } ) )
 
 -- --------------------------------------------------------------------------------
+-- Wounded
+-- --------------------------------------------------------------------------------
+method "isWounded" ( 
+    function( self )
+        return integration.crowdHasWoundHumans( self )
+    end )
+
+method "healIt" ( 
+    function( self )
+        return integration.healWoundedInCrowd( self )
+    end )
+
+method "canBeHealed" ( 
+    function( self )
+        return self:isReached() -- add physical capabilities
+    end )
+
+-- --------------------------------------------------------------------------------
 -- Specific crowd transportation methods
 -- --------------------------------------------------------------------------------
 method "hasConcentration" ( 

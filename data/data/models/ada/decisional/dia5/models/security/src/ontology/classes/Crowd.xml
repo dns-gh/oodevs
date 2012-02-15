@@ -8,6 +8,7 @@ A crowd can victims. &#xD;
 </description>
     <realizes>agent.world.Victims</realizes>
     <realizes>agent.world.Transportable</realizes>
+    <realizes>agent.world.Wounded</realizes>
     <methods>
         <method name="getPosition">
             <return name="simPosition">
@@ -114,6 +115,30 @@ This implementation makes agent Unit &quot;magically&quot; unload 'this' entity 
                     <class name="ontology.classes.Position"/>
                 </type>
             </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="healIt" abstract="false">
+            <description>For agent Unit, to act on this element to heal all wounded persons within it.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="isWounded" abstract="false">
+            <description>Returns 'true' if this element has wounded persons within.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canBeHealed" abstract="false">
+            <description>Returns 'true' if this element can be healed. </description>
             <return>
                 <type>
                     <simple name="boolean"/>

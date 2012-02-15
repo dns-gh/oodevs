@@ -185,7 +185,7 @@ method "equipWithNBCProtection" ( masalife.brain.integration.startStopAction(
 
 
 -- --------------------------------------------------------------------------------
--- Specific methods for crowd transportation
+-- Specific methods for crowd
 -- --------------------------------------------------------------------------------
 method "loadCrowdConcentration" ( masalife.brain.integration.startStopAction( 
 {
@@ -221,6 +221,14 @@ method "unloadCrowdConcentration" ( masalife.brain.integration.startStopAction(
 method "canTransportCrowd" ( 
     function( self, crowd )
         return integration.canTransportCrowd()
+    end )
+
+-- --------------------------------------------------------------------------------
+-- Wounded entity to heal
+-- --------------------------------------------------------------------------------
+method "heal" ( 
+    function( self, wounded )
+        return wounded:healIt()
     end )
 
 -- --------------------------------------------------------------------------------

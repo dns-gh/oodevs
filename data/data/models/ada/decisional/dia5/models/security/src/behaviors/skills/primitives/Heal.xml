@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.skills.primitives.Heal" source-version="1.0.0">
+    <description>For an agent to know how to heal wounded victims within a set of 'Crowds' objects.&#xD;
+&#xD;
+When several crowds should be healed, the agent acts on each crowd by following the order of the elements into the 'crowds' list. &#xD;
+&#xD;
+Wounded victims from a crowd won't be healed if it could not reached (it has moved away or it is localized in a non accessible urban block).</description>
+    <parameters>
+        <parameter name="crowds">
+            <description>The set of 'Crowd' objects to heal.</description>
+            <type>
+                <list>
+                    <class name="ontology.classes.Crowd"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <body-type>
+        <class name="ontology.classes.MeKnowledge"/>
+    </body-type>
+    <links>
+        <link name="reach" skill="behaviors.skills.primitives.Reach">
+            <description>To reach the crowds to heal.</description>
+        </link>
+        <link name="heal" skill="agent.behaviors.skills.actions.Heal">
+            <description>To heal each entity.</description>
+        </link>
+    </links>
+</skill>

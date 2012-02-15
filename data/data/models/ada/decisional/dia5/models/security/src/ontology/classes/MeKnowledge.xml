@@ -516,5 +516,20 @@ This implementation returns 'true' if life level of this element is stricly equa
                 </type>
             </return>
         </method>
+        <method name="heal" abstract="false">
+            <description>To heal a given simulated entity (a &quot;wounded&quot; object).&#xD;
+Returns 'true' upon action completion.</description>
+            <argument name="wounded">
+                <description>The element to heal.</description>
+                <type>
+                    <class name="agent.world.Wounded"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
     </methods>
 </class>

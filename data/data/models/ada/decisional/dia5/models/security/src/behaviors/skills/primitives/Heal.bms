@@ -1,0 +1,60 @@
+-- **************************************************************************** 
+-- To heal all wounded victims from 'crowds'.
+-- @params self.params.crowds, a list of crowds with wounded elements within.
+-- @returns "done" when all Crowds have been healed
+-- ****************************************************************************
+rootnode 
+{
+    connections = { skill.links.reach, skill.links.heal },
+    feedbacks   = { "healed", "notHealed" },
+
+    -- --------------------------------------------------------------------------------
+    -- Feedbacks
+    -- --------------------------------------------------------------------------------
+    done = function( self, params ) -- from reach skill
+        self.arrived = true
+    end,
+
+    healed = function( self, params, additionalParams ) -- called be skill.links.extractVictims
+        Feedback( self.feedbacks.healed, additionalParams )
+        self.arrived = false
+        self.nextTargetIndex = self.nextTargetIndex + 1
+    end,
+
+    notHealed = function( self, params, additionalParams )
+        Feedback( self.feedbacks.notHealed, additionalParams )
+        self.arrived = false
+        self.nextTargetIndex = self.nextTargetIndex + 1
+    end,
+
+    -- --------------------------------------------------------------------------------
+    -- Init
+    -- --------------------------------------------------------------------------------
+    create = function( self )
+        self.arrived = false
+        self.nextTargetIndex = 1
+    end,
+
+    -- --------------------------------------------------------------------------------
+    -- Behavior execution
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        local Activate = Activate
+
+        local paramsSize = #self.params.crowds
+        if paramsSize > 0 then 
+            if self.nextTargetIndex <= paramsSize then
+                self.crowd = self.params.crowds[ self.nextTargetIndex ]
+                if self.arrived then
+                    Activate( skill.links.heal, 1, { wounded = self.crowd } )
+                else
+                    Activate( skill.links.reach, 1, { destination = self.crowd } )
+                end
+            else
+                Feedback( self.feedbacks.done )
+            end
+        else
+            Feedback( self.feedbacks.failed )
+        end
+    end
+}
