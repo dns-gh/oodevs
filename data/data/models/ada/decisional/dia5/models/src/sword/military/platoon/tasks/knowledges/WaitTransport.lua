@@ -1,7 +1,7 @@
 local result = 
 {
     fillParameters = function( self, companyTask, params )
-        return { position = companyTask:getReachable( params ) }
+        return { position = companyTask:getEmbarkPoint( params ) }
     end
 }
 
