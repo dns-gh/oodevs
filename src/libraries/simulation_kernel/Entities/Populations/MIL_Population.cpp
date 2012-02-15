@@ -856,6 +856,15 @@ unsigned int MIL_Population::GetAllHumansInConcentration( unsigned int concentra
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Population::HealWounded
+// Created: JSR 2012-02-15
+// -----------------------------------------------------------------------------
+void MIL_Population::HealWounded()
+{
+    ChangeComposition( GetHealthyHumans() + GetWoundedHumans(), 0, GetContaminatedHumans(), GetDeadHumans() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Population::GetArmedIndividuals
 // Created: MMC 2011-03-28
 // -----------------------------------------------------------------------------

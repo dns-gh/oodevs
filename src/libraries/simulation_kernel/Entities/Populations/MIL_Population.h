@@ -84,6 +84,7 @@ public:
     unsigned int GetContaminatedHumans() const;
     unsigned int GetDeadHumans() const;
     unsigned int GetAllHumansInConcentration( unsigned int concentrationId );
+    void HealWounded();
     double GetArmedIndividuals() const;
     void SetArmedIndividuals( double armedIndividuals );
     double GetNewArmedIndividuals() const;

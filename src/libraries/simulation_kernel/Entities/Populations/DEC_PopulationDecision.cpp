@@ -253,6 +253,8 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::brain::Brain& brai
     brain[ "DEC_GetUrbanBlockAngriness" ] =
         boost::function< double() >( boost::bind( &DEC_PopulationFunctions::GetUrbanBlockAngriness, boost::ref( GetPopulation() ) ) );
     brain[ "DEC_ReintegrateUrbanBlock" ] = boost::function< void() >( boost::bind( &DEC_PopulationFunctions::ReintegrateUrbanBlock, boost::ref( GetPopulation() ) ) );
+    brain[ "DEC_Population_HealWounded" ] =
+        boost::function< void() >( boost::bind( &MIL_Population::HealWounded, boost::ref( GetPopulation() ) ) );
 
     // nbc
     brain[ "DEC_ConnaissanceObjet_DemandeDeDecontamination" ] =
