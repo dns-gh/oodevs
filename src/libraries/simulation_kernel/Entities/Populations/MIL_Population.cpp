@@ -1083,10 +1083,10 @@ void MIL_Population::FireOnPion( double rIntensity, MIL_Agent_ABC& target, PHY_F
 // Name: MIL_Population::Attack
 // Created: LGY 2012-02-14
 // -----------------------------------------------------------------------------
-void MIL_Population::Attack()
+void MIL_Population::Attack( float intensity )
 {
     for( CIT_ConcentrationVector itConcentration = concentrations_.begin(); itConcentration != concentrations_.end(); ++itConcentration )
-        ( **itConcentration ).Attack();
+        ( **itConcentration ).Attack( intensity );
 }
 
 // -----------------------------------------------------------------------------

@@ -25,7 +25,7 @@ class MIL_Effect_AttackPopulation : public MIL_Effect_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_Effect_AttackPopulation( MIL_PopulationElement_ABC& attacker, MIL_PopulationElement_ABC& defender );
+             MIL_Effect_AttackPopulation( MIL_PopulationElement_ABC& attacker, MIL_PopulationElement_ABC& defender, float intensity );
     virtual ~MIL_Effect_AttackPopulation();
     //@}
 
@@ -39,6 +39,7 @@ private:
     //@{
     MIL_PopulationElement_ABC& attacker_;
     MIL_PopulationElement_ABC& defender_;
+    float intensity_;
     //@}
 };
 
