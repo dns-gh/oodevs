@@ -140,7 +140,7 @@ public:
     void Move( const MT_Vector2D& destination );
     void FireOnPions( double rIntensity, PHY_FireResults_Population& fireResult );
     void FireOnPion( double rIntensity, MIL_Agent_ABC& target, PHY_FireResults_Population& fireResult );
-    void Attack();
+    void Attack( float intensity );
     double GetDangerosity( const MIL_AgentPion& target ) const;
     void SetAttitude( const MIL_PopulationAttitude& attitude );
     void SetBlinded( bool blinded );

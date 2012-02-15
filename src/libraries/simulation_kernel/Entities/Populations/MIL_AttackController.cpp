@@ -41,7 +41,7 @@ MIL_AttackController::~MIL_AttackController()
 // Name: MIL_AttackController::Attack
 // Created: LGY 2012-02-14
 // -----------------------------------------------------------------------------
-void MIL_AttackController::Attack( MIL_PopulationElement_ABC& attacking )
+void MIL_AttackController::Attack( MIL_PopulationElement_ABC& attacking, float intensity )
 {
     T_Effects updated;
     TER_PopulationConcentration_ABC::T_PopulationConcentrationVector concentrations;
@@ -54,7 +54,7 @@ void MIL_AttackController::Attack( MIL_PopulationElement_ABC& attacking )
             const unsigned int id = pElement->GetID();
             T_Effect& effect = effects_[ id ];
             if( !effect )
-                effect.reset( new MIL_Effect_AttackPopulation( attacking, *pElement ) );
+                effect.reset( new MIL_Effect_AttackPopulation( attacking, *pElement, intensity ) );
             effectManager_.Register( *effect );
             updated[ id ] = effect;
         }

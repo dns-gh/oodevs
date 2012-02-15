@@ -157,8 +157,8 @@ void DEC_PopulationDecision::RegisterUserFunctions( directia::brain::Brain& brai
         boost::function< unsigned int( float, unsigned int ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionFireOnPion, float, unsigned int >, boost::ref( GetPopulation() ), _1, _2 ) );
     brain[ "DEC_StartTirSurPion" ] =
         boost::function< unsigned int( float, DEC_Decision_ABC* ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionFireOnPion, float, DEC_Decision_ABC* >, boost::ref( GetPopulation() ), _1, _2 ) );
-    brain[ "DEC__StartAgresserFoule" ] =
-        boost::function< unsigned int() >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionBattle >, boost::ref( GetPopulation() ) ) );
+    brain[ "DEC_StartAgresserFoule" ] =
+        boost::function< unsigned int( float ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionBattle, float >, boost::ref( GetPopulation() ), _1 ) );
     brain[ "DEC_DetruireBlocUrbain" ] =
         boost::function< unsigned int( UrbanObjectWrapper* ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_Population_ActionUrbanDestruction, UrbanObjectWrapper* >, boost::ref( GetPopulation() ), _1 ) );
     brain[ "DEC_EtatBlocUrbain" ] =

@@ -53,7 +53,7 @@ public:
     //@{
     void MagicMove( const MT_Vector2D& destination );
     void Move( const MT_Vector2D& destination );
-    void Attack();
+    void Attack( float intensity );
     //@}
 
     //! @name Flows management

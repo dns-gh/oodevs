@@ -16,8 +16,9 @@
 // Name: PHY_Population_ActionBattle constructor
 // Created: LGY 2012-02-14
 // -----------------------------------------------------------------------------
-PHY_Population_ActionBattle::PHY_Population_ActionBattle( MIL_Population& attacker )
-    : attacker_( attacker )
+PHY_Population_ActionBattle::PHY_Population_ActionBattle( MIL_Population& attacker, float intensity )
+    : attacker_ ( attacker )
+    , intensity_( intensity )
 {
     // NOTHING
 }
@@ -37,7 +38,7 @@ PHY_Population_ActionBattle::~PHY_Population_ActionBattle()
 // -----------------------------------------------------------------------------
 void PHY_Population_ActionBattle::Execute()
 {
-    attacker_.Attack();
+    attacker_.Attack( intensity_ );
 }
 
 // -----------------------------------------------------------------------------

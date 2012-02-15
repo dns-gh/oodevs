@@ -477,7 +477,7 @@ double MIL_PopulationConcentration::GetDefaultDensity( const MIL_PopulationType&
 // Name: MIL_PopulationConcentration::Attack
 // Created: LGY 2012-02-14
 // -----------------------------------------------------------------------------
-void MIL_PopulationConcentration::Attack()
+void MIL_PopulationConcentration::Attack( float intensity )
 {
-    pAttackController_->Attack( *this );
+    pAttackController_->Attack( *this, intensity );
 }

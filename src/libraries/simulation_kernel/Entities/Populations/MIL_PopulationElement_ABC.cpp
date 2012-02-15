@@ -491,6 +491,7 @@ void MIL_PopulationElement_ABC::KillAllHumans()
 void MIL_PopulationElement_ABC::KillHumans( unsigned int humans )
 {
     humans_.KillHumans( humans );
+    bHumansUpdated_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -500,6 +501,7 @@ void MIL_PopulationElement_ABC::KillHumans( unsigned int humans )
 void MIL_PopulationElement_ABC::WoundHumans( unsigned int humans )
 {
     humans_.WoundHumans( humans );
+    bHumansUpdated_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -614,13 +616,13 @@ namespace
 // Name: MIL_PopulationElement_ABC::Attack
 // Created: LGY 2012-02-10
 // -----------------------------------------------------------------------------
-void MIL_PopulationElement_ABC::Attack( MIL_PopulationElement_ABC& element )
+void MIL_PopulationElement_ABC::Attack( MIL_PopulationElement_ABC& element, float intensity )
 {
     if( GetHealthyHumans() != 0u && element.GetHealthyHumans() != 0u )
         if( const PHY_Protection* protection = GetHumanProtection( PHY_Protection::GetProtections() ) )
         {
             const double rPH = GetPopulation().GetType().GetPH( *pAttitude_, rDensity_ );
-            if( !( 1. - MIL_Random::rand_io( MIL_Random::eFire ) <= rPH ) )
+            if( !( 1. - MIL_Random::rand_io( MIL_Random::eFire ) <= rPH * intensity ) )
                 return;
 
             const MIL_PopulationType& populationType = pPopulation_->GetType();
@@ -633,6 +635,5 @@ void MIL_PopulationElement_ABC::Attack( MIL_PopulationElement_ABC& element )
             if( element.GetHealthyHumans() != 0u )
                 element.WoundHumans( static_cast< unsigned int >( humanAttacker *
                                    ( attritionData.GetReparableWithEvacuation() + attritionData.GetReparableWithoutEvacuation() ) ) );
-            bHumansUpdated_ = true;
         }
 }

@@ -37,7 +37,7 @@ public:
 
     //! @name Operations
     //@{
-    void Attack( MIL_PopulationElement_ABC& attacking );
+    void Attack( MIL_PopulationElement_ABC& attacking, float intensity );
     //@}
 
 private:
