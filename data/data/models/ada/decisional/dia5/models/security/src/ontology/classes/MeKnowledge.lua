@@ -117,7 +117,7 @@ method "enhanceResourceProductionCapability" ( masalife.brain.integration.startS
 method "damageResourceProductionCapability" ( masalife.brain.integration.startStopAction( 
 { 
     start = function( self, resourceNode, quantity )
-        meKnowledge:RC( eRC_ResourceNodeProductionEnhanced )
+        meKnowledge:RC( eRC_ResourceNodeProductionDamaged )
         return integration.decreaseNodeProduction( resourceNode, quantity )
     end,
     started = function( self )

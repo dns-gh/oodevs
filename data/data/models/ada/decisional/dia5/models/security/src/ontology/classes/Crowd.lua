@@ -54,9 +54,10 @@ method "canBeUnloaded" (
         end
     end )
 
-method "isLoaded" ( function( self ) 
-    return integration.isTransportingCrowd()
-end )
+method "isLoaded" ( 
+    function( self ) 
+        return integration.isTransportingCrowd()
+    end )
 
 method "loadIt" ( masalife.brain.integration.startStopAction( 
 {

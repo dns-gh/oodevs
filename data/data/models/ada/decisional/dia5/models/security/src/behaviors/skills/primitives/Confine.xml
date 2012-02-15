@@ -37,5 +37,11 @@ If the visited area does not contain population, the confinement is not effectiv
                 </type>
             </argument>
         </feedback>
+        <feedback name="done">
+            <description>Sent when all 'populatedAreas' have been visited, even of once of them haven't been alerted.</description>
+        </feedback>
+        <feedback name="failed">
+            <description>Sent if the set of &quot;populatedAreas&quot; is empty (no element to act on).</description>
+        </feedback>
     </feedbacks>
 </skill>

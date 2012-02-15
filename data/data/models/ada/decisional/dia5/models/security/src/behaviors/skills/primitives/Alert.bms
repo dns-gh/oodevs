@@ -1,7 +1,7 @@
 -- ****************************************************************************
 -- To alert a specified set of PopulatedArea objects
 -- @params: self.params.populatedAreas, a masalife list of PopulatedArea objects
--- @returns: "done" when there is no more populated area to alert OR if the list of populated areas is empty.
+-- @returns: "done" when there is no more populated area to alert
 --
 -- /!\ order is determined by elements' insertion in the table
 -- ****************************************************************************
@@ -21,9 +21,6 @@ rootnode
         Feedback( self.feedbacks.alerted, { populatedArea = params.populatedArea } )
         self.nextTargetIndex = self.nextTargetIndex + 1
         self.arrived = false
-        if self.nextTargetIndex > #self.params.populatedAreas then
-            Feedback( self.feedbacks.done )
-        end
     end,
 
     -- --------------------------------------------------------------------------------
@@ -41,8 +38,8 @@ rootnode
         local Activate = Activate
 
         local paramsSize = #self.params.populatedAreas
-        if self.nextTargetIndex <= paramsSize then
-            if paramsSize > 0 then
+        if paramsSize > 0 then 
+            if self.nextTargetIndex <= paramsSize then
                 self.populatedArea = self.params.populatedAreas[ self.nextTargetIndex ]
                 if self.arrived then
                     Activate( skill.links.alert, 1, { populatedArea = self.populatedArea } )
@@ -50,8 +47,10 @@ rootnode
                     Activate( skill.links.reach, 1, { destination = self.populatedArea } )
                 end
             else
-                Feedback( self.feedbacks.failed )
+                Feedback( self.feedbacks.done )
             end
-         end
+        else
+            Feedback( self.feedbacks.failed )
+        end
     end
 }

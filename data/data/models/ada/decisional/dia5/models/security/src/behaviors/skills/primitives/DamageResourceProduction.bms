@@ -20,9 +20,6 @@ rootnode
         Feedback( self.feedbacks.damaged, { resourceNode = params.resourceNode } )
         self.arrived = false
         self.nextTargetIndex = self.nextTargetIndex + 1
-        if self.nextTargetIndex > #self.params.resourceNodes then
-            Feedback( self.feedbacks.done )
-        end
     end,
 
     -- --------------------------------------------------------------------------------
@@ -40,8 +37,8 @@ rootnode
         local Activate = Activate
 
         local paramsSize = #self.params.resourceNodes
-        if self.nextTargetIndex <= paramsSize then
-            if paramsSize > 0 then
+        if paramsSize > 0 then 
+            if self.nextTargetIndex <= paramsSize then
                 self.resourceNode = self.params.resourceNodes[ self.nextTargetIndex ]
                 if self.arrived then
                     Activate( skill.links.damageProduction, 1, { resourceNode = self.resourceNode } )
@@ -49,9 +46,10 @@ rootnode
                     Activate( skill.links.reach, 1, { destination = self.resourceNode } )
                 end
             else
-                meKnowledge:sendReport( eRC_NoKeyPositionsFoundInArea )
-                Feedback( self.feedbacks.failed )
+                Feedback( self.feedbacks.done )
             end
+        else
+            Feedback( self.feedbacks.failed )
         end
     end
 }
