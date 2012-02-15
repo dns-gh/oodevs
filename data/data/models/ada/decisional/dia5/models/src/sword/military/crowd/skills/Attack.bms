@@ -1,20 +1,13 @@
 -- **************************************************************************** 
--- Attack a unit
--- self.params.unit: the element to attack
+-- Attack a unit or crowds on the objective
+-- self.params.objective: the element to attack or to reach
 -- ****************************************************************************
 rootnode
 {
     connections = { skill.links.moveTo, skill.nodes.Attack, skill.nodes.CR_AgressionImpossible },
 
-    -- -------------------------------------------------------------------------------- 
-    -- Feedbacks
-    -- 'done' function is called only if objective is reached
-    -- --------------------------------------------------------------------------------
-    done = function( self ) -- from MoveTo
-        if not self.params.unit:isOperational() then
-            Feedback( self.feedbacks.done )
-        end
-    end,
+
+    done = function( self ) end,
 
     -- -------------------------------------------------------------------------------- 
     -- Init --> set agressive attitude to attack the objective
@@ -36,16 +29,11 @@ rootnode
             Feedback( self.feedbacks.done )
         end
         
-        Activate( skill.links.moveTo, 1, { entity = self.params.unit } )
-
-        -- stop attacking the in entity once it is not operationnal. 
-        if not self.params.unit:isOperational() then
-            return
-        end
+        Activate( skill.links.moveTo, 1, { entity = self.params.objective } )
 
         -- once entity is reached attack it.
-        if self.params.unit:isReached() then
-            Activate( skill.nodes.Attack, 1, { unit = self.params.unit } )
+        if self.params.objective:isReached() then
+            Activate( skill.nodes.Attack, 1, { objective = self.params.objective } )
         end
     end
 }
@@ -56,7 +44,7 @@ rootnode
 node "Attack"
 {
     select = function( self )
-        self.params.unit:attackIt()
+        self.params.objective:attackIt()
     end
 }
 

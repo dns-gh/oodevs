@@ -273,6 +273,7 @@ integration.uptateDemonstrate = function( crowd )
     if intensite ~= crowd.manifIntensity then
         crowd.actionSurPions = DEC__StopAction( crowd.actionSurPions )
         crowd.actionSurPions = DEC__StartTirSurPions( intensite )
+        crowd.manifIntensity = intensite
     end
 end
 
@@ -283,6 +284,26 @@ integration.stopDemonstrate = function( crowd )
     end
 end
 
+integration.startAgressCrowd = function( self )
+    self.actionOnCrowd = DEC_StartAgresserFoule()
+    self.attitude = DEC_Population_Attitude()
+end
+
+integration.updateAgressCrowd = function( self )
+   self.actionOnCrowd = self.actionOnCrowd or {}
+   local currentAttitude = DEC_Population_Attitude()
+   if currentAttitude ~= self.attitude then
+     DEC__StopAction( self.actionOnCrowd )
+     self.actionOnCrowd = DEC_StartAgresserFoule()
+     self.attitude = currentAttitude
+   end
+end
+
+integration.stopAgressCrowd = function( self )
+    if self.actionOnCrowd then
+        self.actionOnCrowd = DEC__StopAction(self.actionOnCrowd)
+    end
+end
 
 integration.isCivilian = function( pion )
     local typePion = DEC_ConnaissanceAgent_GetMilPionType( pion.source )

@@ -2,20 +2,20 @@
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.crowd.tasks.Attack" source-version="1.0.0" knowledge-class="sword.military.crowd.tasks.knowldege.CrowdTask">
     <description>Déplacement vers les objectifs etant agressif.</description>
     <parameters>
-        <parameter name="unit">
+        <parameter name="objective">
             <type>
-                <class name="sword.military.crowd.world.classes.Unit"/>
+                <class name="sword.military.crowd.world.classes.LocalizedElement"/>
             </type>
         </parameter>
     </parameters>
     <stages>
-        <stage label="Agresser" permanent="false" disable-when-done="true">
+        <stage label="Agresser" permanent="true">
             <description>Déplacement vers les objectifs etant agressif.</description>
             <skills>
-                <skill name="sword.military.crowd.skills.Attack" main="true">
-                    <parameter name="unit">
+                <skill name="sword.military.crowd.skills.Attack">
+                    <parameter name="objective">
                         <value>
-                            <parameter>unit</parameter>
+                            <parameter>objective</parameter>
                         </value>
                     </parameter>
                 </skill>
