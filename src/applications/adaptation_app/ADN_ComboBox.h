@@ -98,4 +98,5 @@ int ADN_ComboBox::GetEnumIndexFromGUI( int index ) const
     return ( vItemsEnum_.empty() ) ? index : vItemsEnum_.at( index );
 }
 
+
 #endif // __ADN_ComboBox_h_

@@ -40,6 +40,7 @@ public:
         void FixConsistency();
         void WriteArchive( xml::xostream& ) const;
         void CreateDefaultAttrition();
+        E_ProtectionType GetType() const;
 
     public:
         ADN_Type_Enum< E_ProtectionType, eNbrProtectionType > nType_;

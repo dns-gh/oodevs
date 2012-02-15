@@ -220,6 +220,7 @@ T_ConverterProtectionType ProtectionTypeConverter_[] =
 {
     T_ConverterProtectionType( "materiel", QT_TRANSLATE_NOOP( "ADN_Tr", "Equipment" ), eProtectionType_Material ),
     T_ConverterProtectionType( "humain",   QT_TRANSLATE_NOOP( "ADN_Tr", "Human" ),     eProtectionType_Human ),
+    T_ConverterProtectionType( "foule",    QT_TRANSLATE_NOOP( "ADN_Tr", "crowd" ),     eProtectionType_Crowd ),
     T_ConverterProtectionType( "", "", (E_ProtectionType)-1 )
 };
 

@@ -219,6 +219,7 @@ enum E_ProtectionType
 {
     eProtectionType_Material,
     eProtectionType_Human,
+    eProtectionType_Crowd,
     eNbrProtectionType
 };
 

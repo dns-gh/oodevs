@@ -22,6 +22,31 @@
 
 typedef ADN_Armors_Data::ArmorInfos ArmorInfos;
 
+class ADN_CLV_Categories_Armor : public ADN_Connector_ListView_ABC
+{
+public:
+    ADN_CLV_Categories_Armor( ADN_ListView_Categories_Armor& list )
+        : ADN_Connector_ListView_ABC( list )
+    {}
+
+    virtual ~ADN_CLV_Categories_Armor()
+    {}
+
+    ADN_ListViewItem* CreateItem( void* obj )
+    {
+        ADN_ListViewItem *pItem = new ADN_ListViewItem( &list_,obj, 1 );
+        ArmorInfos* pInfos = static_cast< ArmorInfos*>( obj );
+        pItem->Connect( 0, &pInfos->strName_ );
+        if( pInfos->GetType() == eProtectionType_Crowd )
+            pItem->setVisible( false );
+        return pItem;
+    }
+
+private:
+    ADN_CLV_Categories_Armor& operator=( const ADN_CLV_Categories_Armor& );
+};
+
+
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Categories_Armor constructor
 // Created: JDY 03-08-27
@@ -29,6 +54,12 @@ typedef ADN_Armors_Data::ArmorInfos ArmorInfos;
 ADN_ListView_Categories_Armor::ADN_ListView_Categories_Armor( QWidget* parent )
     : ADN_ListView( parent, "ADN_ListView_Categories_Armor", tools::translate( "ADN_ListView_Categories_Armor", "Armor-Plating" ) )
 {
+
+    // add one column && disable sort
+    addColumn( tools::translate( "ADN_ListView_Categories_Armor", "Armor-Plating" ) );
+    setSorting( -1, true );
+    setResizeMode( Q3ListView::AllColumns );
+
     pConnector_.reset( new ADN_Connector_ListView< ArmorInfos >( *this ) );
     SetDeletionEnabled( true, false );
 }

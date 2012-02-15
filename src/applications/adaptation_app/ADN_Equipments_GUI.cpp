@@ -648,6 +648,19 @@ void ADN_Equipments_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const to
 // -----------------------------------------------------------------------------
 void ADN_Equipments_GUI::OnProtectionTypeChanged()
 {
+//    int index = -1;
+//    for( int i = 0; i < pCombo_->count(); ++i )
+//        if( ADN_ComboBoxItem* item = pCombo_->GetItem( i ) )
+//            if( helpers::ArmorInfos* info = static_cast< helpers::ArmorInfos* >( item->GetData() ) )
+//                if( info->GetType() == eProtectionType_Crowd )
+//                {
+//                    index = i;
+//                    break;
+//                }
+//
+//    if( index != -1 )
+//        pCombo_->removeItem( index );
+
     ADN_Equipments_Data::EquipmentInfos* pInfos = static_cast< ADN_Equipments_Data::EquipmentInfos* >( pListView_->GetCurrentData() );
     if( pInfos == 0 )
         pBreakdownsGroup_->setEnabled( false );

@@ -754,7 +754,7 @@ namespace
     const PHY_Protection* GetHumanProtection( const PHY_Protection::T_ProtectionMap& protections )
     {
         for( PHY_Protection::CIT_ProtectionMap it = protections.begin(); it != protections.end(); ++it )
-            if( it->second->IsHuman() )
+            if( it->second->IsCrowd() )
                 return it->second;
         return 0;
     }

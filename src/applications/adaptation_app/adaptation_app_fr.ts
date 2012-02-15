@@ -5352,6 +5352,13 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
         <translation>Nuage</translation>
     </message>
     <message>
+        <source>crowd</source>
+        <translation>foule</translation>
+    </message>
+</context>
+<context>
+    <name>ADN_Type_Repartition</name>
+    <message>
         <source>Date Time</source>
         <translation>Date et Heure</translation>
     </message>

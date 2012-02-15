@@ -49,12 +49,15 @@ void AttritionInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void AttritionInfos::WriteArchive( xml::xostream& output, const std::string& tag /* = "attrition"*/ ) const
 {
+    if( ptrArmor_.GetData()->GetType() != eProtectionType_Crowd )
+    {
     output << xml::start( tag )
              << xml::attribute( "protection", *this )
              << xml::attribute( "destruction", rDestroy_.GetData() / 100.0 )
              << xml::attribute( "repairable-with-evacuation", rRepairWithEvac_.GetData() / 100.0 )
              << xml::attribute( "repairable-without-evacuation", rRepairNoEvac_.GetData() / 100.0 )
            << xml::end;
+}
 }
 
 // -----------------------------------------------------------------------------
