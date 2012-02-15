@@ -439,15 +439,14 @@ void PHY_RolePion_Location::Update( bool bIsDead )
     std::auto_ptr< LocationComputer_ABC > computer( pion_.GetAlgorithms().locationComputerFactory_->Create() );
     SetHeight( pion_.Execute( *computer ).GetHeight() );
 
-    if( HasLocationChanged() )
+    bool locationChanged = HasLocationChanged();
+    if( locationChanged || HasSpeedChanged() )
     {
+        pion_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
         pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
-        pion_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
-        pion_.Apply( &location::MovementHandler_ABC::NotifyHasMove, GetPosition() );
     }
-    if( HasSpeedChanged() )
-        pion_.Apply( &network::VisionConeNotificationHandler_ABC::NotifyVisionConeDataHasChanged );
-
+    if( locationChanged )
+        pion_.Apply( &location::MovementHandler_ABC::NotifyHasMove, GetPosition() );
 }
 
 // -----------------------------------------------------------------------------
