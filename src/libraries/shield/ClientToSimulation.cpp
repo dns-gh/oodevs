@@ -252,3 +252,12 @@ void ClientToSimulation::Convert( const MsgsClientToSim::MsgOrderStream& from, s
 {
     CONVERT( serialized_order );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ClientToSimulation::Convert
+// Created: LDC 2012-02-15
+// -----------------------------------------------------------------------------
+void ClientToSimulation::Convert( const MsgsClientToSim::MsgControlExportRequest& from, sword::ControlExportRequest* to )
+{
+    CONVERT( directory_name );
+}

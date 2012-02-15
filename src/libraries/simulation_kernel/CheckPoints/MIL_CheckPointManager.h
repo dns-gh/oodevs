@@ -45,8 +45,8 @@ public:
 
     //! @name Main
     //@{
-    void Update                 ();
-    static void LoadCheckPoint  ( const MIL_Config& config );
+    void Update();
+    static void LoadCheckPoint( const MIL_Config& config );
     void SaveCheckPointDirectory( const std::string& directoryName, const std::string userName = "" );
     //@}
 
@@ -57,9 +57,10 @@ public:
 
     //! @name Network
     //@{
-    void OnReceiveMsgCheckPointSaveNow      ( const sword::ControlCheckPointSaveNow&       msg );
-    void OnReceiveMsgCheckPointSetFrequency ( const sword::ControlCheckPointSetFrequency&  msg );
+    void OnReceiveMsgCheckPointSaveNow( const sword::ControlCheckPointSaveNow& msg );
+    void OnReceiveMsgCheckPointSetFrequency( const sword::ControlCheckPointSetFrequency&  msg );
     void OnReceiveMsgCheckPointDeleteRequest( const sword::ControlCheckPointDeleteRequest& msg );
+    void OnReceiveMsgControlExportRequest( const sword::ControlExportRequest msg );
     //@}
 
     //! @name CheckPoints

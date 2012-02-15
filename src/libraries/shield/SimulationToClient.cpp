@@ -2425,3 +2425,14 @@ void SimulationToClient::Convert( const sword::PopulationUpdate& from, MsgsSimTo
         ConvertBlockOccupation( from.occupations( i ), to->add_occupations() );
     CONVERT_CB( extension, ConvertExtension );
 }
+
+// -----------------------------------------------------------------------------
+// Name: SimulationToClient::Convert
+// Created: LDC 2012-02-15
+// -----------------------------------------------------------------------------
+void SimulationToClient::Convert( const sword::ControlExportRequestAck& from, MsgsSimToClient::MsgControlExportRequestAck* to )
+{
+    CONVERT_ENUM( error_code, ( sword::ControlExportRequestAck::success, MsgsSimToClient::MsgControlExportRequestAck::success )
+                              ( sword::ControlExportRequestAck::failure, MsgsSimToClient::MsgControlExportRequestAck::failure ) );
+    CONVERT( directory_name );
+}

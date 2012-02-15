@@ -37,7 +37,6 @@ NotificationMessageHandler::~NotificationMessageHandler()
 // -----------------------------------------------------------------------------
 bool NotificationMessageHandler::OnReceiveMessage( const sword::SimToClient& message )
 {
-    // Unit
     if( message.message().has_unit_creation() )
     {
         SessionNotification response;
@@ -53,7 +52,6 @@ bool NotificationMessageHandler::OnReceiveMessage( const sword::SimToClient& mes
         *unit->mutable_extensions() = message.message().unit_attributes().extension();
         Send( response );
     }
-    // Formation
     if( message.message().has_formation_creation() )
     {
         SessionNotification response;
@@ -68,6 +66,17 @@ bool NotificationMessageHandler::OnReceiveMessage( const sword::SimToClient& mes
         formation->mutable_formation()->set_id( message.message().formation_update().formation().id() );
         *formation->mutable_extensions() = message.message().formation_update().extension();
         Send( response );
+    }
+    if( message.message().has_control_export_request_ack() )
+    {
+        const ::sword::ControlExportRequestAck& ackMessage = message.message().control_export_request_ack();
+        if( ackMessage.error_code() == ::sword::ControlExportRequestAck_ErrorCode::ControlExportRequestAck_ErrorCode_success )
+        {
+            SessionNotification response;
+            sword::SessionNotification_ExportCreation* exportCreation = response().mutable_notification()->mutable_export_creation();
+            exportCreation->set_export_directory( ackMessage.directory_name() );
+            Send( response );
+        }
     }
     return false;
 }

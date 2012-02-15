@@ -2121,6 +2121,15 @@ message ControlSendCurrentStateBegin {
 message ControlSendCurrentStateEnd {
 }
 
+message ControlExportRequestAck {
+    enum ErrorCode {
+        success                    = 0;
+        failure                    = 1;
+    }
+    required ErrorCode  error_code = 1;
+    required string directory_name = 2;
+}
+
 /** @struct RgbaColor
     @brief Defines a color with alpha channel
 */
@@ -2575,10 +2584,10 @@ message SimToClient {
         optional BurningCellRequestAck                  burning_cell_request_ack                  = 140; //!< @copybrief BurningCellRequestAck
         optional FormationUpdate                        formation_update                          = 141; //!< @copybrief FormationUpdate
         optional ControlCheckPointSaveDelete            control_checkpoint_save_delete            = 142; //!< @copybrief ControlCheckPointSaveDelete
-        optional LogFuneralHandlingCreation             log_funeral_handling_creation             = 143;  //!< @copybrief LogFuneralHandlingCreation
-        optional LogFuneralHandlingUpdate               log_funeral_handling_update               = 144;  //!< @copybrief LogLogFuneralHandlingUpdateMedicalHandlingUpdate
-        optional LogFuneralHandlingDestruction          log_funeral_handling_destruction          = 145;  //!< @copybrief LogFuneralHandlingDestruction
-//        optional LogFuneralState                        log_funeral_state                         = 146;  //!< @copybrief LogFuneralState
+        optional LogFuneralHandlingCreation             log_funeral_handling_creation             = 143; //!< @copybrief LogFuneralHandlingCreation
+        optional LogFuneralHandlingUpdate               log_funeral_handling_update               = 144; //!< @copybrief LogLogFuneralHandlingUpdateMedicalHandlingUpdate
+        optional LogFuneralHandlingDestruction          log_funeral_handling_destruction          = 145; //!< @copybrief LogFuneralHandlingDestruction
+        optional ControlExportRequestAck                control_export_request_ack                = 146; //!< @copybrief ControlExportRequestAck
     }
     /** @property context
         @brief Identifies the request matching the response

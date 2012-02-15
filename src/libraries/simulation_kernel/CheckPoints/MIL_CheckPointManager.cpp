@@ -404,6 +404,20 @@ void MIL_CheckPointManager::OnReceiveMsgCheckPointSaveNow( const sword::ControlC
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_CheckPointManager::OnReceiveMsgControlExportRequest
+// Created: LDC 2012-02-15
+// -----------------------------------------------------------------------------
+void MIL_CheckPointManager::OnReceiveMsgControlExportRequest( const sword::ControlExportRequest msg )
+{
+    const std::string& name = msg.directory_name();
+    client::ControlExportRequestAck asnReplyMsg;
+    bool success = SaveCheckPoint( name, name );
+    asnReplyMsg.set_error_code( success ? client::ControlExportRequestAck::success : client::ControlExportRequestAck::failure );
+    asnReplyMsg.set_directory_name( name );
+    asnReplyMsg.Send( NET_Publisher_ABC::Publisher() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_CheckPointManager::OnReceiveMsgCheckPointSetFrequency
 // Created: NLD 2003-08-05
 // -----------------------------------------------------------------------------

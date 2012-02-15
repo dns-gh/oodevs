@@ -246,6 +246,8 @@ bool Profile::CheckRights( const sword::ClientToSim& wrapper ) const
         return true;
     if( message.has_order_stream() )
         return true;
+    if( message.has_control_export() )
+        return bSupervision_;
     return false;
 }
 
