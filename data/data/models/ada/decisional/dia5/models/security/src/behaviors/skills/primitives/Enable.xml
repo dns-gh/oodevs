@@ -6,7 +6,7 @@ Systems are visited in the order of the list. &#xD;
 Enable/disable skills may be used to model the damage/sabotage of a resource node.  </description>
     <parameters>
         <parameter name="systems">
-            <description>A list of systems. </description>
+            <description>A list of systems to enable.</description>
             <type>
                 <list>
                     <class name="agent.world.System"/>
@@ -33,6 +33,12 @@ Enable/disable skills may be used to model the damage/sabotage of a resource nod
                     <class name="agent.world.System"/>
                 </type>
             </argument>
+        </feedback>
+        <feedback name="done">
+            <description>Sent when all 'systems' have been visited, even of once of them has not been enabled.</description>
+        </feedback>
+        <feedback name="failed">
+            <description>Sent if the set of 'systems' is empty (no element to act on).</description>
         </feedback>
     </feedbacks>
 </skill>

@@ -355,6 +355,45 @@
             </nbc-agents>
           </attributes>
         </object>
+        <object id="182" name="Dyke [182]" type="dyke">
+          <shape type="polygone">
+            <points>
+              <point>29TNF3002457948</point>
+              <point>29TNF3003957745</point>
+              <point>29TNF3005557743</point>
+              <point>29TNF3004557952</point>
+            </points>
+          </shape>
+          <attributes>
+            <altitude-modifier height="0"/>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="183" name="Dyke [183]" type="dyke">
+          <shape type="polygone">
+            <points>
+              <point>29TNF3008657577</point>
+              <point>29TNF3008657524</point>
+              <point>29TNF3017757558</point>
+              <point>29TNF3018157594</point>
+            </points>
+          </shape>
+          <attributes>
+            <altitude-modifier height="0"/>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="184" name="Firebreak [184]" type="firebreak area">
+          <shape type="polygone">
+            <points>
+              <point>29TNF2959857306</point>
+              <point>29TNF2958157247</point>
+              <point>29TNF2983857206</point>
+              <point>29TNF2983757255</point>
+            </points>
+          </shape>
+          <attributes/>
+        </object>
       </objects>
       <tactical>
         <formation id="4" level="iii" name="Formation [4]">
@@ -938,4 +977,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="4163962024" -->
+<!-- signature="2101832027" -->

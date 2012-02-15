@@ -55,7 +55,8 @@ rootnode
                 if self.arrived then
                     Activate( skill.links.decontaminate, 1, { area = self.area } )
                 else
-                    Activate( skill.links.reach, 1, { destination = self.area, urgency = false, pathType = eTypeItiNBC } )
+                    Activate( skill.links.reach, 1, 
+                      { destination = self.area, urgency = false, pathType = eTypeItiNBC } )
                 end
             else
                 Feedback( self.feedbacks.done )

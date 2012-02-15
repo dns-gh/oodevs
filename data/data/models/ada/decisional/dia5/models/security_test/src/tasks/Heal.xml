@@ -14,7 +14,7 @@
         <stage label="Heal" disable-when-done="true">
             <skills>
                 <skill name="behaviors.skills.primitives.Heal" main="true">
-                    <parameter name="crowds">
+                    <parameter name="woundedUnits">
                         <value>
                             <parameter>crowds</parameter>
                         </value>

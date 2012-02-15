@@ -348,6 +348,5 @@ integration.crowdHasWoundHumans = function( crowd )
 end
 
 integration.healWoundedInCrowd = function( crowd )
-    DEC_Population_HealWounded( crowd.source )
-    return true
+    return DEC_Crowd_HealWoundedHumans( crowd.source )
 end
