@@ -90,6 +90,8 @@ MIL_AgentServer::MIL_AgentServer( MIL_Config& config )
     }
     else
     {
+        if( config_.GetPausedAtStartup() )
+            nextPause_ = 2;
         // $$$$ NLD 2007-01-11: A nettoyer - pb pEntityManager_ instancié par checkpoint
         pMeteoDataManager_ = new PHY_MeteoDataManager( config_ );
         pEntityManager_ = new MIL_EntityManager( *this, *pEffectManager_, *pProfilerMgr_, config_.ReadGCParameter_setPause(), config.ReadGCParameter_setStepMul() );
