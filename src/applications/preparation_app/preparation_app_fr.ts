@@ -2358,11 +2358,11 @@
     </message>
     <message>
         <source>&apos;Control&apos; permission allows you to control a unit.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;Contrôle&apos; permet de contrôler une unité.</translation>
     </message>
     <message>
         <source>&apos;View&apos; permission allows you to see a unit.</source>
-        <translation type="unfinished"></translation>
+        <translation>&apos;Vue&apos; permet de voir une unité.</translation>
     </message>
 </context>
 <context>

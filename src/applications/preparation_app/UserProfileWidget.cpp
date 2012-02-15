@@ -255,8 +255,8 @@ void UserProfileWidget::Update()
         if( !editable )
             profile_->Clear();
         bool supervisor = std::find( supervisors_.begin(), supervisors_.end(), profile_->GetUserRole() ) != supervisors_.end();
-        informationControls_->setText( supervisor ? tr( "'View' permission allows you to see a unit." )
-                                                  : tr( "'Control' permission allows you to control a unit." ) );
+        informationControls_->setText( supervisor ? tools::translate( "UserProfileWidget", "'View' permission allows you to see a unit." )
+                                                  : tools::translate( "UserProfileWidget", "'Control' permission allows you to control a unit." ) );
         colorInformation_->setVisible( !supervisor );
         pUnits_->Update( supervisor, *profile_ );
         pPopulations_->Update( supervisor, *profile_ );
