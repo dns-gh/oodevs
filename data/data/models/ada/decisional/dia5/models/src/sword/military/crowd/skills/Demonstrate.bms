@@ -32,5 +32,6 @@ node "Demonstrate"
 {
     select = function( self )
         meKnowledge:demonstrate()
+        meKnowledge:agressCrowd()
     end
 }

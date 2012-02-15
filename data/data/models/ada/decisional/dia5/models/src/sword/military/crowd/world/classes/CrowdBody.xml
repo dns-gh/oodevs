@@ -99,12 +99,12 @@ D'une point de vue g�n�rale, toutes positions du terrain est une position ut
             <description>M�thode sp�cifique � la classe de foule. Chaque population peut avoir une attidude plus ou moins agressive. Cette attitude peut �tre modifi�e par ordre de conduite ou par la foule elle-m�me (cf. mission &quot;Attack&quot;).</description>
         </method>
         <method name="getDomination">
-          <return>
-            <description>Renvoir le domination de la foule.</description>
-            <type>
-              <simple name="numeric"/>
-            </type>
-          </return>
+            <return>
+                <description>Renvoir le domination de la foule.</description>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
         </method>
         <method name="setDomination">
             <argument>
@@ -117,13 +117,16 @@ D'une point de vue g�n�rale, toutes positions du terrain est une position ut
         <method name="demonstrate">
             <description>Action de manifestation d'une foule. L'intensité avec laquelle la foule manifeste dépend de son attitude. Plus l'attitude est agressive, plus l'intensité de la manifestation est grande. L'effet de manifester se traduit par une prise à partie automatique de tous les agents se trouvant dans la foule. C'est cette prise à partie qui sera plus ou moins intense, en fonction de l'attitude.</description>
         </method>
-         <method name="isContaminated">
+        <method name="isContaminated">
             <description>Indique si l'unité est contaminée</description>
             <return>
                 <type>
                     <simple name="boolean"/>
                 </type>
             </return>
+        </method>
+        <method name="agressCrowd">
+            <description>TODO.</description>
         </method>
     </methods>
     <predicates>

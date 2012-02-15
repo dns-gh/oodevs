@@ -2825,6 +2825,7 @@
     <mission dia-behavior="france.military.crowd.tasks.Agresser" dia-type="france.military.crowd.tasks.Agresser" id="3001" name="FOULES Agresser" package="attack">
       <parameter dia-name="objectif" name="Cible" optional="false" type="LocationComposite">
         <choice>
+          <parameter type="Point"/>
           <parameter type="Agent"/>
         </choice>
       </parameter>
@@ -3036,4 +3037,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_RejoindrePointLancement" id="405" name="Rejoindre point de lancement"/>
   </fragorders>
 </missions>
-<!-- signature="2353735801" -->
+<!-- signature="0804004721" -->

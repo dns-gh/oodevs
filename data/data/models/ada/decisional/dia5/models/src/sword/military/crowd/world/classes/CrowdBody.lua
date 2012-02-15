@@ -61,6 +61,12 @@ return
         started = integration.uptateDemonstrate,
         stop = integration.stopDemonstrate 
     } ),
+    agressCrowd = masalife.brain.integration.startStopAction( 
+    {
+        start = integration.startAgressCrowd,
+        started = integration.updateAgressCrowd,
+        stop = integration.stopAgressCrowd
+    } ),
     -- -------------------------------------------------------------------------------- 
     -- Attributes
     -- $$$ MIA TODO A revoir, inutile pour les crowd

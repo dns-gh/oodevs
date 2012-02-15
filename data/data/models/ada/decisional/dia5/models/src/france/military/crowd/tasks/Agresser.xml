@@ -3,13 +3,13 @@
     <parameters>
         <parameter name="objectif">
             <type>
-                <class name="sword.military.crowd.world.classes.Unit"/>
+                <class name="sword.military.crowd.world.classes.LocalizedElement"/>
             </type>
         </parameter>
     </parameters>
     <stages/>
     <next-task name="sword.military.crowd.tasks.Attack">
-        <parameter name="unit">
+        <parameter name="objective">
             <value>
                 <parameter>objectif</parameter>
             </value>
