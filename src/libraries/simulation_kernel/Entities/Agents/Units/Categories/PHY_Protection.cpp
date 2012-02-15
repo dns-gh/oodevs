@@ -90,7 +90,9 @@ PHY_Protection::PHY_Protection( const std::string& strName, xml::xistream& xis )
     , rBreakdownProbabilityNeva_( 0. )
     , attritionEffectsOnHumans_ ( PHY_ComposanteState::GetNbrStates(), T_HumanEffect() )
 {
-    nType_ = sCaseInsensitiveEqual()( xis.attribute< std::string >( "type" ), "humain" ) ? eHuman : eMaterial;
+    std::string type = xis.attribute< std::string >( "type" );
+    nType_ = sCaseInsensitiveEqual()( type, "humain" ) ? eHuman :
+             sCaseInsensitiveEqual()( type, "materiel" ) ? eMaterial : eCrowd;
 
     std::string timeString, varianceString;
     xis >> xml::start( "neutralization" )
@@ -106,7 +108,7 @@ PHY_Protection::PHY_Protection( const std::string& strName, xml::xistream& xis )
         xis.error( "variance is not defined" );
     neutralizationTime_ = MT_GaussianRandom( timeVal, fabs( MIL_Tools::ConvertSecondsToSim( variance ) ) );
 
-    if( nType_ == eHuman )
+    if( nType_ == eHuman || nType_ == eCrowd )
     {
         rBreakdownProbabilityEva_  = 0.;
         rBreakdownProbabilityNeva_ = 0.;
@@ -266,4 +268,13 @@ const PHY_Protection::T_ProtectionMap& PHY_Protection::GetProtections()
 bool PHY_Protection::IsHuman() const
 {
     return nType_ == eHuman;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_Protection::IsCrowd
+// Created: LGY 2012-02-15
+// -----------------------------------------------------------------------------
+bool PHY_Protection::IsCrowd() const
+{
+    return nType_ == eCrowd;
 }

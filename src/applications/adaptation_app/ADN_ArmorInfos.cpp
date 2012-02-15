@@ -59,7 +59,7 @@ void ArmorInfos::ReadArchive( xml::xistream& input )
         >> xml::attribute( "variance", neutralizationVariance_ )
         >> xml::end();
 
-    if( nType_ != eProtectionType_Human )
+    if( nType_ != eProtectionType_Human && nType_ != eProtectionType_Crowd )
     {
         input >> xml::start( "random-breakdown-probability" )
             >> xml::attribute( "eva", rBreakdownEVA_ )
@@ -107,7 +107,7 @@ void ArmorInfos::WriteArchive( xml::xostream& output )
         << xml::attribute( "variance", neutralizationVariance_ )
         << xml::end();
 
-    if( nType_ != eProtectionType_Human )
+    if( nType_ != eProtectionType_Human && nType_ != eProtectionType_Crowd )
     {
         output << xml::start( "random-breakdown-probability" )
             << xml::attribute( "eva", rBreakdownEVA_ )
@@ -119,4 +119,14 @@ void ArmorInfos::WriteArchive( xml::xostream& output )
         output << xml::end();
     }
     output << xml::end();
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ArmorInfos::GetType
+// Created: LGY 2012-02-15
+// -----------------------------------------------------------------------------
+E_ProtectionType ArmorInfos::GetType() const
+{
+    return nType_.GetData();
 }

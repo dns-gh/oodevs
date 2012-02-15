@@ -157,6 +157,16 @@ void ADN_Categories_GUI::Build()
 // -----------------------------------------------------------------------------
 void ADN_Categories_GUI::OnTypeChanged( int index )
 {
+    int crowdIndex = -1;
+    for( int i = 0; i < pComboType_->count(); ++i )
+        if( pComboType_->GetEnumIndexFromGUI( i ) == eProtectionType_Crowd )
+        {
+            crowdIndex = i;
+            break;
+        }
+    if( crowdIndex != -1 )
+        static_cast< QComboBox* >( pComboType_ )->removeItem( crowdIndex );
+
     if( pComboType_->GetEnumIndexFromGUI( index ) == eProtectionType_Human )
     {
         pArmorBreakdownGroup_->hide();

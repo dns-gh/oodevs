@@ -19,6 +19,31 @@
 
 typedef helpers::ArmorInfos ArmorInfos;
 
+class ADN_CLV_Categories_Armor : public ADN_Connector_ListView_ABC
+{
+public:
+    ADN_CLV_Categories_Armor( ADN_ListView_Categories_Armor& list )
+        : ADN_Connector_ListView_ABC( list )
+    {}
+
+    virtual ~ADN_CLV_Categories_Armor()
+    {}
+
+    ADN_ListViewItem* CreateItem( void* obj )
+    {
+        ADN_ListViewItem *pItem = new ADN_ListViewItem( &list_,obj, 1 );
+        ArmorInfos* pInfos = static_cast< ArmorInfos*>( obj );
+        pItem->Connect( 0, &pInfos->strName_ );
+        if( pInfos->GetType() == eProtectionType_Crowd )
+            pItem->setVisible( false );
+        return pItem;
+    }
+
+private:
+    ADN_CLV_Categories_Armor& operator=( const ADN_CLV_Categories_Armor& );
+};
+
+
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Categories_Armor constructor
 // Created: JDY 03-08-27
@@ -33,7 +58,7 @@ ADN_ListView_Categories_Armor::ADN_ListView_Categories_Armor(QWidget * parent, c
     setResizeMode( Q3ListView::AllColumns );
 
     // connector creation
-    pConnector_ = new ADN_Connector_ListView<ArmorInfos>(*this);
+    pConnector_ = new ADN_CLV_Categories_Armor(*this);
     this->SetDeletionEnabled( true, false );
 }
 

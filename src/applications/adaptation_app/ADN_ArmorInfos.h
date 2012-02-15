@@ -26,6 +26,8 @@ public:
     ArmorInfos();
     std::string GetItemName();
 
+    E_ProtectionType GetType() const;
+
     void ReadArchive( xml::xistream& );
     void ReadAttrition( xml::xistream& );
     void WriteArchive( xml::xostream& );

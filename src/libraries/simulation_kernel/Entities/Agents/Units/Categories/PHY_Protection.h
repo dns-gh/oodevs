@@ -53,6 +53,7 @@ public:
     double GetHumanDeadRatio( const PHY_ComposanteState& composanteState ) const;
     double GetHumanWoundedRatio( const PHY_ComposanteState& composanteState ) const;
     bool IsHuman() const;
+    bool IsCrowd() const;
     //@}
 
     //! @name Operations
@@ -81,7 +82,8 @@ private:
     enum E_Type
     {
         eHuman,
-        eMaterial
+        eMaterial,
+        eCrowd
     };
 
     struct T_HumanEffect

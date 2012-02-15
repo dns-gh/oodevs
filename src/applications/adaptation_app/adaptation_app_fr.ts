@@ -5162,6 +5162,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <source>Cloud</source>
         <translation>Nuage</translation>
     </message>
+    <message>
+        <source>crowd</source>
+        <translation>foule</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Type_Repartition</name>

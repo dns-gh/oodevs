@@ -1,5 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <protections model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Armors.xsd">
+  <protection name="Foule" type="foule">
+    <neutralization average-time="0s" variance="0s"/>
+  </protection>
   <protection name="Composite" type="materiel">
     <neutralization average-time="240s" variance="60s"/>
     <random-breakdown-probability eva="4" neva="0"/>
@@ -70,4 +73,4 @@
     <neutralization average-time="300s" variance="420s"/>
   </protection>
 </protections>
-<!-- signature="2191398369" -->
+<!-- signature="2034771102" -->

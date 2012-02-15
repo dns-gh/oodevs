@@ -203,6 +203,7 @@ ADN_Tr::T_ConverterProtectionType ADN_Tr::protectionTypeConverter_[] =
 {
     T_ConverterProtectionType( "materiel", QT_TRANSLATE_NOOP( "ADN_Tr", "equipment" ), eProtectionType_Material ),
     T_ConverterProtectionType( "humain",   QT_TRANSLATE_NOOP( "ADN_Tr", "human" ),     eProtectionType_Human ),
+    T_ConverterProtectionType( "foule",    QT_TRANSLATE_NOOP( "ADN_Tr", "crowd" ),     eProtectionType_Crowd ),
     T_ConverterProtectionType( "", "", (E_ProtectionType)-1 )
 };
 

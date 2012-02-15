@@ -23,6 +23,7 @@ class ADN_Urban_AttritionTable_Connector : public ADN_Connector_Table_ABC
 public:
     explicit ADN_Urban_AttritionTable_Connector( ADN_Urban_AttritionTable& tab )
         : ADN_Connector_Table_ABC( tab, false )
+        , tab_( tab )
     {}
 
     void  AddSubItems( int i, void* pObj )
@@ -30,33 +31,41 @@ public:
         assert( pObj != 0 );
         helpers::AttritionInfos* pAttrition = ( helpers::AttritionInfos* )pObj;
 
-        tab_.verticalHeader()->setLabel( i, pAttrition->ptrArmor_.GetData()->strName_.GetData().c_str() );
+        if( pAttrition->ptrArmor_.GetData()->GetType() == eProtectionType_Crowd )
+            tab_.hideRow ( i );
+        else
+        {
+            tab_.verticalHeader()->setLabel( i, pAttrition->ptrArmor_.GetData()->strName_.GetData().c_str() );
 
-        // add a new row & set new values
-        ADN_TableItem_DoublePercentage* pItem0 = new ADN_TableItem_DoublePercentage( &tab_, pObj );
-        pItem0->SetUseColor( true );
-        pItem0->SetRangeForColor( 0.0, 100.0 );
-        tab_.setItem( i, 0, pItem0 );
-        static_cast< ADN_DoublePercentageValidator* >( &pItem0->GetValidator() )->AddLinkedValue( pAttrition->rRepairWithEvac_ );
-        static_cast< ADN_DoublePercentageValidator* >( &pItem0->GetValidator() )->AddLinkedValue( pAttrition->rRepairNoEvac_ );
-        pItem0->GetConnector().Connect( & pAttrition->rDestroy_ );
+            // add a new row & set new values
+            ADN_TableItem_DoublePercentage* pItem0 = new ADN_TableItem_DoublePercentage( &tab_, pObj );
+            pItem0->SetUseColor( true );
+            pItem0->SetRangeForColor( 0.0, 100.0 );
+            tab_.setItem( i, 0, pItem0 );
+            static_cast< ADN_DoublePercentageValidator* >( &pItem0->GetValidator() )->AddLinkedValue( pAttrition->rRepairWithEvac_ );
+            static_cast< ADN_DoublePercentageValidator* >( &pItem0->GetValidator() )->AddLinkedValue( pAttrition->rRepairNoEvac_ );
+            pItem0->GetConnector().Connect( & pAttrition->rDestroy_ );
 
-        ADN_TableItem_DoublePercentage* pItem1 = new ADN_TableItem_DoublePercentage( &tab_, pObj );
-        pItem1->SetUseColor( true );
-        pItem1->SetRangeForColor( 0.0, 100.0 );
-        tab_.setItem( i, 1, pItem1 );
-        static_cast< ADN_DoublePercentageValidator* >( &pItem1->GetValidator() )->AddLinkedValue( pAttrition->rDestroy_ );
-        static_cast< ADN_DoublePercentageValidator* >( &pItem1->GetValidator() )->AddLinkedValue( pAttrition->rRepairNoEvac_ );
-        pItem1->GetConnector().Connect( & pAttrition->rRepairWithEvac_ );
+            ADN_TableItem_DoublePercentage* pItem1 = new ADN_TableItem_DoublePercentage( &tab_, pObj );
+            pItem1->SetUseColor( true );
+            pItem1->SetRangeForColor( 0.0, 100.0 );
+            tab_.setItem( i, 1, pItem1 );
+            static_cast< ADN_DoublePercentageValidator* >( &pItem1->GetValidator() )->AddLinkedValue( pAttrition->rDestroy_ );
+            static_cast< ADN_DoublePercentageValidator* >( &pItem1->GetValidator() )->AddLinkedValue( pAttrition->rRepairNoEvac_ );
+            pItem1->GetConnector().Connect( & pAttrition->rRepairWithEvac_ );
 
-        ADN_TableItem_DoublePercentage* pItem2 = new ADN_TableItem_DoublePercentage( &tab_, pObj );
-        pItem2->SetUseColor( true );
-        pItem2->SetRangeForColor( 0.0, 100.0 );
-        tab_.setItem( i, 2, pItem2 );
-        static_cast< ADN_DoublePercentageValidator* >( &pItem2->GetValidator() )->AddLinkedValue( pAttrition->rDestroy_ );
-        static_cast< ADN_DoublePercentageValidator* >( &pItem2->GetValidator() )->AddLinkedValue( pAttrition->rRepairWithEvac_ );
-        pItem2->GetConnector().Connect( & pAttrition->rRepairNoEvac_ );
+            ADN_TableItem_DoublePercentage* pItem2 = new ADN_TableItem_DoublePercentage( &tab_, pObj );
+            pItem2->SetUseColor( true );
+            pItem2->SetRangeForColor( 0.0, 100.0 );
+            tab_.setItem( i, 2, pItem2 );
+            static_cast< ADN_DoublePercentageValidator* >( &pItem2->GetValidator() )->AddLinkedValue( pAttrition->rDestroy_ );
+            static_cast< ADN_DoublePercentageValidator* >( &pItem2->GetValidator() )->AddLinkedValue( pAttrition->rRepairWithEvac_ );
+            pItem2->GetConnector().Connect( & pAttrition->rRepairNoEvac_ );
+        }
     }
+
+private:
+    ADN_Urban_AttritionTable& tab_;
 };
 
 //-----------------------------------------------------------------------------

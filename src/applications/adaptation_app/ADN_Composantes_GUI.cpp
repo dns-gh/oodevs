@@ -78,8 +78,8 @@ void ADN_Composantes_GUI::Build()
     // Comments
     builder.AddField<ADN_EditLine_String>( pInfoHolder, tr( "Comments" ), vInfosConnectors[eComments] );
     // Armors
-    QComboBox* pCombo = builder.AddField< ADN_ComboBox_Vector<helpers::ArmorInfos> >( pInfoHolder, tr( "Armor-Plating" ), vInfosConnectors[eArmor]  );
-    connect( pCombo, SIGNAL( activated( const QString& ) ), this, SLOT( OnProtectionTypeChanged() ) );
+    pCombo_= builder.AddField< ADN_ComboBox_Vector<helpers::ArmorInfos> >( pInfoHolder, tr( "Armor-Plating" ), vInfosConnectors[eArmor]  );
+    connect( pCombo_, SIGNAL( activated( const QString& ) ), this, SLOT( OnProtectionTypeChanged() ) );
     // Size
     builder.AddField<ADN_ComboBox_Composantes_Sizes>( pInfoHolder, tr( "Volume" ), vInfosConnectors[eSize]  );
     // Weight
@@ -538,6 +538,19 @@ void ADN_Composantes_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const Q
 // -----------------------------------------------------------------------------
 void ADN_Composantes_GUI::OnProtectionTypeChanged()
 {
+    int index = -1;
+    for( int i = 0; i < pCombo_->count(); ++i )
+        if( ADN_ComboBoxItem* item = pCombo_->GetItem( i ) )
+            if( helpers::ArmorInfos* info = static_cast< helpers::ArmorInfos* >( item->GetData() ) )
+                if( info->GetType() == eProtectionType_Crowd )
+                {
+                    index = i;
+                    break;
+                }
+
+    if( index != -1 )
+        pCombo_->removeItem( index );
+
     ADN_Composantes_Data::ComposanteInfos* pInfos = ( ADN_Composantes_Data::ComposanteInfos* ) pListView_->GetCurrentData();
     if( pInfos == 0 )
         pBreakdownsGroup_->setEnabled( false );
