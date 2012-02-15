@@ -15,6 +15,10 @@ rootnode
         Feedback( self.feedbacks.done, additionalParams )
     end,
 
+    notReached = function( self, params, additionalParams )
+        Feedback( self.feedbacks.done, { reason = additionalParams.reason, element = additionalParams.element } )
+    end,
+
     -- --------------------------------------------------------------------------------
     -- For each objective of the skill, move toward it.
     -- --------------------------------------------------------------------------------
@@ -34,11 +38,17 @@ node "MoveTowardElement"
 {
     connections = { skill.links.moveAndTakePosition, skill.links.observe };
 
+    feedbacks = { "notReached" },
+
     -- --------------------------------------------------------------------------------
     -- Main effect is done: reach the reachable element (objective)
     -- --------------------------------------------------------------------------------
     done = function( self, params, additionalParams )
         Feedback( self.feedbacks.done, additionalParams )
+    end,
+
+    elementFailed = function( self, params, additionalParams )
+        Feedback( self.feedbacks.notReached, { reason = additionalParams.reason, element = additionalParams.element } )
     end,
 
     -- --------------------------------------------------------------------------------

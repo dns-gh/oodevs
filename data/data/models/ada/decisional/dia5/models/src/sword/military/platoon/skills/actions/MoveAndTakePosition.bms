@@ -7,6 +7,8 @@ rootnode
 {
     connections = { skill.nodes.MoveTo, skill.nodes.TakePosition },
 
+    feedbacks = { "elementFailed" },
+
     -- --------------------------------------------------------------------------------
     -- Feedback when position reached and when occupied
     -- --------------------------------------------------------------------------------
@@ -14,6 +16,9 @@ rootnode
         Feedback( self.feedbacks.done, additionalParams )
     end,
 
+    failed = function( self, params, additionalParams )
+        Feedback( self.feedbacks.elementFailed, additionalParams )
+    end,
 
     -- --------------------------------------------------------------------------------
     -- Move toward the objective, when it is possible (not occupied, reached...),
@@ -49,6 +54,7 @@ node "TakePosition"
             end
         else
             myself.blockForcesContinue = nil
+            Feedback( self.feedbacks.failed, { reason = "blocked", element = self.params.position } ) -- un obstacle ou l'eau me bloque
         end
     end
 }

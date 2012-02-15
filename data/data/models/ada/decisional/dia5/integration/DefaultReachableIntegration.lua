@@ -351,6 +351,7 @@ integration.updateMoveToIt = function( objective, pathType )
         if objective[myself].rcDone ~= etat then
             meKnowledge:RC( eRC_TerrainDifficile )
             objective[ myself ].rcDone = etat
+            myself.canBeBlocked = true
         end
     elseif etat == eEtatActionDeplacement_CheminPartiel then
         myself.canBeBlocked = true
