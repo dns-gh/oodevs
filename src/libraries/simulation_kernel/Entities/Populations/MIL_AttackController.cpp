@@ -49,7 +49,7 @@ void MIL_AttackController::Attack( MIL_PopulationElement_ABC& attacking )
     for( TER_PopulationConcentration_ABC::CIT_PopulationConcentrationVector it = concentrations.begin(); it != concentrations.end(); ++it )
     {
         MIL_PopulationConcentration* pElement = static_cast< MIL_PopulationConcentration* >( *it );
-        if( pElement && pElement->GetID() != attacking.GetID() )
+        if( pElement && pElement->GetID() != attacking.GetID() && pElement->GetHealthyHumans() > 0 && attacking.GetHealthyHumans() > 0 )
         {
             const unsigned int id = pElement->GetID();
             T_Effect& effect = effects_[ id ];
