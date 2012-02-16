@@ -62,8 +62,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     , pSplittingObject_( 0 )
     , hasDoneMagicMove_( false )
     , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
-    , pAttackController_   ( new MIL_AttackController( TER_World::GetWorld().GetPopulationManager().GetConcentrationManager(),
-                                                       MIL_EffectManager::GetEffectManager() ) )
+    , pAttackController_   ( new MIL_AttackController() )
 {
     // NOTHING
 }
@@ -78,8 +77,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     , pSplittingObject_    ( 0 )
     , hasDoneMagicMove_( false )
     , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
-    , pAttackController_   ( new MIL_AttackController( TER_World::GetWorld().GetPopulationManager().GetConcentrationManager(),
-                                                       MIL_EffectManager::GetEffectManager() ) )
+    , pAttackController_   ( new MIL_AttackController() )
 {
     // Position
     MIL_Tools::ConvertCoordMosToSim( xis.attribute< std::string >( "position" ), position_ );
@@ -101,8 +99,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     , pSplittingObject_    ( 0 )
     , hasDoneMagicMove_( false )
     , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
-    , pAttackController_   ( new MIL_AttackController( TER_World::GetWorld().GetPopulationManager().GetConcentrationManager(),
-                                                       MIL_EffectManager::GetEffectManager() ) )
+    , pAttackController_   ( new MIL_AttackController() )
 {
     PushHumans( MIL_PopulationHumans( nHumans ) );
     UpdateLocation();
