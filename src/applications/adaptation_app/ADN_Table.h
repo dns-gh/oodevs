@@ -28,7 +28,7 @@ public:
     void* GetCurrentData();
     void  setEnabled( bool b );
 
-    void AdjustColumns( int nMinWidth );
+    void AdjustColumns( int nMinWidth = -1 );
 
     int ComputeNbrPrintPages( const QSize& painterSize ) const;
     void Print( int nPage, QPainter& painter, const QSize& painterSize );
@@ -39,6 +39,7 @@ public:
 
     // SBO 2005-09-01 : was protected
     virtual void sortColumn( int nCol, bool bAscending = true, bool wholerows = false );
+    virtual bool event(QEvent *event);
 
 protected:
     virtual void drawContents ( QPainter * p, int cx, int cy, int cw, int ch );
@@ -52,6 +53,7 @@ protected:
 protected slots:
     virtual void OnContextMenu( int nRow, int nCol, const QPoint& pt );
     void UpdateEnableState();
+    QString GetToolTips( int nRow, int nCol ) const;
 
     virtual void doValueChanged( int row, int col );
 

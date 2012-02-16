@@ -112,6 +112,9 @@ public:
         pItemLoadable->GetConnector().Connect( &static_cast< ComposanteInfos* >( pObj )->bLoadable_ );
         pItemConveyor->GetConnector().Connect( &static_cast< ComposanteInfos* >( pObj )->bConveyor_ );
         pItemNbrHuman->GetConnector().Connect( &static_cast< ComposanteInfos* >( pObj )->nNbrHumanInCrew_ );
+
+        // Resize column
+        tab_.adjustColumn( 0 );
     }
 
 private:

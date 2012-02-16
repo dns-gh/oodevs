@@ -102,12 +102,13 @@ void ADN_Table::paintEmptyArea( QPainter* pPainter, int nX, int nY, int nWidth, 
 // Name: ADN_Table::AdjustColumns
 // Created: APE 2005-04-01
 // -----------------------------------------------------------------------------
-void ADN_Table::AdjustColumns( int nMinWidth )
+void ADN_Table::AdjustColumns( int nMinWidth /*= -1*/ )
 {
-    for( int n = 0; n < this->numCols(); ++n )
+    for( int n = 0; n < numCols(); ++n )
     {
-        this->adjustColumn( n );
-        this->setColumnWidth( n, std::max< int >( this->columnWidth( n ) + 5, nMinWidth ) );
+        adjustColumn( n );
+        if( nMinWidth != -1 )
+            setColumnWidth( n, std::max< int >( columnWidth( n ) + 5, nMinWidth ) );
     }
 }
 
@@ -378,7 +379,7 @@ void ADN_Table::SaveToXls( const QString& path, const QString& sheetName ) const
             // Merge
             if( qItem->rowSpan() != 1  || qItem->colSpan() != 1 )
             {
-                sheet->MergeCells( row, col, qItem->rowSpan(), qItem->colSpan() );
+                sheet->MergeCells( row, col, static_cast< USHORT >( qItem->rowSpan() ), static_cast< USHORT >( qItem->colSpan() ) );
                 format.set_alignment( EXCEL_VALIGN_CENTRED );
                 for( int i = 0; i < qItem->rowSpan(); ++i )
                     for( int j = 0; j < qItem->colSpan(); ++j )
@@ -419,3 +420,80 @@ void ADN_Table::SaveToXls( const QString& path, const QString& sheetName ) const
 
     xls.SaveAs( path.ascii() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::GetToolTips
+// Created: ABR 2012-02-16
+// -----------------------------------------------------------------------------
+QString ADN_Table::GetToolTips( int nRow, int nCol ) const
+{
+    assert( nRow >= 0 && nRow < numRows() && nCol >= 0 && nCol < numCols() );
+
+    Q3TableItem* it = item( nRow, nCol );
+    if( it )
+        return it->text();
+    else
+        return "";
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::event
+// Created: ABR 2012-02-16
+// -----------------------------------------------------------------------------
+bool ADN_Table::event(QEvent *event)
+{
+    if( event->type() == QEvent::ToolTip )
+    {
+        QHelpEvent *helpEvent = static_cast<QHelpEvent *>(event);
+
+        const int yPos = helpEvent->pos().y();
+        const int xPos = helpEvent->pos().x();
+        bool mouseOnHHeader = false;
+        bool mouseOnVHeader = false;
+        int row = 0;
+        int col = 0;
+
+        if( horizontalHeader()->isVisible() )
+        {
+            if( yPos <= horizontalHeader()->height() )
+                mouseOnHHeader = true;
+            else
+                row = rowAt( yPos - horizontalHeader()->height() + verticalScrollBar()->sliderPosition() );
+        }
+        else
+            row = rowAt( yPos + verticalScrollBar()->sliderPosition() );
+
+        if( verticalHeader()->isVisible() )
+        {
+            if( xPos <= verticalHeader()->width() )
+                mouseOnVHeader = true;
+            else
+                col = columnAt( xPos - verticalHeader()->width() + horizontalScrollBar()->sliderPosition() );
+        }
+        else
+            col = columnAt( xPos + horizontalScrollBar()->sliderPosition() );
+
+        // Outside, or on both header.
+        if( row == -1 || col == -1 || ( mouseOnHHeader && mouseOnVHeader ) )
+        {
+            QToolTip::hideText();
+            event->ignore();
+        }
+        else
+        {
+            QString toolTips;
+            if( mouseOnHHeader )
+                toolTips = horizontalHeader()->label( col );
+            else if( mouseOnVHeader )
+                toolTips = verticalHeader()->label( row );
+            else
+                toolTips = GetToolTips( row, col );
+
+            if( !toolTips.isEmpty() )
+                QToolTip::showText( helpEvent->globalPos(), toolTips );
+        }
+        return true;
+    }
+    return Q3Table::event(event);
+}
+

@@ -73,8 +73,9 @@ ADN_Units_LogThreshold_GUI::ADN_Units_LogThreshold_GUI( QWidget* pParent )
     // Setup the columns.
     setNumRows( 0 );
     setNumCols( 2 );
-    setColumnStretchable( 0, true );
+    setColumnStretchable( 0, false );
     setColumnStretchable( 1, true );
+    setColumnWidth( 0, 250 );
 
     horizontalHeader()->setLabel( 0, tr( "Logistic supply class" ) );
     horizontalHeader()->setLabel( 1, tr( "Log threshold (%)" ) );
@@ -107,12 +108,20 @@ void ADN_Units_LogThreshold_GUI::OnContextMenu( int /*row*/, int /*col*/, const 
     // Fill the popup menu with submenus, one for each dotation.
     for( helpers::IT_LogisticSupplyClass_Vector it = logisticSupplyClasses.begin(); it != logisticSupplyClasses.end(); ++it )
     {
-        // This id is used to encode the category into the item.
-        int nItemId = (int)(*it);
-        targetMenu.insertItem( (*it)->GetData().c_str(), nItemId );
-    }
+        bool found = false;
+        for( int i = 0; i < numRows() && !found; ++i )
+            if( text( i, 0 ).ascii() == (*it)->GetData() )
+                found = true;
 
-    menu.insertItem( tr( "Add class"), &targetMenu ,0 );
+        if( !found )
+        {
+            // This id is used to encode the category into the item.
+            int nItemId = (int)(*it); // $$$$ ABR 2012-02-16: OMG
+            targetMenu.insertItem( (*it)->GetData().c_str(), nItemId );
+        }
+    }
+    if( targetMenu.count() > 0 )
+        menu.insertItem( tr( "Add class"), &targetMenu ,0 );
     if( GetCurrentData() != 0 )
         menu.insertItem( tr( "Remove class" ), 1 );
 
@@ -120,7 +129,7 @@ void ADN_Units_LogThreshold_GUI::OnContextMenu( int /*row*/, int /*col*/, const 
     if( nMenuResult == 1 )
         RemoveCurrentLogSupplyClass();
     else if( nMenuResult > 1 )
-        AddNewLogSupplyClass( *(helpers::LogisticSupplyClass*)nMenuResult );
+        AddNewLogSupplyClass( *(helpers::LogisticSupplyClass*)nMenuResult ); // $$$$ ABR 2012-02-16: OMFG
 }
 
 // -----------------------------------------------------------------------------
@@ -147,4 +156,3 @@ void ADN_Units_LogThreshold_GUI::RemoveCurrentLogSupplyClass()
     assert( GetCurrentData() != 0 );
     static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem( GetCurrentData() );
 }
-
