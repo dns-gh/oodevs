@@ -585,7 +585,11 @@ public:
 		eRC_NoFiresWithinArea,
 		eRC_StartingToDecontaminate,
 		eRC_DecontaminationDone,
-        eLast // 438
+		eRC_StartingToHealCrowd,
+		eRC_WoundedPersonsHealed,
+		eRC_StartingToExtractVictimsFromCrowd,// 440
+		eRC_WoundedCannotBeHealed,
+        eLast // 442
     };
     //@}
 public:

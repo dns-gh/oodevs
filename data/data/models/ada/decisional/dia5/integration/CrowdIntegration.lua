@@ -339,7 +339,6 @@ end
 integration.extractVictimsFromCrowd = function( crowd )
     local nearestPosition = DEC_ConnaissancePopulation_PointPlusProche( crowd.source )
     crowd.getCrowdPositionResult = crowd.getCrowdPositionResult or nearestPosition
-    meKnowledge:RC( eRC_VictimsExtracted )
     return DEC_Crowd_ExtractWoundedFromCrowd( crowd.source, crowd.getCrowdPositionResult )
 end
 
@@ -349,4 +348,8 @@ end
 
 integration.healWoundedInCrowd = function( crowd )
     return DEC_Crowd_HealWoundedHumans( crowd.source )
+end
+
+integration.getNbWoundedInCrowd = function( crowd )
+    return DEC_Crowd_GetNbreOfWoundedHumans()
 end

@@ -20,18 +20,12 @@ rootnode
         Feedback( self.feedbacks.extracted, params )
         self.arrived = false
         self.nextTargetIndex = self.nextTargetIndex + 1
-        if self.nextTargetIndex > #self.params.victimsUnits then
-            Feedback( self.feedbacks.done )
-        end
     end,
 
     extractionImpossible = function( self, params )
         Feedback( self.feedbacks.notExtracted, { victimsUnit = params.victimsUnit } )
         self.arrived = false
         self.nextTargetIndex = self.nextTargetIndex + 1
-        if self.nextTargetIndex > #self.params.victimsUnits then
-            Feedback( self.feedbacks.done )
-        end
     end,
 
     -- --------------------------------------------------------------------------------
@@ -49,8 +43,8 @@ rootnode
         local Activate = Activate
 
         local paramsSize = #self.params.victimsUnits
-        if self.nextTargetIndex <= paramsSize then
-            if paramsSize > 0 then
+        if paramsSize > 0 then 
+            if self.nextTargetIndex <= paramsSize then
                 self.victimsUnit = self.params.victimsUnits[ self.nextTargetIndex ]
                 if self.arrived then
                     if self.victimsUnit:canVictimsBeExtracted() then
@@ -62,8 +56,10 @@ rootnode
                     Activate( skill.links.reach, 1, { destination = self.victimsUnit } )
                 end
             else
-                Feedback( self.feedbacks.failed )
+                Feedback( self.feedbacks.done )
             end
+        else
+            Feedback( self.feedbacks.failed )
         end
     end
 }

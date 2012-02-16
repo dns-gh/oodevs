@@ -4,8 +4,7 @@
 A crowd has a a density that evolves during locomotion.&#xD;
 A crowd is oriented. It has three sections: front, middle, back.&#xD;
 A crowd can be calm or upset.&#xD;
-A crowd can victims. &#xD;
-</description>
+A crowd can victims. </description>
     <realizes>agent.world.Victims</realizes>
     <realizes>agent.world.Transportable</realizes>
     <realizes>agent.world.Wounded</realizes>
@@ -44,7 +43,8 @@ A crowd can victims. &#xD;
         </method>
         <method name="extractVictimsFromIt" abstract="false">
             <description>To extract wounded victims from this element.&#xD;
-This implementation create a new crowd with wounded elements on a near position. New crowd created contains as many elements as there are wounded victims within this crowd.</description>
+&#xD;
+This implementation create a new crowd with wounded elements on a near position. New crowd created contains as many elements as there are wounded victims within this crowd before the extraction.</description>
             <return>
                 <description>Returns true once all wounded victims have been extracted from this element.&#xD;
 This implementation returns true once a new crowd of wounded elements have been created.</description>
@@ -97,7 +97,7 @@ This implementation makes agent Unit &quot;magically&quot; load 'this' entity af
         <method name="unloadIt" abstract="false">
             <description>Action of unloading this element from agent Unit.&#xD;
 &#xD;
-This implementation makes agent Unit magically unload 'this' entity after a defined delay (in minutes).</description>
+This implementation makes agent Unit magically unload  the crowd after a defined delay (in minutes). Unloading position is right on the agent Unit's position.</description>
             <return>
                 <description>Returns 'true' on action completion,  'false' otherwise.&#xD;
 &#xD;
@@ -122,7 +122,10 @@ This implementation makes agent Unit &quot;magically&quot; unload 'this' entity 
             </return>
         </method>
         <method name="healIt" abstract="false">
-            <description>For agent Unit, to act on this element to heal all wounded persons within it.</description>
+            <description>For agent Unit, to act on this element to heal all wounded persons within it. &#xD;
+&#xD;
+This implementation heal magically all injured elements within the Crowd.&#xD;
+</description>
             <return>
                 <type>
                     <simple name="boolean"/>
@@ -138,7 +141,9 @@ This implementation makes agent Unit &quot;magically&quot; unload 'this' entity 
             </return>
         </method>
         <method name="canBeHealed" abstract="false">
-            <description>Returns 'true' if this element can be healed. </description>
+            <description>Returns 'true' if this element can be healed. &#xD;
+&#xD;
+This implementation returns 'true' if this element is reached. </description>
             <return>
                 <type>
                     <simple name="boolean"/>

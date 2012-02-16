@@ -51,6 +51,7 @@ public:
                            static bool ExtractWoundedFromCrowd( const MIL_AgentPion& callerPion, unsigned int knowledgeId, const MT_Vector2D* position );
 						   static bool HasWoundedHumans( const MIL_AgentPion& caller, int knowledgeId );
 						   static bool HealWoundedHumans( const MIL_AgentPion& caller, int knowledgeId );
+						   static int GetNbreOfWoundedHumans( const MIL_AgentPion& caller, int knowledgeId );
     //@}
 };
 

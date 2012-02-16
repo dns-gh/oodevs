@@ -1,4 +1,15 @@
 -- --------------------------------------------------------------------------------
+-- Delays for magic actions in MINUTES
+-- --------------------------------------------------------------------------------
+local healActionDelays        = 2
+local extractionActionDelays  = 2
+
+-- --------------------------------------------------------------------------------
+-- Distance to find crowd's concentration around in METERS
+-- --------------------------------------------------------------------------------
+local crowdConcentrationRadius = 100
+
+-- --------------------------------------------------------------------------------
 -- VictimsUnit implementation
 -- --------------------------------------------------------------------------------
 method "canVictimsBeEvacuated" (
@@ -9,7 +20,7 @@ method "canVictimsBeEvacuated" (
 
 method "canVictimsBeExtracted" (
     function( self )
-        local hasWoundedHumans = integration.crowdHasWoundHumans( self )
+        local hasWoundedHumans = self:isWounded()
         if self:isReached() and hasWoundedHumans then
             return true
         else
@@ -21,21 +32,32 @@ method "canVictimsBeExtracted" (
         end
     end )
 
-method "extractVictimsFromIt" (
-    function( self )
-        return integration.extractVictimsFromCrowd( self )
-    end )
+method "extractVictimsFromIt" ( masalife.brain.integration.startStopAction(
+{
+    start = function( self )
+        meKnowledge:sendReport( eRC_StartingToExtractVictimsFromCrowd )
+        return false
+    end,
+    started = function( self )
+        if waitInMin( self, extractionActionDelays ) then
+            meKnowledge:sendReport( eRC_VictimsExtracted )
+            return integration.extractVictimsFromCrowd( self ) -- magic action
+        end
+        return false
+    end
+} ) )
 
 -- --------------------------------------------------------------------------------
 -- Transport
 -- --------------------------------------------------------------------------------
 method "canBeLoaded" ( 
     function( self )
-        if integration.isTransportingCrowd() then -- $$$ MIA hack.
+        -- $$$ MIA temp hack Begin
+        if integration.isTransportingCrowd() then 
             return true
-        end
+        end -- $$$ MIA temp End
         if self:isReached() then -- check if there is a concentration to load
-            local concentration = integration.getNearbyConcentration( self, self, 100 )
+            local concentration = integration.getNearbyConcentration( self, self, crowdConcentrationRadius )
             if concentration ~= nil then
                 if integration.canTransportCrowd() then -- agent has physical capability?
                     return true
@@ -62,7 +84,7 @@ method "isLoaded" (
 method "loadIt" ( masalife.brain.integration.startStopAction( 
 {
     start = function( self )
-        local concentration = integration.getNearbyConcentration( self, self, 100 )
+        local concentration = integration.getNearbyConcentration( self, self, crowdConcentrationRadius )
         if concentration ~= nil then
             return integration.startLoadCrowd( self, concentration )
         else
@@ -99,14 +121,33 @@ method "isWounded" (
         return integration.crowdHasWoundHumans( self )
     end )
 
-method "healIt" ( 
-    function( self )
-        return integration.healWoundedInCrowd( self )
-    end )
+method "healIt" ( masalife.brain.integration.startStopAction(
+{
+    start = function( self )
+        meKnowledge:sendReport( eRC_StartingToHealCrowd )
+        return false
+    end,
+    started = function( self )
+        if waitInMin( self, healActionDelays ) then -- $$$ temp
+            meKnowledge:sendReport( eRC_WoundedPersonsHealed )
+            return integration.healWoundedInCrowd( self ) -- magic
+        end
+        return false
+    end
+} ) )
 
-method "canBeHealed" ( 
+method "canBeHealed" (
     function( self )
-        return self:isReached() -- add physical capabilities
+        local hasWoundedHumans = self:isWounded()
+        if self:isReached() and hasWoundedHumans then
+            return true
+        else
+            meKnowledge:sendReport( eRC_WoundedCannotBeHealed )
+            if not hasWoundedHumans then
+                meKnowledge:sendReport( eRC_NoWoundedVictims )
+            end
+            return false
+        end
     end )
 
 -- --------------------------------------------------------------------------------
@@ -114,7 +155,7 @@ method "canBeHealed" (
 -- --------------------------------------------------------------------------------
 method "hasConcentration" ( 
     function( self, position )
-        local concentration = integration.getNearbyConcentration( self, position, 100 )
+        local concentration = integration.getNearbyConcentration( self, position, crowdConcentrationRadius )
         if concentration == 0 then -- no concentration found
             return false
         end

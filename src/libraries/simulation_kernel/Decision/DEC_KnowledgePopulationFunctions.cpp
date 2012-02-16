@@ -315,3 +315,18 @@ bool DEC_KnowledgePopulationFunctions::HealWoundedHumans( const MIL_AgentPion& c
     }
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgePopulationFunctions::GetNbreOfWoundedHumans
+// Created: MIA 2011-02-16
+// -----------------------------------------------------------------------------
+int DEC_KnowledgePopulationFunctions::GetNbreOfWoundedHumans( const MIL_AgentPion& caller, int knowledgeId )
+{
+    DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
+    if( pKnowledge )
+    {
+			MIL_Population& population = pKnowledge->GetPopulationKnown();
+            return population.GetWoundedHumans();
+    }
+    return 0;
+}

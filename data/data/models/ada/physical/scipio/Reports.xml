@@ -609,5 +609,9 @@
   <report category="operational" id="435" message="Pas d'incendie dans la zone"/>
   <report category="operational" id="436" message="Début de la décontamination de la zone"/>
   <report category="operational" id="437" message="Fin de la décontamination de la zone"/>
+  <report category="operational" id="438" message="Commence à soigner les bléssés"/>
+  <report category="operational" id="439" message="Fin des soins"/>
+  <report category="operational" id="440" message="Début de l'extraction des victimes"/>
+  <report category="operational" id="441" message="Impossible de guérir les  bléssés"/>
 </reports>
-<!-- signature="3414195085" -->
+<!-- signature="2222151283" -->

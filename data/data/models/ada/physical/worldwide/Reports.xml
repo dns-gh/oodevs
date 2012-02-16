@@ -609,5 +609,9 @@
   <report category="operational" id="435" message="No fires within area"/>
   <report category="operational" id="436" message="Starting to decontaminate"/>
   <report category="operational" id="437" message="Decontamination done"/>
+  <report category="operational" id="438" message="Starting to heal the crowd"/>
+  <report category="operational" id="439" message="Wounded persons healed"/>
+  <report category="operational" id="440" message="Starting to extract victims"/>
+  <report category="operational" id="441" message="Wounded cannot be healed"/>
 </reports>
-<!-- signature="3194112119" -->
+<!-- signature="0315518178" -->
