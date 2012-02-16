@@ -33,5 +33,11 @@ Populated areas are visited in the order of the list. </description>
                 </type>
             </argument>
         </feedback>
+        <feedback name="done">
+            <description>Sent when all &quot;populatedAreas&quot; have been visited.</description>
+        </feedback>
+        <feedback name="failed">
+            <description>Sent if the set of &quot;populatedAreas&quot; is empty (no element to act on).</description>
+        </feedback>
     </feedbacks>
 </skill>

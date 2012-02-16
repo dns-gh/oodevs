@@ -10,7 +10,7 @@
         <skill name="behaviors.skills.primitives.Confine"/>
         <skill name="behaviors.skills.primitives.Create"/>
         <skill name="behaviors.skills.primitives.Disable"/>
-        <skill name="behaviors.skills.primitives.EnsureEvacuation"/>
+        <skill name="behaviors.skills.primitives.EnsureVictimsEvacuation"/>
         <skill name="behaviors.skills.primitives.Evacuate"/>
         <skill name="behaviors.skills.primitives.ExtractVictims"/>
         <skill name="behaviors.skills.primitives.Reach"/>

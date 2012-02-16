@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.skills.primitives.EnsureEvacuation" source-version="1.0.0">
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.skills.primitives.EnsureVictimsEvacuation" source-version="1.0.0">
     <description>To ensure the evacuation of wounded humans contained in a set  of a given &quot;VictimsUnits&quot;. Each wounded humans are evacuated by the issued 'medicalUnit'.&#xD;
 &#xD;
 When several &quot;VictimsUnit&quot; should be evacuated, the agent acts on each unit by following the order of the elements into the 'victimsUnits' list.&#xD;

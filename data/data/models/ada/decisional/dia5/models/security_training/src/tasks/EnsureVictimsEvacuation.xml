@@ -25,7 +25,7 @@ Wounded human victims won't be evacuated if:&#xD;
         <stage label="Starting to evacuate victims from units" disable-when-done="true">
             <description>Reach each victims unit and try to make wounded humans evacuated through the medical unit. </description>
             <skills>
-                <skill name="behaviors.skills.primitives.EnsureEvacuation" main="true">
+                <skill name="behaviors.skills.primitives.EnsureVictimsEvacuation" main="true">
                     <parameter name="medicalUnit">
                         <value>
                             <parameter>medicalUnit</parameter>
