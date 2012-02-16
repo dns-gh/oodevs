@@ -4971,18 +4971,6 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation></translation>
     </message>
     <message>
-        <source>NatureAtlas</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>AgentKnowledge</source>
-        <translation>Connaissance Agent</translation>
-    </message>
-    <message>
-        <source>ObjectKnowledge</source>
-        <translation>Connaissance Objet</translation>
-    </message>
-    <message>
         <source>Path</source>
         <translation>Itinéraire</translation>
     </message>
@@ -4999,28 +4987,8 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation>Localisation</translation>
     </message>
     <message>
-        <source>EquipmentType</source>
-        <translation>Type d&apos;Equipement</translation>
-    </message>
-    <message>
-        <source>MaintenancePriorities</source>
-        <translation>Priorités de Maintenance</translation>
-    </message>
-    <message>
-        <source>MedicalPriorities</source>
-        <translation>Priorités Médicales</translation>
-    </message>
-    <message>
-        <source>IndirectFire</source>
-        <translation>Tir indirect</translation>
-    </message>
-    <message>
         <source>Limit</source>
         <translation>Limite</translation>
-    </message>
-    <message>
-        <source>LocationComposite</source>
-        <translation></translation>
     </message>
     <message>
         <source>Organization</source>
@@ -5067,35 +5035,7 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>DateTime</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>CrowdKnowledge</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PlannedWork</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ResourceType</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>PhaseLine</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>UrbanKnowledge</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>lima</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>ResourceNetwork</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -5140,6 +5080,70 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>Cloud</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Date Time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Nature Atlas</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Agent knowledge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Object knowledge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crowd knowledge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Planned work</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Equipment type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resource type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maintenance priorities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Medical priorities</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Indirect fire</source>
+        <translation type="unfinished">Fuego indirecto</translation>
+    </message>
+    <message>
+        <source>Phase line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Urban knowledge</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Location composite</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resource network node</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Resource network type</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

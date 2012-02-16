@@ -16,6 +16,6 @@ Parameter.inl \
 ParameterList.cpp \
 Parameter_ABC.cpp \
 Path.cpp \
-ResourceNetwork.cpp \
+ResourceNetworkNode.cpp \
 
 TRANSLATIONS = actions_fr.ts actions_es.ts

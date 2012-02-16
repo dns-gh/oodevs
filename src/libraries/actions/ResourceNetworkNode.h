@@ -3,12 +3,12 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2011 MASA Group
+// Copyright (c) 2012 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __ActionParameterResourceNetwork_h_
-#define __ActionParameterResourceNetwork_h_
+#ifndef __action_ResourceNetworkNode_h_
+#define __action_ResourceNetworkNode_h_
 
 #include "Entity.h"
 #include "clients_kernel/Object_ABC.h"
@@ -28,22 +28,22 @@ namespace actions
     namespace parameters {
 
 // =============================================================================
-/** @class  ResourceNetwork
-    @brief  ResourceNetwork
+/** @class  ResourceNetworkNode
+    @brief  ResourceNetworkNode
 */
-// Created: JSR 2011-05-02
+// Created: ABR 2012-02-15
 // =============================================================================
-class ResourceNetwork : public Entity< kernel::Object_ABC >
+class ResourceNetworkNode : public Entity< kernel::Object_ABC >
 {
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ResourceNetwork( const kernel::OrderParameter& parameter, kernel::Controller& controller );
-             ResourceNetwork( const kernel::OrderParameter& parameter, const kernel::Object_ABC& object, const std::string& resource, kernel::Controller& controller );
-             ResourceNetwork( const kernel::OrderParameter& parameter, const sword::ResourceNetworkElement& resourceNetwork, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
-             ResourceNetwork( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
-    virtual ~ResourceNetwork();
+    ResourceNetworkNode( const kernel::OrderParameter& parameter, kernel::Controller& controller );
+    ResourceNetworkNode( const kernel::OrderParameter& parameter, const kernel::Object_ABC& object, const std::string& resource, kernel::Controller& controller );
+    ResourceNetworkNode( const kernel::OrderParameter& parameter, const sword::ResourceNetworkElement& resourceNetwork, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
+    ResourceNetworkNode( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller );
+    virtual ~ResourceNetworkNode();
     //@}
 
     //! @name Operations
@@ -69,4 +69,4 @@ private:
 }
 }
 
-#endif // __ActionParameterResourceNetwork_h_
+#endif // __action_ResourceNetworkNode_h_

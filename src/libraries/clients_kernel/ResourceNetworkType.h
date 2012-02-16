@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef __ResourceNetworkType_h_
-#define __ResourceNetworkType_h_
+#ifndef __kernel_ResourceNetworkType_h_
+#define __kernel_ResourceNetworkType_h_
 
 namespace xml
 {

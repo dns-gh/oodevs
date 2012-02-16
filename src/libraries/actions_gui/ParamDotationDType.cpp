@@ -17,6 +17,7 @@
 #include "clients_kernel/StaticModel.h"
 #include "protocol/Protocol.h"
 #include "tools/Iterator.h"
+#include "tools/Resolver.h"
 
 using namespace actions::gui;
 
@@ -55,11 +56,7 @@ QWidget* ParamDotationDType::BuildInterface( QWidget* parent )
         {
             const kernel::DotationType& type = it.NextElement();
             if( type.IsAmmunition() && dotations->Accept( type ) )
-            {
-                sword::ResourceType dot;
-                dot.set_id( type.GetId() );
-                AddItem( type.GetName().c_str(), dot.id() );
-            }
+                AddItem( type.GetName().c_str(), type.GetId() );
         }
     }
     return ParamComboBox< int >::BuildInterface( parent );

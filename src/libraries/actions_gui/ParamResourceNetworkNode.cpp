@@ -3,16 +3,16 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2011 MASA Group
+// Copyright (c) 2012 MASA Group
 //
 // *****************************************************************************
 
 #include "actions_gui_pch.h"
-#include "ParamResourceNetwork.h"
-#include "moc_ParamResourceNetwork.cpp"
+#include "ParamResourceNetworkNode.h"
+#include "moc_ParamResourceNetworkNode.cpp"
 #include "InterfaceBuilder_ABC.h"
 #include "actions/ParameterContainer_ABC.h"
-#include "actions/ResourceNetwork.h"
+#include "actions/ResourceNetworkNode.h"
 #include "actions/String.h"
 #include "actions_gui/MissionInterface_ABC.h"
 #include "clients_gui/RichLabel.h"
@@ -24,10 +24,10 @@
 using namespace actions::gui;
 
 // -----------------------------------------------------------------------------
-// Name: ParamResourceNetwork constructor
+// Name: ParamResourceNetworkNode constructor
 // Created: JSR 2011-05-02
 // -----------------------------------------------------------------------------
-ParamResourceNetwork::ParamResourceNetwork( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
+ParamResourceNetworkNode::ParamResourceNetworkNode( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
     : Param_ABC     ( builder.GetParentObject(), builder.GetParamInterface(), parameter )
     , controller_   ( builder.GetControllers().controller_ )
     , current_      ( 0 )
@@ -39,20 +39,20 @@ ParamResourceNetwork::ParamResourceNetwork( const InterfaceBuilder_ABC& builder,
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamResourceNetwork destructor
+// Name: ParamResourceNetworkNode destructor
 // Created: JSR 2011-05-02
 // -----------------------------------------------------------------------------
-ParamResourceNetwork::~ParamResourceNetwork()
+ParamResourceNetworkNode::~ParamResourceNetworkNode()
 {
     delete objectName_;
     delete resourceName_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamResourceNetwork::BuildInterface
+// Name: ParamResourceNetworkNode::BuildInterface
 // Created: JSR 2011-05-02
 // -----------------------------------------------------------------------------
-QWidget* ParamResourceNetwork::BuildInterface( QWidget* parent )
+QWidget* ParamResourceNetworkNode::BuildInterface( QWidget* parent )
 {
     Param_ABC::BuildInterface( parent );
     QGridLayout* layout = new QGridLayout( group_ );
@@ -65,30 +65,30 @@ QWidget* ParamResourceNetwork::BuildInterface( QWidget* parent )
     resourceName_->setAlignment( Qt::AlignCenter );
     resourceName_->setFrameStyle( QFrame::Box | QFrame::Sunken );
 
-    layout->addWidget( new ::gui::RichLabel( tools::translate( "ParamResourceNetwork", "Object" ), false, parent ), 0, 0 ); // $$$$ ABR 2012-01-05: TODO: Replace RichLabel by QLabel
+    layout->addWidget( new ::gui::RichLabel( tools::translate( "ParamResourceNetworkNode", "Object" ), false, parent ), 0, 0 ); // $$$$ ABR 2012-01-05: TODO: Replace RichLabel by QLabel
     layout->addWidget( objectName_, 0, 1 );
-    layout->addWidget( new ::gui::RichLabel( tools::translate( "ParamResourceNetwork", "Resource" ), false, parent ), 1, 0 );
+    layout->addWidget( new ::gui::RichLabel( tools::translate( "ParamResourceNetworkNode", "Resource" ), false, parent ), 1, 0 );
     layout->addWidget( resourceName_, 1, 1 );
     return group_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamResourceNetwork::CommitTo
+// Name: ParamResourceNetworkNode::CommitTo
 // Created: JSR 2011-05-02
 // -----------------------------------------------------------------------------
-void ParamResourceNetwork::CommitTo( actions::ParameterContainer_ABC& parameter ) const
+void ParamResourceNetworkNode::CommitTo( actions::ParameterContainer_ABC& parameter ) const
 {
     if( IsChecked() && selected_ )
-        parameter.AddParameter( *new actions::parameters::ResourceNetwork( parameter_, *selected_, resourceName_->text().ascii(), controller_ ) );
+        parameter.AddParameter( *new actions::parameters::ResourceNetworkNode( parameter_, *selected_, resourceName_->text().ascii(), controller_ ) );
     else
-        parameter.AddParameter( *new actions::parameters::ResourceNetwork( parameter_, controller_ ) );
+        parameter.AddParameter( *new actions::parameters::ResourceNetworkNode( parameter_, controller_ ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamResourceNetwork::CreateInternalMenu
+// Name: ParamResourceNetworkNode::CreateInternalMenu
 // Created: ABR 2012-01-06
 // -----------------------------------------------------------------------------
-void ParamResourceNetwork::CreateInternalMenu( kernel::ContextMenu& menu )
+void ParamResourceNetworkNode::CreateInternalMenu( kernel::ContextMenu& menu )
 {
     kernel::ContextMenu* internalMenu = new kernel::ContextMenu( &menu );
     internalMenu->setTitle( GetMenuName() );
@@ -103,10 +103,10 @@ void ParamResourceNetwork::CreateInternalMenu( kernel::ContextMenu& menu )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamResourceNetwork::OnMenuClick
+// Name: ParamResourceNetworkNode::OnMenuClick
 // Created: JSR 2011-05-02
 // -----------------------------------------------------------------------------
-void ParamResourceNetwork::OnMenuClick( QAction* action )
+void ParamResourceNetworkNode::OnMenuClick( QAction* action )
 {
     selected_ = current_;
     if( selected_ )
@@ -129,10 +129,10 @@ void ParamResourceNetwork::OnMenuClick( QAction* action )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamResourceNetwork::NotifyContextMenu
+// Name: ParamResourceNetworkNode::NotifyContextMenu
 // Created: JSR 2011-05-02
 // -----------------------------------------------------------------------------
-void ParamResourceNetwork::NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu )
+void ParamResourceNetworkNode::NotifyContextMenu( const kernel::Object_ABC& entity, kernel::ContextMenu& menu )
 {
     // $$$$ JSR 2011-05-02: TODO gérer Deleted
     current_ = 0;
@@ -149,10 +149,11 @@ void ParamResourceNetwork::NotifyContextMenu( const kernel::Object_ABC& entity, 
 }
 
 // -----------------------------------------------------------------------------
-// Name: ParamResourceNetwork::InternalCheckValidity
+// Name: ParamResourceNetworkNode::InternalCheckValidity
 // Created: ABR 2011-11-22
 // -----------------------------------------------------------------------------
-bool ParamResourceNetwork::InternalCheckValidity() const
+bool ParamResourceNetworkNode::InternalCheckValidity() const
 {
     return selected_ != 0;
 }
+

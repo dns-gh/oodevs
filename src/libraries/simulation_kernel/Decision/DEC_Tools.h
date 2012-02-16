@@ -39,6 +39,7 @@ class PHY_HumanWound;
 class PHY_Population_ActionFireOnPion;
 class PHY_Population_ActionFireOnPions;
 class PHY_Population_ActionMove;
+class PHY_ResourceNetworkType;
 class TER_Localisation;
 class UrbanObjectWrapper;
 
@@ -86,6 +87,8 @@ namespace directia
     void ReleasedByDIA( TER_Localisation* );
     void UsedByDIA( PHY_Action_ABC* );
     void ReleasedByDIA( PHY_Action_ABC* );
+    void UsedByDIA( PHY_ResourceNetworkType* );
+    void ReleasedByDIA( PHY_ResourceNetworkType* );
 }
 
 #endif // __DEC_Tools_h_

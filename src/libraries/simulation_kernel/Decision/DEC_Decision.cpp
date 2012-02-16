@@ -443,8 +443,10 @@ void RegisterMissionParametersFunctions( directia::brain::Brain& brain, bool isM
     brain[ "DEC_AssignMissionDirectionParameter" ] = &MIL_MissionParameterFactory::SetDirectionParameter;
     brain[ "DEC_AssignMissionDotationTypeParameter" ] = &MIL_MissionParameterFactory::SetDotationTypeParameter;
     brain[ "DEC_AssignMissionNumericTypeParameter" ] = &MIL_MissionParameterFactory::SetNumericTypeParameter;
-    brain[ "DEC_AssignMissionResourceNetworkParameter" ] = &MIL_MissionParameterFactory::SetResourceNetworkParameter;
-    brain[ "DEC_AssignMissionResourceNetworkListParameter" ] = &MIL_MissionParameterFactory::CreateResourceNetwork;
+    brain[ "DEC_AssignMissionResourceNetworkParameter" ] = &MIL_MissionParameterFactory::SetResourceNetworkNodeParameter;
+    brain[ "DEC_AssignMissionResourceNetworkListParameter" ] = &MIL_MissionParameterFactory::CreateResourceNetworkNode;
+    brain[ "DEC_AssignMissionResourceNetworkTypeParameter" ] = &MIL_MissionParameterFactory::SetResourceNetworkTypeParameter;
+    brain[ "DEC_AssignMissionResourceNetworkTypeListParameter" ] = &MIL_MissionParameterFactory::CreateResourceNetworkType;
     brain[ "DEC_AssignMissionPathConstParameter" ] = &MIL_MissionParameterFactory::AssignPathConst;
     brain[ "DEC_IsMissionAvailable" ] = &DEC_OrdersFunctions::IsPionMissionAvailable;
     brain[ "DEC_Mission_IsPath" ] = &DEC_OrdersFunctions::DEC_Mission_IsPath;
@@ -937,10 +939,10 @@ bool DotationTypeListFunctionBM( directia::brain::Brain& /*brain*/, directia::to
     return false;
 }
 
-bool ResourceNetworkFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool ResourceNetworkNodeFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     boost::shared_ptr< DEC_ResourceNetwork > value;
-    if( element.ToResourceNetwork( value ) && value )
+    if( element.ToResourceNetworkNode( value ) && value )
     {
         knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.resourceNetwork" ], name, value, false );
         return true;
@@ -948,12 +950,34 @@ bool ResourceNetworkFunctionBM( directia::brain::Brain& brain, directia::tools::
     return false;
 }
 
-bool ResourceNetworkListFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+bool ResourceNetworkNodeListFunctionBM( directia::brain::Brain& brain, directia::tools::binders::ScriptRef& knowledgeCreateFunction, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
 {
     std::vector< boost::shared_ptr< DEC_ResourceNetwork > > value;
-    if( element.ToResourceNetworkList( value ) )
+    if( element.ToResourceNetworkNodeList( value ) )
     {
         knowledgeCreateFunction( refMission, brain[ "integration.ontology.types.resourceNetwork" ], name, value, true );
+        return true;
+    }
+    return false;
+}
+
+bool ResourceNetworkTypeFunctionBM( directia::brain::Brain& /*brain*/, directia::tools::binders::ScriptRef& /*knowledgeCreateFunction*/, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+{
+    const PHY_ResourceNetworkType* value = 0;
+    if( element.ToResourceNetworkType( value ) && value )
+    {
+        refMission[ name ] = value;
+        return true;
+    }
+    return false;
+}
+
+bool ResourceNetworkTypeListFunctionBM( directia::brain::Brain& /*brain*/, directia::tools::binders::ScriptRef& /*knowledgeCreateFunction*/, const directia::tools::binders::ScriptRef& refMission, const std::string& name, MIL_MissionParameter_ABC& element )
+{
+    std::vector< const PHY_ResourceNetworkType* > value;
+    if( element.ToResourceNetworkTypeList( value ) )
+    {
+        refMission[ name ] = value;
         return true;
     }
     return false;
@@ -1233,8 +1257,10 @@ void InitFunctions()
         functorsBM[ "PhaseLineList" ] = PhaseLineListFunctionBM;
         functorsBM[ "ResourceType" ] = DotationTypeFunctionBM;
         functorsBM[ "ResourceTypeList" ] = DotationTypeListFunctionBM;
-        functorsBM[ "ResourceNetwork" ] = ResourceNetworkFunctionBM;
-        functorsBM[ "ResourceNetworkList" ] = ResourceNetworkListFunctionBM;
+        functorsBM[ "ResourceNetworkNode" ] = ResourceNetworkNodeFunctionBM;
+        functorsBM[ "ResourceNetworkNodeList" ] = ResourceNetworkNodeListFunctionBM;
+        functorsBM[ "ResourceNetworkType" ] = ResourceNetworkTypeFunctionBM;
+        functorsBM[ "ResourceNetworkTypeList" ] = ResourceNetworkTypeListFunctionBM;
     }
 }
 

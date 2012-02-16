@@ -365,10 +365,10 @@ bool MIL_BaseParameter::ToLimaList( std::vector< boost::shared_ptr< TER_Localisa
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_BaseParameter::ToResourceNetwork
+// Name: MIL_BaseParameter::ToResourceNetworkNode
 // Created: JSR 2011-05-03
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToResourceNetwork( boost::shared_ptr< DEC_ResourceNetwork >& ) const
+bool MIL_BaseParameter::ToResourceNetworkNode( boost::shared_ptr< DEC_ResourceNetwork >& ) const
 {
     return false;
 }
@@ -377,7 +377,7 @@ bool MIL_BaseParameter::ToResourceNetwork( boost::shared_ptr< DEC_ResourceNetwor
 // Name: MIL_BaseParameter::ToResourceNetworkList
 // Created: LMT 2011-05-12
 // -----------------------------------------------------------------------------
-bool MIL_BaseParameter::ToResourceNetworkList( std::vector< boost::shared_ptr< DEC_ResourceNetwork > >& ) const
+bool MIL_BaseParameter::ToResourceNetworkNodeList( std::vector< boost::shared_ptr< DEC_ResourceNetwork > >& ) const
 {
     return false;
 }
@@ -396,6 +396,24 @@ void MIL_BaseParameter::Append( boost::shared_ptr< MIL_MissionParameter_ABC > pa
 // Created: BCI 2011-02-08
 // -----------------------------------------------------------------------------
 bool MIL_BaseParameter::ToDotationTypeList( std::vector< const PHY_DotationCategory* >& ) const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_BaseParameter::ToResourceNetworkType
+// Created: ABR 2012-02-15
+// -----------------------------------------------------------------------------
+bool MIL_BaseParameter::ToResourceNetworkType( const PHY_ResourceNetworkType*& ) const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_BaseParameter::ToResourceNetworkTypeList
+// Created: ABR 2012-02-15
+// -----------------------------------------------------------------------------
+bool MIL_BaseParameter::ToResourceNetworkTypeList( std::vector< const PHY_ResourceNetworkType* >& ) const
 {
     return false;
 }

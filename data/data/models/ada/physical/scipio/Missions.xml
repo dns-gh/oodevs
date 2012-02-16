@@ -1047,7 +1047,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="objective" name="Reseau de ressource" optional="false" type="ResourceNetwork"/>
+      <parameter dia-name="objective" name="Reseau de ressource" optional="false" type="ResourceNetworkNode"/>
       <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="france.military.platoon.tasks.ReparerReseau" dia-type="france.military.platoon.tasks.ReparerReseau" id="2144" name="PION GENIE Retablir Point Du Reseau" package="none">
@@ -1055,7 +1055,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="objective" name="Reseau de ressource" optional="false" type="ResourceNetwork"/>
+      <parameter dia-name="objective" name="Reseau de ressource" optional="false" type="ResourceNetworkNode"/>
       <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="france.military.platoon.terrorism.tasks.SInfiltrer" dia-type="france.military.platoon.tasks.ASYSInfiltrer" id="28747" name="PION ASYMETRIQUE S'Infiltrer" package="move">
@@ -1099,7 +1099,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="objective" name="Reseau de ressource" optional="false" type="ResourceNetwork"/>
+      <parameter dia-name="objective" name="Reseau de ressource" optional="false" type="ResourceNetworkNode"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.Reconnaitre" dia-type="france.military.platoon.combat.support.engineer.tasks.Reconnaitre" id="2150" name="PION GENIE Reconnaitre" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2330,7 +2330,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Reseaux de ressources" optional="false" type="ResourceNetwork"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Reseaux de ressources" optional="false" type="ResourceNetworkNode"/>
       <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.tasks.ReparerReseau" dia-type="france.military.company.tasks.ReparerReseau" id="1048" mrt-dia-behavior="france.military.company.tasks.ReparerReseau" name="AUTOMATE GENIE Retablir Point Du Reseau" package="none">
@@ -2339,7 +2339,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Reseaux de ressources" optional="false" type="ResourceNetwork"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Reseaux de ressources" optional="false" type="ResourceNetworkNode"/>
       <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.tasks.PrendreOtage" dia-type="france.military.company.tasks.PrendreOtage" id="1049" mrt-dia-behavior="france.military.company.tasks.PrendreOtage" name="AUTOMATE ASYMETRIQUE Prendre en Otage" package="none">
@@ -2406,7 +2406,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Reseau de ressource" optional="false" type="ResourceNetwork"/>
+      <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Reseau de ressource" optional="false" type="ResourceNetworkNode"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.combat.support.engineer.tasks.Reparer" dia-type="france.military.company.combat.support.engineer.tasks.Reparer" id="1054" mrt-dia-behavior="france.military.company.combat.support.engineer.tasks.Reparer" name="AUTOMATE GENIE Reparer" package="none">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3091,4 +3091,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_RejoindrePointLancement" id="405" name="Rejoindre point de lancement"/>
   </fragorders>
 </missions>
-<!-- signature="3825221677" -->
+<!-- signature="0485663222" -->

@@ -3,12 +3,12 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2011 MASA Group
+// Copyright (c) 2012 MASA Group
 //
 // *****************************************************************************
 
 #include "actions_pch.h"
-#include "ResourceNetwork.h"
+#include "ResourceNetworkNode.h"
 #include "ParameterVisitor_ABC.h"
 #include "Resource.h"
 #include "clients_kernel/EntityResolver_ABC.h"
@@ -22,30 +22,30 @@ using namespace actions;
 using namespace parameters;
 
 // -----------------------------------------------------------------------------
-// Name: ResourceNetwork constructor
+// Name: ResourceNetworkNode constructor
 // Created: ABR 2011-11-17
 // -----------------------------------------------------------------------------
-ResourceNetwork::ResourceNetwork( const kernel::OrderParameter& parameter, kernel::Controller& controller )
+ResourceNetworkNode::ResourceNetworkNode( const kernel::OrderParameter& parameter, kernel::Controller& controller )
     : Entity< kernel::Object_ABC >( parameter, controller )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceNetwork constructor
+// Name: ResourceNetworkNode constructor
 // Created: JSR 2011-05-03
 // -----------------------------------------------------------------------------
-ResourceNetwork::ResourceNetwork( const kernel::OrderParameter& parameter, const kernel::Object_ABC& object, const std::string& resource, kernel::Controller& controller )
+ResourceNetworkNode::ResourceNetworkNode( const kernel::OrderParameter& parameter, const kernel::Object_ABC& object, const std::string& resource, kernel::Controller& controller )
     : Entity< kernel::Object_ABC >( parameter, &object, controller )
 {
     AddResourceParameter( resource );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceNetwork constructor
+// Name: ResourceNetworkNode constructor
 // Created: JSR 2011-05-03
 // -----------------------------------------------------------------------------
-ResourceNetwork::ResourceNetwork( const kernel::OrderParameter& parameter, const sword::ResourceNetworkElement& resourceNetwork, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
+ResourceNetworkNode::ResourceNetworkNode( const kernel::OrderParameter& parameter, const sword::ResourceNetworkElement& resourceNetwork, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
     : Entity< kernel::Object_ABC >( parameter, controller )
 {
     unsigned long id = resourceNetwork.object().id();
@@ -57,10 +57,10 @@ ResourceNetwork::ResourceNetwork( const kernel::OrderParameter& parameter, const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceNetwork constructor
+// Name: ResourceNetworkNode constructor
 // Created: JSR 2011-05-03
 // -----------------------------------------------------------------------------
-ResourceNetwork::ResourceNetwork( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
+ResourceNetworkNode::ResourceNetworkNode( const kernel::OrderParameter& parameter, xml::xistream& xis, const kernel::EntityResolver_ABC& resolver, kernel::Controller& controller )
     : Entity< kernel::Object_ABC >( parameter, controller )
 {
     if( xis.has_attribute( "value" ) )
@@ -70,42 +70,42 @@ ResourceNetwork::ResourceNetwork( const kernel::OrderParameter& parameter, xml::
         if( !object )
             object = resolver.FindObject( id );
         SetValue( object );
-        xis >> xml::list( "parameter", *this, &ResourceNetwork::ReadParameter );
+        xis >> xml::list( "parameter", *this, &ResourceNetworkNode::ReadParameter );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceNetwork destructor
+// Name: ResourceNetworkNode destructor
 // Created: JSR 2011-05-03
 // -----------------------------------------------------------------------------
-ResourceNetwork::~ResourceNetwork()
+ResourceNetworkNode::~ResourceNetworkNode()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceNetwork::Accept
+// Name: ResourceNetworkNode::Accept
 // Created: JSR 2011-05-03
 // -----------------------------------------------------------------------------
-void ResourceNetwork::Accept( ParameterVisitor_ABC& visitor ) const
+void ResourceNetworkNode::Accept( ParameterVisitor_ABC& visitor ) const
 {
     visitor.Visit( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceNetwork::DisplayInToolTip
+// Name: ResourceNetworkNode::DisplayInToolTip
 // Created: JSR 2011-05-04
 // -----------------------------------------------------------------------------
-void ResourceNetwork::DisplayInToolTip( kernel::Displayer_ABC& displayer ) const
+void ResourceNetworkNode::DisplayInToolTip( kernel::Displayer_ABC& displayer ) const
 {
     displayer.Display( "", GetName() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceNetwork::Draw
+// Name: ResourceNetworkNode::Draw
 // Created: JSR 2011-05-04
 // -----------------------------------------------------------------------------
-void ResourceNetwork::Draw( const geometry::Point2f&, const kernel::Viewport_ABC&, const kernel::GlTools_ABC& tools ) const
+void ResourceNetworkNode::Draw( const geometry::Point2f&, const kernel::Viewport_ABC&, const kernel::GlTools_ABC& tools ) const
 {
     const bool selected = tools.ShouldDisplay();
     GLfloat color[4];
@@ -125,10 +125,10 @@ void ResourceNetwork::Draw( const geometry::Point2f&, const kernel::Viewport_ABC
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceNetwork::GetPosition
+// Name: ResourceNetworkNode::GetPosition
 // Created: JSR 2011-05-04
 // -----------------------------------------------------------------------------
-geometry::Point2f ResourceNetwork::GetPosition() const
+geometry::Point2f ResourceNetworkNode::GetPosition() const
 {
     if( IsSet() )
         if( const kernel::UrbanPositions_ABC* positions = GetValue()->Retrieve< kernel::UrbanPositions_ABC >() )
@@ -137,50 +137,50 @@ geometry::Point2f ResourceNetwork::GetPosition() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceNetwork::CommitTo
+// Name: ResourceNetworkNode::CommitTo
 // Created: JSR 2011-05-03
 // -----------------------------------------------------------------------------
-void ResourceNetwork::CommitTo( sword::MissionParameter& message ) const
+void ResourceNetworkNode::CommitTo( sword::MissionParameter& message ) const
 {
     message.set_null_value( !IsSet() );
     if( IsSet() )
-        CommitTo( *message.mutable_value()->Add()->mutable_resourcenetwork() );
+        CommitTo( *message.mutable_value()->Add()->mutable_resourcenetworknode() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceNetwork::CommitTo
+// Name: ResourceNetworkNode::CommitTo
 // Created: JSR 2011-05-03
 // -----------------------------------------------------------------------------
-void ResourceNetwork::CommitTo( sword::MissionParameter_Value& message ) const
+void ResourceNetworkNode::CommitTo( sword::MissionParameter_Value& message ) const
 {
     if( IsSet() )
-        CommitTo( *message.mutable_resourcenetwork() );
+        CommitTo( *message.mutable_resourcenetworknode() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceNetwork::AddResourceParameter
+// Name: ResourceNetworkNode::AddResourceParameter
 // Created: JSR 2011-05-04
 // -----------------------------------------------------------------------------
-void ResourceNetwork::AddResourceParameter( const std::string& resource )
+void ResourceNetworkNode::AddResourceParameter( const std::string& resource )
 {
     AddParameter( *new Resource( kernel::OrderParameter( tools::translate( "Parameter", "Resource" ).ascii(), "resource", false ), resource ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceNetwork::ReadParameter
+// Name: ResourceNetworkNode::ReadParameter
 // Created: JSR 2011-05-04
 // -----------------------------------------------------------------------------
-void ResourceNetwork::ReadParameter( xml::xistream& xis )
+void ResourceNetworkNode::ReadParameter( xml::xistream& xis )
 {
     if( xis.attribute< std::string >( "type" ) == "resource" )
         AddResourceParameter( xis.attribute< std::string >( "value" ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceNetwork::CommitTo
+// Name: ResourceNetworkNode::CommitTo
 // Created: JSR 2011-05-03
 // -----------------------------------------------------------------------------
-void ResourceNetwork::CommitTo( sword::ResourceNetworkElement& resourceNetwork ) const
+void ResourceNetworkNode::CommitTo( sword::ResourceNetworkElement& resourceNetwork ) const
 {
     Entity< kernel::Object_ABC >::CommitTo( *resourceNetwork.mutable_object() );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
@@ -189,10 +189,11 @@ void ResourceNetwork::CommitTo( sword::ResourceNetworkElement& resourceNetwork )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ResourceNetwork::SerializeType
+// Name: ResourceNetworkNode::SerializeType
 // Created: LDC 2011-05-13
 // -----------------------------------------------------------------------------
-std::string ResourceNetwork::SerializeType() const
+std::string ResourceNetworkNode::SerializeType() const
 {
-    return "resourcenetwork";
+    return "resourcenetworknode";
 }
+

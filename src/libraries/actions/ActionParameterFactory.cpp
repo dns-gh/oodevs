@@ -42,7 +42,8 @@
 #include "Identifier.h"
 #include "ParameterList.h"
 #include "KnowledgeGroup.h"
-#include "ResourceNetwork.h"
+#include "ResourceNetworkNode.h"
+#include "ResourceNetworkType.h"
 #include "ExtensionList.h"
 #include "PushFlowParameters.h"
 #include "PullFlowParameters.h"
@@ -174,8 +175,10 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
         return ( nullValue ) ? new parameters::Identifier( parameter )                      : new parameters::Identifier( parameter, message.identifier() );
     if( message.has_knowledgegroup() )
         return ( nullValue ) ? new parameters::KnowledgeGroup( parameter, controller_ )     : new parameters::KnowledgeGroup( parameter, message.knowledgegroup().id(), entities_, controller_ );
-    if( message.has_resourcenetwork() )
-        return ( nullValue ) ? new parameters::ResourceNetwork( parameter, controller_ )    : new parameters::ResourceNetwork( parameter, message.resourcenetwork(), entities_, controller_ );
+    if( message.has_resourcenetworknode() )
+        return ( nullValue ) ? new parameters::ResourceNetworkNode( parameter, controller_ ): new parameters::ResourceNetworkNode( parameter, message.resourcenetworknode(), entities_, controller_ );
+    if( message.has_resourcenetworktype() )
+        return ( nullValue ) ? new parameters::ResourceNetworkType( parameter )             : new parameters::ResourceNetworkType( parameter, message.resourcenetworktype().name(), staticModel_.objectTypes_ );
     if( message.list_size() )
         return new parameters::ParameterList( parameter );
     if( message.has_extensionlist() )
@@ -315,8 +318,10 @@ bool ActionParameterFactory::DoCreateParameter( const kernel::OrderParameter& pa
         param.reset( new parameters::Identifier( parameter, xis ) );
     else if( type == "knowledgegroup" )
         param.reset( new parameters::KnowledgeGroup( parameter, xis, entities_, controller_ ) );
-    else if( type == "resourcenetwork" )
-        param.reset( new parameters::ResourceNetwork( parameter, xis, entities_, controller_ ) );
+    else if( type == "resourcenetworknode" )
+        param.reset( new parameters::ResourceNetworkNode( parameter, xis, entities_, controller_ ) );
+    else if( type == "resourcenetworktype" )
+        param.reset( new parameters::ResourceNetworkType( parameter, xis, staticModel_.objectTypes_ ) );
     else if( type == "extensionlist" )
     {
         parameters::ParameterList* extensionList = new parameters::ExtensionList( parameter );

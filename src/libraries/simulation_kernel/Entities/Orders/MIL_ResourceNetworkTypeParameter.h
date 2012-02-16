@@ -3,38 +3,35 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2011 MASA Group
+// Copyright (c) 2012 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __MIL_ResourceNetworkParameter_h_
-#define __MIL_ResourceNetworkParameter_h_
+#ifndef __MIL_ResourceNetworkTypeParameter_h_
+#define __MIL_ResourceNetworkTypeParameter_h_
 
 #include "MIL_BaseParameter.h"
 
-namespace sword
-{
-    class ResourceNetworkElement;
-}
-
+class PHY_ResourceNetworkType;
 class MIL_CheckPointInArchive;
 class MIL_CheckPointOutArchive;
 
 // =============================================================================
-/** @class  MIL_ResourceNetworkParameter
-    @brief  MIL_ResourceNetworkParameter
+/** @class  MIL_ResourceNetworkTypeParameter
+    @brief  MIL_ResourceNetworkTypeParameter
 */
-// Created: JSR 2011-05-03
+// Created: ABR 2012-02-15
 // =============================================================================
-class MIL_ResourceNetworkParameter : public MIL_BaseParameter
+class MIL_ResourceNetworkTypeParameter : public MIL_BaseParameter
 {
+
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_ResourceNetworkParameter();
-    explicit MIL_ResourceNetworkParameter( const sword::ResourceNetworkElement& message );
-    explicit MIL_ResourceNetworkParameter( boost::shared_ptr< DEC_ResourceNetwork > resourceNetwork );
-    virtual ~MIL_ResourceNetworkParameter();
+             MIL_ResourceNetworkTypeParameter();
+    explicit MIL_ResourceNetworkTypeParameter( const sword::ResourceNetworkType& message );
+    explicit MIL_ResourceNetworkTypeParameter( const PHY_ResourceNetworkType* pNetworkType );
+    virtual ~MIL_ResourceNetworkTypeParameter();
     //@}
 
     //! @name Type checking
@@ -42,9 +39,9 @@ public:
     virtual bool IsOfType( MIL_ParameterType_ABC::E_Type type ) const;
     //@}
 
-    //! @name Conversions
+    //! @name Conversion
     //@{
-    virtual bool ToResourceNetwork( boost::shared_ptr< DEC_ResourceNetwork >& ) const;
+    virtual bool ToResourceNetworkType( const PHY_ResourceNetworkType*& ) const;
     virtual bool ToElement( sword::MissionParameter_Value& elem ) const;
     //@}
 
@@ -58,10 +55,10 @@ public:
 private:
     //! @name Member data
     //@{
-    boost::shared_ptr< DEC_ResourceNetwork > pResourceNetwork_;
+    const PHY_ResourceNetworkType* pNetworkType_;
     //@}
 };
 
-BOOST_CLASS_EXPORT_KEY( MIL_ResourceNetworkParameter )
+BOOST_CLASS_EXPORT_KEY( MIL_ResourceNetworkTypeParameter )
 
-#endif // __MIL_ResourceNetworkParameter_h_
+#endif // __MIL_ResourceNetworkTypeParameter_h_

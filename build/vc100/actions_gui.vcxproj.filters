@@ -115,9 +115,6 @@
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamNumericField.cpp">
       <Filter>Source Files\Parameters\Common</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamResourceNetwork.cpp">
-      <Filter>Source Files\Parameters\Resource Network</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamStringField.cpp">
       <Filter>Source Files\Parameters\Common</Filter>
     </ClCompile>
@@ -132,6 +129,15 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamDotationTypeList.cpp">
       <Filter>Source Files\Parameters\Static model types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions_gui\ParamResourceNetworkNode.cpp">
+      <Filter>Source Files\Parameters\Resource Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions_gui\ParamResourceNetworkType.cpp">
+      <Filter>Source Files\Parameters\Resource Network</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions_gui\ParamComboBox.cpp">
+      <Filter>Source Files\Parameters\Common</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -191,6 +197,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\actions_gui\EntityParameter.h">
       <Filter>Source Files\Parameters\Base</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions_gui\ParamResourceNetworkType.h">
+      <Filter>Source Files\Parameters\Resource Network</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -256,9 +265,6 @@
     <CustomBuild Include="..\..\src\libraries\actions_gui\ParamDirection.h">
       <Filter>Source Files\Parameters\Common</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\actions_gui\ParamResourceNetwork.h">
-      <Filter>Source Files\Parameters\Resource Network</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\actions_gui\ParamObstacle.h">
       <Filter>Source Files\Parameters\Static model types</Filter>
     </CustomBuild>
@@ -270,6 +276,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\actions_gui\ParamDotationTypeList.h">
       <Filter>Source Files\Parameters\Static model types</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\actions_gui\ParamResourceNetworkNode.h">
+      <Filter>Source Files\Parameters\Resource Network</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

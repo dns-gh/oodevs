@@ -71,7 +71,8 @@ void MIL_ParameterType_ABC::Initialize()
     RegisterParameterType( std::string("UrbanKnowledge"), eUrbanKnowledge );
     RegisterParameterType( std::string("LocationComposite"), eLocationComposite );
     RegisterParameterType( std::string("PhaseLine"), ePhaseLine );
-    RegisterParameterType( std::string("ResourceNetwork"), eResourceNetwork );
+    RegisterParameterType( std::string("ResourceNetworkNode"), eResourceNetworkNode );
+    RegisterParameterType( std::string("ResourceNetworkType"), eResourceNetworkType );
 }
 
 // =============================================================================

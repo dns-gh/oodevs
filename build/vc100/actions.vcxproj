@@ -144,7 +144,8 @@
     <ClCompile Include="..\..\src\libraries\actions\PushFlowParameters.cpp" />
     <ClCompile Include="..\..\src\libraries\actions\Quantity.cpp" />
     <ClCompile Include="..\..\src\libraries\actions\Resource.cpp" />
-    <ClCompile Include="..\..\src\libraries\actions\ResourceNetwork.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\ResourceNetworkNode.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions\ResourceNetworkType.cpp" />
     <ClCompile Include="..\..\src\libraries\actions\String.cpp" />
     <ClCompile Include="..\..\src\libraries\actions\UrbanBlock.cpp" />
     <ClCompile Include="..\..\src\libraries\actions\ActionWithTarget_ABC.cpp" />
@@ -221,7 +222,8 @@
     <ClInclude Include="..\..\src\libraries\actions\PushFlowParameters.h" />
     <ClInclude Include="..\..\src\libraries\actions\Quantity.h" />
     <ClInclude Include="..\..\src\libraries\actions\Resource.h" />
-    <ClInclude Include="..\..\src\libraries\actions\ResourceNetwork.h" />
+    <ClInclude Include="..\..\src\libraries\actions\ResourceNetworkNode.h" />
+    <ClInclude Include="..\..\src\libraries\actions\ResourceNetworkType.h" />
     <ClInclude Include="..\..\src\libraries\actions\String.h" />
     <ClInclude Include="..\..\src\libraries\actions\UrbanBlock.h" />
     <ClInclude Include="..\..\src\libraries\actions\ActionWithTarget_ABC.h" />

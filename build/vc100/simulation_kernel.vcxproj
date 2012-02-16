@@ -138,6 +138,8 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\TrafficabilityAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\TrafficabilityCapacity.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Objects\UrbanDestructionCapacity.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ResourceNetworkNodeParameter.cpp" />
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ResourceNetworkTypeParameter.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_DecontaminationEffect.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\MIL.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\MIL_UrbanCache.cpp" />
@@ -658,7 +660,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_PolygonParameter.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_PopulationKnowledgeParameter.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_RealParameter.cpp" />
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ResourceNetworkParameter.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_StringParameter.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_TirIndirectParameter.cpp" />
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_UrbanBlockParameter.cpp" />
@@ -878,6 +879,8 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\TrafficabilityAttribute.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\TrafficabilityCapacity.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Objects\UrbanDestructionCapacity.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ResourceNetworkNodeParameter.h" />
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ResourceNetworkTypeParameter.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Populations\MIL_DecontaminationEffect.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\KnowledgesVisitor_ABC.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL.h" />
@@ -1458,7 +1461,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_PolygonParameter.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_PopulationKnowledgeParameter.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_RealParameter.h" />
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ResourceNetworkParameter.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_StringParameter.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_TirIndirectParameter.h" />
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_UrbanBlockParameter.h" />

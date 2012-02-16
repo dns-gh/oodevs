@@ -181,9 +181,13 @@ public:
     { throw; }
     virtual bool ToLimaList( std::vector< boost::shared_ptr< TER_Localisation > >& ) const
     { throw; }
-    virtual bool ToResourceNetwork( boost::shared_ptr< DEC_ResourceNetwork >& ) const
+    virtual bool ToResourceNetworkNode( boost::shared_ptr< DEC_ResourceNetwork >& ) const
     { throw; }
-    virtual bool ToResourceNetworkList( std::vector< boost::shared_ptr< DEC_ResourceNetwork > >& ) const
+    virtual bool ToResourceNetworkNodeList( std::vector< boost::shared_ptr< DEC_ResourceNetwork > >& ) const
+    { throw; }
+    virtual bool ToResourceNetworkType( const PHY_ResourceNetworkType*& ) const
+    { throw; }
+    virtual bool ToResourceNetworkTypeList( std::vector< const PHY_ResourceNetworkType* >& ) const
     { throw; }
     virtual void Append( boost::shared_ptr< MIL_MissionParameter_ABC > param )
     { throw; }

@@ -36,7 +36,8 @@
 #include "MIL_PolygonParameter.h"
 #include "MIL_PopulationKnowledgeParameter.h"
 #include "MIL_RealParameter.h"
-#include "MIL_ResourceNetworkParameter.h"
+#include "MIL_ResourceNetworkNodeParameter.h"
+#include "MIL_ResourceNetworkTypeParameter.h"
 #include "MIL_StringParameter.h"
 #include "MIL_TirIndirectParameter.h"
 #include "MIL_UrbanBlockParameter.h"
@@ -157,8 +158,10 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::Create(
 //        else if( message.has_value_line() ||
 //            message.has_value_intelligenceList() )
         // $$$$ LDC : These types are exclusively managed by the OrderContext.
-    else if( message.has_resourcenetwork() )
-        ptr = new MIL_ResourceNetworkParameter( message.resourcenetwork() );
+    else if( message.has_resourcenetworknode() )
+        ptr = new MIL_ResourceNetworkNodeParameter( message.resourcenetworknode() );
+    else if( message.has_resourcenetworktype() )
+        ptr = new MIL_ResourceNetworkTypeParameter( message.resourcenetworktype() );
     else
         ptr = new MIL_ListParameter( resolver, message.list() );
 
@@ -312,9 +315,19 @@ boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateU
 // Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateResourceNetwork
 // Created: LMT 2011-05-12
 // -----------------------------------------------------------------------------
-boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateResourceNetwork( boost::shared_ptr<class DEC_ResourceNetwork> resourceNetwork )
+boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateResourceNetworkNode( boost::shared_ptr<class DEC_ResourceNetwork> resourceNetwork )
 {
-    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_ResourceNetworkParameter( resourceNetwork ) );
+    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_ResourceNetworkNodeParameter( resourceNetwork ) );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateResourceNetworkType
+// Created: ABR 2012-02-15
+// -----------------------------------------------------------------------------
+boost::shared_ptr<MIL_MissionParameter_ABC> MIL_MissionParameterFactory::CreateResourceNetworkType( const PHY_ResourceNetworkType* resourceNetworkType )
+{
+    boost::shared_ptr<MIL_MissionParameter_ABC> result( new MIL_ResourceNetworkTypeParameter( resourceNetworkType ) );
     return result;
 }
 
@@ -552,11 +565,22 @@ void MIL_MissionParameterFactory::SetDirectionParameter( boost::shared_ptr< MIL_
 // Name: MIL_MissionParameterFactory::SetResourceNetworkParameter
 // Created: LMT 2011-05-12
 // -----------------------------------------------------------------------------
-void MIL_MissionParameterFactory::SetResourceNetworkParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr<class DEC_ResourceNetwork> resourceNetwork )
+void MIL_MissionParameterFactory::SetResourceNetworkNodeParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr<class DEC_ResourceNetwork> resourceNetwork )
 {
     if( !pMission.get() )
         throw std::runtime_error( "Invalid mission" );
-    pMission->SetParameter( parameter, CreateResourceNetwork( resourceNetwork ) );
+    pMission->SetParameter( parameter, CreateResourceNetworkNode( resourceNetwork ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_MissionParameterFactory::SetResourceNetworkTypeParameter
+// Created: ABR 2012-02-15
+// -----------------------------------------------------------------------------
+void MIL_MissionParameterFactory::SetResourceNetworkTypeParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const PHY_ResourceNetworkType* resourceNetworkType )
+{
+    if( !pMission.get() )
+        throw std::runtime_error( "Invalid mission" );
+    pMission->SetParameter( parameter, CreateResourceNetworkType( resourceNetworkType ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -34,6 +34,7 @@ class MIL_OrderTypeParameter;
 class MT_Vector2D;
 class PHY_DotationCategory;
 class PHY_ComposanteTypePion;
+class PHY_ResourceNetworkType;
 class TER_Localisation;
 class UrbanObjectWrapper;
 
@@ -69,7 +70,8 @@ public:
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreatePath( boost::shared_ptr< MT_Vector2D > point );
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreateDirection( boost::shared_ptr< MT_Vector2D > direction );
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreateGenObject( boost::shared_ptr< DEC_Gen_Object > param );
-    static boost::shared_ptr<MIL_MissionParameter_ABC> CreateResourceNetwork( boost::shared_ptr<class DEC_ResourceNetwork> resourceNetwork );
+    static boost::shared_ptr<MIL_MissionParameter_ABC> CreateResourceNetworkNode( boost::shared_ptr<class DEC_ResourceNetwork> resourceNetwork );
+    static boost::shared_ptr<MIL_MissionParameter_ABC> CreateResourceNetworkType( const PHY_ResourceNetworkType* resourceNetworkType );
     static boost::shared_ptr<MIL_MissionParameter_ABC> CreatePion( DEC_Decision_ABC* pion );
 
 //    static void Copy( const MissionParameters& asn, std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& parameters, const DEC_KnowledgeResolver_ABC& resolver );
@@ -90,7 +92,8 @@ public:
     static void SetDirectionParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr< MT_Vector2D > direction );
     static void SetDotationTypeParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const PHY_DotationCategory* type );
     static void SetNumericTypeParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, float value );
-    static void SetResourceNetworkParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr<class DEC_ResourceNetwork> resourceNetwork );
+    static void SetResourceNetworkNodeParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, boost::shared_ptr<class DEC_ResourceNetwork> resourceNetwork );
+    static void SetResourceNetworkTypeParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const PHY_ResourceNetworkType* resourceNetworkType );
     static void SetCrowdKnowledgeParameter( DEC_Decision_ABC* caller, boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, int knowledgeId );
 
     static void AssignMissionListParameter( boost::shared_ptr< MIL_Mission_ABC > pMission, const std::string& parameter, const std::vector< boost::shared_ptr< MIL_MissionParameter_ABC > >& params );

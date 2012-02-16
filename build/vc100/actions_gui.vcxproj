@@ -97,14 +97,16 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\actions_gui\InterfaceBuilder.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions_gui\ParamComboBox.cpp" />
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamDotationTypeList.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions_gui\ParamResourceNetworkNode.cpp" />
+    <ClCompile Include="..\..\src\libraries\actions_gui\ParamResourceNetworkType.cpp" />
     <ClCompile Include="..\..\src\libraries\actions_gui\resources.cpp" />
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamBool.cpp" />
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamDateTime.cpp" />
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamDirection.cpp" />
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamNumericField.cpp" />
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamObstacle.cpp" />
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamResourceNetwork.cpp" />
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamStringField.cpp" />
     <ClCompile Include="..\..\src\libraries\actions_gui\LimaParameter.cpp" />
     <ClCompile Include="..\..\src\libraries\actions_gui\LimitParameter.cpp" />
@@ -146,6 +148,21 @@
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamInterface_ABC.h" />
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamLocation_ABC.h" />
+    <CustomBuild Include="..\..\src\libraries\actions_gui\ParamResourceNetworkNode.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(Filename).h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <ClInclude Include="..\..\src\libraries\actions_gui\ParamResourceNetworkType.h" />
     <ClInclude Include="..\..\src\libraries\actions_gui\resources.h" />
     <CustomBuild Include="..\..\src\libraries\actions_gui\ParamBool.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
@@ -204,24 +221,6 @@
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\actions_gui\ParamNumericField.h" />
     <CustomBuild Include="..\..\src\libraries\actions_gui\ParamObstacle.h">
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing %(Filename).h</Message>
-      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(Filename).h</Message>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\actions_gui\ParamResourceNetwork.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp

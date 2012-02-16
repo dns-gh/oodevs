@@ -1790,7 +1790,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="resourceNode" name="Resource node" optional="false" type="ResourceNetwork"/>
+      <parameter dia-name="resourceNode" name="Resource node" optional="false" type="ResourceNetworkNode"/>
       <parameter dia-name="quantity" name="quantity" optional="true" type="Integer"/>
     </mission>
     <mission dia-behavior="tasks.EvacuateUrbanBlocksWithinArea" dia-type="tasks.EvacuateUrbanBlocksWithinArea" id="4448" name="MLSECURITY - Evacuate urban blocks within area ">
@@ -1905,7 +1905,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="resourceNodes" max-occurs="1000000" min-occurs="1" name="resourceNodes" optional="false" type="ResourceNetwork"/>
+      <parameter dia-name="resourceNodes" max-occurs="1000000" min-occurs="1" name="resourceNodes" optional="false" type="ResourceNetworkNode"/>
     </mission>
     <mission dia-behavior="tasks.DeactivateResourceNodes" dia-type="tasks.DeactivateResourceNodes" id="4455" name="MLSECURITY - Disable resource nodes">
       <description>
@@ -1916,7 +1916,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="resourceNodes" max-occurs="10000000" min-occurs="1" name="Resource nodes to disable" optional="false" type="ResourceNetwork"/>
+      <parameter dia-name="resourceNodes" max-occurs="10000000" min-occurs="1" name="Resource nodes to disable" optional="false" type="ResourceNetworkNode"/>
     </mission>
     <mission dia-behavior="tasks.Patrol" dia-type="tasks.Patrol" id="4456" name="MLSECURITY - Patrol">
       <description>
@@ -3533,4 +3533,4 @@ A visited object won't be created and build if agent doesn't have the physical c
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="1971528629" -->
+<!-- signature="1171895534" -->

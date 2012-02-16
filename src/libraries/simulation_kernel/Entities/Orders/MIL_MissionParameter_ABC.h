@@ -55,6 +55,8 @@ namespace sword
     class UnitKnowledgeId;
     class UnitKnowledgeIdList;
     class UrbanObjectId;
+    class ResourceNetworkElement;
+    class ResourceNetworkType;
 }
 
 class DEC_Decision_ABC;
@@ -70,6 +72,7 @@ class MT_Vector2D;
 class PHY_DotationCategory;
 class PHY_ComposanteTypePion;
 class PHY_HumanWound;
+class PHY_ResourceNetworkType;
 class TER_Localisation;
 
 // =============================================================================
@@ -142,8 +145,10 @@ public:
     virtual bool ToList( std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> >& ) const = 0;
     virtual bool ToLima( boost::shared_ptr< TER_Localisation >& ) const = 0;
     virtual bool ToLimaList( std::vector< boost::shared_ptr< TER_Localisation > >& ) const = 0;
-    virtual bool ToResourceNetwork( boost::shared_ptr< DEC_ResourceNetwork >& ) const = 0;
-    virtual bool ToResourceNetworkList( std::vector< boost::shared_ptr< DEC_ResourceNetwork > >& ) const = 0;
+    virtual bool ToResourceNetworkNode( boost::shared_ptr< DEC_ResourceNetwork >& ) const = 0;
+    virtual bool ToResourceNetworkNodeList( std::vector< boost::shared_ptr< DEC_ResourceNetwork > >& ) const = 0;
+    virtual bool ToResourceNetworkType( const PHY_ResourceNetworkType*& ) const = 0;
+    virtual bool ToResourceNetworkTypeList( std::vector< const PHY_ResourceNetworkType* >& ) const = 0;
     virtual void Append( boost::shared_ptr< MIL_MissionParameter_ABC > param ) = 0;
     //@}
 

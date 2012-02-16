@@ -4937,18 +4937,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <translation>Enumération</translation>
     </message>
     <message>
-        <source>NatureAtlas</source>
-        <translation>Nature ATLAS</translation>
-    </message>
-    <message>
-        <source>AgentKnowledge</source>
-        <translation>Connaissance Agent</translation>
-    </message>
-    <message>
-        <source>ObjectKnowledge</source>
-        <translation>Connaissance Objet</translation>
-    </message>
-    <message>
         <source>Path</source>
         <translation>Itinéraire</translation>
     </message>
@@ -4963,22 +4951,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Location</source>
         <translation>Localisation</translation>
-    </message>
-    <message>
-        <source>EquipmentType</source>
-        <translation>Type d&apos;Equipement</translation>
-    </message>
-    <message>
-        <source>MaintenancePriorities</source>
-        <translation>Priorités de Maintenance</translation>
-    </message>
-    <message>
-        <source>MedicalPriorities</source>
-        <translation>Priorités Médicales</translation>
-    </message>
-    <message>
-        <source>IndirectFire</source>
-        <translation>Tir indirect</translation>
     </message>
     <message>
         <source>Limit</source>
@@ -5017,16 +4989,8 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <translation>Fumigène</translation>
     </message>
     <message>
-        <source>LocationComposite</source>
-        <translation>Localisation composite</translation>
-    </message>
-    <message>
         <source>Heading</source>
         <translation>Direction</translation>
-    </message>
-    <message>
-        <source>PhaseLine</source>
-        <translation>Lima</translation>
     </message>
     <message>
         <source>Automat</source>
@@ -5039,26 +5003,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Integer</source>
         <translation>Entier</translation>
-    </message>
-    <message>
-        <source>DateTime</source>
-        <translation>Date Heure</translation>
-    </message>
-    <message>
-        <source>PlannedWork</source>
-        <translation>travaux génie</translation>
-    </message>
-    <message>
-        <source>ResourceType</source>
-        <translation>Type de dotation</translation>
-    </message>
-    <message>
-        <source>UrbanKnowledge</source>
-        <translation>Connaissance bloc urbain</translation>
-    </message>
-    <message>
-        <source>CrowdKnowledge</source>
-        <translation>Connaissance population</translation>
     </message>
     <message>
         <source></source>
@@ -5095,10 +5039,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>lima</source>
         <translation>lima</translation>
-    </message>
-    <message>
-        <source>ResourceNetwork</source>
-        <translation>reseau de ressource</translation>
     </message>
     <message>
         <source>Commander, Organization</source>
@@ -5143,6 +5083,70 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>Cloud</source>
         <translation>Nuage</translation>
+    </message>
+    <message>
+        <source>Date Time</source>
+        <translation>Date et Heure</translation>
+    </message>
+    <message>
+        <source>Nature Atlas</source>
+        <translation>Nature ATLAS</translation>
+    </message>
+    <message>
+        <source>Agent knowledge</source>
+        <translation>Connaissance d&apos;agent</translation>
+    </message>
+    <message>
+        <source>Object knowledge</source>
+        <translation>Connaissance d&apos;objet</translation>
+    </message>
+    <message>
+        <source>Crowd knowledge</source>
+        <translation>Connaissance de foule</translation>
+    </message>
+    <message>
+        <source>Planned work</source>
+        <translation>Travaux génie</translation>
+    </message>
+    <message>
+        <source>Equipment type</source>
+        <translation>Type d&apos;equipement</translation>
+    </message>
+    <message>
+        <source>Resource type</source>
+        <translation>Type de dotation</translation>
+    </message>
+    <message>
+        <source>Maintenance priorities</source>
+        <translation>Priorités de maintenance</translation>
+    </message>
+    <message>
+        <source>Medical priorities</source>
+        <translation>Priorités médicales</translation>
+    </message>
+    <message>
+        <source>Indirect fire</source>
+        <translation>Tir indirect</translation>
+    </message>
+    <message>
+        <source>Phase line</source>
+        <translation>Lima</translation>
+    </message>
+    <message>
+        <source>Urban knowledge</source>
+        <translation>Connaissance de bloc urbain</translation>
+    </message>
+    <message>
+        <source>Location composite</source>
+        <translation>Localisation composite</translation>
+    </message>
+    <message>
+        <source>Resource network node</source>
+        <translation>Noeud de réseau de ressource</translation>
+    </message>
+    <message>
+        <source>Resource network type</source>
+        <translation>Type de réseau de ressource</translation>
     </message>
 </context>
 <context>

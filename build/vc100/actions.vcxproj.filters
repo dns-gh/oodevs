@@ -163,9 +163,6 @@
     <ClCompile Include="..\..\src\libraries\actions\Quantity.cpp">
       <Filter>Source Files\Parameters\Types</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions\ResourceNetwork.cpp">
-      <Filter>Source Files\Parameters\Types</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\actions\String.cpp">
       <Filter>Source Files\Parameters\Types</Filter>
     </ClCompile>
@@ -224,6 +221,12 @@
       <Filter>Source Files\Parameters\Types</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\actions\Resource.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\ResourceNetworkNode.cpp">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\actions\ResourceNetworkType.cpp">
       <Filter>Source Files\Parameters\Types</Filter>
     </ClCompile>
   </ItemGroup>
@@ -390,9 +393,6 @@
     <ClInclude Include="..\..\src\libraries\actions\Quantity.h">
       <Filter>Source Files\Parameters\Types</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\actions\ResourceNetwork.h">
-      <Filter>Source Files\Parameters\Types</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\actions\String.h">
       <Filter>Source Files\Parameters\Types</Filter>
     </ClInclude>
@@ -454,6 +454,12 @@
       <Filter>Source Files\Parameters\Types</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\actions\Resource.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\ResourceNetworkNode.h">
+      <Filter>Source Files\Parameters\Types</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\actions\ResourceNetworkType.h">
       <Filter>Source Files\Parameters\Types</Filter>
     </ClInclude>
   </ItemGroup>

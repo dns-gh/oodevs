@@ -1914,9 +1914,6 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_RealParameter.cpp">
       <Filter>Source Files\Entities\Orders\Parameters</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ResourceNetworkParameter.cpp">
-      <Filter>Source Files\Entities\Orders\Parameters</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_StringParameter.cpp">
       <Filter>Source Files\Entities\Orders\Parameters</Filter>
     </ClCompile>
@@ -2528,6 +2525,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path.cpp">
       <Filter>Source Files\Decision\Path</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ResourceNetworkNodeParameter.cpp">
+      <Filter>Source Files\Entities\Orders\Parameters</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ResourceNetworkTypeParameter.cpp">
+      <Filter>Source Files\Entities\Orders\Parameters</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -4241,9 +4244,6 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_RealParameter.h">
       <Filter>Source Files\Entities\Orders\Parameters</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ResourceNetworkParameter.h">
-      <Filter>Source Files\Entities\Orders\Parameters</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_StringParameter.h">
       <Filter>Source Files\Entities\Orders\Parameters</Filter>
     </ClInclude>
@@ -4963,6 +4963,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Decision\DEC_Path.h">
       <Filter>Source Files\Decision\Path</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ResourceNetworkNodeParameter.h">
+      <Filter>Source Files\Entities\Orders\Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ResourceNetworkTypeParameter.h">
+      <Filter>Source Files\Entities\Orders\Parameters</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

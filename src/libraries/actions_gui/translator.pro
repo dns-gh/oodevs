@@ -10,6 +10,6 @@ ParamAgent.cpp \
 ParamBool.cpp \
 ParamHumanWoundList.cpp \
 ParamObstacle.cpp \
-ParamResourceNetwork.cpp \
+ParamResourceNetworkNode.cpp \
 
 TRANSLATIONS = actions_gui_fr.ts actions_gui_es.ts

@@ -62,7 +62,7 @@
     </message>
 </context>
 <context>
-    <name>ParamResourceNetwork</name>
+    <name>ParamResourceNetworkNode</name>
     <message>
         <source>Object</source>
         <translation>Objet</translation>

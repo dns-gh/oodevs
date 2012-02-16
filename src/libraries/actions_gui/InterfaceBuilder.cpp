@@ -34,7 +34,8 @@
 #include "ParamObjectKnowledge.h"
 #include "ParamPath.h"
 #include "ParamPopulationKnowledge.h"
-#include "ParamResourceNetwork.h"
+#include "ParamResourceNetworkNode.h"
+#include "ParamResourceNetworkType.h"
 #include "ParamUrbanBlock.h"
 #include "ParamStringField.h"
 #include "clients_kernel/AgentKnowledge_ABC.h"
@@ -99,7 +100,8 @@ InterfaceBuilder::InterfaceBuilder( kernel::Controllers& controllers, gui::Param
     AddFunctor< actions::gui::ParamAtlasNature >        ( "natureatlas" );
     AddFunctor< actions::gui::ParamEquipmentList >      ( "maintenancepriorities" );
     AddFunctor< actions::gui::ParamHumanWoundList >     ( "medicalpriorities" );
-    AddFunctor< actions::gui::ParamResourceNetwork >    ( "resourcenetwork" );
+    AddFunctor< actions::gui::ParamResourceNetworkNode >( "resourcenetworknode" );
+    AddFunctor< actions::gui::ParamResourceNetworkType >( "resourcenetworktype" );
     AddFunctor< actions::gui::ParamObstacle >           ( "plannedwork" );
     AddFunctor< actions::gui::ParamDotationDType >      ( "resourcetype" );
     AddFunctor< actions::gui::ParamDotationTypeList >   ( "allresourcetype" );

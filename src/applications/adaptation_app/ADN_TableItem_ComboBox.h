@@ -71,6 +71,7 @@ public:
     int          FindNdx( const ADN_TableItem_ComboBoxItem* item ) const;
     int          FindNdx( void * data) const;
     ADN_TableItem_ComboBoxItem*           GetItem( int ndx );
+    int                         GetEnumIndexFromGUI( int index ) const;
     //@}
 
 
@@ -79,13 +80,11 @@ protected:
     virtual void        DoValueChanged();
 
 private:
-    QComboBox *                             cb;
-    QStringList                             entries;
-    int                                     current;
-    bool                                    edit;
-    static QComboBox *                      fakeCombo;
+    QStringList                             entries_;
+    int                                     currentComboIndex_;
+    bool                                    edit_;
     T_Ptr_TableItem_ComboBoxItem_Vector     vItems_;
-
+    std::vector< int >                      vItemsEnum_;
 };
 
 typedef ADN_Connector_Combo<ADN_TableItem_ComboBox> ADN_Connector_TableItem_ComboBox;

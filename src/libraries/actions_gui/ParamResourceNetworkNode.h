@@ -3,12 +3,12 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2011 MASA Group
+// Copyright (c) 2012 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __ParamResourceNetwork_h_
-#define __ParamResourceNetwork_h_
+#ifndef __ParamResourceNetworkNode_h_
+#define __ParamResourceNetworkNode_h_
 
 #include "Param_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
@@ -27,21 +27,21 @@ namespace actions
         class InterfaceBuilder_ABC;
 
 // =============================================================================
-/** @class  ParamResourceNetwork
-    @brief  ParamResourceNetwork
+/** @class  ParamResourceNetworkNode
+    @brief  ParamResourceNetworkNode
 */
 // Created: JSR 2011-05-02
 // =============================================================================
-class ParamResourceNetwork : public Param_ABC
-                           , public kernel::ContextMenuObserver_ABC< kernel::Object_ABC >
+class ParamResourceNetworkNode : public Param_ABC
+                               , public kernel::ContextMenuObserver_ABC< kernel::Object_ABC >
 {
     Q_OBJECT
 
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamResourceNetwork( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter );
-    virtual ~ParamResourceNetwork();
+             ParamResourceNetworkNode( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter );
+    virtual ~ParamResourceNetworkNode();
     //@}
 
     //! @name Operations
@@ -80,4 +80,4 @@ private:
 }
 }
 
-#endif // __ParamResourceNetwork_h_
+#endif // __ParamResourceNetworkNode_h_

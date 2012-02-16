@@ -277,15 +277,31 @@ bool MIL_ListParameter::ToDotationTypeList( std::vector< const PHY_DotationCateg
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_ListParameter::ToResourceNetworkList
+// Name: MIL_ListParameter::ToResourceNetworkNodeList
 // Created: LMT 2011-05-12
 // -----------------------------------------------------------------------------
-bool MIL_ListParameter::ToResourceNetworkList( std::vector< boost::shared_ptr< DEC_ResourceNetwork > >& result ) const
+bool MIL_ListParameter::ToResourceNetworkNodeList( std::vector< boost::shared_ptr< DEC_ResourceNetwork > >& result ) const
 {
     for( CIT_ParameterList it = list_.begin(); it != list_.end(); ++it )
     {
         boost::shared_ptr< DEC_ResourceNetwork > param;
-        if( !(*it)->ToResourceNetwork( param ) )
+        if( !(*it)->ToResourceNetworkNode( param ) )
+            return false;
+        result.push_back( param );
+    }
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ListParameter::ToResourceNetworkTypeList
+// Created: ABR 2012-02-15
+// -----------------------------------------------------------------------------
+bool MIL_ListParameter::ToResourceNetworkTypeList( std::vector< const PHY_ResourceNetworkType* >& result ) const
+{
+    for( CIT_ParameterList it = list_.begin(); it != list_.end(); ++it )
+    {
+        const PHY_ResourceNetworkType* param = 0;
+        if( !(*it)->ToResourceNetworkType( param ) )
             return false;
         result.push_back( param );
     }

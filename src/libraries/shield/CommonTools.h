@@ -283,7 +283,8 @@ namespace shield
         CONVERT_ID( resourcetype );
         CONVERT_LIST( logmaintenancepriorities, elem, ConvertIdentifier );
         CONVERT_CB( logmedicalpriorities, ConvertLogMedicalPriorities );
-        CONVERT_CB( resourcenetwork, ConvertResourceNetworkElement );
+        CONVERT_CB( resourcenetworknode, ConvertResourceNetworkElement );
+        CONVERT_NAME( resourcenetworktype );
         CONVERT( areal );
         CONVERT_LIST( pathlist, elem, ConvertLocationElem );
         CONVERT_LIST( pointlist, elem, ConvertLocationElem );

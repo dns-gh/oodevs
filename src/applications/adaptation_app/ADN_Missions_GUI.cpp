@@ -97,6 +97,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( QWidget*& pContent, ADN_Missions_Data:
     QGroupBox* pParametersGroup = new QGroupBox( tr( "Parameters" ) );
     ADN_MissionParameters_Table* paramList = new ADN_MissionParameters_Table();
     vInfosConnectors[eParameters] = &paramList->GetConnector();
+
     Q3GroupBox* pEnum = new Q3GroupBox( 1, Qt::Horizontal, tr( "Enumeration values" ) );
     ADN_MissionParameterValues_Table* valueList = new ADN_MissionParameterValues_Table( pEnum, "" );
     vInfosConnectors[eParameterValues] = &valueList->GetConnector();

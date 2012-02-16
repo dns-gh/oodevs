@@ -3,18 +3,18 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2006 Mathématiques Appliquées SA (MASA)
+// Copyright (c) 2012 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __ParamDotationDType_h_
-#define __ParamDotationDType_h_
+#ifndef __ParamResourceNetworkType_h_
+#define __ParamResourceNetworkType_h_
 
 #include "ParamComboBox.h"
 
 namespace kernel
 {
-    class DotationType;
+    class ResourceNetworkType;
     class OrderParameter;
 }
 
@@ -24,18 +24,19 @@ namespace actions
     {
 
 // =============================================================================
-/** @class  ParamDotationDType
-    @brief  Agent's resources only
+/** @class  ParamResourceNetworkType
+    @brief  ParamResourceNetworkType
 */
-// Created: SBO 2006-08-09
+// Created: ABR 2012-02-15
 // =============================================================================
-class ParamDotationDType : public ParamComboBox< int >
+class ParamResourceNetworkType : public ParamComboBox< int >
 {
+
 public:
     //! @name Constructors/Destructor
     //@{
-             ParamDotationDType( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter );
-    virtual ~ParamDotationDType();
+             ParamResourceNetworkType( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter );
+    virtual ~ParamResourceNetworkType();
     //@}
 
     //! @name Operations
@@ -53,12 +54,12 @@ private:
 private:
     //! @name Member data
     //@{
-    const tools::Resolver_ABC< kernel::DotationType >& resolver_;
-    const kernel::Entity_ABC& agent_;
+    const tools::StringResolver< kernel::ResourceNetworkType >& resolver_;
+    std::map< int, std::string > internalId_;
     //@}
 };
 
-    }
+}
 }
 
-#endif // __ParamDotationDType_h_
+#endif // __ParamResourceNetworkType_h_
