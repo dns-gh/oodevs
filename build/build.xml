@@ -1432,19 +1432,19 @@
                 <include name="data/terrains/Paris_Est/**"/>
                 <include name="data/terrains/Angers_x9_en/**"/>
                 <include name="data/terrains/Sw_terrain2/**"/>
-			    <include name="data/terrains/lehavre_4.2.0/**"/>
-				<include name="data/terrains/afghan_kabuldist/**"/>
+                <include name="data/terrains/lehavre_4.2.0/**"/>
+                <include name="data/terrains/afghan_kabuldist/**"/>
                 <include name="data/terrains/Nord egypt/**"/>
                 <include name="data/terrains/Paris_Est/**"/>
             </zipfileset>
             <zipfileset dir="${data.dir}/exercises/worldwide" prefix="exercises">
                 <include name="Egypt/**"/>
-				<include name="Logistic_example/**"/>
+                <include name="Logistic_example/**"/>
                 <include name="Paris/**"/>
                 <include name="9_cases/**"/>
                 <include name="Musoria Border Defense/**"/>
                 <include name="Tuto_sw/**"/>
-				<include name="LOSSC Scenario 1/**"/>
+                <include name="LOSSC Scenario 1/**"/>
                 <include name="LOSSC Scenario 2/**"/>
                 <include name="LOSSC Scenario 3/**"/>
                 <include name="tutorials/01 - Generalities/**"/>
@@ -1463,7 +1463,7 @@
             </zipfileset>
         </pack>
     </target>
-	<target name="package.otpack.defense.worldwide.QA" description="package du defense-worldwide otpack">
+    <target name="package.otpack.defense.worldwide.QA" description="package du defense-worldwide otpack">
         <pack name="defense-worldwide-QA" description="defense-worldwide exercises package for QA">
             <zipfileset dir="${data.dir}">
                 <include name="data/models/ada/physical/worldwide/**"/>
@@ -1491,10 +1491,10 @@
                 <include name="tutorials/11 - Preparation/**"/>
                 <include name="tutorials/12 - AAR/**"/>
                 <include name="tutorials/13 - Advanced features/**"/>
-				<include name="tests/Pathfind/**"/>
-				<include name="tests/TestPlanExercise/**"/>
-			</zipfileset>
-		</pack>
+                <include name="tests/Pathfind/**"/>
+                <include name="tests/TestPlanExercise/**"/>
+            </zipfileset>
+        </pack>
     </target>
 
 
@@ -1518,7 +1518,7 @@
     <target name="package.otpack.decisional3" description="decisional package DIA3">
         <pack name="decisional3" description="decisional package DIA3">
             <zipfileset dir="${data.dir}">
-				<include name="data/models/ada/decisional/Sources/**"/>
+                <include name="data/models/ada/decisional/Sources/**"/>
                 <include name="data/models/ada/decisional/decisional.xml"/>
             </zipfileset>
         </pack>
@@ -1527,7 +1527,7 @@
     <target name="package.otpack.decisional45" description="decisional package DIA45">
         <pack name="decisional45" description="decisional package DIA4_5">
             <zipfileset dir="${data.dir}">
-			    <include name="data/models/ada/decisional/bms/**"/>
+                <include name="data/models/ada/decisional/bms/**"/>
                 <include name="data/models/ada/decisional/dia5/**"/>
                 <exclude name="data/models/ada/decisional/dia5/models/src/france/**"/>
                 <include name="data/models/ada/decisional/decisional.xml"/>
