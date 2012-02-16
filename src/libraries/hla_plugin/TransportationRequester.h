@@ -42,6 +42,7 @@ namespace sword
     class AutomatOrder;
     class UnitOrder;
     class Report;
+    class FragOrder;
 }
 
 namespace plugins
@@ -64,6 +65,7 @@ namespace hla
 class TransportationRequester : private tools::MessageObserver< sword::AutomatOrder >
                               , private tools::MessageObserver< sword::UnitOrder >
                               , private tools::MessageObserver< sword::Report >
+                              , private tools::MessageObserver< sword::FragOrder >
                               , private ::hla::InteractionNotification_ABC< interactions::NetnOfferConvoy >
                               , private ::hla::InteractionNotification_ABC< interactions::NetnServiceStarted >
                               , private ::hla::InteractionNotification_ABC< interactions::NetnConvoyEmbarkmentStatus >
@@ -81,7 +83,8 @@ public:
                                       InteractionSender_ABC< interactions::NetnAcceptOffer >& acceptSender,
                                       InteractionSender_ABC< interactions::NetnRejectOfferConvoy >& rejectSender,
                                       InteractionSender_ABC< interactions::NetnReadyToReceiveService >& readySender,
-                                      InteractionSender_ABC< interactions::NetnServiceReceived >& receivedSender );
+                                      InteractionSender_ABC< interactions::NetnServiceReceived >& receivedSender,
+                                      InteractionSender_ABC< interactions::NetnCancelConvoy >& cancelSender );
     virtual ~TransportationRequester();
     //@}
 
@@ -103,6 +106,7 @@ private:
     virtual void Notify( const sword::AutomatOrder& message, int context );
     virtual void Notify( const sword::UnitOrder& message, int context );
     virtual void Notify( const sword::Report& message, int context );
+    virtual void Notify( const sword::FragOrder& message, int context );
     //@}
 
 private:
@@ -124,6 +128,7 @@ private:
     void ProcessTransport(const T& message, bool isAutomaton);
     template <typename T>
     void ProcessEmbark(const T& message, bool isAutomaton, const std::vector< unsigned int >& missions, bool embark);
+    void CancelOffer(T_Requests& container, unsigned int context);
     //@}
 
 private:
@@ -145,6 +150,7 @@ private:
     InteractionSender_ABC< interactions::NetnRejectOfferConvoy >& rejectSender_;
     InteractionSender_ABC< interactions::NetnReadyToReceiveService >& readySender_;
     InteractionSender_ABC< interactions::NetnServiceReceived >& receivedSender_;
+    InteractionSender_ABC< interactions::NetnCancelConvoy >& cancelSender_;
     T_Requests pendingRequests_;
     T_Requests acceptedRequests_;
     T_Requests readyToReceiveRequests_;

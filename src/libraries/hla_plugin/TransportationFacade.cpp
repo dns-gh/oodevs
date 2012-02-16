@@ -42,9 +42,9 @@ TransportationFacade::TransportationFacade( xml::xisubstream xis, const MissionR
     , pTransportationRequester_      ( new TransportationRequester( xis, missionResolver, controller, callsignResolver, subordinates,
                                                                     contextFactory, simulationPublisher, *pNetnRequestConvoy_,
                                                                     *pNetnAcceptOffer_, *pNetnRejectOfferConvoy_,
-                                                                    *pNetnReadyToReceiveService_, *pNetnServiceReceived_ ) )
-    , pTransportationOfferer_        ( new TransportationOfferer( xis, missionResolver, *pNetnOfferConvoy_, *pNetnServiceStarted_, *pNetnConvoyEmbarkmentStatus_, *pNetnConvoyDisembarkmentStatus_, *pNetnConvoyDestroyedEntities_, *pNetnServiceComplete_,
-                                                                  controller, contextFactory, callsignResolver, clientsPublisher ) )
+                                                                    *pNetnReadyToReceiveService_, *pNetnServiceReceived_, *pNetnCancelConvoy_ ) )
+    , pTransportationOfferer_        ( new TransportationOfferer( xis, missionResolver, *pNetnOfferConvoy_, *pNetnServiceStarted_, *pNetnConvoyEmbarkmentStatus_, *pNetnConvoyDisembarkmentStatus_, *pNetnConvoyDestroyedEntities_, *pNetnServiceComplete_, *pNetnCancelConvoy_,
+                                                                  controller, contextFactory, callsignResolver, clientsPublisher, simulationPublisher ) )
 {
     // NOTHING
 }
@@ -98,9 +98,10 @@ void TransportationFacade::Receive( interactions::NetnRejectOfferConvoy& /*inter
 // Name: TransportationFacade::Receive
 // Created: SLI 2011-10-24
 // -----------------------------------------------------------------------------
-void TransportationFacade::Receive( interactions::NetnCancelConvoy& /*interaction*/ )
+void TransportationFacade::Receive( interactions::NetnCancelConvoy& interaction )
 {
-    // NOTHING
+    pTransportationRequester_->Receive( interaction );
+    pTransportationOfferer_->Receive( interaction );
 }
 
 // -----------------------------------------------------------------------------

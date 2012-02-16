@@ -25,11 +25,13 @@ namespace sword
     class UnitAttributes;
     class UnitOrder;
     class ControlEndTick;
+    class FragOrder;
 }
 
 namespace dispatcher
 {
     class ClientPublisher_ABC;
+    class SimulationPublisher_ABC;
 }
 
 namespace tools
@@ -74,6 +76,7 @@ class TransportationOfferer : public ::hla::InteractionNotification_ABC< interac
                             , private tools::MessageObserver< sword::UnitAttributes >
                             , private tools::MessageObserver< sword::UnitOrder >
                             , private tools::MessageObserver< sword::ControlEndTick >
+                            , private tools::MessageObserver< sword::FragOrder >
 {
 public:
     //! @name Constructors/Destructor
@@ -85,8 +88,10 @@ public:
                                     InteractionSender_ABC< interactions::NetnConvoyDisembarkmentStatus >& convoyDisembarkmentStatusSender,
                                     InteractionSender_ABC< interactions::NetnConvoyDestroyedEntities >& convoyDestroyedEntitiesSender,
                                     InteractionSender_ABC< interactions::NetnServiceComplete >& serviceCompleteSender,
+                                    InteractionSender_ABC< interactions::NetnCancelConvoy >& cancelConvoySender,
                                     tools::MessageController_ABC< sword::SimToClient_Content >& messageController, const ContextFactory_ABC& factory,
-                                    const CallsignResolver_ABC& callsignRevoler, dispatcher::ClientPublisher_ABC& clientsPublisher );
+                                    const CallsignResolver_ABC& callsignRevoler, dispatcher::ClientPublisher_ABC& clientsPublisher, 
+                                    dispatcher::SimulationPublisher_ABC& simulationPublisher );
     virtual ~TransportationOfferer();
     //@}
 
@@ -105,15 +110,7 @@ private:
     virtual void Notify( const sword::UnitAttributes& message, int context );
     virtual void Notify( const sword::UnitOrder& message, int context );
     virtual void Notify( const sword::ControlEndTick& message, int context );
-    //@}
-
-private:
-    //! @name Helpers
-    //@{
-    void HandleConvoyStatus( const sword::UnitAttributes& message );
-    void HandleTransporterDeath( const sword::UnitAttributes& message );
-    void SendEmbarkmentStatus( unsigned int transporter, unsigned int transported );
-    void SendDisembarkmentStatus( unsigned int transporter, unsigned int untransported );
+    virtual void Notify( const sword::FragOrder& message, int context );
     //@}
 
 private:
@@ -128,6 +125,17 @@ private:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    void HandleConvoyStatus( const sword::UnitAttributes& message );
+    void HandleTransporterDeath( const sword::UnitAttributes& message );
+    void SendEmbarkmentStatus( unsigned int transporter, unsigned int transported );
+    void SendDisembarkmentStatus( unsigned int transporter, unsigned int untransported );
+    void Cancel( unsigned int entity );
+    void Cleanup( T_Offers& container, const std::string& serviceId );
+    //@}
+
+private:
     //! @name Member data
     //@{
     InteractionSender_ABC< interactions::NetnOfferConvoy >& offerInteractionSender_;
@@ -136,14 +144,17 @@ private:
     InteractionSender_ABC< interactions::NetnConvoyDisembarkmentStatus >& convoyDisembarkmentStatusSender_;
     InteractionSender_ABC< interactions::NetnConvoyDestroyedEntities >& convoyDestroyedEntitiesSender_;
     InteractionSender_ABC< interactions::NetnServiceComplete >& serviceCompleteSender_;
+    InteractionSender_ABC< interactions::NetnCancelConvoy >& cancelConvoySender_;
     tools::MessageController_ABC< sword::SimToClient_Content >& messageController_;
     const ContextFactory_ABC& factory_;
     const CallsignResolver_ABC& callsignResolver_;
     dispatcher::ClientPublisher_ABC& clientsPublisher_;
+    dispatcher::SimulationPublisher_ABC& simulationPublisher_;
     unsigned int transportIdentifier_;
     unsigned int embarkIdentifier_;
     unsigned int disembarkIdentifier_;
     const unsigned int missionCompleteReportId_;
+    const unsigned int cancelId_;
     T_Offers pendingOffers_;
     T_Offers offeredOffers_;
     T_Offers acceptedOffers_;

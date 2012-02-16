@@ -18,6 +18,8 @@
 #include "protocol/Simulation.h"
 #include "protocol/MessengerSenders.h"
 #include "protocol/ClientPublisher_ABC.h"
+#include "protocol/SimulationSenders.h"
+#include "dispatcher/SimulationPublisher_ABC.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/lexical_cast.hpp>
 #pragma warning( push, 1 )
@@ -35,6 +37,15 @@ namespace
         std::string name;
         xis >> xml::content( mission, name );
         return resolver.ResolveUnit( name );
+    }
+    
+    std::string GetFragoName( xml::xisubstream xis, const std::string& frago)
+    {
+        std::string name;
+        xis >> xml::start( "missions" )
+            >> xml::start( "fragOrders" )
+            >> xml::content( frago, name );
+        return name;
     }
 
     unsigned int ResolveReportId( xml::xisubstream xis )
@@ -69,19 +80,24 @@ TransportationOfferer::TransportationOfferer( xml::xisubstream xis, const Missio
                                               InteractionSender_ABC< interactions::NetnConvoyDisembarkmentStatus >& convoyDisembarkmentStatusSender,
                                               InteractionSender_ABC< interactions::NetnConvoyDestroyedEntities >& convoyDestroyedEntitiesSender,
                                               InteractionSender_ABC< interactions::NetnServiceComplete >& serviceCompleteSender,
+                                              InteractionSender_ABC< interactions::NetnCancelConvoy >& cancelConvoySender,
                                               tools::MessageController_ABC< sword::SimToClient_Content >& messageController, const ContextFactory_ABC& factory,
-                                              const CallsignResolver_ABC& callsignRevoler, dispatcher::ClientPublisher_ABC& clientsPublisher )
+                                              const CallsignResolver_ABC& callsignRevoler, dispatcher::ClientPublisher_ABC& clientsPublisher,
+                                              dispatcher::SimulationPublisher_ABC& simulationPublisher )
     : offerInteractionSender_         ( offerInteractionSender )
     , serviceStartedInteractionSender_( serviceStartedInteractionSender )
     , convoyEmbarkmentStatusSender_   ( convoyEmbarkmentStatusSender )
     , convoyDisembarkmentStatusSender_( convoyDisembarkmentStatusSender )
     , convoyDestroyedEntitiesSender_  ( convoyDestroyedEntitiesSender )
     , serviceCompleteSender_          ( serviceCompleteSender )
+    , cancelConvoySender_             ( cancelConvoySender )
     , messageController_              ( messageController )
     , factory_                        ( factory )
     , callsignResolver_               ( callsignRevoler )
     , clientsPublisher_               ( clientsPublisher )
+    , simulationPublisher_            ( simulationPublisher )
     , missionCompleteReportId_        ( ResolveReportId( xis ) )
+    , cancelId_                       ( missionResolver.ResolveUnit( GetFragoName( xis, "cancel" ) ) )
 {
     xml::xisubstream sxis(xis);
     xis >> xml::start( "missions" )
@@ -93,6 +109,7 @@ TransportationOfferer::TransportationOfferer( xml::xisubstream xis, const Missio
     CONNECT( messageController, *this, unit_order );
     CONNECT( messageController, *this, unit_attributes );
     CONNECT( messageController, *this, control_end_tick );
+    CONNECT( messageController, *this, frag_order );
 }
 
 // -----------------------------------------------------------------------------
@@ -442,6 +459,7 @@ namespace
 void TransportationOfferer::HandleConvoyStatus( const sword::UnitAttributes& message )
 {
     const unsigned int transported = message.unit().id();
+
     unsigned int transporter = message.transporting_unit().id();
     if( transporter != 0 )
     {
@@ -515,6 +533,111 @@ void TransportationOfferer::SendDisembarkmentStatus( unsigned int transporter, u
 // Name: TransportationOfferer::Receive
 // Created: AHC 2012-02-10
 // -----------------------------------------------------------------------------
-void TransportationOfferer::Receive( interactions::NetnCancelConvoy& )
+void TransportationOfferer::Receive( interactions::NetnCancelConvoy& interaction)
 {
+    const std::string serviceId = ServiceIdentifier( interaction );
+    if( offeredOffers_.find( serviceId ) == offeredOffers_.end() )
+    {
+        Cleanup( offeredOffers_, serviceId );
+    }
+    else if( acceptedOffers_.find( serviceId ) == acceptedOffers_.end() )
+    {
+        Cleanup( acceptedOffers_, serviceId );  
+    }
+    else if( startedOffers_.find( serviceId ) == startedOffers_.end() )
+    {
+        Cleanup( startedOffers_, serviceId );  
+    }
+    else if( completetedOffers_.find( serviceId ) == completetedOffers_.end() )
+    {
+        Cleanup( completetedOffers_, serviceId );  
+    }
+}
+
+namespace
+{
+    void SendFragOrder( unsigned int automat, unsigned int fragOrderType, dispatcher::SimulationPublisher_ABC& publisher )
+    {
+        simulation::FragOrder order;
+        order().mutable_tasker()->mutable_automat()->set_id( automat );
+        order().mutable_type()->set_id( fragOrderType );
+        order.Send( publisher );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TransportationOfferer::Cancel
+// Created: AHC 2012-02-14
+// -----------------------------------------------------------------------------
+void TransportationOfferer::Cancel( unsigned int entity )
+{
+    SendFragOrder( entity, cancelId_, simulationPublisher_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TransportationOfferer::Cancel
+// Created: AHC 2012-02-14
+// -----------------------------------------------------------------------------
+void TransportationOfferer::Notify( const sword::FragOrder& message, int /*context*/ )
+{
+    if( message.type().id() != cancelId_ || !message.tasker().has_unit() )
+        return;
+
+    unsigned int unit_id = message.tasker().unit().id();
+    T_Transporters::left_const_iterator it = transporters_.left.find( unit_id );
+    if( it == transporters_.left.end() )
+        return;
+    const std::string& serviceId = it->second;
+    interactions::NetnCancelConvoy cancel;
+    cancel.reason = "mission cancelled";
+    if( offeredOffers_.find( serviceId ) != offeredOffers_.end() )
+    {
+        const interactions::NetnOfferConvoy& offer = offeredOffers_[serviceId];
+        cancel.consumer = offer.consumer;
+        cancel.consumer = offer.provider;
+        cancel.serviceType = offer.serviceType;
+        cancel.serviceId = offer.serviceId;
+        cancelConvoySender_.Send( cancel );
+        Cleanup( offeredOffers_, serviceId ); 
+    }
+    if( acceptedOffers_.find( serviceId ) != acceptedOffers_.end() )
+    {
+        const interactions::NetnOfferConvoy& offer = acceptedOffers_[serviceId];
+        cancel.consumer = offer.consumer;
+        cancel.consumer = offer.provider;
+        cancel.serviceType = offer.serviceType;
+        cancel.serviceId = offer.serviceId;
+        cancelConvoySender_.Send( cancel );
+        Cleanup( acceptedOffers_, serviceId ); 
+    }
+    else if( startedOffers_.find( serviceId ) != startedOffers_.end() )
+    {
+        const interactions::NetnOfferConvoy& offer = startedOffers_[serviceId];
+        cancel.consumer = offer.consumer;
+        cancel.consumer = offer.provider;
+        cancel.serviceType = offer.serviceType;
+        cancel.serviceId = offer.serviceId;
+        cancelConvoySender_.Send( cancel );
+        Cleanup( startedOffers_, serviceId ); 
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TransportationOfferer::Cleanup
+// Created: AHC 2012-02-16
+// -----------------------------------------------------------------------------
+void TransportationOfferer::Cleanup( T_Offers& container, const std::string& serviceId )
+{
+    Transfer(container, receivedOffers_, serviceId );
+    
+    T_Transporters::right_const_iterator transporter = transporters_.right.find( serviceId );
+    if( transporter != transporters_.right.end() )
+    {
+        Cancel( transporter->second );
+        transporters_.right.erase( serviceId );
+        BOOST_FOREACH( const unsigned int transported, transported_[transporter->second] )
+            transportedBy_.erase( transported );
+        transported_.erase( transporter->second );
+    }
+    remainingTransported_.erase( serviceId );
 }

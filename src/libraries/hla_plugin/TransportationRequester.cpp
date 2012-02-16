@@ -124,7 +124,8 @@ TransportationRequester::TransportationRequester( xml::xisubstream xis, const Mi
                                                   InteractionSender_ABC< interactions::NetnAcceptOffer >& acceptSender,
                                                   InteractionSender_ABC< interactions::NetnRejectOfferConvoy >& rejectSender,
                                                   InteractionSender_ABC< interactions::NetnReadyToReceiveService >& readySender,
-                                                  InteractionSender_ABC< interactions::NetnServiceReceived >& receivedSender )
+                                                  InteractionSender_ABC< interactions::NetnServiceReceived >& receivedSender,
+                                                  InteractionSender_ABC< interactions::NetnCancelConvoy >& cancelSender )
     : missionCompleteReportId_( ResolveReportId( xis ) )
     , pauseId_                ( resolver.ResolveAutomat( GetName( xis, "fragOrders", "pause" ) ) )
     , resumeId_               ( resolver.ResolveAutomat( GetName( xis, "fragOrders", "resume" ) ) )
@@ -138,11 +139,13 @@ TransportationRequester::TransportationRequester( xml::xisubstream xis, const Mi
     , rejectSender_           ( rejectSender )
     , readySender_            ( readySender )
     , receivedSender_         ( receivedSender )
+    , cancelSender_           ( cancelSender )
     , federateName_           ( xis.attribute<std::string>( "name", "SWORD" ) )
 {
     CONNECT( controller, *this, automat_order );
     CONNECT( controller, *this, unit_order );
     CONNECT( controller, *this, report );
+    CONNECT( controller, *this, frag_order );
     xis >> xml::start("missions") >> xml::start("request")
         >> xml::list( "transport", *this, &TransportationRequester::ReadMission, transportIds_, resolver )
         >> xml::list( "embarkment", *this, &TransportationRequester::ReadMission, embarkmentIds_, resolver )
@@ -527,8 +530,69 @@ void TransportationRequester::Receive( interactions::NetnCancelConvoy& interacti
     const unsigned int context = interaction.serviceId.eventCount;
     if( pendingRequests_.left.find( context ) != pendingRequests_.left.end() )
     {
-        Resume( pendingRequests_.left.find( context )->second );
-        return;
+        Cancel( pendingRequests_.left.find( context )->second );
+        Transfer( pendingRequests_, completeRequests_, context );
+    }
+    else if( acceptedRequests_.left.find( context ) != acceptedRequests_.left.end() )
+    {
+        Cancel( acceptedRequests_.left.find( context )->second );
+        Transfer( acceptedRequests_, completeRequests_, context );
+    }
+    else if( readyToReceiveRequests_.left.find( context ) != readyToReceiveRequests_.left.end() )
+    {
+        Transfer( readyToReceiveRequests_, completeRequests_, context );
+    }
+    else if( serviceStartedRequests_.left.find( context ) != serviceStartedRequests_.left.end() )
+    {
+        Transfer( serviceStartedRequests_, completeRequests_, context );
     }
     
+}
+
+// -----------------------------------------------------------------------------
+// Name: TransportationRequester::Receive
+// Created: AHC 2012-02-10
+// -----------------------------------------------------------------------------
+void TransportationRequester::Notify( const sword::FragOrder& message, int /*context*/ )
+{
+    if( message.type().id() != cancelId_ ||
+        ( !message.tasker().has_automat() && !message.tasker().has_unit() ) )
+        return;
+    unsigned int unit = message.tasker().has_automat() ?
+                        message.tasker().automat().id() :
+                        message.tasker().unit().id();
+    T_Requests::right_const_iterator it = pendingRequests_.right.find( unit );
+    if( it != pendingRequests_.right.end() )
+    {
+        CancelOffer(pendingRequests_, it->second);
+    }
+    else if( (it = acceptedRequests_.right.find( unit )) != acceptedRequests_.right.end() )
+    {
+        CancelOffer(acceptedRequests_, it->second);
+    }
+    else if( (it = readyToReceiveRequests_.right.find( unit )) != readyToReceiveRequests_.right.end() )
+    {
+        CancelOffer(readyToReceiveRequests_, it->second);
+    }
+    else if( (it = serviceStartedRequests_.right.find( unit )) != serviceStartedRequests_.right.end() )
+    {
+        CancelOffer(serviceStartedRequests_, it->second);
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TransportationRequester::CancelOffer
+// Created: AHC 2012-02-16
+// -----------------------------------------------------------------------------
+void TransportationRequester::CancelOffer(T_Requests& container, unsigned int context)
+{
+    const interactions::NetnOfferConvoy& offer = contextRequests_[context];
+    interactions::NetnCancelConvoy cancel;
+    cancel.consumer = offer.consumer;
+    cancel.provider = offer.provider;
+    cancel.serviceType = offer.serviceType;
+    cancel.serviceId = offer.serviceId;
+    cancel.reason = "mission cancelled";
+    cancelSender_.Send( cancel );
+    Transfer(container, completeRequests_, context);
 }

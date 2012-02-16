@@ -57,6 +57,7 @@ BOOST_AUTO_TEST_CASE( transportation_requester_reads_transportation_mission_name
     MockInteractionSender< interactions::NetnRejectOfferConvoy > rejectSender;
     MockInteractionSender< interactions::NetnReadyToReceiveService > readySender;
     MockInteractionSender< interactions::NetnServiceReceived > receivedSender;
+    MockInteractionSender< interactions::NetnCancelConvoy > cancelSender;
     MOCK_EXPECT( resolver, ResolveAutomat ).once().with( "transportation mission name" ).returns( 42 );
     MOCK_EXPECT( resolver, ResolveUnit ).once().with( "transportation mission name" ).returns( 42 );
     MOCK_EXPECT( resolver, ResolveAutomat ).once().with( "embarkment mission name" ).returns( 42 );
@@ -66,7 +67,7 @@ BOOST_AUTO_TEST_CASE( transportation_requester_reads_transportation_mission_name
     MOCK_EXPECT( resolver, ResolveAutomat ).once().with( "pause" ).returns( 43 );
     MOCK_EXPECT( resolver, ResolveAutomat ).once().with( "resume" ).returns( 44 );
     MOCK_EXPECT( resolver, ResolveAutomat ).once().with( "cancel" ).returns( 45 );
-    TransportationRequester requester( xis, resolver, messageController, callsignResolver, subordinates, factory, publisher, requestSender, acceptSender, rejectSender, readySender, receivedSender );
+    TransportationRequester requester( xis, resolver, messageController, callsignResolver, subordinates, factory, publisher, requestSender, acceptSender, rejectSender, readySender, receivedSender, cancelSender );
 }
 
 namespace
@@ -145,6 +146,7 @@ namespace
         MockInteractionSender< interactions::NetnRejectOfferConvoy > rejectSender;
         MockInteractionSender< interactions::NetnReadyToReceiveService > readySender;
         MockInteractionSender< interactions::NetnServiceReceived > receivedSender;
+        MockInteractionSender< interactions::NetnCancelConvoy > cancelSender;
     };
     bool CheckTransportedUnits( const TransportedUnits_ABC& visitable, const std::string& subordinateCallsign, const std::string& subordinateNetnUniqueId )
     {
@@ -173,7 +175,7 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( transportation_requester_listens_to_automat_transportation_mission_and_notifies_listener_and_pauses_mission, Fixture )
 {
-    TransportationRequester requester( xis, missionResolver, messageController, callsignResolver, subordinates, factory, publisher, requestSender, acceptSender, rejectSender, readySender, receivedSender );
+    TransportationRequester requester( xis, missionResolver, messageController, callsignResolver, subordinates, factory, publisher, requestSender, acceptSender, rejectSender, readySender, receivedSender, cancelSender );
     const geometry::Point2d embarkingPoint;
     const geometry::Point2d debarkingPoint;
     const long long embarkingTime = 1;
@@ -226,7 +228,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_requester_listens_to_automat_transportat
 
 BOOST_FIXTURE_TEST_CASE( transportation_requester_listens_to_automat_embarkment_mission_and_notifies_listener_and_pauses_mission, Fixture )
 {
-    TransportationRequester requester( xis, missionResolver, messageController, callsignResolver, subordinates, factory, publisher, requestSender, acceptSender, rejectSender, readySender, receivedSender );
+    TransportationRequester requester( xis, missionResolver, messageController, callsignResolver, subordinates, factory, publisher, requestSender, acceptSender, rejectSender, readySender, receivedSender, cancelSender );
     const geometry::Point2d embarkingPoint;
     const long long embarkingTime = 1;
     const std::string subordinateCallsign = "subordinate callsign";
@@ -272,7 +274,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_requester_listens_to_automat_embarkment_
 
 BOOST_FIXTURE_TEST_CASE( transportation_requester_listens_to_automat_disembarkment_mission_and_notifies_listener_and_pauses_mission, Fixture )
 {
-    TransportationRequester requester( xis, missionResolver, messageController, callsignResolver, subordinates, factory, publisher, requestSender, acceptSender, rejectSender, readySender, receivedSender );
+    TransportationRequester requester( xis, missionResolver, messageController, callsignResolver, subordinates, factory, publisher, requestSender, acceptSender, rejectSender, readySender, receivedSender, cancelSender );
     const geometry::Point2d disembarkingPoint;
     const long long disembarkingTime = 1;
     const std::string subordinateCallsign = "subordinate callsign";
@@ -318,7 +320,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_requester_listens_to_automat_disembarkme
 
 BOOST_FIXTURE_TEST_CASE( transportation_requester_listens_to_unit_transportation_mission_and_notifies_listener_and_pauses_mission, Fixture )
 {
-    TransportationRequester requester( xis, missionResolver, messageController, callsignResolver, subordinates, factory, publisher, requestSender, acceptSender, rejectSender, readySender, receivedSender );
+    TransportationRequester requester( xis, missionResolver, messageController, callsignResolver, subordinates, factory, publisher, requestSender, acceptSender, rejectSender, readySender, receivedSender, cancelSender );
     const geometry::Point2d embarkingPoint( 1., 2. );
     const geometry::Point2d debarkingPoint( -1., -2. );
     const std::string unitCallsign = "callsign";
@@ -354,7 +356,7 @@ BOOST_FIXTURE_TEST_CASE( transportation_requester_listens_to_unit_transportation
 
 BOOST_FIXTURE_TEST_CASE( transporation_controller_does_nothing_if_mission_is_not_transportation, Fixture )
 {
-    TransportationRequester requester( xis, missionResolver, messageController, callsignResolver, subordinates, factory, publisher, requestSender, acceptSender, rejectSender, readySender, receivedSender );
+    TransportationRequester requester( xis, missionResolver, messageController, callsignResolver, subordinates, factory, publisher, requestSender, acceptSender, rejectSender, readySender, receivedSender, cancelSender );
     const unsigned int unknownMission = transportAutomatId + 100;
     messageController.Dispatch( MakeTransportationMessage( unknownMission ) );
 }
@@ -365,7 +367,7 @@ namespace
     {
     public:
         RequestedFixture()
-            : requester                   ( xis, missionResolver, messageController, callsignResolver, subordinates, factory, publisher, requestSender, acceptSender, rejectSender, readySender, receivedSender )
+            : requester                   ( xis, missionResolver, messageController, callsignResolver, subordinates, factory, publisher, requestSender, acceptSender, rejectSender, readySender, receivedSender, cancelSender )
             , context                     ( 1337 )
             , missionCompleteId           ( 1338u )
             , embarkingPoint              ( 1., 2. )

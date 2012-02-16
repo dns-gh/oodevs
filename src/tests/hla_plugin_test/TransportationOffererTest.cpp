@@ -16,6 +16,7 @@
 #include "MockMissionResolver.h"
 #include "MockCallsignResolver.h"
 #include "MockClientPublisher.h"
+#include "MockSimulationPublisher.h"
 #include "tools/MessageController.h"
 #include "protocol/Simulation.h"
 #include "protocol/MessengerSenders.h"
@@ -31,6 +32,9 @@ namespace
         Fixture()
             : xis        ( "<configuration>"
                            "    <missions>"
+                           "        <fragOrders>"
+                           "            <cancel>cancel</cancel>"
+                           "        </fragOrders>"
                            "        <offer>"
                            "            <transport>transport</transport>"
                            "            <embarkment>embarkment</embarkment>"
@@ -44,16 +48,19 @@ namespace
             , transportId( 42 )
             , embarkId( 43 )
             , disembarkId( 44 )
+            , cancelId ( 45 )
         {
             xis >> xml::start( "configuration" );
             MOCK_EXPECT( missionResolver, ResolveUnit ).once().with( "transport" ).returns( transportId );
             MOCK_EXPECT( missionResolver, ResolveUnit ).once().with( "embarkment" ).returns( embarkId );
             MOCK_EXPECT( missionResolver, ResolveUnit ).once().with( "disembarkment" ).returns( disembarkId );
+            MOCK_EXPECT( missionResolver, ResolveUnit ).once().with( "cancel" ).returns( cancelId );
         }
         xml::xistringstream xis;
         unsigned int transportId;
         unsigned int embarkId;
         unsigned int disembarkId;
+        unsigned int cancelId;
         MockMissionResolver missionResolver;
         MockInteractionSender< interactions::NetnOfferConvoy > offerInteractionSender;
         MockInteractionSender< interactions::NetnServiceStarted > serviceStartedInteractionSender;
@@ -61,20 +68,22 @@ namespace
         MockInteractionSender< interactions::NetnConvoyDisembarkmentStatus > convoyDisembarkmentStatusInteractionSender;
         MockInteractionSender< interactions::NetnConvoyDestroyedEntities > convoyDestroyedEntitiesSender;
         MockInteractionSender< interactions::NetnServiceComplete > serviceCompleteSender;
+        MockInteractionSender< interactions::NetnCancelConvoy > cancelConvoySender;
         interactions::NetnOfferConvoy offer;
         interactions::NetnRequestConvoy request;
         tools::MessageController< sword::SimToClient_Content > messageController;
         MockContextFactory contextFactory;
         MockCallsignResolver callsignResolver;
         dispatcher::MockClientPublisher clientPublisher;
+        dispatcher::MockSimulationPublisher simulationPublisher;
     };
 }
 
 BOOST_FIXTURE_TEST_CASE( netn_offer_convoy_sender_sends_announce_offer_to_clients_and_creates_flags_at_embarking_and_debarking_points, Fixture )
 {
     TransportationOfferer transportationOfferer( xis, missionResolver, offerInteractionSender, serviceStartedInteractionSender,
-                                                 convoyEmbarkmentStatusInteractionSender, convoyDisembarkmentStatusInteractionSender, convoyDestroyedEntitiesSender, serviceCompleteSender,
-                                                 messageController, contextFactory, callsignResolver, clientPublisher );
+                                                 convoyEmbarkmentStatusInteractionSender, convoyDisembarkmentStatusInteractionSender, convoyDestroyedEntitiesSender, serviceCompleteSender, cancelConvoySender,
+                                                 messageController, contextFactory, callsignResolver, clientPublisher, simulationPublisher );
     request.serviceType = 4; // Convoy
     request.consumer = UnicodeString( "consumer" );
     request.provider = UnicodeString( "provider" );
