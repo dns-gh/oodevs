@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="ASCII"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="tasks.MoveAlong" source-version="1.0.0">
+    <parameters>
+        <parameter name="entities">
+            <description>The list of entities defining the path. The list must be ordered such a way that its nth element represents the nth entity on the agent&#x2019;s path</description>
+            <type>
+                <list>
+                    <class name="agent.world.Destination"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="MoveAlong">
+            <skills>
+                <skill name="behaviors.skills.MoveAlong" main="true">
+                    <parameter name="entities">
+                        <value>
+                            <parameter>entities</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>
