@@ -10,9 +10,6 @@ rootnode
     -- --------------------------------------------------------------------------------
     done = function( self )
         self.nextTargetIndex = self.nextTargetIndex + 1
-        if self.nextTargetIndex > #self.params.entities then
-            Feedback( self.feedbacks.done )
-        end
     end,
 
     -- -------------------------------------------------------------------------------- 
@@ -27,6 +24,10 @@ rootnode
     -- --------------------------------------------------------------------------------
     activate = function( self )
         local Activate = Activate
-        Activate( skill.links.reach, 1, { destination  = self.params.entities[ self.nextTargetIndex ] } )
+        if self.nextTargetIndex > #self.params.entities then
+            Feedback( self.feedbacks.done )
+        else
+            Activate( skill.links.reach, 1, { destination  = self.params.entities[ self.nextTargetIndex ] } )
+        end
     end
 }
