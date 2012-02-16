@@ -263,7 +263,7 @@ message ControlCheckPointListRequest {
 }
 
 /** @struct ControlExportRequest
-    @brief Request an export of current exercise for preparation
+    @brief Request an export of current exercise for preparation.
 */
 message ControlExportRequest {
    required string directory_name = 1;
