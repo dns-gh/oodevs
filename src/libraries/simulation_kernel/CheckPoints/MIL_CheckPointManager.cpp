@@ -411,9 +411,9 @@ void MIL_CheckPointManager::OnReceiveMsgControlExportRequest( const sword::Contr
 {
     const std::string& name = msg.directory_name();
     client::ControlExportRequestAck asnReplyMsg;
-    bool success = SaveCheckPoint( name, name );
-    asnReplyMsg.set_error_code( success ? client::ControlExportRequestAck::success : client::ControlExportRequestAck::failure );
-    asnReplyMsg.set_directory_name( name );
+    bool success = SaveCheckPoint( false, name, name );
+    asnReplyMsg().set_error_code( success ? sword::ControlExportRequestAck::success : sword::ControlExportRequestAck::failure );
+    asnReplyMsg().set_directory_name( name );
     asnReplyMsg.Send( NET_Publisher_ABC::Publisher() );
 }
 
