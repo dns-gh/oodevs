@@ -24,6 +24,7 @@ namespace sword
     class ControlCheckPointDeleteRequest;
     class ControlCheckPointSaveNow;
     class ControlCheckPointSetFrequency;
+    class ControlExportRequest;
 }
 
 namespace xml
