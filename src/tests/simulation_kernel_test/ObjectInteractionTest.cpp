@@ -421,7 +421,6 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Mine, ObjectCapacityFi
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_InteractionAttitudeModifier, ObjectCapacityFixture )
 {
-    WorldInitialize( "worldwide/Paris" );
     MockNET_Publisher_ABC mockPublisher;
     MOCK_EXPECT( mockPublisher, Send ).at_least( 1 );
     MIL_PopulationAttitude::Initialize();
@@ -455,7 +454,6 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_InteractionAttitudeModifier, Objec
     object->ProcessPopulationInside( concentration );
     BOOST_CHECK( &concentration.GetAttitude() == MIL_PopulationAttitude::Find("agressive") );
     MOCK_EXPECT( army, UnregisterObject ).once();
-    TER_World::DestroyWorld();
 }
 
 // -----------------------------------------------------------------------------

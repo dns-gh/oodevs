@@ -27,7 +27,6 @@
 #include "protocol/ClientSenders.h"
 #include "simulation_kernel/PopulationCollisionNotificationHandler_ABC.h"
 #include "simulation_terrain/TER_World.h"
-#include "simulation_terrain/TER_PopulationManager.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "Tools/MIL_Tools.h"
 #include "Tools/MIL_IDManager.h"
@@ -66,8 +65,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     , pPullingFlow_        ( 0 )
     , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
     , pSplittingObject_    ( 0 )
-    , pAttackController_   ( new MIL_AttackController( TER_World::GetWorld().GetPopulationManager().GetConcentrationManager(),
-                                                       MIL_EffectManager::GetEffectManager() ) )
+    , pAttackController_   ( new MIL_AttackController() )
 {
     // NOTHING
 }
@@ -81,8 +79,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     , pPullingFlow_        ( 0 )
     , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
     , pSplittingObject_    ( 0 )
-    , pAttackController_   ( new MIL_AttackController( TER_World::GetWorld().GetPopulationManager().GetConcentrationManager(),
-                                                       MIL_EffectManager::GetEffectManager() ) )
+    , pAttackController_   ( new MIL_AttackController() )
 {
     // Position
     MIL_Tools::ConvertCoordMosToSim( xis.attribute< std::string >( "position" ), position_ );
@@ -103,8 +100,7 @@ MIL_PopulationConcentration::MIL_PopulationConcentration( MIL_Population& popula
     , pPullingFlow_        ( 0 )
     , rPullingFlowsDensity_( population.GetDefaultFlowDensity() )
     , pSplittingObject_    ( 0 )
-    , pAttackController_   ( new MIL_AttackController( TER_World::GetWorld().GetPopulationManager().GetConcentrationManager(),
-                                                       MIL_EffectManager::GetEffectManager() ) )
+    , pAttackController_   ( new MIL_AttackController() )
 {
     PushHumans( MIL_PopulationHumans( nHumans ) );
     UpdateLocation();

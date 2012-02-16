@@ -16,8 +16,6 @@
 
 class MIL_Effect_AttackPopulation;
 class MIL_PopulationElement_ABC;
-class TER_PopulationConcentrationManager;
-class MIL_EffectManager;
 
 // =============================================================================
 /** @class  MIL_AttackController
@@ -30,8 +28,7 @@ class MIL_AttackController : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             MIL_AttackController( const TER_PopulationConcentrationManager& concentrationManager,
-                                   MIL_EffectManager& effectManager );
+             MIL_AttackController();
     virtual ~MIL_AttackController();
     //@}
 
@@ -53,8 +50,6 @@ private:
     //! @name Member data
     //@{
     T_Effects effects_;
-    const TER_PopulationConcentrationManager& concentrationManager_;
-    MIL_EffectManager& effectManager_;
     //@}
 };
 
