@@ -337,9 +337,8 @@ integration.crowdIsContamined = function ()
 end
 
 integration.extractVictimsFromCrowd = function( crowd )
-    local nearestPosition = DEC_ConnaissancePopulation_PointPlusProche( crowd.source )
-    crowd.getCrowdPositionResult = crowd.getCrowdPositionResult or nearestPosition
-    return DEC_Crowd_ExtractWoundedFromCrowd( crowd.source, crowd.getCrowdPositionResult )
+    local position = DEC_Geometrie_CalculerPositionSureteAvecPopulation( crowd.source, 0 )
+    return DEC_Crowd_ExtractWoundedFromCrowd( crowd.source, position )
 end
 
 integration.crowdHasWoundHumans = function( crowd )
