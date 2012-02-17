@@ -333,7 +333,10 @@ void ObjectPrototype_ABC::Draw( const kernel::Location_ABC& location, const geom
 {
     if( isVisible() )
         if( const kernel::ObjectType* type = objectTypes_->GetValue() )
-            tools.DrawTacticalGraphics( type->GetSymbol(), location, true );
+        {
+            const std::string locationType = location.GetTypeName();
+            tools.DrawTacticalGraphics( type->GetSymbol( locationType ), location, true );
+        }
 }
 
 // -----------------------------------------------------------------------------

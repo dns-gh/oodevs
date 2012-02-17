@@ -30,8 +30,9 @@ ObjectPositions::ObjectPositions( kernel::Controller& controller, const kernel::
     : controller_( controller)
     , converter_ ( converter )
     , location_  ( &location.Clone() )
-    , symbol_    ( type.GetSymbol() )
 {
+    const std::string locationType = location.GetTypeName();
+    symbol_ = type.GetSymbol( locationType );
     Update();
 }
 
@@ -43,9 +44,8 @@ ObjectPositions::ObjectPositions( xml::xistream& xis, kernel::Controller& contro
     : controller_( controller )
     , converter_ ( converter )
     , location_  ( 0 )
-    , symbol_    ( type.GetSymbol() )
 {
-    ReadLocation( xis );
+    ReadLocation( xis, type );
     Update();
 }
 
@@ -62,7 +62,7 @@ ObjectPositions::~ObjectPositions()
 // Name: ObjectPositions::ReadLocation
 // Created: SBO 2006-10-20
 // -----------------------------------------------------------------------------
-void ObjectPositions::ReadLocation( xml::xistream& xis )
+void ObjectPositions::ReadLocation( xml::xistream& xis, const kernel::ObjectType& objectType )
 {
     std::string type;
     xis >> xml::start( "shape" )
@@ -77,6 +77,8 @@ void ObjectPositions::ReadLocation( xml::xistream& xis )
         location_ = new kernel::Point();
     else
         return;
+    const std::string locationType = location_->GetTypeName();
+    symbol_ = objectType.GetSymbol( locationType );
     xis     >> xml::start( "points" )
                 >> xml::list( "point", *this, &ObjectPositions::ReadPoint )
             >> xml::end

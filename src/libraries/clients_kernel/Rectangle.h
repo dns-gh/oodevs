@@ -35,6 +35,7 @@ public:
     virtual void AddPoint( const geometry::Point2f& point );
     virtual void Translate( const geometry::Point2f& from, const geometry::Vector2f& translation, float precision );
     virtual Location_ABC& Clone() const;
+    virtual std::string GetTypeName() const;
     //@}
 
     //! @name Accessors

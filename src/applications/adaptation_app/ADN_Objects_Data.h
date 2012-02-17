@@ -634,9 +634,11 @@ public:
              ADN_Objects_Data();
     virtual ~ADN_Objects_Data();
 
+    virtual bool IsValidDatabase();
     void FilesNeeded( T_StringList& l ) const;
     void Reset();
     void SaveAttritionInfos( xml::xostream& output );
+
 
     T_ObjectsInfos_Vector& GetObjectInfos();
     ADN_Objects_Data_ObjectInfos* FindObject( const std::string& strName );

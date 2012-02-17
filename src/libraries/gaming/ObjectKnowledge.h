@@ -87,6 +87,7 @@ private:
     kernel::Object_ABC* pRealObject_;
     unsigned long entityId_;
     const kernel::Team_ABC* pTeam_;
+    std::string symbol_;
     kernel::OptionalValue< bool > bIsPerceived_;
     kernel::OptionalValue< uint > nRelevance_;
     //@}

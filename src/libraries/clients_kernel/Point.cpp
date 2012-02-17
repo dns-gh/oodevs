@@ -108,3 +108,12 @@ Location_ABC& Point::Clone() const
 {
     return *new Point( *this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Point::GetTypeName
+// Created: JSR 2012-02-17
+// -----------------------------------------------------------------------------
+std::string Point::GetTypeName() const
+{
+    return "point";
+}

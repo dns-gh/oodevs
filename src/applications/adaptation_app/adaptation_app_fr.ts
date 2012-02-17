@@ -11,6 +11,10 @@
         <source>Convoy unit type not defined in Log/Supply, database cannot be saved.</source>
         <translation>Le type de pion Convoi n&apos;est pas défini dans Log/Ravitaillement, la base ne peut pas être sauvée.</translation>
     </message>
+    <message>
+        <source>No geometry defined for object %1, database cannot be saved.</source>
+        <translation>Pas de géométrie définie pour l'objet %1, la base ne peut pas être sauvée.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_ActiveProtectionsListView</name>
@@ -3377,6 +3381,30 @@ du tireur</translation>
     <message>
         <source>Description</source>
         <translation>Description</translation>
+    </message>
+    <message>
+        <source>Geometries</source>
+        <translation>Géométries</translation>
+    </message>
+    <message>
+        <source>Polygon</source>
+        <translation>Polygone</translation>
+    </message>
+    <message>
+        <source>Point</source>
+        <translation>Point</translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <translation>Ligne</translation>
+    </message>
+    <message>
+        <source>Circle</source>
+        <translation>Cercle</translation>
+    </message>
+    <message>
+        <source>Infos</source>
+        <translation>Infos</translation>
     </message>
 </context>
 <context>

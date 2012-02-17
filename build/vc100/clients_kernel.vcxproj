@@ -113,7 +113,6 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\CoordinateSystems.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\DetectionMap.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\DetectionMapIterator.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_kernel\objecticons.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Styles.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\SymbolHierarchy.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Tools.cpp" />
@@ -248,7 +247,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\DetectionMap.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\DetectionMapIterator.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\ExtensionVisitor_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\objecticons.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\OptionalValue.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Resolver2.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\ResolverAdapter.h" />

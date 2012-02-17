@@ -11,6 +11,10 @@
         <source>Convoy unit type not defined in Log/Supply, database cannot be saved.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>No geometry defined for object %1, database cannot be saved.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_ActiveProtectionsListView</name>
@@ -3376,6 +3380,30 @@ tirador</translation>
     </message>
     <message>
         <source>Description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Geometries</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Polygon</source>
+        <translation type="unfinished">Polygone</translation>
+    </message>
+    <message>
+        <source>Point</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Line</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Circle</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Infos</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

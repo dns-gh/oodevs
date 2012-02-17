@@ -1282,6 +1282,17 @@ ADN_Objects_Data::~ADN_Objects_Data()
     vObjectInfos_.Reset();
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data::IsValidDatabase
+// Created: JSR 2012-02-16
+// -----------------------------------------------------------------------------
+bool ADN_Objects_Data::IsValidDatabase()
+{
+    for( IT_ObjectsInfos_Vector it = vObjectInfos_.begin(); it != vObjectInfos_.end(); ++it )
+        if( !( *it )->IsValidDatabase() )
+            return false;
+}
+
 //-----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::FilesNeeded
 // Created: JDY 03-09-08

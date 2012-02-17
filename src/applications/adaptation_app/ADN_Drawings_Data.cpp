@@ -242,6 +242,8 @@ void ADN_Drawings_Data::DrawingInfo::Draw()
         DrawOnLine();
     else if( geometry == "point" )
         DrawOnPoint();
+    else if( geometry == "circle" )
+        DrawOnCircle();
 
     glPopMatrix();
     glPopAttrib();
@@ -282,6 +284,39 @@ void ADN_Drawings_Data::DrawingInfo::DrawOnPolygon()
     points.push_back( geometry::Point2f( SYMBOL_ICON_SIZE - SYMBOL_ICON_MARGIN,                    SYMBOL_ICON_MARGIN ) );
     points.push_back( geometry::Point2f(                    SYMBOL_ICON_MARGIN,                    SYMBOL_ICON_MARGIN ) );
     points.push_back( geometry::Point2f(                    SYMBOL_ICON_MARGIN, SYMBOL_ICON_SIZE - SYMBOL_ICON_MARGIN ) );
+    DrawItem( points );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Drawings_Data::DrawOnCircle
+// Created: JSR 2012-02-15
+// -----------------------------------------------------------------------------
+void ADN_Drawings_Data::DrawingInfo::DrawOnCircle()
+{
+    static const float radius = 0.5f * SYMBOL_ICON_SIZE - SYMBOL_ICON_MARGIN;
+    static const float p1 = SYMBOL_ICON_MARGIN;
+    static const float p2 = SYMBOL_ICON_MARGIN + radius * 0.134f;
+    static const float p3 = SYMBOL_ICON_MARGIN + radius * 0.5f  ;
+    static const float p4 = SYMBOL_ICON_MARGIN + radius;
+    static const float p5 = SYMBOL_ICON_MARGIN + radius * 1.5f;
+    static const float p6 = SYMBOL_ICON_MARGIN + radius * 1.866f;
+    static const float p7 = SYMBOL_ICON_MARGIN + radius * 2;
+
+    T_PointVector points;
+    points.push_back( geometry::Point2f( p1, p4 ) );
+    points.push_back( geometry::Point2f( p2, p5 ) );
+    points.push_back( geometry::Point2f( p3, p6 ) );
+    points.push_back( geometry::Point2f( p4, p7 ) );
+    points.push_back( geometry::Point2f( p5, p6 ) );
+    points.push_back( geometry::Point2f( p6, p5 ) );
+    points.push_back( geometry::Point2f( p7, p4 ) );
+    points.push_back( geometry::Point2f( p6, p3 ) );
+    points.push_back( geometry::Point2f( p5, p2 ) );
+    points.push_back( geometry::Point2f( p4, p1 ) );
+    points.push_back( geometry::Point2f( p3, p2 ) );
+    points.push_back( geometry::Point2f( p2, p3 ) );
+    points.push_back( geometry::Point2f( p1, p4 ) );
+
     DrawItem( points );
 }
 

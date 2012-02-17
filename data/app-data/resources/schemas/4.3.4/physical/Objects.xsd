@@ -9,9 +9,6 @@
 			<xs:enumeration value="polygon"/>
 		</xs:restriction>
 	</xs:simpleType>
-	<xs:simpleType name="T_GeometryList">
-		<xs:list itemType="T_Geometry"/>
-	</xs:simpleType>
 	<xs:simpleType name="T_App6Symbol">
 		<xs:restriction base="xs:string">
 			<xs:maxLength value="15" fixed="true"/>
@@ -134,10 +131,8 @@
 	<xs:complexType name="T_Object">
 		<xs:complexContent>
 			<xs:extension base="T_ObjectCapacities">
-				<xs:attribute name="geometry" type="T_GeometryList" use="optional"/>
 				<xs:attribute name="point-size" type="xs:double" use="optional"/>
 				<xs:attribute name="name" type="xs:string" use="required"/>
-				<xs:attribute name="symbol" type="T_App6Symbol" use="optional"/>
 				<xs:attribute name="type" type="xs:string" use="required"/>
 				<xs:attribute name="description" type="xs:string" use="optional"/>
 			</xs:extension>
@@ -145,6 +140,18 @@
 	</xs:complexType>
 	<xs:complexType name="T_ObjectCapacities">
 		<xs:all>
+			<xs:element name="geometries" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="geometry" minOccurs="0" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:attribute name="type" type="T_Geometry" use="optional"/>
+								<xs:attribute name="symbol" type="T_App6Symbol" use="optional"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
 			<xs:element name="activable" minOccurs="0"/>
 			<xs:element name="attrition" minOccurs="0">
 				<xs:complexType>

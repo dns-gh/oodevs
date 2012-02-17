@@ -47,6 +47,7 @@ public:
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual bool CanAggregate() const;
     virtual bool IsAggregated() const;
+    const kernel::Location_ABC* GetLocation() const;
     //@}
 
 private:
@@ -66,7 +67,6 @@ private:
 protected:
     //! @name Helpers
     //@{
-    const kernel::Location_ABC* GetLocation() const;
     void Update( const sword::Location& message );
     void Update( const sword::Location& message, const geometry::Point2f& startPoint );
     //@}

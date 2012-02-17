@@ -74,3 +74,31 @@ bool Localisation::IsEmpty() const
 {
     return points_.empty();
 }
+
+// -----------------------------------------------------------------------------
+// Name: Localisation::GetTypeName
+// Created: JSR 2012-02-17
+// -----------------------------------------------------------------------------
+std::string Localisation::GetTypeName() const
+{
+    switch( nType_ )
+    {
+    case sword::Location_Geometry_circle :
+        return "circle";
+    case sword::Location_Geometry_ellipse :
+        return "ellipse";
+    case sword::Location_Geometry_line :
+        return "line";
+    case sword::Location_Geometry_rectangle :
+        return "rectangle";
+    case sword::Location_Geometry_polygon :
+        return "polygon";
+    case sword::Location_Geometry_point :
+        return "point";
+    case sword::Location_Geometry_sector :
+        return "sector";
+    case sword::Location_Geometry_none :
+    default:
+        return "";
+    }
+}

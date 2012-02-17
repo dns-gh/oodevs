@@ -67,7 +67,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    void ReadLocation( xml::xistream& xis );
+    void ReadLocation( xml::xistream& xis, const kernel::ObjectType& type );
     void ReadPoint( xml::xistream& xis );
     void Update();
     virtual void VisitLines     ( const T_PointVector& points );
@@ -84,7 +84,7 @@ private:
     kernel::Controller& controller_;
     const kernel::CoordinateConverter_ABC& converter_;
     kernel::Location_ABC* location_;
-    const std::string symbol_;
+    std::string symbol_;
     geometry::Rectangle2f boundingBox_;
     T_PointVector points_;
     //@}

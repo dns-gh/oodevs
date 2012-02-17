@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "ObjectPositions.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Viewport_ABC.h"
 
@@ -19,7 +20,7 @@
 // -----------------------------------------------------------------------------
 ObjectPositions::ObjectPositions( const kernel::ObjectType& type, const kernel::CoordinateConverter_ABC& converter )
     : LocationPositions( converter )
-    , symbol_( type.GetSymbol() )
+    , type_( type  )
 {
     // NOTHING
 }
@@ -40,7 +41,14 @@ ObjectPositions::~ObjectPositions()
 void ObjectPositions::DoUpdate( const sword::ObjectUpdate& message )
 {
     if( message.has_location()  )
+    {
         Update( message.location() );
+        if( const kernel::Location_ABC* location = GetLocation() )
+        {
+            const std::string locationType = location->GetTypeName();
+            symbol_ = type_.GetSymbol( locationType );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -50,6 +58,11 @@ void ObjectPositions::DoUpdate( const sword::ObjectUpdate& message )
 void ObjectPositions::DoUpdate( const sword::ObjectCreation& message )
 {
     Update( message.location() );
+    if( const kernel::Location_ABC* location = GetLocation() )
+    {
+        const std::string locationType = location->GetTypeName();
+        symbol_ = type_.GetSymbol( locationType );
+    }
 }
 
 // -----------------------------------------------------------------------------

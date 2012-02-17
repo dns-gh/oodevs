@@ -114,3 +114,12 @@ Location_ABC& Lines::Clone() const
 {
     return *new Lines( *this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Lines::GetTypeName
+// Created: JSR 2012-02-17
+// -----------------------------------------------------------------------------
+std::string Lines::GetTypeName() const
+{
+    return "line";
+}

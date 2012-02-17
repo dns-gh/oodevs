@@ -35,6 +35,7 @@ public:
     static bool DeletionWarning();
     static bool MissingConvoyWarning();
     static bool MissingBreakdownWarning( const std::string& name );
+    static bool MissingGeometry( const std::string& name );
 };
 
 #endif // __ADN_GuiTools_h_

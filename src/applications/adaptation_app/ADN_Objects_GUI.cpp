@@ -65,23 +65,119 @@ void ADN_Objects_GUI::Build()
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
 
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name"), vInfosConnectors[ eName ] );
-    ADN_EditLine_String* geometry = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Geometry"), vInfosConnectors[ eGeometry ] );
-    builder.SetEnabled( false );
     pPointDistance_ = builder.AddField< ADN_EditLine_Double >( pInfoHolder, tr( "Point effect distance"), vInfosConnectors[ ePointSize ] );
-    connect( geometry, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnGeometryChanged ( const QString& ) ) );
     pPointDistance_->SetAutoEnabled( false );
-    QComboBox* combo = builder.AddField< ADN_ComboBox_Drawings< ADN_Drawings_Data::DrawingInfo > >( pInfoHolder, tr( "Symbol"), vInfosConnectors[ eSymbol ] );
-    combo->setMinimumHeight( SYMBOL_PIXMAP_SIZE );
     builder.AddField< ADN_TextEdit_String >( pInfoHolder, tr( "Description"), vInfosConnectors[ eDescription ] );
 
-    // Capacities
-    Q3GroupBox* capacitiesGroup = new Q3GroupBox( 2, Qt::Horizontal, tr( "Capacities" ) );
+    // Geometries
+    Q3GroupBox* geometries = new Q3GroupBox( 2, Qt::Horizontal, tr( "Geometries" ) );
     {
-        ADN_GroupBox* constructor = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Constructor" ), capacitiesGroup );
+        {
+            ADN_GroupBox* group = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Polygon" ), geometries );
+            vInfosConnectors[ eGeometryPolygon ] = &group->GetConnector();
+            QComboBox* combo = builder.AddField< ADN_ComboBox_Drawings< ADN_Drawings_Data::DrawingInfo > >( group, tr( "Symbol" ), vInfosConnectors[ eSymbolPolygon ] );
+            combo->setMinimumHeight( SYMBOL_PIXMAP_SIZE );
+        }
+        {
+            ADN_GroupBox* group = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Point" ), geometries );
+            vInfosConnectors[ eGeometryPoint ] = &group->GetConnector();
+            QComboBox* combo = builder.AddField< ADN_ComboBox_Drawings< ADN_Drawings_Data::DrawingInfo > >( group, tr( "Symbol" ), vInfosConnectors[ eSymbolPoint ] );
+            combo->setMinimumHeight( SYMBOL_PIXMAP_SIZE );
+            connect( group, SIGNAL( toggled( bool ) ), this, SLOT( OnGeometryChanged ( bool ) ) );
+        }
+        {
+            ADN_GroupBox* group = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Line" ), geometries );
+            vInfosConnectors[ eGeometryLine ] = &group->GetConnector();
+            QComboBox* combo = builder.AddField< ADN_ComboBox_Drawings< ADN_Drawings_Data::DrawingInfo > >( group, tr( "Symbol" ), vInfosConnectors[ eSymbolLine ] );
+            combo->setMinimumHeight( SYMBOL_PIXMAP_SIZE );
+        }
+        {
+            ADN_GroupBox* group = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Circle" ), geometries );
+            vInfosConnectors[ eGeometryCircle ] = &group->GetConnector();
+            QComboBox* combo = builder.AddField< ADN_ComboBox_Drawings< ADN_Drawings_Data::DrawingInfo > >( group, tr( "Symbol" ), vInfosConnectors[ eSymbolCircle ] );
+            combo->setMinimumHeight( SYMBOL_PIXMAP_SIZE );
+        }
+    }
+
+    // Capacities
+    Q3GroupBox* capacitiesGroup = new Q3GroupBox( 2, Qt::Horizontal );
+    {
+        // Activable
+        ADN_CheckBox* activable = new ADN_CheckBox( tr( "Activable" ), capacitiesGroup );
+        vInfosConnectors[ eActivableCapacityPresent ] = & activable->GetConnector();
+
+        // Logistic
+        ADN_CheckBox* logistic = new ADN_CheckBox( tr( "Logistic" ), capacitiesGroup );
+        vInfosConnectors[ eLogisticCapacityPresent ] = & logistic->GetConnector();
+
+        // Supply route
+        ADN_CheckBox* supplyRoute = new ADN_CheckBox( tr( "Supply-Route" ), capacitiesGroup );
+        vInfosConnectors[ eSupplyRouteCapacityPresent ] = & supplyRoute->GetConnector();
+
+        // Decontamination
+        ADN_CheckBox* decontamination = new ADN_CheckBox( tr( "Decontamination" ), capacitiesGroup );
+        vInfosConnectors[ eDecontaminationCapacityPresent ] = & decontamination->GetConnector();
+
+        ADN_CheckBox* extinguishable = new ADN_CheckBox( tr( "Extinguishable" ), capacitiesGroup );
+        vInfosConnectors[ eExtinguishableCapacityPresent ] = & extinguishable->GetConnector();
+
+        ADN_CheckBox* interference = new ADN_CheckBox( tr( "Interference" ), capacitiesGroup );
+        vInfosConnectors[ eInterferenceCapacityPresent ] = & interference->GetConnector();
+
+        ADN_CheckBox* interactWithEnemy = new ADN_CheckBox( tr( "InteractWithEnemy" ), capacitiesGroup );
+        vInfosConnectors[ eInteractWithEnemyCapacityPresent ] = & interactWithEnemy->GetConnector();
+
+        ADN_CheckBox* occupable = new ADN_CheckBox( tr( "Occupable" ), capacitiesGroup );
+        vInfosConnectors[ eOccupableCapacityPresent ] = & occupable->GetConnector();
+
+        ADN_CheckBox* supply = new ADN_CheckBox( tr( "Supply" ), capacitiesGroup );
+        vInfosConnectors[ eSupplyCapacityPresent ] = & supply->GetConnector();
+
+        ADN_CheckBox* time_limited = new ADN_CheckBox( tr( "TimeLimited" ), capacitiesGroup );
+        vInfosConnectors[ eTimeLimitedCapacityPresent ] = & time_limited->GetConnector();
+
+        ADN_CheckBox* delay = new ADN_CheckBox( tr( "Delay time" ), capacitiesGroup );
+        vInfosConnectors[ eDelayCapacityPresent ] = & delay->GetConnector();
+
+        ADN_CheckBox* altitudeModifier = new ADN_CheckBox( tr( "Altitude modifier" ), capacitiesGroup );
+        vInfosConnectors[ eAltitudeModifierCapacityPresent ] = & altitudeModifier->GetConnector();
+
+        ADN_CheckBox* burn = new ADN_CheckBox( tr( "Burn" ), capacitiesGroup );
+        vInfosConnectors[ eBurnCapacityPresent ] = & burn->GetConnector();
+
+        ADN_CheckBox* universal = new ADN_CheckBox( tr( "Universal" ), capacitiesGroup );
+        vInfosConnectors[ eUniversalCapacityPresent ] = & universal->GetConnector();
+
+        ADN_CheckBox* stock = new ADN_CheckBox( tr( "Stock" ), capacitiesGroup );
+        vInfosConnectors[ eStockCapacityPresent ] = & stock->GetConnector();
+
+        ADN_CheckBox* resourceNetwork = new ADN_CheckBox( tr( "Resource network element" ), capacitiesGroup );
+        vInfosConnectors[ eResourceNetworkCapacityPresent ] = & resourceNetwork->GetConnector();
+
+        ADN_CheckBox* lodging = new ADN_CheckBox( tr( "Lodging" ), capacitiesGroup );
+        vInfosConnectors[ eLodgingCapacityPresent ] = & lodging->GetConnector();
+
+        ADN_CheckBox* undergroundNetwork = new ADN_CheckBox( tr( "Underground network exit" ), capacitiesGroup );
+        vInfosConnectors[ eUndergroundNetworkCapacityPresent ] = & undergroundNetwork->GetConnector();
+
+        ADN_CheckBox* fireForbidden = new ADN_CheckBox( tr( "Fire forbidden" ), capacitiesGroup );
+        vInfosConnectors[ eFireForbiddenCapacityPresent ] = & fireForbidden->GetConnector();
+
+        ADN_CheckBox* border = new ADN_CheckBox( tr( "Border" ), capacitiesGroup );
+        vInfosConnectors[ eBorderCapacityPresent] = & border->GetConnector();
+    }
+
+    QGridLayout* grid = new QGridLayout();
+    {
+        ADN_GroupBox* constructor = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Constructor" ) );
         vInfosConnectors[ eConstructorCapacityPresent ] = & constructor->GetConnector();
+
+        QWidget* constr = new QWidget( constructor );
+        constr->setLayout( new Q3GridLayout( 2, 3 ) );
+
         // Comsumption
-        builder.AddEnumField< E_ConsumptionType >( constructor, tr( "Default consumption" ), vInfosConnectors[ eConstructorCapacity_DefaultConsumption ], ADN_Tr::ConvertFromConsumptionType );
-        builder.AddEnumField< E_ConstructorType >( constructor, tr( "Model" ), vInfosConnectors[ eConstructorCapacity_UnitType ], ADN_Tr::ConvertFromConstructorType );
+        builder.AddEnumField< E_ConsumptionType >( constr, tr( "Default consumption" ), vInfosConnectors[ eConstructorCapacity_DefaultConsumption ], ADN_Tr::ConvertFromConsumptionType );
+        builder.AddEnumField< E_ConstructorType >( constr, tr( "Model" ), vInfosConnectors[ eConstructorCapacity_UnitType ], ADN_Tr::ConvertFromConstructorType );
         // Buildable
         ADN_GroupBox* buildable = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Buildable" ), constructor );
         vInfosConnectors[ eBuildableCapacityPresent ] = & buildable->GetConnector();
@@ -97,37 +193,25 @@ void ADN_Objects_GUI::Build()
         }
 
         // Heuristic
-        ADN_GroupBox* heuristic = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Terrain Heuristic" ), capacitiesGroup );
+        ADN_GroupBox* heuristic = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Terrain Heuristic" ) );
         vInfosConnectors[ eTerrainHeuristicCapacityPresent ] = & heuristic->GetConnector();
         ADN_Table_Objects_LocationScore* pScoreLocation = new ADN_Table_Objects_LocationScore( heuristic );
         vInfosConnectors[ eTerrainHeuristicCapacity_LocationScore ] = &pScoreLocation->GetConnector();
 
         // Avoidable
-        ADN_GroupBox* avoidable = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Avoidable" ), capacitiesGroup );
+        ADN_GroupBox* avoidable = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Avoidable" ) );
         vInfosConnectors[ eAvoidableCapacityPresent ] = & avoidable->GetConnector();
         // Distance
         builder.AddField< ADN_EditLine_Double >( avoidable, tr( "Distance" ), vInfosConnectors[ eAvoidableCapacity_Distance ], tr( "m" ) );
 
         // Bypassable
-        ADN_GroupBox* bypassable = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Bypassable" ), capacitiesGroup );
+        ADN_GroupBox* bypassable = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Bypassable" ) );
         vInfosConnectors[ eBypassableCapacityPresent ] = & bypassable->GetConnector();
         // Distance
         builder.AddField< ADN_EditLine_Double >( bypassable, tr( "Bypass Speed" ), vInfosConnectors[ eBypassableCapacity_Speed ], tr( "km/h" ) );
 
-        // Activable
-        ADN_GroupBox* activable = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Activable" ), capacitiesGroup );
-        vInfosConnectors[ eActivableCapacityPresent ] = & activable->GetConnector();
-
-        // Logistic
-        ADN_GroupBox* logistic = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Logistic" ), capacitiesGroup );
-        vInfosConnectors[ eLogisticCapacityPresent ] = & logistic->GetConnector();
-
-        // Supply route
-        ADN_GroupBox* supplyRoute = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Supply-Route" ), capacitiesGroup );
-        vInfosConnectors[ eSupplyRouteCapacityPresent ] = & supplyRoute->GetConnector();
-
         // Mobility
-        ADN_GroupBox* mobility = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Mobility" ), capacitiesGroup );
+        ADN_GroupBox* mobility = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Mobility" ) );
         vInfosConnectors[ eMobilityCapacityPresent ] = & mobility->GetConnector();
         // Default speed
         builder.AddField< ADN_EditLine_Double >( mobility, tr( "Default speed" ), vInfosConnectors[ eMobilityCapacity_DefaultSpeed ], tr( "km/h" ) );
@@ -136,7 +220,7 @@ void ADN_Objects_GUI::Build()
         connect( pSpeedImpactCombo_, SIGNAL( activated( int ) ), this, SLOT( OnSpeedImpactComboChanged() ) );
 
         // Trafficability
-        ADN_GroupBox* trafficability = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Trafficability" ), capacitiesGroup );
+        ADN_GroupBox* trafficability = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Trafficability" ) );
         vInfosConnectors[ eTrafficabilityCapacityPresent ] = & trafficability->GetConnector();
         // Limitation
         ADN_GroupBox* limitation = new ADN_GroupBox( 4, Qt::Horizontal, tr( "Default Limitation" ), trafficability );
@@ -144,27 +228,27 @@ void ADN_Objects_GUI::Build()
         builder.AddField< ADN_EditLine_Double >( limitation, tr( "Max Weight" ), vInfosConnectors[ eTrafficabilityCapacity_MaxWeight ], tr( "tons" ) );
 
         // Workable
-        ADN_GroupBox* workable = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Workable" ), capacitiesGroup );
+        ADN_GroupBox* workable = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Workable" ) );
         vInfosConnectors[ eWorkableCapacityPresent ] = & workable->GetConnector();
         builder.AddField< ADN_EditLine_Int >( workable, tr( "Max Animator: " ), vInfosConnectors[ eWorkableCapacity_Size ], tr( "agents" ) );
 
         // Attrition
-        ADN_GroupBox* attrition = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Attrition" ), capacitiesGroup );
+        ADN_GroupBox* attrition = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Attrition" ) );
         vInfosConnectors[ eAttritionCapacityPresent ] = & attrition->GetConnector();
         ADN_GroupBox* dotation = new ADN_GroupBox( 2, Qt::Horizontal, tr( "Use ammunition" ), attrition );
         vInfosConnectors[ eAttritionCapacity_UseDotation ] = & dotation->GetConnector();
         builder.AddField< ADN_ComboBox_Vector< ADN_Equipement_Data::AmmoCategoryInfo > >( dotation, tr( "Resource" ), vInfosConnectors[ eAttritionCapacity_Dotation ] );
-        Q3GroupBox* box = new Q3GroupBox( 3, Qt::Horizontal, tr( "Crowd attrition" ), attrition );
-        builder.AddField< ADN_EditLine_Double >( box, tr( "Attrition surface" ), vInfosConnectors[ eAttritionCapacity_Surface ], tr( "m²" ), eGreaterEqualZero );
-        builder.AddField< ADN_EditLine_Double >( box, tr( "PH" ), vInfosConnectors[ eAttritionCapacity_Ph ], 0, eZeroOne );
+        Q3GroupBox* attritionBox = new Q3GroupBox( 3, Qt::Horizontal, tr( "Crowd attrition" ), attrition );
+        builder.AddField< ADN_EditLine_Double >( attritionBox, tr( "Attrition surface" ), vInfosConnectors[ eAttritionCapacity_Surface ], tr( "m²" ), eGreaterEqualZero );
+        builder.AddField< ADN_EditLine_Double >( attritionBox, tr( "PH" ), vInfosConnectors[ eAttritionCapacity_Ph ], 0, eZeroOne );
 
         // Urban Destruction
-        ADN_GroupBox* urbanDestruction = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Urban Destruction" ), capacitiesGroup );
+        ADN_GroupBox* urbanDestruction = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Urban Destruction" ) );
         vInfosConnectors[ eUrbanDestructionCapacityPresent ] = & urbanDestruction->GetConnector();
         new helpers::ADN_UrbanModifiersTable( urbanDestruction, vInfosConnectors[ eUrbanDestructionCapacity_Data ] );
 
         // NBC
-        Q3GroupBox* gNBC = new Q3GroupBox( 2, Qt::Horizontal, tr( "NBC" ), capacitiesGroup );
+        Q3GroupBox* gNBC = new Q3GroupBox( 2, Qt::Horizontal, tr( "NBC" ) );
         // Contamination
         ADN_GroupBox* contamination = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Contamination" ), gNBC );
         {
@@ -179,17 +263,13 @@ void ADN_Objects_GUI::Build()
             builder.AddField< ADN_EditLine_Int >( intoxication, tr( "Max Toxic" ), vInfosConnectors[ eIntoxicationCapacity_MaxToxic ], tr( "items" ) );
         }
 
-        // Decontamination
-        ADN_GroupBox* decontamination = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Decontamination" ), capacitiesGroup );
-        vInfosConnectors[ eDecontaminationCapacityPresent ] = & decontamination->GetConnector();
-
         // Population filter
-        ADN_GroupBox* populationFilter = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Population" ), capacitiesGroup );
+        ADN_GroupBox* populationFilter = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Population" ) );
         vInfosConnectors[ ePopulationCapacityPresent ] = & populationFilter->GetConnector();
         builder.AddField< ADN_EditLine_Double >( populationFilter, tr( "Density: " ), vInfosConnectors[ ePopulationCapacity_Density ] );
 
         // Detection
-        ADN_GroupBox* detection = new ADN_GroupBox( 3, Qt::Horizontal, tr( ADN_Objects_Data::ADN_CapacityInfos_Detection::DISPLAY_NAME.c_str() ), capacitiesGroup );
+        ADN_GroupBox* detection = new ADN_GroupBox( 3, Qt::Horizontal, tr( ADN_Objects_Data::ADN_CapacityInfos_Detection::DISPLAY_NAME.c_str() ) );
         vInfosConnectors[ eDetectionCapacityPresent ] = & detection->GetConnector();
         // LTO begin
         builder.AddOptionnalField<ADN_TimeField>( detection, tr( "Detection duration" ), vInfosConnectors[ eDetectionCapacity_HasDetectionTime ], vInfosConnectors[ eDetectionCapacity_DetectionTime ] );
@@ -198,78 +278,54 @@ void ADN_Objects_GUI::Build()
         // LTO end
 
         // Spawn
-        ADN_GroupBox* spawn = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Spawn" ), capacitiesGroup );
+        ADN_GroupBox* spawn = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Spawn" ) );
         vInfosConnectors[ eSpawnCapacityPresent ] = & spawn->GetConnector();
         builder.AddField<ADN_EditLine_Double>( spawn, tr( "Action range" ), vInfosConnectors[ eSpawnCapacity_ActionRange ], tr( "m" ) );
         builder.AddField< ADN_ComboBox_Vector< ADN_Objects_Data_ObjectInfos > >( spawn, tr( "Object" ), vInfosConnectors[ eSpawnCapacity_ObjectType ] );
         builder.AddField< ADN_CheckBox >( spawn, tr( "NBC" ), vInfosConnectors[ eSpawnCapacity_NBC ] );
 
-        ADN_GroupBox* medical = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Medical" ), capacitiesGroup );
+        ADN_GroupBox* medical = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Medical" ) );
         vInfosConnectors[ eMedicalCapacityPresent ] = & medical->GetConnector();
         builder.AddField< ADN_EditLine_Int >( medical, tr( "Doctor night rate" ), vInfosConnectors[ eMedicalCapacity_NightRate ] );
         builder.AddField< ADN_EditLine_Int >( medical, tr( "Emergency doctor rate" ), vInfosConnectors[ eMedicalCapacity_EmergencyDoctorRate ] );
         builder.AddField< ADN_EditLine_Int >( medical, tr( "Emergency bed rate" ), vInfosConnectors[ eMedicalCapacity_EmergencyBedRate ] );
 
-        ADN_GroupBox* extinguishable = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Extinguishable" ), capacitiesGroup );
-        vInfosConnectors[ eExtinguishableCapacityPresent ] = & extinguishable->GetConnector();
-
-        ADN_GroupBox* interference = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Interference" ), capacitiesGroup );
-        vInfosConnectors[ eInterferenceCapacityPresent ] = & interference->GetConnector();
-
-        ADN_GroupBox* heightInteraction = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Height interaction" ), capacitiesGroup );
+        ADN_GroupBox* heightInteraction = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Height interaction" ) );
         vInfosConnectors[ eInteractionHeightCapacityPresent ] = & heightInteraction->GetConnector();
         builder.AddField< ADN_EditLine_Double >( heightInteraction, tr( "Interaction max height" ), vInfosConnectors[ eInteractionHeightCapacity_Height ], tr( "m" ) );
 
-        ADN_GroupBox* protection = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Protection" ), capacitiesGroup );
+        ADN_GroupBox* protection = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Protection" ) );
         vInfosConnectors[ eProtectionCapacityPresent ] = & protection->GetConnector();
         builder.AddField< ADN_EditLine_Int >( protection, tr( "Max size" ), vInfosConnectors[ eProtectionCapacity_MaxSize ], tr( "agents" ) );
         builder.SetValidator( new ADN_IntValidator( 1, INT_MAX, this ) );
         builder.AddField< ADN_CheckBox >( protection, tr( "Genie prepared" ), vInfosConnectors[ eProtectionCapacity_GeniePrepared ] );
 
-        ADN_GroupBox* interactWithEnemy = new ADN_GroupBox( 3, Qt::Horizontal, tr( "InteractWithEnemy" ), capacitiesGroup );
-        vInfosConnectors[ eInteractWithEnemyCapacityPresent ] = & interactWithEnemy->GetConnector();
-
-        ADN_GroupBox* occupable = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Occupable" ), capacitiesGroup );
-        vInfosConnectors[ eOccupableCapacityPresent ] = & occupable->GetConnector();
-
-        ADN_GroupBox* supply = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Supply" ), capacitiesGroup );
-        vInfosConnectors[ eSupplyCapacityPresent ] = & supply->GetConnector();
-
-        ADN_GroupBox* bridging = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Bridge / Road" ), capacitiesGroup );
+        ADN_GroupBox* bridging = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Bridge / Road" ) );
         vInfosConnectors[ eBridgingCapacityPresent ] = & bridging->GetConnector();
         builder.AddEnumField< E_CrossingType >( bridging, tr( "Type" ), vInfosConnectors[ eBridgingCapacity_Type ], ENT_Tr::ConvertFromCrossingType );
 
-        ADN_GroupBox* time_limited = new ADN_GroupBox( 3, Qt::Horizontal, tr( "TimeLimited" ), capacitiesGroup );
-        vInfosConnectors[ eTimeLimitedCapacityPresent ] = & time_limited->GetConnector();
-
-        ADN_GroupBox* propagation = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Propagation" ), capacitiesGroup );
+        ADN_GroupBox* propagation = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Propagation" ) );
         vInfosConnectors[ ePropagationCapacityPresent ] = & propagation->GetConnector();
         builder.AddEnumField< E_PropagationModel >( propagation, tr( "Model" ), vInfosConnectors[ ePropagationCapacity_ModelType ], ADN_Tr::ConvertFromPropagationModel);
 
-        ADN_GroupBox* attitudeModifier = new ADN_GroupBox( 3, Qt::Horizontal, tr( "AttitudeModifier" ), capacitiesGroup );
+        ADN_GroupBox* attitudeModifier = new ADN_GroupBox( 3, Qt::Horizontal, tr( "AttitudeModifier" ) );
         vInfosConnectors[ eAttitudeModifierCapacityPresent ] = & attitudeModifier->GetConnector();
         builder.AddEnumField< E_PopulationAttitude >( attitudeModifier, tr( "Attitude" ), vInfosConnectors[ eAttitudeModifierCapacity_Attitude ], ENT_Tr::ConvertFromPopulationAttitude );
 
-        ADN_GroupBox* perception = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Perception" ), capacitiesGroup );
+        ADN_GroupBox* perception = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Perception" ) );
         vInfosConnectors[ ePerceptionCapacityPresent ] = & perception->GetConnector();
         builder.AddField< ADN_CheckBox >( perception, tr( "Blinding" ), vInfosConnectors[ ePerceptionCapacity_Blinded ] );
 
-        ADN_GroupBox* scattering = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Scattering" ), capacitiesGroup );
+        ADN_GroupBox* scattering = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Scattering" ) );
         vInfosConnectors[ eScatteringCapacityPresent ] = & scattering->GetConnector();
         builder.AddField< ADN_EditLine_Int >( scattering, tr( "Number of humans per simulation step" ), vInfosConnectors[ eScatteringCapacity_HumanByTimeStep ] );
         builder.SetValidator( new ADN_IntValidator( 1, INT_MAX, this ) );
 
-        ADN_GroupBox* structural = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Structural state" ), capacitiesGroup );
+        ADN_GroupBox* structural = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Structural state" ) );
         vInfosConnectors[ eStructuralCapacityPresent ] = & structural->GetConnector();
         builder.AddField< ADN_EditLine_Int >( structural, tr( "Initial value"), vInfosConnectors[ eStructuralCapacity_Value ], tr( "%" ), ePercentage );
 
-        ADN_GroupBox* delay = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Delay time" ), capacitiesGroup );
-        vInfosConnectors[ eDelayCapacityPresent ] = & delay->GetConnector();
-
-        ADN_GroupBox* altitudeModifier = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Altitude modifier" ), capacitiesGroup );
-        vInfosConnectors[ eAltitudeModifierCapacityPresent ] = & altitudeModifier->GetConnector();
-
-        ADN_GroupBox* flood = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Flood" ), capacitiesGroup );
+        ADN_GroupBox* flood = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Flood" ) );
         vInfosConnectors[ eFloodCapacityPresent ] = & flood->GetConnector();
         QWidget* pInjuriesHolder = builder.AddFieldHolder( flood );
         builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Wounded seriousness level 1" ), vInfosConnectors[ eFloodCapacity_HurtHumans1 ], tr( "%" ), ePercentage );
@@ -278,34 +334,36 @@ void ADN_Objects_GUI::Build()
         builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Wounded extreme seriousness" ), vInfosConnectors[ eFloodCapacity_HurtHumansE ], tr( "%" ), ePercentage );
         builder.AddField< ADN_EditLine_Int >( pInjuriesHolder, tr( "Killed" ), vInfosConnectors[ eFloodCapacity_DeadHumans ], tr( "%" ), ePercentage  );
 
-        ADN_GroupBox* firePropagationModifier = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Fire propagation modifier" ), capacitiesGroup );
+        ADN_GroupBox* firePropagationModifier = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Fire propagation modifier" ) );
         vInfosConnectors[ eFirePropagationModifierCapacityPresent ] = & firePropagationModifier->GetConnector();
         ADN_Table_Objects_FirePropagationModifier* pFirePropagationModifierTable = new ADN_Table_Objects_FirePropagationModifier( firePropagationModifier );
         vInfosConnectors[ eFirePropagationModifierCapacity_Modifiers ] = &pFirePropagationModifierTable->GetConnector();
 
-        ADN_GroupBox* burn = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Burn" ), capacitiesGroup );
-        vInfosConnectors[ eBurnCapacityPresent ] = & burn->GetConnector();
-
-        ADN_GroupBox* universal = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Universal" ), capacitiesGroup );
-        vInfosConnectors[ eUniversalCapacityPresent ] = & universal->GetConnector();
-
-        ADN_GroupBox* stock = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Stock" ), capacitiesGroup );
-        vInfosConnectors[ eStockCapacityPresent ] = & stock->GetConnector();
-
-        ADN_GroupBox* resourceNetwork = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Resource network element" ), capacitiesGroup );
-        vInfosConnectors[ eResourceNetworkCapacityPresent ] = & resourceNetwork->GetConnector();
-
-        ADN_GroupBox* lodging = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Lodging" ), capacitiesGroup );
-        vInfosConnectors[ eLodgingCapacityPresent ] = & lodging->GetConnector();
-
-        ADN_GroupBox* undergroundNetwork = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Underground network exit" ), capacitiesGroup );
-        vInfosConnectors[ eUndergroundNetworkCapacityPresent ] = & undergroundNetwork->GetConnector();
-
-        ADN_GroupBox* fireForbidden = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Fire forbidden" ), capacitiesGroup );
-        vInfosConnectors[ eFireForbiddenCapacityPresent ] = & fireForbidden->GetConnector();
-
-        ADN_GroupBox* border = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Border" ), capacitiesGroup );
-        vInfosConnectors[ eBorderCapacityPresent] = & border->GetConnector();
+        grid->addWidget( constructor, 0, 0 );
+        grid->addWidget( improvable, 0, 1 );
+        grid->addWidget( heuristic, 1, 0, 3, 1 );
+        grid->addWidget( avoidable, 1, 1 );
+        grid->addWidget( bypassable, 2, 1 );
+        grid->addWidget( trafficability, 3, 1 );
+        grid->addWidget( mobility, 4, 0 );
+        grid->addWidget( gNBC, 4, 1 );
+        grid->addWidget( attrition, 5, 0 );
+        grid->addWidget( urbanDestruction, 5, 1 );
+        grid->addWidget( workable, 6, 0 );
+        grid->addWidget( populationFilter, 6, 1 );
+        grid->addWidget( detection, 7, 0 );
+        grid->addWidget( spawn, 7, 1 );
+        grid->addWidget( medical, 8, 0 );
+        grid->addWidget( protection, 8, 1 );
+        grid->addWidget( heightInteraction, 9, 0 );
+        grid->addWidget( bridging, 9, 1 );
+        grid->addWidget( propagation, 10, 0 );
+        grid->addWidget( attitudeModifier, 10, 1 );
+        grid->addWidget( perception, 11, 0 );
+        grid->addWidget( scattering, 11, 1 );
+        grid->addWidget( structural, 12, 0 );
+        grid->addWidget( flood, 12, 1, 2, 1 );
+        grid->addWidget( firePropagationModifier, 13, 0 );
     }
 
     // -------------------------------------------------------------------------
@@ -318,13 +376,26 @@ void ADN_Objects_GUI::Build()
     pContentLayout->setSpacing( 10 );
     pContentLayout->setAlignment( Qt::AlignTop );
     pContentLayout->addWidget( pInfoHolder );
-    pContentLayout->addWidget( capacitiesGroup );
+    pContentLayout->addWidget( geometries );
+    pContentLayout->addStretch( 1 );
+
+    pCapacities_ = new QWidget();
+    QVBoxLayout* pCapacitiesLayout = new QVBoxLayout( pCapacities_ );
+    pCapacitiesLayout->setMargin( 10 );
+    pCapacitiesLayout->setSpacing( 10 );
+    pCapacitiesLayout->addWidget( capacitiesGroup );
+    pCapacitiesLayout->addLayout( grid );
 
     // List view
     ADN_SearchListView< ADN_ListView_Objects >* pSearchListView = new ADN_SearchListView< ADN_ListView_Objects >( data_.GetObjectInfos(), vInfosConnectors );
 
+    // Tab widget
+    QTabWidget* pTabWidget = new QTabWidget();
+    pTabWidget->addTab( CreateScrollArea( *pContent_, 0 ), tr( "Infos" ) );
+    pTabWidget->addTab( CreateScrollArea( *pCapacities_, 0 ), tr( "Capacities" ) );
+
     // Main widget
-    pMainWidget_ = CreateScrollArea( *pContent_, pSearchListView );
+    pMainWidget_ = CreateScrollArea( *pTabWidget, pSearchListView );
 }
 
 // -----------------------------------------------------------------------------
@@ -340,9 +411,9 @@ void ADN_Objects_GUI::OnSpeedImpactComboChanged()
 // Name: ADN_Objects_GUI::OnGeometryChanged
 // Created: LDC 2011-05-20
 // -----------------------------------------------------------------------------
-void ADN_Objects_GUI::OnGeometryChanged( const QString& geometry )
+void ADN_Objects_GUI::OnGeometryChanged( bool b )
 {
-    pPointDistance_->setEnabled( geometry == "point" );
+    pPointDistance_->setEnabled( b );
 }
 
 // -----------------------------------------------------------------------------
@@ -352,6 +423,7 @@ void ADN_Objects_GUI::OnGeometryChanged( const QString& geometry )
 void ADN_Objects_GUI::Enable( bool enable )
 {
     pContent_->setEnabled( enable );
+    pCapacities_->setEnabled( enable );
 }
 
 // -----------------------------------------------------------------------------
@@ -377,7 +449,7 @@ void ADN_Objects_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const QStri
         ADN_Objects_Data_ObjectInfos& object = **it;
         indexBuilder.TableItem( n, 0, object.strName_.GetData().c_str() );
         indexBuilder.TableItem( n, 1, object.strType_.GetData().c_str() );
-        indexBuilder.TableItem( n, 2, object.geometries_.GetData().c_str() );
+        indexBuilder.TableItem( n, 2, object.GetAllGeometries().c_str() );
 
         ADN_HtmlBuilder listBuilder;
         listBuilder.BeginList();

@@ -9,6 +9,7 @@
 
 #include "clients_kernel_pch.h"
 #include "ObjectType.h"
+#include "Location_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -20,13 +21,14 @@ using namespace kernel;
 ObjectType::ObjectType( xml::xistream& xis )
     : name_          ( xis.attribute< std::string >( "name" ) )
     , type_          ( xis.attribute< std::string >( "type" ) )
-    , symbol_        ( xis.attribute< std::string >( "symbol", "" ) )
-    , geometry_      ( xis.attribute< std::string >( "geometry", "" ) )
     , description_   ( xis.attribute< std::string >( "description", "" ) )
     , canBeValorized_( false )
     , canBeBypassed_ ( false )
 {
-    xis >> xml::optional() >> xml::start( "constructor" )
+    xis >> xml::optional() >> xml::start( "geometries" )
+            >> xml::list( "geometry", *this, &ObjectType::ReadGeometry )
+        >> xml::end
+        >> xml::optional() >> xml::start( "constructor" )
             >> xml::list( "improvable", *this, &ObjectType::SetValorizable )
         >> xml::end();
     xis >> xml::list( *this, &ObjectType::ReadCapacities );
@@ -39,6 +41,15 @@ ObjectType::ObjectType( xml::xistream& xis )
 ObjectType::~ObjectType()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: ObjectType::ReadGeometry
+// Created: JSR 2012-02-17
+// -----------------------------------------------------------------------------
+void ObjectType::ReadGeometry( xml::xistream& xis )
+{
+    geometrySymbols_[ xis.attribute< std::string >( "type" ) ] = xis.attribute< std::string >( "symbol" );
 }
 
 // -----------------------------------------------------------------------------
@@ -81,9 +92,13 @@ const std::string& ObjectType::GetType() const
 // Name: ObjectType::GetSymbol
 // Created: JCR 2008-06-10
 // -----------------------------------------------------------------------------
-const std::string& ObjectType::GetSymbol() const
+const std::string& ObjectType::GetSymbol( const std::string& locationType ) const
 {
-    return symbol_;
+    static const std::string emptyString;
+    CIT_GeometrySymbols it = geometrySymbols_.find( locationType );
+    if( it != geometrySymbols_.end() )
+        return it->second;
+    return emptyString;
 }
 
 // -----------------------------------------------------------------------------
@@ -137,8 +152,7 @@ bool ObjectType::HasBuildableDensity() const
         xml::xistream& xis = *pXis;
         if( xis.has_child( "buildable" ) && xis.has_attribute( "unit-type" ) )
         {
-            std::string density;
-            xis >> xml::attribute( "unit-type", density );
+            std::string density = xis.attribute< std::string >( "unit-type" );
             xis >> xml::start( "buildable" );
             bool hasResources = xis.has_child( "resources" );
             xis >> xml::end;
@@ -226,7 +240,7 @@ bool ObjectType::CanBeTrafficable() const
 // -----------------------------------------------------------------------------
 bool ObjectType::CanBePoint() const
 {
-    return geometry_.empty() || geometry_.find( "point" ) != std::string::npos;
+    return geometrySymbols_.find( "point" ) != geometrySymbols_.end();
 }
 
 // -----------------------------------------------------------------------------
@@ -235,7 +249,7 @@ bool ObjectType::CanBePoint() const
 // -----------------------------------------------------------------------------
 bool ObjectType::CanBeLine() const
 {
-    return geometry_.empty() || geometry_.find( "line" ) != std::string::npos;
+    return geometrySymbols_.find( "line" ) != geometrySymbols_.end();
 }
 
 // -----------------------------------------------------------------------------
@@ -244,7 +258,7 @@ bool ObjectType::CanBeLine() const
 // -----------------------------------------------------------------------------
 bool ObjectType::CanBeRectangle() const
 {
-    return geometry_.empty() || geometry_.find( "rectangle" ) != std::string::npos;
+    return geometrySymbols_.find( "rectangle" ) != geometrySymbols_.end();
 }
 
 // -----------------------------------------------------------------------------
@@ -253,7 +267,7 @@ bool ObjectType::CanBeRectangle() const
 // -----------------------------------------------------------------------------
 bool ObjectType::CanBePolygon() const
 {
-    return geometry_.empty() || geometry_.find( "polygon" ) != std::string::npos;
+    return geometrySymbols_.find( "polygon" ) != geometrySymbols_.end();
 }
 
 // -----------------------------------------------------------------------------
@@ -262,5 +276,5 @@ bool ObjectType::CanBePolygon() const
 // -----------------------------------------------------------------------------
 bool ObjectType::CanBeCircle() const
 {
-    return geometry_.empty() || geometry_.find( "circle" ) != std::string::npos;
+    return geometrySymbols_.find( "circle" ) != geometrySymbols_.end();
 }

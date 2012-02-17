@@ -144,3 +144,12 @@ Location_ABC& Polygon::Clone() const
 {
     return *new Polygon( *this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Polygon::GetTypeName
+// Created: JSR 2012-02-17
+// -----------------------------------------------------------------------------
+std::string Polygon::GetTypeName() const
+{
+    return "polygon";
+}

@@ -16,7 +16,6 @@
 #include "ParameterVisitor_ABC.h"
 #include "clients_kernel/EntityResolver_ABC.h"
 #include "clients_kernel/ObjectType.h"
-#include "clients_kernel/ObjectIcons.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/Protocol.h"
 #include <boost/bind.hpp>

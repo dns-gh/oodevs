@@ -116,3 +116,12 @@ Location_ABC& Path::Clone() const
 {
     return *new Path( *this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Path::GetTypeName
+// Created: JSR 2012-02-17
+// -----------------------------------------------------------------------------
+std::string Path::GetTypeName() const
+{
+    return "path";
+}

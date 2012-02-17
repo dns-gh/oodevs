@@ -52,6 +52,7 @@ public:
     virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual const kernel::ObjectType& GetType() const;
     virtual const Team_ABC& GetTeam() const;
+    std::string GetSymbol() const;
     //@}
 
 private:

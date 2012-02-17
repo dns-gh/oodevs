@@ -57,7 +57,8 @@ private:
 private:
     //! @name Member data
     //@{
-    const std::string symbol_;
+    const kernel::ObjectType& type_;
+    std::string symbol_;
     //@}
 };
 

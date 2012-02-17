@@ -115,9 +115,6 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\DetectionMapIterator.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_kernel\objecticons.cpp">
-      <Filter>Source Files\Tools</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_kernel\Styles.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
@@ -502,9 +499,6 @@
       <Filter>Source Files\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\ExtensionVisitor_ABC.h">
-      <Filter>Source Files\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_kernel\objecticons.h">
       <Filter>Source Files\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\OptionalValue.h">

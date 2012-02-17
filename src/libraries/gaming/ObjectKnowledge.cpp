@@ -9,10 +9,12 @@
 
 #include "gaming_pch.h"
 #include "ObjectKnowledge.h"
+#include "ObjectPositions.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
+#include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -46,6 +48,12 @@ ObjectKnowledge::ObjectKnowledge( const Entity_ABC& owner, const sword::ObjectKn
         const Hierarchies* hierarchies = pRealObject_->Retrieve< TacticalHierarchies >();
         if( ! hierarchies )
             hierarchies = pRealObject_->Retrieve< CommunicationHierarchies >();
+        const ObjectPositions* positions = static_cast< ObjectPositions* >( pRealObject_->Retrieve< Positions >() );
+        if( positions && type_ && positions->GetLocation() )
+        {
+            const std::string locationType = positions->GetLocation()->GetTypeName();
+            symbol_ = type_->GetSymbol( locationType );
+        }
         const Entity_ABC& tmp = hierarchies ? hierarchies->GetTop() : *pRealObject_;
         pTeam_ = dynamic_cast< const kernel::Team_ABC* >( &tmp );
     }
@@ -70,7 +78,15 @@ void ObjectKnowledge::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
     {
         pRealObject_ = objectResolver_.Find( message.object().id() );
         if( pRealObject_ )
+        {
             entityId_ = pRealObject_->GetId();
+            const ObjectPositions* positions = static_cast< ObjectPositions* >( pRealObject_->Retrieve< kernel::Positions >() );
+            if( positions && type_ && positions->GetLocation() )
+            {
+                const std::string locationType = positions->GetLocation()->GetTypeName();
+                symbol_ = type_->GetSymbol( locationType );
+            }
+        }
     }
     if( message.has_relevance() )
         nRelevance_ = message.relevance();
@@ -170,5 +186,5 @@ const Entity_ABC& ObjectKnowledge::GetOwner() const
 // -----------------------------------------------------------------------------
 std::string ObjectKnowledge::GetSymbol() const
 {
-    return type_ ? type_->GetSymbol() : "";
+    return symbol_;
 }

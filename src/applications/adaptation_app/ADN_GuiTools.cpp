@@ -79,3 +79,17 @@ bool ADN_GuiTools::MissingBreakdownWarning( const std::string& name )
         QMessageBox::No  | QMessageBox::Escape );
     return nResult == QMessageBox::Yes;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GuiTools::MissingGeometry
+// Created: JSR 2012-02-16
+// -----------------------------------------------------------------------------
+bool ADN_GuiTools::MissingGeometry( const std::string& name )
+{
+    QApplication::restoreOverrideCursor();
+    QMessageBox::warning( 0,
+        qApp->translate( "ADNDatabaseWarnings", "Database Work in progress" ),
+        qApp->translate( "ADNDatabaseWarnings", "No geometry defined for object %1, database cannot be saved." ).arg( name.c_str() ) ,
+        QMessageBox::Ok | QMessageBox::Default );
+    return false;
+}

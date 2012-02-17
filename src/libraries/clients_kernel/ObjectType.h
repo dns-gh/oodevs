@@ -21,6 +21,7 @@ namespace xml
 
 namespace kernel
 {
+class Location_ABC;
 
 // =============================================================================
 /** @class  ObjectType
@@ -44,12 +45,19 @@ public:
     typedef T_Capacities::const_iterator                                    CIT_Capacities;
     //@}
 
+private:
+    //! @name Types
+    //@{
+    typedef std::map< std::string, std::string > T_GeometrySymbols;
+    typedef T_GeometrySymbols::const_iterator  CIT_GeometrySymbols;
+    //@}
+
 public:
     //! @name Operations
     //@{
     const std::string& GetName() const;
     const std::string& GetType() const;
-    const std::string& GetSymbol() const;
+    const std::string& GetSymbol( const std::string& locationType ) const;
     const std::string& GetDescription() const;
 
     CIT_Capacities CapacitiesBegin() const;
@@ -74,6 +82,7 @@ public:
 private:
     //! @name Helper
     //@{
+    void ReadGeometry( xml::xistream& xis );
     void ReadCapacities( const std::string& capacity, xml::xistream& xis );
     void SetValorizable( xml::xistream& xis );
     xml::xistream* FindCapacity( const std::string& capacity ) const;
@@ -84,8 +93,7 @@ private:
     //@{
     const std::string name_;
     const std::string type_;
-    const std::string symbol_;
-    const std::string geometry_;
+    T_GeometrySymbols geometrySymbols_;
     const std::string description_;
     T_Capacities capacities_;
     bool canBeValorized_;

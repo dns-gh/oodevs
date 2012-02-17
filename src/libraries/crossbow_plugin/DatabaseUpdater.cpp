@@ -227,10 +227,10 @@ void DatabaseUpdater::Update( const sword::ObjectKnowledgeCreation& msg )
     std::auto_ptr< Table_ABC > table( database_->GetGeometry().OpenTable( "KnowledgeObjects" ) );
 
     const dispatcher::ObjectKnowledge_ABC* knowledge = model_.ObjectKnowledges().Find( msg.knowledge().id() );
-    const kernel::Object_ABC* entity = knowledge->GetEntity();
+    const dispatcher::Object* entity = static_cast< const dispatcher::Object* >( knowledge->GetEntity() );
     if( !entity ) // $$$$ _RC_ SBO 2010-06-10: no real object => giving up
         return;
-    std::string symbol = entity->GetType().GetSymbol();
+    std::string symbol = entity->GetSymbol();
     Row_ABC& row = table->CreateRow();
     row.SetField( "public_oid", FieldVariant( (long) msg.knowledge().id() ) );
     row.SetField( "type", FieldVariant( std::string( msg.type().id() ) ) );
@@ -395,10 +395,10 @@ void DatabaseUpdater::Update( const sword::ObjectKnowledgeUpdate& msg )
             row->SetField( "state", FieldVariant( msg.attributes().construction().percentage() ) );
 
         const dispatcher::ObjectKnowledge_ABC* knowledge = model_.ObjectKnowledges().Find( msg.knowledge().id() );
-        const kernel::Object_ABC* entity = knowledge->GetEntity();
+        const dispatcher::Object* entity = static_cast< const dispatcher::Object* >( knowledge->GetEntity() );
         if( !entity ) // $$$$ _RC_ SBO 2010-06-10: no real object => giving up
             return;
-        std::string symbol = entity->GetType().GetSymbol();
+        std::string symbol = entity->GetSymbol();
         if( tools::app6::GetAffiliation( symbol ) != "U" )
             row->SetField( "name",  FieldVariant( std::string( entity->GetName() ) ) );
 

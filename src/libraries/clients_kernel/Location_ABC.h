@@ -31,8 +31,8 @@ class Location_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Location_ABC() {};
-    virtual ~Location_ABC() {};
+             Location_ABC() {}
+    virtual ~Location_ABC() {}
     //@}
 
     //! @name Operations
@@ -41,6 +41,7 @@ public:
     virtual void AddPoint( const geometry::Point2f& point ) = 0;
     virtual void Translate( const geometry::Point2f& from, const geometry::Vector2f& translation, float precision ) = 0;
     virtual Location_ABC& Clone() const = 0;
+    virtual std::string GetTypeName() const = 0;
     //@}
 
     //! @name Accessors

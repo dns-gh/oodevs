@@ -77,6 +77,7 @@ public:
         void DrawOnPoint();
         void DrawOnLine();
         void DrawOnPolygon();
+        void DrawOnCircle();
         void DrawItem( const T_PointVector& points );
         //@}
 

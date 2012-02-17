@@ -115,3 +115,12 @@ Location_ABC& Rectangle::Clone() const
 {
     return *new Rectangle( *this );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Rectangle::GetTypeName
+// Created: JSR 2012-02-17
+// -----------------------------------------------------------------------------
+std::string Rectangle::GetTypeName() const
+{
+    return "rectangle";
+}

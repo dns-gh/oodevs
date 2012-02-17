@@ -10,6 +10,12 @@
 #include "adaptation_app_pch.h"
 #include "ADN_Objects_Data_ObjectInfos.h"
 #include "ADN_Objects_Data.h"
+#include "ADN_GuiTools.h"
+
+namespace
+{
+    static const std::string locations[ 4 ] = { "polygon", "point", "line", "circle" };
+}
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Objects_Data_ObjectInfos::ADN_Objects_Data_ObjectInfos
@@ -18,11 +24,15 @@
 ADN_Objects_Data_ObjectInfos::ADN_Objects_Data_ObjectInfos( const std::string& type )
     : ADN_Ref_ABC()
     , strType_   ( type )
-    , geometries_( "polygon" )
     , pointSize_ ( 0. )
 {
-    symbol_.SetParentNode( *this );
-    geometries_.SetParentNode( *this );
+    for( int i = 0; i < 4; ++i )
+    {
+        symbols_[ i ].SetParentNode( *this );
+        geometries_[ i ].SetParentNode( *this );
+        geometries_[ i ] = false;
+    }
+
     description_.SetParentNode( *this );
     InitializeCapacities();
 }
@@ -34,14 +44,16 @@ ADN_Objects_Data_ObjectInfos::ADN_Objects_Data_ObjectInfos( const std::string& t
 ADN_Objects_Data_ObjectInfos::ADN_Objects_Data_ObjectInfos()
     : ADN_Ref_ABC()
     , strType_   ()
-    , geometries_( "polygon" )
     , pointSize_ ( 0. )
 {
-    symbol_.SetParentNode( *this );
-    geometries_.SetParentNode( *this );
-    geometries_.SetParentNode( *this );
     ADN_Drawings_Data& drawingsData = ADN_Workspace::GetWorkspace().GetDrawings().GetData();
-    symbol_.SetVector( drawingsData.GetGeometryDrawings( geometries_.GetData() ) );
+    for( int i = 0; i < 4; ++i )
+    {
+        symbols_[ i ].SetParentNode( *this );
+        geometries_[ i ].SetParentNode( *this );
+        geometries_[ i ] = false;
+        symbols_[ i ].SetVector( drawingsData.GetGeometryDrawings( locations[ i ] ) );
+    }
     InitializeCapacities();
 }
 
@@ -137,23 +149,44 @@ void ADN_Objects_Data_ObjectInfos::ReadCapacityArchive( const std::string& type,
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data_ObjectInfos::ReadGeometry
+// Created: JSR 2012-02-13
+// -----------------------------------------------------------------------------
+void ADN_Objects_Data_ObjectInfos::ReadGeometry( xml::xistream& xis )
+{
+    const std::string code = xis.attribute< std::string >( "symbol" );
+    const std::string type = xis.attribute< std::string >( "type" );
+    for( int i = 0; i < 4; ++i )
+    {
+        if( locations[ i ] == type )
+        {
+            ADN_Drawings_Data& drawingsData = ADN_Workspace::GetWorkspace().GetDrawings().GetData();
+            symbols_[ i ].SetData( drawingsData.GetDrawing( code ), false );
+            geometries_[ i ] = true;
+            return;
+        }
+    }
+
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data_ObjectInfos::ReadArchive
 // Created: APE 2004-11-18
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data_ObjectInfos::ReadArchive( xml::xistream& xis )
 {
-    std::string code;
+    ADN_Drawings_Data& drawingsData = ADN_Workspace::GetWorkspace().GetDrawings().GetData();
+    for( int i = 0; i < 4; ++i )
+        symbols_[ i ].SetVector( drawingsData.GetGeometryDrawings( locations[ i ] ) );
+
     xis >> xml::attribute( "name", strName_ )
         >> xml::attribute( "type", strType_ )
-        >> xml::attribute( "geometry", geometries_ )
-        >> xml::optional >> xml::attribute( "symbol", code )
         >> xml::optional >> xml::attribute( "point-size", pointSize_ )
         >> xml::optional >> xml::attribute( "description", description_ )
+        >> xml::start( "geometries" )
+        >> xml::list( "geometry", *this, &ADN_Objects_Data_ObjectInfos::ReadGeometry )
+        >> xml::end
         >> xml::list( *this, &ADN_Objects_Data_ObjectInfos::ReadCapacityArchive );
-
-    ADN_Drawings_Data& drawingsData = ADN_Workspace::GetWorkspace().GetDrawings().GetData();
-    symbol_.SetVector( drawingsData.GetGeometryDrawings( geometries_.GetData() ) );
-    symbol_.SetData( drawingsData.GetDrawing( code ), false );
 }
 
 // -----------------------------------------------------------------------------
@@ -162,11 +195,8 @@ void ADN_Objects_Data_ObjectInfos::ReadArchive( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ADN_Objects_Data_ObjectInfos::WriteArchive( xml::xostream& xos )
 {
-    std::string code = ( symbol_.GetData() ) ? symbol_.GetData()->GetCode() : "";
     xos << xml::start( "object" )
-        << xml::attribute( "name", strName_ )
-        << xml::attribute( "geometry", geometries_.GetData() )
-        << xml::attribute( "symbol", code );
+        << xml::attribute( "name", strName_ );
     if( pointSize_.GetData() )
         xos << xml::attribute( "point-size", pointSize_.GetData() );
     if( strType_ == "" )
@@ -176,6 +206,20 @@ void ADN_Objects_Data_ObjectInfos::WriteArchive( xml::xostream& xos )
     if( !description_.GetData().empty() )
         xos << xml::attribute( "description", description_ );
 
+    xos << xml::start( "geometries" );
+    for( int i = 0; i < 4; ++i )
+    {
+        if( geometries_[ i ].GetData() )
+        {
+            const std::string code = ( symbols_[ i ].GetData() ) ? symbols_[ i ].GetData()->GetCode() : "";
+            xos << xml::start( "geometry" );
+            xos << xml::attribute( "type", locations[ i ] );
+            xos << xml::attribute( "symbol", code );
+            xos << xml::end;
+        }
+    }
+    xos << xml::end;
+
     for( CIT_CapacityMap it = capacities_.begin(); capacities_.end() != it; ++it )
         if( it->second->bPresent_.GetData() )
         {
@@ -184,6 +228,37 @@ void ADN_Objects_Data_ObjectInfos::WriteArchive( xml::xostream& xos )
             xos << xml::end;
         }
         xos << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data_ObjectInfos::IsValidDatabase
+// Created: JSR 2012-02-16
+// -----------------------------------------------------------------------------
+bool ADN_Objects_Data_ObjectInfos::IsValidDatabase()
+{
+    for( int i = 0; i < 4; ++i )
+        if( geometries_[ i ].GetData() )
+            return true;
+    return ADN_GuiTools::MissingGeometry( strName_.GetData() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Objects_Data_ObjectInfos::GetAllGeometries
+// Created: JSR 2012-02-14
+// -----------------------------------------------------------------------------
+std::string ADN_Objects_Data_ObjectInfos::GetAllGeometries() const
+{
+    std::string ret;
+    for( int i = 0; i < 4; ++i )
+    {
+        if( geometries_[ i ].GetData() )
+        {
+            if( !ret.empty() )
+                ret += " ";
+            ret += locations[ i ];
+        }
+    }
+    return ret;
 }
 
 // -----------------------------------------------------------------------------

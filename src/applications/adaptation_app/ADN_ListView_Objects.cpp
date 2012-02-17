@@ -135,9 +135,15 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     LinkBuilder builder( vItemConnectors_, *pInfos, bConnect );
 
     vItemConnectors_[ ADN_Objects_GUI::eName ]->Connect( &pInfos->strName_, bConnect );
-    vItemConnectors_[ ADN_Objects_GUI::eGeometry ]->Connect( &pInfos->geometries_, bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eSymbolPolygon ]->Connect( &pInfos->symbols_[ 0 ], bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eSymbolPoint ]->Connect( &pInfos->symbols_[ 1 ], bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eSymbolLine ]->Connect( &pInfos->symbols_[ 2 ], bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eSymbolCircle ]->Connect( &pInfos->symbols_[ 3 ], bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eGeometryPolygon ]->Connect( &pInfos->geometries_[ 0 ], bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eGeometryPoint ]->Connect( &pInfos->geometries_[ 1 ], bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eGeometryLine ]->Connect( &pInfos->geometries_[ 2 ], bConnect );
+    vItemConnectors_[ ADN_Objects_GUI::eGeometryCircle ]->Connect( &pInfos->geometries_[ 3 ], bConnect );
     vItemConnectors_[ ADN_Objects_GUI::ePointSize ]->Connect( &pInfos->pointSize_, bConnect );
-    vItemConnectors_[ ADN_Objects_GUI::eSymbol ]->Connect( &pInfos->symbol_, bConnect );
     vItemConnectors_[ ADN_Objects_GUI::eDescription ]->Connect( &pInfos->description_, bConnect );
 
     // process capacities

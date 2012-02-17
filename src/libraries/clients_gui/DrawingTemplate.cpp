@@ -12,6 +12,7 @@
 #include "DrawingCategory.h"
 #include "resources.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Circle.h"
 #include "clients_kernel/Lines.h"
 #include "clients_kernel/Point.h"
 #include "clients_kernel/Polygon.h"
@@ -36,6 +37,7 @@ DrawingTemplate::DrawingTemplate( xml::xistream& input, const QString& category,
     , linePixmap_   ( MAKE_PIXMAP( line ) )
     , pointPixmap_  ( MAKE_PIXMAP( point ) )
     , polygonPixmap_( MAKE_PIXMAP( polygon ) )
+    , circlePixmap_ ( MAKE_PIXMAP( circle ) )
     , lineUnit      ( eNone )
     , startUnit     ( eNone )
     , middleUnit    ( eNone )
@@ -123,6 +125,7 @@ QPixmap DrawingTemplate::GetPixmap() const
     return type_ == "line"    ? linePixmap_ :
            type_ == "point"   ? pointPixmap_ :
            type_ == "polygon" ? polygonPixmap_ :
+           type_ == "circle"  ? circlePixmap_ :
            QPixmap();
 }
 
@@ -153,6 +156,8 @@ kernel::Location_ABC* DrawingTemplate::CreateLocation() const
         return new kernel::Point();
     if( type_ == "polygon" )
         return new kernel::Polygon();
+    if( type_ == "circle" )
+        return new kernel::Circle();
     throw std::runtime_error( __FUNCTION__ " Invalid drawing geometry type." );
 }
 

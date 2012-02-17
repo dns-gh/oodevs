@@ -33,9 +33,15 @@ public:
     enum E_GuiElements
     {
         eName = 0,
-        eGeometry,
+        eGeometryPolygon,
+        eGeometryPoint,
+        eGeometryLine,
+        eGeometryCircle,
+        eSymbolPolygon,
+        eSymbolPoint,
+        eSymbolLine,
+        eSymbolCircle,
         ePointSize,
-        eSymbol,
         eDescription,
         eActivableCapacityPresent,
         eAttitudeModifierCapacityPresent,
@@ -153,7 +159,7 @@ public:
     //! @name slots
     //@{
     void OnSpeedImpactComboChanged();
-    void OnGeometryChanged( const QString& );
+    void OnGeometryChanged( bool );
     //@}
 
 private:
@@ -164,6 +170,7 @@ private:
     QWidget* pMaxAgentSpeed_;
     ADN_EditLine_Double* pPointDistance_;
     QWidget* pContent_;
+    QWidget* pCapacities_;
     //@}
 };
 

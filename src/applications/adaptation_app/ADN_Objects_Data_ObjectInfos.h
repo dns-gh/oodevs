@@ -24,7 +24,6 @@
 class ADN_Objects_Data_ObjectInfos : public ADN_Ref_ABC
                                    , public ADN_DataTreeNode_ABC
 {
-
 public:
     //! @name Constructors/Destructor
     //@{
@@ -40,12 +39,15 @@ public:
     ADN_Objects_Data_ObjectInfos* CreateCopy();
     void ReadArchive( xml::xistream& input );
     void WriteArchive( xml::xostream& output );
+    bool IsValidDatabase();
+    std::string GetAllGeometries() const;
     //@}
 
 private:
     //! @name Helpers
     //@{
-    void ReadCapacityArchive( const std::string& type, xml::xistream& input );
+    void ReadCapacityArchive( const std::string& type, xml::xistream& xis );
+    void ReadGeometry( xml::xistream& xis );
     void InitializeCapacities();
     //@}
 
@@ -61,10 +63,10 @@ public:
     //@{
     ADN_Type_String strName_;
     ADN_Type_String strType_;
-    ADN_Type_String geometries_;
     ADN_Type_String description_;
     ADN_Type_Double pointSize_;
-    ADN_TypePtr_InVector_ABC< ADN_Drawings_Data::DrawingInfo > symbol_;
+    ADN_Type_Bool geometries_[ 4 ];
+    ADN_TypePtr_InVector_ABC< ADN_Drawings_Data::DrawingInfo > symbols_[ 4 ];
     T_CapacityMap capacities_;
     //@}
 

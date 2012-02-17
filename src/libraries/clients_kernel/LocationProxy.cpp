@@ -97,6 +97,15 @@ Location_ABC& LocationProxy::Clone() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: LocationProxy::GetTypeName
+// Created: JSR 2012-02-17
+// -----------------------------------------------------------------------------
+std::string LocationProxy::GetTypeName() const
+{
+    return location_ ? location_->GetTypeName() : "";
+}
+
+// -----------------------------------------------------------------------------
 // Name: LocationProxy::Accept
 // Created: SBO 2008-06-02
 // -----------------------------------------------------------------------------

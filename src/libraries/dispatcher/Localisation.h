@@ -43,6 +43,7 @@ public:
     void Update( const sword::Location& msg );
     void Send( sword::Location& msg ) const;
     bool IsEmpty() const;
+    std::string GetTypeName() const;
     //@}
 
 private:
