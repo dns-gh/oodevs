@@ -51,10 +51,11 @@ namespace
             itemDiaName->GetConnector().Connect( &param->diaName_ );
             itemType->GetConnector().Connect( &param->type_ );
             itemOptional->GetConnector().Connect( &param->isOptional_ );
-            itemMin->GetConnector().Connect( &param->min_ );
-            itemMax->GetConnector().Connect( &param->max_ );
+            itemMin->GetConnector().Connect( &param->minOccurs_ );
+            itemMax->GetConnector().Connect( &param->maxOccurs_ );
 
             static_cast< ADN_MissionParameters_Table& >( tab_ ).ResetCurrent();
+            tab_.AdjustColumns();
         }
 
     private:

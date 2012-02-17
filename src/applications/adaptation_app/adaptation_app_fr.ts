@@ -2752,6 +2752,18 @@ du tireur</translation>
         <source>Symbol</source>
         <translation>Symbole</translation>
     </message>
+    <message>
+        <source>Limits</source>
+        <translation>Limites</translation>
+    </message>
+    <message>
+        <source>Minimum</source>
+        <translation>Minimum</translation>
+    </message>
+    <message>
+        <source>Maximum</source>
+        <translation>Maximum</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Model_Wizard</name>

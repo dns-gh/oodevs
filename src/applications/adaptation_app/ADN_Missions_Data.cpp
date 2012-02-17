@@ -93,8 +93,10 @@ void ADN_Missions_Data::MissionParameterValue::WriteArchive( xml::xostream& outp
 // -----------------------------------------------------------------------------
 ADN_Missions_Data::MissionParameter::MissionParameter()
     : isOptional_( false )
-    , min_( 1 )
-    , max_( 1 )
+    , minOccurs_( 1 )
+    , maxOccurs_( 1 )
+    , minValue_ ( std::numeric_limits< int >::min() )
+    , maxValue_ ( std::numeric_limits< int >::max() )
 {
     ADN_Type_Enum< E_MissionParameterType, eNbrMissionParameterType >::SetConverter( &ADN_Tr::ConvertFromMissionParameterType );
     FillChoices();
@@ -128,8 +130,10 @@ ADN_Missions_Data::MissionParameter* ADN_Missions_Data::MissionParameter::Create
     newParam->strName_    = strName_.GetData();
     newParam->type_       = type_.GetData();
     newParam->isOptional_ = isOptional_.GetData();
-    newParam->min_        = min_.GetData();
-    newParam->max_        = max_.GetData();
+    newParam->minOccurs_  = minOccurs_.GetData();
+    newParam->maxOccurs_  = maxOccurs_.GetData();
+    newParam->minValue_   = minValue_.GetData();
+    newParam->maxValue_   = maxValue_.GetData();
     newParam->diaName_    = diaName_.GetData();
     newParam->values_.reserve( values_.size() );
     for( IT_MissionParameterValue_Vector it = values_.begin(); it != values_.end(); ++it )
@@ -158,12 +162,14 @@ void ADN_Missions_Data::MissionParameter::ReadArchive( xml::xistream& input )
             >> xml::attribute( "type", type )
             >> xml::optional >> xml::attribute( "optional", isOptional_ )
             >> xml::attribute( "dia-name", diaName_ )
-            >> xml::optional >> xml::attribute( "min-occurs", min_ )
-            >> xml::optional >> xml::attribute( "max-occurs", max );
+            >> xml::optional >> xml::attribute( "min-occurs", minOccurs_ )
+            >> xml::optional >> xml::attribute( "max-occurs", max )
+            >> xml::optional >> xml::attribute( "min-value", minValue_ )
+            >> xml::optional >> xml::attribute( "max-value", maxValue_ );
     if( max == "unbounded" )
-        max_ = std::numeric_limits< int >::max();
+        maxOccurs_ = std::numeric_limits< int >::max();
     else
-        input >> xml::optional >> xml::attribute( "max-occurs", max_ );
+        input >> xml::optional >> xml::attribute( "max-occurs", maxOccurs_ );
     type_ = ADN_Tr::ConvertToMissionParameterType( type );
     input >> xml::list( "value", *this, &ADN_Missions_Data::MissionParameter::ReadValue );
     input >> xml::optional() >> xml::start( "choice" )
@@ -243,14 +249,18 @@ void ADN_Missions_Data::MissionParameter::WriteArchive( xml::xostream& output )
             << xml::attribute( "type", ADN_Tr::ConvertFromMissionParameterType( type_.GetData() ) )
             << xml::attribute( "optional", isOptional_ )
             << xml::attribute( "dia-name", diaName );
-    if( max_ != 1 )
+    if( maxOccurs_ != 1 )
     {
-        output << xml::attribute( "min-occurs", min_ );
-        if( max_ == std::numeric_limits< int >::max() )
+        output << xml::attribute( "min-occurs", minOccurs_ );
+        if( maxOccurs_ == std::numeric_limits< int >::max() )
             output << xml::attribute( "max-occurs", "unbounded" );
         else
-            output << xml::attribute( "max-occurs", max_ );
+            output << xml::attribute( "max-occurs", maxOccurs_ );
     }
+    if( minValue_ != std::numeric_limits< int >::min() )
+        output << xml::attribute( "min-value", minValue_ );
+    if( maxValue_ != std::numeric_limits< int >::max() )
+        output << xml::attribute( "max-value", maxValue_ );
     for( unsigned int i = 0; i < values_.size(); ++i )
         values_[i]->WriteArchive( output, i );
     bool hasChoice = false;

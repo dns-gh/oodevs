@@ -44,12 +44,7 @@ ADN_MissionParameterType::ADN_MissionParameterType( ADN_Table* parent, void* dat
 // -----------------------------------------------------------------------------
 ADN_MissionParameterType::~ADN_MissionParameterType()
 {
-    ADN_Missions_Data::MissionParameter* param = static_cast< ADN_Missions_Data::MissionParameter* >( pData_ );
-    if( param )
-    {
-        itemConnectors_[ADN_Missions_GUI::eParameterValues]->Disconnect( &param->values_ );
-        itemConnectors_[ADN_Missions_GUI::eChoiceValues]->Disconnect( &param->choices_ );
-    }
+    Disconnect();
     delete pConnector_;
 }
 
@@ -76,6 +71,9 @@ void ADN_MissionParameterType::DoValueChanged()
     itemConnectors_[ADN_Missions_GUI::eParameterValues]->Connect( &param->values_, isEnum );
     bool isChoice = param->type_.GetData() == eMissionParameterTypeLocationComposite;
     itemConnectors_[ADN_Missions_GUI::eChoiceValues]->Connect( &param->choices_, isChoice );
+    bool isNumeric = param->type_.GetData() == eMissionParameterTypeNumeric;
+    itemConnectors_[ADN_Missions_GUI::eMinValue]->Connect( &param->minValue_, isNumeric );
+    itemConnectors_[ADN_Missions_GUI::eMaxValue]->Connect( &param->maxValue_, isNumeric );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,5 +87,7 @@ void ADN_MissionParameterType::Disconnect()
     {
         itemConnectors_[ADN_Missions_GUI::eParameterValues]->Disconnect( &param->values_ );
         itemConnectors_[ADN_Missions_GUI::eChoiceValues]->Disconnect( &param->choices_ );
+        itemConnectors_[ADN_Missions_GUI::eMinValue]->Disconnect( &param->minValue_ );
+        itemConnectors_[ADN_Missions_GUI::eMaxValue]->Disconnect( &param->maxValue_ );
     }
 }

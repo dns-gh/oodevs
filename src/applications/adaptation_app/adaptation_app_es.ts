@@ -2752,6 +2752,18 @@ tirador</translation>
         <source>Symbol</source>
         <translation type="unfinished">Simbolo</translation>
     </message>
+    <message>
+        <source>Limits</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Minimum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maximum</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Model_Wizard</name>
