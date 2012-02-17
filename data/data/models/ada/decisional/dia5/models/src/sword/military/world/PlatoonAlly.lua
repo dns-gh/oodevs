@@ -788,6 +788,9 @@ return
     isTransportingCrowd = function( self )
         return integration.isTransportingCrowd( self )
     end,
+    isSurrendered = function( self )
+        return integration.isSurrendered( self )
+    end,
     changeAutomate = function( self )
         integration.changeAutomate( self )
     end,

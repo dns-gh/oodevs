@@ -65,8 +65,8 @@ rootnode
             return -- evaluation of other conditions is useless
         end
 
-        -- Take cover once ME is not opérationnal.
-        if not meKnowledge:isOperational() then
+        -- Take cover once ME is not opérationnal but not if unit is surrendered.
+        if not meKnowledge:isOperational() and not meKnowledge:isSurrendered() then
             Activate( skill.links.takeCover, skill.modifiers.importance, { entities = self.entitiesToSafeguardFrom } )
             return -- evaluation of other conditions is useless
         end
@@ -85,8 +85,8 @@ rootnode
             end
         end
 
-        -- If detected by elements to safeguard from, active cover posture and dismount 
-        if self.detected then
+        -- If detected by elements to safeguard from and agent is not surrendered, active cover posture and dismount 
+        if self.detected and not meKnowledge:isSurrendered() then
             Activate( skill.nodes.CoverAttitude, skill.modifiers.importance )
             Activate( skill.links.dismount, 1 )
 

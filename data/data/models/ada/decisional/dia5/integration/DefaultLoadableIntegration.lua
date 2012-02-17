@@ -222,3 +222,7 @@ end
 integration.isTransported = function( enemy )
     return DEC_ConnaissanceAgent_EstTransporte( enemy.source )
 end
+
+integration.isSurrendered = function( )
+    return DEC_Agent_EstRendu( myself )
+end

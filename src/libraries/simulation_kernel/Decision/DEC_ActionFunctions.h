@@ -59,6 +59,7 @@ public:
     static bool CanTransportKnowledge     ( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, bool bTransportOnlyLoadable );
     static bool CanTransportCrowd         ( DEC_Decision_ABC& callerAgent );
     static bool IsTransportingCrowd       ( DEC_Decision_ABC& callerAgent );
+    static bool IsSurrendered             ( DEC_Decision_ABC& callerAgent );
 
     static void Prisoners_CaptureAndLoad  ( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
     static void Prisoners_Unload          ( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
