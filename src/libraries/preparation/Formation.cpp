@@ -38,9 +38,9 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 Formation::Formation( kernel::Controller& controller, const HierarchyLevel_ABC& level, const FormationLevels& levels, IdManager& idManager )
     : EntityImplementation< Formation_ABC >( controller, idManager.GetNextId(), "" )
-    , level_      ( &level )
-    , levels_     ( levels )
-    , karmaFactor_( 0.f )
+    , level_         ( &level )
+    , levels_        ( levels )
+    , verticalOffset_( 0.f )
 {
     RegisterSelf( *this );
     name_ = tools::translate( "Formation", "Formation [%1]" ).arg( id_ );
@@ -53,8 +53,8 @@ Formation::Formation( kernel::Controller& controller, const HierarchyLevel_ABC& 
 // -----------------------------------------------------------------------------
 Formation::Formation( xml::xistream& xis, Controller& controller, const FormationLevels& levels, IdManager& idManager )
     : EntityImplementation< Formation_ABC >( controller, 0, "" )
-    , levels_     ( levels )
-    , karmaFactor_( 0.f )
+    , levels_        ( levels )
+    , verticalOffset_( 0.f )
 {
     std::string level, name;
     xis >> xml::attribute( "id", ( int& ) id_ )
@@ -133,7 +133,7 @@ void Formation::InitializeSymbol() const
     symbolPath_ = symbol;
     levelPath_ = level;
     const kernel::Karma& karma = hierarchies.GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
-    karmaFactor_ = GetFactor( karma );
+    verticalOffset_ = GetFactor( karma );
     kernel::App6Symbol::SetKarma( symbolPath_, karma );
 }
 
@@ -147,7 +147,7 @@ void Formation::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC
     {
         InitializeSymbol();
         tools.DrawApp6Symbol( symbolPath_, where, 4 );
-        const geometry::Point2f center( where.X(), where.Y() + karmaFactor_ );
+        const geometry::Point2f center( where.X(), where.Y() + verticalOffset_ );
         tools.DrawApp6Symbol( levelPath_, center, 4 );
     }
 }

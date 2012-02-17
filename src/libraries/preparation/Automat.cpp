@@ -33,8 +33,8 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 Automat::Automat( const AutomatType& type, Controller& controller, IdManager& idManager, const QString& name )
     : EntityImplementation< Automat_ABC >( controller, idManager.GetNextId(), "" )
-    , type_       ( type )
-    , karmaFactor_( 0.f )
+    , type_          ( type )
+    , verticalOffset_( 0.f )
 {
     name_ = name.isEmpty() ? type.GetName().c_str() + QString( " [%1]" ).arg( id_ )
                            : name + " " + QString( "[%1]" ).arg( id_ );
@@ -48,8 +48,8 @@ Automat::Automat( const AutomatType& type, Controller& controller, IdManager& id
 // -----------------------------------------------------------------------------
 Automat::Automat( xml::xistream& xis, Controller& controller, IdManager& idManager, const AutomatType& type )
     : EntityImplementation< Automat_ABC >( controller, xis.attribute< unsigned long >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
-    , type_       ( type )
-    , karmaFactor_( 0.f )
+    , type_          ( type )
+    , verticalOffset_( 0.f )
 {
     RegisterSelf( *this );
     CreateDictionary( controller );
@@ -109,7 +109,7 @@ void Automat::Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& 
     {
         InitializeSymbol();
         tools.DrawApp6Symbol( symbol_, where, 2 );
-        const geometry::Point2f center( where.X(), where.Y() + karmaFactor_ );
+        const geometry::Point2f center( where.X(), where.Y() + verticalOffset_ );
         tools.DrawApp6Symbol( level_, center, 2 );
     }
 }
@@ -128,7 +128,7 @@ void Automat::InitializeSymbol() const
     symbol_ = symbol;
     level_ = level;
     const kernel::Karma& karma = hierarchies.GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
-    karmaFactor_ = GetFactor( karma );
+    verticalOffset_ = GetFactor( karma );
     kernel::App6Symbol::SetKarma( symbol_, karma );
 }
 

@@ -86,7 +86,7 @@ private:
     const kernel::HierarchyLevel_ABC* level_;
     mutable std::string symbolPath_;
     mutable std::string levelPath_;
-    mutable float karmaFactor_;
+    mutable float verticalOffset_;
     const kernel::FormationLevels& levels_;
     //@}
 };

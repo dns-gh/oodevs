@@ -61,7 +61,7 @@ const QPixmap& EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, const
 namespace
 {
     // $$$$ LGY 2012-02-07 : hardcoded for displaying !!!
-    bool IsValid( const kernel::Karma& karma, int x, int y )
+    bool ShouldPaintPixelAtCoordinateForKarma( const kernel::Karma& karma, int x, int y )
     {
         if( karma == kernel::Karma::friend_ )
             return ( x == 0 || x == 1 ) && y > 11;
@@ -107,23 +107,26 @@ QPixmap EntitySymbols::GetSymbol( const kernel::Entity_ABC& entity, const QPixma
             QImage headquarter( 32, height, QImage::Format_ARGB32 );
             memcpy( headquarter.bits(), symbol.bits(), symbol.byteCount() );
             uchar* ptr = headquarter.bits();
+            const int blue = 0, green = 1, red = 2, alpha = 3;
+            for( unsigned int y = height - headquarterSize_; y < height; ++y )
+                for( unsigned int x = 0; x < 32; ++x )
+                {
+                    int offset = 4 * x + y * headquarter.bytesPerLine() ;
+                    ptr[ offset + blue  ] = 0x00;
+                    ptr[ offset + green ] = 0x00;
+                    ptr[ offset + red   ] = 0x00;
+                    ptr[ offset + alpha ] = 0x00;
+                }
             for( unsigned int y = 0; y < height; ++y )
                 for( unsigned int x = 0; x < 32; ++x )
                 {
-                    int value = 4 * x + y * headquarter.bytesPerLine() ;
-                    if( y > height - headquarterSize_ - 1 )
+                    int offset = 4 * x + y * headquarter.bytesPerLine() ;
+                    if( ShouldPaintPixelAtCoordinateForKarma( karma, x, y ) )
                     {
-                        ptr[ value     ] = 0xff;
-                        ptr[ value + 1 ] = 0xff;
-                        ptr[ value + 2 ] = 0xff;
-                        ptr[ value + 3 ] = 0x00;
-                    }
-                    if( IsValid( karma, x, y ) )
-                    {
-                        ptr[ value     ] = 0x00;
-                        ptr[ value + 1 ] = 0x00;
-                        ptr[ value + 2 ] = 0x00;
-                        ptr[ value + 3 ] = 0xff;
+                        ptr[ offset + blue  ] = 0x00;
+                        ptr[ offset + green ] = 0x00;
+                        ptr[ offset + red   ] = 0x00;
+                        ptr[ offset + alpha ] = 0xff;
                     }
                 }
             return QPixmap( headquarter );
