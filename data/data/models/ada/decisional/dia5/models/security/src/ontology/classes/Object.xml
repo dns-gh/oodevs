@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <class xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.classes.Object" source-version="1.0.0" extends="ontology.classes.LocalizedElement">
-    <description>Represents anything world entity that is not a: &#xD;
+    <description>Represents anything that is not a: &#xD;
 - Agent&#xD;
 - Crowd&#xD;
 - Urban block&#xD;

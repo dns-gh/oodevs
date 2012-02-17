@@ -18,5 +18,13 @@
                 </type>
             </return>
         </method>
+        <method name="operateIt">
+            <description></description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
     </methods>
 </interface>
