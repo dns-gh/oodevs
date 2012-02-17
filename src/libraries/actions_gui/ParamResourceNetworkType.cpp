@@ -64,7 +64,8 @@ void ParamResourceNetworkType::CommitTo( actions::ParameterContainer_ABC& action
     if( IsChecked() && GetValue() != 0 )
     {
         assert( internalId_.find( GetValue() ) != internalId_.end() );
-        action.AddParameter( *new actions::parameters::ResourceNetworkType( parameter_, internalId_.at( GetValue() ), resolver_ ) );
+        const std::string name = ( *internalId_.find( GetValue() ) ).second;
+        action.AddParameter( *new actions::parameters::ResourceNetworkType( parameter_, name, resolver_ ) );
     }
     else
         action.AddParameter( *new actions::parameters::ResourceNetworkType( parameter_ ) );

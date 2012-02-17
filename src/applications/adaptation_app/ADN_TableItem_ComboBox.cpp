@@ -265,7 +265,7 @@ QString ADN_TableItem_ComboBox::currentText() const
     QWidget *w = table()->cellWidget( row(), col() );
     if( w && w->inherits( "QComboBox" ) )
         return ( (QComboBox*)w )->currentText();
-    return *entries_.at( GetEnumIndexFromGUI( currentComboIndex_ ) );
+    return entries_.at( GetEnumIndexFromGUI( currentComboIndex_ ) );
 }
 
 //-----------------------------------------------------------------------------
