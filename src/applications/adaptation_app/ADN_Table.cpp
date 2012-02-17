@@ -102,12 +102,13 @@ void ADN_Table::paintEmptyArea( QPainter* pPainter, int nX, int nY, int nWidth, 
 // Name: ADN_Table::AdjustColumns
 // Created: APE 2005-04-01
 // -----------------------------------------------------------------------------
-void ADN_Table::AdjustColumns( int nMinWidth )
+void ADN_Table::AdjustColumns( int nMinWidth /*= -1*/)
 {
-    for( int n = 0; n < this->numCols(); ++n )
+    for( int n = 0; n < numCols(); ++n )
     {
-        this->adjustColumn( n );
-        this->setColumnWidth( n, std::max< int >( this->columnWidth( n ) + 5, nMinWidth ) );
+        adjustColumn( n );
+        if( nMinWidth != -1 )
+            setColumnWidth( n, std::max< int >( columnWidth( n ) + 5, nMinWidth ) );
     }
 }
 

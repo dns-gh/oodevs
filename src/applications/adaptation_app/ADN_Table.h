@@ -28,7 +28,7 @@ public:
     void* GetCurrentData();
     void  setEnabled( bool b );
 
-    void AdjustColumns( int nMinWidth );
+    void AdjustColumns( int nMinWidth = -1 );
 
     int ComputeNbrPrintPages( const QSize& painterSize ) const;
     void Print( int nPage, QPainter& painter, const QSize& painterSize );

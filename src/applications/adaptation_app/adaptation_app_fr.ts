@@ -2738,6 +2738,18 @@ du tireur</translation>
         <source>Symbol</source>
         <translation>Symbole</translation>
     </message>
+    <message>
+        <source>Limits</source>
+        <translation>Limites</translation>
+    </message>
+    <message>
+        <source>Minimum</source>
+        <translation>Minimum</translation>
+    </message>
+    <message>
+        <source>Maximum</source>
+        <translation>Maximum</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Model_Wizard</name>
@@ -5060,7 +5072,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>PlannedWork</source>
-        <translation>travaux génie</translation>
+        <translation>Travaux génie</translation>
     </message>
     <message>
         <source>ResourceType</source>
@@ -5112,7 +5124,7 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     </message>
     <message>
         <source>ResourceNetwork</source>
-        <translation>reseau de ressource</translation>
+        <translation>Réseau de ressource</translation>
     </message>
     <message>
         <source>Commander, Organization</source>

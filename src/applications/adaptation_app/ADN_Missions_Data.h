@@ -94,8 +94,10 @@ public:
         ADN_Type_Enum< E_MissionParameterType, eNbrMissionParameterType > type_;
         ADN_Type_Enum< E_AnchorType, eNbrAnchorType >                     anchor_;
         ADN_Type_Bool                                                     isOptional_;
-        ADN_Type_Int                                                      min_;
-        ADN_Type_Int                                                      max_;
+        ADN_Type_Int                                                      minOccurs_;
+        ADN_Type_Int                                                      maxOccurs_;
+        ADN_Type_Int                                                      minValue_;
+        ADN_Type_Int                                                      maxValue_;
         T_MissionParameterValue_Vector                                    values_;
         T_Choice_Vector                                                   choices_;
 

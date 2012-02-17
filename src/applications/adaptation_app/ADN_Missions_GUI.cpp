@@ -97,6 +97,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( QWidget*& pContent, ADN_Missions_Data:
     QGroupBox* pParametersGroup = new QGroupBox( tr( "Parameters" ) );
     ADN_MissionParameters_Table* paramList = new ADN_MissionParameters_Table();
     vInfosConnectors[eParameters] = &paramList->GetConnector();
+
     Q3GroupBox* pEnum = new Q3GroupBox( 1, Qt::Horizontal, tr( "Enumeration values" ) );
     ADN_MissionParameterValues_Table* valueList = new ADN_MissionParameterValues_Table( pEnum, "" );
     vInfosConnectors[eParameterValues] = &valueList->GetConnector();
@@ -105,6 +106,11 @@ QWidget* ADN_Missions_GUI::BuildMissions( QWidget*& pContent, ADN_Missions_Data:
     ADN_MissionTypes_Table* choiceList = new ADN_MissionTypes_Table( pChoice, "" );
     vInfosConnectors[eChoiceValues] = &choiceList->GetConnector();
 
+    Q3GroupBox* pLimit = new Q3GroupBox( 1, Qt::Horizontal, tr( "Limits" ) );
+    QWidget* pLimitHolder = builder.AddFieldHolder( pLimit );
+    builder.AddField< ADN_EditLine_Int >( pLimitHolder, tr( "Minimum" ), vInfosConnectors[ eMinValue ] );
+    builder.AddField< ADN_EditLine_Int >( pLimitHolder, tr( "Maximum" ), vInfosConnectors[ eMaxValue ] );
+
     // Connect the gui to the data.
     paramList->SetItemConnectors( vInfosConnectors );
 
@@ -112,10 +118,11 @@ QWidget* ADN_Missions_GUI::BuildMissions( QWidget*& pContent, ADN_Missions_Data:
     // Layouts
     // -------------------------------------------------------------------------
     // Parameters layout
-    QGridLayout* parameterLayout = new QGridLayout( pParametersGroup, 2, 2 );
+    QGridLayout* parameterLayout = new QGridLayout( pParametersGroup, 2, 3 );
     parameterLayout->setMargin( 10 );
     parameterLayout->setSpacing( 10 );
-    parameterLayout->addWidget( paramList, 0, 0, 1, 2 );
+    parameterLayout->addWidget( paramList, 0, 0, 1, 3 );
+    parameterLayout->addWidget( pLimit );
     parameterLayout->addWidget( pEnum );
     parameterLayout->addWidget( pChoice );
 
