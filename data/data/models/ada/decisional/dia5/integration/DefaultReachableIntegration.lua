@@ -35,7 +35,7 @@ integration.getHeadPosition = function( crowd )
     if DEC_ConnaissancePopulation_HasFlow( crowd.source ) then
         local pointEnTete = DEC_ConnaissancePopulation_PointEnTeteDeFlux( myself, crowd.source )
         crowd.getPointEnTeteResult = crowd.getPointEnTeteResult or pointEnTete
-        if DEC_Geometrie_DistanceBetweenPoints( crowd.getPointEnTeteResult,  pointEnTete) > 300 then
+        if DEC_Geometrie_DistanceBetweenPoints( crowd.getPointEnTeteResult,  pointEnTete) > 30 then
             crowd.getPointEnTeteResult = pointEnTete
         end
         return crowd.getPointEnTeteResult
@@ -50,7 +50,7 @@ integration.getCrowdPosition = function( crowd )
     else
         local pointLePlusProche = DEC_ConnaissancePopulation_PointPlusProche( crowd.source )
         crowd.getCrowdPositionResult =  crowd.getCrowdPositionResult or pointLePlusProche
-        if DEC_Geometrie_DistanceBetweenPoints( pointLePlusProche, crowd.getCrowdPositionResult ) > 300 then
+        if DEC_Geometrie_DistanceBetweenPoints( pointLePlusProche, crowd.getCrowdPositionResult ) > 30 then
             crowd.getCrowdPositionResult = pointLePlusProche
         end
         return crowd.getCrowdPositionResult
