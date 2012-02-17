@@ -1226,7 +1226,7 @@ void MIL_AgentPion::InteractWithTraffic( const std::vector< TER_Agent_ABC* >& ag
         for( std::vector< TER_Agent_ABC* >::const_iterator itAgent = agents.begin(); itAgent != agents.end(); ++itAgent )
         {
             MIL_Agent_ABC& agent = static_cast< PHY_RoleInterface_Location& >( **itAgent ).GetAgent();
-            if( agent.CanInteractWithTraffic() )
+            if( &agent != this && agent.CanInteractWithTraffic() )
             {
                 MT_Vector2D position = GetRole< PHY_RoleInterface_Location >().GetPosition();
                 MT_Vector2D positionAgent = ( *itAgent )->GetPosition();
