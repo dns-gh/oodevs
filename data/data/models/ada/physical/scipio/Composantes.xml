@@ -344,7 +344,7 @@
     </objects>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="114021" codeEMAT8="114021N1" codeLFRIL="" codeNNO="1005145647513" comment="" id="6" name="Fantassin  + AA 5.56 MINIMI FELIN" protection="Combattant" size="Personnel" weight="0.08">
+  <equipment codeEMAT6="114021" codeEMAT8="114021N1" codeLFRIL="" codeNNO="1005145647513" comment="" id="6" name="Fantassin + AA 5.56 MINIMI FELIN" protection="Combattant" size="Personnel" weight="0.08">
     <speeds max="6">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="6"/>
@@ -35323,4 +35323,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="1965055147" -->
+<!-- signature="2890234071" -->
