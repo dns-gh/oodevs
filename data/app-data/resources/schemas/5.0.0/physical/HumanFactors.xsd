@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.2">
+  <xs:include schemaLocation="tools.xsd"/>
+  <xs:simpleType name="T_NonPositiveInteger">
+    <xs:restriction base="xs:integer">
+      <xs:maxInclusive value="0"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:simpleType name="T_StrictNonNegativeInteger">
+    <xs:restriction base="xs:integer">
+      <xs:minExclusive value="0"/>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="humans-factors">
+    <xs:complexType>
+      <xs:sequence>
+        <xs:element name="experience-factor" type="T_Modifier"/>
+        <xs:element name="tiredness-factor" type="T_Modifier"/>
+        <xs:element name="stress-factor" type="T_Modifier"/>
+        <xs:element name="automatic-evolution" type="T_Evolution"/>
+      </xs:sequence>
+      <xs:attribute name="model-version" type="T_Version"/>
+    </xs:complexType>
+  </xs:element>
+  <xs:complexType name="T_Modifier">
+    <xs:sequence>
+      <xs:element name="modifier" minOccurs="0" maxOccurs="unbounded">
+        <xs:complexType>
+          <xs:attribute name="state" type="xs:string" use="required"/>
+          <xs:attribute name="max-speed" type="T_NonNegativeDouble" use="required"/>
+          <xs:attribute name="ph" type="T_NonNegativeDouble" use="required"/>
+          <xs:attribute name="sensor-distance" type="T_NonNegativeDouble" use="required"/>
+          <xs:attribute name="loading-time" type="T_NonNegativeDouble" use="required"/>
+          <xs:attribute name="posture-setup-time" type="T_NonNegativeDouble" use="required"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:complexType name="T_Evolution">
+    <xs:sequence>
+      <xs:element name="tiredness-evolution">
+        <xs:complexType>
+          <xs:attribute name="first-threshold" type="T_StrictNonNegativeInteger" use="required"/>
+          <xs:attribute name="second-threshold" type="T_StrictNonNegativeInteger" use="required"/>
+          <xs:attribute name="working" type="xs:integer" use="required"/>
+          <xs:attribute name="moving" type="xs:integer" use="required"/>
+          <xs:attribute name="engine-stopped" type="xs:integer" use="required"/>
+          <xs:attribute name="engine-running" type="xs:integer" use="required"/>
+        </xs:complexType>
+      </xs:element>
+      <xs:element name="stress-evolution">
+        <xs:complexType>
+          <xs:attribute name="first-threshold" type="T_StrictNonNegativeInteger" use="required"/>
+          <xs:attribute name="second-threshold" type="T_StrictNonNegativeInteger" use="required"/>
+          <xs:attribute name="inc-per-shot" type="T_NonNegativeInteger" use="required"/>
+          <xs:attribute name="dec-per-hour" type="T_NonPositiveInteger" use="required"/>
+        </xs:complexType>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>

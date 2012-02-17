@@ -153,4 +153,6 @@
     <upgrade schema="schemas/4.3.3/exercise/settings.xsd" apply="schemas/4.3.4/xsl/settings_4.3.3-4.3.4.xsl"/>
     <upgrade schema="schemas/4.3.3/physical/Missions.xsd" apply="schemas/4.3.4/xsl/missions_4.3.3-4.3.4.xsl"/>
   </migration>
+  <migration from="4.3.4" to="5.0.0">
+  </migration>
 </migrations>
