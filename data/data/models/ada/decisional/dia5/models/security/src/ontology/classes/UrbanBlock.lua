@@ -116,6 +116,14 @@ method "decontaminateIt" ( masalife.brain.integration.startStopAction(
     end
 } ) )
 
+-- --------------------------------------------------------------------------------
+-- ResourceReceiver
+-- --------------------------------------------------------------------------------
+method "createLinkWith" (
+    function( self, resourceNode )
+        return integration.createResourceLinkWithUrbanBlock( self, resourceNode )
+    end )
+
 
 -- --------------------------------------------------------------------------------
 -- Specific classes methods

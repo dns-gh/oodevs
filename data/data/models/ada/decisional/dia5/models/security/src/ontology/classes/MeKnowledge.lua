@@ -253,6 +253,15 @@ method "isDead" (
     end )
 
 -- --------------------------------------------------------------------------------
+-- Resources
+-- --------------------------------------------------------------------------------
+method "createResourceLink" ( 
+    function( self, resourceNode, resourceReceiver )
+        return resourceReceiver:createLinkWith( resourceNode )
+    end )
+
+
+-- --------------------------------------------------------------------------------
 -- Reports
 -- --------------------------------------------------------------------------------
 method "sendReport" ( masalife.brain.integration.startStopAction( 

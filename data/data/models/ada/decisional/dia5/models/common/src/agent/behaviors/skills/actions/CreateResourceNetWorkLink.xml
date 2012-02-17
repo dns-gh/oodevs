@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.behaviors.skills.actions.CreateResourceNetWorkLink" source-version="1.0.0">
+    <description/>
+    <parameters>
+        <parameter name="resourceNode">
+            <description/>
+            <type>
+                <class name="agent.world.ResourceNode"/>
+            </type>
+        </parameter>
+        <parameter name="resourceReceiver">
+            <description></description>
+            <type>
+                <class name="agent.world.ResourceReceiver"/>
+            </type>
+        </parameter>
+    </parameters>
+    <body-type>
+        <class name="agent.world.Body"/>
+    </body-type>
+    <feedbacks>
+        <feedback name="linkCreationActionCompleted"/>
+    </feedbacks>
+</skill>

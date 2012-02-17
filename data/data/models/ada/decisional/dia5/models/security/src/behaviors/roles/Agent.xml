@@ -58,6 +58,8 @@
         <skill name="behaviors.skills.CommitSuicideAttack"/>
         <skill name="behaviors.skills.primitives.Heal"/>
         <skill name="agent.behaviors.skills.actions.Heal"/>
+        <skill name="agent.behaviors.skills.actions.CreateResourceNetWorkLink"/>
+        <skill name="behaviors.skills.primitives.CreateResourceNetWorkLinks"/>
     </skills>
     <resources>
         <resource name="agent.behaviors.resources.Motion"/>

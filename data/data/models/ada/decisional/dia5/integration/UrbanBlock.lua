@@ -115,6 +115,10 @@ end
 -- Decontamination
 integration.decontaminateUrbanBlock = function( urbanBlock )            
     DEC_DecontaminerZone( DEC_PolygoneBlocUrbain( urbanBlock.source ) )
-    ntegration.pionRC( eRC_DecontaminationDone )        
+    integration.pionRC( eRC_DecontaminationDone )        
     return true
+end
+
+integration.createResourceLinkWithUrbanBlock = function( urbanBlock, resourceNode )
+    return DEC_ResourceNetwork_CreateLinkFromUrbanBlock( urbanBlock.source, resourceNode.source )
 end

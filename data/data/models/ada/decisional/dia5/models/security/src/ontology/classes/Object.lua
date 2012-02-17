@@ -76,6 +76,14 @@ method "canBeExtinguished" (
     end )
 
 -- --------------------------------------------------------------------------------
+-- ResourceReceiver
+-- --------------------------------------------------------------------------------
+method "createLinkWith" (
+    function( self, resourceNode ) 
+        return integration.createResourceLinkWithObject( self, resourceNode )
+    end )
+
+-- --------------------------------------------------------------------------------
 -- Specific classe methods
 -- --------------------------------------------------------------------------------
 method "getPosition" ( 
