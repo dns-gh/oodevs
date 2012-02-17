@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<shapes>
+  <shape category="Lines" color="#000000" template="-- x --" type="line">
+    <point x="18923.2" y="66378.7"/>
+    <point x="20933.5" y="68821.6"/>
+  </shape>
+  <shape category="Lines" color="#000000" template="-- x --" type="line">
+    <point x="19915.6" y="69661.3"/>
+    <point x="21798.7" y="67981.9"/>
+  </shape>
+  <shape category="Lines" color="#000000" template="-- x --" type="line">
+    <point x="25005" y="63605"/>
+    <point x="25590.2" y="66836.8"/>
+  </shape>
+  <shape category="Lines" color="#000000" template="-- x --" type="line">
+    <point x="24368.8" y="66934.3"/>
+    <point x="26837.1" y="66629"/>
+  </shape>
+  <shape category="Lines" color="#000000" template="-- x --" type="line">
+    <point x="16005.3" y="56149.1"/>
+    <point x="17659.3" y="58057.6"/>
+  </shape>
+  <shape category="Lines" color="#000000" template="-- x --" type="line">
+    <point x="16497.2" y="59016.1"/>
+    <point x="18736.5" y="57311.1"/>
+  </shape>
+  <shape category="Markers" color="#000000" template="Coordinating point" type="point">
+    <point x="24877.7" y="62638"/>
+  </shape>
+  <shape category="Markers" color="#000000" template="Coordinating point" type="point">
+    <point x="18439.7" y="66022.5"/>
+  </shape>
+  <shape category="Markers" color="#000000" template="Coordinating point" type="point">
+    <point x="15615" y="55869.2"/>
+  </shape>
+  <shape category="Misc." color="#000000" template="Bold arrow" type="line">
+    <point x="13770.2" y="58865.5"/>
+    <point x="17472.7" y="64578.3"/>
+  </shape>
+  <shape category="Misc." color="#000000" template="Bold arrow" type="line">
+    <point x="18846.8" y="56041"/>
+    <point x="24114.3" y="61435.6"/>
+  </shape>
+  <shape category="Misc." color="#000000" template="Bold arrow" type="line">
+    <point x="24038" y="75418.7"/>
+    <point x="27129.8" y="74273.6"/>
+    <point x="25908.3" y="71716.2"/>
+  </shape>
+  <shape category="Misc." color="#000000" template="Bold arrow" type="line">
+    <point x="34267.6" y="71830.7"/>
+    <point x="29496.3" y="72746.8"/>
+    <point x="26557.2" y="69349.6"/>
+  </shape>
+  <shape category="Orders" color="#000000" template="Support" type="line">
+    <point x="12575" y="52784"/>
+    <point x="13872.8" y="54259.9"/>
+  </shape>
+</shapes>
+<!-- signature="1033453070" -->

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<session>
+  <config>
+    <dispatcher>
+      <network client="localhost:10000" server="10001"/>
+      <plugins>
+        <recorder fragmentfreq="200" keyframesfreq="100"/>
+		<hla configuration="configuration.xml" creation="1" debug="1" destruction="1" federation="MyFederation" fom="ASI_FOM_v2.0.8_2010.xml" host="sli" library="hla_plugin-vc80-mt.dll" lookahead="10" name="SWORD-Blue" netn="1" port="8989" protocol="hla-1516e" time-constrained="1" time-regulating="1"/>
+      </plugins>
+    </dispatcher>
+    <gaming>
+      <network server="localhost:10001"/>
+    </gaming>
+    <simulation>
+      <GarbageCollector setpause="100" setstepmul="100"/>
+      <checkpoint frequency="100000h" keep="1" usecrc="true"/>
+      <debug decisional="false" diadebugger="false" diadebuggerport="15000" networklogger="true" networkloggerport="20000" pathfind="false"/>
+      <decisional useonlybinaries="false"/>
+      <dispatcher embedded="true"/>
+      <network port="10000"/>
+      <orbat checkcomposition="false"/>
+      <pathfinder threads="1"/>
+      <profiling enabled="false"/>
+      <time factor="10" step="10"/>
+    </simulation>
+  </config>
+  <meta>
+    <comment/>
+    <date>20101109T141911</date>
+    <name>default</name>
+  </meta>
+</session>
+<!-- signature="3975572219" -->
