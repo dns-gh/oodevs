@@ -171,16 +171,21 @@ integration.buildInstantlyCheckPointOn = function( position )  -- A appeler une 
         DEC_CreerObjetSansDelais( 
                 S_TypeObject_ToString( eTypeObjectPosteControle ), localisation )
         end
-    meKnowledge:RC( eRC_MiseEnPlaceFiltrage )
+        meKnowledge:RC( eRC_MiseEnPlaceFiltrage )
     end
+    meKnowledge.checkPointForFilterCrowd = nil
+    meKnowledge.localisationForFilterCrowd = nil
 end
 
-integration.changeCrowdDensity = function( blockingStrength, position ) -- A appeler une seule fois.
+integration.doFiltration = function( bodySearchStrength, blockingStrength, position )
+    meKnowledge.localisationForFilterCrowd = meKnowledge.localisationForFilterCrowd or DEC_Geometrie_ConvertirPointEnLocalisation( position.source )
+    meKnowledge.checkPointForFilterCrowd = meKnowledge.checkPointForFilterCrowd or integration.obtenirObjetProcheDe( meKnowledge.localisationForFilterCrowd, S_TypeObject_ToString( eTypeObjectPosteControle ), 10 )
+    integration.setBodySearchIntensity( bodySearchStrength , position, meKnowledge.checkPointForFilterCrowd )
+    integration.changeCrowdDensity( blockingStrength, meKnowledge.checkPointForFilterCrowd )
+end
+
+integration.changeCrowdDensity = function( blockingStrength, checkpoint ) -- A appeler une seule fois.
     if not myself.changeDensity then
-        local checkpoint = nil
-        local localisation = DEC_Geometrie_ConvertirPointEnLocalisation( position.source )
-        checkpoint = integration.obtenirObjetProcheDe( localisation, 
-                        S_TypeObject_ToString( eTypeObjectPosteControle ), 10 )
         if checkpoint then
             myself.changeDensity = true
             DEC_ConnaissanceObjet_ChangeDensitePopulationSortanteEnPourcentage( checkpoint, ( 100 - blockingStrength ) / 100 )-- valeur entre 0 et 1
@@ -188,11 +193,7 @@ integration.changeCrowdDensity = function( blockingStrength, position ) -- A app
     end
 end
 
-integration.setBodySearchIntensity = function( bodySearchStrength, position ) -- Appeler à chaque tic
-    local checkpoint = nil
-    local localisation = DEC_Geometrie_ConvertirPointEnLocalisation( position.source )
-    checkpoint = integration.obtenirObjetProcheDe( localisation, 
-                    S_TypeObject_ToString( eTypeObjectPosteControle ), 10 )
+integration.setBodySearchIntensity = function( bodySearchStrength, position, checkpoint ) -- Appeler à chaque tic
     if checkpoint then
         if not position.constructedObject then
             position.constructedObject = checkpoint
@@ -206,6 +207,8 @@ integration.setBodySearchIntensity = function( bodySearchStrength, position ) --
 end
 
 integration.destroyInstantlyCheckpointOn = function( position )
+    meKnowledge.checkPointForFilterCrowd = nil
+    meKnowledge.localisationForFilterCrowd = nil
     if position.constructedObject  then 
         if DEC_ConnaissanceObjet_NiveauAnimation( position.constructedObject  ) > 0 then
             DEC__StopAction( position.constructedObject.actionAnimation )

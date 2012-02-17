@@ -715,8 +715,7 @@ return
             myself.CR_TerroristsFounded = {}
         end,
         started = function( self, blockingStrength , bodySearchStrength , position )
-            integration.setBodySearchIntensity( bodySearchStrength , position )
-            integration.changeCrowdDensity( blockingStrength, position )
+            integration.doFiltration( bodySearchStrength, blockingStrength, position )
             integration.captureTerrorists( integration.getNearbyTerrorists() ) 
         end,
         stop = function( self, blockingStrength , bodySearchStrength , position )
