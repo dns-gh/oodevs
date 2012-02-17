@@ -605,13 +605,5 @@
   <report category="operational" id="433" message="Progression difficile en raison de %1">
     <parameter type="String"/>
   </report>
-  <report category="operational" id="434" message="L'incendie ne peut pas être éteind"/>
-  <report category="operational" id="435" message="Pas d'incendie dans la zone"/>
-  <report category="operational" id="436" message="Début de la décontamination de la zone"/>
-  <report category="operational" id="437" message="Fin de la décontamination de la zone"/>
-  <report category="operational" id="438" message="Commence à soigner les bléssés"/>
-  <report category="operational" id="439" message="Fin des soins"/>
-  <report category="operational" id="440" message="Début de l'extraction des victimes"/>
-  <report category="operational" id="441" message="Impossible de guérir les  bléssés"/>
 </reports>
-<!-- signature="2222151283" -->
+<!-- signature="1999930977" -->

@@ -62,7 +62,7 @@
     <population-filter density="0.1"/>
     <time-limited/>
   </object>
-  <object geometry="line" name="fosse anti char" symbol="G*MPOADC--****X" type="anti tank obstacle">
+  <object geometry="polygon" name="fosse anti char" symbol="G*MPOADC--****X" type="anti tank obstacle">
     <attrition attrition-surface="0" category="mine classique" ph="0"/>
     <avoidable distance="500"/>
     <bypassable bypass-speed="10"/>
@@ -273,14 +273,14 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <supply/>
   </object>
-  <object geometry="point polygon" name="site decontamination" symbol="G*MPNDP---****X" type="decontamination site">
+  <object geometry="point" name="site decontamination" symbol="G*MPNDP---****X" type="decontamination site">
     <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <decontamination/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
     <workable max-animator="3"/>
   </object>
-  <object geometry="polygon point" name="rota" symbol="G*ROTA*********" type="rota area">
+  <object geometry="point" name="rota" symbol="G*ROTA*********" type="rota area">
     <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <contamination max-toxic="-1"/>
@@ -300,21 +300,21 @@
     <interaction-height height="100"/>
     <interference/>
   </object>
-  <object geometry="point" name="aire poser" symbol="G*GPGAL---****X" type="landing area">
+  <object geometry="polygon" name="aire poser" symbol="G*GPGAL---****X" type="landing area">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
   </object>
-  <object geometry="line" name="piste" symbol="G*GPGAZ---****X" type="trail">
+  <object geometry="polygon" name="piste" symbol="G*GPGAZ---****X" type="trail">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <mobility default-speed="-1" max-unit-percentage-speed="90" unit-speed-impact-mode="VitesseMaxAgent"/>
   </object>
-  <object geometry="point" name="plate-forme" symbol="G*PLATFORM*****" type="platform">
+  <object geometry="polygon" name="plate-forme" symbol="G*PLATFORM*****" type="platform">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
   </object>
   <object geometry="polygon" name="zone mobilite amelioree" symbol="G*MPSP----****X" type="mobility enhanced area">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <mobility default-speed="-1" max-unit-percentage-speed="100" unit-speed-impact-mode="VitesseMaxAgent"/>
   </object>
-  <object geometry="point" name="zone poser helicoptere" symbol="G*GPGAL---****X" type="landing area (helicopter)">
+  <object geometry="polygon" name="zone poser helicoptere" symbol="G*GPGAL---****X" type="landing area (helicopter)">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
   </object>
   <object geometry="polygon" name="aire logistique" symbol="G*SPAR----****X" type="logistic area">
@@ -325,7 +325,6 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <lodging/>
     <logistic/>
-    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
   </object>
   <object geometry="polygon" name="camp refugies" symbol="G*SPAH----****X" type="refugees camp">
     <bypassable bypass-speed="-1"/>
@@ -334,9 +333,8 @@
     </constructor>
     <lodging/>
     <logistic/>
-    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
   </object>
-  <object geometry="point" name="poste controle" symbol="G*GPGPPK--****X" type="checkpoint">
+  <object geometry="point" name="poste controle" point-size="100" symbol="G*GPGPPK--****X" type="checkpoint">
     <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <detection>
@@ -357,13 +355,11 @@
   <object geometry="polygon" name="terrain largage" symbol="G*GPGAD---****X" type="dropping area">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <interaction-height height="2"/>
-    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
   </object>
   <object geometry="polygon" name="zone interdite mouvement" symbol="G*MPOGZ---****X" type="movement forbidden area">
     <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <interaction-height height="6000"/>
-    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
   </object>
   <object geometry="polygon" name="zone interdite tir" symbol="G*FPAN----****X" type="firing forbidden area">
@@ -371,11 +367,9 @@
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <fire-forbidden/>
     <interaction-height height="6000"/>
-    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
   </object>
   <object geometry="point" name="zone implantation mortier" symbol="G*FPAP----****X" type="mortar deployment area">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
-    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <protection geniePrepared="false" max-size="1"/>
     <workable max-animator="1"/>
   </object>
@@ -465,6 +459,7 @@
   </object>
   <object geometry="line" name="frontiere" symbol="Route" type="border">
     <border/>
+    <universal/>
   </object>
 </objects>
-<!-- signature="0311429363" -->
+<!-- signature="0913091845" -->

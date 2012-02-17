@@ -344,7 +344,7 @@
     </objects>
     <equipment-category>Autres</equipment-category>
   </equipment>
-  <equipment codeEMAT6="114021" codeEMAT8="114021N1" codeLFRIL="" codeNNO="1005145647513" comment="" id="6" name="Fantassin  + AA 5.56 MINIMI FELIN" protection="Combattant" size="Personnel" weight="0.08">
+  <equipment codeEMAT6="114021" codeEMAT8="114021N1" codeLFRIL="" codeNNO="1005145647513" comment="" id="6" name="Fantassin + AA 5.56 MINIMI FELIN" protection="Combattant" size="Personnel" weight="0.08">
     <speeds max="6">
       <speed terrain="unknown" value="5"/>
       <speed terrain="forest" value="6"/>
@@ -5466,6 +5466,8 @@
       <object initial-construction-time="36h" type="mobility enhanced area"/>
       <object initial-construction-time="36h" type="safe zone"/>
       <object initial-construction-time="36h" type="installation"/>
+      <object initial-construction-time="12h" initial-destruction-time="1h" type="metro station"/>
+      <object initial-construction-time="3h" initial-destruction-time="20m" type="sewer entry"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="Panne MOB 1"/>
@@ -35321,4 +35323,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="2001467135" -->
+<!-- signature="4176479508" -->
