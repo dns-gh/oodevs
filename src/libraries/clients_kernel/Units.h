@@ -31,9 +31,9 @@ public:
     const double GetMinValue() const { return minValue_; }
     const double GetMaxValue() const { return maxValue_; }
 private:
-    const QString symbol_;
-    const double minValue_;
-    const double maxValue_;
+    QString symbol_;
+    double minValue_;
+    double maxValue_;
 };
 
 // =============================================================================
