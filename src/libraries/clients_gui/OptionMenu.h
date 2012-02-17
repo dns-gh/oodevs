@@ -93,7 +93,7 @@ public:
     int AddItem( const QString& label, const T& value )
     {
         std::vector< T >::iterator it = std::find( values_.begin(), values_.end(), value );
-        if ( it != values_.end() )
+        if( it != values_.end() )
             return static_cast< int >( std::distance( values_.begin(), it ) );
 
         values_.push_back( value );

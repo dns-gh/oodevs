@@ -79,7 +79,6 @@ protected slots:
     //@}
 };
 
-
 // =============================================================================
 /** @class  ListParameter
     @brief  ListParameter

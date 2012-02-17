@@ -139,7 +139,6 @@ void TacticalListView::NotifyUpdated( const AutomatDecisions& decisions )
         UpdatePixmap( *agent, item );
 }
 
-
 namespace
 {
     bool UpdateFormationRenamingText( const Entity_ABC& entity, ValuedListItem& item )
@@ -255,7 +254,7 @@ void TacticalListView::keyPressEvent( QKeyEvent* event )
 // -----------------------------------------------------------------------------
 void TacticalListView::OnContextMenuRequested( Q3ListViewItem* item, const QPoint& pos, int index )
 {
-    if ( isRenaming() )
+    if( isRenaming() )
         static_cast< RichListItem* >( item )->ValidUserRenaming( 0 );
 
     HierarchyListView_ABC::OnContextMenuRequested( item, pos, index );

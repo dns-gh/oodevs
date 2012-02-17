@@ -184,7 +184,7 @@ void LongNameEditor::RemoveCountryEnding( const Entity_ABC& entity, QString& nam
     if( DictionaryExtensions* ext = const_cast< Entity_ABC& >( entity ).Retrieve< DictionaryExtensions >() )
     {
         std::string country = ext->GetValue( "Nationalite" );
-        if ( country.empty() )
+        if( country.empty() )
             return;
         std::string countryEnding( "." + GetCountryAlias( country ) );
         if( name.endsWith( countryEnding.c_str() ) )
@@ -246,7 +246,7 @@ void LongNameEditor::SetExtension( Entity_ABC& entity, const QString& name, cons
         {
             ext->SetEnabled( true );
             QString longName = name;
-            std::string country = ext->GetValue( "Nationalite" );         
+            std::string country = ext->GetValue( "Nationalite" );
             std::string countryEnding( "." + GetCountryAlias( country ) );
             if( !country.empty() && !longName.endsWith( countryEnding.c_str() ) )
                 longName += countryEnding.c_str();

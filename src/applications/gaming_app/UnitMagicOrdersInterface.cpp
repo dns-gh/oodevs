@@ -51,7 +51,6 @@ using namespace kernel;
 using namespace gui;
 using namespace actions;
 
-
 // -----------------------------------------------------------------------------
 // Name: UnitMagicOrdersInterface constructor
 // Created: SBO 2007-05-04
@@ -96,7 +95,7 @@ void UnitMagicOrdersInterface::NotifyContextMenu( const kernel::Agent_ABC& agent
         int moveId = AddMagic( tr( "Teleport" ), SLOT( Move() ), magicMenu );
         magicMenu->setItemEnabled( moveId, orders->CanMagicMove() );
         AddSurrenderMenu( magicMenu, agent );
-        AddReloadBrainMenu( magicMenu, static_.types_.unitModels_, 
+        AddReloadBrainMenu( magicMenu, static_.types_.unitModels_,
         agent.Retrieve<Decisions>() ? agent.Retrieve<Decisions>()->ModelName() : "unknown",
         agent.GetType().GetDecisionalModel().GetName() );
         if( orders->CanRetrieveTransporters() )
@@ -479,7 +478,7 @@ void UnitMagicOrdersInterface::NotifyDeleted( const kernel::Team_ABC& team )
 // Name: UnitMagicOrdersInterface::AddReloadBrainMenu
 // Created: AHC 2012-01-13
 // -----------------------------------------------------------------------------
-void UnitMagicOrdersInterface::AddReloadBrainMenu( QMenu* parent, const tools::StringResolver< DecisionalModel >& models, 
+void UnitMagicOrdersInterface::AddReloadBrainMenu( QMenu* parent, const tools::StringResolver< DecisionalModel >& models,
     const std::string& currentModel, const std::string& defaultModel)
 {
     QMenu* menu = new QMenu( tr( "Reload brain" ), parent );

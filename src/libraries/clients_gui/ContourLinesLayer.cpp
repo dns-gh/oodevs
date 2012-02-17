@@ -519,7 +519,7 @@ void ContourLinesLayer::CreateCallList()
             return;
         }
     }
-    
+
     callListId_ = glGenLists( 1 );
     glNewList( callListId_, GL_COMPILE );
     glHint( GL_LINE_SMOOTH_HINT, GL_NICEST );

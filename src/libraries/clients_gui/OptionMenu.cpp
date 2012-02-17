@@ -62,7 +62,7 @@ void OptionMenuBase::Select( int id )
 {
     if( id == selected_ )
     {
-        if ( !isItemChecked( id ) )
+        if( !isItemChecked( id ) )
             setItemChecked( selected_, true );
     }
     else

@@ -396,7 +396,7 @@ QString RichListItem::text( int column ) const
     if( column < 0 || column >= ( int ) columns_.size() )
         return "";
 
-    if ( isSelected() && listView()->isRenaming() && !columns_[ column ].renamingText.isNull() )
+    if( isSelected() && listView()->isRenaming() && !columns_[ column ].renamingText.isNull() )
         return columns_[ column ].renamingText;
 
     return columns_[ column ].base;

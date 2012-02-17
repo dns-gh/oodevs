@@ -138,7 +138,6 @@ void OrderParameter::SetMinMaxOccurs( unsigned int min, unsigned int max )
     maxOccurs_ = max;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: OrderParameter::GetValue
 // Created: SBO 2007-05-25

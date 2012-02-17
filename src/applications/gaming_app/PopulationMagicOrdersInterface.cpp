@@ -111,7 +111,7 @@ void PopulationMagicOrdersInterface::NotifyContextMenu( const Population_ABC& en
     selectedEntity_ = &entity;
     kernel::ContextMenu* magicMenu = menu.SubMenu( "Order", tr( "Magic orders" ), false, 1 );
     AddMagic( tr( "Teleport" ), SLOT( Move() ), magicMenu );
-    AddReloadBrainMenu(magicMenu, static_.types_.populationModels_, 
+    AddReloadBrainMenu(magicMenu, static_.types_.populationModels_,
             entity.Retrieve<PopulationDecisions>() ? entity.Retrieve<PopulationDecisions>()->ModelName() : "unknown",
             entity.GetType().GetDecisionalModel().GetName() );
     AddMagic( tr( "Kill all" ), SLOT( KillAllPopulation() ), magicMenu );

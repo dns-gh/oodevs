@@ -374,7 +374,7 @@ void ListParameter< ConcreteElement >::Draw( const geometry::Point2f& point, con
 // Created: MMC 2011-12-19
 // -----------------------------------------------------------------------------
 template< typename ConcreteElement >
-Param_ABC* ListParameter< ConcreteElement >::CreateElement() 
+Param_ABC* ListParameter< ConcreteElement >::CreateElement()
 {
     kernel::OrderParameter param = parameter_;
     param.SetName( tools::translate( "ListParameter", "%1 (item %2)" ).arg( parameter_.GetName().c_str() ).arg( ++count_ ).toStdString() );
