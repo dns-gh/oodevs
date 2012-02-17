@@ -206,6 +206,7 @@ void GradientButton::keyPressEvent( QKeyEvent* event )
         T_Colors::iterator it = std::find( colors_.begin(), colors_.end(), selected_ );
         if( it != colors_.end() )
         {
+            (*it)->hide();
             colors_.erase( it );
             delete selected_;
             selected_ = 0;
