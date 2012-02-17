@@ -25,11 +25,15 @@ namespace kernel
 class Unit
 {
 public:
-    explicit Unit( const QString& symbol );
+    explicit Unit( const QString& symbol, double minValue, double maxValue );
     ~Unit() {}
     const QString& AsString() const { return symbol_; }
+    const double GetMinValue() const { return minValue_; }
+    const double GetMaxValue() const { return maxValue_; }
 private:
-    QString symbol_;
+    const QString symbol_;
+    const double minValue_;
+    const double maxValue_;
 };
 
 // =============================================================================
