@@ -158,7 +158,28 @@ namespace
 
         virtual QValidator::State validate( QString& input, int& pos ) const
         {
-            return QDoubleValidator( 0, std::numeric_limits< int >::max(), decimals_, 0 ).validate( input, pos );
+            input = input.mid( prefix().length(), input.length() - prefix().length() - suffix().length() );
+            QValidator::State result = QDoubleValidator( minValue(), maxValue(), decimals_, 0 ).validate( input, pos );
+            input = prefix() + input + suffix();
+            return result;
+        }
+
+        virtual void fixup( QString & input ) const
+        {
+            input = input.mid( prefix().length(), input.length() - prefix().length() - suffix().length() );
+
+            const double b = minValue();
+            const double t = maxValue();
+            bool bOk = true;
+            const double rValue = input.toDouble( &bOk );
+            if( ! bOk )
+                return;
+            if( rValue > t )
+                input = QString::number( t );
+            else if( rValue < b )
+                input = QString::number( b );
+
+            input = prefix() + input + suffix();
         }
 
         virtual QString textFromValue( int value ) const
@@ -227,6 +248,8 @@ namespace
              : DecimalSpinBox( parent, decimals )
              , unit_( value.unit_ )
          {
+             setMinValue( value.unit_.GetMinValue() );
+             setMaxValue( value.unit_.GetMaxValue() );
              setSuffix( value.unit_.AsString() );
              SetValue( value.value_ );
          }
