@@ -417,3 +417,14 @@ bool DEC_ActionFunctions::Stock_IsDistributePossible( MIL_AgentPion& /*callerAge
         return !attribute->IsEmpty();
     return false;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ActionFunctions::IsSurrendered()
+// Created: GGE 2012-02-17
+// -----------------------------------------------------------------------------
+bool DEC_ActionFunctions::IsSurrendered( DEC_Decision_ABC& callerAgent )
+{
+   if( callerAgent.GetPion().GetRole< surrender::PHY_RoleInterface_Surrender >().IsSurrendered() )
+       return true;
+   return false;
+}

@@ -1113,6 +1113,14 @@ que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe
         <method name="isTransportingCrowd">
             <description>retourne vrai si l'agent transporte une foule.</description>
         </method>
+        <method name="isSurrendered">
+            <description>retourne vrai si l'agent s'est rendu.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
         <method name="isEngaged">
             <return name="engaged">
                 <type>
