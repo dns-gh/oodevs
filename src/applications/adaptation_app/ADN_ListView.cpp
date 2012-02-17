@@ -501,7 +501,7 @@ void ADN_ListView::SaveToSheet( BasicExcel& xls, const char* sheetName, int shee
             cell->SetFormat( format );
             if( col == 0 )
             {
-                sheet->MergeCells( row, col, 1, maxDepth + 1 );
+                sheet->MergeCells( row, col, 1, static_cast< USHORT >( maxDepth + 1 ) );
                 for( int ghostCol = 1; ghostCol < maxDepth + 1; ++ghostCol )
                 {
                     BasicExcelCell* ghostCell = sheet->Cell( row, ghostCol );
@@ -613,7 +613,7 @@ void ADN_ListView::FillSheetFromItem( Q3ListViewItem* qItem, BasicExcelWorksheet
             }
 
             // Merge with right
-            sheet.MergeCells( row, xlsCol, 1, maxDepth + 1 - depth );
+            sheet.MergeCells( row, xlsCol, 1, static_cast< USHORT >( maxDepth + 1 - depth ) );
         }
         cell->SetFormat( format );
     }

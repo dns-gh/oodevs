@@ -305,7 +305,10 @@ QStringList ADN_Automata_Data::GetAutomataThatUse( ADN_Units_Data::UnitInfos& un
     {
         AutomatonInfos* pAutomaton = *it;
         if( pAutomaton->ptrUnit_ == &unit )
+        {
             result << pAutomaton->strName_.GetData().c_str();
+            continue;
+        }
 
         for( IT_UnitInfosVector it2 = pAutomaton->vSubUnits_.begin(); it2 != pAutomaton->vSubUnits_.end(); ++it2 )
         {
