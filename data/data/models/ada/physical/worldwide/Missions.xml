@@ -2101,6 +2101,80 @@ overwhelming force.]]></doctrine>
         </choice>
       </parameter>
     </mission>
+    <mission dia-behavior="MIS_Pion_Transporter" dia-type="T_Mission_Pion_Transporter" id="4440" name="Common - offer transport">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="unitesATransporter_" max-occurs="unbounded" min-occurs="1" name="Units to transport" optional="false" type="Agent"/>
+      <parameter dia-name="pointDebarquement_" name="Disembarking point" optional="false" type="Point"/>
+      <parameter dia-name="pointEmbarquement_" name="Embarking point" optional="false" type="Point"/>
+      <parameter dia-name="avecMateriel_" name="With equipments" optional="false" type="Boolean"/>
+      <parameter dia-name="requestIssuingObjectIdentifier_" name="Request identifier" optional="false" type="String"/>
+      <parameter dia-name="isPartialOffer_" name="Is partial offer" optional="false" type="Boolean"/>
+    </mission>
+    <mission dia-behavior="MIS_Pion_SeFaireTransporter" dia-type="T_Mission_Pion_SeFaireTransporter2" id="4441" name="Common - request transport">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="pointEmbarquement_" name="Embarking point" optional="false" type="Point"/>
+      <parameter dia-name="heureEmbarquement_" name="Embarking time" optional="false" type="DateTime"/>
+      <parameter dia-name="pointDebarquement_" name="Debarking point" optional="false" type="Point"/>
+      <parameter dia-name="heureDebarquement_" name="Debarking time" optional="false" type="DateTime"/>
+    </mission>
+    <mission dia-behavior="MIS_Pion_SeFaireTransporter" dia-type="T_Mission_Pion_SeFaireTransporter4" id="4464" name="Common - request embark">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="pointEmbarquement_" name="Embarking point" optional="false" type="Point"/>
+      <parameter dia-name="heureEmbarquement_" name="Embarking time" optional="false" type="DateTime"/>
+    </mission>
+    <mission dia-behavior="MIS_Pion_SeFaireTransporter" dia-type="T_Mission_Pion_SeFaireTransporter3" id="4465" name="Common - request disembark">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="pointEmbarquement_" name="Debarking point" optional="false" type="Point"/>
+      <parameter dia-name="heureDebarquement_" name="Debarking time" optional="false" type="DateTime"/>
+    </mission>
+    <mission dia-behavior="MIS_Pion_SeFaireTransporter" dia-type="T_Mission_Pion_SeFaireTransporter6" id="4468" name="Common - request take off">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="pointEmbarquement_" name="Takeoff point" optional="false" type="Point"/>
+      <parameter dia-name="heureDebarquement_" name="Takeoff time" optional="false" type="DateTime"/>
+    </mission>
+    <mission dia-behavior="MIS_Pion_SeFaireTransporter" dia-type="T_Mission_Pion_SeFaireTransporter5" id="4469" name="Common - request landing">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="pointEmbarquement_" name="Landing point" optional="false" type="Point"/>
+      <parameter dia-name="heureEmbarquement_" name="Landing time" optional="false" type="DateTime"/>
+    </mission>
+    <mission dia-behavior="MIS_Pion_TransportEmbarquer" dia-type="T_Mission_Pion_TransportEmbarquer2" id="4472" name="Common - offer embark">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="unitesATransporter_" max-occurs="unbounded" min-occurs="1" name="Units to embark" optional="false" type="Agent"/>
+      <parameter dia-name="pointEmbarquement_" name="Embarking point" optional="false" type="Point"/>
+      <parameter dia-name="requestIssuingObjectIdentifier_" name="Request identifier" optional="false" type="String"/>
+      <parameter dia-name="isPartialOffer_" name="Is partial offer" optional="false" type="Boolean"/>
+    </mission>
+    <mission dia-behavior="MIS_Pion_TransportDebarquer" dia-type="T_Mission_Pion_TransportDebarquer2" id="4473" name="Common - offer disembark">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="unitesADebarquer_" max-occurs="unbounded" min-occurs="1" name="Units to disembark" optional="false" type="Agent"/>
+      <parameter dia-name="pointDebarquement_" name="Disembarking point" optional="false" type="Point"/>
+      <parameter dia-name="requestIssuingObjectIdentifier_" name="Request identifier" optional="false" type="String"/>
+      <parameter dia-name="isPartialOffer_" name="Is partial offer" optional="false" type="Boolean"/>
+    </mission>
   </units>
   <automats>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_AllerSeRecompleter" dia-type="T_Mission_Automate_ALAT_AllerSeRecompleter" id="189" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AllerSeRecompleter" name="ArmyAviation - resupply">
@@ -3255,9 +3329,40 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="zoneEmbarquement_" name="Embarking point" optional="false" type="Location"/>
       <parameter dia-name="heureEmbarquement_" name="Embarking time" optional="false" type="DateTime"/>
-      <parameter dia-name="zoneDebarquement_" name="Debarking point" optional="false" type="Location"/>
+      <parameter dia-name="zoneDebarquement_" name="Debarking point" optional="false" type="Point"/>
       <parameter dia-name="heureDebarquement_" name="Debarking time" optional="false" type="DateTime"/>
-      <parameter dia-name="uniteTransport_" name="Transporting unit" optional="false" type="Agent"/>
+    </mission>
+    <mission cdt-dia-behavior="MIS_Automate_CDT_SeFaireTransporter" dia-type="T_Mission_Automate_SeFaireTransporter4" id="4466" mrt-dia-behavior="MIS_Automate_MRT_SeFaireTransporter" name="COMMON - request embark">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="zoneEmbarquement_" name="Embarking point" optional="false" type="Polygon"/>
+      <parameter dia-name="heureEmbarquement_" name="Embarking time" optional="false" type="DateTime"/>
+    </mission>
+    <mission cdt-dia-behavior="MIS_Automate_CDT_SeFaireTransporter" dia-type="T_Mission_Automate_SeFaireTransporter3" id="4467" mrt-dia-behavior="MIS_Automate_MRT_SeFaireTransporter" name="COMMON - request disembark">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="zoneEmbarquement_" name="Debarking point" optional="false" type="Polygon"/>
+      <parameter dia-name="heureDebarquement_" name="Debarking time" optional="false" type="DateTime"/>
+    </mission>
+    <mission cdt-dia-behavior="MIS_Automate_CDT_SeFaireTransporter" dia-type="T_Mission_Automate_SeFaireTransporter6" id="4470" mrt-dia-behavior="MIS_Automate_MRT_SeFaireTransporter" name="COMMON - request take off">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="zoneEmbarquement_" name="Takeoff point" optional="false" type="Polygon"/>
+      <parameter dia-name="heureDebarquement_" name="Takeoff time" optional="false" type="DateTime"/>
+    </mission>
+    <mission cdt-dia-behavior="MIS_Automate_CDT_SeFaireTransporter" dia-type="T_Mission_Automate_SeFaireTransporter5" id="4471" mrt-dia-behavior="MIS_Automate_MRT_SeFaireTransporter" name="COMMON - request landing">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="zoneEmbarquement_" name="Landing point" optional="false" type="Polygon"/>
+      <parameter dia-name="heureEmbarquement_" name="Landing time" optional="false" type="DateTime"/>
     </mission>
   </automats>
   <populations>
@@ -3454,4 +3559,4 @@ overwhelming force.]]></doctrine>
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="3549283151" -->
+<!-- signature="3858141500" -->

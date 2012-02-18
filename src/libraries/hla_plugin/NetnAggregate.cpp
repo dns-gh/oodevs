@@ -21,7 +21,7 @@ using namespace plugins::hla;
 // Name: NetnAggregate constructor
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-NetnAggregate::NetnAggregate( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& agent, const std::string& callsign, const std::string& uniqueIdentifier )
+NetnAggregate::NetnAggregate( std::auto_ptr< HlaObject_ABC > aggregate, Agent_ABC& agent, const std::string& callsign, const std::string& uniqueIdentifier, const std::string& symbol )
     : aggregate_ ( aggregate )
     , agent_     ( agent )
     , attributes_( new AttributesSerializer() )
@@ -32,6 +32,7 @@ NetnAggregate::NetnAggregate( std::auto_ptr< HlaObject_ABC > aggregate, Agent_AB
     attributes_->Register( "HigherHeadquarters", UniqueId( uniqueIdentifier ) );
     attributes_->Register( "Callsign", UnicodeString( callsign ) );
     attributes_->Register( "Status", Wrapper< int8 >( 1 ) ); // Active
+    attributes_->Register( "Symbol", UnicodeString( symbol ) ); // APP6
     agent_.Register( *this );
 }
 

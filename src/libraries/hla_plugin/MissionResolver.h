@@ -21,6 +21,7 @@ namespace tools
 namespace kernel
 {
     class MissionType;
+    class FragOrderType;
 }
 
 namespace plugins
@@ -38,19 +39,22 @@ class MissionResolver : public MissionResolver_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit MissionResolver( const tools::Resolver_ABC< kernel::MissionType, unsigned long >& missions );
+             MissionResolver( const tools::Resolver_ABC< kernel::MissionType, unsigned long >& missions,
+                              const tools::Resolver_ABC< kernel::FragOrderType, unsigned long >& fragOrders );
     virtual ~MissionResolver();
     //@}
 
     //! @name Operations
     //@{
-    virtual unsigned int Resolve( const std::string& name ) const;
+    virtual unsigned int ResolveAutomat( const std::string& name ) const;
+    virtual unsigned int ResolveUnit( const std::string& name ) const;
     //@}
 
 private:
     //! @name Types
     //@{
-    typedef std::map< std::string, unsigned int > T_Missions;
+    typedef std::pair< unsigned int, unsigned int > T_Mission;
+    typedef std::map< std::string, T_Mission > T_Missions;
     //@}
 
 private:

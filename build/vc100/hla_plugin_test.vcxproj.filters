@@ -31,9 +31,6 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\hla_plugin_test_pch.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\MunitionDetonationTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\tests\hla_plugin_test\RprSerializationTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -121,16 +118,7 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\HlaClassTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportationControllerTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRequestConvoyTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportationTypesTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRequestConvoySenderTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRemoteCallsignListenerTest.cpp">
@@ -139,31 +127,19 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\SubordinatesTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportersTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnOfferConvoyTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnOfferConvoySenderTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\tests\hla_plugin_test\SideCheckerTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRejectOfferConvoyTest.cpp">
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportationOffererTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnAcceptOfferTest.cpp">
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportationRequesterTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnOfferConvoyReceiverTest.cpp">
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\InteractionBuilderTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnOfferResponseSenderTest.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnReadyToReceiveServiceTest.cpp">
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\MappingsTest.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -282,12 +258,6 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockMissionResolver.h">
       <Filter>Source Files\mock</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransportationListener.h">
-      <Filter>Source Files\mock</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransportationController.h">
-      <Filter>Source Files\mock</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransportedUnits.h">
       <Filter>Source Files\mock</Filter>
     </ClInclude>
@@ -306,10 +276,19 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockSideChecker.h">
       <Filter>Source Files\mock</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransporters.h">
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockAutomatChecker.h">
       <Filter>Source Files\mock</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockAutomatChecker.h">
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockMarkingFactory.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockLogger.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockClientPublisher.h">
+      <Filter>Source Files\mock</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockExtentResolver.h">
       <Filter>Source Files\mock</Filter>
     </ClInclude>
   </ItemGroup>

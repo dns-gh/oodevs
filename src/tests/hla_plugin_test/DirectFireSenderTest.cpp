@@ -129,8 +129,7 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_sender_articulated_part_data_is_always_empty, ConfiguredFixture )
 {
-    const unsigned int size = 0u;
-    BOOST_CHECK_EQUAL( size, parameters.articulatedPartData );
+    BOOST_CHECK( parameters.articulatedPartData.empty() );
 }
 
 BOOST_FIXTURE_TEST_CASE( direct_fire_sender_sends_target_location, ConfiguredFixture )

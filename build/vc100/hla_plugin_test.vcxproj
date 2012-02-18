@@ -100,7 +100,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
     <ClCompile />
     <Link>
-      <AdditionalDependencies>hla_d.lib;wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>hla_d.lib;graphics_d.lib;wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent />
   </ItemDefinitionGroup>
@@ -117,7 +117,7 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
     <ClCompile />
     <Link>
-      <AdditionalDependencies>hla.lib;wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>hla.lib;graphics.lib;wsock32.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
     <PostBuildEvent />
     <PostBuildEvent />
@@ -158,20 +158,12 @@
     </ClCompile>
     <ClCompile Include="..\..\src\tests\hla_plugin_test\IndirectFireReceiverTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\IndirectFireSenderTest.cpp" />
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\MunitionDetonationTest.cpp" />
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnAcceptOfferTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\InteractionBuilderTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\MappingsTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnAggregateTest.cpp" />
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnOfferConvoyReceiverTest.cpp" />
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnOfferConvoySenderTest.cpp" />
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnOfferConvoyTest.cpp" />
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnOfferResponseSenderTest.cpp" />
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnReadyToReceiveServiceTest.cpp" />
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRejectOfferConvoyTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRemoteAggregateTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRemoteCallsignListenerTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRemoteSurfaceVesselTest.cpp" />
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRequestConvoySenderTest.cpp" />
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnRequestConvoyTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\NetnSurfaceVesselTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\Omt13StringTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\RemoteAgentControllerTest.cpp" />
@@ -185,9 +177,9 @@
     <ClCompile Include="..\..\src\tests\hla_plugin_test\SpatialTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\SubordinatesTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\SurfaceVesselTest.cpp" />
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportationControllerTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportationOffererTest.cpp" />
+    <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportationRequesterTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportationTypesTest.cpp" />
-    <ClCompile Include="..\..\src\tests\hla_plugin_test\TransportersTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\UnicodeStringTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\UniqueIdTest.cpp" />
     <ClCompile Include="..\..\src\tests\hla_plugin_test\UnitTeleporterTest.cpp" />
@@ -201,10 +193,12 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockAutomatTypeResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockCallsignResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockClassBuilder.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockClientPublisher.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockComponentTypes.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockContextFactory.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockContextHandler.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockEntityTypeResolver.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockExtentResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockFederate.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockFederateAmbassadorFactory.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockHlaObject.h" />
@@ -214,6 +208,8 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockInteractionSender.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockKnowledgeGroup.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockLocalAgentResolver.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockLogger.h" />
+    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockMarkingFactory.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockMessageController.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockMissionResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockModel.h" />
@@ -232,11 +228,8 @@
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockSimulationPublisher.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockSubordinates.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTeam.h" />
-    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransportationController.h" />
-    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransportationListener.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransportedUnits.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransportedUnitsVisitor.h" />
-    <ClInclude Include="..\..\src\tests\hla_plugin_test\MockTransporters.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockUnitTypeResolver.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\MockUpdateFunctor.h" />
     <ClInclude Include="..\..\src\tests\hla_plugin_test\DeserializationTools.h" />
@@ -260,6 +253,12 @@
     </ProjectReference>
     <ProjectReference Include="rpr.vcxproj">
       <Project>{70a0412c-1716-4034-bf76-39f8dd7d817f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="simulation_terrain.vcxproj">
+      <Project>{6b144816-9773-40f9-ade6-0acbc2eae516}</Project>
+    </ProjectReference>
+    <ProjectReference Include="tools.vcxproj">
+      <Project>{c11d1c79-d437-4299-a75a-98dd97036d5b}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

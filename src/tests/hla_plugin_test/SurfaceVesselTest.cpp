@@ -14,6 +14,7 @@
 #include "rpr/ForceIdentifier.h"
 #include "MockAgent.h"
 #include "MockUpdateFunctor.h"
+#include "MockMarkingFactory.h"
 #include <hla/Deserializer.h>
 #include <hla/Serializer.h>
 #include <hla/AttributeIdentifier.h>
@@ -32,8 +33,10 @@ namespace
         {
             MOCK_EXPECT( agent, Register ).once().with( mock::retrieve( listener ) );
             MOCK_EXPECT( agent, Unregister ).once();
+            MOCK_EXPECT( factory, CreateMarking ).once().returns( Marking() );
         }
         MockAgent agent;
+        MockMarkingFactory factory;
         EventListener_ABC* listener;
         hla::MockUpdateFunctor functor;
         rpr::EntityType entityType;
@@ -42,7 +45,7 @@ namespace
     {
     public:
         RegisteredFixture()
-            : entity( agent, 1u, "name", rpr::Friendly, rpr::EntityType() )
+            : entity( agent, 1u, "name", rpr::Friendly, rpr::EntityType(), factory )
         {}
         SurfaceVessel entity;
     };

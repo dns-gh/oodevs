@@ -12,9 +12,13 @@
 #include "RemoteAgentSubject_ABC.h"
 #include "ContextHandler_ABC.h"
 #include "UnitTypeResolver_ABC.h"
+#include "ExtentResolver_ABC.h"
 #include "protocol/SimulationSenders.h"
 #include "dispatcher/Team_ABC.h"
+#include "dispatcher/Logger_ABC.h"
 #include "clients_kernel/Karma.h"
+#include <boost/lexical_cast.hpp>
+#include <boost/foreach.hpp>
 
 using namespace plugins::hla;
 
@@ -40,19 +44,26 @@ RemoteAgentController::RemoteAgentController( RemoteAgentSubject_ABC& agentSubje
                                               ContextHandler_ABC< sword::AutomatCreation >& automatHandler,
                                               ContextHandler_ABC< sword::UnitCreation >& unitHandler,
                                               const tools::Resolver_ABC< dispatcher::Team_ABC >& sides,
-                                              const UnitTypeResolver_ABC& typeResolver )
+                                              const UnitTypeResolver_ABC& typeResolver, dispatcher::Logger_ABC& logger,
+                                              const ExtentResolver_ABC& extent )
     : agentSubject_  ( agentSubject )
     , automatHandler_( automatHandler )
     , unitHandler_   ( unitHandler )
     , sides_         ( sides )
     , typeResolver_  ( typeResolver )
+    , logger_        ( logger )
+    , extent_        ( extent )
 {
     automatHandler_.Register( *this );
     agentSubject_.Register( *this );
     for( tools::Iterator< const dispatcher::Team_ABC& > it = sides.CreateIterator(); it.HasMoreElements(); )
     {
         const dispatcher::Team_ABC& team = it.NextElement();
-        karmas_[ team.GetKarma() ] = team.GetId();
+        if( team.GetId() )
+        {
+            logger_.LogInfo( "karmas[ " + boost::lexical_cast< std::string >( team.GetId() ) + " ] = " + team.GetKarma().GetName().ascii() + " (" + team.GetName().ascii() + ")" );
+            karmas_[ team.GetKarma() ] = team.GetId();
+        }
     }
 }
 
@@ -70,9 +81,12 @@ RemoteAgentController::~RemoteAgentController()
 // Name: RemoteAgentController::Notify
 // Created: SLI 2011-09-01
 // -----------------------------------------------------------------------------
-void RemoteAgentController::Notify( const sword::AutomatCreation& message, const std::string& /*identifier*/ )
+void RemoteAgentController::Notify( const sword::AutomatCreation& message, const std::string& identifier )
 {
+    logger_.LogInfo( "parties[ " + boost::lexical_cast< std::string >( message.party().id() ) + " ] = " + boost::lexical_cast< std::string >( message.automat().id() ) + " (" + identifier + ")" );
     parties_[ message.party().id() ] = message.automat().id();
+    BOOST_FOREACH( const T_WaitingAutomats::value_type& waiting, waitingAutomats_ )
+        SideChanged( waiting.first, waiting.second );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,7 +120,11 @@ void RemoteAgentController::Moved( const std::string& identifier, double latitud
 {
     if( unitCreations_.find( identifier ) == unitCreations_.end() )
         return;
+    if( !extent_.IsInBoundaries( geometry::Point2d( longitude, latitude ) ) ) // $$$$ _RC_ SLI 2011-11-30: geocoord invert latitude/longitude???
+        return;
     simulation::UnitMagicAction& message = *unitCreations_[ identifier ];
+    if( message().mutable_parameters()->mutable_elem( 1 )->value_size() != 0 )
+        return;
     sword::Location* location = message().mutable_parameters()->mutable_elem( 1 )->add_value()->mutable_point()->mutable_location();
     location->set_type( sword::Location::point );
     sword::CoordLatLong* coordLatLong = location->mutable_coordinates()->add_elem();
@@ -126,9 +144,12 @@ void RemoteAgentController::SideChanged( const std::string& identifier, rpr::For
     simulation::UnitMagicAction& message = *unitCreations_[ identifier ];
     const unsigned long automat = FindAutomat( side );
     if( automat == 0 )
-        throw std::runtime_error( "Army '" + GetKarma( side ).GetName().toStdString() + "' does not exist for remote agent '" + identifier + "'" );
-    message().mutable_tasker()->mutable_automat()->set_id( automat );
-    Send( message, identifier );
+        waitingAutomats_[ identifier ] = side;
+    else
+    {
+        message().mutable_tasker()->mutable_automat()->set_id( automat );
+        Send( message, identifier );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -206,11 +227,15 @@ void RemoteAgentController::Send( simulation::UnitMagicAction& message, const st
 // -----------------------------------------------------------------------------
 unsigned long RemoteAgentController::FindAutomat( rpr::ForceIdentifier force ) const
 {
-    T_Karmas::const_iterator itKarma = karmas_.find( GetKarma( force ) );
+    const kernel::Karma& karma = GetKarma( force );
+    T_Karmas::const_iterator itKarma = karmas_.find( karma );
     if( itKarma == karmas_.end() )
-        return 0;
+        throw std::runtime_error( "Karma '" + karma.GetName().toStdString() + "' not found in scenario" );
     T_Parties::const_iterator itParty = parties_.find( itKarma->second );
     if( itParty == parties_.end() )
+    {
+        logger_.LogWarning( "Party '" + boost::lexical_cast< std::string >( itKarma->second ) + "' not existing yet" );
         return 0;
+    }
     return itParty->second;
 }

@@ -19,6 +19,7 @@
 namespace dispatcher
 {
     class Team_ABC;
+    class Logger_ABC;
 }
 
 namespace kernel
@@ -44,6 +45,7 @@ namespace hla
     class RemoteAgentSubject_ABC;
     template< typename Response > class ContextHandler_ABC;
     class UnitTypeResolver_ABC;
+    class ExtentResolver_ABC;
 
 // =============================================================================
 /** @class  RemoteAgentController
@@ -61,7 +63,8 @@ public:
                                     ContextHandler_ABC< sword::AutomatCreation >& automatHandler,
                                     ContextHandler_ABC< sword::UnitCreation >& unitHandler,
                                     const tools::Resolver_ABC< dispatcher::Team_ABC >& sides,
-                                    const UnitTypeResolver_ABC& typeResolver );
+                                    const UnitTypeResolver_ABC& typeResolver, dispatcher::Logger_ABC& logger,
+                                    const ExtentResolver_ABC& extent );
     virtual ~RemoteAgentController();
     //@}
 
@@ -98,6 +101,7 @@ private:
     typedef std::map< std::string, T_UnitCreation > T_UnitCreations;
     typedef std::map< unsigned long, unsigned long > T_Parties;
     typedef std::map< kernel::Karma, unsigned long > T_Karmas;
+    typedef std::map< std::string, rpr::ForceIdentifier > T_WaitingAutomats;
     //@}
 
 private:
@@ -108,9 +112,12 @@ private:
     ContextHandler_ABC< sword::UnitCreation >& unitHandler_;
     const tools::Resolver_ABC< dispatcher::Team_ABC >& sides_;
     const UnitTypeResolver_ABC& typeResolver_;
+    dispatcher::Logger_ABC& logger_;
+    const ExtentResolver_ABC& extent_;
     T_UnitCreations unitCreations_;
     T_Parties parties_;
     T_Karmas karmas_;
+    T_WaitingAutomats waitingAutomats_;
     //@}
 };
 

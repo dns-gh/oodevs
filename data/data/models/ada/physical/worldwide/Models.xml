@@ -12,6 +12,9 @@
         <mission name="Common - adopt transportation posture"/>
         <mission name="JointAir - bombing"/>
         <mission name="JointAir - air strike (total)"/>
+        <mission name="Common - request transport"/>
+        <mission name="Common - request landing"/>
+        <mission name="Common - request take off"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -42,6 +45,9 @@
         </mission>
         <mission name="Common - transport embark"/>
         <mission name="Common - transport disembark"/>
+        <mission name="Common - offer transport"/>
+        <mission name="Common - offer disembark"/>
+        <mission name="Common - offer embark"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -1075,6 +1081,7 @@
         <mission name="Common - transport">
           <fragorder name="Modify Disembarking point"/>
         </mission>
+        <mission name="Common - offer transport"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -1796,6 +1803,9 @@
     <unit dia-type="Drone_SDTI" file="Appui\Rens\Pions\Roim\Drone SDTI\Model.bms" masalife="false" name="Drone">
       <missions>
         <mission name="Imagery Intelligence - report information (real time UAV)"/>
+        <mission name="Common - request landing"/>
+        <mission name="Common - request take off"/>
+        <mission name="Common - request transport"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -2644,6 +2654,9 @@
         </mission>
         <mission name="Common - transport embark"/>
         <mission name="Common - transport disembark"/>
+        <mission name="Common - offer transport"/>
+        <mission name="Common - offer disembark"/>
+        <mission name="Common - offer embark"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -2820,6 +2833,9 @@
         <mission name="Common - move parallel"/>
         <mission name="Common - follow"/>
         <mission name="Common - withdraw"/>
+        <mission name="COMMON - request landing"/>
+        <mission name="COMMON - request take off"/>
+        <mission name="Common - request transport"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3126,6 +3142,7 @@
         <mission name="Infantry - block"/>
         <mission name="Common - follow"/>
         <mission name="Common - request transport"/>
+        <mission name="COMMON - request embark"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3257,6 +3274,8 @@
         <mission name="Common - cross"/>
         <mission name="Common - follow"/>
         <mission name="Common - request transport"/>
+        <mission name="COMMON - request disembark"/>
+        <mission name="COMMON - request embark"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3603,6 +3622,8 @@
         <mission name="Armor - screen"/>
         <mission name="Armor - recon in force (a position)"/>
         <mission name="Common - request transport"/>
+        <mission name="COMMON - request disembark"/>
+        <mission name="COMMON - request embark"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -4180,4 +4201,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3433918061" -->
+<!-- signature="1946050021" -->

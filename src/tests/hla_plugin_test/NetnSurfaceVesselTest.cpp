@@ -38,7 +38,7 @@ namespace
     {
     public:
         RegisteredFixture()
-            : entity( std::auto_ptr< HlaObject_ABC >( aggregate ), agent, "name", "identifier" )
+            : entity( std::auto_ptr< HlaObject_ABC >( aggregate ), agent, "name", "identifier", "symbol" )
         {}
         NetnSurfaceVessel entity;
     };

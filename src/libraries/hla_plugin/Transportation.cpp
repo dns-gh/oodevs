@@ -159,7 +159,6 @@ NetnObjectFeatureStruct::NetnObjectFeatureStruct( const std::vector< NetnObjectD
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: NetnObjectFeatureStruct::NetnObjectFeatureStruct
 // Created: SLI 2011-10-07
@@ -242,7 +241,6 @@ NetnObjectDefinitionStruct::~NetnObjectDefinitionStruct()
 {
     // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: NetnAppointmentStruct::NetnAppointmentStruct
@@ -370,7 +368,7 @@ NetnEventIdentifier::~NetnEventIdentifier()
 // Created: SLI 2011-10-07
 // -----------------------------------------------------------------------------
 NetnTransportStruct::NetnTransportStruct()
-    : convoyType( 0 )
+    : convoyType( E_Transport )
 {
     // NOTHING
 }
@@ -380,7 +378,7 @@ NetnTransportStruct::NetnTransportStruct()
 // Created: SLI 2011-10-07
 // -----------------------------------------------------------------------------
 NetnTransportStruct::NetnTransportStruct( const NetnDataTStruct& dataTransport )
-    : convoyType   ( 0 )
+    : convoyType   ( E_Transport )
     , dataTransport( dataTransport )
 {
     // NOTHING
@@ -390,12 +388,12 @@ NetnTransportStruct::NetnTransportStruct( const NetnDataTStruct& dataTransport )
 // Name: NetnTransportStruct::NetnTransportStruct
 // Created: SLI 2011-10-07
 // -----------------------------------------------------------------------------
-NetnTransportStruct::NetnTransportStruct( const NetnDataEDStruct& data, int32 convoyType )
+NetnTransportStruct::NetnTransportStruct( const NetnDataEDStruct& data, ConvoyType convoyType )
     : convoyType       ( convoyType )
 {
-    if( convoyType == 1 )
+    if( convoyType == E_Embarkment )
         dataEmbarkment = data;
-    if( convoyType == 2 )
+    if( convoyType == E_Disembarkment )
         dataDisembarkment = data;
 }
 

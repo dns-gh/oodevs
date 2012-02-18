@@ -1077,9 +1077,13 @@ void MIL_AgentPion::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg,
         break;
     case sword::UnitMagicAction::change_equipment_human_size:
         OnReceiveChangeEquipmentHumanSize( msg.parameters() );
+    case sword::UnitMagicAction::load_unit:
+        OnReceiveLoadUnit( msg.parameters() );
         break;
     case sword::UnitMagicAction::log_finish_handlings:
         OnReceiveFinishLogisticHandlings(); 
+    case sword::UnitMagicAction::unload_unit:
+        OnReceiveUnloadUnit( msg.parameters() );
         break;
     default:
         assert( false );
@@ -1696,3 +1700,39 @@ void MIL_AgentPion::OnReceiveFinishLogisticHandlings()
     if( roleMedical )
         roleMedical->FinishAllHandlingsSuccessfullyWithoutDelay();
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::OnReceiveLoadUnit
+// Created: SLI 2011-10-17
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::OnReceiveLoadUnit( const sword::MissionParameters& msg )
+{
+    if( msg.elem_size() < 1 || msg.elem( 0 ).value_size() != 1 || !msg.elem( 0 ).value( 0 ).has_agent() )
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+    MIL_AgentPion* target = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( msg.elem( 0 ).value( 0 ).agent().id() );
+    if( target == 0 )
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+    transport::PHY_RoleAction_Transport* role = RetrieveRole< transport::PHY_RoleAction_Transport >();
+    if( !role )
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+    role->MagicLoadPion( *target, false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::OnReceiveUnloadUnit
+// Created: SLI 2011-10-17
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::OnReceiveUnloadUnit( const sword::MissionParameters& msg )
+{
+    if( msg.elem_size() < 1 || msg.elem( 0 ).value_size() != 1 || !msg.elem( 0 ).value( 0 ).has_agent() )
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+    MIL_AgentPion* target = MIL_AgentServer::GetWorkspace().GetEntityManager().FindAgentPion( msg.elem( 0 ).value( 0 ).agent().id() );
+    if( target == 0 )
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+    transport::PHY_RoleAction_Transport* role = RetrieveRole< transport::PHY_RoleAction_Transport >();
+    if( !role )
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
+    role->MagicUnloadPion( *target );
+}
+
+

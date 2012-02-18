@@ -6,21 +6,28 @@
         <munition>munition.xml</munition>
     </mappings>
     <types>
-        <automat>MBT squadron</automat>
+        <automat>ARMOR.MBT squadron</automat>
     </types>
     <missions>
-        <transport>Common - request transport</transport>
+        <fragOrders>
+            <pause>Pause maneuver</pause>
+            <resume>Resume maneuver</resume>
+            <cancel>Cancel maneuver</cancel>
+        </fragOrders>
+        <request>
+            <transport>COMMON - request transport</transport>
+            <embarkment>COMMON - request embark</embarkment>
+            <disembarkment>COMMON - request take off</disembarkment>
+            <embarkment>COMMON - request landing</embarkment>
+            <disembarkment>COMMON - request disembark</disembarkment>
+        </request>
+        <offer>
+            <transport>COMMON - offer transport</transport>
+            <embarkment>COMMON - offer embark</embarkment>
+            <disembarkment>COMMON - offer disembark</disembarkment>
+        </offer>
     </missions>
     <reports>
         <mission-complete>12</mission-complete>
     </reports>
-    <surfaceVessels>
-        <unit>Marine CP</unit>
-        <unit>Aircraft Carrier</unit>
-        <unit>HS - Helivac</unit>
-        <unit>Landing Craft</unit>
-        <unit>CDIC + 2 CTM</unit>
-        <unit>2 CTM</unit>
-        <unit>PC Marine</unit>
-    </surfaceVessels>
 </configuration>

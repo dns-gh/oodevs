@@ -23,7 +23,7 @@
     <entry name="Armoured Recovery Vehicule" dis="1 1 225 20 1 0 0"/>
     <entry name="Artillery Firefinder Radar" dis="1 1 225 4 1 0 1"/>
     <entry name="Artillery Recce Vehicle" dis="1 1 225 4 1 0 2"/>
-    <entry name="Champ Operatoire" dis="1 1 225 18 1 0 1"/>
+    <entry name="Operative Field" dis="1 1 225 18 1 0 1"/>
     <entry name="Command and Control Vehicle" dis="1 1 225 20 1 0 1"/>
     <entry name="Commando" dis="3 1 225 1 1 0 0"/>
     <entry name="CP failure reapairs team" dis="3 1 225 1 1 0 1"/>
@@ -32,14 +32,14 @@
     <entry name="Cruiser" dis="1 3 71 6 1 1 0"/>
     <entry name="Engineer Bridge Vehicule" dis="1 1 225 18 1 0 2"/>
     <entry name="Engineer VPC" dis="3 1 225 1 1 0 5"/>
-    <entry name="Fire Engine" dis="1 1 225 18 1 0 3"/>
+    <!--entry name="Fire Engine" dis="1 1 225 18 1 0 3"/-->
     <entry name="Fire Truck" dis="1 1 225 18 1 0 4"/>
     <entry name="Firing mobility repairs team (corps)" dis="3 1 225 1 1 0 6"/>
     <entry name="Firing mobility repairs team (division)" dis="3 1 225 1 1 0 7"/>
     <entry name="Heavy Equipment Transporter System" dis="1 1 225 19 1 0 0"/>
     <entry name="Infantry Soldiers" dis="3 1 225 1 1 0 8"/>
     <entry name="Jammer" dis="1 1 225 18 1 0 5"/>
-    <entry name="Landing craft" dis="1 3 71 11 1 1 0"/>
+    <entry name="Landing Craft" dis="1 3 71 11 1 1 0"/>
     <entry name="Light Armored Vehicle" dis="1 1 225 2 1 0 0"/>
     <entry name="Light Armored Vehicle 12.7-mm" dis="1 1 225 2 1 0 1"/>
     <entry name="Light Armored Vehicle 7.62-mm" dis="1 1 225 2 1 0 2"/>
@@ -73,7 +73,7 @@
     <entry name="Mortar Troop" dis="3 1 225 1 1 0 19"/>
     <entry name="Motocycle" dis="1 1 225 6 1 0 0"/>
     <entry name="MTV 1 Pers" dis="1 1 225 20 1 0 3"/>
-    <entry name="MTV 2Pers" dis="1 1 225 20 1 0 4"/>
+    <!--entry name="MTV 2Pers" dis="1 1 225 20 1 0 4"/-->
     <entry name="MTV 2Pers 12.7" dis="1 1 225 20 1 0 5"/>
     <entry name="MTV 3Pers" dis="1 1 225 20 1 0 6"/>
     <entry name="MTV CLD" dis="1 1 225 20 1 0 7"/>
@@ -95,15 +95,15 @@
     <entry name="SRAW soldier" dis="3 1 225 1 1 0 25"/>
     <entry name="Strategic Bomber" dis="1 2 225 3 1 0 0"/>
     <entry name="TBU15 CLD" dis="1 1 225 18 1 0 10"/>
-    <entry name="Terroriste" dis="3 1 102 1 1 0 1"/>
-    <entry name="Theater High Altitude Aera Defense Device" dis="1 1 225 7 1 0 0"/>
+    <entry name="Terrorist" dis="3 1 102 1 1 0 1"/>
+    <!--entry name="Theater High Altitude Aera Defense Device" dis="1 1 225 7 1 0 0"/-->
     <entry name="Theater High Altitude Radar Vehicle" dis="1 1 225 7 1 0 1"/>
     <entry name="Tigre helicopter" dis="1 2 225 20 1 0 3"/>
     <entry name="Transport helicopter" dis="1 2 225 21 1 0 1"/>
     <entry name="TUM 12.7" dis="1 1 225 18 1 0 11"/>
     <entry name="VAB RATAC" dis="1 1 225 3 1 0 6"/>
     <entry name="VAB SAN" dis="1 1 225 3 1 0 7"/>
-    <entry name="Very Short Range Surface To Air System" dis="1 1 225 7 1 0 2"/>
+    <!--entry name="Very Short Range Surface To Air System" dis="1 1 225 7 1 0 2"/-->
     <entry name="VSB" dis="1 1 225 3 1 0 8"/>
     <entry name="VSRAW soldier" dis="3 1 225 1 1 0 26"/>
 </dis-mapping>

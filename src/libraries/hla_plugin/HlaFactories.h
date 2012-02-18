@@ -19,13 +19,21 @@ namespace plugins
 {
 namespace hla
 {
+    class MarkingFactory_ABC;
+
     template< typename T >
     class HlaObjectFactory : public HlaObjectFactory_ABC
     {
-        virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC& agent, const std::string& name, unsigned int identifier, rpr::ForceIdentifier force, const rpr::EntityType& type ) const
+    public:
+        explicit HlaObjectFactory( const MarkingFactory_ABC& markingFactory )
+            : markingFactory_( markingFactory )
+        {}
+        virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC& agent, const std::string& name, unsigned int identifier, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& /*symbol*/ ) const
         {
-            return std::auto_ptr< HlaObject_ABC >( new T( agent, identifier, name, force, type ) );
+            return std::auto_ptr< HlaObject_ABC >( new T( agent, identifier, name, force, type, markingFactory_ ) );
         }
+    private:
+        const MarkingFactory_ABC& markingFactory_;
     };
     template< typename T >
     class NetnHlaObjectFactory : public HlaObjectFactory_ABC
@@ -35,13 +43,13 @@ namespace hla
             : factory_ ( factory )
             , resolver_( resolver )
         {}
-        virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC& agent, const std::string& name, unsigned int identifier, rpr::ForceIdentifier force, const rpr::EntityType& type ) const
+        virtual std::auto_ptr< HlaObject_ABC > Create( Agent_ABC& agent, const std::string& name, unsigned int identifier, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol ) const
         {
-            std::auto_ptr< HlaObject_ABC > object = factory_->Create( agent, name, identifier, force, type );
+            std::auto_ptr< HlaObject_ABC > object = factory_->Create( agent, name, identifier, force, type, symbol );
             const std::string uniqueIdentifier( "SWORD" + boost::lexical_cast< std::string >( identifier ) );
-            const std::string callsign( name );
+            const std::string callsign( name + boost::lexical_cast< std::string >( identifier ) );
             resolver_.Add( identifier, callsign, uniqueIdentifier );
-            return std::auto_ptr< HlaObject_ABC >( new T( object, agent, callsign, uniqueIdentifier ) );
+            return std::auto_ptr< HlaObject_ABC >( new T( object, agent, callsign, uniqueIdentifier, symbol ) );
         }
     private:
         std::auto_ptr< HlaObjectFactory_ABC > factory_;

@@ -25,6 +25,7 @@ namespace dispatcher
     class Model_ABC;
     class Logger_ABC;
     class SimulationPublisher_ABC;
+    class ClientPublisher_ABC;
     class StaticModel;
 }
 
@@ -64,9 +65,10 @@ namespace hla
     class MissionResolver_ABC;
     class AutomatChecker_ABC;
     class Subordinates_ABC;
-    class Transporters_ABC;
+    class ExtentResolver_ABC;
+    class InteractionBuilder;
     class SimulationFacade;
-    class InteractionsFacade;
+    class DetonationFacade;
     class TransportationFacade;
 
 // =============================================================================
@@ -81,8 +83,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              HlaPlugin( dispatcher::Model_ABC& dynamicModel, const dispatcher::StaticModel& staticModel,
-                        dispatcher::SimulationPublisher_ABC& publisher, const dispatcher::Config& config,
-                        xml::xistream& xis, dispatcher::Logger_ABC& logger );
+                        dispatcher::SimulationPublisher_ABC& simulationPublisher, dispatcher::ClientPublisher_ABC& clientsPublisher,
+                        const dispatcher::Config& config, xml::xistream& xis, dispatcher::Logger_ABC& logger );
     virtual ~HlaPlugin();
     //@}
 
@@ -96,11 +98,13 @@ private:
     //@{
     dispatcher::Model_ABC& dynamicModel_;
     const dispatcher::StaticModel& staticModel_;
-    dispatcher::SimulationPublisher_ABC& publisher_;
+    dispatcher::SimulationPublisher_ABC& simulationPublisher_;
+    dispatcher::ClientPublisher_ABC& clientsPublisher_;
     const dispatcher::Config& config_;
     std::auto_ptr< xml::xistream > pXisSession_;
     std::auto_ptr< xml::xistream > pXisConfiguration_;
     std::auto_ptr< xml::ximultistream > pXis_;
+    std::auto_ptr< dispatcher::Logger_ABC > logFilter_;
     dispatcher::Logger_ABC& logger_;
     std::auto_ptr< ContextFactory_ABC > pContextFactory_;
     std::auto_ptr< ObjectResolver_ABC > pObjectResolver_;
@@ -121,13 +125,14 @@ private:
     std::auto_ptr< Subordinates_ABC > pSubordinates_;
     std::auto_ptr< tools::MessageController< sword::SimToClient_Content > > pMessageController_;
     std::auto_ptr< AutomatChecker_ABC > pAutomatChecker_;
+    std::auto_ptr< ExtentResolver_ABC > pExtentResolver_;
     std::auto_ptr< AgentController > pSubject_;
     std::auto_ptr< FederateFacade > pFederate_;
+    std::auto_ptr< InteractionBuilder > pInteractionBuilder_;
     std::auto_ptr< SimulationFacade > pSimulationFacade_;
     std::auto_ptr< RemoteAgentResolver_ABC > pRemoteAgentResolver_;
-    std::auto_ptr< InteractionsFacade > pInteractionsFacade_;
+    std::auto_ptr< DetonationFacade > pDetonationFacade_;
     std::auto_ptr< SideChecker_ABC > pSideChecker_;
-    std::auto_ptr< Transporters_ABC > pTransporters_;
     std::auto_ptr< TransportationFacade > pTransportationFacade_;
     std::auto_ptr< Stepper > pStepper_;
     //@}

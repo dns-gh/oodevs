@@ -67,9 +67,9 @@ BOOST_FIXTURE_TEST_CASE( remote_aggregate_deserializes_force_identifier_attribut
 
 BOOST_FIXTURE_TEST_CASE( remote_aggregate_deserializes_aggregate_marking_attribute_and_notifies_listener, Fixture )
 {
-    const AggregateMarking marking( "name" );
+    const AggregateMarking marking( "name", 42 );
     marking.Serialize( serializer );
-    MOCK_EXPECT( listener, NameChanged ).once().with( "identifier", "name" );
+    MOCK_EXPECT( listener, NameChanged ).once().with( "identifier", "name42" );
     aggregate.Deserialize( "AggregateMarking", Deserialize() );
 }
 

@@ -40,38 +40,42 @@ namespace hla
     class ClassBuilder : public ClassBuilder_ABC
     {
     protected:
-                 ClassBuilder( const std::string& name, const std::vector< std::string >& attributes )
+                 ClassBuilder( const std::string& name, bool publish, bool subscribe, const std::vector< std::string >& attributes )
                      : name_      ( name )
+                     , publish_   ( publish )
+                     , subscribe_ ( subscribe )
                      , attributes_( attributes.begin(), attributes.end() )
                  {}
         virtual ~ClassBuilder() {}
 
     public:
-        virtual void Build( Federate_ABC& federate, ::hla::Class< HlaObject_ABC >& hlaClass, bool publish, bool subscribe ) const
+        virtual void Build( Federate_ABC& federate, ::hla::Class< HlaObject_ABC >& hlaClass ) const
         {
             BOOST_FOREACH( const std::string& attribute, attributes_ )
                 hlaClass.Register( ::hla::AttributeIdentifier( attribute ) );
             hlaClass.ActivateUpdates( true );
-            federate.Register( ::hla::ClassIdentifier( name_ ), hlaClass, publish, subscribe );
+            federate.Register( ::hla::ClassIdentifier( name_ ), hlaClass, publish_, subscribe_ );
         }
     private:
         const std::string name_;
+        const bool publish_;
+        const bool subscribe_;
         const std::vector< std::string > attributes_;
     };
     class NetnClassBuilder : public ClassBuilder
     {
     protected:
-                 NetnClassBuilder( const std::string& name, const std::vector< std::string >& attributes, std::auto_ptr< ClassBuilder_ABC > builder )
-                     : ClassBuilder( name, attributes )
+                 NetnClassBuilder( const std::string& name, bool publish, bool subscribe, const std::vector< std::string >& attributes, std::auto_ptr< ClassBuilder_ABC > builder )
+                     : ClassBuilder( name, publish, subscribe, attributes )
                      , builder_( builder )
                  {}
         virtual ~NetnClassBuilder() {}
     public:
-        virtual void Build( Federate_ABC& federate, ::hla::Class< HlaObject_ABC >& hlaClass, bool publish, bool subscribe ) const
+        virtual void Build( Federate_ABC& federate, ::hla::Class< HlaObject_ABC >& hlaClass ) const
         {
             EmptyFederate empty;
-            builder_->Build( empty, hlaClass, publish, subscribe );
-            ClassBuilder::Build( federate, hlaClass, publish, subscribe );
+            builder_->Build( empty, hlaClass );
+            ClassBuilder::Build( federate, hlaClass );
         }
     private:
         std::auto_ptr< ClassBuilder_ABC > builder_;
@@ -81,7 +85,7 @@ namespace hla
     {
     public:
         AggregateEntityBuilder()
-            : ClassBuilder( "BaseEntity.AggregateEntity"
+            : ClassBuilder( "BaseEntity.AggregateEntity", true, true
             , boost::assign::list_of( "EntityType" )
                                     ( "EntityIdentifier" )
                                     ( "ForceIdentifier" )
@@ -101,13 +105,14 @@ namespace hla
     {
     public:
         NetnAggregateEntityBuilder()
-            : NetnClassBuilder( "BaseEntity.AggregateEntity.NETN_Aggregate"
+            : NetnClassBuilder( "BaseEntity.AggregateEntity.NETN_Aggregate", true, true
             , boost::assign::list_of( "Mounted" )
                                     ( "Echelon" )
                                     ( "UniqueID" )
                                     ( "HigherHeadquarters" )
                                     ( "Callsign" )
                                     ( "Status" )
+                                    ( "Symbol" )
             , std::auto_ptr< ClassBuilder_ABC >( new AggregateEntityBuilder() ) )
         {}
     };
@@ -115,7 +120,7 @@ namespace hla
     {
     public:
         SurfaceVesselBuilder()
-            : ClassBuilder( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel"
+            : ClassBuilder( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel", false, true
             , boost::assign::list_of( "EntityType" )
                                     ( "EntityIdentifier" )
                                     ( "ForceIdentifier" )
@@ -127,10 +132,32 @@ namespace hla
     {
     public:
         NetnSurfaceVesselBuilder()
-            : NetnClassBuilder( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel.NETN_SurfaceVessel"
+            : NetnClassBuilder( "BaseEntity.PhysicalEntity.Platform.SurfaceVessel.NETN_SurfaceVessel", false, true
             , boost::assign::list_of( "UniqueID" )
                                     ( "Callsign" )
             , std::auto_ptr< ClassBuilder_ABC >( new SurfaceVesselBuilder() ) )
+        {}
+    };
+    class AircraftBuilder : public ClassBuilder
+    {
+    public:
+        AircraftBuilder()
+            : ClassBuilder( "BaseEntity.PhysicalEntity.Platform.Aircraft", false, true
+            , boost::assign::list_of( "EntityType" )
+                                    ( "EntityIdentifier" )
+                                    ( "ForceIdentifier" )
+                                    ( "Marking" )
+                                    ( "Spatial" ) )
+        {}
+    };
+    class NetnAircraftBuilder : public NetnClassBuilder
+    {
+    public:
+        NetnAircraftBuilder()
+            : NetnClassBuilder( "BaseEntity.PhysicalEntity.Platform.Aircraft.NETN_Aircraft", false, true
+            , boost::assign::list_of( "UniqueID" )
+                                    ( "Callsign" )
+            , std::auto_ptr< ClassBuilder_ABC >( new AircraftBuilder() ) )
         {}
     };
 }

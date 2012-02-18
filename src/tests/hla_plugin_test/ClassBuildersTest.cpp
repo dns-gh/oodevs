@@ -27,10 +27,10 @@ namespace
         Fixture()
             : hlaClass( objectRegistration, true )
         {}
-        void Check( ClassBuilder_ABC& builder, const std::string& name )
+        void Check( ClassBuilder_ABC& builder, const std::string& name, bool publish, bool subscribe )
         {
-            MOCK_EXPECT( federate, RegisterClass ).once().with( name, mock::any, mock::any, mock::any );
-            builder.Build( federate, hlaClass, true, false );
+            MOCK_EXPECT( federate, RegisterClass ).once().with( name, mock::any, publish, subscribe);
+            builder.Build( federate, hlaClass );
             mock::sequence s;
             ::hla::MockAttributeFunctor visitor;
             BOOST_FOREACH( const std::string& attribute, attributes )
@@ -60,7 +60,7 @@ BOOST_FIXTURE_TEST_CASE( aggegate_entity_builder_registers_attributes, Fixture )
                                        ( "SilentAggregates" )
                                        ( "SubAggregateIdentifiers" )
                                        ( "EntityIdentifiers" );
-    Check( builder, "BaseEntity.AggregateEntity" );
+    Check( builder, "BaseEntity.AggregateEntity", true, true );
 }
 
 BOOST_FIXTURE_TEST_CASE( netn_aggegate_entity_builder_registers_attributes, Fixture )
@@ -85,8 +85,9 @@ BOOST_FIXTURE_TEST_CASE( netn_aggegate_entity_builder_registers_attributes, Fixt
                                        ( "UniqueID" )
                                        ( "HigherHeadquarters" )
                                        ( "Callsign" )
-                                       ( "Status" );
-    Check( builder, "BaseEntity.AggregateEntity.NETN_Aggregate" );
+                                       ( "Status" )
+                                       ( "Symbol" );
+    Check( builder, "BaseEntity.AggregateEntity.NETN_Aggregate", true, true );
 }
 
 BOOST_FIXTURE_TEST_CASE( surface_vessel_builder_registers_attributes, Fixture )
@@ -97,7 +98,7 @@ BOOST_FIXTURE_TEST_CASE( surface_vessel_builder_registers_attributes, Fixture )
                                        ( "ForceIdentifier" )
                                        ( "Marking" )
                                        ( "Spatial" );
-    Check( builder, "BaseEntity.PhysicalEntity.Platform.SurfaceVessel" );
+    Check( builder, "BaseEntity.PhysicalEntity.Platform.SurfaceVessel", false, true );
 }
 
 BOOST_FIXTURE_TEST_CASE( netn_surface_vessel_builder_registers_attributes, Fixture )
@@ -111,5 +112,30 @@ BOOST_FIXTURE_TEST_CASE( netn_surface_vessel_builder_registers_attributes, Fixtu
                                        // NETN
                                        ( "UniqueID" )
                                        ( "Callsign" );
-    Check( builder, "BaseEntity.PhysicalEntity.Platform.SurfaceVessel.NETN_SurfaceVessel" );
+    Check( builder, "BaseEntity.PhysicalEntity.Platform.SurfaceVessel.NETN_SurfaceVessel", false, true );
+}
+
+BOOST_FIXTURE_TEST_CASE( aircraft_builder_registers_attributes, Fixture )
+{
+    AircraftBuilder builder;
+    attributes = boost::assign::list_of( "EntityType" )
+                                       ( "EntityIdentifier" )
+                                       ( "ForceIdentifier" )
+                                       ( "Marking" )
+                                       ( "Spatial" );
+    Check( builder, "BaseEntity.PhysicalEntity.Platform.Aircraft", false, true );
+}
+
+BOOST_FIXTURE_TEST_CASE( netn_aircraft_builder_registers_attributes, Fixture )
+{
+    NetnAircraftBuilder builder;
+    attributes = boost::assign::list_of( "EntityType" )
+                                       ( "EntityIdentifier" )
+                                       ( "ForceIdentifier" )
+                                       ( "Marking" )
+                                       ( "Spatial" )
+                                       // NETN
+                                       ( "UniqueID" )
+                                       ( "Callsign" );
+    Check( builder, "BaseEntity.PhysicalEntity.Platform.Aircraft.NETN_Aircraft", false, true );
 }

@@ -44,7 +44,8 @@ IndirectFireReceiver::~IndirectFireReceiver()
 // -----------------------------------------------------------------------------
 void IndirectFireReceiver::Receive( interactions::MunitionDetonation& interaction )
 {
-    if( interaction.detonationResultCode != 3 ) // ground impact
+    const std::string target = interaction.targetObjectIdentifier.str();
+    if( !target.empty() )
         return;
     simulation::MagicAction message;
     message().set_type( sword::MagicAction::create_fire_order_on_location );

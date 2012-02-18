@@ -36,6 +36,12 @@ public:
         federateIdentifier_.Serialize( archive );
         archive << entityNumber_;
     }
+    template< typename Archive >
+    void Deserialize( Archive& archive )
+    {
+        federateIdentifier_.Deserialize( archive );
+        archive >> entityNumber_;
+    }
     //@}
 
 private:
@@ -49,6 +55,11 @@ private:
         void Serialize( Archive& archive ) const
         {
             archive << siteID_ << applicationID_;
+        }
+        template< typename Archive >
+        void Deserialize( Archive& archive )
+        {
+            archive >> siteID_ >> applicationID_;
         }
         unsigned short siteID_;
         unsigned short applicationID_;

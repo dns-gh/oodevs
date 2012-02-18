@@ -44,6 +44,7 @@ namespace hla
     class Federate_ABC;
     class RtiAmbassadorFactory_ABC;
     class LocalAgentResolver_ABC;
+    class MarkingFactory_ABC;
     class HlaClass;
 
 // =============================================================================
@@ -99,8 +100,7 @@ private:
 
     //! @name Operations
     //@{
-    virtual void AggregateCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type );
-    virtual void SurfaceVesselCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type );
+    virtual void AggregateCreated( Agent_ABC& agent, unsigned int identifier, const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const std::string& symbol );
     //@}
 
 private:
@@ -113,6 +113,7 @@ private:
     //! @name Member data
     //@{
     AgentSubject_ABC& subject_;
+    std::auto_ptr< MarkingFactory_ABC > markingFactory_;
     std::auto_ptr< ::hla::TimeFactory_ABC > timeFactory_;
     std::auto_ptr< ::hla::TimeIntervalFactory_ABC > intervalFactory_;
     std::auto_ptr< ::hla::RtiAmbassador_ABC > ambassador_;
@@ -120,6 +121,7 @@ private:
     std::auto_ptr< FederationDestructor > destructor_;
     std::auto_ptr< HlaClass > aggregateClass_;
     std::auto_ptr< HlaClass > surfaceVesselClass_;
+    std::auto_ptr< HlaClass > aircraftClass_;
     //@}
 };
 

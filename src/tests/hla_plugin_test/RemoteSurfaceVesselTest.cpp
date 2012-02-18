@@ -67,9 +67,9 @@ BOOST_FIXTURE_TEST_CASE( remote_vessel_deserializes_force_identifier_attribute_a
 
 BOOST_FIXTURE_TEST_CASE( remote_vessel_deserializes_vessel_marking_attribute_and_notifies_listener, Fixture )
 {
-    const Marking marking( "name" );
+    const Marking marking( "name", 42 );
     marking.Serialize( serializer );
-    MOCK_EXPECT( listener, NameChanged ).once().with( "identifier", "name" );
+    MOCK_EXPECT( listener, NameChanged ).once().with( "identifier", "name42" );
     vessel.Deserialize( "Marking", Deserialize() );
 }
 

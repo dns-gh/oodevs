@@ -9,6 +9,6 @@
     </hla-1516>
     <hla-1516e>
         <release>libFedTime1516e.dll</release>
-        <debug>libFedTime1516e_d.dll</debug>
+        <debug>libFedTime1516ed.dll</debug>
     </hla-1516e>
 </protocols>

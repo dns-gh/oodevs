@@ -34,6 +34,7 @@ namespace hla
 {
     class Agent_ABC;
     class AttributesSerializer;
+    class MarkingFactory_ABC;
 
 // =============================================================================
 /** @class  AggregateEntity
@@ -48,7 +49,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              AggregateEntity( Agent_ABC& agent, unsigned int identifier,
-                              const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type );
+                              const std::string& name, rpr::ForceIdentifier force, const rpr::EntityType& type, const MarkingFactory_ABC& markingFactory );
     virtual ~AggregateEntity();
     //@}
 
