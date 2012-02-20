@@ -185,6 +185,24 @@ void Page_ABC::EnableButton( unsigned short flags, bool enable )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Page_ABC::ShowButton
+// Created: LGY 2012-02-20
+// -----------------------------------------------------------------------------
+void Page_ABC::ShowButton( unsigned short flags, bool enable )
+{
+    if( ( flags & eButtonStart ) && startButton_ )
+        startButton_->setVisible( enable );
+    if( ( flags & eButtonJoin ) && joinButton_ )
+        joinButton_->setVisible( enable );
+    if( ( flags & eButtonEdit ) && editButton_ )
+        editButton_->setVisible( enable );
+    if( ( flags & eButtonApply ) && applyButton_ )
+        applyButton_->setVisible( enable );
+    if( ( flags & eButtonDelete ) && deleteButton_ )
+        deleteButton_->setVisible( enable );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Page_ABC::SetButtonText
 // Created: JSR 2010-07-19
 // -----------------------------------------------------------------------------

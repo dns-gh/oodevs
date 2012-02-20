@@ -245,18 +245,22 @@ void ScenarioEditPage::UpdateEditButton()
         enable = exercise_ != 0;
         SetButtonText( eButtonDelete, tools::translate( "Page_ABC", "Delete" ) );
         SetButtonText( eButtonEdit, tools::translate( "Page_ABC", "Edit" ) );
+        ShowButton( eButtonDelete, true );
         break;
     case eTabs_Create:
         enable = createExerciceWidget_->EnableEditButton();
         SetButtonText( eButtonEdit, tools::translate( "ScenarioEditPage", "Create" ) );
+        ShowButton( eButtonDelete, false );
         break;
     case eTabs_Import:
         enable = importWidget_->EnableEditButton();
         SetButtonText( eButtonEdit, tools::translate( "ScenarioEditPage", "Import" ) );
+        ShowButton( eButtonDelete, false );
         break;
     case eTabs_Export:
         enable = exportWidget_->EnableEditButton();
         SetButtonText( eButtonEdit, tools::translate( "ScenarioEditPage", "Export" ) );
+        ShowButton( eButtonDelete, false );
         break;
     default:
         break;
@@ -264,7 +268,6 @@ void ScenarioEditPage::UpdateEditButton()
     EnableButton( eButtonDelete, enable );
     EnableButton( eButtonEdit, enable );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ScenarioEditPage::UpdateEditButton
