@@ -17253,6 +17253,9 @@
       <category name="munition">
         <resource capacity="240" logistic-threshold="10" name="CART 5.56 BAL ORD F1" normalized-consumption="30"/>
       </category>
+      <category name="mine">
+        <resource capacity="10" logistic-threshold="10" name="mine classique" normalized-consumption="10"/>
+      </category>
       <category name="ration">
         <resource capacity="3" logistic-threshold="30" name="RATION DE COMBAT 1" normalized-consumption="1"/>
         <resource capacity="18" logistic-threshold="30" name="EAU MINERALE 1L T 1" normalized-consumption="6"/>
@@ -21243,6 +21246,9 @@
     <composition>
       <category name="munition">
         <resource capacity="3" logistic-threshold="30" name="RO 80 EXPL AC" normalized-consumption="2"/>
+      </category>
+      <category name="mine">
+        <resource capacity="10" logistic-threshold="10" name="mine classique" normalized-consumption="10"/>
       </category>
       <category name="ration">
         <resource capacity="3" logistic-threshold="30" name="RATION DE COMBAT 1" normalized-consumption="1"/>
@@ -35323,4 +35329,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="2890234071" -->
+<!-- signature="2768103528" -->
