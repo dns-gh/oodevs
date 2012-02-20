@@ -654,3 +654,30 @@ QString tools::LimaTypeShortToXmlString( const QString& shortType )
             return PhaseLines()[i].xmlName_;
     return "";
 }
+
+// -----------------------------------------------------------------------------
+// Name: tools::StockCategoryFromDotationFamily
+// Created: MMC 2012-02-17
+// -----------------------------------------------------------------------------
+E_StockCategory tools::StockCategoryFromDotationFamily( E_DotationFamily eDotationFamily, bool dType )
+{
+    switch( eDotationFamily )
+    {
+    case eDotationFamily_Munition :
+        if ( dType )
+            return eStockCategory_UniteFieldArtyAmmo;
+    case eDotationFamily_Explosif :
+    case eDotationFamily_Mine :
+    case eDotationFamily_Barbele :
+        return eStockCategory_UniteNotFieldArtyAmmo;
+    case eDotationFamily_Carburant :
+        return eStockCategory_UniteFuel;
+    case eDotationFamily_Piece :
+        return eStockCategory_Piece;
+    case eDotationFamily_Ration :
+    case eDotationFamily_AgentExtincteur :
+    case eDotationFamily_Energy :
+    default :
+        return eStockCategory_UniteSupply;
+    }
+}

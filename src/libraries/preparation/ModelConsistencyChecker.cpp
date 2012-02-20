@@ -314,12 +314,14 @@ void ModelConsistencyChecker::CheckMaxStockExceeded()
             Iterator< const AgentComposition& > itComposition = agent.GetType().CreateIterator();
             while( itComposition.HasMoreElements() )
             {
-                const ComponentType& equipment = itComposition.NextElement().GetType();
+                const AgentComposition& agentComposition = itComposition.NextElement();
+                const ComponentType& equipment = agentComposition.GetType();
                 const EquipmentType& equipmentType = staticModel_.objectTypes_.Resolver< EquipmentType >::Get( equipment.GetId() );
                 if( const EquipmentType::CarryingSupplyFunction* carrying = equipmentType.GetLogSupplyFunctionCarrying() )
                 {
-                    maxCapacities[ carrying->stockNature_ ].first += carrying->stockWeightCapacity_;
-                    maxCapacities[ carrying->stockNature_ ].second += carrying->stockVolumeCapacity_;
+                    double nEquipments = static_cast< double >( agentComposition.GetCount() );
+                    maxCapacities[ carrying->stockNature_ ].first += nEquipments * carrying->stockWeightCapacity_;
+                    maxCapacities[ carrying->stockNature_ ].second += nEquipments * carrying->stockVolumeCapacity_;
                 }
             }
 

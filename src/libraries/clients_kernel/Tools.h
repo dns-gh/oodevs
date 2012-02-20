@@ -81,6 +81,8 @@ namespace tools
     kernel::E_FuncLimaType  LimaTypeFromShortString ( const QString& type );
     kernel::E_FuncLimaType  LimaTypeFromXmlString   ( const QString& type );
     QString                 LimaTypeShortToXmlString( const QString& shortType );
+
+    E_StockCategory         StockCategoryFromDotationFamily( E_DotationFamily eDotationFamily, bool dType );
 }
 
 #endif // __Kernel_Tools_h_
