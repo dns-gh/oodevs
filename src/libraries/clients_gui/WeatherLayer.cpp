@@ -48,6 +48,8 @@ void WeatherLayer::Paint( const geometry::Rectangle2f& /*viewport*/ )
 {
     if( !ShouldDrawPass() || !displaying_ )
         return;
+    if( topLeft_ == geometry::Point2f( 0, 0 ) )
+        return;
     const geometry::Point2f topRight( bottomRight_.X(), topLeft_.Y() );
     const geometry::Point2f bottomLeft( topLeft_.X(), bottomRight_.Y() );
 
@@ -70,9 +72,12 @@ bool WeatherLayer::HandleMousePress( QMouseEvent* mouse, const geometry::Point2f
 {
     if( mouse->state() == Qt::LeftButton && isEditing_ )
     {
-        currentMeteoLocal_->SetPosition( topLeft_, point );
+        if( topLeft_ != geometry::Point2f( 0, 0 ) )
+        {
+            currentMeteoLocal_->SetPosition( topLeft_, point );
+            currentMeteoLocal_->SetModified( true );
+        }
         eventStrategy_.ReleaseExclusiveFocus();
-        currentMeteoLocal_->SetModified( true );
         isEditing_ = false;
         return true;
     }
@@ -117,7 +122,9 @@ void WeatherLayer::SetPosition( const weather::MeteoLocal& weather )
 void WeatherLayer::StartEdition( weather::MeteoLocal& weather )
 {
     currentMeteoLocal_ = &weather;
-    SetPosition( weather );
+    displaying_ = true;
+    topLeft_ = geometry::Point2f();
+    bottomRight_ = geometry::Point2f();
     eventStrategy_.TakeExclusiveFocus( *this );
     isEditing_ = true;
     firstPointSet_ = false;
