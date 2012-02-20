@@ -34,8 +34,6 @@ public:
         tab_.setItem( i, 0, pItemString );
         tab_.setItem( i, 1, pItemIgnition );
         tab_.setItem( i, 2, pItemCombustion );
-        // disable first column
-        pItemString->setEnabled( false );
         // connect items & datas
         pItemString->GetConnector().Connect( &static_cast< ADN_FireClass_Data::FireSurfaceInfos* >( obj )->strName_ );
         pItemIgnition->GetConnector().Connect( &static_cast< ADN_FireClass_Data::FireSurfaceInfos* >( obj )->ignitionThreshold_ );
@@ -66,6 +64,7 @@ ADN_SurfaceFireInfos_Table::ADN_SurfaceFireInfos_Table( QWidget* pParent )
     horizontalHeader()->setLabel( 0, tr( "Ground type" ) );
     horizontalHeader()->setLabel( 1, tr( "Ignition threshold" ) );
     horizontalHeader()->setLabel( 2, tr( "Max combustion energy" ) );
+    setColumnReadOnly( 0, true );
     // connector creation
     pConnector_ = new ADN_SurfaceFireInfos_Table_Connector( *this );
 }
