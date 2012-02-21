@@ -2,7 +2,7 @@
 -- To reach a checkpoint and activate its filtration capability.
 -- @params: self.params.checkpoint, a masalife 'checkPoint' object
 -- @params: self.params.inensity, the % of filtration strength
--- @returns: filtrationActionRunning once action is running
+-- @returns: filtering once action is running
 -- ****************************************************************************
 rootnode 
 {
@@ -15,9 +15,10 @@ rootnode
     done = function( self, params ) -- from reach skill
         self.arrived = true
     end,
-    filterActionRunning = function( self, params )  -- from filter skill
+
+    filtrationActionRunning = function( self, params ) -- from filter skill
         DEC_Trace( "----filtering-----" )
-        Feedback( self.feedbacks.filtering )
+        Feedback( self.feedbacks.filtering, { object = params.checkpoint } )
     end,
 
     -- --------------------------------------------------------------------------------

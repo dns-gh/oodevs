@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.skills.CreateThenFilter" source-version="1.0.0">
+    <description>For an agent to move toward an planned object, create it and then, activate the filtration capability on it. &#xD;
+This skill is specific to 'plannedWork' and 'Object' classes. It uses the 'Create' skill with the 'plannedWork'. Because the 'Create' skill returns the created object (ontology.classes.Object) that realizes the concept of 'CheckPoint', this skill uses the 'Filter' skill on this new created object.</description>
+    <parameters>
+        <parameter name="plannedWork">
+            <description>The plannified work to create and use to filter.</description>
+            <type>
+                <class name="ontology.classes.PlannedWork"/>
+            </type>
+        </parameter>
+        <parameter name="intensity">
+            <description>The strenght that is used to filter crowds.  The value is defined between 0 et 1. A value of '0' means &quot;no filtration at all&quot;. A value of '1' means &quot;totally blocked&quot; (the crowds that interact with the checkpoint cannot go through it).&#xD;
+</description>
+            <type>
+                <simple name="numeric"/>
+            </type>
+            <default>
+                <number>0.5</number>
+            </default>
+        </parameter>
+    </parameters>
+    <body-type>
+        <class name="ontology.classes.MeKnowledge"/>
+    </body-type>
+    <links>
+        <link name="create" skill="behaviors.skills.primitives.Create">
+            <description>To enact the decision to create the planned object.</description>
+        </link>
+        <link name="filter" skill="behaviors.skills.primitives.Filter">
+            <description>To enact the decision to activate the filtration of the created object.</description>
+        </link>
+    </links>
+    <feedbacks>
+        <feedback name="filtering">
+            <description>Sent once the action of filtering is running.</description>
+            <argument name="object">
+                <description>The object created, and used to filter. </description>
+                <type>
+                    <class name="ontology.classes.Object"/>
+                </type>
+            </argument>
+        </feedback>
+    </feedbacks>
+</skill>

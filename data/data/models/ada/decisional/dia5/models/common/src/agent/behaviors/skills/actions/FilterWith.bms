@@ -8,7 +8,7 @@ rootnode
 {
     feedbacks = { "filtrationActionRunning" },
     select = function( self )
-        if meKnowledge:activateFitration( self.params.checkPoint, self.params.intensity ) then
+        if meKnowledge:activateFitration( self.params.checkpoint, self.params.intensity ) then
             Feedback( self.feedbacks.filtrationActionRunning )
         end
     end

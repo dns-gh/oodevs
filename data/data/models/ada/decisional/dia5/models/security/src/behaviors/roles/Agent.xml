@@ -62,9 +62,10 @@
         <skill name="behaviors.skills.primitives.CreateResourceNetWorkLinks"/>
         <skill name="agent.behaviors.skills.actions.Operate"/>
         <skill name="behaviors.skills.primitives.Operate"/>
-        <skill name="behaviors.skills.OperateAPlannedObject"/>
+        <skill name="behaviors.skills.CreateThenOperate"/>
         <skill name="agent.behaviors.skills.actions.FilterWith"/>
         <skill name="behaviors.skills.primitives.Filter"/>
+        <skill name="behaviors.skills.CreateThenFilter"/>
     </skills>
     <resources>
         <resource name="agent.behaviors.resources.Motion"/>

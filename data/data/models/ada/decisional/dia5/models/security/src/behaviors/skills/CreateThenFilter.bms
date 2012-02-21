@@ -1,0 +1,35 @@
+-- **************************************************************************** 
+-- To create and activate filtration on a object
+-- @params: self.params.plannedObject, a planned object to build and use to filter
+-- @returns: "filtering" when action is running
+-- ****************************************************************************
+rootnode
+{
+    connections = { skill.links.create, skill.links.filter },
+    feedbacks   = { "filtering" },
+
+    -- -------------------------------------------------------------------------------- 
+    -- Feedbacks
+    -- --------------------------------------------------------------------------------
+    created = function( self, params, additionalParams ) -- call by 'Create' skill
+        self.createdWork = additionalParams.work -- object that realizes "checkPoint" concept.
+        self.isCreated = true
+    end,
+
+    filtering = function( self, params ) -- called by 'Filter' skill
+        Feedback( self.feedbacks.filtering, { object = params.checkpoint } )
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Create the planned object, then operate it.
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        local Activate = Activate
+
+        if not self.isCreated then
+            Activate( skill.links.create, 1, { works = { self.params.plannedWork } } )
+        else
+            Activate( skill.links.filter, 1, { checkpoint = self.createdWork, intensity = self.params.intensity } )
+        end
+    end
+}

@@ -14,7 +14,8 @@ rootnode
     done = function( self, params ) -- from reach skill
         self.arrived = true
     end,
-    operateActionRunning = function( self, params )
+
+    operateActionRunning = function( self, params ) -- from operate skill
         Feedback( self.feedbacks.operating, params )
     end,
 

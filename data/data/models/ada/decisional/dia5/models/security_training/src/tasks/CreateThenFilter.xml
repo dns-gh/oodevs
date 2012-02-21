@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="ASCII"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="tasks.CreateThenFilter" source-version="1.0.0">
+    <parameters>
+        <parameter name="plannedWork">
+            <description>The plannified work to create and use to filter.</description>
+            <type>
+                <class name="ontology.classes.PlannedWork"/>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="CreateThenFilter" permanent="true">
+            <skills>
+                <skill name="behaviors.skills.CreateThenFilter">
+                    <parameter name="plannedWork">
+                        <value>
+                            <parameter>plannedWork</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>

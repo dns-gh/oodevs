@@ -268,9 +268,9 @@ method "createResourceLink" (
 -- --------------------------------------------------------------------------------
 -- Check point activation
 -- --------------------------------------------------------------------------------
-method "activateFiltration" ( 
-    function( self, checkPoint, intensity )
-        return checkPoint:filter( intensity )
+method "activateFitration" ( 
+    function( self, checkpoint, intensity )
+        return checkpoint:filter( intensity )
     end )
 
 -- --------------------------------------------------------------------------------
