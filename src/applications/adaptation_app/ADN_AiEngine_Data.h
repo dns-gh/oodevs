@@ -62,5 +62,4 @@ public:
     ADN_Type_Double rCapturedModificator_;
 };
 
-
 #endif // __ADN_AiEngine_Data_h_

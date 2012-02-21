@@ -20,8 +20,8 @@
 
 // -----------------------------------------------------------------------------
 // Name: ADN_AddElementCommand constructor
-/** @param  modifiedData 
-    @param  pAddedObject 
+/** @param  modifiedData
+    @param  pAddedObject
 */
 // Created: AGN 2004-05-13
 // -----------------------------------------------------------------------------
@@ -41,7 +41,7 @@ ADN_AddElementCommand< ObjectType >::ADN_AddElementCommand( ADN_Type_Vector_ABC<
 template< class ObjectType >
 ADN_AddElementCommand< ObjectType >::~ADN_AddElementCommand()
 {
-    
+
 }
 
 // -----------------------------------------------------------------------------
@@ -63,7 +63,7 @@ template< class ObjectType >
 void ADN_AddElementCommand< ObjectType >::UpdateDescription()
 {
     QString strDescription( tr( "Add " ) );
-    
+
     std::string strItemName = pAddedObject_->GetItemName();
     if( strItemName.empty() )
         strItemName = tr( "new " ).ascii() + modifiedData_.GetItemTypeName();
@@ -76,7 +76,7 @@ void ADN_AddElementCommand< ObjectType >::UpdateDescription()
 
     if( ! strNodeName.empty() )
         strDescription += strNodeName.c_str();
-    
+
     ADN_DataTreeNode_ABC* pParent = modifiedData_.GetParentNode();
     while( pParent != 0 )
     {
@@ -89,5 +89,5 @@ void ADN_AddElementCommand< ObjectType >::UpdateDescription()
         pParent = pParent->GetParentNode();
     }
 
-    setDescription( strDescription );    
+    setDescription( strDescription );
 }

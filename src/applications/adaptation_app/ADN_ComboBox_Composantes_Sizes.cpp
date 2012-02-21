@@ -40,7 +40,6 @@ public:
 
 };
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ComboBox_Composantes_Sizes constructor
 // Created: JDY 03-07-18
@@ -51,7 +50,6 @@ ADN_ComboBox_Composantes_Sizes::ADN_ComboBox_Composantes_Sizes(QWidget * parent,
     // connector creation
     pConnector_=new ADN_CCB_Composantes_Sizes(*this);
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ComboBox_Composantes_Sizes destructor

@@ -42,5 +42,4 @@ private:
 
 #include "ADN_Connector_Bool.inl"
 
-
 #endif // __ADN_Connector_Bool_h_

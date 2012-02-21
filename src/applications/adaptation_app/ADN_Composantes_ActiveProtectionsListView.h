@@ -12,7 +12,6 @@
 
 #include "ADN_ActiveProtections_Data.h"
 
-
 // =============================================================================
 /** @class  ADN_Composantes_ActiveProtectionsListView
     @brief  ADN_Composantes_ActiveProtectionsListView
@@ -33,6 +32,5 @@ private:
     void OnContextMenu( const QPoint& pt );
     bool Contains( const ADN_ActiveProtections_Data::ActiveProtectionsInfos* pInfo );
 };
-
 
 #endif // __ADN_Composantes_ActiveProtectionsListView_h_

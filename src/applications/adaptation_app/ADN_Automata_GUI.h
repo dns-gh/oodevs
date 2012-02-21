@@ -75,5 +75,4 @@ private:
     //@}
 };
 
-
 #endif // __ADN_Automata_GUI_h_

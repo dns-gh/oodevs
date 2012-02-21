@@ -41,7 +41,6 @@ ADN_AutomatLog_ListView::ADN_AutomatLog_ListView( ADN_Automata_Data& data, QWidg
     BuildBody   ();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_AutomatLog_ListView destructor
 // Created: APE 2005-04-04
@@ -52,7 +51,6 @@ ADN_AutomatLog_ListView::~ADN_AutomatLog_ListView()
     ClearEntry( unitTotal_ );
     ClearEntry( automatTotal_ );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_AutomatLog_ListView::BuildHeaders

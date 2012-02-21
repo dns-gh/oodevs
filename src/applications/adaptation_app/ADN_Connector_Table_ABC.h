@@ -53,7 +53,6 @@ protected:
     bool bWithSort_;
 };
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Connector_Table_ABC::IsConnected
 // Created: AGN 2004-05-25
@@ -63,6 +62,5 @@ bool ADN_Connector_Table_ABC::IsConnected() const
 {
     return bIsConnected_;
 }
-
 
 #endif // __ADN_Connector_Table_ABC_h_

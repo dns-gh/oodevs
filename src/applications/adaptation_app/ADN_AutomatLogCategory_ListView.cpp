@@ -44,7 +44,6 @@ ADN_AutomatLogCategory_ListView::ADN_AutomatLogCategory_ListView( ADN_Automata_D
     BuildBody   ();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_AutomatLogCategory_ListView destructor
 // Created: APE 2005-04-04
@@ -52,7 +51,6 @@ ADN_AutomatLogCategory_ListView::ADN_AutomatLogCategory_ListView( ADN_Automata_D
 ADN_AutomatLogCategory_ListView::~ADN_AutomatLogCategory_ListView()
 {
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_AutomatLogCategory_ListView::BuildHeaders

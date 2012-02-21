@@ -32,5 +32,4 @@ public:
     //@}
 };
 
-
 #endif // __ADN_ActiveProtections_Wizard_h_

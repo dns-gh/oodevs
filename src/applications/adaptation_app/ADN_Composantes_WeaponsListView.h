@@ -16,7 +16,6 @@
 
 #include "ADN_Weapons_Data.h"
 
-
 // =============================================================================
 /** @class  ADN_Composantes_WeaponsListView
     @brief  ADN_Composantes_WeaponsListView
@@ -37,6 +36,5 @@ private:
     void OnContextMenu( const QPoint& pt );
     bool Contains( const ADN_Weapons_Data::WeaponInfos* pInfo );
 };
-
 
 #endif // __ADN_Composantes_WeaponsListView_h_

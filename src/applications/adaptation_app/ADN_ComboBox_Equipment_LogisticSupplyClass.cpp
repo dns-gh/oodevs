@@ -39,7 +39,6 @@ public:
 
 };
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ComboBox_Equipment_LogisticSupplyClass constructor
 // Created: JDY 03-07-18
@@ -50,7 +49,6 @@ ADN_ComboBox_Equipment_LogisticSupplyClass::ADN_ComboBox_Equipment_LogisticSuppl
     // connector creation
     pConnector_=new ADN_CCB_Equipement_LogisticSupplyClass(*this);
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ComboBox_Equipment_LogisticSupplyClass destructor

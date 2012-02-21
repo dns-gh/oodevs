@@ -42,5 +42,4 @@ public:
     bool bQtyDecimal_;
 };
 
-
 #endif // __ADN_Composantes_Dotations_GUI_h_

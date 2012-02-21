@@ -32,7 +32,6 @@ ADN_Breakdowns_Data::RepairPartInfo::RepairPartInfo()
     this->BindExistenceTo( &ptrPart_ );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: RepairPartInfo::GetNodeName
 // Created: APE 2005-03-16
@@ -42,7 +41,6 @@ std::string ADN_Breakdowns_Data::RepairPartInfo::GetNodeName()
     return std::string();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: RepairPartInfo::GetItemName
 // Created: APE 2005-03-16
@@ -51,7 +49,6 @@ std::string ADN_Breakdowns_Data::RepairPartInfo::GetItemName()
 {
     return std::string();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Breakdowns_Data::CreateCopy
@@ -65,7 +62,6 @@ ADN_Breakdowns_Data::RepairPartInfo* ADN_Breakdowns_Data::RepairPartInfo::Create
 
     return pCopy;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: RepairPartInfo::ReadArchive
@@ -320,6 +316,4 @@ void ADN_Breakdowns_Data::WriteArchive( xml::xostream& output )
     }
     output << xml::end;
 }
-
-
 

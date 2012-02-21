@@ -9,7 +9,6 @@
 //
 //*****************************************************************************
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Combo<T> constructor
 // Created: JDY 03-07-18
@@ -25,7 +24,6 @@ ADN_Connector_Combo<T>::ADN_Connector_Combo(T* combo)
         pCombo_->setEnabled(false);
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Combo<T> destructor
 // Created: JDY 03-07-18
@@ -34,7 +32,6 @@ template< class T >
 ADN_Connector_Combo<T>::~ADN_Connector_Combo()
 {
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Connector_Combo::ConnectPrivateSub
@@ -50,13 +47,12 @@ void ADN_Connector_Combo<T>::ConnectPrivateSub( ADN_Connector_Vector_ABC* pTarge
     connect( pTarget, SIGNAL(ItemSwapped(int,int)), this, SLOT(SwapItem(int,int)));
     connect( pTarget, SIGNAL(Cleared(bool)),        this, SLOT(Clear(bool)));
 
-    if ( pCombo_->IsAutoEnabled() )
+    if( pCombo_->IsAutoEnabled() )
         pCombo_->setEnabled(true);
     bIsConnected_=true;
 
     pTarget->Initialize( *this );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Connector_Combo::DisconnectPrivateSub
@@ -74,13 +70,12 @@ void ADN_Connector_Combo<T>::DisconnectPrivateSub( ADN_Connector_Vector_ABC* pTa
 
     bIsConnected_=false;
 
-    if ( pCombo_->IsAutoEnabled() )
+    if( pCombo_->IsAutoEnabled() )
     {
         Clear();
         pCombo_->setEnabled(false);
     }
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Combo<T>::AddItemPrivate
@@ -91,11 +86,10 @@ bool ADN_Connector_Combo<T>::AddItemPrivate(void *obj,bool)
 {
     if( obj == 0 )
         return false;
-    
+
     pCombo_->insertItem(CreateItem(obj));
     return true;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Connector_Combo_ABC::RemItemPrivate
@@ -114,7 +108,6 @@ bool ADN_Connector_Combo< T >::RemItemPrivate(void *item,bool)
     return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Combo<T>::ClearPrivate
 // Created: JDY 03-07-18
@@ -122,12 +115,11 @@ bool ADN_Connector_Combo< T >::RemItemPrivate(void *item,bool)
 template< class T >
 void ADN_Connector_Combo<T>::ClearPrivate(bool bInConnection)
 {
-    if ( bInConnection && bIsConnected_)
+    if( bInConnection && bIsConnected_)
         return;
     pCombo_->SetCurrentData(0);
     pCombo_->clear();
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Combo<T>::SetDataChanged
@@ -140,7 +132,6 @@ void* ADN_Connector_Combo<T>::SetNdxChanged(int ndx)
     emit DataChanged(data);
     return data;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Combo<T>::SetDataPrivate
@@ -158,14 +149,12 @@ void ADN_Connector_Combo<T>::SetDataPrivate(void *data)
             SetNdxChanged(0);
         return;
     }
-        
 
     // current selected data changed
     int ndx=pCombo_->FindNdx(data);
-    if ( ndx!=-1)
+    if( ndx!=-1)
         pCombo_->setCurrentItem(ndx);
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Connector_Combo_ABC::IsConnected

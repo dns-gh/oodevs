@@ -20,9 +20,9 @@
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ChangeValueCommand_Pointer constructor
-/** @param  modifiedData 
-    @param  pOldValue 
-    @param  pNewValue 
+/** @param  modifiedData
+    @param  pOldValue
+    @param  pNewValue
 */
 // Created: AGN 2004-05-13
 // -----------------------------------------------------------------------------
@@ -77,12 +77,12 @@ void ADN_ChangeValueCommand_Pointer< PointedClass >::UpdateDescription()
         }
         pParent = pParent->GetParentNode();
     }
-    
+
     strDescription += qApp->translate("ADN_ChangeValueCommand"," from ");
     if( pOldValue_ != 0 )
         strDescription += pOldValue_->strName_.GetData().c_str();
     strDescription += qApp->translate("ADN_ChangeValueCommand"," to ");
     if( pNewValue_ != 0 )
         strDescription += pNewValue_->strName_.GetData().c_str();
-    setDescription( strDescription );        
+    setDescription( strDescription );
 }

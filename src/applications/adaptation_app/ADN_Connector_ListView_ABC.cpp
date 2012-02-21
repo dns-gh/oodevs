@@ -26,7 +26,6 @@ ADN_Connector_ListView_ABC::ADN_Connector_ListView_ABC( ADN_ListView& list, cons
         list_.setEnabled(false);
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_ListView_ABC destructor
 // Created: JDY 03-07-09
@@ -34,7 +33,6 @@ ADN_Connector_ListView_ABC::ADN_Connector_ListView_ABC( ADN_ListView& list, cons
 ADN_Connector_ListView_ABC::~ADN_Connector_ListView_ABC()
 {
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Connector_ListView_ABC::ConnectPrivateSub
@@ -55,7 +53,6 @@ void ADN_Connector_ListView_ABC::ConnectPrivateSub( ADN_Connector_Vector_ABC* pT
 
     pTarget->Initialize( *this );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Connector_ListView_ABC::DisconnectPrivateSub
@@ -78,7 +75,6 @@ void ADN_Connector_ListView_ABC::DisconnectPrivateSub( ADN_Connector_Vector_ABC*
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Connector_ListView_ABC::AddItemPrivate
 // Created: AGN 2004-03-19
@@ -91,7 +87,6 @@ bool ADN_Connector_ListView_ABC::AddItemPrivate(void *obj,bool)
     list_.insertItem(CreateItem(obj));
     return true;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Connector_ListView_ABC::RemItemPrivate
@@ -109,7 +104,6 @@ bool ADN_Connector_ListView_ABC::RemItemPrivate(void *item, bool)
     }
     return true;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_ListView_ABC::SwapItemPrivate
@@ -172,7 +166,6 @@ void ADN_Connector_ListView_ABC::ClearPrivate(bool bInConnection )
         list_.clear();
     }
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_ListView_ABC::SetDataPrivate

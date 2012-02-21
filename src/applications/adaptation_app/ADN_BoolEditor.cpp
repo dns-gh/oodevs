@@ -101,7 +101,6 @@ void ADN_BoolEditor::paintEvent( QPaintEvent * pEvent )
         pPixmap = &EmptyBoxPixmap();
     }
 
-
     int dx = ( rect.width() - pPixmap->width() ) / 2;
     if( dx < 0 )
         dx = 0;

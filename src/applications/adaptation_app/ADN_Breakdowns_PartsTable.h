@@ -37,5 +37,4 @@ private:
     //@}
 };
 
-
 #endif // __ADN_Breakdowns_PartsTable_h_

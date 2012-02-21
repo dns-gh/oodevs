@@ -49,7 +49,6 @@ public:
     virtual void undo();
     //@}
 
-
 private:
     //! @name Copy/Assignment
     //@{
@@ -87,7 +86,6 @@ public:
     //@{
     virtual void undo();
     //@}
-
 
 private:
     //! @name Copy/Assignment

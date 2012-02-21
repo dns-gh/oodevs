@@ -40,7 +40,6 @@ ADN_Categories_GUI::ADN_Categories_GUI( ADN_Categories_Data& data )
 {
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Categories_GUI destructor
 // Created: JDY 03-08-27
@@ -48,7 +47,6 @@ ADN_Categories_GUI::ADN_Categories_GUI( ADN_Categories_Data& data )
 ADN_Categories_GUI::~ADN_Categories_GUI()
 {
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Categories_GUI::Build

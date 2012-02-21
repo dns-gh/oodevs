@@ -46,7 +46,6 @@ ADN_ConfigDialog::ADN_ConfigDialog( ADN_Config& config )
     pOk_->setFocus();
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ConfigDialog destructor
 // Created: JDY 03-09-08

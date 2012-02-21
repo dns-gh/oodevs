@@ -30,7 +30,6 @@ ADN_DataException::ADN_DataException( const std::string& strErrorTitle, const st
 {
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_DataException constructor
 // Created: AGN 2003-12-09
@@ -42,7 +41,6 @@ ADN_DataException::ADN_DataException( const ADN_DataException& rhs )
 {
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_DataException destructor
 // Created: AGN 2003-12-09
@@ -50,7 +48,6 @@ ADN_DataException::ADN_DataException( const ADN_DataException& rhs )
 ADN_DataException::~ADN_DataException()
 {
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_DataException::GetExceptionTitle
@@ -60,7 +57,6 @@ std::string ADN_DataException::GetExceptionTitle() const
 {
     return qApp->translate( "ADN_DataException", "Data error" ).ascii();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_DataException::GetExceptionMessage

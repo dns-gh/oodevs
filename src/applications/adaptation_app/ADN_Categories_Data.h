@@ -78,7 +78,6 @@ private:
     static IdentifierFactory idFactory_;
 };
 
-
 //-----------------------------------------------------------------------------
 // Name: helpers::T_ArmorInfos_Vector
 // Created: JDY 03-08-27
@@ -88,7 +87,6 @@ helpers::T_ArmorInfos_Vector& ADN_Categories_Data::GetArmorsInfos()
 {
     return vArmors_;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Categories_Data::T_SizeInfos_Vector
@@ -132,7 +130,6 @@ helpers::ArmorInfos* ADN_Categories_Data::FindArmor( const std::string& strName 
         return 0;
     return *it;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Categories_Data::FindSize

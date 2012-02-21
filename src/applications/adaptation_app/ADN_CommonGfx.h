@@ -12,7 +12,6 @@
 #ifndef __ADN_CommonGfx_h_
 #define __ADN_CommonGfx_h_
 
-
 //*****************************************************************************
 // Created: JDY 03-07-07
 //*****************************************************************************
@@ -25,6 +24,5 @@
 #include "ADN_Table.h"
 #include "ADN_TableItem_Edit.h"
 #include "ADN_TableItem_ComboBox.h"
-
 
 #endif // __ADN_CommonGfx_h_

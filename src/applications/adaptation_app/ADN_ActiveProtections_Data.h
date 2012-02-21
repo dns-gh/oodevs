@@ -51,7 +51,6 @@ public:
     typedef ADN_Type_Vector_ABC< ActiveProtectionsInfosWeapons > T_ActiveProtectionsInfosWeaponsVector;
     typedef T_ActiveProtectionsInfosWeaponsVector::iterator     IT_ActiveProtectionsInfosWeaponsVector;
 
-
     //! @name Types
     //@{
     class ActiveProtectionsInfos
@@ -83,7 +82,6 @@ public:
 
     typedef ADN_Type_Vector_ABC< ActiveProtectionsInfos > T_ActiveProtectionsInfosVector;
     typedef T_ActiveProtectionsInfosVector::iterator     IT_ActiveProtectionsInfosVector;
-
 
     //! @name Constructors/Destructor
     //@{

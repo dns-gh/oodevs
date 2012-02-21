@@ -18,7 +18,6 @@
 
 #include "ADN_Tr.h"
 
-
 // -----------------------------------------------------------------------------
 // Name: UnitInfos::UnitInfos
 // Created: APE 2004-12-02
@@ -292,7 +291,6 @@ void ADN_Automata_Data::WriteArchive( xml::xostream& output )
         (*it)->WriteArchive( output, nMosBaseId + n );
     output  << xml::end;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Automata_Data::GetAutomataThatUse

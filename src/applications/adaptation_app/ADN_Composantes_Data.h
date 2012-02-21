@@ -60,7 +60,6 @@ public:
         ADN_Type_Time   unloadTimePerPerson_;
     };
 
-
     //*****************************************************************************
     class LogHealthInfos : public ADN_DataTreeNode_ABC
     {
@@ -91,7 +90,6 @@ public:
         ADN_Type_Bool bCuresShock_;
     };
 
-
     //*****************************************************************************
     class NTIInfos : public ADN_DataTreeNode_ABC
     {
@@ -115,7 +113,6 @@ public:
         ADN_Type_Bool bCanRepairEA_;
         ADN_Type_Bool bCanRepairM_;
     };
-
 
     //*****************************************************************************
     class LogMaintenanceInfos : public ADN_DataTreeNode_ABC
@@ -143,7 +140,6 @@ public:
         NTIInfos NTI2Infos_;
         NTIInfos NTI3Infos_;
     };
-
 
     //*****************************************************************************
     class LogSupplyInfos : public ADN_Ref_ABC
@@ -193,7 +189,6 @@ public:
         LogSupplyInfos      supplyInfos_;
     };
 
-
     //*****************************************************************************
     class BreakdownInfos : public ADN_Ref_ABC
                          , public ADN_DataTreeNode_ABC
@@ -205,7 +200,6 @@ public:
         std::string GetItemName();
 
         BreakdownInfos* CreateCopy();
-
 
         void ReadArchive( xml::xistream& input );
         void WriteArchive( const std::string& origin, xml::xostream& output ) const;
@@ -239,7 +233,6 @@ public:
         std::string strName_;
         T_BreakdownInfos_Vector vBreakdowns_;
     };
-
 
     //*****************************************************************************
     class SpeedInfos : public ADN_DataTreeNode_ABC
@@ -500,7 +493,6 @@ public:
         T_CategoryInfos_Vector categories_;
     };
 
-
     //*****************************************************************************
     class ObjectInfos : public ADN_Ref_ABC
                       , public ADN_DataTreeNode_ABC
@@ -609,7 +601,6 @@ public:
     public:
         T_ConsumptionItem_Vector vConsumptions_;
     };
-
 
     //*****************************************************************************
     class ComposanteInfos : public ADN_Ref_ABC

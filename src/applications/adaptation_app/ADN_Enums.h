@@ -404,7 +404,6 @@ enum E_MissionParameterType
     eNbrMissionParameterType                    = 28
 };
 
-
 enum E_ConstructorType
 {
     eRaw,

@@ -27,7 +27,6 @@
 
 typedef ADN_Automata_Data::UnitInfos UnitInfos;
 
-
 //-----------------------------------------------------------------------------
 // Internal table connector
 //-----------------------------------------------------------------------------
@@ -92,7 +91,6 @@ ADN_Automata_SubUnitsTable::ADN_Automata_SubUnitsTable( QWidget* pParent )
     // Create the connector.
     pConnector_ = new ADN_Connector_SubUnitTable( *this );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Automata_SubUnitsTable destructor

@@ -51,7 +51,6 @@ public:
     typedef ADN_Type_Vector_ABC<RepairPartInfo> T_RepairPartInfoVector;
     typedef T_RepairPartInfoVector::iterator    IT_RepairPartInfoVector;
 
-
 // *****************************************************************************
 
     class BreakdownInfo : public ADN_Ref_ABC
@@ -84,7 +83,6 @@ public:
     typedef ADN_Type_Vector_ABC<BreakdownInfo>      T_BreakdownInfoVector;
     typedef T_BreakdownInfoVector::iterator         IT_BreakdownInfoVector;
     typedef T_BreakdownInfoVector::const_iterator   CIT_BreakdownInfoVector;
-
 
 // *****************************************************************************
 public:

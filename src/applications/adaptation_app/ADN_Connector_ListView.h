@@ -53,7 +53,6 @@ public:
     //@}
 };
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Connector_ListView constructor
 // Created: APE 2004-12-29
@@ -64,7 +63,6 @@ ADN_Connector_ListView<T>::ADN_Connector_ListView( ADN_ListView& list )
 {
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Connector_ListView destructor
 // Created: APE 2004-12-29
@@ -73,7 +71,6 @@ template< typename T >
 ADN_Connector_ListView<T>::~ADN_Connector_ListView()
 {
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Connector_ListView::CreateItem
@@ -89,6 +86,5 @@ ADN_ListViewItem* ADN_Connector_ListView<T>::CreateItem( void* pObj )
     pItem->Connect( 0, & static_cast<T*>(pObj)->strName_ );
     return pItem;
 }
-
 
 #endif // __ADN_Connector_ListView_h_

@@ -40,7 +40,6 @@ private:
     T*  pGfx_;
 };
 
-
 #include "ADN_Connector_Double.inl"
 
 #endif // __ADN_Connector_Double_h_

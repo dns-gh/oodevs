@@ -87,5 +87,4 @@ private:
     Q3GroupBox*    pAttritionEffectGroup_;
 };
 
-
 #endif // __ADN_Categories_GUI_h_

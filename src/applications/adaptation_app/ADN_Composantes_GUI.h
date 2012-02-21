@@ -205,5 +205,4 @@ private:
     //@}
 };
 
-
 #endif // __ADN_Composantes_GUI_h_

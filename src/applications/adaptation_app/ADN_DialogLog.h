@@ -45,7 +45,6 @@ private:
     QPushButton*                pOk_;
 };
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_DialogLog::SetMsg
 // Created: JDY 03-09-08
@@ -55,7 +54,6 @@ void ADN_DialogLog::setMsg(const std::string& msg)
 {
     szMsg_=msg;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_DialogLog::addMsg
@@ -67,7 +65,6 @@ void ADN_DialogLog::addMsg(const std::string& msg)
     lMsg_.push_back(msg);
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: std::string
 // Created: JDY 03-09-08
@@ -77,7 +74,6 @@ void ADN_DialogLog::setMsgFormat(const std::string& msg)
 {
     szFormat_=msg;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_DialogLog::empty

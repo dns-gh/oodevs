@@ -7,11 +7,9 @@
 //
 // *****************************************************************************
 
-
 // -----------------------------------------------------------------------------
 // ADN_ComboBox_Drawings
 // -----------------------------------------------------------------------------
-
 
 namespace
 {
@@ -79,7 +77,6 @@ inline void ADN_ComboBox_Drawings< T >::insertItem( ADN_ComboBoxItem* item, int 
     vItems_.insert(vItems_.begin() + nRealIndex, item );
 }
 
-
 // -----------------------------------------------------------------------------
 // ADN_ComboBox_Drawings_Connector
 // -----------------------------------------------------------------------------
@@ -116,7 +113,6 @@ inline ADN_ComboBoxItem* ADN_ComboBox_Drawings_Connector< T >::CreateItem( void 
     pItem->GetConnector().Connect( &( static_cast< T* > (obj) )->strName_ );
     return pItem;
 };
-
 
 // -----------------------------------------------------------------------------
 // ADN_ComboBoxDrawingItem

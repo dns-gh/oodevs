@@ -20,7 +20,6 @@
 
 typedef ADN_Composantes_Data::WeaponInfos WeaponInfos;
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Composantes_WeaponsListView constructor
 // Created: JDY 03-07-03
@@ -41,7 +40,6 @@ ADN_Composantes_WeaponsListView::ADN_Composantes_WeaponsListView( QWidget* pPare
     this->SetDeletionEnabled( true );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Composantes_WeaponsListView destructor
 // Created: JDY 03-07-03
@@ -51,7 +49,6 @@ ADN_Composantes_WeaponsListView::~ADN_Composantes_WeaponsListView()
     delete pConnector_;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Composantes_WeaponsListView::ConnectItem
 // Created: JDY 03-07-03
@@ -60,7 +57,6 @@ void ADN_Composantes_WeaponsListView::ConnectItem( bool /*bConnect*/ )
 {
     // Nothing
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Composantes_WeaponsListView::OnContextMenu
@@ -108,7 +104,6 @@ void ADN_Composantes_WeaponsListView::OnContextMenu( const QPoint& pt )
     }
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Composantes_WeaponsListView::Contains
 // Created: AGN 03-08-01
@@ -126,5 +121,4 @@ bool ADN_Composantes_WeaponsListView::Contains( const ADN_Weapons_Data::WeaponIn
     }
     return false;
 }
-
 

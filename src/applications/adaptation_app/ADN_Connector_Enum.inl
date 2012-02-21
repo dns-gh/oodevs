@@ -9,7 +9,6 @@
 //
 //*****************************************************************************
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Enum<T> constructor
 // Created: JDY 03-07-18
@@ -27,7 +26,6 @@ ADN_Connector_Enum<T>::ADN_Connector_Enum(T* pGfx)
         pGfx_->setEnabled(false);
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Enum<T> destructor
 // Created: JDY 03-07-18
@@ -36,7 +34,6 @@ template<class T>
 ADN_Connector_Enum<T>::~ADN_Connector_Enum()
 {
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Connector_Enum::ConnectPrivateSub
@@ -54,10 +51,9 @@ void ADN_Connector_Enum<T>::ConnectPrivateSub( ADN_Connector_Vector_ABC* pTarget
 
     bIsConnected_ = true;
     if( pGfx_->IsAutoEnabled() )
-        pGfx_->setEnabled(true);    
+        pGfx_->setEnabled(true);
     pTarget->Initialize( *this );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Connector_Enum::DisconnectPrivateSub
@@ -78,7 +74,6 @@ void ADN_Connector_Enum<T>::DisconnectPrivateSub( ADN_Connector_Vector_ABC* pTar
     if( pGfx_->IsAutoEnabled() )
         pGfx_->setEnabled(false);
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Enum<T>::AddItemPrivate
@@ -118,7 +113,6 @@ bool ADN_Connector_Enum< T >::RemItemPrivate(void *item)
     return true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Enum<T>::ClearPrivate
 // Created: JDY 03-07-18
@@ -132,7 +126,6 @@ void ADN_Connector_Enum<T>::ClearPrivate(bool bInConnection )
         pGfx_->clear();
     }
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Enum<T>::SetNdxChanged
@@ -157,13 +150,13 @@ void ADN_Connector_Enum<T>::SetDataPrivate(void *data)
 {
     // current selected data changed
     int ndx=*(int*)data;
-    if ( ndx!=-1)
+    if( ndx!=-1)
         pGfx_->setCurrentItem(ndx);
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Connector_Enum::IsConnected
-/** @return 
+/** @return
 */
 // Created: AGN 2004-05-25
 // -----------------------------------------------------------------------------

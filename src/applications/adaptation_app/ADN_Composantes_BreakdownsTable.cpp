@@ -28,7 +28,6 @@
 
 typedef ADN_Composantes_Data::BreakdownInfos BreakdownInfos;
 
-
 //-----------------------------------------------------------------------------
 // Internal Table connector to be connected with ADN_Composantes_BreakdownsTable
 //-----------------------------------------------------------------------------
@@ -71,8 +70,6 @@ private:
     ADN_CT_Composantes_BreakdownsTable& operator=( const ADN_CT_Composantes_BreakdownsTable& );
 };
 
-
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Composantes_BreakdownsTable constructor
 // Created: JDY 03-07-03
@@ -107,7 +104,6 @@ ADN_Composantes_BreakdownsTable::ADN_Composantes_BreakdownsTable( const std::str
     connect( this, SIGNAL( valueChanged( int, int ) ), this, SLOT( OnModified() ) );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Composantes_BreakdownsTable destructor
 // Created: JDY 03-07-03
@@ -116,7 +112,6 @@ ADN_Composantes_BreakdownsTable::~ADN_Composantes_BreakdownsTable()
 {
     delete pConnector_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Composantes_BreakdownsTable::OnContextMenu
@@ -159,7 +154,6 @@ void ADN_Composantes_BreakdownsTable::OnContextMenu( int /*nRow*/, int /*nCol*/,
         pCTable->AddItem( 0 );
     }
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Composantes_BreakdownsTable::OnModified

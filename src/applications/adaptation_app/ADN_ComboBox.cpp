@@ -64,7 +64,7 @@ void ADN_ComboBox::DisconnectItem()
 
 inline void SetAutoClear(T_ConnectorVector& v,bool b)
 {
-    for ( T_ConnectorVector::iterator itConnector=v.begin();itConnector!=v.end();++itConnector)
+    for( T_ConnectorVector::iterator itConnector=v.begin();itConnector!=v.end();++itConnector)
         (*itConnector)->SetAutoClear(b);
 }
 

@@ -16,10 +16,8 @@
 //
 // *****************************************************************************
 
-
 #include "adaptation_app_pch.h"
 #include "ADN_DataTreeNode_ABC.h"
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_DataTreeNode_ABC constructor
@@ -52,7 +50,6 @@ std::string ADN_DataTreeNode_ABC::GetNodeName()
 {
     return std::string();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_DataTreeNode_ABC::GetParentNode

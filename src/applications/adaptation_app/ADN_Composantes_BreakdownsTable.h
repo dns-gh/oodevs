@@ -21,7 +21,6 @@
 
 #include "ADN_CommonGfx.h"
 
-
 // =============================================================================
 /** @class  ADN_Composantes_BreakdownsTable
     @brief  ADN_Composantes_BreakdownsTable

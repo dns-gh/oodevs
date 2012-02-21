@@ -42,5 +42,4 @@ private:
 
 #include "ADN_Connector_String.inl"
 
-
 #endif // __ADN_Connector_String_h_

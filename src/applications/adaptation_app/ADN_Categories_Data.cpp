@@ -149,7 +149,6 @@ void ADN_Categories_Data::Save()
     tools::WriteXmlCrc32Signature( szLogisticSupplyClassesFile );
 }
 
-
 class ADN_String_Cmp : public std::unary_function< ADN_Type_String* , bool >
 {
 public:
@@ -258,7 +257,7 @@ void ADN_Categories_Data::ReadNature( xml::xistream& input )
     helpers::T_ResourceNatureInfos_Vector::iterator found = std::find_if( vDotationNatures_.begin(), vDotationNatures_.end(), ADN_String_Cmp( strName ) );
     if( found != vDotationNatures_.end() )
         throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).ascii(), tools::translate( "Categories_Data", "Categories - Duplicated resource nature type name '%1'" ).arg( strName.c_str() ).ascii() );
-    if ( !id )
+    if( !id )
         id = idFactory_.Create();
     helpers::ResourceNatureInfos* pNew = new helpers::ResourceNatureInfos( strName, id );
     pNew->SetDataName( "le nom de la nature de dotation" );
@@ -279,7 +278,7 @@ void ADN_Categories_Data::ReadLogisticSupplyClass( xml::xistream& input )
     helpers::T_LogisticSupplyClass_Vector::iterator found = std::find_if( vLogisticSupplyClasses_.begin(), vLogisticSupplyClasses_.end(), ADN_String_Cmp( strName ) );
     if( found != vLogisticSupplyClasses_.end() )
         throw ADN_DataException( tools::translate( "Categories_Data", "Invalid data" ).ascii(), tools::translate( "Categories_Data", "Categories - Duplicated resource logistic category '%1'" ).arg( strName.c_str() ).ascii() );
-    if ( !id )
+    if( !id )
         id = idFactory_.Create();
     helpers::LogisticSupplyClass* pNew = new helpers::LogisticSupplyClass( strName, id );
     pNew->SetDataName( "le nom de la categorie logistic de dotation" );

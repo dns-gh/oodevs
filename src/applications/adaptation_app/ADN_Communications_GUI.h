@@ -42,5 +42,4 @@ private:
     //@}
 };
 
-
 #endif // __ADN_Communications_GUI_h_

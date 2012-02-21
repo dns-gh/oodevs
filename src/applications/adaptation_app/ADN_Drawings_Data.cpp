@@ -79,7 +79,6 @@ namespace
     };
 }
 
-
 // -----------------------------------------------------------------------------
 // ADN_Drawings_Data::SymbolInfo
 // -----------------------------------------------------------------------------
@@ -336,7 +335,6 @@ void ADN_Drawings_Data::DrawingInfo::DrawItem( const T_PointVector& points )
         template_->Draw( points, context, tools_ );
     context.PopProperty( svg::RenderingContext_ABC::color );
 }
-
 
 // -----------------------------------------------------------------------------
 // ADN_Drawings_Data

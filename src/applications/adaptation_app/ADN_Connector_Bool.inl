@@ -9,7 +9,6 @@
 //
 //*****************************************************************************
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Bool constructor
 // Created: JDY 03-07-08
@@ -23,9 +22,8 @@ ADN_Connector_Bool<T>::ADN_Connector_Bool(T* gfx)
     assert(pGfx_);
     if (pGfx_->IsAutoEnabled())
         pGfx_->setEnabled(false);
-    
-}
 
+}
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Bool destructor
@@ -35,7 +33,6 @@ template <class T>
 ADN_Connector_Bool<T>::~ADN_Connector_Bool()
 {
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Bool<T>::SetDataPrivate
@@ -51,7 +48,6 @@ void ADN_Connector_Bool<T>::SetDataPrivate(void *data)
         pGfx_->setHidden( true );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Bool<T>::SetDataChanged
 // Created: JDY 03-07-08
@@ -61,7 +57,6 @@ void  ADN_Connector_Bool<T>::SetDataChanged(bool b)
 {
      emit DataChanged((void*)&b);
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Int<T>::connectNotify
@@ -75,7 +70,6 @@ void  ADN_Connector_Bool<T>::connectNotify(const char *signal)
     bIsConnected_ = true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Int<T>::disconnectNotify
 // Created: JDY 03-07-16
@@ -83,16 +77,15 @@ void  ADN_Connector_Bool<T>::connectNotify(const char *signal)
 template <class T>
 void  ADN_Connector_Bool<T>::disconnectNotify(const char *signal)
 {
-    if ( signal != 0 && !strcmp(signal,SIGNAL(DataChanged(void*))))
+    if( signal != 0 && !strcmp(signal,SIGNAL(DataChanged(void*))))
     {
-        if ( pGfx_->IsAutoEnabled() )
+        if( pGfx_->IsAutoEnabled() )
             pGfx_->setEnabled(false);
-        if ( IsAutoClear() )
+        if( IsAutoClear() )
             pGfx_->setChecked(false);
         bIsConnected_ = false;
     }
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Connector_Bool::IsConnected

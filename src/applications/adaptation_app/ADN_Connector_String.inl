@@ -9,7 +9,6 @@
 //
 //*****************************************************************************
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_String constructor
 // Created: JDY 03-07-08
@@ -25,7 +24,6 @@ ADN_Connector_String<T>::ADN_Connector_String(T* gfx)
         pGfx_->setEnabled(false);
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_String destructor
 // Created: JDY 03-07-08
@@ -34,7 +32,6 @@ template <class T>
 ADN_Connector_String<T>::~ADN_Connector_String()
 {
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_String<T>::SetDataPrivate
@@ -45,10 +42,9 @@ void ADN_Connector_String<T>::SetDataPrivate(void *data)
 {
     assert(data);
     std::string* pTxt=(std::string*)data;
-    if ( pGfx_->text()!=pTxt->c_str() )
+    if( pGfx_->text()!=pTxt->c_str() )
         pGfx_->setText(((std::string*)data)->c_str());
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_String<T>::SetDataChanged
@@ -74,7 +70,6 @@ void  ADN_Connector_String<T>::connectNotify(const char *signal)
     bIsConnected_ = true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Double<T>::disconnectNotify
 // Created: JDY 03-07-16
@@ -84,18 +79,18 @@ void  ADN_Connector_String<T>::disconnectNotify(const char *signal)
 {
     if (signal != 0 && !strcmp(signal,SIGNAL(DataChanged(void*))))
     {
-        if ( pGfx_->IsAutoEnabled() )
+        if( pGfx_->IsAutoEnabled() )
             pGfx_->setEnabled(false);
-        if ( IsAutoClear() )
+        if( IsAutoClear() )
             pGfx_->setText("");
     }
- 
+
     bIsConnected_ = false;
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Connector_String::IsConnected
-/** @return 
+/** @return
 */
 // Created: AGN 2004-05-25
 // -----------------------------------------------------------------------------

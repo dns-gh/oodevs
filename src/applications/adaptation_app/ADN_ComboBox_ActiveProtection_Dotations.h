@@ -26,5 +26,4 @@ public:
     //@}
 };
 
-
 #endif // __ADN_ComboBox_ActiveProtection_Dotations_h_

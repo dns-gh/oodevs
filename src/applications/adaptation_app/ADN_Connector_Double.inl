@@ -9,7 +9,6 @@
 //
 //*****************************************************************************
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Double constructor
 // Created: JDY 03-07-08
@@ -25,7 +24,6 @@ ADN_Connector_Double<T>::ADN_Connector_Double(T* gfx)
         pGfx_->setEnabled(false);
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Double destructor
 // Created: JDY 03-07-08
@@ -34,7 +32,6 @@ template <class T>
 ADN_Connector_Double<T>::~ADN_Connector_Double()
 {
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Double<T>::SetDataPrivate
@@ -47,10 +44,9 @@ void ADN_Connector_Double<T>::SetDataPrivate(void *data)
 //    char   istring[256];
 //    sprintf(istring,"%f",*(double*)data);
     QString strText = QString::number( *(double*)data, 'g', 10 );
-    if ( strText != pGfx_->text() )
+    if( strText != pGfx_->text() )
         pGfx_->setText(strText);
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Double<T>::SetDataChanged
@@ -62,7 +58,6 @@ void  ADN_Connector_Double<T>::SetDataChanged(const QString& string)
     double newval = string.toDouble();
     emit DataChanged( ( void* ) &newval );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Double<T>::connectNotify
@@ -76,7 +71,6 @@ void  ADN_Connector_Double<T>::connectNotify(const char *signal)
     bIsConnected_ = true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Double<T>::disconnectNotify
 // Created: JDY 03-07-16
@@ -84,21 +78,20 @@ void  ADN_Connector_Double<T>::connectNotify(const char *signal)
 template <class T>
 void  ADN_Connector_Double<T>::disconnectNotify(const char *signal)
 {
-    if ( signal != 0 && !strcmp(signal,SIGNAL(DataChanged(void*))))
+    if( signal != 0 && !strcmp(signal,SIGNAL(DataChanged(void*))))
     {
-        if ( pGfx_->IsAutoEnabled() )
+        if( pGfx_->IsAutoEnabled() )
             pGfx_->setEnabled(false);
-        if ( IsAutoClear() )
+        if( IsAutoClear() )
             pGfx_->setText("");
     }
 
     bIsConnected_ = false;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Connector_Double::IsConnected
-/** @return 
+/** @return
 */
 // Created: AGN 2004-05-25
 // -----------------------------------------------------------------------------

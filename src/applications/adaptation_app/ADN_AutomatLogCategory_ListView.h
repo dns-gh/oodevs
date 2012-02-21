@@ -100,7 +100,6 @@ private:
             rEngineStartedAutonomy_            = std::numeric_limits< double >::max();
         };
 
-
         double rNbr_;
         double rNormalizedConsumption_;
         double rMoveQuantityUsedPerHour_;

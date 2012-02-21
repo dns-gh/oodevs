@@ -26,7 +26,6 @@
 
 typedef ADN_Composantes_Data::ComposanteInfos ComposanteInfos;
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Composante_Wizard constructor
 // Created: AGN 2003-11-03
@@ -44,7 +43,6 @@ ADN_Composante_Wizard::ADN_Composante_Wizard( QWidget* pParent, const char* szNa
     new ADN_Wizard_LastPage( this, qApp->translate( "ADN_Composante_Wizard", "Creation completed" ), qApp->translate( "ADN_Composante_Wizard",
         "Click \"Done\" to create the new equipment." ) );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Composante_Wizard destructor

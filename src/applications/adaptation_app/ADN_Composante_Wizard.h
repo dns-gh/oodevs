@@ -36,5 +36,4 @@ public:
     //@}
 };
 
-
 #endif // __ADN_Composante_Wizard_h_

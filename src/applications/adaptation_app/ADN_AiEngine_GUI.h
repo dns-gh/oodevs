@@ -42,5 +42,4 @@ private:
     //@}
 };
 
-
 #endif // __ADN_AiEngine_GUI_h_

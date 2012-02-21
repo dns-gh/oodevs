@@ -62,5 +62,4 @@ private:
     ADN_ListView_Composantes* composanteListView_;
 };
 
-
 #endif // __ADN_Composantes_ConsumptionsTable_h_

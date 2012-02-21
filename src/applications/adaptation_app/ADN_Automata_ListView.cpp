@@ -25,7 +25,6 @@
 
 typedef ADN_Automata_Data::AutomatonInfos AutomatonInfos;
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Automata_ListView constructor
 // Created: APE 2005-01-06
@@ -43,7 +42,6 @@ ADN_Automata_ListView::ADN_Automata_ListView( QWidget* pParent, const char* szNa
     this->SetDeletionEnabled( true );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Automata_ListView destructor
 // Created: APE 2005-01-06
@@ -52,7 +50,6 @@ ADN_Automata_ListView::~ADN_Automata_ListView()
 {
     delete pConnector_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Automata_ListView::ConnectItem
@@ -74,7 +71,6 @@ void ADN_Automata_ListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Automata_GUI::eHasFeedbackTime]->Connect( &pInfos->bStrengthRatioFeedbackTime_, bConnect );
     vItemConnectors_[ADN_Automata_GUI::eUnit]->Connect( &pInfos->ptrUnit_, bConnect );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Automata_ListView::OnContextMenu

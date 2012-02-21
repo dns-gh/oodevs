@@ -35,7 +35,6 @@ protected:
     bool event( QEvent *event );
 };
 
-
 // =============================================================================
 /** @class  ADN_BaseEditLine
     @brief  ADN_BaseEditLine

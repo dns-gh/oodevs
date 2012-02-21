@@ -49,7 +49,6 @@ protected:
     bool bIsConnected_;
 };
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Connector_ListView_ABC::IsConnected
 // Created: AGN 2004-05-25
@@ -59,6 +58,5 @@ bool ADN_Connector_ListView_ABC::IsConnected() const
 {
     return bIsConnected_;
 }
-
 
 #endif // __ADN_Connector_ListView_ABC_h_

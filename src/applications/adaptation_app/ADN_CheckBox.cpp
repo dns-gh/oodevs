@@ -34,7 +34,6 @@ ADN_CheckBox::ADN_CheckBox(QWidget* parent, const char * name)
     connect( static_cast< ADN_App* >( qApp )->GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_CheckBox constructor
 // Created: JDY 03-07-02
@@ -56,7 +55,6 @@ ADN_CheckBox::~ADN_CheckBox()
 {
     delete pConnector_;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_CheckBox::BoolChanged

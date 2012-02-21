@@ -46,7 +46,6 @@ public:
     virtual std::string GetExceptionMessage() const;
     //@}
 
-
     //! @name Accessors
     //@{
     const std::string& GetTitle();
@@ -63,7 +62,6 @@ private:
     //@}
 };
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_DataException::GetTitle
 // Created: AGN 2003-12-09
@@ -73,7 +71,6 @@ const std::string& ADN_DataException::GetTitle()
 {
     return strErrorTitle_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_DataException::GetDescription
@@ -85,7 +82,6 @@ const std::string& ADN_DataException::GetDescription()
     return strErrorDescription_;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_DataException::GetSolution
 // Created: AGN 2003-12-09
@@ -95,6 +91,5 @@ const std::string& ADN_DataException::GetSolution()
 {
     return strErrorSolution_;
 }
-
 
 #endif // __ADN_DataException_h_

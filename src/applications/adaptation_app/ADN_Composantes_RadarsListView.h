@@ -15,7 +15,6 @@
 #include "ADN_ListView.h"
 #include "ADN_Radars_Data.h"
 
-
 // =============================================================================
 /** @class  ADN_Composantes_RadarsListView
     @brief  ADN_Composantes_RadarsListView
@@ -36,6 +35,5 @@ private:
     void OnContextMenu( const QPoint& pt );
     bool Contains( const ADN_Radars_Data::RadarInfos* pInfo );
 };
-
 
 #endif // __ADN_Composantes_RadarsListView_h_

@@ -32,5 +32,4 @@ public:
     //@}
 };
 
-
 #endif // __ADN_Breakdown_Wizard_h_

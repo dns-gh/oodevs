@@ -16,7 +16,6 @@
 //
 // *****************************************************************************
 
-
 #include "adaptation_app_pch.h"
 #include "ADN_Breakdown_Wizard.h"
 
@@ -26,7 +25,6 @@
 #include "ADN_Wizard_FirstPage_Default.h"
 
 typedef ADN_Breakdowns_Data::BreakdownInfo BreakdownInfo;
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Breakdown_Wizard constructor
@@ -46,7 +44,6 @@ ADN_Breakdown_Wizard::ADN_Breakdown_Wizard( QWidget* pParent, const char* szName
     new ADN_Wizard_LastPage( this,qApp->translate( "ADN_Breakdown_Wizard", "Creation finished" ),
         qApp->translate( "ADN_Breakdown_Wizard",  "Click \"Done\" to create the new breakdown." ) );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Breakdown_Wizard destructor

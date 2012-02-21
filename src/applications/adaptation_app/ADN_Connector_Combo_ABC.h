@@ -34,7 +34,6 @@ protected:
 
 class ADN_ComboBoxItem;
 
-
 template < class T >
 class ADN_Connector_Combo
 : public ADN_Connector_Combo_ABC
@@ -62,6 +61,5 @@ protected:
 };
 
 #include "ADN_Connector_Combo_ABC.inl"
-
 
 #endif // __ADN_Connector_Combo_ABC_h_

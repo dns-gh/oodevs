@@ -59,5 +59,4 @@ public:
     //@}
 };
 
-
 #endif // __ADN_Data_ABC_h_

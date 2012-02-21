@@ -36,7 +36,6 @@ bool ADN_SideWidget::event( QEvent *event )
     return QWidget::event( event );
 }
 
-
 // -----------------------------------------------------------------------------
 // ADN_BaseEditLine
 // -----------------------------------------------------------------------------
@@ -269,7 +268,7 @@ void ADN_BaseEditLine::UpdateSideWidgetLocations()
     int left = TextMargin( ADN_BaseEditLine::LeftSide );
     int midHeight = textRect.center().y() + 1;
 
-    if ( leftLayout_->count() > 0 )
+    if( leftLayout_->count() > 0 )
     {
         int leftHeight = midHeight - leftWidget_->height() / 2;
         int leftWidth = leftWidget_->width();

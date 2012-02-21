@@ -34,7 +34,6 @@ ADN_Communications_Data::ADN_Communications_Data()
 {
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Communications_Data::~ADN_Communications_Data
 // Created: APE 2005-03-14
@@ -42,7 +41,6 @@ ADN_Communications_Data::ADN_Communications_Data()
 ADN_Communications_Data::~ADN_Communications_Data()
 {
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Communications_Data::FilesNeeded
@@ -53,7 +51,6 @@ void ADN_Communications_Data::FilesNeeded( T_StringList& vFiles ) const
     vFiles.push_back( ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szCom_.GetData() );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Communications_Data::Reset
 // Created: APE 2005-03-14
@@ -61,7 +58,6 @@ void ADN_Communications_Data::FilesNeeded( T_StringList& vFiles ) const
 void ADN_Communications_Data::Reset()
 {
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Communications_Data::ReadArchive

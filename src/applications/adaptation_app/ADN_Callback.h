@@ -19,7 +19,6 @@
 #ifndef __ADN_Callback_h_
 #define __ADN_Callback_h_
 
-
 // =============================================================================
 /** @class  ADN_Callback_ABC
     @brief  ADN_Callback_ABC
@@ -34,7 +33,6 @@ public:
     virtual ~ADN_Callback_ABC() {}
     virtual Result operator()() = 0;
 };
-
 
 // =============================================================================
 /** @class  ADN_Callback
@@ -59,6 +57,5 @@ private:
     std::mem_fun_t<Result, Class> f_;
     Class* pCaller_;
 };
-
 
 #endif // __ADN_Callback_h_

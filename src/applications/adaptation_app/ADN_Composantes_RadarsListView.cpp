@@ -21,7 +21,6 @@
 
 typedef ADN_Composantes_Data::RadarInfos RadarInfos;
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Composantes_RadarsListView constructor
 // Created: JDY 03-07-03
@@ -41,7 +40,6 @@ ADN_Composantes_RadarsListView::ADN_Composantes_RadarsListView( QWidget* pParent
     SetDeletionEnabled( true );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Composantes_RadarsListView destructor
 // Created: JDY 03-07-03
@@ -51,7 +49,6 @@ ADN_Composantes_RadarsListView::~ADN_Composantes_RadarsListView()
     delete pConnector_;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Composantes_RadarsListView::ConnectItem
 // Created: JDY 03-07-03
@@ -60,7 +57,6 @@ void ADN_Composantes_RadarsListView::ConnectItem( bool /*bConnect*/ )
 {
     // Nothing
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Composantes_RadarsListView::OnContextMenu
@@ -106,7 +102,6 @@ void ADN_Composantes_RadarsListView::OnContextMenu( const QPoint& pt )
         setCurrentItem( FindItem( pNewInfo ) );
     }
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Composantes_RadarsListView::Contains

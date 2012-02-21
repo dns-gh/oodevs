@@ -39,7 +39,6 @@ public:
 
 };
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ComboBox_Equipment_Nature constructor
 // Created: JDY 03-07-18
@@ -50,7 +49,6 @@ ADN_ComboBox_Equipment_Nature::ADN_ComboBox_Equipment_Nature(QWidget * parent, c
     // connector creation
     pConnector_=new ADN_CCB_Equipement_Nature(*this);
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ComboBox_Equipment_Nature destructor

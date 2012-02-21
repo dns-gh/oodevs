@@ -16,7 +16,6 @@
 //
 // *****************************************************************************
 
-
 #include "adaptation_app_pch.h"
 #include "ADN_ChangeValueCommand_Double.h"
 #include "moc_ADN_ChangeValueCommand_Double.cpp"

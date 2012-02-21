@@ -544,7 +544,6 @@ void ADN_Composantes_GUI::ExportHtml( ADN_HtmlBuilder& mainIndexBuilder, const Q
             builder.EndList();
         }
 
-
         builder.EndHtml();
 
         QString strFileName = tr( "Equipment_%1.htm" ).arg( n );

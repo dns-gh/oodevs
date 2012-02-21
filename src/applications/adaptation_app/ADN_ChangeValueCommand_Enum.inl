@@ -20,10 +20,10 @@
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ChangeValueCommand_Enum constructor
-/** @param  EnumType 
-    @param  modifiedData 
-    @param  nOldValue 
-    @param  nNewValue 
+/** @param  EnumType
+    @param  modifiedData
+    @param  nOldValue
+    @param  nNewValue
 */
 // Created: AGN 2004-05-13
 // -----------------------------------------------------------------------------
@@ -44,7 +44,7 @@ ADN_ChangeValueCommand_Enum< EnumType, nb >::ADN_ChangeValueCommand_Enum( ADN_Ty
 template< class EnumType, int nb >
 ADN_ChangeValueCommand_Enum< EnumType, nb >::~ADN_ChangeValueCommand_Enum()
 {
-    
+
 }
 
 // -----------------------------------------------------------------------------
@@ -66,7 +66,7 @@ void ADN_ChangeValueCommand_Enum< EnumType, nb >::UpdateDescription()
 {
     QString strDescription( qApp->translate("ADN_ChangeValueCommand","Change ") );
     strDescription += modifiedData_.GetNodeName().c_str();
-    
+
     ADN_DataTreeNode_ABC* pParent = modifiedData_.GetParentNode();
     while( pParent != 0 )
     {
@@ -84,5 +84,5 @@ void ADN_ChangeValueCommand_Enum< EnumType, nb >::UpdateDescription()
     strDescription += ADN_Type_Enum< EnumType, nb >::ConvertValue( oldValue_, ENT_Tr_ABC::eToTr ).c_str();
     strDescription += qApp->translate("ADN_ChangeValueCommand"," to ");
     strDescription += ADN_Type_Enum< EnumType, nb >::ConvertValue( newValue_, ENT_Tr_ABC::eToTr ).c_str();
-    setDescription( strDescription );    
+    setDescription( strDescription );
 }

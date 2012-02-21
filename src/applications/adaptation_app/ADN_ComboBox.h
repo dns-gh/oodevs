@@ -78,7 +78,6 @@ protected slots:
 typedef ADN_Connector_Combo<ADN_ComboBox> ADN_Connector_ComboBox;
 typedef ADN_Connector_Enum<ADN_ComboBox>  ADN_Connector_EnumComboBox;
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ComboBox::GetCurrentData
 // Created: JDY 03-07-18
@@ -88,7 +87,6 @@ void* ADN_ComboBox::GetCurrentData()
 {
     return pCurData_;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ComboBox::SetItemConnectors

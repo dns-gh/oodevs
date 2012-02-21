@@ -9,7 +9,6 @@
 //
 //*****************************************************************************
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Int constructor
 // Created: JDY 03-07-08
@@ -25,7 +24,6 @@ ADN_Connector_Int<T>::ADN_Connector_Int(T* gfx)
         pGfx_->setEnabled(false);
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Int destructor
 // Created: JDY 03-07-08
@@ -34,7 +32,6 @@ template <class T>
 ADN_Connector_Int<T>::~ADN_Connector_Int()
 {
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Int<T>::SetDataPrivate
@@ -46,10 +43,9 @@ void ADN_Connector_Int<T>::SetDataPrivate(void *data)
     assert(data);
     char   istring[256];
     sprintf_s(istring,"%d",*(int*)data);
-    if ( strcmp(istring,pGfx_->text().ascii()) )
+    if( strcmp(istring,pGfx_->text().ascii()) )
         pGfx_->setText(istring);
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Int<T>::SetDataChanged
@@ -74,7 +70,6 @@ void  ADN_Connector_Int<T>::connectNotify(const char *signal)
     bIsConnected_ = true;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Int<T>::disconnectNotify
 // Created: JDY 03-07-16
@@ -82,20 +77,19 @@ void  ADN_Connector_Int<T>::connectNotify(const char *signal)
 template <class T>
 void  ADN_Connector_Int<T>::disconnectNotify(const char *signal)
 {
-    if ( signal != 0 && !strcmp(signal,SIGNAL(DataChanged(void*))))
+    if( signal != 0 && !strcmp(signal,SIGNAL(DataChanged(void*))))
     {
-        if ( pGfx_->IsAutoEnabled() )
+        if( pGfx_->IsAutoEnabled() )
             pGfx_->setEnabled(false);
-        if ( IsAutoClear() )
+        if( IsAutoClear() )
             pGfx_->setText("");
     }
     bIsConnected_ = false;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Connector_Int::IsConnected
-/** @return 
+/** @return
 */
 // Created: AGN 2004-05-25
 // -----------------------------------------------------------------------------

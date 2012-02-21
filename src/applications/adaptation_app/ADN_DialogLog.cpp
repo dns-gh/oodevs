@@ -20,7 +20,6 @@ public:
     : Q3TextView( parent, name ) { }
 };
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_DialogLog constructor
 // Created: JDY 03-09-08
@@ -45,7 +44,6 @@ ADN_DialogLog::ADN_DialogLog( QWidget * parent, const char * name)
     grid->addMultiCellWidget( pOk_, 2, 2, 0, 1, Qt::AlignCenter );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_DialogLog destructor
 // Created: JDY 03-09-08
@@ -54,7 +52,6 @@ ADN_DialogLog::~ADN_DialogLog()
 {
 
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_DialogLog::show
@@ -65,13 +62,12 @@ void ADN_DialogLog::show()
     pMsg_->setText(szMsg_.c_str() );
 
     std::string rich;
-    for ( std::list<std::string>::iterator it=lMsg_.begin();it!=lMsg_.end();++it )
+    for( std::list<std::string>::iterator it=lMsg_.begin();it!=lMsg_.end();++it )
         rich+=MT_FormatString(szFormat_.c_str(),it->c_str());
     pText_->setText(rich.c_str());
 
     QDialog::show();
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_DialogLog::done
@@ -82,5 +78,4 @@ void ADN_DialogLog::done(int a)
     lMsg_.clear();
     QDialog::done(a);
 }
-
 

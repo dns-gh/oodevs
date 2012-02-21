@@ -70,7 +70,6 @@ private:
     bool bState_;
 };
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_BoolEditor::GetState
 // Created: AGN 2004-03-11

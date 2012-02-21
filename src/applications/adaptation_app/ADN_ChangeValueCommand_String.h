@@ -73,5 +73,4 @@ private:
     //@}
 };
 
-
 #endif // __ADN_ChangeValueCommand_String_h_

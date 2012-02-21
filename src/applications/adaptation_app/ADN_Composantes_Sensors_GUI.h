@@ -32,5 +32,4 @@ public:
     void RemoveCurrentSensor();
 };
 
-
 #endif // __ADN_Composantes_Sensors_GUI_h_

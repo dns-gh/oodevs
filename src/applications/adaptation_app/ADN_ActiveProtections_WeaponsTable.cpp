@@ -55,8 +55,6 @@ private:
     ADN_CT_ActiveProtections_WeaponsTable& operator=( const ADN_CT_ActiveProtections_WeaponsTable& );
 };
 
-
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ActiveProtections_WeaponsTable constructor
 // Created: FDS 2010-02-24
@@ -85,7 +83,6 @@ ADN_ActiveProtections_WeaponsTable::ADN_ActiveProtections_WeaponsTable( const st
     // connector creation
     pConnector_ = new ADN_CT_ActiveProtections_WeaponsTable( *this );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ActiveProtections_WeaponsTable destructor

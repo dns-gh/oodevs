@@ -32,5 +32,4 @@ public:
     //@}
 };
 
-
 #endif // __ADN_Automata_Wizard_h_

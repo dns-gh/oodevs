@@ -25,7 +25,6 @@
 
 typedef ADN_Breakdowns_Data::BreakdownInfo BreakdownInfo;
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Breakdowns_ListView constructor
 // Created: APE 2005-01-06
@@ -42,7 +41,6 @@ ADN_Breakdowns_ListView::ADN_Breakdowns_ListView( QWidget* pParent, const char* 
     SetDeletionEnabled( true );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Breakdowns_ListView destructor
 // Created: APE 2005-01-06
@@ -51,7 +49,6 @@ ADN_Breakdowns_ListView::~ADN_Breakdowns_ListView()
 {
     delete pConnector_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Breakdowns_ListView::ConnectItem
@@ -72,7 +69,6 @@ void ADN_Breakdowns_ListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Breakdowns_GUI::eRepairTimeVariance]->Connect( &pInfos->repairTimeVariance_, bConnect );
     vItemConnectors_[ADN_Breakdowns_GUI::eParts]->Connect( &pInfos->vRepairParts_, bConnect );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Breakdowns_ListView::OnContextMenu

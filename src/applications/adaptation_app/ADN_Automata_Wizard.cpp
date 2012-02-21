@@ -16,7 +16,6 @@
 //
 // *****************************************************************************
 
-
 #include "adaptation_app_pch.h"
 #include "ADN_Automata_Wizard.h"
 
@@ -26,7 +25,6 @@
 #include "ADN_Wizard_LastPage.h"
 
 typedef ADN_Automata_Data::AutomatonInfos AutomatonInfos;
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Automata_Wizard constructor
@@ -45,7 +43,6 @@ ADN_Automata_Wizard::ADN_Automata_Wizard( QWidget* pParent, const char* szName )
     new ADN_Wizard_LastPage( this,qApp->translate( "ADN_Automata_Wizard", "Creation finished" ),
         qApp->translate( "ADN_Automata_Wizard", "Click \"Done\" to create the new automaton." ) );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Automata_Wizard destructor

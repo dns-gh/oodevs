@@ -26,7 +26,6 @@
 
 typedef ADN_Breakdowns_Data::RepairPartInfo RepairPartInfo;
 
-
 //-----------------------------------------------------------------------------
 // Internal table connector
 //-----------------------------------------------------------------------------
@@ -54,7 +53,6 @@ public:
         pItemNbr->GetConnector().Connect( &static_cast<RepairPartInfo*>(pObj)->nNbr_ );
     }
 };
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Breakdowns_PartsTable constructor
@@ -85,7 +83,6 @@ ADN_Breakdowns_PartsTable::ADN_Breakdowns_PartsTable( QWidget* pParent )
     pConnector_ = new ADN_Connector_PartsTable( *this );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Breakdowns_PartsTable destructor
 // Created: APE 2005-01-07
@@ -94,7 +91,6 @@ ADN_Breakdowns_PartsTable::~ADN_Breakdowns_PartsTable()
 {
     delete pConnector_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Breakdowns_PartsTable::OnContextMenu
@@ -139,7 +135,6 @@ void ADN_Breakdowns_PartsTable::OnContextMenu( int /*nRow*/, int /*nCol*/, const
         pCTable->AddItem( 0 );
     }
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Breakdowns_PartsTable::Contains

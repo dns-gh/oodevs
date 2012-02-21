@@ -40,7 +40,6 @@ ADN_Composantes_Data::AmbulanceInfos::AmbulanceInfos()
         transportSkills_[n] = false;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: AmbulanceInfos::GetNodeName
 // Created: APE 2005-03-11
@@ -1122,7 +1121,6 @@ void ADN_Composantes_Data::HumanProtectionInfos::WriteArchive( xml::xostream& ou
     output << xml::start( "human-protections" ) << xml::end;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ActiveProtectionsInfos::ActiveProtectionsInfos
 // Created: FDS 10-02-24
@@ -1720,7 +1718,6 @@ void ADN_Composantes_Data::ConsumptionsInfos::WriteArchive( xml::xostream& outpu
     output << xml::end;
 }
 
-
 //=============================================================================
 //
 //=============================================================================
@@ -1913,7 +1910,7 @@ void ADN_Composantes_Data::ComposanteInfos::ReadSpeed( xml::xistream& input )
 {
     std::string strLocation;
     input >> xml::attribute( "terrain", strLocation );
-    
+
     try
     {
         E_Location nLocation = ADN_Tr::ConvertToLocation( strLocation );
@@ -2060,7 +2057,7 @@ void ADN_Composantes_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
           >> xml::start( "objects" )
             >> xml::list( "object", *this, &ADN_Composantes_Data::ComposanteInfos::ReadObject )
           >> xml::end;
-    if ( input.has_child( "power-indicators" ) )
+    if( input.has_child( "power-indicators" ) )
     {
         input >> xml::start( "power-indicators" )
                 >> xml::attribute( "direct-fire", nPowerDirectFire_ )
@@ -2208,7 +2205,7 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output 
         output << xml::end;
     }
 
-    if ( nPowerDirectFire_ != 0 || nPowerIndirectFire_ != 0 || nPowerCloseCombat_ != 0 || nPowerEngineering_ != 0 )
+    if( nPowerDirectFire_ != 0 || nPowerIndirectFire_ != 0 || nPowerCloseCombat_ != 0 || nPowerEngineering_ != 0 )
     {
         output << xml::start( "power-indicators" )
                  << xml::attribute( "direct-fire", nPowerDirectFire_ )
@@ -2262,7 +2259,6 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output 
 //=============================================================================
 //
 //=============================================================================
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Composantes_Data constructor

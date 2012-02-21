@@ -26,7 +26,6 @@ public:
     const ADN_Connector_Table_ABC& tab_;
 };
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Table_ABC constructor
 // Created: JDY 03-07-09
@@ -41,7 +40,6 @@ ADN_Connector_Table_ABC::ADN_Connector_Table_ABC(ADN_Table& tab, bool bWithSort,
         tab_.setEnabled(false);
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Table_ABC destructor
 // Created: JDY 03-07-09
@@ -49,7 +47,6 @@ ADN_Connector_Table_ABC::ADN_Connector_Table_ABC(ADN_Table& tab, bool bWithSort,
 ADN_Connector_Table_ABC::~ADN_Connector_Table_ABC()
 {
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Connector_Table_ABC::ConnectPrivateSub
@@ -72,7 +69,6 @@ void ADN_Connector_Table_ABC::ConnectPrivateSub( ADN_Connector_Vector_ABC* pTarg
     pTarget->Initialize( *this );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Connector_Table_ABC::DisconnectPrivateSub
 // Created: APE 2005-02-28
@@ -93,7 +89,6 @@ void ADN_Connector_Table_ABC::DisconnectPrivateSub( ADN_Connector_Vector_ABC* pT
     if( IsAutoClear() )
         Clear();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Connector_Table_ABC::AddItemPrivate
@@ -129,7 +124,6 @@ bool ADN_Connector_Table_ABC::AddItemPrivate(void *obj,bool)
 
     return true;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Connector_Table_ABC::RemItemPrivate
@@ -173,8 +167,6 @@ bool ADN_Connector_Table_ABC::LessComparison( void* , void* ) const
     return true;
 }
 
-
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Table_ABC::ClearPrivate
 // Created: JDY 03-07-09
@@ -193,7 +185,6 @@ void ADN_Connector_Table_ABC::ClearPrivate(bool bInConnection)
         vDatas_.clear();
     }
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Table_ABC::SetDataPrivate

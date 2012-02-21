@@ -29,9 +29,7 @@
 #include "ADN_Tr.h"
 #include "ADN_ListView_Composantes.h"
 
-
 typedef ADN_Composantes_Data::ConsumptionItem ConsumptionItem;
-
 
 //-----------------------------------------------------------------------------
 // Internal Table connector
@@ -79,7 +77,6 @@ public:
     }
 };
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Composantes_ConsumptionsTable constructor
 // Created: APE 2005-01-07
@@ -114,7 +111,6 @@ ADN_Composantes_ConsumptionsTable::ADN_Composantes_ConsumptionsTable( QWidget* p
     // Create the connector.
     pConnector_ = new ADN_Connector_ConsumptionTable( *this );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Composantes_ConsumptionsTable destructor
@@ -189,7 +185,6 @@ void ADN_Composantes_ConsumptionsTable::OnContextMenu( int /*nRow*/, int /*nCol*
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Composantes_ConsumptionsTable::CreateNewElement
 // Created: APE 2005-01-25
@@ -203,7 +198,6 @@ void ADN_Composantes_ConsumptionsTable::CreateNewElement( T_MenuItemParameters& 
     pCTable->AddItem( pNewItem );
     pCTable->AddItem( 0 );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Composantes_ConsumptionsTable::DeleteCurrentElement

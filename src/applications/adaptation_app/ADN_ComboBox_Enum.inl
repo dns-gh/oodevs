@@ -12,12 +12,12 @@
 // Created: JDY 03-08-29
 //-----------------------------------------------------------------------------
 template <class EnumType>
-ADN_ComboBox_Enum<EnumType>::ADN_ComboBox_Enum(T_Converter cv,QWidget * parent, const char * name) 
+ADN_ComboBox_Enum<EnumType>::ADN_ComboBox_Enum(T_Converter cv,QWidget * parent, const char * name)
     : ADN_ComboBox(parent,name)
     , converter_(cv)
-{   
-    pConnector_=new ADN_CCB(*this); 
-    assert(pConnector_); 
+{
+    pConnector_=new ADN_CCB(*this);
+    assert(pConnector_);
 }
 
 //-----------------------------------------------------------------------------
@@ -26,7 +26,7 @@ ADN_ComboBox_Enum<EnumType>::ADN_ComboBox_Enum(T_Converter cv,QWidget * parent, 
 //-----------------------------------------------------------------------------
 template <class EnumType>
 ADN_ComboBox_Enum<EnumType>::~ADN_ComboBox_Enum()
-{   
+{
     delete pConnector_;
 }
 

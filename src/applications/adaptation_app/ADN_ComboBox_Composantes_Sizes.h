@@ -27,5 +27,4 @@ public:
 private:
 };
 
-
 #endif // __ADN_ComboBox_Composantes_Sizes_h_

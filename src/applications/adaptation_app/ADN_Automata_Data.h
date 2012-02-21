@@ -17,7 +17,6 @@
 
 namespace xml { class xistream; }
 
-
 // =============================================================================
 /** @class  ADN_Automata_Data
 */
@@ -53,7 +52,6 @@ public:
     typedef ADN_Type_Vector_ABC<UnitInfos> T_UnitInfosVector;
     typedef T_UnitInfosVector::iterator    IT_UnitInfosVector;
 
-
 // *****************************************************************************
     class AutomatonInfos
         : public ADN_Ref_ABC
@@ -86,7 +84,6 @@ public:
     typedef ADN_Type_Vector_ABC<AutomatonInfos>  T_AutomatonInfosVector;
     typedef T_AutomatonInfosVector::iterator      IT_AutomatonInfosVector;
 
-
 // *****************************************************************************
 public:
     ADN_Automata_Data();
@@ -110,7 +107,6 @@ public:
     T_AutomatonInfosVector  vAutomata_;
 };
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Automata_Data::GetAutomata
 // Created: APE 2004-12-02
@@ -120,7 +116,6 @@ ADN_Automata_Data::T_AutomatonInfosVector& ADN_Automata_Data::GetAutomata()
 {
     return vAutomata_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Automata_Data::FindAutomaton
@@ -134,6 +129,5 @@ ADN_Automata_Data::AutomatonInfos* ADN_Automata_Data::FindAutomaton( const std::
         return 0;
     return *it;
 }
-
 
 #endif // __ADN_Automata_Data_h_
