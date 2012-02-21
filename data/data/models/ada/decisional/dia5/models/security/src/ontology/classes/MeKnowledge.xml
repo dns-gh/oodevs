@@ -552,5 +552,40 @@ Returns 'true' upon action completion (when the link is done).</description>
                 </type>
             </return>
         </method>
+        <method name="operate" abstract="false">
+            <description>To operate and run a system.</description>
+            <argument name="system">
+                <description>The system to operate. Returns 'true' once the given system is running.</description>
+                <type>
+                    <class name="agent.world.System"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="activateFitration" abstract="false">
+            <description>To activate the crowds filtration capability of a given checkpoint.&#xD;
+Returns 'true' when checkPoint is filtering.</description>
+            <argument name="checkPoint">
+                <description>The checkPoint object to activate.</description>
+                <type>
+                    <class name="agent.world.CheckPoint"/>
+                </type>
+            </argument>
+            <argument name="intensity">
+                <description>The strenght that is used to filter crowds.  The value is defined between 0 et 1. A value of '0' means &quot;no filtration at all&quot;. A value of '1' means &quot;totally blocked&quot; (the crowds that interact with the checkpoint cannot go through it).</description>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
     </methods>
 </class>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.behaviors.skills.actions.IncreaseProduction" source-version="1.0.0">
-    <description>For an agent to enact the action of increasing temporary the production of a resource node. While this action is activated, the production of the resource node will be increased with the specified quantity of resource. Once the action is no longer triggered, production returns back to initial production capability.</description>
+    <description>For an agent to enact the decision of increasing temporary the production of a resource node. While this action is activated, the production of the resource node will be increased with the specified quantity of resource. Once the action is no longer triggered, production returns back to initial production capability.</description>
     <parameters>
         <parameter name="resourceNode">
             <description>The resource node to act on. </description>

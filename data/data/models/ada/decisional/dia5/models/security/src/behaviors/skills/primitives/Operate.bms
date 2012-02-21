@@ -1,0 +1,40 @@
+-- ****************************************************************************
+-- To operate a system
+-- @params: self.params.system, a masalife 'System' object
+-- @returns: "operating", when agent is operating the system.
+-- ****************************************************************************
+rootnode 
+{
+    connections = { skill.links.reach, skill.links.operate },
+    feedbacks   = { "operating" },
+
+    -- --------------------------------------------------------------------------------
+    -- Feedbacks
+    -- --------------------------------------------------------------------------------
+    done = function( self, params ) -- from reach skill
+        self.arrived = true
+    end,
+    operateActionRunning = function( self, params )
+        Feedback( self.feedbacks.operating, params )
+    end,
+
+    -- --------------------------------------------------------------------------------
+    -- Init
+    -- --------------------------------------------------------------------------------
+    create = function( self )
+        self.arrived = false
+    end,
+
+    -- --------------------------------------------------------------------------------
+    -- Feedbacks
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        local Activate = Activate
+
+        if self.arrived then
+            Activate( skill.links.operate, 1, { system = self.params.system } )
+        end
+        Activate( skill.links.reach, 1, { destination = self.params.system } )
+        self.arrived = false
+    end
+}

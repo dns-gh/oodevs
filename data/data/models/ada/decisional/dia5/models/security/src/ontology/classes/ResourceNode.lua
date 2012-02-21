@@ -11,6 +11,11 @@ method "disableIt" (
         return integration.disable( self )
     end )
 
+method "operateIt" ( 
+    function( self ) 
+        return integration.enable( self )
+    end )
+
 -- --------------------------------------------------------------------------------
 -- Information
 -- --------------------------------------------------------------------------------

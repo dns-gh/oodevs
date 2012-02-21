@@ -60,6 +60,11 @@
         <skill name="agent.behaviors.skills.actions.Heal"/>
         <skill name="agent.behaviors.skills.actions.CreateResourceNetWorkLink"/>
         <skill name="behaviors.skills.primitives.CreateResourceNetWorkLinks"/>
+        <skill name="agent.behaviors.skills.actions.Operate"/>
+        <skill name="behaviors.skills.primitives.Operate"/>
+        <skill name="behaviors.skills.OperateAPlannedObject"/>
+        <skill name="agent.behaviors.skills.actions.FilterWith"/>
+        <skill name="behaviors.skills.primitives.Filter"/>
     </skills>
     <resources>
         <resource name="agent.behaviors.resources.Motion"/>

@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.world.System" source-version="1.0.0">
+<interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.world.System" source-version="1.0.0" extends="agent.world.Destination">
     <description>A sytem is an installation that can be used by an agent. To be used, it may require to be &quot;enabled&quot; or &quot;operated&quot;.  </description>
     <methods>
         <method name="enableIt">
@@ -19,7 +19,7 @@
             </return>
         </method>
         <method name="operateIt">
-            <description></description>
+            <description>To manage and run this element in order to activate it. Operating a 'system' object is a permanent effect. The object is activated until tthe agent Unit is operating it.</description>
             <return>
                 <type>
                     <simple name="boolean"/>

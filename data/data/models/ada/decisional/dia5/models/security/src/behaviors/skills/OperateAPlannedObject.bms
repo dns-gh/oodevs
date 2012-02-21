@@ -1,0 +1,36 @@
+-- **************************************************************************** 
+-- To operate planned object
+-- @params: self.params.plannedObject, a planned object to build and operate
+-- @returns: 
+-- ****************************************************************************
+rootnode
+{
+    connections = { skill.links.create, skill.links.operate },
+    feedbacks   = { "operating" },
+
+    -- -------------------------------------------------------------------------------- 
+    -- Feedbacks
+    -- --------------------------------------------------------------------------------
+    created = function( self, params, additionalParams ) -- call by 'Create' skill
+        self.createdWork = additionalParams.work
+        self.isCreated = true
+    end,
+
+    operateActionCompleted = function( self, params ) -- called by 'Operate' skills
+        Feedback( self.feedbacks.operating, { object = params.system } )
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Create the planned object, then operate it.
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        local Activate = Activate
+
+        -- MoveToward nearest position from nearest agent
+        if not self.isCreated then
+            Activate( skill.links.create, 1, { works = { self.params.plannedWork } } )
+        else
+            Activate( skill.links.operate, 1, { system = self.createdWork } )
+        end
+    end
+}

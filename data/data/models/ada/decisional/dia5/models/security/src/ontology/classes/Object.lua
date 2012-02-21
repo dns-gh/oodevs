@@ -59,15 +59,15 @@ method "isExtinguished" (
 
 method "extinguishIt" ( masalife.brain.integration.startStopAction( 
 { 
-        start = function( self )
-            return integration.startExtinguish( self )
-        end, 
-        started = function( self )
-            return integration.updateExtinguish( self )
-        end, 
-        stop = function( self )
-            return integration.stopExtinguish( self )
-        end,
+    start = function( self )
+        return integration.startExtinguish( self )
+    end, 
+    started = function( self )
+        return integration.updateExtinguish( self )
+    end, 
+    stop = function( self )
+        return integration.stopExtinguish( self )
+    end,
 } ) )
 
 method "canBeExtinguished" ( 
@@ -82,6 +82,51 @@ method "createLinkWith" (
     function( self, resourceNode ) 
         return integration.createResourceLinkWithObject( self, resourceNode )
     end )
+
+-- --------------------------------------------------------------------------------
+-- System
+-- --------------------------------------------------------------------------------
+method "disableIt" (
+    function( self )
+        return true -- $$$ TODO
+    end )
+
+method "enableIt" (
+    function( self )
+        return true -- $$$ TODO
+    end )
+
+method "operateIt" ( masalife.brain.integration.startStopAction( 
+{
+    start = function( self )
+        integration.startAnimateIt( self )
+        return true
+    end,
+    started = function( self )
+        return true
+    end,
+    stop = function( self )
+        return integration.stopAnimateIt( self )
+    end,
+} ) )
+
+-- --------------------------------------------------------------------------------
+-- CheckPoint
+-- --------------------------------------------------------------------------------
+method "filter" ( masalife.brain.integration.startStopAction( 
+{
+    start = function( self, intensity )
+        integration.startFilterCrowds( intensity, self.source )
+        return true
+    end,
+    started = function( self )
+        return true
+    end,
+    stop = function( self )
+        integration.stopFilterCrowds( self.source )
+        return false
+    end,
+} ) )
 
 -- --------------------------------------------------------------------------------
 -- Specific classe methods

@@ -76,6 +76,11 @@ method "disable" (
         return system:disableIt()
     end )
 
+method "operate" (
+    function( self, system )
+        return system:operateIt()
+    end )
+
 -- --------------------------------------------------------------------------------
 -- Resource nodes
 -- --------------------------------------------------------------------------------
@@ -260,6 +265,13 @@ method "createResourceLink" (
         return resourceReceiver:createLinkWith( resourceNode )
     end )
 
+-- --------------------------------------------------------------------------------
+-- Check point activation
+-- --------------------------------------------------------------------------------
+method "activateFiltration" ( 
+    function( self, checkPoint, intensity )
+        return checkPoint:filter( intensity )
+    end )
 
 -- --------------------------------------------------------------------------------
 -- Reports

@@ -13,6 +13,8 @@
     <realizes>agent.world.ResourceNode</realizes>
     <realizes>agent.world.Work</realizes>
     <realizes>agent.world.ResourceReceiver</realizes>
+    <realizes>agent.world.System</realizes>
+    <realizes>agent.world.CheckPoint</realizes>
     <methods>
         <method name="getPosition">
             <return name="simPosition">
@@ -115,6 +117,46 @@ Returns 'true' when element is deconstructed.</description>
                     <class name="agent.world.ResourceNode"/>
                 </type>
             </argument>
+        </method>
+        <method name="disableIt" abstract="false">
+            <description>Stops a system from being activated. A deactivated system can't be used. </description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="enableIt" abstract="false">
+            <description>Must be called on a system that requires activation in order to be used. </description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="operateIt" abstract="false">
+            <description>To manage and run this element in order to activate it. Operating a 'system' object is a permanent effect. The object is activated until tthe agent Unit is operating it.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="filter" abstract="false">
+            <description>To filter crowds that interact with this element. Returns true once the filtration has just started.&#xD;
+&#xD;
+This implementation returns true once the crowds filtration property is running.</description>
+            <argument name="intensity">
+                <description>The strenght that is used to filter crowds.  The value is defined between 0 et 1. A value of '0' means &quot;no filtration at all&quot;. A value of '1' means &quot;totally blocked&quot; (the crowds that interact with the checkpoint cannot go through it).</description>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
         </method>
     </methods>
 </class>

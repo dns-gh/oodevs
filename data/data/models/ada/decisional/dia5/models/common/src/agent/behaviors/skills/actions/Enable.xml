@@ -9,12 +9,9 @@
             </type>
         </parameter>
     </parameters>
-    <modifiers/>
     <body-type>
         <class name="agent.world.Body"/>
     </body-type>
-    <links/>
-    <resources/>
     <feedbacks>
         <feedback name="enableActionCompleted">
             <description>Executed upon action completion. </description>

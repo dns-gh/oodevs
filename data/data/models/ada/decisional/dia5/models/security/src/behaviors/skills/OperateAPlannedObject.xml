@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.skills.OperateAPlannedObject" source-version="1.0.0">
+    <description>For an agent to move toward an planned object, create it and then, operate it. &#xD;
+This skill is specific to 'plannedWork' and 'Object' classes. It uses the 'Create' skill with the 'plannedWork'. Because the 'Create' skill returns the created object (ontology.classes.Object) that realizes the concept of 'System', this skill uses the 'Operate' skill on this new created object.</description>
+    <parameters>
+        <parameter name="plannedWork">
+            <description>The plannified work to create and operate.</description>
+            <type>
+                <class name="ontology.classes.PlannedWork"/>
+            </type>
+        </parameter>
+    </parameters>
+    <body-type>
+        <class name="ontology.classes.MeKnowledge"/>
+    </body-type>
+    <links>
+        <link name="create" skill="behaviors.skills.primitives.Create">
+            <description></description>
+        </link>
+        <link name="operate" skill="behaviors.skills.primitives.Operate">
+            <description></description>
+        </link>
+    </links>
+    <feedbacks>
+        <feedback name="operating">
+            <description></description>
+            <argument name="object">
+                <description>The object created, and operated (a 'decontamination site' or a 'checkPoint' for instance). </description>
+                <type>
+                    <class name="ontology.classes.Object"/>
+                </type>
+            </argument>
+        </feedback>
+    </feedbacks>
+</skill>
