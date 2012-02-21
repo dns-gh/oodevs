@@ -1291,6 +1291,7 @@ bool ADN_Objects_Data::IsValidDatabase()
     for( IT_ObjectsInfos_Vector it = vObjectInfos_.begin(); it != vObjectInfos_.end(); ++it )
         if( !( *it )->IsValidDatabase() )
             return false;
+    return true;
 }
 
 //-----------------------------------------------------------------------------

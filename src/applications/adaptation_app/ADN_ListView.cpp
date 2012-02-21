@@ -563,7 +563,7 @@ void ADN_ListView::RecursiveFillSheetFromItem( Q3ListViewItem* qItem, BasicExcel
 // Name: ADN_ListView::FillSheetFromItem
 // Created: ABR 2012-02-10
 // -----------------------------------------------------------------------------
-void ADN_ListView::FillSheetFromItem( Q3ListViewItem* qItem, BasicExcelWorksheet& sheet, XLSFormatManager& fmt_mgr, int depth, int maxDepth, int& row, std::vector< int >& columnMaxContentSize, int nbRow ) const
+void ADN_ListView::FillSheetFromItem( Q3ListViewItem* qItem, BasicExcelWorksheet& sheet, XLSFormatManager& fmt_mgr, int depth, int maxDepth, int& row, std::vector< int >& columnMaxContentSize, int /*nbRow*/ ) const
 {
     for( int col = 0; col < columns(); ++col )
     {
