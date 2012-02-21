@@ -38,7 +38,7 @@ QString ADN_GUI_ABC::tr( const char* s, const char* c )
 // Name: ADN_GUI_ABC::CreateMainWidget
 // Created: ABR 2012-01-20
 // -----------------------------------------------------------------------------
-QWidget* ADN_GUI_ABC::CreateScrollArea( QWidget& content, QWidget* list /*= 0*/, bool paintSplitter /*= true*/, bool paintBackground /*= false*/, bool showFrameBorder /*= true*/, int margin /*= 10*/, int spacing /*= 10*/ )
+QWidget* ADN_GUI_ABC::CreateScrollArea( QWidget& content, QWidget* list /* = 0*/, bool paintSplitter /* = true*/, bool paintBackground /* = false*/, bool showFrameBorder /* = true*/, int margin /* = 10*/, int spacing /* = 10*/ )
 {
     // Content area
     QScrollArea* scrollArea = new QScrollArea();

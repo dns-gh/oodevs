@@ -17,7 +17,7 @@
 // Name: ADN_SearchLineEdit constructor
 // Created: ABR 2012-01-19
 // -----------------------------------------------------------------------------
-ADN_SearchLineEdit::ADN_SearchLineEdit( QWidget* parent /*= 0*/ )
+ADN_SearchLineEdit::ADN_SearchLineEdit( QWidget* parent /* = 0*/ )
     : ADN_BaseEditLine( parent )
 {
     // search icon on the left

@@ -15,7 +15,7 @@
 // Name: ADN_ClearButton constructor
 // Created: ABR 2012-01-19
 // -----------------------------------------------------------------------------
-ADN_ClearButton::ADN_ClearButton( QWidget *parent /*= 0*/ )
+ADN_ClearButton::ADN_ClearButton( QWidget *parent /* = 0*/ )
     : QAbstractButton(parent)
 {
     setCursor( Qt::ArrowCursor );

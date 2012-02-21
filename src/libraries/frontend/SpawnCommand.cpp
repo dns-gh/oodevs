@@ -27,7 +27,7 @@ struct SpawnCommand::InternalData
 // Created: AGE 2007-10-04
 // -----------------------------------------------------------------------------
 SpawnCommand::SpawnCommand( const tools::GeneralConfig& config, const char* exe, bool attach ,
-                            std::string commanderEndpoint /*= ""*/, std::string jobName /*= ""*/ )
+                            std::string commanderEndpoint /* = ""*/, std::string jobName /* = ""*/ )
     : config_                   ( config )
     , internal_                 ( new InternalData() )
     , attach_                   ( attach )

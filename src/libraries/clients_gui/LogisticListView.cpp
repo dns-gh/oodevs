@@ -34,7 +34,7 @@ using namespace kernel;
 // Name: LogisticListView constructor
 // Created: ABR 2011-09-13
 // -----------------------------------------------------------------------------
-LogisticListView::LogisticListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory, const Profile_ABC& profile, const EntitySymbols& symbols, bool renamable /*= false*/ )
+LogisticListView::LogisticListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory, const Profile_ABC& profile, const EntitySymbols& symbols, bool renamable /* = false*/ )
     : HierarchyListView_ABC( pParent, controllers, factory, profile, symbols )
     , profile_    ( profile )
     , droppedUnit_( 0 )

@@ -189,13 +189,13 @@ void UnitStateTableCrew::ComputeValues( E_HumanRank rank )
 // Name: UnitStateTableCrew::AddLine
 // Created: ABR 2011-02-25
 // -----------------------------------------------------------------------------
-void UnitStateTableCrew::AddLine( int number /*= 0*/,
-                                  E_HumanRank rank /*= eHumanRank_Officier*/,
-                                  E_HumanState state /*= eHumanState_Healhty*/,
-                                  E_InjuriesSeriousness seriousness /*= eInjuriesSeriousness_U1*/,
-                                  bool psy /*= false*/,
-                                  bool contaminated /*= false*/,
-                                  E_HumanLocation location /*= eHumanLocation_Battlefield*/ )
+void UnitStateTableCrew::AddLine( int number /* = 0*/,
+                                  E_HumanRank rank /* = eHumanRank_Officier*/,
+                                  E_HumanState state /* = eHumanState_Healhty*/,
+                                  E_InjuriesSeriousness seriousness /* = eInjuriesSeriousness_U1*/,
+                                  bool psy /* = false*/,
+                                  bool contaminated /* = false*/,
+                                  E_HumanLocation location /* = eHumanLocation_Battlefield*/ )
 {
     updating_ = true;
     unsigned int row = dataModel_.rowCount();
@@ -234,7 +234,7 @@ void UnitStateTableCrew::AddLine( int number /*= 0*/,
 // Name: UnitStateTableCrew::MergeLine
 // Created: ABR 2011-07-06
 // -----------------------------------------------------------------------------
-void UnitStateTableCrew::MergeLine( E_HumanRank rank, E_HumanState state, E_InjuriesSeriousness seriousness, bool psyop, bool contaminated, int number, E_HumanLocation location /*= eHumanLocation_Battlefield*/ )
+void UnitStateTableCrew::MergeLine( E_HumanRank rank, E_HumanState state, E_InjuriesSeriousness seriousness, bool psyop, bool contaminated, int number, E_HumanLocation location /* = eHumanLocation_Battlefield*/ )
 {
     nbrOfficersTotal_[ rank ] += number;
     if( state == eHumanState_Healthy && location == eHumanLocation_Battlefield && !contaminated && !psyop && seriousness == eInjuriesSeriousness_U1 )

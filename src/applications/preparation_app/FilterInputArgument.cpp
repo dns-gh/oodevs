@@ -17,7 +17,7 @@
 // Name: FilterInputArgument constructor
 // Created: ABR 2011-09-28
 // -----------------------------------------------------------------------------
-FilterInputArgument::FilterInputArgument( const std::string& argumentValue, const kernel::XmlDescription& description, const std::string exerciseDir /*= ""*/ )
+FilterInputArgument::FilterInputArgument( const std::string& argumentValue, const kernel::XmlDescription& description, const std::string exerciseDir /* = ""*/ )
     : exerciseDir_( exerciseDir )
     , description_( description.GetName() )
 {

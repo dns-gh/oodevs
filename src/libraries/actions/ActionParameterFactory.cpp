@@ -104,7 +104,7 @@ Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParam
 // Name: ActionParameterFactory::CreateParameter
 // Created: MGD 2010-11-09
 // -----------------------------------------------------------------------------
-Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter, const sword::MissionParameter_Value& message, const kernel::Entity_ABC& entity, bool nullValue /*= false*/ ) const
+Parameter_ABC* ActionParameterFactory::CreateParameter( const kernel::OrderParameter& parameter, const sword::MissionParameter_Value& message, const kernel::Entity_ABC& entity, bool nullValue /* = false*/ ) const
 {
     if( message.has_booleanvalue() )
         return ( nullValue ) ? new parameters::Bool( parameter )                            : new parameters::Bool( parameter, message.booleanvalue() != 0 );

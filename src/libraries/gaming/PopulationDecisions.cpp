@@ -119,7 +119,7 @@ std::string PopulationDecisions::ModelName() const
 // Name: PopulationDecisions::DoUpdate
 // Created: AHC 2012-01-23
 // -----------------------------------------------------------------------------
-void PopulationDecisions::DoUpdate( const sword::CrowdUpdate& message )
+void PopulationDecisions::DoUpdate( const sword::CrowdUpdate& /*message*/ )
 {
-
+    // NOTHING
 }

@@ -35,7 +35,7 @@ using namespace gui;
 // Name: UnitPreviewIcon constructor
 // Created: SBO 2007-10-16
 // -----------------------------------------------------------------------------
-UnitPreviewIcon::UnitPreviewIcon( QWidget* parent, Controllers& controllers, SymbolIcons& icons, ColorStrategy_ABC& colorStrategy, QString tooltips /*= QString()*/ )
+UnitPreviewIcon::UnitPreviewIcon( QWidget* parent, Controllers& controllers, SymbolIcons& icons, ColorStrategy_ABC& colorStrategy, QString tooltips /* = QString()*/ )
     : Q3HBox          ( parent )
     , controllers_   ( controllers )
     , icons_         ( icons )

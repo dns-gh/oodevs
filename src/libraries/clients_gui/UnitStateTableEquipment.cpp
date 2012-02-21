@@ -61,7 +61,7 @@ void UnitStateTableEquipment::OnItemChanged( QStandardItem* item )
 // Name: UnitStateTableEquipment::AddLines
 // Created: ABR 2011-07-08
 // -----------------------------------------------------------------------------
-void UnitStateTableEquipment::AddLines( const QString& name, int size, E_EquipmentState state, const QStringList& breakdowns, const std::vector< unsigned int > currentBreakdowns /*= std::vector< unsigned int >()*/ )
+void UnitStateTableEquipment::AddLines( const QString& name, int size, E_EquipmentState state, const QStringList& breakdowns, const std::vector< unsigned int > currentBreakdowns /* = std::vector< unsigned int >()*/ )
 {
     if( !currentBreakdowns.empty() && ( state != eEquipmentState_RepairableWithEvacuation || static_cast< int >( currentBreakdowns.size() ) != size ) )
         throw std::runtime_error( __FUNCTION__ " Bad amount of breakdowns." );

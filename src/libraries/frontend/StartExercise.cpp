@@ -34,7 +34,7 @@ namespace
 // Name: StartExercise constructor
 // Created: AGE 2007-10-04
 // -----------------------------------------------------------------------------
-StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, bool attach, bool launchDispatchedIfNotEmbedded /*= true*/, std::string commanderEndpoint /*= ""*/, std::string processJobName /*= ""*/ )
+StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, bool attach, bool launchDispatchedIfNotEmbedded /* = true*/, std::string commanderEndpoint /* = ""*/, std::string processJobName /*= ""*/ )
     : SpawnCommand( config, "simulation_app.exe", attach, commanderEndpoint, processJobName )
     , exercise_ ( exercise.ascii() )
     , session_ ( session.ascii() )

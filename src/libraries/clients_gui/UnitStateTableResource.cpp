@@ -67,7 +67,7 @@ void UnitStateTableResource::MergeLine( const QString& name, const QString& cate
 // Name: UnitStateTableResource::AddLine
 // Created: ABR 2011-07-05
 // -----------------------------------------------------------------------------
-void UnitStateTableResource::AddLine( const QString& name, const QString& category, unsigned quantity /*= 0*/, unsigned maximum /*= 0*/, double threshold /*= 0.*/, double consumption /*= 0.*/ )
+void UnitStateTableResource::AddLine( const QString& name, const QString& category, unsigned quantity /* = 0*/, unsigned maximum /* = 0*/, double threshold /* = 0.*/, double consumption /* = 0.*/ )
 {
     int row = dataModel_.rowCount();
     AddItem( row, eName, name, name );

@@ -65,7 +65,7 @@ UnitStateTableResource::~UnitStateTableResource()
 // Name: UnitStateTableResource::ComputeCapacityAndConsumption
 // Created: ABR 2011-07-11
 // -----------------------------------------------------------------------------
-void UnitStateTableResource::ComputeCapacityAndConsumption( const std::string& name, unsigned int& capacity, double& consumption, tools::Iterator< const kernel::DotationCapacityType& > agentResourceIterator, unsigned int factor /*= 1*/ ) const
+void UnitStateTableResource::ComputeCapacityAndConsumption( const std::string& name, unsigned int& capacity, double& consumption, tools::Iterator< const kernel::DotationCapacityType& > agentResourceIterator, unsigned int factor /* = 1*/ ) const
 {
     while( agentResourceIterator.HasMoreElements() )
     {

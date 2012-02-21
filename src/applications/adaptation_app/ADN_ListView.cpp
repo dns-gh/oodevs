@@ -169,7 +169,7 @@ void ADN_ListView::FillContextMenuWithDefault( Q3PopupMenu& popupMenu, ADN_Objec
 // Name: ADN_ListView::FillContextMenuWithUsersList
 // Created: ABR 2012-01-25
 // -----------------------------------------------------------------------------
-void ADN_ListView::FillContextMenuWithUsersList( Q3PopupMenu& popupMenu, QString usingName, QStringList userList, E_WorkspaceElements targetTab, int subTargetTab /*= -1*/ )
+void ADN_ListView::FillContextMenuWithUsersList( Q3PopupMenu& popupMenu, QString usingName, QStringList userList, E_WorkspaceElements targetTab, int subTargetTab /* = -1*/ )
 {
     if( pCurData_ != 0 && !userList.isEmpty() )
     {

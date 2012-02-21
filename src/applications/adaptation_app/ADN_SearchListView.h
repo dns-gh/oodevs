@@ -76,7 +76,7 @@ private:
 // Created: ABR 2012-01-19
 // -----------------------------------------------------------------------------
 template< typename ListView >
-ADN_SearchListView< ListView >::ADN_SearchListView( ADN_Ref_ABC& reference, const T_ConnectorVector& connector, int subTab /*= -1*/, QWidget* parent /*= 0*/ )
+ADN_SearchListView< ListView >::ADN_SearchListView( ADN_Ref_ABC& reference, const T_ConnectorVector& connector, int subTab /* = -1*/, QWidget* parent /* = 0*/ )
     : ADN_SearchListView_ABC( parent )
     , listView_( 0 )
     , lineEdit_( 0 )
@@ -104,7 +104,7 @@ ADN_SearchListView< ListView >::ADN_SearchListView( ADN_Ref_ABC& reference, cons
 // -----------------------------------------------------------------------------
 template< typename ListView >
 template< typename FirstParam >
-ADN_SearchListView< ListView >::ADN_SearchListView( FirstParam& first, ADN_Ref_ABC& reference, const T_ConnectorVector& connector, int subTab /*= -1*/, QWidget* parent /*= 0*/ )
+ADN_SearchListView< ListView >::ADN_SearchListView( FirstParam& first, ADN_Ref_ABC& reference, const T_ConnectorVector& connector, int subTab /* = -1*/, QWidget* parent /* = 0*/ )
     : ADN_SearchListView_ABC( parent )
     , listView_( 0 )
     , lineEdit_( 0 )
@@ -132,7 +132,7 @@ ADN_SearchListView< ListView >::ADN_SearchListView( FirstParam& first, ADN_Ref_A
 // -----------------------------------------------------------------------------
 template< typename ListView >
 template< typename FirstParam, typename SecondParam >
-ADN_SearchListView< ListView >::ADN_SearchListView( FirstParam& first, SecondParam& second, ADN_Ref_ABC& reference, const T_ConnectorVector& connector, int subTab /*= -1*/, QWidget* parent /*= 0*/ )
+ADN_SearchListView< ListView >::ADN_SearchListView( FirstParam& first, SecondParam& second, ADN_Ref_ABC& reference, const T_ConnectorVector& connector, int subTab /* = -1*/, QWidget* parent /* = 0*/ )
     : ADN_SearchListView_ABC( parent )
     , listView_( 0 )
     , lineEdit_( 0 )

@@ -19,7 +19,7 @@ using namespace gui;
 // Name: ComboTableItem constructor
 // Created: ABR 2011-07-20
 // -----------------------------------------------------------------------------
-ComboTableItem::ComboTableItem( Q3Table* parent, const QStringList& content, Q3TableItem::EditType editType, int currentIndex /*= 0*/ )
+ComboTableItem::ComboTableItem( Q3Table* parent, const QStringList& content, Q3TableItem::EditType editType, int currentIndex /* = 0*/ )
     : QObject( parent )
     , Q3TableItem( parent, editType )
     , currentIndex_( currentIndex )

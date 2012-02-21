@@ -224,7 +224,7 @@ void Menu::Wrap( int item )
 // Name: Menu::InsertFileMenuEntry
 // Created: ABR 2011-06-24
 // -----------------------------------------------------------------------------
-int Menu::InsertFileMenuEntry( const QString& name, const QObject* receiver, const char* member, const QKeySequence& accel /*= 0*/, int index /*= -1*/ )
+int Menu::InsertFileMenuEntry( const QString& name, const QObject* receiver, const char* member, const QKeySequence& accel /* = 0*/, int index /* = -1*/ )
 {
     int result = fileMenu_->insertItem( name, receiver, member, accel, -1, index );
     Wrap( result );

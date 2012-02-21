@@ -56,8 +56,8 @@ using namespace actions::gui;
 // Created: SBO 2006-11-22
 // -----------------------------------------------------------------------------
 InterfaceBuilder::InterfaceBuilder( kernel::Controllers& controllers, gui::ParametersLayer& layer, const kernel::StaticModel& staticModel,
-                                    kernel::AgentKnowledgeConverter_ABC* knowledgeConverter /*= 0*/, kernel::ObjectKnowledgeConverter_ABC* objectKnowledgeConverter /*= 0*/,
-                                    const kernel::Time_ABC* simulation /*= 0*/ )
+                                    kernel::AgentKnowledgeConverter_ABC* knowledgeConverter /* = 0*/, kernel::ObjectKnowledgeConverter_ABC* objectKnowledgeConverter /* = 0*/,
+                                    const kernel::Time_ABC* simulation /* = 0*/ )
     : controllers_             ( controllers )
     , layer_                   ( layer )
     , knowledgeConverter_      ( knowledgeConverter )

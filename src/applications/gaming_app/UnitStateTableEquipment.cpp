@@ -72,7 +72,7 @@ int UnitStateTableEquipment::CountLines( const QString& name, int firstRow, E_Eq
 // Name: UnitStateTableEquipment::LineChanged
 // Created: ABR 2011-07-11
 // -----------------------------------------------------------------------------
-bool UnitStateTableEquipment::LineChanged( const QString& name, int& row, int size, E_EquipmentState state, const std::vector< unsigned int > currentBreakdowns /*= std::vector< unsigned int >()*/ ) const
+bool UnitStateTableEquipment::LineChanged( const QString& name, int& row, int size, E_EquipmentState state, const std::vector< unsigned int > currentBreakdowns /* = std::vector< unsigned int >()*/ ) const
 {
     for( int i = 0; row < dataModel_.rowCount() && i < size && GetDisplayData( row, eName ) == name; ++i, ++row )
         if( GetEnumData< E_EquipmentState >( row, eState ) != state ||
