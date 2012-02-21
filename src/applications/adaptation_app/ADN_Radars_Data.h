@@ -84,7 +84,6 @@ public:
     typedef ADN_Type_Vector_ABC<RadarInfos > T_RadarInfos_Vector;
     typedef T_RadarInfos_Vector::iterator   IT_RadarInfos_Vector;
 
-
 //*****************************************************************************
 public:
              ADN_Radars_Data();
@@ -103,6 +102,5 @@ public:
 public:
     T_RadarInfos_Vector  vRadars_;
 };
-
 
 #endif // __ADN_Radars_Data_h_

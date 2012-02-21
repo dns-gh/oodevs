@@ -22,7 +22,6 @@
 #include "ADN_Weapon_Wizard_Page0.h"
 #include "ADN_Wizard_LastPage.h"
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapon_Wizard constructor
 // Created: APE 2005-01-12

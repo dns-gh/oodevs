@@ -74,7 +74,7 @@ bool ADN_Type_Vector_ABC<T>::AddItemPrivate( void* pItem, bool bCreateCommand )
     pCastItem->SetParentNode( *this );
 
     if( bCreateCommand )
-        ADN_Workspace::GetWorkspace().AddCommand( new ADN_AddElementCommand< T >( *this, pCastItem ) );        
+        ADN_Workspace::GetWorkspace().AddCommand( new ADN_AddElementCommand< T >( *this, pCastItem ) );
 
     if( bAutoRef_ )
         connect( static_cast< ADN_Ref_ABC* >( pItem ), SIGNAL( Invalidated( void*, bool ) ), this, SLOT( Invalidate( void*, bool ) ) );
@@ -101,10 +101,10 @@ bool ADN_Type_Vector_ABC< T >::RemItemPrivate( void* pItem, bool bCreateCommand 
         return false;
 
     if( bCreateCommand )
-        ADN_Workspace::GetWorkspace().AddCommand( new ADN_RemoveElementCommand< T >( *this, pCastItem ) );        
+        ADN_Workspace::GetWorkspace().AddCommand( new ADN_RemoveElementCommand< T >( *this, pCastItem ) );
 
     erase(it);
-    
+
     // rem ref
     if( bAutoRef_ )
         disconnect( static_cast< ADN_Ref_ABC* >( pItem ), SIGNAL( Invalidated( void*, bool ) ), this, SLOT( Invalidate( void*, bool ) ) );
@@ -174,9 +174,9 @@ void ADN_Type_Vector_ABC<T>::InvalidatePrivate(void *item,bool bDel)
         erase(it);
         emit ItemRemoved(item);
         emit Invalidated(item,false);
-        
+
         // rem ref
-        if ( bAutoRef_ )
+        if( bAutoRef_ )
         {
             disconnect( static_cast<ADN_Ref_ABC*>( item ), SIGNAL(Invalidated(void *,bool)),
                         this,                              SLOT(Invalidate(void *,bool)));
@@ -196,7 +196,7 @@ void ADN_Type_Vector_ABC<T>::InvalidatePrivate(void *item,bool bDel)
 template <class T>
 void ADN_Type_Vector_ABC<T>::ClearPrivate(bool bInConnection)
 {
-    if ( !bInConnection && size()!=0 )
+    if( !bInConnection && size()!=0 )
     {
         clear();
         emit Cleared(bInConnection);
@@ -217,11 +217,11 @@ void ADN_Type_Vector_ABC<T>::Reset()
     // cleaning vector - ptr may be in use in Cleared
     // signal
     ADN_Type_Vector_ABC<T> vTmp=*this;
-    
+
     // clear vector
     clear();
     emit Cleared(false);
-    
+
     // delete ptrs
     clear_owned_ptrs(vTmp);
 }

@@ -65,7 +65,6 @@ protected:
     virtual QValidator::State InternalValidate( double top, double bottom, QString& input, int& nPos ) const;
 };
 
-
 // =============================================================================
 /** @class  ADN_PercentageValidator
     @brief

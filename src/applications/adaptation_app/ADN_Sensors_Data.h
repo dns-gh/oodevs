@@ -107,7 +107,6 @@ public:
     typedef ADN_Type_VectorFixed_ABC<ModificatorSizeInfos>  T_ModificatorSizeInfos_Vector;
     typedef T_ModificatorSizeInfos_Vector::iterator        IT_ModificatorSizeInfos_Vector;
 
-
 //*****************************************************************************
     class ModificatorIlluminationInfos : public ADN_Ref_ABC
                                        , public ADN_DataTreeNode_ABC
@@ -145,7 +144,6 @@ public:
     typedef ADN_Type_Vector_ABC<ModificatorIlluminationInfos >  T_ModificatorIlluminationInfos_Vector;
     typedef T_ModificatorIlluminationInfos_Vector::iterator    IT_ModificatorIlluminationInfos_Vector;
 
-
 //*****************************************************************************
     class ModificatorMeteoInfos : public ADN_Ref_ABC
                                 , public ADN_DataTreeNode_ABC
@@ -180,7 +178,6 @@ public:
 
     typedef ADN_Type_Vector_ABC<ModificatorMeteoInfos>        T_ModificatorMeteoInfos_Vector;
     typedef T_ModificatorMeteoInfos_Vector::iterator          IT_ModificatorMeteoInfos_Vector;
-
 
 //*****************************************************************************
     class ModificatorEnvironmentInfos : public ADN_Ref_ABC
@@ -308,7 +305,6 @@ public:
 
     typedef ADN_Type_Vector_ABC<ModificatorPostureInfos>  T_ModificatorPostureInfos_Vector;
     typedef T_ModificatorPostureInfos_Vector::iterator   IT_ModificatorPostureInfos_Vector;
-
 
 //*****************************************************************************
     class PopulationInfos : public ADN_Ref_ABC

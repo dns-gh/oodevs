@@ -15,7 +15,6 @@
 
 typedef ADN_Sensors_Data::LimitedToSensorsInfos LimitedToSensorsInfos;
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_LimitedToSensorsListView constructor
 // Created: JSR 2010-03-17

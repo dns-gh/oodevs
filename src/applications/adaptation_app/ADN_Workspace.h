@@ -171,7 +171,6 @@ private:
     static ADN_Workspace* pWorkspace_;
 };
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Workspace::GetNbc
 // Created: APE 2004-12-07
@@ -182,7 +181,6 @@ ADN_WorkspaceElement< ADN_NBC_Datas, ADN_GUI_ABC >& ADN_Workspace::GetNbc()
     return (ADN_WorkspaceElement< ADN_NBC_Datas, ADN_GUI_ABC >&)(*elements_[eNBC]);
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Workspace::GetLaunchers
 // Created: APE 2004-12-07
@@ -192,7 +190,6 @@ ADN_WorkspaceElement< ADN_Launchers_Data, ADN_Launchers_GUI >& ADN_Workspace::Ge
 {
     return (ADN_WorkspaceElement< ADN_Launchers_Data, ADN_Launchers_GUI >&)(*elements_[eLaunchers]);
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Workspace::GetProject
@@ -205,7 +202,6 @@ ADN_Project_Data& ADN_Workspace::GetProject()
         throw std::runtime_error( "Project data not initialized" );
     return *projectData_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Workspace::GetCategories
@@ -227,7 +223,6 @@ ADN_WorkspaceElement< ADN_Urban_Data, ADN_Urban_GUI >& ADN_Workspace::GetUrban()
     return (ADN_WorkspaceElement< ADN_Urban_Data, ADN_Urban_GUI >&)(*elements_[eUrban]);
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Workspace::GetEquipements
 // Created: APE 2004-12-07
@@ -238,7 +233,6 @@ ADN_WorkspaceElement< ADN_Equipement_Data, ADN_Equipement_GUI >& ADN_Workspace::
     return (ADN_WorkspaceElement< ADN_Equipement_Data, ADN_Equipement_GUI >&)(*elements_[eEquipement]);
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Workspace::GetObjects
 // Created: APE 2004-12-07
@@ -248,7 +242,6 @@ ADN_WorkspaceElement< ADN_Objects_Data, ADN_Objects_GUI>& ADN_Workspace::GetObje
 {
     return (ADN_WorkspaceElement< ADN_Objects_Data, ADN_Objects_GUI>&)(*elements_[eObjects]);
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Workspace::GetWeapons
@@ -270,7 +263,6 @@ ADN_WorkspaceElement< ADN_ActiveProtections_Data, ADN_ActiveProtections_GUI>& AD
     return (ADN_WorkspaceElement< ADN_ActiveProtections_Data, ADN_ActiveProtections_GUI>&)(*elements_[eActiveProtections]);
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Workspace::GetSensors
 // Created: APE 2004-12-07
@@ -280,7 +272,6 @@ ADN_WorkspaceElement< ADN_Sensors_Data, ADN_Sensors_GUI>& ADN_Workspace::GetSens
 {
     return (ADN_WorkspaceElement< ADN_Sensors_Data, ADN_Sensors_GUI>&)(*elements_[eSensors]);
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Workspace::GetComposantes
@@ -292,7 +283,6 @@ ADN_WorkspaceElement< ADN_Composantes_Data, ADN_Composantes_GUI >& ADN_Workspace
     return (ADN_WorkspaceElement< ADN_Composantes_Data, ADN_Composantes_GUI >&)(*elements_[eComposantes]);
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Workspace::GetUnits
 // Created: APE 2004-12-07
@@ -302,7 +292,6 @@ ADN_WorkspaceElement< ADN_Units_Data, ADN_Units_GUI >& ADN_Workspace::GetUnits()
 {
     return (ADN_WorkspaceElement< ADN_Units_Data, ADN_Units_GUI >&)(*elements_[eUnits]);
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Workspace::GetModels
@@ -324,7 +313,6 @@ ADN_WorkspaceElement< ADN_Missions_Data, ADN_Missions_GUI >& ADN_Workspace::GetM
     return (ADN_WorkspaceElement< ADN_Missions_Data, ADN_Missions_GUI >&)(*elements_[eMissions]);
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Workspace::GetAutomata
 // Created: APE 2004-12-07
@@ -335,7 +323,6 @@ ADN_WorkspaceElement< ADN_Automata_Data, ADN_Automata_GUI >& ADN_Workspace::GetA
     return (ADN_WorkspaceElement< ADN_Automata_Data, ADN_Automata_GUI >&)(*elements_[eAutomata]);
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Workspace::GetAiEngine
 // Created: APE 2004-12-07
@@ -345,7 +332,6 @@ ADN_WorkspaceElement< ADN_AiEngine_Data, ADN_AiEngine_GUI>& ADN_Workspace::GetAi
 {
     return (ADN_WorkspaceElement< ADN_AiEngine_Data, ADN_AiEngine_GUI>&)(*elements_[eAiEngine]);
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Workspace::GetBreakdowns

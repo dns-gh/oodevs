@@ -53,5 +53,4 @@ private:
     GUI&  gui_;
 };
 
-
 #endif // __ADN_WorkspaceElement_h_

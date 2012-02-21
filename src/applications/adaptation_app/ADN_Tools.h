@@ -48,7 +48,6 @@ public:
         std::string strName_;
     };
 
-
     template< class DataClass >
     struct NameSort
     {
@@ -57,7 +56,6 @@ public:
             return pLHS->strName_.GetData().compare( pRHS->strName_.GetData() ) < 0;
         }
     };
-
 
 public:
     static bool CaselessCompare( const std::string& str1, const std::string& str2 );

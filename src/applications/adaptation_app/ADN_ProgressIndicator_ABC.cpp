@@ -27,7 +27,6 @@ ADN_ProgressIndicator_ABC::ADN_ProgressIndicator_ABC()
 {
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_ProgressIndicator_ABC destructor
 // Created: APE 2005-03-18

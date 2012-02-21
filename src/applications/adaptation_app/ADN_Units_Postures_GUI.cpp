@@ -59,8 +59,6 @@ private:
     ADN_CT_Units_Postures& operator=( const ADN_CT_Units_Postures& );
 };
 
-
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Units_Postures_GUI constructor
 // Created: JDY 03-07-03
@@ -91,7 +89,6 @@ ADN_Units_Postures_GUI::ADN_Units_Postures_GUI( QWidget* pParent )
     // Create the connector.
     pConnector_ = new ADN_CT_Units_Postures(*this);
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Units_Postures_GUI destructor

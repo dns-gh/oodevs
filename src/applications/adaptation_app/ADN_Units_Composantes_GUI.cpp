@@ -59,7 +59,7 @@ namespace
                     }
             }
             connect( listView_, SIGNAL( doubleClicked( Q3ListViewItem*, const QPoint&, int ) ), receiver_, SLOT( MenuListItemSelected() ) );
-            connect( listView_, SIGNAL( returnPressed( Q3ListViewItem* ) ), receiver_, SLOT( MenuListItemSelected() ) );            
+            connect( listView_, SIGNAL( returnPressed( Q3ListViewItem* ) ), receiver_, SLOT( MenuListItemSelected() ) );
             return listView_;
         }
 
@@ -95,7 +95,6 @@ public:
         ADN_TableItem_CheckItem* pItemLoadable = new ADN_TableItem_CheckItem( &tab_, pObj );
         ADN_TableItem_CheckItem* pItemConveyor = new ADN_TableItem_CheckItem( &tab_, pObj );
         ADN_TableItem_Int*       pItemNbrHuman = new ADN_TableItem_Int( &tab_, pObj );
-
 
         // add a new row & set new values
         tab_.setItem( nRow, 0, pItemName );
@@ -190,7 +189,7 @@ void ADN_Units_Composantes_GUI::OnContextMenu(int /*row*/,int /*col*/,const QPoi
     if( nMenuResult == 1 )
         RemoveCurrentElement();
     else if( bMenuListItemSelected_ )
-        AddNewElement( list ->SelectedValue() );     
+        AddNewElement( list ->SelectedValue() );
 }
 
 // -----------------------------------------------------------------------------

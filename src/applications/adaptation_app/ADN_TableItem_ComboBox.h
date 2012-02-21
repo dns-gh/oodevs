@@ -74,7 +74,6 @@ public:
     int                         GetEnumIndexFromGUI( int index ) const;
     //@}
 
-
 protected:
 
     virtual void        DoValueChanged();
@@ -89,6 +88,5 @@ private:
 
 typedef ADN_Connector_Combo<ADN_TableItem_ComboBox> ADN_Connector_TableItem_ComboBox;
 typedef ADN_Connector_Enum<ADN_TableItem_ComboBox>  ADN_Connector_TableItem_EnumComboBox;
-
 
 #endif // __ADN_TableItem_ComboBox_h_

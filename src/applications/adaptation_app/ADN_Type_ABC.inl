@@ -46,7 +46,7 @@ ADN_Type_ABC<T>::~ADN_Type_ABC()
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Type_ABC<T>::operator 
+// Name: ADN_Type_ABC<T>::operator
 // Created: JDY 03-07-02
 //-----------------------------------------------------------------------------
 template <class T>
@@ -57,7 +57,7 @@ ADN_Type_ABC<T>& ADN_Type_ABC<T>::operator =(const T& val)
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Type_ABC<T>::operator 
+// Name: ADN_Type_ABC<T>::operator
 // Created: JDY 03-07-22
 //-----------------------------------------------------------------------------
 template <class T>
@@ -67,7 +67,7 @@ bool ADN_Type_ABC<T>::operator ==(const T& val) const
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Type_ABC<T>::operator 
+// Name: ADN_Type_ABC<T>::operator
 // Created: JDY 03-07-22
 //-----------------------------------------------------------------------------
 template <class T>
@@ -94,12 +94,12 @@ template <class T>
 void ADN_Type_ABC<T>::SetData(const T& data, bool bCanBeUndone )
 {
     if (val_!=data)
-    {   
+    {
         if( bCanBeUndone && bUndoAvailable_ )
         {
             ADN_Workspace::GetWorkspace().AddCommand( ADN_ChangeValueCommand_Chooser< T >::CreateCommand( *this, val_, data ) );
         }
-        
+
         val_ = data;
         // emit signal
         emit DataChanged((void*)&val_);
@@ -123,13 +123,13 @@ const T ADN_Type_ABC<T>::GetData() const
 //-----------------------------------------------------------------------------
 template <class T>
 void  ADN_Type_ABC<T>::SetDataPrivate(void *data)
-{    
+{
     SetData(*static_cast< T* >( data ),true);
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Type_ABC::GetName
-/** @return 
+/** @return
 */
 // Created: AGN 2004-05-13
 // -----------------------------------------------------------------------------
@@ -141,7 +141,7 @@ std::string ADN_Type_ABC< T >::GetNodeName()
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Type_ABC::SetDataName
-/** @param  strName 
+/** @param  strName
 */
 // Created: AGN 2004-05-13
 // -----------------------------------------------------------------------------

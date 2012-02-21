@@ -143,5 +143,4 @@ private:
     //@}
 };
 
-
 #endif // __ADN_Units_GUI_h_

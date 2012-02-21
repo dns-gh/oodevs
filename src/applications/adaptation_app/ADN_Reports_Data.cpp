@@ -234,7 +234,7 @@ void ADN_Reports_Data::ReportInfo::WriteArchive( xml::xostream& output )
             << xml::attribute( "id", id_ )
             << xml::attribute( "category", category_ )
             << xml::attribute( "message",  message_ );
-    if ( clientFunctionTrigger_ != "" )
+    if( clientFunctionTrigger_ != "" )
         output  << xml::attribute( "client-function-trigger",  clientFunctionTrigger_ );
     for( unsigned long i = 0; i < parameters_.size(); ++i )
         parameters_[i]->WriteArchive( output );

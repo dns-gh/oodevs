@@ -83,7 +83,6 @@ ADN_Units_LogThreshold_GUI::ADN_Units_LogThreshold_GUI( QWidget* pParent )
     pConnector_ = new ADN_Units_LogThreshold_GUI_Connector( *this );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Units_LogThreshold_GUI destructor
 // Created: JDY 03-07-03

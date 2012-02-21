@@ -37,5 +37,4 @@ private:
     bool bMenuListItemSelected_;
 };
 
-
 #endif // __ADN_Units_Composantes_GUI_h_

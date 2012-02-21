@@ -89,7 +89,6 @@ ADN_Sensors_Targets_GUI::ADN_Sensors_Targets_GUI(QWidget * parent )
     pConnector_=new ADN_CT_Sensors_Targets(*this);
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Sensors_Targets_GUI destructor
 // Created: JDY 03-07-03
@@ -110,7 +109,6 @@ ADN_Sensors_Targets_GUI::~ADN_Sensors_Targets_GUI()
 void ADN_Sensors_Targets_GUI::OnContextMenu(int /*row*/,int /*col*/,const QPoint& pt)
 {
     std::auto_ptr< Q3PopupMenu > pTargetMenu( new Q3PopupMenu(this) );
-
 
     // Get the list of the possible munitions
     bool bDisplayAdd = false;

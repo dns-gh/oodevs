@@ -116,5 +116,4 @@ public:
     //@}
 };
 
-
 #endif // __ADN_Table_h_

@@ -80,7 +80,6 @@ class QtCommand : public QObject
     Type m_type;
 };
 
-
 class QtUndoStack : public QObject, private Q3PtrList<QtCommand>
 {
     Q_OBJECT

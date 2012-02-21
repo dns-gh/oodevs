@@ -34,5 +34,4 @@ private:
     void RemoveCurrentLogSupplyClass();
 };
 
-
 #endif // __ADN_Units_LogThreshold_GUI_h_

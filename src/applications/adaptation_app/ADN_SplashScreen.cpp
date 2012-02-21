@@ -49,7 +49,6 @@ ADN_SplashScreen::~ADN_SplashScreen()
 {
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_SplashScreen::SetNbrOfSteps
 // Created: APE 2005-03-18
@@ -57,7 +56,6 @@ ADN_SplashScreen::~ADN_SplashScreen()
 void ADN_SplashScreen::SetNbrOfSteps( int /*n*/ )
 {
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_SplashScreen::SetTextColor
@@ -68,7 +66,6 @@ void ADN_SplashScreen::SetTextColor( const QColor& color )
     textColor_ = color;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_SplashScreen::Increment
 // Created: APE 2005-03-18
@@ -76,7 +73,6 @@ void ADN_SplashScreen::SetTextColor( const QColor& color )
 void ADN_SplashScreen::Increment( int /*n*/ )
 {
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_SplashScreen::Increment
@@ -88,7 +84,6 @@ void ADN_SplashScreen::Increment( const char* szText, int /*n*/ )
         this->message( szText, Qt::AlignBottom | Qt::AlignHCenter, textColor_ );
     qApp->processEvents();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_SplashScreen::Reset

@@ -39,7 +39,6 @@ ADN_Table::ADN_Table( QWidget* pParent, const char* szName )
     connect( static_cast< ADN_App* >( qApp )->GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Table destructor
 // Created: JDY 03-07-07

@@ -67,7 +67,6 @@ public:
     typedef T_AccommodationInfos_Vector::iterator        IT_AccommodationInfos_Vector;
     typedef T_AccommodationInfos_Vector::const_iterator CIT_AccommodationInfos_Vector;
 
-
 //*****************************************************************************
 public:
     class InfrastructureInfos : public ADN_Ref_ABC

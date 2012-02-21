@@ -45,7 +45,6 @@ void ADN_CT_Sensors_Sizes::AddSubItems(int i,void *obj)
     pItemDouble->GetConnector().Connect( &static_cast< ModificatorSizeInfos* >( obj )->rCoeff_ );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_Sizes_GUI constructor
 // Created: ABR 2012-01-16

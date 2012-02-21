@@ -35,7 +35,7 @@ ADN_Type_VectorFixed_ABC<T,Cmp>::~ADN_Type_VectorFixed_ABC()
 template <class T,class Cmp>
 void ADN_Type_VectorFixed_ABC<T,Cmp>::AutoCreatePrivate(void* ptr)
 {
-    if( ptr && std::find_if( begin(), end(), Cmp((T_Item*)ptr) ) == end() ) 
+    if( ptr && std::find_if( begin(), end(), Cmp((T_Item*)ptr) ) == end() )
     {
         T* pNewItem = new T((T_Item*)ptr);
         AddItemPrivate( pNewItem );

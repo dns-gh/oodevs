@@ -44,5 +44,4 @@ public:
     //@}
 };
 
-
 #endif // __ADN_Weapons_ListView_h_

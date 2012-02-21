@@ -29,5 +29,4 @@ public:
     bool Contains( const std::string& strMunitionName );
 };
 
-
 #endif // __ADN_Sensors_Targets_GUI_h_

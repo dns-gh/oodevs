@@ -44,5 +44,4 @@ public:
     //@}
 };
 
-
 #endif // __ADN_Sensor_Wizard_h_

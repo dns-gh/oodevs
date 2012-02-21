@@ -25,7 +25,6 @@
 
 typedef ADN_Weapons_Data::PhInfos PhInfos;
 
-
 //-----------------------------------------------------------------------------
 // Internal Table connector to be connected with T_ModificatorComposanteInfos_Vector
 //-----------------------------------------------------------------------------
@@ -66,7 +65,6 @@ public:
     }
 };
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_PhTable constructor
 // Created: APE 2005-01-07
@@ -98,7 +96,6 @@ ADN_Weapons_PhTable::ADN_Weapons_PhTable( QWidget* pParent )
     pConnector_ = new ADN_Connector_PhTable( *this );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_PhTable destructor
 // Created: APE 2005-01-07
@@ -107,7 +104,6 @@ ADN_Weapons_PhTable::~ADN_Weapons_PhTable()
 {
     delete pConnector_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_PhTable::OnContextMenu
@@ -139,7 +135,6 @@ void ADN_Weapons_PhTable::OnContextMenu( int /*nRow*/, int /*nCol*/, const QPoin
         break;
     }
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_PhTable::CreateNewElement

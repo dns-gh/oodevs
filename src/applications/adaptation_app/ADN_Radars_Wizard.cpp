@@ -35,7 +35,6 @@ ADN_Radars_Wizard::ADN_Radars_Wizard( QWidget* pParent, const char* szName )
         qApp->translate( "ADN_Radars_Wizard", "Click \"Done\" to create the new special sensor." ) );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Radars_Wizard destructor
 // Created: LGY 2010-08-18

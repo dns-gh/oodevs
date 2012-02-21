@@ -65,7 +65,6 @@ MT_ValuedListViewItem<T, N>::MT_ValuedListViewItem( T value, Q3ListView * parent
 {
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MT_ValuedListViewItem constructor
 // Created: APE 2004-04-19
@@ -77,7 +76,6 @@ MT_ValuedListViewItem<T, N>::MT_ValuedListViewItem( T value, Q3ListView * parent
 {
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MT_ValuedListViewItem constructor
 // Created: APE 2004-04-19
@@ -88,7 +86,6 @@ MT_ValuedListViewItem<T, N>::MT_ValuedListViewItem( T value, Q3ListView * parent
     , value_         ( value )
 {
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MT_ValuedListViewItem constructor
@@ -112,7 +109,6 @@ MT_ValuedListViewItem<T, N>::MT_ValuedListViewItem( T value, Q3ListViewItem * pa
 {
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MT_ValuedListViewItem constructor
 
@@ -125,7 +121,6 @@ MT_ValuedListViewItem<T, N>::MT_ValuedListViewItem( T value, Q3ListViewItem * pa
 {
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MT_ValuedListViewItem constructor
 // Created: APE 2004-04-19
@@ -136,7 +131,6 @@ MT_ValuedListViewItem<T, N>::MT_ValuedListViewItem( T value, Q3ListViewItem * pa
     , value_         ( value )
 {
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MT_ValuedListViewItem constructor
@@ -149,7 +143,6 @@ MT_ValuedListViewItem<T, N>::MT_ValuedListViewItem( T value, Q3ListViewItem * pa
 {
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MT_ValuedListViewItem destructor
 // Created: APE 2004-04-19
@@ -158,7 +151,6 @@ template< class T, int N >
 MT_ValuedListViewItem<T, N>::~MT_ValuedListViewItem()
 {
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MT_ValuedListViewItem::GetValue
@@ -170,7 +162,6 @@ T& MT_ValuedListViewItem<T, N>::GetValue()
     return value_;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MT_ValuedListViewItem::rtti
 // Created: APE 2004-04-19
@@ -180,7 +171,5 @@ int MT_ValuedListViewItem<T, N>::rtti() const
 {
     return N;
 }
-
-
 
 #endif // __MT_ValuedListViewItem_h_

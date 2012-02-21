@@ -16,7 +16,6 @@
 //
 // *****************************************************************************
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Wizard_FirstPage_ABC constructor
 // Created: APE 2005-01-28
@@ -26,7 +25,6 @@ ADN_Wizard_FirstPage_ABC<T>::ADN_Wizard_FirstPage_ABC( Q3Wizard* pParent, const 
 : ADN_WizardPage_ABC( pParent, szName, szImageName )
 {
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Wizard_FirstPage_ABC destructor

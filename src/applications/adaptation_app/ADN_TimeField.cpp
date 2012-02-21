@@ -129,7 +129,7 @@ void ADN_TimeField::OnValueChanged( const QString& strValue )
     if( strValue.isEmpty() || nSecondsValue_ < nMinimumSecondsValue_ )
     {
         QString currentEmptyValue = QString::number( 0 );
-        if ( nMinimumSecondsValue_ > 0 )
+        if( nMinimumSecondsValue_ > 0 )
         {
             if( pComboBox_->currentText() == "s" )
                 currentEmptyValue = QString::number(nMinimumSecondsValue_);
@@ -241,8 +241,8 @@ void ADN_TimeField::SetMinimumValueInSecond( unsigned int value )
     nMinimumMinutesValue_ = value/60;
     nMinimumHoursValue_ = value/3600;
 
-    if ( value%60 > 0 )
+    if( value%60 > 0 )
         nMinimumMinutesValue_ += 1;
-    if ( value%3600 > 0 )
+    if( value%3600 > 0 )
         nMinimumHoursValue_ += 1;
 }

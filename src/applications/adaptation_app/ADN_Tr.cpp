@@ -190,7 +190,6 @@ ADN_Tr::T_ConverterProtectionType ADN_Tr::protectionTypeConverter_[] =
     T_ConverterProtectionType( "", "", (E_ProtectionType)-1 )
 };
 
-
 ADN_Tr::T_ConverterBreakdownType ADN_Tr::breakdownTypeConverter_[] =
 {
     T_ConverterBreakdownType( "EA", QT_TRANSLATE_NOOP( "ADN_Tr", "Eletronic" ), eBreakdownType_EA ),
@@ -532,7 +531,6 @@ E_NatureAtlasType ADN_Tr::ConvertToNatureAtlasType( const std::string& strName )
     return ADN_Tr::FindInConverter( natureAtlasTypeConverter_, strName );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertToSpeedImpact
 // Created: APE 2005-02-23
@@ -541,7 +539,6 @@ E_SpeedImpact ADN_Tr::ConvertToSpeedImpact( const std::string& strName )
 {
     return ADN_Tr::FindInConverter( speedImpactConverter_, strName );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertToCrossingHeight
@@ -552,7 +549,6 @@ E_CrossingHeight ADN_Tr::ConvertToCrossingHeight( const std::string& strName )
     return ADN_Tr::FindInConverter( crossingHeightConverter_, strName );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertToSensorWeatherModifiers
 // Created: APE 2005-03-07
@@ -561,7 +557,6 @@ E_SensorWeatherModifiers ADN_Tr::ConvertToSensorWeatherModifiers( const std::str
 {
     return ADN_Tr::FindInConverter( sensorWeatherModifiersConverter_, strName );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertToDoctorSkills
@@ -572,7 +567,6 @@ E_DoctorSkills ADN_Tr::ConvertToDoctorSkills( const std::string& strName )
     return ADN_Tr::FindInConverter( doctorSkillsConverter_, strName );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertToProtectionType
 // Created: APE 2005-03-07
@@ -581,7 +575,6 @@ E_ProtectionType ADN_Tr::ConvertToProtectionType( const std::string& strName )
 {
     return ADN_Tr::FindInConverter( protectionTypeConverter_, strName );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertToBreakdownType

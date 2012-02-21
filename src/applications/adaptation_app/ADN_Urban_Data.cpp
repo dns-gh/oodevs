@@ -138,7 +138,7 @@ void ADN_Urban_Data::Save()
 {
     T_StringList fileList;
     FilesNeeded( fileList );
-    for ( CIT_StringList it = fileList.begin(); it != fileList.end(); ++it )
+    for( CIT_StringList it = fileList.begin(); it != fileList.end(); ++it )
     {
         std::string strFile = ADN_Project_Data::GetWorkDirInfos().GetSaveDirectory() + *it;
         ADN_Tools::CreatePathToFile( strFile );
@@ -161,7 +161,7 @@ void ADN_Urban_Data::Load( const tools::Loader_ABC& fileLoader )
 {
     T_StringList fileList;
     FilesNeeded( fileList );
-    for ( CIT_StringList it = fileList.begin(); it != fileList.end(); ++it )
+    for( CIT_StringList it = fileList.begin(); it != fileList.end(); ++it )
     {
         const std::string strFile = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + (*it);
         if( *it == "Urban.xml" )
@@ -334,7 +334,6 @@ void ADN_Urban_Data::UrbanMaterialInfos::ReadAttrition( xml::xistream& input )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Equipment - Invalid armor type '%1'" ).arg( protection.c_str() ).ascii() );
     ( *itAttrition )->ReadArchive( input );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Urban_Data::UrbanMaterialInfos::GetNodeName

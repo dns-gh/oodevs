@@ -52,5 +52,4 @@ private:
     const QString strName_;
 };
 
-
 #endif // __ADN_WorkspaceElement_ABC_h_

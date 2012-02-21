@@ -42,7 +42,6 @@ ADN_Sensors_TargetsListView::ADN_Sensors_TargetsListView( QWidget* pParent, cons
     this->SetDeletionEnabled( true );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_TargetsListView destructor
 // Created: APE 2005-01-18
@@ -51,7 +50,6 @@ ADN_Sensors_TargetsListView::~ADN_Sensors_TargetsListView()
 {
     delete pConnector_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_TargetsListView::ConnectItem
@@ -70,7 +68,6 @@ void ADN_Sensors_TargetsListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Sensors_GUI::eObjPopulationDensity]->Connect( &pInfos->populationInfos_.rDensity_, bConnect );
     vItemConnectors_[ADN_Sensors_GUI::eObjPopulationModifier]->Connect( &pInfos->populationInfos_.rModifier_, bConnect );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_TargetsListView::OnContextMenu
@@ -117,7 +114,6 @@ void ADN_Sensors_TargetsListView::OnContextMenu( const QPoint& pt )
         setCurrentItem( FindItem( pNewInfo ) );
     }
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Sensors_TargetsListView::Contains

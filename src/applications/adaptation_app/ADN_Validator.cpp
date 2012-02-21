@@ -89,7 +89,6 @@ QValidator::State ADN_IntValidator::InternalValidate( int top, int bottom, QStri
         return QIntValidator::validate( input, nPos );
 }
 
-
 // -----------------------------------------------------------------------------
 // ADN_DoubleValidator
 // -----------------------------------------------------------------------------
@@ -217,7 +216,6 @@ QValidator::State ADN_DoubleValidator::InternalValidate( double top, double bott
     else
         return Acceptable;
 }
-
 
 // -----------------------------------------------------------------------------
 // ADN_PercentageValidator

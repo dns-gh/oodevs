@@ -54,7 +54,6 @@ std::string ADN_Weapons_Data::PhInfos::GetNodeName()
     return MT_FormatString( "la distance de tir %d", nDistance_.GetData() );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PhInfos::GetItemName
 // Created: APE 2004-11-22
@@ -383,7 +382,6 @@ void ADN_Weapons_Data::WeaponInfos::WriteArchive( xml::xostream& output )
     output << xml::end;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_Data constructor
 // Created: APE 2004-11-22
@@ -392,7 +390,6 @@ ADN_Weapons_Data::ADN_Weapons_Data()
 : ADN_Data_ABC()
 {
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_Data destructor
@@ -403,7 +400,6 @@ ADN_Weapons_Data::~ADN_Weapons_Data()
     this->Reset();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_Data::FilesNeeded
 // Created: APE 2004-11-22
@@ -413,7 +409,6 @@ void ADN_Weapons_Data::FilesNeeded( T_StringList& files ) const
     files.push_back(ADN_Workspace::GetWorkspace().GetProject().GetDataInfos().szWeapons_.GetData());
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_Data::Reset
 // Created: APE 2004-11-22
@@ -422,7 +417,6 @@ void ADN_Weapons_Data::Reset()
 {
     weapons_.Reset();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_Data::ReadArchive

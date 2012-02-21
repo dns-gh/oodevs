@@ -88,7 +88,6 @@ ADN_Weapon_Wizard_Page0::ADN_Weapon_Wizard_Page0( Q3Wizard* pParent, const char*
     pParent->setFinishEnabled( this, false );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapon_Wizard_Page0 destructor
 // Created: APE 2005-01-11
@@ -96,7 +95,6 @@ ADN_Weapon_Wizard_Page0::ADN_Weapon_Wizard_Page0( Q3Wizard* pParent, const char*
 ADN_Weapon_Wizard_Page0::~ADN_Weapon_Wizard_Page0()
 {
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapon_Wizard_Page0::CreateObject

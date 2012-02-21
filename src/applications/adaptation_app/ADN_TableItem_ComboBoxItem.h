@@ -41,7 +41,6 @@ private:
     QString                   szTmpTxt_;
 };
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_TableItem_ComboBoxItem::GetData
 // Created: JDY 03-09-10
@@ -51,6 +50,5 @@ void*  ADN_TableItem_ComboBoxItem::GetData()
 {
     return pData_;
 }
-
 
 #endif // __ADN_TableItem_ComboBoxItem_h_

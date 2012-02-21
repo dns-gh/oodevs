@@ -506,7 +506,6 @@ void GQ_PlotData::TouchData()
     UpdateBBox();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::Draw
 /** @param
@@ -573,14 +572,12 @@ void GQ_PlotData::DrawCaption( QPixmap& caption, int nSize )
     }
 }
 
-
 typedef std::vector<QPoint> T_QPointVector;
 
 struct QPointVector_Comp
 {
     bool operator ()( const QPoint& lhs, const QPoint rhs ) { return  lhs.x() < rhs.x(); }
 };
-
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::PreparePoints
@@ -808,7 +805,6 @@ void GQ_PlotData::DrawBars( QPainter& painter, const Q3PointArray& points )
         else
             painter.setBrush( QBrush( QColor( Qt::blue ) ) );
 
-
         painter.drawRect( rect );
 
         nPrevX = nNextX;
@@ -844,7 +840,6 @@ void GQ_PlotData::UpdateBBox()
     if( bbox_.SetBBox( boundingBox ) )
         TouchRange();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotData::GetBaseline

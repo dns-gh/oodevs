@@ -22,7 +22,6 @@
 #include "ADN_ListView.h"
 #include "ADN_Objects_Data.h"
 
-
 // =============================================================================
 /** @class  ADN_Sensors_TargetsListView
     @brief  ADN_Sensors_TargetsListView
@@ -48,6 +47,5 @@ private:
     bool Contains( const ADN_Objects_Data_ObjectInfos* pInfo );
     //@}
 };
-
 
 #endif // __ADN_Sensors_TargetsListView_h_

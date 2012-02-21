@@ -31,7 +31,6 @@ ADN_RunProcessDialog::ADN_RunProcessDialog( QWidget* pParent, const char* szDial
     pGrid->setColStretch( 0, 1 );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_RunProcessDialog destructor
 // Created: JDY 03-09-08

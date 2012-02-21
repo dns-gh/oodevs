@@ -16,7 +16,6 @@
 //
 // *****************************************************************************
 
-
 #include "adaptation_app_pch.h"
 #include "ADN_Sensor_Wizard.h"
 
@@ -25,7 +24,6 @@
 #include "ADN_Wizard_LastPage.h"
 
 typedef ADN_Sensors_Data::SensorInfos SensorInfos;
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensor_Wizard constructor
@@ -44,7 +42,6 @@ ADN_Sensor_Wizard::ADN_Sensor_Wizard( QWidget* pParent, const char* szName )
     new ADN_Wizard_LastPage( this, qApp->translate( "ADN_Sensor_Wizard","Creation completed" ),
         qApp->translate( "ADN_Sensor_Wizard","Click \"Done\" to create the new sensor." ) );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensor_Wizard destructor

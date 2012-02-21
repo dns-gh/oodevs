@@ -18,9 +18,9 @@
 
 // -----------------------------------------------------------------------------
 // Name: ADN_UserData_ListViewItem constructor
-/** @param  pParent 
-    @param  strName 
-    @param  pPointer 
+/** @param  pParent
+    @param  strName
+    @param  pPointer
 */
 // Created: AGN 2003-11-03
 // -----------------------------------------------------------------------------
@@ -29,7 +29,7 @@ ADN_UserData_ListViewItem< PointerType >::ADN_UserData_ListViewItem( Q3ListView*
 : Q3ListViewItem( pParent, strName.c_str() )
 , pPointer_( pPointer )
 {
-    
+
 }
 
 // -----------------------------------------------------------------------------
@@ -39,13 +39,12 @@ ADN_UserData_ListViewItem< PointerType >::ADN_UserData_ListViewItem( Q3ListView*
 template< class PointerType >
 ADN_UserData_ListViewItem< PointerType >::~ADN_UserData_ListViewItem()
 {
-    
-}
 
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_UserData_ListViewItem::GetPointer
-/** @return 
+/** @return
 */
 // Created: AGN 2003-11-03
 // -----------------------------------------------------------------------------

@@ -33,7 +33,6 @@ ADN_Radars_ListView::ADN_Radars_ListView( QWidget* pParent, const char* szName, 
     this->SetDeletionEnabled( true );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Radars_ListView destructor
 // Created: APE 2005-03-21
@@ -42,7 +41,6 @@ ADN_Radars_ListView::~ADN_Radars_ListView()
 {
     delete pConnector_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Radars_ListView::ConnectItem
@@ -83,7 +81,6 @@ void ADN_Radars_ListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Radars_GUI::eHasRecoTime]->Connect( &pInfos->detectTimes_.bRecoTime_, bConnect );
     vItemConnectors_[ADN_Radars_GUI::eHasDetectionTimes]->Connect( &pInfos->bHasDetectTimes_, bConnect );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Radars_ListView::OnContextMenu

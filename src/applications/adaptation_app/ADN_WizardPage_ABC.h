@@ -53,5 +53,4 @@ protected:
     //@}
 };
 
-
 #endif // __ADN_WizardPage_ABC_h_

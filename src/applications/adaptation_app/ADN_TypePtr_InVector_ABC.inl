@@ -108,7 +108,7 @@ void ADN_TypePtr_InVector_ABC<T>::DisconnectPrivateSub( ADN_Connector_Vector_ABC
 template <class T>
 void ADN_TypePtr_InVector_ABC<T>::SetData(const T_TypePtr& value, bool bCanBeUndone)
 {
-    if ( pData_!= value)
+    if( pData_!= value)
     {
         if( bCanBeUndone )
         {
@@ -120,11 +120,11 @@ void ADN_TypePtr_InVector_ABC<T>::SetData(const T_TypePtr& value, bool bCanBeUnd
             static_cast<ADN_Ref_ABC*>(pData_)->ADN_Ref_ABC::DisconnectPrivate( static_cast<ADN_Ref_ABC*>(this) );
             pData_->RemoveRef();
         }
-        
+
         pData_    =value;
         emit DataChanged(pData_);
-    
-        if ( pData_ )
+
+        if( pData_ )
         {
             static_cast<ADN_Ref_ABC*>(pData_)->ADN_Ref_ABC::ConnectPrivate( static_cast<ADN_Ref_ABC*>(this) );
             pData_->AddRef();
@@ -133,7 +133,7 @@ void ADN_TypePtr_InVector_ABC<T>::SetData(const T_TypePtr& value, bool bCanBeUnd
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_TypePtr_InVector_ABC<T>::T_TypePtr 
+// Name: ADN_TypePtr_InVector_ABC<T>::T_TypePtr
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
 template <class T>
@@ -171,7 +171,7 @@ void ADN_TypePtr_InVector_ABC<T>::SetVector(const typename ADN_TypePtr_InVector_
         // connect new vector
         if (pVector_)
             static_cast<ADN_Connector_Vector_ABC*>(this)->Connect(static_cast<ADN_Connector_Vector_ABC*>(pVector_));
-            
+
     }
 }
 
@@ -188,9 +188,9 @@ ADN_TypePtr_InVector_ABC<T>& ADN_TypePtr_InVector_ABC<T>::operator =(const T_Typ
 
 // -----------------------------------------------------------------------------
 // Name: ADN_TypePtr_InVector_ABC::AddItemPrivate
-/** @param  item 
-    @param  bInConnection 
-    @return 
+/** @param  item
+    @param  bInConnection
+    @return
 */
 // Created: AGN 2004-03-22
 // -----------------------------------------------------------------------------
@@ -202,8 +202,8 @@ bool ADN_TypePtr_InVector_ABC< T >::AddItemPrivate(void *item,bool)
 
 // -----------------------------------------------------------------------------
 // Name: ADN_TypePtr_InVector_ABC::RemItemPrivate
-/** @param  item 
-    @return 
+/** @param  item
+    @return
 */
 // Created: AGN 2004-05-11
 // -----------------------------------------------------------------------------
@@ -246,10 +246,10 @@ bool ADN_TypePtr_InVector_ABC<T>::operator ==(const T_TypePtr& val) const
 //-----------------------------------------------------------------------------
 template <class T>
 void ADN_TypePtr_InVector_ABC<T>::SetDataPrivate(void *data)
-{   
+{
     T_TypePtr newData=(T_TypePtr)data;
     SetData(newData,true);
-}    
+}
 
 //-----------------------------------------------------------------------------
 // Name: ADN_TypePtr_InVector_ABC<T>:: InvalidatePrivate
@@ -258,10 +258,10 @@ void ADN_TypePtr_InVector_ABC<T>::SetDataPrivate(void *data)
 template <class T>
 void ADN_TypePtr_InVector_ABC<T>::InvalidatePrivate(void *ptr,bool bDel)
 {
-    if ( pData_ == ptr)
+    if( pData_ == ptr)
     {
         ADN_TypePtr_InVector_ABC<T>::SetData((T_TypePtr)0,false);
-        ADN_Ref_ABC::InvalidatePrivate(this); 
+        ADN_Ref_ABC::InvalidatePrivate(this);
         emit Invalidated(ptr,bDel); // $$$$ SBO 2006-09-12: see below
     }
 //    emit Invalidated(ptr,bDel); // $$$$ SBO 2006-09-12: recursive deletion problem...
@@ -269,7 +269,7 @@ void ADN_TypePtr_InVector_ABC<T>::InvalidatePrivate(void *ptr,bool bDel)
 
 // -----------------------------------------------------------------------------
 // Name: ADN_TypePtr_InVector_ABC::Initialize
-/** @param  dest 
+/** @param  dest
 */
 // Created: AGN 2004-03-22
 // -----------------------------------------------------------------------------
@@ -298,7 +298,7 @@ void ADN_TypePtr_InVector_ABC< T >::Initialize( ADN_Connector_ABC& dest ) const
 
 // -----------------------------------------------------------------------------
 // Name: ADN_TypePtr_InVector_ABC::GetNodeName
-/** @return 
+/** @return
 */
 // Created: AGN 2004-05-13
 // -----------------------------------------------------------------------------
@@ -310,7 +310,7 @@ std::string ADN_TypePtr_InVector_ABC< T >::GetNodeName()
 
 // -----------------------------------------------------------------------------
 // Name: ADN_TypePtr_InVector_ABC::SetDataName
-/** @param  strName 
+/** @param  strName
 */
 // Created: AGN 2004-05-13
 // -----------------------------------------------------------------------------

@@ -105,7 +105,6 @@ public:
         ADN_Type_String        szFileName_;
     };
 
-
 //*****************************************************************************
     class WorkDirInfos : private boost::noncopyable
     {
@@ -137,7 +136,6 @@ public:
         ADN_Type_String     szTempDir_;
         bool                bTmpActivated_;
     };
-
 
 //*****************************************************************************
 public:

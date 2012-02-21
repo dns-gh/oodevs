@@ -16,7 +16,6 @@
 //
 // *****************************************************************************
 
-
 #include "adaptation_app_pch.h"
 #include "ADN_RemoveElementCommand.h"
 

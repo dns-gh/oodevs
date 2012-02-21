@@ -93,7 +93,6 @@ private:
     ADN_GraphData& graphData_;
 };
 
-
 class ADN_GC_PhSize : public ADN_Connector_Graph_ABC
 {
 
@@ -583,7 +582,7 @@ void ADN_Weapons_GUI::UpdateModifiers()
         default:
             break;
         }
-        
+
         switch( stress )
         {
         case eUnitStress_Calm:

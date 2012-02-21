@@ -52,5 +52,4 @@ private:
     //@}
 };
 
-
 #endif // __ADN_Sensors_Meteos_GUI_h_

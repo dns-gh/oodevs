@@ -35,7 +35,7 @@ public:
     template <class U> void SetFixedVector(const ADN_Type_Vector_ABC<U>& v)
     {
         // initialize vector
-        for ( ADN_Type_Vector_ABC<U>::CIT_PtrVector it=v.begin();it!=v.end();++it)
+        for( ADN_Type_Vector_ABC<U>::CIT_PtrVector it=v.begin();it!=v.end();++it)
             AddItem( new T(*it) );
         EndVector();
         // connection
@@ -49,6 +49,5 @@ protected:
 };
 
 #include "ADN_Type_VectorFixed_ABC.inl"
-
 
 #endif // __ADN_Type_VectorFixed_ABC_h_

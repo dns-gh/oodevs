@@ -50,7 +50,6 @@ GQ_PlotCaption::~GQ_PlotCaption()
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotCaption::UpdateCaption
 // Created: CBX 2003-11-25
@@ -75,7 +74,6 @@ void GQ_PlotCaption::paintEvent( QPaintEvent* pEvent )
 
     QWidget::paintEvent( pEvent );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotCaption::Update

@@ -25,5 +25,4 @@ public:
     virtual ~ADN_Units_Postures_GUI();
 };
 
-
 #endif // __ADN_Units_Postures_GUI_h_

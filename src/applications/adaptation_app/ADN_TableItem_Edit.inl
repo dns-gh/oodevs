@@ -30,7 +30,6 @@ ADN_TableItem_Edit<Connector,Validator>::ADN_TableItem_Edit(ADN_Table*parent,voi
     assert( pValidator_ != 0 );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_TableItem_Edit destructor
 // Created: JDY 03-07-09
@@ -51,7 +50,6 @@ Validator& ADN_TableItem_Edit<Connector,Validator>::GetValidator()
     return *pValidator_;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_TableItem_Edit::SetValidator
 // Created: APE 2005-04-14
@@ -63,7 +61,6 @@ void ADN_TableItem_Edit<Connector,Validator>::SetValidator( Validator* pValidato
     pValidator_ = pValidator;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_TableItem_Edit<Connector,Validator>::createEditor
 // Created: JDY 03-07-09
@@ -72,7 +69,7 @@ template <class Connector,class Validator>
 QWidget *ADN_TableItem_Edit<Connector,Validator>::createEditor() const
 {
     QWidget* pEditor = Q3TableItem::createEditor();
-    if ( pEditor && pEditor->inherits( "QLineEdit" ) )
+    if( pEditor && pEditor->inherits( "QLineEdit" ) )
     {
         QLineEdit* pLineEdit = static_cast<QLineEdit*>( pEditor );
         pLineEdit->setValidator( pValidator_ );
@@ -83,7 +80,6 @@ QWidget *ADN_TableItem_Edit<Connector,Validator>::createEditor() const
     return pEditor;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_TableItem_Edit<Connector,Validator>::DoValueChanged
 // Created: JDY 03-07-09
@@ -93,7 +89,6 @@ void ADN_TableItem_Edit<Connector,Validator>::DoValueChanged()
 {
     static_cast<Connector*>(pConnector_)->SetDataChanged(text());
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_TableItem_Edit::paint
@@ -128,7 +123,6 @@ void ADN_TableItem_Edit<Connector,Validator>::paint( QPainter *p, const QColorGr
 
     ADN_TableItem_ABC::paint( p, newCg, cr, selected );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_TableItem_Edit::UseColor
@@ -181,7 +175,6 @@ void ADN_TableItem_Edit<Connector,Validator>::SetAlignment( int nAlignment )
 {
     nAlignment_ = nAlignment;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_TableItem_Edit::alignment

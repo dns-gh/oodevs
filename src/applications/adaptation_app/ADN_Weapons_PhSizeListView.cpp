@@ -56,7 +56,6 @@ public:
         ADN_ListViewItem *pItem = new ADN_ListViewItem( &list_, pObj, 1 );
         pItem->setPixmap( 0, icon );
 
-
         // Connect it with the size info.
         pItem->Connect( 0, static_cast<PhSizeInfos*>(pObj)->ptrSize_.GetData() );
 
@@ -66,7 +65,6 @@ public:
 private:
     GQ_Plot& plot_;
 };
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_PhSizeListView constructor
@@ -86,7 +84,6 @@ ADN_Weapons_PhSizeListView::ADN_Weapons_PhSizeListView( GQ_Plot& plot, QWidget* 
     pConnector_ = new ADN_CLV_PhSizes( *this, plot );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_PhSizeListView destructor
 // Created: APE 2005-01-07
@@ -95,7 +92,6 @@ ADN_Weapons_PhSizeListView::~ADN_Weapons_PhSizeListView()
 {
     delete pConnector_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_PhSizeListView::ConnectItem

@@ -58,7 +58,6 @@ public:
     typedef ADN_Type_Vector_ABC<PhInfos>    T_PhInfosVector;
     typedef T_PhInfosVector::iterator       IT_PhInfosVector;
 
-
 // *****************************************************************************
     class PhSizeInfos : public ADN_Ref_ABC
                       , public ADN_DataTreeNode_ABC
@@ -107,12 +106,10 @@ public:
             ADN_Categories_Data::SizeInfos* val_;
         };
 
-
     };
 
     typedef ADN_Type_VectorFixed_ABC<PhSizeInfos> T_PhSizeInfosVector;
     typedef T_PhSizeInfosVector::iterator        IT_PhSizeInfosVector;
-
 
 // *****************************************************************************
     class WeaponInfos : public ADN_Ref_ABC
@@ -180,7 +177,6 @@ public:
 
     typedef ADN_Type_Vector_ABC<WeaponInfos>       T_WeaponInfosVector;
     typedef T_WeaponInfosVector::iterator           IT_WeaponInfosVector;
-
 
 // *****************************************************************************
 public:

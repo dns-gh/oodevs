@@ -34,7 +34,6 @@ ADN_RadioButton::ADN_RadioButton(QWidget* parent, const char * name)
     connect( static_cast< ADN_App* >( qApp )->GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_RadioButton constructor
 // Created: JDY 03-07-02
@@ -56,7 +55,6 @@ ADN_RadioButton::~ADN_RadioButton()
 {
     delete pConnector_;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_RadioButton::BoolChanged

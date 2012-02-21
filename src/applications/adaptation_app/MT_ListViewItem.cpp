@@ -22,7 +22,6 @@ MT_ListViewItem::MT_ListViewItem( Q3ListView * parent )
 {
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MT_ListViewItem constructor
 // Created: APE 2004-03-16
@@ -34,7 +33,6 @@ MT_ListViewItem::MT_ListViewItem( Q3ListView * parent, Q3ListViewItem * after )
     , pBackgroundColor_( 0 )
 {
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MT_ListViewItem constructor
@@ -48,7 +46,6 @@ MT_ListViewItem::MT_ListViewItem( Q3ListView * parent, QString label1, QString l
 {
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MT_ListViewItem constructor
 // Created: APE 2004-03-16
@@ -60,7 +57,6 @@ MT_ListViewItem::MT_ListViewItem( Q3ListView * parent, Q3ListViewItem * after, Q
     , pBackgroundColor_( 0 )
 {
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MT_ListViewItem constructor
@@ -76,7 +72,6 @@ MT_ListViewItem::MT_ListViewItem( Q3ListViewItem * parent )
 {
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MT_ListViewItem constructor
 // Created: APE 2004-03-16
@@ -88,7 +83,6 @@ MT_ListViewItem::MT_ListViewItem( Q3ListViewItem * parent, Q3ListViewItem * afte
     , pBackgroundColor_( 0 )
 {
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MT_ListViewItem constructor
@@ -102,7 +96,6 @@ MT_ListViewItem::MT_ListViewItem( Q3ListViewItem * parent, QString label1, QStri
 {
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MT_ListViewItem constructor
 // Created: APE 2004-03-16
@@ -115,7 +108,6 @@ MT_ListViewItem::MT_ListViewItem( Q3ListViewItem * parent, Q3ListViewItem * afte
 {
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MT_ListViewItem destructor
 // Created: APE 2004-03-16
@@ -126,7 +118,6 @@ MT_ListViewItem::~MT_ListViewItem()
     delete pFontColor_;
     delete pBackgroundColor_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MT_ListViewItem::SetFont
@@ -145,7 +136,6 @@ void MT_ListViewItem::SetFont( uint nColumn, const QFont &font )
     fonts_[nColumn] = font;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MT_ListViewItem::SetFontColor
 /** @param  nColumn
@@ -162,7 +152,6 @@ void MT_ListViewItem::SetFontColor( uint nColumn, const QColor &color )
             fontColors_.resize( nColumn + 1, listView()->colorGroup().text() );
     fontColors_[nColumn] = color;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MT_ListViewItem::SetBackground
@@ -181,7 +170,6 @@ void MT_ListViewItem::SetBackground( uint nColumn, const QColor &color )
     backgrounds_[nColumn] = color;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MT_ListViewItem::SetFont
 /** @param  font
@@ -196,7 +184,6 @@ void MT_ListViewItem::SetFont( const QFont &font )
         fonts_[n] = font;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MT_ListViewItem::SetFontColor
 /** @param  color
@@ -210,7 +197,6 @@ void MT_ListViewItem::SetFontColor( const QColor &color )
     for( uint n = 0; n < fontColors_.size(); ++n )
         fontColors_[n] = color;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MT_ListViewItem::SetBackground
@@ -267,7 +253,6 @@ void MT_ListViewItem::paintCell( QPainter *painter, const QColorGroup &cg, int c
     // Restore the painter.
     painter->restore();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MT_ListViewItem::width

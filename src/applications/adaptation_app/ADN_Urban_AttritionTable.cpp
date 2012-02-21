@@ -86,7 +86,6 @@ ADN_Urban_AttritionTable::ADN_Urban_AttritionTable( QWidget* pParent )
     pConnector_ = new ADN_Urban_AttritionTable_Connector( *this );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Urban_AttritionTable destructor
 // Created: JDY 03-07-03

@@ -20,8 +20,8 @@
 
 // -----------------------------------------------------------------------------
 // Name: ADN_RemoveElementCommand constructor
-/** @param  modifiedData 
-    @param  pRemovedObject 
+/** @param  modifiedData
+    @param  pRemovedObject
 */
 // Created: AGN 2004-05-13
 // -----------------------------------------------------------------------------
@@ -63,7 +63,7 @@ template< class ObjectType >
 void ADN_RemoveElementCommand< ObjectType >::UpdateDescription()
 {
     QString strDescription( qApp->translate("ADN_RemoveElementCommand","Remove ") );
-    
+
     std::string strItemName = pRemovedObject_->GetItemName();
     if( strItemName.empty() )
         strItemName = qApp->translate("ADN_RemoveElementCommand","new ").ascii() + modifiedData_.GetItemTypeName();
@@ -71,7 +71,7 @@ void ADN_RemoveElementCommand< ObjectType >::UpdateDescription()
         strItemName = modifiedData_.GetItemTypeName() + " " + strItemName;
 
     strDescription += strItemName.c_str();
-    
+
     ADN_DataTreeNode_ABC* pParent = modifiedData_.GetParentNode();
     while( pParent != 0 )
     {
@@ -84,5 +84,5 @@ void ADN_RemoveElementCommand< ObjectType >::UpdateDescription()
         pParent = pParent->GetParentNode();
     }
 
-    setDescription( strDescription );    
+    setDescription( strDescription );
 }

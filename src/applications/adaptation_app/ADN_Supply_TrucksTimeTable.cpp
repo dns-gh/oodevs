@@ -26,7 +26,6 @@
 
 typedef ADN_Supply_Data::ConvoyInfo< ADN_Type_Time > ConvoyInfo;
 
-
 //-----------------------------------------------------------------------------
 // Internal table connector
 //-----------------------------------------------------------------------------
@@ -54,7 +53,6 @@ public:
         pItemTime->GetConnector().Connect( &static_cast<ConvoyInfo*>(pObj)->value_ );
     }
 };
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Supply_TrucksTimeTable constructor
@@ -87,7 +85,6 @@ ADN_Supply_TrucksTimeTable::ADN_Supply_TrucksTimeTable( QWidget* pParent )
     pConnector_ = new ADN_Connector_TrucksTimeTable( *this );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Supply_TrucksTimeTable destructor
 // Created: APE 2005-01-07
@@ -96,7 +93,6 @@ ADN_Supply_TrucksTimeTable::~ADN_Supply_TrucksTimeTable()
 {
     delete pConnector_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Supply_TrucksTimeTable::OnContextMenu
@@ -131,5 +127,4 @@ void ADN_Supply_TrucksTimeTable::OnContextMenu( int /*nRow*/, int /*nCol*/, cons
         pCTable->AddItem( 0 );
     }
 }
-
 

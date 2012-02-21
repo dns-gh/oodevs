@@ -107,5 +107,4 @@ public:
     SupplyDataInfos infos_;
 };
 
-
 #endif // __ADN_Supply_Data_h_

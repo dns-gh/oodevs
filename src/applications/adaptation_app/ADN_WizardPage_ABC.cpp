@@ -20,7 +20,6 @@
 #include "ADN_WizardPage_ABC.h"
 #include "ADN_ImageViewer.h"
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_WizardPage_ABC constructor
 // Created: AGN 2003-11-18
@@ -36,7 +35,6 @@ ADN_WizardPage_ABC::ADN_WizardPage_ABC( Q3Wizard* pParent, const char* name, con
 
     pRightSide_ = new Q3VBox( this );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_WizardPage_ABC destructor

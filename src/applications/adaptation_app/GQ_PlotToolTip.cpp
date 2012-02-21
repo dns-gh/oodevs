@@ -46,7 +46,6 @@ GQ_PlotToolTip::~GQ_PlotToolTip()
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: GQ_PlotToolTip::maybeTip
 /** @param  QPoint&

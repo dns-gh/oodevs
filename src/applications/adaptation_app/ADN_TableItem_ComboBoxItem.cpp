@@ -26,7 +26,6 @@ ADN_TableItem_ComboBoxItem::ADN_TableItem_ComboBoxItem(ADN_TableItem_ComboBox& c
     assert(pConnector_);
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_TableItem_ComboBoxItem destructor
 // Created: JDY 03-09-10
@@ -35,7 +34,6 @@ ADN_TableItem_ComboBoxItem::~ADN_TableItem_ComboBoxItem()
 {
     delete pConnector_;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_TableItem_ComboBoxItem::setText
@@ -52,7 +50,6 @@ void ADN_TableItem_ComboBoxItem::setText(const QString& txt)
         szTmpTxt_=txt;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_TableItem_ComboBoxItem::text
 // Created: JDY 03-09-10
@@ -67,7 +64,6 @@ QString ADN_TableItem_ComboBoxItem::text() const
     else
         return szTmpTxt_;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_TableItem_ComboBoxItem::setEnabled

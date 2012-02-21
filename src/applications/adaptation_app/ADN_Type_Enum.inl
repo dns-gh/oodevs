@@ -16,9 +16,9 @@ typename ADN_Type_Enum< T, nb >::T_Converter ADN_Type_Enum< T, nb >::converter_ 
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Type_Enum::ConvertValue
-/** @param  nVal 
-    @param  nConversion 
-    @return 
+/** @param  nVal
+    @param  nConversion
+    @return
 */
 // Created: AGN 2004-05-13
 // -----------------------------------------------------------------------------
@@ -33,7 +33,7 @@ std::string ADN_Type_Enum< T, nb >::ConvertValue( T nVal, ENT_Tr_ABC::E_Conversi
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Type_Enum::SetConverter
-/** @param  enumConverter 
+/** @param  enumConverter
 */
 // Created: AGN 2004-05-13
 // -----------------------------------------------------------------------------
@@ -78,7 +78,7 @@ ADN_Type_Enum<T,nb>::~ADN_Type_Enum()
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Type_Enum<T,nb>::T_TypePtr 
+// Name: ADN_Type_Enum<T,nb>::T_TypePtr
 // Created: JDY 03-07-18
 //-----------------------------------------------------------------------------
 template <class T,int nb>
@@ -110,7 +110,7 @@ ADN_Type_Enum<T,nb>& ADN_Type_Enum<T,nb>::operator =(const T& val)
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Type_ABC<T>::operator 
+// Name: ADN_Type_ABC<T>::operator
 // Created: JDY 03-07-22
 //-----------------------------------------------------------------------------
 template <class T,int nb>
@@ -120,7 +120,7 @@ bool ADN_Type_Enum<T,nb>::operator ==(const ADN_Type_Enum& o) const
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Type_ABC<T>::operator 
+// Name: ADN_Type_ABC<T>::operator
 // Created: JDY 03-07-22
 //-----------------------------------------------------------------------------
 template <class T,int nb>
@@ -128,9 +128,9 @@ bool ADN_Type_Enum<T,nb>::operator ==(const T& val) const
 {
     return data_==val;
 }
-    
+
 //-----------------------------------------------------------------------------
-// Name: ADN_Type_ABC<T>::operator 
+// Name: ADN_Type_ABC<T>::operator
 // Created: JDY 03-07-22
 //-----------------------------------------------------------------------------
 template <class T,int nb>
@@ -140,7 +140,7 @@ bool ADN_Type_Enum<T,nb>::operator !=(const ADN_Type_Enum& o) const
 }
 
 //-----------------------------------------------------------------------------
-// Name: ADN_Type_ABC<T>::operator 
+// Name: ADN_Type_ABC<T>::operator
 // Created: JDY 03-07-22
 //-----------------------------------------------------------------------------
 template <class T,int nb>
@@ -166,7 +166,7 @@ void ADN_Type_Enum<T,nb>::SetDataPrivate(void *data)
 template <class T,int nb>
 void ADN_Type_Enum<T,nb>::SetDataPrivate(const T& value, bool bCanBeUndone )
 {
-    if ( data_!= value)
+    if( data_!= value)
     {
         if( bCanBeUndone )
         {
@@ -175,12 +175,12 @@ void ADN_Type_Enum<T,nb>::SetDataPrivate(const T& value, bool bCanBeUndone )
 
         data_     =value;
         emit DataChanged(&data_);
-    }  
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Type_Enum::Initialize
-/** @param  dest 
+/** @param  dest
 */
 // Created: AGN 2004-03-22
 // -----------------------------------------------------------------------------
@@ -200,7 +200,7 @@ void ADN_Type_Enum<T,nb>::Initialize( ADN_Connector_Vector_ABC& dest ) const
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Type_Enum::GetName
-/** @return 
+/** @return
 */
 // Created: AGN 2004-05-13
 // -----------------------------------------------------------------------------
@@ -212,7 +212,7 @@ std::string ADN_Type_Enum<T,nb>::GetNodeName()
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Type_Enum::SetDataName
-/** @param  strName 
+/** @param  strName
 */
 // Created: AGN 2004-05-13
 // -----------------------------------------------------------------------------

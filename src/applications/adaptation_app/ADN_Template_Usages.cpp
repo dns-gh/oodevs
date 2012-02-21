@@ -44,7 +44,6 @@ private:
     ADN_CT_Template_Usages& operator=( const ADN_CT_Template_Usages& );
 };
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Template_Usages constructor
 // Created: LGY 2011-09-21

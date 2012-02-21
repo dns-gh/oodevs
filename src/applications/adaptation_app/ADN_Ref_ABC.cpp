@@ -101,7 +101,6 @@ void ADN_Ref_ABC::DisconnectPrivate( ADN_Ref_ABC* pTarget )
     this->DisconnectPrivateSub( pTarget );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Ref_ABC::DisconnectPrivate
 // Created: APE 2005-02-28

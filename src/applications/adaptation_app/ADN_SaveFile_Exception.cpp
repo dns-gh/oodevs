@@ -28,7 +28,6 @@ ADN_SaveFile_Exception::ADN_SaveFile_Exception( const std::string& strFileName )
 {
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_SaveFile_Exception constructor
 // Created: AGN 2003-12-09
@@ -38,7 +37,6 @@ ADN_SaveFile_Exception::ADN_SaveFile_Exception( const ADN_SaveFile_Exception& rh
 {
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_SaveFile_Exception destructor
 // Created: AGN 2003-12-09
@@ -46,7 +44,6 @@ ADN_SaveFile_Exception::ADN_SaveFile_Exception( const ADN_SaveFile_Exception& rh
 ADN_SaveFile_Exception::~ADN_SaveFile_Exception()
 {
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_SaveFile_Exception::GetExceptionTitle
@@ -57,7 +54,6 @@ std::string ADN_SaveFile_Exception::GetExceptionTitle() const
     return qApp->translate( "ADN_SaveFile_Exception", "File error" ).ascii();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_SaveFile_Exception::GetExceptionMessage
 // Created: APE 2005-03-15
@@ -66,6 +62,4 @@ std::string ADN_SaveFile_Exception::GetExceptionMessage() const
 {
     return qApp->translate( "ADN_SaveFile_Exception", "Could not save file '%1'.\nMake sure that the file is not write-protected." ).arg( strFileName_.c_str() ).ascii();
 }
-
-
 

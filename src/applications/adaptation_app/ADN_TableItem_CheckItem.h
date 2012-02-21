@@ -61,7 +61,6 @@ public:
     void setHidden( bool b );
     //@}
 
-
 protected:
 
     virtual void        DoValueChanged();
@@ -71,7 +70,6 @@ private:
     bool                                    bIsChecked_;
 
 };
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_TableItem_CheckItem::rtti

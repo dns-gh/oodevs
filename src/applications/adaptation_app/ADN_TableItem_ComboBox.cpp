@@ -100,7 +100,7 @@ void ADN_TableItem_ComboBox::changeItem( const QString & t, int index )
 
     int i=0;
     QStringList::iterator it=entries_.begin();
-    for ( ;it!=entries_.end();++it ,++i)
+    for( ;it!=entries_.end();++it ,++i)
         if( i == index )
             break;
     if( it == entries_.end() )
@@ -128,7 +128,7 @@ void ADN_TableItem_ComboBox::removeItem ( int index )
     // remove entry
     int i=0;
     QStringList::iterator it=entries_.begin();
-    for ( ;it!=entries_.end();++it ,++i)
+    for( ;it!=entries_.end();++it ,++i)
         if( i == index )
             break;
     if( it == entries_.end() )
@@ -335,7 +335,7 @@ void ADN_TableItem_ComboBox::DoValueChanged()
 int ADN_TableItem_ComboBox::FindNdx( const ADN_TableItem_ComboBoxItem* item ) const
 {
     int ndx=0;
-    for ( CIT_Ptr_TableItem_ComboBoxItem_Vector it=vItems_.begin();it!=vItems_.end();++it,++ndx)
+    for( CIT_Ptr_TableItem_ComboBoxItem_Vector it=vItems_.begin();it!=vItems_.end();++it,++ndx)
         if( (*it)==item)
             return ndx;
     return -1;
@@ -348,7 +348,7 @@ int ADN_TableItem_ComboBox::FindNdx( const ADN_TableItem_ComboBoxItem* item ) co
 int ADN_TableItem_ComboBox::FindNdx( void * data) const
 {
     int ndx=0;
-    for ( CIT_Ptr_TableItem_ComboBoxItem_Vector it=vItems_.begin();it!=vItems_.end();++it,++ndx)
+    for( CIT_Ptr_TableItem_ComboBoxItem_Vector it=vItems_.begin();it!=vItems_.end();++it,++ndx)
         if( (*it) && (*it)->GetData() == data)
             return ndx;
     return -1;

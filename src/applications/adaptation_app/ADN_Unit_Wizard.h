@@ -37,5 +37,4 @@ public:
     //@}
 };
 
-
 #endif // __ADN_Unit_Wizard_h_

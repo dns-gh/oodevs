@@ -35,7 +35,6 @@ ADN_Wizard_LastPage::ADN_Wizard_LastPage( Q3Wizard* pParent, const QString& strT
     pParent->setFinishEnabled( this, true );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Wizard_LastPage destructor
 // Created: APE 2005-01-11

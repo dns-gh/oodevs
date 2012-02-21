@@ -52,7 +52,7 @@ ADN_Units_Data::ComposanteInfos::ComposanteInfos()
     bConveyor_.SetDataName( "hein ?" ); //XXX
     bConveyor_.SetParentNode( *this );
     nNbrHumanInCrew_.SetDataName( "Comprends pas ..." );
-    nNbrHumanInCrew_.SetParentNode( *this );  
+    nNbrHumanInCrew_.SetParentNode( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -250,7 +250,6 @@ void ADN_Units_Data::StockInfos::ReadStock( xml::xistream& input, ADN_Type_Bool&
     vLogThresholds_.AddItem( spNew.release() );
     stockThresholds = true;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Units_Data::StockInfos::ReadArchive
@@ -894,7 +893,6 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output ) const
     output << xml::end;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: UnitInfos::CleanupNature
 // Created: RPD 2011-04-11
@@ -902,15 +900,15 @@ void ADN_Units_Data::UnitInfos::WriteArchive( xml::xostream& output ) const
 void ADN_Units_Data::UnitInfos::CleanupNature()
 {
     std::string nature = strNature_.GetData();
-    if ( nature.size() > 10 )
+    if( nature.size() > 10 )
     {
-        if ( nature.compare( nature.size()-10, 10 ,"/undefined") == 0 )
+        if( nature.compare( nature.size()-10, 10 ,"/undefined") == 0 )
         {
             nature.resize( nature.size()-10 );
             strNature_ = nature;
         }
     }
-    if ( !ADN_Workspace::GetWorkspace().GetUnits().GetGui().IsSymbolAvailable( strNature_.GetData() ) )
+    if( !ADN_Workspace::GetWorkspace().GetUnits().GetGui().IsSymbolAvailable( strNature_.GetData() ) )
         strNature_ = "undefined";
 }
 
@@ -986,7 +984,7 @@ void ADN_Units_Data::ReadArchive( xml::xistream& input )
           >> xml::end;
     vUnits_.AddItem( 0 );
 
-    if ( !vUnits_.empty() )
+    if( !vUnits_.empty() )
         ADN_Workspace::GetWorkspace().GetUnits().GetGui().PreloadUnitSymbolComboBox( vUnits_[0] );
 }
 

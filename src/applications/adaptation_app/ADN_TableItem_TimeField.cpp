@@ -106,7 +106,6 @@ void ADN_TableItem_TimeField::SetAlignment( int nAlignment )
     nAlignment_ = nAlignment;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_TableItem_TimeField::alignment
 // Created: SBO 2005-09-13

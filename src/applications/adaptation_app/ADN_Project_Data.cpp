@@ -178,7 +178,6 @@ ADN_Project_Data::FileInfos::FileInfos()
     // NOTHING
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: FileInfos::FileInfos
 // Created: JDY 03-09-09
@@ -189,7 +188,6 @@ ADN_Project_Data::FileInfos::FileInfos( const std::string& filename )
     // NOTHING
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: FileInfos::operator =
 // Created: JDY 03-09-09
@@ -199,7 +197,6 @@ ADN_Project_Data::FileInfos& ADN_Project_Data::FileInfos::operator=( const std::
     szFileName_ = ADN_Project_Data::GetWorkDirInfos().GetRelativePath( filename );
     return *this;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: WorkDirInfos::WorkDirInfos
@@ -213,7 +210,6 @@ ADN_Project_Data::WorkDirInfos::WorkDirInfos()
     // NOTHING
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: WorkDirInfos::GetFullPath
 // Created: JDY 03-06-24
@@ -222,7 +218,6 @@ std::string ADN_Project_Data::WorkDirInfos::GetFullPath( const std::string& part
 {
     return ( ( e == eWorking ) ? szWorkingDir_.GetData() : szTempDir_.GetData() ) + part;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: WorkDirInfos::GetPartPath
@@ -277,7 +272,6 @@ void ADN_Project_Data::WorkDirInfos::UseTempDirectory( bool bActivateTemp )
         free( pTempDir );
     }
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Project_Data constructor

@@ -236,7 +236,6 @@ void GQ_Plot::TouchData()
     bPlotUpdateNeeded_ = true;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::Layers
 /** @return
@@ -939,7 +938,6 @@ bool GQ_Plot::GetToolTips( const QPoint& refPoint, QRect& tipRect, QStringList& 
 
     return bToolTipFound;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: GQ_Plot::SetSelectionMode

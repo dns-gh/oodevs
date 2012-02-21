@@ -433,7 +433,7 @@ bool ADN_Units_GUI::IsSymbolAvailable( const std::string& symbol )
 // -----------------------------------------------------------------------------
 void ADN_Units_GUI::PreloadUnitSymbolComboBox( ADN_Units_Data::UnitInfos* pValidUnitInfos )
 {
-    if ( !pListView_ )
+    if( !pListView_ )
         return;
 
    pListView_->ConnectNatureSymbol( pValidUnitInfos );

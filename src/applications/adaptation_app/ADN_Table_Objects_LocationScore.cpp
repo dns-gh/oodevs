@@ -16,7 +16,6 @@
 //
 // *****************************************************************************
 
-
 #include "adaptation_app_pch.h"
 #include "ADN_Table_Objects_LocationScore.h"
 
@@ -147,7 +146,6 @@ void ADN_Table_Objects_LocationScore::OnContextMenu(int /*row*/,int /*col*/,cons
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Table_Objects_LocationScore::AddNewElement
 // Created: AGN 2004-05-24
@@ -163,7 +161,6 @@ void ADN_Table_Objects_LocationScore::AddNewElement( int n )
     pCTable->AddItem( 0 );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Table_Objects_LocationScore::RemoveCurrentElement
 // Created: AGN 2004-05-24
@@ -175,7 +172,6 @@ void ADN_Table_Objects_LocationScore::RemoveCurrentElement()
     assert( pCurComposante != 0 );
     static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem(pCurComposante);
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Table_Objects_LocationScore::Contains

@@ -48,7 +48,7 @@ static struct EmbedImage {
 
 static QImage uic_findImage( const QString& name )
 {
-    for ( int i=0; embed_image_vec[i].data; i++ ) {
+    for( int i=0; embed_image_vec[i].data; i++ ) {
     if( QString::fromUtf8(embed_image_vec[i].name) == name ) {
         QByteArray baunzip;
         baunzip = qUncompress( embed_image_vec[i].data,

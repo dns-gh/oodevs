@@ -26,7 +26,6 @@
 
 typedef ADN_Supply_Data::ConvoyInfo< ADN_Type_Double > ConvoyInfo;
 
-
 //-----------------------------------------------------------------------------
 // Internal table connector
 //-----------------------------------------------------------------------------
@@ -54,7 +53,6 @@ public:
         pItemDouble->GetConnector().Connect( &static_cast<ConvoyInfo*>(pObj)->value_ );
     }
 };
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Supply_TrucksDoubleTable constructor
@@ -87,7 +85,6 @@ ADN_Supply_TrucksDoubleTable::ADN_Supply_TrucksDoubleTable( QWidget* pParent )
     pConnector_ = new ADN_Connector_TrucksDoubleTable( *this );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Supply_TrucksDoubleTable destructor
 // Created: APE 2005-01-07
@@ -96,7 +93,6 @@ ADN_Supply_TrucksDoubleTable::~ADN_Supply_TrucksDoubleTable()
 {
     delete pConnector_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Supply_TrucksDoubleTable::OnContextMenu
@@ -131,5 +127,4 @@ void ADN_Supply_TrucksDoubleTable::OnContextMenu( int /*nRow*/, int /*nCol*/, co
         pCTable->AddItem( 0 );
     }
 }
-
 

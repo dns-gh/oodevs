@@ -59,7 +59,6 @@ bool ADN_Tools::CaselessCompare( const std::string& str1, const std::string& str
     return str1Lower == str2Lower;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Tools::Scriptify
 // Created: APE 2005-02-21
@@ -80,7 +79,6 @@ std::string ADN_Tools::Scriptify( const std::string& strFieldName )
     }
     return strResult;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Tools::ComputePostureScriptName
@@ -112,7 +110,6 @@ void ADN_Tools::CheckConnectorVector( const T_ConnectorVector& vConnectors, uint
     return;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Tools::SecondToString
 // Created: APE 2005-03-08
@@ -123,7 +120,6 @@ std::string ADN_Tools::SecondToString( double rSecond )
     strText << rSecond << "s";
     return strText.str();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: Local defs for the function below
@@ -140,7 +136,6 @@ struct ItemSort
         return lhs.first.lower() < rhs.first.lower();
     }
 };
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Tools::SortMenu

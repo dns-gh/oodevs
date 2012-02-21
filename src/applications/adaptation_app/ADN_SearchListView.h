@@ -35,7 +35,6 @@ public slots:
     virtual void OnApplyFilterList( const ADN_UsedByInfos& /*usedByInfos*/ ) {}
 };
 
-
 // =============================================================================
 /** @class  ADN_SearchListView
     @brief  ADN_SearchListView

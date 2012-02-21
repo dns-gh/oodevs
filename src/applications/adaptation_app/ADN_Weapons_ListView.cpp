@@ -26,7 +26,6 @@
 
 typedef ADN_Weapons_Data::WeaponInfos WeaponInfos;
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_ListView constructor
 // Created: APE 2005-01-06
@@ -44,7 +43,6 @@ ADN_Weapons_ListView::ADN_Weapons_ListView( QWidget* pParent, const char* szName
     this->SetDeletionEnabled( true );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_ListView destructor
 // Created: APE 2005-01-06
@@ -53,7 +51,6 @@ ADN_Weapons_ListView::~ADN_Weapons_ListView()
 {
     delete pConnector_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Weapons_ListView::ConnectItem

@@ -36,5 +36,4 @@ public:
     //@}
 };
 
-
 #endif // __ADN_Weapon_Wizard_h_

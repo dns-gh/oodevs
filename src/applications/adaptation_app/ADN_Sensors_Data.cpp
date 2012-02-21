@@ -26,7 +26,6 @@
 //
 // =============================================================================
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_Data::LimitedToSensorsInfos::LimitedToSensorsInfos
 // Created: JSR 2010-03-16
@@ -351,7 +350,6 @@ ADN_Sensors_Data::ModificatorUrbanBlockInfos::ModificatorUrbanBlockInfos( ADN_Ur
     rCoeff_.SetDataName( "le modificateur de perception dû" );
     rCoeff_.SetParentNode( *this );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ModificatorUrbanBlockInfos::GetNodeName

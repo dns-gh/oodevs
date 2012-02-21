@@ -18,7 +18,6 @@
 
 #include "ADN_UserData_ListViewItem.h"
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Wizard_FirstPage_Default constructor
 // Created: APE 2005-02-14
@@ -37,7 +36,6 @@ ADN_Wizard_FirstPage_Default<T>::ADN_Wizard_FirstPage_Default( typename ADN_Wiza
     pParent->setFinishEnabled( this, false );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Wizard_FirstPage_Default destructor
 // Created: APE 2005-02-14
@@ -46,7 +44,6 @@ template< typename T >
 ADN_Wizard_FirstPage_Default<T>::~ADN_Wizard_FirstPage_Default()
 {
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Wizard_FirstPage_Default::Initialize
@@ -96,9 +93,8 @@ void ADN_Wizard_FirstPage_Default< T >::Initialize()
 
     connect( pCopyRadioButton_, SIGNAL( toggled( bool ) ), pExistingItemsListView_, SLOT( setEnabled( bool ) ) );
     pButtonGroup->setButton( 0 );
-    pExistingItemsListView_->setEnabled( false );  
+    pExistingItemsListView_->setEnabled( false );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Wizard_FirstPage_Default::CreateObject
@@ -146,7 +142,6 @@ T* ADN_Wizard_FirstPage_Default< T >::CreateObject()
     return pResult;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Wizard_FirstPage_Default::SetCaptions
 // Created: APE 2005-02-14
@@ -158,7 +153,6 @@ void ADN_Wizard_FirstPage_Default< T >::SetCaptions( const char* szPageName, con
     pExistingItemsListView_->setColumnText( 0, szColumnHeader );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Wizard_FirstPage_Default::NewT
 // Created: APE 2005-02-15
@@ -168,7 +162,6 @@ T* ADN_Wizard_FirstPage_Default<T>::NewT()
 {
     return new T();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Wizard_FirstPage_Default::showEvent

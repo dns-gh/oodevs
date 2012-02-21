@@ -384,7 +384,7 @@ namespace
 {
     void Convert( const ADN_Urban_Data::T_UrbanMaterialInfos_Vector& vector, ADN_Categories_Data::T_SizeInfos_Vector& result )
     {
-       for ( ADN_Urban_Data::CIT_UrbanMaterialInfos_Vector it = vector.begin(); it != vector.end(); ++it )
+       for( ADN_Urban_Data::CIT_UrbanMaterialInfos_Vector it = vector.begin(); it != vector.end(); ++it )
            result.AddItem( &( *it )->strName_ );
     }
 }

@@ -65,7 +65,6 @@ protected:
     virtual void SetDataPrivate( void *data );
             void SetDataPrivate( const T& value, bool bCanBeUndone );
 
-
 private:
     //! @name Copy/Assignment
     //@{

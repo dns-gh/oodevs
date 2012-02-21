@@ -168,7 +168,6 @@ public:
     void GetSelection( T_DataItemVector& selection );
     //@}
 
-
 public slots:
     //! @name Slots
     //@{
@@ -268,6 +267,5 @@ GQ_PlotAxis& GQ_Plot::YAxis()
 {
     return y_;
 }
-
 
 #endif // __GQ_Plot_h_

@@ -55,5 +55,4 @@ private:
     //@}
 };
 
-
 #endif // __ADN_SplashScreen_h_

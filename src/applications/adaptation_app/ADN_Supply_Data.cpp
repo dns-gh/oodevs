@@ -163,7 +163,6 @@ void ADN_Supply_Data::SupplyDataInfos::ReadArchive( xml::xistream& input )
     if( stockSupplyConvoyType_ == E_SupplyConvoyType( -1 ) )
         throw ADN_DataException( tools::translate( "Supply_Data", "Invalid data" ).ascii(), tools::translate( "Breakdown_Data", "Logistic supply system - Invalid supply convoy type '%1'" ).arg( stockSupplyConvoyType.c_str() ).ascii() );
 
-
     ADN_Units_Data::UnitInfos* pUnit = ADN_Workspace::GetWorkspace().GetUnits().GetData().FindUnit( strUnit );
     if( pUnit == 0 )
         throw ADN_DataException( tools::translate( "Supply_Data", "Invalid data" ).ascii(), tools::translate( "Supply_Data",  "Logistic supply system - Invalid unit '%1'" ).arg( strUnit.c_str() ).ascii() );
@@ -184,7 +183,6 @@ void ADN_Supply_Data::SupplyDataInfos::ReadArchive( xml::xistream& input )
 
     vVectorWarnings_.AddItem( 0 );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Supply_Data::SupplyDataInfos::ReadResourceAvailability
@@ -311,7 +309,6 @@ void ADN_Supply_Data::SupplyDataInfos::WriteArchive( xml::xostream& output )
 
     output << xml::end;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Supply_Data constructor

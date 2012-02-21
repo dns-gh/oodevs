@@ -32,5 +32,4 @@ public:
     //@}
 };
 
-
 #endif // __ADN_Radars_Wizard_h_

@@ -26,7 +26,6 @@
 
 typedef ADN_Units_Data::UnitInfos UnitInfos;
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Unit_Wizard constructor
 // Created: AGN 2003-12-02
@@ -44,7 +43,6 @@ ADN_Unit_Wizard::ADN_Unit_Wizard( QWidget* pParent, const char* szName )
     new ADN_Wizard_LastPage( this, qApp->translate( "ADN_Unit_Wizard", "Creation completed" ),
         qApp->translate( "ADN_Unit_Wizard",  "Click \"Done\" to create the new unit." ) );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Unit_Wizard destructor

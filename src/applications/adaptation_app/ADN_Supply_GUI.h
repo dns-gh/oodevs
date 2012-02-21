@@ -44,5 +44,4 @@ private:
     //@}
 };
 
-
 #endif // __ADN_Supply_GUI_h_

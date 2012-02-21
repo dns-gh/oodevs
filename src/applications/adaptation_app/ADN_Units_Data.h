@@ -217,7 +217,7 @@ public:
         ADN_Type_Bool                                               bProbe_;
         ADN_Type_Double                                             rProbeWidth_;
         ADN_Type_Double                                             rProbeLength_;
-        
+
         ADN_Type_Bool                                               bRanges_;
         ADN_Type_Int                                                nSensorRange_;
         ADN_Type_Int                                                nEquipmentRange_;

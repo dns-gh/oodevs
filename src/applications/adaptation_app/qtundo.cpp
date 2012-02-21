@@ -172,7 +172,6 @@ QtCommand::QtCommand(Type type, const QString &description, bool canMerge)
     objects returned by QtUndoManager::createUndoAction() and
     QtUndoManager::createRedoAction().
 
-
     \sa setDescription() QtUndoStack::undoDescription() QtUndoStack::redoDescription() QtUndoManager::undoDescription() QtUndoManager::redoDescription()
 */
 
@@ -472,7 +471,6 @@ QtUndoStack::CommandIter QtUndoStack::findMacroEnd(CommandIter it) const
     \sa undo() redo() clear()
 */
 
-
 void QtUndoStack::push(QtCommand *command)
 {
     bool old_clean = isClean();
@@ -599,7 +597,6 @@ bool QtUndoStack::canRedo() const
     return true;
 }
 
-
 void QtUndoStack::undoMacro()
 {
     Q_ASSERT(m_macro_nest == 0);
@@ -703,7 +700,6 @@ void QtUndoStack::undo()
     if (old_clean != isClean())
         emit cleanChanged(isClean());
 }
-
 
 /*!
     If the current command's \link QtCommand::type() type()\endlink is
@@ -882,7 +878,6 @@ QStringList QtUndoStack::redoList() const
     emitted only once, even though the macro may contain more than one
     command.
 */
-
 
 /*!
     \class QtUndoManager
@@ -1167,7 +1162,6 @@ void QtUndoManager::viewDestroyed(QObject *view)
     updateActions();
 }
 
-
 /*!
     Directs an undo request to the appropriate QtUndoStack. The stack
     is chosen by finding the widget with the keyboard focus and
@@ -1305,7 +1299,6 @@ uint QtUndoManager::undoLimit() const
 
     \sa undoLimit()
 */
-
 
 void QtUndoManager::setUndoLimit(uint i)
 {

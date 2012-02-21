@@ -93,5 +93,4 @@ private:
     //@}
 };
 
-
 #endif // __ADN_Weapons_GUI_h_
