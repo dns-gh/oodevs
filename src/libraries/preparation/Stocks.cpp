@@ -64,25 +64,33 @@ void Stocks::ReadDotation( xml::xistream& xis, const tools::Resolver_ABC< Dotati
 }
 
 // -----------------------------------------------------------------------------
-// Name: Stocks::AddDotation
+// Name: Stocks::SetDotation
 // Created: MMC 2011-08-09
 // -----------------------------------------------------------------------------
-void Stocks::AddDotation( Dotation* pNewDotation )
+void Stocks::SetDotation( const kernel::DotationType& type, unsigned int quantity )
 {
-    if( !pNewDotation )
-        return;
-
-    Dotation* pDotation = Find( pNewDotation->type_.GetId() );
+    Dotation* pDotation = Find( type.GetId() );
     if( pDotation )
+        pDotation->quantity_ = quantity;
+    else
     {
-        pDotation->quantity_ = pNewDotation->quantity_;
-        delete pNewDotation;
-        return;
+        Dotation* pDotation = new Dotation( type, quantity );
+        item_->AddDotation( *pDotation );
+        Register( pDotation->type_.GetId(), *pDotation );
+        controller_.Update( *this );
     }
+}
 
-    item_->AddDotation( *pNewDotation );
-    Register( pNewDotation->type_.GetId(), *pNewDotation );
-    controller_.Update( *this );
+// -----------------------------------------------------------------------------
+// Name: Stocks::AddDotationValue
+// Created: MMC 2011-08-09
+// -----------------------------------------------------------------------------
+void Stocks::AddDotationValue( const kernel::DotationType& type, unsigned int quantity )
+{
+    Dotation* pDotation = Find( type.GetId() );
+    if ( pDotation )
+        quantity += pDotation->quantity_;
+    SetDotation( type, quantity );
 }
 
 // -----------------------------------------------------------------------------
@@ -131,4 +139,42 @@ void Stocks::CreateDictionary( Entity_ABC& entity, PropertiesDictionary& dico )
 bool Stocks::HasDotations() const
 {
     return ( item_ ) ? item_->CountDotations() != 0 : false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Stocks::ComputeWeight
+// Created: MMC 2012-02-17
+// -----------------------------------------------------------------------------
+double Stocks::ComputeWeight()
+{
+    double weight = 0.;
+    if( item_ )
+    {
+        tools::Iterator< const Dotation& > it = item_->CreateIterator();
+        while( it.HasMoreElements() )
+        {
+            const Dotation& dotation = it.NextElement();
+            weight += static_cast< double >( dotation.quantity_ ) * dotation.type_.GetUnitWeight();
+        }
+    }
+    return weight;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Stocks::ComputeVolume
+// Created: MMC 2012-02-17
+// -----------------------------------------------------------------------------
+double Stocks::ComputeVolume()
+{
+    double volume = 0.;
+    if( item_ )
+    {
+        tools::Iterator< const Dotation& > it = item_->CreateIterator();
+        while( it.HasMoreElements() )
+        {
+            const Dotation& dotation = it.NextElement();
+            volume += static_cast< double >( dotation.quantity_ ) * dotation.type_.GetUnitVolume();
+        }
+    }
+    return volume;
 }
