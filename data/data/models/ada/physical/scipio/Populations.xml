@@ -1465,7 +1465,7 @@
     </urban-destruction-effects>
     <repartition children="0.1" female="0.45" male="0.45"/>
   </population>
-  <population armed-individuals="0.5" concentration-density="0.02" decisional-model="Masalife.Foule" id="7" moving-base-density="0.3" moving-speed="6" name="Foule armée">
+  <population armed-individuals="0.5" concentration-density="0.002" decisional-model="Masalife.Foule" id="7" moving-base-density="0.3" moving-speed="6" name="Foule armée">
     <slowing-effects>
       <slowing-effect population-attitude="calme">
         <unit max-speed="5" population-density="0.3" unit-size="Gros"/>
@@ -1493,7 +1493,7 @@
       </slowing-effect>
     </slowing-effects>
     <attrition-effects>
-      <attrition-effect intensity="1" population-attitude="calme" population-density="0.001">
+      <attrition-effect intensity="0.2" population-attitude="calme" population-density="0.002">
         <protection name="Foule">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1535,10 +1535,10 @@
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
         </protection>
       </attrition-effect>
-      <attrition-effect intensity="1" population-attitude="agitee" population-density="0.001">
+      <attrition-effect intensity="0.1" population-attitude="agitee" population-density="0.002">
         <protection name="Foule">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <unarmed destruction="0.01" repairable-with-evacuation="0.03" repairable-without-evacuation="0.07"/>
+          <armed destruction="0.02" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
         </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1577,10 +1577,10 @@
           <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
         </protection>
       </attrition-effect>
-      <attrition-effect intensity="1" population-attitude="excitee" population-density="0.001">
+      <attrition-effect intensity="0.2" population-attitude="excitee" population-density="0.002">
         <protection name="Foule">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <unarmed destruction="0.01" repairable-with-evacuation="0.03" repairable-without-evacuation="0.07"/>
+          <armed destruction="0.02" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
         </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1619,10 +1619,10 @@
           <armed destruction="0.02" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
         </protection>
       </attrition-effect>
-      <attrition-effect intensity="1" population-attitude="agressive" population-density="0.001">
+      <attrition-effect intensity="0.3" population-attitude="agressive" population-density="0.002">
         <protection name="Foule">
-          <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
-          <armed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
+          <unarmed destruction="0.01" repairable-with-evacuation="0.03" repairable-without-evacuation="0.07"/>
+          <armed destruction="0.02" repairable-with-evacuation="0.1" repairable-without-evacuation="0.1"/>
         </protection>
         <protection name="Composite">
           <unarmed destruction="0" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
@@ -1884,4 +1884,4 @@
     <repartition children="0.1" female="0.45" male="0.45"/>
   </population>
 </populations>
-<!-- signature="0805848327" -->
+<!-- signature="0577835341" -->
