@@ -675,7 +675,7 @@ void LogisticSupplyRecompletionDialog::NotifyContextMenu( const Agent_ABC& agent
     if( profile_.CanDoMagic( agent ) )
     {
         selected_ = &agent;
-        kernel::ContextMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
+        kernel::ContextMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ), false, 1 );
         subMenu->insertItem( tr( "Partial recompletion" ), this, SLOT( Show() ) );
     }
 }

@@ -74,7 +74,7 @@ void PopulationChangeAffinitiesDialog::NotifyContextMenu( const kernel::Populati
     if( profile_.CanDoMagic( entity ) )
     {
         selected_ = &entity;
-        kernel::ContextMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ) );
+        kernel::ContextMenu* subMenu = menu.SubMenu( "Order", tr( "Magic orders" ), false, 1 );
         subMenu->insertItem( tools::translate( "ChangeAffinitiesDialog", "Change affinities" ), this, SLOT( Show() ) );
     }
 }

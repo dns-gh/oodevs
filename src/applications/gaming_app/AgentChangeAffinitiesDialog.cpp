@@ -74,7 +74,7 @@ void AgentChangeAffinitiesDialog::NotifyContextMenu( const kernel::Agent_ABC& en
     if( profile_.CanDoMagic( entity ) )
     {
         selected_ = &entity;
-        kernel::ContextMenu* subMenu = menu.SubMenu( "Order", tools::translate( "ChangeAffinitiesDialog", "Magic orders" ) );
+        kernel::ContextMenu* subMenu = menu.SubMenu( "Order", tools::translate( "ChangeAffinitiesDialog", "Magic orders" ), false, 1 );
         subMenu->insertItem( tools::translate( "ChangeAffinitiesDialog", "Change affinities" ), this, SLOT( Show() ) );
     }
 }
