@@ -51,6 +51,7 @@ public:
     void Purge();
     virtual int GetIndex( Param_ABC* param ) const;
     virtual void SetParentList( ListParameterBase* parentList );
+    virtual void SetName( const QString& name );
     virtual void RegisterIn( kernel::ActionController& controller );
     virtual void RemoveFromController();
 

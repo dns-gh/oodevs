@@ -150,6 +150,7 @@ private:
     //! @name Helpers
     //@{
     void CreatePotential();
+    QString CreateNextName();
     bool CommitChildrenTo( actions::ParameterContainer_ABC& parent ) const;
     void DeleteItem( Q3ListViewItem* item );
     void Clear();
@@ -164,21 +165,21 @@ private:
 protected :
     //! @name Member data
     //@{
-    unsigned int count_;
-    Param_ABC* potential_;
+    unsigned int    count_;
+    Param_ABC*      potential_;
     //@}
 
 private:
     //! @name Member data
     //@{
     const InterfaceBuilder_ABC& builder_;
-    kernel::ActionController& controller_;
-    Q3ListView* list_;
-    Q3ListViewItem* selected_;
-    T_Widgets widgets_;
-    unsigned int min_;
-    unsigned int max_;
-    bool createEnabled_;
+    kernel::ActionController&   controller_;
+    Q3ListView*                 list_;
+    Q3ListViewItem*             selected_;
+    T_Widgets                   widgets_;
+    unsigned int                min_;
+    unsigned int                max_;
+    bool                        createEnabled_;
     //@}
 
 };

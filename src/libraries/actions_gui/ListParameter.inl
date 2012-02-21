@@ -47,6 +47,7 @@ ListParameter< ConcreteElement >::~ListParameter()
 template< typename ConcreteElement >
 void ListParameter< ConcreteElement >::CreatePotential()
 {
+    potential_ = 0;
     potential_ = CreateElement();
     if( potential_ )
         potential_->RegisterIn( controller_ );
@@ -370,6 +371,16 @@ void ListParameter< ConcreteElement >::Draw( const geometry::Point2f& point, con
 }
 
 // -----------------------------------------------------------------------------
+// Name: ListParameter::CreateNextName
+// Created: ABR 2012-02-21
+// -----------------------------------------------------------------------------
+template< typename ConcreteElement >
+QString ListParameter< ConcreteElement >::CreateNextName()
+{
+    return tools::translate( "ListParameter", "%1 (item %2)" ).arg( parameter_.GetName().c_str() ).arg( ++count_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ListParameter::CreateElement
 // Created: MMC 2011-12-19
 // -----------------------------------------------------------------------------
@@ -377,7 +388,7 @@ template< typename ConcreteElement >
 Param_ABC* ListParameter< ConcreteElement >::CreateElement()
 {
     kernel::OrderParameter param = parameter_;
-    param.SetName( tools::translate( "ListParameter", "%1 (item %2)" ).arg( parameter_.GetName().c_str() ).arg( ++count_ ).toStdString() );
+    param.SetName( ( potential_ != 0 ) ?  CreateNextName().toStdString() : "POTENTIAL" );
     param.SetOptional( false );
     param.SetMinMaxOccurs( 1, 1 );
     Param_ABC& parameter = builder_.BuildOne( param, false );
@@ -422,6 +433,7 @@ void ListParameter< ConcreteElement >::OnMenuClick()
     assert( potential_ );
     Param_ABC* newParam = potential_;
     newParam->RemoveFromController();
+    newParam->SetName( CreateNextName() );
     AddElement( *newParam );
     CreatePotential();
 }

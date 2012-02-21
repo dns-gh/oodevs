@@ -248,6 +248,17 @@ void ParamLocationComposite::SetParentList( ListParameterBase* parentList )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ParamLocationComposite::SetName
+// Created: ABR 2012-02-21
+// -----------------------------------------------------------------------------
+void ParamLocationComposite::SetName( const QString& name )
+{
+    Param_ABC::SetName( name );
+    for( IT_Params it = params_.begin(); it != params_.end(); ++it )
+        ( *it )->SetName( name );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ParamLocationComposite::CreateInternalMenu
 // Created: ABR 2012-01-09
 // -----------------------------------------------------------------------------
