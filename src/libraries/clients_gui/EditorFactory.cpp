@@ -214,7 +214,7 @@ namespace
             setValue( static_cast< int >( value * static_cast< T >( multiplier_ ) + 0.5 ) );
         }
 
-    private:
+    protected:
         int decimals_;
         unsigned int multiplier_;
     };
@@ -248,8 +248,8 @@ namespace
              : DecimalSpinBox( parent, decimals )
              , unit_( value.unit_ )
          {
-             setMinValue( value.unit_.GetMinValue() );
-             setMaxValue( value.unit_.GetMaxValue() );
+             setMinValue( static_cast< int >( value.unit_.GetMinValue() * multiplier_ ) );
+             setMaxValue( static_cast< int >( value.unit_.GetMaxValue() * multiplier_ ) );
              setSuffix( value.unit_.AsString() );
              SetValue( value.value_ );
          }
