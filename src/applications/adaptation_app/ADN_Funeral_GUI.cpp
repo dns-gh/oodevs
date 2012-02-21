@@ -71,7 +71,7 @@ void ADN_Funeral_GUI::Build()
     QPushButton* moveUpButton_ = new QPushButton();
     moveUpButton_->setIcon( MAKE_ICON( arrow_up ) );
     moveUpButton_->setMaximumWidth( maxSize );
-    
+
     QPushButton* moveDownButton_ = new QPushButton();
     moveDownButton_->setIcon( MAKE_ICON( arrow_down ) );
     moveDownButton_->setMaximumWidth( maxSize );
@@ -113,12 +113,12 @@ void ADN_Funeral_GUI::SwapResource( int offsetRow )
 
     if( curRow < 0 || curRow >= numRows )
         return;
-    if ( targetRow < 0 || targetRow >= numRows )
+    if( targetRow < 0 || targetRow >= numRows )
         return;
 
     ADN_FuneralPackagingResource* curPackagingResource = data_.funeralPackagingResources_[ curRow ];
     ADN_FuneralPackagingResource* targetPackagingResource = data_.funeralPackagingResources_[ targetRow ];
-    if ( curPackagingResource && targetPackagingResource )
+    if( curPackagingResource && targetPackagingResource )
     {
         curPackagingResource->ExchangeData( *targetPackagingResource );
         resourceTable_->clearSelection();

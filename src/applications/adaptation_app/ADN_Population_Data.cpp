@@ -545,7 +545,6 @@ ADN_Population_Data::PopulationInfos::PopulationInfos()
     this->BindExistenceTo( &ptrModel_ );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PopulationInfos::~PopulationInfos
 // Created: APE 2004-12-02
@@ -555,7 +554,6 @@ ADN_Population_Data::PopulationInfos::~PopulationInfos()
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PopulationInfos::GetNodeName
 // Created: APE 2004-12-02
@@ -564,7 +562,6 @@ std::string ADN_Population_Data::PopulationInfos::GetNodeName()
 {
     return std::string();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PopulationInfos::GetItemName
@@ -635,7 +632,7 @@ void ADN_Population_Data::PopulationInfos::ReadArchive( xml::xistream& input )
             >> xml::list( "urban-destruction-effect", *this, &ADN_Population_Data::PopulationInfos::ReadUrbanEffect )
           >> xml::end
           >> xml::start( "nbc" )
-            >> xml::attribute( "decontaminationDelay", decontaminationDelay_ ) 
+            >> xml::attribute( "decontaminationDelay", decontaminationDelay_ )
           >> xml::end;
     if( input.has_child("repartition") )
     {
@@ -808,7 +805,6 @@ ADN_Population_Data::ADN_Population_Data()
 {
     // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Population_Data destructor

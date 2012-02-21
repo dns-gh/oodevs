@@ -56,5 +56,4 @@ private:
     ADN_Launchers_ModifPhs_GUI* pModifPhs_;
 };
 
-
 #endif // __ADN_Launchers_GUI_h_

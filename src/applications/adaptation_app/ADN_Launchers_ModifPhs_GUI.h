@@ -27,5 +27,4 @@ public:
     virtual void doValueChanged( int row, int col );
 };
 
-
 #endif // __ADN_Launchers_ModifPhs_GUI_h_

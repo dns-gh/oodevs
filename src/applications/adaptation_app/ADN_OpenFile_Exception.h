@@ -56,7 +56,6 @@ private:
     //@}
 };
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_OpenFile_Exception::GetFileName
 // Created: AGN 2003-12-09
@@ -66,6 +65,5 @@ const std::string& ADN_OpenFile_Exception::GetFileName() const
 {
     return strFileName_;
 }
-
 
 #endif // __ADN_OpenFile_Exception_h_

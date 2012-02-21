@@ -329,7 +329,7 @@ void ADN_NBC_Datas::NbcAgentInfos::ReadArchive( xml::xistream& input )
     input >> xml::attribute( "name", strName_ )
           >> xml::optional >> xml::attribute( "category", category_ )
           >> xml::list( "effects", *this, &ADN_NBC_Datas::NbcAgentInfos::ReadEffect );
-    if ( category_ == "" )
+    if( category_ == "" )
         category_ = "chemical";
 }
 

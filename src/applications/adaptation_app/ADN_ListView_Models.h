@@ -41,5 +41,4 @@ private:
     ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType_;
 };
 
-
 #endif // __ADN_ListView_Models_h_

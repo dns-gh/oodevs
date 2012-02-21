@@ -48,7 +48,6 @@ private:
     ADN_CLV_UrbanMaterial_Type& operator=( const ADN_CLV_UrbanMaterial_Type& );
 };
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_UrbanMaterial_Type constructor
 // Created: SLG 2010-03-10

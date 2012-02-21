@@ -50,5 +50,4 @@ private:
     //@}
 };
 
-
 #endif // __ADN_Health_GUI_h_

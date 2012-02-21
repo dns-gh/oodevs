@@ -174,5 +174,4 @@ private:
     //@}
 };
 
-
 #endif // __ADN_Objects_GUI_h_

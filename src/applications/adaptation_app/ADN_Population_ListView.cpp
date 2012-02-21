@@ -32,7 +32,6 @@ ADN_Population_ListView::ADN_Population_ListView( QWidget* pParent, const char* 
     this->SetDeletionEnabled( true );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Population_ListView destructor
 // Created: APE 2005-01-06

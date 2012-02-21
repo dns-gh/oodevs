@@ -50,7 +50,6 @@ private:
     //@}
 };
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Mission_CheckItem::GetMission
 // Created: AGN 2004-04-28
@@ -70,6 +69,5 @@ ADN_Models_Data::MissionInfos* ADN_Mission_CheckItem::GetMissionPtr()
 {
     return missionModel_;
 }
-
 
 #endif // __ADN_Mission_CheckItem_h_

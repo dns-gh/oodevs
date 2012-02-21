@@ -29,7 +29,6 @@ ADN_Equipement_Wizard_Page0::ADN_Equipement_Wizard_Page0( ADN_Equipement_Data::R
 {
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Equipement_Wizard_Page0 destructor
 // Created: APE 2005-01-20
@@ -37,7 +36,6 @@ ADN_Equipement_Wizard_Page0::ADN_Equipement_Wizard_Page0( ADN_Equipement_Data::R
 ADN_Equipement_Wizard_Page0::~ADN_Equipement_Wizard_Page0()
 {
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Equipement_Wizard_Page0::NewT

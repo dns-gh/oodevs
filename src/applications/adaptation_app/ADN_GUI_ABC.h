@@ -85,5 +85,4 @@ protected:
     //@}
 };
 
-
 #endif // __ADN_GUI_ABC_h_

@@ -26,7 +26,6 @@ ADN_ProgressBar::ADN_ProgressBar( QWidget* pParent, const char* szName, Qt::WFla
     setStretchFactor( bar_, 1 );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ProgressBar destructor
 // Created: JDY 03-07-17
@@ -35,7 +34,6 @@ ADN_ProgressBar::~ADN_ProgressBar()
 {
     // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ProgressBar::SetNbrOfSteps
@@ -46,7 +44,6 @@ void ADN_ProgressBar::SetNbrOfSteps( int n )
     bar_->setTotalSteps( n );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_ProgressBar::Increment
 // Created: APE 2005-03-18
@@ -55,7 +52,6 @@ void ADN_ProgressBar::Increment( int n )
 {
     bar_->setProgress( bar_->progress() + n );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ProgressBar::Increment
@@ -66,7 +62,6 @@ void ADN_ProgressBar::Increment( const char* szText, int n )
     label_->setText( szText );
     Increment( n );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ProgressBar::Reset

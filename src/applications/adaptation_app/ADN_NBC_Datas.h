@@ -107,7 +107,6 @@ public:
     };
     typedef ADN_Type_Vector_ABC< NbcAgentInfos > T_NbcAgentInfos_Vector;
 
-
 //*****************************************************************************
 public:
     //! @name Constructors/Destructor
@@ -139,7 +138,6 @@ private:
     int nNextId_;
     T_NbcAgentInfos_Vector vNbcAgent_;
 };
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_NBC_Datas::GetNbcAgentVector

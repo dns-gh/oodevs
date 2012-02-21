@@ -33,5 +33,4 @@ private:
     void OnContextMenu( const QPoint& pt );
 };
 
-
 #endif // __ADN_ListView_Categories_Armor_h_

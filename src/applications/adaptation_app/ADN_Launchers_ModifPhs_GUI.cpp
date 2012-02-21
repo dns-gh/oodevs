@@ -39,7 +39,7 @@ public:
         assert(obj);
         ADN_TableItem_Double              *pItemDouble=0;
         ADN_Type_Line_ABC<ModifPhsInfos>  *pLine=(ADN_Type_Line_ABC<ModifPhsInfos>*)obj;
-        for ( int j=0;j<eNbrUnitPosture;++j)
+        for( int j=0;j<eNbrUnitPosture;++j)
         {
             // add a new row & set new values
             pItemDouble = new ADN_TableItem_Double(&tab_,obj);
@@ -54,8 +54,6 @@ public:
 private:
     ADN_Launchers_ModifPhs_GUI_Connector& operator=( const ADN_Launchers_ModifPhs_GUI_Connector& );
 };
-
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Launchers_ModifPhs_GUI constructor
@@ -84,7 +82,6 @@ ADN_Launchers_ModifPhs_GUI::ADN_Launchers_ModifPhs_GUI( QWidget * parent )
     // connector creation
     pConnector_=new ADN_Launchers_ModifPhs_GUI_Connector(*this);
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Launchers_ModifPhs_GUI destructor

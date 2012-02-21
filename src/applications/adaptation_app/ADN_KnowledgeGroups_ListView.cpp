@@ -33,7 +33,6 @@ ADN_KnowledgeGroups_ListView::ADN_KnowledgeGroups_ListView( QWidget* pParent, co
     this->SetDeletionEnabled( true );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_KnowledgeGroups_ListView destructor
 // Created: APE 2005-03-21

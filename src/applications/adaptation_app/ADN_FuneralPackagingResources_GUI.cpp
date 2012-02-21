@@ -88,7 +88,6 @@ ADN_FuneralPackagingResources_GUI::ADN_FuneralPackagingResources_GUI( QWidget* p
     pConnector_ = new ADN_FuneralPackagingResources_GUI_Connector( *this );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_FuneralPackagingResources_GUI destructor
 // Created: JDY 03-07-03

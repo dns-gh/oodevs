@@ -16,7 +16,6 @@
 //
 // *****************************************************************************
 
-
 #include "adaptation_app_pch.h"
 #include "ADN_Population_Wizard.h"
 
@@ -26,7 +25,6 @@
 #include "ADN_Wizard_LastPage.h"
 
 typedef ADN_Population_Data::PopulationInfos PopulationInfos;
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Population_Wizard constructor
@@ -45,7 +43,6 @@ ADN_Population_Wizard::ADN_Population_Wizard( QWidget* pParent, const char* szNa
     new ADN_Wizard_LastPage( this, qApp->translate( "ADN_Population_Wizard",  "Creation finished" ),
         qApp->translate( "ADN_Population_Wizard", "Click \"Done\" to create the new crowd." ) );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Population_Wizard destructor

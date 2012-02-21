@@ -32,5 +32,4 @@ public:
     //@}
 };
 
-
 #endif // __ADN_Population_Wizard_h_

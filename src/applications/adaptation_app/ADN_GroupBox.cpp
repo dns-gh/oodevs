@@ -26,7 +26,6 @@
 #include "ADN_Enums.h"
 #include "ADN_Workspace.h"
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_GroupBox constructor
 // Created: APE 2005-01-03
@@ -126,7 +125,6 @@ void ADN_GroupBox::UpdateEnableState()
     if( bEnabledOnlyInAdminMode_ && IsAutoEnabled() )
         setEnabled( static_cast< ADN_Connector_Bool<ADN_GroupBox>* >( pConnector_ )->IsConnected() );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GroupBox::ADN_GroupBox2

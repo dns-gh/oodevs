@@ -37,7 +37,6 @@ ADN_ListView_Categories_Armor::ADN_ListView_Categories_Armor(QWidget * parent, c
     this->SetDeletionEnabled( true, false );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Categories_Armor destructor
 // Created: JDY 03-08-27
@@ -46,7 +45,6 @@ ADN_ListView_Categories_Armor::~ADN_ListView_Categories_Armor()
 {
     delete pConnector_;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Categories_Armor::ConnectItem
@@ -68,7 +66,6 @@ void ADN_ListView_Categories_Armor::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Categories_GUI::eBreakdownNEVA]->Connect( &pInfos->rBreakdownNEVA_, bConnect );
     vItemConnectors_[ADN_Categories_GUI::eAttritionEffects]->Connect( &pInfos->vAttritionEffects_, bConnect );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Categories_Armor::OnContextMenu

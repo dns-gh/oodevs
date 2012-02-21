@@ -34,7 +34,6 @@ ADN_NBC_Wizard::ADN_NBC_Wizard( QWidget* pParent, const char* szName )
         qApp->translate( "ADN_NBC_Wizard",  "Click \"Done\" to create the new NBC." ) );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_NBC_Wizard destructor
 // Created: AGN 2003-11-03

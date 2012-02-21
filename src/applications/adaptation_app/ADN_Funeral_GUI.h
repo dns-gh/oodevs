@@ -53,5 +53,4 @@ private:
     //@}
 };
 
-
 #endif // __ADN_Funeral_GUI_h_

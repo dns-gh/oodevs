@@ -36,5 +36,4 @@ public:
     //@}
 };
 
-
 #endif // __ADN_Launcher_Wizard_h_

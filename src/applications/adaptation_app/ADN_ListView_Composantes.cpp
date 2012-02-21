@@ -23,7 +23,6 @@
 
 typedef ADN_Composantes_Data::ComposanteInfos ComposanteInfos;
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Composantes constructor
 // Created: JDY 03-07-03
@@ -41,7 +40,6 @@ ADN_ListView_Composantes::ADN_ListView_Composantes( QWidget* pParent, const char
     this->SetDeletionEnabled( true );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Composantes destructor
 // Created: JDY 03-07-03
@@ -50,7 +48,6 @@ ADN_ListView_Composantes::~ADN_ListView_Composantes()
 {
    delete pConnector_;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Composantes::ConnectItem
@@ -118,7 +115,6 @@ void ADN_ListView_Composantes::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Composantes_GUI::eRAmbulanceTransportShock]->Connect( &pInfos->logInfos_.healthInfos_.ambulanceReleveInfos_.bTransportShock_, bConnect );
     for( int n = 0; n < eNbrDoctorSkills; ++n )
         vItemConnectors_[ADN_Composantes_GUI::eRAmbulanceTransportSkills + n]->Connect( &pInfos->logInfos_.healthInfos_.ambulanceReleveInfos_.transportSkills_[n], bConnect );
-
 
     vItemConnectors_[ADN_Composantes_GUI::eIsDoctor]->Connect( &pInfos->logInfos_.healthInfos_.bIsDoctor_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eIsSortingDoctor]->Connect( &pInfos->logInfos_.healthInfos_.bIsSortingDoctor_, bConnect );

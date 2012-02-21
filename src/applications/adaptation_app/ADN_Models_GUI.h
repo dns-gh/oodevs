@@ -73,5 +73,4 @@ private:
     //@}
 };
 
-
 #endif // __ADN_Models_GUI_h_

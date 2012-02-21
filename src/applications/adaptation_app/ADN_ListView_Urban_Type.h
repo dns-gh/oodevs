@@ -32,5 +32,4 @@ private:
     void OnContextMenu( const QPoint& pt );
 };
 
-
 #endif // __ADN_ListView_Urban_Type_h_

@@ -40,7 +40,6 @@ private:
     ADN_CLV_Categories_DotationNature& operator=( const ADN_CLV_Categories_DotationNature& );
 };
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_Categories_DotationNature::ADN_ListView_Categories_DotationNature
 // Created: SBO 2006-03-23
@@ -63,7 +62,6 @@ ADN_ListView_Categories_DotationNature::~ADN_ListView_Categories_DotationNature(
 {
     delete pConnector_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_Categories_DotationNature::ConnectItem

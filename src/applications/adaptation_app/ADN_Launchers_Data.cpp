@@ -50,7 +50,6 @@ ADN_Launchers_Data::LauncherInfos::LauncherInfos()
     }
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: LauncherInfos::LauncherInfos
 // Created: JDY 03-07-15
@@ -58,7 +57,6 @@ ADN_Launchers_Data::LauncherInfos::LauncherInfos()
 ADN_Launchers_Data::LauncherInfos::~LauncherInfos()
 {
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: LauncherInfos::GetNodeName
@@ -146,7 +144,6 @@ void ADN_Launchers_Data::LauncherInfos::WriteArchive( xml::xostream& output )
     output << xml::end;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: LauncherInfos::CreateCopy
 // Created: AGN 2003-11-03
@@ -162,7 +159,6 @@ ADN_Launchers_Data::LauncherInfos* ADN_Launchers_Data::LauncherInfos::CreateCopy
     return pCopy;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Launchers_Data constructor
 // Created: JDY 03-07-11
@@ -172,7 +168,6 @@ ADN_Launchers_Data::ADN_Launchers_Data()
 {
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Launchers_Data destructor
 // Created: JDY 03-07-11
@@ -181,7 +176,6 @@ ADN_Launchers_Data::~ADN_Launchers_Data()
 {
     Reset();
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Launchers_Data::FilesNeeded

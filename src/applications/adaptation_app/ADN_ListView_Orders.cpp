@@ -58,7 +58,6 @@ private:
     ADN_CLV_Orders& operator=( const ADN_CLV_Orders& );
 };
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_Orders constructor
 // Created: AGN 2003-11-27
@@ -104,7 +103,7 @@ void ADN_ListView_Orders::OnContextMenu( const QPoint& pt )
     ADN_Missions_Data::T_FragOrder_Vector& fragOrders = ADN_Workspace::GetWorkspace().GetMissions().GetData().GetFragOrders();
     for( ADN_Missions_Data::IT_FragOrder_Vector it = fragOrders.begin(); it != fragOrders.end(); ++it )
     {
-        if ( usedWithMission_ || (*it)->isAvailableWithoutMission_.GetData() )
+        if( usedWithMission_ || (*it)->isAvailableWithoutMission_.GetData() )
         {
             std::string strOrderName = (*it)->strName_.GetData();
             const int id = pTargetMenu->insertItem( strOrderName.c_str(), 2 + n );

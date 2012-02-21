@@ -60,8 +60,6 @@ public:
     }
 };
 
-
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Equipement_AttritionTable constructor
 // Created: JDY 03-07-03
@@ -88,7 +86,6 @@ ADN_Equipement_AttritionTable::ADN_Equipement_AttritionTable( QWidget* pParent )
     // Connector creation.
     pConnector_ = new ADN_Equipement_AttritionTable_Connector( *this );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Equipement_AttritionTable destructor

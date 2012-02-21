@@ -15,7 +15,6 @@
 #include "ADN_ListView.h"
 #include "ADN_Objects_Data.h"
 
-
 // =============================================================================
 /** @class  ADN_ListView_Composantes_Objects
     @brief  ADN_ListView_Composantes_Objects
@@ -37,6 +36,5 @@ private:
     bool Contains( const ADN_Objects_Data_ObjectInfos* pInfo );
 
 };
-
 
 #endif // __ADN_ListView_Composantes_Objects_h_

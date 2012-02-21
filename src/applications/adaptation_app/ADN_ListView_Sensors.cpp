@@ -37,7 +37,6 @@ ADN_ListView_Sensors::ADN_ListView_Sensors( QWidget* pParent, const char* szName
     this->SetDeletionEnabled( true );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Sensors destructor
 // Created: JDY 03-07-03
@@ -46,7 +45,6 @@ ADN_ListView_Sensors::~ADN_ListView_Sensors()
 {
     delete pConnector_;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Sensors::ConnectItem
@@ -94,7 +92,6 @@ void ADN_ListView_Sensors::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Sensors_GUI::ePreviewModifTargetStances]->Connect( &pInfos->vModifTargetStance_, bConnect );
 
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Sensors::OnContextMenu

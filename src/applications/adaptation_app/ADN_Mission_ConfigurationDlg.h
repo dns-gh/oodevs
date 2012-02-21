@@ -58,7 +58,6 @@ private:
     //@}
 };
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Mission_ConfigurationDlg::GetMissionList
 // Created: AGN 2004-04-28

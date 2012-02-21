@@ -121,5 +121,4 @@ private:
     T_ListViewRegistrationMap vListViewRegistrations_;
 };
 
-
 #endif // __ADN_MainWindow_h_

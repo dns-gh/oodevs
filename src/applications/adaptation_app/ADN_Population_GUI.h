@@ -90,5 +90,4 @@ private:
     //@}
 };
 
-
 #endif // __ADN_Population_GUI_h_

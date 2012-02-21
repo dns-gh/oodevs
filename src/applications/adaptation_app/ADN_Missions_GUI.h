@@ -76,5 +76,4 @@ private:
     //@}
 };
 
-
 #endif // __ADN_Missions_GUI_h_

@@ -37,7 +37,6 @@ ADN_GuiBuilder::ADN_GuiBuilder()
 {
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiBuilder destructor
 // Created: APE 2005-03-11
@@ -45,7 +44,6 @@ ADN_GuiBuilder::ADN_GuiBuilder()
 ADN_GuiBuilder::~ADN_GuiBuilder()
 {
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiBuilder::AddFieldHolder
@@ -57,7 +55,6 @@ QWidget* ADN_GuiBuilder::AddFieldHolder( QWidget* pParent )
     new Q3GridLayout( pHolder, 0, 3, 5, 10 );
     return pHolder;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiBuilder::AddFileField
@@ -82,7 +79,6 @@ ADN_FileChooser* ADN_GuiBuilder::AddFileField( QWidget* pParent, const char* szN
     return pChooser;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiBuilder::AddFileField
 // Created: APE 2005-03-23
@@ -106,7 +102,6 @@ ADN_FileChooser* ADN_GuiBuilder::AddFileField( QWidget* pParent, const char* szN
     return pChooser;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiBuilder::SetToolTip
 // Created: APE 2005-03-11
@@ -121,7 +116,6 @@ void ADN_GuiBuilder::SetToolTip( const char* szToolTip )
         QToolTip::add( pCurrentFieldWidget3_, szToolTip );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiBuilder::SetValidator
 // Created: APE 2005-03-11
@@ -133,7 +127,6 @@ void ADN_GuiBuilder::SetValidator( QValidator* pValidator )
 
     ((QLineEdit*)pCurrentFieldWidget2_)->setValidator( pValidator );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiBuilder::SetEnabled
@@ -148,7 +141,6 @@ void ADN_GuiBuilder::SetEnabled( bool bEnabled )
     pCurrentFieldGfx2_->SetAutoEnabled( bEnabled );
     pCurrentFieldWidget2_->setEnabled( bEnabled );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiBuilder::DoFieldLayout
@@ -184,7 +176,6 @@ void ADN_GuiBuilder::DoFieldLayout( QWidget* pParent, QWidget* pWidget1, QWidget
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiBuilder::AddStretcher
 // Created: APE 2005-03-25
@@ -195,7 +186,6 @@ void ADN_GuiBuilder::AddStretcher( QWidget* pParent, Qt::Orientation nOrientatio
     pParent->layout()->addItem( pSpacer );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiBuilder::AddStretcher
 // Created: APE 2005-03-25
@@ -205,7 +195,6 @@ void ADN_GuiBuilder::AddStretcher( QLayout* pLayout, Qt::Orientation nOrientatio
     QSpacerItem* pSpacer = new QSpacerItem( 1, 1, (nOrientation == Qt::Vertical) ? QSizePolicy::Minimum : QSizePolicy::Expanding, (nOrientation == Qt::Vertical) ? QSizePolicy::Expanding : QSizePolicy::Minimum );
     pLayout->addItem( pSpacer );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiBuilder::CreateTable
@@ -227,7 +216,6 @@ ADN_Table* ADN_GuiBuilder::CreateTable( QWidget* pParent )
     return pTable;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiBuilder::AddTableCell
 // Created: APE 2005-03-30
@@ -238,7 +226,6 @@ Q3TableItem* ADN_GuiBuilder::AddTableCell( ADN_Table* pTable, int nRow, int nCol
     pTable->setItem( nRow, nCol, pItem );
     return pItem;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiBuilder::AddTableCell
@@ -251,6 +238,4 @@ Q3TableItem* ADN_GuiBuilder::AddTableCell( ADN_Table* pTable, int nRow, int nCol
     pItem->setSpan( nRowSpan, nColSpan );
     return pItem;
 }
-
-
 

@@ -55,5 +55,4 @@ private:
     ADN_NBC_Datas& data_;
 };
 
-
 #endif // __ADN_NBC_GUI_h_

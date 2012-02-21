@@ -32,5 +32,4 @@ public:
     //@}
 };
 
-
 #endif // __ADN_KnowledgeGroups_Wizard_h_

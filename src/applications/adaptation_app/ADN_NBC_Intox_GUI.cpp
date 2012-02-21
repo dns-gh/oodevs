@@ -96,4 +96,3 @@ ADN_NBC_Intox_GUI::~ADN_NBC_Intox_GUI()
     delete pConnector_;
 }
 
-

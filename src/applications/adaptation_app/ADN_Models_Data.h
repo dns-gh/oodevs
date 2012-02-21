@@ -51,7 +51,6 @@ public:
     typedef ADN_Type_Vector_ABC<OrderInfos> T_OrderInfos_Vector;
     typedef T_OrderInfos_Vector::iterator   IT_OrderInfos_Vector;
 
-
 //*****************************************************************************
     class MissionInfos
         : public ADN_Ref_ABC
@@ -79,7 +78,6 @@ public:
 
     typedef ADN_Type_Vector_ABC<MissionInfos> T_MissionInfos_Vector;
     typedef T_MissionInfos_Vector::iterator   IT_MissionInfos_Vector;
-
 
 //*****************************************************************************
     class ModelInfos
@@ -126,7 +124,6 @@ public:
     typedef ADN_Type_Vector_ABC<ModelInfos> T_ModelInfos_Vector;
     typedef T_ModelInfos_Vector::iterator   IT_ModelInfos_Vector;
 
-
 //*****************************************************************************
 public:
     explicit ADN_Models_Data();
@@ -158,7 +155,6 @@ private:
     T_ModelInfos_Vector     vAutomataModels_;
     T_ModelInfos_Vector     vPopulationModels_;
 };
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Models_Data::GetModelsThatUse
@@ -258,6 +254,5 @@ ADN_Models_Data::ModelInfos* ADN_Models_Data::FindPopulationModel( const std::st
         return 0;
     return *it;
 }
-
 
 #endif // __ADN_Models_Data_h_

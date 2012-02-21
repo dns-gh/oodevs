@@ -45,7 +45,6 @@ private:
     ADN_CLV_UrbanAccommodation_Type& operator=( const ADN_CLV_UrbanAccommodation_Type& );
 };
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_UrbanAccommodation_Type constructor
 // Created: SLG 2010-12-20

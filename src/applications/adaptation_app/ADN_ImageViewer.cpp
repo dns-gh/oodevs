@@ -134,7 +134,6 @@ void ADN_ImageViewer::resizeEvent( QResizeEvent * )
         erase();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_ImageViewer::Scale
 // Created: AGN 2003-11-18

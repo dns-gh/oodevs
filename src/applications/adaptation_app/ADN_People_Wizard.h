@@ -31,5 +31,4 @@ public:
     //@}
 };
 
-
 #endif // __ADN_People_Wizard_h_

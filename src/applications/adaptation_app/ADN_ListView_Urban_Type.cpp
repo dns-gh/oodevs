@@ -48,7 +48,6 @@ private:
     ADN_CLV_Urban_Type& operator=( const ADN_CLV_Urban_Type& );
 };
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Urban_Type constructor
 // Created: SLG 2010-03-10
@@ -66,7 +65,6 @@ ADN_ListView_Urban_Type::ADN_ListView_Urban_Type(QWidget * parent, const char * 
 
     this->SetDeletionEnabled( true );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Urban_Type destructor

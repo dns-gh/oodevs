@@ -39,5 +39,4 @@ private:
     //@}
 };
 
-
 #endif // __ADN_ListView_Sensors_h_

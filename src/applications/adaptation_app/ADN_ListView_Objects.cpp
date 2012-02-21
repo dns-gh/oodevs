@@ -187,7 +187,7 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     CONNECT_HELPER( Bridging, Type, type_ );
 
     BUILDER_HELPER( Lodging );
-    
+
     BUILDER_HELPER( Workable );
     CONNECT_HELPER( Workable, Size, worker_ );
 
@@ -225,7 +225,7 @@ void ADN_ListView_Objects::ConnectItem( bool bConnect )
     BUILDER_HELPER( Occupable );
 
     BUILDER_HELPER( Supply );
-    
+
     BUILDER_HELPER( Protection );
     CONNECT_HELPER( Protection, MaxSize, max_size_ );
     CONNECT_HELPER( Protection, GeniePrepared, geniePrepared_ );

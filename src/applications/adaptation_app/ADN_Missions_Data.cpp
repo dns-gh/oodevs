@@ -419,7 +419,7 @@ void ADN_Missions_Data::Mission::WriteArchive( xml::xostream& output, const std:
     if( code != "" && code != " - " )
         output << xml::attribute( "symbol", code );
 
-    if ( ! strPackage_.GetData().empty() )
+    if( ! strPackage_.GetData().empty() )
         output << xml::attribute( "package", strPackage_);
 
     if( !isAutomat )
@@ -614,7 +614,6 @@ ADN_Missions_Data::~ADN_Missions_Data()
 {
     // NOTHING
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_Data::FilesNeeded
@@ -828,7 +827,6 @@ ADN_Missions_Data::Mission* ADN_Missions_Data::FindMission( ADN_Missions_Data::T
         return 0;
     return *it;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Missions_Data::MissionType::MissionType

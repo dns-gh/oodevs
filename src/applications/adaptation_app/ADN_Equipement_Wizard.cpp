@@ -42,7 +42,6 @@ ADN_Equipement_Wizard::ADN_Equipement_Wizard( ADN_Equipement_Data::ResourceInfos
         qApp->translate( "ADN_Equipement_Wizard", "Click \"Done\" to create the new resource category." ) );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Equipement_Wizard destructor
 // Created: APE 2005-01-20

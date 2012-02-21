@@ -44,5 +44,4 @@ private:
     Q3ProgressBar* bar_;
 };
 
-
 #endif // __ADN_ProgressBar_h_

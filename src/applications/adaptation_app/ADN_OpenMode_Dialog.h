@@ -63,5 +63,4 @@ private:
     //@}
 };
 
-
 #endif // __ADN_OpenMode_Dialog_h_

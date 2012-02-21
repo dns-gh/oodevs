@@ -32,7 +32,6 @@ public:
         eDirectory  =1
     };
 
-
 public:
     explicit ADN_FileChooser(QWidget *parent,const QString& filter=szDefaultFilter_,const char* szName = 0);
     virtual ~ADN_FileChooser();
@@ -62,7 +61,6 @@ private:
     static QString          szDefaultFilter_;
 };
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_FileChooser::GetDirectory
 // Created: JDY 03-07-01
@@ -72,7 +70,6 @@ QString ADN_FileChooser::GetDirectory() const
 {
     return szDirectory_;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_FileChooser::E_Mode
@@ -84,7 +81,6 @@ ADN_FileChooser::E_Mode  ADN_FileChooser::GetMode() const
     return eMode_;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_FileChooser::SetFilter
 // Created: JDY 03-07-01
@@ -95,7 +91,6 @@ void ADN_FileChooser::SetFilter(const QString& filter)
     szFilter_=filter;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_FileChooser::GetConverter
 // Created: JDY 03-07-01
@@ -105,6 +100,5 @@ ADN_Connector_ABC& ADN_FileChooser::GetConnector(ADN_FileChooser::E_Mode type)
 {
     return *vConnectors_[type];
 }
-
 
 #endif // __ADN_FileChooser_h_

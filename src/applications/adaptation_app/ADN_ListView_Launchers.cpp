@@ -22,7 +22,6 @@
 
 typedef ADN_Launchers_Data::LauncherInfos LauncherInfos;
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Launchers constructor
 // Created: JDY 03-07-03
@@ -39,7 +38,6 @@ ADN_ListView_Launchers::ADN_ListView_Launchers( QWidget* pParent, const char* sz
 
     this->SetDeletionEnabled( true );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Launchers destructor
@@ -86,7 +84,6 @@ void ADN_ListView_Launchers::ConnectItem( bool bConnect )
     indirect.Initialize( &pInfos->bIndirect_, boost::bind( &Matches, false, _1, pInfos ) );
     vItemConnectors_[ADN_Launchers_GUI::eIndirect]->Connect( &indirect, bConnect );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_Launchers::OnContextMenu

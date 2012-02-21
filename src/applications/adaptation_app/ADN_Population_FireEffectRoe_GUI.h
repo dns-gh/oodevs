@@ -27,5 +27,4 @@ public:
     //@}
 };
 
-
 #endif // __ADN_Population_FireEffectRoe_GUI_h_

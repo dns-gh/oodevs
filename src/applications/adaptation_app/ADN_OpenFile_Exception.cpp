@@ -28,7 +28,6 @@ ADN_OpenFile_Exception::ADN_OpenFile_Exception( const std::string& strFileName )
 {
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_OpenFile_Exception constructor
 // Created: AGN 2003-12-09
@@ -38,7 +37,6 @@ ADN_OpenFile_Exception::ADN_OpenFile_Exception( const ADN_OpenFile_Exception& rh
 {
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_OpenFile_Exception destructor
 // Created: AGN 2003-12-09
@@ -46,7 +44,6 @@ ADN_OpenFile_Exception::ADN_OpenFile_Exception( const ADN_OpenFile_Exception& rh
 ADN_OpenFile_Exception::~ADN_OpenFile_Exception()
 {
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_OpenFile_Exception::GetExceptionTitle
@@ -57,7 +54,6 @@ std::string ADN_OpenFile_Exception::GetExceptionTitle() const
     return qApp->translate( "ADN_OpenFile_Exception", "File error" ).ascii();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_OpenFile_Exception::GetExceptionMessage
 // Created: APE 2005-03-15
@@ -66,6 +62,4 @@ std::string ADN_OpenFile_Exception::GetExceptionMessage() const
 {
     return qApp->translate( "ADN_OpenFile_Exception", "Could not open file '%1'.\nMake sure the file exists." ).arg( strFileName_.c_str() ).ascii();
 }
-
-
 

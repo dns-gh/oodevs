@@ -98,9 +98,6 @@ private:
     T_ConnectorVector        vConnectors_;
 };
 
-
-
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ListViewItem constructor
 // Created: JDY 03-07-02
@@ -123,7 +120,6 @@ ADN_ListViewItem::ADN_ListViewItem(ADN_ListView *parent,void* item,int ncol)
         parent->setColumnWidthMode(j,Q3ListView::Maximum);
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ListViewItem destructor
 // Created: JDY 03-07-02
@@ -135,7 +131,6 @@ ADN_ListViewItem::~ADN_ListViewItem()
     vConnectors_.clear();
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ListViewItem::Connect
 // Created: JDY 03-07-03
@@ -146,12 +141,9 @@ void ADN_ListViewItem::Connect(int ndx,ADN_Connector_ABC *data,E_TypeCvt cvt)
     vConnectors_[ndx]=new ADN_ListViewItem_Connector(*this,ndx,cvt, "ADN_ListViewItem_Connector" );
     assert(vConnectors_[ndx]);
 
-
     // connect internal connect and external data
     vConnectors_[ndx]->Connect(data);
 }
-
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListViewItem::okRename

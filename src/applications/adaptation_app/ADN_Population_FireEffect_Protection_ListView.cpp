@@ -55,7 +55,6 @@ ADN_Population_FireEffect_Protection_ListView::ADN_Population_FireEffect_Protect
     this->SetDeletionEnabled( false );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Population_FireEffect_Protection_ListView destructor
 // Created: APE 2005-01-06

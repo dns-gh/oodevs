@@ -44,7 +44,6 @@ private:
     ADN_CLV_UrbanInfrastructure_Type& operator=( const ADN_CLV_UrbanInfrastructure_Type& );
 };
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_UrbanInfrastructure_Type constructor
 // Created: SLG 2010-12-20

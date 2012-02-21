@@ -51,7 +51,6 @@ public:
     }
 };
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Equipement_Postures_GUI constructor
 // Created: JDY 03-07-03
@@ -79,7 +78,6 @@ ADN_Equipement_Postures_GUI::ADN_Equipement_Postures_GUI( const QString& strColC
     // Create the connector.
     pConnector_ = new ADN_CT_Equipement_Postures( *this );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Equipement_Postures_GUI destructor

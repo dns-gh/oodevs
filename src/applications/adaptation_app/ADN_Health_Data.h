@@ -44,7 +44,6 @@ public:
         ADN_Type_Double rPercentage_;
     };
 
-
 // *****************************************************************************
 public:
     //! @name Constructors/Destructor
@@ -82,6 +81,5 @@ public:
     T_AvailabilityWarning_Vector vCollectingWarnings_;
     T_AvailabilityWarning_Vector vDoctorsWarnings_;
 };
-
 
 #endif // __ADN_Health_Data_h_

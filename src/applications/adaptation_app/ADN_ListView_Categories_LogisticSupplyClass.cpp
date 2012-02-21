@@ -40,7 +40,6 @@ private:
     ADN_CLV_Categories_LogisticSupplyClass& operator=( const ADN_CLV_Categories_LogisticSupplyClass& );
 };
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_Categories_LogisticSupplyClass::ADN_ListView_Categories_LogisticSupplyClass
 // Created: SBO 2006-03-23
@@ -63,7 +62,6 @@ ADN_ListView_Categories_LogisticSupplyClass::~ADN_ListView_Categories_LogisticSu
 {
     delete pConnector_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_Categories_LogisticSupplyClass::ConnectItem

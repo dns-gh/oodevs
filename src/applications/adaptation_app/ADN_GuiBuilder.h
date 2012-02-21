@@ -43,7 +43,6 @@ enum E_Validator
     eVarName
 };
 
-
 // =============================================================================
 /** @class  ADN_GuiBuilder
     @brief  ADN_GuiBuilder
@@ -81,7 +80,6 @@ public:
 
     template< typename T >
         ADN_ComboBox_Enum<T>* AddEnumField( QWidget* pParent, const char* szName, ADN_Connector_ABC& itemConnector, typename ADN_ComboBox_Enum<T>::T_Converter converter );
-
 
     ADN_FileChooser* AddFileField( QWidget* pParent, const char* szName, ADN_Connector_ABC*& pGuiConnector, const char* szFilter = "(*.*)" );
     ADN_FileChooser* AddFileField( QWidget* pParent, const char* szName, ADN_Type_String& strFileNameConnector, const char* szFilter = "(*.*)" );
@@ -128,7 +126,6 @@ private:
     //@}
 };
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiBuilder::AddField
 // Created: APE 2005-03-11
@@ -155,7 +152,6 @@ T* ADN_GuiBuilder::AddField( QWidget* pParent, const char* szName, ADN_Connector
     pGuiConnector = &pField->GetConnector();
     return pField;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiBuilder::AddField
@@ -185,7 +181,6 @@ T* ADN_GuiBuilder::AddField( QWidget* pParent, const char* szName, ADN_Connector
     pConnector->Connect( &itemConnector );
     return pField;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiBuilder::AddOptionnalField
@@ -218,7 +213,6 @@ T* ADN_GuiBuilder::AddOptionnalField( QWidget* pParent, const char* szName, ADN_
     return pField;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiBuilder::AddOptionnalField
 // Created: APE 2005-03-31
@@ -250,8 +244,6 @@ T* ADN_GuiBuilder::AddOptionnalField( QWidget* pParent, const char* szName, ADN_
     return pField;
 }
 
-
-
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiBuilder::AddEnumField
 // Created: APE 2005-03-11
@@ -274,7 +266,6 @@ ADN_ComboBox_Enum<T>* ADN_GuiBuilder::AddEnumField( QWidget* pParent, const char
     return pField;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiBuilder::AddEnumField
 // Created: APE 2005-03-11
@@ -296,7 +287,6 @@ ADN_ComboBox_Enum<T>* ADN_GuiBuilder::AddEnumField( QWidget* pParent, const char
     pField->GetConnector().Connect( &itemConnector );
     return pField;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiBuilder::AddTableCell
@@ -328,7 +318,6 @@ T* ADN_GuiBuilder::AddTableCell( ADN_Table* pParent, void* pData, int nRow, int 
     return pItem;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiBuilder::AddValidator
 // Created: APE 2005-04-13
@@ -338,8 +327,6 @@ void ADN_GuiBuilder::SetValidator( T& /*validator*/, E_Validator nValidator )
 {
     assert( nValidator == eNone );
 }
-
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiBuilder::SetValidator
@@ -373,7 +360,6 @@ void ADN_GuiBuilder::SetValidator( ADN_IntValidator& validator, E_Validator nVal
         assert( 0 );
     }
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiBuilder::SetValidator
@@ -413,7 +399,6 @@ void ADN_GuiBuilder::SetValidator( ADN_DoubleValidator& validator, E_Validator n
         assert( 0 );
     }
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_GuiBuilder::AddValidator

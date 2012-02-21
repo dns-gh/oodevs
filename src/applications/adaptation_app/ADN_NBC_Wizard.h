@@ -32,5 +32,4 @@ public:
     //@}
 };
 
-
 #endif // __ADN_NBC_Wizard_h_

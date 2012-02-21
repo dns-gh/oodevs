@@ -38,7 +38,7 @@ ADN_ListViewToolTip::~ADN_ListViewToolTip()
 // -----------------------------------------------------------------------------
 bool ADN_ListViewToolTip::eventFilter( QObject*, QEvent* event )
 {
-    if ( event->type() == QEvent::ToolTip )
+    if( event->type() == QEvent::ToolTip )
     {
         QHelpEvent* helpEvent = static_cast< QHelpEvent* >( event );
         QPoint pos = helpEvent->pos();

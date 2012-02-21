@@ -63,6 +63,6 @@ void ADN_Nature_GUI::UpdateEnableState()
 // -----------------------------------------------------------------------------
 void ADN_Nature_GUI::OnUnitSymbolChanged( const QString& nature )
 {
-    if ( text() != nature )
+    if( text() != nature )
         setText( nature );
 }

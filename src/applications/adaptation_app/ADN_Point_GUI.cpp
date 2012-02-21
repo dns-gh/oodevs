@@ -52,11 +52,9 @@ public:
         pItemInt->GetConnector().Connect(&static_cast<PointInfos*>(obj)->nDistance_);
     }
 
-
 private:
     ADN_CT_PointDistances& operator=( const ADN_CT_PointDistances& );
 };
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Point_GUI constructor
@@ -87,7 +85,6 @@ ADN_Point_GUI::ADN_Point_GUI(QWidget* pParent )
     pConnector_ = new ADN_CT_PointDistances(*this);
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Point_GUI destructor
 // Created: AGN 03-07-30
@@ -96,7 +93,6 @@ ADN_Point_GUI::~ADN_Point_GUI()
 {
     delete pConnector_;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Point_GUI::OnContextMenu
@@ -122,7 +118,6 @@ void ADN_Point_GUI::OnContextMenu( int /*nRow*/, int /*nCol*/, const QPoint& pt 
     else if( nMenuResult >= 0 )
         AddNewElement( (E_KeyPoint)nMenuResult );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Point_GUI::AddNewElement

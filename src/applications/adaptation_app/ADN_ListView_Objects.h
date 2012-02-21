@@ -36,5 +36,4 @@ private:
     //@}
 };
 
-
 #endif // __ADN_ListView_Objects_h_

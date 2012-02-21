@@ -48,5 +48,4 @@ private:
     //@}
 };
 
-
 #endif // __ADN_HumanFactors_GUI_h_

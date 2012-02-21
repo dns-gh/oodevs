@@ -22,8 +22,6 @@
 
 QString ADN_FileChooser::szDefaultFilter_="All Files (*.*)";
 
-
-
 class ADN_FileChooser_Connector
 : public ADN_Connector_ABC
 {
@@ -58,10 +56,6 @@ private:
     T_OpSet          op_;
 };
 
-
-
-
-
 //-----------------------------------------------------------------------------
 // Name: ADN_FileChooser constructor
 // Created: JDY 03-07-01
@@ -92,8 +86,6 @@ ADN_FileChooser::ADN_FileChooser(QWidget *parent,const QString& filter,const cha
     vConnectors_[eFile]     =new ADN_FileChooser_Connector(*this,&ADN_FileChooser::SetFilename);
     vConnectors_[eDirectory]=new ADN_FileChooser_Connector(*this,&ADN_FileChooser::SetDirectory);
 
-
-
     connect( pLineEdit_             , SIGNAL( textChanged( const QString & ) ),
              this                   , SLOT( FilenameChanged( const QString & ) ) );
 
@@ -101,7 +93,6 @@ ADN_FileChooser::ADN_FileChooser(QWidget *parent,const QString& filter,const cha
              this       , SLOT( ChooseFile() ) );
 
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_FileChooser destructor
@@ -112,8 +103,6 @@ ADN_FileChooser::~ADN_FileChooser()
     clear_owned_ptrs(vConnectors_);
     vConnectors_.clear();
 }
-
-
 
 //-----------------------------------------------------------------------------
 //
@@ -126,7 +115,6 @@ std::string GetPartPath(const std::string szWorking,const std::string& full)
     else
         return full.substr(szWorking.size(),full.size()-szWorking.size());
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_FileChooser::ChooseFile
@@ -171,7 +159,6 @@ void ADN_FileChooser::FilenameChanged(const QString& file)
     static_cast<ADN_FileChooser_Connector*>(vConnectors_[eFile])->SetDataChanged(file);
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_FileChooser::SetFileName
 // Created: JDY 03-07-01
@@ -201,7 +188,6 @@ void ADN_FileChooser::SetDirectory(const QString& szDir)
     szDirectory_=szDir;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_FileChooser::SetMode
 // Created: JDY 03-07-01
@@ -210,5 +196,4 @@ void ADN_FileChooser::SetMode( ADN_FileChooser::E_Mode m )
 {
     eMode_=m;
 }
-
 

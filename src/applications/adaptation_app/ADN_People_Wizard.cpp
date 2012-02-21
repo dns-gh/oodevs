@@ -34,7 +34,6 @@ ADN_People_Wizard::ADN_People_Wizard( QWidget* pParent, const char* szName )
         qApp->translate( "ADN_People_Wizard", "Click \"Done\" to create the new population." ) );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_People_Wizard destructor
 // Created: SLG 2010-11-23

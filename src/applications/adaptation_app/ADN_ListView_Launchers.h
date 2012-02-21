@@ -41,5 +41,4 @@ private:
     //@}
 };
 
-
 #endif // __ADN_ListView_Launchers_h_

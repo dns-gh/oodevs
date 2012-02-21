@@ -50,7 +50,6 @@ private:
     T_ConnectorVector        vConnectors_;
 };
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ListViewItem::GetItem
 // Created: JDY 03-07-03
@@ -60,6 +59,5 @@ void* ADN_ListViewItem::GetData()
 {
     return pData_;
 }
-
 
 #endif // __ADN_ListViewItem_h_

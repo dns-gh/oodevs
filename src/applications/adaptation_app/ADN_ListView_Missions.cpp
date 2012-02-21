@@ -53,7 +53,6 @@ private:
     ADN_CLV_Missions& operator=( const ADN_CLV_Missions& );
 };
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_Missions constructor
 // Created: AGN 2003-11-27
@@ -72,7 +71,6 @@ ADN_ListView_Missions::ADN_ListView_Missions( ADN_Models_Data::ModelInfos::E_Mod
 
     this->SetDeletionEnabled( true );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_Missions destructor
@@ -97,7 +95,6 @@ void ADN_ListView_Missions::ConnectItem( bool bConnect )
 
     vItemConnectors_[ADN_Models_GUI::eOrders]->Connect( &pInfos->vOrders_, bConnect );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_Missions::OnContextMenu
@@ -140,7 +137,6 @@ void ADN_ListView_Missions::OnContextMenu( const QPoint& pt )
     currentMissions_ = 0;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_Missions::FillList
 // Created: AGN 2004-04-28
@@ -156,7 +152,6 @@ void ADN_ListView_Missions::FillList( Q3CheckListItem* pParent, ADN_Missions_Dat
         else
             new ADN_Mission_CheckItem( pParent, **it );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_Missions::FindItem
@@ -175,7 +170,6 @@ ADN_ListViewItem* ADN_ListView_Missions::FindItem( const std::string& strMission
 
     return 0;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView_Missions::ApplyModifications

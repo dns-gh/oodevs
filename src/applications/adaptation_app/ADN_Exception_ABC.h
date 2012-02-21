@@ -19,7 +19,6 @@
 #ifndef __ADN_Exception_ABC_h_
 #define __ADN_Exception_ABC_h_
 
-
 // =============================================================================
 /** @class  ADN_Exception_ABC
     @brief  ADN_Exception_ABC

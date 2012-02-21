@@ -440,7 +440,6 @@ void ADN_Objects_Data::ADN_CapacityInfos_Attrition::WriteArchive( xml::xostream&
 }
 //@}
 
-
 //! @name ADN_CapacityInfos_UrbanDestruction
 //@{
 
@@ -463,7 +462,7 @@ void ADN_Objects_Data::ADN_CapacityInfos_UrbanDestruction::ReadArchive( xml::xis
             (*it)->ReadArchive( xis );
         }
     };
-    
+
     helpers::ADN_TypeCapacity_Infos::ReadArchive( xis );
     xis >> xml::list( "urban-modifier", boost::bind( &UrbanDestructionScore::Read, _1, boost::ref( modifUrbanBlocks_ ) ) );
 }

@@ -58,7 +58,6 @@ void ADN_HumanFactors_Data::ModifiersInfo::WriteArchive( xml::xostream& output )
            << xml::end;
 }
 
-
 // =============================================================================
 // ADN_HumanFactors_Data
 // =============================================================================
@@ -91,7 +90,6 @@ void ADN_HumanFactors_Data::ThresholdsInfo::WriteArchive( xml::xostream& output 
     output << xml::attribute( "first-threshold", firstThreshold_ )
            << xml::attribute( "second-threshold", secondThreshold_ );
 }
-
 
 // =============================================================================
 // ADN_HumanFactors_Data

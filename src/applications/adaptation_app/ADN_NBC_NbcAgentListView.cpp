@@ -19,7 +19,6 @@
 
 typedef ADN_NBC_Datas::NbcAgentInfos NbcAgentInfos;
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_NBC_NbcAgentListView constructor
 // Created: AGN 2004-05-06
@@ -38,7 +37,6 @@ ADN_NBC_NbcAgentListView::ADN_NBC_NbcAgentListView( QWidget* pParent, const char
     this->SetDeletionEnabled( true );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_NBC_NbcAgentListView destructor
 // Created: AGN 2004-05-06
@@ -47,7 +45,6 @@ ADN_NBC_NbcAgentListView::~ADN_NBC_NbcAgentListView()
 {
     delete pConnector_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_NBC_NbcAgentListView::ConnectItem
@@ -69,7 +66,6 @@ void ADN_NBC_NbcAgentListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_NBC_GUI::eGazGroupPresent]->Connect( &pInfos->bGazPresent_, bConnect );
     vItemConnectors_[ADN_NBC_GUI::eLiquidGroupPresent]->Connect( &pInfos->bLiquidPresent_, bConnect );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_NBC_NbcAgentListView::OnContextMenu

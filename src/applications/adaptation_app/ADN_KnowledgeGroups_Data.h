@@ -57,7 +57,6 @@ public:
         ADN_Type_Time   maxLifetime_;
     };
 
-
 // *****************************************************************************
     class GroupInfo : public ADN_Ref_ABC
                     , public ADN_DataTreeNode_ABC
@@ -84,7 +83,6 @@ public:
 
     typedef ADN_Type_Vector_ABC< GroupInfo > T_GroupInfoVector;
     typedef T_GroupInfoVector::iterator     IT_GroupInfoVector;
-
 
 // *****************************************************************************
 public:
@@ -120,6 +118,5 @@ public:
     //@}
 
 };
-
 
 #endif // __ADN_KnowledgeGroups_Data_h_

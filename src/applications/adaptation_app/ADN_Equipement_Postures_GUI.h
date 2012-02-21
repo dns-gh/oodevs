@@ -24,5 +24,4 @@ public:
     virtual ~ADN_Equipement_Postures_GUI();
 };
 
-
 #endif // __ADN_Equipement_Postures_GUI_h_

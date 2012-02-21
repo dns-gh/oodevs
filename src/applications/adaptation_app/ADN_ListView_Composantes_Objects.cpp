@@ -45,7 +45,6 @@ public:
     //@}
 };
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Composantes_Objects constructor
 // Created: JDY 03-07-03
@@ -64,7 +63,6 @@ ADN_ListView_Composantes_Objects::ADN_ListView_Composantes_Objects( QWidget* pPa
 
     this->SetDeletionEnabled( true );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Composantes_Objects destructor
@@ -109,7 +107,6 @@ void ADN_ListView_Composantes_Objects::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Composantes_GUI::eHasSpeedCirc]->Connect( &pInfos->bSpeedCirc_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eHasSpeedNotCirc]->Connect( &pInfos->bSpeedNotCirc_, bConnect );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Composantes_Objects::OnContextMenu
@@ -156,7 +153,6 @@ void ADN_ListView_Composantes_Objects::OnContextMenu( const QPoint& pt )
     }
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Composantes_Objects::Contains
 // Created: AGN 03-08-04
@@ -164,7 +160,7 @@ void ADN_ListView_Composantes_Objects::OnContextMenu( const QPoint& pt )
 bool ADN_ListView_Composantes_Objects::Contains( const ADN_Objects_Data_ObjectInfos* pInfo )
 {
     Q3ListViewItemIterator it( this );
-    while ( it.current() != 0 )
+    while( it.current() != 0 )
     {
         ADN_ListViewItem* pCurr = (ADN_ListViewItem*)it.current();
         ADN_Composantes_Data::ObjectInfos* pData = static_cast< ADN_Composantes_Data::ObjectInfos* >( pCurr->GetData() );

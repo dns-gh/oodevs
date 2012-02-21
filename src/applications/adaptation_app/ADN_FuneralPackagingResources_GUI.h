@@ -35,5 +35,4 @@ private:
     void RemoveCurrentDotation();
 };
 
-
 #endif // __ADN_FuneralPackagingResources_GUI_h_

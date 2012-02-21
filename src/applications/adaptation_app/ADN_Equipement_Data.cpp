@@ -507,7 +507,7 @@ void ADN_Equipement_Data::AmmoCategoryInfo::ReadArchive( xml::xistream& input )
         if( nType_ == E_MunitionType( -1 ) )
             throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Equipment - Invalid resource type '%1'" ).arg( type.c_str() ).ascii() );
     }
-    
+
     if( input.has_child( "illuminating" ) )
     {
         bIlluminating_ = true;
@@ -602,7 +602,6 @@ bool ADN_Equipement_Data::AmmoCategoryInfo::HasUrbanAttrition() const
             return true;
     return false;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ResourceInfos::ResourceInfos
@@ -818,7 +817,7 @@ ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::FindEquipementCategory( 
 // -----------------------------------------------------------------------------
 ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::FindEquipementCategory( const std::string& strCategoryName )
 {
-    for ( IT_ResourceInfos_Vector it = resources_.begin(); it != resources_.end(); ++it )
+    for( IT_ResourceInfos_Vector it = resources_.begin(); it != resources_.end(); ++it )
     {
         ADN_Equipement_Data::CategoryInfo* category = (*it)->FindCategory( strCategoryName );
         if( category )

@@ -30,5 +30,4 @@ private:
     void OnContextMenu( const QPoint& pt );
 };
 
-
 #endif // __ADN_NBC_NbcAgentListView_h_

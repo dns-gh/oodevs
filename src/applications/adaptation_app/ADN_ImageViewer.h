@@ -68,5 +68,4 @@ private:
 //@}
 };
 
-
 #endif // __ADN_ImageViewer_h_

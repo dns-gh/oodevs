@@ -14,7 +14,6 @@
 
 #include "ADN_ListView.h"
 
-
 // =============================================================================
 /** @class  ADN_ListView_Composantes
     @brief  ADN_ListView_Composantes
@@ -38,6 +37,5 @@ private:
     std::string GetToolTipFor( Q3ListViewItem& item );
     //@}
 };
-
 
 #endif // __ADN_ListView_Composantes_h_

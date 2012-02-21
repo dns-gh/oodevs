@@ -65,7 +65,7 @@ int ADN_ListView::FindNdx(void *data)
 {
     int ndx=0;
     Q3ListViewItemIterator it( this );
-    while ( it.current() != 0 )
+    while( it.current() != 0 )
     {
         ADN_ListViewItem* pCurr=(ADN_ListViewItem*)it.current();
         if( pCurr->GetData()==data )
@@ -84,7 +84,7 @@ ADN_ListViewItem* ADN_ListView::ItemAt(int i)
 {
     int ndx=0;
     Q3ListViewItemIterator it( this );
-    while ( it.current() != 0 && ndx < i )
+    while( it.current() != 0 && ndx < i )
     {
         ++it;
         ++ndx;
@@ -99,7 +99,7 @@ ADN_ListViewItem* ADN_ListView::ItemAt(int i)
 ADN_ListViewItem* ADN_ListView::FindItem(void* data)
 {
     Q3ListViewItemIterator it( this );
-    while ( it.current() != 0 )
+    while( it.current() != 0 )
     {
         ADN_ListViewItem* pCurr=(ADN_ListViewItem*)it.current();
         if( pCurr->GetData()==data )
@@ -111,7 +111,7 @@ ADN_ListViewItem* ADN_ListView::FindItem(void* data)
 
 inline void SetAutoClear(T_ConnectorVector& v,bool b)
 {
-    for(  T_ConnectorVector::iterator itConnector=v.begin();itConnector!=v.end();++itConnector)
+    for( T_ConnectorVector::iterator itConnector=v.begin();itConnector!=v.end();++itConnector)
         (*itConnector)->SetAutoClear(b);
 }
 

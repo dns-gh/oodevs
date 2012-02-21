@@ -237,7 +237,6 @@ void ADN_HtmlBuilder::CreateTableFrom( Q3ListView& listView )
     strOutput_ << "</table>\n";
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_HtmlBuilder::CreateTableFrom
 // Created: APE 2005-04-20

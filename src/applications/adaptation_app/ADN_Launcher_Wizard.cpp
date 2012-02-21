@@ -16,7 +16,6 @@
 //
 // *****************************************************************************
 
-
 #include "adaptation_app_pch.h"
 #include "ADN_Launcher_Wizard.h"
 #include "ADN_Workspace.h"
@@ -44,7 +43,6 @@ ADN_Launcher_Wizard::ADN_Launcher_Wizard( QWidget* pParent, const char* szName )
     new ADN_Wizard_LastPage( this, qApp->translate( "ADN_Launcher_Wizard", "Creation finished" ),
         qApp->translate( "ADN_Launcher_Wizard", "Click \"Done\" to create the new launcher." ) );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Launcher_Wizard destructor

@@ -111,7 +111,6 @@ protected:
     QStringList             filterList_;
 };
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView::GetCurrentData
 // Created: JDY 03-07-16
@@ -121,7 +120,6 @@ void* ADN_ListView::GetCurrentData()
 {
     return pCurData_;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView::SetItemConnectors
@@ -133,7 +131,6 @@ void ADN_ListView::SetItemConnectors( const T_ConnectorVector& v )
     vItemConnectors_ = v;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView::SetDeletionEnabled
 // Created: APE 2005-04-06
@@ -144,7 +141,6 @@ void ADN_ListView::SetDeletionEnabled( bool enabled, bool warning )
     bDeletionEnabled_ = enabled;
     bDeletionWarning_ = warning;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_ListView::GetToolTipFor

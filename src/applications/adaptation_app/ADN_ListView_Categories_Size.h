@@ -32,5 +32,4 @@ private:
     void OnContextMenu( const QPoint& pt );
 };
 
-
 #endif // __ADN_ListView_Categories_Size_h_

@@ -20,15 +20,15 @@ ADN_FragOrder_WizardSecondPage::ADN_FragOrder_WizardSecondPage( Q3Wizard* pParen
   : ADN_WizardPage_ABC( pParent, szName, szImageName )
 {
     QWidget* pGroupBox = new QWidget( pRightSide_ );
-    
+
     addForAllUnits_ = new QCheckBox();
     QLabel* pLabel1 = new QLabel();
     pLabel1->setText( qApp->translate( "ADN_FragOrder_WizardSecondPage", "Add for all Units" ) );
-    
+
     addForAllAutomata_ = new QCheckBox();
     QLabel* pLabel2 = new QLabel();
     pLabel2->setText( qApp->translate( "ADN_FragOrder_WizardSecondPage", "Add for all Automata" ) );
-    
+
     addForAllPops_ = new QCheckBox();
     QLabel* pLabel3 = new QLabel();
     pLabel3->setText( qApp->translate( "ADN_FragOrder_WizardSecondPage", "Add for all Crowds" ) );
@@ -59,21 +59,21 @@ ADN_FragOrder_WizardSecondPage::~ADN_FragOrder_WizardSecondPage()
 // -----------------------------------------------------------------------------
 void ADN_FragOrder_WizardSecondPage::AddFragOrderForAll( const std::string& name )
 {
-    if ( addForAllUnits_->isChecked() )
+    if( addForAllUnits_->isChecked() )
     {
         ADN_Missions_Data::FragOrder* fragorder = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindFragOrder( name );
         ADN_Models_Data::T_ModelInfos_Vector& units = ADN_Workspace::GetWorkspace().GetModels().GetData().GetUnitModelsInfos();
         for( ADN_Models_Data::IT_ModelInfos_Vector it1 = units.begin(); it1 != units.end(); ++it1 )
             (*it1)->AddFragOrder( fragorder, name );
     }
-    if ( addForAllAutomata_->isChecked() )
+    if( addForAllAutomata_->isChecked() )
     {
         ADN_Missions_Data::FragOrder* fragorder = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindFragOrder( name );
         ADN_Models_Data::T_ModelInfos_Vector& automata = ADN_Workspace::GetWorkspace().GetModels().GetData().GetAutomataModelsInfos();
         for( ADN_Models_Data::IT_ModelInfos_Vector it1 = automata.begin(); it1 != automata.end(); ++it1 )
             (*it1)->AddFragOrder( fragorder, name );
     }
-     if ( addForAllPops_->isChecked() )
+     if( addForAllPops_->isChecked() )
     {
         ADN_Missions_Data::FragOrder* fragorder = ADN_Workspace::GetWorkspace().GetMissions().GetData().FindFragOrder( name );
         ADN_Models_Data::T_ModelInfos_Vector& pops = ADN_Workspace::GetWorkspace().GetModels().GetData().GetPopulationModelsInfos();

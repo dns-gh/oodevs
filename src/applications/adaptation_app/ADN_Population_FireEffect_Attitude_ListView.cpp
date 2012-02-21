@@ -32,7 +32,6 @@ ADN_Population_FireEffect_Attitude_ListView::ADN_Population_FireEffect_Attitude_
     this->SetDeletionEnabled( false );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Population_FireEffect_Attitude_ListView destructor
 // Created: APE 2005-01-06

@@ -57,7 +57,6 @@ private:
     void ConstructorHelper();
     //@}
 
-
 private slots:
     //! @name Internal slots
     //@{

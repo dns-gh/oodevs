@@ -48,5 +48,4 @@ private:
     //@}
 };
 
-
 #endif // __ADN_Maintenance_GUI_h_

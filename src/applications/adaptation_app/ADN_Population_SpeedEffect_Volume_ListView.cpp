@@ -54,7 +54,6 @@ ADN_Population_SpeedEffect_Volume_ListView::ADN_Population_SpeedEffect_Volume_Li
     this->SetDeletionEnabled( false );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Population_SpeedEffect_Volume_ListView destructor
 // Created: APE 2005-01-06

@@ -33,5 +33,4 @@ public:
     bool Contains( E_KeyPoint nKeyPoint );
 };
 
-
 #endif // __ADN_Point_GUI_h_

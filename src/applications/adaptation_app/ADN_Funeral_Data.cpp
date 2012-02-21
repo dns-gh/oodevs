@@ -80,7 +80,7 @@ void ADN_Funeral_Data::ReadArchive( xml::xistream& input )
             >> xml::end
           >> xml::end;
     funeralPackagingResources_.AddItem( 0 );
-}   
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Funeral_Data::WriteArchive

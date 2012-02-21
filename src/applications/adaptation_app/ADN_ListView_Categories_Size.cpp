@@ -18,7 +18,6 @@
 
 typedef ADN_Categories_Data::SizeInfos SizeInfos;
 
-
 //-----------------------------------------------------------------------------
 // Internal List View Categories_Size connector to be connected with ADN_ListView_Categories_Size
 //-----------------------------------------------------------------------------
@@ -49,7 +48,6 @@ private:
     ADN_CLV_Categories_Size& operator=( const ADN_CLV_Categories_Size& );
 };
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Categories_Size constructor
 // Created: JDY 03-08-27
@@ -68,7 +66,6 @@ ADN_ListView_Categories_Size::ADN_ListView_Categories_Size(QWidget * parent, con
     this->SetDeletionEnabled( true, false );
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Categories_Size destructor
 // Created: JDY 03-08-27
@@ -77,7 +74,6 @@ ADN_ListView_Categories_Size::~ADN_ListView_Categories_Size()
 {
     delete pConnector_;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Categories_Size::ConnectItem
@@ -93,7 +89,6 @@ void ADN_ListView_Categories_Size::ConnectItem( bool bConnect )
 
     vItemConnectors_[ADN_Categories_GUI::eSizeName]->Connect( pInfos, bConnect );
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView_Categories_Size::OnContextMenu

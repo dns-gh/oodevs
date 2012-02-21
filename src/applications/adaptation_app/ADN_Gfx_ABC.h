@@ -36,7 +36,6 @@ protected:
     bool               bEnabledOnlyInAdminMode_;
 };
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Gfx_ABC::GetConnector
 // Created: JDY 03-07-10
@@ -46,7 +45,6 @@ ADN_Connector_ABC& ADN_Gfx_ABC::GetConnector()
 {
     return *pConnector_;
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: ADN_Gfx_ABC::SetAutoEnabled
@@ -58,7 +56,6 @@ void ADN_Gfx_ABC::SetAutoEnabled(bool bAuto)
     bAutoEnabled_=bAuto;
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Gfx_ABC::IsAutoEnabled
 // Created: JDY 03-07-16
@@ -69,7 +66,6 @@ bool ADN_Gfx_ABC::IsAutoEnabled()
     return bAutoEnabled_;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Gfx_ABC::SetIsEnabledOnlyInAdminMode
 // Created: AGN 2004-05-25
@@ -79,6 +75,5 @@ void ADN_Gfx_ABC::SetIsEnabledOnlyInAdminMode( bool b )
 {
     bEnabledOnlyInAdminMode_ = b;
 }
-
 
 #endif // __ADN_Gfx_ABC_h_

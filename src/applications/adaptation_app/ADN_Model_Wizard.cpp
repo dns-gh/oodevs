@@ -51,7 +51,6 @@ ADN_Model_Wizard::ADN_Model_Wizard( ADN_Models_Data::ModelInfos::E_ModelEntityTy
         qApp->translate( "ADN_Mission_Wizard", "Click \"Done\" to create the new model." ) );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Model_Wizard destructor
 // Created: AGN 2003-11-03

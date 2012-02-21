@@ -36,5 +36,4 @@ public:
     //@}
 };
 
-
 #endif // __ADN_Model_Wizard_h_

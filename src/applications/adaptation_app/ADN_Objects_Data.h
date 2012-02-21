@@ -24,7 +24,7 @@
 #include <boost/tuple/tuple.hpp>
 
 namespace xml
-{ 
+{
     class xistream;
 }
 
@@ -77,7 +77,6 @@ public:
 //    typedef helpers::AttritionInfos AttritionInfos;
 //    typedef ADN_Type_VectorFixed_ABC<AttritionInfos> T_AttritionInfosVector;
 //    typedef T_AttritionInfosVector::iterator        IT_AttritionInfosVector;
-
 
 //*****************************************************************************
 
@@ -628,7 +627,6 @@ public:
     typedef ADN_Type_Vector_ABC< ADN_Objects_Data_ObjectInfos > T_ObjectsInfos_Vector;
     typedef T_ObjectsInfos_Vector::iterator                    IT_ObjectsInfos_Vector;
 
-
 //*****************************************************************************
 public:
              ADN_Objects_Data();
@@ -638,7 +636,6 @@ public:
     void FilesNeeded( T_StringList& l ) const;
     void Reset();
     void SaveAttritionInfos( xml::xostream& output );
-
 
     T_ObjectsInfos_Vector& GetObjectInfos();
     ADN_Objects_Data_ObjectInfos* FindObject( const std::string& strName );
@@ -651,7 +648,6 @@ private:
 private:
     T_ObjectsInfos_Vector vObjectInfos_;
 };
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Objects_Data::GetObjectInfos

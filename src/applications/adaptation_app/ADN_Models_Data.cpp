@@ -55,7 +55,6 @@ std::string ADN_Models_Data::OrderInfos::GetItemName()
     return strName_.GetData();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: OrderInfos::ReadArchive
 // Created: APE 2004-12-01
@@ -280,7 +279,7 @@ void ADN_Models_Data::ModelInfos::AddFragOrder( ADN_Missions_Data::FragOrder* fr
 void ADN_Models_Data::ModelInfos::RemoveFragOder( const std::string& order )
 {
     for( T_OrderInfos_Vector::iterator it = vFragOrders_.begin(); it != vFragOrders_.end(); ++it )
-        if ( (*it)->strName_ == order)
+        if( (*it)->strName_ == order)
         {
             vFragOrders_.RemItem( *it );
             break;

@@ -20,7 +20,6 @@
 
 namespace xml { class xistream; }
 
-
 //*****************************************************************************
 // Created: JDY 03-07-11
 //*****************************************************************************
@@ -29,7 +28,6 @@ class ADN_Launchers_Data : public ADN_Data_ABC
 
 public:
     typedef ADN_Type_Double ModifPhsInfos;
-
 
 //*****************************************************************************
     class LauncherInfos
@@ -63,7 +61,6 @@ public:
     typedef ADN_Type_Vector_ABC<LauncherInfos>          T_LauncherInfos_Vector;
     typedef T_LauncherInfos_Vector::iterator            IT_LauncherInfos_Vector;
 
-
 //*****************************************************************************
 public:
     explicit ADN_Launchers_Data();
@@ -84,7 +81,6 @@ private:
     T_LauncherInfos_Vector      vLaunchers_;
 };
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Launchers_Data::GetLaunchersInfos
 // Created: JDY 03-07-15
@@ -94,7 +90,6 @@ ADN_Launchers_Data::T_LauncherInfos_Vector& ADN_Launchers_Data::GetLaunchersInfo
 {
     return vLaunchers_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Launchers_Data::FindLauncher
@@ -108,6 +103,5 @@ ADN_Launchers_Data::LauncherInfos* ADN_Launchers_Data::FindLauncher( const std::
         return 0;
     return *it;
 }
-
 
 #endif // __ADN_Launchers_Data_h_

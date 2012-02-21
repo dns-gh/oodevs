@@ -28,7 +28,6 @@
 typedef ADN_Equipement_Data::ResourceInfos ResourceInfos;
 typedef ADN_Equipement_Data::CategoryInfo CategoryInfo;
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Equipement_GenericListView constructor
 // Created: APE 2004-12-29
@@ -48,7 +47,6 @@ ADN_Equipement_GenericListView::ADN_Equipement_GenericListView( E_DotationFamily
     this->SetDeletionEnabled( true );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Equipement_GenericListView destructor
 // Created: APE 2004-12-29
@@ -57,7 +55,6 @@ ADN_Equipement_GenericListView::~ADN_Equipement_GenericListView()
 {
     delete pConnector_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Equipement_GenericListView::ConnectItem
@@ -82,7 +79,6 @@ void ADN_Equipement_GenericListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Equipement_GUI::eGenNature]->Connect( &pInfos->ptrResourceNature_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eGenLogisticSupplyClass]->Connect( &pInfos->ptrLogisticSupplyClass_, bConnect );
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Equipement_GenericListView::OnContextMenu
