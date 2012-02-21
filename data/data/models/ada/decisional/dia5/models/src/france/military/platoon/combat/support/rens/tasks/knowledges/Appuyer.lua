@@ -3,7 +3,8 @@ local result =
     fillParameters = function( self, companyTask, params )
          local objective = companyTask:getObjective( params )
          local meetingPoint = companyTask:getMeetingPoint( params )
-         return { objective = objective, meetingPoint = meetingPoint }
+         local jammingTime = companyTask:getJammingTime( params )
+         return { objective = objective, meetingPoint = meetingPoint, jammingTime = jammingTime }
     end
 }
 

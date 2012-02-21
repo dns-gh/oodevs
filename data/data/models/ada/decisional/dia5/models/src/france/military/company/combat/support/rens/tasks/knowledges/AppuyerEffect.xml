@@ -15,5 +15,12 @@
                 </type>
             </return>
         </method>
+        <method name="getJammingTime">
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
     </methods>
 </class>
