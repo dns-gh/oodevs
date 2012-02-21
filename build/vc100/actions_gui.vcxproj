@@ -97,7 +97,6 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\actions_gui\InterfaceBuilder.cpp" />
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamComboBox.cpp" />
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamDotationTypeList.cpp" />
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamResourceNetworkNode.cpp" />
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamResourceNetworkType.cpp" />

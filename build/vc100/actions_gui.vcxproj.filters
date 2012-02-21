@@ -136,9 +136,6 @@
     <ClCompile Include="..\..\src\libraries\actions_gui\ParamResourceNetworkType.cpp">
       <Filter>Source Files\Parameters\Resource Network</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\actions_gui\ParamComboBox.cpp">
-      <Filter>Source Files\Parameters\Common</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\actions_gui\actions_gui_pch.h">
