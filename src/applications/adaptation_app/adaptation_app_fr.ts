@@ -13,7 +13,7 @@
     </message>
     <message>
         <source>No geometry defined for object %1, database cannot be saved.</source>
-        <translation>Pas de géométrie définie pour l'objet %1, la base ne peut pas être sauvée.</translation>
+        <translation>Pas de géométrie définie pour l&apos;objet %1, la base ne peut pas être sauvée.</translation>
     </message>
 </context>
 <context>
