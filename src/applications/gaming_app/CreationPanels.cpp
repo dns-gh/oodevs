@@ -37,11 +37,10 @@ CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const
     : Panels      ( parent )
     , controllers_( controllers )
 {
-    Q3VBox* box = new Q3VBox( parent );
     setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
     AddPanel( units_ = new UnitsPanel( this, *this, controllers, staticModel.types_, factory, icons, colorStrategy ) );
     AddPanel( crowds_ = new PopulationsPanel( this, *this, controllers, staticModel.types_, factory ) );
-    AddPanel( objects_ = new ObjectCreationPanel( box, *this, controllers, model.actions_, staticModel, simulation, model.teams_.GetNoSideTeam(), paramLayer, tools ) );
+    AddPanel( objects_ = new ObjectCreationPanel( this, *this, controllers, model.actions_, staticModel, simulation, model.teams_.GetNoSideTeam(), paramLayer, tools ) );
     AddPanel( drawings_ = new DrawerPanel( this, *this, paramLayer, controllers, model.drawings_, config ) );
     AddPanel( fires_ = new FireCreationPanel( this, *this, controllers, model.actions_, simulation, staticModel, paramLayer, tools ) );
     AddPanel( weather_ = new ::WeatherPanel( this, *this, controllers, model.actions_, staticModel, simulation, weatherLayer ) );
