@@ -85,9 +85,27 @@ void ParamLocation_ABC< BaseParameter >::InternalOnMenuClick()
 // Created: ABR 2012-01-03
 // -----------------------------------------------------------------------------
 template< typename BaseParameter >
-void ParamLocation_ABC< BaseParameter >::NotifyContextMenu( const geometry::Point2f&, kernel::ContextMenu& menu )
+void ParamLocation_ABC< BaseParameter >::NotifyContextMenu( const geometry::Point2f& pos, kernel::ContextMenu& menu )
 {
-    Param_ABC::CreateMenu( menu );
+    if( parameter_.GetType() == "point" )
+    {
+        popupPosition_.reset( new geometry::Point2f( pos ) );
+        Param_ABC::CreateMenu( menu );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ParamLocation_ABC::NotifyContextMenu
+// Created: ABR 2012-02-21
+// -----------------------------------------------------------------------------
+template< typename BaseParameter >
+void ParamLocation_ABC< BaseParameter >::NotifyContextMenu( const kernel::Nothing&, kernel::ContextMenu& menu )
+{
+    if( parameter_.GetType() != "point" )
+    {
+        popupPosition_.reset();
+        Param_ABC::CreateMenu( menu );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -116,8 +134,12 @@ void ParamLocation_ABC< BaseParameter >::OnMenuClick()
         layer_.StartCircle( *this );
     else if( parameter_.GetType() == "line" )
         layer_.StartLine( *this );
-    else if( parameter_.GetType() == "point" )
-        layer_.StartPoint( *this );
+    else if( parameter_.GetType() == "point" && popupPosition_.get() )
+    {
+        kernel::Point locPoint;
+        locPoint.AddPoint( *popupPosition_.get() );
+        Handle( locPoint.Clone() );
+    }
     else if( parameter_.GetType() == "polygon" )
         layer_.StartPolygon( *this );
     else if( parameter_.GetType() == "rectangle" )

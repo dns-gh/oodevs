@@ -17,6 +17,7 @@
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_kernel/StaticModel.h"
+#include "clients_kernel/Point.h"
 #include "actions/Location.h"
 #include "actions/ParameterContainer_ABC.h"
 #include "actions/Path.h"
@@ -45,6 +46,7 @@ namespace actions
 template< typename BaseParameter >
 class ParamLocation_ABC : public Param_ABC
                         , public kernel::ContextMenuObserver_ABC< geometry::Point2f >
+                        , public kernel::ContextMenuObserver_ABC< kernel::Nothing >
                         , protected ::gui::ShapeHandler_ABC
 {
 
@@ -61,6 +63,7 @@ public:
     virtual QWidget* BuildInterface( QWidget* parent );
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& extent, const kernel::GlTools_ABC& tools ) const;
     virtual void NotifyContextMenu( const geometry::Point2f&, kernel::ContextMenu& );
+    virtual void NotifyContextMenu( const kernel::Nothing&, kernel::ContextMenu& );
     virtual void Handle( kernel::Location_ABC& location );
     virtual void OnMenuClick();
     //@}
@@ -79,6 +82,7 @@ protected:
     ::gui::ParametersLayer&                layer_;
     QLabel*                                pPosLabel_;
     std::auto_ptr< kernel::Location_ABC >  location_;
+    std::auto_ptr< geometry::Point2f >     popupPosition_;
     //@}
 };
 
