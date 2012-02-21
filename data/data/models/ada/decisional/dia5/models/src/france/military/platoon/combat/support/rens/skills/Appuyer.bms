@@ -25,7 +25,7 @@ rootnode
            Activate( skill.links.moveToward, 1, { entities = { self.params.meetingPoint } } )
        else
           if self.isPosted then
-             Activate( skill.nodes.JammingActivation, 1, { position = self.params.objective } )
+             Activate( skill.nodes.JammingActivation, 1, { position = self.params.objective, jammingTime = self.params.jammingTime } )
           end
        
           Activate( skill.links.moveToward, 1, { entities = { self.params.objective } } )
@@ -44,7 +44,7 @@ node "JammingActivation"
     
     select = function( self )
           meKnowledge:buildObjectOnPosition( eTypeObjectZoneBrouillage, self.params.position )
-          if waitInMin( self, 15 ) then
+          if waitInMin( self, self.params.jammingTime ) then
               Feedback( self.feedbacks.timeOutJamming )
         end
     end,

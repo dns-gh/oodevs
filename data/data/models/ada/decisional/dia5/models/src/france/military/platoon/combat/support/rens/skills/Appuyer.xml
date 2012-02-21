@@ -13,6 +13,12 @@
                 <class name="sword.military.knowledge.decisional.Reachable"/>
             </type>
         </parameter>
+        <parameter name="jammingTime">
+            <description>Temps pendant lequel la zone de brouillage sera activée.</description>
+            <type>
+                <simple name="numeric"/>
+            </type>
+        </parameter>
     </parameters>
     <links>
         <link name="moveToward" skill="sword.military.platoon.skills.MoveToward"/>

@@ -11,6 +11,11 @@
                 <class name="sword.military.knowledge.decisional.Reachable"/>
             </type>
         </parameter>
+        <parameter name="jammingTime">
+            <type>
+                <simple name="numeric"/>
+            </type>
+        </parameter>
     </parameters>
     <stages>
         <stage label="Brouillage" disable-when-done="true">
