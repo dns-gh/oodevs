@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <orbat model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
   <parties>
-    <party id="1" name="Camp Ami" type="friend">
+    <party color="0x647dff" id="1" name="Camp Ami" type="friend">
       <objects>
         <object id="403" name="plot ravitaillement [403]" type="logistic support area">
           <shape type="point">
@@ -35,36 +35,36 @@
         </object>
       </objects>
       <tactical>
-        <formation id="4" level="ii" name="GTIA [4]">
-          <automat engaged="true" id="257" knowledge-group="6" name="SGTIA INF [257]" type="SGTIA INF dominante roues">
-            <unit command-post="true" id="258" name="Section . CDT CIE INF VAB" position="29TNF3286759316" type="INF . Section CDT CIE VAB"/>
-            <unit command-post="false" id="260" name="Section . CBT INF VAB CDS SOFF" position="29TNF3244158863" type="INF . Section CBT VAB CDS SOFF"/>
-            <unit command-post="false" id="261" name="Section . CBT INF VAB CDS OFF" position="29TNF3324359063" type="INF . Section CBT VAB CDS OFF"/>
-            <unit command-post="false" id="264" name="Groupe GEN . EBG" position="29TNF3276959091" type="GEN . Groupe EBG"/>
-            <unit command-post="false" id="265" name="PIA Dominante ABC" position="29TNF3347259199" type="PIA Dominante ABC"/>
-            <unit command-post="false" id="266" name="PIA Dominante INF" position="29TNF3384759060" type="PIA Dominante INF"/>
-            <unit command-post="false" id="268" name="Patrouille . EI 12,7" position="29TNF3315558804" type="ABC . Patrouille EI 12,7"/>
+        <formation color="0x647dff" id="4" level="ii" name="GTIA [4]">
+          <automat color="0x647dff" engaged="true" id="257" knowledge-group="6" name="SGTIA INF [257]" type="SGTIA INF dominante roues">
+            <unit color="0x647dff" command-post="true" id="258" name="Section . CDT CIE INF VAB" position="29TNF3286759316" type="INF . Section CDT CIE VAB"/>
+            <unit color="0x647dff" command-post="false" id="260" name="Section . CBT INF VAB CDS SOFF" position="29TNF3244158863" type="INF . Section CBT VAB CDS SOFF"/>
+            <unit color="0x647dff" command-post="false" id="261" name="Section . CBT INF VAB CDS OFF" position="29TNF3324359063" type="INF . Section CBT VAB CDS OFF"/>
+            <unit color="0x647dff" command-post="false" id="264" name="Groupe GEN . EBG" position="29TNF3276959091" type="GEN . Groupe EBG"/>
+            <unit color="0x647dff" command-post="false" id="265" name="PIA Dominante ABC" position="29TNF3347259199" type="PIA Dominante ABC"/>
+            <unit color="0x647dff" command-post="false" id="266" name="PIA Dominante INF" position="29TNF3384759060" type="PIA Dominante INF"/>
+            <unit color="0x647dff" command-post="false" id="268" name="Patrouille . EI 12,7" position="29TNF3315558804" type="ABC . Patrouille EI 12,7"/>
           </automat>
-          <automat engaged="true" id="467" knowledge-group="6" name="ALAT - ESCADRILLE 3HAC [467]" symbol="symbols/sfgpucv" type="ALAT - ESCADRILLE 3HAC">
-            <unit command-post="true" id="468" name="ALAT - PC ALAT" position="29TNF3003263612" type="ALAT - PC ALAT"/>
-            <unit command-post="false" id="469" name="ALAT - Patrouille 3HAC" position="29TNF3064763519" type="ALAT - Patrouille 3HAC"/>
-            <unit command-post="false" id="470" name="ALAT - Patrouille 3HAC" position="29TNF3003662615" type="ALAT - Patrouille 3HAC"/>
-            <unit command-post="false" id="471" name="ALAT - Patrouille 3HAC" position="29TNF2953363111" type="ALAT - Patrouille 3HAC"/>
-            <unit command-post="false" id="472" name="ALAT - Patrouille HAC" position="29TNF3066362962" type="ALAT - Patrouille HAC"/>
+          <automat color="0x647dff" engaged="true" id="467" knowledge-group="6" name="ALAT - ESCADRILLE 3HAC [467]" type="ALAT - ESCADRILLE 3HAC">
+            <unit color="0x647dff" command-post="true" id="468" name="ALAT - PC ALAT" position="29TNF3003263612" type="ALAT - PC ALAT"/>
+            <unit color="0x647dff" command-post="false" id="469" name="ALAT - Patrouille 3HAC" position="29TNF3064763519" type="ALAT - Patrouille 3HAC"/>
+            <unit color="0x647dff" command-post="false" id="470" name="ALAT - Patrouille 3HAC" position="29TNF3003662615" type="ALAT - Patrouille 3HAC"/>
+            <unit color="0x647dff" command-post="false" id="471" name="ALAT - Patrouille 3HAC" position="29TNF2953363111" type="ALAT - Patrouille 3HAC"/>
+            <unit color="0x647dff" command-post="false" id="472" name="ALAT - Patrouille HAC" position="29TNF3066362962" type="ALAT - Patrouille HAC"/>
           </automat>
-          <automat engaged="false" id="473" knowledge-group="6" name="ALAT - ESCADRILLE 3HAC [473]" symbol="symbols/sfgpucv" type="ALAT - ESCADRILLE 3HAC">
-            <unit command-post="true" id="474" name="ALAT - PC ALAT" position="29TNF3554863111" type="ALAT - PC ALAT"/>
-            <unit command-post="false" id="475" name="ALAT - Patrouille 3HAC" position="29TNF3602762515" type="ALAT - Patrouille 3HAC"/>
-            <unit command-post="false" id="476" name="ALAT - Patrouille 3HAC" position="29TNF3532962228" type="ALAT - Patrouille 3HAC"/>
-            <unit command-post="false" id="477" name="ALAT - Patrouille 3HAC" position="29TNF3505062610" type="ALAT - Patrouille 3HAC"/>
-            <unit command-post="false" id="478" name="ALAT - Patrouille HAC" position="29TNF3607462915" type="ALAT - Patrouille HAC"/>
+          <automat color="0x647dff" engaged="false" id="473" knowledge-group="6" name="ALAT - ESCADRILLE 3HAC [473]" type="ALAT - ESCADRILLE 3HAC">
+            <unit color="0x647dff" command-post="true" id="474" name="ALAT - PC ALAT" position="29TNF3554863111" type="ALAT - PC ALAT"/>
+            <unit color="0x647dff" command-post="false" id="475" name="ALAT - Patrouille 3HAC" position="29TNF3602762515" type="ALAT - Patrouille 3HAC"/>
+            <unit color="0x647dff" command-post="false" id="476" name="ALAT - Patrouille 3HAC" position="29TNF3532962228" type="ALAT - Patrouille 3HAC"/>
+            <unit color="0x647dff" command-post="false" id="477" name="ALAT - Patrouille 3HAC" position="29TNF3505062610" type="ALAT - Patrouille 3HAC"/>
+            <unit color="0x647dff" command-post="false" id="478" name="ALAT - Patrouille HAC" position="29TNF3607462915" type="ALAT - Patrouille HAC"/>
           </automat>
-          <automat engaged="false" id="498" knowledge-group="6" name="ALAT - Escadrille HRA [498]" type="ALAT - Escadrille HRA">
-            <unit command-post="true" id="499" name="ALAT - PC Escadrille" position="29TNF3342063433" type="ALAT - PC Escadrille"/>
-            <unit command-post="false" id="501" name="ALAT - Patrouille 2HAH" position="29TNF3355062905" type="ALAT - Patrouille 2HAH"/>
-            <unit command-post="false" id="502" name="ALAT - Patrouille 2HR" position="29TNF3324763144" type="ALAT - Patrouille 2HR"/>
-            <unit command-post="false" id="503" name="ALAT - Patrouille 2HR" position="29TNF3367863386" type="ALAT - Patrouille 2HR"/>
-            <unit command-post="false" id="504" name="ALAT - Patrouille 3HAH" position="29TNF3375162881" type="ALAT - Patrouille 3HAH"/>
+          <automat color="0x647dff" engaged="false" id="498" knowledge-group="6" name="ALAT - Escadrille HRA [498]" type="ALAT - Escadrille HRA">
+            <unit color="0x647dff" command-post="true" id="499" name="ALAT - PC Escadrille" position="29TNF3342063433" type="ALAT - PC Escadrille"/>
+            <unit color="0x647dff" command-post="false" id="501" name="ALAT - Patrouille 2HAH" position="29TNF3355062905" type="ALAT - Patrouille 2HAH"/>
+            <unit color="0x647dff" command-post="false" id="502" name="ALAT - Patrouille 2HR" position="29TNF3324763144" type="ALAT - Patrouille 2HR"/>
+            <unit color="0x647dff" command-post="false" id="503" name="ALAT - Patrouille 2HR" position="29TNF3367863386" type="ALAT - Patrouille 2HR"/>
+            <unit color="0x647dff" command-post="false" id="504" name="ALAT - Patrouille 3HAH" position="29TNF3375162881" type="ALAT - Patrouille 3HAH"/>
           </automat>
           <lima name="Lima 339">
             <point>29TNF3246056898</point>
@@ -189,9 +189,9 @@
             <point>29TNF3040148254</point>
           </limit>
         </formation>
-        <formation id="422" level="ii" logistic-level="logistic-base" name="BLD">
-          <automat engaged="true" id="451" knowledge-group="6" logistic-level="logistic-base" name="LOG . TC2 LOG [451]" type="LOG . TC2 LOG">
-            <unit command-post="true" id="452" name="LOG . TC2" position="29TNF3450964975" type="LOG . TC2">
+        <formation color="0x647dff" id="422" level="ii" logistic-level="logistic-base" name="BLD">
+          <automat color="0x647dff" engaged="true" id="451" knowledge-group="6" logistic-level="logistic-base" name="LOG . TC2 LOG [451]" type="LOG . TC2 LOG">
+            <unit color="0x647dff" command-post="true" id="452" name="LOG . TC2" position="29TNF3450964975" type="LOG . TC2">
               <stocks>
                 <resource name="CART 5.56 F1A F1" quantity="400000000"/>
                 <resource name="CART 5.56 BAL ORD F1" quantity="40000000"/>
@@ -228,14 +228,14 @@
         </logistic-base>
       </logistics>
     </party>
-    <party id="2" name="Camp Eni" type="enemy">
+    <party color="0xff3232" id="2" name="Camp Eni" type="enemy">
       <objects/>
       <tactical>
-        <formation id="25" level="ii" name="GTIA [25]">
-          <automat engaged="false" id="192" knowledge-group="31" name="MILICE [192]" type="MILICE">
-            <unit command-post="true" id="193" name="MILICE . CDT" position="29TNF3335755311" type="MILICE . PICK UP CDT"/>
-            <unit command-post="false" id="194" name="MILICE . Miliciens" position="29TNF3449155342" type="MILICE . PICK UP 14,5"/>
-            <unit command-post="false" id="195" name="MILICE . Miliciens" position="29TNF3396755956" type="MILICE . PICK UP 14,5"/>
+        <formation color="0xff3232" id="25" level="ii" name="GTIA [25]">
+          <automat color="0xff3232" engaged="false" id="192" knowledge-group="31" name="MILICE [192]" type="MILICE">
+            <unit color="0xff3232" command-post="true" id="193" name="MILICE . CDT" position="29TNF3335755311" type="MILICE . PICK UP CDT"/>
+            <unit color="0xff3232" command-post="false" id="194" name="MILICE . Miliciens" position="29TNF3449155342" type="MILICE . PICK UP 14,5"/>
+            <unit color="0xff3232" command-post="false" id="195" name="MILICE . Miliciens" position="29TNF3396755956" type="MILICE . PICK UP 14,5"/>
             <lima name="Lima 337">
               <point>29TNF3265656108</point>
               <point>29TNF3308956090</point>
@@ -284,10 +284,10 @@
       <inhabitants/>
       <logistics/>
     </party>
-    <party id="128" name="Camp Neutre" type="friend">
+    <party color="0x4bbedc" id="128" name="Camp Neutre" type="friend">
       <objects/>
       <tactical>
-        <formation id="129" level="ii" name="Formation [129]"/>
+        <formation color="0x4bbedc" id="129" level="ii" name="Formation [129]"/>
       </tactical>
       <communication>
         <knowledge-group id="132" name="Knowledge group [132]" type="Standard"/>
@@ -312,4 +312,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="1360184730" -->
+<!-- signature="2827711604" -->
