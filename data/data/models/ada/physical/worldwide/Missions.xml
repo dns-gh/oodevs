@@ -2100,7 +2100,7 @@ A visited object won't be created and build if agent doesn't have the physical c
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="works" max-occurs="12554" min-occurs="1" name="Plan of attack" optional="false" type="PlannedWork"/>
     </mission>
-    <mission dia-behavior="tasks.CreateThenOperate" dia-type="tasks.CreateThenOperate" id="4478" name="MLSECURITY - Create and Operate a system">
+    <mission dia-behavior="tasks.CreateThenOperate" dia-type="tasks.CreateThenOperate" id="4478" name="MLSECURITY - Create and operate a system">
       <description>
         <doctrine><![CDATA[To create and operate a given system.]]></doctrine>
         <usage><![CDATA[Agent moves toward the planned system (a planned object as a decontamination site), create it and then operate it. ]]></usage>
@@ -2112,7 +2112,7 @@ A visited object won't be created and build if agent doesn't have the physical c
       <parameter dia-name="plannedWork" name="planned object to operate" optional="false" type="PlannedWork"/>
       <parameter dia-name="removeWork" name="remove installations at the end of mission" optional="true" type="Boolean"/>
     </mission>
-    <mission dia-behavior="tasks.CreateThenFilter" dia-type="tasks.CreateThenFilter" id="4479" name="MLSECURITY - Create a checkpoint">
+    <mission dia-behavior="tasks.CreateThenFilter" dia-type="tasks.CreateThenFilter" id="4479" name="MLSECURITY - Create and operate a checkpoint">
       <description>
         <doctrine><![CDATA[To create and operate a given object.]]></doctrine>
         <usage><![CDATA[Agent moves toward the planned checkpoint, creates it and then uses it to filter crowds. ]]></usage>
@@ -2147,6 +2147,22 @@ A visited object won't be created and build if agent doesn't have the physical c
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="system" name="Element to operate" optional="false" type="ObjectKnowledge"/>
+    </mission>
+    <mission dia-behavior="tasks.HealVictimsWithinCrowds" dia-type="tasks.HealVictimsWithinCrowds" id="4483" name="MLSECURITY - Heal victims within crowds">
+      <description>
+        <doctrine><![CDATA[To heal all the victims within issued crowds.]]></doctrine>
+        <usage><![CDATA[When several crowds  should be healed, the agent acts on each one by following the order of the elements into the 'crowds' list. 
+A crowd won't be healed if it could not be reached (it has moved away or it is localized in a non accessible urban block).]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="crowds" max-occurs="465465465" min-occurs="1" name="crowds" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="CrowdKnowledge"/>
+        </choice>
+      </parameter>
     </mission>
   </units>
   <automats>
@@ -3503,4 +3519,4 @@ A visited object won't be created and build if agent doesn't have the physical c
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="0370708495" -->
+<!-- signature="3954333417" -->

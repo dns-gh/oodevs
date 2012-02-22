@@ -2597,12 +2597,13 @@
         <mission name="MLSECURITY - Decontaminate"/>
         <mission name="MLSECURITY - Perform public works"/>
         <mission name="MLSECURITY - Resume public works"/>
-        <mission name="MLSECURITY - Create and Operate a system"/>
-        <mission name="MLSECURITY - Create a checkpoint"/>
+        <mission name="MLSECURITY - Create and operate a system"/>
+        <mission name="MLSECURITY - Create and operate a checkpoint"/>
         <mission name="MLSECURITY - Plan a multiple attack"/>
         <mission name="MLSECURITY - Plan an attack"/>
         <mission name="MLSECURITY - Operate a system"/>
         <mission name="MLSECURITY - Use a checkpoint (filter crowds)"/>
+        <mission name="MLSECURITY - Heal victims within crowds"/>
       </missions>
       <fragorders/>
     </unit>
@@ -3851,4 +3852,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0715268341" -->
+<!-- signature="1843203693" -->
