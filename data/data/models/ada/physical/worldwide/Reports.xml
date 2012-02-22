@@ -366,7 +366,7 @@
     <parameter type="String"/>
   </report>
   <report category="operational" id="261" message="reserved obstacle activated"/>
-  <report category="operational" id="262" message="system is being operated for %1">
+  <report category="operational" id="262" message="system %1 is being operated">
     <parameter type="ObjectKnowledge"/>
   </report>
   <report category="operational" id="263" message="direct fire on target : %1">
@@ -613,5 +613,7 @@
   <report category="operational" id="439" message="Wounded persons healed"/>
   <report category="operational" id="440" message="Starting to extract victims"/>
   <report category="operational" id="441" message="Wounded cannot be healed"/>
+  <report category="operational" id="442" message="Control point established"/>
+  <report category="operational" id="443" message="System is being operated"/>
 </reports>
-<!-- signature="0143723966" -->
+<!-- signature="2138392456" -->
