@@ -1304,9 +1304,9 @@
         <mission name="PION ALAT Detruire Neutraliser Dans Zone"/>
         <mission name="PION ALAT Eclairer"/>
         <mission name="PION ALAT Escorter"/>
-        <mission name="PION ALAT Freiner"/>
+        <mission name="PION ALAT Interdire"/>
         <mission name="PION ALAT Jalonner"/>
-        <mission name="PION ALAT Reconnaitre Dans La Profondeur"/>
+        <mission name="PION ALAT Reconnaitre"/>
         <mission name="PION ALAT Reconnaitre Contour Ennemi"/>
         <mission name="PION ALAT Surveiller"/>
         <mission name="PION Faire Mouvement"/>
@@ -1347,19 +1347,19 @@
       <missions>
         <mission name="PION ALAT Appuyer Direct Au Contact"/>
         <mission name="PION ALAT Couvrir"/>
-        <mission name="PION ALAT Detruire Aeromobile"/>
+        <mission name="PION ALAT Detruire"/>
         <mission name="PION ALAT Detruire Neutraliser Dans Zone"/>
         <mission name="PION ALAT Eclairer"/>
         <mission name="PION ALAT Escorter"/>
         <mission name="PION ALAT Jalonner"/>
         <mission name="PION ALAT Reconnaitre Contour Ennemi"/>
-        <mission name="PION ALAT Reconnaitre Dans La Profondeur"/>
+        <mission name="PION ALAT Reconnaitre"/>
         <mission name="PION ALAT Surveiller"/>
         <mission name="PION Faire Mouvement"/>
         <mission name="PION Suivre"/>
         <mission name="PION Se Faire Decontaminer"/>
         <mission name="PION Stationner"/>
-        <mission name="PION ALAT Freiner"/>
+        <mission name="PION ALAT Interdire"/>
         <mission name="PION ALAT Attaquer"/>
         <mission name="PION Se Faire Transporter"/>
         <mission name="PION ALAT Passer Au Commandement De"/>
@@ -1392,13 +1392,13 @@
     <unit dia-type="EscortAndCloseSupportHelicopterPatrol" file="Appui\Alat\Pions\Pat Ham\model.bms" masalife="false" name="Patrouille HAM">
       <missions>
         <mission name="PION ALAT Couvrir"/>
-        <mission name="PION ALAT Detruire Aeromobile"/>
+        <mission name="PION ALAT Detruire"/>
         <mission name="PION ALAT Eclairer"/>
         <mission name="PION ALAT Escorter"/>
         <mission name="PION ALAT Jalonner"/>
         <mission name="PION ALAT Detruire Neutraliser Dans Zone"/>
         <mission name="PION ALAT Reconnaitre Contour Ennemi"/>
-        <mission name="PION ALAT Reconnaitre Dans La Profondeur"/>
+        <mission name="PION ALAT Reconnaitre"/>
         <mission name="PION ALAT Surveiller"/>
         <mission name="PION Faire Mouvement"/>
         <mission name="PION Suivre"/>
@@ -1522,13 +1522,13 @@
       <missions>
         <mission name="PION ALAT Appuyer Direct Au Contact"/>
         <mission name="PION ALAT Couvrir"/>
-        <mission name="PION ALAT Detruire Aeromobile"/>
+        <mission name="PION ALAT Detruire"/>
         <mission name="PION ALAT Detruire Neutraliser Dans Zone"/>
         <mission name="PION ALAT Eclairer"/>
         <mission name="PION ALAT Escorter"/>
-        <mission name="PION ALAT Freiner"/>
+        <mission name="PION ALAT Interdire"/>
         <mission name="PION ALAT Jalonner"/>
-        <mission name="PION ALAT Reconnaitre Dans La Profondeur"/>
+        <mission name="PION ALAT Reconnaitre"/>
         <mission name="PION ALAT Reconnaitre Contour Ennemi"/>
         <mission name="PION ALAT Surveiller"/>
         <mission name="PION Faire Mouvement"/>
@@ -1633,7 +1633,7 @@
         <mission name="PION ALAT Eclairer"/>
         <mission name="PION ALAT Jalonner"/>
         <mission name="PION ALAT Reconnaitre Contour Ennemi"/>
-        <mission name="PION ALAT Reconnaitre Dans La Profondeur"/>
+        <mission name="PION ALAT Reconnaitre"/>
         <mission name="PION ALAT Surveiller"/>
         <mission name="PION Faire Mouvement"/>
         <mission name="PION Suivre"/>
@@ -1715,19 +1715,19 @@
       <missions>
         <mission name="PION ALAT Appuyer Direct Au Contact"/>
         <mission name="PION ALAT Couvrir"/>
-        <mission name="PION ALAT Detruire Aeromobile"/>
+        <mission name="PION ALAT Detruire"/>
         <mission name="PION ALAT Detruire Neutraliser Dans Zone"/>
         <mission name="PION ALAT Eclairer"/>
         <mission name="PION ALAT Escorter"/>
         <mission name="PION ALAT Jalonner"/>
         <mission name="PION ALAT Reconnaitre Contour Ennemi"/>
-        <mission name="PION ALAT Reconnaitre Dans La Profondeur"/>
+        <mission name="PION ALAT Reconnaitre"/>
         <mission name="PION ALAT Surveiller"/>
         <mission name="PION Faire Mouvement"/>
         <mission name="PION Suivre"/>
         <mission name="PION Se Faire Decontaminer"/>
         <mission name="PION Stationner"/>
-        <mission name="PION ALAT Freiner"/>
+        <mission name="PION ALAT Interdire"/>
         <mission name="PION ALAT Attaquer"/>
         <mission name="PION Se Faire Transporter"/>
         <mission name="PION ALAT Passer Au Commandement De"/>
@@ -1761,7 +1761,7 @@
         <mission name="PION ALAT Eclairer"/>
         <mission name="PION ALAT Jalonner"/>
         <mission name="PION ALAT Reconnaitre Contour Ennemi"/>
-        <mission name="PION ALAT Reconnaitre Dans La Profondeur"/>
+        <mission name="PION ALAT Reconnaitre"/>
         <mission name="PION ALAT Surveiller"/>
         <mission name="PION Faire Mouvement"/>
         <mission name="PION Suivre"/>
@@ -6213,14 +6213,14 @@
         <mission name="AUTOMATE Se Recompleter"/>
         <mission name="AUTOMATE ALAT Attaquer"/>
         <mission name="AUTOMATE ALAT Detruire Neutraliser Dans Profondeur"/>
-        <mission name="AUTOMATE ALAT Freiner"/>
+        <mission name="AUTOMATE ALAT Interdire"/>
         <mission name="AUTOMATE ALAT Donner Coup Arret"/>
         <mission name="AUTOMATE ALAT Attaquer Formation Aeromobile"/>
         <mission name="AUTOMATE ALAT Appuyer"/>
         <mission name="AUTOMATE ALAT Couvrir"/>
         <mission name="AUTOMATE ALAT Detruire Neutraliser Dans Zone"/>
         <mission name="AUTOMATE ALAT Escorter"/>
-        <mission name="AUTOMATE ALAT Recueillir Formation Aeromobile"/>
+        <mission name="AUTOMATE ALAT Recueillir"/>
         <mission name="AUTOMATE Stationner"/>
         <mission name="AUTOMATE Orienter Refugies"/>
         <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
@@ -6257,14 +6257,14 @@
         <mission name="AUTOMATE Se Recompleter"/>
         <mission name="AUTOMATE ALAT Attaquer"/>
         <mission name="AUTOMATE ALAT Detruire Neutraliser Dans Profondeur"/>
-        <mission name="AUTOMATE ALAT Freiner"/>
+        <mission name="AUTOMATE ALAT Interdire"/>
         <mission name="AUTOMATE ALAT Donner Coup Arret"/>
         <mission name="AUTOMATE ALAT Attaquer Formation Aeromobile"/>
         <mission name="AUTOMATE ALAT Appuyer"/>
         <mission name="AUTOMATE ALAT Couvrir"/>
         <mission name="AUTOMATE ALAT Detruire Neutraliser Dans Zone"/>
         <mission name="AUTOMATE ALAT Escorter"/>
-        <mission name="AUTOMATE ALAT Recueillir Formation Aeromobile"/>
+        <mission name="AUTOMATE ALAT Recueillir"/>
         <mission name="AUTOMATE Stationner"/>
         <mission name="AUTOMATE Orienter Refugies"/>
         <mission name="AUTOMATE Prendre En Compte Prisonniers"/>
@@ -6404,14 +6404,14 @@
         <mission name="AUTOMATE Se Recompleter"/>
         <mission name="AUTOMATE ALAT Attaquer"/>
         <mission name="AUTOMATE ALAT Detruire Neutraliser Dans Profondeur"/>
-        <mission name="AUTOMATE ALAT Freiner"/>
+        <mission name="AUTOMATE ALAT Interdire"/>
         <mission name="AUTOMATE ALAT Donner Coup Arret"/>
         <mission name="AUTOMATE ALAT Attaquer Formation Aeromobile"/>
         <mission name="AUTOMATE ALAT Appuyer"/>
         <mission name="AUTOMATE ALAT Couvrir"/>
         <mission name="AUTOMATE ALAT Detruire Neutraliser Dans Zone"/>
         <mission name="AUTOMATE ALAT Escorter"/>
-        <mission name="AUTOMATE ALAT Recueillir Formation Aeromobile"/>
+        <mission name="AUTOMATE ALAT Recueillir"/>
         <mission name="AUTOMATE Stationner"/>
         <mission name="AUTOMATE Se Faire Transporter"/>
         <mission name="AUTOMATE ALAT Aller Se Recompleter"/>
@@ -7264,4 +7264,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2695081641" -->
+<!-- signature="0826697513" -->
