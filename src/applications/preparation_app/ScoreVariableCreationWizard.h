@@ -107,7 +107,7 @@ private:
     QLineEdit* name_;
     QPushButton* ok_;
     gui::ValuedComboBox< std::string >* type_;
-    Q3VGroupBox* paramBox_;
+    Q3VBox* paramBox_;
     boost::shared_ptr< actions::gui::Param_ABC > parameter_;
     //@}
 };

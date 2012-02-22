@@ -40,7 +40,7 @@ ScoreVariableCreationWizard::ScoreVariableCreationWizard( QWidget* parent, Contr
 
     setCaption( tr( "Create variable" ) );
     setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
-    Q3GridLayout* grid = new Q3GridLayout( this, 3, 2, 0, 5 );
+    QGridLayout* grid = new QGridLayout( this, 3, 2, 0, 5 );
     grid->setMargin( 5 );
     grid->setRowStretch( 1, 5 );
     {
@@ -73,8 +73,8 @@ ScoreVariableCreationWizard::ScoreVariableCreationWizard( QWidget* parent, Contr
         grid->addWidget( box, 0, 0 );
     }
     {
-        paramBox_ = new Q3VGroupBox( tr( "Value" ), this );
-        grid->addWidget( paramBox_, 1, 0 );
+        paramBox_ = new Q3VBox( this );
+        grid->addWidget( paramBox_, 1, 0, 1, 2 );
     }
     {
         Q3HBox* box = new Q3HBox( this );
@@ -120,7 +120,10 @@ namespace
             indicators::DataTypeFactory types;
             std::string value;
             parameter.CommitTo( value );
-            pVariable_.reset( new indicators::Variable( name_.ascii(), types.Instanciate( parameter.GetType() ), value ) );
+            std::string typeName = parameter.GetType();
+            if( typeName == "circle" || typeName == "polygon" )
+                typeName = "zone";
+            pVariable_.reset( new indicators::Variable( name_.ascii(), types.Instanciate( typeName ), value ) );
             delete &parameter;
         }
         const QString name_;
@@ -193,8 +196,8 @@ void ScoreVariableCreationWizard::OnChangeType()
     if( paramBox_ )
     {
         delete paramBox_;
-        paramBox_ = new Q3VGroupBox( tr( "Value" ), this );
-        static_cast< Q3GridLayout* >( layout() )->addWidget( paramBox_, 1, 0 );
+        paramBox_ = new Q3VBox( this );
+        static_cast< Q3GridLayout* >( layout() )->addWidget( paramBox_, 1, 0, 1, 2 );
     }
 
     parameter_ = CreateParameter( type_->GetValue(), name_->text() );
