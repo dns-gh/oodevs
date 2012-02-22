@@ -10427,7 +10427,7 @@
     </weapon-systems>
     <human-protections/>
     <objects>
-      <object construction-time-factor="0s" destruction-time-factor="0s" initial-construction-time="180s" initial-destruction-time="0s" type="checkpoint"/>
+      <object construction-time-factor="0s" destruction-time-factor="0s" initial-construction-time="4m" initial-destruction-time="0s" type="checkpoint"/>
       <object initial-construction-time="10m" type="secured area"/>
       <object initial-construction-time="10m" initial-destruction-time="0s" type="road destruction"/>
     </objects>
@@ -10618,7 +10618,7 @@
     </weapon-systems>
     <human-protections/>
     <objects>
-      <object construction-time-factor="0s" destruction-time-factor="0s" initial-construction-time="180s" initial-destruction-time="0s" type="checkpoint"/>
+      <object construction-time-factor="0s" destruction-time-factor="0s" initial-construction-time="4m" initial-destruction-time="0s" type="checkpoint"/>
       <object initial-construction-time="10m" type="secured area"/>
       <object initial-construction-time="10m" initial-destruction-time="0s" type="road destruction"/>
     </objects>
@@ -10762,7 +10762,7 @@
       <object construction-time-factor="1s" initial-construction-time="120s" type="urban block"/>
       <object initial-construction-time="120s" type="ressource node"/>
       <object construction-time-factor="0s" initial-construction-time="120s" type="decontamination site"/>
-      <object initial-construction-time="30s" type="Arson"/>
+      <object initial-construction-time="4m" type="Arson"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="50" type="Tire flat"/>
@@ -10836,7 +10836,7 @@
     <human-protections/>
     <objects>
       <object initial-construction-time="60s" type="Destruction Bomb"/>
-      <object initial-construction-time="60s" type="Arson"/>
+      <object initial-construction-time="2m" type="Arson"/>
       <object initial-construction-time="120s" type="barricade"/>
     </objects>
     <breakdowns>
@@ -10851,4 +10851,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="1962579920" -->
+<!-- signature="3292739879" -->

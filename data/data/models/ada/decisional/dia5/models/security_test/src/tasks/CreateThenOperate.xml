@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ASCII"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="tasks.CreateThenOperate" source-version="1.0.0">
     <parameters>
         <parameter name="plannedWork">
@@ -6,6 +6,15 @@
             <type>
                 <class name="ontology.classes.PlannedWork"/>
             </type>
+        </parameter>
+        <parameter name="removeWork">
+            <description>Define if planned work that is beeing operated needs to be destroyed at the end of the skill.</description>
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
         </parameter>
     </parameters>
     <stages>
@@ -15,6 +24,11 @@
                     <parameter name="plannedWork">
                         <value>
                             <parameter>plannedWork</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="removeWork">
+                        <value>
+                            <parameter>removeWork</parameter>
                         </value>
                     </parameter>
                 </skill>

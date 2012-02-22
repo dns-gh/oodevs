@@ -16,7 +16,7 @@ This skill is specific to 'plannedWork' and 'Object' classes. It uses the 'Creat
                 <simple name="numeric"/>
             </type>
             <default>
-                <number>0.5</number>
+                <number>1.0</number>
             </default>
         </parameter>
         <parameter name="removeWork">

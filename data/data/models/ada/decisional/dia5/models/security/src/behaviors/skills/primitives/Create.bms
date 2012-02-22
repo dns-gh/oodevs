@@ -11,7 +11,7 @@ rootnode
     feedbacks   = { "created", "creating" },
 
     -- --------------------------------------------------------------------------------
-    -- Feedbacks
+    -- Feedbacks and slots
     -- --------------------------------------------------------------------------------
     done = function( self, params ) -- from reach skill
         self.arrived = true
@@ -42,7 +42,7 @@ rootnode
     end,
 
     -- --------------------------------------------------------------------------------
-    -- Feedbacks
+    -- Move and create current work
     -- --------------------------------------------------------------------------------
     activate = function( self )
         local Activate = Activate

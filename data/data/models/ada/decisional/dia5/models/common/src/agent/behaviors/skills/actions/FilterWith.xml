@@ -14,7 +14,7 @@
                 <simple name="numeric"/>
             </type>
             <default>
-                <number>0.5</number>
+                <number>1.0</number>
             </default>
         </parameter>
     </parameters>

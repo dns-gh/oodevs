@@ -448,7 +448,8 @@ integration.hasEnoughtDotationForObjectTypeWithoutReinforcement = function( obje
 end
 
 -- $$$ MIA temp for Secu, à merger avec military
-integration.startFilterCrowds = function( intensity, checkpoint ) -- A appeler une seule fois.
+integration.startFilterCrowds = function( intensity, checkpoint )
+    meKnowledge:RC( eRC_ControlPointEstablished )
     DEC_ConnaissanceObjet_ChangeDensitePopulationSortanteEnPourcentage( checkpoint, ( 100 - intensity ) / 100 )-- value needed is [0;1]
 end
 integration.stopFilterCrowds = function( checkpoint ) -- A appeler une seule fois.

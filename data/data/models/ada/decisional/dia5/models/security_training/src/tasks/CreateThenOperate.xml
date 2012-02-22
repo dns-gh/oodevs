@@ -1,23 +1,25 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="tasks.CreateThenOperate" source-version="1.0.0">
+    <description>For an agent to move toward an planned system (decontamination site, road block etc.), create it and then, operate it. </description>
     <parameters>
         <parameter name="plannedWork">
-            <description>The plannified work to create and operate.</description>
+            <description>The plannified system (planned object) to create and operate.</description>
             <type>
                 <class name="ontology.classes.PlannedWork"/>
             </type>
         </parameter>
         <parameter name="removeWork">
+            <description>Define if planned work that is beeing operated needs to be destroyed at the end of the task.</description>
             <type>
                 <simple name="boolean"/>
             </type>
             <default>
-                <boolean>false</boolean>
+                <boolean>true</boolean>
             </default>
         </parameter>
     </parameters>
     <stages>
-        <stage label="CreateThenOperate" permanent="true">
+        <stage label="Operate a system" permanent="true">
             <skills>
                 <skill name="behaviors.skills.CreateThenOperate">
                     <parameter name="plannedWork">

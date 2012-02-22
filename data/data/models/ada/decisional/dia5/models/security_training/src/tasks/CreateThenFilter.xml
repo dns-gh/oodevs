@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="tasks.CreateThenFilter" source-version="1.0.0">
+    <description>For an agent to move toward an planned checkpoint, create it and use it in order to filtrate crowds that interact with it.</description>
     <parameters>
         <parameter name="plannedWork">
             <description>The plannified work to create and use to filter.</description>
@@ -8,24 +9,26 @@
             </type>
         </parameter>
         <parameter name="intensity">
+            <description>The strenght that is used to filter crowds.  The value is defined between 0 and 100. A value of '0' means &quot;no filtration at all&quot;. A value of '100' means &quot;totally blocked&quot; (the crowds that interact with the checkpoint cannot go through it).</description>
             <type>
                 <simple name="numeric"/>
             </type>
             <default>
-                <number>0.5</number>
+                <number>1.0</number>
             </default>
         </parameter>
         <parameter name="removeWork">
+            <description>Define if planned work that is beeing used to filter crowds need to be destroyed at the end of the task.</description>
             <type>
                 <simple name="boolean"/>
             </type>
             <default>
-                <boolean>false</boolean>
+                <boolean>true</boolean>
             </default>
         </parameter>
     </parameters>
     <stages>
-        <stage label="CreateThenFilter" permanent="true">
+        <stage label="Operate a checkpoint" permanent="true">
             <skills>
                 <skill name="behaviors.skills.CreateThenFilter">
                     <parameter name="plannedWork">

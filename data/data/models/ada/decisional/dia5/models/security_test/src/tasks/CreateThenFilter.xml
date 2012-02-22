@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ASCII"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="tasks.CreateThenFilter" source-version="1.0.0">
     <parameters>
         <parameter name="plannedWork">
@@ -6,6 +6,25 @@
             <type>
                 <class name="ontology.classes.PlannedWork"/>
             </type>
+        </parameter>
+        <parameter name="intensity">
+            <description>The strenght that is used to filter crowds.  The value is defined between 0 and 100. A value of '0' means &quot;no filtration at all&quot;. A value of '100' means &quot;totally blocked&quot; (the crowds that interact with the checkpoint cannot go through it).&#xD;
+</description>
+            <type>
+                <simple name="numeric"/>
+            </type>
+            <default>
+                <number>1.0</number>
+            </default>
+        </parameter>
+        <parameter name="removeWork">
+            <description>Define if planned work that is beeing used to filter crowds need to be destroyed at the end of the skill.</description>
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
         </parameter>
     </parameters>
     <stages>
@@ -15,6 +34,16 @@
                     <parameter name="plannedWork">
                         <value>
                             <parameter>plannedWork</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="intensity">
+                        <value>
+                            <parameter>intensity</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="removeWork">
+                        <value>
+                            <parameter>removeWork</parameter>
                         </value>
                     </parameter>
                 </skill>
