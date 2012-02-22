@@ -1929,10 +1929,6 @@
         <translation>Zone</translation>
     </message>
     <message>
-        <source>Value</source>
-        <translation>Valeur</translation>
-    </message>
-    <message>
         <source>Variable value: </source>
         <translation>Valeur de la variable: </translation>
     </message>
