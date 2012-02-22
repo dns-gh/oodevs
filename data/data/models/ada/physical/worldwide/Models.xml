@@ -2616,6 +2616,7 @@
         <mission name="MLSECURITY - Patrol"/>
         <mission name="MLSECURITY - Plan a multiple attack"/>
         <mission name="MLSECURITY - Plan an attack"/>
+        <mission name="MLSECURITY - Attack urban blocks within area (with projectiles)"/>
       </missions>
       <fragorders/>
     </unit>
@@ -3852,4 +3853,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1843203693" -->
+<!-- signature="1339037504" -->

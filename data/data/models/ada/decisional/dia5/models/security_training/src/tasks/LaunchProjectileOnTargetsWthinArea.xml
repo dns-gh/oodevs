@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="tasks.LaunchProjectileOnTargetsWthinArea" source-version="1.0.0">
+    <parameters>
+        <parameter name="area">
+            <description>The area to find the target urban blocks within.</description>
+            <type>
+                <class name="ontology.classes.Area"/>
+            </type>
+        </parameter>
+        <parameter name="quantity">
+            <description>The quantity of resourse to use per time unit.</description>
+            <type>
+                <simple name="numeric"/>
+            </type>
+            <default>
+                <number>10.0</number>
+            </default>
+        </parameter>
+        <parameter name="dotationType">
+            <description>The type of projectile (resource dotation type) to launch to hit the target.</description>
+            <type>
+                <any/>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="LaunchProjectileOnTargets" disable-when-done="true">
+            <skills>
+                <skill name="behaviors.skills.LaunchProjectileOnTargets" main="true">
+                    <parameter name="targets">
+                        <value>
+                            <call method="ontology.queries.GetUrbanBlocksWithinArea">
+                                <parameter name="area">
+                                    <value>
+                                        <parameter>area</parameter>
+                                    </value>
+                                </parameter>
+                            </call>
+                        </value>
+                    </parameter>
+                    <parameter name="quantity">
+                        <value>
+                            <parameter>quantity</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="dotationType">
+                        <value>
+                            <parameter>dotationType</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>

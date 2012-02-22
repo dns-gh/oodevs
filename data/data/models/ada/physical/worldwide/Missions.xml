@@ -2164,6 +2164,15 @@ A crowd won't be healed if it could not be reached (it has moved away or it is l
         </choice>
       </parameter>
     </mission>
+    <mission dia-behavior="tasks.LaunchProjectileOnTargetsWthinArea" dia-type="tasks.LaunchProjectileOnTargetsWthinArea" id="4484" name="MLSECURITY - Attack urban blocks within area (with projectiles)">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="area" name="area" optional="false" type="Polygon"/>
+      <parameter dia-name="quantity" name="quantity" optional="false" type="Integer"/>
+      <parameter dia-name="dotationType" name="dotation type" optional="false" type="ResourceType"/>
+    </mission>
   </units>
   <automats>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_AllerSeRecompleter" dia-type="T_Mission_Automate_ALAT_AllerSeRecompleter" id="189" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AllerSeRecompleter" name="AIR - resupply">
@@ -3519,4 +3528,4 @@ A crowd won't be healed if it could not be reached (it has moved away or it is l
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="3954333417" -->
+<!-- signature="1283021928" -->

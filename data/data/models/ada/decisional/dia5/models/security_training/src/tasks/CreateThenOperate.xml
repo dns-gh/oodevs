@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="tasks.CreateThenOperate" source-version="1.0.0">
-    <description>For an agent to move toward an planned system (decontamination site, road block etc.), create it and then, operate it. </description>
+    <description>For an agent to move toward an planned system (decontamination site, road block etc.), create it and then, operate it. &#xD;
+The object won't be created and build if agent doesn't have the physical capability or if it hasn't enough resources to do it</description>
     <parameters>
         <parameter name="plannedWork">
             <description>The plannified system (planned object) to create and operate.</description>

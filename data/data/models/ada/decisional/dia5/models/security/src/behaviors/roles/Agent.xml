@@ -66,6 +66,7 @@
         <skill name="agent.behaviors.skills.actions.FilterWith"/>
         <skill name="behaviors.skills.primitives.Filter"/>
         <skill name="behaviors.skills.CreateThenFilter"/>
+        <skill name="behaviors.skills.LaunchProjectileOnTargets"/>
     </skills>
     <resources>
         <resource name="agent.behaviors.resources.Motion"/>
