@@ -266,7 +266,7 @@ void ADN_Missions_Data::MissionParameter::WriteArchive( xml::xostream& output )
     bool hasChoice = false;
     for( std::size_t i = 0; i < choices_.size() && !hasChoice; ++i )
         hasChoice = choices_[i]->isAllowed_.GetData();
-    if( hasChoice )
+    if( hasChoice && type_.GetData() == eMissionParameterTypeLocationComposite )
     {
         output << xml::start( "choice" );
         for( std::size_t i = 0; i < choices_.size(); ++i )
