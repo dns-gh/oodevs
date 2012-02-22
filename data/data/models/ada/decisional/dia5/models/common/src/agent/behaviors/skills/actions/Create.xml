@@ -22,5 +22,14 @@
                 </type>
             </argument>
         </feedback>
+        <feedback name="createActionRunning">
+            <description>Sent once the work is being built.</description>
+            <argument name="work">
+                <description>The work that has is being currently built.</description>
+                <type>
+                    <class name="agent.world.Work"/>
+                </type>
+            </argument>
+        </feedback>
     </feedbacks>
 </skill>

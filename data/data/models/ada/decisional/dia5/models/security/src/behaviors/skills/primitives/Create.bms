@@ -8,13 +8,17 @@
 rootnode 
 {
     connections = { skill.links.reach, skill.links.create },
-    feedbacks   = { "created" },
+    feedbacks   = { "created", "creating" },
 
     -- --------------------------------------------------------------------------------
     -- Feedbacks
     -- --------------------------------------------------------------------------------
     done = function( self, params ) -- from reach skill
         self.arrived = true
+    end,
+
+    createActionRunning = function( self, params, additionalParams ) -- from create action skill
+        Feedback( self.feedbacks.creating, { work = additionalParams.work } ) -- return the object created
     end,
 
     creationActionCompleted = function( self, params, additionalParams ) -- from create action skill

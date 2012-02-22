@@ -509,7 +509,7 @@ Returns 'true' when checkPoint is filtering.</description>
                 </type>
             </argument>
             <argument name="intensity">
-                <description>The strenght that is used to filter crowds.  The value is defined between 0 et 1. A value of '0' means &quot;no filtration at all&quot;. A value of '1' means &quot;totally blocked&quot; (the crowds that interact with the checkpoint cannot go through it).</description>
+                <description>The strenght that is used to filter crowds.  The value is defined between 0 and 100. A value of '0' means &quot;no filtration at all&quot;. A value of '100' means &quot;totally blocked&quot; (the crowds that interact with the checkpoint cannot go through it).</description>
                 <type>
                     <simple name="numeric"/>
                 </type>

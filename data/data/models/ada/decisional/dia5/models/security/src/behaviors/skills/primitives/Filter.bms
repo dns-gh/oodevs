@@ -17,7 +17,6 @@ rootnode
     end,
 
     filtrationActionRunning = function( self, params ) -- from filter skill
-        DEC_Trace( "----filtering-----" )
         Feedback( self.feedbacks.filtering, { object = params.checkpoint } )
     end,
 

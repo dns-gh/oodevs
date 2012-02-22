@@ -9,6 +9,15 @@ This skill is specific to 'plannedWork' and 'Object' classes. It uses the 'Creat
                 <class name="ontology.classes.PlannedWork"/>
             </type>
         </parameter>
+        <parameter name="removeWork">
+            <description>Define if planned work that is beeing operated needs to be destroyed at the end of the skill.</description>
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
+        </parameter>
     </parameters>
     <body-type>
         <class name="ontology.classes.MeKnowledge"/>

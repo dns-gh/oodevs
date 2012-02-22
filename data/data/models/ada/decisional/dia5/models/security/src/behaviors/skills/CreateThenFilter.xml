@@ -10,13 +10,22 @@ This skill is specific to 'plannedWork' and 'Object' classes. It uses the 'Creat
             </type>
         </parameter>
         <parameter name="intensity">
-            <description>The strenght that is used to filter crowds.  The value is defined between 0 et 1. A value of '0' means &quot;no filtration at all&quot;. A value of '1' means &quot;totally blocked&quot; (the crowds that interact with the checkpoint cannot go through it).&#xD;
+            <description>The strenght that is used to filter crowds.  The value is defined between 0 and 100. A value of '0' means &quot;no filtration at all&quot;. A value of '100' means &quot;totally blocked&quot; (the crowds that interact with the checkpoint cannot go through it).&#xD;
 </description>
             <type>
                 <simple name="numeric"/>
             </type>
             <default>
                 <number>0.5</number>
+            </default>
+        </parameter>
+        <parameter name="removeWork">
+            <description>Define if planned work that is beeing used to filter crowds need to be destroyed at the end of the skill.</description>
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
             </default>
         </parameter>
     </parameters>

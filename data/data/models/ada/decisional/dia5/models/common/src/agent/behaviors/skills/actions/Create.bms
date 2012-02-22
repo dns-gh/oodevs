@@ -5,11 +5,12 @@
 -- ****************************************************************************
 rootnode
 {
-    feedbacks = { "creationActionCompleted" },
+    feedbacks = { "creationActionCompleted", "createActionRunning" },
 
     select = function( self )
         if not self.params.work:isBuilt() then
             self.createdWork = meKnowledge:create( self.params.work )
+            Feedback( self.feedbacks.createActionRunning, { work = self.createdWork } )
         else
             Feedback( self.feedbacks.creationActionCompleted, { work = self.createdWork } )
         end

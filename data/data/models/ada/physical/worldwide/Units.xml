@@ -3251,7 +3251,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height=">1m"/>
   </unit>
-  <unit decisional-model="ML_Terrorist" id="104" name="ML_Security - Agressor" type="Pion Emergency">
+  <unit decisional-model="ML_Terrorist" id="104" name="ML_Security - Agressor" type="Pion ASY">
     <nature atlas-nature="Indefini" level="none" nature-app6="combat"/>
     <equipments>
       <equipment count="4" crew="4" major="true" type="SECURITY.Terrorist"/>
@@ -3273,4 +3273,4 @@
     <crossing-height height="1m"/>
   </unit>
 </units>
-<!-- signature="1185268001" -->
+<!-- signature="2031528388" -->

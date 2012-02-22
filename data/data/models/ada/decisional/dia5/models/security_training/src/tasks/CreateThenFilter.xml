@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="ASCII"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="tasks.CreateThenFilter" source-version="1.0.0">
     <parameters>
         <parameter name="plannedWork">
@@ -6,6 +6,22 @@
             <type>
                 <class name="ontology.classes.PlannedWork"/>
             </type>
+        </parameter>
+        <parameter name="intensity">
+            <type>
+                <simple name="numeric"/>
+            </type>
+            <default>
+                <number>0.5</number>
+            </default>
+        </parameter>
+        <parameter name="removeWork">
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
         </parameter>
     </parameters>
     <stages>
@@ -15,6 +31,16 @@
                     <parameter name="plannedWork">
                         <value>
                             <parameter>plannedWork</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="intensity">
+                        <value>
+                            <parameter>intensity</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="removeWork">
+                        <value>
+                            <parameter>removeWork</parameter>
                         </value>
                     </parameter>
                 </skill>

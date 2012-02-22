@@ -2178,6 +2178,86 @@ A visited object won't be created and build if agent doesn't have the physical c
         </choice>
       </parameter>
     </mission>
+    <mission dia-behavior="tasks.CreateThenOperate" dia-type="tasks.CreateThenOperate" id="4478" name="MLSECURITY - Create and Operate">
+      <description>
+        <doctrine><![CDATA[To create and operate a given object.]]></doctrine>
+        <usage><![CDATA[Agent moves toward the planned object, create it and then operate it. ]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="plannedWork" name="Element to operate" optional="false" type="PlannedWork">
+        <choice>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+          <parameter type="ObjectKnowledge"/>
+          <parameter type="CrowdKnowledge"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+      <parameter dia-name="removeWork" name="remove work at the end of mission" optional="true" type="Boolean"/>
+    </mission>
+    <mission dia-behavior="tasks.CreateThenFilter" dia-type="tasks.CreateThenFilter" id="4479" name="MLSECURITY - Filter (crowds)">
+      <description>
+        <doctrine><![CDATA[To create and operate a given object.]]></doctrine>
+        <usage><![CDATA[Agent moves toward the planned object, create it and then uses it to filter crowds. ]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="plannedWork" name="planned check point" optional="false" type="PlannedWork">
+        <choice>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+          <parameter type="ObjectKnowledge"/>
+          <parameter type="CrowdKnowledge"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+      <parameter dia-name="intensity" name="intensity" optional="true" type="Integer"/>
+      <parameter dia-name="removeWork" name="remove work at the end of the mission" optional="true" type="Boolean"/>
+    </mission>
+    <mission dia-behavior="tasks.Filter" dia-type="tasks.Filter" id="4480" name="MLSECURITY - Use a checkpoint (filter crowds)">
+      <description>
+        <doctrine><![CDATA[To use a given object to filter crowds]]></doctrine>
+        <usage><![CDATA[Agent moves toward the object, and uses it to filter crowds. ]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="work" name="check point" optional="false" type="ObjectKnowledge">
+        <choice>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+          <parameter type="ObjectKnowledge"/>
+          <parameter type="CrowdKnowledge"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+      <parameter dia-name="intensity" name="intensity (%)" optional="true" type="Integer"/>
+    </mission>
+    <mission dia-behavior="tasks.Operate" dia-type="tasks.Operate" id="4482" name="MLSECURITY - Operate">
+      <description>
+        <doctrine><![CDATA[To  operate a given object.]]></doctrine>
+        <usage><![CDATA[Agent moves toward the planned object, create it and then operate it. ]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="system" name="Element to operate" optional="false" type="ObjectKnowledge">
+        <choice>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+          <parameter type="ObjectKnowledge"/>
+          <parameter type="CrowdKnowledge"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
   </units>
   <automats>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_AllerSeRecompleter" dia-type="T_Mission_Automate_ALAT_AllerSeRecompleter" id="189" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AllerSeRecompleter" name="AIR - resupply">
@@ -3533,4 +3613,4 @@ A visited object won't be created and build if agent doesn't have the physical c
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="1171895534" -->
+<!-- signature="0378425499" -->

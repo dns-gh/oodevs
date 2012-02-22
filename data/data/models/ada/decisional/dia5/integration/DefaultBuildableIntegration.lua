@@ -447,10 +447,10 @@ integration.hasEnoughtDotationForObjectTypeWithoutReinforcement = function( obje
   return DEC_Agent_ADotationPourConstruireObjetSansRenforts( objectType )
 end
 
--- $$$ MIA for Secu
+-- $$$ MIA temp for Secu, à merger avec military
 integration.startFilterCrowds = function( intensity, checkpoint ) -- A appeler une seule fois.
-    DEC_ConnaissanceObjet_ChangeDensitePopulationSortanteEnPourcentage( checkpoint, intensity )-- valeur entre 0 et 1
+    DEC_ConnaissanceObjet_ChangeDensitePopulationSortanteEnPourcentage( checkpoint, ( 100 - intensity ) / 100 )-- value needed is [0;1]
 end
 integration.stopFilterCrowds = function( checkpoint ) -- A appeler une seule fois.
-    DEC_ConnaissanceObjet_ChangeDensitePopulationSortanteEnPourcentage( checkpoint, 0 )-- valeur entre 0 et 1
+    DEC_ConnaissanceObjet_ChangeDensitePopulationSortanteEnPourcentage( checkpoint, 1 )
 end

@@ -9,8 +9,11 @@ rootnode
     feedbacks   = { "operating" },
 
     -- -------------------------------------------------------------------------------- 
-    -- Feedbacks
+    -- Feedbacks and slots
     -- --------------------------------------------------------------------------------
+    creating = function( self, params, additionalParams ) -- call by 'Create' skill
+        self.createdWork = additionalParams.work
+    end,
     created = function( self, params, additionalParams ) -- call by 'Create' skill
         self.createdWork = additionalParams.work
         self.isCreated = true
@@ -30,6 +33,12 @@ rootnode
             Activate( skill.links.create, 1, { works = { self.params.plannedWork } } )
         else
             Activate( skill.links.operate, 1, { system = self.createdWork } )
+        end
+    end,
+
+    destroy = function( self )
+        if self.params.removeWork then
+            meKnowledge:remove( self.createdWork ) -- magic destruction
         end
     end
 }

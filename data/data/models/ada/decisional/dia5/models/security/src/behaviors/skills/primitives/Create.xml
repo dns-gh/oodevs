@@ -36,8 +36,17 @@ A visited work won't be created and build if agent doesn't have the physical cap
         </link>
     </links>
     <feedbacks>
+        <feedback name="creating">
+            <description>Sent while a work is being built.</description>
+            <argument name="work">
+                <description>The work that is beeing built. </description>
+                <type>
+                    <class name="agent.world.Work"/>
+                </type>
+            </argument>
+        </feedback>
         <feedback name="created">
-            <description>Sent upon completion of the simulation action.</description>
+            <description>Sent upon completion of the simulation action, once the work is done.</description>
             <argument name="work">
                 <description>Work that has been created or built.</description>
                 <type>
