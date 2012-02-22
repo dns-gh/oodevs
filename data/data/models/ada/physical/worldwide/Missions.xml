@@ -1752,15 +1752,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="area" name="Area to confine" optional="false" type="Polygon">
-        <choice>
-          <parameter type="Agent"/>
-          <parameter type="AgentKnowledge"/>
-          <parameter type="ObjectKnowledge"/>
-          <parameter type="CrowdKnowledge"/>
-          <parameter type="UrbanKnowledge"/>
-        </choice>
-      </parameter>
+      <parameter dia-name="area" name="Area to confine" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="tasks.UndoConfineUrbanBlocksWithinArea" dia-type="tasks.UndoConfineUrbanBlocksWithinArea" id="4445" name="MLSECURITY - Lift urban blocks confinement within area">
       <description>
@@ -1771,15 +1763,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="area" name="Area to lift confinement" optional="false" type="Polygon">
-        <choice>
-          <parameter type="Agent"/>
-          <parameter type="AgentKnowledge"/>
-          <parameter type="ObjectKnowledge"/>
-          <parameter type="CrowdKnowledge"/>
-          <parameter type="UrbanKnowledge"/>
-        </choice>
-      </parameter>
+      <parameter dia-name="area" name="Area to lift confinement" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="tasks.IncreaseResourceNodeProduction" dia-type="tasks.IncreaseResourceNodeProduction" id="4446" name="MLSECURITY - Increase resource node production">
       <description>
@@ -1802,15 +1786,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="area" name="Area to evacuate" optional="false" type="Polygon">
-        <choice>
-          <parameter type="Agent"/>
-          <parameter type="AgentKnowledge"/>
-          <parameter type="ObjectKnowledge"/>
-          <parameter type="CrowdKnowledge"/>
-          <parameter type="UrbanKnowledge"/>
-        </choice>
-      </parameter>
+      <parameter dia-name="area" name="Area to evacuate" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="tasks.UndoEvacuateUrbanBlocksWithinArea" dia-type="tasks.UndoEvacuateUrbanBlocksWithinArea" id="4449" name="MLSECURITY - Lift urban blocks evacuation within area">
       <description>
@@ -1821,15 +1797,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="area" name="Area to evacuate" optional="false" type="Polygon">
-        <choice>
-          <parameter type="Agent"/>
-          <parameter type="AgentKnowledge"/>
-          <parameter type="ObjectKnowledge"/>
-          <parameter type="CrowdKnowledge"/>
-          <parameter type="UrbanKnowledge"/>
-        </choice>
-      </parameter>
+      <parameter dia-name="area" name="Area to evacuate" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="tasks.EnsureVictimsEvacuation" dia-type="tasks.EnsureVictimsEvacuation" id="4450" name="MLSECURITY - Ensure victims evacuation">
       <description>
@@ -1867,15 +1835,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="area" name="Area to alert populations thereof" optional="false" type="Polygon">
-        <choice>
-          <parameter type="Agent"/>
-          <parameter type="AgentKnowledge"/>
-          <parameter type="ObjectKnowledge"/>
-          <parameter type="CrowdKnowledge"/>
-          <parameter type="UrbanKnowledge"/>
-        </choice>
-      </parameter>
+      <parameter dia-name="area" name="Area to alert populations thereof" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="tasks.UndoAlertUrbanBlocksWithinArea" dia-type="tasks.UndoAlertUrbanBlocksWithinArea" id="4453" name="MLSECURITY - Lift urban blocks alert within area">
       <description>
@@ -1886,15 +1846,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="area" name="Area to alert populations thereof" optional="false" type="Polygon">
-        <choice>
-          <parameter type="Agent"/>
-          <parameter type="AgentKnowledge"/>
-          <parameter type="ObjectKnowledge"/>
-          <parameter type="CrowdKnowledge"/>
-          <parameter type="UrbanKnowledge"/>
-        </choice>
-      </parameter>
+      <parameter dia-name="area" name="Area to alert populations thereof" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="tasks.ActivateResourceNodes" dia-type="tasks.ActivateResourceNodes" id="4454" name="MLSECURITY - Enable resource nodes">
       <description>
@@ -1973,13 +1925,7 @@ Depending on its crowd transport capacity, agent will make as many round trips a
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="crowd" name="The crowd to transport" optional="false" type="CrowdKnowledge">
-        <choice>
-          <parameter type="Agent"/>
-          <parameter type="AgentKnowledge"/>
-          <parameter type="CrowdKnowledge"/>
-        </choice>
-      </parameter>
+      <parameter dia-name="crowd" name="The crowd to transport" optional="false" type="CrowdKnowledge"/>
       <parameter dia-name="targetDestination" name="Target destination" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
@@ -2101,15 +2047,7 @@ A visited object won't be created and build if agent doesn't have the physical c
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="works" max-occurs="12554" min-occurs="1" name="works to perform" optional="false" type="PlannedWork">
-        <choice>
-          <parameter type="Agent"/>
-          <parameter type="AgentKnowledge"/>
-          <parameter type="ObjectKnowledge"/>
-          <parameter type="CrowdKnowledge"/>
-          <parameter type="UrbanKnowledge"/>
-        </choice>
-      </parameter>
+      <parameter dia-name="works" max-occurs="12554" min-occurs="1" name="works to perform" optional="false" type="PlannedWork"/>
     </mission>
     <mission dia-behavior="tasks.PerformWorks" dia-type="tasks.PerformWorks2" id="4475" name="MLSECURITY - Resume public works">
       <description>
@@ -2140,15 +2078,7 @@ A visited object won't be created and build if agent doesn't have the physical c
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="plannedWork" name="Planned attack" optional="false" type="PlannedWork">
-        <choice>
-          <parameter type="Agent"/>
-          <parameter type="AgentKnowledge"/>
-          <parameter type="ObjectKnowledge"/>
-          <parameter type="CrowdKnowledge"/>
-          <parameter type="UrbanKnowledge"/>
-        </choice>
-      </parameter>
+      <parameter dia-name="plannedWork" name="Planned attack" optional="false" type="PlannedWork"/>
       <parameter dia-name="position" name="Position of attack activation" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
@@ -2168,15 +2098,7 @@ A visited object won't be created and build if agent doesn't have the physical c
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="works" max-occurs="12554" min-occurs="1" name="Plan of attack" optional="false" type="PlannedWork">
-        <choice>
-          <parameter type="Agent"/>
-          <parameter type="AgentKnowledge"/>
-          <parameter type="ObjectKnowledge"/>
-          <parameter type="CrowdKnowledge"/>
-          <parameter type="UrbanKnowledge"/>
-        </choice>
-      </parameter>
+      <parameter dia-name="works" max-occurs="12554" min-occurs="1" name="Plan of attack" optional="false" type="PlannedWork"/>
     </mission>
     <mission dia-behavior="tasks.CreateThenOperate" dia-type="tasks.CreateThenOperate" id="4478" name="MLSECURITY - Create and Operate a system">
       <description>
@@ -2187,15 +2109,7 @@ A visited object won't be created and build if agent doesn't have the physical c
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="plannedWork" name="planned object to operate" optional="false" type="PlannedWork">
-        <choice>
-          <parameter type="Agent"/>
-          <parameter type="AgentKnowledge"/>
-          <parameter type="ObjectKnowledge"/>
-          <parameter type="CrowdKnowledge"/>
-          <parameter type="UrbanKnowledge"/>
-        </choice>
-      </parameter>
+      <parameter dia-name="plannedWork" name="planned object to operate" optional="false" type="PlannedWork"/>
       <parameter dia-name="removeWork" name="remove installations at the end of mission" optional="true" type="Boolean"/>
     </mission>
     <mission dia-behavior="tasks.CreateThenFilter" dia-type="tasks.CreateThenFilter" id="4479" name="MLSECURITY - Create a checkpoint">
@@ -2207,15 +2121,7 @@ A visited object won't be created and build if agent doesn't have the physical c
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="plannedWork" name="planned check point" optional="false" type="PlannedWork">
-        <choice>
-          <parameter type="Agent"/>
-          <parameter type="AgentKnowledge"/>
-          <parameter type="ObjectKnowledge"/>
-          <parameter type="CrowdKnowledge"/>
-          <parameter type="UrbanKnowledge"/>
-        </choice>
-      </parameter>
+      <parameter dia-name="plannedWork" name="planned check point" optional="false" type="PlannedWork"/>
       <parameter dia-name="intensity" name="intensity used to filter interacting crowds (%)" optional="true" type="Integer"/>
       <parameter dia-name="removeWork" name="remove installations at the end of mission" optional="true" type="Boolean"/>
     </mission>
@@ -2228,15 +2134,7 @@ A visited object won't be created and build if agent doesn't have the physical c
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="work" name="check point" optional="false" type="ObjectKnowledge">
-        <choice>
-          <parameter type="Agent"/>
-          <parameter type="AgentKnowledge"/>
-          <parameter type="ObjectKnowledge"/>
-          <parameter type="CrowdKnowledge"/>
-          <parameter type="UrbanKnowledge"/>
-        </choice>
-      </parameter>
+      <parameter dia-name="work" name="check point" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="intensity" name="intensity (%)" optional="true" type="Integer"/>
     </mission>
     <mission dia-behavior="tasks.Operate" dia-type="tasks.Operate" id="4482" name="MLSECURITY - Operate a system">
@@ -2248,15 +2146,7 @@ A visited object won't be created and build if agent doesn't have the physical c
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="system" name="Element to operate" optional="false" type="ObjectKnowledge">
-        <choice>
-          <parameter type="Agent"/>
-          <parameter type="AgentKnowledge"/>
-          <parameter type="ObjectKnowledge"/>
-          <parameter type="CrowdKnowledge"/>
-          <parameter type="UrbanKnowledge"/>
-        </choice>
-      </parameter>
+      <parameter dia-name="system" name="Element to operate" optional="false" type="ObjectKnowledge"/>
     </mission>
   </units>
   <automats>
@@ -3613,4 +3503,4 @@ A visited object won't be created and build if agent doesn't have the physical c
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="2296910981" -->
+<!-- signature="0370708495" -->
