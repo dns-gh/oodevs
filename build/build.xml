@@ -1504,7 +1504,8 @@
             <include name="exercises/scipio/exercisesVA/VEM_Detection/**"/>
             <include name="exercises/scipio/exercisesVA/VEM_Humain/**"/>
             <include name="exercises/scipio/exercisesVA/VEM_Objet/**"/>
-            <include name="exercises/scipio/exercisesVA/VEM_Transport/**"/>            
+            <include name="exercises/scipio/exercisesVA/VEM_Transport/**"/>
+            <include name="exercises/scipio/exercisesVA/VEM_Logistique/**"/>
             <include name="data/terrains/PortoV3Lite/**"/>
         </pack>
     </target>
