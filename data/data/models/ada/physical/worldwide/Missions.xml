@@ -2187,7 +2187,7 @@ A visited object won't be created and build if agent doesn't have the physical c
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="plannedWork" name="Element to operate" optional="false" type="PlannedWork">
+      <parameter dia-name="plannedWork" name="planned object to operate" optional="false" type="PlannedWork">
         <choice>
           <parameter type="Agent"/>
           <parameter type="AgentKnowledge"/>
@@ -2196,7 +2196,7 @@ A visited object won't be created and build if agent doesn't have the physical c
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
-      <parameter dia-name="removeWork" name="remove work at the end of mission" optional="true" type="Boolean"/>
+      <parameter dia-name="removeWork" name="remove installations at the end of mission" optional="true" type="Boolean"/>
     </mission>
     <mission dia-behavior="tasks.CreateThenFilter" dia-type="tasks.CreateThenFilter" id="4479" name="MLSECURITY - Filter (crowds)">
       <description>
@@ -2216,8 +2216,8 @@ A visited object won't be created and build if agent doesn't have the physical c
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
-      <parameter dia-name="intensity" name="intensity" optional="true" type="Integer"/>
-      <parameter dia-name="removeWork" name="remove work at the end of the mission" optional="true" type="Boolean"/>
+      <parameter dia-name="intensity" name="intensity used to filter interacting crowds (%)" optional="true" type="Integer"/>
+      <parameter dia-name="removeWork" name="remove installations at the end of mission" optional="true" type="Boolean"/>
     </mission>
     <mission dia-behavior="tasks.Filter" dia-type="tasks.Filter" id="4480" name="MLSECURITY - Use a checkpoint (filter crowds)">
       <description>
@@ -3613,4 +3613,4 @@ A visited object won't be created and build if agent doesn't have the physical c
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="0378425499" -->
+<!-- signature="1310136953" -->
