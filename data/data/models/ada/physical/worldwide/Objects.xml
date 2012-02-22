@@ -418,7 +418,7 @@
     <lodging/>
     <logistic/>
   </object>
-  <object name="Checkpoint" type="checkpoint">
+  <object name="Checkpoint" point-size="50" type="checkpoint">
     <geometries>
       <geometry symbol="G*GPGPPK--****X" type="point"/>
     </geometries>

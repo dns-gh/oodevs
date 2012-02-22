@@ -589,7 +589,8 @@ public:
 		eRC_WoundedPersonsHealed,
 		eRC_StartingToExtractVictimsFromCrowd,// 440
 		eRC_WoundedCannotBeHealed,
-        eLast // 442
+		eRC_ControlPointEstablished,
+		eRC_SystemIsBeingOperated,
     };
     //@}
 public:
