@@ -1755,16 +1755,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="elementToExtinguish" name="Element to exinguish" optional="false" type="ObjectKnowledge">
-        <choice>
-          <parameter type="Point"/>
-          <parameter type="Polygon"/>
-          <parameter type="Agent"/>
-          <parameter type="AgentKnowledge"/>
-          <parameter type="ObjectKnowledge"/>
-          <parameter type="UrbanKnowledge"/>
-        </choice>
-      </parameter>
+      <parameter dia-name="elementToExtinguish" name="Element to exinguish" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="garagePosition" name="Garage location" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
@@ -1802,16 +1793,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="supplyPoint" name="Supply location" optional="false" type="ObjectKnowledge">
-        <choice>
-          <parameter type="Point"/>
-          <parameter type="Polygon"/>
-          <parameter type="Agent"/>
-          <parameter type="AgentKnowledge"/>
-          <parameter type="ObjectKnowledge"/>
-          <parameter type="UrbanKnowledge"/>
-        </choice>
-      </parameter>
+      <parameter dia-name="supplyPoint" name="Supply location" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="resourceTypes" max-occurs="8" min-occurs="1" name="Resource types" optional="false" type="ResourceType"/>
       <parameter dia-name="sourcePoints" max-occurs="8" min-occurs="1" name="Sources" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="garagePosition" name="Garage location" optional="false" type="LocationComposite">
@@ -1833,16 +1815,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="supplyPoint" name="Supply point" optional="false" type="ObjectKnowledge">
-        <choice>
-          <parameter type="Point"/>
-          <parameter type="Polygon"/>
-          <parameter type="Agent"/>
-          <parameter type="AgentKnowledge"/>
-          <parameter type="ObjectKnowledge"/>
-          <parameter type="UrbanKnowledge"/>
-        </choice>
-      </parameter>
+      <parameter dia-name="supplyPoint" name="Supply point" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="garagePosition" name="Garage location" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
@@ -1920,11 +1893,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="entities" max-occurs="1000" min-occurs="1" name="Objects to build" optional="false" type="PlannedWork">
-        <choice>
-          <parameter type="Polygon"/>
-        </choice>
-      </parameter>
+      <parameter dia-name="entities" max-occurs="1000" min-occurs="1" name="Objects to build" optional="false" type="PlannedWork"/>
       <parameter dia-name="garagePosition" name="Garage location" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
@@ -1966,11 +1935,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="roadblockPositions" max-occurs="4" min-occurs="1" name="Roadblock locations" optional="false" type="Polygon">
-        <choice>
-          <parameter type="Path"/>
-        </choice>
-      </parameter>
+      <parameter dia-name="roadblockPositions" max-occurs="4" min-occurs="1" name="Roadblock locations" optional="false" type="Polygon"/>
       <parameter dia-name="garagePosition" name="Garage location" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="security.unit.tasks.EscortCrowd" dia-type="security.unit.tasks.EscortCrowd" id="4431" name="Security - escort crowd">
@@ -2041,11 +2006,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="victim" name="Victim" optional="false" type="Agent">
-        <choice>
-          <parameter type="Path"/>
-        </choice>
-      </parameter>
+      <parameter dia-name="victim" name="Victim" optional="false" type="Agent"/>
       <parameter dia-name="hospitals" max-occurs="5" min-occurs="1" name="Hospitals" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="garage" name="Garage location" optional="false" type="LocationComposite">
         <choice>
@@ -2087,11 +2048,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="zone" name="Zone" optional="false" type="Polygon">
-        <choice>
-          <parameter type="Polygon"/>
-        </choice>
-      </parameter>
+      <parameter dia-name="zone" name="Zone" optional="false" type="Polygon"/>
       <parameter dia-name="garagePosition" name="Garage location" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
@@ -3559,4 +3516,4 @@ overwhelming force.]]></doctrine>
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="2305999788" -->
+<!-- signature="3598846038" -->
