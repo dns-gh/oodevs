@@ -10,6 +10,7 @@
             <unit color="0x647dff" command-post="false" id="278" name="INF . Section CBT VAB CDS OFF" position="29TNF2692358494" type="INF . Section CBT VAB CDS OFF"/>
             <unit color="0x647dff" command-post="false" id="279" name="INF . Section CBT VAB CDS OFF" position="29TNF2658158832" type="INF . Section CBT VAB CDS OFF"/>
             <unit color="0x647dff" command-post="false" id="280" name="INF . Section CBT VAB CDS SOFF" position="29TNF2715158505" type="INF . Section CBT VAB CDS SOFF"/>
+			<unit color="0x647dff" command-post="false" id="281" name="INF . Fantassin oeil" position="29TNF2715158515" type="INF . Fantassin oeil"/>
           </automat>
           <automat color="0x647dff" engaged="true" id="316" knowledge-group="6" name="GEN . Compagnie Appui generique [316]" type="GEN . Compagnie Appui generique">
             <unit color="0x647dff" command-post="true" id="317" name="GEN . PC Cie APP" position="29TNF3007261278" type="GEN . PC Cie APP"/>
@@ -307,6 +308,7 @@
             <unit color="0xff3232" command-post="true" id="193" name="MILICE . CDT" position="29TNF3335755311" type="MILICE . PICK UP CDT"/>
             <unit color="0xff3232" command-post="false" id="194" name="MILICE . Miliciens" position="29TNF3449155342" type="MILICE . PICK UP 14,5"/>
             <unit color="0xff3232" command-post="false" id="195" name="MILICE . Miliciens" position="29TNF3319355351" type="MILICE . PICK UP 14,5"/>
+			<unit color="0xff3232" command-post="false" id="23" name="INF . Fantassin oeil" position="29TNF3319355360" type="INF . Fantassin oeil"/>
             <lima name="Lima 337">
               <point>29TNF3265656108</point>
               <point>29TNF3308956090</point>
@@ -514,4 +516,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="4284978588" -->
+<!-- signature="3808882240" -->

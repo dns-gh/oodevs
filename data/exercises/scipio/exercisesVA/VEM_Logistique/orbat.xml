@@ -1,0 +1,2472 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<orbat model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/orbat.xsd">
+  <parties>
+    <party color="0x6480ff" id="12521" name="CRAMBER" type="friend">
+      <objects>
+        <object id="245409" name="zone interdite mouvement [245409]" type="movement forbidden area">
+          <shape type="polygone">
+            <points>
+              <point>30TUN9439255357</point>
+              <point>30TUN7887451619</point>
+              <point>30TUP6030211085</point>
+              <point>30TUP8503109832</point>
+              <point>30TUN9778657181</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+        <object id="245458" name="zone interdite mouvement [245458]" type="movement forbidden area">
+          <shape type="polygone">
+            <points>
+              <point>30TVN5661802446</point>
+              <point>30TVN6415603965</point>
+              <point>30TVM7802293866</point>
+              <point>30TVM7524290907</point>
+              <point>30TVM6483694430</point>
+            </points>
+          </shape>
+          <attributes>
+            <construction completion="1"/>
+          </attributes>
+        </object>
+      </objects>
+      <tactical>
+        <formation color="0x6480ff" id="12860" level="xxxx" name="FR">
+          <formation color="0x6480ff" id="12865" level="x" logistic-level="logistic-base" name="BLT" nature="sfgpuss">
+            <formation color="0x6480ff" id="13189" level="iii" name="RAV.BLT">
+              <automat color="0x6480ff" engaged="true" id="14078" knowledge-group="246190" name="SH" type="LOG . Secteur approvisionnement (SH)">
+                <unit color="0x6480ff" command-post="true" id="14079" name="PC" position="29TNF4097156955" type="LOG . PC LOG BLD Secteur Ravitaillement">
+                  <extensions>
+                    <entry key="DiffusionList" value="16470"/>
+                    <entry key="Ethnie" value=""/>
+                    <entry key="Information" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="PC.SH.RAV.BLT.FR"/>
+                    <entry key="Religion" value="Catholique"/>
+                    <entry key="TypePC" value="2"/>
+                    <entry key="TypeSIOC" value="6"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="20629" name="O1" position="29TNF4072556448" type="LOG . Groupe Appro Vivre Eau">
+                  <stocks>
+                    <resource name="RATION DE COMBAT 1" quantity="197052"/>
+                    <resource name="EAU MINERALE 1L T 1" quantity="1173846"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="O1.SH.RAV.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="20630" name="O2" position="29TNF4073356081" type="LOG . Groupe Appro Vivre Eau">
+                  <stocks>
+                    <resource name="RATION DE COMBAT 1" quantity="197052"/>
+                    <resource name="EAU MINERALE 1L T 1" quantity="1173846"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="O2.SH.RAV.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="20631" name="O3" position="29TNF4074756305" type="LOG . Groupe Appro Vivre Eau BLIAT">
+                  <stocks>
+                    <resource name="RATION DE COMBAT 1" quantity="197052"/>
+                    <resource name="EAU MINERALE 1L T 1" quantity="1173846"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="O3.SH.RAV.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="20632" name="O4" position="29TNF4068156304" type="LOG . Groupe Appro Vivre Eau BLIAT">
+                  <stocks>
+                    <resource name="RATION DE COMBAT 1" quantity="197052"/>
+                    <resource name="EAU MINERALE 1L T 1" quantity="1173846"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="O4.SH.RAV.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <extensions>
+                  <entry key="DiffusionList" value=""/>
+                  <entry key="Nationalite" value="84"/>
+                  <entry key="NomLong" value="SH.RAV.BLT.FR"/>
+                </extensions>
+              </automat>
+              <automat color="0x6480ff" engaged="true" id="14088" knowledge-group="246190" name="MU" type="LOG . Secteur munitions">
+                <unit color="0x6480ff" command-post="false" id="12686" name="T2" position="29TNF3879356640" type="LOG . Groupe Munitions SOFF TT - D">
+                  <stocks>
+                    <resource name="CART 12.7 SBP" quantity="2759160"/>
+                    <resource name="CART 7.62 N BD PAN" quantity="3337200"/>
+                    <resource name="CART 120 OECC F1" quantity="10040"/>
+                    <resource name="CART 120 OFL F1" quantity="2008"/>
+                    <resource name="CART 105 F3 OCC F3" quantity="1536"/>
+                    <resource name="CART 105  F3 OE F3" quantity="1024"/>
+                    <resource name="CART 105  F3 OFL F3" quantity="1024"/>
+                    <resource name="CART 20 AME 621" quantity="25152"/>
+                    <resource name="CART 5.56 F1A F1" quantity="5390640"/>
+                    <resource name="CART 5.56 BAL ORD F1" quantity="1231200"/>
+                    <resource name="ROQ 84 EXPL ABLF1" quantity="17680"/>
+                    <resource name="CART CAL 308 168 GRS" quantity="74400"/>
+                    <resource name="CHARGE A BILLE" quantity="932"/>
+                    <resource name="MIS MILAN LEG AC F2" quantity="320"/>
+                    <resource name="MIS AC 136 ERYX F1" quantity="2608"/>
+                    <resource name="ART FUM DREB" quantity="20232"/>
+                    <resource name="CPLT 81 EXPL MLE F2" quantity="10080"/>
+                    <resource name="CART 9 BAL ORD F3" quantity="6714"/>
+                    <resource name="ROQ 68 FL CH F3" quantity="672"/>
+                    <resource name="CART 30/550  OSPEI" quantity="6000"/>
+                    <resource name="MIS AAH HAWK EXPL NP" quantity="96"/>
+                    <resource name="Obus 73 OE" quantity="96"/>
+                    <resource name="Grenade AGS 17" quantity="0"/>
+                    <resource name="GR 51  EXPL AP LGI" quantity="3816"/>
+                    <resource name="GR 51 FUM INC LGI" quantity="3816"/>
+                    <resource name="GR 47  ECL LGI" quantity="3816"/>
+                    <resource name="CART 120 OFL F1A" quantity="6024"/>
+                    <resource name="CART 105 F3 OFUM PH" quantity="512"/>
+                    <resource name="CPLT 81 OFUM PH" quantity="2880"/>
+                    <resource name="CPLT 81 OECL F1" quantity="1440"/>
+                    <resource name="MIS 150 F3 HOT" quantity="176"/>
+                    <resource name="CART 20 OEI OEIT SBP" quantity="60112"/>
+                    <resource name="CART 20 OPT" quantity="18180"/>
+                    <resource name="Munition CAS" quantity="4000"/>
+                    <resource name="Charg 7,62" quantity="1080"/>
+                    <resource name="CART 7.62" quantity="3600"/>
+                    <resource name="Missile AT4" quantity="12"/>
+                    <resource name="CART 7,62 BD HOM" quantity="53376"/>
+                    <resource name="Grenade offensive" quantity="12324"/>
+                    <resource name="OE JUPU 155 F2 Kit RTC" quantity="3168"/>
+                    <resource name="PETD 500 G T ID M 1" quantity="437360"/>
+                    <resource name="mine classique" quantity="249136"/>
+                    <resource name="barbele classique" quantity="68160"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="T2.MU.RAV.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="12687" name="TD1" position="29TNF3829656139" type="LOG . Groupe Munitions OFF TT- D">
+                  <stocks>
+                    <resource name="CART 12.7 SBP" quantity="2759160"/>
+                    <resource name="CART 7.62 N BD PAN" quantity="3337200"/>
+                    <resource name="CART 120 OECC F1" quantity="10040"/>
+                    <resource name="CART 120 OFL F1" quantity="2008"/>
+                    <resource name="CART 105 F3 OCC F3" quantity="1536"/>
+                    <resource name="CART 105  F3 OE F3" quantity="1024"/>
+                    <resource name="CART 105  F3 OFL F3" quantity="1024"/>
+                    <resource name="CART 20 AME 621" quantity="25152"/>
+                    <resource name="CART 5.56 F1A F1" quantity="5390640"/>
+                    <resource name="CART 5.56 BAL ORD F1" quantity="1231200"/>
+                    <resource name="ROQ 84 EXPL ABLF1" quantity="17680"/>
+                    <resource name="CART CAL 308 168 GRS" quantity="74400"/>
+                    <resource name="CHARGE A BILLE" quantity="932"/>
+                    <resource name="MIS MILAN LEG AC F2" quantity="320"/>
+                    <resource name="MIS AC 136 ERYX F1" quantity="2608"/>
+                    <resource name="ART FUM DREB" quantity="20232"/>
+                    <resource name="CPLT 81 EXPL MLE F2" quantity="10080"/>
+                    <resource name="CART 9 BAL ORD F3" quantity="6714"/>
+                    <resource name="ROQ 68 FL CH F3" quantity="672"/>
+                    <resource name="CART 30/550  OSPEI" quantity="6000"/>
+                    <resource name="MIS AAH HAWK EXPL NP" quantity="96"/>
+                    <resource name="Obus 73 OE" quantity="96"/>
+                    <resource name="Grenade AGS 17" quantity="0"/>
+                    <resource name="GR 51  EXPL AP LGI" quantity="3816"/>
+                    <resource name="GR 51 FUM INC LGI" quantity="3816"/>
+                    <resource name="GR 47  ECL LGI" quantity="3816"/>
+                    <resource name="CART 120 OFL F1A" quantity="6024"/>
+                    <resource name="CART 105 F3 OFUM PH" quantity="512"/>
+                    <resource name="CPLT 81 OFUM PH" quantity="2880"/>
+                    <resource name="CPLT 81 OECL F1" quantity="1440"/>
+                    <resource name="MIS 150 F3 HOT" quantity="176"/>
+                    <resource name="CART 20 OEI OEIT SBP" quantity="60112"/>
+                    <resource name="CART 20 OPT" quantity="18180"/>
+                    <resource name="Munition CAS" quantity="4000"/>
+                    <resource name="Charg 7,62" quantity="1080"/>
+                    <resource name="CART 7.62" quantity="3600"/>
+                    <resource name="Missile AT4" quantity="12"/>
+                    <resource name="CART 7,62 BD HOM" quantity="53376"/>
+                    <resource name="Grenade offensive" quantity="12324"/>
+                    <resource name="OE JUPU 155 F2 Kit RTC" quantity="3168"/>
+                    <resource name="PETD 500 G T ID M 1" quantity="437360"/>
+                    <resource name="mine classique" quantity="249136"/>
+                    <resource name="barbele classique" quantity="68160"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="TD1.MU.RAV.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="12688" name="D1" position="29TNF3779256635" type="LOG . Groupe Munitions OFF TD">
+                  <stocks>
+                    <resource name="OE JUPU 155 F2" quantity="13632"/>
+                    <resource name="OE CCR 155 MLE F1" quantity="35232"/>
+                    <resource name="O GR 155 F1" quantity="7920"/>
+                    <resource name="O 155 F1 AC EF DR" quantity="1152"/>
+                    <resource name="O ECL 155 F1" quantity="3936"/>
+                    <resource name="CPLT FUM PH 155" quantity="4512"/>
+                    <resource name="CPLT 120 OFUM PH F1" quantity="4608"/>
+                    <resource name="CPLT 120 OECL PRY F1" quantity="1152"/>
+                    <resource name="CPLT 120 OE PRY F2" quantity="16896"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="D1.MU.RAV.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="12689" name="D3" position="29TNF3879157138" type="LOG . Groupe Munitions SOFF TD">
+                  <stocks>
+                    <resource name="OE JUPU 155 F2" quantity="13632"/>
+                    <resource name="OE CCR 155 MLE F1" quantity="35232"/>
+                    <resource name="O GR 155 F1" quantity="7920"/>
+                    <resource name="O 155 F1 AC EF DR" quantity="1152"/>
+                    <resource name="O ECL 155 F1" quantity="3936"/>
+                    <resource name="CPLT FUM PH 155" quantity="4512"/>
+                    <resource name="CPLT 120 OFUM PH F1" quantity="4608"/>
+                    <resource name="CPLT 120 OECL PRY F1" quantity="1152"/>
+                    <resource name="CPLT 120 OE PRY F2" quantity="16896"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="D3.MU.RAV.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="true" id="14089" name="PC" position="29TNF3997257463" type="LOG . PC LOG BLD Secteur Ravitaillement">
+                  <extensions>
+                    <entry key="DiffusionList" value="16470"/>
+                    <entry key="Ethnie" value=""/>
+                    <entry key="Information" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="PC.MU.RAV.BLT.FR"/>
+                    <entry key="Religion" value="Catholique"/>
+                    <entry key="TypePC" value="2"/>
+                    <entry key="TypeSIOC" value="6"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14090" name="T1" position="29TNF3927056409" type="LOG . Groupe Munitions SOFF TT - D">
+                  <stocks>
+                    <resource name="CART 12.7 SBP" quantity="2759160"/>
+                    <resource name="CART 7.62 N BD PAN" quantity="3337200"/>
+                    <resource name="CART 120 OECC F1" quantity="10040"/>
+                    <resource name="CART 120 OFL F1" quantity="2008"/>
+                    <resource name="CART 105 F3 OCC F3" quantity="1536"/>
+                    <resource name="CART 105  F3 OE F3" quantity="1024"/>
+                    <resource name="CART 105  F3 OFL F3" quantity="1024"/>
+                    <resource name="CART 20 AME 621" quantity="25152"/>
+                    <resource name="CART 5.56 F1A F1" quantity="5390640"/>
+                    <resource name="CART 5.56 BAL ORD F1" quantity="1231200"/>
+                    <resource name="ROQ 84 EXPL ABLF1" quantity="17680"/>
+                    <resource name="CART CAL 308 168 GRS" quantity="74400"/>
+                    <resource name="CHARGE A BILLE" quantity="932"/>
+                    <resource name="MIS MILAN LEG AC F2" quantity="320"/>
+                    <resource name="MIS AC 136 ERYX F1" quantity="2608"/>
+                    <resource name="ART FUM DREB" quantity="20232"/>
+                    <resource name="CPLT 81 EXPL MLE F2" quantity="10080"/>
+                    <resource name="CART 9 BAL ORD F3" quantity="6714"/>
+                    <resource name="ROQ 68 FL CH F3" quantity="672"/>
+                    <resource name="CART 30/550  OSPEI" quantity="6000"/>
+                    <resource name="MIS AAH HAWK EXPL NP" quantity="96"/>
+                    <resource name="Obus 73 OE" quantity="96"/>
+                    <resource name="Grenade AGS 17" quantity="0"/>
+                    <resource name="GR 51  EXPL AP LGI" quantity="3816"/>
+                    <resource name="GR 51 FUM INC LGI" quantity="3816"/>
+                    <resource name="GR 47  ECL LGI" quantity="3816"/>
+                    <resource name="CART 120 OFL F1A" quantity="6024"/>
+                    <resource name="CART 105 F3 OFUM PH" quantity="512"/>
+                    <resource name="CPLT 81 OFUM PH" quantity="2880"/>
+                    <resource name="CPLT 81 OECL F1" quantity="1440"/>
+                    <resource name="MIS 150 F3 HOT" quantity="176"/>
+                    <resource name="CART 20 OEI OEIT SBP" quantity="60112"/>
+                    <resource name="CART 20 OPT" quantity="18180"/>
+                    <resource name="Munition CAS" quantity="4000"/>
+                    <resource name="Charg 7,62" quantity="1080"/>
+                    <resource name="CART 7.62" quantity="3600"/>
+                    <resource name="Missile AT4" quantity="12"/>
+                    <resource name="CART 7,62 BD HOM" quantity="53376"/>
+                    <resource name="Grenade offensive" quantity="12324"/>
+                    <resource name="OE JUPU 155 F2 Kit RTC" quantity="3168"/>
+                    <resource name="PETD 500 G T ID M 1" quantity="437360"/>
+                    <resource name="mine classique" quantity="249136"/>
+                    <resource name="barbele classique" quantity="68160"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="T1.MU.RAV.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14091" name="TD2" position="29TNF3878555894" type="LOG . Groupe Munitions OFF TT- D">
+                  <stocks>
+                    <resource name="CART 12.7 SBP" quantity="2759160"/>
+                    <resource name="CART 7.62 N BD PAN" quantity="3337200"/>
+                    <resource name="CART 120 OECC F1" quantity="10040"/>
+                    <resource name="CART 120 OFL F1" quantity="2008"/>
+                    <resource name="CART 105 F3 OCC F3" quantity="1536"/>
+                    <resource name="CART 105  F3 OE F3" quantity="1024"/>
+                    <resource name="CART 105  F3 OFL F3" quantity="1024"/>
+                    <resource name="CART 20 AME 621" quantity="25152"/>
+                    <resource name="CART 5.56 F1A F1" quantity="5390640"/>
+                    <resource name="CART 5.56 BAL ORD F1" quantity="1231200"/>
+                    <resource name="ROQ 84 EXPL ABLF1" quantity="17680"/>
+                    <resource name="CART CAL 308 168 GRS" quantity="74400"/>
+                    <resource name="CHARGE A BILLE" quantity="932"/>
+                    <resource name="MIS MILAN LEG AC F2" quantity="320"/>
+                    <resource name="MIS AC 136 ERYX F1" quantity="2608"/>
+                    <resource name="ART FUM DREB" quantity="20232"/>
+                    <resource name="CPLT 81 EXPL MLE F2" quantity="10080"/>
+                    <resource name="CART 9 BAL ORD F3" quantity="6714"/>
+                    <resource name="ROQ 68 FL CH F3" quantity="672"/>
+                    <resource name="CART 30/550  OSPEI" quantity="6000"/>
+                    <resource name="MIS AAH HAWK EXPL NP" quantity="96"/>
+                    <resource name="Obus 73 OE" quantity="96"/>
+                    <resource name="Grenade AGS 17" quantity="0"/>
+                    <resource name="GR 51  EXPL AP LGI" quantity="3816"/>
+                    <resource name="GR 51 FUM INC LGI" quantity="3816"/>
+                    <resource name="GR 47  ECL LGI" quantity="3816"/>
+                    <resource name="CART 120 OFL F1A" quantity="6024"/>
+                    <resource name="CART 105 F3 OFUM PH" quantity="512"/>
+                    <resource name="CPLT 81 OFUM PH" quantity="2880"/>
+                    <resource name="CPLT 81 OECL F1" quantity="1440"/>
+                    <resource name="MIS 150 F3 HOT" quantity="176"/>
+                    <resource name="CART 20 OEI OEIT SBP" quantity="60112"/>
+                    <resource name="CART 20 OPT" quantity="18180"/>
+                    <resource name="Munition CAS" quantity="4000"/>
+                    <resource name="Charg 7,62" quantity="1080"/>
+                    <resource name="CART 7.62" quantity="3600"/>
+                    <resource name="Missile AT4" quantity="12"/>
+                    <resource name="CART 7,62 BD HOM" quantity="53376"/>
+                    <resource name="Grenade offensive" quantity="12324"/>
+                    <resource name="OE JUPU 155 F2 Kit RTC" quantity="3168"/>
+                    <resource name="PETD 500 G T ID M 1" quantity="437360"/>
+                    <resource name="mine classique" quantity="249136"/>
+                    <resource name="barbele classique" quantity="68160"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="TD2.MU.RAV.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14092" name="D4" position="29TNF3826956377" type="LOG . Groupe Munitions OFF TD">
+                  <stocks>
+                    <resource name="OE JUPU 155 F2" quantity="13632"/>
+                    <resource name="OE CCR 155 MLE F1" quantity="35232"/>
+                    <resource name="O GR 155 F1" quantity="7920"/>
+                    <resource name="O 155 F1 AC EF DR" quantity="1152"/>
+                    <resource name="O ECL 155 F1" quantity="3936"/>
+                    <resource name="CPLT FUM PH 155" quantity="4512"/>
+                    <resource name="CPLT 120 OFUM PH F1" quantity="4608"/>
+                    <resource name="CPLT 120 OECL PRY F1" quantity="1152"/>
+                    <resource name="CPLT 120 OE PRY F2" quantity="16896"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="D4.MU.RAV.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14093" name="D2" position="29TNF3925356906" type="LOG . Groupe Munitions SOFF TD">
+                  <stocks>
+                    <resource name="OE JUPU 155 F2" quantity="13632"/>
+                    <resource name="OE CCR 155 MLE F1" quantity="35232"/>
+                    <resource name="O GR 155 F1" quantity="7920"/>
+                    <resource name="O 155 F1 AC EF DR" quantity="1152"/>
+                    <resource name="O ECL 155 F1" quantity="3936"/>
+                    <resource name="CPLT FUM PH 155" quantity="4512"/>
+                    <resource name="CPLT 120 OFUM PH F1" quantity="4608"/>
+                    <resource name="CPLT 120 OECL PRY F1" quantity="1152"/>
+                    <resource name="CPLT 120 OE PRY F2" quantity="16896"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="D2.MU.RAV.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <extensions>
+                  <entry key="DiffusionList" value=""/>
+                  <entry key="Nationalite" value="84"/>
+                  <entry key="NomLong" value="MU.RAV.BLT.FR"/>
+                </extensions>
+              </automat>
+              <formation color="0x6480ff" id="16470" level="iii" name="PC.RAV.BLT">
+                <extensions>
+                  <entry key="DiffusionList" value=""/>
+                  <entry key="Nationalite" value="84"/>
+                  <entry key="NomLong" value="PC.RAV.BLT.FR"/>
+                  <entry key="TypePC" value="1"/>
+                  <entry key="TypeSIOC" value="6"/>
+                </extensions>
+              </formation>
+              <automat color="0x6480ff" engaged="true" id="245466" knowledge-group="246190" logistic-level="logistic-base" name="TC2" type="LOG . TC2 LOG">
+                <unit color="0x6480ff" command-post="true" id="245467" name="PC" position="29TNF4218659093" type="LOG . TC2">
+                  <stocks>
+                    <resource name="CART 12.7 SBP" quantity="77550"/>
+                    <resource name="CART 7.62 N BD PAN" quantity="7500"/>
+                    <resource name="CART 5.56 F1A F1" quantity="61500"/>
+                    <resource name="F-63 1" quantity="47135"/>
+                    <resource name="mine classique" quantity="300"/>
+                    <resource name="barbele classique" quantity="300"/>
+                    <resource name="Rechange  NTI1 MOB" quantity="150"/>
+                    <resource name="Rechange  NTI1 EA" quantity="30"/>
+                    <resource name="RATION DE COMBAT 1" quantity="2140"/>
+                    <resource name="EAU MINERALE 1L T 1" quantity="12690"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="PC.TC2.RAV.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <extensions>
+                  <entry key="DiffusionList" value=""/>
+                  <entry key="Nationalite" value="84"/>
+                  <entry key="NomLong" value="TC2.RAV.BLT.FR"/>
+                </extensions>
+              </automat>
+              <extensions>
+                <entry key="DiffusionList" value=""/>
+                <entry key="Nationalite" value="84"/>
+                <entry key="NomLong" value="RAV.BLT.FR"/>
+              </extensions>
+            </formation>
+            <formation color="0x6480ff" id="13190" level="iii" name="SAN.BLT">
+              <automat color="0x6480ff" engaged="true" id="12724" knowledge-group="246191" name="TRI" type="LOG . Secteur triage">
+                <unit color="0x6480ff" command-post="true" id="12725" name="PC" position="29TNF4032354916" type="LOG . PC LOG BLD Secteur Sante">
+                  <extensions>
+                    <entry key="DiffusionList" value="16469"/>
+                    <entry key="Ethnie" value=""/>
+                    <entry key="Information" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="PC.TRI.SAN.BLT.FR"/>
+                    <entry key="Religion" value="Catholique"/>
+                    <entry key="TypePC" value="2"/>
+                    <entry key="TypeSIOC" value="6"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="12726" name="2" position="29TNF4092454114" type="LOG . Section Triage modulaire">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="2.TRI.SAN.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14064" name="1" position="29TNF4092054293" type="LOG . Section Triage modulaire">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="1.TRI.SAN.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14068" name="3" position="29TNF4110154232" type="LOG . Section Triage modulaire">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="3.TRI.SAN.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <extensions>
+                  <entry key="DiffusionList" value=""/>
+                  <entry key="Nationalite" value="84"/>
+                  <entry key="NomLong" value="TRI.SAN.BLT.FR"/>
+                </extensions>
+              </automat>
+              <automat color="0x6480ff" engaged="true" id="14026" knowledge-group="246191" name="E" type="LOG . Secteur EVASAN">
+                <unit color="0x6480ff" command-post="false" id="13194" name="J53" position="29TNF3982053936" type="LOG . Groupe VS J5">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="J53.E.SAN.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="13195" name="VAB1" position="29TNF3932453437" type="LOG . Groupe VS VAB">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="VAB1.E.SAN.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="13196" name="SAN3" position="29TNF3882153933" type="LOG . Equipe HM EVASAN">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="SAN3.E.SAN.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="true" id="14027" name="PC" position="29TNF3883154857" type="LOG . PC LOG BLD Secteur Sante">
+                  <extensions>
+                    <entry key="DiffusionList" value="16469"/>
+                    <entry key="Ethnie" value=""/>
+                    <entry key="Information" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="PC.E.SAN.BLT.FR"/>
+                    <entry key="Religion" value="Catholique"/>
+                    <entry key="TypePC" value="2"/>
+                    <entry key="TypeSIOC" value="6"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14028" name="J52" position="29TNF4001353392" type="LOG . Groupe VS J5">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="J52.E.SAN.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14029" name="VAB2" position="29TNF3953052878" type="LOG . Groupe VS VAB">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="VAB2.E.SAN.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14030" name="SAN2" position="29TNF3901353361" type="LOG . Equipe HM EVASAN">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="SAN2.E.SAN.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14034" name="J51" position="29TNF4023453157" type="LOG . Groupe VS J5">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="J51.E.SAN.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14035" name="VAB3" position="29TNF3974952643" type="LOG . Groupe VS VAB">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="VAB3.E.SAN.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14036" name="SAN1" position="29TNF3923353126" type="LOG . Equipe HM EVASAN">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="SAN1.E.SAN.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <extensions>
+                  <entry key="DiffusionList" value=""/>
+                  <entry key="Nationalite" value="84"/>
+                  <entry key="NomLong" value="E.SAN.BLT.FR"/>
+                </extensions>
+              </automat>
+              <automat color="0x6480ff" engaged="true" id="14038" knowledge-group="246191" name="TRT" type="LOG . Secteur traitement">
+                <unit color="0x6480ff" command-post="true" id="14039" name="PC" position="29TNF4057656718" type="LOG . PC LOG BLD Secteur Sante">
+                  <extensions>
+                    <entry key="DiffusionList" value="16469"/>
+                    <entry key="Ethnie" value=""/>
+                    <entry key="Information" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="PC.TRT.SAN.BLT.FR"/>
+                    <entry key="Religion" value="Catholique"/>
+                    <entry key="TypePC" value="2"/>
+                    <entry key="TypeSIOC" value="6"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14040" name="N2" position="29TNF4191055548" type="LOG . Section Decontamination Medicale NBC">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="N2.TRT.SAN.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14041" name="Y2" position="29TNF4142655034" type="LOG . Section Medico Psychologique">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="Y2.TRT.SAN.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14042" name="A2" position="29TNF4091155517" type="LOG . Antenne Chirurgicale">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="A2.TRT.SAN.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14043" name="M2" position="29TNF4189456046" type="LOG . Section Chirurgicale Modulaire">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="M2.TRT.SAN.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14044" name="C2" position="29TNF4211855556" type="LOG . Section Chirurgicale HMC">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="C2.TRT.SAN.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14052" name="N1" position="29TNF4235955788" type="LOG . Section Decontamination Medicale NBC">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="N1.TRT.SAN.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14053" name="Y1" position="29TNF4187455275" type="LOG . Section Medico Psychologique">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="Y1.TRT.SAN.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14054" name="A1" position="29TNF4135855757" type="LOG . Antenne Chirurgicale">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="A1.TRT.SAN.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14055" name="M1" position="29TNF4234256287" type="LOG . Section Chirurgicale Modulaire">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="M1.TRT.SAN.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14056" name="C1" position="29TNF4256655796" type="LOG . Section Chirurgicale HMC">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="C1.TRT.SAN.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <extensions>
+                  <entry key="DiffusionList" value=""/>
+                  <entry key="Nationalite" value="84"/>
+                  <entry key="NomLong" value="TRT.SAN.BLT.FR"/>
+                </extensions>
+              </automat>
+              <formation color="0x6480ff" id="16469" level="iii" name="PC.EVA.BLT">
+                <extensions>
+                  <entry key="DiffusionList" value=""/>
+                  <entry key="Nationalite" value="84"/>
+                  <entry key="NomLong" value="PC.EVA.BLT.FR"/>
+                  <entry key="TypePC" value="1"/>
+                  <entry key="TypeSIOC" value="6"/>
+                </extensions>
+              </formation>
+              <automat color="0x6480ff" engaged="true" id="245468" knowledge-group="246191" logistic-level="logistic-base" name="TC2" type="LOG . TC2 LOG">
+                <unit color="0x6480ff" command-post="true" id="245469" name="PC" position="29TNF3894957742" type="LOG . TC2">
+                  <stocks>
+                    <resource name="CART 12.7 SBP" quantity="47300"/>
+                    <resource name="CART 7.62 N BD PAN" quantity="7500"/>
+                    <resource name="CART 5.56 F1A F1" quantity="91200"/>
+                    <resource name="F-63 1" quantity="45280"/>
+                    <resource name="F-57 1" quantity="90"/>
+                    <resource name="F-35 1" quantity="23250"/>
+                    <resource name="mine classique" quantity="450"/>
+                    <resource name="barbele classique" quantity="450"/>
+                    <resource name="Rechange  NTI1 MOB" quantity="150"/>
+                    <resource name="Rechange  NTI1 EA" quantity="30"/>
+                    <resource name="RATION DE COMBAT 1" quantity="3350"/>
+                    <resource name="EAU MINERALE 1L T 1" quantity="19950"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="PC.TC2.SAN.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <extensions>
+                  <entry key="DiffusionList" value=""/>
+                  <entry key="Nationalite" value="84"/>
+                  <entry key="NomLong" value="TC2.SAN.BLT.FR"/>
+                </extensions>
+              </automat>
+              <extensions>
+                <entry key="DiffusionList" value=""/>
+                <entry key="Nationalite" value="84"/>
+                <entry key="NomLong" value="SAN.BLT.FR"/>
+              </extensions>
+            </formation>
+            <formation color="0x6480ff" id="13191" level="iii" name="MAI.BLT">
+              <automat color="0x6480ff" engaged="true" id="14108" knowledge-group="246189" name="MOB" type="LOG . Secteur reparation maint mob">
+                <unit color="0x6480ff" command-post="true" id="14109" name="PC" position="29TNF3935057267" type="LOG . PC LOG BLD Secteur Maintenance">
+                  <extensions>
+                    <entry key="DiffusionList" value="16467"/>
+                    <entry key="Ethnie" value=""/>
+                    <entry key="Information" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="PC.MOB.MAI.BLT.FR"/>
+                    <entry key="Religion" value="Catholique"/>
+                    <entry key="TypePC" value="2"/>
+                    <entry key="TypeSIOC" value="6"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14110" name="E2" position="29TNF3909858113" type="LOG . Section CDT CMM (EVAC)">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="E2.MOB.MAI.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14111" name="M2" position="29TNF3861557598" type="LOG . Section Reparation Mob BLD  MOB">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="M2.MOB.MAI.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14112" name="F1" position="29TNF3809758081" type="LOG . Section Reparation Mob Feu BLD  SRMF">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="F1.MOB.MAI.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14118" name="E1" position="29TNF3876258192" type="LOG . Section CDT CMM (EVAC)">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="E1.MOB.MAI.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14119" name="M1" position="29TNF3827657678" type="LOG . Section Reparation Mob BLD  MOB">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="M1.MOB.MAI.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14120" name="F2" position="29TNF3776158160" type="LOG . Section Reparation Mob Feu BLD  SRMF">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="F2.MOB.MAI.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <extensions>
+                  <entry key="DiffusionList" value=""/>
+                  <entry key="Nationalite" value="84"/>
+                  <entry key="NomLong" value="MOB.MAI.BLT.FR"/>
+                </extensions>
+              </automat>
+              <automat color="0x6480ff" engaged="true" id="14124" knowledge-group="246189" name="TEC" type="LOG . Secteur reparation techniques fines">
+                <unit color="0x6480ff" command-post="true" id="14125" name="PC" position="29TNF3868956383" type="LOG . PC LOG BLD Secteur Maintenance">
+                  <extensions>
+                    <entry key="DiffusionList" value="16467"/>
+                    <entry key="Ethnie" value=""/>
+                    <entry key="Information" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="PC.TEC.MAI.BLT.FR"/>
+                    <entry key="Religion" value="Catholique"/>
+                    <entry key="TypePC" value="2"/>
+                    <entry key="TypeSIOC" value="6"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14126" name="2" position="29TNF3806756826" type="LOG . Section Reparation EA BLD SREAT">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="2.TEC.MAI.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14130" name="1" position="29TNF3805656735" type="LOG . Section Reparation EA BLD SREAT">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="1.TEC.MAI.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <extensions>
+                  <entry key="DiffusionList" value=""/>
+                  <entry key="Nationalite" value="84"/>
+                  <entry key="NomLong" value="TEC.MAI.BLT.FR"/>
+                </extensions>
+              </automat>
+              <automat color="0x6480ff" engaged="true" id="16406" knowledge-group="246189" name="CAP" type="LOG . Secteur appro (CAP)">
+                <unit color="0x6480ff" command-post="true" id="16407" name="PC" position="29TNF3986458546" type="LOG . PC LOG BLD Secteur Ravitaillement">
+                  <extensions>
+                    <entry key="DiffusionList" value="16467"/>
+                    <entry key="Ethnie" value=""/>
+                    <entry key="Information" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="PC.CAP.MAI.BLT.FR"/>
+                    <entry key="Religion" value="Catholique"/>
+                    <entry key="TypePC" value="2"/>
+                    <entry key="TypeSIOC" value="6"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="16408" name="2" position="29TNF3910559027" type="LOG . Section Magasin CAP">
+                  <stocks>
+                    <resource name="Rechange  NTI1 MOB" quantity="13560"/>
+                    <resource name="Rechange  NTI2 MOB" quantity="900"/>
+                    <resource name="Rechange  NTI1 TCT" quantity="1440"/>
+                    <resource name="Rechange  NTI2 TCT" quantity="90"/>
+                    <resource name="Rechange  NTI2 TRS" quantity="330"/>
+                    <resource name="Rechange  NTI2 COTAC" quantity="330"/>
+                    <resource name="Rechange  NTI2 DEM" quantity="330"/>
+                    <resource name="Rechange  NTI1 EA" quantity="4680"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="2.CAP.MAI.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="16410" name="1" position="29TNF3866059070" type="LOG . Section Magasin CAP">
+                  <stocks>
+                    <resource name="Rechange  NTI1 MOB" quantity="13560"/>
+                    <resource name="Rechange  NTI2 MOB" quantity="900"/>
+                    <resource name="Rechange  NTI1 TCT" quantity="1440"/>
+                    <resource name="Rechange  NTI2 TCT" quantity="90"/>
+                    <resource name="Rechange  NTI2 TRS" quantity="330"/>
+                    <resource name="Rechange  NTI2 COTAC" quantity="330"/>
+                    <resource name="Rechange  NTI2 DEM" quantity="330"/>
+                    <resource name="Rechange  NTI1 EA" quantity="4680"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="1.CAP.MAI.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="16411" name="3" position="29TNF3865759185" type="LOG . Section Magasin CAP">
+                  <stocks>
+                    <resource name="Rechange  NTI1 MOB" quantity="13560"/>
+                    <resource name="Rechange  NTI2 MOB" quantity="900"/>
+                    <resource name="Rechange  NTI1 TCT" quantity="1440"/>
+                    <resource name="Rechange  NTI2 TCT" quantity="90"/>
+                    <resource name="Rechange  NTI2 TRS" quantity="330"/>
+                    <resource name="Rechange  NTI2 COTAC" quantity="330"/>
+                    <resource name="Rechange  NTI2 DEM" quantity="330"/>
+                    <resource name="Rechange  NTI1 EA" quantity="4680"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="3.CAP.MAI.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <extensions>
+                  <entry key="DiffusionList" value=""/>
+                  <entry key="Nationalite" value="84"/>
+                  <entry key="NomLong" value="CAP.MAI.BLT.FR"/>
+                </extensions>
+              </automat>
+              <formation color="0x6480ff" id="16467" level="iii" name="PC.CAP.BLT">
+                <extensions>
+                  <entry key="DiffusionList" value=""/>
+                  <entry key="Nationalite" value="84"/>
+                  <entry key="NomLong" value="PC.CAP.BLT.FR"/>
+                  <entry key="TypePC" value="1"/>
+                  <entry key="TypeSIOC" value="6"/>
+                </extensions>
+              </formation>
+              <automat color="0x6480ff" engaged="true" id="245464" knowledge-group="246189" logistic-level="logistic-base" name="TC2" type="LOG . TC2 LOG">
+                <unit color="0x6480ff" command-post="true" id="245465" name="PC" position="29TNF4106456013" type="LOG . TC2">
+                  <stocks>
+                    <resource name="CART 12.7 SBP" quantity="60500"/>
+                    <resource name="CART 7.62 N BD PAN" quantity="7500"/>
+                    <resource name="CART 5.56 F1A F1" quantity="70200"/>
+                    <resource name="F-63 1" quantity="34360"/>
+                    <resource name="mine classique" quantity="450"/>
+                    <resource name="barbele classique" quantity="450"/>
+                    <resource name="Rechange  NTI1 MOB" quantity="1470"/>
+                    <resource name="Rechange  NTI2 MOB" quantity="600"/>
+                    <resource name="Rechange  NTI1 TCT" quantity="720"/>
+                    <resource name="Rechange  NTI2 TCT" quantity="60"/>
+                    <resource name="Rechange  NTI2 TRS" quantity="220"/>
+                    <resource name="Rechange  NTI2 COTAC" quantity="220"/>
+                    <resource name="Rechange  NTI2 DEM" quantity="220"/>
+                    <resource name="Rechange  NTI1 EA" quantity="1350"/>
+                    <resource name="RATION DE COMBAT 1" quantity="2430"/>
+                    <resource name="EAU MINERALE 1L T 1" quantity="14370"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="PC.TC2.MAI.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <extensions>
+                  <entry key="DiffusionList" value=""/>
+                  <entry key="Nationalite" value="84"/>
+                  <entry key="NomLong" value="TC2.MAI.BLT.FR"/>
+                </extensions>
+              </automat>
+              <extensions>
+                <entry key="DiffusionList" value=""/>
+                <entry key="Nationalite" value="84"/>
+                <entry key="NomLong" value="MAI.BLT.FR"/>
+              </extensions>
+            </formation>
+            <formation color="0x6480ff" id="13198" level="iii" name="TRP.BLT">
+              <automat color="0x6480ff" engaged="true" id="12728" knowledge-group="246186" name="U2" type="LOG . Section CDT LOG URB">
+                <unit color="0x6480ff" command-post="true" id="12729" name="PC" position="29TNF3837956060" type="LOG . Section CDT et  URB">
+                  <stocks>
+                    <resource name="CART 12.7 SBP" quantity="2759160"/>
+                    <resource name="CART 7.62 N BD PAN" quantity="3337200"/>
+                    <resource name="CART 120 OECC F1" quantity="10040"/>
+                    <resource name="CART 120 OFL F1" quantity="2008"/>
+                    <resource name="CART 105 F3 OCC F3" quantity="1536"/>
+                    <resource name="CART 105  F3 OE F3" quantity="1024"/>
+                    <resource name="CART 105  F3 OFL F3" quantity="1024"/>
+                    <resource name="CART 20 AME 621" quantity="25152"/>
+                    <resource name="CART 5.56 F1A F1" quantity="5390640"/>
+                    <resource name="CART 5.56 BAL ORD F1" quantity="1231200"/>
+                    <resource name="ROQ 84 EXPL ABLF1" quantity="17680"/>
+                    <resource name="CART CAL 308 168 GRS" quantity="74400"/>
+                    <resource name="CHARGE A BILLE" quantity="932"/>
+                    <resource name="MIS MILAN LEG AC F2" quantity="320"/>
+                    <resource name="MIS AC 136 ERYX F1" quantity="2608"/>
+                    <resource name="ART FUM DREB" quantity="20232"/>
+                    <resource name="CPLT 81 EXPL MLE F2" quantity="10080"/>
+                    <resource name="OE JUPU 155 F2" quantity="13632"/>
+                    <resource name="OE CCR 155 MLE F1" quantity="35232"/>
+                    <resource name="O GR 155 F1" quantity="7920"/>
+                    <resource name="O 155 F1 AC EF DR" quantity="1152"/>
+                    <resource name="O ECL 155 F1" quantity="3936"/>
+                    <resource name="CPLT FUM PH 155" quantity="4512"/>
+                    <resource name="CART 9 BAL ORD F3" quantity="6714"/>
+                    <resource name="ROQ 68 FL CH F3" quantity="672"/>
+                    <resource name="CART 30/550  OSPEI" quantity="6000"/>
+                    <resource name="MIS AAH HAWK EXPL NP" quantity="96"/>
+                    <resource name="Obus 73 OE" quantity="96"/>
+                    <resource name="Grenade AGS 17" quantity="0"/>
+                    <resource name="GR 51  EXPL AP LGI" quantity="3816"/>
+                    <resource name="GR 51 FUM INC LGI" quantity="3816"/>
+                    <resource name="GR 47  ECL LGI" quantity="3816"/>
+                    <resource name="CART 120 OFL F1A" quantity="6024"/>
+                    <resource name="CART 105 F3 OFUM PH" quantity="512"/>
+                    <resource name="CPLT 81 OFUM PH" quantity="2880"/>
+                    <resource name="CPLT 81 OECL F1" quantity="1440"/>
+                    <resource name="CPLT 120 OFUM PH F1" quantity="4608"/>
+                    <resource name="CPLT 120 OECL PRY F1" quantity="1152"/>
+                    <resource name="MIS 150 F3 HOT" quantity="176"/>
+                    <resource name="CART 20 OEI OEIT SBP" quantity="60112"/>
+                    <resource name="CART 20 OPT" quantity="18180"/>
+                    <resource name="Munition CAS" quantity="4000"/>
+                    <resource name="Charg 7,62" quantity="1080"/>
+                    <resource name="CART 7.62" quantity="3600"/>
+                    <resource name="Missile AT4" quantity="12"/>
+                    <resource name="CPLT 120 OE PRY F2" quantity="16896"/>
+                    <resource name="CART 7,62 BD HOM" quantity="53376"/>
+                    <resource name="Grenade offensive" quantity="12324"/>
+                    <resource name="OE JUPU 155 F2 Kit RTC" quantity="3168"/>
+                    <resource name="F-63 1" quantity="1567829"/>
+                    <resource name="F-57 1" quantity="2053"/>
+                    <resource name="F-35 1" quantity="351192"/>
+                    <resource name="PETD 500 G T ID M 1" quantity="437360"/>
+                    <resource name="mine classique" quantity="249136"/>
+                    <resource name="barbele classique" quantity="68160"/>
+                    <resource name="Rechange  NTI1 MOB" quantity="13560"/>
+                    <resource name="Rechange  NTI2 MOB" quantity="900"/>
+                    <resource name="Rechange  NTI1 TCT" quantity="1440"/>
+                    <resource name="Rechange  NTI2 TCT" quantity="90"/>
+                    <resource name="Rechange  NTI2 TRS" quantity="330"/>
+                    <resource name="Rechange  NTI2 COTAC" quantity="330"/>
+                    <resource name="Rechange  NTI2 DEM" quantity="330"/>
+                    <resource name="Rechange  NTI1 EA" quantity="4680"/>
+                    <resource name="RATION DE COMBAT 1" quantity="197052"/>
+                    <resource name="EAU MINERALE 1L T 1" quantity="1173846"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value="16471"/>
+                    <entry key="Ethnie" value=""/>
+                    <entry key="Information" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="PC.U2.TRP.BLT.FR"/>
+                    <entry key="Religion" value="Catholique"/>
+                    <entry key="TypePC" value="2"/>
+                    <entry key="TypeSIOC" value="6"/>
+                  </extensions>
+                </unit>
+                <extensions>
+                  <entry key="DiffusionList" value=""/>
+                  <entry key="Nationalite" value="84"/>
+                  <entry key="NomLong" value="U2.TRP.BLT.FR"/>
+                </extensions>
+              </automat>
+              <automat color="0x6480ff" engaged="true" id="14010" knowledge-group="246186" name="1" type="LOG . Secteur transport">
+                <unit color="0x6480ff" command-post="true" id="14011" name="PC" position="29TNF3791055982" type="LOG . PC LOG BLD Secteur Transport">
+                  <extensions>
+                    <entry key="DiffusionList" value="16471"/>
+                    <entry key="Ethnie" value=""/>
+                    <entry key="Information" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="PC.1.TRP.BLT.FR"/>
+                    <entry key="Religion" value="Catholique"/>
+                    <entry key="TypePC" value="2"/>
+                    <entry key="TypeSIOC" value="6"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14012" name="PT" position="29TNF3842755499" type="LOG . Peloton Transport VTLR (PT)">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="PT.1.TRP.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14013" name="PR" position="29TNF3794354987" type="LOG . Peloton Ravitaillement (PR)">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="PR.1.TRP.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14014" name="TRM" position="29TNF3742555469" type="LOG . Peloton Transport TRM 10000">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="TRM.1.TRP.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <extensions>
+                  <entry key="DiffusionList" value=""/>
+                  <entry key="Nationalite" value="84"/>
+                  <entry key="NomLong" value="1.TRP.BLT.FR"/>
+                </extensions>
+              </automat>
+              <automat color="0x6480ff" engaged="true" id="14016" knowledge-group="246186" name="2" type="LOG . Secteur transport">
+                <unit color="0x6480ff" command-post="true" id="14017" name="PC" position="29TNF3784856012" type="LOG . PC LOG BLD Secteur Transport">
+                  <extensions>
+                    <entry key="DiffusionList" value="16471"/>
+                    <entry key="Ethnie" value=""/>
+                    <entry key="Information" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="PC.2.TRP.BLT.FR"/>
+                    <entry key="Religion" value="Catholique"/>
+                    <entry key="TypePC" value="2"/>
+                    <entry key="TypeSIOC" value="6"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14018" name="PT" position="29TNF3836555529" type="LOG . Peloton Transport VTLR (PT)">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="PT.2.TRP.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14019" name="PR" position="29TNF3788155015" type="LOG . Peloton Ravitaillement (PR)">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="PR.2.TRP.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14020" name="TRM" position="29TNF3736455498" type="LOG . Peloton Transport TRM 10000">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="TRM.2.TRP.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <extensions>
+                  <entry key="DiffusionList" value=""/>
+                  <entry key="Nationalite" value="84"/>
+                  <entry key="NomLong" value="2.TRP.BLT.FR"/>
+                </extensions>
+              </automat>
+              <automat color="0x6480ff" engaged="true" id="14022" knowledge-group="246186" logistic-level="logistic-base" name="U1" type="LOG . Section CDT LOG URB">
+                <unit color="0x6480ff" command-post="true" id="14023" name="PC" position="29TNF3858554841" type="LOG . Section CDT et  URB">
+                  <stocks>
+                    <resource name="CART 12.7 SBP" quantity="2200"/>
+                    <resource name="CART 7.62 N BD PAN" quantity="18000"/>
+                    <resource name="CART 5.56 F1A F1" quantity="16200"/>
+                    <resource name="F-63 1" quantity="4920"/>
+                    <resource name="Rechange  NTI1 MOB" quantity="120"/>
+                    <resource name="Rechange  NTI1 EA" quantity="120"/>
+                    <resource name="RATION DE COMBAT 1" quantity="580"/>
+                    <resource name="EAU MINERALE 1L T 1" quantity="3360"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value="16471"/>
+                    <entry key="Ethnie" value=""/>
+                    <entry key="Information" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="PC.U1.TRP.BLT.FR"/>
+                    <entry key="Religion" value="Catholique"/>
+                    <entry key="TypePC" value="2"/>
+                    <entry key="TypeSIOC" value="6"/>
+                  </extensions>
+                </unit>
+                <extensions>
+                  <entry key="DiffusionList" value=""/>
+                  <entry key="Nationalite" value="84"/>
+                  <entry key="NomLong" value="U1.TRP.BLT.FR"/>
+                </extensions>
+              </automat>
+              <formation color="0x6480ff" id="16471" level="iii" name="PC.TRP.BLT">
+                <extensions>
+                  <entry key="DiffusionList" value=""/>
+                  <entry key="Nationalite" value="84"/>
+                  <entry key="NomLong" value="PC.TRP.BLT.FR"/>
+                  <entry key="TypePC" value="1"/>
+                  <entry key="TypeSIOC" value="6"/>
+                </extensions>
+              </formation>
+              <automat color="0x6480ff" engaged="true" id="245470" knowledge-group="246186" logistic-level="logistic-base" name="TC2" type="LOG . TC2 LOG">
+                <unit color="0x6480ff" command-post="true" id="245471" name="PC" position="29TNF4145655933" type="LOG . TC2">
+                  <stocks>
+                    <resource name="CART 12.7 SBP" quantity="52800"/>
+                    <resource name="CART 7.62 N BD PAN" quantity="30000"/>
+                    <resource name="CART 5.56 F1A F1" quantity="56550"/>
+                    <resource name="CART 20 OEI OEIT SBP" quantity="840"/>
+                    <resource name="CART 20 OPT" quantity="270"/>
+                    <resource name="F-63 1" quantity="38925"/>
+                    <resource name="F-57 1" quantity="180"/>
+                    <resource name="mine classique" quantity="300"/>
+                    <resource name="barbele classique" quantity="300"/>
+                    <resource name="Rechange  NTI1 MOB" quantity="180"/>
+                    <resource name="Rechange  NTI1 EA" quantity="60"/>
+                    <resource name="RATION DE COMBAT 1" quantity="1925"/>
+                    <resource name="EAU MINERALE 1L T 1" quantity="11370"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="PC.TC2.TRP.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <extensions>
+                  <entry key="DiffusionList" value=""/>
+                  <entry key="Nationalite" value="84"/>
+                  <entry key="NomLong" value="TC2.TRP.BLT.FR"/>
+                </extensions>
+              </automat>
+              <extensions>
+                <entry key="DiffusionList" value=""/>
+                <entry key="Nationalite" value="84"/>
+                <entry key="NomLong" value="TRP.BLT.FR"/>
+              </extensions>
+            </formation>
+            <formation color="0x6480ff" id="245472" level="ii" name="GSP.BLT" nature="sfgpus">
+              <automat color="0x6480ff" engaged="true" id="12741" knowledge-group="246188" name="GSP" type="LOG . Secteur distribution stockage (SEA)">
+                <unit color="0x6480ff" command-post="true" id="12742" name="PC" position="29TNF3947657138" type="LOG . PC LOG BLD Secteur Ravitaillement">
+                  <extensions>
+                    <entry key="DiffusionList" value="245475"/>
+                    <entry key="Ethnie" value=""/>
+                    <entry key="Information" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="PC.GSP.GSP.BLT.FR"/>
+                    <entry key="Religion" value="Catholique"/>
+                    <entry key="TypePC" value="2"/>
+                    <entry key="TypeSIOC" value="6"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="12743" name="1B" position="29TNF4050657521" type="LOG . Escouade Trspt CARB 35m3">
+                  <stocks>
+                    <resource name="F-63 1" quantity="1567829"/>
+                    <resource name="F-57 1" quantity="2053"/>
+                    <resource name="F-35 1" quantity="351192"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="1B.GSP.GSP.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="12744" name="2B" position="29TNF4121257272" type="LOG . Escouade Trspt CARB 60m3">
+                  <stocks>
+                    <resource name="F-63 1" quantity="1567829"/>
+                    <resource name="F-57 1" quantity="2053"/>
+                    <resource name="F-35 1" quantity="351192"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="2B.GSP.GSP.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="12745" name="3A" position="29TNF3999456515" type="LOG . Escouade Trspt CARB180m3">
+                  <stocks>
+                    <resource name="F-63 1" quantity="1567829"/>
+                    <resource name="F-57 1" quantity="2053"/>
+                    <resource name="F-35 1" quantity="351192"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="3A.GSP.GSP.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14134" name="1A" position="29TNF4013156791" type="LOG . Escouade Trspt CARB 35m3">
+                  <stocks>
+                    <resource name="F-63 1" quantity="1567829"/>
+                    <resource name="F-57 1" quantity="2053"/>
+                    <resource name="F-35 1" quantity="351192"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="1A.GSP.GSP.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="14143" name="2A" position="29TNF4057656369" type="LOG . Escouade Trspt CARB 60m3">
+                  <stocks>
+                    <resource name="F-63 1" quantity="1567829"/>
+                    <resource name="F-57 1" quantity="2053"/>
+                    <resource name="F-35 1" quantity="351192"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="2A.GSP.GSP.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="16421" name="1E" position="29TNF4017656771" type="LOG . Escouade Trspt CARB 35m3">
+                  <stocks>
+                    <resource name="F-63 1" quantity="1567829"/>
+                    <resource name="F-57 1" quantity="2053"/>
+                    <resource name="F-35 1" quantity="351192"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="1E.GSP.GSP.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="16422" name="1C" position="29TNF4111856575" type="LOG . Escouade Trspt CARB 35m3">
+                  <stocks>
+                    <resource name="F-63 1" quantity="1567829"/>
+                    <resource name="F-57 1" quantity="2053"/>
+                    <resource name="F-35 1" quantity="351192"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="1C.GSP.GSP.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="16423" name="1D" position="29TNF4062156762" type="LOG . Escouade Trspt CARB 35m3">
+                  <stocks>
+                    <resource name="F-63 1" quantity="1567829"/>
+                    <resource name="F-57 1" quantity="2053"/>
+                    <resource name="F-35 1" quantity="351192"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="1D.GSP.GSP.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="16424" name="2C" position="29TNF4096156633" type="LOG . Escouade Trspt CARB 60m3">
+                  <stocks>
+                    <resource name="F-63 1" quantity="1567829"/>
+                    <resource name="F-57 1" quantity="2053"/>
+                    <resource name="F-35 1" quantity="351192"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="2C.GSP.GSP.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="16425" name="2D" position="29TNF4103656635" type="LOG . Escouade Trspt CARB 60m3">
+                  <stocks>
+                    <resource name="F-63 1" quantity="1567829"/>
+                    <resource name="F-57 1" quantity="2053"/>
+                    <resource name="F-35 1" quantity="351192"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="2D.GSP.GSP.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="16426" name="3B" position="29TNF3977856512" type="LOG . Escouade Trspt CARB180m3">
+                  <stocks>
+                    <resource name="F-63 1" quantity="1567829"/>
+                    <resource name="F-57 1" quantity="2053"/>
+                    <resource name="F-35 1" quantity="351192"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="3B.GSP.GSP.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="16427" name="1F" position="29TNF4055256849" type="LOG . Escouade Trspt CARB 35m3">
+                  <stocks>
+                    <resource name="F-63 1" quantity="1567829"/>
+                    <resource name="F-57 1" quantity="2053"/>
+                    <resource name="F-35 1" quantity="351192"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="1F.GSP.GSP.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <extensions>
+                  <entry key="DiffusionList" value=""/>
+                  <entry key="Nationalite" value="84"/>
+                  <entry key="NomLong" value="GSP.GSP.BLT.FR"/>
+                </extensions>
+              </automat>
+              <automat color="0x6480ff" engaged="true" id="245473" knowledge-group="246188" logistic-level="logistic-base" name="TC2" type="LOG . TC2 LOG">
+                <unit color="0x6480ff" command-post="true" id="245474" name="PC" position="29TNF3824857775" type="LOG . TC2">
+                  <stocks>
+                    <resource name="CART 12.7 SBP" quantity="23100"/>
+                    <resource name="CART 7.62 N BD PAN" quantity="7500"/>
+                    <resource name="CART 5.56 F1A F1" quantity="52200"/>
+                    <resource name="F-63 1" quantity="39010"/>
+                    <resource name="mine classique" quantity="150"/>
+                    <resource name="barbele classique" quantity="150"/>
+                    <resource name="Rechange  NTI1 MOB" quantity="150"/>
+                    <resource name="Rechange  NTI1 EA" quantity="30"/>
+                    <resource name="RATION DE COMBAT 1" quantity="2130"/>
+                    <resource name="EAU MINERALE 1L T 1" quantity="12630"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="PC.TC2.GSP.BLT.FR"/>
+                  </extensions>
+                </unit>
+                <extensions>
+                  <entry key="DiffusionList" value=""/>
+                  <entry key="Nationalite" value="84"/>
+                  <entry key="NomLong" value="TC2.GSP.BLT.FR"/>
+                </extensions>
+              </automat>
+              <formation color="0x6480ff" id="245475" level="ii" name="PC.GSP.BLT">
+                <extensions>
+                  <entry key="DiffusionList" value=""/>
+                  <entry key="Nationalite" value="84"/>
+                  <entry key="NomLong" value="PC.GSP.BLT.FR"/>
+                  <entry key="TypePC" value="1"/>
+                  <entry key="TypeSIOC" value="6"/>
+                </extensions>
+              </formation>
+              <extensions>
+                <entry key="DiffusionList" value=""/>
+                <entry key="IdCDB" value=""/>
+                <entry key="IndOpe" value=""/>
+                <entry key="IndRadio" value=""/>
+                <entry key="Nationalite" value="84"/>
+                <entry key="NomLong" value="GSP.BLT.FR"/>
+              </extensions>
+            </formation>
+            <extensions>
+              <entry key="DiffusionList" value=""/>
+              <entry key="Nationalite" value="84"/>
+              <entry key="NomLong" value="BLT.FR"/>
+            </extensions>
+          </formation>
+          <formation color="0x6480ff" id="12866" level="xx" name="4" nature="sfgpuci">
+            <formation color="0x6480ff" id="12871" level="iii" logistic-level="logistic-base" name="BLD4" nature="sfgpuss">
+              <automat color="0x6480ff" engaged="true" id="13122" knowledge-group="246324" name="GSP" type="LOG . Secteur distribution stockage (SEA)">
+                <unit color="0x6480ff" command-post="true" id="13123" name="PC" position="29TNF2708465125" type="LOG . PC LOG BLD Secteur Ravitaillement">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Ethnie" value=""/>
+                    <entry key="Information" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="PC.GSP.BLD4.FR"/>
+                    <entry key="Religion" value="Catholique"/>
+                    <entry key="TypePC" value="2"/>
+                    <entry key="TypeSIOC" value="6"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="13124" name="1A" position="29TNF2758764628" type="LOG . Escouade Trspt CARB 35m3">
+                  <stocks>
+                    <resource name="F-63 1" quantity="139859"/>
+                    <resource name="F-57 1" quantity="234"/>
+                    <resource name="F-35 1" quantity="17992"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="1A.GSP.BLD4.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="13125" name="2A" position="29TNF2708964129" type="LOG . Escouade Trspt CARB 60m3">
+                  <stocks>
+                    <resource name="F-63 1" quantity="139859"/>
+                    <resource name="F-57 1" quantity="234"/>
+                    <resource name="F-35 1" quantity="17992"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="2A.GSP.BLD4.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="13126" name="3A" position="29TNF2658664624" type="LOG . Escouade Trspt CARB180m3">
+                  <stocks>
+                    <resource name="F-63 1" quantity="139859"/>
+                    <resource name="F-57 1" quantity="234"/>
+                    <resource name="F-35 1" quantity="17992"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="3A.GSP.BLD4.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="16428" name="1B" position="29TNF2766964692" type="LOG . Escouade Trspt CARB 35m3">
+                  <stocks>
+                    <resource name="F-63 1" quantity="139859"/>
+                    <resource name="F-57 1" quantity="234"/>
+                    <resource name="F-35 1" quantity="17992"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="1B.GSP.BLD4.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="16429" name="2B" position="29TNF2772264325" type="LOG . Escouade Trspt CARB 60m3">
+                  <stocks>
+                    <resource name="F-63 1" quantity="139859"/>
+                    <resource name="F-57 1" quantity="234"/>
+                    <resource name="F-35 1" quantity="17992"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="2B.GSP.BLD4.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="16432" name="1D" position="29TNF2754264811" type="LOG . Escouade Trspt CARB 35m3">
+                  <stocks>
+                    <resource name="F-63 1" quantity="139859"/>
+                    <resource name="F-57 1" quantity="234"/>
+                    <resource name="F-35 1" quantity="17992"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="1D.GSP.BLD4.FR"/>
+                  </extensions>
+                </unit>
+                <unit color="0x6480ff" command-post="false" id="16433" name="1C" position="29TNF2675664869" type="LOG . Escouade Trspt CARB 35m3">
+                  <stocks>
+                    <resource name="F-63 1" quantity="139859"/>
+                    <resource name="F-57 1" quantity="234"/>
+                    <resource name="F-35 1" quantity="17992"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="1C.GSP.BLD4.FR"/>
+                  </extensions>
+                </unit>
+                <extensions>
+                  <entry key="DiffusionList" value=""/>
+                  <entry key="Nationalite" value="84"/>
+                  <entry key="NomLong" value="GSP.BLD4.FR"/>
+                </extensions>
+              </automat>
+              <formation color="0x6480ff" id="13178" level="ii" name="MNT.BLD4" nature="sfgpusx">
+                <automat color="0x6480ff" engaged="true" id="13146" knowledge-group="246322" name="M" type="LOG . Secteur reparation maint mob">
+                  <unit color="0x6480ff" command-post="true" id="13147" name="PC" position="29TNF2902062742" type="LOG . PC LOG BLD Secteur Maintenance">
+                    <extensions>
+                      <entry key="DiffusionList" value="16476"/>
+                      <entry key="Ethnie" value=""/>
+                      <entry key="Information" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="PC.M.MNT.BLD4.FR"/>
+                      <entry key="Religion" value="Catholique"/>
+                      <entry key="TypePC" value="2"/>
+                      <entry key="TypeSIOC" value="6"/>
+                    </extensions>
+                  </unit>
+                  <unit color="0x6480ff" command-post="false" id="13148" name="CMM" position="29TNF2952362245" type="LOG . Section CDT CMM (EVAC)">
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="CMM.M.MNT.BLD4.FR"/>
+                    </extensions>
+                  </unit>
+                  <unit color="0x6480ff" command-post="false" id="13149" name="1" position="29TNF2902461744" type="LOG . Section Reparation Mob BLD  MOB">
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="1.M.MNT.BLD4.FR"/>
+                    </extensions>
+                  </unit>
+                  <unit color="0x6480ff" command-post="false" id="13150" name="FEU" position="29TNF2852162241" type="LOG . Section Reparation Mob Feu BLD  SRMF">
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="FEU.M.MNT.BLD4.FR"/>
+                    </extensions>
+                  </unit>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="M.MNT.BLD4.FR"/>
+                  </extensions>
+                </automat>
+                <automat color="0x6480ff" engaged="true" id="16412" knowledge-group="246322" name="C" type="LOG . Secteur appro (CAP)">
+                  <unit color="0x6480ff" command-post="true" id="16413" name="PC" position="29TNF2910763490" type="LOG . PC LOG BLD Secteur Ravitaillement">
+                    <extensions>
+                      <entry key="DiffusionList" value="16476"/>
+                      <entry key="Ethnie" value=""/>
+                      <entry key="Information" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="PC.C.MNT.BLD4.FR"/>
+                      <entry key="Religion" value="Catholique"/>
+                      <entry key="TypePC" value="2"/>
+                      <entry key="TypeSIOC" value="6"/>
+                    </extensions>
+                  </unit>
+                  <unit color="0x6480ff" command-post="false" id="16414" name="M1" position="29TNF2959362639" type="LOG . Section Magasin CAP">
+                    <stocks>
+                      <resource name="Rechange  NTI1 MOB" quantity="2544"/>
+                      <resource name="Rechange  NTI2 MOB" quantity="120"/>
+                      <resource name="Rechange  NTI1 TCT" quantity="216"/>
+                      <resource name="Rechange  NTI2 TCT" quantity="12"/>
+                      <resource name="Rechange  NTI2 TRS" quantity="44"/>
+                      <resource name="Rechange  NTI2 COTAC" quantity="44"/>
+                      <resource name="Rechange  NTI2 DEM" quantity="44"/>
+                      <resource name="Rechange  NTI1 EA" quantity="792"/>
+                    </stocks>
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="M1.C.MNT.BLD4.FR"/>
+                    </extensions>
+                  </unit>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="C.MNT.BLD4.FR"/>
+                  </extensions>
+                </automat>
+                <automat color="0x6480ff" engaged="true" id="16472" knowledge-group="246322" name="T" type="LOG . Secteur reparation techniques fines">
+                  <unit color="0x6480ff" command-post="true" id="16473" name="PC" position="29TNF2894463150" type="LOG . PC LOG BLD Secteur Maintenance">
+                    <extensions>
+                      <entry key="DiffusionList" value="16476"/>
+                      <entry key="Ethnie" value=""/>
+                      <entry key="Information" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="PC.T.MNT.BLD4.FR"/>
+                      <entry key="Religion" value="Catholique"/>
+                      <entry key="TypePC" value="2"/>
+                      <entry key="TypeSIOC" value="6"/>
+                    </extensions>
+                  </unit>
+                  <unit color="0x6480ff" command-post="false" id="16474" name="1" position="29TNF2946062668" type="LOG . Section Reparation EA BLD SREAT">
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="1.T.MNT.BLD4.FR"/>
+                    </extensions>
+                  </unit>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="T.MNT.BLD4.FR"/>
+                  </extensions>
+                </automat>
+                <formation color="0x6480ff" id="16476" level="ii" name="PC.MNT.BLD.4">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="PC.MNT.BLD.4.FR"/>
+                    <entry key="TypePC" value="1"/>
+                    <entry key="TypeSIOC" value="6"/>
+                  </extensions>
+                </formation>
+                <extensions>
+                  <entry key="DiffusionList" value=""/>
+                  <entry key="Nationalite" value="84"/>
+                  <entry key="NomLong" value="MNT.BLD4.FR"/>
+                </extensions>
+              </formation>
+              <formation color="0x6480ff" id="13187" level="ii" name="RAV.BLD4" nature="sfgpuss2">
+                <automat color="0x6480ff" engaged="true" id="13117" knowledge-group="246325" name="SH" nature="sfgpuss2" type="LOG . Secteur approvisionnement (SH)">
+                  <unit color="0x6480ff" command-post="true" id="13118" name="PC" position="29TNF2522762688" type="LOG . PC LOG BLD Secteur Ravitaillement">
+                    <extensions>
+                      <entry key="DiffusionList" value="16478"/>
+                      <entry key="Ethnie" value=""/>
+                      <entry key="Information" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="PC.SH.RAV.BLD4.FR"/>
+                      <entry key="Religion" value="Catholique"/>
+                      <entry key="TypePC" value="2"/>
+                      <entry key="TypeSIOC" value="6"/>
+                    </extensions>
+                  </unit>
+                  <unit color="0x6480ff" command-post="false" id="20645" name="O1" position="29TNF2573062192" type="LOG . Groupe Appro Vivre Eau">
+                    <stocks>
+                      <resource name="RATION DE COMBAT 1" quantity="24176"/>
+                      <resource name="EAU MINERALE 1L T 1" quantity="144045"/>
+                    </stocks>
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="O1.SH.RAV.BLD4.FR"/>
+                    </extensions>
+                  </unit>
+                  <unit color="0x6480ff" command-post="false" id="20646" name="O2" position="29TNF2472762186" type="LOG . Groupe Appro Vivre Eau">
+                    <stocks>
+                      <resource name="RATION DE COMBAT 1" quantity="24176"/>
+                      <resource name="EAU MINERALE 1L T 1" quantity="144045"/>
+                    </stocks>
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="O2.SH.RAV.BLD4.FR"/>
+                    </extensions>
+                  </unit>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="SH.RAV.BLD4.FR"/>
+                  </extensions>
+                </automat>
+                <automat color="0x6480ff" engaged="true" id="13136" knowledge-group="246325" name="MU" nature="sfgpuss5" type="LOG . Secteur munitions">
+                  <unit color="0x6480ff" command-post="true" id="13137" name="PC" position="29TNF2511062787" type="LOG . PC LOG BLD Secteur Ravitaillement">
+                    <extensions>
+                      <entry key="DiffusionList" value="16478"/>
+                      <entry key="Ethnie" value=""/>
+                      <entry key="Information" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="PC.MU.RAV.BLD4.FR"/>
+                      <entry key="Religion" value="Catholique"/>
+                      <entry key="TypePC" value="2"/>
+                      <entry key="TypeSIOC" value="6"/>
+                    </extensions>
+                  </unit>
+                  <unit color="0x6480ff" command-post="false" id="13138" name="T2" position="29TNF2561362290" type="LOG . Groupe Munitions SOFF TT - D">
+                    <stocks>
+                      <resource name="CART 12.7 SBP" quantity="338540"/>
+                      <resource name="CART 7.62 N BD PAN" quantity="398100"/>
+                      <resource name="CART 120 OECC F1" quantity="1255"/>
+                      <resource name="CART 120 OFL F1" quantity="251"/>
+                      <resource name="CART 105 F3 OCC F3" quantity="192"/>
+                      <resource name="CART 105  F3 OE F3" quantity="128"/>
+                      <resource name="CART 105  F3 OFL F3" quantity="128"/>
+                      <resource name="CART 20 AME 621" quantity="3144"/>
+                      <resource name="CART 5.56 F1A F1" quantity="658110"/>
+                      <resource name="CART 5.56 BAL ORD F1" quantity="153900"/>
+                      <resource name="ROQ 84 EXPL ABLF1" quantity="2210"/>
+                      <resource name="CART CAL 308 168 GRS" quantity="9300"/>
+                      <resource name="CHARGE A BILLE" quantity="148"/>
+                      <resource name="MIS MILAN LEG AC F2" quantity="40"/>
+                      <resource name="MIS AC 136 ERYX F1" quantity="326"/>
+                      <resource name="ART FUM DREB" quantity="2520"/>
+                      <resource name="CPLT 81 EXPL MLE F2" quantity="1260"/>
+                      <resource name="CART 9 BAL ORD F3" quantity="837"/>
+                      <resource name="ROQ 68 FL CH F3" quantity="84"/>
+                      <resource name="CART 30/550  OSPEI" quantity="750"/>
+                      <resource name="MIS AAH HAWK EXPL NP" quantity="16"/>
+                      <resource name="GR 51  EXPL AP LGI" quantity="477"/>
+                      <resource name="GR 51 FUM INC LGI" quantity="477"/>
+                      <resource name="GR 47  ECL LGI" quantity="477"/>
+                      <resource name="CART 120 OFL F1A" quantity="753"/>
+                      <resource name="CART 105 F3 OFUM PH" quantity="64"/>
+                      <resource name="CPLT 81 OFUM PH" quantity="360"/>
+                      <resource name="CPLT 81 OECL F1" quantity="180"/>
+                      <resource name="MIS 150 F3 HOT" quantity="22"/>
+                      <resource name="CART 20 OEI OEIT SBP" quantity="7332"/>
+                      <resource name="CART 20 OPT" quantity="2214"/>
+                      <resource name="CART 7,62 BD HOM" quantity="6672"/>
+                      <resource name="Grenade offensive" quantity="1533"/>
+                      <resource name="OE JUPU 155 F2 Kit RTC" quantity="144"/>
+                      <resource name="PETD 500 G T ID M 1" quantity="54620"/>
+                      <resource name="mine classique" quantity="31202"/>
+                      <resource name="barbele classique" quantity="8580"/>
+                    </stocks>
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="T2.MU.RAV.BLD4.FR"/>
+                    </extensions>
+                  </unit>
+                  <unit color="0x6480ff" command-post="false" id="13139" name="T1" position="29TNF2511461788" type="LOG . Groupe Munitions OFF TT- D">
+                    <stocks>
+                      <resource name="CART 12.7 SBP" quantity="338540"/>
+                      <resource name="CART 7.62 N BD PAN" quantity="398100"/>
+                      <resource name="CART 120 OECC F1" quantity="1255"/>
+                      <resource name="CART 120 OFL F1" quantity="251"/>
+                      <resource name="CART 105 F3 OCC F3" quantity="192"/>
+                      <resource name="CART 105  F3 OE F3" quantity="128"/>
+                      <resource name="CART 105  F3 OFL F3" quantity="128"/>
+                      <resource name="CART 20 AME 621" quantity="3144"/>
+                      <resource name="CART 5.56 F1A F1" quantity="658110"/>
+                      <resource name="CART 5.56 BAL ORD F1" quantity="153900"/>
+                      <resource name="ROQ 84 EXPL ABLF1" quantity="2210"/>
+                      <resource name="CART CAL 308 168 GRS" quantity="9300"/>
+                      <resource name="CHARGE A BILLE" quantity="148"/>
+                      <resource name="MIS MILAN LEG AC F2" quantity="40"/>
+                      <resource name="MIS AC 136 ERYX F1" quantity="326"/>
+                      <resource name="ART FUM DREB" quantity="2520"/>
+                      <resource name="CPLT 81 EXPL MLE F2" quantity="1260"/>
+                      <resource name="CART 9 BAL ORD F3" quantity="837"/>
+                      <resource name="ROQ 68 FL CH F3" quantity="84"/>
+                      <resource name="CART 30/550  OSPEI" quantity="750"/>
+                      <resource name="MIS AAH HAWK EXPL NP" quantity="16"/>
+                      <resource name="GR 51  EXPL AP LGI" quantity="477"/>
+                      <resource name="GR 51 FUM INC LGI" quantity="477"/>
+                      <resource name="GR 47  ECL LGI" quantity="477"/>
+                      <resource name="CART 120 OFL F1A" quantity="753"/>
+                      <resource name="CART 105 F3 OFUM PH" quantity="64"/>
+                      <resource name="CPLT 81 OFUM PH" quantity="360"/>
+                      <resource name="CPLT 81 OECL F1" quantity="180"/>
+                      <resource name="MIS 150 F3 HOT" quantity="22"/>
+                      <resource name="CART 20 OEI OEIT SBP" quantity="7332"/>
+                      <resource name="CART 20 OPT" quantity="2214"/>
+                      <resource name="CART 7,62 BD HOM" quantity="6672"/>
+                      <resource name="Grenade offensive" quantity="1533"/>
+                      <resource name="OE JUPU 155 F2 Kit RTC" quantity="144"/>
+                      <resource name="PETD 500 G T ID M 1" quantity="54620"/>
+                      <resource name="mine classique" quantity="31202"/>
+                      <resource name="barbele classique" quantity="8580"/>
+                    </stocks>
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="T1.MU.RAV.BLD4.FR"/>
+                    </extensions>
+                  </unit>
+                  <unit color="0x6480ff" command-post="false" id="13140" name="D1" position="29TNF2461262285" type="LOG . Groupe Munitions OFF TD">
+                    <stocks>
+                      <resource name="OE JUPU 155 F2" quantity="1536"/>
+                      <resource name="OE CCR 155 MLE F1" quantity="3984"/>
+                      <resource name="O GR 155 F1" quantity="864"/>
+                      <resource name="O 155 F1 AC EF DR" quantity="144"/>
+                      <resource name="O ECL 155 F1" quantity="408"/>
+                      <resource name="CPLT FUM PH 155" quantity="480"/>
+                      <resource name="ROQ GMLRS" quantity="864"/>
+                    </stocks>
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="D1.MU.RAV.BLD4.FR"/>
+                    </extensions>
+                  </unit>
+                  <unit color="0x6480ff" command-post="false" id="13141" name="D2" position="29TNF2561162788" type="LOG . Groupe Munitions SOFF TD">
+                    <stocks>
+                      <resource name="OE JUPU 155 F2" quantity="1536"/>
+                      <resource name="OE CCR 155 MLE F1" quantity="3984"/>
+                      <resource name="O GR 155 F1" quantity="864"/>
+                      <resource name="O 155 F1 AC EF DR" quantity="144"/>
+                      <resource name="O ECL 155 F1" quantity="408"/>
+                      <resource name="CPLT FUM PH 155" quantity="480"/>
+                      <resource name="ROQ GMLRS" quantity="864"/>
+                    </stocks>
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="D2.MU.RAV.BLD4.FR"/>
+                    </extensions>
+                  </unit>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="MU.RAV.BLD4.FR"/>
+                  </extensions>
+                </automat>
+                <formation color="0x6480ff" id="16478" level="ii" name="PC.RAV.BLD4">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="PC.RAV.BLD4.FR"/>
+                    <entry key="TypePC" value="1"/>
+                    <entry key="TypeSIOC" value="6"/>
+                  </extensions>
+                </formation>
+                <extensions>
+                  <entry key="DiffusionList" value=""/>
+                  <entry key="Nationalite" value="84"/>
+                  <entry key="NomLong" value="RAV.BLD4.FR"/>
+                </extensions>
+              </formation>
+              <formation color="0x6480ff" id="13188" level="ii" name="MED.BLD4" nature="sfgpusm">
+                <automat color="0x6480ff" engaged="true" id="13130" knowledge-group="246323" name="E" type="LOG . Secteur EVASAN">
+                  <unit color="0x6480ff" command-post="true" id="13131" name="PC" position="29TNF2798061814" type="LOG . PC LOG BLD Secteur Sante">
+                    <extensions>
+                      <entry key="DiffusionList" value="16477"/>
+                      <entry key="Ethnie" value=""/>
+                      <entry key="Information" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="PC.E.MED.BLD4.FR"/>
+                      <entry key="Religion" value="Catholique"/>
+                      <entry key="TypePC" value="2"/>
+                      <entry key="TypeSIOC" value="6"/>
+                    </extensions>
+                  </unit>
+                  <unit color="0x6480ff" command-post="false" id="13132" name="3" position="29TNF2848261318" type="LOG . Groupe VS J5">
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="3.E.MED.BLD4.FR"/>
+                    </extensions>
+                  </unit>
+                  <unit color="0x6480ff" command-post="false" id="13133" name="2" position="29TNF2798360818" type="LOG . Groupe VS VAB">
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="2.E.MED.BLD4.FR"/>
+                    </extensions>
+                  </unit>
+                  <unit color="0x6480ff" command-post="false" id="13134" name="1" position="29TNF2748061314" type="LOG . Equipe HM EVASAN">
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="1.E.MED.BLD4.FR"/>
+                    </extensions>
+                  </unit>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="E.MED.BLD4.FR"/>
+                  </extensions>
+                </automat>
+                <automat color="0x6480ff" engaged="true" id="13154" knowledge-group="246323" name="T" type="LOG . Secteur traitement">
+                  <unit color="0x6480ff" command-post="true" id="13155" name="PC" position="29TNF2812961782" type="LOG . PC LOG BLD Secteur Sante">
+                    <extensions>
+                      <entry key="DiffusionList" value="16477"/>
+                      <entry key="Ethnie" value=""/>
+                      <entry key="Information" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="PC.T.MED.BLD4.FR"/>
+                      <entry key="Religion" value="Catholique"/>
+                      <entry key="TypePC" value="2"/>
+                      <entry key="TypeSIOC" value="6"/>
+                    </extensions>
+                  </unit>
+                  <unit color="0x6480ff" command-post="false" id="13156" name="D1" position="29TNF2863161285" type="LOG . Section Decontamination Medicale NBC">
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="D1.T.MED.BLD4.FR"/>
+                    </extensions>
+                  </unit>
+                  <unit color="0x6480ff" command-post="false" id="13157" name="P1" position="29TNF2813360784" type="LOG . Section Medico Psychologique">
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="P1.T.MED.BLD4.FR"/>
+                    </extensions>
+                  </unit>
+                  <unit color="0x6480ff" command-post="false" id="13158" name="C1" position="29TNF2763061281" type="LOG . Antenne Chirurgicale">
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="C1.T.MED.BLD4.FR"/>
+                    </extensions>
+                  </unit>
+                  <unit color="0x6480ff" command-post="false" id="13159" name="M1" position="29TNF2862961784" type="LOG . Section Chirurgicale Modulaire">
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="M1.T.MED.BLD4.FR"/>
+                    </extensions>
+                  </unit>
+                  <unit color="0x6480ff" command-post="false" id="13160" name="H1" position="29TNF2883761286" type="LOG . Section Chirurgicale HMC">
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="H1.T.MED.BLD4.FR"/>
+                    </extensions>
+                  </unit>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="T.MED.BLD4.FR"/>
+                  </extensions>
+                </automat>
+                <automat color="0x6480ff" engaged="true" id="13203" knowledge-group="246323" name="I" type="LOG . Secteur triage">
+                  <unit color="0x6480ff" command-post="true" id="13204" name="PC" position="29TNF2822262104" type="LOG . PC LOG BLD Secteur Sante">
+                    <extensions>
+                      <entry key="DiffusionList" value="16477"/>
+                      <entry key="Ethnie" value=""/>
+                      <entry key="Information" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="PC.I.MED.BLD4.FR"/>
+                      <entry key="Religion" value="Catholique"/>
+                      <entry key="TypePC" value="2"/>
+                      <entry key="TypeSIOC" value="6"/>
+                    </extensions>
+                  </unit>
+                  <unit color="0x6480ff" command-post="false" id="13205" name="1" position="29TNF2872461607" type="LOG . Section Triage modulaire">
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="1.I.MED.BLD4.FR"/>
+                    </extensions>
+                  </unit>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="I.MED.BLD4.FR"/>
+                  </extensions>
+                </automat>
+                <formation color="0x6480ff" id="16477" level="ii" name="PC.EVA.BLD.4">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="PC.EVA.BLD.4.FR"/>
+                    <entry key="TypePC" value="1"/>
+                    <entry key="TypeSIOC" value="6"/>
+                  </extensions>
+                </formation>
+                <extensions>
+                  <entry key="DiffusionList" value=""/>
+                  <entry key="Nationalite" value="84"/>
+                  <entry key="NomLong" value="MED.BLD4.FR"/>
+                </extensions>
+              </formation>
+              <formation color="0x6480ff" id="13202" level="ii" name="TRP.BLD4" nature="sfgpust">
+                <automat color="0x6480ff" engaged="true" id="13166" knowledge-group="246321" name="1" nature="sfgpust" type="LOG . Secteur transport">
+                  <unit color="0x6480ff" command-post="true" id="13167" name="PC" position="29TNF2627561595" type="LOG . PC LOG BLD Secteur Transport">
+                    <extensions>
+                      <entry key="DiffusionList" value="16479"/>
+                      <entry key="Ethnie" value=""/>
+                      <entry key="Information" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="PC.1.TRP.BLD4.FR"/>
+                      <entry key="Religion" value="Catholique"/>
+                      <entry key="TypePC" value="2"/>
+                      <entry key="TypeSIOC" value="6"/>
+                    </extensions>
+                  </unit>
+                  <unit color="0x6480ff" command-post="false" id="13168" name="PT" position="29TNF2677861098" type="LOG . Peloton Transport VTLR (PT)">
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="PT.1.TRP.BLD4.FR"/>
+                    </extensions>
+                  </unit>
+                  <unit color="0x6480ff" command-post="false" id="13169" name="PR" position="29TNF2628160597" type="LOG . Peloton Ravitaillement (PR)">
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="PR.1.TRP.BLD4.FR"/>
+                    </extensions>
+                  </unit>
+                  <unit color="0x6480ff" command-post="false" id="13170" name="TRM" position="29TNF2577761094" type="LOG . Peloton Transport TRM 10000">
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="TRM.1.TRP.BLD4.FR"/>
+                    </extensions>
+                  </unit>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="1.TRP.BLD4.FR"/>
+                  </extensions>
+                </automat>
+                <formation color="0x6480ff" id="16479" level="ii" name="PC.TRP.BLD.4">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="PC.TRP.BLD.4.FR"/>
+                    <entry key="TypePC" value="1"/>
+                    <entry key="TypeSIOC" value="6"/>
+                  </extensions>
+                </formation>
+                <extensions>
+                  <entry key="DiffusionList" value=""/>
+                  <entry key="Nationalite" value="84"/>
+                  <entry key="NomLong" value="TRP.BLD4.FR"/>
+                </extensions>
+              </formation>
+              <automat color="0x6480ff" engaged="true" id="16417" knowledge-group="246326" name="PC" type="LOG . PC BIA">
+                <unit color="0x6480ff" command-post="true" id="16418" name="PC" position="29TNF2620863482" type="TRANS . PC BIA">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Ethnie" value=""/>
+                    <entry key="Information" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="PC.PC.BLD4.FR"/>
+                    <entry key="Religion" value="Catholique"/>
+                    <entry key="TypePC" value="2"/>
+                    <entry key="TypeSIOC" value="6"/>
+                  </extensions>
+                </unit>
+                <extensions>
+                  <entry key="DiffusionList" value=""/>
+                  <entry key="Nationalite" value="84"/>
+                  <entry key="NomLong" value="PC.BLD4.FR"/>
+                </extensions>
+              </automat>
+              <extensions>
+                <entry key="DiffusionList" value=""/>
+                <entry key="Nationalite" value="84"/>
+                <entry key="NomLong" value="BLD4.FR"/>
+              </extensions>
+            </formation>
+            <formation color="0x6480ff" id="15113" level="x" name="24" nature="sfgpuci">
+              <formation color="0x6480ff" id="15114" level="ii" name="C1.24" nature="sfgpuca">
+                <automat color="0x6480ff" engaged="true" id="12731" knowledge-group="246314" name="1" type="ABC . Escadron Blinde AMX 10 RC">
+                  <unit color="0x6480ff" command-post="true" id="12732" name="PC" position="29TNF3196351489" type="ABC . PC">
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Ethnie" value=""/>
+                      <entry key="Information" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="PC.1.C1.24.FR"/>
+                      <entry key="Religion" value=""/>
+                      <entry key="TypePC" value="2"/>
+                      <entry key="TypeSIOC" value="6"/>
+                    </extensions>
+                  </unit>
+                  <unit color="0x6480ff" command-post="false" id="12733" name="1" position="29TNF3246650993" type="ABC . PLT AMX 10 RC CDP OFF">
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="1.1.C1.24.FR"/>
+                    </extensions>
+                  </unit>
+                  <unit color="0x6480ff" command-post="false" id="12734" name="2" position="29TNF3196850492" type="ABC . PLT AMX 10 RC CDP OFF">
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="2.1.C1.24.FR"/>
+                    </extensions>
+                  </unit>
+                  <unit color="0x6480ff" command-post="false" id="12735" name="3" position="29TNF3146550988" type="ABC . PLT AMX 10 RC CDP OFF">
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="3.1.C1.24.FR"/>
+                    </extensions>
+                  </unit>
+                  <unit color="0x6480ff" command-post="false" id="12736" name="4" position="29TNF3246351491" type="ABC . PLT AMX 10 RC CDP SOFF">
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="4.1.C1.24.FR"/>
+                    </extensions>
+                  </unit>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="1.C1.24.FR"/>
+                  </extensions>
+                </automat>
+                <automat color="0x6480ff" engaged="true" id="12737" knowledge-group="246314" logistic-level="logistic-base" name="TC2" type="LOG . TC2 GTIA INF AMX 10P">
+                  <unit color="0x6480ff" command-post="true" id="12738" name="PC" position="29TNF3232353067" type="LOG . TC2 GTIA  AMX 10P">
+                    <stocks>
+                      <resource name="CART 12.7 SBP" quantity="6460"/>
+                      <resource name="CART 7.62 N BD PAN" quantity="29100"/>
+                      <resource name="CART 105 F3 OCC F3" quantity="144"/>
+                      <resource name="CART 105  F3 OE F3" quantity="96"/>
+                      <resource name="CART 105  F3 OFL F3" quantity="96"/>
+                      <resource name="CART 5.56 F1A F1" quantity="21450"/>
+                      <resource name="ART FUM DREB" quantity="384"/>
+                      <resource name="CART 9 BAL ORD F3" quantity="9"/>
+                      <resource name="CART 105 F3 OFUM PH" quantity="48"/>
+                      <resource name="F-63 1" quantity="12107"/>
+                      <resource name="mine classique" quantity="150"/>
+                      <resource name="barbele classique" quantity="150"/>
+                      <resource name="Rechange  NTI1 MOB" quantity="90"/>
+                      <resource name="Rechange  NTI1 TCT" quantity="18"/>
+                      <resource name="Rechange  NTI1 EA" quantity="36"/>
+                      <resource name="RATION DE COMBAT 1" quantity="736"/>
+                      <resource name="EAU MINERALE 1L T 1" quantity="4404"/>
+                    </stocks>
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Ethnie" value=""/>
+                      <entry key="Information" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="PC.TC2.C1.24.FR"/>
+                      <entry key="Religion" value=""/>
+                      <entry key="TypePC" value="2"/>
+                      <entry key="TypeSIOC" value="6"/>
+                    </extensions>
+                  </unit>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="TC2.C1.24.FR"/>
+                  </extensions>
+                </automat>
+                <automat color="0x6480ff" engaged="true" id="15399" knowledge-group="246314" name="2" type="ABC . Escadron Blinde AMX 10 RC">
+                  <unit color="0x6480ff" command-post="true" id="15400" name="PC" position="29TNF3302051520" type="ABC . PC">
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Ethnie" value=""/>
+                      <entry key="Information" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="PC.2.C1.24.FR"/>
+                      <entry key="Religion" value=""/>
+                      <entry key="TypePC" value="2"/>
+                      <entry key="TypeSIOC" value="6"/>
+                    </extensions>
+                  </unit>
+                  <unit color="0x6480ff" command-post="false" id="15401" name="1" position="29TNF3353651038" type="ABC . PLT AMX 10 RC CDP OFF">
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="1.2.C1.24.FR"/>
+                    </extensions>
+                  </unit>
+                  <unit color="0x6480ff" command-post="false" id="15402" name="2" position="29TNF3305250523" type="ABC . PLT AMX 10 RC CDP OFF">
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="2.2.C1.24.FR"/>
+                    </extensions>
+                  </unit>
+                  <unit color="0x6480ff" command-post="false" id="15403" name="3" position="29TNF3253551006" type="ABC . PLT AMX 10 RC CDP OFF">
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="3.2.C1.24.FR"/>
+                    </extensions>
+                  </unit>
+                  <unit color="0x6480ff" command-post="false" id="15404" name="4" position="29TNF3352151536" type="ABC . PLT AMX 10 RC CDP SOFF">
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="4.2.C1.24.FR"/>
+                    </extensions>
+                  </unit>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="2.C1.24.FR"/>
+                  </extensions>
+                </automat>
+                <automat color="0x6480ff" engaged="true" id="15405" knowledge-group="246314" name="3" type="ABC . Escadron Blinde AMX 10 RC">
+                  <unit color="0x6480ff" command-post="true" id="15406" name="PC" position="29TNF3070052244" type="ABC . PC">
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Ethnie" value=""/>
+                      <entry key="Information" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="PC.3.C1.24.FR"/>
+                      <entry key="Religion" value=""/>
+                      <entry key="TypePC" value="2"/>
+                      <entry key="TypeSIOC" value="6"/>
+                    </extensions>
+                  </unit>
+                  <unit color="0x6480ff" command-post="false" id="15407" name="1" position="29TNF3121651762" type="ABC . PLT AMX 10 RC CDP OFF">
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="1.3.C1.24.FR"/>
+                    </extensions>
+                  </unit>
+                  <unit color="0x6480ff" command-post="false" id="15408" name="2" position="29TNF3073151248" type="ABC . PLT AMX 10 RC CDP OFF">
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="2.3.C1.24.FR"/>
+                    </extensions>
+                  </unit>
+                  <unit color="0x6480ff" command-post="false" id="15409" name="3" position="29TNF3021551730" type="ABC . PLT AMX 10 RC CDP OFF">
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="3.3.C1.24.FR"/>
+                    </extensions>
+                  </unit>
+                  <unit color="0x6480ff" command-post="false" id="15410" name="4" position="29TNF3120052260" type="ABC . PLT AMX 10 RC CDP SOFF">
+                    <extensions>
+                      <entry key="DiffusionList" value=""/>
+                      <entry key="Nationalite" value="84"/>
+                      <entry key="NomLong" value="4.3.C1.24.FR"/>
+                    </extensions>
+                  </unit>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="3.C1.24.FR"/>
+                  </extensions>
+                </automat>
+                <extensions>
+                  <entry key="DiffusionList" value=""/>
+                  <entry key="Nationalite" value="84"/>
+                  <entry key="NomLong" value="C1.24.FR"/>
+                </extensions>
+              </formation>
+              <extensions>
+                <entry key="DiffusionList" value=""/>
+                <entry key="Nationalite" value="84"/>
+                <entry key="NomLong" value="24.FR"/>
+              </extensions>
+            </formation>
+            <automat color="0x6480ff" engaged="true" id="15117" knowledge-group="246289" logistic-level="logistic-base" name="TC2" type="LOG . TC2 LOG">
+              <unit color="0x6480ff" command-post="true" id="15118" name="PC" position="29TNF3068663648" type="LOG . TC2">
+                <stocks>
+                  <resource name="CART 12.7 SBP" quantity="89700"/>
+                  <resource name="CART 7.62 N BD PAN" quantity="80700"/>
+                  <resource name="CART 105 F3 OCC F3" quantity="144"/>
+                  <resource name="CART 105  F3 OE F3" quantity="96"/>
+                  <resource name="CART 105  F3 OFL F3" quantity="96"/>
+                  <resource name="CART 5.56 F1A F1" quantity="180180"/>
+                  <resource name="CART 5.56 BAL ORD F1" quantity="41400"/>
+                  <resource name="ROQ 84 EXPL ABLF1" quantity="808"/>
+                  <resource name="CART CAL 308 168 GRS" quantity="2520"/>
+                  <resource name="MIS MILAN LEG AC F2" quantity="32"/>
+                  <resource name="MIS AC 136 ERYX F1" quantity="84"/>
+                  <resource name="ART FUM DREB" quantity="384"/>
+                  <resource name="CPLT 81 EXPL MLE F2" quantity="420"/>
+                  <resource name="OE JUPU 155 F2" quantity="480"/>
+                  <resource name="OE CCR 155 MLE F1" quantity="1248"/>
+                  <resource name="O GR 155 F1" quantity="264"/>
+                  <resource name="O 155 F1 AC EF DR" quantity="48"/>
+                  <resource name="O ECL 155 F1" quantity="120"/>
+                  <resource name="CPLT FUM PH 155" quantity="144"/>
+                  <resource name="CART 9 BAL ORD F3" quantity="198"/>
+                  <resource name="GR 51  EXPL AP LGI" quantity="126"/>
+                  <resource name="GR 51 FUM INC LGI" quantity="126"/>
+                  <resource name="GR 47  ECL LGI" quantity="126"/>
+                  <resource name="CART 105 F3 OFUM PH" quantity="48"/>
+                  <resource name="CPLT 81 OFUM PH" quantity="120"/>
+                  <resource name="CPLT 81 OECL F1" quantity="60"/>
+                  <resource name="CART 20 OEI OEIT SBP" quantity="558"/>
+                  <resource name="CART 20 OPT" quantity="108"/>
+                  <resource name="Grenade offensive" quantity="420"/>
+                  <resource name="F-63 1" quantity="82271"/>
+                  <resource name="F-57 1" quantity="216"/>
+                  <resource name="PETD 500 G T ID M 1" quantity="17400"/>
+                  <resource name="mine classique" quantity="7670"/>
+                  <resource name="barbele classique" quantity="3110"/>
+                  <resource name="Rechange  NTI1 MOB" quantity="330"/>
+                  <resource name="Rechange  NTI1 TCT" quantity="18"/>
+                  <resource name="Rechange  NTI1 EA" quantity="84"/>
+                  <resource name="RATION DE COMBAT 1" quantity="6647"/>
+                  <resource name="EAU MINERALE 1L T 1" quantity="39630"/>
+                </stocks>
+                <extensions>
+                  <entry key="DiffusionList" value=""/>
+                  <entry key="Ethnie" value=""/>
+                  <entry key="Information" value=""/>
+                  <entry key="Nationalite" value="84"/>
+                  <entry key="NomLong" value="PC.TC2.4.FR"/>
+                  <entry key="Religion" value="Catholique"/>
+                  <entry key="TypePC" value="1"/>
+                  <entry key="TypeSIOC" value="6"/>
+                </extensions>
+              </unit>
+              <extensions>
+                <entry key="DiffusionList" value=""/>
+                <entry key="Nationalite" value="84"/>
+                <entry key="NomLong" value="TC2.4.FR"/>
+              </extensions>
+            </automat>
+            <formation color="0x6480ff" id="16187" level="ii" logistic-level="logistic-base" name="BLDA4" nature="sfgpuss">
+              <automat color="0x6480ff" engaged="true" id="16188" knowledge-group="246328" logistic-level="logistic-base" name="TC2" type="LOG . TC2 LOG">
+                <unit color="0x6480ff" command-post="true" id="16189" name="PC" position="29TNF3353065070" type="LOG . TC2">
+                  <stocks>
+                    <resource name="CART 12.7 SBP" quantity="5490"/>
+                    <resource name="CART 7.62 N BD PAN" quantity="1800"/>
+                    <resource name="CART 5.56 F1A F1" quantity="5130"/>
+                    <resource name="CART 9 BAL ORD F3" quantity="9"/>
+                    <resource name="F-63 1" quantity="3377"/>
+                    <resource name="mine classique" quantity="40"/>
+                    <resource name="barbele classique" quantity="40"/>
+                    <resource name="Rechange  NTI1 MOB" quantity="30"/>
+                    <resource name="Rechange  NTI1 EA" quantity="6"/>
+                    <resource name="RATION DE COMBAT 1" quantity="189"/>
+                    <resource name="EAU MINERALE 1L T 1" quantity="1104"/>
+                  </stocks>
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Ethnie" value=""/>
+                    <entry key="Information" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="PC.TC2.BLDA4.FR"/>
+                    <entry key="Religion" value="Catholique"/>
+                    <entry key="TypePC" value="2"/>
+                    <entry key="TypeSIOC" value="6"/>
+                  </extensions>
+                </unit>
+                <extensions>
+                  <entry key="DiffusionList" value=""/>
+                  <entry key="Nationalite" value="84"/>
+                  <entry key="NomLong" value="TC2.BLDA4.FR"/>
+                </extensions>
+              </automat>
+              <automat color="0x6480ff" engaged="true" id="16257" knowledge-group="246327" name="PCA" type="TRANS . PC TAC">
+                <unit color="0x6480ff" command-post="true" id="16258" name="PC" position="29TNF3355564811" type="TRANS . PC TAC">
+                  <extensions>
+                    <entry key="DiffusionList" value=""/>
+                    <entry key="Ethnie" value=""/>
+                    <entry key="Information" value=""/>
+                    <entry key="Nationalite" value="84"/>
+                    <entry key="NomLong" value="PC.PCA.BLDA4.FR"/>
+                    <entry key="Religion" value="Catholique"/>
+                    <entry key="TypePC" value="2"/>
+                    <entry key="TypeSIOC" value="6"/>
+                  </extensions>
+                </unit>
+                <extensions>
+                  <entry key="DiffusionList" value=""/>
+                  <entry key="Nationalite" value="84"/>
+                  <entry key="NomLong" value="PCA.BLDA4.FR"/>
+                </extensions>
+              </automat>
+              <extensions>
+                <entry key="DiffusionList" value=""/>
+                <entry key="Nationalite" value="84"/>
+                <entry key="NomLong" value="BLDA4.FR"/>
+              </extensions>
+            </formation>
+            <extensions>
+              <entry key="DiffusionList" value=""/>
+              <entry key="Nationalite" value="84"/>
+              <entry key="NomLong" value="4.FR"/>
+            </extensions>
+          </formation>
+          <limit name="FRW">
+            <point>29TNF1919383061</point>
+            <point>29TNF2281974076</point>
+            <point>29TNF2238565732</point>
+            <point>29TNF2352264070</point>
+            <point>29TNF2337861600</point>
+            <point>29TNF2573358318</point>
+            <point>29TNF2766453645</point>
+            <point>29TNF3001740999</point>
+          </limit>
+          <limit name="FRC">
+            <point>29TNF3687697750</point>
+            <point>29TNF3593263045</point>
+            <point>29TNF3785862016</point>
+            <point>29TNF3973156214</point>
+            <point>29TNF3818953022</point>
+            <point>29TNF3971240008</point>
+          </limit>
+          <extensions>
+            <entry key="DiffusionList" value=""/>
+            <entry key="Nationalite" value="84"/>
+            <entry key="NomLong" value="FR.FR"/>
+            <entry key="TypePC" value="4"/>
+            <entry key="TypeSIOC" value="1"/>
+          </extensions>
+        </formation>
+      </tactical>
+      <communication>
+        <knowledge-group id="246181" name="KG.0.CR" type="Standard"/>
+        <knowledge-group id="246186" name="KG.BLT.TRP.FR" type="Standard"/>
+        <knowledge-group id="246187" name="KG.BLT.GEN.FR" type="Standard"/>
+        <knowledge-group id="246188" name="KG.BLT.GSP.FR" type="Standard"/>
+        <knowledge-group id="246189" name="KG.BLT.MAI.FR" type="Standard"/>
+        <knowledge-group id="246190" name="KG.BLT.RAV.FR" type="Standard"/>
+        <knowledge-group id="246191" name="KG.BLT.SAN.FR" type="Standard"/>
+        <knowledge-group id="246273" name="KG.34.I3.FR" type="Standard"/>
+        <knowledge-group id="246274" name="KG.24.I3.FR" type="Standard"/>
+        <knowledge-group id="246275" name="KG.34.I2.FR" type="Standard"/>
+        <knowledge-group id="246276" name="KG.34.A1.FR" type="Standard"/>
+        <knowledge-group id="246277" name="KG.34.C1.FR" type="Standard"/>
+        <knowledge-group id="246278" name="KG.34.EEI.FR" type="Standard"/>
+        <knowledge-group id="246279" name="KG.34.I1.FR" type="Standard"/>
+        <knowledge-group id="246280" name="KG.34.G1.FR" type="Standard"/>
+        <knowledge-group id="246281" name="KG.34.CIR.FR" type="Standard"/>
+        <knowledge-group id="246283" name="KG.14.I3.FR" type="Standard"/>
+        <knowledge-group id="246284" name="KG.24.I2.FR" type="Standard"/>
+        <knowledge-group id="246287" name="KG.04.PCA.FR" type="Standard"/>
+        <knowledge-group id="246288" name="KG.04.PCB.FR" type="Standard"/>
+        <knowledge-group id="246289" name="KG.04.TC2.FR" type="Standard"/>
+        <knowledge-group id="246290" name="KG.04.AIR.FR" type="Standard"/>
+        <knowledge-group id="246291" name="KG.04.EEI.FR" type="Standard"/>
+        <knowledge-group id="246292" name="KG.04.ASS.FR" type="Standard"/>
+        <knowledge-group id="246293" name="KG.04.ASA.FR" type="Standard"/>
+        <knowledge-group id="246294" name="KG.04.GEN.FR" type="Standard"/>
+        <knowledge-group id="246295" name="KG.04.TRS.FR" type="Standard"/>
+        <knowledge-group id="246296" name="KG.04.CIR.FR" type="Standard"/>
+        <knowledge-group id="246297" name="KG.04.ALT.FR" type="Standard"/>
+        <knowledge-group id="246298" name="KG.04.NBC.FR" type="Standard"/>
+        <knowledge-group id="246299" name="KG.14.PCA.FR" type="Standard"/>
+        <knowledge-group id="246300" name="KG.14.I1.FR" type="Standard"/>
+        <knowledge-group id="246301" name="KG.14.I2.FR" type="Standard"/>
+        <knowledge-group id="246302" name="KG.24.I1.FR" type="Standard"/>
+        <knowledge-group id="246303" name="KG.14.C1.FR" type="Standard"/>
+        <knowledge-group id="246304" name="KG.14.G1.FR" type="Standard"/>
+        <knowledge-group id="246305" name="KG.14.CIR.FR" type="Standard"/>
+        <knowledge-group id="246306" name="KG.14.A1.FR" type="Standard"/>
+        <knowledge-group id="246307" name="KG.24.PCA.FR" type="Standard"/>
+        <knowledge-group id="246310" name="KG.24.A1.FR" type="Standard"/>
+        <knowledge-group id="246311" name="KG.24.EEI.FR" type="Standard"/>
+        <knowledge-group id="246314" name="KG.24.C1.FR" type="Standard"/>
+        <knowledge-group id="246315" name="KG.24.CIR.FR" type="Standard"/>
+        <knowledge-group id="246316" name="KG.24.G1.FR" type="Standard"/>
+        <knowledge-group id="246318" name="KG.34.PCA.FR" type="Standard"/>
+        <knowledge-group id="246321" name="KG.04.BLD.TRP.FR" type="Standard"/>
+        <knowledge-group id="246322" name="KG.04.BLD.MNT.FR" type="Standard"/>
+        <knowledge-group id="246323" name="KG.04.BLD.MED.FR" type="Standard"/>
+        <knowledge-group id="246324" name="KG.04.BLD.GSP.FR" type="Standard"/>
+        <knowledge-group id="246325" name="KG.04.BLD.RAV.FR" type="Standard"/>
+        <knowledge-group id="246326" name="KG.04.BLD.PCA.FR" type="Standard"/>
+        <knowledge-group id="246327" name="KG.04.BLDA.PCA.FR" type="Standard"/>
+        <knowledge-group id="246328" name="KG.04.BLDA.TC2.FR" type="Standard"/>
+        <knowledge-group id="246426" name="KG.14.C2.FR" type="Standard"/>
+        <knowledge-group id="246427" name="KG.14.C3.FR" type="Standard"/>
+        <knowledge-group id="246481" name="KG.BLT.PCA.FR" type="Standard"/>
+        <knowledge-group id="246543" name="KG.14.C4.FR" type="Standard"/>
+      </communication>
+      <populations/>
+      <inhabitants/>
+      <logistics>
+        <logistic-base id="245466">
+          <subordinate id="14078"/>
+          <subordinate id="14088"/>
+        </logistic-base>
+        <logistic-base id="245468">
+          <subordinate id="12724"/>
+          <subordinate id="14026"/>
+          <subordinate id="14038"/>
+        </logistic-base>
+        <logistic-base id="245464">
+          <subordinate id="14108"/>
+          <subordinate id="14124"/>
+          <subordinate id="16406"/>
+        </logistic-base>
+        <logistic-base id="245470">
+          <subordinate id="12728"/>
+          <subordinate id="14010"/>
+          <subordinate id="14016"/>
+        </logistic-base>
+        <logistic-base id="245473">
+          <subordinate id="12741"/>
+        </logistic-base>
+        <logistic-base id="12865">
+          <subordinate id="12871"/>
+          <subordinate id="14022"/>
+          <subordinate id="16187"/>
+          <subordinate id="245464"/>
+          <subordinate id="245466"/>
+          <subordinate id="245468"/>
+          <subordinate id="245470"/>
+          <subordinate id="245473"/>
+        </logistic-base>
+        <logistic-base id="12871">
+          <subordinate id="12737"/>
+          <subordinate id="13117"/>
+          <subordinate id="13122"/>
+          <subordinate id="13130"/>
+          <subordinate id="13136"/>
+          <subordinate id="13146"/>
+          <subordinate id="13154"/>
+          <subordinate id="13166"/>
+          <subordinate id="13203"/>
+          <subordinate id="15117"/>
+          <subordinate id="16188"/>
+          <subordinate id="16412"/>
+          <subordinate id="16417"/>
+          <subordinate id="16472"/>
+        </logistic-base>
+        <logistic-base id="12737">
+          <subordinate id="12731"/>
+          <subordinate id="15399"/>
+          <subordinate id="15405"/>
+        </logistic-base>
+        <logistic-base id="16188">
+          <subordinate id="16257"/>
+        </logistic-base>
+      </logistics>
+    </party>
+  </parties>
+  <diplomacy>
+    <party id="12521"/>
+  </diplomacy>
+</orbat>
+<!-- signature="2297094812" -->

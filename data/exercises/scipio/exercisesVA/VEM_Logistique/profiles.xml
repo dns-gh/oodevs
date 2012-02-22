@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<profiles model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/exercise/profiles.xsd">
+  <profile name="RAV.BLT.FR" password="" role="anibas" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <automat id="14078"/>
+        <automat id="14088"/>
+        <automat id="245466"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="SAN.BLT.FR" password="" role="anibas" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <automat id="12724"/>
+        <automat id="14026"/>
+        <automat id="14038"/>
+        <automat id="245468"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="MAI.BLT.FR" password="" role="anibas" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <automat id="14108"/>
+        <automat id="14124"/>
+        <automat id="16406"/>
+        <automat id="245464"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="TRP.BLT.FR" password="" role="anibas" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <automat id="12728"/>
+        <automat id="14010"/>
+        <automat id="14016"/>
+        <automat id="14022"/>
+        <automat id="245470"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="GSP.BLT.FR" password="" role="anibas" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <automat id="12741"/>
+        <automat id="245473"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="MNT.BLD4.FR" password="" role="anibas" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <automat id="13146"/>
+        <automat id="16412"/>
+        <automat id="16472"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="RAV.BLD4.FR" password="" role="anibas" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <automat id="13117"/>
+        <automat id="13136"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="MED.BLD4.FR" password="" role="anibas" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <automat id="13130"/>
+        <automat id="13154"/>
+        <automat id="13203"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="TRP.BLD4.FR" password="" role="anibas" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <automat id="13166"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="BLD4.FR" password="" role="anibas" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <automat id="13122"/>
+        <automat id="16417"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="CIR.24.FR" password="" role="anibas" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite/>
+    </rights>
+  </profile>
+  <profile name="C1.24.FR" password="" role="anibas" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <automat id="12731"/>
+        <automat id="12737"/>
+        <automat id="15399"/>
+        <automat id="15405"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="G1.24.FR" password="" role="anibas" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite/>
+    </rights>
+  </profile>
+  <profile name="I1.24.FR" password="" role="anibas" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite/>
+    </rights>
+  </profile>
+  <profile name="I2.24.FR" password="" role="anibas" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite/>
+    </rights>
+  </profile>
+  <profile name="I3.24.FR" password="" role="anibas" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite/>
+    </rights>
+  </profile>
+  <profile name="A1.24.FR" password="" role="anibas" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite/>
+    </rights>
+  </profile>
+  <profile name="EEI.24.FR" password="" role="anibas" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite/>
+    </rights>
+  </profile>
+  <profile name="24.FR" password="" role="anibas" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite/>
+    </rights>
+  </profile>
+  <profile name="BLDA4.FR" password="" role="anibas" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <automat id="16188"/>
+        <automat id="16257"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="4.FR" password="" role="anibas" supervision="false">
+    <rights>
+      <readonly/>
+      <readwrite>
+        <automat id="15117"/>
+      </readwrite>
+    </rights>
+  </profile>
+  <profile name="Superviseur" password="" role="supervisor" supervision="true">
+    <rights>
+      <readonly>
+        <side id="12521"/>
+      </readonly>
+      <readwrite/>
+    </rights>
+  </profile>
+  <profile name="Superviseur CRAMBER" password="" role="supervisor" supervision="true">
+    <rights>
+      <readonly>
+        <side id="12521"/>
+      </readonly>
+      <readwrite/>
+    </rights>
+  </profile>
+</profiles>
+<!-- signature="1988815767" -->
