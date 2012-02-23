@@ -1627,7 +1627,7 @@
         <update name="geometry"/>
         <update name="geocoord"/>
         <update name="terrain" modules="terrain,graphics,spatialcontainer,pathfind,analysis,vmap,geodata,gdal_ogr,urban"/>
-        <update name="terrain" package="terraintools_${platform}.zip"/>
+        <update name="terrain" package="terraintools"/>
         <update name="qt"/>
         <update name="boost"/>
         <update name="boost" package="geometry" todir="${include.dir}"/>
@@ -1635,8 +1635,8 @@
         <update name="masalife/brain" version="${masalife.version}" package="bmc" todir="${bin.dir}"/>
         <update name="masalife/brain" version="${masalife.version}" package="net.masagroup.life.brain.ide-win32.win32.x86.zip" todir="${out.dir}"/>
         <update name="hla" package="include" todir="${include.dir}"/>
-        <update name="hla" package="lib" todir="${lib.dir}"/>
-        <update name="hla" package="dll" todir="${run.dir}/plugins/hla"/>
+        <update name="hla" package="lib/${platform}" todir="${lib.dir}"/>
+        <update name="hla" package="dll/${platform}" todir="${run.dir}/plugins/hla"/>
         <update name="hla" package="federation_app" todir="${bin.dir}"/>
         <update name="tools"/>
         <update name="log4cxx"/>
@@ -1654,8 +1654,8 @@
         <update name="openssl"/>
         <update name="excel"/>
         <update name="mak" version="4.0.2" package="include" todir="${include.dir}"/>
-        <update name="mak" version="4.0.2" package="lib" todir="${lib.dir}"/>
-        <update name="mak" version="4.0.2" package="dll" todir="${run.dir}/plugins/vrforces"/>
+        <update name="mak" version="4.0.2" package="lib/${platform}" todir="${lib.dir}"/>
+        <update name="mak" version="4.0.2" package="dll/${platform}" todir="${run.dir}/plugins/vrforces"/>
         <update name="wise"/>
         <antcall target="deploy-application-data"/>
         <update-database database="directia.core.bml" dir="${models.dir}/directia.core"/>
