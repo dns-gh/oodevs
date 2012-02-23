@@ -554,6 +554,7 @@ public:
         eRC_SectionUndeployed,
         eRC_StartUndeploy,
         eRC_DifficultMovementProgression,
+        eRC_LimaParameterNotPresent,
         eLast
     };
     //@}

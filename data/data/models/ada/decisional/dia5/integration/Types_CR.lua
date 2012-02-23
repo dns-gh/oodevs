@@ -418,4 +418,5 @@ eRC_NoPEInAutomat = 403
 eRC_SectionUndeployed = 404
 eRC_StartUndeploy = 405
 eRC_DifficultMovementProgression = 406
-eNbr = 407
+eRC_LimaParameterNotPresent = 407
+eNbr = 408

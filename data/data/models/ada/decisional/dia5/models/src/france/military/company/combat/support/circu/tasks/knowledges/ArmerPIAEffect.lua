@@ -18,12 +18,16 @@ return
             end
         end
         
-        local pointsOnLimas = DEC_Geometrie_GetPointsLimas( eTypeLima_LIA, ( self.nbMain ) )
+        local pointsOnLimas = DEC_Geometrie_GetPointsLimas( eTypeLima_LIA, ( self.nbMain ) )	
         for _, points in pairs( pointsOnLimas ) do
             for _, point in pairs( points ) do
                 self.mainPositions[#self.mainPositions + 1] = CreateKnowledge( sword.military.world.Point, point )
             end
         end
+        if not pointsOnLimas or #pointsOnLimas == 0 then
+            DEC_RC( eRC_LimaParameterNotPresent, eTypeLima_LIA )
+        end	
+
         if #self.mainPositions == 0 then
             local pos =  meKnowledge:getPosition()
             self.mainPositions[#self.mainPositions + 1] =  CreateKnowledge( sword.military.world.Point, pos )--myself.taskParams.meetingPoint
