@@ -2165,6 +2165,12 @@ A crowd won't be healed if it could not be reached (it has moved away or it is l
       </parameter>
     </mission>
     <mission dia-behavior="tasks.LaunchProjectileOnTargetsWthinArea" dia-type="tasks.LaunchProjectileOnTargetsWthinArea" id="4484" name="MLSECURITY - Attack urban blocks within area (with projectiles)">
+      <description>
+        <doctrine><![CDATA[For an agent to launch a specified quantity of projectiles on a given set of urban blocks target within a specified area.]]></doctrine>
+        <usage><![CDATA[Agent will move toward each target until it is able to launch the projectile.
+
+A urban block won't be hit (unit cannot launch projectile) if agent doesn't have the physical capability (no adapted launcher regarding to dotation type) or if it hasn't enough dotation). In that specific case, agent will decide to act on the next urban block. In some cases (long range type of projectiles) the agent won't move.]]></usage>
+      </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
@@ -3528,4 +3534,4 @@ A crowd won't be healed if it could not be reached (it has moved away or it is l
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="2423147797" -->
+<!-- signature="3752194283" -->

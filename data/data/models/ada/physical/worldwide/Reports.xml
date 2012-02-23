@@ -386,7 +386,7 @@
   </report>
   <report category="operational" id="270" message="no fire capacity"/>
   <report category="operational" id="271" message="unvalid ammunition type"/>
-  <report category="operational" id="272" message="Cannot launch projectile (no launcher or target out of range)"/>
+  <report category="operational" id="272" message="impossible indirect fire"/>
   <report category="operational" id="273" message="Target not detected"/>
   <report category="operational" id="274" message="Target tactically destroyed : %1">
     <parameter type="AgentKnowledge"/>
