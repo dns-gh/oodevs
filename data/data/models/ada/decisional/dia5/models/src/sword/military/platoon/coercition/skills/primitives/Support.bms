@@ -69,12 +69,14 @@ node "SupportElement"
         
         --If the old bestPosition is still good
         if self.bestPosition then
-           if self.bestPosition:supportEfficiency( self.params.entity ) > 0.8 and not self.bestPosition:isReached()  then
+           if self.bestPosition:supportEfficiency( self.params.entity ) > 0.8 then
                 for i=1, #self.positions do
                      Activate( skill.links.moveAndTakePosition,
                                self.efficiencies[self.positions[i]], { entity = self.positions[i] } )
                 end
-                return
+                if not self.bestPosition:isReached() then
+                    return
+                end
             end
         end
         -- If the bestPosition is not enought good for supporting the entity
