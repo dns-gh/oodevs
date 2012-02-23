@@ -254,7 +254,7 @@ void MissionInterface_ABC::paintEvent( QPaintEvent*, QString title )
 // -----------------------------------------------------------------------------
 int MissionInterface_ABC::GetIndex( Param_ABC* param ) const
 {
-    for( int i = 0; i < parameters_.size(); ++i )
+    for( int i = 0; i < (int)parameters_.size(); ++i )
         if( parameters_[ i ] == param )
             return i;
     return -1;
