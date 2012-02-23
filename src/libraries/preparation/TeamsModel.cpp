@@ -58,6 +58,7 @@ TeamsModel::~TeamsModel()
 // -----------------------------------------------------------------------------
 void TeamsModel::Purge()
 {
+    noSideTeam_.reset( factory_.CreateNoSideTeam() );
     DeleteAll();
 }
 
