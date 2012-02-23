@@ -2170,7 +2170,7 @@ A crowd won't be healed if it could not be reached (it has moved away or it is l
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="area" name="area" optional="false" type="Polygon"/>
-      <parameter dia-name="quantity" name="quantity" optional="false" type="Integer"/>
+      <parameter dia-name="quantity" name="quantity" optional="true" type="Integer"/>
       <parameter dia-name="dotationType" name="dotation type" optional="false" type="ResourceType"/>
     </mission>
   </units>
@@ -3528,4 +3528,4 @@ A crowd won't be healed if it could not be reached (it has moved away or it is l
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="1283021928" -->
+<!-- signature="2423147797" -->
