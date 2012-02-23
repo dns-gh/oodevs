@@ -7,7 +7,7 @@
                 <class name="agent.world.Target"/>
             </type>
         </parameter>
-        <parameter name="launchPosition" nullable="true">
+        <parameter name="position" nullable="true">
             <description>The position from which agent unit launch the projectile.</description>
             <type>
                 <class name="agent.world.Destination"/>
@@ -41,9 +41,9 @@
                             <parameter>target</parameter>
                         </value>
                     </parameter>
-                    <parameter name="launchPosition">
+                    <parameter name="position">
                         <value>
-                            <parameter>launchPosition</parameter>
+                            <parameter>position</parameter>
                         </value>
                     </parameter>
                     <parameter name="quantity">

@@ -24,6 +24,14 @@
                 <any/>
             </type>
         </parameter>
+        <parameter name="position" nullable="true">
+            <type>
+                <class name="agent.world.Destination"/>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
     </parameters>
     <stages>
         <stage label="LaunchProjectileOnTargets" disable-when-done="true">
@@ -42,6 +50,11 @@
                     <parameter name="dotationType">
                         <value>
                             <parameter>dotationType</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="position">
+                        <value>
+                            <parameter>position</parameter>
                         </value>
                     </parameter>
                 </skill>

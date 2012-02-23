@@ -11,7 +11,7 @@ rootnode
     -- -------------------------------------------------------------------------------- 
     -- Feedbacks and slots
     -- --------------------------------------------------------------------------------
-    done = function( self, params, additionalParams ) -- call by 'Lauchprojectile' skill
+    done = function( self, params, additionalParams ) -- call by 'Launchprojectile' skill
         self.nextTargetIndex = self.nextTargetIndex + 1
         if self.nextTargetIndex > #self.params.targets then
             Feedback( self.feedbacks.done )
@@ -39,6 +39,8 @@ rootnode
 
         -- Launch projectile on current target
         Activate( skill.links.launchProjectile, 1, { target = self.params.targets[ self.nextTargetIndex ], 
-          quantity = self.params.quantity, dotationType = self.params.dotationType } )
+                                                     position = self.params.position, 
+                                                     quantity = self.params.quantity, 
+                                                     dotationType = self.params.dotationType } )
     end
 }

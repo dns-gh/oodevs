@@ -22,11 +22,25 @@
                 <any/>
             </type>
         </parameter>
+        <parameter name="position" nullable="true">
+            <description/>
+            <type>
+                <class name="agent.world.Destination"/>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
     </parameters>
     <stages>
         <stage label="LaunchProjectileOnTargets" disable-when-done="true">
             <skills>
                 <skill name="behaviors.skills.LaunchProjectileOnTargets" main="true">
+                    <parameter name="position">
+                        <value>
+                            <parameter>position</parameter>
+                        </value>
+                    </parameter>
                     <parameter name="targets">
                         <value>
                             <call method="ontology.queries.GetUrbanBlocksWithinArea">

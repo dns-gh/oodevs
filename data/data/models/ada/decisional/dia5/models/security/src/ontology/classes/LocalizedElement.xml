@@ -54,7 +54,7 @@ Returns true once the agent has reached the end-point of the path (please note t
         <method name="canBeHit" abstract="false">
             <description>Returns 'true' if this element can be hit with the given type of dotation.&#xD;
 &#xD;
-This implementation  returns 'true' if the distance between agent unit and this element (the target) is smaller than the maximum firing distance allowed by the given dotation.</description>
+This implementation  returns 'true' if the distance between agent unit and this element (the target) is smaller than the maximum firing distance allowed by the given dotation, false otherwise.  If agent doesn't have adapted launcher for the dotation,  it returns false as well.</description>
             <argument name="typeOfResource">
                 <description>Type of resource (dotation) to launch on this element.</description>
                 <type>
