@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.skills.primitives.LaunchProjectile" source-version="1.0.0">
-    <description>For an agent to launch a specified quantity of projectile on a given target, with a specified type of dotation, from a position.</description>
+    <description>For an agent to launch a specified quantity of projectile on a given target, with a specified type of dotation, from a position. The position is can be issued or not. In the last case, agent will move toward the target until it is able to launch the projectile. </description>
     <parameters>
         <parameter name="target">
             <description>The target to launch projectile on.</description>
@@ -9,7 +9,7 @@
             </type>
         </parameter>
         <parameter name="position" nullable="true">
-            <description>The position from which agent unit launch the projectile.</description>
+            <description>The position from which agent unit launch the projectile (optionnal). If no position issued, agent moves to target until it can launch a projectile. </description>
             <type>
                 <class name="agent.world.Destination"/>
             </type>

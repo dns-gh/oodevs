@@ -1,19 +1,24 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="tasks.LaunchProjectileOnTargetsWthinArea" source-version="1.0.0">
+    <description>For an agent to launch a specified quantity of projectiles on a given set of urban blocks target within a specified area.&#xD;
+&#xD;
+A urban block won't be hit (unit cannot launch projectile) if agent doesn't have the physical capability (no adapted launcher regarding to dotation type) or if it hasn't enough dotation). In that specific case, agent will decide to act on the next urban block.&#xD;
+&#xD;
+If a position is issued (optional) agent tries to launch projectiles from it. If not, agent moves toward each urban block until it can launche the projectile. In some cases (long range type of projectiles) agent don't need to move.</description>
     <parameters>
         <parameter name="area">
-            <description>The area to find the target urban blocks within.</description>
+            <description>The area to find the urban blocks within.</description>
             <type>
                 <class name="ontology.classes.Area"/>
             </type>
         </parameter>
         <parameter name="quantity">
-            <description>The quantity of resourse to use per time unit.</description>
+            <description>The quantity of resourse to use for each target.</description>
             <type>
                 <simple name="numeric"/>
             </type>
             <default>
-                <number>10.0</number>
+                <number>1.0</number>
             </default>
         </parameter>
         <parameter name="dotationType">
@@ -23,7 +28,7 @@
             </type>
         </parameter>
         <parameter name="position" nullable="true">
-            <description/>
+            <description>The (optional) position from which the agent launches the projectiles on each urban block (same position for all issued urban blocks).</description>
             <type>
                 <class name="agent.world.Destination"/>
             </type>
@@ -33,7 +38,7 @@
         </parameter>
     </parameters>
     <stages>
-        <stage label="LaunchProjectileOnTargets" disable-when-done="true">
+        <stage label="attack begins" disable-when-done="true">
             <skills>
                 <skill name="behaviors.skills.LaunchProjectileOnTargets" main="true">
                     <parameter name="position">
