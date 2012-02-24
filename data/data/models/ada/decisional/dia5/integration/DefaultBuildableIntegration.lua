@@ -99,35 +99,33 @@ integration.updateBuildIt = function( object )
     else
         if object[myself].actionBuildState == eActionObjetImpossible then
             DEC_Trace( "impossible works" )
-            return eRC_ConstructionObjetImpossible
+            return false
         elseif object[myself].actionBuildState == eActionObjetManqueDotation then
             DEC_Trace( "not enough dotation" ) 
-            return eRC_PasDotationConstructionObjet
+            return false
         elseif object[myself].actionBuildState == eActionObjetPasDeCapacite then
             DEC_Trace( "no capacity" ) 
-            return eRC_ConstructionObjetImpossible
+            return false
         end
     end
-    return eRC_RAS
+    return true
 end
 -- -----------------------------------------------------------------------------
 -- Update the object creation
 -- -----------------------------------------------------------------------------
 integration.stopBuildIt = function( object )
     object[ myself ] = object[ myself ] or {}
-    local result
     if object[ myself ].actionBuildState == eActionObjetTerminee then
     if( object.knowledge ~= nil ) then
             meKnowledge:RC( eRC_FinTravauxObjet, object.knowledge.source )
         end
-        result = eRC_RAS
+        return true
     else
-        result = eRC_ConstructionObjetImpossible
+        return false
     end
     integration.pionRC( eRC_FinTravauxObjet )
     object[ myself ].actionBuild = DEC__StopAction( object[ myself ].actionBuild )
     object[ myself ].actionBuildState = nil
-    return result
 end
 
 -- -----------------------------------------------------------------------------
