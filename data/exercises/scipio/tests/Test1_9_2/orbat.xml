@@ -37,7 +37,7 @@
             <unit color="0x647dff" command-post="false" id="325" name="RENS . Equipe de recueil information" position="31UCQ0632003402" type="RENS . Equipe de recueil information"/>
           </automat>
           <automat color="0x647dff" engaged="true" id="326" knowledge-group="2" name="RENS . Section ROIM [326]" type="RENS . Section ROIM">
-            <unit color="0x647dff" command-post="true" id="327" name="RENS . Section MO DRAC" position="31UCQ0462501659" type="RENS  Section MO DRAC"/>
+            <unit color="0x647dff" command-post="true" id="327" name="RENS . Section MO DRAC" position="31UCQ0462501659" type="RENS . Section MO DRAC"/>
             <unit color="0x647dff" command-post="false" id="328" name="RENS . Drone DRAC" position="31UCQ0510801142" type="RENS . Drone DRAC"/>
             <unit color="0x647dff" command-post="false" id="329" name="RENS . Drone DRAC" position="31UCQ0458900661" type="RENS . Drone DRAC"/>
             <unit color="0x647dff" command-post="false" id="330" name="RENS . Drone DRAC" position="31UCQ0410601178" type="RENS . Drone DRAC"/>
@@ -289,4 +289,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="1618671500" -->
+<!-- signature="0618216284" -->
