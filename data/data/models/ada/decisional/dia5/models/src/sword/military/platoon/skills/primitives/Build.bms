@@ -68,7 +68,7 @@ node "BuildElement"
        self.arrived = true
     end,
     failed = function( self, params, additionalParams )
-       Feedback( self.feedbacks.failed, { element = self.params.entity, reason = additionalParams.reason } )
+       Feedback( self.feedbacks.failed, { element = additionalParams.element } )
     end,
 
     create = function( self )
@@ -135,9 +135,8 @@ node "Build"
     acquire = { [ skill.resources.buildCapacity ] = 1 },
 
     select = function( self )
-        local value =  self.params.entity:buildIt()
-        if value ~= eRC_RAS then
-           Feedback( self.feedbacks.failed, { element = self.params.entity, reason = value } )
+        if not self.params.entity:buildIt() then
+           Feedback( self.feedbacks.failed, { element = self.params.entity } )
         end
     end
 }
