@@ -51,7 +51,8 @@ PopulationsLayer::~PopulationsLayer()
 bool PopulationsLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& ) const
 {
     return ( gui::ValuedDragObject::Provides< const PopulationPrototype >( event ) && selectedEntity_ )
-        || ( gui::ValuedDragObject::Provides< const PopulationPositions >( event ) && selectedPopulation_ );
+        || ( gui::ValuedDragObject::Provides< const PopulationPositions >( event ) && selectedPopulation_ )
+        || ( gui::ValuedDragObject::Provides< const Entity_ABC >( event ) && selectedPopulation_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -61,7 +62,14 @@ bool PopulationsLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& 
 bool PopulationsLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometry::Point2f& point )
 {
     if( selectedPopulation_ )
-        if( PopulationPositions* positions = gui::ValuedDragObject::GetValue< PopulationPositions >( event ) )
+    {
+        PopulationPositions* positions = gui::ValuedDragObject::GetValue< PopulationPositions >( event );
+        if( !positions )
+        {
+            if( Entity_ABC* entity = gui::ValuedDragObject::GetValue< Entity_ABC >( event ) )
+                positions = static_cast< PopulationPositions* >( selectedPopulation_.ConstCast()->Retrieve< Positions >() );
+        }
+        if( positions )
         {
             if( draggingPoint_.Distance( point ) >= 5.f * tools_.Pixels( point ) )
             {
@@ -70,6 +78,7 @@ bool PopulationsLayer::HandleMoveDragEvent( QDragMoveEvent* event, const geometr
             }
             return true;
         }
+    }
     return gui::PopulationsLayer::HandleMoveDragEvent( event, point );
 }
 
@@ -89,7 +98,13 @@ bool PopulationsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point
     }
     else if( selectedPopulation_ )
     {
-        if( PopulationPositions* positions = gui::ValuedDragObject::GetValue< PopulationPositions >( event ) )
+        PopulationPositions* positions = gui::ValuedDragObject::GetValue< PopulationPositions >( event );
+        if( !positions )
+        {
+            if( Entity_ABC* entity = gui::ValuedDragObject::GetValue< Entity_ABC >( event ) )
+                positions = static_cast< PopulationPositions* >( selectedPopulation_.ConstCast()->Retrieve< Positions >() );
+        }
+        if( positions )
         {
             draggingPoint_.Set( 0, 0 );
             draggingOffset_.Set( 0, 0 );

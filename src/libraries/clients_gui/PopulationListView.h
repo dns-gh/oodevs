@@ -40,7 +40,7 @@ public:
     virtual ~PopulationListView();
     //@}
 
-private:
+protected:
     //! @name Helpers
     //@{
     virtual void NotifyCreated( const kernel::Population_ABC& population );

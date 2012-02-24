@@ -13,7 +13,8 @@
 #include "PreparationProfile.h"
 #include "ModelBuilder.h"
 #include "clients_gui/ValuedDragObject.h"
-#include "preparation/PopulationPositions.h"
+#include "preparation/PopulationHierarchies.h"
+#include "preparation/ProfileHierarchies.h"
 
 // -----------------------------------------------------------------------------
 // Name: PopulationListView constructor
@@ -24,6 +25,8 @@ PopulationListView::PopulationListView( QWidget* pParent, kernel::Controllers& c
     , modelBuilder_( modelBuilder )
     , selected_    ( controllers )
 {
+    setDragAutoScroll( true );
+    viewport()->setAcceptDrops( true );
     connect( this, SIGNAL( itemRenamed( Q3ListViewItem*, int, const QString& ) ), &modelBuilder, SLOT( OnRename( Q3ListViewItem*, int, const QString& ) ) );
 }
 
@@ -79,13 +82,16 @@ void PopulationListView::NotifyCreated( const kernel::Team_ABC& team )
 // -----------------------------------------------------------------------------
 Q3DragObject* PopulationListView::dragObject()
 {
+    gui::PopulationListView::dragObject();
     gui::ValuedListItem* pItem = static_cast< gui::ValuedListItem* >( selectedItem() );
     if( !pItem )
         return 0;
     if( dynamic_cast< const kernel::Population_ABC* >( &*selected_ ) )
     {
-        const PopulationPositions* pos = static_cast< const PopulationPositions* >( selected_->Retrieve< kernel::Positions >() );
-        return new gui::ValuedDragObject( pos, dynamic_cast< QWidget* >( parent() ) );
+        gui::ValuedListItem* pItem = static_cast< gui::ValuedListItem* >( selectedItem() );
+        if( !pItem )
+            return 0;
+        return new gui::ValuedDragObject( pItem->GetValue< const kernel::Entity_ABC >(), this );
     }
     return 0;
 }
@@ -103,4 +109,61 @@ void PopulationListView::OnContextMenuRequested( Q3ListViewItem* item, const QPo
     kernel::ContextMenu* menu = new kernel::ContextMenu( this );
     menu->insertItem( tr( "Create side" ), &modelBuilder_, SLOT( OnCreate() ) );
     menu->exec( pos, index );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationListView::viewportDragEnterEvent
+// Created: JSR 2012-02-24
+// -----------------------------------------------------------------------------
+void PopulationListView::viewportDragEnterEvent( QDragEnterEvent* pEvent )
+{
+    EntityListView::viewportDragEnterEvent( pEvent );
+    pEvent->accept( gui::ValuedDragObject::Provides< const kernel::Entity_ABC >( pEvent ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationListView::viewportDragMoveEvent
+// Created: JSR 2012-02-24
+// -----------------------------------------------------------------------------
+void PopulationListView::viewportDragMoveEvent( QDragMoveEvent *pEvent )
+{
+    EntityListView::viewportDragMoveEvent( pEvent );
+    pEvent->accept( gui::ValuedDragObject::Provides< const kernel::Entity_ABC >( pEvent ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationListView::viewportDropEvent
+// Created: JSR 2012-02-24
+// -----------------------------------------------------------------------------
+void PopulationListView::viewportDropEvent( QDropEvent* pEvent )
+{
+    EntityListView::viewportDropEvent( pEvent );
+    const kernel::Population_ABC* entity = dynamic_cast< const kernel::Population_ABC* >( gui::ValuedDragObject::GetValue< const kernel::Entity_ABC >( pEvent ) );
+    if( entity )
+    {
+        QPoint position = viewport()->mapFromParent( pEvent->pos() );
+        gui::ValuedListItem* targetItem = static_cast< gui::ValuedListItem* >( itemAt( position ) );
+        if( !targetItem || !targetItem->IsA< const kernel::Entity_ABC >() )
+            pEvent->ignore();
+        else
+        {
+            pEvent->accept();
+            kernel::TacticalHierarchies* hierarchies = const_cast< kernel::TacticalHierarchies* >( entity->Retrieve< kernel::TacticalHierarchies >() );
+            if( hierarchies )
+            {
+                const kernel::Entity_ABC& target = *targetItem->GetValue< const kernel::Entity_ABC >();
+                if( &target == entity )
+                    return;
+                gui::PopulationListView::NotifyDeleted( *entity );
+                kernel::TacticalHierarchies* targetHierarchies = const_cast< kernel::TacticalHierarchies* >( target.Retrieve< kernel::TacticalHierarchies >() );
+                const kernel::Entity_ABC& superior = targetHierarchies ? targetHierarchies->GetTop() : target;
+                static_cast< ::PopulationHierarchies* >( hierarchies )->ChangeSuperior( const_cast< kernel::Entity_ABC& >( superior ) );
+                if( ProfileHierarchies_ABC* profileHierarchie = const_cast< ProfileHierarchies_ABC* >( entity->Retrieve< ProfileHierarchies_ABC >() ) )
+                    static_cast< ::ProfileHierarchies* >( profileHierarchie )->ChangeSuperior( const_cast< kernel::Entity_ABC& >( superior ) );
+                gui::PopulationListView::NotifyCreated( *entity );
+            }
+        }
+    }
+    else
+        pEvent->ignore();
 }
