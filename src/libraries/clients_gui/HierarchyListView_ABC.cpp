@@ -395,11 +395,13 @@ void HierarchyListView_ABC::viewportDropEvent( QDropEvent* pEvent )
     {
         QPoint position = viewport()->mapFromParent( pEvent->pos() );
         ValuedListItem* targetItem = static_cast< ValuedListItem* >( itemAt( position ) );
-        if( !entity || !targetItem || !Drop( *entity, *targetItem ) )
+        if( !targetItem || !Drop( *entity, *targetItem ) )
             pEvent->ignore();
         else
             pEvent->accept();
     }
+    else
+        pEvent->ignore();
 }
 
 // -----------------------------------------------------------------------------

@@ -9,6 +9,7 @@
 
 #include "preparation_pch.h"
 #include "PopulationHierarchies.h"
+#include "Population.h"
 #include "Populations.h"
 
 // -----------------------------------------------------------------------------
@@ -17,7 +18,6 @@
 // -----------------------------------------------------------------------------
 PopulationHierarchies::PopulationHierarchies( kernel::Entity_ABC& holder, kernel::Entity_ABC* superior )
     : kernel::SimpleHierarchies< kernel::TacticalHierarchies >( holder, superior )
-    , superior_( superior )
 {
     // NOTHING
 }
@@ -28,7 +28,24 @@ PopulationHierarchies::PopulationHierarchies( kernel::Entity_ABC& holder, kernel
 // -----------------------------------------------------------------------------
 PopulationHierarchies::~PopulationHierarchies()
 {
-    if( superior_ )
-        if( Populations* popus = superior_->Retrieve< Populations >() )
-            popus->Remove( GetEntity().GetId() );
+    if( GetSuperior() )
+        if( const Populations* popus = GetSuperior()->Retrieve< Populations >() )
+            const_cast< Populations* >( popus )->Remove( GetEntity().GetId() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationHierarchies::ChangeSuperior
+// Created: JSR 2012-02-24
+// -----------------------------------------------------------------------------
+void PopulationHierarchies::ChangeSuperior( kernel::Entity_ABC& superior )
+{
+    if( kernel::Entity_ABC* oldsuperior = const_cast< kernel::Entity_ABC* >( GetSuperior() ) )
+        if( Populations* pop = oldsuperior->Retrieve< Populations >() )
+            pop->Remove( GetEntity().GetId() );
+    SetSuperior( &superior );
+    if( Populations* pops = superior.Retrieve< Populations >() )
+    {
+        const Population& pop = static_cast< const Population& >( GetEntity() );
+        pops->AddPopulation( const_cast< Population& >( pop ) );
+    }
 }
