@@ -36,7 +36,7 @@ namespace
 BOOST_AUTO_TEST_CASE( max_files_set_to_zero_disables_log )
 {
     MockLogFactory factory;
-    RotatingLog log( factory, "filename", 0, 42 );
+    RotatingLog log( factory, "filename", 0, 42, true );
     log.Write( "some text" );
 }
 
@@ -44,7 +44,7 @@ BOOST_AUTO_TEST_CASE( max_entries_set_to_zero_disables_rotation )
 {
     MockLogFactory factory;
     MockLog* pLog = new MockLog();
-    RotatingLog log( factory, "filename", 1, 0 );
+    RotatingLog log( factory, "filename", 1, 0, true );
     MOCK_EXPECT( factory, CreateLog ).once().returns( pLog );
     MOCK_EXPECT( pLog, Write ).exactly( 3 ).with( "some text" );
     log.Write( "some text" );
@@ -57,7 +57,7 @@ BOOST_AUTO_TEST_CASE( rotating_log_first_log_is_sent_to_log )
 {
     MockLogFactory factory;
     MockLog* pLog = new MockLog();
-    RotatingLog log( factory, "filename", 12, 42 );
+    RotatingLog log( factory, "filename", 12, 42, true );
     MOCK_EXPECT( factory, CreateLog ).once().returns( pLog );
     MOCK_EXPECT( pLog, Write ).once().with( "some text" );
     log.Write( "some text" );
@@ -69,7 +69,7 @@ BOOST_AUTO_TEST_CASE( rotating_log_switches_to_next_log_when_max_entries_is_reac
     MockLogFactory factory;
     MockLog* pLog = new MockLog();
     const unsigned int size = 3;
-    RotatingLog log( factory, "filename.log", 2, static_cast< int >( strlen( "some text" ) ) * size );
+    RotatingLog log( factory, "filename.log", 2, static_cast< int >( strlen( "some text" ) ) * size, true );
     MOCK_EXPECT( factory, CreateLog ).once().with( "filename.log" ).returns( pLog );
     MOCK_EXPECT( pLog, Write ).exactly( size ).with( "some text" );
     log.Write( "some text" );
@@ -90,7 +90,7 @@ BOOST_AUTO_TEST_CASE( rotating_log_goes_back_to_the_first_one_when_max_files_is_
     MockLogFactory factory;
     MockLog* pLog = new MockLog();
     const unsigned int size = 3;
-    RotatingLog log( factory, "filename.log", 2, static_cast< int >( strlen( "some text" ) ) * size );
+    RotatingLog log( factory, "filename.log", 2, static_cast< int >( strlen( "some text" ) ) * size, true );
     MOCK_EXPECT( factory, CreateLog ).once().with( "filename.log" ).returns( pLog );
     MOCK_EXPECT( pLog, Write ).exactly( size ).with( "some text" );
     log.Write( "some text" );
