@@ -73,17 +73,32 @@ public:
     virtual std::string GetPropagationFile( const std::string& path ) const;
     virtual std::string BuildPropagationChildFile( const std::string& path, const std::string& file ) const;
 
-    virtual unsigned int GetLogLevel( const std::string& field );
-    virtual unsigned int GetLogFiles( const std::string& field );
-    virtual unsigned int GetLogSize( const std::string& field );
-
     virtual void Parse( int argc, char** argv );
     void LoadExercise( const std::string& file ); //$$$ Rien à foutre la ...
+    //@}
+
+    //! @name Types
+    //@{
+    struct LogSettings
+    {
+        enum eLogLevel
+        {
+            eLogLevel_error,
+            eLogLevel_info,
+            elogLevel_all
+        };
+
+        LogSettings(): logLevel_( elogLevel_all ) , maxFiles_( 1 ), maxFileSize_( -1 ) {}        
+        eLogLevel logLevel_;
+        unsigned int maxFiles_;
+        int maxFileSize_;
+    };
     //@}
 
     //! @name Operations
     //@{
     const Loader_ABC& GetLoader() const;
+    virtual void GetLogSettings( const std::string& field, LogSettings& logSettings );
     //@}
 
 private:
@@ -94,27 +109,13 @@ private:
     void ReadLogSettings( const std::string& name, xml::xistream& xis );
     //@}
 
-private:
-
-    //! @name Types
+protected:
+    //! @name Helpers
     //@{
-    struct LogSetting
-    {
-        LogSetting();
-
-        enum eLogLevel
-        {
-            eLogLevel_error,
-            eLogLevel_info,
-            elogLevel_all
-        };
-
-        eLogLevel logLevel_;
-        int maxFileSize_;
-        unsigned int maxFiles_;
-    };
+    void SetLogSettings( const std::string& name, unsigned int level, unsigned int files, int size, bool replace = true );
     //@}
 
+private:
     //! @name Member data
     //@{
     std::auto_ptr< tools::Loader_ABC > fileLoader_;
@@ -135,7 +136,7 @@ private:
     std::string population_;
     std::string propagations_;
 
-    std::map< std::string, LogSetting > logSettings_;
+    std::map< std::string, LogSettings > logSettings_;
     //@}
 };
 

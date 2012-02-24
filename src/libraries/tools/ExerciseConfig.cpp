@@ -400,55 +400,44 @@ const tools::Loader_ABC& ExerciseConfig::GetLoader() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExerciseConfig::LogSetting
-// Created: MMC 2012-01-25
-// -----------------------------------------------------------------------------
-ExerciseConfig::LogSetting::LogSetting()
-    : logLevel_( elogLevel_all )
-    , maxFileSize_( -1 )
-    , maxFiles_( 1 )
-{
-    // NOTHING
-}
-
-// -----------------------------------------------------------------------------
 // Name: ExerciseConfig::ReadLogSettings
 // Created: MMC 2012-01-25
 // -----------------------------------------------------------------------------
 void ExerciseConfig::ReadLogSettings( const std::string& name, xml::xistream& xis )
 {
-    LogSetting& setting = logSettings_[ name ];
+    LogSettings& setting = logSettings_[ name ];
     unsigned int logLevel = setting.logLevel_;
-    xis 
-    >> xml::optional >> xml::attribute( "loglevel", logLevel )
-    >> xml::optional >> xml::attribute( "logfiles", setting.maxFiles_  )
-    >> xml::optional >> xml::attribute( "logsize", setting.maxFileSize_ );
-    setting.logLevel_ = static_cast< LogSetting::eLogLevel >( logLevel > 2 ? 2 : logLevel );
+    xis >> xml::optional >> xml::attribute( "loglevel", logLevel )
+        >> xml::optional >> xml::attribute( "logfiles", setting.maxFiles_  )
+        >> xml::optional >> xml::attribute( "logsize", setting.maxFileSize_ );
+    setting.logLevel_ = static_cast< LogSettings::eLogLevel >( logLevel > 2 ? 2 : logLevel );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExerciseConfig::GetLogLevel
-// Created: MMC 2012-01-25
+// Name: ExerciseConfig::SetLogSettings
+// Created: MMC 2012-02-21
 // -----------------------------------------------------------------------------
-unsigned int ExerciseConfig::GetLogLevel( const std::string& field )
+void ExerciseConfig::SetLogSettings( const std::string& name, unsigned int level, unsigned int files, int size, bool replace /* = true */ )
 {
-    return static_cast< unsigned int >( logSettings_[ field ].logLevel_ );
+    std::map< std::string, LogSettings >::iterator it = logSettings_.find( name );
+    if( replace || it == logSettings_.end() )
+    {
+        LogSettings& setting = logSettings_[ name ];
+        setting.logLevel_ = static_cast< LogSettings::eLogLevel >( level > 2 ? 2 : level );
+        setting.maxFiles_= files;
+        setting.maxFileSize_ = size;
+    }
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExerciseConfig::GetLogFiles
-// Created: MMC 2012-01-25
+// Name: ExerciseConfig::GetLogSettings
+// Created: MMC 2012-02-21
 // -----------------------------------------------------------------------------
-unsigned int ExerciseConfig::GetLogFiles( const std::string& field )
+void ExerciseConfig::GetLogSettings( const std::string& field, LogSettings& logSettings )
 {
-    return logSettings_[ field ].maxFiles_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExerciseConfig::GetLogSize
-// Created: MMC 2012-01-25
-// -----------------------------------------------------------------------------
-unsigned int ExerciseConfig::GetLogSize( const std::string& field )
-{
-    return logSettings_[ field ].maxFileSize_;
+    LogSettings settings;
+    std::map< std::string, LogSettings >::iterator it = logSettings_.find( field );
+    if( it != logSettings_.end() )
+        settings = it->second;
+    logSettings = settings;
 }

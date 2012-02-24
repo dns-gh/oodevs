@@ -35,7 +35,7 @@ class MT_FileLogger : public MT_Logger_ABC
 
 public:
     explicit MT_FileLogger( const char* strFileName, unsigned int maxFiles = 1, int maxSize = -1, int nLogLevels = eLogLevel_All, 
-                            bool bClearPreviousLog = false, E_Type type = eSimulation );
+                            bool bClearPreviousLog = false, E_Type type = eSimulation, bool sizeInBytes = false );
 
     virtual ~MT_FileLogger();
 
@@ -59,6 +59,7 @@ private:
     bool bClearPreviousLog_;
     int maxSize_;
     int sizeCount_;
+    bool sizeInBytes_;
 };
 
 #endif // __MT_FileLogger_h_

@@ -30,7 +30,7 @@ class RotatingLog : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-    RotatingLog( dispatcher::LogFactory_ABC& factory, const std::string& filename, unsigned int files, unsigned int size );
+    RotatingLog( dispatcher::LogFactory_ABC& factory, const std::string& filename, unsigned int files, unsigned int size, bool sizeInBytes = false );
     //@}
 
     //! @name Operations
@@ -47,6 +47,7 @@ private:
     //! @name Operations
     //@{
     void DoWrite( const std::string& line );
+    void CreateFileLog();
     //@}
 
     //! @name Member data
@@ -57,6 +58,7 @@ private:
     std::string extension_;
     unsigned int file_, files_, size_, count_;
     std::auto_ptr< Log_ABC > pLog_;
+    bool sizeInBytes_;
     //@}
 };
 
