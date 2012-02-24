@@ -615,5 +615,19 @@
   <report category="operational" id="441" message="Impossible de soigné les bléssés"/>
   <report category="operational" id="442" message="Mise en place sur le poste de contrôle"/>
   <report category="operational" id="443" message="Mise en oeuvre du système"/>
+  <report category="operational" id="444" message="La lima de type %1 n'est pas renseignée">
+    <parameter type="Enumeration">
+      <value id="0" name="ligne_debouche"/>
+      <value id="1" name="ligne_changement_attitude"/>
+      <value id="2" name="ligne_coordination"/>
+      <value id="3" name="ligne_interdire"/>
+      <value id="4" name="ligne_objectif"/>
+      <value id="5" name="ligne_coup_arret"/>
+      <value id="6" name="ligne_recueil"/>
+      <value id="7" name="ligne_debut_mission"/>
+      <value id="8" name="ligne_fin_mission"/>
+      <value id="9" name="ligne_identification_accueil"/>
+    </parameter>
+  </report>
 </reports>
-<!-- signature="0783531458" -->
+<!-- signature="3261495131" -->

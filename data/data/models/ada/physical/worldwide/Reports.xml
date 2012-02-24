@@ -615,5 +615,19 @@
   <report category="operational" id="441" message="Wounded cannot be healed"/>
   <report category="operational" id="442" message="Control point established"/>
   <report category="operational" id="443" message="System is being operated"/>
+  <report category="operational" id="444" message="Phase line of type %1 is not filled">
+    <parameter type="Enumeration">
+      <value id="0" name="ligne_debouche"/>
+      <value id="1" name="ligne_changement_attitude"/>
+      <value id="2" name="ligne_coordination"/>
+      <value id="3" name="ligne_interdire"/>
+      <value id="4" name="ligne_objectif"/>
+      <value id="5" name="ligne_coup_arret"/>
+      <value id="6" name="ligne_recueil"/>
+      <value id="7" name="ligne_debut_mission"/>
+      <value id="8" name="ligne_fin_mission"/>
+      <value id="9" name="ligne_identification_accueil"/>
+    </parameter>
+  </report>
 </reports>
-<!-- signature="2138392456" -->
+<!-- signature="3145040165" -->

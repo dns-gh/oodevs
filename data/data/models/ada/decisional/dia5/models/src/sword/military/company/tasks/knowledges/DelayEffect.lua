@@ -10,7 +10,7 @@ return
       self.ptrDelayPoints = {}
       myself.leadData.pionsLima1 = {}
       myself.leadData.pionsLima2 = {}
-  
+
       -- self.scoutPoints: Points sur les limas pour les pions d'eclairage
       meKnowledge.nbPionsScout = meKnowledge.nbPionsScout or 0
       self.pointsOnLimasScout = DEC_Geometrie_GetPointsLimas( eTypeLima_LCAR, meKnowledge.nbPionsScout )
@@ -18,14 +18,12 @@ return
        for _, point in pairs( points ) do
          self.scoutPoints[ #self.scoutPoints + 1 ] = CreateKnowledge( sword.military.world.Point, point )
        end
-      end  
+      end
       self.numberEchelons = myself.taskParams.echelonNumber or 0
       if self.numberEchelons == 0 then
         self.numberEchelons = 1 -- par défaut les pions décrochent sur 1 échelon
       end
-      
 
-            
       -- self.mainPoints: Points sur les limas pour les pions ayant la mission principale
       -- meKnowledge.nbPionsMain + meKnowledge.nbPionsMain % 2  nombre de points sont créés sur n echelons
       meKnowledge.nbPionsMain = meKnowledge.nbPionsMain or 0
@@ -41,6 +39,9 @@ return
          compt = compt + 1  
        end
       end 
+      if not self.pointsOnLimas or #self.pointsOnLimas == 0 then
+        DEC_RC( eRC_LimaParameterNotPresent, eTypeLima_LCAR )
+      end
       if params.pcObjective and params.pcObjective ~= NIL then
         for i = 1, meKnowledge.nbPionsMain do
           self.mainPoints[ #self.mainPoints + 1 ] = params.pcObjective

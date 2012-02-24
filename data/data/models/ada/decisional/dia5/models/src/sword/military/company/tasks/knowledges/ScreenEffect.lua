@@ -17,13 +17,15 @@ return
             myself.leadData.fuseaux[ #myself.leadData.fuseaux + 1 ] = fuseau
         end
 
-        -- Organisation du dsipositif initial à 300 metres devant la LCAR
+        -- Organisation du dsipositif initial à 300 metres devant la LCAR (moins en zurb ?)
         local LimaId = DEC_GetLima( eTypeLima_LCAR )
         if LimaId > 0 and meKnowledge.nbPionsMain > 0 then
             pointsBeforeLimas = DEC_Geometrie_CalculerPositionsParRapportALima( LimaId, 300, meKnowledge.nbPionsMain)
-        for _, point in pairs( pointsBeforeLimas ) do
+            for _, point in pairs( pointsBeforeLimas ) do
                 myself.leadData.scoutPoints[ #myself.leadData.scoutPoints + 1 ]= CreateKnowledge( sword.military.world.Point, point )
             end
+        else
+            DEC_RC( eRC_LimaParameterNotPresent, eTypeLima_LCAR )
         end
     end,
 

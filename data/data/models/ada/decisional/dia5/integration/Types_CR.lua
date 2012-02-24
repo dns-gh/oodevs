@@ -455,4 +455,5 @@ eRC_StartingToExtractVictimsFromCrowd = 440
 eRC_WoundedCannotBeHealed = 441
 eRC_ControlPointEstablished = 442
 eRC_SystemIsBeingOperated = 443
-eNbr = 444
+eRC_LimaParameterNotPresent = 444
+eNbr = 445
