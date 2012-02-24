@@ -34,7 +34,7 @@ rootnode
     end,
 
     -- --------------------------------------------------------------------------------
-    -- Feedbacks
+    -- Move to position and launch projectile
     -- --------------------------------------------------------------------------------
     activate = function( self )
         local Activate = Activate

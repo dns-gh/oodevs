@@ -9,7 +9,7 @@
             </type>
         </parameter>
         <parameter name="position" nullable="true">
-            <description>The position from which agent unit launch the projectile (optionnal). If no position issued, agent moves to target until it can launch a projectile. </description>
+            <description>The position from which agent unit launch the projectile (optional). If no position issued, agent moves to target until it can launch a projectile. </description>
             <type>
                 <class name="agent.world.Destination"/>
             </type>

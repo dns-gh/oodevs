@@ -38,9 +38,9 @@ rootnode
         end
 
         -- Launch projectile on current target
-        Activate( skill.links.launchProjectile, 1, { target = self.params.targets[ self.nextTargetIndex ], 
-                                                     position = self.params.position, 
-                                                     quantity = self.params.quantity, 
+        Activate( skill.links.launchProjectile, 1, { target = self.params.targets[ self.nextTargetIndex ],
+                                                     position = self.params.position,
+                                                     quantity = self.params.quantity,
                                                      dotationType = self.params.dotationType } )
     end
 }

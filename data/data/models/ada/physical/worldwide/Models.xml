@@ -2617,6 +2617,11 @@
         <mission name="MLSECURITY - Plan a multiple attack"/>
         <mission name="MLSECURITY - Plan an attack"/>
         <mission name="MLSECURITY - Attack urban blocks within area (with projectiles)"/>
+        <mission name="MLSECURITY - Commit suicide attack (on units)"/>
+        <mission name="MLSECURITY - Increase resource node production"/>
+        <mission name="MLSECURITY - Operate a system"/>
+        <mission name="MLSECURITY - Transport"/>
+        <mission name="MLSECURITY - Use a checkpoint (filter crowds)"/>
       </missions>
       <fragorders/>
     </unit>
@@ -3853,4 +3858,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1339037504" -->
+<!-- signature="1568823844" -->

@@ -4,7 +4,7 @@
 &#xD;
 A urban block won't be hit (unit cannot launch projectile) if agent doesn't have the physical capability (no adapted launcher regarding to dotation type) or if it hasn't enough dotation). In that specific case, agent will decide to act on the next urban block.&#xD;
 &#xD;
-If a position is issued (optional) agent tries to launch projectiles from it. If not, agent moves toward each urban block until it can launche the projectile. In some cases (long range type of projectiles) agent don't need to move.</description>
+If a position is issued (optional) agent tries to launch projectiles from it. If not, agent moves toward each urban block until it can launch the projectile. In some cases (long range type of projectiles) agent don't need to move.</description>
     <parameters>
         <parameter name="area">
             <description>The area to find the urban blocks within.</description>
