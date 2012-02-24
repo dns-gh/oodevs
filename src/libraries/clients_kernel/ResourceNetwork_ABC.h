@@ -53,22 +53,22 @@ public:
     {
         ResourceNode()
             : isEnabled_   ( true )
+            , critical_    ( false )
             , production_  ( 0 )
             , consumption_ ( 0 )
             , needs_       ( 0 )
             , satisfaction_( 0.f )
-            , critical_    ( false )
             , maxStock_    ( 0 )
             , stock_       ( 0 )
             , totalFlow_   ( 0 )
         {}
 
         bool isEnabled_;
+        bool critical_;
         unsigned int production_;
         unsigned int consumption_;
         unsigned int needs_;
         float satisfaction_;
-        bool critical_;
         unsigned int maxStock_;
         unsigned int stock_;
         unsigned int totalFlow_;
