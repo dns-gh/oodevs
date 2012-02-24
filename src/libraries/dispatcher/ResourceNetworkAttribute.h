@@ -40,13 +40,13 @@ class ResourceNetworkAttribute : public UrbanObjectAttribute_ABC
         std::string resource_;
         std::vector< Link > links_;
         bool enabled_;
+        bool critical_;
         unsigned int maxStock_;
         unsigned int stock_;
         unsigned int production_;
         unsigned int consumption_;
         unsigned int maxConsumption_;
         unsigned int currentConsumption_;
-        bool critical_;
         float functionalState_;
     };
 
