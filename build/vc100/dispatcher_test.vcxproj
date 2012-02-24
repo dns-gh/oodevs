@@ -104,7 +104,7 @@
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|win32'">
     <Link>
-      <AdditionalDependencies>psapi.lib;masalloc.lib;HLA.lib;libFedTime1516e.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>psapi.lib;masalloc.lib;HLA.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <StackReserveSize>15000000</StackReserveSize>
       <LargeAddressAware>true</LargeAddressAware>
     </Link>
@@ -113,7 +113,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
     <Link>
-      <AdditionalDependencies>psapi.lib;masalloc.lib;HLA.lib;libFedTime1516e.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>psapi.lib;masalloc.lib;HLA.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <StackReserveSize>15000000</StackReserveSize>
       <LargeAddressAware>true</LargeAddressAware>
     </Link>
@@ -121,7 +121,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|win32'">
     <Link>
-      <AdditionalDependencies>psapi.lib;masalloc_d.lib;HLA_d.lib;libFedTime1516e_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>psapi.lib;masalloc_d.lib;HLA_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <StackReserveSize>15000000</StackReserveSize>
       <LargeAddressAware>true</LargeAddressAware>
     </Link>
@@ -129,7 +129,7 @@
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'">
     <Link>
-      <AdditionalDependencies>psapi.lib;masalloc_d.lib;HLA_d.lib;libFedTime1516e_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>psapi.lib;masalloc_d.lib;HLA_d.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <StackReserveSize>15000000</StackReserveSize>
       <LargeAddressAware>true</LargeAddressAware>
     </Link>
