@@ -580,17 +580,17 @@
   </report>
   <report category="operational" id="407" message="Phase line of type %1 is not filled">
     <parameter type="Enumeration">
-      <value id="0" name="ligne_debouche"/>
-      <value id="1" name="ligne_changement_attitude"/>
-      <value id="2" name="ligne_coordination"/>
-      <value id="3" name="ligne_interdire"/>
-      <value id="4" name="ligne_objectif"/>
-      <value id="5" name="ligne_coup_arret"/>
-      <value id="6" name="ligne_recueil"/>
-      <value id="7" name="ligne_debut_mission"/>
-      <value id="8" name="ligne_fin_mission"/>
-      <value id="9" name="ligne_identification_accueil"/>
+      <value id="0" name="departure line"/>
+      <value id="1" name="change of posture line"/>
+      <value id="2" name="coordination line"/>
+      <value id="3" name="deny line"/>
+      <value id="4" name="objective line"/>
+      <value id="5" name="blocking line"/>
+      <value id="6" name="rearward passage line"/>
+      <value id="7" name="mission: start line"/>
+      <value id="8" name="mission: complete line"/>
+      <value id="9" name="checkpoint line"/>
     </parameter>
   </report>
 </reports>
-<!-- signature="2647759245" -->
+<!-- signature="0804870500" -->
