@@ -1627,7 +1627,7 @@
         <update name="geometry"/>
         <update name="geocoord"/>
         <update name="terrain" modules="terrain,graphics,spatialcontainer,pathfind,analysis,vmap,geodata,gdal_ogr,urban"/>
-        <update name="terrain" package="terraintools"/>
+        <update name="terrain" package="terraintools_${platform}.zip"/>
         <update name="qt"/>
         <update name="boost"/>
         <update name="boost" package="geometry" todir="${include.dir}"/>
