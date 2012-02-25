@@ -53,7 +53,7 @@ public:
     virtual bool Create( const std::string& federation, const T_FomFiles& fomFiles );
     virtual bool Destroy( const std::string& federation );
 
-    virtual bool Join  ( const std::string& federate, const std::string& federation, ::hla::FederateAmbassador_ABC& ambassador );
+    virtual T_JointInfo Join  ( const std::string& federate, const std::string& federation, ::hla::FederateAmbassador_ABC& ambassador );
     virtual void Resign();
     //@}
 
@@ -93,6 +93,19 @@ public:
     virtual void RegisterSynchronizationPoint( const std::string& label );
     //@}
 
+    //! @name Ownership management
+    //@{
+    virtual void UnconditionalOwnershipDivestiture( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes);
+    virtual void NegotiatedOwnershipDivestiture( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes );
+    virtual void ConfirmDivestiture( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes );
+    virtual void OwnershipAcquisition( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes );
+    virtual void OwnershipAcquisitionIfAvailable( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes );
+    virtual void OwnershipDivestitureIfWanted( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes );
+    virtual void CancelNegotiatedOwnershipDivestiture( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes );
+    virtual void CancelOwnershipAcquisition( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes );
+    virtual void QueryAttributeOwnership( const ::hla::ObjectIdentifier& objectID, const ::hla::AttributeIdentifier& attributeID);
+    virtual bool IsAttributeOwnedByFederate( const ::hla::ObjectIdentifier& objectID, const ::hla::AttributeIdentifier& attributeID);
+    //@}
 private:
     //! @name Helpers
     //@{

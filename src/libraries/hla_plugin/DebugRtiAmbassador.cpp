@@ -127,7 +127,7 @@ bool DebugRtiAmbassador::Destroy( const std::string& federation )
 // Name: DebugRtiAmbassador::Join
 // Created: MCO 2009-01-26
 // -----------------------------------------------------------------------------
-bool DebugRtiAmbassador::Join( const std::string& federate, const std::string& federation, FederateAmbassador_ABC& ambassador )
+::hla::RtiAmbassador_ABC::T_JointInfo DebugRtiAmbassador::Join( const std::string& federate, const std::string& federation, FederateAmbassador_ABC& ambassador )
 {
     Flush();
     logger_.LogInfo( "-> Join federate " + federate + " federation " + federation );
@@ -346,4 +346,114 @@ void DebugRtiAmbassador::RegisterSynchronizationPoint( const std::string& label 
     Flush();
     logger_.LogInfo( "-> RegisterSynchronizationPoint label " + label );
     ambassador_->RegisterSynchronizationPoint( label );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DebugRtiAmbassador::UnconditionalOwnershipDivestiture
+// Created: AHC 2012-02-24
+// -----------------------------------------------------------------------------
+void DebugRtiAmbassador::UnconditionalOwnershipDivestiture( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes)
+{
+    Flush();
+    logger_.LogInfo( "-> UnconditionalOwnershipDivestiture object " + objectID.ToString() );
+    ambassador_->UnconditionalOwnershipDivestiture( objectID, attributes );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DebugRtiAmbassador::NegotiatedOwnershipDivestiture
+// Created: AHC 2012-02-24
+// -----------------------------------------------------------------------------
+void DebugRtiAmbassador::NegotiatedOwnershipDivestiture( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes )
+{
+    Flush();
+    logger_.LogInfo( "-> ConfirmDivestiture object " + objectID.ToString() );
+    ambassador_->ConfirmDivestiture( objectID, attributes );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DebugRtiAmbassador::ConfirmDivestiture
+// Created: AHC 2012-02-24
+// -----------------------------------------------------------------------------
+void DebugRtiAmbassador::ConfirmDivestiture( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes )
+{
+    Flush();
+    logger_.LogInfo( "-> ConfirmDivestiture object " + objectID.ToString() );
+    ambassador_->ConfirmDivestiture( objectID, attributes );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DebugRtiAmbassador::OwnershipAcquisition
+// Created: AHC 2012-02-24
+// -----------------------------------------------------------------------------
+void DebugRtiAmbassador::OwnershipAcquisition( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes )
+{
+    Flush();
+    logger_.LogInfo( "-> OwnershipAcquisition object " + objectID.ToString() );
+    ambassador_->OwnershipAcquisition( objectID, attributes );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DebugRtiAmbassador::OwnershipAcquisitionIfAvailable
+// Created: AHC 2012-02-24
+// -----------------------------------------------------------------------------
+void DebugRtiAmbassador::OwnershipAcquisitionIfAvailable( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes )
+{
+    Flush();
+    logger_.LogInfo( "-> OwnershipAcquisitionIfAvailable object " + objectID.ToString() );
+    ambassador_->OwnershipAcquisitionIfAvailable( objectID, attributes );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DebugRtiAmbassador::OwnershipDivestitureIfWanted
+// Created: AHC 2012-02-24
+// -----------------------------------------------------------------------------
+void DebugRtiAmbassador::OwnershipDivestitureIfWanted( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes )
+{
+    Flush();
+    logger_.LogInfo( "-> OwnershipDivestitureIfWanted object " + objectID.ToString() );
+    ambassador_->OwnershipDivestitureIfWanted( objectID, attributes );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DebugRtiAmbassador::CancelNegotiatedOwnershipDivestiture
+// Created: AHC 2012-02-24
+// -----------------------------------------------------------------------------
+void DebugRtiAmbassador::CancelNegotiatedOwnershipDivestiture( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes )
+{
+    Flush();
+    logger_.LogInfo( "-> RegisterSynchronizationPoint object " + objectID.ToString() );
+    ambassador_->CancelNegotiatedOwnershipDivestiture( objectID, attributes );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DebugRtiAmbassador::CancelOwnershipAcquisition
+// Created: AHC 2012-02-24
+// -----------------------------------------------------------------------------
+void DebugRtiAmbassador::CancelOwnershipAcquisition( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& attributes )
+{
+    Flush();
+    logger_.LogInfo( "-> CancelOwnershipAcquisition object " + objectID.ToString() );
+    ambassador_->CancelOwnershipAcquisition( objectID, attributes );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DebugRtiAmbassador::QueryAttributeOwnership
+// Created: AHC 2012-02-24
+// -----------------------------------------------------------------------------
+void DebugRtiAmbassador::QueryAttributeOwnership( const ::hla::ObjectIdentifier& objectID, const ::hla::AttributeIdentifier& attributeID)
+{
+    Flush();
+    logger_.LogInfo( "-> QueryAttributeOwnership object " + objectID.ToString() );
+    ambassador_->QueryAttributeOwnership( objectID, attributeID );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DebugRtiAmbassador::IsAttributeOwnedByFederate
+// Created: AHC 2012-02-24
+// -----------------------------------------------------------------------------
+bool DebugRtiAmbassador::IsAttributeOwnedByFederate( const ::hla::ObjectIdentifier& objectID, const ::hla::AttributeIdentifier& attributeID)
+{
+    Flush();
+    logger_.LogInfo( "-> IsAttributeOwnedByFederate object " + objectID.ToString() );
+    return ambassador_->IsAttributeOwnedByFederate( objectID, attributeID );
 }

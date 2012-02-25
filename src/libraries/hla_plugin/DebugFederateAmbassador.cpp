@@ -179,3 +179,85 @@ void DebugFederateAmbassador::FederationSynchronized( const std::string& label )
 {
     logger_.LogInfo( "<- FederationSynchronized label " + label );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DebugFederateAmbassador::RequestAttributeOwnershipAssumption
+// Created:AHC 2012-02-24
+// -----------------------------------------------------------------------------
+void DebugFederateAmbassador::RequestAttributeOwnershipAssumption( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& /*offeredAttributes*/)
+{
+    logger_.LogInfo( "<- RequestAttributeOwnershipAssumption object " + objectID.ToString() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DebugFederateAmbassador::RequestDivestitureConfirmation
+// Created:AHC 2012-02-24
+// -----------------------------------------------------------------------------
+void DebugFederateAmbassador::RequestDivestitureConfirmation( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& /*releasedAttributes*/)
+{
+    logger_.LogInfo( "<- RequestDivestitureConfirmation object " + objectID.ToString() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DebugFederateAmbassador::AttributeOwnershipAcquisitionNotification
+// Created:AHC 2012-02-24
+// -----------------------------------------------------------------------------
+void DebugFederateAmbassador::AttributeOwnershipAcquisitionNotification( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& /*securedAttributes*/)
+{
+    logger_.LogInfo( "<- AttributeOwnershipAcquisitionNotification object " + objectID.ToString() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DebugFederateAmbassador::AttributeOwnershipUnavailable
+// Created:AHC 2012-02-24
+// -----------------------------------------------------------------------------
+void DebugFederateAmbassador::AttributeOwnershipUnavailable( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& /*theAttributes*/)
+{
+    logger_.LogInfo( "<- AttributeOwnershipUnavailable object " + objectID.ToString() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DebugFederateAmbassador::RequestAttributeOwnershipRelease
+// Created:AHC 2012-02-24
+// -----------------------------------------------------------------------------
+void DebugFederateAmbassador::RequestAttributeOwnershipRelease( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& /*candidateAttributes*/)
+{
+    logger_.LogInfo( "<- RequestAttributeOwnershipRelease object " + objectID.ToString() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DebugFederateAmbassador::ConfirmAttributeOwnershipAcquisitionCancellation
+// Created:AHC 2012-02-24
+// -----------------------------------------------------------------------------
+void DebugFederateAmbassador::ConfirmAttributeOwnershipAcquisitionCancellation( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& /*theAttributes*/)
+{
+    logger_.LogInfo( "<- ConfirmAttributeOwnershipAcquisitionCancellation object " + objectID.ToString() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DebugFederateAmbassador::InformAttributeOwnership
+// Created:AHC 2012-02-24
+// -----------------------------------------------------------------------------
+void DebugFederateAmbassador::InformAttributeOwnership( const ::hla::ObjectIdentifier& objectID, const ::hla::AttributeIdentifier& /*theAttribute*/ , const ::hla::FederateIdentifier& /*theOwner*/ )
+{
+    logger_.LogInfo( "<- InformAttributeOwnership object " + objectID.ToString() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DebugFederateAmbassador::AttributeIsNotOwned
+// Created:AHC 2012-02-24
+// -----------------------------------------------------------------------------
+void DebugFederateAmbassador::AttributeIsNotOwned( const ::hla::ObjectIdentifier& objectID, const ::hla::AttributeIdentifier& /*theAttribute*/)
+{
+    logger_.LogInfo( "<- AttributeIsNotOwned object " + objectID.ToString() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DebugFederateAmbassador::AttributeIsOwnedByRTI
+// Created:AHC 2012-02-24
+// -----------------------------------------------------------------------------
+void DebugFederateAmbassador::AttributeIsOwnedByRTI( const ::hla::ObjectIdentifier& objectID, const ::hla::AttributeIdentifier& /*theAttribute*/)
+{
+    logger_.LogInfo( "<- AttributeIsOwnedByRTI object " + objectID.ToString() );
+}
+

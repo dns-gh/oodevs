@@ -70,6 +70,19 @@ public:
     virtual void FederationSynchronized( const std::string& label );
     //@}
 
+    //! @name  Ownership Management
+    //@{
+    virtual void RequestAttributeOwnershipAssumption( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& offeredAttributes);
+    virtual void RequestDivestitureConfirmation( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& releasedAttributes);
+    virtual void AttributeOwnershipAcquisitionNotification( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& securedAttributes);
+    virtual void AttributeOwnershipUnavailable( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& theAttributes);
+    virtual void RequestAttributeOwnershipRelease( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& candidateAttributes);
+    virtual void ConfirmAttributeOwnershipAcquisitionCancellation( const ::hla::ObjectIdentifier& objectID, const T_AttributeIdentifiers& theAttributes);
+    virtual void InformAttributeOwnership( const ::hla::ObjectIdentifier& objectID, const ::hla::AttributeIdentifier& theAttribute , const ::hla::FederateIdentifier& theOwner );
+    virtual void AttributeIsNotOwned( const ::hla::ObjectIdentifier& objectID, const ::hla::AttributeIdentifier& theAttribute);
+    virtual void AttributeIsOwnedByRTI( const ::hla::ObjectIdentifier& objectID, const ::hla::AttributeIdentifier& theAttribute);
+    //@}
+
 private:
     //! @name Member data
     //@{

@@ -101,9 +101,45 @@ void HlaClass::Register( RemoteAgentListener_ABC& listener )
 
 // -----------------------------------------------------------------------------
 // Name: HlaClass::Unregister
-// Created: SLI 2011-08-29
+// Created: AHC 2012-02-24
 // -----------------------------------------------------------------------------
 void HlaClass::Unregister( RemoteAgentListener_ABC& listener )
 {
     pListeners_->Unregister( listener );
+}
+
+// -----------------------------------------------------------------------------
+// Name: HlaClass::Reflected
+// Created: AHC 2012-02-24
+// -----------------------------------------------------------------------------
+void HlaClass::Reflected( HlaObject_ABC& /*object*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: HlaClass::RequestConfirmDivestiture
+// Created: AHC 2012-02-24
+// -----------------------------------------------------------------------------
+bool HlaClass::RequestConfirmDivestiture( const HlaObject_ABC& /*object*/ )
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: HlaClass::OwnershipAcquisitionNotification
+// Created: AHC 2012-02-24
+// -----------------------------------------------------------------------------
+void HlaClass::OwnershipAcquisitionNotification( const HlaObject_ABC& /*object*/ )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: HlaClass::RequestOwnershipAssumption
+// Created: AHC 2012-02-24
+// -----------------------------------------------------------------------------
+bool HlaClass::RequestOwnershipAssumption( const HlaObject_ABC& /*object*/ )
+{
+    return false;
 }

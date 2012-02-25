@@ -25,6 +25,10 @@ MOCK_BASE_CLASS( MockObjectRegistration, ::hla::ObjectRegistration_ABC< T > )
 {
     MOCK_METHOD_EXT_TPL( Create, 2, T&( const ::hla::ObjectIdentifier&, const std::string& ), Create )
     MOCK_METHOD_EXT_TPL( Destroy, 1, void( T& ), Destroy )
+    MOCK_METHOD_EXT_TPL( Reflected, 1, void( T& ), Reflected )
+    MOCK_METHOD_EXT_TPL( RequestConfirmDivestiture, 1, bool( const T& ), RequestConfirmDivestiture )
+    MOCK_METHOD_EXT_TPL( OwnershipAcquisitionNotification, 1, void( const T& ), OwnershipAcquisitionNotification )
+    MOCK_METHOD_EXT_TPL( RequestOwnershipAssumption, 1, bool( const T& ), RequestOwnershipAssumption )
 };
 
 }

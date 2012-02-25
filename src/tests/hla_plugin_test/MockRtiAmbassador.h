@@ -45,6 +45,16 @@ MOCK_BASE_CLASS( MockRtiAmbassador, hla::RtiAmbassador_ABC )
     MOCK_METHOD( NextEventRequestAvailable, 1 );
     MOCK_METHOD( SynchronizationPointAchieved, 1 );
     MOCK_METHOD( RegisterSynchronizationPoint, 1 );
+    MOCK_METHOD( UnconditionalOwnershipDivestiture, 2 );
+    MOCK_METHOD( NegotiatedOwnershipDivestiture, 2 );
+    MOCK_METHOD( ConfirmDivestiture, 2 );
+    MOCK_METHOD( OwnershipAcquisition, 2 );
+    MOCK_METHOD( OwnershipAcquisitionIfAvailable, 2 );
+    MOCK_METHOD( OwnershipDivestitureIfWanted, 2 );
+    MOCK_METHOD( CancelNegotiatedOwnershipDivestiture, 2 );
+    MOCK_METHOD( CancelOwnershipAcquisition, 2 );
+    MOCK_METHOD( QueryAttributeOwnership, 2 );
+    MOCK_METHOD( IsAttributeOwnedByFederate, 2 );
 };
 
 }
