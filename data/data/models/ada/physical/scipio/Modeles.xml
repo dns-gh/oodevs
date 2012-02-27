@@ -7045,7 +7045,7 @@
     </automat>
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.RENS.CDER RBRR">
       <missions>
-        <mission name="AUTOMATE RENS ROHUM SExfiltrer"/>
+        <mission name="AUTOMATE RENS SExfiltrer"/>
         <mission name="AUTOMATE RENS Orienter"/>
         <mission name="AUTOMATE RENS ROHUM Renseigner Sur"/>
         <mission name="AUTOMATE COMMUNES Decrocher"/>
@@ -7101,7 +7101,7 @@
     </automat>
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.RENS.URH">
       <missions>
-        <mission name="AUTOMATE RENS ROHUM SExfiltrer"/>
+        <mission name="AUTOMATE RENS SExfiltrer"/>
         <mission name="AUTOMATE RENS ROHUM Renseigner Sur"/>
         <mission name="AUTOMATE COMMUNES Decrocher"/>
         <mission name="AUTOMATE COMMUNES Faire Mouvement"/>
@@ -7198,7 +7198,7 @@
     </automat>
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.RENS.Multicapteur">
       <missions>
-        <mission name="AUTOMATE RENS ROHUM SExfiltrer"/>
+        <mission name="AUTOMATE RENS SExfiltrer"/>
         <mission name="AUTOMATE RENS Orienter"/>
         <mission name="AUTOMATE RENS ROHUM Renseigner Sur"/>
         <mission name="AUTOMATE COMMUNES Decrocher"/>
@@ -7264,4 +7264,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0826697513" -->
+<!-- signature="0217529468" -->
