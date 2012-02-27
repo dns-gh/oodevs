@@ -148,7 +148,7 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
     menu->insertItem( tools::translate( "Menu", "Properties..." ), &exerciseDialog, SLOT( exec() ) );
     menu->insertItem( tools::translate( "Menu", "Scores..." ), &scoreDialog, SLOT( exec() ) );
     menu->insertItem( tools::translate( "Menu", "Success factors..." ), &successFactorDialog, SLOT( exec() ) );
-    menu->insertItem( tools::translate( "Menu", "Consistency analysis..." ), &consistencyDialog, SLOT( CheckConsistency() ) );
+    menu->insertItem( tools::translate( "Menu", "Consistency analysis..." ), &consistencyDialog, SLOT( Display() ) );
     menu->insertItem( tools::translate( "Menu", "Performance..."), &performanceDialog, SLOT( exec() ) );
     Wrap( insertItem( tools::translate( "Menu", "&Exercise" ), menu ) );
 

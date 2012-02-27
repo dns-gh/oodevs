@@ -1330,6 +1330,10 @@
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
+    <message>
+        <source>No orbat.xml found</source>
+        <translation>Orbat.xml non présent</translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>

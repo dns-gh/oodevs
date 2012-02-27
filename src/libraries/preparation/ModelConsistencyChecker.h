@@ -93,6 +93,7 @@ private:
     void CheckScores();
     void CheckSuccessFactors();
     void CheckLogisticBase();
+    void CheckOrbat();
     //@}
 
 private:

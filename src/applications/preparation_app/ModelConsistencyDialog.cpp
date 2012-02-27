@@ -128,8 +128,8 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eGhostConverted ]                  = tr( "Unknown type '%1', a phantom unit has been created instead." );
 
     // Command Post
-    errorDescriptions_[ eNoCommandPost ]                  = tr( "Automat has no command post." );
-    errorDescriptions_[ eSeveralCommandPost ]             = tr( "Automat has more than one command post." );
+    errorDescriptions_[ eNoCommandPost ]                   = tr( "Automat has no command post." );
+    errorDescriptions_[ eSeveralCommandPost ]              = tr( "Automat has more than one command post." );
 
     // Others
     errorDescriptions_[ eLongNameSize ]                    = tr( "Long name size limit exceeded : %1." );
@@ -139,6 +139,7 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eNoKnowledgeGroup ]                = tr( "Automat has no knowledge group." );
     errorDescriptions_[ eScoreError ]                      = tr( "Score definitions contain errors: %1" );
     errorDescriptions_[ eSuccessFactorError ]              = tr( "Success factor definitions contain errors: %1" );
+    errorDescriptions_[ eNoOrbat ]                         = tr( "No orbat.xml found" );
     errorDescriptions_[ eOthers ]                          = "%1";
 }
 
@@ -200,6 +201,17 @@ void ModelConsistencyDialog::CheckConsistency()
     UpdateDataModel();
     if( !checker_.GetConsistencyErrors().empty() && dataModel_->rowCount() > 0 )
         show();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelConsistencyDialog::Display
+// Created: ABR 2012-02-27
+// -----------------------------------------------------------------------------
+void ModelConsistencyDialog::Display()
+{
+    checker_.CheckConsistency();
+    UpdateDataModel();
+    show();
 }
 
 // -----------------------------------------------------------------------------

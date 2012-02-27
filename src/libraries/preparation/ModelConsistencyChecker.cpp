@@ -153,6 +153,7 @@ bool ModelConsistencyChecker::CheckConsistency()
     CheckLoadingErrors();
     CheckScores();
     CheckSuccessFactors();
+    CheckOrbat();
 
     return !errors_.empty();
 }
@@ -592,6 +593,17 @@ void ModelConsistencyChecker::CheckLogisticBase()
         if( attribute && !attribute->HasValidLogisticBase() )
             AddError( eNoLogisticBase, &obj );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelConsistencyChecker::CheckOrbat
+// Created: ABR 2012-02-27
+// -----------------------------------------------------------------------------
+void ModelConsistencyChecker::CheckOrbat()
+{
+    Iterator< const Team_ABC& > it = model_.GetTeamResolver().CreateIterator();
+    if( !it.HasMoreElements() )
+        AddError( eNoOrbat, 0 );
 }
 
 // -----------------------------------------------------------------------------

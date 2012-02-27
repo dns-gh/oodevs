@@ -1330,6 +1330,10 @@
         <source>No valid logistic base defined.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>No orbat.xml found</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>

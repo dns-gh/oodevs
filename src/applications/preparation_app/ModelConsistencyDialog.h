@@ -57,10 +57,15 @@ public:
     virtual ~ModelConsistencyDialog();
     //@}
 
+    //! @name Public
+    //@{
+    void CheckConsistency();
+    //@}
+
 public slots:
     //! @name Slots
     //@{
-    void CheckConsistency();
+    void Display();
     //@}
 
 private:
