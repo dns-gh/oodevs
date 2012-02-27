@@ -129,6 +129,20 @@ method "filter" ( masalife.brain.integration.startStopAction(
 } ) )
 
 -- --------------------------------------------------------------------------------
+-- Decontamination plot
+-- --------------------------------------------------------------------------------
+method "decontaminateMe" ( 
+    function( self )
+        meKnowledge:sendReport( eRC_DemandeDecontamination )
+        integration.requestForDecontamination( self )
+        if not integration.isContaminated() then
+            integration.pionRC( eRC_UniteDecontaminee )
+            return true
+        end
+        return false
+    end )
+
+-- --------------------------------------------------------------------------------
 -- Specific classe methods
 -- --------------------------------------------------------------------------------
 method "getPosition" ( 

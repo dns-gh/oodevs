@@ -15,6 +15,7 @@
     <realizes>agent.world.ResourceReceiver</realizes>
     <realizes>agent.world.System</realizes>
     <realizes>agent.world.CheckPoint</realizes>
+    <realizes>agent.world.DecontaminationPlot</realizes>
     <methods>
         <method name="getPosition">
             <return name="simPosition">
@@ -152,6 +153,16 @@ This implementation returns true once the crowds filtration property is running.
                     <simple name="numeric"/>
                 </type>
             </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="decontaminateMe" abstract="false">
+            <description>To decontaminate me through this element.&#xD;
+&#xD;
+Returns 'true' once decontamination is complete, 'false' otherwise.</description>
             <return>
                 <type>
                     <simple name="boolean"/>

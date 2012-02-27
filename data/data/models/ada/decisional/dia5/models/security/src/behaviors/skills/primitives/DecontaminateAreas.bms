@@ -11,7 +11,8 @@ rootnode
     {
         skill.links.reach,
         skill.links.decontaminate,
-        skill.links.selfprotect
+        skill.links.selfprotect,
+        skill.links.selfDecontaminate
     },
     feedbacks   = { "decontaminated" },
 
@@ -59,6 +60,9 @@ rootnode
                       { destination = self.area, urgency = false, pathType = eTypeItiNBC } )
                 end
             else
+                if self.params.selfDecontaminate then -- self decontaminate is needed.
+                    Activate( skill.links.selfDecontaminate, 1 )
+                end
                 Feedback( self.feedbacks.done )
             end
          else 

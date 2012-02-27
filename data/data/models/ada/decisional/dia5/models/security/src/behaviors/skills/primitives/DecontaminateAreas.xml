@@ -12,12 +12,21 @@ Areas are visited in the order of the list. </description>
             </type>
         </parameter>
         <parameter name="equipNRBCProtection">
-            <description>If this parameter is set tot 'false', agent won't equip itself with NBC protection to decontaminate the given areas.</description>
+            <description>If this parameter is set to 'false', agent won't equip itself with NBC protection to decontaminate the given areas.</description>
             <type>
                 <simple name="boolean"/>
             </type>
             <default>
                 <boolean>true</boolean>
+            </default>
+        </parameter>
+        <parameter name="selfDecontaminate">
+            <description>Define if agent needs to self decontaminate once area decontamination is done.</description>
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
             </default>
         </parameter>
     </parameters>
@@ -33,6 +42,9 @@ Areas are visited in the order of the list. </description>
         </link>
         <link name="selfprotect" skill="agent.behaviors.skills.actions.EquipWithNBCProtection">
             <description>To take all necessary steps to selfProtect against NRBC contamination or intoxication.</description>
+        </link>
+        <link name="selfDecontaminate" skill="agent.behaviors.skills.actions.SelfDecontaminate">
+            <description>To enect the decision to self decontaminate once area decontamination is done.</description>
         </link>
     </links>
     <feedbacks>

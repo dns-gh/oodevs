@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.world.DecontaminationPlot" source-version="1.0.0" extends="agent.world.Destination">
+    <description/>
+    <methods>
+        <method name="decontaminateMe">
+            <description>To decontaminate me through this element.&#xD;
+&#xD;
+Returns 'true' once decontamination is complete, 'false' otherwise.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+    </methods>
+</interface>

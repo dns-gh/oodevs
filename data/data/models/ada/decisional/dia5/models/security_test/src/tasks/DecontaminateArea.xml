@@ -9,14 +9,40 @@
                 </list>
             </type>
         </parameter>
+        <parameter name="selfDecontamination">
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>false</boolean>
+            </default>
+        </parameter>
+        <parameter name="equipNRBCProtection">
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>true</boolean>
+            </default>
+        </parameter>
     </parameters>
     <stages>
         <stage label="DecontaminateArea" disable-when-done="true">
             <skills>
                 <skill name="behaviors.skills.primitives.DecontaminateAreas" main="true">
+                    <parameter name="equipNRBCProtection">
+                        <value>
+                            <parameter>equipNRBCProtection</parameter>
+                        </value>
+                    </parameter>
                     <parameter name="areas">
                         <value>
                             <parameter>areas</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="selfDecontaminate">
+                        <value>
+                            <parameter>selfDecontamination</parameter>
                         </value>
                     </parameter>
                 </skill>

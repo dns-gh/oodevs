@@ -14,7 +14,7 @@
     </body-type>
     <feedbacks>
         <feedback name="confineActionCompleted">
-            <description>Sent when the population is effectively confined into the populated area.</description>
+            <description>Sent when the population is confined into the populated area.</description>
         </feedback>
     </feedbacks>
 </skill>

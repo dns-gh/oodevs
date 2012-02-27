@@ -438,8 +438,8 @@ Display a message.</description>
                 </type>
             </return>
         </method>
-        <method name="commitSuicide">
-            <description>To commit suicide instanteneously. Agent life level is set to 0%, means that it is dead.</description>
+        <method name="selfDestruct">
+            <description>To self destruct instanteneously. Agent life level is set to 0%, means that it is dead. This actin may be used to commit suicide.</description>
         </method>
         <method name="isDead">
             <description>Returns true if this element is dead.</description>
@@ -514,6 +514,28 @@ Returns 'true' when checkPoint is filtering.</description>
                     <simple name="numeric"/>
                 </type>
             </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="beDecontaminated">
+            <description>To be decontaminated with the given decontamination plot. Returns 'true' once deonctamination is complete, 'false' otherwise.</description>
+            <argument name="decontaminationPlot">
+                <description></description>
+                <type>
+                    <class name="agent.world.DecontaminationPlot"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="selfDecontaminate">
+            <description>To self decontaminate instanteneously. Returns true once self decontamination action is completed.</description>
             <return>
                 <type>
                     <simple name="boolean"/>

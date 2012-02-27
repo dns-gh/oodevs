@@ -13,7 +13,7 @@ rootnode
     -- Feedbacks
     -- --------------------------------------------------------------------------------
     launchActionCompleted = function( self ) -- from Launch action skill
-        meKnowledge:commitSuicide() -- agent unit must die
+        meKnowledge:selfDestruct() -- agent unit must die
         Feedback( self.feedbacks.done )
     end,
 

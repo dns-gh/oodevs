@@ -27,7 +27,7 @@ rootnode
     end,
 
     -- --------------------------------------------------------------------------------
-    -- Feedbacks
+    -- Move to system and operate it.
     -- --------------------------------------------------------------------------------
     activate = function( self )
         local Activate = Activate

@@ -503,9 +503,6 @@ Returns true if agent Unit has physical capabilities to loasd a 'Crowd' object.<
                 </type>
             </return>
         </method>
-        <method name="commitSuicide" abstract="false">
-            <description>To commit suicide instanteneously. Agent life level is set to 0%, means that it is dead.</description>
-        </method>
         <method name="isDead" abstract="false">
             <description>Returns true if this element is dead.&#xD;
 &#xD;
@@ -581,6 +578,31 @@ Returns 'true' when checkPoint is filtering.</description>
                     <simple name="numeric"/>
                 </type>
             </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="beDecontaminated" abstract="false">
+            <description>To be decontaminated with the given decontamination plot. Returns 'true' once deonctamination is complete, 'false' otherwise.</description>
+            <argument name="decontaminationPlot">
+                <description></description>
+                <type>
+                    <class name="agent.world.DecontaminationPlot"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="selfDestruct" abstract="false">
+            <description>To self destruct instanteneously. Agent life level is set to 0%, means that it is dead. This actin may be used to commit suicide.</description>
+        </method>
+        <method name="selfDecontaminate" abstract="false">
+            <description>To self decontaminate instanteneously. Returns true once self decontamination action is completed.</description>
             <return>
                 <type>
                     <simple name="boolean"/>

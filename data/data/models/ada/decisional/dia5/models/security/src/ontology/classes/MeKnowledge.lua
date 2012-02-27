@@ -247,7 +247,7 @@ method "launchProjectile" (
 -- --------------------------------------------------------------------------------
 -- Life level
 -- --------------------------------------------------------------------------------
-method "commitSuicide" ( 
+method "selfDestruct" ( 
     function( self )
         return integration.commitSuicide()
     end )
@@ -255,6 +255,14 @@ method "commitSuicide" (
 method "isDead" ( 
     function( self )
         return integration.isDead()
+    end )
+
+-- --------------------------------------------------------------------------------
+-- NBC decontamination
+-- --------------------------------------------------------------------------------
+method "selfDecontaminate" ( 
+    function( self )
+        return integration.selfDecontaminate()
     end )
 
 -- --------------------------------------------------------------------------------
@@ -271,6 +279,14 @@ method "createResourceLink" (
 method "activateFitration" ( 
     function( self, checkpoint, intensity )
         return checkpoint:filter( intensity )
+    end )
+
+-- --------------------------------------------------------------------------------
+-- Decontamination
+-- --------------------------------------------------------------------------------
+method "beDecontaminated" ( 
+    function( self, decontaminationPlot )
+        return decontaminationPlot:decontaminateMe() -- decontaminate me
     end )
 
 -- --------------------------------------------------------------------------------
