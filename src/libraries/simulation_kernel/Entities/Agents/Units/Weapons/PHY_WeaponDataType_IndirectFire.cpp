@@ -25,7 +25,7 @@
 PHY_WeaponDataType_IndirectFire::PHY_WeaponDataType_IndirectFire( const PHY_WeaponType& weaponType, xml::xistream& xis, double timeFactor )
     : weaponType_( weaponType )
 {
-    assert( weaponType_.GetDotationCategory().GetIndirectFireData() != 0 );
+    assert( weaponType_.GetDotationCategory().CanBeUsedForIndirectFire() );
 
     xis >> xml::attribute( "average-speed", rAverageSpeed_ )
         >> xml::attribute( "min-range", rMinRange_ )

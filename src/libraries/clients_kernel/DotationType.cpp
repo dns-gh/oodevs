@@ -42,7 +42,7 @@ DotationType::DotationType( xml::xistream& xis, const tools::Resolver_ABC< Logis
     categoryId_ = tools::DotationFamilyFromString( category );
     gaz_        = ( category == "carburant" );
     ammunition_ = ( category == "munition" );
-    indirectFireAmmunition_ = xis.has_child( "indirect-fire" );
+    indirectFireAmmunition_ = xis.has_child( "indirect-fires" );
 }
 
 // -----------------------------------------------------------------------------

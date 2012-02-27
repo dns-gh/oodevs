@@ -298,15 +298,17 @@
       <urban-modifier material-type="Prefabrique" value="0.9"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
-      <ph target-posture="Mouvement" value="1"/>
-      <ph target-posture="MouvementDiscret" value="1"/>
-      <ph target-posture="Arret" value="1"/>
-      <ph target-posture="PosteReflexe" value="1"/>
-      <ph target-posture="Poste" value="1"/>
-      <ph target-posture="PosteAmenage" value="0.5"/>
-      <ph target-posture="PostePrepareGenie" value="0.2"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="6" x-dispersion="300" y-dispersion="200">
+      <indirect-fire neutralization-ratio="1.5" type="explosif">
+        <ph target-posture="Mouvement" value="1"/>
+        <ph target-posture="MouvementDiscret" value="1"/>
+        <ph target-posture="Arret" value="1"/>
+        <ph target-posture="PosteReflexe" value="1"/>
+        <ph target-posture="Poste" value="1"/>
+        <ph target-posture="PosteAmenage" value="0.5"/>
+        <ph target-posture="PostePrepareGenie" value="0.2"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1336 351 0001" codeLFRIL="" codeNNO="1336 14 414 4831" id="15" id-nature="3" logistic-supply-class="Unite non tranche D" name="CHARGE A BILLE" nature="Solide" package-mass="0.056" package-size="2" package-volume="0.04" type="MissileAir">
     <attritions>
@@ -375,7 +377,9 @@
     </urban-modifiers>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1370 408 0020" codeLFRIL="" codeNNO="1370 14 237 0366" id="18" id-nature="3" logistic-supply-class="Unite non tranche D" name="ART FUM DREB" nature="Solide" package-mass="0.054" package-size="8" package-volume="0.071" type="Obus">
-    <indirect-fire intervention-type="4" life-time="300s" setup-time="18s" type="fumigene" x-dispersion="400" y-dispersion="600"/>
+    <indirect-fires intervention-type="4" x-dispersion="400" y-dispersion="600">
+      <indirect-fire life-time="300s" setup-time="18s" type="fumigene"/>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1315  310 0210" codeLFRIL="" codeNNO="1315 14 527 1536" id="19" id-nature="3" logistic-supply-class="Unite non tranche D" name="CPLT 81 EXPL MLE F2" nature="Solide" package-mass="0.034" package-size="6" package-volume="0.058" type="Obus">
     <attritions>
@@ -389,15 +393,17 @@
       <attrition destruction="0.1" protection="VehiculeNonProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0.3"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
-    <indirect-fire intervention-type="12" neutralization-ratio="2.5" type="explosif" x-dispersion="100" y-dispersion="100">
-      <ph target-posture="Mouvement" value="0.3"/>
-      <ph target-posture="MouvementDiscret" value="0.3"/>
-      <ph target-posture="Arret" value="0.6"/>
-      <ph target-posture="PosteReflexe" value="0.6"/>
-      <ph target-posture="Poste" value="0.5"/>
-      <ph target-posture="PosteAmenage" value="0.3"/>
-      <ph target-posture="PostePrepareGenie" value="0.1"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="12" x-dispersion="100" y-dispersion="100">
+      <indirect-fire neutralization-ratio="2.5" type="explosif">
+        <ph target-posture="Mouvement" value="0.3"/>
+        <ph target-posture="MouvementDiscret" value="0.3"/>
+        <ph target-posture="Arret" value="0.6"/>
+        <ph target-posture="PosteReflexe" value="0.6"/>
+        <ph target-posture="Poste" value="0.5"/>
+        <ph target-posture="PosteAmenage" value="0.3"/>
+        <ph target-posture="PostePrepareGenie" value="0.1"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1320 326 0010" codeLFRIL="" codeNNO="1320 14 419 1501" id="20" id-nature="3" logistic-supply-class="Unite tranche D" name="OE JUPU 155 F2" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
@@ -420,15 +426,17 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="24" neutralization-ratio="3" type="explosif" x-dispersion="200" y-dispersion="200">
-      <ph target-posture="Mouvement" value="0.3"/>
-      <ph target-posture="MouvementDiscret" value="0.3"/>
-      <ph target-posture="Arret" value="0.6"/>
-      <ph target-posture="PosteReflexe" value="0.6"/>
-      <ph target-posture="Poste" value="0.5"/>
-      <ph target-posture="PosteAmenage" value="0.3"/>
-      <ph target-posture="PostePrepareGenie" value="0.1"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="24" x-dispersion="200" y-dispersion="200">
+      <indirect-fire neutralization-ratio="3" type="explosif">
+        <ph target-posture="Mouvement" value="0.3"/>
+        <ph target-posture="MouvementDiscret" value="0.3"/>
+        <ph target-posture="Arret" value="0.6"/>
+        <ph target-posture="PosteReflexe" value="0.6"/>
+        <ph target-posture="Poste" value="0.5"/>
+        <ph target-posture="PosteAmenage" value="0.3"/>
+        <ph target-posture="PostePrepareGenie" value="0.1"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1320 320 0001" codeLFRIL="" codeNNO="1320 14 375 2164" id="21" id-nature="3" logistic-supply-class="Unite tranche D" name="OE CCR 155 MLE F1" nature="Solide" package-mass="0.65" package-size="8" package-volume="0.82" type="Obus">
     <attritions>
@@ -451,15 +459,17 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="24" neutralization-ratio="1.5" type="explosif" x-dispersion="200" y-dispersion="200">
-      <ph target-posture="Mouvement" value="0.3"/>
-      <ph target-posture="MouvementDiscret" value="0.3"/>
-      <ph target-posture="Arret" value="0.6"/>
-      <ph target-posture="PosteReflexe" value="0.6"/>
-      <ph target-posture="Poste" value="0.5"/>
-      <ph target-posture="PosteAmenage" value="0.3"/>
-      <ph target-posture="PostePrepareGenie" value="0.1"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="24" x-dispersion="200" y-dispersion="200">
+      <indirect-fire neutralization-ratio="1.5" type="explosif">
+        <ph target-posture="Mouvement" value="0.3"/>
+        <ph target-posture="MouvementDiscret" value="0.3"/>
+        <ph target-posture="Arret" value="0.6"/>
+        <ph target-posture="PosteReflexe" value="0.6"/>
+        <ph target-posture="Poste" value="0.5"/>
+        <ph target-posture="PosteAmenage" value="0.3"/>
+        <ph target-posture="PostePrepareGenie" value="0.1"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1320 328 0010" codeLFRIL="" codeNNO="1320 14 473 2523" id="22" id-nature="3" logistic-supply-class="Unite tranche D" name="O GR 155 F1" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
@@ -482,15 +492,17 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="12" neutralization-ratio="3.5" type="grenade" x-dispersion="200" y-dispersion="200">
-      <ph target-posture="Mouvement" value="0.3"/>
-      <ph target-posture="MouvementDiscret" value="0.3"/>
-      <ph target-posture="Arret" value="0.6"/>
-      <ph target-posture="PosteReflexe" value="0.6"/>
-      <ph target-posture="Poste" value="0.5"/>
-      <ph target-posture="PosteAmenage" value="0.3"/>
-      <ph target-posture="PostePrepareGenie" value="0.1"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="12" x-dispersion="200" y-dispersion="200">
+      <indirect-fire neutralization-ratio="3.5" type="explosif">
+        <ph target-posture="Mouvement" value="0.3"/>
+        <ph target-posture="MouvementDiscret" value="0.3"/>
+        <ph target-posture="Arret" value="0.6"/>
+        <ph target-posture="PosteReflexe" value="0.6"/>
+        <ph target-posture="Poste" value="0.5"/>
+        <ph target-posture="PosteAmenage" value="0.3"/>
+        <ph target-posture="PostePrepareGenie" value="0.1"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1320 329 0005" codeLFRIL="" codeNNO="1320 14 524 6658" id="23" id-nature="3" logistic-supply-class="Unite tranche D" name="O 155 F1 AC EF DR" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
@@ -513,21 +525,27 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="2" neutralization-ratio="1.5" type="aced" x-dispersion="200" y-dispersion="200">
-      <ph target-posture="Mouvement" value="0.5"/>
-      <ph target-posture="MouvementDiscret" value="0.5"/>
-      <ph target-posture="Arret" value="0.8"/>
-      <ph target-posture="PosteReflexe" value="0.8"/>
-      <ph target-posture="Poste" value="0.7"/>
-      <ph target-posture="PosteAmenage" value="0.5"/>
-      <ph target-posture="PostePrepareGenie" value="0.2"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="2" x-dispersion="200" y-dispersion="200">
+      <indirect-fire neutralization-ratio="1.5" type="explosif">
+        <ph target-posture="Mouvement" value="0.5"/>
+        <ph target-posture="MouvementDiscret" value="0.5"/>
+        <ph target-posture="Arret" value="0.8"/>
+        <ph target-posture="PosteReflexe" value="0.8"/>
+        <ph target-posture="Poste" value="0.7"/>
+        <ph target-posture="PosteAmenage" value="0.5"/>
+        <ph target-posture="PostePrepareGenie" value="0.2"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1320 323 0020" codeLFRIL="" codeNNO="1320 14 449 8615" id="24" id-nature="3" logistic-supply-class="Unite tranche D" name="O ECL 155 F1" nature="Solide" package-mass="0.652" package-size="8" package-volume="0.82" type="Obus">
-    <indirect-fire intervention-type="4" life-time="300s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1000"/>
+    <indirect-fires intervention-type="4" x-dispersion="1000" y-dispersion="1000">
+      <indirect-fire life-time="300s" setup-time="0s" type="eclairant"/>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1320 325 0010" codeLFRIL="" codeNNO="1320 14 449 8616" id="25" id-nature="3" logistic-supply-class="Unite tranche D" name="CPLT FUM PH 155" nature="Solide" package-mass="0.65" package-size="8" package-volume="0.82" type="Obus">
-    <indirect-fire intervention-type="2" life-time="600s" setup-time="60s" type="fumigene" x-dispersion="1000" y-dispersion="1000"/>
+    <indirect-fires intervention-type="2" x-dispersion="1000" y-dispersion="1000">
+      <indirect-fire life-time="600s" setup-time="60s" type="fumigene"/>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="Roquette M77" codeEMAT8="Roquette M77" codeLFRIL="Roquette M77" codeNNO="Roquette M77" id="26" id-nature="3" logistic-supply-class="Unite non tranche D" name="Roquette M77" nature="Solide" package-mass="0.049" package-size="4" package-volume="0.22" type="MissileSol">
     <attritions>
@@ -550,15 +568,17 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="100" y-dispersion="100">
-      <ph target-posture="Mouvement" value="1"/>
-      <ph target-posture="MouvementDiscret" value="1"/>
-      <ph target-posture="Arret" value="1"/>
-      <ph target-posture="PosteReflexe" value="1"/>
-      <ph target-posture="Poste" value="1"/>
-      <ph target-posture="PosteAmenage" value="0.5"/>
-      <ph target-posture="PostePrepareGenie" value="0.2"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="6" x-dispersion="100" y-dispersion="100">
+      <indirect-fire neutralization-ratio="1.5" type="explosif">
+        <ph target-posture="Mouvement" value="1"/>
+        <ph target-posture="MouvementDiscret" value="1"/>
+        <ph target-posture="Arret" value="1"/>
+        <ph target-posture="PosteReflexe" value="1"/>
+        <ph target-posture="Poste" value="1"/>
+        <ph target-posture="PosteAmenage" value="0.5"/>
+        <ph target-posture="PostePrepareGenie" value="0.2"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1340 011 1010" codeLFRIL="" codeNNO="1340 01 122 3506" id="27" id-nature="3" logistic-supply-class="Unite tranche D" name="ROQ EXPL 298 M26" nature="Solide" package-mass="2.27" package-size="6" package-volume="3.116" type="MissileSol">
     <attritions>
@@ -581,15 +601,17 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="6" neutralization-ratio="2" type="explosif" x-dispersion="100" y-dispersion="100">
-      <ph target-posture="Mouvement" value="1"/>
-      <ph target-posture="MouvementDiscret" value="1"/>
-      <ph target-posture="Arret" value="1"/>
-      <ph target-posture="PosteReflexe" value="1"/>
-      <ph target-posture="Poste" value="1"/>
-      <ph target-posture="PosteAmenage" value="0.5"/>
-      <ph target-posture="PostePrepareGenie" value="0.2"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="6" x-dispersion="100" y-dispersion="100">
+      <indirect-fire neutralization-ratio="2" type="explosif">
+        <ph target-posture="Mouvement" value="1"/>
+        <ph target-posture="MouvementDiscret" value="1"/>
+        <ph target-posture="Arret" value="1"/>
+        <ph target-posture="PosteReflexe" value="1"/>
+        <ph target-posture="Poste" value="1"/>
+        <ph target-posture="PosteAmenage" value="0.5"/>
+        <ph target-posture="PostePrepareGenie" value="0.2"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1315 420 0005" codeLFRIL="" codeNNO="1315 14 249 8497" id="28" id-nature="3" logistic-supply-class="Unite non tranche D" name="CART 90 F2 OCC 62" nature="Solide" package-mass="0.038" package-size="2" package-volume="0.067" type="Obus">
     <attritions>
@@ -713,15 +735,17 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="100" y-dispersion="100">
-      <ph target-posture="Mouvement" value="1"/>
-      <ph target-posture="MouvementDiscret" value="1"/>
-      <ph target-posture="Arret" value="1"/>
-      <ph target-posture="PosteReflexe" value="1"/>
-      <ph target-posture="Poste" value="1"/>
-      <ph target-posture="PosteAmenage" value="0.5"/>
-      <ph target-posture="PostePrepareGenie" value="0.2"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="6" x-dispersion="100" y-dispersion="100">
+      <indirect-fire neutralization-ratio="1.5" type="explosif">
+        <ph target-posture="Mouvement" value="1"/>
+        <ph target-posture="MouvementDiscret" value="1"/>
+        <ph target-posture="Arret" value="1"/>
+        <ph target-posture="PosteReflexe" value="1"/>
+        <ph target-posture="Poste" value="1"/>
+        <ph target-posture="PosteAmenage" value="0.5"/>
+        <ph target-posture="PostePrepareGenie" value="0.2"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1315 792 0005" codeLFRIL="" codeNNO="1305 14 511 5288" id="34" id-nature="3" logistic-supply-class="Unite non tranche D" name="CART 30/550  OSPEI" nature="Solide" package-mass="0.03" package-size="60" package-volume="0.026" type="Obus">
     <attritions>
@@ -779,15 +803,17 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="40" neutralization-ratio="5" type="explosif" x-dispersion="200" y-dispersion="200">
-      <ph target-posture="Mouvement" value="1"/>
-      <ph target-posture="MouvementDiscret" value="1"/>
-      <ph target-posture="Arret" value="1"/>
-      <ph target-posture="PosteReflexe" value="1"/>
-      <ph target-posture="Poste" value="1"/>
-      <ph target-posture="PosteAmenage" value="0.5"/>
-      <ph target-posture="PostePrepareGenie" value="0.2"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="40" x-dispersion="200" y-dispersion="200">
+      <indirect-fire neutralization-ratio="5" type="explosif">
+        <ph target-posture="Mouvement" value="1"/>
+        <ph target-posture="MouvementDiscret" value="1"/>
+        <ph target-posture="Arret" value="1"/>
+        <ph target-posture="PosteReflexe" value="1"/>
+        <ph target-posture="Poste" value="1"/>
+        <ph target-posture="PosteAmenage" value="0.5"/>
+        <ph target-posture="PostePrepareGenie" value="0.2"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="37" id-nature="3" logistic-supply-class="Unite non tranche D" name="Missile AT5" nature="Solide" package-mass="0.029" package-size="1" package-volume="0.13" type="MissileSol">
     <attritions>
@@ -854,15 +880,17 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="4" neutralization-ratio="1.5" type="aced" x-dispersion="200" y-dispersion="200">
-      <ph target-posture="Mouvement" value="0.5"/>
-      <ph target-posture="MouvementDiscret" value="0.5"/>
-      <ph target-posture="Arret" value="0.8"/>
-      <ph target-posture="PosteReflexe" value="0.8"/>
-      <ph target-posture="Poste" value="0.7"/>
-      <ph target-posture="PosteAmenage" value="0.5"/>
-      <ph target-posture="PostePrepareGenie" value="0.2"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="4" x-dispersion="200" y-dispersion="200">
+      <indirect-fire neutralization-ratio="1.5" type="explosif">
+        <ph target-posture="Mouvement" value="0.5"/>
+        <ph target-posture="MouvementDiscret" value="0.5"/>
+        <ph target-posture="Arret" value="0.8"/>
+        <ph target-posture="PosteReflexe" value="0.8"/>
+        <ph target-posture="Poste" value="0.7"/>
+        <ph target-posture="PosteAmenage" value="0.5"/>
+        <ph target-posture="PostePrepareGenie" value="0.2"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="40" id-nature="3" logistic-supply-class="Unite tranche D" name="Obus 152 OE" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
@@ -885,15 +913,17 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="24" neutralization-ratio="2.5" type="explosif" x-dispersion="200" y-dispersion="200">
-      <ph target-posture="Mouvement" value="0.3"/>
-      <ph target-posture="MouvementDiscret" value="0.3"/>
-      <ph target-posture="Arret" value="0.6"/>
-      <ph target-posture="PosteReflexe" value="0.6"/>
-      <ph target-posture="Poste" value="0.5"/>
-      <ph target-posture="PosteAmenage" value="0.3"/>
-      <ph target-posture="PostePrepareGenie" value="0.1"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="24" x-dispersion="200" y-dispersion="200">
+      <indirect-fire neutralization-ratio="2.5" type="explosif">
+        <ph target-posture="Mouvement" value="0.3"/>
+        <ph target-posture="MouvementDiscret" value="0.3"/>
+        <ph target-posture="Arret" value="0.6"/>
+        <ph target-posture="PosteReflexe" value="0.6"/>
+        <ph target-posture="Poste" value="0.5"/>
+        <ph target-posture="PosteAmenage" value="0.3"/>
+        <ph target-posture="PostePrepareGenie" value="0.1"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="41" id-nature="3" logistic-supply-class="Unite tranche D" name="Obus 152 OE MPA" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
@@ -916,15 +946,17 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="24" neutralization-ratio="2" type="explosif" x-dispersion="200" y-dispersion="200">
-      <ph target-posture="Mouvement" value="0.3"/>
-      <ph target-posture="MouvementDiscret" value="0.3"/>
-      <ph target-posture="Arret" value="0.6"/>
-      <ph target-posture="PosteReflexe" value="0.6"/>
-      <ph target-posture="Poste" value="0.5"/>
-      <ph target-posture="PosteAmenage" value="0.3"/>
-      <ph target-posture="PostePrepareGenie" value="0.1"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="24" x-dispersion="200" y-dispersion="200">
+      <indirect-fire neutralization-ratio="2" type="explosif">
+        <ph target-posture="Mouvement" value="0.3"/>
+        <ph target-posture="MouvementDiscret" value="0.3"/>
+        <ph target-posture="Arret" value="0.6"/>
+        <ph target-posture="PosteReflexe" value="0.6"/>
+        <ph target-posture="Poste" value="0.5"/>
+        <ph target-posture="PosteAmenage" value="0.3"/>
+        <ph target-posture="PostePrepareGenie" value="0.1"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="Obus 125 OCC" codeEMAT8="1X000026" codeLFRIL="Obus 125 OCC" codeNNO="Obus 125 OCC" id="42" id-nature="3" logistic-supply-class="Unite non tranche D" name="Obus 125 OCC" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
@@ -1013,15 +1045,17 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="1" neutralization-ratio="20" type="explosif" x-dispersion="10" y-dispersion="10">
-      <ph target-posture="Mouvement" value="1"/>
-      <ph target-posture="MouvementDiscret" value="1"/>
-      <ph target-posture="Arret" value="1"/>
-      <ph target-posture="PosteReflexe" value="1"/>
-      <ph target-posture="Poste" value="1"/>
-      <ph target-posture="PosteAmenage" value="0.5"/>
-      <ph target-posture="PostePrepareGenie" value="0.2"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="1" x-dispersion="10" y-dispersion="10">
+      <indirect-fire neutralization-ratio="20" type="explosif">
+        <ph target-posture="Mouvement" value="1"/>
+        <ph target-posture="MouvementDiscret" value="1"/>
+        <ph target-posture="Arret" value="1"/>
+        <ph target-posture="PosteReflexe" value="1"/>
+        <ph target-posture="Poste" value="1"/>
+        <ph target-posture="PosteAmenage" value="0.5"/>
+        <ph target-posture="PostePrepareGenie" value="0.2"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1330 580 0005" codeLFRIL="" codeNNO="1330 14 475 4727" id="46" id-nature="3" logistic-supply-class="Unite non tranche D" name="GR 51  EXPL AP LGI" nature="Solide" package-mass="0.027" package-size="16" package-volume="0.04" type="Obus">
     <attritions>
@@ -1044,15 +1078,17 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="1" neutralization-ratio="20" type="explosif" x-dispersion="10" y-dispersion="10">
-      <ph target-posture="Mouvement" value="1"/>
-      <ph target-posture="MouvementDiscret" value="1"/>
-      <ph target-posture="Arret" value="1"/>
-      <ph target-posture="PosteReflexe" value="1"/>
-      <ph target-posture="Poste" value="1"/>
-      <ph target-posture="PosteAmenage" value="0.5"/>
-      <ph target-posture="PostePrepareGenie" value="0.2"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="1" x-dispersion="10" y-dispersion="10">
+      <indirect-fire neutralization-ratio="20" type="explosif">
+        <ph target-posture="Mouvement" value="1"/>
+        <ph target-posture="MouvementDiscret" value="1"/>
+        <ph target-posture="Arret" value="1"/>
+        <ph target-posture="PosteReflexe" value="1"/>
+        <ph target-posture="Poste" value="1"/>
+        <ph target-posture="PosteAmenage" value="0.5"/>
+        <ph target-posture="PostePrepareGenie" value="0.2"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="47" id-nature="3" logistic-supply-class="Unite non tranche D" name="Obus 23 mm" nature="Solide" package-mass="0.032" package-size="60" package-volume="0.041" type="Obus">
     <attritions>
@@ -1097,15 +1133,17 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="24" neutralization-ratio="1.5" type="explosif" x-dispersion="100" y-dispersion="100">
-      <ph target-posture="Mouvement" value="0.3"/>
-      <ph target-posture="MouvementDiscret" value="0.3"/>
-      <ph target-posture="Arret" value="0.6"/>
-      <ph target-posture="PosteReflexe" value="0.6"/>
-      <ph target-posture="Poste" value="0.5"/>
-      <ph target-posture="PosteAmenage" value="0.3"/>
-      <ph target-posture="PostePrepareGenie" value="0.1"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="24" x-dispersion="100" y-dispersion="100">
+      <indirect-fire neutralization-ratio="1.5" type="explosif">
+        <ph target-posture="Mouvement" value="0.3"/>
+        <ph target-posture="MouvementDiscret" value="0.3"/>
+        <ph target-posture="Arret" value="0.6"/>
+        <ph target-posture="PosteReflexe" value="0.6"/>
+        <ph target-posture="Poste" value="0.5"/>
+        <ph target-posture="PosteAmenage" value="0.3"/>
+        <ph target-posture="PostePrepareGenie" value="0.1"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="49" id-nature="3" logistic-supply-class="Unite tranche D" name="Obus 122 OE MPA" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
@@ -1128,15 +1166,17 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="24" neutralization-ratio="2" type="explosif" x-dispersion="100" y-dispersion="100">
-      <ph target-posture="Mouvement" value="0.3"/>
-      <ph target-posture="MouvementDiscret" value="0.3"/>
-      <ph target-posture="Arret" value="0.6"/>
-      <ph target-posture="PosteReflexe" value="0.6"/>
-      <ph target-posture="Poste" value="0.5"/>
-      <ph target-posture="PosteAmenage" value="0.3"/>
-      <ph target-posture="PostePrepareGenie" value="0.1"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="24" x-dispersion="100" y-dispersion="100">
+      <indirect-fire neutralization-ratio="2" type="explosif">
+        <ph target-posture="Mouvement" value="0.3"/>
+        <ph target-posture="MouvementDiscret" value="0.3"/>
+        <ph target-posture="Arret" value="0.6"/>
+        <ph target-posture="PosteReflexe" value="0.6"/>
+        <ph target-posture="Poste" value="0.5"/>
+        <ph target-posture="PosteAmenage" value="0.3"/>
+        <ph target-posture="PostePrepareGenie" value="0.1"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="50" id-nature="3" logistic-supply-class="Unite tranche D" name="Obus 122 ACED" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
@@ -1159,15 +1199,17 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="4" neutralization-ratio="1.5" type="aced" x-dispersion="200" y-dispersion="200">
-      <ph target-posture="Mouvement" value="0.5"/>
-      <ph target-posture="MouvementDiscret" value="0.5"/>
-      <ph target-posture="Arret" value="0.8"/>
-      <ph target-posture="PosteReflexe" value="0.8"/>
-      <ph target-posture="Poste" value="0.7"/>
-      <ph target-posture="PosteAmenage" value="0.5"/>
-      <ph target-posture="PostePrepareGenie" value="0.2"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="4" x-dispersion="200" y-dispersion="200">
+      <indirect-fire neutralization-ratio="1.5" type="explosif">
+        <ph target-posture="Mouvement" value="0.5"/>
+        <ph target-posture="MouvementDiscret" value="0.5"/>
+        <ph target-posture="Arret" value="0.8"/>
+        <ph target-posture="PosteReflexe" value="0.8"/>
+        <ph target-posture="Poste" value="0.7"/>
+        <ph target-posture="PosteAmenage" value="0.5"/>
+        <ph target-posture="PostePrepareGenie" value="0.2"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="51" id-nature="3" logistic-supply-class="Unite non tranche D" name="Obus 76 OE" nature="Solide" package-mass="0.046" package-size="2" package-volume="0.067" type="Obus">
     <attritions>
@@ -1192,7 +1234,9 @@
     </urban-modifiers>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1330 581 0010" codeLFRIL="" codeNNO="1330 14 475 4728" id="52" id-nature="3" logistic-supply-class="Unite non tranche D" name="GR 51 FUM INC LGI" nature="Solide" package-mass="0.027" package-size="16" package-volume="0.04" type="Obus">
-    <indirect-fire intervention-type="1" life-time="300s" setup-time="10s" type="fumigene" x-dispersion="200" y-dispersion="200"/>
+    <indirect-fires intervention-type="1" x-dispersion="200" y-dispersion="200">
+      <indirect-fire life-time="300s" setup-time="10s" type="fumigene"/>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1330 582 0020" codeLFRIL="" codeNNO="1330 14 475 4729" id="53" id-nature="3" logistic-supply-class="Unite non tranche D" name="GR 47  ECL LGI" nature="Solide" package-mass="0.021" package-size="10" package-volume="0.04" type="Obus">
     <attritions>
@@ -1215,15 +1259,17 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="1" neutralization-ratio="20" type="explosif" x-dispersion="10" y-dispersion="10">
-      <ph target-posture="Mouvement" value="1"/>
-      <ph target-posture="MouvementDiscret" value="1"/>
-      <ph target-posture="Arret" value="1"/>
-      <ph target-posture="PosteReflexe" value="1"/>
-      <ph target-posture="Poste" value="1"/>
-      <ph target-posture="PosteAmenage" value="1"/>
-      <ph target-posture="PostePrepareGenie" value="1"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="1" x-dispersion="10" y-dispersion="10">
+      <indirect-fire neutralization-ratio="20" type="explosif">
+        <ph target-posture="Mouvement" value="1"/>
+        <ph target-posture="MouvementDiscret" value="1"/>
+        <ph target-posture="Arret" value="1"/>
+        <ph target-posture="PosteReflexe" value="1"/>
+        <ph target-posture="Poste" value="1"/>
+        <ph target-posture="PosteAmenage" value="1"/>
+        <ph target-posture="PostePrepareGenie" value="1"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1315 422 0005" codeLFRIL="" codeNNO="1315 14 310 6628" id="54" id-nature="3" logistic-supply-class="Unite non tranche D" name="CART 90 F2 OFUM" nature="Solide" package-mass="0.041" package-size="2" package-volume="0.067" type="Obus">
     <attritions>
@@ -1336,16 +1382,24 @@
     </urban-modifiers>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1315 317 0010" codeLFRIL="" codeNNO="1315 14 266 3970" id="59" id-nature="3" logistic-supply-class="Unite non tranche D" name="CPLT 81 OFUM PH" nature="Solide" package-mass="0.038" package-size="6" package-volume="0.055" type="Obus">
-    <indirect-fire intervention-type="4" life-time="300s" setup-time="18s" type="fumigene" x-dispersion="400" y-dispersion="600"/>
+    <indirect-fires intervention-type="4" x-dispersion="400" y-dispersion="600">
+      <indirect-fire life-time="300s" setup-time="18s" type="fumigene"/>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1315 314 0030" codeLFRIL="" codeNNO="1315 14 348 7513" id="60" id-nature="3" logistic-supply-class="Unite non tranche D" name="CPLT 81 OECL F1" nature="Solide" package-mass="0.036" package-size="6" package-volume="0.055" type="Obus">
-    <indirect-fire intervention-type="3" life-time="300s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1500"/>
+    <indirect-fires intervention-type="3" x-dispersion="1000" y-dispersion="1500">
+      <indirect-fire life-time="300s" setup-time="0s" type="eclairant"/>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1315  956 0010" codeLFRIL="" codeNNO="1315 14 417 3265" id="61" id-nature="3" logistic-supply-class="Unite tranche D" name="CPLT 120 OFUM PH F1" nature="Solide" package-mass="0.06" package-size="2" package-volume="0.06" type="Obus">
-    <indirect-fire intervention-type="4" life-time="600s" setup-time="60s" type="fumigene" x-dispersion="1000" y-dispersion="1000"/>
+    <indirect-fires intervention-type="4" x-dispersion="1000" y-dispersion="1000">
+      <indirect-fire life-time="600s" setup-time="60s" type="fumigene"/>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1315 958 0001" codeLFRIL="" codeNNO="1315 14 402 5698" id="62" id-nature="3" logistic-supply-class="Unite tranche D" name="CPLT 120 OECL PRY F1" nature="Solide" package-mass="0.06" package-size="2" package-volume="0.06" type="Obus">
-    <indirect-fire intervention-type="4" life-time="300s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1000"/>
+    <indirect-fires intervention-type="4" x-dispersion="1000" y-dispersion="1000">
+      <indirect-fire life-time="300s" setup-time="0s" type="eclairant"/>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1410 072 0001" codeLFRIL="" codeNNO="1410 14 463 8267" id="63" id-nature="3" logistic-supply-class="Unite non tranche D" name="MIS 150 F3 HOT" nature="Solide" package-mass="0.232" package-size="4" package-volume="0.486" type="MissileSol">
     <attritions>
@@ -1368,15 +1422,17 @@
       <urban-modifier material-type="Prefabrique" value="0.9"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
-      <ph target-posture="Mouvement" value="1"/>
-      <ph target-posture="MouvementDiscret" value="1"/>
-      <ph target-posture="Arret" value="1"/>
-      <ph target-posture="PosteReflexe" value="1"/>
-      <ph target-posture="Poste" value="1"/>
-      <ph target-posture="PosteAmenage" value="0.5"/>
-      <ph target-posture="PostePrepareGenie" value="0.2"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="6" x-dispersion="300" y-dispersion="200">
+      <indirect-fire neutralization-ratio="1.5" type="explosif">
+        <ph target-posture="Mouvement" value="1"/>
+        <ph target-posture="MouvementDiscret" value="1"/>
+        <ph target-posture="Arret" value="1"/>
+        <ph target-posture="PosteReflexe" value="1"/>
+        <ph target-posture="Poste" value="1"/>
+        <ph target-posture="PosteAmenage" value="0.5"/>
+        <ph target-posture="PostePrepareGenie" value="0.2"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1305 701 0010" codeLFRIL="" codeNNO="1305 14 041 0338" id="64" id-nature="3" logistic-supply-class="Unite non tranche D" name="CART 20 OEI OEIT SBP" nature="Solide" package-mass="0.032" package-size="60" package-volume="0.041" type="Obus">
     <attritions>
@@ -1443,15 +1499,17 @@
       <urban-modifier material-type="Prefabrique" value="0.9"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
-      <ph target-posture="Mouvement" value="1"/>
-      <ph target-posture="MouvementDiscret" value="1"/>
-      <ph target-posture="Arret" value="1"/>
-      <ph target-posture="PosteReflexe" value="1"/>
-      <ph target-posture="Poste" value="1"/>
-      <ph target-posture="PosteAmenage" value="0.5"/>
-      <ph target-posture="PostePrepareGenie" value="0.2"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="6" x-dispersion="300" y-dispersion="200">
+      <indirect-fire neutralization-ratio="1.5" type="explosif">
+        <ph target-posture="Mouvement" value="1"/>
+        <ph target-posture="MouvementDiscret" value="1"/>
+        <ph target-posture="Arret" value="1"/>
+        <ph target-posture="PosteReflexe" value="1"/>
+        <ph target-posture="Poste" value="1"/>
+        <ph target-posture="PosteAmenage" value="0.5"/>
+        <ph target-posture="PostePrepareGenie" value="0.2"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="67" id-nature="3" logistic-supply-class="Unite non tranche D" name="Munition CAS" nature="Solide" package-mass="0.25" package-size="1" package-volume="0.2" type="Obus">
     <attritions>
@@ -1465,15 +1523,17 @@
       <attrition destruction="0.6" protection="VehiculeNonProtege" repairable-with-evacuation="0.3" repairable-without-evacuation="0.1"/>
       <attrition destruction="0.6" protection="Combattant" repairable-with-evacuation="0.3" repairable-without-evacuation="0.1"/>
     </attritions>
-    <indirect-fire intervention-type="1" neutralization-ratio="3" type="explosif" x-dispersion="200" y-dispersion="200">
-      <ph target-posture="Mouvement" value="0.3"/>
-      <ph target-posture="MouvementDiscret" value="0.3"/>
-      <ph target-posture="Arret" value="0.6"/>
-      <ph target-posture="PosteReflexe" value="0.6"/>
-      <ph target-posture="Poste" value="0.5"/>
-      <ph target-posture="PosteAmenage" value="0.3"/>
-      <ph target-posture="PostePrepareGenie" value="0.1"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="1" x-dispersion="200" y-dispersion="200">
+      <indirect-fire neutralization-ratio="3" type="explosif">
+        <ph target-posture="Mouvement" value="0.3"/>
+        <ph target-posture="MouvementDiscret" value="0.3"/>
+        <ph target-posture="Arret" value="0.6"/>
+        <ph target-posture="PosteReflexe" value="0.6"/>
+        <ph target-posture="Poste" value="0.5"/>
+        <ph target-posture="PosteAmenage" value="0.3"/>
+        <ph target-posture="PostePrepareGenie" value="0.1"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="68" id-nature="3" ied="true" logistic-supply-class="Unite tranche D" name="IED" nature="Solide" package-mass="0.05" package-size="1" package-volume="0.05" type="Obus">
     <attritions>
@@ -1496,15 +1556,17 @@
       <urban-modifier material-type="Prefabrique" value="0.9"/>
       <urban-modifier material-type="Vegetation" value="0.5"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="1" neutralization-ratio="5" type="explosif" x-dispersion="30" y-dispersion="30">
-      <ph target-posture="Mouvement" value="1"/>
-      <ph target-posture="MouvementDiscret" value="1"/>
-      <ph target-posture="Arret" value="1"/>
-      <ph target-posture="PosteReflexe" value="1"/>
-      <ph target-posture="Poste" value="1"/>
-      <ph target-posture="PosteAmenage" value="1"/>
-      <ph target-posture="PostePrepareGenie" value="1"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="1" x-dispersion="30" y-dispersion="30">
+      <indirect-fire neutralization-ratio="5" type="explosif">
+        <ph target-posture="Mouvement" value="1"/>
+        <ph target-posture="MouvementDiscret" value="1"/>
+        <ph target-posture="Arret" value="1"/>
+        <ph target-posture="PosteReflexe" value="1"/>
+        <ph target-posture="Poste" value="1"/>
+        <ph target-posture="PosteAmenage" value="1"/>
+        <ph target-posture="PostePrepareGenie" value="1"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="69" id-nature="3" logistic-supply-class="Unite non tranche D" name="Charg 7,62" nature="Solide" package-mass="0.001" package-size="0.001" package-volume="0.001" type="Mitraille">
     <attritions>
@@ -1694,15 +1756,17 @@
       <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
-    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
-      <ph target-posture="Mouvement" value="1"/>
-      <ph target-posture="MouvementDiscret" value="1"/>
-      <ph target-posture="Arret" value="1"/>
-      <ph target-posture="PosteReflexe" value="1"/>
-      <ph target-posture="Poste" value="1"/>
-      <ph target-posture="PosteAmenage" value="0.5"/>
-      <ph target-posture="PostePrepareGenie" value="0.2"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="6" x-dispersion="300" y-dispersion="200">
+      <indirect-fire neutralization-ratio="1.5" type="explosif">
+        <ph target-posture="Mouvement" value="1"/>
+        <ph target-posture="MouvementDiscret" value="1"/>
+        <ph target-posture="Arret" value="1"/>
+        <ph target-posture="PosteReflexe" value="1"/>
+        <ph target-posture="Poste" value="1"/>
+        <ph target-posture="PosteAmenage" value="0.5"/>
+        <ph target-posture="PostePrepareGenie" value="0.2"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="78" id-nature="3" logistic-supply-class="Unite non tranche D" name="Missile SA 7" nature="Solide" package-mass="0.02" package-size="2" package-volume="0.001" type="MissileAir">
     <attritions>
@@ -1716,15 +1780,17 @@
       <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
-    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
-      <ph target-posture="Mouvement" value="1"/>
-      <ph target-posture="MouvementDiscret" value="1"/>
-      <ph target-posture="Arret" value="1"/>
-      <ph target-posture="PosteReflexe" value="1"/>
-      <ph target-posture="Poste" value="1"/>
-      <ph target-posture="PosteAmenage" value="0.5"/>
-      <ph target-posture="PostePrepareGenie" value="0.2"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="6" x-dispersion="300" y-dispersion="200">
+      <indirect-fire neutralization-ratio="1.5" type="explosif">
+        <ph target-posture="Mouvement" value="1"/>
+        <ph target-posture="MouvementDiscret" value="1"/>
+        <ph target-posture="Arret" value="1"/>
+        <ph target-posture="PosteReflexe" value="1"/>
+        <ph target-posture="Poste" value="1"/>
+        <ph target-posture="PosteAmenage" value="0.5"/>
+        <ph target-posture="PostePrepareGenie" value="0.2"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="79" id-nature="3" logistic-supply-class="Unite non tranche D" name="Missile AT4" nature="Solide" package-mass="0.012" package-size="1" package-volume="0.27" type="MissileSol">
     <attritions>
@@ -1769,15 +1835,17 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="12" neutralization-ratio="1.5" type="explosif" x-dispersion="100" y-dispersion="100">
-      <ph target-posture="Mouvement" value="0.3"/>
-      <ph target-posture="MouvementDiscret" value="0.3"/>
-      <ph target-posture="Arret" value="0.6"/>
-      <ph target-posture="PosteReflexe" value="0.6"/>
-      <ph target-posture="Poste" value="0.5"/>
-      <ph target-posture="PosteAmenage" value="0.3"/>
-      <ph target-posture="PostePrepareGenie" value="0.1"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="12" x-dispersion="100" y-dispersion="100">
+      <indirect-fire neutralization-ratio="1.5" type="explosif">
+        <ph target-posture="Mouvement" value="0.3"/>
+        <ph target-posture="MouvementDiscret" value="0.3"/>
+        <ph target-posture="Arret" value="0.6"/>
+        <ph target-posture="PosteReflexe" value="0.6"/>
+        <ph target-posture="Poste" value="0.5"/>
+        <ph target-posture="PosteAmenage" value="0.3"/>
+        <ph target-posture="PostePrepareGenie" value="0.1"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="81" id-nature="3" logistic-supply-class="Unite non tranche D" name="Obus 23 OE" nature="Solide" package-mass="0.001" package-size="50" package-volume="0.001" type="Obus">
     <attritions>
@@ -1813,15 +1881,17 @@
       <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
-    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
-      <ph target-posture="Mouvement" value="1"/>
-      <ph target-posture="MouvementDiscret" value="1"/>
-      <ph target-posture="Arret" value="1"/>
-      <ph target-posture="PosteReflexe" value="1"/>
-      <ph target-posture="Poste" value="1"/>
-      <ph target-posture="PosteAmenage" value="0.5"/>
-      <ph target-posture="PostePrepareGenie" value="0.2"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="6" x-dispersion="300" y-dispersion="200">
+      <indirect-fire neutralization-ratio="1.5" type="explosif">
+        <ph target-posture="Mouvement" value="1"/>
+        <ph target-posture="MouvementDiscret" value="1"/>
+        <ph target-posture="Arret" value="1"/>
+        <ph target-posture="PosteReflexe" value="1"/>
+        <ph target-posture="Poste" value="1"/>
+        <ph target-posture="PosteAmenage" value="0.5"/>
+        <ph target-posture="PostePrepareGenie" value="0.2"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="83" id-nature="3" logistic-supply-class="Unite non tranche D" name="Missile SA 13" nature="Solide" package-mass="0.039" package-size="1" package-volume="0.54" type="MissileAir">
     <attritions>
@@ -1835,15 +1905,17 @@
       <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
-    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
-      <ph target-posture="Mouvement" value="1"/>
-      <ph target-posture="MouvementDiscret" value="1"/>
-      <ph target-posture="Arret" value="1"/>
-      <ph target-posture="PosteReflexe" value="1"/>
-      <ph target-posture="Poste" value="1"/>
-      <ph target-posture="PosteAmenage" value="0.5"/>
-      <ph target-posture="PostePrepareGenie" value="0.2"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="6" x-dispersion="300" y-dispersion="200">
+      <indirect-fire neutralization-ratio="1.5" type="explosif">
+        <ph target-posture="Mouvement" value="1"/>
+        <ph target-posture="MouvementDiscret" value="1"/>
+        <ph target-posture="Arret" value="1"/>
+        <ph target-posture="PosteReflexe" value="1"/>
+        <ph target-posture="Poste" value="1"/>
+        <ph target-posture="PosteAmenage" value="0.5"/>
+        <ph target-posture="PostePrepareGenie" value="0.2"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="84" id-nature="3" logistic-supply-class="Unite non tranche D" name="Missile SA 16" nature="Solide" package-mass="0.016" package-size="1" package-volume="0.04" type="MissileAir">
     <attritions>
@@ -1857,15 +1929,17 @@
       <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
-    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
-      <ph target-posture="Mouvement" value="1"/>
-      <ph target-posture="MouvementDiscret" value="1"/>
-      <ph target-posture="Arret" value="1"/>
-      <ph target-posture="PosteReflexe" value="1"/>
-      <ph target-posture="Poste" value="1"/>
-      <ph target-posture="PosteAmenage" value="0.5"/>
-      <ph target-posture="PostePrepareGenie" value="0.2"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="6" x-dispersion="300" y-dispersion="200">
+      <indirect-fire neutralization-ratio="1.5" type="explosif">
+        <ph target-posture="Mouvement" value="1"/>
+        <ph target-posture="MouvementDiscret" value="1"/>
+        <ph target-posture="Arret" value="1"/>
+        <ph target-posture="PosteReflexe" value="1"/>
+        <ph target-posture="Poste" value="1"/>
+        <ph target-posture="PosteAmenage" value="0.5"/>
+        <ph target-posture="PostePrepareGenie" value="0.2"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="85" id-nature="3" logistic-supply-class="Unite tranche D" name="Roquette BM22" nature="Solide" package-mass="0.049" package-size="4" package-volume="0.22" type="MissileSol">
     <attritions>
@@ -1888,15 +1962,17 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="16" neutralization-ratio="5" type="explosif" x-dispersion="200" y-dispersion="200">
-      <ph target-posture="Mouvement" value="1"/>
-      <ph target-posture="MouvementDiscret" value="1"/>
-      <ph target-posture="Arret" value="1"/>
-      <ph target-posture="PosteReflexe" value="1"/>
-      <ph target-posture="Poste" value="1"/>
-      <ph target-posture="PosteAmenage" value="0.5"/>
-      <ph target-posture="PostePrepareGenie" value="0.2"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="16" x-dispersion="200" y-dispersion="200">
+      <indirect-fire neutralization-ratio="5" type="explosif">
+        <ph target-posture="Mouvement" value="1"/>
+        <ph target-posture="MouvementDiscret" value="1"/>
+        <ph target-posture="Arret" value="1"/>
+        <ph target-posture="PosteReflexe" value="1"/>
+        <ph target-posture="Poste" value="1"/>
+        <ph target-posture="PosteAmenage" value="0.5"/>
+        <ph target-posture="PostePrepareGenie" value="0.2"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="86" id-nature="3" logistic-supply-class="Unite tranche D" name="Roquette BM30" nature="Solide" package-mass="0.049" package-size="4" package-volume="0.22" type="MissileSol">
     <attritions>
@@ -1919,15 +1995,17 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="12" neutralization-ratio="5" type="explosif" x-dispersion="200" y-dispersion="200">
-      <ph target-posture="Mouvement" value="1"/>
-      <ph target-posture="MouvementDiscret" value="1"/>
-      <ph target-posture="Arret" value="1"/>
-      <ph target-posture="PosteReflexe" value="1"/>
-      <ph target-posture="Poste" value="1"/>
-      <ph target-posture="PosteAmenage" value="0.5"/>
-      <ph target-posture="PostePrepareGenie" value="0.2"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="12" x-dispersion="200" y-dispersion="200">
+      <indirect-fire neutralization-ratio="5" type="explosif">
+        <ph target-posture="Mouvement" value="1"/>
+        <ph target-posture="MouvementDiscret" value="1"/>
+        <ph target-posture="Arret" value="1"/>
+        <ph target-posture="PosteReflexe" value="1"/>
+        <ph target-posture="Poste" value="1"/>
+        <ph target-posture="PosteAmenage" value="0.5"/>
+        <ph target-posture="PostePrepareGenie" value="0.2"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="Obus 125 OE" codeEMAT8="Obus 125 OE" codeLFRIL="Obus 125 OE" codeNNO="Obus 125 OE" id="87" id-nature="3" logistic-supply-class="Unite non tranche D" name="Obus 125 OE" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.07" type="Obus">
     <attritions>
@@ -1963,15 +2041,17 @@
       <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
-    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
-      <ph target-posture="Mouvement" value="1"/>
-      <ph target-posture="MouvementDiscret" value="1"/>
-      <ph target-posture="Arret" value="1"/>
-      <ph target-posture="PosteReflexe" value="1"/>
-      <ph target-posture="Poste" value="1"/>
-      <ph target-posture="PosteAmenage" value="0.5"/>
-      <ph target-posture="PostePrepareGenie" value="0.2"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="6" x-dispersion="300" y-dispersion="200">
+      <indirect-fire neutralization-ratio="1.5" type="explosif">
+        <ph target-posture="Mouvement" value="1"/>
+        <ph target-posture="MouvementDiscret" value="1"/>
+        <ph target-posture="Arret" value="1"/>
+        <ph target-posture="PosteReflexe" value="1"/>
+        <ph target-posture="Poste" value="1"/>
+        <ph target-posture="PosteAmenage" value="0.5"/>
+        <ph target-posture="PostePrepareGenie" value="0.2"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="89" id-nature="3" logistic-supply-class="Unite non tranche D" name="Missile SA 11" nature="Solide" package-mass="2.6" package-size="4" package-volume="0.54" type="MissileAir">
     <attritions>
@@ -1985,15 +2065,17 @@
       <attrition destruction="0" protection="VehiculeNonProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
-    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="300" y-dispersion="200">
-      <ph target-posture="Mouvement" value="1"/>
-      <ph target-posture="MouvementDiscret" value="1"/>
-      <ph target-posture="Arret" value="1"/>
-      <ph target-posture="PosteReflexe" value="1"/>
-      <ph target-posture="Poste" value="1"/>
-      <ph target-posture="PosteAmenage" value="0.5"/>
-      <ph target-posture="PostePrepareGenie" value="0.2"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="6" x-dispersion="300" y-dispersion="200">
+      <indirect-fire neutralization-ratio="1.5" type="explosif">
+        <ph target-posture="Mouvement" value="1"/>
+        <ph target-posture="MouvementDiscret" value="1"/>
+        <ph target-posture="Arret" value="1"/>
+        <ph target-posture="PosteReflexe" value="1"/>
+        <ph target-posture="Poste" value="1"/>
+        <ph target-posture="PosteAmenage" value="0.5"/>
+        <ph target-posture="PostePrepareGenie" value="0.2"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="90" id-nature="3" logistic-supply-class="Unite non tranche D" name="RO 80 EXPL AC" nature="Solide" package-mass="0.049" package-size="4" package-volume="0.22" type="MissileSol">
     <attritions>
@@ -2060,18 +2142,22 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="12" neutralization-ratio="1.5" type="explosif" x-dispersion="100" y-dispersion="100">
-      <ph target-posture="Mouvement" value="0.3"/>
-      <ph target-posture="MouvementDiscret" value="0.3"/>
-      <ph target-posture="Arret" value="0.6"/>
-      <ph target-posture="PosteReflexe" value="0.6"/>
-      <ph target-posture="Poste" value="0.5"/>
-      <ph target-posture="PosteAmenage" value="0.3"/>
-      <ph target-posture="PostePrepareGenie" value="0.1"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="12" x-dispersion="100" y-dispersion="100">
+      <indirect-fire neutralization-ratio="1.5" type="explosif">
+        <ph target-posture="Mouvement" value="0.3"/>
+        <ph target-posture="MouvementDiscret" value="0.3"/>
+        <ph target-posture="Arret" value="0.6"/>
+        <ph target-posture="PosteReflexe" value="0.6"/>
+        <ph target-posture="Poste" value="0.5"/>
+        <ph target-posture="PosteAmenage" value="0.3"/>
+        <ph target-posture="PostePrepareGenie" value="0.1"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="93" id-nature="3" logistic-supply-class="Unite tranche D" name="Obus 130  Fum" nature="Solide" package-mass="0.03" package-size="1" package-volume="0.1" type="Obus">
-    <indirect-fire intervention-type="4" life-time="600s" setup-time="60s" type="fumigene" x-dispersion="1000" y-dispersion="1000"/>
+    <indirect-fires intervention-type="4" x-dispersion="1000" y-dispersion="1000">
+      <indirect-fire life-time="600s" setup-time="60s" type="fumigene"/>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="94" id-nature="3" logistic-supply-class="Unite tranche D" name="Obus 130 OE" nature="Solide" package-mass="0.03" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
@@ -2094,24 +2180,32 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="12" neutralization-ratio="2.5" type="explosif" x-dispersion="100" y-dispersion="100">
-      <ph target-posture="Mouvement" value="0.3"/>
-      <ph target-posture="MouvementDiscret" value="0.3"/>
-      <ph target-posture="Arret" value="0.6"/>
-      <ph target-posture="PosteReflexe" value="0.6"/>
-      <ph target-posture="Poste" value="0.5"/>
-      <ph target-posture="PosteAmenage" value="0.3"/>
-      <ph target-posture="PostePrepareGenie" value="0.1"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="12" x-dispersion="100" y-dispersion="100">
+      <indirect-fire neutralization-ratio="2.5" type="explosif">
+        <ph target-posture="Mouvement" value="0.3"/>
+        <ph target-posture="MouvementDiscret" value="0.3"/>
+        <ph target-posture="Arret" value="0.6"/>
+        <ph target-posture="PosteReflexe" value="0.6"/>
+        <ph target-posture="Poste" value="0.5"/>
+        <ph target-posture="PosteAmenage" value="0.3"/>
+        <ph target-posture="PostePrepareGenie" value="0.1"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="95" id-nature="3" logistic-supply-class="Unite non tranche D" name="Obus 130 Ecl" nature="Solide" package-mass="0.06" package-size="2" package-volume="0.06" type="Obus">
-    <indirect-fire intervention-type="4" life-time="300s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1000"/>
+    <indirect-fires intervention-type="4" x-dispersion="1000" y-dispersion="1000">
+      <indirect-fire life-time="300s" setup-time="0s" type="eclairant"/>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="96" id-nature="3" logistic-supply-class="Unite tranche D" name="Obus 122 OFUM" nature="Solide" package-mass="0.03" package-size="1" package-volume="0.1" type="Obus">
-    <indirect-fire intervention-type="6" life-time="600s" setup-time="60s" type="fumigene" x-dispersion="1000" y-dispersion="1000"/>
+    <indirect-fires intervention-type="6" x-dispersion="1000" y-dispersion="1000">
+      <indirect-fire life-time="600s" setup-time="60s" type="fumigene"/>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="97" id-nature="3" logistic-supply-class="Unite tranche D" name="Obus 152 FUM" nature="Solide" package-mass="0.03" package-size="1" package-volume="0.1" type="Obus">
-    <indirect-fire intervention-type="4" life-time="600s" setup-time="60s" type="fumigene" x-dispersion="1000" y-dispersion="1000"/>
+    <indirect-fires intervention-type="4" x-dispersion="1000" y-dispersion="1000">
+      <indirect-fire life-time="600s" setup-time="60s" type="fumigene"/>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="98" id-nature="3" logistic-supply-class="Unite tranche D" name="Obus 203" nature="Solide" package-mass="0.65" package-size="8" package-volume="0.82" type="Obus">
     <attritions>
@@ -2134,15 +2228,17 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="24" neutralization-ratio="3" type="explosif" x-dispersion="200" y-dispersion="200">
-      <ph target-posture="Mouvement" value="0.3"/>
-      <ph target-posture="MouvementDiscret" value="0.3"/>
-      <ph target-posture="Arret" value="0.6"/>
-      <ph target-posture="PosteReflexe" value="0.6"/>
-      <ph target-posture="Poste" value="0.5"/>
-      <ph target-posture="PosteAmenage" value="0.3"/>
-      <ph target-posture="PostePrepareGenie" value="0.1"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="24" x-dispersion="200" y-dispersion="200">
+      <indirect-fire neutralization-ratio="3" type="explosif">
+        <ph target-posture="Mouvement" value="0.3"/>
+        <ph target-posture="MouvementDiscret" value="0.3"/>
+        <ph target-posture="Arret" value="0.6"/>
+        <ph target-posture="PosteReflexe" value="0.6"/>
+        <ph target-posture="Poste" value="0.5"/>
+        <ph target-posture="PosteAmenage" value="0.3"/>
+        <ph target-posture="PostePrepareGenie" value="0.1"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="99" id-nature="3" logistic-supply-class="Unite tranche D" name="Obus 203 OE MPA" nature="Solide" package-mass="0.65" package-size="8" package-volume="0.82" type="Obus">
     <attritions>
@@ -2165,15 +2261,17 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="24" neutralization-ratio="3" type="explosif" x-dispersion="200" y-dispersion="200">
-      <ph target-posture="Mouvement" value="0.3"/>
-      <ph target-posture="MouvementDiscret" value="0.3"/>
-      <ph target-posture="Arret" value="0.6"/>
-      <ph target-posture="PosteReflexe" value="0.6"/>
-      <ph target-posture="Poste" value="0.5"/>
-      <ph target-posture="PosteAmenage" value="0.3"/>
-      <ph target-posture="PostePrepareGenie" value="0.1"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="24" x-dispersion="200" y-dispersion="200">
+      <indirect-fire neutralization-ratio="3" type="explosif">
+        <ph target-posture="Mouvement" value="0.3"/>
+        <ph target-posture="MouvementDiscret" value="0.3"/>
+        <ph target-posture="Arret" value="0.6"/>
+        <ph target-posture="PosteReflexe" value="0.6"/>
+        <ph target-posture="Poste" value="0.5"/>
+        <ph target-posture="PosteAmenage" value="0.3"/>
+        <ph target-posture="PostePrepareGenie" value="0.1"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="100" id-nature="3" logistic-supply-class="Unite non tranche D" name="Roquette 57" nature="Solide" package-mass="0.049" package-size="4" package-volume="0.22" type="MissileSol">
     <attritions>
@@ -2196,15 +2294,17 @@
       <urban-modifier material-type="Prefabrique" value="0.9"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="6" neutralization-ratio="1.5" type="explosif" x-dispersion="100" y-dispersion="100">
-      <ph target-posture="Mouvement" value="1"/>
-      <ph target-posture="MouvementDiscret" value="1"/>
-      <ph target-posture="Arret" value="1"/>
-      <ph target-posture="PosteReflexe" value="1"/>
-      <ph target-posture="Poste" value="1"/>
-      <ph target-posture="PosteAmenage" value="0.5"/>
-      <ph target-posture="PostePrepareGenie" value="0.2"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="6" x-dispersion="100" y-dispersion="100">
+      <indirect-fire neutralization-ratio="1.5" type="explosif">
+        <ph target-posture="Mouvement" value="1"/>
+        <ph target-posture="MouvementDiscret" value="1"/>
+        <ph target-posture="Arret" value="1"/>
+        <ph target-posture="PosteReflexe" value="1"/>
+        <ph target-posture="Poste" value="1"/>
+        <ph target-posture="PosteAmenage" value="0.5"/>
+        <ph target-posture="PostePrepareGenie" value="0.2"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1420-026" codeLFRIL="" codeNNO="" id="101" id-nature="3" logistic-supply-class="Unite non tranche D" name="Roquette RPG7" nature="Solide" package-mass="0.029" package-size="1" package-volume="0.13" type="MissileSol">
     <attritions>
@@ -2293,15 +2393,17 @@
       <urban-modifier material-type="Prefabrique" value="0.9"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="12" neutralization-ratio="2.5" type="explosif" x-dispersion="100" y-dispersion="100">
-      <ph target-posture="Mouvement" value="1"/>
-      <ph target-posture="MouvementDiscret" value="1"/>
-      <ph target-posture="Arret" value="1"/>
-      <ph target-posture="PosteReflexe" value="1"/>
-      <ph target-posture="Poste" value="1"/>
-      <ph target-posture="PosteAmenage" value="0.5"/>
-      <ph target-posture="PostePrepareGenie" value="0.2"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="12" x-dispersion="100" y-dispersion="100">
+      <indirect-fire neutralization-ratio="2.5" type="explosif">
+        <ph target-posture="Mouvement" value="1"/>
+        <ph target-posture="MouvementDiscret" value="1"/>
+        <ph target-posture="Arret" value="1"/>
+        <ph target-posture="PosteReflexe" value="1"/>
+        <ph target-posture="Poste" value="1"/>
+        <ph target-posture="PosteAmenage" value="0.5"/>
+        <ph target-posture="PostePrepareGenie" value="0.2"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="105" id-nature="3" logistic-supply-class="Unite non tranche D" name="CPLT EXPL 60" nature="Solide" package-mass="0.034" package-size="6" package-volume="0.058" type="Obus">
     <attritions>
@@ -2324,15 +2426,17 @@
       <urban-modifier material-type="Prefabrique" value="0.9"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="12" neutralization-ratio="2.5" type="explosif" x-dispersion="100" y-dispersion="100">
-      <ph target-posture="Mouvement" value="1"/>
-      <ph target-posture="MouvementDiscret" value="1"/>
-      <ph target-posture="Arret" value="1"/>
-      <ph target-posture="PosteReflexe" value="1"/>
-      <ph target-posture="Poste" value="1"/>
-      <ph target-posture="PosteAmenage" value="0.5"/>
-      <ph target-posture="PostePrepareGenie" value="0.2"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="12" x-dispersion="100" y-dispersion="100">
+      <indirect-fire neutralization-ratio="2.5" type="explosif">
+        <ph target-posture="Mouvement" value="1"/>
+        <ph target-posture="MouvementDiscret" value="1"/>
+        <ph target-posture="Arret" value="1"/>
+        <ph target-posture="PosteReflexe" value="1"/>
+        <ph target-posture="Poste" value="1"/>
+        <ph target-posture="PosteAmenage" value="0.5"/>
+        <ph target-posture="PostePrepareGenie" value="0.2"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="106" id-nature="3" logistic-supply-class="Unite non tranche D" name="CART 7,62 BD HOM" nature="Solide" package-mass="0.038" package-size="1000" package-volume="0.035" type="Mitraille">
     <attritions>
@@ -2359,15 +2463,17 @@
       <attrition destruction="1" protection="VehiculeNonProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="1" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
-    <indirect-fire intervention-type="1" neutralization-ratio="2" type="explosif" x-dispersion="100" y-dispersion="100">
-      <ph target-posture="Mouvement" value="1"/>
-      <ph target-posture="MouvementDiscret" value="1"/>
-      <ph target-posture="Arret" value="1"/>
-      <ph target-posture="PosteReflexe" value="1"/>
-      <ph target-posture="Poste" value="1"/>
-      <ph target-posture="PosteAmenage" value="0.5"/>
-      <ph target-posture="PostePrepareGenie" value="0.2"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="1" x-dispersion="100" y-dispersion="100">
+      <indirect-fire neutralization-ratio="2" type="explosif">
+        <ph target-posture="Mouvement" value="1"/>
+        <ph target-posture="MouvementDiscret" value="1"/>
+        <ph target-posture="Arret" value="1"/>
+        <ph target-posture="PosteReflexe" value="1"/>
+        <ph target-posture="Poste" value="1"/>
+        <ph target-posture="PosteAmenage" value="0.5"/>
+        <ph target-posture="PostePrepareGenie" value="0.2"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1320144127130" id="108" id-nature="3" logistic-supply-class="Unite tranche D" name="OE F1 155 CAESAR" nature="Solide" package-mass="0.65" package-size="8" package-volume="0.82" type="Obus">
     <attritions>
@@ -2381,15 +2487,17 @@
       <attrition destruction="0.3" protection="VehiculeNonProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
       <attrition destruction="0.5" protection="Combattant" repairable-with-evacuation="0.5" repairable-without-evacuation="0"/>
     </attritions>
-    <indirect-fire intervention-type="24" neutralization-ratio="1.5" type="explosif" x-dispersion="200" y-dispersion="200">
-      <ph target-posture="Mouvement" value="0.3"/>
-      <ph target-posture="MouvementDiscret" value="0.3"/>
-      <ph target-posture="Arret" value="0.6"/>
-      <ph target-posture="PosteReflexe" value="0.6"/>
-      <ph target-posture="Poste" value="0.5"/>
-      <ph target-posture="PosteAmenage" value="0.3"/>
-      <ph target-posture="PostePrepareGenie" value="0.1"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="24" x-dispersion="200" y-dispersion="200">
+      <indirect-fire neutralization-ratio="1.5" type="explosif">
+        <ph target-posture="Mouvement" value="0.3"/>
+        <ph target-posture="MouvementDiscret" value="0.3"/>
+        <ph target-posture="Arret" value="0.6"/>
+        <ph target-posture="PosteReflexe" value="0.6"/>
+        <ph target-posture="Poste" value="0.5"/>
+        <ph target-posture="PosteAmenage" value="0.3"/>
+        <ph target-posture="PostePrepareGenie" value="0.1"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1320145451198" id="109" id-nature="3" logistic-supply-class="Unite tranche D" name="OE F2 155 CAESAR" nature="Solide" package-mass="0.65" package-size="8" package-volume="0.82" type="Obus">
     <attritions>
@@ -2403,15 +2511,17 @@
       <attrition destruction="0.3" protection="VehiculeNonProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
       <attrition destruction="0.5" protection="Combattant" repairable-with-evacuation="0.5" repairable-without-evacuation="0"/>
     </attritions>
-    <indirect-fire intervention-type="24" neutralization-ratio="1.5" type="explosif" x-dispersion="200" y-dispersion="200">
-      <ph target-posture="Mouvement" value="0.3"/>
-      <ph target-posture="MouvementDiscret" value="0.3"/>
-      <ph target-posture="Arret" value="0.6"/>
-      <ph target-posture="PosteReflexe" value="0.6"/>
-      <ph target-posture="Poste" value="0.5"/>
-      <ph target-posture="PosteAmenage" value="0.3"/>
-      <ph target-posture="PostePrepareGenie" value="0.1"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="24" x-dispersion="200" y-dispersion="200">
+      <indirect-fire neutralization-ratio="1.5" type="explosif">
+        <ph target-posture="Mouvement" value="0.3"/>
+        <ph target-posture="MouvementDiscret" value="0.3"/>
+        <ph target-posture="Arret" value="0.6"/>
+        <ph target-posture="PosteReflexe" value="0.6"/>
+        <ph target-posture="Poste" value="0.5"/>
+        <ph target-posture="PosteAmenage" value="0.3"/>
+        <ph target-posture="PostePrepareGenie" value="0.1"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1320145543404" id="110" id-nature="3" logistic-supply-class="Unite tranche D" name="OE F4 155 CAESAR" nature="Solide" package-mass="0.65" package-size="8" package-volume="0.82" type="Obus">
     <attritions>
@@ -2425,15 +2535,17 @@
       <attrition destruction="0.3" protection="VehiculeNonProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
       <attrition destruction="0.5" protection="Combattant" repairable-with-evacuation="0.5" repairable-without-evacuation="0"/>
     </attritions>
-    <indirect-fire intervention-type="24" neutralization-ratio="1.5" type="explosif" x-dispersion="200" y-dispersion="200">
-      <ph target-posture="Mouvement" value="0.3"/>
-      <ph target-posture="MouvementDiscret" value="0.3"/>
-      <ph target-posture="Arret" value="0.6"/>
-      <ph target-posture="PosteReflexe" value="0.6"/>
-      <ph target-posture="Poste" value="0.5"/>
-      <ph target-posture="PosteAmenage" value="0.3"/>
-      <ph target-posture="PostePrepareGenie" value="0.1"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="24" x-dispersion="200" y-dispersion="200">
+      <indirect-fire neutralization-ratio="1.5" type="explosif">
+        <ph target-posture="Mouvement" value="0.3"/>
+        <ph target-posture="MouvementDiscret" value="0.3"/>
+        <ph target-posture="Arret" value="0.6"/>
+        <ph target-posture="PosteReflexe" value="0.6"/>
+        <ph target-posture="Poste" value="0.5"/>
+        <ph target-posture="PosteAmenage" value="0.3"/>
+        <ph target-posture="PostePrepareGenie" value="0.1"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1320145567091" id="111" id-nature="3" logistic-supply-class="Unite tranche D" name="OE F5 155 CAESAR" nature="Solide" package-mass="0.65" package-size="8" package-volume="0.82" type="Obus">
     <attritions>
@@ -2447,15 +2559,17 @@
       <attrition destruction="0.3" protection="VehiculeNonProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
       <attrition destruction="0.5" protection="Combattant" repairable-with-evacuation="0.5" repairable-without-evacuation="0"/>
     </attritions>
-    <indirect-fire intervention-type="24" neutralization-ratio="1.5" type="explosif" x-dispersion="200" y-dispersion="200">
-      <ph target-posture="Mouvement" value="0.3"/>
-      <ph target-posture="MouvementDiscret" value="0.3"/>
-      <ph target-posture="Arret" value="0.6"/>
-      <ph target-posture="PosteReflexe" value="0.6"/>
-      <ph target-posture="Poste" value="0.5"/>
-      <ph target-posture="PosteAmenage" value="0.3"/>
-      <ph target-posture="PostePrepareGenie" value="0.1"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="24" x-dispersion="200" y-dispersion="200">
+      <indirect-fire neutralization-ratio="1.5" type="explosif">
+        <ph target-posture="Mouvement" value="0.3"/>
+        <ph target-posture="MouvementDiscret" value="0.3"/>
+        <ph target-posture="Arret" value="0.6"/>
+        <ph target-posture="PosteReflexe" value="0.6"/>
+        <ph target-posture="Poste" value="0.5"/>
+        <ph target-posture="PosteAmenage" value="0.3"/>
+        <ph target-posture="PostePrepareGenie" value="0.1"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="Obus 155 OE F2 JUPE" codeEMAT8="1X000019" codeLFRIL="Obus 155 OE F2 JUPE" codeNNO="Obus 155 OE F2 JUPE" id="112" id-nature="3" logistic-supply-class="Unite tranche D" name="Obus 155 OE JUPE F2 RTC" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
@@ -2478,15 +2592,17 @@
       <urban-modifier material-type="Prefabrique" value="0.6"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="24" neutralization-ratio="3" type="explosif" x-dispersion="200" y-dispersion="200">
-      <ph target-posture="Mouvement" value="0.3"/>
-      <ph target-posture="MouvementDiscret" value="0.3"/>
-      <ph target-posture="Arret" value="0.6"/>
-      <ph target-posture="PosteReflexe" value="0.6"/>
-      <ph target-posture="Poste" value="0.5"/>
-      <ph target-posture="PosteAmenage" value="0.3"/>
-      <ph target-posture="PostePrepareGenie" value="0.1"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="24" x-dispersion="200" y-dispersion="200">
+      <indirect-fire neutralization-ratio="3" type="explosif">
+        <ph target-posture="Mouvement" value="0.3"/>
+        <ph target-posture="MouvementDiscret" value="0.3"/>
+        <ph target-posture="Arret" value="0.6"/>
+        <ph target-posture="PosteReflexe" value="0.6"/>
+        <ph target-posture="Poste" value="0.5"/>
+        <ph target-posture="PosteAmenage" value="0.3"/>
+        <ph target-posture="PostePrepareGenie" value="0.1"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1320-300" codeLFRIL="" codeNNO="" id="113" id-nature="3" logistic-supply-class="Unite tranche D" name="Obus 155 OE CCR F1" nature="Solide" package-mass="0.65" package-size="8" package-volume="0.82" type="Obus">
     <attritions>
@@ -2509,15 +2625,17 @@
       <urban-modifier material-type="Prefabrique" value="0.9"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="24" neutralization-ratio="3" type="explosif" x-dispersion="200" y-dispersion="200">
-      <ph target-posture="Mouvement" value="0.3"/>
-      <ph target-posture="MouvementDiscret" value="0.3"/>
-      <ph target-posture="Arret" value="0.6"/>
-      <ph target-posture="PosteReflexe" value="0.6"/>
-      <ph target-posture="Poste" value="0.5"/>
-      <ph target-posture="PosteAmenage" value="0.3"/>
-      <ph target-posture="PostePrepareGenie" value="0.1"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="24" x-dispersion="200" y-dispersion="200">
+      <indirect-fire neutralization-ratio="3" type="explosif">
+        <ph target-posture="Mouvement" value="0.3"/>
+        <ph target-posture="MouvementDiscret" value="0.3"/>
+        <ph target-posture="Arret" value="0.6"/>
+        <ph target-posture="PosteReflexe" value="0.6"/>
+        <ph target-posture="Poste" value="0.5"/>
+        <ph target-posture="PosteAmenage" value="0.3"/>
+        <ph target-posture="PostePrepareGenie" value="0.1"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="1320145246658" id="114" id-nature="3" logistic-supply-class="Unite tranche D" name="ACED 155 CAESAR" nature="Solide" package-mass="0.65" package-size="8" package-volume="0.82" type="Obus">
     <attritions>
@@ -2531,15 +2649,17 @@
       <attrition destruction="1" protection="VehiculeNonProtege" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="0" repairable-without-evacuation="0"/>
     </attritions>
-    <indirect-fire intervention-type="2" neutralization-ratio="1.25" type="aced" x-dispersion="300" y-dispersion="300">
-      <ph target-posture="Mouvement" value="0.5"/>
-      <ph target-posture="MouvementDiscret" value="0.5"/>
-      <ph target-posture="Arret" value="0.8"/>
-      <ph target-posture="PosteReflexe" value="0.8"/>
-      <ph target-posture="Poste" value="0.7"/>
-      <ph target-posture="PosteAmenage" value="0.5"/>
-      <ph target-posture="PostePrepareGenie" value="0.2"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="2" x-dispersion="300" y-dispersion="300">
+      <indirect-fire neutralization-ratio="1.25" type="explosif">
+        <ph target-posture="Mouvement" value="0.5"/>
+        <ph target-posture="MouvementDiscret" value="0.5"/>
+        <ph target-posture="Arret" value="0.8"/>
+        <ph target-posture="PosteReflexe" value="0.8"/>
+        <ph target-posture="Poste" value="0.7"/>
+        <ph target-posture="PosteAmenage" value="0.5"/>
+        <ph target-posture="PostePrepareGenie" value="0.2"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="Obus 155 OGRE F1" codeEMAT8="1X000027" codeLFRIL="Obus 155 OGRE F1" codeNNO="Obus 155 OGRE F1" id="115" id-nature="3" logistic-supply-class="Unite tranche D" name="Obus 155 OGRE F1" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
@@ -2562,15 +2682,17 @@
       <urban-modifier material-type="Prefabrique" value="0.9"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="12" neutralization-ratio="3.5" type="grenade" x-dispersion="200" y-dispersion="200">
-      <ph target-posture="Mouvement" value="0.3"/>
-      <ph target-posture="MouvementDiscret" value="0.3"/>
-      <ph target-posture="Arret" value="0.6"/>
-      <ph target-posture="PosteReflexe" value="0.6"/>
-      <ph target-posture="Poste" value="0.5"/>
-      <ph target-posture="PosteAmenage" value="0.3"/>
-      <ph target-posture="PostePrepareGenie" value="0.1"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="12" x-dispersion="200" y-dispersion="200">
+      <indirect-fire neutralization-ratio="3.5" type="explosif">
+        <ph target-posture="Mouvement" value="0.3"/>
+        <ph target-posture="MouvementDiscret" value="0.3"/>
+        <ph target-posture="Arret" value="0.6"/>
+        <ph target-posture="PosteReflexe" value="0.6"/>
+        <ph target-posture="Poste" value="0.5"/>
+        <ph target-posture="PosteAmenage" value="0.3"/>
+        <ph target-posture="PostePrepareGenie" value="0.1"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="Obus 155 ACED" codeEMAT8="1X000044" codeLFRIL="Obus 155 ACED" codeNNO="Obus 155 ACED" id="116" id-nature="3" logistic-supply-class="Unite tranche D" name="Obus 155 OACED" nature="Solide" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
     <attritions>
@@ -2593,21 +2715,27 @@
       <urban-modifier material-type="Prefabrique" value="0.9"/>
       <urban-modifier material-type="Vegetation" value="0.9"/>
     </urban-modifiers>
-    <indirect-fire intervention-type="2" neutralization-ratio="1.5" type="aced" x-dispersion="200" y-dispersion="200">
-      <ph target-posture="Mouvement" value="0.5"/>
-      <ph target-posture="MouvementDiscret" value="0.5"/>
-      <ph target-posture="Arret" value="0.8"/>
-      <ph target-posture="PosteReflexe" value="0.8"/>
-      <ph target-posture="Poste" value="0.7"/>
-      <ph target-posture="PosteAmenage" value="0.5"/>
-      <ph target-posture="PostePrepareGenie" value="0.2"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="2" x-dispersion="200" y-dispersion="200">
+      <indirect-fire neutralization-ratio="1.5" type="explosif">
+        <ph target-posture="Mouvement" value="0.5"/>
+        <ph target-posture="MouvementDiscret" value="0.5"/>
+        <ph target-posture="Arret" value="0.8"/>
+        <ph target-posture="PosteReflexe" value="0.8"/>
+        <ph target-posture="Poste" value="0.7"/>
+        <ph target-posture="PosteAmenage" value="0.5"/>
+        <ph target-posture="PostePrepareGenie" value="0.2"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1320-344" codeLFRIL="" codeNNO="" id="117" id-nature="3" logistic-supply-class="Unite tranche D" name="Obus 155 OECL F1" nature="Solide" package-mass="0.652" package-size="8" package-volume="0.82" type="Obus">
-    <indirect-fire intervention-type="4" life-time="300s" setup-time="0s" type="eclairant" x-dispersion="1000" y-dispersion="1000"/>
+    <indirect-fires intervention-type="4" x-dispersion="1000" y-dispersion="1000">
+      <indirect-fire life-time="300s" setup-time="0s" type="eclairant"/>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1320-325" codeLFRIL="" codeNNO="" id="118" id-nature="3" logistic-supply-class="Unite tranche D" name="Obus 155 OFUM PH" nature="Solide" package-mass="0.65" package-size="8" package-volume="0.82" type="Obus">
-    <indirect-fire intervention-type="2" life-time="600s" setup-time="60s" type="fumigene" x-dispersion="1000" y-dispersion="1000"/>
+    <indirect-fires intervention-type="2" x-dispersion="1000" y-dispersion="1000">
+      <indirect-fire life-time="600s" setup-time="60s" type="fumigene"/>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="119" id-nature="3" logistic-supply-class="Unite non tranche D" name="Grenade offensive" nature="Solide" package-mass="1" package-size="1" package-volume="1" type="ALR">
     <attritions>
@@ -2623,7 +2751,9 @@
     </attritions>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1370 408 0020" codeLFRIL="" codeNNO="1370 14 237 0366" id="120" id-nature="3" logistic-supply-class="Unite non tranche D" name="GALIX FLB/AP" nature="Solide" package-mass="0.054" package-size="8" package-volume="0.071" type="Obus">
-    <indirect-fire intervention-type="4" life-time="300s" setup-time="18s" type="fumigene" x-dispersion="400" y-dispersion="600"/>
+    <indirect-fires intervention-type="4" x-dispersion="400" y-dispersion="600">
+      <indirect-fire life-time="300s" setup-time="18s" type="fumigene"/>
+    </indirect-fires>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="1315 792 0005" codeLFRIL="" codeNNO="1305 14 511 5288" id="121" id-nature="3" logistic-supply-class="Unite non tranche D" name="Obus 25mm HEI EXPLO." nature="Solide" package-mass="0.03" package-size="60" package-volume="0.026" type="Obus">
     <attritions>
@@ -2681,15 +2811,17 @@
       <attrition destruction="0.3" protection="VehiculeNonProtege" repairable-with-evacuation="0.6" repairable-without-evacuation="0.1"/>
       <attrition destruction="0" protection="Combattant" repairable-with-evacuation="1" repairable-without-evacuation="0"/>
     </attritions>
-    <indirect-fire intervention-type="24" neutralization-ratio="3" type="explosif" x-dispersion="200" y-dispersion="200">
-      <ph target-posture="Mouvement" value="0.3"/>
-      <ph target-posture="MouvementDiscret" value="0.3"/>
-      <ph target-posture="Arret" value="0.6"/>
-      <ph target-posture="PosteReflexe" value="0.6"/>
-      <ph target-posture="Poste" value="0.5"/>
-      <ph target-posture="PosteAmenage" value="0.3"/>
-      <ph target-posture="PostePrepareGenie" value="0.1"/>
-    </indirect-fire>
+    <indirect-fires intervention-type="24" x-dispersion="200" y-dispersion="200">
+      <indirect-fire neutralization-ratio="3" type="explosif">
+        <ph target-posture="Mouvement" value="0.3"/>
+        <ph target-posture="MouvementDiscret" value="0.3"/>
+        <ph target-posture="Arret" value="0.6"/>
+        <ph target-posture="PosteReflexe" value="0.6"/>
+        <ph target-posture="Poste" value="0.5"/>
+        <ph target-posture="PosteAmenage" value="0.3"/>
+        <ph target-posture="PostePrepareGenie" value="0.1"/>
+      </indirect-fire>
+    </indirect-fires>
   </resource>
   <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="9140 14 507 3290" id="124" id-nature="2" logistic-supply-class="Unite essence" name="F-63 1" nature="Gasoil" package-mass="1" package-size="1000" package-volume="1"/>
   <resource category="carburant" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="9130 14 310 5441" id="125" id-nature="2" logistic-supply-class="Unite essence" name="F-57 1" nature="Gasoil" package-mass="1" package-size="1000" package-volume="1"/>
@@ -2744,4 +2876,4 @@
   <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="150" id-nature="2" logistic-supply-class="Unite vivre" name="carburant" nature="Gasoil" package-mass="1" package-size="1" package-volume="1"/>
   <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="151" id-nature="3" logistic-supply-class="Unite vivre" name="nourriture" nature="Solide" package-mass="1" package-size="1" package-volume="1"/>
 </resources>
-<!-- signature="3509441803" -->
+<!-- signature="1493343130" -->

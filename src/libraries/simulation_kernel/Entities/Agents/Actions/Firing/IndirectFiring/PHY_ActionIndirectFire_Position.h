@@ -34,7 +34,13 @@ public:
     //@}
 
 private:
-    MIL_Effect_IndirectFire* pEffect_;
+    //! @name Types
+    //@{
+    typedef std::vector< MIL_Effect_IndirectFire* > T_Effects;
+    typedef T_Effects::const_iterator             CIT_Effects;
+    //@}
+private:
+    T_Effects effects_;
 };
 
 #endif // __PHY_ActionIndirectFire_Position_h_

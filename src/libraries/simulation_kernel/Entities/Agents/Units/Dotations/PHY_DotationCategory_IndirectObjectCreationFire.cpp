@@ -26,17 +26,19 @@
 // Name: PHY_DotationCategory_IndirectObjectCreationFire::Create
 // Created: LDC 2009-12-30
 // -----------------------------------------------------------------------------
-PHY_DotationCategory_IndirectFire_ABC& PHY_DotationCategory_IndirectObjectCreationFire::Create( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis )
+PHY_DotationCategory_IndirectFire_ABC& PHY_DotationCategory_IndirectObjectCreationFire::Create( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis,
+                                                                                                unsigned int nInterventionType, double rDispersionX, double rDispersionY )
 {
-    return *new PHY_DotationCategory_IndirectObjectCreationFire( type, dotationCategory, xis );
+    return *new PHY_DotationCategory_IndirectObjectCreationFire( type, dotationCategory, xis, nInterventionType, rDispersionX, rDispersionY );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory_IndirectObjectCreationFire constructor
 // Created: LDC 2009-12-30
 // -----------------------------------------------------------------------------
-PHY_DotationCategory_IndirectObjectCreationFire::PHY_DotationCategory_IndirectObjectCreationFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis )
-    : PHY_DotationCategory_IndirectFire_ABC( type, dotationCategory, xis )
+PHY_DotationCategory_IndirectObjectCreationFire::PHY_DotationCategory_IndirectObjectCreationFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis,
+                                                                                                  unsigned int nInterventionType, double rDispersionX, double rDispersionY )
+    : PHY_DotationCategory_IndirectFire_ABC( type, dotationCategory, nInterventionType, rDispersionX, rDispersionY )
 {
     std::string lifeTime;
     xis >> xml::attribute( "object-type", objectType_ )
@@ -50,8 +52,9 @@ PHY_DotationCategory_IndirectObjectCreationFire::PHY_DotationCategory_IndirectOb
 // Name: PHY_DotationCategory_IndirectObjectCreationFire constructor
 // Created: LDC 2009-12-30
 // -----------------------------------------------------------------------------
-PHY_DotationCategory_IndirectObjectCreationFire::PHY_DotationCategory_IndirectObjectCreationFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis, const std::string& objectType )
-    : PHY_DotationCategory_IndirectFire_ABC( type, dotationCategory, xis )
+PHY_DotationCategory_IndirectObjectCreationFire::PHY_DotationCategory_IndirectObjectCreationFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, const std::string& objectType,
+                                                                                                  unsigned int nInterventionType, double rDispersionX, double rDispersionY )
+    : PHY_DotationCategory_IndirectFire_ABC( type, dotationCategory, nInterventionType, rDispersionX, rDispersionY )
     , objectType_   ( objectType )
 {
     // NOTHING

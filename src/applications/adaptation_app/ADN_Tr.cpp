@@ -27,8 +27,6 @@
 ADN_Tr::T_ConverterTypeMunitionTirIndirect ADN_Tr::munitionTirIndirectConverter_[] =
 {
     T_ConverterTypeMunitionTirIndirect( "explosif",  QT_TRANSLATE_NOOP( "ADN_Tr", "explosive" ),          eTypeMunitionTirIndirect_Explosif ),
-    T_ConverterTypeMunitionTirIndirect( "grenade",   QT_TRANSLATE_NOOP( "ADN_Tr", "grenade" ),            eTypeMunitionTirIndirect_Grenade ),
-    T_ConverterTypeMunitionTirIndirect( "aced",      QT_TRANSLATE_NOOP( "ADN_Tr", "anti tank" ),          eTypeMunitionTirIndirect_Aced ),
     T_ConverterTypeMunitionTirIndirect( "fumigene",  QT_TRANSLATE_NOOP( "ADN_Tr", "smoke" ),              eTypeMunitionTirIndirect_Fumigene ),
     T_ConverterTypeMunitionTirIndirect( "eclairant", QT_TRANSLATE_NOOP( "ADN_Tr", "illumination shell" ), eTypeMunitionTirIndirect_Eclairant ),
     T_ConverterTypeMunitionTirIndirect( "mine",      QT_TRANSLATE_NOOP( "ADN_Tr", "mine" ),               eTypeMunitionTirIndirect_Mine ),

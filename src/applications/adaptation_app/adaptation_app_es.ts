@@ -1452,7 +1452,7 @@ estacionado con motor encendido</translation>
     </message>
     <message>
         <source>Equipment - Invalid indirect fire ammo type &apos;%1&apos;</source>
-        <translation>Equipo - Tipo de munición de fuego indirecto inválido &apos;%1&apos;</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1546,46 +1546,6 @@ estacionado con motor encendido</translation>
         <translation>Dispersión Y</translation>
     </message>
     <message>
-        <source>Explosive ammo parameters</source>
-        <translation>Parámetros de munición explosiva</translation>
-    </message>
-    <message>
-        <source>Stance</source>
-        <translation>Postura</translation>
-    </message>
-    <message>
-        <source>Neutralization ratio</source>
-        <translation>Radio de neutralización</translation>
-    </message>
-    <message>
-        <source>Flare/Smoke ammo parameters</source>
-        <translation>Parámetros de munición lumínica/humo</translation>
-    </message>
-    <message>
-        <source>Activation duration</source>
-        <translation>Tiempo de activación</translation>
-    </message>
-    <message>
-        <source>Span</source>
-        <translation>Duración</translation>
-    </message>
-    <message>
-        <source>Effect ammo parameters</source>
-        <translation>Parámetros de munición de efecto</translation>
-    </message>
-    <message>
-        <source>Created object</source>
-        <translation>Objeto creado</translation>
-    </message>
-    <message>
-        <source>Mine ammo parameters</source>
-        <translation>Parámetros de munición tipo mina</translation>
-    </message>
-    <message>
-        <source>Mines quantity</source>
-        <translation>Cantidad de minas</translation>
-    </message>
-    <message>
         <source>Illumination capacity</source>
         <translation>Capacidad de iluminación</translation>
     </message>
@@ -1643,6 +1603,74 @@ estacionado con motor encendido</translation>
     </message>
     <message>
         <source>Improvised explosive device</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Effects</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Explosive</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Smoke</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Illumination shell</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mine</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Effect</source>
+        <translation type="unfinished">Efecto</translation>
+    </message>
+    <message>
+        <source>Explosive ammo parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Stance</source>
+        <translation type="unfinished">Postura</translation>
+    </message>
+    <message>
+        <source>Neutralization ratio</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activation duration</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Span</source>
+        <translation type="unfinished">Duración</translation>
+    </message>
+    <message>
+        <source>Effect ammo parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Created object</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mine ammo parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Mines quantity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Smoke ammo parameters</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Flare ammo parameters</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -4585,14 +4613,6 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     <message>
         <source>explosive</source>
         <translation>explosif</translation>
-    </message>
-    <message>
-        <source>grenade</source>
-        <translation></translation>
-    </message>
-    <message>
-        <source>anti tank</source>
-        <translation>anti char</translation>
     </message>
     <message>
         <source>smoke</source>

@@ -144,6 +144,16 @@ void ADN_Equipement_GUI::BuildGeneric( E_DotationFamily nType, QTabWidget* pPare
     pParent->addTab( pPage, ENT_Tr::ConvertFromDotationFamily( nType, ENT_Tr_ABC::eToTr ).c_str() );
 }
 
+namespace
+{
+    void CreateCheckbox( Q3GroupBox* parent, T_ConnectorVector& vConnectors, QString name,
+                         QButtonGroup* group, ADN_Equipement_GUI::E_AmmoGuiElements id )
+    {
+        ADN_CheckBox* checkbox = new ADN_CheckBox( name, parent );
+        vConnectors[ id ] = &checkbox->GetConnector();
+        group->addButton( checkbox, id );
+    }
+}
 // -----------------------------------------------------------------------------
 // Name: ADN_Equipement_GUI::BuildAmmunition
 // Created: APE 2004-12-28
@@ -205,46 +215,57 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     ADN_GroupBox* pIndirectGroup = new ADN_GroupBox( tr( "Indirect fire" ) );
     vConnectors[ eIndirect ] = &pIndirectGroup->GetConnector();
     QWidget* pIndirectGroupHolder = builder.AddFieldHolder( pIndirectGroup );
-    pIndirectTypeCombo_ = builder.AddEnumField< E_TypeMunitionTirIndirect >( pIndirectGroupHolder, tr( "Type" ), vConnectors[ eIndirectType ], ADN_Tr::ConvertFromTypeMunitionTirIndirect );
-    pIndirectGroup->connect( pIndirectTypeCombo_, SIGNAL( activated( int ) ), this, SLOT( IndirectTypeComboActivated( int ) ) );
     builder.AddField< ADN_EditLine_Int >( pIndirectGroupHolder, tr( "Intervention" ), vConnectors[ eIntervention ], 0, eGreaterZero );
     builder.AddField< ADN_EditLine_Double >( pIndirectGroupHolder, tr( "X Dispersion" ), vConnectors[ eDispersionX ], tr( "m" ), eGreaterZero );
     builder.AddField< ADN_EditLine_Double >( pIndirectGroupHolder, tr( "Y Dispersion" ), vConnectors[ eDispersionY ], tr( "m" ), eGreaterZero );
 
+    Q3GroupBox* pEffects = new Q3GroupBox( 5, Qt::Horizontal, tr( "Effects" ), pIndirectGroup );
+    {
+        buttonGroup_ = new QButtonGroup();
+        buttonGroup_->setExclusive( false );
+
+        CreateCheckbox( pEffects, vConnectors, tr( "Explosive" ), buttonGroup_, eExplosivePresent );
+        CreateCheckbox( pEffects, vConnectors, tr( "Smoke" ), buttonGroup_, eSmokePresent );
+        CreateCheckbox( pEffects, vConnectors, tr( "Illumination shell" ), buttonGroup_, eFlarePresent );
+        CreateCheckbox( pEffects, vConnectors, tr( "Mine" ), buttonGroup_, eMinePresent );
+        CreateCheckbox( pEffects, vConnectors, tr( "Effect" ), buttonGroup_, eEffectPresent );
+        connect( buttonGroup_, SIGNAL( buttonClicked( int ) ), this, SLOT( IndirectTypeChanged() ) );
+    }
+
+    QWidget* pEffectsInfo = new Q3VBox();
     {
         // Explosive parameters
-        pExplosiveParametersGroup_ = new Q3GroupBox( 1, Qt::Horizontal, tr( "Explosive ammo parameters" ), pIndirectGroup );
+        pExplosiveParametersGroup_ = new Q3GroupBox( 1, Qt::Horizontal, tr( "Explosive ammo parameters" ), pEffectsInfo );
         ADN_Equipement_Postures_GUI* pStance = new ADN_Equipement_Postures_GUI( tr( "Stance" ), pExplosiveParametersGroup_ );
         vConnectors[ eModifStances ] = &pStance->GetConnector();
         QWidget* pExplosiveParametersGroupHolder = builder.AddFieldHolder( pExplosiveParametersGroup_ );
         builder.AddField< ADN_EditLine_Double >( pExplosiveParametersGroupHolder, tr( "Neutralization ratio" ), vConnectors[ eNeutralizationRatio ] );
         builder.SetValidator( new ADN_DoubleValidator( 1, INT_MAX, 2, this ) );
 
+        // Smoke parameters
+        pSmokeParametersGroup_ = new Q3GroupBox( 3, Qt::Horizontal, tr( "Smoke ammo parameters" ), pEffectsInfo );
+        builder.AddField< ADN_TimeField >( pSmokeParametersGroup_, tr( "Activation duration" ), vConnectors[ eSmokeDeployTime ] );
+        builder.AddField< ADN_TimeField >( pSmokeParametersGroup_, tr( "Span" ), vConnectors[ eSmokeLifetime ] );
+
         // Flare parameters
-        pFlareParametersGroup_ = new Q3GroupBox( 3, Qt::Horizontal, tr( "Flare/Smoke ammo parameters" ), pIndirectGroup );
-        builder.AddField< ADN_TimeField >( pFlareParametersGroup_, tr( "Activation duration" ), vConnectors[ eDeployTime ] );
+        pFlareParametersGroup_ = new Q3GroupBox( 3, Qt::Horizontal, tr( "Flare ammo parameters" ), pEffectsInfo );
+        builder.AddField< ADN_TimeField >( pFlareParametersGroup_, tr( "Activation duration" ), vConnectors[ eFlareDeployTime ] );
         builder.AddField< ADN_TimeField >( pFlareParametersGroup_, tr( "Span" ), vConnectors[ eFlareLifetime ] );
 
         // Effect (object) parameters
-        pEffectParametersGroup_ = new Q3GroupBox( 3, Qt::Horizontal, tr( "Effect ammo parameters" ), pIndirectGroup );
+        pEffectParametersGroup_ = new Q3GroupBox( 3, Qt::Horizontal, tr( "Effect ammo parameters" ), pEffectsInfo );
         builder.AddField< ADN_ComboBox_Vector< ADN_Objects_Data_ObjectInfos> >( pEffectParametersGroup_, tr( "Created object" ), vConnectors[ eEffectType ] );
         builder.AddField< ADN_TimeField >( pEffectParametersGroup_, tr( "Span" ), vConnectors[ eEffectLifetime ] );
 
         // Mine parameters
-        pMineParametersGroup_ = new Q3GroupBox( 3, Qt::Horizontal, tr( "Mine ammo parameters" ), pIndirectGroup );
+        pMineParametersGroup_ = new Q3GroupBox( 3, Qt::Horizontal, tr( "Mine ammo parameters" ), pEffectsInfo );
         builder.AddField< ADN_EditLine_Int >( pMineParametersGroup_, tr( "Mines quantity" ), vConnectors[ eMineNumber ], 0, eGreaterEqualZero );
-
-        pIndirectEffectLayout_ = new QStackedLayout();
-        pIndirectEffectLayout_->addWidget( pExplosiveParametersGroup_ );
-        pIndirectEffectLayout_->addWidget( pFlareParametersGroup_ );
-        pIndirectEffectLayout_->addWidget( pEffectParametersGroup_ );
-        pIndirectEffectLayout_->addWidget( pMineParametersGroup_ );
     }
 
-    QVBoxLayout* pIndirectGroupLayout = new QVBoxLayout();
-    pIndirectGroupLayout->addWidget( pIndirectGroupHolder );
-    pIndirectGroupLayout->addLayout( pIndirectEffectLayout_ );
-    pIndirectGroup->setLayout( pIndirectGroupLayout );
+    QVBoxLayout* pIndirectGroupLayout_ = new QVBoxLayout( pIndirectGroup );
+    pIndirectGroupLayout_->addWidget( pIndirectGroupHolder );
+    pIndirectGroupLayout_->addWidget( pEffects );
+    pIndirectGroupLayout_->addWidget( pEffectsInfo );
 
     // Illumination
     ADN_GroupBox* pIlluminationGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Illumination capacity" ) );
@@ -282,6 +303,8 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     // Main page
     QWidget* pPage = CreateScrollArea( *pContent, pSearchListView );
     pParent->addTab( pPage, ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Munition, ENT_Tr_ABC::eToTr ).c_str() );
+
+    IndirectTypeChanged();
 }
 
 // -----------------------------------------------------------------------------
@@ -316,6 +339,8 @@ void ADN_Equipement_GUI::InitializeSimulationCombos()
         pMaterialCombo_->insertItem( noneItem, 0 );
         pMaterialCombo_->setCurrentItem( 0 );
     }
+
+    IndirectTypeChanged();
 }
 
 // -----------------------------------------------------------------------------
@@ -337,22 +362,16 @@ helpers::ADN_UrbanAttritionInfos* ADN_Equipement_GUI::GetSelectedMaterial() cons
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_GUI::IndirectTypeComboActivated
-// Created: APE 2005-01-04
+// Name: ADN_Equipement_GUI::IndirectTypeChanged
+// Created: LGY 2012-02-21
 // -----------------------------------------------------------------------------
-void ADN_Equipement_GUI::IndirectTypeComboActivated( int nIndex )
+void ADN_Equipement_GUI::IndirectTypeChanged()
 {
-    E_TypeMunitionTirIndirect type = static_cast< E_TypeMunitionTirIndirect >( pIndirectTypeCombo_->GetEnumIndexFromGUI( nIndex ) );
-    if( type == eTypeMunitionTirIndirect_Explosif || type == eTypeMunitionTirIndirect_Aced || type == eTypeMunitionTirIndirect_Grenade )
-        pIndirectEffectLayout_->setCurrentWidget( pExplosiveParametersGroup_ );
-    else if( type == eTypeMunitionTirIndirect_Eclairant || type == eTypeMunitionTirIndirect_Fumigene )
-        pIndirectEffectLayout_->setCurrentWidget( pFlareParametersGroup_ );
-    else if( type == eTypeMunitionTirIndirect_Mine )
-        pIndirectEffectLayout_->setCurrentWidget( pMineParametersGroup_ );
-    else if( type == eTypeMunitionTirIndirect_Effect )
-        pIndirectEffectLayout_->setCurrentWidget( pEffectParametersGroup_ );
-    data_.Initialize();
-    //data_.InitializeIndirectEffect();
+    pExplosiveParametersGroup_->setVisible( buttonGroup_->button( eExplosivePresent )->isChecked() );
+    pSmokeParametersGroup_->setVisible( buttonGroup_->button( eSmokePresent )->isChecked() );
+    pEffectParametersGroup_->setVisible( buttonGroup_->button( eEffectPresent )->isChecked() );
+    pMineParametersGroup_->setVisible( buttonGroup_->button( eMinePresent )->isChecked() );
+    pFlareParametersGroup_->setVisible( buttonGroup_->button( eFlarePresent )->isChecked() );
 }
 
 // -----------------------------------------------------------------------------

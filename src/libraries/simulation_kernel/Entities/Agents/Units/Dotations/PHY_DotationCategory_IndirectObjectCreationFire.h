@@ -23,12 +23,15 @@ class PHY_DotationCategory_IndirectObjectCreationFire : public PHY_DotationCateg
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_DotationCategory_IndirectObjectCreationFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis );
-             PHY_DotationCategory_IndirectObjectCreationFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis, const std::string& objectType );
+             PHY_DotationCategory_IndirectObjectCreationFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis,
+                                                              unsigned int nInterventionType, double rDispersionX, double rDispersionY );
+             PHY_DotationCategory_IndirectObjectCreationFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, const std::string& objectType,
+                                                              unsigned int nInterventionType, double rDispersionX, double rDispersionY );
     virtual ~PHY_DotationCategory_IndirectObjectCreationFire();
     //@}
 
-    static PHY_DotationCategory_IndirectFire_ABC& Create( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis );
+    static PHY_DotationCategory_IndirectFire_ABC& Create( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis,
+                                                          unsigned int nInterventionType, double rDispersionX, double rDispersionY );
 
     //! @name Operations
     //@{

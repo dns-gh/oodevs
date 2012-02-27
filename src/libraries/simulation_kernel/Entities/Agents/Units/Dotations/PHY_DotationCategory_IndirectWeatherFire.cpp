@@ -21,17 +21,19 @@
 // Name: PHY_DotationCategory_IndirectFire::Create
 // Created: NLD 2004-10-08
 // -----------------------------------------------------------------------------
-PHY_DotationCategory_IndirectFire_ABC& PHY_DotationCategory_IndirectWeatherFire::Create( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis )
+PHY_DotationCategory_IndirectFire_ABC& PHY_DotationCategory_IndirectWeatherFire::Create( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis,
+                                                                                         unsigned int nInterventionType, double rDispersionX, double rDispersionY )
 {
-    return *new PHY_DotationCategory_IndirectWeatherFire( type, dotationCategory, xis );
+    return *new PHY_DotationCategory_IndirectWeatherFire( type, dotationCategory, xis, nInterventionType, rDispersionX, rDispersionY );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory_IndirectWeatherFire constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_DotationCategory_IndirectWeatherFire::PHY_DotationCategory_IndirectWeatherFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis )
-    : PHY_DotationCategory_IndirectFire_ABC( type, dotationCategory, xis )
+PHY_DotationCategory_IndirectWeatherFire::PHY_DotationCategory_IndirectWeatherFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis,
+                                                                                    unsigned int nInterventionType, double rDispersionX, double rDispersionY )
+    : PHY_DotationCategory_IndirectFire_ABC( type, dotationCategory, nInterventionType, rDispersionX, rDispersionY )
 {
     std::string setupTime, lifeTime;
     xis >> xml::attribute( "setup-time", setupTime )

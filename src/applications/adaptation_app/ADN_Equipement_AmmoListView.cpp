@@ -93,17 +93,26 @@ void ADN_Equipement_AmmoListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Equipement_GUI::eAmmoPackageVolume ]->Connect( &pInfos->rPackageVolume_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eAttritions]->Connect( &pInfos->attritions_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eUrbanAttritions]->Connect( &pInfos->modifUrbanBlocks_, bConnect );
-    vItemConnectors_[ADN_Equipement_GUI::eIndirectType]->Connect( &pInfos->indirectAmmoInfos_.nIndirectType_, bConnect );
+    vItemConnectors_[ADN_Equipement_GUI::eIsIED]->Connect( &pInfos->bIED_, bConnect );
+
+    vItemConnectors_[ADN_Equipement_GUI::eExplosivePresent]->Connect( &pInfos->indirectAmmoInfos_.bExplosive_, bConnect );
+    vItemConnectors_[ADN_Equipement_GUI::eSmokePresent]->Connect( &pInfos->indirectAmmoInfos_.bSmoke_, bConnect );
+    vItemConnectors_[ADN_Equipement_GUI::eFlarePresent]->Connect( &pInfos->indirectAmmoInfos_.bFlare_, bConnect );
+    vItemConnectors_[ADN_Equipement_GUI::eMinePresent]->Connect( &pInfos->indirectAmmoInfos_.bMine_, bConnect );
+    vItemConnectors_[ADN_Equipement_GUI::eEffectPresent]->Connect( &pInfos->indirectAmmoInfos_.bEffect_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eIntervention]->Connect( &pInfos->indirectAmmoInfos_.nIntervention_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eDispersionX]->Connect( &pInfos->indirectAmmoInfos_.rDispersionX_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eDispersionY]->Connect( &pInfos->indirectAmmoInfos_.rDispersionY_, bConnect );
+
+    vItemConnectors_[ADN_Equipement_GUI::eModifStances]->Connect( &pInfos->indirectAmmoInfos_.vModifStance_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eNeutralizationRatio]->Connect( &pInfos->indirectAmmoInfos_.rNeutralizationRatio_, bConnect );
-    vItemConnectors_[ADN_Equipement_GUI::eDeployTime]->Connect( &pInfos->indirectAmmoInfos_.deployTime_, bConnect );
+    vItemConnectors_[ADN_Equipement_GUI::eFlareDeployTime]->Connect( &pInfos->indirectAmmoInfos_.flareDeployTime_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eFlareLifetime]->Connect( &pInfos->indirectAmmoInfos_.flareLifeTime_, bConnect );
+    vItemConnectors_[ADN_Equipement_GUI::eSmokeDeployTime]->Connect( &pInfos->indirectAmmoInfos_.smokeDeployTime_, bConnect );
+    vItemConnectors_[ADN_Equipement_GUI::eSmokeLifetime]->Connect( &pInfos->indirectAmmoInfos_.smokeLifeTime_, bConnect );
+    vItemConnectors_[ADN_Equipement_GUI::eMineNumber]->Connect( &pInfos->indirectAmmoInfos_.nMineNumber_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eEffectType]->Connect( &pInfos->indirectAmmoInfos_.objectType_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eEffectLifetime]->Connect( &pInfos->indirectAmmoInfos_.effectLifeTime_, bConnect );
-    vItemConnectors_[ADN_Equipement_GUI::eMineNumber]->Connect( &pInfos->indirectAmmoInfos_.nMineNumber_, bConnect );
-    vItemConnectors_[ADN_Equipement_GUI::eIsIED]->Connect( &pInfos->bIED_, bConnect );
 
     vItemConnectors_[ADN_Equipement_GUI::eArmor]->Connect( &ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos(), bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eMaterial]->Connect( &pInfos->modifUrbanBlocks_, bConnect );
@@ -117,8 +126,6 @@ void ADN_Equipement_AmmoListView::ConnectItem( bool bConnect )
     static ADN_WeaponFilter indirect;
     indirect.Initialize( &pInfos->bIndirect_, boost::bind( &Matches, false, _1, pInfos ) );
     vItemConnectors_[ADN_Equipement_GUI::eIndirect]->Connect( &indirect, bConnect );
-
-    vItemConnectors_[ADN_Equipement_GUI::eModifStances]->Connect( &pInfos->indirectAmmoInfos_.vModifStance_, bConnect );
 
     vItemConnectors_[ADN_Equipement_GUI::eRange]->Connect( &pInfos->fRange_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eMaintainIllumination]->Connect( &pInfos->bMaintainIllumination_, bConnect );

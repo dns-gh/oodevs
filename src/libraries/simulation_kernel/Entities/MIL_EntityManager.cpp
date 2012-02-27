@@ -1647,7 +1647,7 @@ void MIL_EntityManager::ProcessMagicActionCreateFireOrder( const UnitMagicAction
             throw NET_AsnException< ActionCreateFireOrderAck::ErrorCode >( ActionCreateFireOrderAck::error_invalid_iteration );
 
         PHY_FireResults_Pion fireResult( *reporter , targetKn->GetPosition(), *pDotationCategory );
-        unsigned int ammos = (unsigned int) pDotationCategory->GetIndirectFireData()->ConvertToNbrAmmo( iterations.value().Get(0).areal() );
+        unsigned int ammos = (unsigned int) pDotationCategory->ConvertToNbrAmmo( iterations.value().Get(0).areal() );
 
         MIL_Report::PostEvent( *reporter, MIL_Report::eReport_IndirectFireOnTarget, targetKn );
 
@@ -1692,7 +1692,7 @@ void MIL_EntityManager::OnReceiveCreateFireOrderOnLocation( const MagicAction& m
         if( iterations.value_size() != 1 || !iterations.value().Get( 0 ).has_areal() )
             throw NET_AsnException< ActionCreateFireOrderAck::ErrorCode >( ActionCreateFireOrderAck::error_invalid_iteration );
 
-        unsigned int ammos = static_cast< unsigned int >( pDotationCategory->GetIndirectFireData()->ConvertToNbrAmmo( iterations.value().Get(0).areal() ) );
+        unsigned int ammos = static_cast< unsigned int >( pDotationCategory->ConvertToNbrAmmo( iterations.value().Get(0).areal() ) );
 
         PHY_FireResults_Default fireResult;
         MT_Vector2D targetPos;

@@ -133,7 +133,7 @@ void MIL_Effect_IndirectFire::NotifyAmmoFired( const PHY_WeaponDataType_Indirect
     rImpactTimeStep_ = std::max( rImpactTimeStep_, rNewTimeBeforeImpact + MIL_Singletons::GetTime().GetCurrentTick() );
 
     nNbrAmmoFired_ += nNbrAmmoReserved;
-    if( indirectDotationCategory_.ConvertToInterventionType( nNbrAmmoFired_ ) >= rInterventionTypeToFire_ )
+    if( indirectDotationCategory_.GetDotationCategory().ConvertToInterventionType( nNbrAmmoFired_ ) >= rInterventionTypeToFire_ )
         StartFlying();
 }
 
@@ -227,7 +227,7 @@ unsigned int MIL_Effect_IndirectFire::GetNbrAmmoToCompleteInterventionType() con
     if( bFired_ )
         return 0;
 
-    double rTmp = indirectDotationCategory_.ConvertToNbrAmmo( rInterventionTypeToFire_ ) - nNbrAmmoFired_;
+    double rTmp = indirectDotationCategory_.GetDotationCategory().ConvertToNbrAmmo( rInterventionTypeToFire_ ) - nNbrAmmoFired_;
     if( rTmp <= 0. )
         return 0;
     return std::max( (unsigned int)1, (unsigned int)rTmp );

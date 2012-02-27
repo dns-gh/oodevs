@@ -23,6 +23,7 @@ class MIL_Agent_ABC;
 class PHY_DotationType;
 class PHY_DotationNature;
 class PHY_DotationCategory_IndirectFire_ABC;
+class PHY_IndirectFireDotationClass;
 class PHY_AmmoDotationClass;
 class PHY_Protection;
 class PHY_DotationLogisticType;
@@ -41,6 +42,12 @@ public:
              PHY_DotationCategory( const PHY_DotationType& type, const std::string& strName, xml::xistream& xis );
     virtual ~PHY_DotationCategory();
 
+    //! @name Types
+    //@{
+    typedef std::vector< PHY_DotationCategory_IndirectFire_ABC* > T_IndirectFireEffects;
+    typedef T_IndirectFireEffects::const_iterator               CIT_IndirectFireEffects;
+    //@}
+
     //! @name Accessors
     //@{
     unsigned int GetMosID() const;
@@ -53,6 +60,7 @@ public:
     float GetGuidanceRange() const;
     bool IsIlluminating( float range, bool permanent ) const;
     float GetIlluminatingRange() const;
+    const T_IndirectFireEffects& GetIndirectFireEffects() const;
     //@}
 
     //! @name Fire
@@ -60,14 +68,18 @@ public:
     bool CanBeUsedForDirectFire  () const;
     bool CanBeUsedForIndirectFire() const;
     bool HasAttritions           () const;
+    bool HasIndirectWeaponCategory( const PHY_IndirectFireDotationClass& indirectWeaponCategory ) const;
 
     const PHY_AttritionData& GetAttritionData( const PHY_Protection& protectionTarget ) const;
     double GetAttritionScore( const PHY_Protection& protectionTarget ) const;
-    const PHY_DotationCategory_IndirectFire_ABC* GetIndirectFireData() const;
 
     void ApplyIndirectFireEffect( const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const;
     void ApplyIndirectFireEffect( const MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const;
     void ApplyIndirectFireEffect( const MIL_Agent_ABC& firer, MIL_Agent_ABC& target, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const;
+
+    double ConvertToNbrAmmo( double rNbrIT ) const;
+    double ConvertToInterventionType( unsigned int nNbr ) const;
+    double GetRadius() const;
     //@}
 
     //! @name Packaging
@@ -118,7 +130,7 @@ private:
     void ReadAttrition             ( xml::xistream& xis );
     void ListUrbanAttrition        ( xml::xistream& xis );
     void ReadUrbanAttritionModifier( xml::xistream& xis );
-    void ReadIndirectFire          ( xml::xistream& xis );
+    void ReadIndirectFire          ( xml::xistream& xis, unsigned int nInterventionType, double rDispersionX, double rDispersionY );
     //@}
 
 private:
@@ -136,7 +148,7 @@ private:
 
     T_AttritionVector attritions_;
     std::auto_ptr< PHY_UrbanAttritionData > urbanAttritionData_;
-    PHY_DotationCategory_IndirectFire_ABC* pIndirectFireData_;
+    T_IndirectFireEffects indirectFireEffects_;
 
     //Illumination capacity
     float fRange_;
@@ -146,6 +158,9 @@ private:
     bool bGuided_;
     bool bMaintainGuidance_;
     float rGuidanceRange_;
+    unsigned int nInterventionType_;
+    double rDispersionX_;
+    double rDispersionY_;
 
 private:
     static unsigned int nbComposantes;

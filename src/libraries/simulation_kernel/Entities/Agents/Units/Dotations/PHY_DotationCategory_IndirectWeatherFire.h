@@ -26,12 +26,14 @@ namespace xml
 class PHY_DotationCategory_IndirectWeatherFire : public PHY_DotationCategory_IndirectFire_ABC
 {
 public:
-             PHY_DotationCategory_IndirectWeatherFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis );
+             PHY_DotationCategory_IndirectWeatherFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis,
+                                                       unsigned int nInterventionType, double rDispersionX, double rDispersionY );
     virtual ~PHY_DotationCategory_IndirectWeatherFire();
 
     //! @name
     //@{
-    static PHY_DotationCategory_IndirectFire_ABC& Create( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis );
+    static PHY_DotationCategory_IndirectFire_ABC& Create( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis,
+                                                          unsigned int nInterventionType, double rDispersionX, double rDispersionY );
     //@}
 
     //! @name Operations

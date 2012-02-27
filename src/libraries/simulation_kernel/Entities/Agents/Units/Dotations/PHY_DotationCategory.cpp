@@ -33,7 +33,6 @@ PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const 
     , pNature_              ( 0 )
     , strName_              ( strName )
     , nMosID_               ( 0 )
-    , pIndirectFireData_    ( 0 )
     , rWeight_              ( 0. )
     , rVolume_              ( 0. )
     , fRange_               ( 0.)
@@ -56,7 +55,7 @@ PHY_DotationCategory::PHY_DotationCategory( const PHY_DotationType& type, const 
     InitializeLogisticType    ( xis );
     InitializeIllumination    ( xis );
     InitializeGuidance        ( xis );
-    if( !attritions_.empty() || pIndirectFireData_ )
+    if( !attritions_.empty() || !indirectFireEffects_.empty() )
     {
         std::string strTmp; // $$$$ Check validity
         xis >> xml::optional >> xml::attribute( "type", strTmp );
@@ -158,25 +157,39 @@ void PHY_DotationCategory::InitializeUrbanAttritions( xml::xistream& xis )
     xis >> xml::list( "urban-modifiers", boost::bind( &UrbanModifier::Read, _1, boost::ref( urbanAttritionData_ ) ) );
 }
 
+// -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory::InitializeIndirectFireData
 // Created: NLD 2004-10-11
 // -----------------------------------------------------------------------------
 void PHY_DotationCategory::InitializeIndirectFireData( xml::xistream& xis )
 {
-    xis >> xml::list( "indirect-fire", *this, &PHY_DotationCategory::ReadIndirectFire );
+    if( xis.has_child( "indirect-fires" ) )
+    {
+        xis >> xml::start( "indirect-fires" )
+            >> xml::attribute( "intervention-type", nInterventionType_ )
+            >> xml::attribute( "x-dispersion", rDispersionX_ )
+            >> xml::attribute( "y-dispersion", rDispersionY_ );
+        if( nInterventionType_ <= 0. )
+            xis.error( "intervention-type <= 0" );
+        if( rDispersionX_ <= 0. )
+            xis.error( "rDispersionX_ <= 0" );
+        if( rDispersionY_ <= 0. )
+            xis.error( "rDispersionY_ <= 0" );
+        xis >> xml::list( "indirect-fire", *this, &PHY_DotationCategory::ReadIndirectFire, nInterventionType_, rDispersionX_, rDispersionY_ )
+            >> xml::end;
+    }
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory::ReadIndirectFire
 // Created: ABL 2007-07-19
 // -----------------------------------------------------------------------------
-void PHY_DotationCategory::ReadIndirectFire( xml::xistream& xis )
+void PHY_DotationCategory::ReadIndirectFire( xml::xistream& xis, unsigned int nInterventionType, double rDispersionX, double rDispersionY )
 {
-    pIndirectFireData_ = 0;
     const PHY_IndirectFireDotationClass* pType = PHY_IndirectFireDotationClass::Find( xis.attribute< std::string >( "type" ) );
     if( !pType )
         xis.error( "Unknown indirect fire data type" );
-    pIndirectFireData_ = &pType->InstanciateDotationCategory( *this, xis );
+    indirectFireEffects_.push_back(  &pType->InstanciateDotationCategory( *this, xis, nInterventionType, rDispersionX, rDispersionY ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -253,14 +266,23 @@ double PHY_DotationCategory::GetAttritionScore( const PHY_Protection& protection
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::GetIndirectFireEffects
+// Created: LGY 2012-02-24
+// -----------------------------------------------------------------------------
+const PHY_DotationCategory::T_IndirectFireEffects& PHY_DotationCategory::GetIndirectFireEffects() const
+{
+    return indirectFireEffects_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory::ApplyIndirectFireEffect
 // Created: ABR 2011-01-19
 // -----------------------------------------------------------------------------
 void PHY_DotationCategory::ApplyIndirectFireEffect( const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const
 {
-    assert( pIndirectFireData_ );
-    const double rInterventionTypeFired = pIndirectFireData_->ConvertToInterventionType( nNbrAmmoFired );
-    pIndirectFireData_->ApplyEffect( 0, vSourcePosition, vTargetPosition, rInterventionTypeFired, fireResult );
+    const double rInterventionTypeFired = ConvertToInterventionType( nNbrAmmoFired );
+    for( CIT_IndirectFireEffects it = indirectFireEffects_.begin(); it != indirectFireEffects_.end(); ++ it )
+        (*it)->ApplyEffect( 0, vSourcePosition, vTargetPosition, rInterventionTypeFired, fireResult );
 }
 
 // -----------------------------------------------------------------------------
@@ -269,9 +291,9 @@ void PHY_DotationCategory::ApplyIndirectFireEffect( const MT_Vector2D& vSourcePo
 // -----------------------------------------------------------------------------
 void PHY_DotationCategory::ApplyIndirectFireEffect( const MIL_Agent_ABC& firer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const
 {
-    assert( pIndirectFireData_ );
-    const double rInterventionTypeFired = pIndirectFireData_->ConvertToInterventionType( nNbrAmmoFired );
-    pIndirectFireData_->ApplyEffect( &firer, vSourcePosition, vTargetPosition, rInterventionTypeFired, fireResult );
+    const double rInterventionTypeFired = ConvertToInterventionType( nNbrAmmoFired );
+    for( CIT_IndirectFireEffects it = indirectFireEffects_.begin(); it != indirectFireEffects_.end(); ++ it )
+        (*it)->ApplyEffect( &firer, vSourcePosition, vTargetPosition, rInterventionTypeFired, fireResult );
 }
 
 // -----------------------------------------------------------------------------
@@ -280,9 +302,9 @@ void PHY_DotationCategory::ApplyIndirectFireEffect( const MIL_Agent_ABC& firer, 
 // -----------------------------------------------------------------------------
 void PHY_DotationCategory::ApplyIndirectFireEffect( const MIL_Agent_ABC& firer, MIL_Agent_ABC& target, unsigned int nNbrAmmoFired, PHY_FireResults_ABC& fireResult ) const
 {
-    assert( pIndirectFireData_ );
-    const double rInterventionTypeFired = pIndirectFireData_->ConvertToInterventionType( nNbrAmmoFired );
-    pIndirectFireData_->ApplyEffect( firer, target, rInterventionTypeFired, fireResult );
+    const double rInterventionTypeFired = ConvertToInterventionType( nNbrAmmoFired );
+    for( CIT_IndirectFireEffects it = indirectFireEffects_.begin(); it != indirectFireEffects_.end(); ++ it )
+        (*it)->ApplyEffect( firer, target, rInterventionTypeFired, fireResult );
 }
 
 // -----------------------------------------------------------------------------
@@ -360,21 +382,25 @@ bool PHY_DotationCategory::HasAttritions() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::HasIndirectWeaponCategory
+// Created: LGY 2012-02-24
+// -----------------------------------------------------------------------------
+bool PHY_DotationCategory::HasIndirectWeaponCategory( const PHY_IndirectFireDotationClass& indirectWeaponCategory ) const
+{
+    for( CIT_IndirectFireEffects it = indirectFireEffects_.begin(); it != indirectFireEffects_.end(); ++ it )
+        if( (*it)->GetIndirectFireDotationCategory() == indirectWeaponCategory )
+            return true;
+    return false;
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory::CanBeUsedForIndirectFire
 // Created: NLD 2004-10-11
 // -----------------------------------------------------------------------------
 bool PHY_DotationCategory::CanBeUsedForIndirectFire() const
 {
-    return pIndirectFireData_ != 0;
-}
-
-// -----------------------------------------------------------------------------
-// Name: PHY_DotationCategory::GetIndirectFireData
-// Created: NLD 2004-10-11
-// -----------------------------------------------------------------------------
-const PHY_DotationCategory_IndirectFire_ABC* PHY_DotationCategory::GetIndirectFireData() const
-{
-    return pIndirectFireData_;
+    return !indirectFireEffects_.empty();
 }
 
 // -----------------------------------------------------------------------------
@@ -472,4 +498,31 @@ bool PHY_DotationCategory::IsSignificantChange( double oldValue, double newValue
         return ( (unsigned int)oldValue != (unsigned int)newValue );
     double delta = std::abs( oldValue - newValue );
     return ( delta/capacity ) >= 0.1;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::ConvertToNbrAmmo
+// Created: LGY 2012-02-24
+// -----------------------------------------------------------------------------
+double PHY_DotationCategory::ConvertToNbrAmmo( double rNbrIT ) const
+{
+    return nInterventionType_ * rNbrIT;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::ConvertToInterventionType
+// Created: LGY 2012-02-24
+// -----------------------------------------------------------------------------
+double PHY_DotationCategory::ConvertToInterventionType( unsigned int nNbr ) const
+{
+    return static_cast< float >( nNbr ) / static_cast< float >( nInterventionType_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_DotationCategory::GetRadius
+// Created: LGY 2012-02-24
+// -----------------------------------------------------------------------------
+double PHY_DotationCategory::GetRadius() const
+{
+    return ( rDispersionX_ + rDispersionY_ ) / 2;
 }

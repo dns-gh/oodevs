@@ -27,15 +27,19 @@ using namespace firing;
 // -----------------------------------------------------------------------------
 PHY_ActionIndirectFire_Position::PHY_ActionIndirectFire_Position( MIL_Agent_ABC& pion, const PHY_DotationCategory* pDotationCategory, float rNbInterventionType, const MT_Vector2D* pTargetPosition )
     : PHY_ActionIndirectFire_ABC( pion, pDotationCategory, rNbInterventionType )
-    , pEffect_                  ( 0 )
 {
     assert( pTargetPosition );
 
     if( pDotationCategory_ && pDotationCategory_->CanBeUsedForIndirectFire() )
     {
-        pEffect_ = new MIL_Effect_IndirectFire( pion, *pTargetPosition, *pDotationCategory_->GetIndirectFireData(), rNbInterventionType_ );
-        pEffect_->IncRef();
-        MIL_EffectManager::GetEffectManager().Register( *pEffect_ );
+        const PHY_DotationCategory::T_IndirectFireEffects& effects = pDotationCategory->GetIndirectFireEffects();
+        for( PHY_DotationCategory::CIT_IndirectFireEffects it = effects.begin(); it != effects.end(); ++ it )
+        {
+            MIL_Effect_IndirectFire* pEffect = new MIL_Effect_IndirectFire( pion, *pTargetPosition, **it, rNbInterventionType_ );
+            pEffect->IncRef();
+            MIL_EffectManager::GetEffectManager().Register( *pEffect );
+            effects_.push_back( pEffect );
+        }
     }
 }
 
@@ -54,10 +58,10 @@ PHY_ActionIndirectFire_Position::~PHY_ActionIndirectFire_Position()
 // -----------------------------------------------------------------------------
 void PHY_ActionIndirectFire_Position::StopAction()
 {
-    if( pEffect_ )
+    for( CIT_Effects it = effects_.begin(); it != effects_.end(); ++it  )
     {
-        pEffect_->ForceFlying();
-        pEffect_->DecRef();
+        (*it)->ForceFlying();
+        (*it)->DecRef();
     }
     PHY_ActionIndirectFire_ABC::StopAction();
 }
@@ -68,7 +72,9 @@ void PHY_ActionIndirectFire_Position::StopAction()
 // -----------------------------------------------------------------------------
 void PHY_ActionIndirectFire_Position::Execute()
 {
-    int nResult = role_.Fire( pEffect_ );
+    int nResult = PHY_RoleAction_IndirectFiring::eRunning;
+    for( CIT_Effects it = effects_.begin(); it != effects_.end(); ++it )
+        nResult = role_.Fire( *it );
     Callback( nResult );
 }
 

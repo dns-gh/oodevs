@@ -106,7 +106,8 @@ public:
     TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<ModificatorPostureInfos>, ModificatorPostureInfos_Vector );
 
 // *****************************************************************************
-    class IndirectAmmoInfos : private boost::noncopyable
+    class IndirectAmmoInfos : public ADN_Ref_ABC
+                            , public ADN_DataTreeNode_ABC
     {
     public:
         IndirectAmmoInfos();
@@ -114,31 +115,42 @@ public:
         void CopyFrom( IndirectAmmoInfos& ammoInfos );
 
         void ReadArchive( xml::xistream& );
+        void ReadIndirectFire( xml::xistream& );
         void ReadPh( xml::xistream& );
         void WriteArchive( xml::xostream& ) const;
         void Initialize();
 
     public:
-        ADN_Type_Enum<E_TypeMunitionTirIndirect,eNbrTypeMunitionTirIndirect>  nIndirectType_;
-        ADN_Type_Int                                                          nIntervention_;
-        ADN_Type_Double                                                       rDispersionX_;
-        ADN_Type_Double                                                       rDispersionY_;
+        // Present types
+        ADN_Type_Bool bExplosive_;
+        ADN_Type_Bool bSmoke_;
+        ADN_Type_Bool bFlare_;
+        ADN_Type_Bool bMine_;
+        ADN_Type_Bool bEffect_;
+
+        ADN_Type_Int nIntervention_;
+        ADN_Type_Double rDispersionX_;
+        ADN_Type_Double rDispersionY_;
 
         // For explosive ammo
-        ADN_Type_Double                                                       rNeutralizationRatio_;
-        T_ModificatorPostureInfos_Vector                                      vModifStance_;
+        ADN_Type_Double rNeutralizationRatio_;
+        T_ModificatorPostureInfos_Vector vModifStance_;
 
-        // For flares
-        ADN_Type_Time                                                         deployTime_;
-        ADN_Type_Time                                                         flareLifeTime_;
+        // For flare
+        ADN_Type_Time flareDeployTime_;
+        ADN_Type_Time flareLifeTime_;
 
         // For smoke
-        ADN_Type_Int                                                          nMineNumber_;
+        ADN_Type_Time smokeDeployTime_;
+        ADN_Type_Time smokeLifeTime_;
+
+        // For mine
+        ADN_Type_Int nMineNumber_;
 
         // For effect
-        std::string                                                           strObjectType_;
-        ADN_TypePtr_InVector_ABC< ADN_Objects_Data_ObjectInfos >              objectType_;
-        ADN_Type_Time                                                         effectLifeTime_;
+        std::string strObjectType_;
+        ADN_TypePtr_InVector_ABC< ADN_Objects_Data_ObjectInfos > objectType_;
+        ADN_Type_Time effectLifeTime_;
     };
 
 // *****************************************************************************
@@ -153,7 +165,6 @@ public:
         void ReadArchive( xml::xistream& );
         void ReadAttrition( xml::xistream& );
         void ReadUrbanModifer( xml::xistream& );
-        void ReadIndirectFire( xml::xistream& );
         void WriteArchive( xml::xostream& ) const;
         bool HasUrbanAttrition() const;
         virtual void Initialize();

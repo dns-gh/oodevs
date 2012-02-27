@@ -25,13 +25,17 @@
 // -----------------------------------------------------------------------------
 PHY_ActionIndirectFire_Knowledge::PHY_ActionIndirectFire_Knowledge( MIL_AgentPion& pion, const PHY_DotationCategory* pDotationCategory, float rNbInterventionType, unsigned int nTargetKnowledgeID )
     : PHY_ActionIndirectFire_ABC( pion, pDotationCategory, rNbInterventionType )
-    , pEffect_                  ( 0 )
 {
     if( pDotationCategory_ && pDotationCategory_->CanBeUsedForIndirectFire() )
     {
-        pEffect_ = new MIL_Effect_IndirectFire( pion, nTargetKnowledgeID, *pDotationCategory_->GetIndirectFireData(), rNbInterventionType_ );
-        pEffect_->IncRef();
-        MIL_EffectManager::GetEffectManager().Register( *pEffect_ );
+        const PHY_DotationCategory::T_IndirectFireEffects& effects = pDotationCategory->GetIndirectFireEffects();
+        for( PHY_DotationCategory::CIT_IndirectFireEffects it = effects.begin(); it != effects.end(); ++ it )
+        {
+            MIL_Effect_IndirectFire* pEffect = new MIL_Effect_IndirectFire( pion, nTargetKnowledgeID, **it, rNbInterventionType_ );
+            pEffect->IncRef();
+            MIL_EffectManager::GetEffectManager().Register( *pEffect );
+            effects_.push_back( pEffect );
+        }
     }
 }
 
@@ -42,13 +46,17 @@ PHY_ActionIndirectFire_Knowledge::PHY_ActionIndirectFire_Knowledge( MIL_AgentPio
 // -----------------------------------------------------------------------------
 PHY_ActionIndirectFire_Knowledge::PHY_ActionIndirectFire_Knowledge( MIL_AgentPion& pion, const PHY_DotationCategory* pDotationCategory, float rNbInterventionType, boost::shared_ptr< DEC_Knowledge_Agent > targetKnowledge )
 : PHY_ActionIndirectFire_ABC( pion, pDotationCategory, rNbInterventionType )
-, pEffect_                  ( 0 )
 {
     if( pDotationCategory_ && pDotationCategory_->CanBeUsedForIndirectFire() )
     {
-        pEffect_ = new MIL_Effect_IndirectFire( pion, targetKnowledge->GetID(), *pDotationCategory_->GetIndirectFireData(), rNbInterventionType_ );
-        pEffect_->IncRef();
-        MIL_EffectManager::GetEffectManager().Register( *pEffect_ );
+        const PHY_DotationCategory::T_IndirectFireEffects& effects = pDotationCategory->GetIndirectFireEffects();
+        for( PHY_DotationCategory::CIT_IndirectFireEffects it = effects.begin(); it != effects.end(); ++ it )
+        {
+            MIL_Effect_IndirectFire* pEffect = new MIL_Effect_IndirectFire( pion, targetKnowledge->GetID(), **it, rNbInterventionType_ );
+            pEffect->IncRef();
+            MIL_EffectManager::GetEffectManager().Register( *pEffect );
+            effects_.push_back( pEffect );
+        }
     }
 }
 
@@ -67,10 +75,10 @@ PHY_ActionIndirectFire_Knowledge::~PHY_ActionIndirectFire_Knowledge()
 // -----------------------------------------------------------------------------
 void PHY_ActionIndirectFire_Knowledge::StopAction()
 {
-    if( pEffect_ )
+    for( CIT_Effects it = effects_.begin(); it != effects_.end(); ++it  )
     {
-        pEffect_->ForceFlying();
-        pEffect_->DecRef();
+        (*it)->ForceFlying();
+        (*it)->DecRef();
     }
     PHY_ActionIndirectFire_ABC::StopAction();
 }
@@ -81,7 +89,9 @@ void PHY_ActionIndirectFire_Knowledge::StopAction()
 // -----------------------------------------------------------------------------
 void PHY_ActionIndirectFire_Knowledge::Execute()
 {
-    const int nResult = role_.Fire( pEffect_ );
+    int nResult = firing::PHY_RoleAction_IndirectFiring::eRunning;
+    for( CIT_Effects it = effects_.begin(); it != effects_.end(); ++it )
+        nResult = role_.Fire( *it );
     Callback( nResult );
 }
 

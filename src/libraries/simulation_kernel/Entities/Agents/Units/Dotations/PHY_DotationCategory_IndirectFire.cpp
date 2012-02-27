@@ -43,17 +43,19 @@
 // Name: PHY_DotationCategory_IndirectFire::Create
 // Created: NLD 2004-10-08
 // -----------------------------------------------------------------------------
-PHY_DotationCategory_IndirectFire_ABC& PHY_DotationCategory_IndirectFire::Create( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis )
+PHY_DotationCategory_IndirectFire_ABC& PHY_DotationCategory_IndirectFire::Create( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis,
+                                                                                  unsigned int nInterventionType, double rDispersionX, double rDispersionY )
 {
-    return *new PHY_DotationCategory_IndirectFire( type, dotationCategory, xis );
+    return *new PHY_DotationCategory_IndirectFire( type, dotationCategory, xis, nInterventionType, rDispersionX, rDispersionY );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory_IndirectFire constructor
 // Created: NLD 2004-08-05
 // -----------------------------------------------------------------------------
-PHY_DotationCategory_IndirectFire::PHY_DotationCategory_IndirectFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis )
-    : PHY_DotationCategory_IndirectFire_ABC( type, dotationCategory, xis )
+PHY_DotationCategory_IndirectFire::PHY_DotationCategory_IndirectFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis,
+                                                                      unsigned int nInterventionType, double rDispersionX, double rDispersionY )
+    : PHY_DotationCategory_IndirectFire_ABC( type, dotationCategory, nInterventionType, rDispersionX, rDispersionY )
     , phs_                                 ( PHY_Posture::GetPostures().size(), 1. )
 {
     rNeutralizationCoef_ = xis.attribute< double >( "neutralization-ratio" );

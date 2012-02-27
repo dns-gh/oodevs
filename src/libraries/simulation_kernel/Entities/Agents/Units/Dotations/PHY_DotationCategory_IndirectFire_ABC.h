@@ -10,11 +10,6 @@
 #ifndef __PHY_DotationCategory_IndirectFire_ABC_h_
 #define __PHY_DotationCategory_IndirectFire_ABC_h_
 
-namespace xml
-{
-    class xistream;
-}
-
 class MIL_AgentPion;
 class MIL_Agent_ABC;
 class MIL_EntityManager_ABC;
@@ -30,7 +25,8 @@ class MT_Vector2D;
 class PHY_DotationCategory_IndirectFire_ABC : private boost::noncopyable
 {
 public:
-             PHY_DotationCategory_IndirectFire_ABC( const PHY_IndirectFireDotationClass& category, const PHY_DotationCategory& dotationCategory, xml::xistream& xis );
+             PHY_DotationCategory_IndirectFire_ABC( const PHY_IndirectFireDotationClass& category, const PHY_DotationCategory& dotationCategory,
+                                                    unsigned int nInterventionType, double rDispersionX, double rDispersionY );
     virtual ~PHY_DotationCategory_IndirectFire_ABC();
 
     //! @name Accessors
@@ -41,12 +37,9 @@ public:
 
     //! @name Operations
     //@{
-    double ConvertToInterventionType( unsigned int nNbr ) const;
-    double ConvertToNbrAmmo( double rNbrIT ) const;
     virtual void ApplyEffect( const MIL_Agent_ABC* pFirer, const MT_Vector2D& vSourcePosition, const MT_Vector2D& vTargetPosition, double rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const = 0;
     virtual void ApplyEffect( const MIL_Agent_ABC& firer, MIL_Agent_ABC& target, double rInterventionTypeFired, PHY_FireResults_ABC& fireResult ) const;
     virtual bool HasHit( const MIL_Agent_ABC& target, double ) const;
-    double GetRadius() const;
     //@}
 
 protected:

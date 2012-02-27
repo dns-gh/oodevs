@@ -20,8 +20,6 @@
 #include <xeumeuleu/xml.hpp>
 
 const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::explosif_  ( "Explosif"  , eExplosif  , /*NeedPH*/true , &PHY_DotationCategory_IndirectFire              ::Create );
-const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::grenade_   ( "Grenade"   , eGrenade   , /*NeedPH*/true , &PHY_DotationCategory_IndirectFire              ::Create );
-const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::aced_      ( "ACED"      , eACED      , /*NeedPH*/true , &PHY_DotationCategory_IndirectFire              ::Create );
 const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::fumigene_  ( "Fumigene"  , eFumigene  , /*NeedPH*/false, &PHY_DotationCategory_IndirectWeatherFire       ::Create );
 const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::eclairant_ ( "Eclairant" , eEclairant , /*NeedPH*/false, &PHY_DotationCategory_IndirectWeatherFire       ::Create );
 const PHY_IndirectFireDotationClass PHY_IndirectFireDotationClass::mine_      ( "Mine"      , eMine      , /*NeedPH*/false, &PHY_DotationCategory_IndirectMineFire          ::Create );
@@ -37,8 +35,6 @@ void PHY_IndirectFireDotationClass::Initialize()
 {
     MT_LOG_INFO_MSG( "Initializing indirect ammo effects" );
     types_[ explosif_  .GetID() ] = &explosif_;
-    types_[ grenade_   .GetID() ] = &grenade_;
-    types_[ aced_      .GetID() ] = &aced_;
     types_[ fumigene_  .GetID() ] = &fumigene_;
     types_[ eclairant_ .GetID() ] = &eclairant_;
     types_[ mine_      .GetID() ] = &mine_;
@@ -106,9 +102,10 @@ const PHY_IndirectFireDotationClass* PHY_IndirectFireDotationClass::Find( const 
 // Name: PHY_IndirectFireDotationClass::InstanciateWeaponDataType
 // Created: NLD 2004-10-08
 // -----------------------------------------------------------------------------
-PHY_DotationCategory_IndirectFire_ABC& PHY_IndirectFireDotationClass::InstanciateDotationCategory( const PHY_DotationCategory& dotationCategory, xml::xistream& xis ) const
+PHY_DotationCategory_IndirectFire_ABC& PHY_IndirectFireDotationClass::InstanciateDotationCategory( const PHY_DotationCategory& dotationCategory, xml::xistream& xis,
+                                                                                                   unsigned int nInterventionType, double rDispersionX, double rDispersionY ) const
 {
-    return typeInstancier_( *this, dotationCategory, xis );
+    return typeInstancier_( *this, dotationCategory, xis, nInterventionType, rDispersionX, rDispersionY );
 }
 
 // -----------------------------------------------------------------------------

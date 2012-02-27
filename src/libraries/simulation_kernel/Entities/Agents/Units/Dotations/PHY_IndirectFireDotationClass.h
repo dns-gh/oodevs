@@ -31,8 +31,6 @@ public:
     //! @name Statics
     //@{
     static const PHY_IndirectFireDotationClass explosif_;
-    static const PHY_IndirectFireDotationClass grenade_;
-    static const PHY_IndirectFireDotationClass aced_;
     static const PHY_IndirectFireDotationClass fumigene_;
     static const PHY_IndirectFireDotationClass eclairant_;
     static const PHY_IndirectFireDotationClass mine_;
@@ -58,7 +56,8 @@ public:
 
     //! @name Operations
     //@{
-    PHY_DotationCategory_IndirectFire_ABC& InstanciateDotationCategory( const PHY_DotationCategory& dotationCategory, xml::xistream& xis ) const;
+    PHY_DotationCategory_IndirectFire_ABC& InstanciateDotationCategory( const PHY_DotationCategory& dotationCategory, xml::xistream& xis,
+                                                                        unsigned int nInterventionType, double rDispersionX, double rDispersionY ) const;
     bool                                    operator==                ( const PHY_IndirectFireDotationClass& rhs ) const;
     bool                                    operator!=                ( const PHY_IndirectFireDotationClass& rhs ) const;
     //@}
@@ -69,14 +68,12 @@ private:
     typedef std::map< int, const PHY_IndirectFireDotationClass* > T_TypeMap;
     typedef T_TypeMap::const_iterator                             CIT_TypeMap;
 
-    typedef PHY_DotationCategory_IndirectFire_ABC& (*T_TypeInstancier)( const PHY_IndirectFireDotationClass&, const PHY_DotationCategory& dotationCategory, xml::xistream& );
+    typedef PHY_DotationCategory_IndirectFire_ABC& (*T_TypeInstancier)( const PHY_IndirectFireDotationClass&, const PHY_DotationCategory& dotationCategory, xml::xistream&, unsigned int, double, double );
 
 public:
     enum E_Type
     {
         eExplosif,
-        eGrenade,
-        eACED,
         eFumigene,
         eEclairant,
         eMine,

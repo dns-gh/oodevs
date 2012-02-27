@@ -26,13 +26,15 @@ class PHY_DotationCategory_IndirectFire : public PHY_DotationCategory_IndirectFi
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_DotationCategory_IndirectFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis );
+             PHY_DotationCategory_IndirectFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis,
+                                                unsigned int nInterventionType, double rDispersionX, double rDispersionY   );
     virtual ~PHY_DotationCategory_IndirectFire();
     //@}
 
     //! @name
     //@{
-    static PHY_DotationCategory_IndirectFire_ABC& Create( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis );
+    static PHY_DotationCategory_IndirectFire_ABC& Create( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis,
+                                                          unsigned int nInterventionType, double rDispersionX, double rDispersionY );
     //@}
 
     //! @name Operations

@@ -54,13 +54,19 @@ public:
         eArmor,
         eMaterial,
         eAttritionGraph,
-        eIndirectType,
         eIntervention,
         eDispersionX,
         eDispersionY,
+        eExplosivePresent,
+        eSmokePresent,
+        eFlarePresent,
+        eMinePresent,
+        eEffectPresent,
         eNeutralizationRatio,
         eModifStances,
-        eDeployTime,
+        eSmokeDeployTime,
+        eSmokeLifetime,
+        eFlareDeployTime,
         eFlareLifetime,
         eEffectType,
         eEffectLifetime,
@@ -76,6 +82,16 @@ public:
         eLogisticSupplyClass,
         eIsIED,
         eNbrAmmoGuiElements
+    };
+
+    enum E_IndirectFire
+    {
+        eExplosive,
+        eSmoke,
+        eIlluminationShell,
+        eMine,
+        eEffect,
+        eNbrIndirectFire
     };
 
     enum E_GenericGuiElements
@@ -122,7 +138,7 @@ private:
 private slots:
     //! @name Slots
     //@{
-    void IndirectTypeComboActivated( int nIndex );
+    void IndirectTypeChanged();
     void SimulationCombosActivated();
     //@}
 
@@ -132,12 +148,12 @@ private:
     ADN_Equipement_Data& data_;
     ADN_Equipement_AmmoListView* pAmmoListView_;
     ADN_Equipement_AttritionTable* pAttritionTable_;
-    ADN_ComboBox* pIndirectTypeCombo_;
     ADN_Equipement_AttritionGraph* pAttritionGraph_;
     ADN_ComboBox_Vector< helpers::ArmorInfos >* pArmorCombo_;
     ADN_ComboBox_Vector< helpers::ADN_UrbanAttritionInfos >* pMaterialCombo_;
-    QStackedLayout* pIndirectEffectLayout_;
+    QButtonGroup* buttonGroup_;
     Q3GroupBox* pExplosiveParametersGroup_;
+    Q3GroupBox* pSmokeParametersGroup_;
     Q3GroupBox* pFlareParametersGroup_;
     Q3GroupBox* pEffectParametersGroup_;
     Q3GroupBox* pMineParametersGroup_;

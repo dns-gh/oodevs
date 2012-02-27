@@ -233,18 +233,34 @@ void ADN_Equipement_Data::ModificatorPostureInfos::WriteArchive( xml::xostream& 
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
 ADN_Equipement_Data::IndirectAmmoInfos::IndirectAmmoInfos()
-    : nIndirectType_       ( (E_TypeMunitionTirIndirect)0 )
+    : bExplosive_          ( false )
+    , bSmoke_              ( false )
+    , bFlare_              ( false )
+    , bMine_               ( false )
+    , bEffect_             ( false )
     , nIntervention_       ( 0 )
     , rDispersionX_        ( 0.0 )
     , rDispersionY_        ( 0.0 )
     , rNeutralizationRatio_( 1 )
     , vModifStance_        ()
-    , deployTime_          ( "0s" )
+    , flareDeployTime_     ( "0s" )
     , flareLifeTime_       ( "0s" )
+    , smokeDeployTime_     ( "0s" )
+    , smokeLifeTime_       ( "0s" )
     , nMineNumber_         ( 0 )
     , effectLifeTime_      ( "0s" )
     , objectType_          ( ADN_TypePtr_InVector_ABC< ADN_Objects_Data_ObjectInfos >( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos(), 0, "" ) )
 {
+    bExplosive_.SetParentNode( *this );
+    bSmoke_.SetParentNode( *this );
+    bFlare_.SetParentNode( *this );
+    bMine_.SetParentNode( *this ); 
+    bEffect_.SetParentNode( *this );
+
+    smokeDeployTime_.SetParentNode( *this );
+    smokeLifeTime_.SetParentNode( *this );
+
+
     for( int i = 0; i < eNbrUnitPosture; ++i )
     {
         ModificatorPostureInfos* pNew = new ModificatorPostureInfos( ( E_UnitPosture )i );
@@ -259,8 +275,12 @@ ADN_Equipement_Data::IndirectAmmoInfos::IndirectAmmoInfos()
 // -----------------------------------------------------------------------------
 void ADN_Equipement_Data::IndirectAmmoInfos::CopyFrom( ADN_Equipement_Data::IndirectAmmoInfos& ammoInfos )
 {
-    nIndirectType_ = ammoInfos.nIndirectType_.GetData();
-    nIntervention_ = ammoInfos.nIntervention_.GetData();
+    bExplosive_ = ammoInfos.bExplosive_.GetData();
+    bSmoke_ = ammoInfos.bSmoke_.GetData();
+    bFlare_ = ammoInfos.bFlare_.GetData();
+    bMine_ = ammoInfos.bMine_.GetData();
+    bEffect_ = ammoInfos.bEffect_.GetData();
+
     rDispersionX_ = ammoInfos.rDispersionX_.GetData();
     rDispersionY_ = ammoInfos.rDispersionY_.GetData();
     rNeutralizationRatio_ = ammoInfos.rNeutralizationRatio_.GetData();
@@ -268,8 +288,10 @@ void ADN_Equipement_Data::IndirectAmmoInfos::CopyFrom( ADN_Equipement_Data::Indi
     for( uint i=0 ; i< eNbrUnitPosture ; ++i)
         vModifStance_[i]->rCoeff_ = ammoInfos.vModifStance_[ i ]->rCoeff_.GetData();
 
-    deployTime_ = ammoInfos.deployTime_.GetData();
+    flareDeployTime_ = ammoInfos.flareDeployTime_.GetData();
     flareLifeTime_ = ammoInfos.flareLifeTime_.GetData();
+    smokeDeployTime_ = ammoInfos.smokeDeployTime_.GetData();
+    smokeLifeTime_ = ammoInfos.smokeLifeTime_.GetData();
     nMineNumber_ = ammoInfos.nMineNumber_.GetData();
     objectType_ = ammoInfos.objectType_.GetData();
     effectLifeTime_ = ammoInfos.effectLifeTime_.GetData();
@@ -298,32 +320,47 @@ void ADN_Equipement_Data::IndirectAmmoInfos::ReadPh( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Equipement_Data::IndirectAmmoInfos::ReadArchive( xml::xistream& input )
 {
-    std::string type;
-    input >> xml::attribute( "type", type )
-          >> xml::attribute( "intervention-type", nIntervention_ )
+    input >> xml::attribute( "intervention-type", nIntervention_ )
           >> xml::attribute( "x-dispersion", rDispersionX_ )
-          >> xml::attribute( "y-dispersion", rDispersionY_ );
-    nIndirectType_ = ADN_Tr::ConvertToTypeMunitionTirIndirect( type );
-    if( nIndirectType_ == (E_TypeMunitionTirIndirect)-1 )
+          >> xml::attribute( "y-dispersion", rDispersionY_ )
+          >> xml::list( "indirect-fire", *this, &ADN_Equipement_Data::IndirectAmmoInfos::ReadIndirectFire );
+}
+
+// -----------------------------------------------------------------------------
+// Name: IndirectAmmoInfos::ReadIndirectFire
+// Created: LGY 2012-02-24
+// -----------------------------------------------------------------------------
+void ADN_Equipement_Data::IndirectAmmoInfos::ReadIndirectFire( xml::xistream& input )
+{
+    std::string type;
+    input >> xml::attribute( "type", type );
+    E_TypeMunitionTirIndirect indirect = ADN_Tr::ConvertToTypeMunitionTirIndirect( type );
+    if( indirect == (E_TypeMunitionTirIndirect)-1 )
         throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Equipment - Invalid indirect fire ammo type '%1'" ).arg( type.c_str() ).ascii() );
 
-    switch( nIndirectType_.GetData() )
+    switch( indirect )
     {
         case eTypeMunitionTirIndirect_Explosif:
-        case eTypeMunitionTirIndirect_Aced:
-        case eTypeMunitionTirIndirect_Grenade:
+            bExplosive_ = true;
             input >> xml::attribute( "neutralization-ratio", rNeutralizationRatio_ )
                   >> xml::list( "ph", *this, &ADN_Equipement_Data::IndirectAmmoInfos::ReadPh );
             break;
         case eTypeMunitionTirIndirect_Fumigene:
+            bSmoke_ = true;
+            input >> xml::attribute( "setup-time", smokeDeployTime_ )
+                  >> xml::attribute( "life-time", smokeLifeTime_ );
+            break;
         case eTypeMunitionTirIndirect_Eclairant:
-            input >> xml::attribute( "setup-time", deployTime_ )
+            bFlare_ = true;
+            input >> xml::attribute( "setup-time", flareDeployTime_ )
                   >> xml::attribute( "life-time", flareLifeTime_ );
             break;
         case eTypeMunitionTirIndirect_Mine:
+            bMine_ = true;
             input >> xml::attribute( "mine-count", nMineNumber_ );
             break;
         case eTypeMunitionTirIndirect_Effect:
+            bEffect_ = true;
             input >> xml::attribute( "object-type", strObjectType_ )
                   >> xml::attribute( "life-time", effectLifeTime_ );
             break;
@@ -336,37 +373,51 @@ void ADN_Equipement_Data::IndirectAmmoInfos::ReadArchive( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Equipement_Data::IndirectAmmoInfos::WriteArchive( xml::xostream& output ) const
 {
-    output << xml::start( "indirect-fire" )
-            << xml::attribute( "type", ADN_Tr::ConvertFromTypeMunitionTirIndirect( nIndirectType_.GetData() ) )
-            << xml::attribute( "intervention-type", nIntervention_ )
-            << xml::attribute( "x-dispersion", rDispersionX_ )
-            << xml::attribute( "y-dispersion", rDispersionY_ );
+    output << xml::start( "indirect-fires" )
+                << xml::attribute( "intervention-type", nIntervention_ )
+                << xml::attribute( "x-dispersion", rDispersionX_ )
+                << xml::attribute( "y-dispersion", rDispersionY_ );
 
-    switch( nIndirectType_.GetData() )
+    if( bExplosive_.GetData() )
     {
-    case eTypeMunitionTirIndirect_Explosif:
-    case eTypeMunitionTirIndirect_Aced:
-    case eTypeMunitionTirIndirect_Grenade:
-        output << xml::attribute( "neutralization-ratio", rNeutralizationRatio_ );
+        output << xml::start( "indirect-fire" )
+                    << xml::attribute( "type", ADN_Tr::ConvertFromTypeMunitionTirIndirect( eTypeMunitionTirIndirect_Explosif ) )
+                    << xml::attribute( "neutralization-ratio", rNeutralizationRatio_ );
         for( CIT_ModificatorPostureInfos_Vector it = vModifStance_.begin(); it != vModifStance_.end(); ++it )
             ( *it )->WriteArchive( output );
-        break;
-
-    case eTypeMunitionTirIndirect_Fumigene:
-    case eTypeMunitionTirIndirect_Eclairant:
-        output << xml::attribute( "setup-time", deployTime_ )
-               << xml::attribute( "life-time", flareLifeTime_ );
-        break;
-
-    case eTypeMunitionTirIndirect_Mine:
-        output << xml::attribute( "mine-count", nMineNumber_ );
-        break;
-    case eTypeMunitionTirIndirect_Effect:
-        output << xml::attribute( "object-type", ( objectType_.GetData() != 0 ) ? objectType_.GetData()->strType_.GetData() : "" )
-               << xml::attribute( "life-time", effectLifeTime_ );
-        break;
+        output << xml::end;
     }
-
+    if( bSmoke_.GetData() )
+    {
+        output << xml::start( "indirect-fire" )
+                    << xml::attribute( "type", ADN_Tr::ConvertFromTypeMunitionTirIndirect( eTypeMunitionTirIndirect_Fumigene ) )
+                    << xml::attribute( "setup-time", smokeDeployTime_ )
+                    << xml::attribute( "life-time", smokeLifeTime_ )
+                << xml::end;
+    }
+    if( bFlare_.GetData() )
+    {
+        output << xml::start( "indirect-fire" )
+                    << xml::attribute( "type", ADN_Tr::ConvertFromTypeMunitionTirIndirect( eTypeMunitionTirIndirect_Eclairant ) )
+                    << xml::attribute( "setup-time", flareDeployTime_ )
+                    << xml::attribute( "life-time", flareLifeTime_ )
+                << xml::end;
+    }
+    if( bMine_.GetData() )
+    {
+        output << xml::start( "indirect-fire" )
+                    << xml::attribute( "type", ADN_Tr::ConvertFromTypeMunitionTirIndirect( eTypeMunitionTirIndirect_Mine ) )
+                    << xml::attribute( "mine-count", nMineNumber_ )
+                << xml::end;
+    }
+    if( bEffect_.GetData() )
+    {
+        output << xml::start( "indirect-fire" )
+                    << xml::attribute( "type", ADN_Tr::ConvertFromTypeMunitionTirIndirect( eTypeMunitionTirIndirect_Effect ) )
+                    << xml::attribute( "object-type", ( objectType_.GetData() != 0 ) ? objectType_.GetData()->strType_.GetData() : "" )
+                    << xml::attribute( "life-time", effectLifeTime_ )
+                << xml::end;
+    }
     output << xml::end;
 }
 
@@ -481,16 +532,6 @@ void ADN_Equipement_Data::AmmoCategoryInfo::ReadUrbanModifer( xml::xistream& inp
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Equipement_Data::AmmoCategoryInfo::ReadIndirectFire
-// Created: AGE 2007-08-21
-// -----------------------------------------------------------------------------
-void ADN_Equipement_Data::AmmoCategoryInfo::ReadIndirectFire( xml::xistream& input )
-{
-    bIndirect_ = true;
-    indirectAmmoInfos_.ReadArchive( input );
-}
-
-// -----------------------------------------------------------------------------
 // Name: AmmoCategoryInfo::ReadArchive
 // Created: APE 2004-11-16
 // -----------------------------------------------------------------------------
@@ -532,8 +573,12 @@ void ADN_Equipement_Data::AmmoCategoryInfo::ReadArchive( xml::xistream& input )
           >> xml::optional
           >> xml::start( "urban-modifiers" )
             >> xml::list( "urban-modifier", *this, &ADN_Equipement_Data::AmmoCategoryInfo::ReadUrbanModifer )
-          >> xml::end
-          >> xml::list( "indirect-fire", *this, &ADN_Equipement_Data::AmmoCategoryInfo::ReadIndirectFire );
+          >> xml::end;
+    if( input.has_child( "indirect-fires" ) )
+    {
+        bIndirect_ = true;
+        indirectAmmoInfos_.ReadArchive( input >> xml::start( "indirect-fires" ) );
+    }
 }
 
 // -----------------------------------------------------------------------------

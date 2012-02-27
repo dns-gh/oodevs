@@ -128,51 +128,37 @@
 									</xs:sequence>
 								</xs:complexType>
 							</xs:element>
-							<xs:element name="indirect-fire" minOccurs="0">
+							<xs:sequence/>
+							<xs:element name="indirect-fires" minOccurs="0">
 								<xs:annotation>
 									<xs:documentation xml:lang="en">TODO</xs:documentation>
 									<xs:documentation xml:lang="fr">Données spécifiques au tir indirect, dépendant de l’effet indirect</xs:documentation>
 								</xs:annotation>
 								<xs:complexType>
 									<xs:sequence>
-										<xs:element name="ph" minOccurs="0" maxOccurs="unbounded">
-											<xs:annotation>
-												<xs:documentation xml:lang="en">TODO</xs:documentation>
-												<xs:documentation xml:lang="fr">Probabilité d’atteintes, en fonction de la posture de la cible</xs:documentation>
-											</xs:annotation>
+										<xs:element name="indirect-fire" minOccurs="0" maxOccurs="unbounded">
 											<xs:complexType>
-												<xs:attribute name="target-posture" type="xs:string" use="required">
-													<xs:annotation>
-														<xs:documentation xml:lang="en">TODO</xs:documentation>
-														<xs:documentation xml:lang="fr">Posture de la cible visée par le tir indirecte</xs:documentation>
-													</xs:annotation>
-												</xs:attribute>
-												<xs:attribute name="value" type="T_NonNegativeDouble" use="required">
-													<xs:annotation>
-														<xs:documentation xml:lang="en">TODO</xs:documentation>
-														<xs:documentation xml:lang="fr">Probabilité que la cible soit atteinte par le tir indirecte, en fonction de sa posture</xs:documentation>
-													</xs:annotation>
-												</xs:attribute>
+												<xs:sequence>
+													<xs:element name="ph" minOccurs="0" maxOccurs="unbounded">
+														<xs:complexType>
+															<xs:attribute name="target-posture" type="xs:string" use="required"/>
+															<xs:attribute name="value" type="T_NonNegativeDouble" use="required"/>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:attribute name="type" type="xs:string" use="required"/>
+												<xs:attribute name="object-type" type="xs:string" use="optional"/>
+												<xs:attribute name="neutralization-ratio" type="T_NonNegativeDouble" use="optional"/>
+												<xs:attribute name="setup-time" type="T_Time" use="optional"/>
+												<xs:attribute name="life-time" type="T_Time" use="optional"/>
+												<xs:attribute name="mine-count" type="xs:nonNegativeInteger" use="optional"/>
 											</xs:complexType>
 										</xs:element>
 									</xs:sequence>
-									<xs:attribute name="type" type="xs:string" use="required">
-										<xs:annotation>
-											<xs:documentation xml:lang="en">TODO</xs:documentation>
-											<xs:documentation xml:lang="fr">Type de munition utilisé (explosif, grenade, fumigène etc.)
-</xs:documentation>
-										</xs:annotation>
-									</xs:attribute>
 									<xs:attribute name="intervention-type" type="xs:nonNegativeInteger" use="required">
 										<xs:annotation>
 											<xs:documentation xml:lang="en">TODO</xs:documentation>
 											<xs:documentation xml:lang="fr">TODO</xs:documentation>
-										</xs:annotation>
-									</xs:attribute>
-									<xs:attribute name="object-type" type="xs:string" use="optional">
-										<xs:annotation>
-											<xs:documentation xml:lang="en">Type of object created by indirect fire</xs:documentation>
-											<xs:documentation xml:lang="fr">Type d'objet créé par le tir indirect</xs:documentation>
 										</xs:annotation>
 									</xs:attribute>
 									<xs:attribute name="x-dispersion" type="T_NonNegativeDouble" use="required">
@@ -185,30 +171,6 @@
 										<xs:annotation>
 											<xs:documentation xml:lang="en">TODO</xs:documentation>
 											<xs:documentation xml:lang="fr">Rayon r2 de l’ellipse d’effet du tir</xs:documentation>
-										</xs:annotation>
-									</xs:attribute>
-									<xs:attribute name="neutralization-ratio" type="T_NonNegativeDouble" use="optional">
-										<xs:annotation>
-											<xs:documentation xml:lang="en">TODO</xs:documentation>
-											<xs:documentation xml:lang="fr">Facteur appliqué à l’ellipse d’effet du tir déterminant l’ellipse de neutralisation</xs:documentation>
-										</xs:annotation>
-									</xs:attribute>
-									<xs:attribute name="setup-time" type="T_Time" use="optional">
-										<xs:annotation>
-											<xs:documentation xml:lang="en">TODO</xs:documentation>
-											<xs:documentation xml:lang="fr">Durée de déploiement avant effet éclairant/fumigène</xs:documentation>
-										</xs:annotation>
-									</xs:attribute>
-									<xs:attribute name="life-time" type="T_Time" use="optional">
-										<xs:annotation>
-											<xs:documentation xml:lang="en">TODO</xs:documentation>
-											<xs:documentation xml:lang="fr">Durée de vie de l’effet</xs:documentation>
-										</xs:annotation>
-									</xs:attribute>
-									<xs:attribute name="mine-count" type="xs:nonNegativeInteger" use="optional">
-										<xs:annotation>
-											<xs:documentation xml:lang="en">TODO</xs:documentation>
-											<xs:documentation xml:lang="fr">Nombre de mines constituant la zone minée</xs:documentation>
 										</xs:annotation>
 									</xs:attribute>
 								</xs:complexType>

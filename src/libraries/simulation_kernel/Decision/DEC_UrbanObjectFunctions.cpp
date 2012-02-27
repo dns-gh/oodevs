@@ -225,10 +225,10 @@ void DEC_UrbanObjectFunctions::DestroyUrbanBlock(  MIL_AgentPion& callerAgent, U
     StructuralCapacity* capacity = const_cast< StructuralCapacity* >( pUrbanObject->Retrieve< StructuralCapacity >() );
     if( capacity )
     {
-        if( const PHY_DotationCategory_IndirectFire_ABC* firedata = category->GetIndirectFireData() )
+        if( category->CanBeUsedForIndirectFire() )
         {
             const PHY_RoleInterface_Location& location = callerAgent.Get< PHY_RoleInterface_Location >();
-            TER_Localisation localisation( location.GetPosition(), firedata->GetRadius() );
+            TER_Localisation localisation( location.GetPosition(), category->GetRadius() );
             capacity->ApplyIndirectFire( *pUrbanObject, localisation, *category, &callerAgent.GetArmy() );
         }
         else

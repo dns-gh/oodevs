@@ -1546,46 +1546,6 @@ Arrêt moteur allumé</translation>
         <translation>Dispersion V</translation>
     </message>
     <message>
-        <source>Explosive ammo parameters</source>
-        <translation>Paramètres munitions explosives</translation>
-    </message>
-    <message>
-        <source>Stance</source>
-        <translation>Posture</translation>
-    </message>
-    <message>
-        <source>Neutralization ratio</source>
-        <translation>Rayon de neutralisation</translation>
-    </message>
-    <message>
-        <source>Flare/Smoke ammo parameters</source>
-        <translation>Paramètres Obus fumigène / Fusée éclairante</translation>
-    </message>
-    <message>
-        <source>Activation duration</source>
-        <translation>Durée d&apos;activation</translation>
-    </message>
-    <message>
-        <source>Span</source>
-        <translation>Période</translation>
-    </message>
-    <message>
-        <source>Effect ammo parameters</source>
-        <translation>Paramètres d&apos;effets de munitions</translation>
-    </message>
-    <message>
-        <source>Created object</source>
-        <translation>Objet créé</translation>
-    </message>
-    <message>
-        <source>Mine ammo parameters</source>
-        <translation>Paramètres munitions mines</translation>
-    </message>
-    <message>
-        <source>Mines quantity</source>
-        <translation>Quantité de mines</translation>
-    </message>
-    <message>
         <source>Illumination capacity</source>
         <translation>Capacité d&apos;illumination</translation>
     </message>
@@ -1644,6 +1604,74 @@ Arrêt moteur allumé</translation>
     <message>
         <source>Improvised explosive device</source>
         <translation>Engin explosif improvisé</translation>
+    </message>
+    <message>
+        <source>Effects</source>
+        <translation>Effets</translation>
+    </message>
+    <message>
+        <source>Explosive</source>
+        <translation>Explosif</translation>
+    </message>
+    <message>
+        <source>Smoke</source>
+        <translation>Fumigène</translation>
+    </message>
+    <message>
+        <source>Illumination shell</source>
+        <translation>Fusée éclairante</translation>
+    </message>
+    <message>
+        <source>Mine</source>
+        <translation>Mine</translation>
+    </message>
+    <message>
+        <source>Effect</source>
+        <translation>Effet</translation>
+    </message>
+    <message>
+        <source>Explosive ammo parameters</source>
+        <translation>Paramètres munitions explosives</translation>
+    </message>
+    <message>
+        <source>Stance</source>
+        <translation>Posture</translation>
+    </message>
+    <message>
+        <source>Neutralization ratio</source>
+        <translation>Rayon de neutralisation</translation>
+    </message>
+    <message>
+        <source>Activation duration</source>
+        <translation>Durée d&apos;activation</translation>
+    </message>
+    <message>
+        <source>Span</source>
+        <translation>Période</translation>
+    </message>
+    <message>
+        <source>Effect ammo parameters</source>
+        <translation>&gt;Paramètres d&apos;effets de munitions</translation>
+    </message>
+    <message>
+        <source>Created object</source>
+        <translation>Objet créé</translation>
+    </message>
+    <message>
+        <source>Mine ammo parameters</source>
+        <translation>Paramètres munitions mines</translation>
+    </message>
+    <message>
+        <source>Mines quantity</source>
+        <translation>Quantité de mines</translation>
+    </message>
+    <message>
+        <source>Smoke ammo parameters</source>
+        <translation>Paramètres Obus fumigène</translation>
+    </message>
+    <message>
+        <source>Flare ammo parameters</source>
+        <translation>Paramètres Fusée éclairante</translation>
     </message>
 </context>
 <context>
@@ -4587,14 +4615,6 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>explosive</source>
         <translation>explosif</translation>
-    </message>
-    <message>
-        <source>grenade</source>
-        <translation>grenade</translation>
-    </message>
-    <message>
-        <source>anti tank</source>
-        <translation>anti char</translation>
     </message>
     <message>
         <source>smoke</source>

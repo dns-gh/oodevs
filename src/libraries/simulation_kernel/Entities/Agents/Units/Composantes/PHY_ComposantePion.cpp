@@ -377,12 +377,13 @@ void PHY_ComposantePion::ApplyNewComposanteState( const PHY_ComposanteState& pNe
 void PHY_ComposantePion::ApplyIndirectFire( const PHY_DotationCategory& dotationCategory, PHY_FireDamages_Agent& fireDamages, double ratio )
 {
     assert( pType_ );
-    assert( dotationCategory.GetIndirectFireData() );
-    if( dotationCategory.GetIndirectFireData()->HasHit( pRole_->GetPion(), ratio ) )
-    {
-        double urbanProtection = pRole_->GetPion().GetRole< PHY_RoleInterface_UrbanLocation >().ComputeUrbanProtection( dotationCategory );
-        ApplyFire( dotationCategory.GetAttritionData( pType_->GetProtection() ), urbanProtection, fireDamages );
-    }
+    const PHY_DotationCategory::T_IndirectFireEffects& effects = dotationCategory.GetIndirectFireEffects();
+    for( PHY_DotationCategory::CIT_IndirectFireEffects it = effects.begin(); it != effects.end(); ++it )
+        if( (*it)->HasHit( pRole_->GetPion(), ratio ) )
+        {
+            double urbanProtection = pRole_->GetPion().GetRole< PHY_RoleInterface_UrbanLocation >().ComputeUrbanProtection( dotationCategory );
+            ApplyFire( dotationCategory.GetAttritionData( pType_->GetProtection() ), urbanProtection, fireDamages );
+        }
 }
 
 // -----------------------------------------------------------------------------
