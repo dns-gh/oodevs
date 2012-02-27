@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="tasks.ExtinguishAFire" source-version="1.0.0">
-    <description>To extinguish a selected fire. Once the given fire is extinguished, agent Unit move toward a issued garage position.</description>
+    <description>To extinguish a given fire. Once the given fire is extinguished, agent Unit move toward a issued garage position.</description>
     <parameters>
         <parameter name="fire">
             <description>The fire to act on.</description>

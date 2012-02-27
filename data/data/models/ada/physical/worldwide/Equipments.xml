@@ -2828,7 +2828,7 @@
     </weapon-systems>
     <human-protections/>
     <objects>
-      <object bypass-gain-factor="-1" bypassed-speed="-1" construction-time-factor="0s" destruction-time-factor="0s" devalorization-time="0s" initial-construction-time="0s" initial-destruction-time="0s" non-bypassed-speed="-1" type="decontamination site" valorization-time="0s"/>
+      <object bypass-gain-factor="-1" bypassed-speed="-1" construction-time-factor="0s" destruction-time-factor="0s" devalorization-time="0s" initial-construction-time="6m" initial-destruction-time="0s" non-bypassed-speed="-1" type="decontamination site" valorization-time="0s"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="MOB Breakdown 1"/>
@@ -10864,4 +10864,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="3437145679" -->
+<!-- signature="3321019498" -->

@@ -592,3 +592,8 @@ end
 integration.isDead = function( self )
     return DEC_Agent_EstMort()
 end
+
+integration.selfDecontaminate = function( self )
+    DEC_Agent_SeDecontaminer()
+    return true
+end

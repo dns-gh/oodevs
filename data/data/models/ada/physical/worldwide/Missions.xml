@@ -2198,6 +2198,25 @@ A urban block won't be hit (unit cannot launch projectile) if agent doesn't have
       <parameter dia-name="quantity" name="quantity" optional="true" type="Integer"/>
       <parameter dia-name="dotationType" name="type of dotation" optional="false" type="ResourceType"/>
     </mission>
+    <mission dia-behavior="tasks.BeDecontaminated" dia-type="tasks.BeDecontaminated" id="4486" name="MLSECURITY - Be decontaminated">
+      <description>
+        <doctrine><![CDATA[To be decontaminated through a decontamination site.]]></doctrine>
+        <usage><![CDATA[The agent moves to the given decontamination site. Once it is reached, agent ask for decontamination. Once agent is decontaminated, it moves to a given garage position. Decontamination site must be operated to decontaminate. If not agent stays nearby the site until it can be decontaminated. ]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="decontaminationPlot" name="decontamination site" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="garagePosition" name="garage position" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="ObjectKnowledge"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
   </units>
   <automats>
     <mission cdt-dia-behavior="MIS_Automate_CDT_ALAT_AllerSeRecompleter" dia-type="T_Mission_Automate_ALAT_AllerSeRecompleter" id="189" mrt-dia-behavior="MIS_Automate_MRT_ALAT_AllerSeRecompleter" name="AIR - resupply">
@@ -3553,4 +3572,4 @@ A urban block won't be hit (unit cannot launch projectile) if agent doesn't have
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="2086432258" -->
+<!-- signature="0108634339" -->

@@ -2604,6 +2604,9 @@
         <mission name="MLSECURITY - Operate a system"/>
         <mission name="MLSECURITY - Use a checkpoint (filter crowds)"/>
         <mission name="MLSECURITY - Heal victims within crowds"/>
+        <mission name="MLSECURITY - Be decontaminated"/>
+        <mission name="MLSECURITY - Attack urban blocks within area (with projectiles)"/>
+        <mission name="MLSECURITY - Commit suicide attack (on units)"/>
       </missions>
       <fragorders/>
     </unit>
@@ -3858,4 +3861,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1568823844" -->
+<!-- signature="3275486532" -->
