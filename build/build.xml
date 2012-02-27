@@ -1648,8 +1648,8 @@
         <update name="mak" version="4.0.2" package="lib/${platform}" todir="${lib.dir}"/>
         <update name="mak" version="4.0.2" package="dll/${platform}" todir="${run.dir}/plugins/vrforces"/>
         <update name="wise"/>
-        <antcall target="deploy-application-data"/>
         <update name="masalife/brain" version="${masalife.version}" package="directia.core.bml" todir="${models.dir}/directia.core" clean="true"/>
+        <antcall target="deploy-application-data"/>
         <antcall target="generate-database"/>
         <antcall target="generate-database-security"/>
         <antcall target="generate-symbols"/>
