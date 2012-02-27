@@ -209,9 +209,9 @@ void MIL_Config::ReadDebugConfiguration( xml::xistream& xis )
             >> xml::optional >> xml::attribute( "diadebuggerport", diaDebuggerPort_ )
             >> xml::attribute( "networklogger", bUseNetworkLogger_ )
             >> xml::optional >> xml::attribute( "networkloggerport", networkLoggerPort_ )
-            >> xml::optional >> xml::attribute( "level", level )
-            >> xml::optional >> xml::attribute( "files", files )
-            >> xml::optional >> xml::attribute( "filesize", fileSize )
+            >> xml::optional >> xml::attribute( "loglevel", level )
+            >> xml::optional >> xml::attribute( "logfiles", files )
+            >> xml::optional >> xml::attribute( "logsize", fileSize )
         >> xml::end;
     if( bUseDiaDebugger_ && !diaDebuggerPort_ )
         throw std::exception( "DIA debug server activated but no debugger port specified!" );
