@@ -286,7 +286,7 @@ void Model::Load( const tools::ExerciseConfig& config )
     const bfs::path urbanFile = bfs::path( directoryPath, bfs::native ) / "urban" / "urban.xml";
     if( bfs::exists( urbanFile ) )
     {
-        config.GetLoader().CheckFile( urbanFile.string() );
+        config.GetLoader().CheckFile( urbanFile.native_file_string() );
         urban::WorldParameters world( directoryPath );
         urban_.Load( directoryPath, world, *this );
         const std::string urbanStateFile = config.GetUrbanStateFile() ;
