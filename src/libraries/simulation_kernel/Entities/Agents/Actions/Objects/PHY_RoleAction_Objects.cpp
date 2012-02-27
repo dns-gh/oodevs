@@ -620,10 +620,10 @@ void PHY_RoleAction_Objects::StopOccupyingObject( boost::shared_ptr< DEC_Knowled
 // Name: PHY_RoleAction_Objects::CanConstructWithReinforcement
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------
-bool PHY_RoleAction_Objects::CanConstructWithReinforcement( const std::string& strType, bool bWithLoaded ) const
+bool PHY_RoleAction_Objects::CanConstructWithReinforcement( const std::string& strType, const TER_Localisation* localisation, bool bWithLoaded ) const
 {
     const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( strType );
-    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eConstruct, type, bWithLoaded );
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eConstruct, type, localisation, bWithLoaded );
     return capabilityComputer.HasCapability();
 }
 
@@ -631,10 +631,10 @@ bool PHY_RoleAction_Objects::CanConstructWithReinforcement( const std::string& s
 // Name: PHY_RoleAction_Objects::CanConstructWithoutReinforcement
 // Created: LGY 2011-10-04
 // -----------------------------------------------------------------------------
-bool PHY_RoleAction_Objects::CanConstructWithoutReinforcement( const std::string& objectType, bool bWithLoaded ) const
+bool PHY_RoleAction_Objects::CanConstructWithoutReinforcement( const std::string& objectType, const TER_Localisation* localisation, bool bWithLoaded ) const
 {
     const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( objectType );
-    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eConstruct, type, bWithLoaded, false );
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eConstruct, type, localisation, bWithLoaded, false );
     return capabilityComputer.HasCapability();
 }
 
@@ -642,9 +642,9 @@ bool PHY_RoleAction_Objects::CanConstructWithoutReinforcement( const std::string
 // Name: PHY_RoleAction_Objects::CanBypassWithReinforcement
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------
-bool PHY_RoleAction_Objects::CanBypassWithReinforcement( const MIL_ObjectType_ABC& object ) const
+bool PHY_RoleAction_Objects::CanBypassWithReinforcement( const MIL_ObjectType_ABC& object, const TER_Localisation& localisation ) const
 {
-    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eBypass, object, false );
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eBypass, object, &localisation, false );
     return capabilityComputer.HasCapability();
 }
 
@@ -652,9 +652,9 @@ bool PHY_RoleAction_Objects::CanBypassWithReinforcement( const MIL_ObjectType_AB
 // Name: PHY_RoleAction_Objects::CanDestroyWithReinforcement
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------
-bool PHY_RoleAction_Objects::CanDestroyWithReinforcement( const MIL_ObjectType_ABC& object ) const
+bool PHY_RoleAction_Objects::CanDestroyWithReinforcement( const MIL_ObjectType_ABC& object, const TER_Localisation& localisation ) const
 {
-    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eDestroy, object, false );
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eDestroy, object, &localisation, false );
     return capabilityComputer.HasCapability();
 }
 
@@ -662,21 +662,20 @@ bool PHY_RoleAction_Objects::CanDestroyWithReinforcement( const MIL_ObjectType_A
 // Name: PHY_RoleAction_Objects::CanMineWithReinforcement
 // Created: NLD 2005-09-08
 // -----------------------------------------------------------------------------
-bool PHY_RoleAction_Objects::CanMineWithReinforcement( const MIL_ObjectType_ABC& object ) const
+bool PHY_RoleAction_Objects::CanMineWithReinforcement( const MIL_ObjectType_ABC& object, const TER_Localisation& localisation ) const
 {
-    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eMine, object, false );
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eMine, object, &localisation, false );
     return capabilityComputer.HasCapability();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Objects::CanMineTypeWithReinforcement
 // Created: LMT 2012-02-01
 // -----------------------------------------------------------------------------
-bool PHY_RoleAction_Objects::CanMineTypeWithReinforcement( const std::string& strType ) const
+bool PHY_RoleAction_Objects::CanMineTypeWithReinforcement( const std::string& strType, const TER_Localisation* localisation ) const
 {
     const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( strType );
-    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eMine, type, false );
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eMine, type, localisation, false );
     return capabilityComputer.HasCapability();
 }
 
@@ -684,10 +683,10 @@ bool PHY_RoleAction_Objects::CanMineTypeWithReinforcement( const std::string& st
 // Name: PHY_RoleAction_Objects::CanDestroyTypeWithReinforcement
 // Created: LMT 2012-02-01
 // -----------------------------------------------------------------------------
-bool PHY_RoleAction_Objects::CanDestroyTypeWithReinforcement( const std::string& strType ) const
+bool PHY_RoleAction_Objects::CanDestroyTypeWithReinforcement( const std::string& strType, const TER_Localisation* localisation ) const
 {
     const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( strType );
-    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eDestroy, type, false );
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eDestroy, type, localisation, false );
     return capabilityComputer.HasCapability();
 }
 
@@ -695,10 +694,10 @@ bool PHY_RoleAction_Objects::CanDestroyTypeWithReinforcement( const std::string&
 // Name: PHY_RoleAction_Objects::CanBypassTypeWithReinforcement
 // Created: LMT 2012-02-01
 // -----------------------------------------------------------------------------
-bool PHY_RoleAction_Objects::CanBypassTypeWithReinforcement( const std::string& strType ) const
+bool PHY_RoleAction_Objects::CanBypassTypeWithReinforcement( const std::string& strType, const TER_Localisation* localisation  ) const
 {
     const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( strType );
-    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eBypass, type, false );
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eBypass, type, localisation, false );
     return capabilityComputer.HasCapability();
 }
 

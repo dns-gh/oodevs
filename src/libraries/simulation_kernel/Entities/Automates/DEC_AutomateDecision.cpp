@@ -332,6 +332,8 @@ void DEC_AutomateDecision::RegisterUserFunctions( directia::brain::Brain& brain 
         boost::function< bool( MT_Vector2D*, DEC_Decision_ABC* ) >( boost::bind( &DEC_AutomateFunctions::IsPointInPionFuseau , boost::ref( GetAutomate() ), _1, _2 ) );
     brain[ "DEC_Automate_PionPeutConstruireObjet" ] =
         boost::function< bool( const DEC_Decision_ABC*, const std::string& ) >( boost::bind( &DEC_AutomateFunctions::CanPionConstructObject, boost::cref( GetAutomate() ), _1, _2 ) );
+    brain[ "DEC_Automate_PionPeutConstruireObjetAvecLocalisation" ] =
+        boost::function< bool( const DEC_Decision_ABC*, const std::string&, const TER_Localisation* ) >( boost::bind( &DEC_AutomateFunctions::CanPionConstructObjectWithLocalisation, boost::cref( GetAutomate() ), _1, _2, _3 ) );
     brain[ "DEC_Automate_PionPeutConstruireContournementObjet" ] =
         boost::function< bool( const DEC_Decision_ABC*, boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_AutomateFunctions::CanPionBypassObject, boost::cref( GetAutomate() ), _1, _2 ) );
     brain[ "DEC_Automate_PionPeutDetruireObjet" ] =

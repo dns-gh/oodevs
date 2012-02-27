@@ -53,8 +53,11 @@ public:
     static std::string GetMilPionType( DEC_Decision_ABC* pion );
 
     static bool CanConstructObject( const MIL_Agent_ABC& callerAgent, const std::string& type );
+    static bool CanConstructObjectWithLocalisation( const MIL_Agent_ABC& callerAgent, const std::string& type, const TER_Localisation* location );
     static bool CanConstructWithoutReinforcement( const MIL_Agent_ABC& callerAgent, const std::string& type );
+    static bool CanConstructWithoutReinforcementWithLocalisation( const MIL_Agent_ABC& callerAgent, const std::string& type, const TER_Localisation* location );
     static bool CanConstructObjectWithLoaded( const MIL_Agent_ABC& callerAgent, const std::string& type );
+    static bool CanConstructObjectWithLoadedAndLocalisation( const MIL_Agent_ABC& callerAgent, const std::string& type, const TER_Localisation* location );
     static bool HasDotationForBuilding( MIL_Agent_ABC& callerAgent, const std::string& type );
     static bool CanBypassObject( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
     static bool CanDestroyObject( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
@@ -64,21 +67,28 @@ public:
     static void DisableDiscreteMode( MIL_Agent_ABC& callerAgent );
     static double GetCurrentSpeed( const DEC_Decision_ABC* agent );
 
-	static bool AgentCanConstructObjectWithLoaded( const DEC_Decision_ABC* agent, const std::string& type );
+    static bool AgentCanConstructObjectWithLoaded( const DEC_Decision_ABC* agent, const std::string& type );
+    static bool AgentCanConstructObjectWithLoadedAndLocalisation( const DEC_Decision_ABC* agent, const std::string& type, const TER_Localisation* localisation );
     static bool AgentHasDotationForBuilding(const DEC_Decision_ABC* agent, const std::string& type );
-	static bool AgentCanConstructObjectWithOutLoaded( const DEC_Decision_ABC* agent, const std::string& type );
+    static bool AgentCanConstructObjectWithOutLoaded( const DEC_Decision_ABC* agent, const std::string& type );
+    static bool AgentCanConstructObjectWithOutLoadedWithLocalisation( const DEC_Decision_ABC* agent, const std::string& type, const TER_Localisation* localisation );
     static bool AgentHasDotationForBuildingWithOutLoaded(const DEC_Decision_ABC* agent, const std::string& type );
     static bool HasDotationForBuildingWithoutReinforcement( MIL_Agent_ABC& callerAgent, const std::string& type );
     static bool AgentCanDestroyObject( const DEC_Decision_ABC* agent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
     static bool AgentCanBypassObject( const DEC_Decision_ABC* agent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
     static bool AgentCanDestroyObjectType( const DEC_Decision_ABC* agent, const std::string& type );
-    static bool AgentCanMineObject( const DEC_Decision_ABC* agent, const std::string& type );
-    static bool AgentCanByPassObject( const DEC_Decision_ABC* agent, const std::string& type );
+    static bool AgentCanDestroyObjectTypeWithLocalisation( const DEC_Decision_ABC* agent, const std::string& type, const TER_Localisation* localisation );
+    static bool AgentCanMineObject( const DEC_Decision_ABC* agent, const std::string& type, const TER_Localisation* localisation );
+    static bool AgentCanByPassObjectWithLocalisation( const DEC_Decision_ABC* agent, const std::string& type, const TER_Localisation* localisation );
 
     static std::vector< DEC_Decision_ABC* > RetrieveUnitsAbleToBuild( const std::vector< DEC_Decision_ABC* >& units, const std::string& type );
+    static std::vector< DEC_Decision_ABC* > RetrieveUnitsAbleToBuildWithLocalisation( const std::vector< DEC_Decision_ABC* >& units, const std::string& type, const TER_Localisation* localisation );
     static std::vector< DEC_Decision_ABC* > RetrieveUnitsAbleToMine( const std::vector< DEC_Decision_ABC* >& units, const std::string& type );
+    static std::vector< DEC_Decision_ABC* > RetrieveUnitsAbleToMineWithLocalisation( const std::vector< DEC_Decision_ABC* >& units, const std::string& type, const TER_Localisation* localisation );
     static std::vector< DEC_Decision_ABC* > RetrieveUnitsAbleToDestroy( const std::vector< DEC_Decision_ABC* >& units, const std::string& type );
+    static std::vector< DEC_Decision_ABC* > RetrieveUnitsAbleToDestroyWithLocalisation( const std::vector< DEC_Decision_ABC* >& units, const std::string& type, const TER_Localisation* localisation );
     static std::vector< DEC_Decision_ABC* > RetrieveUnitsAbleToByPass( const std::vector< DEC_Decision_ABC* >& units, const std::string& type );
+    static std::vector< DEC_Decision_ABC* > RetrieveUnitsAbleToByPassWithLocalisation( const std::vector< DEC_Decision_ABC* >& units, const std::string& type, const TER_Localisation* localisation );
 
     // Getter
     static double GetAgentDotationNumber( const DEC_Decision_ABC* agent, const PHY_DotationCategory* pDotationCategory );

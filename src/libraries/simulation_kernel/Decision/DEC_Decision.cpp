@@ -452,14 +452,17 @@ void RegisterMissionParametersFunctions( directia::brain::Brain& brain, bool isM
             boost::function< void (MT_Vector2D* ,  boost::shared_ptr< MIL_Mission_ABC > ) >( boost::bind( &DEC_OrdersFunctions::AssignDirectionToAutomateMission , _1, _2 ) );
     brain[ "DEC_AssignMissionListParameter" ] = &MIL_MissionParameterFactory::AssignMissionListParameter;
 
-	// Objet
-	brain[ "DEC_Agent_AgentPeutConstruireObjetEmbarque" ] = &DEC_AgentFunctions::AgentCanConstructObjectWithLoaded;
+    // Objet
+    brain[ "DEC_Agent_AgentPeutConstruireObjetEmbarque" ] = &DEC_AgentFunctions::AgentCanConstructObjectWithLoaded;
+    brain[ "DEC_Agent_AgentPeutConstruireObjetEmbarqueAvecLocalisation" ] = &DEC_AgentFunctions::AgentCanConstructObjectWithLoadedAndLocalisation;
     brain[ "DEC_Agent_AgentADotationPourConstruireObjet" ] = &DEC_AgentFunctions::AgentHasDotationForBuilding;
-	brain[ "DEC_Agent_AgentPeutConstruireObjetEmbarqueSansRenfort" ] = &DEC_AgentFunctions::AgentCanConstructObjectWithOutLoaded;
+    brain[ "DEC_Agent_AgentPeutConstruireObjetEmbarqueSansRenfort" ] = &DEC_AgentFunctions::AgentCanConstructObjectWithOutLoaded;
+    brain[ "DEC_Agent_AgentPeutConstruireObjetEmbarqueSansRenfortAvecLocalisation" ] = &DEC_AgentFunctions::AgentCanConstructObjectWithOutLoadedWithLocalisation;
     brain[ "DEC_Agent_AgentADotationPourConstruireObjetSansRenfort" ] = &DEC_AgentFunctions::AgentHasDotationForBuildingWithOutLoaded;
-	brain[ "DEC_Agent_AgentPeutDetruireObjet" ] = &DEC_AgentFunctions::AgentCanDestroyObject;
-	brain[ "DEC_Agent_AgentPeutConstruireContournementObjet" ] = &DEC_AgentFunctions::AgentCanBypassObject;
+    brain[ "DEC_Agent_AgentPeutDetruireObjet" ] = &DEC_AgentFunctions::AgentCanDestroyObject;
+    brain[ "DEC_Agent_AgentPeutConstruireContournementObjet" ] = &DEC_AgentFunctions::AgentCanBypassObject;
     brain[ "DEC_Agent_AgentPeutDetruireTypeObjet" ] = &DEC_AgentFunctions::AgentCanDestroyObjectType;
+    brain[ "DEC_Agent_AgentPeutDetruireTypeObjetAvecLocalisation" ] = &DEC_AgentFunctions::AgentCanDestroyObjectTypeWithLocalisation;
 
     brain[ "DEC_Agent_PeutActiverObjet" ] = &DEC_AgentFunctions::CanActivateObject;
     
@@ -467,9 +470,13 @@ void RegisterMissionParametersFunctions( directia::brain::Brain& brain, bool isM
     brain[ "DEC_GetAgentDotationManquantePourConstruireObjet" ] = &DEC_AgentFunctions::GetAgentMissingDotationForBuilding;
     brain[ "DEC_GetAgentDotationManquantePourValoriserObjet" ] = &DEC_AgentFunctions::GetAgentMissingDotationForMining;
     brain[ "DEC_GetAgentsPouvantConstruire" ] = &DEC_AgentFunctions::RetrieveUnitsAbleToBuild;
+    brain[ "DEC_GetAgentsPouvantConstruireAvecLocalisation" ] = &DEC_AgentFunctions::RetrieveUnitsAbleToBuildWithLocalisation;
     brain[ "DEC_GetAgentsPouvantValoriser" ] = &DEC_AgentFunctions::RetrieveUnitsAbleToMine;
+    brain[ "DEC_GetAgentsPouvantValoriserAvecLocalisation" ] = &DEC_AgentFunctions::RetrieveUnitsAbleToMineWithLocalisation;
     brain[ "DEC_GetAgentsPouvantContourner" ] = &DEC_AgentFunctions::RetrieveUnitsAbleToByPass;
+    brain[ "DEC_GetAgentsPouvantContournerAvecLocalisation" ] = &DEC_AgentFunctions::RetrieveUnitsAbleToByPassWithLocalisation;
     brain[ "DEC_GetAgentsPouvantDetruire" ] = &DEC_AgentFunctions::RetrieveUnitsAbleToDestroy;
+    brain[ "DEC_GetAgentsPouvantDetruireAvecLocalisation" ] = &DEC_AgentFunctions::RetrieveUnitsAbleToDestroyWithLocalisation;
 }
 // -----------------------------------------------------------------------------
 // Name: DEC_Decision::RegisterReportFunctions
@@ -1213,7 +1220,7 @@ void InitFunctions()
         functorsBM[ "PopulationKnowledge" ] = PopulationKnowledgeFunctionBM;
         functorsBM[ "CrowdKnowledge" ] = PopulationKnowledgeFunctionBM;
         functorsBM[ "PlannedWork" ] = GenObjectFunctionBM;
-		functorsBM[ "MaintenancePriorities" ] = MaintenancePrioritiesFunctionBM;
+        functorsBM[ "MaintenancePriorities" ] = MaintenancePrioritiesFunctionBM;
         functorsBM[ "MedicalPriorities" ] = MedicalPrioritiesFunctionBM;
         functorsBM[ "PlannedWorkList" ] = GenObjectListFunctionBM;
         functorsBM[ "UrbanKnowledge" ] = UrbanBlockFunctionBM;

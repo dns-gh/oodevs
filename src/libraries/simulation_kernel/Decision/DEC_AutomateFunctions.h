@@ -61,6 +61,7 @@ public:
     static double GetPerceptionForPion( const DEC_Decision_ABC* pion, boost::shared_ptr< MT_Vector2D >, boost::shared_ptr< MT_Vector2D > );
     static bool CanPionRelievePion( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* relieving, const DEC_Decision_ABC* relieved );
     static bool CanPionConstructObject( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* pion, const std::string& type );
+    static bool CanPionConstructObjectWithLocalisation( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* pion, const std::string& type, const TER_Localisation* localisation );
     static bool CanPionBypassObject( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* pion, boost::shared_ptr< DEC_Knowledge_Object > knowledgeId );
     static bool CanPionDestroyObject( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* pion, boost::shared_ptr< DEC_Knowledge_Object > knowledgeId );
     static boost::shared_ptr< MT_Vector2D > ComputePointBeforeLimaForPion( int phaseLine, float distanceBefore, const DEC_Decision_ABC* pion );

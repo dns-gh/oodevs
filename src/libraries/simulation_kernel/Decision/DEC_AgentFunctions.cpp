@@ -305,7 +305,16 @@ float DEC_AgentFunctions::GetDetectionDistance( MIL_Agent_ABC& callerAgent )
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::CanConstructObject( const MIL_Agent_ABC& callerAgent, const std::string& type )
 {
-    return callerAgent.GetRole< PHY_RoleAction_Objects >().CanConstructWithReinforcement( type, false );
+    return CanConstructObjectWithLocalisation( callerAgent, type, 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::CanConstructObjectWithLocalisation
+// Created: JSR 2012-02-24
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::CanConstructObjectWithLocalisation( const MIL_Agent_ABC& callerAgent, const std::string& type, const TER_Localisation* location )
+{
+    return callerAgent.GetRole< PHY_RoleAction_Objects >().CanConstructWithReinforcement( type, location, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -314,7 +323,16 @@ bool DEC_AgentFunctions::CanConstructObject( const MIL_Agent_ABC& callerAgent, c
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::CanConstructWithoutReinforcement( const MIL_Agent_ABC& callerAgent, const std::string& type )
 {
-    return callerAgent.GetRole< PHY_RoleAction_Objects >().CanConstructWithoutReinforcement( type, false );
+    return CanConstructWithoutReinforcementWithLocalisation( callerAgent, type, 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::CanConstructWithoutReinforcementWithLocalisation
+// Created: JSR 2012-02-24
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::CanConstructWithoutReinforcementWithLocalisation( const MIL_Agent_ABC& callerAgent, const std::string& type, const TER_Localisation* location )
+{
+    return callerAgent.GetRole< PHY_RoleAction_Objects >().CanConstructWithoutReinforcement( type, location, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -323,7 +341,16 @@ bool DEC_AgentFunctions::CanConstructWithoutReinforcement( const MIL_Agent_ABC& 
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::CanConstructObjectWithLoaded( const MIL_Agent_ABC& callerAgent, const std::string& type )
 {
-    return callerAgent.GetRole< PHY_RoleAction_Objects >().CanConstructWithReinforcement( type, true );
+    return CanConstructObjectWithLoadedAndLocalisation( callerAgent, type, 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::CanConstructObjectWithLoadedAndLocalisation
+// Created: JSR 2012-02-24
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::CanConstructObjectWithLoadedAndLocalisation( const MIL_Agent_ABC& callerAgent, const std::string& type, const TER_Localisation* location )
+{
+    return callerAgent.GetRole< PHY_RoleAction_Objects >().CanConstructWithReinforcement( type, location, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -350,7 +377,7 @@ bool DEC_AgentFunctions::HasDotationForBuildingWithoutReinforcement( MIL_Agent_A
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::CanBypassObject( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge )
 {
-    return objectKnowledge && objectKnowledge->IsValid() && objectKnowledge->RetrieveAttribute< BypassAttribute >() != 0 && callerAgent.GetRole< PHY_RoleAction_Objects >().CanBypassWithReinforcement( objectKnowledge->GetType() );
+    return objectKnowledge && objectKnowledge->IsValid() && objectKnowledge->RetrieveAttribute< BypassAttribute >() != 0 && callerAgent.GetRole< PHY_RoleAction_Objects >().CanBypassWithReinforcement( objectKnowledge->GetType(), objectKnowledge->GetLocalisation() );
 }
 
 // -----------------------------------------------------------------------------
@@ -359,7 +386,7 @@ bool DEC_AgentFunctions::CanBypassObject( const MIL_Agent_ABC& callerAgent, boos
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::CanDestroyObject( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge )
 {
-    return objectKnowledge && objectKnowledge->IsValid() && callerAgent.GetRole< PHY_RoleAction_Objects >().CanDestroyWithReinforcement( objectKnowledge->GetType() );
+    return objectKnowledge && objectKnowledge->IsValid() && callerAgent.GetRole< PHY_RoleAction_Objects >().CanDestroyWithReinforcement( objectKnowledge->GetType(), objectKnowledge->GetLocalisation() );
 }
 
 // -----------------------------------------------------------------------------
@@ -368,7 +395,7 @@ bool DEC_AgentFunctions::CanDestroyObject( const MIL_Agent_ABC& callerAgent, boo
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::CanMineObject( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge )
 {
-    return objectKnowledge && objectKnowledge->IsValid() && objectKnowledge->IsConstructed() && callerAgent.GetRole< PHY_RoleAction_Objects >().CanMineWithReinforcement( objectKnowledge->GetType() );
+    return objectKnowledge && objectKnowledge->IsValid() && objectKnowledge->IsConstructed() && callerAgent.GetRole< PHY_RoleAction_Objects >().CanMineWithReinforcement( objectKnowledge->GetType(), objectKnowledge->GetLocalisation() );
 }
 
 // -----------------------------------------------------------------------------
@@ -1106,9 +1133,18 @@ double DEC_AgentFunctions::GetCurrentSpeed( const DEC_Decision_ABC* agent )
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::AgentCanConstructObjectWithLoaded( const DEC_Decision_ABC* agent, const std::string& type )
 {
+    return AgentCanConstructObjectWithLoadedAndLocalisation( agent, type, 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::AgentCanConstructObjectWithLoadedAndLocalisation
+// Created: JSR 2012-02-27
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::AgentCanConstructObjectWithLoadedAndLocalisation( const DEC_Decision_ABC* agent, const std::string& type, const TER_Localisation* localisation )
+{
     if( !agent )
         throw std::runtime_error( "Invalid pion in AgentCanConstructObjectWithLoaded" );
-    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanConstructWithReinforcement( type, true );
+    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanConstructWithReinforcement( type, localisation, true );
 }
 
 // -----------------------------------------------------------------------------
@@ -1117,15 +1153,20 @@ bool DEC_AgentFunctions::AgentCanConstructObjectWithLoaded( const DEC_Decision_A
 // -----------------------------------------------------------------------------
 std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::RetrieveUnitsAbleToBuild( const std::vector< DEC_Decision_ABC* >& units, const std::string& type )
 {
+    return RetrieveUnitsAbleToBuildWithLocalisation( units, type, 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::RetrieveUnitsAbleToBuildWithLocalisation
+// Created: JSR 2012-02-27
+// -----------------------------------------------------------------------------
+std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::RetrieveUnitsAbleToBuildWithLocalisation( const std::vector< DEC_Decision_ABC* >& units, const std::string& type, const TER_Localisation* localisation )
+{
     std::vector< DEC_Decision_ABC* > unitsAbleToBuild;
     std::vector< DEC_Decision_ABC* >::const_iterator it;
     for( it = units.begin(); it != units.end(); ++it )
-    {
-        if( AgentCanConstructObjectWithOutLoaded( *it, type) )
-        {
+        if( AgentCanConstructObjectWithOutLoadedWithLocalisation( *it, type, localisation ) )
             unitsAbleToBuild.push_back( *it );
-        }
-    }
     return unitsAbleToBuild;
 }
 
@@ -1135,15 +1176,20 @@ std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::RetrieveUnitsAbleToBuild( c
 // -----------------------------------------------------------------------------
 std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::RetrieveUnitsAbleToMine( const std::vector< DEC_Decision_ABC* >& units, const std::string& type )
 {
+    return RetrieveUnitsAbleToMineWithLocalisation( units, type, 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::RetrieveUnitsAbleToMineWithLocalisation
+// Created: JSR 2012-02-27
+// -----------------------------------------------------------------------------
+std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::RetrieveUnitsAbleToMineWithLocalisation( const std::vector< DEC_Decision_ABC* >& units, const std::string& type, const TER_Localisation* localisation )
+{
     std::vector< DEC_Decision_ABC* > unitsAbleToMine;
     std::vector< DEC_Decision_ABC* >::const_iterator it;
     for( it = units.begin(); it != units.end(); ++it )
-    {
-        if( AgentCanMineObject( *it, type) )
-        {
+        if( AgentCanMineObject( *it, type, localisation ) )
             unitsAbleToMine.push_back( *it );
-        }
-    }
     return unitsAbleToMine;
 }
 
@@ -1153,15 +1199,20 @@ std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::RetrieveUnitsAbleToMine( co
 // -----------------------------------------------------------------------------
 std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::RetrieveUnitsAbleToByPass( const std::vector< DEC_Decision_ABC* >& units, const std::string& type )
 {
+    return RetrieveUnitsAbleToByPassWithLocalisation( units, type, 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::RetrieveUnitsAbleToByPassWithLocalisation
+// Created: JSR 2012-02-27
+// -----------------------------------------------------------------------------
+std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::RetrieveUnitsAbleToByPassWithLocalisation( const std::vector< DEC_Decision_ABC* >& units, const std::string& type, const TER_Localisation* localisation )
+{
     std::vector< DEC_Decision_ABC* > unitsAbleToByPass;
     std::vector< DEC_Decision_ABC* >::const_iterator it;
     for( it = units.begin(); it != units.end(); ++it )
-    {
-        if( AgentCanByPassObject( *it, type) )
-        {
+        if( AgentCanByPassObjectWithLocalisation( *it, type, localisation ) )
             unitsAbleToByPass.push_back( *it );
-        }
-    }
     return unitsAbleToByPass;
 }
 
@@ -1171,15 +1222,20 @@ std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::RetrieveUnitsAbleToByPass( 
 // -----------------------------------------------------------------------------
 std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::RetrieveUnitsAbleToDestroy( const std::vector< DEC_Decision_ABC* >& units, const std::string& type )
 {
+    return RetrieveUnitsAbleToDestroyWithLocalisation( units, type, 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::RetrieveUnitsAbleToDestroyWithLocalisation
+// Created: JSR 2012-02-27
+// -----------------------------------------------------------------------------
+std::vector< DEC_Decision_ABC* > DEC_AgentFunctions::RetrieveUnitsAbleToDestroyWithLocalisation( const std::vector< DEC_Decision_ABC* >& units, const std::string& type, const TER_Localisation* localisation )
+{
     std::vector< DEC_Decision_ABC* > unitsAbleToDestroy;
     std::vector< DEC_Decision_ABC* >::const_iterator it;
     for( it = units.begin(); it != units.end(); ++it )
-    {
-        if( AgentCanDestroyObjectType( *it, type) )
-        {
+        if( AgentCanDestroyObjectTypeWithLocalisation( *it, type, localisation ) )
             unitsAbleToDestroy.push_back( *it );
-        }
-    }
     return unitsAbleToDestroy;
 }
 
@@ -1227,38 +1283,46 @@ std::pair< const PHY_DotationCategory*, double > DEC_AgentFunctions::GetAgentMis
     return agent->GetPion().GetRole< PHY_RoleAction_Objects >().GetAgentMissingDotationForMiningObstacle( pKnowledge, agent->GetPion() );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::AgentCanConstructObjectWithOutLoaded
 // Created: LMT 2012-01-25
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::AgentCanConstructObjectWithOutLoaded( const DEC_Decision_ABC* agent, const std::string& type )
 {
+    return AgentCanConstructObjectWithOutLoadedWithLocalisation( agent, type, 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::AgentCanConstructObjectWithOutLoadedWithLocalisation
+// Created: JSR 2012-02-27
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::AgentCanConstructObjectWithOutLoadedWithLocalisation( const DEC_Decision_ABC* agent, const std::string& type, const TER_Localisation* localisation )
+{
     if( !agent )
         throw std::runtime_error( "Invalid pion in AgentCanConstructObjectWithOutLoaded" );
-    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanConstructWithReinforcement( type, false );
+    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanConstructWithReinforcement( type, localisation, false );
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::AgentCanMineObject
 // Created: LMT 2012-02-01
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::AgentCanMineObject( const DEC_Decision_ABC* agent, const std::string& type )
+bool DEC_AgentFunctions::AgentCanMineObject( const DEC_Decision_ABC* agent, const std::string& type, const TER_Localisation* localisation )
 {
     if( !agent )
         throw std::runtime_error( "Invalid pion in AgentCanMineObject" );
-    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanMineTypeWithReinforcement( type );
+    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanMineTypeWithReinforcement( type, localisation );
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::AgentCanByPassObject
+// Name: DEC_AgentFunctions::AgentCanByPassObjectWithLocalisation
 // Created: LMT 2012-02-01
 // -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::AgentCanByPassObject( const DEC_Decision_ABC* agent, const std::string& type )
+bool DEC_AgentFunctions::AgentCanByPassObjectWithLocalisation( const DEC_Decision_ABC* agent, const std::string& type, const TER_Localisation* localisation )
 {
     if( !agent )
         throw std::runtime_error( "Invalid pion in AgentCanUnmineObject" );
-    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanBypassTypeWithReinforcement( type );
+    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanBypassTypeWithReinforcement( type, localisation );
 }
 
 // -----------------------------------------------------------------------------
@@ -1280,7 +1344,7 @@ bool DEC_AgentFunctions::AgentCanDestroyObject( const DEC_Decision_ABC* agent, b
 {
     if( !agent )
         throw std::runtime_error( "Invalid pion in AgentCanDestroyObject" );
-    return objectKnowledge && objectKnowledge->IsValid() && agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanDestroyWithReinforcement( objectKnowledge->GetType() );
+    return objectKnowledge && objectKnowledge->IsValid() && agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanDestroyWithReinforcement( objectKnowledge->GetType(), objectKnowledge->GetLocalisation() );
 }
 
 // -----------------------------------------------------------------------------
@@ -1289,9 +1353,18 @@ bool DEC_AgentFunctions::AgentCanDestroyObject( const DEC_Decision_ABC* agent, b
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::AgentCanDestroyObjectType( const DEC_Decision_ABC* agent, const std::string& type )
 {
+    return AgentCanDestroyObjectTypeWithLocalisation( agent, type, 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::AgentCanDestroyObjectTypeWithLocalisation
+// Created: JSR 2012-02-27
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::AgentCanDestroyObjectTypeWithLocalisation( const DEC_Decision_ABC* agent, const std::string& type, const TER_Localisation* localisation )
+{
     if( !agent )
         throw std::runtime_error( "Invalid pion in AgentCanDestroyObjectType" );
-    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanDestroyTypeWithReinforcement( type );
+    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanDestroyTypeWithReinforcement( type, localisation );
 }
 
 // -----------------------------------------------------------------------------
@@ -1302,7 +1375,7 @@ bool DEC_AgentFunctions::AgentCanBypassObject( const DEC_Decision_ABC* agent, bo
 {
     if( !agent )
         throw std::runtime_error( "Invalid pion in AgentCanBypassObject" );
-    return objectKnowledge && objectKnowledge->IsValid() && objectKnowledge->RetrieveAttribute< BypassAttribute >() != 0 && agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanBypassWithReinforcement( objectKnowledge->GetType() );
+    return objectKnowledge && objectKnowledge->IsValid() && objectKnowledge->RetrieveAttribute< BypassAttribute >() != 0 && agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanBypassWithReinforcement( objectKnowledge->GetType(), objectKnowledge->GetLocalisation() );
 }
 
 // -----------------------------------------------------------------------------
