@@ -11,22 +11,25 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RoleAction_Objects_CapabilityComputer.h"
+#include "AlgorithmsFactories.h"
+#include "OnComponentFunctorComputer_ABC.h"
+#include "OnComponentFunctorComputerFactory_ABC.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/Roles/Reinforcement/PHY_RoleInterface_Reinforcement.h"
 #include "Entities/Agents/MIL_AgentPion.h"
-#include "OnComponentFunctorComputer_ABC.h"
-#include "OnComponentFunctorComputerFactory_ABC.h"
-#include "AlgorithmsFactories.h"
+#include "simulation_terrain/TER_AnalyzerManager.h"
+#include "simulation_terrain/TER_Localisation.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Objects_CapabilityComputer constructor
 // Created: NLD 2004-10-14
 // -----------------------------------------------------------------------------
 PHY_RoleAction_Objects_CapabilityComputer::PHY_RoleAction_Objects_CapabilityComputer( const MIL_AgentPion& pion, E_Operation nOperation,
-                                                                                      const MIL_ObjectType_ABC& objectType, bool bWithLoaded,
-                                                                                      bool bWithReinforcement )
+                                                                                      const MIL_ObjectType_ABC& objectType, const TER_Localisation* localisation, 
+                                                                                      bool bWithLoaded, bool bWithReinforcement )
     : nOperation_    ( nOperation )
     , objectType_    ( objectType )
+    , localisation_  ( localisation )
     , bHasCapability_( false )
     , bWithLoaded_   ( bWithLoaded )
 {
@@ -79,6 +82,41 @@ void PHY_RoleAction_Objects_CapabilityComputer::operator() ( PHY_ComposantePion&
         case eBypass   : bHasCapability_ = composante.CanBypass( objectType_, false ); break;
         case eExtinguish : bHasCapability_ = composante.CanExtinguish( objectType_ ); break;
         default: assert( false );
+    }
+    if( bHasCapability_ && localisation_ && localisation_->GetType() != TER_Localisation::eNone && composante.HasConstructionSpeeds() )
+    {
+        TerrainData data;
+        switch( localisation_->GetType() )
+        {
+        case TER_Localisation::eCircle :
+            data = TER_AnalyzerManager::GetAnalyzerManager().FindTerrainDataWithinCircle( localisation_->GetCircleCenter(), static_cast< float >( localisation_->GetCircleRadius() ) );
+            break;
+        case TER_Localisation::eLine :
+            {
+                TER_Localisation tmp = *localisation_;
+                tmp.Scale( 100. );
+                TER_Polygon polygon;
+                polygon.Reset( tmp.GetPoints() );
+                data = TER_AnalyzerManager::GetAnalyzerManager().FindTerrainDataWithinPolygon( polygon );
+            }
+            break;
+        case TER_Localisation::ePolygon :
+            {
+                TER_Polygon polygon;
+                polygon.Reset( localisation_->GetPoints() );
+                data = TER_AnalyzerManager::GetAnalyzerManager().FindTerrainDataWithinPolygon( polygon );
+            }
+            break;
+        case TER_Localisation::ePoint :
+            data = TER_AnalyzerManager::GetAnalyzerManager().Pick( localisation_->ComputeBarycenter() );
+            break;
+        default:
+            assert( false );
+            break;
+        }
+
+        if( composante.GetConstructionSpeed( data ) == 0 )
+            bHasCapability_ = false;
     }
 }
 

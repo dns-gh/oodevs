@@ -245,9 +245,18 @@ bool DEC_AutomateFunctions::IsPionInAutomate( const MIL_Automate& automate, cons
 // -----------------------------------------------------------------------------
 bool DEC_AutomateFunctions::CanPionConstructObject( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* pion, const std::string& type )
 {
+    return CanPionConstructObjectWithLocalisation( callerAutomate, pion, type, 0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AutomateFunctions::CanPionConstructObjectWithLocalisation
+// Created: JSR 2012-02-24
+// -----------------------------------------------------------------------------
+bool DEC_AutomateFunctions::CanPionConstructObjectWithLocalisation( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* pion, const std::string& type, const TER_Localisation* localisation )
+{
     if( !pion || !IsPionInAutomate( callerAutomate, pion->GetPion() ) )
         throw std::runtime_error( "Invalid pion in CanPionConstructObject" );
-    return pion->GetPion().GetRole< PHY_RoleAction_Objects >().CanConstructWithReinforcement( type, false );
+    return pion->GetPion().GetRole< PHY_RoleAction_Objects >().CanConstructWithReinforcement( type, localisation, false );
 }
 
 // -----------------------------------------------------------------------------
@@ -259,7 +268,7 @@ bool DEC_AutomateFunctions::CanPionBypassObject( const MIL_Automate& callerAutom
     if( !pion || !IsPionInAutomate( callerAutomate, pion->GetPion() ) )
         throw std::runtime_error( "Invalid pion in CanPionBypassObject" );
     if( pKnowledge && pKnowledge->IsValid() )
-        return pion->GetPion().GetRole< PHY_RoleAction_Objects >().CanBypassWithReinforcement( pKnowledge->GetType() );
+        return pion->GetPion().GetRole< PHY_RoleAction_Objects >().CanBypassWithReinforcement( pKnowledge->GetType(), pKnowledge->GetLocalisation() );
     return false;
 }
 
@@ -272,7 +281,7 @@ bool DEC_AutomateFunctions::CanPionDestroyObject( const MIL_Automate& callerAuto
     if( !pion || !IsPionInAutomate( callerAutomate, pion->GetPion() ) )
         throw std::runtime_error( "Invalid pion in CanPionDestroyObject" );
     if( pKnowledge && pKnowledge->IsValid() )
-        return pion->GetPion().GetRole< PHY_RoleAction_Objects >().CanDestroyWithReinforcement( pKnowledge->GetType() );
+        return pion->GetPion().GetRole< PHY_RoleAction_Objects >().CanDestroyWithReinforcement( pKnowledge->GetType(), pKnowledge->GetLocalisation() );
     return false;
 }
 

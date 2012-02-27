@@ -21,6 +21,7 @@ class MIL_ObjectType_ABC;
 class MIL_AgentPion;
 class MIL_Agent_ABC;
 class PHY_DotationCategory;
+class TER_Localisation;
 class UrbanObjectWrapper;
 class DEC_Gen_Object;
 
@@ -88,15 +89,15 @@ public:
 
     //! @name Capabilities
     //@{
-    bool CanConstructWithReinforcement( const std::string& objectType, bool bWithLoaded ) const;
-    bool CanConstructWithoutReinforcement( const std::string& objectType, bool bWithLoaded ) const;
-    bool CanBypassWithReinforcement( const MIL_ObjectType_ABC& object ) const;
-    bool CanDestroyWithReinforcement( const MIL_ObjectType_ABC& object ) const;
-    bool CanMineWithReinforcement( const MIL_ObjectType_ABC& object ) const;
+    bool CanConstructWithReinforcement( const std::string& objectType, const TER_Localisation* localisation, bool bWithLoaded ) const;
+    bool CanConstructWithoutReinforcement( const std::string& objectType, const TER_Localisation* localisation, bool bWithLoaded ) const;
+    bool CanBypassWithReinforcement( const MIL_ObjectType_ABC& object, const TER_Localisation& localisation ) const;
+    bool CanDestroyWithReinforcement( const MIL_ObjectType_ABC& object, const TER_Localisation& localisation ) const;
+    bool CanMineWithReinforcement( const MIL_ObjectType_ABC& object, const TER_Localisation& localisation ) const;
     bool EnoughtDotationForBuilding( const std::string& objectType, MIL_Agent_ABC& pion, bool bWithLoaded ) const;
-    bool CanMineTypeWithReinforcement( const std::string& strType ) const;
-    bool CanDestroyTypeWithReinforcement( const std::string& strType ) const;
-    bool CanBypassTypeWithReinforcement( const std::string& strType ) const;
+    bool CanMineTypeWithReinforcement( const std::string& strType, const TER_Localisation* localisation ) const;
+    bool CanDestroyTypeWithReinforcement( const std::string& strType, const TER_Localisation* localisation ) const;
+    bool CanBypassTypeWithReinforcement( const std::string& strType, const TER_Localisation* localisation ) const;
 
     //Getter
     double GetAgentDotationNumber( MIL_Agent_ABC& pion, const PHY_DotationCategory* pDotationCategory ) const; 

@@ -18,6 +18,7 @@
 class MIL_ObjectType_ABC;
 class PHY_ComposantePion;
 class MIL_AgentPion;
+class TER_Localisation;
 
 // =============================================================================
 // @class  PHY_RoleAction_Objects_CapabilityComputer
@@ -29,7 +30,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              PHY_RoleAction_Objects_CapabilityComputer( const MIL_AgentPion& pion, E_Operation nOperation, const MIL_ObjectType_ABC& objectType,
-                                                        bool bWithLoaded, bool bWithReinforcement = true );
+                                                        const TER_Localisation* localisation, bool bWithLoaded, bool bWithReinforcement = true );
     virtual ~PHY_RoleAction_Objects_CapabilityComputer();
     //@}
 
@@ -50,6 +51,7 @@ private:
     //@{
     const E_Operation nOperation_;
     const MIL_ObjectType_ABC& objectType_;
+    const TER_Localisation* localisation_;
     bool bHasCapability_;
     bool bWithLoaded_;
     //@}
