@@ -92,12 +92,14 @@ public:
             elogLevel_all
         };
 
-        LogSettings(): logLevel_( elogLevel_all ), maxFiles_( 1 ), maxFileSize_( -1 ), sizeUnit_( eLogSizeType_Lines ) {}
+        LogSettings(): logLevel_( elogLevel_all ), maxFiles_( 1 ), maxFileSize_( -1 ), sizeUnit_( eLogSizeType_Lines ), set_( false ) {}
+        void SetLogSettings( const std::string& name, xml::xistream& xis );
         void SetLogSettings( int level, int files, int size, const std::string& sizeUnit );
-        unsigned int GetLogLevel() { return static_cast< unsigned int >( logLevel_ ); }
-        unsigned int GetMaxFiles() { return maxFiles_; }
-        int GetMaxSize() { return maxFileSize_; }
-        bool IsSizeInBytes() { return sizeUnit_ == eLogSizeType_Bytes; }
+        unsigned int GetLogLevel() const { return static_cast< unsigned int >( logLevel_ ); }
+        unsigned int GetMaxFiles() const { return maxFiles_; }
+        int GetMaxSize() const { return maxFileSize_; }
+        bool IsSizeInBytes() const { return sizeUnit_ == eLogSizeType_Bytes; }
+        bool IsSet() const { return set_; }
 
     private:
         enum eLogSizeType
@@ -105,7 +107,7 @@ public:
             eLogSizeType_Lines,
             eLogSizeType_Bytes,
         };
-        
+        bool set_;
         eLogLevel logLevel_;
         unsigned int maxFiles_;
         int maxFileSize_;
@@ -116,20 +118,35 @@ public:
     //! @name Operations
     //@{
     const Loader_ABC& GetLoader() const;
-    virtual void GetLogSettings( const std::string& field, LogSettings& logSettings );
+
+    virtual unsigned int GetDispatcherProtobufLogFiles() const;
+    virtual int GetDispatcherProtobufLogSize() const;
+    virtual unsigned int GetShieldLogFiles() const;
+    virtual int GetShieldLogSize() const;
+    virtual unsigned int GetDispatcherLogFiles() const;
+    virtual int GetDispatcherLogSize() const;
+    virtual unsigned int GetDispatcherLogLevel() const;
+    virtual unsigned int GetSimLogFiles() const;
+    virtual int GetSimLogSize() const;
+    virtual unsigned int GetSimLogLevel() const;
+    virtual bool IsSimLogInBytes() const;
+    virtual bool IsShieldLogInBytes() const;
+    virtual bool IsDispatcherLogInBytes() const;
+    virtual bool IsDispatcherProtobufLogInBytes() const;
     //@}
 
 private:
     //! @name Helpers
     //@{
     void ReadExercise( xml::xistream& xis );
-    void ReadLogSettings( const std::string& name, xml::xistream& xis );
     //@}
 
 protected:
     //! @name Helpers
     //@{
-    void SetLogSettings( const std::string& name, int level, int files, int size, const std::string& sizeUnit, bool replace = true );
+    void SetDispatcherLogSettings( int level, int files, int size, const std::string& sizeUnit );
+    void SetShieldLogSettings( int files, int size, const std::string& sizeUnit );
+    void SetSimLogSettings( int level, int files, int size, const std::string& sizeUnit );
     //@}
 
 private:
@@ -154,7 +171,10 @@ private:
     std::string population_;
     std::string propagations_;
 
-    std::map< std::string, LogSettings > logSettings_;
+    LogSettings dispatcherProtobufLogSettings_;
+    LogSettings shieldLogSettings_;
+    LogSettings dispatcherLogSettings_;
+    LogSettings simLogSettings_;
     //@}
 };
 

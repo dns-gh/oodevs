@@ -28,7 +28,10 @@ DispatcherFacade::DispatcherFacade( int argc, char** argv, int maxConnections )
 {
     MT_LOG_REGISTER_LOGGER( *new MT_ConsoleLogger() );
     config_->Parse( argc, argv );
-    MT_LOG_REGISTER_LOGGER( *new MT_FileLogger( config_->BuildSessionChildFile( "Dispatcher.log" ).c_str(), 1, -1, MT_Logger_ABC::eLogLevel_All, true, MT_Logger_ABC::eDispatcher ) );
+    MT_LOG_REGISTER_LOGGER( *new MT_FileLogger( config_->BuildSessionChildFile( "Dispatcher.log" ).c_str(), 
+                                                config_->GetDispatcherLogFiles(), config_->GetDispatcherLogSize(), 
+                                                MT_Logger_ABC::ConvertConfigLevel( config_->GetDispatcherLogLevel() ), 
+                                                true, MT_Logger_ABC::eDispatcher, config_->IsDispatcherLogInBytes() ) );
     try
     {
         dispatcher_.reset( new dispatcher::Dispatcher( *config_, maxConnections ) );

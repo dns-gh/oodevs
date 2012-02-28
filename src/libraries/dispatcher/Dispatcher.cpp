@@ -47,7 +47,7 @@ Dispatcher::Dispatcher( const Config& config, int maxConnections )
     , handler_            ( new CompositePlugin() )
     , registrables_       ( new CompositeRegistrable() )
     , services_           ( new Services() )
-    , log_                ( factory, config.BuildSessionChildFile( "Protobuf.log" ), config.GetLogFiles(), config.GetLogSize() )
+    , log_                ( factory, config.BuildSessionChildFile( "Protobuf.log" ), config.GetDispatcherProtobufLogFiles(), config.GetDispatcherProtobufLogSize(), config.IsDispatcherProtobufLogInBytes() )
     , clientsNetworker_   ( new ClientsNetworker( config, *handler_, *services_, *model_ ) )
     , simulationNetworker_( new SimulationNetworker( *model_, *clientsNetworker_, *handler_, config, log_ ) )
     , shield_             ( new Shield( config, *model_, *clientsNetworker_, *clientsNetworker_ ) )
@@ -97,7 +97,7 @@ void Dispatcher::Update()
     clientsNetworker_->Update();
     simulationNetworker_->Update();
     handler_->Update();
-	shield_->Update( clientsNetworker_->IsAllowingConnections() );
+    shield_->Update( clientsNetworker_->IsAllowingConnections() );
     memoryLogger_->Update();
 }
 

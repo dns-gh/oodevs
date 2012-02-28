@@ -65,12 +65,12 @@ SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */ ,LPSTR lpCm
     , dispatcherOk_  ( true )
 {
     startupConfig_->Parse( winArguments_->Argc(), const_cast< char** >( winArguments_->Argv() ) );
-
-    tools::ExerciseConfig::LogSettings logSettings;
-    static_cast< tools::ExerciseConfig* >( startupConfig_.get() )->GetLogSettings( "sim", logSettings );   
-    logger_.reset( new MT_FileLogger( startupConfig_->BuildSessionChildFile( "Sim.log" ).c_str(), logSettings.GetMaxFiles(), logSettings.GetMaxSize(), 
-                                        MT_Logger_ABC::ConvertConfigLevel( logSettings.GetLogLevel() ),
-                                        true, MT_Logger_ABC::eSimulation, logSettings.IsSizeInBytes() ) );
+    
+    tools::ExerciseConfig* exerciceConfig = static_cast< tools::ExerciseConfig* >( startupConfig_.get() );
+    logger_.reset( new MT_FileLogger( startupConfig_->BuildSessionChildFile( "Sim.log" ).c_str(),
+                                        exerciceConfig->GetSimLogFiles(), exerciceConfig->GetSimLogSize(),
+                                        MT_Logger_ABC::ConvertConfigLevel( exerciceConfig->GetSimLogLevel() ),
+                                        true, MT_Logger_ABC::eSimulation, exerciceConfig->IsSimLogInBytes() ) );
     console_.reset( new MT_ConsoleLogger() );
     MT_LOG_REGISTER_LOGGER( *console_ );
     MT_LOG_REGISTER_LOGGER( *logger_ );

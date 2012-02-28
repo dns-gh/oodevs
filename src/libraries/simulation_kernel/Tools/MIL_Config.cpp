@@ -219,8 +219,7 @@ void MIL_Config::ReadDebugConfiguration( xml::xistream& xis )
         throw std::exception( "DIA debug server activated but no debugger port specified!" );
     if( bUseNetworkLogger_ && !networkLoggerPort_ )
         throw std::exception( "Network logger activated but no port specified!" );
-    if( level >= 0 || files >=0 || fileSize >= 0 )
-        SetLogSettings( "sim", level, files, fileSize, sizeUnit, false );
+    SetSimLogSettings( level, files, fileSize, sizeUnit );
 }
 
 // -----------------------------------------------------------------------------
