@@ -29,7 +29,8 @@ public:
     typedef MIL_AgentPion ActorType;
 
 public:
-             PHY_ActionPrepareObject( MIL_AgentPion& pion, const std::string& strType, const TER_Localisation* pLocalisation );
+             PHY_ActionPrepareObject( MIL_AgentPion& pion, const std::string& strType, const TER_Localisation* pLocalisation,
+                                      unsigned int externalIdentifier, const std::string& name );
     virtual ~PHY_ActionPrepareObject();
 
     //! @name Operations

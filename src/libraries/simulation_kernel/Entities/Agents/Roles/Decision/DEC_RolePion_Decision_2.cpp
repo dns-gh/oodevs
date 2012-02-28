@@ -202,7 +202,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_StartCreateObject" ] =
         boost::function< unsigned int( const std::string&, const TER_Localisation*, unsigned int, const std::string& ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionConstructObject, const std::string&, const TER_Localisation*, unsigned int, const std::string& >, boost::ref( GetPion() ), _1, _2, _3, _4 ) );
     brain[ "DEC_StartPrepareObject" ] =
-        boost::function< unsigned int( const std::string&, const TER_Localisation* ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionPrepareObject, const std::string&, const TER_Localisation* >, boost::ref( GetPion() ), _1, _2 ) );
+        boost::function< unsigned int( const std::string&, const TER_Localisation*, unsigned int, const std::string& ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionPrepareObject, const std::string&, const TER_Localisation*, unsigned int, const std::string& >, boost::ref( GetPion() ), _1, _2, _3, _4 ) );
     brain[ "DEC_StartDetruireObjet" ] =
         boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionDestroyObject, boost::shared_ptr< DEC_Knowledge_Object > >, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_StartValoriserObjet" ] =

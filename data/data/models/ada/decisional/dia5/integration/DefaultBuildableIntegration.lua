@@ -42,7 +42,7 @@ integration.startBuildIt = function( object )
     local externalIdentifier = DEC_GenObject_ExternalIdentifier( object.source )
     local name = object.source:DEC_GenObject_Name()
     if DEC_GenObject_TypeObstacleManoeuvre( object.source ) then
-        object[myself].actionBuild = DEC_StartPrepareObject( typeObject, DEC_GenObject_Localisation( object.source ) )
+        object[myself].actionBuild = DEC_StartPrepareObject( typeObject, DEC_GenObject_Localisation( object.source ), externalIdentifier, name )
     else
         object[myself].actionBuild = DEC_StartCreateObject( typeObject, DEC_GenObject_Localisation( object.source ), externalIdentifier, name )
     end

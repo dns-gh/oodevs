@@ -642,7 +642,7 @@ function DEC_StartCreerObjet( knowledge, type, localisation )
 end
 
 function DEC_StartPreparerObjet( knowledge, type, localisation )
-    return DEC_StartPrepareObject( type, localisation )
+    return DEC_StartPrepareObject( type, localisation, 0, "" )
 end
 
 function DEC_Copie_Liste( source )
