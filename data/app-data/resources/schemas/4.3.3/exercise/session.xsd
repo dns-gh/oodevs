@@ -343,6 +343,26 @@
                 <xs:documentation xml:lang="en">Enables pathfind information logging.</xs:documentation>
               </xs:annotation>
             </xs:attribute>
+            <xs:attribute name="loglevel" type="xs:nonNegativeInteger" use="optional">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Set log file trace level. 0: errors. 1: errors and warnings. 2: all. Default: all.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="logfiles" type="xs:nonNegativeInteger" use="optional">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Set the number of rotating sim log files. Default: 1.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="logsize" type="xs:nonNegativeInteger" use="optional">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Log file max size in bytes. Default: no limit.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="sizeunit" type="xs:string" use="optional">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Log file size unit: "lines", "bytes", "kbytes" or "mbytes". Default: "lines".</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>            
           </xs:complexType>
         </xs:element>
         <xs:element name="decisional">

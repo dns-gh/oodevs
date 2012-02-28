@@ -41,7 +41,8 @@ App::App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance*/, LPSTR lpCmdLine, in
     // win32 argument parsing
     tools::WinArguments winArgs( lpCmdLine );
     config_->Parse( winArgs.Argc(), const_cast< char** >( winArgs.Argv() ) );
-    MT_LOG_REGISTER_LOGGER( *new MT_FileLogger( config_->BuildSessionChildFile( "Replayer.log" ).c_str(), MT_Logger_ABC::eLogLevel_All, true ) );
+    MT_LOG_REGISTER_LOGGER( *new MT_FileLogger( config_->BuildSessionChildFile( "Replayer.log" ).c_str(), 1, -1, MT_Logger_ABC::eLogLevel_All, true ) );
+
     MT_LOG_INFO_MSG( "Loading record " << config_->GetSessionFile() );
     replayer_.reset( new Replayer( *config_ ) );
     guiThread_.reset( new boost::thread( boost::bind( &App::RunGUI, this, hinstance ) ) );

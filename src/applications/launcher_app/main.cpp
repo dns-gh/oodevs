@@ -45,7 +45,7 @@ namespace
             return EXIT_SUCCESS;
 
         bfs::path path = bfs::system_complete( bfs::path( argv[0] ) );
-        MT_FileLogger fileLogger( bfs::path( path.parent_path() / "Launcher.log" ).string().c_str() );
+        MT_FileLogger fileLogger( bfs::path( path.parent_path() / "Launcher.log" ).string().c_str(), 1, -1, MT_Logger_ABC::eLogLevel_All );
         MT_LOG_REGISTER_LOGGER( fileLogger );
         LauncherService::Initialize( path );
         LauncherService& service = LauncherService::Instance();

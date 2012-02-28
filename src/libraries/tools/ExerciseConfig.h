@@ -12,6 +12,7 @@
 
 #include "GeneralConfig.h"
 #include <memory>
+#include <map>
 
 namespace xml
 {
@@ -79,15 +80,56 @@ public:
     void SetExerciseName( const std::string& file );
     //@}
 
+    //! @name Types
+    //@{
+    class LogSettings
+    {
+    public:
+        enum eLogLevel
+        {
+            eLogLevel_error,
+            eLogLevel_info,
+            elogLevel_all
+        };
+
+        LogSettings(): logLevel_( elogLevel_all ), maxFiles_( 1 ), maxFileSize_( -1 ), sizeUnit_( eLogSizeType_Lines ) {}
+        void SetLogSettings( int level, int files, int size, const std::string& sizeUnit );
+        unsigned int GetLogLevel() { return static_cast< unsigned int >( logLevel_ ); }
+        unsigned int GetMaxFiles() { return maxFiles_; }
+        int GetMaxSize() { return maxFileSize_; }
+        bool IsSizeInBytes() { return sizeUnit_ == eLogSizeType_Bytes; }
+
+    private:
+        enum eLogSizeType
+        {
+            eLogSizeType_Lines,
+            eLogSizeType_Bytes,
+        };
+        
+        eLogLevel logLevel_;
+        unsigned int maxFiles_;
+        int maxFileSize_;
+        eLogSizeType sizeUnit_;
+    };
+    //@}
+
     //! @name Operations
     //@{
     const Loader_ABC& GetLoader() const;
+    virtual void GetLogSettings( const std::string& field, LogSettings& logSettings );
     //@}
 
 private:
     //! @name Helpers
     //@{
     void ReadExercise( xml::xistream& xis );
+    void ReadLogSettings( const std::string& name, xml::xistream& xis );
+    //@}
+
+protected:
+    //! @name Helpers
+    //@{
+    void SetLogSettings( const std::string& name, int level, int files, int size, const std::string& sizeUnit, bool replace = true );
     //@}
 
 private:
@@ -112,6 +154,7 @@ private:
     std::string population_;
     std::string propagations_;
 
+    std::map< std::string, LogSettings > logSettings_;
     //@}
 };
 
