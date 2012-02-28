@@ -68,9 +68,9 @@ SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */ ,LPSTR lpCm
 
     tools::ExerciseConfig::LogSettings logSettings;
     static_cast< tools::ExerciseConfig* >( startupConfig_.get() )->GetLogSettings( "sim", logSettings );   
-    logger_.reset( new MT_FileLogger( startupConfig_->BuildSessionChildFile( "Sim.log" ).c_str(), logSettings.maxFiles_, logSettings.maxFileSize_, 
-                                        MT_Logger_ABC::ConvertConfigLevel( static_cast< unsigned int >( logSettings.logLevel_ ) ), 
-                                        true, MT_Logger_ABC::eSimulation, true ) );
+    logger_.reset( new MT_FileLogger( startupConfig_->BuildSessionChildFile( "Sim.log" ).c_str(), logSettings.GetMaxFiles(), logSettings.GetMaxSize(), 
+                                        MT_Logger_ABC::ConvertConfigLevel( logSettings.GetLogLevel() ),
+                                        true, MT_Logger_ABC::eSimulation, logSettings.IsSizeInBytes() ) );
     console_.reset( new MT_ConsoleLogger() );
     MT_LOG_REGISTER_LOGGER( *console_ );
     MT_LOG_REGISTER_LOGGER( *logger_ );

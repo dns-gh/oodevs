@@ -12,6 +12,7 @@
 #include "Loader.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push, 0 )
+#include <boost/algorithm/string.hpp>
 #include <boost/program_options.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
@@ -400,33 +401,52 @@ const tools::Loader_ABC& ExerciseConfig::GetLoader() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ExerciseConfig::LogSettings::SetLogSettings
+// Created: MMC 2012-02-27
+// -----------------------------------------------------------------------------
+void ExerciseConfig::LogSettings::SetLogSettings( int level, int files, int size, const std::string& sizeUnit )
+{
+    int maxLevel = static_cast< int >( LogSettings::elogLevel_all ) ;
+    if( level < 0 || level > maxLevel )
+        level = maxLevel;
+    if( files < 1 )
+        files = 1;
+    logLevel_ = static_cast< LogSettings::eLogLevel >( level );
+    maxFiles_= static_cast< unsigned int >( files );
+    maxFileSize_ = size;
+    std::string unit( sizeUnit );
+    boost::algorithm::to_lower( unit );
+    sizeUnit_ = ( unit == "bytes" || unit == "kbytes" || unit == "mbytes" )? eLogSizeType_Bytes : eLogSizeType_Lines;
+    if( unit == "kbytes" )
+        maxFileSize_ *= 1000;
+    else if( unit == "mbytes" )
+        maxFileSize_ *= 1000000;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ExerciseConfig::ReadLogSettings
 // Created: MMC 2012-01-25
 // -----------------------------------------------------------------------------
 void ExerciseConfig::ReadLogSettings( const std::string& name, xml::xistream& xis )
 {
-    LogSettings& setting = logSettings_[ name ];
-    unsigned int logLevel = setting.logLevel_;
+    std::string sizeUnit;
+    int logLevel = -1, files = -1, size = -1;
     xis >> xml::optional >> xml::attribute( "loglevel", logLevel )
-        >> xml::optional >> xml::attribute( "logfiles", setting.maxFiles_  )
-        >> xml::optional >> xml::attribute( "logsize", setting.maxFileSize_ );
-    setting.logLevel_ = static_cast< LogSettings::eLogLevel >( logLevel > 2 ? 2 : logLevel );
+        >> xml::optional >> xml::attribute( "logfiles", files )
+        >> xml::optional >> xml::attribute( "logsize", size )
+        >> xml::optional >> xml::attribute( "sizeunit", sizeUnit);
+    logSettings_[ name ].SetLogSettings( logLevel, files, size, sizeUnit );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ExerciseConfig::SetLogSettings
 // Created: MMC 2012-02-21
 // -----------------------------------------------------------------------------
-void ExerciseConfig::SetLogSettings( const std::string& name, unsigned int level, unsigned int files, int size, bool replace /* = true */ )
+void ExerciseConfig::SetLogSettings( const std::string& name, int level, int files, int size, const std::string& sizeUnit, bool replace /* = true */ )
 {
     std::map< std::string, LogSettings >::iterator it = logSettings_.find( name );
     if( replace || it == logSettings_.end() )
-    {
-        LogSettings& setting = logSettings_[ name ];
-        setting.logLevel_ = static_cast< LogSettings::eLogLevel >( level > 2 ? 2 : level );
-        setting.maxFiles_= files;
-        setting.maxFileSize_ = size;
-    }
+        logSettings_[ name ].SetLogSettings( level, files, size, sizeUnit );
 }
 
 // -----------------------------------------------------------------------------

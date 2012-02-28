@@ -79,8 +79,9 @@ public:
 
     //! @name Types
     //@{
-    struct LogSettings
+    class LogSettings
     {
+    public:
         enum eLogLevel
         {
             eLogLevel_error,
@@ -88,10 +89,24 @@ public:
             elogLevel_all
         };
 
-        LogSettings(): logLevel_( elogLevel_all ) , maxFiles_( 1 ), maxFileSize_( -1 ) {}        
+        LogSettings(): logLevel_( elogLevel_all ), maxFiles_( 1 ), maxFileSize_( -1 ), sizeUnit_( eLogSizeType_Lines ) {}
+        void SetLogSettings( int level, int files, int size, const std::string& sizeUnit );
+        unsigned int GetLogLevel() { return static_cast< unsigned int >( logLevel_ ); }
+        unsigned int GetMaxFiles() { return maxFiles_; }
+        int GetMaxSize() { return maxFileSize_; }
+        bool IsSizeInBytes() { return sizeUnit_ == eLogSizeType_Bytes; }
+
+    private:
+        enum eLogSizeType
+        {
+            eLogSizeType_Lines,
+            eLogSizeType_Bytes,
+        };
+
         eLogLevel logLevel_;
         unsigned int maxFiles_;
         int maxFileSize_;
+        eLogSizeType sizeUnit_;
     };
     //@}
 
@@ -112,7 +127,7 @@ private:
 protected:
     //! @name Helpers
     //@{
-    void SetLogSettings( const std::string& name, unsigned int level, unsigned int files, int size, bool replace = true );
+    void SetLogSettings( const std::string& name, int level, int files, int size, const std::string& sizeUnit, bool replace = true );
     //@}
 
 private:

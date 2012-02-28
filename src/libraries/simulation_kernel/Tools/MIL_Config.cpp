@@ -201,7 +201,8 @@ void MIL_Config::ReadCheckPointConfiguration( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_Config::ReadDebugConfiguration( xml::xistream& xis )
 {
-    int level = -1, files = 1, fileSize = -1;
+    std::string sizeUnit;
+    int level = -1, files = -1, fileSize = -1;
     xis >> xml::start( "debug" )
             >> xml::attribute( "decisional", bUseDecDebug_ )
             >> xml::attribute( "pathfind", bUsePathDebug_ )
@@ -212,13 +213,14 @@ void MIL_Config::ReadDebugConfiguration( xml::xistream& xis )
             >> xml::optional >> xml::attribute( "loglevel", level )
             >> xml::optional >> xml::attribute( "logfiles", files )
             >> xml::optional >> xml::attribute( "logsize", fileSize )
+            >> xml::optional >> xml::attribute( "sizeunit", sizeUnit )
         >> xml::end;
     if( bUseDiaDebugger_ && !diaDebuggerPort_ )
         throw std::exception( "DIA debug server activated but no debugger port specified!" );
     if( bUseNetworkLogger_ && !networkLoggerPort_ )
         throw std::exception( "Network logger activated but no port specified!" );
-    if( level >= 0 )
-        SetLogSettings( "sim", static_cast< unsigned int >( level ), static_cast< unsigned int >( files ), fileSize, false );
+    if( level >= 0 || files >=0 || fileSize >= 0 )
+        SetLogSettings( "sim", level, files, fileSize, sizeUnit, false );
 }
 
 // -----------------------------------------------------------------------------
