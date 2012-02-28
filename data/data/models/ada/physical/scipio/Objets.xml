@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<objects model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/physical/Objects.xsd">
+<objects model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.0.0/physical/Objects.xsd">
   <object name="bouchon mines" type="mines">
     <geometries>
       <geometry symbol="G*MPOMC---****X" type="point"/>
@@ -620,4 +620,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="1638949521" -->
+<!-- signature="1009324557" -->

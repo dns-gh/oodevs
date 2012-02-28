@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<weapons model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/physical/WeaponSystems.xsd">
+<weapons model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.0.0/physical/WeaponSystems.xsd">
   <weapon-system launcher="Mitrailleuse ALAT M621" munition="CART 20 AME 621">
     <burst duration="2s" munition="8"/>
     <reloading duration="30s" munition="240"/>
@@ -3353,4 +3353,4 @@
     <indirect-fire average-speed="1300" max-range="28000" min-range="4200"/>
   </weapon-system>
 </weapons>
-<!-- signature="3942970492" -->
+<!-- signature="3930521588" -->

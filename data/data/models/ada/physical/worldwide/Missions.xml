@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<missions model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/physical/Missions.xsd">
+<missions model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.0.0/physical/Missions.xsd">
   <units>
     <mission dia-behavior="MIS_Pion_SoutenirEnMesureDe" dia-type="T_Mission_Pion_SoutenirEnMesureDe" id="1" name="COMMON - prepare to">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3572,4 +3572,4 @@ A urban block won't be hit (unit cannot launch projectile) if agent doesn't have
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="0108634339" -->
+<!-- signature="3479959754" -->

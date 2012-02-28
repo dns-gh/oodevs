@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<templates model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/physical/UrbanTemplates.xsd">
+<templates model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.0.0/physical/UrbanTemplates.xsd">
   <template name="Bidonville">
     <architecture floor-number="1" height="3" material="Torchis" occupation="0.1" parking-floors="0" roof-shape="Aucun" trafficability="100"/>
     <color alpha="1" blue="0" green="85" red="0"/>
@@ -59,4 +59,4 @@
     </usages>
   </template>
 </templates>
-<!-- signature="0696190647" -->
+<!-- signature="2379754246" -->
