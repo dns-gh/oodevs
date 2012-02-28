@@ -78,6 +78,14 @@
         <source>Launch Terrain Workshop application</source>
         <translation>Démarrage de l&apos;Atelier Terrain</translation>
     </message>
+    <message>
+        <source>Data</source>
+        <translation>Données</translation>
+    </message>
+    <message>
+        <source>Remove Terrains and Models</source>
+        <translation>Supprimer des terrains et des modèles</translation>
+    </message>
 </context>
 <context>
     <name>BattleCenterJoinPage</name>
@@ -187,6 +195,29 @@
     <message>
         <source>Starting terrain creation</source>
         <translation>Démarrage de la création de terrain</translation>
+    </message>
+</context>
+<context>
+    <name>DataPage</name>
+    <message>
+        <source>Data</source>
+        <translation>Données</translation>
+    </message>
+    <message>
+        <source>Terrains</source>
+        <translation>Terrains</translation>
+    </message>
+    <message>
+        <source>Models</source>
+        <translation>Modèles</translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation>Supprimer</translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete?</source>
+        <translation>Etes-vous sur de vouloir supprimer?</translation>
     </message>
 </context>
 <context>
