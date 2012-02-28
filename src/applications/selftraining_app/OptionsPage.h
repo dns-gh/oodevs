@@ -36,7 +36,7 @@ private slots:
     //@{
     void OnChangeLanguage( const QString& lang );
     void OnChangeDataDirectory();
-    void OnEditDataDirectory();
+    void OnEditDataDirectory( const QString& text );
     virtual void OnApply();
     virtual void OnBack();
     //@}
@@ -47,6 +47,7 @@ private:
     virtual void OnLanguageChanged();
     void Reset();
     void Commit();
+    void CreateDataDirectory();
     //@}
 
     //! @name Types
