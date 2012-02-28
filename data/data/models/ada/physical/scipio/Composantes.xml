@@ -69,7 +69,7 @@
       <breakdown origin="random" percentage="100" type="Panne DIV NTI3"/>
       <breakdown origin="attrition" percentage="100" type="Panne DIV NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>AVVF = Aviation à Voilure Fixe</equipment-category>
   </equipment>
   <equipment codeEMAT6="502913" codeEMAT8="50291301" codeLFRIL="" codeNNO="1905144977353" comment="Chaland debarquement Infanterie Chars" id="2" name="CDIC" protection="TransportBlinde" size="Gros" weight="1000">
     <speeds max="60">
@@ -138,7 +138,7 @@
       <breakdown origin="random" percentage="100" type="Panne DIV NTI3"/>
       <breakdown origin="attrition" percentage="100" type="Panne DIV NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>EQFCHT = Equipement de Franchissment</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="S37911K1" codeLFRIL="" codeNNO="5180143740230" comment="" id="3" max-slope="0.6" name="Vedette" protection="TransportBlinde" size="Gros" weight="1000">
     <speeds max="90">
@@ -214,7 +214,7 @@
       <breakdown origin="random" percentage="100" type="Panne DIV NTI3"/>
       <breakdown origin="attrition" percentage="100" type="Panne DIV NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>EQFCHT = Equipement de Franchissment</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="4" max-slope="0.6" name="Individu" protection="Combattant" size="Personnel" weight="0.5">
     <speeds max="8">
@@ -268,7 +268,7 @@
     <weapon-systems/>
     <human-protections/>
     <objects/>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="113223" codeEMAT8="113223N1" codeLFRIL="" codeNNO="1005145033999" comment="" id="5" name="Fantassin + FAMAS 5.56 INF" protection="Combattant" size="Personnel" weight="0.08">
     <speeds max="6">
@@ -342,7 +342,7 @@
       <object initial-destruction-time="1800s" type="mortar deployment area"/>
       <object initial-destruction-time="1800s" type="cobra deployment area"/>
     </objects>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="114021" codeEMAT8="114021N1" codeLFRIL="" codeNNO="1005145647513" comment="" id="6" name="Fantassin + AA 5.56 MINIMI FELIN" protection="Combattant" size="Personnel" weight="0.08">
     <speeds max="6">
@@ -402,7 +402,7 @@
     </weapon-systems>
     <human-protections/>
     <objects/>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="168511" codeEMAT8="16851102" codeLFRIL="" codeNNO="1410144904806" comment="Missile antichar portable tres courte portee" id="7" name="Equipe + ARM A C C P ERYX MLE F1" protection="Combattant" size="Personnel" weight="0.3">
     <speeds max="6">
@@ -466,7 +466,7 @@
       <object bypass-gain-factor="1" bypassed-speed="1" construction-time-factor="60s" destruction-time-factor="0s" initial-construction-time="180s" initial-destruction-time="0s" non-bypassed-speed="5" type="abattis"/>
       <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="60s" destruction-time-factor="180s" devalorization-time="45s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="mines" valorization-time="45s"/>
     </objects>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="11313301" codeLFRIL="" codeNNO="" comment="" id="8" name="Tireur Precision + FRF2" protection="Combattant" size="Personnel" weight="0.08">
     <speeds max="6">
@@ -526,7 +526,7 @@
     </weapon-systems>
     <human-protections/>
     <objects/>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="A35201" codeEMAT8="A3520101" codeLFRIL="" codeNNO="6910145028920" comment="Missile antichar courte portee" id="9" name="Equipe + POST TIR MILAN" protection="Combattant" size="Personnel" weight="0.4">
     <speeds max="6">
@@ -588,7 +588,7 @@
     </weapon-systems>
     <human-protections/>
     <objects/>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="169230" codeEMAT8="16923001" codeLFRIL="" codeNNO="1440144892481" comment="Missile SOL AIR tres courte portee" id="10" max-slope="0.6" name="VLRA + PLATE FORME DE TIR MISTRAL" protection="VehiculeNonProtege" size="Petit" weight="2.1">
     <speeds max="70">
@@ -708,7 +708,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="48" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>MISGAC = Missile guidé antichar</equipment-category>
   </equipment>
   <equipment codeEMAT6="S04371" codeEMAT8="S04371K1" codeLFRIL="" codeNNO="5180145020887" comment="Cabine Roland - Systeme Roland" id="11" max-slope="0.6" name="Tracteur CAROL" protection="VehiculeNonProtege" size="Petit" weight="2.1">
     <speeds max="100">
@@ -1053,7 +1053,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne ALAT 16"/>
       <breakdown origin="attrition" percentage="50" type="Panne ALAT NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>HARM = Hélicoptère Antichar/d'assaut/d'arme</equipment-category>
   </equipment>
   <equipment codeEMAT6="200533" codeEMAT8="20053302" codeLFRIL="" codeNNO="1520145478025" comment="Gazelle SA 342 - Missiles MISTRAL" id="14" max-slope="1" name="Gazelle HA MISTRAL" protection="Aeronef" size="Petit" weight="2.1">
     <speeds max="240">
@@ -1155,7 +1155,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne ALAT 16"/>
       <breakdown origin="attrition" percentage="50" type="Panne ALAT NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>HARM = Hélicoptère Antichar/d'assaut/d'arme</equipment-category>
   </equipment>
   <equipment codeEMAT6="200535" codeEMAT8="20053501" codeLFRIL="" codeNNO="1520145339228" comment="Tigre" id="15" max-slope="1" name="Tigre" protection="Aeronef" size="Petit" weight="2.1">
     <speeds max="240">
@@ -1239,7 +1239,7 @@
       <breakdown origin="random" percentage="100" type="Panne DIV NTI3"/>
       <breakdown origin="attrition" percentage="100" type="Panne DIV NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>HARM = Hélicoptère Antichar/d'assaut/d'arme</equipment-category>
   </equipment>
   <equipment codeEMAT6="200532" codeEMAT8="20053201" codeLFRIL="" codeNNO="1520144904863" comment="Gazelle SA 342 - Cannon 20 mm" id="16" max-slope="1" name="Gazelle HAC CN20" protection="Aeronef" size="Petit" weight="2">
     <speeds max="240">
@@ -1341,7 +1341,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne ALAT 16"/>
       <breakdown origin="attrition" percentage="50" type="Panne ALAT NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>HARM = Hélicoptère Antichar/d'assaut/d'arme</equipment-category>
   </equipment>
   <equipment codeEMAT6="287090" codeEMAT8="28709010" codeLFRIL="" codeNNO="2350145319984" comment="" id="17" max-slope="0.6" name="Char LECLERC" protection="Composite" size="Gros" weight="54">
     <speeds max="70">
@@ -1488,7 +1488,7 @@
       <breakdown origin="attrition" percentage="1" type="Panne TCT 10"/>
       <breakdown origin="attrition" percentage="7" type="Panne TCT NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>CHABAT = Char de Bataille</equipment-category>
     <operational-information information-origin="Jane's" native-country="France" starting-country="France, EAU" starting-date="1992-01-01"/>
   </equipment>
   <equipment codeEMAT6="200742" codeEMAT8="20014202" codeLFRIL="" codeNNO="1520145478019" comment="Helicoptere de transport" id="18" max-slope="1" name="Puma HM" protection="Aeronef" size="Moyen" weight="5.5">
@@ -1595,7 +1595,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne ALAT 16"/>
       <breakdown origin="attrition" percentage="50" type="Panne ALAT NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>HT = Hélicoptère de Transport</equipment-category>
   </equipment>
   <equipment codeEMAT6="289490" codeEMAT8="28949001" codeLFRIL="" codeNNO="2350144905454" comment="Char de deminage" id="19" max-slope="0.6" name="Char AMX 30 B2 DT" protection="CharLourd" size="Gros" weight="34">
     <speeds max="60">
@@ -1712,7 +1712,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 EB Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 EB Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>CHABAT = Char de Bataille</equipment-category>
   </equipment>
   <equipment codeEMAT6="575911" codeEMAT8="57591101" codeLFRIL="" codeNNO="1398145071140" comment="Disperseur de mines antichar courte portee modele F1" id="20" max-slope="0.6" name="MINOTAURE" protection="VehiculeNonProtege" size="Moyen" weight="17">
     <speeds max="80">
@@ -1826,7 +1826,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="289390" codeEMAT8="28939001" codeLFRIL="" codeNNO="2350143676551" comment="Engin blinde du genie" id="21" max-slope="0.6" name="EBG" protection="CharMoyen" size="Gros" weight="42">
     <speeds max="65">
@@ -1952,7 +1952,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 EB Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 EB Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>BLIND = Blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="508711" codeEMAT8="50871101" codeLFRIL="" codeNNO="2320144838911" comment="Engin de franchissement de l'avant" id="22" max-slope="0.6" name="EFA" protection="VehiculeNonProtege" size="Gros" weight="44">
     <speeds max="60">
@@ -2064,7 +2064,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="535411" codeEMAT8="53541101" codeLFRIL="" codeNNO="3805144822866" comment="Engine multifonction d'aide au deploiement" id="23" max-slope="0.6" name="CBH + EMAD" protection="VehiculeNonProtege" size="Gros" weight="45">
     <speeds max="80">
@@ -2186,7 +2186,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="576017" codeEMAT8="57601701" codeLFRIL="" codeNNO="1398145013476" comment="" id="24" max-slope="0.6" name="Enfouisseur Mines" protection="VehiculeNonProtege" size="Moyen" weight="16">
     <speeds max="80">
@@ -2303,7 +2303,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="576312" codeEMAT8="57631201" codeLFRIL="" codeNNO="1075145013478" comment="Materiel aerotransportable de depollution de zone" id="25" max-slope="0.6" name="MADEZ" protection="VehiculeNonProtege" size="Moyen" weight="14">
     <speeds max="28">
@@ -2416,7 +2416,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="520813" codeEMAT8="52081201" codeLFRIL="" codeNNO="3820143630755" comment="Moyen de forage rapide et de destruction de modele F1" id="26" max-slope="0.6" name="MFRD" protection="VehiculeNonProtege" size="Moyen" weight="17">
     <speeds max="75">
@@ -2531,7 +2531,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="507214" codeEMAT8="50721401" codeLFRIL="" codeNNO="2320143630731" comment="Moyen leger de franchissement" id="27" max-slope="0.6" name="MLF" protection="VehiculeNonProtege" size="Moyen" weight="11">
     <speeds max="80">
@@ -2643,7 +2643,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>EQFCHT = Equipement de Franchissment</equipment-category>
   </equipment>
   <equipment codeEMAT6="535230" codeEMAT8="53523001" codeLFRIL="" codeNNO="3805143630848" comment="Moyen polyvalent du genie type tracto-chargeur" id="28" max-slope="0.6" name="MPG" protection="VehiculeNonProtege" size="Moyen" weight="23">
     <speeds max="55">
@@ -2762,7 +2762,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="525011" codeEMAT8="52501101" codeLFRIL="" codeNNO="3805142913277" comment="Excavateur leger aerotransportable de modele F1" id="29" max-slope="0.6" name="NX 7" protection="VehiculeNonProtege" size="Moyen" weight="15">
     <speeds max="65">
@@ -2883,7 +2883,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="508514" codeEMAT8="50851401" codeLFRIL="" codeNNO="2320145019187" comment="Pont automoteur d'accompagnement" id="30" max-slope="0.6" name="PAA" protection="VehiculeNonProtege" size="Gros" weight="34">
     <speeds max="60">
@@ -2997,7 +2997,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="S4452701" codeLFRIL="" codeNNO="1740145312432" comment="Systeme d'ouverture d'itineraire mine sur VTL G290" id="31" max-slope="0.6" name="SOUVIM" protection="VehiculeNonProtege" size="Moyen" weight="15">
     <speeds max="60">
@@ -3110,7 +3110,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="520023" codeEMAT8="52002301" codeLFRIL="" codeNNO="2410143630746" comment="Tracteur Niveleur" id="32" max-slope="0.6" name="Tracteur Niveleur" protection="VehiculeNonProtege" size="Moyen" weight="7">
     <speeds max="90">
@@ -3230,7 +3230,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="281590" codeEMAT8="28159024" codeLFRIL="" codeNNO="2320145214513" comment="" id="33" max-slope="0.6" name="VAB GEN 12,7" protection="TransportBlinde" size="Moyen" weight="13">
     <speeds max="80">
@@ -3367,7 +3367,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 EB Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 EB Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VTT = Véhicule blindé transport de troupes</equipment-category>
   </equipment>
   <equipment codeEMAT6="285891" codeEMAT8="28589101" codeLFRIL="" codeNNO="2350145214558" comment="" id="34" max-slope="0.6" name="AMX 10 RC" protection="CharMoyen" size="Moyen" weight="17">
     <speeds max="90">
@@ -3516,7 +3516,7 @@
       <breakdown origin="attrition" percentage="1" type="Panne TCT 10"/>
       <breakdown origin="attrition" percentage="7" type="Panne TCT NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>CHABAT = Char de Bataille</equipment-category>
   </equipment>
   <equipment codeEMAT6="246375" codeEMAT8="24637501" codeLFRIL="" codeNNO="2320145214476" comment="" id="35" max-slope="0.6" name="VBL 12,7" protection="BlindeLeger" size="Petit" weight="4">
     <speeds max="90">
@@ -3627,7 +3627,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 EB Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 EB Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VCD = Véhicule de Commandement</equipment-category>
   </equipment>
   <equipment codeEMAT6="246001" codeEMAT8="24600101" codeLFRIL="" codeNNO="2320144902692" comment="" id="36" name="VBL 7,62" protection="BlindeLeger" size="Petit" weight="4">
     <speeds max="90">
@@ -3740,7 +3740,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 EB Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 EB Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VCD = Véhicule de Commandement</equipment-category>
   </equipment>
   <equipment codeEMAT6="281190" codeEMAT8="28119006" codeLFRIL="" codeNNO="2320145246804" comment="" id="37" name="VAB CN 20mm" protection="TransportBlinde" size="Moyen" weight="15">
     <speeds max="90">
@@ -3876,7 +3876,7 @@
       <breakdown origin="attrition" percentage="1" type="Panne TCT 10"/>
       <breakdown origin="attrition" percentage="8" type="Panne TCT NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VTT = Véhicule blindé transport de troupes</equipment-category>
   </equipment>
   <equipment codeEMAT6="280090" codeEMAT8="28009023" codeLFRIL="" codeNNO="2355145497479" comment="" id="38" name="VAB 12,7" protection="TransportBlinde" size="Moyen" weight="14">
     <speeds max="80">
@@ -3996,7 +3996,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 EB Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 EB Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VTT = Véhicule blindé transport de troupes</equipment-category>
   </equipment>
   <equipment codeEMAT6="281890" codeEMAT8="281890L6" codeLFRIL="" codeNNO="2320144905195" comment="" id="39" name="VAB HOT" protection="TransportBlinde" size="Moyen" weight="14">
     <speeds max="80">
@@ -4141,7 +4141,7 @@
       <breakdown origin="attrition" percentage="1" type="Panne TCT 10"/>
       <breakdown origin="attrition" percentage="7" type="Panne TCT NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>MISGAC = Missile guidé antichar</equipment-category>
   </equipment>
   <equipment codeEMAT6="270109" codeEMAT8="27010901" codeLFRIL="" codeNNO="2320145437095" comment="Vehicule Blinde Sanitaire (VAB)" id="40" max-slope="0.6" name="VSB" protection="TransportBlinde" size="Moyen" weight="14">
     <speeds max="60">
@@ -4252,7 +4252,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VTT = Véhicule blindé transport de troupes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="41" max-slope="0.6" name="Poste Secours" protection="VehiculeNonProtege" size="Petit" weight="5">
     <speeds max="90">
@@ -4471,7 +4471,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="244911" codeEMAT8="24491101" codeLFRIL="" codeNNO="2320144902668" comment="" id="43" max-slope="0.6" name="TRM 4000 12.7" protection="VehiculeNonProtege" size="Moyen" weight="8">
     <speeds max="90">
@@ -4583,7 +4583,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VUT = Véhicule utilitaire</equipment-category>
   </equipment>
   <equipment codeEMAT6="263114" codeEMAT8="26311401" codeLFRIL="" codeNNO="2320144905297" comment="Vehicule de depannage leger" id="44" max-slope="0.6" name="Lot 7" protection="VehiculeNonProtege" size="Gros" weight="5">
     <speeds max="90">
@@ -4693,7 +4693,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="298811" codeEMAT8="29881101" codeLFRIL="" codeNNO="2330144905511" comment="Porte engin blinde" id="45" max-slope="0.6" name="PEB" protection="VehiculeNonProtege" size="Gros" weight="30">
     <speeds max="90">
@@ -4805,7 +4805,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="788030" codeEMAT8="788030k1" codeLFRIL="" codeNNO="5411145037018" comment="" id="46" max-slope="0.6" name="PL PC" protection="VehiculeNonProtege" size="Moyen" weight="8">
     <speeds max="90">
@@ -4920,7 +4920,7 @@
       <breakdown origin="attrition" percentage="48" type="Panne MOB NTI3 Evac"/>
       <breakdown origin="attrition" percentage="3" type="Panne MOB 12 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="242377" codeEMAT8="24237702" codeLFRIL="" codeNNO="2320145454732" comment="" id="47" max-slope="0.6" name="TRM 2000 12,7" protection="VehiculeNonProtege" size="Moyen" weight="6">
     <speeds max="90">
@@ -5032,7 +5032,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VUT = Véhicule utilitaire</equipment-category>
   </equipment>
   <equipment codeEMAT6="244620" codeEMAT8="24462001" codeLFRIL="" codeNNO="2320143708220" comment="" id="48" max-slope="0.6" name="TRM 10000 12,7" protection="VehiculeNonProtege" size="Gros" weight="21">
     <speeds max="90">
@@ -5146,7 +5146,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VUT = Véhicule utilitaire</equipment-category>
   </equipment>
   <equipment codeEMAT6="245319" codeEMAT8="24531901" codeLFRIL="" codeNNO="2320144902681" comment="Camion Benne" id="49" max-slope="0.6" name="CBH 320" protection="VehiculeNonProtege" size="Gros" weight="26">
     <speeds max="90">
@@ -5264,7 +5264,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="526311" codeEMAT8="52631101" codeLFRIL="" codeNNO="3810145013356" comment="Pelle hydraulique" id="50" max-slope="0.6" name="SRQ + PH 688" protection="VehiculeNonProtege" size="Gros" weight="14">
     <speeds max="90">
@@ -5382,7 +5382,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="520147" codeEMAT8="52014701" codeLFRIL="" codeNNO="2410143630748" comment="Tracteur niveleur" id="51" max-slope="0.6" name="CBH + TN D6 D" protection="VehiculeNonProtege" size="Gros" weight="30">
     <speeds max="75">
@@ -5507,7 +5507,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="520415" codeEMAT8="52041501" codeLFRIL="" codeNNO="3805143197561" comment="Niveleuse" id="52" max-slope="0.6" name="CBH + FG 75 A" protection="VehiculeNonProtege" size="Gros" weight="13">
     <speeds max="90">
@@ -5626,7 +5626,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="281990" codeEMAT8="28199041" codeLFRIL="" codeNNO="2320144905260" comment="" id="53" max-slope="0.6" name="VAB Reco NBC" protection="TransportBlinde" size="Moyen" weight="15">
     <speeds max="90">
@@ -5738,7 +5738,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 EB Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 EB Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>EQCHIM = Equipement Chimique</equipment-category>
   </equipment>
   <equipment codeEMAT6="493512" codeEMAT8="49351201" codeLFRIL="" codeNNO="2320144977392" comment="" id="54" max-slope="0.6" name="VLRA NBC GLD F2 11" protection="BlindeLeger" size="Moyen" weight="4">
     <speeds max="90">
@@ -5847,7 +5847,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>EQCHIM = Equipement Chimique</equipment-category>
   </equipment>
   <equipment codeEMAT6="281990" codeEMAT8="281990D1" codeLFRIL="" codeNNO="2355145455530" comment="" id="55" max-slope="0.6" name="VAB NBC ROTA" protection="TransportBlinde" size="Moyen" weight="14">
     <speeds max="90">
@@ -5957,7 +5957,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 EB Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 EB Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>EQCHIM = Equipement Chimique</equipment-category>
   </equipment>
   <equipment codeEMAT6="280490" codeEMAT8="28049041" codeLFRIL="" codeNNO="2320144905103" comment="Vehicule d'implantation topographique" id="56" max-slope="0.6" name="VAB VIT" protection="BlindeLeger" size="Moyen" weight="14">
     <speeds max="80">
@@ -6073,7 +6073,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 EB Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 EB Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VTT = Véhicule blindé transport de troupes</equipment-category>
   </equipment>
   <equipment codeEMAT6="A426H1" codeEMAT8="A426H101" codeLFRIL="" codeNNO="2350145357309" comment="Canon automoteur de 155 mm sur AMX30 B2" id="57" max-slope="0.6" name="Char AUF1" protection="CharLourd" size="Gros" weight="44">
     <speeds max="50">
@@ -6214,7 +6214,7 @@
       <breakdown origin="attrition" percentage="1" type="Panne TCT 10"/>
       <breakdown origin="attrition" percentage="8" type="Panne TCT NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>CAN = Canon</equipment-category>
   </equipment>
   <equipment codeEMAT6="164201" codeEMAT8="16420101" codeLFRIL="" codeNNO="1025140312257" comment="Canon tracte 155 mm par TRM 10000" id="58" max-slope="0.6" name="Canon TRF1" protection="VehiculeNonProtege" size="Petit" weight="8">
     <speeds max="50">
@@ -6334,7 +6334,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>CAN = Canon</equipment-category>
   </equipment>
   <equipment codeEMAT6="288990" codeEMAT8="28899001" codeLFRIL="" codeNNO="2350145184055" comment="Lance roquette multiple" id="59" max-slope="0.6" name="LRM" protection="CharLourd" size="Gros" weight="45">
     <speeds max="50">
@@ -6463,7 +6463,7 @@
       <breakdown origin="attrition" percentage="1" type="Panne TCT 10"/>
       <breakdown origin="attrition" percentage="8" type="Panne TCT NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>MISSS = Missile sol-sol</equipment-category>
   </equipment>
   <equipment codeEMAT6="739302" codeEMAT8="73930201" codeLFRIL="" codeNNO="5840123610517" comment="" id="60" max-slope="0.6" name="Radar COBRA" protection="VehiculeNonProtege" size="Moyen" weight="10">
     <speeds max="50">
@@ -6581,7 +6581,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="48" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>ACQOBJ = Acquisiton d'objectif</equipment-category>
   </equipment>
   <equipment codeEMAT6="282390" codeEMAT8="28239001" codeLFRIL="" codeNNO="2320144905286" comment="" id="61" max-slope="0.6" name="VAB RATAC" protection="TransportBlinde" size="Moyen" weight="15">
     <speeds max="100">
@@ -6711,7 +6711,7 @@
       <breakdown origin="attrition" percentage="1" type="Panne MOB 2 EB Evac"/>
       <breakdown origin="attrition" percentage="1" type="Panne MOB 7 EB"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>ACQOBJ = Acquisiton d'objectif</equipment-category>
   </equipment>
   <equipment codeEMAT6="246490" codeEMAT8="24649083" codeLFRIL="" codeNNO="2320145078218" comment="VBL Commandement" id="62" name="VBL CDT" protection="BlindeLeger" size="Petit" weight="4">
     <speeds max="80">
@@ -6834,7 +6834,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 EB Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 EB Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VCD = Véhicule de Commandement</equipment-category>
   </equipment>
   <equipment codeEMAT6="244217" codeEMAT8="24421701" codeLFRIL="" codeNNO="2320145449848" comment="VTL R avec remorque" id="63" max-slope="0.6" name="VTL R Remorque" protection="VehiculeNonProtege" size="Gros" weight="15">
     <speeds max="70">
@@ -6946,7 +6946,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VUT = Véhicule utilitaire</equipment-category>
   </equipment>
   <equipment codeEMAT6="189001" codeEMAT8="18900101" codeLFRIL="" codeNNO="1550145377975" comment="" id="64" max-slope="1" name="Drone SDTI" protection="Aeronef" size="Drone" weight="0.2">
     <speeds max="180">
@@ -7004,7 +7004,7 @@
       <breakdown origin="random" percentage="100" type="Panne DIV NTI3"/>
       <breakdown origin="attrition" percentage="100" type="Panne DIV NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>ALT = Aérodyne léger télépiloté</equipment-category>
   </equipment>
   <equipment codeEMAT6="185010" codeEMAT8="18501001" codeLFRIL="" codeNNO="1550219048739" comment="" id="65" max-slope="1" name="Drone CL 289" protection="Aeronef" size="Petit" weight="0.08">
     <speeds max="700">
@@ -7062,7 +7062,7 @@
       <breakdown origin="random" percentage="100" type="Panne DIV NTI3"/>
       <breakdown origin="attrition" percentage="100" type="Panne DIV NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>ALT = Aérodyne léger télépiloté</equipment-category>
   </equipment>
   <equipment codeEMAT6="212016" codeEMAT8="21201601" codeLFRIL="" codeNNO="2340144904932" comment="Moto appartenant au regiment blinde de recherche de renseignement" id="66" name="Moto CAGIVA 350" protection="VehiculeNonProtege" size="Petit" weight="0.2">
     <speeds max="60">
@@ -7147,7 +7147,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne MOB 6"/>
       <breakdown origin="attrition" percentage="69" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="283890" codeEMAT8="283890D1" codeLFRIL="" codeNNO="2320145418704" comment="" id="67" max-slope="0.6" name="VAB RASIT" protection="TransportBlinde" size="Moyen" weight="15">
     <speeds max="60">
@@ -7267,7 +7267,7 @@
       <breakdown origin="attrition" percentage="1" type="Panne MOB 2 EB Evac"/>
       <breakdown origin="attrition" percentage="1" type="Panne MOB 7 EB"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>ACQOBJ = Acquisiton d'objectif</equipment-category>
   </equipment>
   <equipment codeEMAT6="281490" codeEMAT8="281490A1" codeLFRIL="" codeNNO="2355145455515" comment="" id="68" max-slope="0.6" name="VAB BROMURE" protection="TransportBlinde" size="Moyen" weight="14">
     <speeds max="90">
@@ -7378,7 +7378,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 EB Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 EB Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VTT = Véhicule blindé transport de troupes</equipment-category>
   </equipment>
   <equipment codeEMAT6="222306" codeEMAT8="22230601" codeLFRIL="" codeNNO="2355144904972" comment="" id="69" max-slope="0.6" name="VTC P4 Circu CDT" protection="VehiculeNonProtege" size="Petit" weight="1">
     <speeds max="140">
@@ -7502,7 +7502,7 @@
       <breakdown origin="attrition" percentage="48" type="Panne MOB NTI3 Evac"/>
       <breakdown origin="attrition" percentage="3" type="Panne MOB 12 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="535231" codeEMAT8="53523101" codeLFRIL="" codeNNO="3805145230280" comment="Tracteur chargeur" id="70" max-slope="0.6" name="CBH + TC 821 C" protection="VehiculeNonProtege" size="Gros" weight="17">
     <speeds max="90">
@@ -7623,7 +7623,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="283190" codeEMAT8="28319008" codeLFRIL="" codeNNO="2320145246932" comment="" id="71" max-slope="0.6" name="VAB VOA" protection="BlindeLeger" size="Moyen" weight="14">
     <speeds max="80">
@@ -7735,7 +7735,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 EB Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 EB Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>ACQOBJ = Acquisiton d'objectif</equipment-category>
   </equipment>
   <equipment codeEMAT6="246215" codeEMAT8="24621501" codeLFRIL="" codeNNO="2320144905022" comment="" id="72" max-slope="0.6" name="VBL MILAN" protection="BlindeLeger" size="Petit" weight="4">
     <speeds max="90">
@@ -7849,7 +7849,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 EB Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 EB Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>MISGAC = Missile guidé antichar</equipment-category>
   </equipment>
   <equipment codeEMAT6="282990" codeEMAT8="28299002" codeLFRIL="" codeNNO="2355145494182" comment="" id="73" max-slope="0.6" name="ERC 90" protection="BlindeLeger" size="Moyen" weight="7">
     <speeds max="90">
@@ -7990,7 +7990,7 @@
       <breakdown origin="attrition" percentage="1" type="Panne TCT 10"/>
       <breakdown origin="attrition" percentage="8" type="Panne TCT NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>CHALEG = Char Léger</equipment-category>
   </equipment>
   <equipment codeEMAT6="200820" codeEMAT8="20082001" codeLFRIL="" codeNNO="1520144904870" comment="Cougar Rens RADINT" id="74" max-slope="1" name="Cougar Horizon" protection="Aeronef" size="Moyen" weight="12">
     <speeds max="240">
@@ -8063,7 +8063,7 @@
       <breakdown origin="random" percentage="100" type="Panne DIV NTI3"/>
       <breakdown origin="attrition" percentage="100" type="Panne DIV NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>HLO = Hélicoptère Léger d'observation</equipment-category>
   </equipment>
   <equipment codeEMAT6="521911" codeEMAT8="52191101" codeLFRIL="" codeNNO="5680144511491" comment="" id="75" max-slope="0.6" name="TRM 10000 MATS" protection="VehiculeNonProtege" size="Moyen" weight="25">
     <speeds max="75">
@@ -8174,7 +8174,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="535013" codeEMAT8="53501301" codeLFRIL="" codeNNO="3805010645181" comment="Tracteur chargeur" id="76" max-slope="0.6" name="TC 910" protection="VehiculeNonProtege" size="Gros" weight="17">
     <speeds max="90">
@@ -8294,7 +8294,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="52851101" codeLFRIL="" codeNNO="3805143801986" comment="" id="77" max-slope="0.6" name="Dumper TWAITES" protection="CharMoyen" size="Moyen" weight="12">
     <speeds max="90">
@@ -8411,7 +8411,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>BLIND = Blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="537213" codeEMAT8="53721301" codeLFRIL="" codeNNO="3895145013435" comment="" id="78" max-slope="0.6" name="Compacteur CB 434" protection="VehiculeNonProtege" size="Petit" weight="13">
     <speeds max="90">
@@ -8531,7 +8531,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="520415" codeEMAT8="52042201" codeLFRIL="" codeNNO="3805145373650" comment="" id="79" max-slope="0.6" name="Niveleuse" protection="VehiculeNonProtege" size="Moyen" weight="3">
     <speeds max="60">
@@ -8651,7 +8651,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="535268" codeEMAT8="53526801" codeLFRIL="" codeNNO="3805155013429" comment="Tracteur chargeur" id="80" max-slope="0.6" name="TC ALHMANN" protection="VehiculeNonProtege" size="Gros" weight="17">
     <speeds max="90">
@@ -8771,7 +8771,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="719408K1" codeLFRIL="" codeNNO="8045145416240" comment="" id="81" max-slope="0.6" name="Eqp CMAI" protection="VehiculeNonProtege" size="Gros" weight="15">
     <speeds max="70">
@@ -8878,7 +8878,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="659711" codeEMAT8="659711k1" codeLFRIL="" codeNNO="5820145241037" comment="" id="82" max-slope="0.6" name="Station CHF" protection="VehiculeNonProtege" size="Gros" weight="6">
     <speeds max="80">
@@ -8993,7 +8993,7 @@
       <breakdown origin="attrition" percentage="48" type="Panne MOB NTI3 Evac"/>
       <breakdown origin="attrition" percentage="3" type="Panne MOB 12 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>ANT = Antenne</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="669410K1" codeLFRIL="" codeNNO="5895145395043" comment="Station Trans" id="83" max-slope="0.6" name="ARISTOTE" protection="VehiculeNonProtege" size="Gros" weight="10">
     <speeds max="90">
@@ -9108,7 +9108,7 @@
       <breakdown origin="attrition" percentage="48" type="Panne MOB NTI3 Evac"/>
       <breakdown origin="attrition" percentage="3" type="Panne MOB 12 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>ANT = Antenne</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="84" max-slope="0.6" name="SSI" protection="VehiculeNonProtege" size="Gros" weight="10">
     <speeds max="90">
@@ -9338,7 +9338,7 @@
       <breakdown origin="attrition" percentage="48" type="Panne MOB NTI3 Evac"/>
       <breakdown origin="attrition" percentage="3" type="Panne MOB 12 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>ANT = Antenne</equipment-category>
   </equipment>
   <equipment codeEMAT6="243676" codeEMAT8="24367601" codeLFRIL="" codeNNO="2320144902596" comment="" id="86" max-slope="0.6" name="CART" protection="VehiculeNonProtege" size="Gros" weight="7">
     <speeds max="90">
@@ -9453,7 +9453,7 @@
       <breakdown origin="attrition" percentage="48" type="Panne MOB NTI3 Evac"/>
       <breakdown origin="attrition" percentage="3" type="Panne MOB 12 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>ANT = Antenne</equipment-category>
   </equipment>
   <equipment codeEMAT6="669317" codeEMAT8="669317K1" codeLFRIL="" codeNNO="5820145488661" comment="" id="87" max-slope="0.6" name="Station SATCOM" protection="VehiculeNonProtege" size="Gros" weight="50">
     <speeds max="90">
@@ -9568,7 +9568,7 @@
       <breakdown origin="attrition" percentage="48" type="Panne MOB NTI3 Evac"/>
       <breakdown origin="attrition" percentage="3" type="Panne MOB 12 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>ANT = Antenne</equipment-category>
   </equipment>
   <equipment codeEMAT6="762511" codeEMAT8="76251101" codeLFRIL="" codeNNO="5820145020521" comment="" id="88" max-slope="0.6" name="FH Simple" protection="VehiculeNonProtege" size="Gros" weight="10">
     <speeds max="90">
@@ -9683,7 +9683,7 @@
       <breakdown origin="attrition" percentage="48" type="Panne MOB NTI3 Evac"/>
       <breakdown origin="attrition" percentage="3" type="Panne MOB 12 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>ANT = Antenne</equipment-category>
   </equipment>
   <equipment codeEMAT6="200633" codeEMAT8="20063301" codeLFRIL="" codeNNO="1520143647193" comment="Gazelle VIVANE - RENS" id="89" max-slope="1" name="Helicoptere HAV" protection="Aeronef" size="Petit" weight="2.1">
     <speeds max="240">
@@ -9781,7 +9781,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne ALAT 16"/>
       <breakdown origin="attrition" percentage="50" type="Panne ALAT NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>HLO = Hélicoptère Léger d'observation</equipment-category>
   </equipment>
   <equipment codeEMAT6="169230" codeEMAT8="16923001" codeLFRIL="" codeNNO="1430144673841" comment="" id="90" max-slope="0.6" name="SAT P" protection="VehiculeNonProtege" size="Gros" weight="50">
     <speeds max="90">
@@ -9994,7 +9994,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne ALAT 16"/>
       <breakdown origin="attrition" percentage="50" type="Panne ALAT NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>HLO = Hélicoptère Léger d'observation</equipment-category>
   </equipment>
   <equipment codeEMAT6="768610" codeEMAT8="76861001" codeLFRIL="" codeNNO="5895144673034" comment="VLRA avec PR4G (Roem)" id="92" max-slope="0.6" name="VLRA STAIR" protection="BlindeLeger" size="Moyen" weight="4">
     <speeds max="90">
@@ -10111,7 +10111,7 @@
       <breakdown origin="attrition" percentage="48" type="Panne MOB NTI3 Evac"/>
       <breakdown origin="attrition" percentage="3" type="Panne MOB 12 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>ACQOBJ = Acquisiton d'objectif</equipment-category>
   </equipment>
   <equipment codeEMAT6="768211" codeEMAT8="76821101" codeLFRIL="" codeNNO="5820144864029" comment="VLRA avec PR4G (Roem)" id="93" max-slope="0.6" name="VLRA START" protection="BlindeLeger" size="Moyen" weight="4">
     <speeds max="70">
@@ -10228,7 +10228,7 @@
       <breakdown origin="attrition" percentage="48" type="Panne MOB NTI3 Evac"/>
       <breakdown origin="attrition" percentage="3" type="Panne MOB 12 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>ACQOBJ = Acquisiton d'objectif</equipment-category>
   </equipment>
   <equipment codeEMAT6="282490" codeEMAT8="282490L6" codeLFRIL="" codeNNO="2320145412822" comment="" id="94" max-slope="0.6" name="VAB LINX" protection="TransportBlinde" size="Moyen" weight="13">
     <speeds max="100">
@@ -10351,7 +10351,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 EB Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 EB Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>ACQOBJ = Acquisiton d'objectif</equipment-category>
   </equipment>
   <equipment codeEMAT6="648400" codeEMAT8="648400K1" codeLFRIL="" codeNNO="5820145299494" comment="VLRA Horizon" id="95" max-slope="0.6" name="VLRA Horizon" protection="BlindeLeger" size="Moyen" weight="4">
     <speeds max="90">
@@ -10466,7 +10466,7 @@
       <breakdown origin="attrition" percentage="48" type="Panne MOB NTI3 Evac"/>
       <breakdown origin="attrition" percentage="3" type="Panne MOB 12 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>ACQOBJ = Acquisiton d'objectif</equipment-category>
   </equipment>
   <equipment codeEMAT6="222331" codeEMAT8="22237102" codeLFRIL="" codeNNO="2310144904978" comment="" id="96" max-slope="0.6" name="VTC P4 BROD" protection="VehiculeNonProtege" size="Petit" weight="2">
     <speeds max="100">
@@ -10585,7 +10585,7 @@
       <breakdown origin="attrition" percentage="48" type="Panne MOB NTI3 Evac"/>
       <breakdown origin="attrition" percentage="3" type="Panne MOB 12 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="97" name="Tireur Elite" protection="Combattant" size="Personnel" weight="0.08">
     <speeds max="90">
@@ -10645,7 +10645,7 @@
     </weapon-systems>
     <human-protections/>
     <objects/>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="98" name="Fantassin Appui AC" protection="Combattant" size="Personnel" weight="0.08">
     <speeds max="6">
@@ -10707,7 +10707,7 @@
     </weapon-systems>
     <human-protections/>
     <objects/>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="285590" codeEMAT8="28559002" codeLFRIL="" codeNNO="2350145214550" comment="Transport de troupes" id="99" name="AMX10P" protection="CharMoyen" size="Moyen" weight="15">
     <speeds max="90">
@@ -10843,7 +10843,7 @@
       <breakdown origin="attrition" percentage="1" type="Panne TCT 10"/>
       <breakdown origin="attrition" percentage="8" type="Panne TCT NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VCIMEC = Véhicule de combat d'infanterie mécanisée</equipment-category>
   </equipment>
   <equipment codeEMAT6="A11601" codeEMAT8="A11601N1" codeLFRIL="" codeNNO="1015142952241" comment="" id="100" name="Eqp Mortier 81" protection="Combattant" size="Personnel" weight="0.18">
     <speeds max="6">
@@ -10915,7 +10915,7 @@
     </weapon-systems>
     <human-protections/>
     <objects/>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Mortier</equipment-category>
   </equipment>
   <equipment codeEMAT6="113223" codeEMAT8="113223N1" codeLFRIL="" codeNNO="1005145033999" comment="" id="101" name="Fantassin Commando" protection="Combattant" size="Personnel" weight="0.08">
     <speeds max="6">
@@ -10997,7 +10997,7 @@
       <object initial-destruction-time="1800s" type="mortar deployment area"/>
       <object initial-destruction-time="1800s" type="cobra deployment area"/>
     </objects>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="116435" codeEMAT8="116435N1" codeLFRIL="" codeNNO="1015144897638" comment="" id="102" max-slope="0.6" name="120 RTF1" protection="VehiculeNonProtege" size="Petit" weight="0.3">
     <speeds max="50">
@@ -11111,7 +11111,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>MORT = Mortier</equipment-category>
   </equipment>
   <equipment codeEMAT6="177612" codeEMAT8="17761201" codeLFRIL="" codeNNO="1440 01 364 3292" comment="Piece HAWK" id="103" max-slope="0.6" name="Piece HAWK" protection="VehiculeNonProtege" size="Gros" weight="8">
     <speeds max="100">
@@ -11455,7 +11455,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 EB Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 EB Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VCIMEC = Véhicule de combat d'infanterie mécanisée</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="106" name="Fantassin EOP" protection="Combattant" size="Personnel" weight="0.08">
     <speeds max="6">
@@ -11528,7 +11528,7 @@
       <object initial-destruction-time="1800s" type="mortar deployment area"/>
       <object initial-destruction-time="1800s" type="cobra deployment area"/>
     </objects>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="LRM 122 mm sur camion  URAL 375 D" id="107" max-slope="0.6" name="BM 21" protection="VehiculeNonProtege" size="Gros" weight="13">
     <speeds max="70">
@@ -11612,7 +11612,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>MISSS = Missile sol-sol</equipment-category>
   </equipment>
   <equipment codeEMAT6="285390" codeEMAT8="28539001" codeLFRIL="" codeNNO="2350145214547" comment="VOA" id="108" max-slope="0.6" name="AMX10P VOA" protection="CharMoyen" size="Moyen" weight="20">
     <speeds max="90">
@@ -11744,7 +11744,7 @@
       <breakdown origin="attrition" percentage="1" type="Panne TCT 10"/>
       <breakdown origin="attrition" percentage="8" type="Panne TCT NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VCIMEC = Véhicule de combat d'infanterie mécanisée</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Vehicule transport de troupes" id="109" name="BMP 2" protection="CharMoyen" size="Moyen" weight="14">
     <speeds max="65">
@@ -11836,7 +11836,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VCIMEC = Véhicule de combat d'infanterie mécanisée</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Vehicule de reconnaissance" id="110" max-slope="0.6" name="BRDM 2" protection="BlindeLeger" size="Moyen" weight="7">
     <speeds max="100">
@@ -11923,7 +11923,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>BLIND = Blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Vehicule anti char" id="111" max-slope="0.6" name="BRDM 2 AT5" protection="BlindeLeger" size="Moyen" weight="7">
     <speeds max="100">
@@ -12009,7 +12009,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>MISGAC = Missile guidé antichar</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Vehicule Reconnaissance" id="112" max-slope="0.6" name="BRM 1" protection="BlindeLeger" size="Moyen" weight="12">
     <speeds max="90">
@@ -12189,7 +12189,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VTT = Véhicule blindé transport de troupes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Transport de troupes" id="114" name="BTR 80" protection="TransportBlinde" size="Moyen" weight="18">
     <speeds max="100">
@@ -12278,7 +12278,7 @@
       <breakdown origin="random" percentage="100" type="Panne MOB 1"/>
       <breakdown origin="attrition" percentage="100" type="Panne MOB 1"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VTT = Véhicule blindé transport de troupes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Canon Automoteur de 152mm sur chassis T80" id="115" max-slope="0.6" name="2S19" protection="CharLourd" size="Gros" weight="42">
     <speeds max="60">
@@ -12364,7 +12364,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>CAN = Canon</equipment-category>
   </equipment>
   <equipment codeEMAT6="289190" codeEMAT8="28919001" codeLFRIL="" codeNNO="2350145249203" comment="Char de depannage" id="116" max-slope="0.6" name="X30 DEPANNAGE AP M1" protection="CharLourd" size="Gros" weight="45">
     <speeds max="60">
@@ -12507,7 +12507,7 @@
       <breakdown origin="attrition" percentage="1" type="Panne TCT 10"/>
       <breakdown origin="attrition" percentage="7" type="Panne TCT NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>BLIND = Blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Char moyen" id="117" max-slope="0.6" name="Char T72 BM" protection="CharLourd" size="Gros" weight="44">
     <speeds max="80">
@@ -12605,7 +12605,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>CHABAT = Char de Bataille</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="BREM1" id="118" max-slope="0.6" name="Char T72 Depannage" protection="CharLourd" size="Gros" weight="42">
     <speeds max="80">
@@ -12690,7 +12690,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>BLIND = Blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Char lourd" id="119" max-slope="0.6" name="Char T80 U" protection="CharLourd" size="Gros" weight="42">
     <speeds max="90">
@@ -12888,7 +12888,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Enfouisseur de Mines" id="121" max-slope="0.6" name="GMZ 3" protection="VehiculeNonProtege" size="Moyen" weight="25">
     <speeds max="50">
@@ -12982,7 +12982,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Missile antichar portable" id="122" name="Eqp AT7" protection="Combattant" size="Personnel" weight="0.16">
     <speeds max="90">
@@ -13120,7 +13120,7 @@
       <object initial-destruction-time="1800s" type="mortar deployment area"/>
       <object initial-destruction-time="1800s" type="cobra deployment area"/>
     </objects>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Helicoptere de transport et d'appui" id="124" max-slope="1" name="Helicoptere MI 8" protection="Aeronef" size="Moyen" weight="2.1">
     <speeds max="240">
@@ -13211,7 +13211,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>HMT = Hélicoptère Moyen de Transport</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Helicoptere d'attaque et de transport d'assault" id="125" max-slope="1" name="Helicoptere MI 24 HIND F" protection="Aeronef" size="Petit" weight="2.1">
     <speeds max="240">
@@ -13300,7 +13300,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>HMT = Hélicoptère Moyen de Transport</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Engin Blinde de travaux sur T55" id="126" max-slope="0.6" name="IMR" protection="CharMoyen" size="Moyen" weight="43">
     <speeds max="90">
@@ -13491,7 +13491,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>BLIND = Blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Moyen lourd de franchissement" id="128" max-slope="0.6" name="PMP" protection="VehiculeNonProtege" size="Gros" weight="19">
     <speeds max="55">
@@ -13602,7 +13602,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>EQFCHT = Equipement de Franchissment</equipment-category>
   </equipment>
   <equipment codeEMAT6="246115" codeEMAT8="24611501" codeLFRIL="" codeNNO="2320144902717" comment="Missile anti char courte portee" id="129" name="VBL APILAS" protection="BlindeLeger" size="Petit" weight="4">
     <speeds max="90">
@@ -13713,7 +13713,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 EB Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 EB Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>MISGAC = Missile guidé antichar</equipment-category>
   </equipment>
   <equipment codeEMAT6="246875" codeEMAT8="24687501" codeLFRIL="" codeNNO="2320145331711" comment="Missile antichar courte portee" id="130" max-slope="0.6" name="VBL ERYX" protection="BlindeLeger" size="Petit" weight="4">
     <speeds max="90">
@@ -13825,7 +13825,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 EB Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 EB Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>MISGAC = Missile guidé antichar</equipment-category>
   </equipment>
   <equipment codeEMAT6="200633" codeEMAT8="20063301" codeLFRIL="" codeNNO="2350143683636" comment="ROLAND II Missile SOL-AIR de courte portee sur AMX 30" id="131" max-slope="0.6" name="Char ROLAND" protection="CharLourd" size="Gros" weight="36">
     <speeds max="60">
@@ -14101,7 +14101,7 @@
       <breakdown origin="attrition" percentage="1" type="Panne TCT 10"/>
       <breakdown origin="attrition" percentage="8" type="Panne TCT NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VTT = Véhicule blindé transport de troupes</equipment-category>
   </equipment>
   <equipment codeEMAT6="280290" codeEMAT8="280090A1" codeLFRIL="" codeNNO="2320145245869" comment="" id="133" name="VAB PC 7.62" protection="TransportBlinde" size="Moyen" weight="14">
     <speeds max="100">
@@ -14224,7 +14224,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 EB Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 EB Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VCD = Véhicule de Commandement</equipment-category>
   </equipment>
   <equipment codeEMAT6="280290" codeEMAT8="280290B4" codeLFRIL="" codeNNO="2320145348045" comment="" id="134" name="VAB PC 12.7" protection="TransportBlinde" size="Moyen" weight="14">
     <speeds max="100">
@@ -14356,7 +14356,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 EB Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 EB Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VCD = Véhicule de Commandement</equipment-category>
   </equipment>
   <equipment codeEMAT6="117212" codeEMAT8="117212N1" codeLFRIL="" codeNNO="1055144900672" comment="" id="135" name="Fantassin LGI" protection="Combattant" size="Personnel" weight="0.08">
     <speeds max="6">
@@ -14435,7 +14435,7 @@
       <object initial-destruction-time="1800s" type="mortar deployment area"/>
       <object initial-destruction-time="1800s" type="cobra deployment area"/>
     </objects>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="280090" codeEMAT8="280090D3" codeLFRIL="" codeNNO="2320145455442" comment="" id="136" name="VAB 7,62" protection="TransportBlinde" size="Moyen" weight="14">
     <speeds max="100">
@@ -14549,7 +14549,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 EB Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 EB Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VTT = Véhicule blindé transport de troupes</equipment-category>
   </equipment>
   <equipment codeEMAT6="281390" codeEMAT8="28139011" codeLFRIL="" codeNNO="2320145214493" comment="" id="137" name="VAB ATILA" protection="TransportBlinde" size="Moyen" weight="14">
     <speeds max="100">
@@ -14663,7 +14663,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 EB Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 EB Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VTT = Véhicule blindé transport de troupes</equipment-category>
   </equipment>
   <equipment codeEMAT6="738443" codeEMAT8="73844301" codeLFRIL="" codeNNO="5840145357268" comment="" id="138" max-slope="0.6" name="TRM 2000 RASIT" protection="VehiculeNonProtege" size="Moyen" weight="6">
     <speeds max="90">
@@ -14783,7 +14783,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="48" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VUT = Véhicule utilitaire</equipment-category>
   </equipment>
   <equipment codeEMAT6="177115" codeEMAT8="17711501" codeLFRIL="" codeNNO="5840145326414" comment="" id="139" max-slope="0.6" name="GBC PAR" protection="VehiculeNonProtege" size="Moyen" weight="10">
     <speeds max="90">
@@ -14902,7 +14902,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="48" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>ACQOBJ = Acquisiton d'objectif</equipment-category>
   </equipment>
   <equipment codeEMAT6="242306" codeEMAT8="24230603" codeLFRIL="" codeNNO="2320143647276" comment="" id="140" max-slope="0.6" name="TRM 2000 CN20" protection="VehiculeNonProtege" size="Moyen" weight="6">
     <speeds max="90">
@@ -15016,7 +15016,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VUT = Véhicule utilitaire</equipment-category>
   </equipment>
   <equipment codeEMAT6="242309" codeEMAT8="24230901" codeLFRIL="" codeNNO="2320143772257" comment="" id="141" max-slope="0.6" name="TRM 2000 PC" protection="VehiculeNonProtege" size="Moyen" weight="6">
     <speeds max="90">
@@ -15126,7 +15126,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VUT = Véhicule utilitaire</equipment-category>
   </equipment>
   <equipment codeEMAT6="255241" codeEMAT8="25524101" codeLFRIL="" codeNNO="2320144905057" comment="" id="142" max-slope="0.6" name="TRM 10000 PFM" protection="VehiculeNonProtege" size="Gros" weight="30">
     <speeds max="80">
@@ -15239,7 +15239,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="222331" codeEMAT8="22233201" codeLFRIL="" codeNNO="2320144904973" comment="" id="143" max-slope="0.6" name="VTC P4 Circu" protection="VehiculeNonProtege" size="Petit" weight="1">
     <speeds max="140">
@@ -15353,7 +15353,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="244581" codeEMAT8="24458101" codeLFRIL="" codeNNO="2320143687293" comment="" id="144" max-slope="0.6" name="TRM 4000" protection="VehiculeNonProtege" size="Moyen" weight="8">
     <speeds max="90">
@@ -15463,7 +15463,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VUT = Véhicule utilitaire</equipment-category>
   </equipment>
   <equipment codeEMAT6="244516" codeEMAT8="24451602" codeLFRIL="" codeNNO="2320145242958" comment="" id="145" max-slope="0.6" name="GBC 8 KT 12.7" protection="VehiculeNonProtege" size="Moyen" weight="10">
     <speeds max="90">
@@ -15577,7 +15577,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="538018" codeEMAT8="53801801" codeLFRIL="" codeNNO="3895145230279" comment="Tracteur chargeur" id="146" max-slope="0.6" name="SRQ + CA 152D" protection="VehiculeNonProtege" size="Gros" weight="17">
     <speeds max="90">
@@ -15698,7 +15698,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="502812" codeEMAT8="50281201" codeLFRIL="" codeNNO="1940143845936" comment="chaland transport maritime" id="147" name="CTM" protection="TransportBlinde" size="Gros" weight="1000">
     <speeds max="60">
@@ -15767,7 +15767,7 @@
       <breakdown origin="random" percentage="100" type="Panne DIV NTI3"/>
       <breakdown origin="attrition" percentage="100" type="Panne DIV NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>EQFCHT = Equipement de Franchissment</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Camion de transport" id="148" max-slope="0.6" name="ZIL 131" protection="VehiculeNonProtege" size="Moyen" weight="4">
     <speeds max="65">
@@ -15855,7 +15855,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VUT = Véhicule utilitaire</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Canon tracte 152 mm par KrAZ 255B" id="149" max-slope="0.6" name="Canon 2 A 36" protection="VehiculeNonProtege" size="Petit" weight="9">
     <speeds max="71">
@@ -15943,7 +15943,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>CAN = Canon</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Camion de transport" id="150" max-slope="0.6" name="KrAZ 255B" protection="VehiculeNonProtege" size="Moyen" weight="19">
     <speeds max="71">
@@ -16031,7 +16031,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Vehicule d'observation de l'artillerie" id="151" max-slope="0.6" name="1 V 18" protection="TransportBlinde" size="Moyen" weight="10">
     <speeds max="90">
@@ -16119,7 +16119,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>ACQOBJ = Acquisiton d'objectif</equipment-category>
   </equipment>
   <equipment codeEMAT6="242304" codeEMAT8="24230401" codeLFRIL="" codeNNO="2320143647275" comment="" id="152" name="TRM 2000" protection="VehiculeNonProtege" size="Moyen" weight="6">
     <speeds max="90">
@@ -16231,7 +16231,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VUT = Véhicule utilitaire</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="P60000K3" codeLFRIL="" codeNNO="5985145340442" comment="" id="153" max-slope="0.6" name="CTRT" protection="VehiculeNonProtege" size="Gros" weight="7">
     <speeds max="90">
@@ -16336,7 +16336,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>ANT = Antenne</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Vehicule Reconnaissance" id="154" max-slope="0.6" name="SCORPION" protection="BlindeLeger" size="Moyen" weight="8">
     <speeds max="80">
@@ -16424,7 +16424,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>BLIND = Blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="288890" codeEMAT8="28889002" codeLFRIL="" codeNNO="2350145123878" comment="Char de depannage" id="155" max-slope="0.6" name="XL DEPAN VERS AF A1" protection="CharLourd" size="Gros" weight="60">
     <speeds max="65">
@@ -16540,7 +16540,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 EB Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 EB Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>BLIND = Blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="244537" codeEMAT8="24453702" codeLFRIL="" codeNNO="2320145241532" comment="" id="156" max-slope="0.6" name="GBC 180" protection="VehiculeNonProtege" size="Moyen" weight="11">
     <speeds max="90">
@@ -16652,7 +16652,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="244543" codeEMAT8="24454301" codeLFRIL="" codeNNO="2320145034027" comment="" id="157" max-slope="0.6" name="GBC 180 12,7" protection="VehiculeNonProtege" size="Moyen" weight="11">
     <speeds max="90">
@@ -16767,7 +16767,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="648640" codeEMAT8="648640k1" codeLFRIL="" codeNNO="5820145437547" comment="" id="158" max-slope="0.6" name="ST CHF DE BASE G4 1" protection="VehiculeNonProtege" size="Gros" weight="6">
     <speeds max="80">
@@ -16993,7 +16993,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="222331" codeEMAT8="22251102" codeLFRIL="" codeNNO="2310145072353" comment="" id="160" name="VTC P4 12,7" protection="VehiculeNonProtege" size="Petit" weight="2">
     <speeds max="100">
@@ -17102,7 +17102,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="242304" codeEMAT8="24230402" codeLFRIL="" codeNNO="2320143731820" comment="" id="161" max-slope="0.6" name="TRM 2000 7,62" protection="VehiculeNonProtege" size="Moyen" weight="6">
     <speeds max="90">
@@ -17216,7 +17216,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VUT = Véhicule utilitaire</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="162" name="Milicien AK47" protection="Combattant" size="Personnel" weight="0.08">
     <speeds max="6">
@@ -17292,7 +17292,7 @@
       <object initial-destruction-time="1800s" type="mortar deployment area"/>
       <object initial-destruction-time="1800s" type="cobra deployment area"/>
     </objects>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="245215" codeEMAT8="24521501" codeLFRIL="" codeNNO="2320142353520" comment="" id="163" max-slope="0.6" name="GBC 8 KT" protection="VehiculeNonProtege" size="Moyen" weight="10">
     <speeds max="90">
@@ -17404,7 +17404,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="244214" codeEMAT8="24421401" codeLFRIL="" codeNNO="2320144902614" comment="VTL R avec remorque" id="164" max-slope="0.6" name="VTL R" protection="VehiculeNonProtege" size="Gros" weight="15">
     <speeds max="70">
@@ -17516,7 +17516,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VUT = Véhicule utilitaire</equipment-category>
   </equipment>
   <equipment codeEMAT6="299999" codeEMAT8="29999902" codeLFRIL="" codeNNO="2330145335532" comment="camion citerne + citerne remorque" id="165" max-slope="0.6" name="SRQ CITERN 30M3 11" protection="VehiculeNonProtege" size="Gros" weight="15">
     <speeds max="90">
@@ -17626,7 +17626,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="981117" codeEMAT8="98111701" codeLFRIL="" codeNNO="2320145424722" comment="camion citerne" id="166" max-slope="0.6" name="CCP 10M3 RAV SCANI1" protection="VehiculeNonProtege" size="Gros" weight="15">
     <speeds max="90">
@@ -17736,7 +17736,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="280690" codeEMAT8="28069001" codeLFRIL="" codeNNO="2320145214485" comment="" id="167" max-slope="0.6" name="VAB SAN" protection="TransportBlinde" size="Moyen" weight="14">
     <speeds max="100">
@@ -17846,7 +17846,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 EB Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 EB Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VTT = Véhicule blindé transport de troupes</equipment-category>
   </equipment>
   <equipment codeEMAT6="200746" codeEMAT8="20074601" codeLFRIL="" codeNNO="1520143830192" comment="Helicoptere de transport" id="168" max-slope="1" name="SA330 EVASAN" protection="Aeronef" size="Moyen" weight="5.5">
     <speeds max="240">
@@ -17942,7 +17942,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne ALAT 16"/>
       <breakdown origin="attrition" percentage="50" type="Panne ALAT NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>HT = Hélicoptère de Transport</equipment-category>
   </equipment>
   <equipment codeEMAT6="263310" codeEMAT8="26331001" codeLFRIL="" codeNNO="2320142312521" comment="" id="169" max-slope="0.6" name="TBU15 CLD" protection="VehiculeNonProtege" size="Moyen" weight="11">
     <speeds max="90">
@@ -18054,7 +18054,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="271223" codeEMAT8="27122301" codeLFRIL="" codeNNO="2310144905333" comment="cellule sanitaire" id="170" max-slope="0.6" name="CELLULE SANITAIRE 2" protection="VehiculeNonProtege" size="Petit" weight="4">
     <speeds max="90">
@@ -18165,7 +18165,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="49710001" codeLFRIL="" codeNNO="6665145277607" comment="" id="171" max-slope="0.6" name="Gpe Deconta Med NBC" protection="Combattant" size="Personnel" weight="11">
     <speeds max="90">
@@ -18223,7 +18223,7 @@
         <caring nbc="true"/>
       </health-functions>
     </logistic-functions>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="172" max-slope="0.6" name="Eqp Triage Medical" protection="Combattant" size="Personnel" weight="0.001">
     <speeds max="90">
@@ -18407,7 +18407,7 @@
         <repairing category="NTI2" max-reparation-time="8h" type="M"/>
       </maintenance-functions>
     </logistic-functions>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="175" max-slope="0.6" name="Eqp Rep MOB FEU BLT" protection="Combattant" size="Personnel" weight="0.001">
     <speeds max="90">
@@ -18477,7 +18477,7 @@
         <repairing category="NTI2" max-reparation-time="12h" type="EA, M"/>
       </maintenance-functions>
     </logistic-functions>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="244526" codeEMAT8="24452601" codeLFRIL="" codeNNO="2320143161486" comment="" id="176" max-slope="0.6" name="TRM 4000 7,62" protection="VehiculeNonProtege" size="Moyen" weight="8">
     <speeds max="90">
@@ -18589,7 +18589,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VUT = Véhicule utilitaire</equipment-category>
   </equipment>
   <equipment codeEMAT6="222375" codeEMAT8="22237501" codeLFRIL="" codeNNO="2355145460899" comment="VBL Commandement" id="177" max-slope="0.6" name="VTT AEROT BLIND AU1" protection="BlindeLeger" size="Petit" weight="6">
     <speeds max="80">
@@ -18698,7 +18698,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VCD = Véhicule de Commandement</equipment-category>
   </equipment>
   <equipment codeEMAT6="980030" codeEMAT8="98003001" codeLFRIL="" codeNNO="2320143160764" comment="" id="178" max-slope="0.6" name="CCT GBC TD5 11" protection="VehiculeNonProtege" size="Moyen" weight="11">
     <speeds max="90">
@@ -18810,7 +18810,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="179" max-slope="0.6" name="Eqp Rep EA BLD" protection="Combattant" size="Personnel" weight="0.001">
     <speeds max="90">
@@ -18880,7 +18880,7 @@
         <repairing category="NTI2" max-reparation-time="8h" type="EA"/>
       </maintenance-functions>
     </logistic-functions>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="263311" codeEMAT8="26331101" codeLFRIL="" codeNNO="2320144905305" comment="" id="180" max-slope="0.6" name="TRM 10000 CLD" protection="VehiculeNonProtege" size="Gros" weight="21">
     <speeds max="90">
@@ -18994,7 +18994,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="244620" codeEMAT8="24462001" codeLFRIL="" codeNNO="2320143708220" comment="" id="181" max-slope="0.6" name="TRM 10000" protection="VehiculeNonProtege" size="Gros" weight="21">
     <speeds max="90">
@@ -19106,7 +19106,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VUT = Véhicule utilitaire</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="98011003" codeLFRIL="" codeNNO="2320144453364" comment="" id="182" max-slope="0.6" name="GBC SA TITAN CIA 11" protection="VehiculeNonProtege" size="Moyen" weight="11">
     <speeds max="90">
@@ -19218,7 +19218,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="243628" codeEMAT8="24362801" codeLFRIL="" codeNNO="2320144902580" comment="VLRA basique" id="183" max-slope="0.6" name="VLRA" protection="BlindeLeger" size="Moyen" weight="4">
     <speeds max="90">
@@ -19323,7 +19323,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="280090" codeEMAT8="28009000" codeLFRIL="" codeNNO="2320145498818" comment="" id="184" max-slope="0.6" name="VAB RENS 7,62" protection="TransportBlinde" size="Moyen" weight="14">
     <speeds max="100">
@@ -19435,7 +19435,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VTT = Véhicule blindé transport de troupes</equipment-category>
   </equipment>
   <equipment codeEMAT6="261210" codeEMAT8="26121001" codeLFRIL="" codeNNO="2320144905290" comment="" id="185" max-slope="0.6" name="GBC 8 KT 7.62" protection="VehiculeNonProtege" size="Moyen" weight="10">
     <speeds max="90">
@@ -19549,7 +19549,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="763010" codeEMAT8="76301001" codeLFRIL="" codeNNO="5820144404995" comment="" id="186" max-slope="0.6" name="GBC ELODEE" protection="VehiculeNonProtege" size="Moyen" weight="10">
     <speeds max="90">
@@ -19663,7 +19663,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>ACQOBJ = Acquisiton d'objectif</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="76951101" codeLFRIL="" codeNNO="5820144839085" comment="VBL Commandement" id="187" max-slope="0.6" name="SYSTEME SPRINT 11" protection="BlindeLeger" size="Petit" weight="6">
     <speeds max="80">
@@ -19774,7 +19774,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VCD = Véhicule de Commandement</equipment-category>
   </equipment>
   <equipment codeEMAT6="280090" codeEMAT8="28009014" codeLFRIL="" codeNNO="2320143657953" comment="" id="188" max-slope="0.6" name="VAB CIRCU" protection="TransportBlinde" size="Moyen" weight="14">
     <speeds max="100">
@@ -19889,7 +19889,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VTT = Véhicule blindé transport de troupes</equipment-category>
   </equipment>
   <equipment codeEMAT6="255211" codeEMAT8="25521102" codeLFRIL="" codeNNO="2320142912462" comment="Porte engin blinde" id="189" max-slope="0.6" name="TRM 700 100" protection="VehiculeNonProtege" size="Gros" weight="30">
     <speeds max="90">
@@ -20001,7 +20001,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VUT = Véhicule utilitaire</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="190" max-slope="0.6" name="Eqp Med Psy" protection="Combattant" size="Personnel" weight="0.001">
     <speeds max="100">
@@ -20169,7 +20169,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VUT = Véhicule utilitaire</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="192" max-slope="0.6" name="Eqp Rep MOB FEU BLD" protection="Combattant" size="Personnel" weight="0.001">
     <speeds max="90">
@@ -20239,7 +20239,7 @@
         <repairing category="NTI2" max-reparation-time="8h" type="EA, M"/>
       </maintenance-functions>
     </logistic-functions>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="193" max-slope="0.6" name="Eqp Rep MOB BLT" protection="Combattant" size="Personnel" weight="0.001">
     <speeds max="90">
@@ -20307,7 +20307,7 @@
         <repairing category="NTI2" max-reparation-time="12h" type="M"/>
       </maintenance-functions>
     </logistic-functions>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="194" max-slope="0.6" name="Eqp Rep EA BLT" protection="Combattant" size="Personnel" weight="0.001">
     <speeds max="90">
@@ -20560,7 +20560,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="197" max-slope="0.6" name="Eqp NTI1 MOB" protection="Combattant" size="Personnel" weight="0.001">
     <speeds max="70">
@@ -21090,7 +21090,7 @@
     </weapon-systems>
     <human-protections/>
     <objects/>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="205" max-slope="0.6" name="Terroriste Sniper et IED" protection="Combattant" size="Personnel" weight="0.08">
     <speeds max="30">
@@ -21151,7 +21151,7 @@
     </weapon-systems>
     <human-protections/>
     <objects/>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="206" max-slope="0.6" name="Terroriste Sniper" protection="Combattant" size="Personnel" weight="0.08">
     <speeds max="30">
@@ -21210,7 +21210,7 @@
     </weapon-systems>
     <human-protections/>
     <objects/>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="207" name="Milicien RPG" protection="Combattant" size="Personnel" weight="0.08">
     <speeds max="6">
@@ -21286,7 +21286,7 @@
       <object initial-destruction-time="1800s" type="mortar deployment area"/>
       <object initial-destruction-time="1800s" type="cobra deployment area"/>
     </objects>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="A426H1" codeEMAT8="A426H101" codeLFRIL="" codeNNO="2350145357309" comment="Artillerie Animation Haute" id="208" max-slope="0.6" name="Char AUF1 Animation" protection="CharLourd" size="Gros" weight="44">
     <speeds max="50">
@@ -21403,7 +21403,7 @@
       <breakdown origin="attrition" percentage="1" type="Panne TCT 10"/>
       <breakdown origin="attrition" percentage="8" type="Panne TCT NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>CAN = Canon</equipment-category>
   </equipment>
   <equipment codeEMAT6="288990" codeEMAT8="28899001" codeLFRIL="" codeNNO="2350145184055" comment="Artillerie Animation LRU" id="209" max-slope="0.6" name="LRU Animation" protection="CharLourd" size="Gros" weight="45">
     <speeds max="50">
@@ -21510,7 +21510,7 @@
       <breakdown origin="attrition" percentage="1" type="Panne TCT 10"/>
       <breakdown origin="attrition" percentage="8" type="Panne TCT NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>MISSS = Missile sol-sol</equipment-category>
   </equipment>
   <equipment codeEMAT6="288990" codeEMAT8="28899001" codeLFRIL="" codeNNO="2350145184055" comment="Artillerie Animation LRM" id="210" max-slope="0.6" name="LRM Animation" protection="CharLourd" size="Gros" weight="45">
     <speeds max="50">
@@ -21617,7 +21617,7 @@
       <breakdown origin="attrition" percentage="1" type="Panne TCT 10"/>
       <breakdown origin="attrition" percentage="8" type="Panne TCT NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>MISSS = Missile sol-sol</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Helicoptere de transport" id="211" max-slope="1" name="Sea King" protection="Aeronef" size="Moyen" weight="7">
     <speeds max="240">
@@ -21722,7 +21722,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne ALAT 16"/>
       <breakdown origin="attrition" percentage="50" type="Panne ALAT NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>HT = Hélicoptère de Transport</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="212" max-slope="0.6" name="Char T62" protection="CharLourd" size="Gros" weight="37">
     <speeds max="50">
@@ -21815,7 +21815,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>CHABAT = Char de Bataille</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="213" max-slope="0.6" name="Char CHIEFTAIN" protection="CharLourd" size="Gros" weight="45">
     <speeds max="48">
@@ -21905,7 +21905,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>CHABAT = Char de Bataille</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Vehicule transport de troupes" id="214" name="BMP 1 + AT4" protection="TransportBlinde" size="Moyen" weight="13">
     <speeds max="65">
@@ -22001,7 +22001,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VCIMEC = Véhicule de combat d'infanterie mécanisée</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Jeep" id="215" max-slope="0.6" name="UAZ 469" protection="VehiculeNonProtege" size="Petit" weight="2">
     <speeds max="100">
@@ -22082,7 +22082,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Camion de transport" id="216" max-slope="0.6" name="KAMAZ 5320" protection="VehiculeNonProtege" size="Gros" weight="6">
     <speeds max="85">
@@ -22168,7 +22168,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Camion de transport" id="217" max-slope="0.6" name="GAZ 66" protection="VehiculeNonProtege" size="Moyen" weight="5">
     <speeds max="95">
@@ -22256,7 +22256,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Transport de troupes" id="218" name="BTR 70" protection="TransportBlinde" size="Moyen" weight="11">
     <speeds max="80">
@@ -22345,7 +22345,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VTT = Véhicule blindé transport de troupes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="219" max-slope="0.6" name="ZSU 23 4" protection="CharLourd" size="Gros" weight="19">
     <speeds max="50">
@@ -22432,7 +22432,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>BLIND = Blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Lance missile SA 9 sur BRDM 2" id="220" max-slope="0.6" name="SA 9 GASKIN" protection="BlindeLeger" size="Moyen" weight="7">
     <speeds max="100">
@@ -22516,7 +22516,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>MISSA = Missile sol-air</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Lance missile SA 13 sur chassi MT LB" id="221" max-slope="0.6" name="SA 13 GOPHER" protection="BlindeLeger" size="Moyen" weight="13">
     <speeds max="55">
@@ -22603,7 +22603,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>MISSA = Missile sol-air</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="222" max-slope="0.6" name="2S1" protection="BlindeLeger" size="Gros" weight="16">
     <speeds max="60">
@@ -22694,7 +22694,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>CAN = Canon</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="223" max-slope="0.6" name="2S3" protection="BlindeLeger" size="Gros" weight="27">
     <speeds max="62">
@@ -22787,7 +22787,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>CAN = Canon</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="224" max-slope="0.6" name="PICK UP HUMUS" protection="VehiculeNonProtege" size="Petit" weight="2">
     <speeds max="100">
@@ -22868,7 +22868,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="LRM 220 mm" id="225" name="BM 22" protection="VehiculeNonProtege" size="Gros" weight="22">
     <speeds max="65">
@@ -22952,7 +22952,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>MISSS = Missile sol-sol</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="LRM 300 mm" id="226" max-slope="0.6" name="BM 30" protection="VehiculeNonProtege" size="Gros" weight="43">
     <speeds max="60">
@@ -23036,7 +23036,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>MISSS = Missile sol-sol</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Engin chenille creuse tranchee" id="227" max-slope="0.6" name="BTM" protection="VehiculeNonProtege" size="Moyen" weight="26.5">
     <speeds max="35">
@@ -23125,7 +23125,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Engin chenille organisation terrain" id="228" max-slope="0.6" name="BAT2" protection="VehiculeNonProtege" size="Gros" weight="39">
     <speeds max="60">
@@ -23218,7 +23218,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>BLIND = Blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Engin de franchissement" id="229" max-slope="0.6" name="GSP" protection="VehiculeNonProtege" size="Gros" weight="17">
     <speeds max="40">
@@ -23305,7 +23305,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>EQFCHT = Equipement de Franchissment</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Engin chenille creuse fosse" id="230" max-slope="0.6" name="MDK2" protection="VehiculeNonProtege" size="Moyen" weight="28">
     <speeds max="35">
@@ -23393,7 +23393,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Missile SOL AIR portable tres courte portee" id="231" max-slope="0.6" name="SA 7" protection="Combattant" size="Personnel" weight="0.16">
     <speeds max="10">
@@ -23456,7 +23456,7 @@
     </weapon-systems>
     <human-protections/>
     <objects/>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>MISSA = Missile sol-air</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Missile SOL AIR portable tres courte portee" id="232" max-slope="0.6" name="SA 14" protection="Combattant" size="Personnel" weight="0.16">
     <speeds max="10">
@@ -23519,7 +23519,7 @@
     </weapon-systems>
     <human-protections/>
     <objects/>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>MISSA = Missile sol-airAutres</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Lance missiles SOL AIR" id="233" max-slope="0.6" name="SA 6 GAINFUL" protection="CharLourd" size="Gros" weight="14">
     <speeds max="44">
@@ -23605,7 +23605,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>MISSA = Missile sol-air</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Lance missiles SOL AIR" id="234" max-slope="0.6" name="SA 11 GADFLY" protection="CharLourd" size="Gros" weight="16">
     <speeds max="50">
@@ -23691,7 +23691,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>MISSA = Missile sol-air</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Tracte par camion GAZ 66" id="235" max-slope="0.6" name="Eqp 2S12 et GAZ 66" protection="VehiculeNonProtege" size="Petit" weight="0.4">
     <speeds max="50">
@@ -23775,7 +23775,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Vehicule de reconnaissance NBC" id="236" max-slope="0.6" name="BRDM 2 RKh" protection="BlindeLeger" size="Moyen" weight="7">
     <speeds max="100">
@@ -23862,7 +23862,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>BLIND = Blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="MT LB Reco NBC" id="237" max-slope="0.6" name="RKh M" protection="BlindeLeger" size="Moyen" weight="12">
     <speeds max="55">
@@ -23947,7 +23947,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>BLIND = Blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="238" max-slope="0.6" name="BTR 70 GEN" protection="TransportBlinde" size="Moyen" weight="13">
     <speeds max="80">
@@ -24064,7 +24064,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VTT = Véhicule blindé transport de troupes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Vehicule de reconnaissance" id="239" max-slope="0.6" name="EE9 CASCAVEL" protection="BlindeLeger" size="Moyen" weight="13">
     <speeds max="100">
@@ -24240,7 +24240,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="241" max-slope="0.6" name="Toyota 106 SR" protection="VehiculeNonProtege" size="Petit" weight="2">
     <speeds max="100">
@@ -24324,7 +24324,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="580810" codeEMAT8="58081001" codeLFRIL="" codeNNO="4610145013487" comment="Groupe de production d'eau" id="242" max-slope="0.6" name="MATEM" protection="VehiculeNonProtege" size="Gros" weight="8">
     <speeds max="70">
@@ -24399,7 +24399,7 @@
       <breakdown origin="random" percentage="100" type="Panne MOB 1"/>
       <breakdown origin="attrition" percentage="100" type="Panne MOB 1"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="S37405" codeEMAT8="S37405K1" codeLFRIL="" codeNNO="4990145508528" comment="" id="243" max-slope="0.6" name="UMTE" protection="VehiculeNonProtege" size="Gros" weight="5">
     <speeds max="90">
@@ -24472,7 +24472,7 @@
       <breakdown origin="random" percentage="100" type="Panne MOB 1"/>
       <breakdown origin="attrition" percentage="100" type="Panne MOB 1"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="532021" codeEMAT8="53202101" codeLFRIL="" codeNNO="6114145392028" comment="" id="244" max-slope="0.6" name="Centrale GE 400 kW" protection="VehiculeNonProtege" size="Moyen" weight="9">
     <speeds max="80">
@@ -24547,7 +24547,7 @@
       <breakdown origin="random" percentage="100" type="Panne MOB 1"/>
       <breakdown origin="attrition" percentage="100" type="Panne MOB 1"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Missile SOL AIR tres courte portee" id="245" max-slope="0.6" name="SA 16" protection="Combattant" size="Personnel" weight="0.32">
     <speeds max="90">
@@ -24610,7 +24610,7 @@
     </weapon-systems>
     <human-protections/>
     <objects/>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>MISSA = Missile sol-air</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Dog Ear sur chassis MTLB" id="246" max-slope="0.6" name="Dog Ear sur chassis MTLB" protection="TransportBlinde" size="Moyen" weight="11">
     <speeds max="65">
@@ -24700,7 +24700,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>ACQOBJ = Acquisiton d'objectif</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="247" name="Fantassin RPK74" protection="Combattant" size="Personnel" weight="0.08">
     <speeds max="6">
@@ -24760,7 +24760,7 @@
     </weapon-systems>
     <human-protections/>
     <objects/>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Vehicule transport de troupes" id="248" name="BMP 1" protection="TransportBlinde" size="Moyen" weight="13">
     <speeds max="65">
@@ -24854,7 +24854,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VCIMEC = Véhicule de combat d'infanterie mécanisée</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Vehicule de reconnaissance" id="249" max-slope="0.6" name="BRDM2 VTT" protection="BlindeLeger" size="Moyen" weight="7">
     <speeds max="100">
@@ -25036,7 +25036,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VCIMEC = Véhicule de combat d'infanterie mécanisée</equipment-category>
   </equipment>
   <equipment codeEMAT6="222331" codeEMAT8="22237601" codeLFRIL="" codeNNO="2355145460915" comment="" id="251" max-slope="0.6" name="VTC P4 REC LRU" protection="VehiculeNonProtege" size="Petit" weight="2">
     <speeds max="100">
@@ -25146,7 +25146,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="222331" codeEMAT8="22237601" codeLFRIL="" codeNNO="2355145460915" comment="" id="252" max-slope="0.6" name="VTC P4 REC LRM" protection="VehiculeNonProtege" size="Petit" weight="2">
     <speeds max="100">
@@ -25256,7 +25256,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="253" max-slope="0.6" name="Eqp NTI1 EA glaise" protection="Combattant" size="Personnel" weight="0.001">
     <speeds max="70">
@@ -25615,7 +25615,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Camion de transport" id="258" max-slope="0.6" name="Kraz 255B-citerne" protection="VehiculeNonProtege" size="Moyen" weight="19">
     <speeds max="71">
@@ -25706,7 +25706,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Porte engin blinde" id="259" max-slope="0.6" name="MAZ 537" protection="VehiculeNonProtege" size="Gros" weight="30">
     <speeds max="90">
@@ -25794,7 +25794,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Jeep" id="260" max-slope="0.6" name="UAZ 469 SAN" protection="VehiculeNonProtege" size="Petit" weight="2">
     <speeds max="100">
@@ -25881,7 +25881,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="camion citerne" id="261" max-slope="0.6" name="ZIL 151 citerne" protection="VehiculeNonProtege" size="Gros" weight="15">
     <speeds max="90">
@@ -25967,7 +25967,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Char T72 depannage" id="262" max-slope="0.6" name="BREM 1" protection="CharLourd" size="Gros" weight="42">
     <speeds max="50">
@@ -26059,7 +26059,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>BLIND = Blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Vehicule de reconnaissance" id="263" max-slope="0.6" name="BRDM 2 SAN" protection="BlindeLeger" size="Moyen" weight="7">
     <speeds max="100">
@@ -26142,7 +26142,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>BLIND = Blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="264" max-slope="0.6" name="Eqp Rep MOB BLD glaise" protection="Combattant" size="Personnel" weight="0.001">
     <speeds max="90">
@@ -26210,7 +26210,7 @@
         <repairing category="NTI2" max-reparation-time="8h" type="M"/>
       </maintenance-functions>
     </logistic-functions>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="265" max-slope="0.6" name="Eqp Rep EA BLD glaise" protection="Combattant" size="Personnel" weight="0.001">
     <speeds max="90">
@@ -26278,7 +26278,7 @@
         <repairing category="NTI2" max-reparation-time="8h" type="EA"/>
       </maintenance-functions>
     </logistic-functions>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="266" max-slope="0.6" name="Eqp Rep MOB FEU BLD glaise" protection="Combattant" size="Personnel" weight="0.001">
     <speeds max="90">
@@ -26346,7 +26346,7 @@
         <repairing category="NTI2" max-reparation-time="8h" type="EA, M"/>
       </maintenance-functions>
     </logistic-functions>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="267" max-slope="0.6" name="Camion Ravitailleur 5m3 kerosene glaise" protection="VehiculeNonProtege" size="Moyen" weight="11">
     <speeds max="90">
@@ -26434,7 +26434,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="camion citerne + citerne remorque" id="268" max-slope="0.6" name="Camion Citerne Semi remorque 30m3 glaise" protection="VehiculeNonProtege" size="Gros" weight="15">
     <speeds max="90">
@@ -26520,7 +26520,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Helicoptere de transport et d'appui" id="269" name="MI 8 EVASAN" protection="Aeronef" size="Moyen" weight="2.1">
     <speeds max="240">
@@ -26606,7 +26606,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>HMT = Hélicoptère Moyen de Transport</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Canon tractÃ© 105mm par Ural 375D" id="270" name="Eqp 122D30 et Zil 157" protection="VehiculeNonProtege" size="Petit" weight="3.2">
     <speeds max="50">
@@ -26696,7 +26696,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Canon tractÃ© 130 mm par AT-S" id="271" name="Eqp 130M46 et AT-S" protection="VehiculeNonProtege" size="Petit" weight="8">
     <speeds max="50">
@@ -26784,7 +26784,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="VÃ©hicule de commandement et reconnaissance artillerie" id="272" max-slope="0.6" name="1 V 13" protection="BlindeLeger" size="Moyen" weight="13">
     <speeds max="60">
@@ -26873,7 +26873,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VCD = Véhicule de Commandement</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="S5060201" codeLFRIL="" codeNNO="6625145021224" comment="" id="273" max-slope="0.6" name="Eqp diagnostic" protection="Combattant" size="Personnel" weight="4">
     <speeds max="90">
@@ -27020,7 +27020,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>HARM = Hélicoptère Antichar/d'assaut/d'arme</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Helicoptere OH 58D" id="275" max-slope="1" name="Helicoptere OH 58D kiowa" protection="Aeronef" size="Petit" weight="2.5">
     <speeds max="220">
@@ -27109,7 +27109,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>ACQOBJ = Acquisiton d'objectif</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Helicoptere de transport" id="276" max-slope="1" name="Helicoptere CH 53 super stallion" protection="Aeronef" size="Gros" weight="16">
     <speeds max="315">
@@ -27196,7 +27196,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>HARM = Hélicoptère Antichar/d'assaut/d'arme</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Helicoptere de transport" id="277" max-slope="1" name="Helicoptere CH 47 chinook" protection="Aeronef" size="Gros" weight="23">
     <speeds max="300">
@@ -27283,7 +27283,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>HARM = Hélicoptère Antichar/d'assaut/d'arme</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="poste sol air tres courte portÃ©e et vÃ©hicule de transport" id="278" max-slope="0.6" name="SA 7 + BRDM2 transporteur" protection="BlindeLeger" size="Moyen" weight="7">
     <speeds max="100">
@@ -27371,7 +27371,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>BLIND = Blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="poste sol air tres courte portÃ©e et vÃ©hicule de transport" id="279" max-slope="0.6" name="SA 14 + BRDM2 transporteur" protection="BlindeLeger" size="Moyen" weight="7">
     <speeds max="100">
@@ -27459,7 +27459,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>BLIND = Blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="poste sol air tres courte portÃ©e et vÃ©hicule de transport" id="280" max-slope="0.6" name="SA 16 + BRDM2 transporteur" protection="BlindeLeger" size="Moyen" weight="7">
     <speeds max="100">
@@ -27547,7 +27547,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>BLIND = Blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="281" max-slope="0.6" name="Poste de secours glaise" protection="VehiculeNonProtege" size="Petit" weight="5">
     <speeds max="90">
@@ -27779,7 +27779,7 @@
       <breakdown origin="random" percentage="100" type="Panne MOB 1"/>
       <breakdown origin="attrition" percentage="100" type="Panne MOB 1"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="520813" codeEMAT8="52081201" codeLFRIL="" codeNNO="3820143630755" comment="Moyen de forage rapide" id="284" max-slope="0.6" name="MFR" protection="VehiculeNonProtege" size="Moyen" weight="17">
     <speeds max="75">
@@ -27980,7 +27980,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Enfouisseur de mines + Camion de transport" id="286" max-slope="0.6" name="PMR-3 + ZIL 157" protection="VehiculeNonProtege" size="Moyen" weight="6">
     <speeds max="65">
@@ -28067,7 +28067,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Engin de franchissement" id="287" max-slope="0.6" name="PTS" protection="VehiculeNonProtege" size="Gros" weight="17">
     <speeds max="40">
@@ -28144,7 +28144,7 @@
       <breakdown origin="random" percentage="100" type="Panne MOB 1"/>
       <breakdown origin="attrition" percentage="100" type="Panne MOB 1"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Engin Tracteur Niveleur" id="288" max-slope="0.6" name="PZM-2" protection="VehiculeNonProtege" size="Moyen" weight="13">
     <speeds max="45">
@@ -28235,7 +28235,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="289" max-slope="0.6" name="Eqp Rep EA BLT Glaise" protection="Combattant" size="Personnel" weight="0.001">
     <speeds max="90">
@@ -28303,7 +28303,7 @@
         <repairing category="NTI2" max-reparation-time="12h" type="EA"/>
       </maintenance-functions>
     </logistic-functions>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="290" max-slope="0.6" name="Eqp Rep MOB BLT glaise" protection="Combattant" size="Personnel" weight="0.001">
     <speeds max="90">
@@ -28371,7 +28371,7 @@
         <repairing category="NTI2" max-reparation-time="12h" type="M"/>
       </maintenance-functions>
     </logistic-functions>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="291" max-slope="0.6" name="Eqp Rep MOB FEU BLT glaise" protection="Combattant" size="Personnel" weight="0.001">
     <speeds max="90">
@@ -28440,7 +28440,7 @@
         <repairing category="NTI2" max-reparation-time="12h" type="EA, M"/>
       </maintenance-functions>
     </logistic-functions>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="T04720" codeEMAT8="T04720K1" codeLFRIL="" codeNNO="5895145150759" comment="" id="292" max-slope="0.6" name="Station HF NGF5" protection="VehiculeNonProtege" size="Gros" weight="6">
     <speeds max="80">
@@ -28555,7 +28555,7 @@
       <breakdown origin="attrition" percentage="48" type="Panne MOB NTI3 Evac"/>
       <breakdown origin="attrition" percentage="3" type="Panne MOB 12 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>ANT = Antenne</equipment-category>
   </equipment>
   <equipment codeEMAT6="267110" codeEMAT8="26711002" codeLFRIL="" codeNNO="2310145329191" comment="" id="293" max-slope="0.6" name="Station HF NGF4" protection="VehiculeNonProtege" size="Gros" weight="6">
     <speeds max="80">
@@ -28670,7 +28670,7 @@
       <breakdown origin="attrition" percentage="48" type="Panne MOB NTI3 Evac"/>
       <breakdown origin="attrition" percentage="3" type="Panne MOB 12 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>ANT = Antenne</equipment-category>
   </equipment>
   <equipment codeEMAT6="T02820" codeEMAT8="T0282001" codeLFRIL="" codeNNO="5820145021514" comment="" id="294" max-slope="0.6" name="Station RDO UHF" protection="VehiculeNonProtege" size="Gros" weight="6">
     <speeds max="80">
@@ -28785,7 +28785,7 @@
       <breakdown origin="attrition" percentage="48" type="Panne MOB NTI3 Evac"/>
       <breakdown origin="attrition" percentage="3" type="Panne MOB 12 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>ANT = Antenne</equipment-category>
   </equipment>
   <equipment codeEMAT6="T02901" codeEMAT8="T0290101" codeLFRIL="" codeNNO="5820145021519" comment="" id="295" max-slope="0.6" name="Station RDO VHF" protection="VehiculeNonProtege" size="Gros" weight="6">
     <speeds max="80">
@@ -28900,7 +28900,7 @@
       <breakdown origin="attrition" percentage="48" type="Panne MOB NTI3 Evac"/>
       <breakdown origin="attrition" percentage="3" type="Panne MOB 12 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>ANT = Antenne</equipment-category>
   </equipment>
   <equipment codeEMAT6="627410" codeEMAT8="627410K1" codeLFRIL="" codeNNO="5820144888243" comment="" id="296" max-slope="0.6" name="Station HF NGF3" protection="VehiculeNonProtege" size="Gros" weight="6">
     <speeds max="80">
@@ -29015,7 +29015,7 @@
       <breakdown origin="attrition" percentage="48" type="Panne MOB NTI3 Evac"/>
       <breakdown origin="attrition" percentage="3" type="Panne MOB 12 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>ANT = Antenne</equipment-category>
   </equipment>
   <equipment codeEMAT6="747010" codeEMAT8="74701001" codeLFRIL="" codeNNO="5840145085940" comment="" id="297" max-slope="0.6" name="SHELTER HORISON" protection="VehiculeNonProtege" size="Gros" weight="10">
     <speeds max="90">
@@ -29130,7 +29130,7 @@
       <breakdown origin="attrition" percentage="48" type="Panne MOB NTI3 Evac"/>
       <breakdown origin="attrition" percentage="3" type="Panne MOB 12 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="669420K1" codeLFRIL="" codeNNO="5895145395044" comment="" id="298" max-slope="0.6" name="Station ARISTOTE" protection="VehiculeNonProtege" size="Gros" weight="6">
     <speeds max="80">
@@ -29245,7 +29245,7 @@
       <breakdown origin="attrition" percentage="48" type="Panne MOB NTI3 Evac"/>
       <breakdown origin="attrition" percentage="3" type="Panne MOB 12 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>ANT = Antenne</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="S01511K1" codeLFRIL="" codeNNO="5180145037030" comment="" id="299" name="Piece TE" protection="Combattant" size="Personnel" weight="0.1">
     <speeds max="6">
@@ -29307,7 +29307,7 @@
     </weapon-systems>
     <human-protections/>
     <objects/>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="2320145317656" comment="" id="300" max-slope="0.6" name="Bus Renault" protection="VehiculeNonProtege" size="Moyen" weight="12">
     <speeds max="90">
@@ -29410,7 +29410,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VUT = Véhicule utilitaire</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="2310145299271" comment="" id="301" max-slope="0.6" name="Bus Mercedes" protection="VehiculeNonProtege" size="Gros" weight="12">
     <speeds max="90">
@@ -29513,7 +29513,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VUT = Véhicule utilitaire</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="2310142912368" comment="" id="302" max-slope="0.6" name="Bus Volvo" protection="VehiculeNonProtege" size="Gros" weight="12">
     <speeds max="90">
@@ -29617,7 +29617,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VUT = Véhicule utilitaire</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="2320144902611" comment="" id="303" max-slope="0.6" name="Bus MAN" protection="VehiculeNonProtege" size="Gros" weight="12">
     <speeds max="90">
@@ -29720,7 +29720,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VUT = Véhicule utilitaire</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="2310145529031" comment="" id="304" max-slope="0.6" name="Bus IVECO" protection="VehiculeNonProtege" size="Gros" weight="12">
     <speeds max="90">
@@ -29823,7 +29823,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VUT = Véhicule utilitaire</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Camion de transport" id="305" max-slope="0.6" name="PL OURAL 4320" protection="VehiculeNonProtege" size="Moyen" weight="8">
     <speeds max="65">
@@ -29901,7 +29901,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Camion de transport" id="306" max-slope="0.6" name="PL KAMAZ 5320" protection="VehiculeNonProtege" size="Moyen" weight="6.8">
     <speeds max="65">
@@ -29979,7 +29979,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Camion de transport" id="307" max-slope="0.6" name="PL FAP 2026BS" protection="VehiculeNonProtege" size="Moyen" weight="11">
     <speeds max="65">
@@ -30057,7 +30057,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Camion de transport" id="308" max-slope="0.6" name="PL KAMAZ 4310" protection="VehiculeNonProtege" size="Moyen" weight="8">
     <speeds max="65">
@@ -30135,7 +30135,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Camion de transport" id="309" max-slope="0.6" name="PL MAZ 500" protection="VehiculeNonProtege" size="Moyen" weight="6.5">
     <speeds max="65">
@@ -30213,7 +30213,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="310" max-slope="0.6" name="Eqp GTSA" protection="Combattant" size="Petit" weight="0.001">
     <speeds max="90">
@@ -30351,7 +30351,7 @@
       <object initial-destruction-time="1800s" type="mortar deployment area"/>
       <object initial-destruction-time="1800s" type="cobra deployment area"/>
     </objects>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="312" max-slope="1" name="Glaise missile SCUD" protection="Aeronef" size="Gros" weight="6000">
     <speeds max="900">
@@ -30404,7 +30404,7 @@
       <breakdown origin="random" percentage="100" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="100" type="Panne Glaise NTI 3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>MISSS = Missile sol-sol</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Porte engin blinde" id="313" max-slope="0.6" name="MAZ 543" protection="VehiculeNonProtege" size="Gros" weight="30">
     <speeds max="90">
@@ -30492,7 +30492,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="314" max-slope="1" name="SU 25" protection="Aeronef" size="Moyen" weight="10">
     <speeds max="800">
@@ -30563,7 +30563,7 @@
       <breakdown origin="random" percentage="100" type="Panne DIV NTI3"/>
       <breakdown origin="attrition" percentage="100" type="Panne DIV NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>AVVF = Aviation à Voilure Fixe</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="50191501" codeLFRIL="" codeNNO="1940142913233" comment="" id="315" name="ZODIAC" protection="VehiculeNonProtege" size="Moyen" weight="1000">
     <speeds max="95">
@@ -30631,7 +30631,7 @@
       <breakdown origin="random" percentage="100" type="Panne DIV NTI3"/>
       <breakdown origin="attrition" percentage="100" type="Panne DIV NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>EQFCHT = Equipement de Franchissment</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="50114301" codeLFRIL="" codeNNO="1940145356536" comment="" id="316" name="Vedette garde cote" protection="BlindeLeger" size="Moyen" weight="14">
     <speeds max="80">
@@ -30704,7 +30704,7 @@
       <breakdown origin="random" percentage="100" type="Panne DIV NTI3"/>
       <breakdown origin="attrition" percentage="100" type="Panne DIV NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>EQFCHT = Equipement de Franchissment</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="506911K1" codeLFRIL="" codeNNO="4220143723447" comment="" id="317" name="Eqp inter offensive" protection="Combattant" size="Personnel" weight="0.08">
     <speeds max="6">
@@ -30775,7 +30775,7 @@
       <object construction-time-factor="3m" destruction-time-factor="3m" initial-construction-time="90m" initial-destruction-time="90m" type="mines"/>
       <object initial-construction-time="150m" type="bridge destruction" valorization-time="30m"/>
     </objects>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="552411K1" codeLFRIL="" codeNNO="5180145021103" comment="" id="318" name="Eqp  DLRG" protection="Combattant" size="Personnel" weight="0.08">
     <speeds max="6">
@@ -30846,7 +30846,7 @@
       <object construction-time-factor="3m" destruction-time-factor="3m" initial-construction-time="90m" initial-destruction-time="90m" type="mines"/>
       <object initial-construction-time="150m" type="bridge destruction" valorization-time="30m"/>
     </objects>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="553801K1" codeLFRIL="" codeNNO="5180145476063" comment="" id="319" name="Groupe sapeur" protection="Combattant" size="Personnel" weight="1">
     <speeds max="6">
@@ -30918,7 +30918,7 @@
       <object devalorization-time="15m" initial-construction-time="6h" initial-destruction-time="6h" type="road destruction" valorization-time="15m"/>
       <object construction-time-factor="14s" destruction-time-factor="180s" initial-construction-time="4h" initial-destruction-time="2h" type="mined area (linear)"/>
     </objects>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="169230" codeEMAT8="16923001" codeLFRIL="" codeNNO="1430144673841" comment="Missile SOL AIR tres courte portee" id="320" name="Eqp MISTRAL" protection="Combattant" size="Personnel" weight="0.08">
     <speeds max="6">
@@ -30983,7 +30983,7 @@
     </weapon-systems>
     <human-protections/>
     <objects/>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="321" max-slope="0.6" name="2S 5" protection="BlindeLeger" size="Gros" weight="30">
     <speeds max="50">
@@ -31070,7 +31070,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>CAN = Canon</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="322" max-slope="0.6" name="2S 7" protection="BlindeLeger" size="Gros" weight="40">
     <speeds max="50">
@@ -31157,7 +31157,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>CAN = Canon</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="323" name="Fantassin URH" protection="Combattant" size="Personnel" weight="0.08">
     <speeds max="6">
@@ -31230,7 +31230,7 @@
       <object initial-destruction-time="1800s" type="mortar deployment area"/>
       <object initial-destruction-time="1800s" type="cobra deployment area"/>
     </objects>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="2320144902693" comment="" id="324" name="VBL 7,62 ROEM" protection="BlindeLeger" size="Petit" weight="4">
     <speeds max="90">
@@ -31344,7 +31344,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 EB Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 EB Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>ACQOBJ = Acquisiton d'objectif</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="18401010" codeLFRIL="" codeNNO="1550145526625" comment="" id="325" max-slope="1" name="Drone DRAC" protection="Aeronef" size="Drone" weight="0.08">
     <speeds max="72">
@@ -31399,7 +31399,7 @@
       <breakdown origin="random" percentage="100" type="Panne DIV NTI3"/>
       <breakdown origin="attrition" percentage="100" type="Panne DIV NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>ALT = Aérodyne léger télépiloté</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="326" max-slope="0.6" name="Foule 100" protection="Combattant" size="Petit" weight="0.5">
     <speeds max="8">
@@ -31621,7 +31621,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 EB Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 EB Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VTT = Véhicule blindé transport de troupes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="16430101" codeLFRIL="" codeNNO="2320145339206" comment="Camion equipe d'un systeme d'artillerie de 155/52 calibres" id="329" max-slope="0.6" name="CAESAR 155" protection="VehiculeNonProtege" size="Gros" weight="17">
     <speeds max="90">
@@ -31745,7 +31745,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Artillerie</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="330" max-slope="0.6" name="Toyota Cdo Humus (SA7)" protection="VehiculeNonProtege" size="Petit" weight="2">
     <speeds max="100">
@@ -31893,7 +31893,7 @@
     </weapon-systems>
     <human-protections/>
     <objects/>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="332" name="Fantassin SA7" protection="Combattant" size="Personnel" weight="0.08">
     <speeds max="6">
@@ -31955,7 +31955,7 @@
     </weapon-systems>
     <human-protections/>
     <objects/>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="333" name="Fantassin 12.7 H" protection="Combattant" size="Personnel" weight="0.08">
     <speeds max="6">
@@ -32017,7 +32017,7 @@
     </weapon-systems>
     <human-protections/>
     <objects/>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="334" max-slope="0.6" name="Vehicule 4X4 civil _ H" protection="VehiculeNonProtege" size="Petit" weight="2">
     <speeds max="130">
@@ -32205,7 +32205,7 @@
       <breakdown origin="random" percentage="100" type="Panne MOB 1"/>
       <breakdown origin="attrition" percentage="100" type="Panne MOB 1"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Char</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Missile antichar portable" id="336" name="Equipe SR 75" protection="Combattant" size="Personnel" weight="0.16">
     <speeds max="6">
@@ -32269,7 +32269,7 @@
       <object bypass-gain-factor="1" bypassed-speed="1" construction-time-factor="60s" destruction-time-factor="0s" initial-construction-time="180s" initial-destruction-time="0s" non-bypassed-speed="5" type="abattis"/>
       <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="60s" destruction-time-factor="180s" devalorization-time="45s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="mines" valorization-time="45s"/>
     </objects>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="Equipe Mortier 82 _ H" codeEMAT8="Equipe Mortier 82 _ H" codeLFRIL="Equipe Mortier 82 _ H" codeNNO="Equipe Mortier 82 _ H" comment="" id="337" max-slope="0.6" name="Equipe Mortier 82 H" protection="VehiculeNonProtege" size="Petit" weight="0.3">
     <speeds max="50">
@@ -32376,7 +32376,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Mortier</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="338" max-slope="0.6" name="Equipe Mortier 60 H" protection="VehiculeNonProtege" size="Petit" weight="0.3">
     <speeds max="50">
@@ -32483,7 +32483,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Mortier</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="339" name="Tireur Precision glaise" protection="Combattant" size="Personnel" weight="0.08">
     <speeds max="6">
@@ -32543,7 +32543,7 @@
     </weapon-systems>
     <human-protections/>
     <objects/>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="340" max-slope="0.6" name="PICK UP HUMUS 12.7" protection="VehiculeNonProtege" size="Petit" weight="2">
     <speeds max="100">
@@ -33012,7 +33012,7 @@
       <breakdown origin="random" percentage="100" type="Panne DIV NTI3"/>
       <breakdown origin="attrition" percentage="100" type="Panne DIV NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>HARM = Hélicoptère Antichar/d'assaut/d'arme</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="2005 3501" codeLFRIL="" codeNNO="1520145339229" comment="Tigre" id="345" max-slope="1" name="Tigre_HAP" protection="Aeronef" size="Moyen" weight="6.1">
     <speeds max="250">
@@ -33095,7 +33095,7 @@
       <breakdown origin="random" percentage="100" type="Panne DIV NTI3"/>
       <breakdown origin="attrition" percentage="100" type="Panne DIV NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>HARM = Hélicoptère Antichar/d'assaut/d'arme</equipment-category>
   </equipment>
   <equipment codeEMAT6="244543" codeEMAT8="24454303" codeLFRIL="" codeNNO="2320145241531" comment="" id="346" max-slope="0.6" name="GBC 180CSIR" protection="VehiculeNonProtege" size="Moyen" weight="11">
     <speeds max="90">
@@ -33202,7 +33202,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="347" max-slope="0.6" name="Eqp Rep MOB FEU BLIAT" protection="Combattant" size="Personnel" weight="0.001">
     <speeds max="90">
@@ -33271,7 +33271,7 @@
         <repairing category="NTI3" type="M"/>
       </maintenance-functions>
     </logistic-functions>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="348" max-slope="0.6" name="Eqp Rep EA BLIAT" protection="Combattant" size="Personnel" weight="0.001">
     <speeds max="90">
@@ -33438,7 +33438,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>CHABAT = Char de Bataille</equipment-category>
   </equipment>
   <equipment codeEMAT6="288990" codeEMAT8="28899001" codeLFRIL="" codeNNO="2350145184055" comment="Lance roquette multiple" id="350" max-slope="0.6" name="LRU" protection="CharLourd" size="Gros" weight="25">
     <speeds max="50">
@@ -33567,7 +33567,7 @@
       <breakdown origin="attrition" percentage="1" type="Panne TCT 10"/>
       <breakdown origin="attrition" percentage="8" type="Panne TCT NTI3"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>MISSS = Missile sol-sol</equipment-category>
   </equipment>
   <equipment codeEMAT6="244322" codeEMAT8="24432201" codeLFRIL="" codeNNO="2320144902622" comment="" id="351" max-slope="0.6" name="GBC 180 Lanceur Drones" protection="VehiculeNonProtege" size="Moyen" weight="11">
     <speeds max="90">
@@ -33679,7 +33679,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="244578" codeEMAT8="24457801" codeLFRIL="" codeNNO="2320144902648" comment="" id="352" max-slope="0.6" name="TRM 4000 Lanceur Drones" protection="VehiculeNonProtege" size="Moyen" weight="8">
     <speeds max="90">
@@ -33791,7 +33791,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VUT = Véhicule utilitaire</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="353" name="Fantassin LGI glaise" protection="Combattant" size="Personnel" weight="0.08">
     <speeds max="6">
@@ -33859,7 +33859,7 @@
     <objects>
       <object initial-construction-time="36000s" type="checkpoint"/>
     </objects>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="354" name="Eqp Mortier 81 glaise" protection="Combattant" size="Personnel" weight="0.18">
     <speeds max="6">
@@ -33925,7 +33925,7 @@
     </weapon-systems>
     <human-protections/>
     <objects/>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Mortier</equipment-category>
   </equipment>
   <equipment codeEMAT6="177213" codeEMAT8="17721301" codeLFRIL="" codeNNO="1430011846768" comment="GBC CWAR" id="355" max-slope="0.6" name="GBC CWAR" protection="VehiculeNonProtege" size="Moyen" weight="10">
     <speeds max="90">
@@ -34046,7 +34046,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 Evac"/>
       <breakdown origin="attrition" percentage="48" type="Panne MOB NTI3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>ACQOBJ = Acquisiton d'objectif</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="356" max-slope="0.6" name="Terroriste RPG" protection="Combattant" size="Personnel" weight="0.08">
     <speeds max="30">
@@ -34105,7 +34105,7 @@
     </weapon-systems>
     <human-protections/>
     <objects/>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="357" max-slope="0.6" name="Camionnette" protection="VehiculeNonProtege" size="Petit" weight="3">
     <speeds max="100">
@@ -34174,7 +34174,7 @@
       <breakdown origin="random" percentage="100" type="Panne MOB 1"/>
       <breakdown origin="attrition" percentage="100" type="Panne MOB 1"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="358" max-slope="0.6" name="Reporter" protection="Combattant" size="Personnel" weight="0.5">
     <speeds max="8">
@@ -34228,7 +34228,7 @@
     <weapon-systems/>
     <human-protections/>
     <objects/>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="359" max-slope="0.6" name="Train" protection="VehiculeNonProtege" size="Gros" weight="60">
     <speeds max="250">
@@ -34410,7 +34410,7 @@
       <object initial-destruction-time="1800s" type="mortar deployment area"/>
       <object initial-destruction-time="1800s" type="cobra deployment area"/>
     </objects>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="361" name="Fantassin lunettes" protection="Combattant" size="Personnel" weight="0.08">
     <speeds max="5">
@@ -34480,7 +34480,7 @@
       <object initial-destruction-time="1800s" type="mortar deployment area"/>
       <object initial-destruction-time="1800s" type="cobra deployment area"/>
     </objects>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="28411001" codeLFRIL="" codeNNO="2355145548708" comment="Transport de troupes" id="362" name="VBCI" protection="CharMoyen" size="Gros" weight="28">
     <speeds max="100">
@@ -34743,7 +34743,7 @@
       <breakdown origin="attrition" percentage="3" type="Panne MOB 16 EB Evac"/>
       <breakdown origin="attrition" percentage="50" type="Panne MOB NTI3 EB Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VCD = Véhicule de Commandement</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="114031N1" codeLFRIL="" codeNNO="1005143145003" comment="" id="364" name="Fantassin + AA 7,62N F1" protection="Combattant" size="Personnel" weight="0.08">
     <speeds max="6">
@@ -34818,7 +34818,7 @@
       <object initial-destruction-time="1800s" type="mortar deployment area"/>
       <object initial-destruction-time="1800s" type="cobra deployment area"/>
     </objects>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="365" max-slope="1" name="PVP Circu" protection="BlindeLeger" size="Petit" weight="7">
     <speeds max="120">
@@ -35022,7 +35022,7 @@
       <breakdown origin="random" percentage="100" type="Panne MOB 1"/>
       <breakdown origin="attrition" percentage="100" type="Panne MOB 1"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="367" max-slope="0.6" name="PICK UP" protection="VehiculeNonProtege" size="Petit" weight="2">
     <speeds max="100">
@@ -35102,7 +35102,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="368" max-slope="0.6" name="PICK UP 23/2" protection="VehiculeNonProtege" size="Petit" weight="2">
     <speeds max="100">
@@ -35187,7 +35187,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
     </breakdowns>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="369" name="Porte-avions" protection="TransportBlinde" size="Gros" weight="100000">
     <speeds max="60">
@@ -35326,7 +35326,7 @@
       <object initial-destruction-time="1800s" type="mortar deployment area"/>
       <object initial-destruction-time="1800s" type="cobra deployment area"/>
     </objects>
-    <equipment-category>Autres</equipment-category>
+    <equipment-category>Hommes</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="2768103528" -->
+<!-- signature="1833147299" -->
