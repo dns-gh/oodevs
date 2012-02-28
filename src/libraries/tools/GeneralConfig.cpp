@@ -186,6 +186,15 @@ std::string GeneralConfig::GetPhysicalsDir( const std::string& dataset ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: GeneralConfig::GetPhysicalsDir
+// Created: LGY 2012-02-28
+// -----------------------------------------------------------------------------
+std::string GeneralConfig::GetPhysicalsDir( const std::string& dataset, const std::string& physical ) const
+{
+    return ( bfs::path( GetPhysicalsDir( dataset ) ) / bfs::path( physical, bfs::native ) ).native_file_string();
+}
+
+// -----------------------------------------------------------------------------
 // Name: GeneralConfig::GetPhysicalFile
 // Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------

@@ -78,6 +78,14 @@
         <source>Launch Terrain Workshop application</source>
         <translation>Ejecutar herramienta de edición de terreno</translation>
     </message>
+    <message>
+        <source>Data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove Terrains and Models</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>BattleCenterJoinPage</name>
@@ -187,6 +195,29 @@
     <message>
         <source>Starting terrain creation</source>
         <translation>Iniciando creación de terreno</translation>
+    </message>
+</context>
+<context>
+    <name>DataPage</name>
+    <message>
+        <source>Data</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terrains</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Models</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Are you sure you want to delete?</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -452,6 +483,10 @@
     </message>
     <message>
         <source>Apply</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Delete</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

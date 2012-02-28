@@ -12,6 +12,7 @@
 #include "moc_AuthoringPage.cpp"
 #include "Config.h"
 #include "CreateTerrainPage.h"
+#include "DataPage.h"
 #include "MenuButton.h"
 #include "ProcessDialogs.h"
 #include "ProgressPage.h"
@@ -25,16 +26,19 @@
 // Name: AuthoringPage constructor
 // Created: JSR 2010-06-04
 // -----------------------------------------------------------------------------
-AuthoringPage::AuthoringPage( Q3WidgetStack* pages, Page_ABC& previous, const Config& config, kernel::Controllers& controllers )
+AuthoringPage::AuthoringPage( QWidget* parent, Q3WidgetStack* pages, Page_ABC& previous,
+                              const Config& config, kernel::Controllers& controllers )
     : MenuPage( pages, previous, eButtonBack | eButtonQuit )
-    , config_( config )
+    , config_     ( config )
     , controllers_( controllers )
 {
     progressPage_ = new ProgressPage( pages, *this );
+    dataPage_     = new DataPage( parent, pages, *this, config );
 
-    authoring_ =       AddLink( *this, SLOT( OnAuthoring() ) );
-    terrainGen_ =      AddLink( *new CreateTerrainPage( pages, *this, controllers, config ) );
+    authoring_       = AddLink( *this, SLOT( OnAuthoring() ) );
+    terrainGen_      = AddLink( *new CreateTerrainPage( pages, *this, controllers, config ) );
     terrainWorkshop_ = AddLink( *this, SLOT( OnTerrainWorkshop() ) );
+    data_            = AddLink( *dataPage_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -56,6 +60,7 @@ void AuthoringPage::OnLanguageChanged()
     SetTextAndSubtitle( authoring_,       tools::translate( "AuthoringPage", "Authoring" ),        tools::translate( "AuthoringPage", "Launch Authoring application" ) );
     SetTextAndSubtitle( terrainGen_,      tools::translate( "AuthoringPage", "Terrain Gen" ),      tools::translate( "AuthoringPage", "Launch Terrain Generation application" ) );
     SetTextAndSubtitle( terrainWorkshop_, tools::translate( "AuthoringPage", "Terrain Workshop" ), tools::translate( "AuthoringPage", "Launch Terrain Workshop application" ) );
+    SetTextAndSubtitle( data_,            tools::translate( "AuthoringPage", "Data" ),             tools::translate( "AuthoringPage", "Remove Terrains and Models" ) );
     MenuPage::OnLanguageChanged();
 }
 
@@ -71,17 +76,23 @@ void AuthoringPage::Update()
         authoring_->setEnabled( false );
         terrainGen_->setEnabled( true );
         terrainWorkshop_->setEnabled( true );
+        dataPage_->SetTerrainsEnabled( true );
+        dataPage_->SetModelsEnabled( false );
         break;
     case Config::eUser:
     case Config::eAdvancedUser:
         authoring_->setEnabled( true );
         terrainGen_->setEnabled( false );
         terrainWorkshop_->setEnabled( false );
+        dataPage_->SetTerrainsEnabled( false );
+        dataPage_->SetModelsEnabled( true );
         break;
     case Config::eAdministrator:
         authoring_->setEnabled( true );
         terrainGen_->setEnabled( true );
         terrainWorkshop_->setEnabled( true );
+        dataPage_->SetTerrainsEnabled( true );
+        dataPage_->SetModelsEnabled( true );
         break;
     default:
         throw std::exception( "Unknown profile" );

@@ -151,6 +151,9 @@
     <ClCompile Include="..\..\src\applications\selftraining_app\TrayMenu.cpp">
       <Filter>Source Files\Systray</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\selftraining_app\DataPage.cpp">
+      <Filter>Source Files\Pages\Implementations</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\selftraining_app\Config.h">
@@ -288,6 +291,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\selftraining_app\translator.pro">
       <Filter>Translations</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\selftraining_app\DataPage.h">
+      <Filter>Source Files\Pages\Implementations</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

@@ -7,6 +7,7 @@ BattleCenterLauncherPage.cpp \
 BattleCenterPage.cpp \
 CreateExerciceWidget.cpp \
 CreateTerrainPage.cpp \
+DataPage.cpp \
 ExerciseList.cpp \
 ExerciseProperties.cpp \
 ExportWidget.cpp \

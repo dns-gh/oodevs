@@ -48,6 +48,7 @@ public:
     std::string GetModelsDir() const;
 
     std::string GetPhysicalsDir( const std::string& dataset ) const;
+    std::string GetPhysicalsDir( const std::string& dataset, const std::string& physical ) const;
     std::string GetPhysicalFile( const std::string& dataset, const std::string& physical ) const;
 
     std::string GetDecisionalFile( const std::string& dataset ) const;

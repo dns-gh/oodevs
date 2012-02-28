@@ -20,6 +20,7 @@ namespace kernel
 class Config;
 class MenuButton;
 class ProgressPage;
+class DataPage;
 
 // =============================================================================
 /** @class  AuthoringPage
@@ -34,7 +35,8 @@ class AuthoringPage : public MenuPage
 public:
     //! @name Constructors/Destructor
     //@{
-             AuthoringPage( Q3WidgetStack* pages, Page_ABC& previous, const Config& config, kernel::Controllers& controllers );
+             AuthoringPage( QWidget* parent, Q3WidgetStack* pages, Page_ABC& previous,
+                            const Config& config, kernel::Controllers& controllers );
     virtual ~AuthoringPage();
     //@}
 
@@ -58,9 +60,11 @@ private:
     const Config& config_;
     kernel::Controllers& controllers_;
     ProgressPage* progressPage_;
+    DataPage* dataPage_;
     QPushButton* authoring_;
     QPushButton* terrainGen_;
     QPushButton* terrainWorkshop_;
+    QPushButton* data_;
     //@}
 };
 
