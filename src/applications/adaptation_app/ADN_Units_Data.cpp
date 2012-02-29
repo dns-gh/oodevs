@@ -714,8 +714,8 @@ void ADN_Units_Data::UnitInfos::ReadArchive( xml::xistream& input )
 
     input >> xml::optional
             >> xml::start( "setup" )
-                >> xml::attribute( "installation-time", installationDelay_ )
-                >> xml::attribute( "uninstallation-time", uninstallationDelay_ )
+                >> xml::optional >> xml::attribute( "installation-time", installationDelay_ )
+                >> xml::optional >> xml::attribute( "uninstallation-time", uninstallationDelay_ )
             >> xml::end;
     bInstallationDelay_ = installationDelay_ != "0s" || uninstallationDelay_ != "0s";
     input >> xml::start( "nbc" )
