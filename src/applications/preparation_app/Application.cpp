@@ -9,15 +9,16 @@
 
 #include "preparation_app_pch.h"
 #include "Application.h"
-#include "MainWindow.h"
 #include "Config.h"
 #include "ErrorEvent.h"
 #include "FileLoaderObserver.h"
-#include "preparation/StaticModel.h"
+#include "MainWindow.h"
 #include "preparation/Model.h"
+#include "preparation/StaticModel.h"
 #include "clients_kernel/Controllers.h"
-#include "ENT/ENT_Tr.h"
 #include "clients_kernel/Tools.h"
+#include "clients_gui/VerticalHeaderTableView.h"
+#include "ENT/ENT_Tr.h"
 
 namespace
 {
@@ -52,6 +53,7 @@ Application::Application( int& argc, char** argv, const QString& license )
     AddTranslator( locale, "clients_gui_sword" );
     AddTranslator( locale, "resources_gradients" );
     ENT_Tr::InitTranslations();
+    setStyle( new gui::VerticalHeaderStyle( style() ) );
 }
 
 // -----------------------------------------------------------------------------

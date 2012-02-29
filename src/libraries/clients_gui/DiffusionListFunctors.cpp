@@ -9,17 +9,23 @@
 
 #include "clients_gui_pch.h"
 #include "DiffusionListFunctors.h"
-
+#include "LongNameHelper.h"
 #include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/ExtensionType.h"
 #include "clients_kernel/ExtensionTypes.h"
 #include "clients_kernel/TacticalHierarchies.h"
-#include "DiffusionListHierarchy.h"
 #include <boost/lexical_cast.hpp>
 
 using namespace gui;
 using namespace kernel;
+
+// -----------------------------------------------------------------------------
+// DiffusionListData
+// -----------------------------------------------------------------------------
+
+const QString DiffusionListData::separator_ = ";";
+const QRegExp DiffusionListData::regexp_ ( "([0-9]+[;]{1})*[0-9]*" );
 
 // -----------------------------------------------------------------------------
 // DiffusionListFunctor_ABC
@@ -29,8 +35,9 @@ using namespace kernel;
 // Name: DiffusionListFunctor_ABC::DiffusionListFunctor_ABC
 // Created: ABR 2011-05-04
 // -----------------------------------------------------------------------------
-DiffusionListFunctor_ABC::DiffusionListFunctor_ABC( const std::string name )
-    : name_( name )
+DiffusionListFunctor_ABC::DiffusionListFunctor_ABC( const std::string name, const kernel::Entity_ABC& currentTeam )
+    : name_       ( name )
+    , currentTeam_( currentTeam )
 {
     assert( !name_.empty() );
 }
@@ -45,39 +52,114 @@ DiffusionListFunctor_ABC::~DiffusionListFunctor_ABC()
 }
 
 // -----------------------------------------------------------------------------
-// DiffusionListClearer
+// Name: DiffusionListFunctors::IsFromCurrentTeam
+// Created: ABR 2012-02-28
+// -----------------------------------------------------------------------------
+bool DiffusionListFunctor_ABC::IsFromCurrentTeam( const kernel::Entity_ABC& agent ) const
+{
+    const TacticalHierarchies& hierarchy = agent.Get< TacticalHierarchies >();
+    return hierarchy.GetTop().GetId() == currentTeam_.GetId();
+}
+
+
+// -----------------------------------------------------------------------------
+// DiffusionListReceiversExtractor
 // -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
-// Name: DiffusionListClearer::DiffusionListClearer
-// Created: ABR 2011-05-04
+// Name: DiffusionListReceiversExtractor::DiffusionListReceiversExtractor
+// Created: ABR 2012-02-28
 // -----------------------------------------------------------------------------
-DiffusionListClearer::DiffusionListClearer( const std::string name )
-    : DiffusionListFunctor_ABC( name )
+DiffusionListReceiversExtractor::DiffusionListReceiversExtractor( const std::string name, const kernel::Entity_ABC& currentTeam, std::vector< const kernel::Entity_ABC* >& targets, QStringList& targetsNames )
+    : DiffusionListFunctor_ABC( name, currentTeam )
+    , targets_     ( targets )
+    , targetsNames_( targetsNames )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: DiffusionListClearer::~DiffusionListClearer
-// Created: ABR 2011-05-04
+// Name: DiffusionListReceiversExtractor::~DiffusionListReceiversExtractor
+// Created: ABR 2012-02-28
 // -----------------------------------------------------------------------------
-DiffusionListClearer::~DiffusionListClearer()
+DiffusionListReceiversExtractor::~DiffusionListReceiversExtractor()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: DiffusionListClearer::operator()
-// Created: ABR 2011-05-04
+// Name: DiffusionListReceiversExtractor::operator()
+// Created: ABR 2012-02-28
 // -----------------------------------------------------------------------------
-void DiffusionListClearer::operator()( const kernel::Entity_ABC& agent ) const
+void DiffusionListReceiversExtractor::operator()( const kernel::Entity_ABC& agent ) const
 {
+    if( !IsFromCurrentTeam( agent ) )
+        return;
+
     DictionaryExtensions* dico = const_cast< DictionaryExtensions* >( agent.Retrieve< DictionaryExtensions >() );
     if( !dico )
         return;
-    dico->SetValue( name_, "" );
+
+    if( !dico->GetValue( "TypePC" ).empty() && dico->GetValue( "TypePC" ) != "PasCorresp" )
+    {
+        targets_.push_back( &agent );
+        const std::string longName = LongNameHelper::GetEntityLongName( agent );
+        targetsNames_ << ( longName.empty() ? agent.GetName() : longName.c_str() );
+    }
 }
+
+
+// -----------------------------------------------------------------------------
+// DiffusionListEmittersExtractor
+// -----------------------------------------------------------------------------
+
+// -----------------------------------------------------------------------------
+// Name: DiffusionListEmittersExtractor::DiffusionListEmittersExtractor
+// Created: ABR 2012-02-28
+// -----------------------------------------------------------------------------
+DiffusionListEmittersExtractor::DiffusionListEmittersExtractor( const std::string name, const kernel::Entity_ABC& currentTeam, std::vector< const kernel::Entity_ABC* >& targets, QStringList& targetsNames )
+    : DiffusionListFunctor_ABC( name, currentTeam )
+    , targets_     ( targets )
+    , targetsNames_( targetsNames )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DiffusionListEmittersExtractor::~DiffusionListEmittersExtractor
+// Created: ABR 2012-02-28
+// -----------------------------------------------------------------------------
+DiffusionListEmittersExtractor::~DiffusionListEmittersExtractor()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: DiffusionListEmittersExtractor::operator()
+// Created: ABR 2012-02-28
+// -----------------------------------------------------------------------------
+void DiffusionListEmittersExtractor::operator()( const kernel::Entity_ABC& agent ) const
+{
+    if( !IsFromCurrentTeam( agent ) )
+        return;
+
+    DictionaryExtensions* dico = const_cast< DictionaryExtensions* >( agent.Retrieve< DictionaryExtensions >() );
+    if( !dico )
+        return;
+    ExtensionType* type = dico->GetExtensionTypes().tools::StringResolver< ExtensionType >::Find( "orbat-attributes" );
+    if( !type )
+        return;
+    AttributeType* attribute = type->tools::StringResolver< AttributeType >::Find( name_ );
+    if( !attribute )
+        return;
+    if( attribute->IsActive( dico->GetExtensions() ) )
+    {
+        targets_.push_back( &agent );
+        const std::string longName = LongNameHelper::GetEntityLongName( agent );
+        targetsNames_ << ( longName.empty() ? agent.GetName() : longName.c_str() );
+    }
+}
+
 
 // -----------------------------------------------------------------------------
 // DiffusionListGenerator
@@ -87,10 +169,12 @@ void DiffusionListClearer::operator()( const kernel::Entity_ABC& agent ) const
 // Name: DiffusionListGenerator::DiffusionListGenerator
 // Created: ABR 2011-05-04
 // -----------------------------------------------------------------------------
-DiffusionListGenerator::DiffusionListGenerator( const std::string name )
-    : DiffusionListFunctor_ABC( name )
+DiffusionListGenerator::DiffusionListGenerator( const std::string name, const kernel::Entity_ABC& currentTeam, QStringList& generatedDiffusionList )
+    : DiffusionListFunctor_ABC( name, currentTeam )
+    , generatedDiffusionList_( generatedDiffusionList )
 {
     // NOTHING
+    
 }
 
 // -----------------------------------------------------------------------------
@@ -108,39 +192,31 @@ DiffusionListGenerator::~DiffusionListGenerator()
 // -----------------------------------------------------------------------------
 void DiffusionListGenerator::operator()( const Entity_ABC& agent ) const
 {
+    assert( IsFromCurrentTeam( agent ) );
     DictionaryExtensions* dico = const_cast< DictionaryExtensions* >( agent.Retrieve< DictionaryExtensions >() );
-    if( !dico )
-        return;
+    assert( dico != 0 );
     ExtensionType* type = dico->GetExtensionTypes().tools::StringResolver< ExtensionType >::Find( "orbat-attributes" );
-    if( !type )
-        return;
+    assert( type != 0 );
     AttributeType* attribute = type->tools::StringResolver< AttributeType >::Find( name_ );
-    if( !attribute )
-        return;
-    if( attribute->IsActive( dico->GetExtensions() ) && dico->GetValue( name_ ).empty() )
-    {
-        std::string diffusion;
-        const TacticalHierarchies& hierarchy = agent.Get< TacticalHierarchies >();
-        const Entity_ABC* father = hierarchy.GetSuperior();
-        assert( father );
-        const TacticalHierarchies& fatherHierarchy = father->Get< TacticalHierarchies >();
-        const Entity_ABC* grandFather = fatherHierarchy.GetSuperior();
-        assert( grandFather );
-        const TacticalHierarchies& grandFatherHierarchy = grandFather->Get< TacticalHierarchies >();
-        tools::Iterator< const Entity_ABC& > it = grandFatherHierarchy.CreateSubordinateIterator();
-        while( it.HasMoreElements() )
-        {
-            const Entity_ABC& entity = it.NextElement();
+    assert( attribute != 0 );
+    assert( attribute->IsActive( dico->GetExtensions() ) );
 
-            DictionaryExtensions* entityDico = const_cast< DictionaryExtensions* >( entity.Retrieve< DictionaryExtensions >() );
-            const TacticalHierarchies& entityHierarchy = entity.Get< TacticalHierarchies >();
-            if( entityDico && !entityDico->GetValue( "TypePC" ).empty() && entityDico->GetValue( "TypePC" ) != "PasCorresp" && entityHierarchy.GetLevel() == grandFatherHierarchy.GetLevel() )
-            {
-                diffusion += ( diffusion.empty() ) ? "" : DiffusionListHierarchy::diffusionSeparator_;
-                diffusion += boost::lexical_cast< std::string >( entity.GetId() );
-            }
-        }
-        dico->SetValue( name_, diffusion );
+    const TacticalHierarchies& hierarchy = agent.Get< TacticalHierarchies >();
+    const Entity_ABC* father = hierarchy.GetSuperior();
+    assert( father );
+    const TacticalHierarchies& fatherHierarchy = father->Get< TacticalHierarchies >();
+    const Entity_ABC* grandFather = fatherHierarchy.GetSuperior();
+    assert( grandFather );
+    const TacticalHierarchies& grandFatherHierarchy = grandFather->Get< TacticalHierarchies >();
+    tools::Iterator< const Entity_ABC& > it = grandFatherHierarchy.CreateSubordinateIterator();
+    while( it.HasMoreElements() )
+    {
+        const Entity_ABC& entity = it.NextElement();
+
+        DictionaryExtensions* entityDico = const_cast< DictionaryExtensions* >( entity.Retrieve< DictionaryExtensions >() );
+        const TacticalHierarchies& entityHierarchy = entity.Get< TacticalHierarchies >();
+        if( entityDico && !entityDico->GetValue( "TypePC" ).empty() && entityDico->GetValue( "TypePC" ) != "PasCorresp" && entityHierarchy.GetLevel() == grandFatherHierarchy.GetLevel() )
+            generatedDiffusionList_ << QString::number( entity.GetId() );
     }
 }
 

@@ -11,25 +11,21 @@
 #define gui_DiffusionListDialog_h_
 
 #include <boost/noncopyable.hpp>
+#include "clients_kernel/ContextMenuObserver_ABC.h"
+
 #include "clients_kernel/SafePointer.h"
-#include "DiffusionListLegendBar.h"
 #include "tools/Resolver.h"
-
-#pragma warning( push, 0 )
-#include <QtGui/qdialog.h>
-#pragma warning( pop )
-
-class QLineEdit;
-class Q3ButtonGroup;
-class QLabel;
 
 namespace kernel
 {
     class Agent_ABC;
+    class ContextMenu;
     class Controllers;
     class Entity_ABC;
     class ExtensionTypes;
+    class Formation_ABC;
     class Profile_ABC;
+    class Team_ABC;
 }
 
 namespace gui
@@ -37,6 +33,7 @@ namespace gui
     class DiffusionListHierarchy;
     class EntitySymbols;
     class ItemFactory_ABC;
+    class DiffusionListEditor;
 
 // =============================================================================
 /** @class  DiffusionListDialog
@@ -45,6 +42,8 @@ namespace gui
 // Created: ABR 2011-04-29
 // =============================================================================
 class DiffusionListDialog : public QDialog
+                          , public tools::Observer_ABC
+                          , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
                           , private boost::noncopyable
 {
     Q_OBJECT
@@ -52,55 +51,49 @@ class DiffusionListDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             DiffusionListDialog( QWidget* parent, kernel::Controllers& controllers, const tools::Resolver< kernel::Agent_ABC >& agents, const kernel::ExtensionTypes& extensions,
-                                  ItemFactory_ABC& factory, const EntitySymbols& icons, const kernel::Profile_ABC& profile, const char* name = 0 );
+             DiffusionListDialog( QWidget* parent, kernel::Controllers& controllers, const tools::Resolver< kernel::Agent_ABC >& agents, const tools::Resolver< kernel::Formation_ABC >& formations, const kernel::ExtensionTypes& extensions, const char* name = 0 );
     virtual ~DiffusionListDialog();
     //@}
 
-    //! @name Operations
+    //! @name Accessors
     //@{
-    void Purge();
-    void Fill( kernel::SafePointer< kernel::Entity_ABC > selected, const QString& diffusionList );
+    void SetCurrentTeam( const kernel::Entity_ABC& team );
+    void SetCurrentAgent( const kernel::Entity_ABC& agent );
+    void SetContextMenuEntry( bool contextMenuEntry );
+    //@}
+
+public slots:
+    //! @name Slots
+    //@{
+    void Show();
     //@}
 
 private:
-    //! @name Helpers
+    //! @name ContextMenuObserver_ABC implementation
     //@{
-    void UpdateDisplay();
-    void AddLegend( const QString label, QWidget* parent, const QColor& color );
+    virtual void NotifyContextMenu( const kernel::Team_ABC& team, kernel::ContextMenu& menu );
     //@}
 
 signals:
     //! @name Signals
     //@{
-    void Accepted( const QString& );
-    void Rejected();
+    void Accepted();
     //@}
 
 private slots:
     //! @name Slots
     //@{
-    virtual void reject();
     virtual void accept();
-    void OnClear();
-    void OnClearAll();
-    void OnGenerate();
-    void OnGenerateAll();
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controllers&                        controllers_;
-    const kernel::ExtensionTypes&               extensions_;
-    const tools::Resolver< kernel::Agent_ABC >& agents_;
-    kernel::SafePointer< kernel::Entity_ABC >   selected_;
-    std::string                                 extensionName_;
-    DiffusionListHierarchy*                     list_;
-    QLineEdit*                                  text_;
-    QLabel*                                     transmitterName_;
-    Q3ButtonGroup*                              filtersButtons_;
-    QLineEdit*                                  filterLine_;
+    kernel::SafePointer< kernel::Entity_ABC >   currentTeam_;
+    kernel::SafePointer< kernel::Entity_ABC >   currentAgent_;
+    DiffusionListEditor*                        editor_;
+    bool                                        contextMenuEntry_;
     //@}
 };
 

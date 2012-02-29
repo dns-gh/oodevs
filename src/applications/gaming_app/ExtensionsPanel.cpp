@@ -19,18 +19,19 @@
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/MagicActionType.h"
 #include "clients_kernel/OrderParameter.h"
+#include "clients_gui/DiffusionListDialog.h"
 #include "gaming/AgentsModel.h"
 #include "gaming/DictionaryExtensions.h"
 #include "gaming/Model.h"
 #include "gaming/StaticModel.h"
+#include "gaming/TeamsModel.h"
 
 // -----------------------------------------------------------------------------
 // Name: ExtensionsPanel constructor
 // Created: ABR 2011-05-13
 // -----------------------------------------------------------------------------
-ExtensionsPanel::ExtensionsPanel( QMainWindow* parent, kernel::Controllers& controllers, const Model& model, const StaticModel& staticModel, const kernel::Time_ABC& simulation,
-                                  gui::ItemFactory_ABC& factory, const gui::EntitySymbols& icons, const kernel::Profile_ABC& profile, const char* name /* = 0*/ )
-    : gui::ExtensionsPanel( parent, controllers, staticModel.extensions_, model.agents_, factory, icons, profile, name )
+ExtensionsPanel::ExtensionsPanel( QMainWindow* parent, kernel::Controllers& controllers, const Model& model, const StaticModel& staticModel, const kernel::Time_ABC& simulation, const char* name /* = 0*/ )
+    : gui::ExtensionsPanel( parent, controllers, staticModel.extensions_, model.agents_, model.teams_, name )
     , actions_        ( model.actions_ )
     , types_          ( staticModel.types_ )
     , simulation_     ( simulation )
@@ -42,6 +43,7 @@ ExtensionsPanel::ExtensionsPanel( QMainWindow* parent, kernel::Controllers& cont
     resetButton_ = new QPushButton( tr( "Reset" ), buttons_, "ExtensionsPanel_Button_Reset" );
     connect( validateButton_, SIGNAL( clicked() ), SLOT( OnValidate() ) );
     connect( resetButton_, SIGNAL( clicked() ), SLOT( OnReset() ) );
+    diffusionDialog_->SetContextMenuEntry( false );
     QSpacerItem* spacer = new QSpacerItem( 5, 5, QSizePolicy::Minimum, QSizePolicy::Expanding );
     pMainLayout_->layout()->addItem( spacer );
     ChangeButtonsState( false );

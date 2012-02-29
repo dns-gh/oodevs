@@ -331,52 +331,9 @@
 </context>
 <context>
     <name>gui::DiffusionListDialog</name>
-    <message id="0">
-        <source>Edit diffusion list</source>
-        <translation type="unfinished"></translation>
-    </message>
     <message>
-        <source>Transmitter</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Recipients</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Legend</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Transmitter:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Recipients:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Potential recipients:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Filters</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Transmitter, recipients and potentials recipients</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Transmitter and recipients</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>All</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Resulting diffusion list</source>
+        <source>Diffusion list: %1</source>
+        <oldsource>Edit diffusion list</oldsource>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -384,15 +341,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Generate all</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Clear</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Clear all</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
@@ -404,38 +353,18 @@
         <translation type="unfinished">Annuler</translation>
     </message>
     <message>
-        <source>Cleaning diffusion lists</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You are about to erase the selected unit&apos;s diffusion list, are you sure?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You are about to erase all diffusion list on the exercise, are you sure?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Generating diffusion lists</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You are about to replace the selected unit&apos;s diffusion list, are you sure?</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>You are about to replace all diffusion list on the exercise, are you sure?</source>
+        <source>Edit diffusion list</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
-    <name>gui::DiffusionListHierarchy</name>
+    <name>gui::DiffusionListEditor</name>
     <message>
-        <source>Add to diffusion list</source>
+        <source>EMITTERS</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Remove from diffusion list</source>
+        <source>RECIPIENTS</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

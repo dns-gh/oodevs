@@ -22,6 +22,7 @@
 #include "gaming/Profile.h"
 #include "gaming/CommandHandler.h"
 #include "gaming/AgentServerMsgMgr.h"
+#include "clients_gui/VerticalHeaderTableView.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Workers.h"
@@ -64,6 +65,7 @@ Application::Application( int& argc, char** argv, const QString& expiration )
     AddTranslator( locale, "clients_gui_sword" );
     AddTranslator( locale, "resources_gradients" );
     ENT_Tr::InitTranslations();
+    setStyle( new gui::VerticalHeaderStyle( style() ) );
 }
 
 // -----------------------------------------------------------------------------

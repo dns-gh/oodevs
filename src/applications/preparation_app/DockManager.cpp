@@ -122,7 +122,7 @@ DockManager::DockManager( QMainWindow* parent, kernel::Controllers& controllers,
     }
     // Extensions panel
     {
-        pExtensionsPanel_ = new gui::ExtensionsPanel( parent, controllers, staticModel.extensions_, model.agents_, factory, icons, PreparationProfile::GetProfile(), "ExtensionsPanel" );
+        pExtensionsPanel_ = new gui::ExtensionsPanel( parent, controllers, staticModel.extensions_, model.agents_, model.formations_, "ExtensionsPanel" );
         parent->addDockWidget( Qt::LeftDockWidgetArea, pExtensionsPanel_ );
         pExtensionsPanel_->hide();
         dockWidgets_.push_back( pExtensionsPanel_ );

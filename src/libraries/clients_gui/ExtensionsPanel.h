@@ -24,6 +24,7 @@ namespace kernel
     class DictionaryExtensions;
     class Entity_ABC;
     class ExtensionTypes;
+    class Formation_ABC;
     class Profile_ABC;
 }
 
@@ -51,8 +52,7 @@ class ExtensionsPanel : public QDockWidget
 public:
     //! @name Constructors/Destructor
     //@{
-             ExtensionsPanel( QMainWindow* parent, kernel::Controllers& controllers, const kernel::ExtensionTypes& extensions, const tools::Resolver< kernel::Agent_ABC >& agents,
-                              ItemFactory_ABC& factory, const EntitySymbols& icons, const kernel::Profile_ABC& profile, const char* name = 0 );
+             ExtensionsPanel( QMainWindow* parent, kernel::Controllers& controllers, const kernel::ExtensionTypes& extensions, const tools::Resolver< kernel::Agent_ABC >& agents, const tools::Resolver< kernel::Formation_ABC >& formations, const char* name = 0 );
     virtual ~ExtensionsPanel();
     //@}
 
@@ -85,15 +85,15 @@ private:
 protected:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
-    kernel::Entity_ABC* selected_;
-    const kernel::ExtensionTypes& extensions_;
-    DiffusionListDialog* diffusionDialog_;
-    Q3VBox* pMainLayout_;
-    Q3VBox* pExtensionLayout_;
-    Q3GroupBox* pGroupBox_;
-    T_Widgets widgets_;
-    bool updating_;
+    kernel::Controllers&                 controllers_;
+    kernel::Entity_ABC*                  selected_;
+    const kernel::ExtensionTypes&        extensions_;
+    std::auto_ptr< DiffusionListDialog > diffusionDialog_;
+    Q3VBox*                              pMainLayout_;
+    Q3VBox*                              pExtensionLayout_;
+    Q3GroupBox*                          pGroupBox_;
+    T_Widgets                            widgets_;
+    bool                                 updating_;
     //@}
 };
 

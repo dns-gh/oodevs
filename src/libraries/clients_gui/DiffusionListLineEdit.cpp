@@ -13,6 +13,7 @@
 
 #include "clients_kernel/DictionaryExtensions.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/SafePointer.h"
 #include "DiffusionListDialog.h"
 
@@ -28,8 +29,7 @@ DiffusionListLineEdit::DiffusionListLineEdit( QWidget* parent, kernel::Controlle
     , selected_     ( controllers, selected )
     , extensionName_( extensionName )
 {
-    connect( &dialog_, SIGNAL( Accepted( const QString& ) ), SLOT( OnAccepted( const QString& ) ) );
-    connect( &dialog_, SIGNAL( Rejected() ),                 SLOT( OnRejected() ) );
+    connect( &dialog_, SIGNAL( Accepted() ), SLOT( OnAccepted() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -47,9 +47,10 @@ DiffusionListLineEdit::~DiffusionListLineEdit()
 // -----------------------------------------------------------------------------
 void DiffusionListLineEdit::focusInEvent( QFocusEvent * )
 {
-    dialog_.Purge();
-    dialog_.Fill( selected_, text() );
-    dialog_.show();
+    const kernel::TacticalHierarchies& hierarchy = selected_->Get< kernel::TacticalHierarchies >();
+    dialog_.SetCurrentTeam( hierarchy.GetTop() );
+    dialog_.SetCurrentAgent( *selected_ );
+    dialog_.Show();
     parentWidget()->setFocus();
 }
 
@@ -57,16 +58,7 @@ void DiffusionListLineEdit::focusInEvent( QFocusEvent * )
 // Name: DiffusionListLineEdit::OnAccepted
 // Created: ABR 2011-05-02
 // -----------------------------------------------------------------------------
-void DiffusionListLineEdit::OnAccepted( const QString& text )
-{
-    setText( text );
-}
-
-// -----------------------------------------------------------------------------
-// Name: DiffusionListLineEdit::OnRejected
-// Created: ABR 2011-05-04
-// -----------------------------------------------------------------------------
-void DiffusionListLineEdit::OnRejected()
+void DiffusionListLineEdit::OnAccepted()
 {
     if( !selected_ )
         return;
