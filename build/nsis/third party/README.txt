@@ -62,3 +62,6 @@ The following components have been directly or indirectly used :
  . http://www.lua.org
  . lua.txt
 21/ HLA (mak)
+22/ ExcelFormat
+ . http://http://www.codeproject.com/Articles/42504/ExcelFormat-Library
+ . cpol.txt
