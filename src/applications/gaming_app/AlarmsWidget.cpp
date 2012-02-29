@@ -206,4 +206,6 @@ void AlarmsWidget::ShowEditor( Q3ListViewItem* item )
 {
     static AlarmEditor* editor = new AlarmEditor( this, simulation_ );
     editor->Show( item );
+    if( editor->result() == QDialog::Rejected )
+        list_->removeItem( item );
 }
