@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.skills.MakeFollow" source-version="1.0.0">
+    <description></description>
+    <parameters>
+        <parameter name="units">
+            <description>The units to make follow me. The units can be a teammate or a non-teammate agent.</description>
+            <type>
+                <list>
+                    <class name="ontology.classes.Agent"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <body-type>
+        <class name="ontology.classes.MeKnowledge"/>
+    </body-type>
+    <links>
+        <link name="reach" skill="behaviors.skills.primitives.Reach">
+            <description>To reach each unit and ask to follow.</description>
+        </link>
+    </links>
+</skill>

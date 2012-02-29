@@ -4,6 +4,7 @@
     <realizes>agent.world.Medical</realizes>
     <realizes>agent.world.Victims</realizes>
     <realizes>agent.world.Transportable</realizes>
+    <realizes>agent.world.Reinforceable</realizes>
     <methods>
         <method name="getPosition">
             <return name="simPosition">
@@ -125,6 +126,14 @@ This implementation makes agent Unit magically unload 'this' entity after a defi
                 <description>Returns 'true' on action completion,  'false' otherwise.&#xD;
 &#xD;
 This implementation makes agent Unit &quot;magically&quot; unload 'this' entity after a defined delay (in minutes).</description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="reinforceIt" abstract="false">
+            <description>To reinforce this element. Returns 'true' if this element has been reinforced.</description>
+            <return>
                 <type>
                     <simple name="boolean"/>
                 </type>

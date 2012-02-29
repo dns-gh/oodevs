@@ -28,7 +28,7 @@
         <stage label="following agents" permanent="true">
             <skills>
                 <skill name="behaviors.skills.Follow">
-                    <parameter name="agents">
+                    <parameter name="elementsToFollow">
                         <value>
                             <parameter>agents</parameter>
                         </value>

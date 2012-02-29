@@ -1,4 +1,13 @@
 -- --------------------------------------------------------------------------------
+-- Communication treatment
+-- --------------------------------------------------------------------------------
+masalife.brain.communication.setMessageTreatment( "FollowMe",
+    function( content, sender )
+        local entityToFollow = CreateKnowledge( ontology.classes.Teammate, content.entity )
+        integration.communication.FollowMe( content.mission, { entities = { entityToFollow } } )
+    end )
+
+-- --------------------------------------------------------------------------------
 -- Delays for magic actions in MINUTES
 -- --------------------------------------------------------------------------------
 local loadingActionDelays   = 1
@@ -81,6 +90,22 @@ method "unloadIt" ( masalife.brain.integration.startStopAction(
             return integration.unloadFriend( self )
         end
         return false
+    end
+} ) )
+
+-- --------------------------------------------------------------------------------
+-- Reinforceable
+-- --------------------------------------------------------------------------------
+method "reinforceIt" ( masalife.brain.integration.startStopAction(
+{ 
+    start = function( self )
+        return integration.beginReinforcementPlatoon( self )
+    end,
+    started = function( self )
+        return true
+    end,
+    stop = function( self )
+        return integration.cancelReinforcement( self )
     end
 } ) )
 

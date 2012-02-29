@@ -2,6 +2,5 @@
 <role xmlns="http://www.masagroup.net/directia/schemas/bm" name="roles.Agent" source-version="1.0.0" extends="behaviors.roles.Agent">
     <skills>
         <skill name="skills.CreateAWork"/>
-        <skill name="skills.CreateThenRemoveObject"/>
     </skills>
 </role>

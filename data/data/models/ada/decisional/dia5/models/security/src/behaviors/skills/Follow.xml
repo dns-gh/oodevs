@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.skills.Follow" source-version="1.0.0">
-    <description>For an agent to know how to follow the nearest agent belonging to a set of moving agents.</description>
+    <description>For an agent to know how to follow the nearest agent belonging to a set of moving agents or crowds.</description>
     <parameters>
-        <parameter name="agents">
-            <description>The agents to follow. </description>
+        <parameter name="elementsToFollow">
+            <description>The simulated agents to follow (temmeate, non-teammate or crowd agent).</description>
             <type>
                 <list>
-                    <class name="ontology.classes.Agent"/>
+                    <class name="ontology.classes.Human"/>
                 </list>
             </type>
         </parameter>
@@ -32,6 +32,8 @@
         </parameter>
     </parameters>
     <links>
-        <link name="reach" skill="behaviors.skills.primitives.Reach"/>
+        <link name="reach" skill="behaviors.skills.primitives.Reach">
+            <description>To reach positions to stay close to followed elements.</description>
+        </link>
     </links>
 </skill>

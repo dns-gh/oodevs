@@ -154,20 +154,20 @@ end
 
 -- ============================================================================
 -- Object creation SECU
--- comments: -- $$$ MIA TEMP SECURITY 
--- return bool and report enum is not returned by method
+-- comments: -- $$$ MIA TEMP SECURITY à merger avec military
+-- Différence avec military: le contrat n'est pasle même. Ici on renvoie vrai 
+-- quand l'action est terminée, que l'on est contruit ou pas l'objet. On renvoie faux
+-- quand la construction est en cours. 
 -- ============================================================================
 -- -----------------------------------------------------------------------------
 -- Update the object creation
 -- -----------------------------------------------------------------------------
 integration.updateBuildItSecu = function( object )
-    if object[ myself ].actionBuildState == eActionObjetTerminee then
-        if( object.knowledge ~= nil ) then
-            integration.pionRC( eRC_FinTravauxObjet, object.knowledge.source )
-        end
+    if object[ myself ].actionBuildState == eActionObjetTerminee and object.knowledge ~= nil then
+        integration.pionRC( eRC_FinTravauxObjet, object.knowledge.source )
         object[ myself ].actionBuild = DEC__StopAction( object[ myself ].actionBuild )
         object[ myself ].actionBuildState = nil
-        return false
+        return true
     else
         if object[ myself ].actionBuildState == eActionObjetImpossible then
             DEC_Trace( "impossible work" )

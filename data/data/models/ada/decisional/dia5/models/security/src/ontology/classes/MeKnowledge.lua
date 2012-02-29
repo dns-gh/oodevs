@@ -290,6 +290,31 @@ method "beDecontaminated" (
     end )
 
 -- --------------------------------------------------------------------------------
+-- Make follow agents
+-- --------------------------------------------------------------------------------
+method "makeFollow" ( masalife.brain.integration.startStopAction( 
+{
+    start = function( self, agent, missionName )
+        -- integration.unit_communicate = function( self, task, objectives )
+        if integration.isMissionAvailable( agent, missionName ) then
+            integration.SendMessage( "FollowMe", agent, 
+              { mission = missionName, entity = meKnowledge.source }, { type = "dynamic" } )
+            return true
+        else
+            return false
+        end
+    end
+} ) )
+
+-- --------------------------------------------------------------------------------
+-- Reinforcement
+-- --------------------------------------------------------------------------------
+method "reinforce" ( 
+    function( self, unit )
+        return  unit:reinforceIt()
+    end )
+
+-- --------------------------------------------------------------------------------
 -- Reports
 -- --------------------------------------------------------------------------------
 method "sendReport" ( masalife.brain.integration.startStopAction( 

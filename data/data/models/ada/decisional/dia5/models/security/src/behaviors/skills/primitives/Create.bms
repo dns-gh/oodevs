@@ -52,6 +52,7 @@ rootnode
             if self.nextTargetIndex <= paramsSize then
                 self.work = self.params.works[ self.nextTargetIndex ]
                 if self.arrived then
+                    -- $$$ MIA Add dismount here
                     if self.work:canBeCreated() then
                         Activate( skill.links.create, 1, { work = self.work } )
                     elseif not self.params.waitForReinforcement then

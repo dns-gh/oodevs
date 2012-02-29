@@ -16,7 +16,7 @@ Because operating a system requires the presence of the agent, action can only b
     </body-type>
     <links>
         <link name="reach" skill="behaviors.skills.primitives.Reach">
-            <description>To enact the decision to &quot;reach&quot; a resource node. </description>
+            <description>To enact the decision to &quot;reach&quot; the system. </description>
         </link>
         <link name="operate" skill="agent.behaviors.skills.actions.Operate">
             <description>To enact the decision to operate the system once it is reached.</description>

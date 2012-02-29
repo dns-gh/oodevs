@@ -71,6 +71,8 @@
         <skill name="behaviors.skills.primitives.BeDecontaminated"/>
         <skill name="agent.behaviors.skills.actions.SelfDestruct"/>
         <skill name="agent.behaviors.skills.actions.SelfDecontaminate"/>
+        <skill name="behaviors.skills.MakeFollow"/>
+        <skill name="agent.behaviors.skills.actions.Reinforce"/>
     </skills>
     <resources>
         <resource name="agent.behaviors.resources.Motion"/>

@@ -37,7 +37,7 @@ rootnode
     end,
 
     destroy = function( self )
-        if self.params.removeWork then
+        if self.params.removeWork and self.createdWork ~= nil then
             meKnowledge:remove( self.createdWork ) -- magic destruction
         end
     end

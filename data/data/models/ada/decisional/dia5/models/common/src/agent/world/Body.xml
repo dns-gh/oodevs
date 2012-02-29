@@ -542,5 +542,34 @@ Returns 'true' when checkPoint is filtering.</description>
                 </type>
             </return>
         </method>
+        <method name="Dismount">
+            <description>To dismount from vehicules. Returns 'true' once this element is dismounted, 'false' otherwise.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canDismount">
+            <description>Returns 'true' if this element can dismount. 'False' otherwise.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="reinforce">
+            <description>To reinforce the given parameter. Returns 'true' if target parameter has been reinforced. 'False' otherwise.</description>
+            <argument name="unit">
+                <type>
+                    <class name="agent.world.Reinforceable"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
     </methods>
 </interface>

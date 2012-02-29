@@ -1,0 +1,72 @@
+-- **************************************************************************** 
+-- To make follow a set of specified agents
+-- @params: self.params.Agents, a masalife list of Agents (teammate or 
+-- non-teammate units)
+-- @returns: follower: agent that have told to follow.
+-- @returns: done when all agents have been visited.
+-- ****************************************************************************
+rootnode
+{
+    connections = { skill.links.reach, skill.nodes.makeFollow },
+    feedbacks   = { "follower", "done" },
+
+    -- -------------------------------------------------------------------------------- 
+    -- Feedbacks and slots
+    -- --------------------------------------------------------------------------------
+    done = function( self, params, additionalParams ) -- call by reach skill
+        self.arrived = true
+    end,
+
+    makeFollowActionDone = function( self, params ) -- call by MakeFollow node
+        Feedback( self.feedbacks.follower, { follower = params.unit } )
+        self.nextTargetIndex = self.nextTargetIndex + 1
+        self.arrived = false
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Init
+    -- --------------------------------------------------------------------------------
+    create = function( self )
+        self.arrived = false
+        self.nextTargetIndex = 1
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Follow the nearest agent
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        local Activate = Activate
+
+        -- All units have been told to follow
+        if self.nextTargetIndex > #self.params.units then
+            Feedback( self.feedbacks.done )
+            return
+        end
+
+        -- MoveToward nearest position from nearest agent
+        if not self.arrived then
+            Activate( skill.links.reach, 1, { destination = self.params.units[ self.nextTargetIndex ] } )
+        else
+            Activate( skill.nodes.makeFollow, 1, { unit = self.params.units[ self.nextTargetIndex ] } )
+        end
+    end
+}
+
+-- **************************************************************************** 
+-- To make follow an agent
+-- @params: self.params.unit, a masalife agents (teammate or non-teammate units)
+-- @returns: makeFollowActionDone when unit has been told to follow.
+-- ****************************************************************************
+node "makeFollow"
+{
+    feedbacks   = { "makeFollowActionDone" },
+
+    -- -------------------------------------------------------------------------------- 
+    -- Follow the nearest agent
+    -- --------------------------------------------------------------------------------
+    select = function( self )
+        if meKnowledge:makeFollow( self.params.unit, "behaviors.tasks.Follow" ) then
+            Feedback( self.feedbacks.makeFollowActionDone )
+        end
+    end
+}

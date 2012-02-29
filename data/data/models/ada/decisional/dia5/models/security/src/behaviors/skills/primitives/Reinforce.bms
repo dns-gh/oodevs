@@ -1,22 +1,22 @@
 -- ****************************************************************************
--- To reach a decontamaintion plot and try to be decontaminated.
--- @params: self.params.decontaminationPlot, a masalife 'decontamiantionPlot' object
--- @returns: done once agent has been decontaminated.
+-- To reinforce a 'reinforceable' agent
+-- @params: self.params.entity, a masalife 'Reinforceable' object
+-- @returns: "reinforcing", when agent is reinforcing the agent.
 -- ****************************************************************************
 rootnode 
 {
-    connections = { skill.links.reach, skill.links.beDecontaminated },
-    feedbacks   = { "done" },
+    connections = { skill.links.reach, skill.links.reinforce },
+    feedbacks   = { "reinforcing" },
 
     -- --------------------------------------------------------------------------------
-    -- Feedbacks and slots
+    -- Feedbacks
     -- --------------------------------------------------------------------------------
     done = function( self, params ) -- from reach skill
         self.arrived = true
     end,
 
-    beDecontaminatedActionCompleted = function( self, params ) -- call by beDecontaminated action skill
-        Feedback( self.feedbacks.done )
+    reinforcementActionRunning = function( self, params ) -- from reinforce action skill
+        Feedback( self.feedbacks.reinforcing, params )
     end,
 
     -- --------------------------------------------------------------------------------
@@ -27,16 +27,15 @@ rootnode
     end,
 
     -- --------------------------------------------------------------------------------
-    -- Move to decontamination plot and request for decontamination
+    -- Move to system and operate it.
     -- --------------------------------------------------------------------------------
     activate = function( self )
         local Activate = Activate
 
         if self.arrived then
-            Activate( skill.links.beDecontaminated, 1, 
-              { decontaminationPlot = self.params.decontaminationPlot } )
+            Activate( skill.links.reinforce, 1, { entity = self.params.entity } )
         end
-        Activate( skill.links.reach, 1, { destination = self.params.decontaminationPlot } )
+        Activate( skill.links.reach, 1, { destination = self.params.entity } )
         self.arrived = false
     end
 }

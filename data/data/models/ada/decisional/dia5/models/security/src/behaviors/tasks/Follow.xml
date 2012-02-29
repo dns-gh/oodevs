@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="tasks.FollowAgents" source-version="1.0.0">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.tasks.Follow" source-version="1.0.0">
     <parameters>
-        <parameter name="agents">
+        <parameter name="entities">
             <type>
                 <list>
                     <class name="ontology.classes.Human"/>
@@ -14,6 +14,17 @@
                     <class name="agent.world.Destination"/>
                 </list>
             </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+        <parameter name="minDistance">
+            <type>
+                <simple name="numeric"/>
+            </type>
+            <default>
+                <number>0.0</number>
+            </default>
         </parameter>
     </parameters>
     <stages>
@@ -22,12 +33,17 @@
                 <skill name="behaviors.skills.Follow">
                     <parameter name="elementsToFollow">
                         <value>
-                            <parameter>agents</parameter>
+                            <parameter>entities</parameter>
                         </value>
                     </parameter>
                     <parameter name="positions">
                         <value>
                             <parameter>positions</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="minDistance">
+                        <value>
+                            <parameter>minDistance</parameter>
                         </value>
                     </parameter>
                 </skill>

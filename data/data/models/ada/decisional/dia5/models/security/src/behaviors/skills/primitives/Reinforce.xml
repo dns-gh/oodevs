@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.skills.primitives.Reinforce" source-version="1.0.0">
+    <description>For an agent to move toward an agent, and reinforce it. &#xD;
+Once the system is reached, the agent starts reinforcing it.</description>
+    <parameters>
+        <parameter name="entity">
+            <description>The entityto reinforce.</description>
+            <type>
+                <class name="agent.world.Reinforceable"/>
+            </type>
+        </parameter>
+    </parameters>
+    <body-type>
+        <class name="agent.world.Body"/>
+    </body-type>
+    <links>
+        <link name="reach" skill="behaviors.skills.primitives.Reach">
+            <description>To enact the decision to &quot;reach&quot; the entity. </description>
+        </link>
+        <link name="operate" skill="agent.behaviors.skills.actions.Reinforce">
+            <description>To enact the decision to reinforce the entity once it is reached.</description>
+        </link>
+    </links>
+    <feedbacks>
+        <feedback name="reinforcing">
+            <description>Sent once the agent is reinforcing the entity.</description>
+        </feedback>
+    </feedbacks>
+</skill>

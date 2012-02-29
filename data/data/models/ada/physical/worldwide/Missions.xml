@@ -2048,6 +2048,7 @@ A visited object won't be created and build if agent doesn't have the physical c
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="works" max-occurs="12554" min-occurs="1" name="works to perform" optional="false" type="PlannedWork"/>
+      <parameter dia-name="waitForReinforcement" name="waitForReinforcement" optional="true" type="Boolean"/>
     </mission>
     <mission dia-behavior="tasks.PerformWorks" dia-type="tasks.PerformWorks2" id="4475" name="MLSECURITY - Resume public works">
       <description>
@@ -2216,6 +2217,17 @@ A urban block won't be hit (unit cannot launch projectile) if agent doesn't have
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
+    </mission>
+    <mission dia-behavior="behaviors.tasks.StayInCrowd" dia-type="behaviors.tasks.StayInCrowd" id="4487" name="MLSECURITY - Stay in crowd">
+      <description>
+        <doctrine><![CDATA[To stay in a given crowd]]></doctrine>
+        <usage><![CDATA[Agent stays inside Crowd, moving with it.]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="crowd" name="crowd" optional="false" type="CrowdKnowledge"/>
     </mission>
   </units>
   <automats>
@@ -3572,4 +3584,4 @@ A urban block won't be hit (unit cannot launch projectile) if agent doesn't have
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="3479959754" -->
+<!-- signature="0524105951" -->

@@ -585,7 +585,8 @@ Returns 'true' when checkPoint is filtering.</description>
             </return>
         </method>
         <method name="beDecontaminated" abstract="false">
-            <description>To be decontaminated with the given decontamination plot. Returns 'true' once deonctamination is complete, 'false' otherwise.</description>
+            <description>To be decontaminated with the given decontamination plot. Returns 'true' once decontamination is complete, 'false' otherwise.&#xD;
+Agent can be decontaminated only if issued decontamination site is being operated by specific units.</description>
             <argument name="decontaminationPlot">
                 <description></description>
                 <type>
@@ -603,6 +604,37 @@ Returns 'true' when checkPoint is filtering.</description>
         </method>
         <method name="selfDecontaminate" abstract="false">
             <description>To self decontaminate instanteneously. Returns true once self decontamination action is completed.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="makeFollow">
+            <description>Returns 'true' once agent has been told to follow. 'False' otherwise.</description>
+            <argument name="agent">
+                <type>
+                    <class name="ontology.classes.Agent"/>
+                </type>
+            </argument>
+            <argument name="taskName">
+                <type>
+                    <simple name="string"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="reinforce" abstract="false">
+            <description>To reinforce the given parameter. Returns 'true' if target parameter has been reinforced. 'False' otherwise.</description>
+            <argument name="unit">
+                <type>
+                    <class name="agent.world.Reinforceable"/>
+                </type>
+            </argument>
             <return>
                 <type>
                     <simple name="boolean"/>

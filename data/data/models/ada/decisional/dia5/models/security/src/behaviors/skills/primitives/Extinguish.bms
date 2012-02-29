@@ -39,7 +39,8 @@ rootnode
     end,
 
     -- --------------------------------------------------------------------------------
-    -- Feedbacks
+    -- Move to position to extinguish cuurent fire
+    -- $$$ MIA: TODO A fire won't move...maybe call the query one time per Fire to extinguish. 
     -- --------------------------------------------------------------------------------
     activate = function( self )
         local Activate = Activate

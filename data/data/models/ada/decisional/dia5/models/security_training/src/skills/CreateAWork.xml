@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="skills.CreateAWork" source-version="1.0.0">
-    <description>For an agent to create and build a given object (work). This parameter could be an existing object (&quot;ontology.classes.Object&quot;) or a planned object (&quot;ontology.classes.Object&quot;). In the first case, the agent will ensure that the object is 100% built, in the second case, the object is first created, then 100% built. </description>
+    <description>For an agent to create and build a given object (work). This parameter could be an existing object (&quot;ontology.classes.Object&quot;) or a planned object (&quot;ontology.classes.Plannedwork&quot;). In the first case, the agent will ensure that the object is 100% built, in the second case, the object is first created, then 100% built. </description>
     <parameters>
         <parameter name="work">
             <description>The element to create and build.</description>

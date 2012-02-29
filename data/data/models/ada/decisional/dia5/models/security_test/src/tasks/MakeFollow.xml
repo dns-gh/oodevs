@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="tasks.MakeFollow" source-version="1.0.0">
+    <parameters>
+        <parameter name="agents">
+            <type>
+                <list>
+                    <class name="ontology.classes.Agent"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="starting to make agents follow" permanent="true">
+            <skills>
+                <skill name="behaviors.skills.MakeFollow">
+                    <parameter name="units">
+                        <value>
+                            <parameter>agents</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>
