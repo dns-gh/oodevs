@@ -18,6 +18,7 @@
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/Protocol.h"
 #include "meteo/ReadDirections.h"
+#include "MT_Tools/MT_Logger.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_OrderContext )
 
@@ -123,8 +124,9 @@ void MIL_OrderContext::ReadPhaseLines( const sword::MissionParameter& asn )
     {
         if( !asn.value_size() || !asn.value().Get( 0 ).has_phaseline() )
             throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
-        for( int i = 0; i < asn.value().Get( 0 ).phaseline().elem_size(); ++i )
-            limas_.push_back( MIL_LimaOrder( asn.value().Get( 0 ).phaseline().elem(i) ) );
+        int nLimas = asn.value().size();
+        for( int i = 0; i < nLimas; ++i )
+            limas_.push_back( MIL_LimaOrder( asn.value().Get( i ).phaseline().elem( 0 ) ) );
     }
 }
 
