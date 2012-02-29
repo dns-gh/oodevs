@@ -6292,7 +6292,7 @@
     </automat>
     <automat dia-type="TransportHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hm\model.bms" masalife="false" name="Sgpt Hm">
       <missions>
-        <mission name="AUTOMATE ALAT Heliporter">
+        <mission name="AUTOMATE ALAT Heliporter Helitransporter">
           <fragorder name="Changer Position Debarquement"/>
         </mission>
         <mission name="AUTOMATE ALAT Helitransporter">
@@ -6359,7 +6359,7 @@
     </automat>
     <automat dia-type="TransportHelicopterSquadron" file="Appui\Alat\Automates\Sgpt Hm\Model.bms" masalife="false" name="GLAISE ALFT esc UH et UM">
       <missions>
-        <mission name="AUTOMATE ALAT Heliporter">
+        <mission name="AUTOMATE ALAT Heliporter Helitransporter">
           <fragorder name="Changer Position Debarquement"/>
         </mission>
         <mission name="AUTOMATE ALAT Helitransporter">
@@ -7264,4 +7264,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0217529468" -->
+<!-- signature="1816550453" -->
