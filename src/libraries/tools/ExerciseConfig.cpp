@@ -18,7 +18,7 @@
 #include <boost/filesystem/operations.hpp>
 #pragma warning( pop )
 #include <boost/bind.hpp>
-#include <string>
+#include "MT_TOOLS/MT_Logger_ABC.h"
 
 namespace po = boost::program_options;
 namespace bfs = boost::filesystem;
@@ -63,8 +63,15 @@ void ExerciseConfig::Parse( int argc, char** argv )
         if( boost::filesystem::exists( debugSettingFile ) )
         {
             xml::xifstream xis( debugSettingFile );
-            xis >> xml::optional >> xml::start( "debug" )
-                                 >> xml::list( *this, &ExerciseConfig::ReadLogSettings );
+            if( xis.has_child( "debug" ) )
+            {
+                xis >> xml::start( "debug" );
+                dispatcherProtobufLogSettings_.SetLogSettings( "dispatcher", xis );
+                shieldLogSettings_.SetLogSettings( "shield", xis );
+                dispatcherLogSettings_.SetLogSettings( "dispatcherlog", xis );
+                simLogSettings_.SetLogSettings( "sim", xis );
+                simLoggerPluginSettings_.SetLogSettings( "messages", xis );
+            }
         }
     }
     catch( ... )
@@ -406,7 +413,8 @@ const tools::Loader_ABC& ExerciseConfig::GetLoader() const
 // -----------------------------------------------------------------------------
 void ExerciseConfig::LogSettings::SetLogSettings( int level, int files, int size, const std::string& sizeUnit )
 {
-    int maxLevel = static_cast< int >( LogSettings::elogLevel_all ) ;
+    set_ = true;
+    int maxLevel = static_cast< int >( LogSettings::elogLevel_all );
     if( level < 0 || level > maxLevel )
         level = maxLevel;
     if( files < 1 )
@@ -424,40 +432,232 @@ void ExerciseConfig::LogSettings::SetLogSettings( int level, int files, int size
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExerciseConfig::ReadLogSettings
-// Created: MMC 2012-01-25
+// Name: ExerciseConfig::LogSettings::SetLogSettings
+// Created: MMC 2012-02-27
 // -----------------------------------------------------------------------------
-void ExerciseConfig::ReadLogSettings( const std::string& name, xml::xistream& xis )
+void ExerciseConfig::LogSettings::SetLogSettings( const std::string& name, xml::xistream& xis )
 {
+    if( !xis.has_child( name ) )
+        return;
+    xis >> xml::start( name );
     std::string sizeUnit;
-    int logLevel = -1, files = -1, size = -1;
+    int files = 1, size = -1, logLevel = static_cast< int >( LogSettings::elogLevel_all );
     xis >> xml::optional >> xml::attribute( "loglevel", logLevel )
         >> xml::optional >> xml::attribute( "logfiles", files )
         >> xml::optional >> xml::attribute( "logsize", size )
         >> xml::optional >> xml::attribute( "sizeunit", sizeUnit);
-    logSettings_[ name ].SetLogSettings( logLevel, files, size, sizeUnit );
+    SetLogSettings( logLevel, files, size, sizeUnit );
+    xis >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExerciseConfig::SetLogSettings
+// Name: ExerciseConfig::SetDispatcherLogSettings
 // Created: MMC 2012-02-21
 // -----------------------------------------------------------------------------
-void ExerciseConfig::SetLogSettings( const std::string& name, int level, int files, int size, const std::string& sizeUnit, bool replace /* = true */ )
+void ExerciseConfig::SetDispatcherLogSettings( const LogSettingsData& settings )
 {
-    std::map< std::string, LogSettings >::iterator it = logSettings_.find( name );
-    if( replace || it == logSettings_.end() )
-        logSettings_[ name ].SetLogSettings( level, files, size, sizeUnit );
+    if( settings.isSet() &&  !dispatcherLogSettings_.IsSet() )
+        dispatcherLogSettings_.SetLogSettings( settings.level_, settings.files_, settings.fileSize_, settings.sizeUnit_ );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ExerciseConfig::GetLogSettings
+// Name: ExerciseConfig::SetShieldLogSettings
 // Created: MMC 2012-02-21
 // -----------------------------------------------------------------------------
-void ExerciseConfig::GetLogSettings( const std::string& field, LogSettings& logSettings )
+void ExerciseConfig::SetShieldLogSettings( const LogSettingsData& settings )
 {
-    LogSettings settings;
-    std::map< std::string, LogSettings >::iterator it = logSettings_.find( field );
-    if( it != logSettings_.end() )
-        settings = it->second;
-    logSettings = settings;
+    if( settings.isSet() && !shieldLogSettings_.IsSet() )
+        shieldLogSettings_.SetLogSettings( -1, settings.files_, settings.fileSize_, settings.sizeUnit_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::SetSimLogSettings
+// Created: MMC 2012-02-21
+// -----------------------------------------------------------------------------
+void ExerciseConfig::SetSimLogSettings( const LogSettingsData& settings )
+{
+    if( settings.isSet() && !simLogSettings_.IsSet() )
+        simLogSettings_.SetLogSettings( settings.level_, settings.files_, settings.fileSize_, settings.sizeUnit_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::SetDispatcherProtobufLogSettings
+// Created: MMC 2012-02-21
+// -----------------------------------------------------------------------------
+void ExerciseConfig::SetDispatcherProtobufLogSettings( const LogSettingsData& settings )
+{
+    if( settings.isSet() && !dispatcherProtobufLogSettings_.IsSet() )
+        dispatcherProtobufLogSettings_.SetLogSettings( -1, settings.files_, settings.fileSize_, settings.sizeUnit_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::SetLoggerPluginLogSettings
+// Created: MMC 2012-02-21
+// -----------------------------------------------------------------------------
+void ExerciseConfig::SetLoggerPluginLogSettings( const LogSettingsData& settings )
+{
+    if( settings.isSet() && !simLoggerPluginSettings_.IsSet() )
+        simLoggerPluginSettings_.SetLogSettings( settings.level_, settings.files_, settings.fileSize_, settings.sizeUnit_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetDispatcherLogFiles
+// Created: MMC 2012-02-21
+// -----------------------------------------------------------------------------
+unsigned int ExerciseConfig::GetDispatcherProtobufLogFiles() const
+{
+    return dispatcherProtobufLogSettings_.GetMaxFiles();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetDispatcherLogSize
+// Created: MMC 2012-02-21
+// -----------------------------------------------------------------------------
+int ExerciseConfig::GetDispatcherProtobufLogSize() const
+{
+    return dispatcherProtobufLogSettings_.GetMaxSize();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetDispatcherLogLevel
+// Created: MMC 2012-02-21
+// -----------------------------------------------------------------------------
+unsigned int ExerciseConfig::GetDispatcherLogLevel() const
+{
+    return static_cast< unsigned int >( MT_Logger_ABC::ConvertConfigLevel( dispatcherProtobufLogSettings_.GetLogLevel() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetShieldLogFiles
+// Created: MMC 2012-02-21
+// -----------------------------------------------------------------------------
+unsigned int ExerciseConfig::GetShieldLogFiles() const
+{
+    return shieldLogSettings_.GetMaxFiles();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetShieldLogSize
+// Created: MMC 2012-02-21
+// -----------------------------------------------------------------------------
+int ExerciseConfig::GetShieldLogSize() const
+{
+    return shieldLogSettings_.GetMaxSize();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetDispatcherLogFiles
+// Created: MMC 2012-02-21
+// -----------------------------------------------------------------------------
+unsigned int ExerciseConfig::GetDispatcherLogFiles() const
+{
+    return dispatcherLogSettings_.GetMaxFiles();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetDispatcherLogSize
+// Created: MMC 2012-02-21
+// -----------------------------------------------------------------------------
+int ExerciseConfig::GetDispatcherLogSize() const
+{
+    return dispatcherLogSettings_.GetMaxSize();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetSimLogFiles
+// Created: MMC 2012-02-21
+// -----------------------------------------------------------------------------
+unsigned int ExerciseConfig::GetSimLogFiles() const
+{
+    return simLogSettings_.GetMaxFiles();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetSimLogSize
+// Created: MMC 2012-02-21
+// -----------------------------------------------------------------------------
+int ExerciseConfig::GetSimLogSize() const
+{
+    return simLogSettings_.GetMaxSize();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetSimLogLevel
+// Created: MMC 2012-02-21
+// -----------------------------------------------------------------------------
+unsigned int ExerciseConfig::GetSimLogLevel() const
+{
+    return static_cast< unsigned int >( MT_Logger_ABC::ConvertConfigLevel( simLogSettings_.GetLogLevel() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetLoggerPluginLogFiles
+// Created: MMC 2012-02-21
+// -----------------------------------------------------------------------------
+unsigned int ExerciseConfig::GetLoggerPluginLogFiles() const
+{
+    return simLoggerPluginSettings_.GetMaxFiles();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetLoggerPluginLogSize
+// Created: MMC 2012-02-21
+// -----------------------------------------------------------------------------
+int ExerciseConfig::GetLoggerPluginLogSize() const
+{
+    return simLoggerPluginSettings_.GetMaxSize();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::GetLoggerPluginLogLevel
+// Created: MMC 2012-02-21
+// -----------------------------------------------------------------------------
+unsigned int ExerciseConfig::GetLoggerPluginLogLevel() const
+{
+    return static_cast< unsigned int >( MT_Logger_ABC::ConvertConfigLevel( simLoggerPluginSettings_.GetLogLevel() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::IsSimLogInBytes
+// Created: MMC 2012-02-21
+// -----------------------------------------------------------------------------
+bool ExerciseConfig::IsSimLogInBytes() const
+{
+    return simLogSettings_.IsSizeInBytes();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::IsShieldLogInBytes
+// Created: MMC 2012-02-21
+// -----------------------------------------------------------------------------
+bool ExerciseConfig::IsShieldLogInBytes() const
+{
+    return shieldLogSettings_.IsSizeInBytes();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::IsDispatcherLogInBytes
+// Created: MMC 2012-02-21
+// -----------------------------------------------------------------------------
+bool ExerciseConfig::IsDispatcherLogInBytes() const
+{
+    return dispatcherLogSettings_.IsSizeInBytes();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::IsDispatcherProtobufLogInBytes
+// Created: MMC 2012-02-21
+// -----------------------------------------------------------------------------
+bool ExerciseConfig::IsDispatcherProtobufLogInBytes() const
+{
+    return dispatcherProtobufLogSettings_.IsSizeInBytes();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::IsDispatcherProtobufLogInBytes
+// Created: MMC 2012-02-21
+// -----------------------------------------------------------------------------
+bool ExerciseConfig::IsLoggerPluginLogInBytes() const
+{
+    return simLoggerPluginSettings_.IsSizeInBytes();
 }

@@ -31,7 +31,8 @@ namespace
             : log_( factory_,
                     config.BuildSessionChildFile( "Shield.log" ),
                     config.GetShieldLogFiles(),
-                    config.GetShieldLogSize() )
+                    config.GetShieldLogSize(),
+                    config.IsShieldLogInBytes() )
         {}
         virtual void Info( const std::string& message )
         {

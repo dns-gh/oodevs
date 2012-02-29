@@ -77,8 +77,51 @@ public:
     void LoadExercise( const std::string& file ); //$$$ Rien à foutre la ...
     //@}
 
+    //! @name Operations
+    //@{
+    const Loader_ABC& GetLoader() const;
+
+    virtual unsigned int GetDispatcherProtobufLogFiles() const;
+    virtual int GetDispatcherProtobufLogSize() const;
+    virtual unsigned int GetShieldLogFiles() const;
+    virtual int GetShieldLogSize() const;
+    virtual unsigned int GetDispatcherLogFiles() const;
+    virtual unsigned int GetDispatcherLogLevel() const;
+    virtual int GetDispatcherLogSize() const;
+    virtual unsigned int GetSimLogFiles() const;
+    virtual unsigned int GetSimLogLevel() const;
+    virtual int GetSimLogSize() const;
+    virtual unsigned int GetLoggerPluginLogFiles() const;
+    virtual unsigned int GetLoggerPluginLogLevel() const;
+    virtual int GetLoggerPluginLogSize() const;
+
+    virtual bool IsSimLogInBytes() const;
+    virtual bool IsShieldLogInBytes() const;
+    virtual bool IsDispatcherLogInBytes() const;
+    virtual bool IsDispatcherProtobufLogInBytes() const;
+    virtual bool IsLoggerPluginLogInBytes() const;
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void ReadExercise( xml::xistream& xis );
+    //@}
+
+protected:
+
     //! @name Types
     //@{
+    struct LogSettingsData
+    {
+        LogSettingsData(): level_( -1 ), files_( -1 ), fileSize_( -1 ) {}
+        bool isSet() const { return level_ >= 0 || files_ >= 0 || fileSize_ >= 0; }
+        int level_;
+        int files_;
+        int fileSize_;
+        std::string sizeUnit_;
+    };
+
     class LogSettings
     {
     public:
@@ -89,12 +132,14 @@ public:
             elogLevel_all
         };
 
-        LogSettings(): logLevel_( elogLevel_all ), maxFiles_( 1 ), maxFileSize_( -1 ), sizeUnit_( eLogSizeType_Lines ) {}
+        LogSettings(): logLevel_( elogLevel_all ), maxFiles_( 1 ), maxFileSize_( -1 ), sizeUnit_( eLogSizeType_Lines ), set_( false ) {}
+        void SetLogSettings( const std::string& name, xml::xistream& xis );
         void SetLogSettings( int level, int files, int size, const std::string& sizeUnit );
-        unsigned int GetLogLevel() { return static_cast< unsigned int >( logLevel_ ); }
-        unsigned int GetMaxFiles() { return maxFiles_; }
-        int GetMaxSize() { return maxFileSize_; }
-        bool IsSizeInBytes() { return sizeUnit_ == eLogSizeType_Bytes; }
+        unsigned int GetLogLevel() const { return static_cast< unsigned int >( logLevel_ ); }
+        unsigned int GetMaxFiles() const { return maxFiles_; }
+        int GetMaxSize() const { return maxFileSize_; }
+        bool IsSizeInBytes() const { return sizeUnit_ == eLogSizeType_Bytes; }
+        bool IsSet() const { return set_; }
 
     private:
         enum eLogSizeType
@@ -102,7 +147,7 @@ public:
             eLogSizeType_Lines,
             eLogSizeType_Bytes,
         };
-
+        bool set_;
         eLogLevel logLevel_;
         unsigned int maxFiles_;
         int maxFileSize_;
@@ -110,24 +155,14 @@ public:
     };
     //@}
 
-    //! @name Operations
-    //@{
-    const Loader_ABC& GetLoader() const;
-    virtual void GetLogSettings( const std::string& field, LogSettings& logSettings );
-    //@}
-
-private:
     //! @name Helpers
     //@{
-    void ReadExercise( xml::xistream& xis );
+    void SetDispatcherProtobufLogSettings( const LogSettingsData& settings );
+    void SetDispatcherLogSettings( const LogSettingsData& settings );
+    void SetShieldLogSettings( const LogSettingsData& settings );
+    void SetSimLogSettings( const LogSettingsData& settings );
+    void SetLoggerPluginLogSettings( const LogSettingsData& settings );
     void SetExerciseName( const std::string& file );
-    void ReadLogSettings( const std::string& name, xml::xistream& xis );
-    //@}
-
-protected:
-    //! @name Helpers
-    //@{
-    void SetLogSettings( const std::string& name, int level, int files, int size, const std::string& sizeUnit, bool replace = true );
     //@}
 
 private:
@@ -151,7 +186,11 @@ private:
     std::string population_;
     std::string propagations_;
 
-    std::map< std::string, LogSettings > logSettings_;
+    LogSettings dispatcherProtobufLogSettings_;
+    LogSettings shieldLogSettings_;
+    LogSettings dispatcherLogSettings_;
+    LogSettings simLogSettings_;
+    LogSettings simLoggerPluginSettings_;
     //@}
 };
 

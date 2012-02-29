@@ -32,10 +32,6 @@ Config::Config( tools::RealFileLoaderObserver_ABC& observer )
     , keyFramesFrequency_      ( 100 )
     , replayFragmentsFrequency_( 150 )
     , timeStep_                ( 0 )
-    , logFiles_                ( 0 )
-    , logSize_                 ( 0 )
-    , shieldLogFiles_          ( 0 )
-    , shieldLogSize_           ( 0 )
     , useShieldUtf8Encoding_   ( true )
 {
     po::options_description desc( "Dispatcher/replayer options" );
@@ -54,31 +50,13 @@ Config::~Config()
     // NOTHING
 }
 
-namespace
-{
-    void ReadDebugConfigFile( const std::string& filename, unsigned int& logFiles, unsigned int& logSize, unsigned int& shieldLogFiles, unsigned int& shieldLogSize )
-    {
-        if( boost::filesystem::exists( filename ) )
-        {
-            xml::xifstream xis( filename );
-            xis >> xml::start( "debug" )
-                    >> xml::optional >> xml::start( "dispatcher" )
-                        >> xml::optional >> xml::attribute( "logfiles", logFiles )
-                        >> xml::optional >> xml::attribute( "logsize", logSize )
-                    >> xml::end
-                    >> xml::optional >>xml::start( "shield" )
-                        >> xml::optional >> xml::attribute( "logfiles", shieldLogFiles )
-                        >> xml::optional >> xml::attribute( "logsize", shieldLogSize );
-        }
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: Config::Parse
 // Created: NLD 2007-01-10
 // -----------------------------------------------------------------------------
 void Config::Parse( int argc, char** argv )
 {
+    LogSettingsData logShield, logDispatcherProtobuf, logDispatcher, logLoggerPlugin;
     tools::SessionConfig::Parse( argc, argv );
     unsigned short port;
     xml::xifstream xis( GetSessionFile() );
@@ -95,9 +73,22 @@ void Config::Parse( int argc, char** argv )
                         >> xml::attribute( "server", port )
                         >> xml::optional >> xml::attribute( "timeout", networkTimeout_ )
                     >> xml::end
+                    >> xml::optional >> xml::start( "log" )
+                        >> xml::optional >> xml::attribute( "loglevel", logDispatcher.level_ )
+                        >> xml::optional >> xml::attribute( "logfiles", logDispatcher.files_ )
+                        >> xml::optional >> xml::attribute( "logsize",  logDispatcher.fileSize_ )
+                        >> xml::optional >> xml::attribute( "sizeunit", logDispatcher.sizeUnit_ )
+                    >> xml::end
+                    >> xml::optional >> xml::start( "messages" )
+                        >> xml::optional >> xml::attribute( "loglevel", logLoggerPlugin.level_ )
+                        >> xml::optional >> xml::attribute( "logfiles", logLoggerPlugin.files_ )
+                        >> xml::optional >> xml::attribute( "logsize",  logLoggerPlugin.fileSize_ )
+                        >> xml::optional >> xml::attribute( "sizeunit", logLoggerPlugin.sizeUnit_ )
+                    >> xml::end
                     >> xml::optional >> xml::start( "debug" )
-                        >> xml::optional >> xml::attribute( "logfiles", logFiles_ )
-                        >> xml::optional >> xml::attribute( "logsize", logSize_ )
+                        >> xml::optional >> xml::attribute( "logfiles", logDispatcherProtobuf.files_ )
+                        >> xml::optional >> xml::attribute( "logsize",  logDispatcherProtobuf.fileSize_ )
+                        >> xml::optional >> xml::attribute( "sizeunit", logDispatcherProtobuf.sizeUnit_ )
                     >> xml::end
                     >> xml::start( "plugins" )
                         >> xml::optional >>xml::start( "recorder" )
@@ -106,16 +97,20 @@ void Config::Parse( int argc, char** argv )
                         >> xml::end
                         >> xml::optional >>xml::start( "shield" )
                             >> xml::attribute( "server", networkShieldParameters_ )
-                            >> xml::optional >> xml::attribute( "logfiles", shieldLogFiles_ )
-                            >> xml::optional >> xml::attribute( "logsize", shieldLogSize_ )
+                            >> xml::optional >> xml::attribute( "logfiles", logShield.files_ )
+                            >> xml::optional >> xml::attribute( "logsize", logShield.fileSize_ )
+                            >> xml::optional >> xml::attribute( "sizeunit", logShield.sizeUnit_ )
                             >> xml::optional >> xml::attribute( "use-utf8-string-encoding", useShieldUtf8Encoding_ );
-    ReadDebugConfigFile( BuildExerciseChildFile( "debug.xml" ), logFiles_, logSize_, shieldLogFiles_, shieldLogSize_ );
     if( networkSimulationPort_ != 0 )
         networkSimulationParameters_ =
             networkSimulationParameters_.substr( 0, networkSimulationParameters_.find( ':' ) )
             + ':' + boost::lexical_cast< std::string >( networkSimulationPort_ );
     if( ! networkClientsParameters_ )
         networkClientsParameters_ = port;
+    SetDispatcherProtobufLogSettings( logDispatcherProtobuf );
+    SetDispatcherLogSettings( logDispatcher );
+    SetLoggerPluginLogSettings( logLoggerPlugin );
+    SetShieldLogSettings( logShield );
 }
 
 // -----------------------------------------------------------------------------
@@ -188,40 +183,4 @@ unsigned int Config::GetReplayFragmentsFrequency() const
 unsigned int Config::GetTickDuration() const
 {
     return timeStep_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Config::GetLogFiles
-// Created: MCO 2011-06-27
-// -----------------------------------------------------------------------------
-unsigned int Config::GetLogFiles() const
-{
-    return logFiles_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Config::GetLogSize
-// Created: MCO 2011-06-27
-// -----------------------------------------------------------------------------
-unsigned int Config::GetLogSize() const
-{
-    return logSize_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Config::GetShieldLogFiles
-// Created: MCO 2011-06-26
-// -----------------------------------------------------------------------------
-unsigned int Config::GetShieldLogFiles() const
-{
-    return shieldLogFiles_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Config::GetShieldLogSize
-// Created: MCO 2011-06-26
-// -----------------------------------------------------------------------------
-unsigned int Config::GetShieldLogSize() const
-{
-    return shieldLogSize_;
 }

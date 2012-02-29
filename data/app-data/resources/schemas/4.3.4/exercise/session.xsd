@@ -98,6 +98,60 @@
             </xs:attribute>
           </xs:complexType>
         </xs:element>
+        <xs:element name="log" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Enables message debugging.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:attribute name="loglevel" type="xs:nonNegativeInteger" use="optional">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Set log file trace level. 0: errors. 1: errors and warnings. 2: all. Default: all.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="logfiles" type="xs:nonNegativeInteger" use="optional">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Set the number of rotating log files.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="logsize" type="xs:nonNegativeInteger" use="optional">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Set the maximum number of messages to log in each log file.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="sizeunit" type="xs:string" use="optional">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Log file size unit: "lines", "bytes", "kbytes" or "mbytes". Default: "lines".</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
+        <xs:element name="messages" minOccurs="0">
+          <xs:annotation>
+            <xs:documentation xml:lang="en">Enables message debugging.</xs:documentation>
+          </xs:annotation>
+          <xs:complexType>
+            <xs:attribute name="loglevel" type="xs:nonNegativeInteger" use="optional">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Set log file trace level. 0: errors. 1: errors and warnings. 2: all. Default: all.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="logfiles" type="xs:nonNegativeInteger" use="optional">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Set the number of rotating log files.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="logsize" type="xs:nonNegativeInteger" use="optional">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Set the maximum number of messages to log in each log file.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="sizeunit" type="xs:string" use="optional">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Log file size unit: "lines", "bytes", "kbytes" or "mbytes". Default: "lines".</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+          </xs:complexType>
+        </xs:element>
         <xs:element name="debug" minOccurs="0">
           <xs:annotation>
             <xs:documentation xml:lang="en">Enables message debugging.</xs:documentation>
@@ -111,6 +165,11 @@
             <xs:attribute name="logsize" type="xs:nonNegativeInteger" use="optional">
               <xs:annotation>
                 <xs:documentation xml:lang="en">Set the maximum number of messages to log in each log file.</xs:documentation>
+              </xs:annotation>
+            </xs:attribute>
+            <xs:attribute name="sizeunit" type="xs:string" use="optional">
+              <xs:annotation>
+                <xs:documentation xml:lang="en">Log file size unit: "lines", "bytes", "kbytes" or "mbytes". Default: "lines".</xs:documentation>
               </xs:annotation>
             </xs:attribute>
           </xs:complexType>
@@ -235,6 +294,7 @@
                   </xs:attribute>
                   <xs:attribute name="logfiles" type="xs:nonNegativeInteger" use="optional"/>
                   <xs:attribute name="logsize" type="xs:nonNegativeInteger" use="optional"/>
+                  <xs:attribute name="sizeunit" type="xs:string" use="optional"/>
                 </xs:complexType>
               </xs:element>
               <!-- $$$TODO: Add more plugins -->

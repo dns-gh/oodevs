@@ -86,24 +86,15 @@ void MT_FileLogger::LogString( E_LogLevel nLogLevel, const char* strMessage, con
         messageStream << "[Context: " << strContext << "]";
     messageStream << std::endl;
 
-    int messageSize = 1;
     if( maxSize_ > 0 )
     {
-        if( sizeInBytes_ )
-        {
-            messageSize = static_cast< int >( messageStream.str().size() );
-            sizeCount_ += messageSize;
-        }
-        else
-            ++sizeCount_;
-
+        int messageSize = sizeInBytes_ ? static_cast< int >( messageStream.str().size() ) : 1;
+        sizeCount_ += messageSize;
         if( sizeCount_ > maxSize_ )
         {
-            ++filesCount_;
             sizeCount_ = messageSize;
-            if ( filesCount_ > maxFiles_ )
+            if ( ++filesCount_ > maxFiles_ )
                 filesCount_ = 1;
-
             if( filesCount_ == 1 )
                 OpenNewOfstream( fileName_ );
             else

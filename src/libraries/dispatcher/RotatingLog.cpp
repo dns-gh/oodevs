@@ -43,53 +43,29 @@ RotatingLog::RotatingLog( dispatcher::LogFactory_ABC& factory, const std::string
 }
 
 // -----------------------------------------------------------------------------
-// Name: RotatingLog::CreateFileLog
-// Created: MMC 2012-02-21
-// -----------------------------------------------------------------------------
-void RotatingLog::CreateFileLog()
-{
-    pLog_.reset();
-    if( file_ == 1 )
-        pLog_ = factory_.CreateLog( filename_ );
-    else
-        pLog_ = factory_.CreateLog( fileNameNoExtension_ + ( "." + boost::lexical_cast< std::string >( file_ - 1 ) ) + extension_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: RotatingLog::DoWrite
 // Created: MCO 2011-06-26
 // -----------------------------------------------------------------------------
 void RotatingLog::DoWrite( const std::string& line )
 {
-    if( sizeInBytes_ )
+    if( size_ > 0 )
     {
-        unsigned int messageSize = static_cast< unsigned int >( line.size() );
+        unsigned int messageSize = sizeInBytes_ ? static_cast< unsigned int >( line.size() ) : 1;
         count_ += messageSize;
-        if ( !pLog_.get() )
-            pLog_ = factory_.CreateLog( filename_ );
-        else if( size_ > 0 && count_ > size_ )
+        if( count_ > size_ )
         {
+            if( pLog_.get() )
+                pLog_.reset();
             count_ = messageSize;
-            ++file_;
-            if( file_ > files_ )
+            if( ++file_ > files_ )
                 file_ = 1;
-            CreateFileLog();
+            if( file_ == 1 )
+                pLog_ = factory_.CreateLog( filename_ );
+            else
+                pLog_ = factory_.CreateLog( fileNameNoExtension_ + ( "." + boost::lexical_cast< std::string >( file_ - 1 ) ) + extension_ );
         }
-        pLog_->Write( line );
     }
-    else
-    {
-        if( size_ > 0 && count_ >= size_ )
-        {
-            ++file_;
-            if( file_ > files_ )
-                file_ = 1;
-        }
-        if( !pLog_.get() )
-            pLog_ = factory_.CreateLog( filename_ );
-        else
-            CreateFileLog();
-        pLog_->Write( line );
-        ++count_;
-    }
+    if( !pLog_.get() )
+        pLog_ = factory_.CreateLog( filename_ );
+    pLog_->Write( line );
 }
