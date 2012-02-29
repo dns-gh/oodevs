@@ -379,7 +379,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     }
     // Extensions panel
     {
-        pExtensionsPanel_ = new ExtensionsPanel( this, controllers, model, staticModel_, simulation, *factory, *icons, profile, "ExtensionsPanel" );
+        pExtensionsPanel_ = new ExtensionsPanel( this, controllers, model, staticModel_, simulation, "ExtensionsPanel" );
         addDockWidget( Qt::LeftDockWidgetArea, pExtensionsPanel_ );
         pExtensionsPanel_->hide();
     }

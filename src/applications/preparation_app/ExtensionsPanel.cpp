@@ -23,9 +23,8 @@ using namespace kernel;
 // Name: ExtensionsPanel constructor
 // Created: JSR 2011-12-08
 // -----------------------------------------------------------------------------
-ExtensionsPanel::ExtensionsPanel( QMainWindow* parent, Controllers& controllers, const ExtensionTypes& extensions, const tools::Resolver< Agent_ABC >& agents,
-                                  gui::ItemFactory_ABC& factory, const gui::EntitySymbols& icons, const Profile_ABC& profile, const char* name /*= 0*/ )
-    : gui::ExtensionsPanel( parent, controllers, extensions, agents, factory, icons, profile, name )
+ExtensionsPanel::ExtensionsPanel( QMainWindow* parent, Controllers& controllers, const ExtensionTypes& extensions, const tools::Resolver< Agent_ABC >& agents, const tools::Resolver< kernel::Formation_ABC >& formations, const char* name /*= 0*/ )
+    : gui::ExtensionsPanel( parent, controllers, extensions, agents, formations, name )
 {
         // NOTHING
 }

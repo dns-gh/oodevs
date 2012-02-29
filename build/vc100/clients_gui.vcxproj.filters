@@ -784,9 +784,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\DiffusionListFunctors.cpp">
       <Filter>Source Files\Dialogs\Diffusion List</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\DiffusionListHierarchy.cpp">
-      <Filter>Source Files\Dialogs\Diffusion List</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\DiffusionListLineEdit.cpp">
       <Filter>Source Files\Dialogs\Diffusion List</Filter>
     </ClCompile>
@@ -804,9 +801,6 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\TerrainProfilerLayer.cpp">
       <Filter>Source Files\GIS\Terrain Profiler</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\DiffusionListLegendBar.cpp">
-      <Filter>Source Files\Dialogs\Diffusion List</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\ComboTableItem.cpp">
       <Filter>Source Files\Tools</Filter>
@@ -848,6 +842,12 @@
       <Filter>Source Files\Dialogs</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\RichGroupBox.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\DiffusionListEditor.cpp">
+      <Filter>Source Files\Dialogs\Diffusion List</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\VerticalHeaderTableView.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
   </ItemGroup>
@@ -1350,9 +1350,6 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\TerrainProfilerLayer.h">
       <Filter>Source Files\GIS\Terrain Profiler</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\DiffusionListLegendBar.h">
-      <Filter>Source Files\Dialogs\Diffusion List</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\UnitStateTable_ABC.h">
       <Filter>Source Files\Dialogs\Unit state</Filter>
     </ClInclude>
@@ -1378,6 +1375,9 @@
       <Filter>Source Files\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\ContourLinesObserver.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\VerticalHeaderTableView.h">
       <Filter>Source Files\Tools</Filter>
     </ClInclude>
   </ItemGroup>
@@ -1654,9 +1654,6 @@
     <CustomBuild Include="..\..\src\libraries\clients_gui\DiffusionListDialog.h">
       <Filter>Source Files\Dialogs\Diffusion List</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\DiffusionListHierarchy.h">
-      <Filter>Source Files\Dialogs\Diffusion List</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\DiffusionListLineEdit.h">
       <Filter>Source Files\Dialogs\Diffusion List</Filter>
     </CustomBuild>
@@ -1725,6 +1722,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\RichGroupBox.h">
       <Filter>Source Files\Tools</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\DiffusionListEditor.h">
+      <Filter>Source Files\Dialogs\Diffusion List</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

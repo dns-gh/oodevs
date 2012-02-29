@@ -49,16 +49,15 @@ public:
 private slots:
     //! @name Helpers
     //@{
-    void OnAccepted( const QString& );
-    void OnRejected();
+    void OnAccepted();
     //@}
 
 private:
     //! @name Member data
     //@{
-    DiffusionListDialog& dialog_;
+    DiffusionListDialog&                      dialog_;
     kernel::SafePointer< kernel::Entity_ABC > selected_;
-    const std::string extensionName_;
+    const std::string                         extensionName_;
     //@}
 };
 

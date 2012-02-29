@@ -24,8 +24,7 @@ class ExtensionsPanel : public gui::ExtensionsPanel
 public:
     //! @name Constructors/Destructor
     //@{
-    ExtensionsPanel( QMainWindow* parent, kernel::Controllers& controllers, const kernel::ExtensionTypes& extensions, const tools::Resolver< kernel::Agent_ABC >& agents,
-                     gui::ItemFactory_ABC& factory, const gui::EntitySymbols& icons, const kernel::Profile_ABC& profile, const char* name = 0 );
+    ExtensionsPanel( QMainWindow* parent, kernel::Controllers& controllers, const kernel::ExtensionTypes& extensions, const tools::Resolver< kernel::Agent_ABC >& agents, const tools::Resolver< kernel::Formation_ABC >& formations, const char* name = 0 );
     virtual ~ExtensionsPanel();
     //@}
 

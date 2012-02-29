@@ -30,8 +30,8 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "DiffusionListDialog.h"
+#include "DiffusionListFunctors.h"
 #include "DiffusionListLineEdit.h"
-#include "DiffusionListHierarchy.h"
 #include <boost/lexical_cast.hpp>
 
 using namespace gui;
@@ -51,12 +51,11 @@ namespace
 // Name: ExtensionsPanel constructor
 // Created: JSR 2010-10-04
 // -----------------------------------------------------------------------------
-ExtensionsPanel::ExtensionsPanel( QMainWindow* parent, kernel::Controllers& controllers, const kernel::ExtensionTypes& extensions, const tools::Resolver< Agent_ABC >& agents,
-                                  ItemFactory_ABC& factory, const EntitySymbols& icons, const Profile_ABC& profile, const char* name /* = 0*/ )
+ExtensionsPanel::ExtensionsPanel( QMainWindow* parent, kernel::Controllers& controllers, const kernel::ExtensionTypes& extensions, const tools::Resolver< Agent_ABC >& agents, const tools::Resolver< kernel::Formation_ABC >& formations, const char* name )
     : QDockWidget( name, parent )
     , controllers_    ( controllers )
     , extensions_     ( extensions )
-    , diffusionDialog_( new DiffusionListDialog( parent, controllers, agents, extensions, factory, icons, profile, "ExtensionPanel_DiffusionListDialog" ) )
+    , diffusionDialog_( new DiffusionListDialog( parent, controllers, agents, formations, extensions, "DiffusionListDialog" ) )
     , selected_       ( 0 )
     , pGroupBox_      ( 0 )
     , updating_       ( false )
@@ -357,14 +356,16 @@ void ExtensionsPanel::AddWidget( const kernel::AttributeType& attribute )
         break;
     case AttributeType::ETypeDiffusionList:
         {
+            if( !diffusionDialog_.get() )
+                return;
             const std::string extensionName = extensions_.GetNameByType( AttributeType::ETypeDiffusionList );
             assert( !extensionName.empty() );
             DiffusionListLineEdit* edit = new DiffusionListLineEdit( box, controllers_, selected_, *diffusionDialog_, extensionName, attribute.GetName().c_str() );
-            edit->setValidator( new QMinMaxValidator( edit, min, max, new QRegExpValidator( DiffusionListHierarchy::diffusionRegexp_, edit ) ) );
             edit->insert( value.c_str() );
+            edit->setValidator( new QMinMaxValidator( edit, min, max, new QRegExpValidator( DiffusionListData::regexp_, edit ) ) );
             box->setStretchFactor( edit, 1 );
             widgets_.push_back( edit );
-            connect( edit, SIGNAL( textChanged( const QString& ) ), SLOT( Commit() ) );
+            connect( edit, SIGNAL( textChanged( const QString & ) ), SLOT( Commit() ) );
         }
         break;
     default:

@@ -17,7 +17,7 @@ CrossingSitePrototype_ABC.cpp \
 DelayPrototype_ABC.cpp \
 DensityWidget.cpp \
 DiffusionListDialog.cpp \
-DiffusionListHierarchy.cpp \
+DiffusionListEditor.cpp \
 DiplomacyDialog_ABC.cpp \
 DisplayToolbar.cpp \
 DrawerLayer.cpp \
