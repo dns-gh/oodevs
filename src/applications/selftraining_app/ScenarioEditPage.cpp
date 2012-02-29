@@ -140,6 +140,7 @@ void ScenarioEditPage::OnEdit()
         break;
     case eTabs_Import:
         importWidget_->InstallExercise();
+        Update();
         break;
     case eTabs_Export:
         exportWidget_->ExportPackage();
