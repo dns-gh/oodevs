@@ -56,8 +56,7 @@ Config::~Config()
 // -----------------------------------------------------------------------------
 void Config::Parse( int argc, char** argv )
 {
-    std::string logDispatcherSizeUnit; int logDispatcherLevel = -1, logDispatcherFiles = -1, logDispatcherFileSize = -1;
-    std::string logShieldSizeUnit; int logShieldFiles = -1, logShieldFileSize = -1;
+    LogSettingsData logShield, logDispatcherProtobuf, logDispatcher, logLoggerPlugin;
     tools::SessionConfig::Parse( argc, argv );
     unsigned short port;
     xml::xifstream xis( GetSessionFile() );
@@ -74,11 +73,22 @@ void Config::Parse( int argc, char** argv )
                         >> xml::attribute( "server", port )
                         >> xml::optional >> xml::attribute( "timeout", networkTimeout_ )
                     >> xml::end
+                    >> xml::optional >> xml::start( "log" )
+                        >> xml::optional >> xml::attribute( "loglevel", logDispatcher.level_ )
+                        >> xml::optional >> xml::attribute( "logfiles", logDispatcher.files_ )
+                        >> xml::optional >> xml::attribute( "logsize",  logDispatcher.fileSize_ )
+                        >> xml::optional >> xml::attribute( "sizeunit", logDispatcher.sizeUnit_ )
+                    >> xml::end
+                    >> xml::optional >> xml::start( "messages" )
+                        >> xml::optional >> xml::attribute( "loglevel", logLoggerPlugin.level_ )
+                        >> xml::optional >> xml::attribute( "logfiles", logLoggerPlugin.files_ )
+                        >> xml::optional >> xml::attribute( "logsize",  logLoggerPlugin.fileSize_ )
+                        >> xml::optional >> xml::attribute( "sizeunit", logLoggerPlugin.sizeUnit_ )
+                    >> xml::end
                     >> xml::optional >> xml::start( "debug" )
-                        >> xml::optional >> xml::attribute( "loglevel", logDispatcherLevel )
-                        >> xml::optional >> xml::attribute( "logfiles", logDispatcherFiles )
-                        >> xml::optional >> xml::attribute( "logsize", logDispatcherFileSize )
-                        >> xml::optional >> xml::attribute( "sizeunit", logDispatcherSizeUnit )
+                        >> xml::optional >> xml::attribute( "logfiles", logDispatcherProtobuf.files_ )
+                        >> xml::optional >> xml::attribute( "logsize",  logDispatcherProtobuf.fileSize_ )
+                        >> xml::optional >> xml::attribute( "sizeunit", logDispatcherProtobuf.sizeUnit_ )
                     >> xml::end
                     >> xml::start( "plugins" )
                         >> xml::optional >>xml::start( "recorder" )
@@ -87,9 +97,9 @@ void Config::Parse( int argc, char** argv )
                         >> xml::end
                         >> xml::optional >>xml::start( "shield" )
                             >> xml::attribute( "server", networkShieldParameters_ )
-                            >> xml::optional >> xml::attribute( "logfiles", logShieldFiles )
-                            >> xml::optional >> xml::attribute( "logsize", logShieldFileSize )
-                            >> xml::optional >> xml::attribute( "sizeunit", logShieldSizeUnit )
+                            >> xml::optional >> xml::attribute( "logfiles", logShield.files_ )
+                            >> xml::optional >> xml::attribute( "logsize", logShield.fileSize_ )
+                            >> xml::optional >> xml::attribute( "sizeunit", logShield.sizeUnit_ )
                             >> xml::optional >> xml::attribute( "use-utf8-string-encoding", useShieldUtf8Encoding_ );
     if( networkSimulationPort_ != 0 )
         networkSimulationParameters_ =
@@ -97,8 +107,10 @@ void Config::Parse( int argc, char** argv )
             + ':' + boost::lexical_cast< std::string >( networkSimulationPort_ );
     if( ! networkClientsParameters_ )
         networkClientsParameters_ = port;
-    SetDispatcherLogSettings( logDispatcherLevel, logDispatcherFiles, logDispatcherFileSize, logDispatcherSizeUnit );
-    SetShieldLogSettings( logShieldFiles, logShieldFileSize, logShieldSizeUnit );
+    SetDispatcherProtobufLogSettings( logDispatcherProtobuf );
+    SetDispatcherLogSettings( logDispatcher );
+    SetLoggerPluginLogSettings( logLoggerPlugin );
+    SetShieldLogSettings( logShield );
 }
 
 // -----------------------------------------------------------------------------

@@ -201,8 +201,7 @@ void MIL_Config::ReadCheckPointConfiguration( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void MIL_Config::ReadDebugConfiguration( xml::xistream& xis )
 {
-    std::string sizeUnit;
-    int level = -1, files = -1, fileSize = -1;
+    LogSettingsData logSim;
     xis >> xml::start( "debug" )
             >> xml::attribute( "decisional", bUseDecDebug_ )
             >> xml::attribute( "pathfind", bUsePathDebug_ )
@@ -210,16 +209,16 @@ void MIL_Config::ReadDebugConfiguration( xml::xistream& xis )
             >> xml::optional >> xml::attribute( "diadebuggerport", diaDebuggerPort_ )
             >> xml::attribute( "networklogger", bUseNetworkLogger_ )
             >> xml::optional >> xml::attribute( "networkloggerport", networkLoggerPort_ )
-            >> xml::optional >> xml::attribute( "loglevel", level )
-            >> xml::optional >> xml::attribute( "logfiles", files )
-            >> xml::optional >> xml::attribute( "logsize", fileSize )
-            >> xml::optional >> xml::attribute( "sizeunit", sizeUnit )
+            >> xml::optional >> xml::attribute( "loglevel", logSim.level_ )
+            >> xml::optional >> xml::attribute( "logfiles", logSim.files_ )
+            >> xml::optional >> xml::attribute( "logsize", logSim.fileSize_ )
+            >> xml::optional >> xml::attribute( "sizeunit", logSim.sizeUnit_ )
         >> xml::end;
     if( bUseDiaDebugger_ && !diaDebuggerPort_ )
         throw std::exception( "DIA debug server activated but no debugger port specified!" );
     if( bUseNetworkLogger_ && !networkLoggerPort_ )
         throw std::exception( "Network logger activated but no port specified!" );
-    SetSimLogSettings( level, files, fileSize, sizeUnit );
+    SetSimLogSettings( logSim );
 }
 
 // -----------------------------------------------------------------------------

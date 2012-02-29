@@ -84,6 +84,7 @@ private:
 private:
     //! @name Member data
     //@{
+    const tools::SessionConfig&    sessionConfig_;
     std::string                    filename_;
     std::auto_ptr< MT_FileLogger > pLogger_;
     kernel::ObjectTypes            objectTypes_;

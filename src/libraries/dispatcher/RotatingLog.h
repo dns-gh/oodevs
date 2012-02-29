@@ -47,7 +47,6 @@ private:
     //! @name Operations
     //@{
     void DoWrite( const std::string& line );
-    void CreateFileLog();
     //@}
 
     //! @name Member data
