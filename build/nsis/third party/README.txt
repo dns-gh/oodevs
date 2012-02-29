@@ -52,3 +52,13 @@ The following components have been directly or indirectly used :
 17/ Spatialite
  . http://www.gaia-gis.it/spatialite/
  . spatialite.txt
+18/ Log4cxx
+ . http://logging.apache.org/log4cxx/
+ . apache.txt
+19/ OpenSSL
+ . http://www.openssl.org/
+ . openssl.txt
+20/ Lua
+ . http://www.lua.org
+ . lua.txt
+21/ HLA (mak)
