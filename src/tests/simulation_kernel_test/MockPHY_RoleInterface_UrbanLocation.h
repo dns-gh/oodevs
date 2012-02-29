@@ -30,6 +30,8 @@ MOCK_BASE_CLASS( MockPHY_RoleInterface_UrbanLocation, PHY_RoleInterface_UrbanLoc
     MOCK_METHOD( IsInCity, 0 );
     MOCK_METHOD( CanMount, 0 );
     MOCK_METHOD( MagicMove, 1 );
+    MOCK_METHOD( ToggleInhabitantCollision, 1 );
+    MOCK_METHOD( HasInhabitantCollision, 0 );
 };
 
 #endif // __MockPHY_RoleInterface_UrbanLocation_h_
