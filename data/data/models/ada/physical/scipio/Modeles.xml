@@ -6218,7 +6218,7 @@
         <mission name="AUTOMATE ALAT Attaquer Formation Aeromobile"/>
         <mission name="AUTOMATE ALAT Appuyer"/>
         <mission name="AUTOMATE ALAT Couvrir"/>
-        <mission name="AUTOMATE ALAT Detruire Neutraliser Dans Zone"/>
+        <mission name="AUTOMATE ALAT Detruire"/>
         <mission name="AUTOMATE ALAT Escorter"/>
         <mission name="AUTOMATE ALAT Recueillir"/>
         <mission name="AUTOMATE Stationner"/>
@@ -6262,7 +6262,7 @@
         <mission name="AUTOMATE ALAT Attaquer Formation Aeromobile"/>
         <mission name="AUTOMATE ALAT Appuyer"/>
         <mission name="AUTOMATE ALAT Couvrir"/>
-        <mission name="AUTOMATE ALAT Detruire Neutraliser Dans Zone"/>
+        <mission name="AUTOMATE ALAT Detruire"/>
         <mission name="AUTOMATE ALAT Escorter"/>
         <mission name="AUTOMATE ALAT Recueillir"/>
         <mission name="AUTOMATE Stationner"/>
@@ -6409,7 +6409,7 @@
         <mission name="AUTOMATE ALAT Attaquer Formation Aeromobile"/>
         <mission name="AUTOMATE ALAT Appuyer"/>
         <mission name="AUTOMATE ALAT Couvrir"/>
-        <mission name="AUTOMATE ALAT Detruire Neutraliser Dans Zone"/>
+        <mission name="AUTOMATE ALAT Detruire"/>
         <mission name="AUTOMATE ALAT Escorter"/>
         <mission name="AUTOMATE ALAT Recueillir"/>
         <mission name="AUTOMATE Stationner"/>
@@ -7270,4 +7270,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0610340304" -->
+<!-- signature="0786286226" -->
