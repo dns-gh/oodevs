@@ -19,6 +19,7 @@
 #include "AgentsModel.h"
 #include "Diplomacies.h"
 #include "Objects.h"
+#include "Object.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
@@ -58,7 +59,7 @@ TeamsModel::~TeamsModel()
 // -----------------------------------------------------------------------------
 void TeamsModel::Purge()
 {
-    noSideTeam_.reset( factory_.CreateNoSideTeam() );
+    noSideTeam_->Retrieve< Objects >()->DeleteAll();
     DeleteAll();
 }
 

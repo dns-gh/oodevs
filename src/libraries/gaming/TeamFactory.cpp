@@ -119,7 +119,6 @@ namespace
 Team_ABC* TeamFactory::CreateNoSideTeam()
 {
     Team_ABC* result = new EntityImplementation< Team_ABC >( controllers_.controller_, 0, tools::translate( "TeamFactory", "No side" ) );
-    //result->Attach( *new Objects() );
     result->Attach< Diplomacies_ABC >( *new NoSideDiplomacy() );
     result->Attach< kernel::TacticalHierarchies >( *new TeamTacticalHierarchies( controllers_.controller_, *result ) );
     // TODO other extensions needed?
