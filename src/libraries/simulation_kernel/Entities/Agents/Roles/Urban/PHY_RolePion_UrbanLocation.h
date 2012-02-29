@@ -71,6 +71,7 @@ public:
     virtual double ComputeDistanceInsideSameUrbanBlock( MIL_Agent_ABC& target ) const;
     virtual double ComputeRatioPionInside( const MT_Ellipse& attritionSurface ) const;
     virtual double ComputeRatioPionInside( const TER_Polygon& polygon, double modificator ) const;
+    virtual void ToggleInhabitantCollision( bool value );
     void Execute( posture::PostureComputer_ABC& algorithm ) const;
     void Execute( moving::SpeedComputer_ABC& algorithm ) const;
     void Execute( location::LocationComputer_ABC& algorithm ) const;
@@ -92,6 +93,7 @@ public:
     //@{
     virtual const UrbanObjectWrapper* GetCurrentUrbanBlock() const;
     virtual bool IsInCity() const;
+    virtual bool HasInhabitantCollision() const;
     //@}
 
 private:
@@ -102,6 +104,7 @@ private:
     std::auto_ptr< UrbanBlockPosition_ABC > delegate_;
     bool isInCity_;
     bool isFlying_;
+    bool hasCollision_;
     //@}
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_UrbanLocation* role, const unsigned int /*version*/ );

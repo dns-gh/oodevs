@@ -14,6 +14,8 @@
 #include "Entities/Populations/MIL_PopulationAttitude.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
+#include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "Tools/MIL_Tools.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -69,6 +71,7 @@ void CrowdCapacity::load( MIL_CheckPointInArchive& ar, const unsigned int )
 {
     std::string popuName;
     ar >> boost::serialization::base_object< ObjectCapacity_ABC >( *this )
+       >> boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this )
        >> popuName
        >> densityFactor_;
     type_ = MIL_PopulationType::Find( popuName );
@@ -83,6 +86,7 @@ void CrowdCapacity::load( MIL_CheckPointInArchive& ar, const unsigned int )
 void CrowdCapacity::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
 {
     ar << boost::serialization::base_object< ObjectCapacity_ABC >( *this )
+       << boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this )
        << type_->GetName()
        << densityFactor_;
 }
@@ -94,6 +98,7 @@ void CrowdCapacity::save( MIL_CheckPointOutArchive& ar, const unsigned int ) con
 void CrowdCapacity::Register( MIL_Object_ABC& object )
 {
     object.AddCapacity( this );
+    object.Register( static_cast< MIL_InteractiveContainer_ABC *>( this ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,7 +107,9 @@ void CrowdCapacity::Register( MIL_Object_ABC& object )
 // -----------------------------------------------------------------------------
 void CrowdCapacity::Instanciate( MIL_Object_ABC& object ) const
 {
-    object.AddCapacity( new CrowdCapacity( *this ) );
+    CrowdCapacity* capacity = new CrowdCapacity( *this );
+    object.AddCapacity( capacity );
+    object.Register( static_cast< MIL_InteractiveContainer_ABC *>( capacity ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -144,3 +151,30 @@ void CrowdCapacity::SetDensityFactor( double densityFactor )
     densityFactor_ = densityFactor;
 }
 
+// -----------------------------------------------------------------------------
+// Name: CrowdCapacity::ProcessAgentEntering
+// Created: LGY 2012-02-29
+// -----------------------------------------------------------------------------
+void CrowdCapacity::ProcessAgentEntering( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& agent )
+{
+    PHY_RoleInterface_UrbanLocation* role = agent.RetrieveRole< PHY_RoleInterface_UrbanLocation >();
+    if( role && !role->HasInhabitantCollision() )
+    {
+        MIL_Report::PostEvent( agent, MIL_Report::eReport_UrbanCollisionStarted );
+        role->ToggleInhabitantCollision( true );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: CrowdCapacity::ProcessAgentExiting
+// Created: LGY 2012-02-29
+// -----------------------------------------------------------------------------
+void CrowdCapacity::ProcessAgentExiting( MIL_Object_ABC& /*object*/, MIL_Agent_ABC& agent )
+{
+    PHY_RoleInterface_UrbanLocation* role = agent.RetrieveRole< PHY_RoleInterface_UrbanLocation >();
+    if( role && role->HasInhabitantCollision() )
+    {
+        MIL_Report::PostEvent( agent, MIL_Report::eReport_UrbanCollisionStopped );
+        role->ToggleInhabitantCollision( false );
+    }
+}

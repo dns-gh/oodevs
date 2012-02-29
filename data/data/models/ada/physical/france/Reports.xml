@@ -592,5 +592,7 @@
       <value id="9" name="ligne_identification_accueil"/>
     </parameter>
   </report>
+  <report category="operational" id="408" message="Vitesse limitée par population"/>
+  <report category="operational" id="409" message="Fin de vitesse limitée par population"/>
 </reports>
-<!-- signature="3196450416" -->
+<!-- signature="2807020478" -->

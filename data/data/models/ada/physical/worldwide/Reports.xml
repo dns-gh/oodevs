@@ -592,5 +592,7 @@
       <value id="9" name="checkpoint line"/>
     </parameter>
   </report>
+  <report category="operational" id="408" message="Speed limited by population"/>
+  <report category="operational" id="409" message="End of speed limited by population"/>
 </reports>
-<!-- signature="0804870500" -->
+<!-- signature="1572069728" -->

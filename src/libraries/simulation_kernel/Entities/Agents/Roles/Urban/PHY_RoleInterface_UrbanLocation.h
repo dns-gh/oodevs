@@ -46,6 +46,7 @@ public:
     virtual double ComputeDistanceInsideSameUrbanBlock( MIL_Agent_ABC& target  ) const = 0;
     virtual double ComputeRatioPionInside( const MT_Ellipse& attritionSurface ) const = 0;
     virtual double ComputeRatioPionInside( const TER_Polygon& polygon, double modificator ) const = 0;
+    virtual void ToggleInhabitantCollision( bool value ) = 0;
     //@}
 
     //! @name Accessors
@@ -53,6 +54,7 @@ public:
     virtual const UrbanObjectWrapper* GetCurrentUrbanBlock() const = 0;
     virtual bool IsInCity() const = 0;
     virtual bool CanMount() const = 0;
+    virtual bool HasInhabitantCollision() const = 0;
     //@}
 };
 

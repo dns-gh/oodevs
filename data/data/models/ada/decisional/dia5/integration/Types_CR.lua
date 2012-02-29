@@ -419,4 +419,6 @@ eRC_SectionUndeployed = 404
 eRC_StartUndeploy = 405
 eRC_DifficultMovementProgression = 406
 eRC_LimaParameterNotPresent = 407
-eNbr = 408
+eRC_UrbanCollisionStarted = 408
+eRC_UrbanCollisionStopped = 409
+eNbr = 410

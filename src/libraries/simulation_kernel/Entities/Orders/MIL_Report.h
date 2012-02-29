@@ -142,6 +142,8 @@ public:
         eReport_SectionUndeployed,
         eReport_StartUndeploy,
         eReport_DifficultMovementProgression,
+        eReport_UrbanCollisionStarted,
+        eReport_UrbanCollisionStopped,
         eNbrReport
     };
 
@@ -555,6 +557,8 @@ public:
         eRC_StartUndeploy,
         eRC_DifficultMovementProgression,
         eRC_LimaParameterNotPresent,
+        eRC_UrbanCollisionStarted,
+        eRC_UrbanCollisionStopped,
         eLast
     };
     //@}
