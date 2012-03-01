@@ -86,14 +86,19 @@ integration.unitsAbleToReinforce = function ( unitToSupport, units, obstacle, ac
     for _, unit in pairs ( units ) do 
         list[#list + 1] = unit.source
     end
-    if action == "build" then
-        return DEC_GetAgentsPouvantConstruire( list, obstacle:getType() )
-    elseif action == "mine" then
-        return DEC_GetAgentsPouvantValoriser( list, obstacle:getType() )
+    local localisationObject = DEC_ConnaissanceObjet_Localisation( obstacle.source )
+    local localisationisOK = false
+    if localisationObject ~= nil then
+        localisationisOK = true
+    end
+    if action == "build" and localisationisOK then
+        return DEC_GetAgentsPouvantConstruireAvecLocalisation( list, obstacle:getType(), localisationObject )
+    elseif action == "mine" and localisationisOK then
+        return DEC_GetAgentsPouvantValoriserAvecLocalisation( list, obstacle:getType(), localisationObject )
     elseif action == "bypass" then
         return DEC_GetAgentsPouvantDevaloriser( list, obstacle:getType() )
-    elseif action == "destroy" then
-        return DEC_GetAgentsPouvantDetruire( list, obstacle:getType() )
+    elseif action == "destroy" and localisationisOK then
+        return DEC_GetAgentsPouvantDetruireAvecLocalisation( list, obstacle:getType(), localisationObject )
     else
         return {}
     end

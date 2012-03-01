@@ -306,13 +306,13 @@ return
     } ),
     canBuildIt = function( self )
         local objectType = self:getType()
-        return integration.canBuildObjectType( objectType ) and integration.hasEnoughtDotationForObjectType( objectType )
+        return integration.canBuildObjectType( objectType, self:getLocalisation() ) and integration.hasEnoughtDotationForObjectType( objectType )
     end,
     buildingCapacity = function( self )
-        return integration.canBuildObjectType( self:getType() )
+        return integration.canBuildObjectType( self:getType(), self:getLocalisation() )
     end,
     buildingCapacityWithOutReinforcement = function ( self )
-        return integration.canBuildObjectTypeWithoutReinforcement( meKnowledge.source, self:getType() ) 
+        return integration.canBuildObjectTypeWithoutReinforcement( self:getType(), self:getLocalisation() ) 
     end,
     buildingDotation = function( self )
         return integration.hasEnoughtDotationForObjectType( self:getType() )
@@ -394,7 +394,7 @@ return
         integration.unAffectMobility( self )
     end,
     canEquipIt = function( self, typePont )
-        return self:isReached() and DEC_Agent_PeutConstruireObjet( S_TypeObject_ToString( typePont ) )
+        return self:isReached() and DEC_Agent_PeutConstruireObjetAvecLocalisation( S_TypeObject_ToString( typePont ), self:getLocalisation() )
     end,
     equipIt = masalife.brain.integration.startStopAction(
     { 

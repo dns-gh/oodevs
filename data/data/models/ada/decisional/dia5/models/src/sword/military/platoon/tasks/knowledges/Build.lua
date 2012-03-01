@@ -19,7 +19,8 @@ local result =
     end,
 
     canDoIt = function( self, entity, obstacle )
-        return  DEC_Agent_AgentPeutConstruireObjetEmbarque( entity.source, tostring(obstacle:getType()) )
+        local localisation = obstacle:getLocalisation()
+        return DEC_Agent_AgentPeutConstruireObjetEmbarqueAvecLocalisation( entity.source, tostring(obstacle:getType()), localisation )
     end,
 }
 
