@@ -44,7 +44,7 @@ public:
 
     //! @name Operations
     //@{
-    void Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools, const QColor& color, bool overlined );
+    void Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools, const QColor& color, bool overlined, float zoom = 1.f );
     //@}
 
 private:
@@ -83,6 +83,7 @@ private:
     const kernel::GlTools_ABC* tools_;
     QColor color_;
     QColor complement_;
+    float zoom_;
     bool overlined_;
     //@}
 };

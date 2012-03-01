@@ -44,6 +44,7 @@ SvgLocationDrawer::SvgLocationDrawer( const DrawingTemplate& style )
     , style_    ( style )
     , overlined_( false )
     , tools_    ( 0 )
+    , zoom_     ( 1.f )
 {
     GenerateCircle();
 }
@@ -86,12 +87,13 @@ void SvgLocationDrawer::SetColor( const QColor& color )
 // Name: SvgLocationDrawer::Draw
 // Created: SBO 2008-05-30
 // -----------------------------------------------------------------------------
-void SvgLocationDrawer::Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools, const QColor& color, bool overlined )
+void SvgLocationDrawer::Draw( const kernel::Location_ABC& location, const geometry::Rectangle2f& viewport, const kernel::GlTools_ABC& tools, const QColor& color, bool overlined, float zoom )
 {
     SetColor( color );
     viewport_ = viewport;
     overlined_ = overlined;
     tools_ = &tools;
+    zoom_ = zoom;
     location.Accept( *this );
 }
 
@@ -173,7 +175,7 @@ void SvgLocationDrawer::DrawShape( const T& shape )
         context_->PushProperty( svg::RenderingContext_ABC::color, svgColor );
         context_->PushProperty( svg::RenderingContext_ABC::fillOpacity, opacity );
         context_->PushProperty( svg::RenderingContext_ABC::strokeOpacity, opacity );
-        style_.Draw( shape, *context_, *tools_ );
+        style_.Draw( shape, *context_, *tools_, zoom_ );
         context_->PopProperty( svg::RenderingContext_ABC::strokeOpacity );
         context_->PopProperty( svg::RenderingContext_ABC::fillOpacity );
         context_->PopProperty( svg::RenderingContext_ABC::color );
