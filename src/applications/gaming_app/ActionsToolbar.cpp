@@ -111,6 +111,7 @@ ActionsToolbar::ActionsToolbar( QWidget* parent, ActionsModel& actions, const Co
 // -----------------------------------------------------------------------------
 ActionsToolbar::~ActionsToolbar()
 {
+    controllers_.Unregister( *this );
     delete confirmation_;
 }
 
