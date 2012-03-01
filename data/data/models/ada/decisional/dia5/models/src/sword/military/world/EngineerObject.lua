@@ -66,13 +66,13 @@ return
     end,
     canBuildIt = function( self )
         local objectType = self:getType()
-        return integration.canBuildNowObjectType( objectType ) and integration.hasEnoughtDotationForObjectType( objectType )
+        return integration.canBuildNowObjectType( objectType, self:getLocalisation() ) and integration.hasEnoughtDotationForObjectType( objectType )
     end,
     buildingCapacity = function( self )
-        return integration.canBuildObjectType( self:getType() )
+        return integration.canBuildObjectType( self:getType(), self:getLocalisation() )
     end,
     buildingCapacityWithOutReinforcement = function ( self )
-        return integration.canBuildObjectTypeWithoutReinforcement( self:getType() ) 
+        return integration.canBuildObjectTypeWithoutReinforcement( self:getType(), self:getLocalisation() ) 
     end,
     buildingDotation = function( self )
         return integration.hasEnoughtDotationForObjectType( self:getType() )

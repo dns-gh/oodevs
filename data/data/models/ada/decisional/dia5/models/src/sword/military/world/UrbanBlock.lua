@@ -65,7 +65,7 @@ return
         return self:buildingCapacity( objectType ) and self:buildingDotation( objectType )
     end,
     buildingCapacity = function( self )
-        return integration.canBuildObjectType( self:getType() )
+        return integration.canBuildObjectType( self:getType(), self:getLocalisation() )
     end,
     buildingDotation = function( self )
         return integration.hasEnoughtDotationForObjectType( self:getType() )
@@ -283,6 +283,9 @@ return
     getPositions = function( self )
         return integration.getUrbanBlockPositions( self )
     end,
+	getLocalisation = function( self )
+	    return DEC_Geometrie_CalculerLocalisationsBU( self.source )
+	end,
     getCoverAndConcealmentLevelFor = function( self, entity, objective )
         return integration.getUrbanBlockCoverAndConcealmentLevelFor( self, entity, objective )
     end,

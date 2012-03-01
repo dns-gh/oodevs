@@ -155,6 +155,9 @@ Par défaut, toute position est une position potentielle de couverture.</descrip
         <method name="getPositions">
             <description>Fonction d'intégration retournant une liste de MT_Vector2D. On retourne la liste des positions entourant le BU.</description>
         </method>
+        <method name="getLocalisation">
+            <description>Retourne la localisation du BU.</description>
+        </method>
         <method name="destructionEfficiency">
             <description>Le niveau d'efficacité de la connaissance pour son utilisation dans la destruction de l'objectif</description>
             <argument name="objective">

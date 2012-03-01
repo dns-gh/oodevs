@@ -4,20 +4,20 @@
 -- @param type on an object
 -- @author MGD
 -- @release 2010-02-15
-integration.canBuildObjectType = function( objectType )
-  return DEC_Agent_PeutConstruireObjetEmbarque( objectType )
+integration.canBuildObjectType = function( objectType, localisationObject )
+    return DEC_Agent_PeutConstruireObjetEmbarqueAvecLocalisation( objectType, localisationObject )
 end
 
-integration.canBuildObjectTypeWithoutReinforcement = function( objectType )
-    return DEC_Agent_PeutConstruireObjetSansRenforts( objectType )
+integration.canBuildObjectTypeWithoutReinforcement = function( objectType, localisationObject )
+    return DEC_Agent_PeutConstruireObjetSansRenfortsAvecLocalisation( objectType, localisationObject )
 end
 
 --- Return if the unit has the capacity to build the selected object now, the unit has more capacity when dismount
 -- @param type on an object
 -- @author MGD
 -- @release 2010-02-15
-integration.canBuildNowObjectType = function( objectType )
-  return DEC_Agent_PeutConstruireObjet( objectType )
+integration.canBuildNowObjectType = function( objectType, localisationObject )
+    return DEC_Agent_PeutConstruireObjetAvecLocalisation( objectType, localisationObject )
 end
 
 integration.hasEnoughtDotationForObjectType = function( objectType )
