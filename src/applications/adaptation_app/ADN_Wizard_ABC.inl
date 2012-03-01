@@ -19,7 +19,7 @@
 #include <QtGui/qapplication.h>
 #include <QtGui/qpushbutton.h>
 
-#include "ADN_WizardPage_ABC.h"
+#include "ADN_Wizard_LastPage.h"
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Wizard_ABC constructor
@@ -27,10 +27,10 @@
 // -----------------------------------------------------------------------------
 template< typename T >
 ADN_Wizard_ABC<T>::ADN_Wizard_ABC( QWidget* pParent, const char* szName )
-: Q3Wizard              ( pParent, szName )
-, ADN_ObjectCreator_ABC()
-, pResult_             ( 0 )
-, pFirstPage_          ( 0 )
+    : Q3Wizard             ( pParent, szName )
+    , ADN_ObjectCreator_ABC()
+    , pResult_             ( 0 )
+    , pFirstPage_          ( 0 )
 {
     setFixedSize( 600, 400 );
     nextButton()->setText( qApp->translate( "ADN_Wizard_ABC", "Next" ) );
@@ -74,13 +74,26 @@ ADN_Ref_ABC* ADN_Wizard_ABC<T>::CreateObject()
 template< typename T >
 void ADN_Wizard_ABC<T>::showPage( QWidget* pPage )
 {
-    if( currentPage() != 0 && currentPage() != pPage )
-    {
-        // Check if the page we are supposed to leave is valid.
-        if( ! ValidatePage( this->indexOf( currentPage() ) ) )
-            return;
-    }
+    QWidget* current = currentPage();
+    if( current != 0 && current != pPage && !ValidatePage( indexOf( current ) ) )
+        return;
 
+    if( cancelButton() ) cancelButton()->setAutoDefault( false );
+    if( backButton() )   backButton()->setAutoDefault( false );
+    if( nextButton() )   nextButton()->setAutoDefault( false );
+    if( finishButton() ) finishButton()->setAutoDefault( false );
+    if( helpButton() )   helpButton()->setAutoDefault( false );
+
+    if( pPage != 0 && dynamic_cast< ADN_Wizard_LastPage* >( pPage ) && finishButton() )
+    {
+        finishButton()->setAutoDefault( true );
+        finishButton()->setDefault( true );
+    }
+    else if( nextButton )
+    {
+        nextButton()->setAutoDefault( true );
+        nextButton()->setDefault( true );
+    }
     Q3Wizard::showPage( pPage );
 }
 
