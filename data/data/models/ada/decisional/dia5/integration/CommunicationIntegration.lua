@@ -124,8 +124,13 @@ integration.communication.StartMissionPionVersPion = function( content )
   F_Pion_SeteEtatEchelon( meKnowledge.source, content.echelon ) 
 end
 
-integration.communication.FollowMe = function( missionName, params )
-   masalife.brain.core.startTask( missionName, params )
+integration.communication.FollowMe = function( missionName, sender )
+    local mission = DEC_CreerMissionPionVersPion( missionName )
+    local followParam = DEC_AssignMissionPionListParameter( sender )   -- entities to folow: the sender of the message
+    DEC_AssignMissionListParameter( mission, "entities", { followParam } )
+    DEC_AssignMissionListParameter( mission, "positions", NIL )        -- positions
+    DEC_AssignMissionNumericTypeParameter( mission, "minDistance", 0 ) -- distance min 0 meters
+    DEC_DonnerMissionPionVersPion( mission )                           -- Issue the mission
 end
 
 integration.communication.StartMissionAutomate = function( content )

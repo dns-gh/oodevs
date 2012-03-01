@@ -17,7 +17,8 @@ rootnode
         if not next( self.params.elementsToFollow ) then return end
 
         -- get position to follow agents if not issued
-        if self.params.positions == NIL then
+        if self.params.positions == NIL 
+           or not next( self.params.positions ) then -- $$$ TEMP MIA To remove || used for "MakeFollow" skill
             self.positions = ontology.queries.GetPositionsToFollow[ "execute" ]( 
                  { agents = self.params.elementsToFollow, distanceMin = self.params.minDistance } )
         else

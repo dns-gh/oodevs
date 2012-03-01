@@ -8,7 +8,7 @@
 rootnode
 {
     connections = { skill.links.reach, skill.nodes.makeFollow },
-    feedbacks   = { "follower", "done" },
+    feedbacks   = { "followed", "done" },
 
     -- -------------------------------------------------------------------------------- 
     -- Feedbacks and slots
@@ -18,7 +18,6 @@ rootnode
     end,
 
     makeFollowActionDone = function( self, params ) -- call by MakeFollow node
-        Feedback( self.feedbacks.follower, { follower = params.unit } )
         self.nextTargetIndex = self.nextTargetIndex + 1
         self.arrived = false
     end,
@@ -44,10 +43,11 @@ rootnode
         end
 
         -- MoveToward nearest position from nearest agent
+        local agent = self.params.units[ self.nextTargetIndex ]
         if not self.arrived then
-            Activate( skill.links.reach, 1, { destination = self.params.units[ self.nextTargetIndex ] } )
+            Activate( skill.links.reach, 1, { destination = agent } )
         else
-            Activate( skill.nodes.makeFollow, 1, { unit = self.params.units[ self.nextTargetIndex ] } )
+            Activate( skill.nodes.makeFollow, 1, { unit = agent } )
         end
     end
 }
@@ -59,13 +59,13 @@ rootnode
 -- ****************************************************************************
 node "makeFollow"
 {
-    feedbacks   = { "makeFollowActionDone" },
+    feedbacks = { "makeFollowActionDone" },
 
     -- -------------------------------------------------------------------------------- 
     -- Follow the nearest agent
     -- --------------------------------------------------------------------------------
     select = function( self )
-        if meKnowledge:makeFollow( self.params.unit, "behaviors.tasks.Follow" ) then
+        if meKnowledge:makeFollow( self.params.unit ) then
             Feedback( self.feedbacks.makeFollowActionDone )
         end
     end

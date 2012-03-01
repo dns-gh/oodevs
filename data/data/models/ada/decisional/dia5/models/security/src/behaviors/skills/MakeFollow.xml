@@ -1,12 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.skills.MakeFollow" source-version="1.0.0">
-    <description></description>
+    <description>To order a set of given units (teammates) to follow agent.&#xD;
+The agent acts on each unit by following the order of the units into the 'units' list. &#xD;
+A unit won't follow if it cannot perform the mission (mission is not set for this type of unit).</description>
     <parameters>
         <parameter name="units">
-            <description>The units to make follow me. The units can be a teammate or a non-teammate agent.</description>
+            <description>The units to make follow me. </description>
             <type>
                 <list>
-                    <class name="ontology.classes.Agent"/>
+                    <class name="ontology.classes.Teammate"/>
                 </list>
             </type>
         </parameter>
@@ -19,4 +21,9 @@
             <description>To reach each unit and ask to follow.</description>
         </link>
     </links>
+    <feedbacks>
+        <feedback name="done">
+            <description>Sent when all temmate units have been visited, even if once of them couldn't follow.</description>
+        </feedback>
+    </feedbacks>
 </skill>

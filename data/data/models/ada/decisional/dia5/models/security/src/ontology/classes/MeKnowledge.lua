@@ -1,4 +1,12 @@
 -- --------------------------------------------------------------------------------
+-- Communication treatment
+-- --------------------------------------------------------------------------------
+masalife.brain.communication.setMessageTreatment( "FollowMe",
+    function( content, sender )
+        integration.communication.FollowMe( content.missionName, content.entityToFollow )
+    end )
+
+-- --------------------------------------------------------------------------------
 -- Movement
 -- --------------------------------------------------------------------------------
 method "moveTo" (
@@ -290,19 +298,19 @@ method "beDecontaminated" (
     end )
 
 -- --------------------------------------------------------------------------------
--- Make follow agents
+-- Make agents follow me
 -- --------------------------------------------------------------------------------
 method "makeFollow" ( masalife.brain.integration.startStopAction( 
 {
-    start = function( self, agent, missionName )
-        -- integration.unit_communicate = function( self, task, objectives )
+    start = function( self, agent )
+        local missionName = "behaviors.tasks.Follow"
         if integration.isMissionAvailable( agent, missionName ) then
-            integration.SendMessage( "FollowMe", agent, 
-              { mission = missionName, entity = meKnowledge.source }, { type = "dynamic" } )
-            return true
-        else
-            return false
+           integration.SendMessage( "FollowMe", agent, { missionName = missionName, 
+                        entityToFollow = meKnowledge.source }, { type = "dynamic" } )
         end
+    end,
+    started = function( self )
+        return true
     end
 } ) )
 
@@ -311,7 +319,7 @@ method "makeFollow" ( masalife.brain.integration.startStopAction(
 -- --------------------------------------------------------------------------------
 method "reinforce" ( 
     function( self, unit )
-        return  unit:reinforceIt()
+        return unit:reinforceIt()
     end )
 
 -- --------------------------------------------------------------------------------

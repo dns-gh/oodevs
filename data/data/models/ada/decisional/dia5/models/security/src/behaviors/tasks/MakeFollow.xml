@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="tasks.MakeFollow" source-version="1.0.0">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.tasks.MakeFollow" source-version="1.0.0">
+    <description>To order a set of given units (teammates) to follow agent.&#xD;
+The agent acts on each unit by following the order of the units into the 'units' list. &#xD;
+A unit won't follow if it cannot perform the mission (mission is not set for this type of unit).</description>
     <parameters>
-        <parameter name="agents">
+        <parameter name="units">
             <type>
                 <list>
                     <class name="ontology.classes.Teammate"/>
@@ -15,7 +18,7 @@
                 <skill name="behaviors.skills.MakeFollow" main="true">
                     <parameter name="units">
                         <value>
-                            <parameter>agents</parameter>
+                            <parameter>units</parameter>
                         </value>
                     </parameter>
                 </skill>

@@ -1,13 +1,4 @@
 -- --------------------------------------------------------------------------------
--- Communication treatment
--- --------------------------------------------------------------------------------
-masalife.brain.communication.setMessageTreatment( "FollowMe",
-    function( content, sender )
-        local entityToFollow = CreateKnowledge( ontology.classes.Teammate, content.entity )
-        integration.communication.FollowMe( content.mission, { entities = { entityToFollow } } )
-    end )
-
--- --------------------------------------------------------------------------------
 -- Delays for magic actions in MINUTES
 -- --------------------------------------------------------------------------------
 local loadingActionDelays   = 1

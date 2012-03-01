@@ -1717,7 +1717,7 @@ overwhelming force.]]></doctrine>
       </parameter>
       <parameter dia-name="urgency" name="urgency" optional="true" type="Boolean"/>
     </mission>
-    <mission dia-behavior="tasks.FollowAgents" dia-type="tasks.FollowAgents" id="4443" name="MLSECURITY - Follow">
+    <mission dia-behavior="behaviors.tasks.Follow" dia-type="behaviors.tasks.Follow" id="4443" name="MLSECURITY - Follow">
       <description>
         <doctrine><![CDATA[To follow a set of motile agents (unit or crowd). A set of positions can be issued if necessary.]]></doctrine>
         <usage><![CDATA[Agent will follow the nearest target, try to find position to stay nearby. If positions are issued, agent will choose the position allowing to stay as close as it is possible to the choosen target.]]></usage>
@@ -1726,7 +1726,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="agents" max-occurs="200" min-occurs="1" name="agents to follow" optional="false" type="LocationComposite">
+      <parameter dia-name="entities" max-occurs="200" min-occurs="1" name="agents to follow" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Agent"/>
           <parameter type="AgentKnowledge"/>
@@ -1742,6 +1742,7 @@ overwhelming force.]]></doctrine>
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
+      <parameter dia-name="minDistance" name="minimum distance" optional="true" type="Integer"/>
     </mission>
     <mission dia-behavior="tasks.ConfineUrbanBlocksWithinArea" dia-type="tasks.ConfineUrbanBlocksWithinArea" id="4444" name="MLSECURITY - Confine urban blocks within area">
       <description>
@@ -2221,13 +2222,37 @@ A urban block won't be hit (unit cannot launch projectile) if agent doesn't have
     <mission dia-behavior="behaviors.tasks.StayInCrowd" dia-type="behaviors.tasks.StayInCrowd" id="4487" name="MLSECURITY - Stay in crowd">
       <description>
         <doctrine><![CDATA[To stay in a given crowd]]></doctrine>
-        <usage><![CDATA[Agent stays inside Crowd, moving with it.]]></usage>
+        <usage><![CDATA[Agent moves to the given crowd. Then, it stays within it, and moves with it if necessary.]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="crowd" name="crowd" optional="false" type="CrowdKnowledge"/>
+    </mission>
+    <mission dia-behavior="behaviors.tasks.Reinforce" dia-type="behaviors.tasks.Reinforce" id="4488" name="MLSECURITY - Reinforce">
+      <description>
+        <doctrine><![CDATA[To reinforce a given unit with agent's physical capabilities (target unit will be aumented with agent's physical capabilities).]]></doctrine>
+        <usage><![CDATA[Agent moves toward the unit. Once it is reached, agent reinforce it.]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="agent" name="unit to reinforce" optional="false" type="Agent"/>
+    </mission>
+    <mission dia-behavior="behaviors.tasks.MakeFollow" dia-type="behaviors.tasks.MakeFollow" id="4489" name="MLSECURITY - MakeFollow">
+      <description>
+        <doctrine><![CDATA[To order a set of given units (teammates) to follow agent.]]></doctrine>
+        <usage><![CDATA[
+The agent moves to each unit by following the order of the units into the list. 
+A unit won't follow if it cannot perform the mission (mission is not set for this type of unit).]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="units" max-occurs="1213" min-occurs="1" name="units to be ordered to follow" optional="false" type="Agent"/>
     </mission>
   </units>
   <automats>
@@ -3584,4 +3609,4 @@ A urban block won't be hit (unit cannot launch projectile) if agent doesn't have
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="0524105951" -->
+<!-- signature="4217367362" -->

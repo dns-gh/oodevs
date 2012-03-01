@@ -611,15 +611,10 @@ Agent can be decontaminated only if issued decontamination site is being operate
             </return>
         </method>
         <method name="makeFollow">
-            <description>Returns 'true' once agent has been told to follow. 'False' otherwise.</description>
+            <description>Returns 'true' once unit has been told to follow, even if issued unit cannot.</description>
             <argument name="agent">
                 <type>
                     <class name="ontology.classes.Agent"/>
-                </type>
-            </argument>
-            <argument name="taskName">
-                <type>
-                    <simple name="string"/>
                 </type>
             </argument>
             <return>
