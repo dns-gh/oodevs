@@ -51,6 +51,10 @@ public:
     virtual void Display( UserProfile& profile );
     virtual void Display( const kernel::Entity_ABC& entity, gui::ValuedListItem* item );
     void Show();
+
+    virtual void NotifyCreated( const ProfileHierarchies_ABC& hierarchy );
+    virtual void NotifyUpdated( const ProfileHierarchies_ABC& hierarchy );
+    virtual void NotifyDeleted( const ProfileHierarchies_ABC& hierarchy );
     //@}
 
 private slots:
@@ -70,6 +74,8 @@ private:
     void Expand( gui::ValuedListItem* item );
     bool ApplyHideFilter( gui::ValuedListItem* item ) const;
     bool ApplyShowFilter( gui::ValuedListItem* item ) const;
+
+    bool Accept( const ProfileHierarchies_ABC& hierarchy ) const;
     //@}
 
 private:

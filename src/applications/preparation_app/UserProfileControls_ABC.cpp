@@ -12,10 +12,10 @@
 #include "icons.h"
 #include "ControlsChecker_ABC.h"
 #include "ProfileConsistencyDialog.h"
+#include "clients_gui/ValuedListItem.h"
 #include "clients_kernel/Tools.h"
 #include "preparation/ProfileHierarchies_ABC.h"
 #include "preparation/UserProfile.h"
-#include "clients_gui/ValuedListItem.h"
 #include <boost/foreach.hpp>
 
 using namespace gui;
@@ -62,16 +62,16 @@ void UserProfileControls_ABC::Commit()
         {
             const Entity_ABC* entity = item->GetValue< const Entity_ABC >();
             const Status status = Status( item->text( 2 ).toInt() );
-            if( !item->parent() || item->parent()->text( 2 ).toInt() == eNothing )
+            const bool isReadable = ( status == eControl );
+            if( CanWrite( entity ) )
             {
-                const bool isWriteable = ( status == eControl ) ? ( supervisor_ ? false : true ) : false;
-                const bool isReadable = status == eControl;
-                profile_->SetReadable( *entity, isReadable );
+                const bool isWriteable = isReadable && !supervisor_ ;
+                profile_->SetReadable( *entity, isReadable && !isWriteable );
                 profile_->SetWriteable( *entity, isWriteable );
             }
             else
             {
-                profile_->SetReadable( *entity, false );
+                profile_->SetReadable( *entity, isReadable );
                 profile_->SetWriteable( *entity, false );
             }
         }
@@ -87,12 +87,12 @@ void UserProfileControls_ABC::Display( UserProfile& profile )
     Clear();
     listView_->setDisabled( false );
     profile_ = &profile;
-    ValuedListItem* value = static_cast< ValuedListItem* >( listView_->firstChild() );
-    while( value )
+    ValuedListItem* child = static_cast< ValuedListItem* >( listView_->firstChild() );
+    while( child )
     {
-        UpdateColor( value );
-        ReadRights( value, IsControlled( value ) );
-        value = static_cast< ValuedListItem* >( value->nextSibling() );
+        UpdateColor( child );
+        ReadRights( child, IsControlled( child ) );
+        child = static_cast< ValuedListItem* >( child->nextSibling() );
     }
 }
 
@@ -108,20 +108,20 @@ void UserProfileControls_ABC::ReadRights( gui::ValuedListItem* item, bool contro
         SetItem( item, eControl );
         SelectParent( item );
         listView_->ensureItemVisible( item );
-        ValuedListItem* value = static_cast< ValuedListItem* >( item->firstChild() );
-        while( value )
-        {
-            ReadRights( value, control );
-            value = static_cast< ValuedListItem* >( value->nextSibling() );
+        ValuedListItem* child = static_cast< ValuedListItem* >( item->firstChild() );
+        while( child )
+        {            
+            ReadRights( child, control );
+            child = static_cast< ValuedListItem* >( child->nextSibling() );
         }
     }
     else
     {
-        ValuedListItem* value = static_cast< ValuedListItem* >( item->firstChild() );
-        while( value )
+        ValuedListItem* child = static_cast< ValuedListItem* >( item->firstChild() );
+        while( child )
         {
-            ReadRights( value, IsControlled( value ) );
-            value = static_cast< ValuedListItem* >( value->nextSibling() );
+            ReadRights( child, IsControlled( child ) );
+            child = static_cast< ValuedListItem* >( child->nextSibling() );
         }
     }
 }
@@ -133,9 +133,18 @@ void UserProfileControls_ABC::ReadRights( gui::ValuedListItem* item, bool contro
 bool UserProfileControls_ABC::IsControlled( gui::ValuedListItem* item ) const
 {
     const Entity_ABC* entity = item->GetValue< const Entity_ABC >();
-    if( !entity )
+    if( !entity || !CanWrite( entity ) )
         return false;
     return supervisor_ ? profile_->IsReadable( *entity ) : profile_->IsWriteable( *entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileControls_ABC::CanWrite
+// Created: LDC 2012-03-01
+// -----------------------------------------------------------------------------
+bool UserProfileControls_ABC::CanWrite( const kernel::Entity_ABC* entity ) const
+{
+    return true;
 }
 
 // -----------------------------------------------------------------------------

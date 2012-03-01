@@ -248,3 +248,46 @@ void UserProfileUnitControls::UpdateFilter()
 {
     ApplyFilter( func_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileUnitControls::NotifyCreated
+// Created: LDC 2012-03-01
+// -----------------------------------------------------------------------------
+void UserProfileUnitControls::NotifyCreated( const ProfileHierarchies_ABC& hierarchy )
+{
+    if( Accept( hierarchy ) )
+        gui::HierarchyListView< ProfileHierarchies_ABC >::NotifyCreated( hierarchy );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileUnitControls::NotifyUpdated
+// Created: LDC 2012-03-01
+// -----------------------------------------------------------------------------
+void UserProfileUnitControls::NotifyUpdated( const ProfileHierarchies_ABC& hierarchy )
+{
+    if( Accept( hierarchy ) )
+        gui::HierarchyListView< ProfileHierarchies_ABC >::NotifyUpdated( hierarchy );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileUnitControls::NotifyDeleted
+// Created: LDC 2012-03-01
+// -----------------------------------------------------------------------------
+void UserProfileUnitControls::NotifyDeleted( const ProfileHierarchies_ABC& hierarchy )
+{
+    if( Accept( hierarchy ) )
+        gui::HierarchyListView< ProfileHierarchies_ABC >::NotifyDeleted( hierarchy );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileUnitControls::Accept
+// Created: JSR 2012-03-01
+// -----------------------------------------------------------------------------
+bool UserProfileUnitControls::Accept( const ProfileHierarchies_ABC& hierarchy ) const
+{
+    const kernel::Entity_ABC& entity = hierarchy.GetEntity();
+    // accept only automats, formations, teams.
+    return ( dynamic_cast< const kernel::Team_ABC* >( &entity ) || 
+        dynamic_cast< const kernel::Automat_ABC* >( &entity ) ||
+        dynamic_cast< const kernel::Formation_ABC* >( &entity ) );
+}

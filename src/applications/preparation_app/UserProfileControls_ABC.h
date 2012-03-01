@@ -58,6 +58,11 @@ protected:
     void OnItemClicked( Q3ListViewItem* item, const QPoint& point, int column );
     //@}
 
+    //! @name Helpers
+    //@{
+    virtual bool CanWrite( const kernel::Entity_ABC* entity ) const;
+    //@}
+
     //! @name Types
     //@{
     enum Status

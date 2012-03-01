@@ -130,25 +130,6 @@ UserProfile::~UserProfile()
         controller_.Delete( *this );
 }
 
-namespace
-{
-    void Convert( const kernel::Entity_ABC& entity, std::vector< unsigned long >& automats )
-    {
-        if( entity.GetTypeName() == kernel::Automat_ABC::typeName_ )
-            automats.push_back( entity.GetId() );
-        tools::Iterator< const kernel::Entity_ABC& > children = entity.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
-        while( children.HasMoreElements() )
-            Convert( children.NextElement(), automats );
-    }
-
-    void Convert( const std::vector< unsigned long >& formations, std::vector< unsigned long >& automats, const Model& model )
-    {
-        for( unsigned int i = 0; i < formations.size(); ++i )
-            if( kernel::Formation_ABC* formation = model.FindFormation( formations[ i ] ) )
-                Convert( *formation, automats );
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: UserProfile::Serialize
 // Created: SBO 2007-01-17
@@ -213,10 +194,7 @@ void UserProfile::Serialize( xml::xostream& xos ) const
         writeAutomats = writeAutomats_;
         writePopulations = writePopulations_;
     }
-
-    Convert( writeFormations, writeAutomats, model_ );
-    Convert( readFormations, readAutomats, model_ );
-
+    
     xos << xml::start( "profile" )
             << xml::attribute( "role", userRole_ )
             << xml::attribute( "name", login_.ascii() )

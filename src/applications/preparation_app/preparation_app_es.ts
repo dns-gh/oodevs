@@ -2329,10 +2329,6 @@
         <translation>Permisos</translation>
     </message>
     <message>
-        <source>Crowds</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>User role</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2362,6 +2358,10 @@
     </message>
     <message>
         <source>&apos;View&apos; permission allows you to see a unit.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crowds</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

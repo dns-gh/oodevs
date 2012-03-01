@@ -2329,10 +2329,6 @@
         <translation>Droits</translation>
     </message>
     <message>
-        <source>Crowds</source>
-        <translation>Foules</translation>
-    </message>
-    <message>
         <source>User role</source>
         <translation>Rôle de l&apos;utilisateur</translation>
     </message>
@@ -2363,6 +2359,10 @@
     <message>
         <source>&apos;View&apos; permission allows you to see a unit.</source>
         <translation>&apos;Vue&apos; permet de voir une unité.</translation>
+    </message>
+    <message>
+        <source>Crowds</source>
+        <translation type="unfinished">Foules</translation>
     </message>
 </context>
 <context>

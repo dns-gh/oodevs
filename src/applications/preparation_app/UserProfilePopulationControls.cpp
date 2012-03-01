@@ -63,3 +63,12 @@ void UserProfilePopulationControls::OnItemClicked( Q3ListViewItem* item, const Q
 {
     UserProfileControls_ABC::OnItemClicked( item, point, column );
 }
+
+// -----------------------------------------------------------------------------
+// Name: UserProfilePopulationControls::CanWrite
+// Created: LDC 2012-03-01
+// -----------------------------------------------------------------------------
+bool UserProfilePopulationControls::CanWrite( const kernel::Entity_ABC* entity ) const
+{
+    return ( entity && dynamic_cast< const kernel::Population_ABC* >( entity ) );
+}
