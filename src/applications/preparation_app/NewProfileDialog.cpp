@@ -37,6 +37,7 @@ NewProfileDialog::NewProfileDialog( QWidget* parent, ProfilesModel& model, Contr
     userRole_ = new QComboBox();
     mainLayout->addWidget( new QLabel( tr( "Role:" ) ), 1, 0 );
     mainLayout->addWidget( userRole_, 1, 1 );
+    connect( userRole_, SIGNAL( currentIndexChanged( int ) ), this, SLOT( UpdateText() ) );
     warningLabel_ = new QLabel();
     mainLayout->addWidget( warningLabel_, 2, 0, 1, 2, Qt::AlignCenter );
     okButton_ = new QDialogButtonBox( QDialogButtonBox::Ok );
