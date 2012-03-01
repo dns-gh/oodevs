@@ -89,7 +89,7 @@ void ADN_Wizard_ABC<T>::showPage( QWidget* pPage )
         finishButton()->setAutoDefault( true );
         finishButton()->setDefault( true );
     }
-    else if( nextButton )
+    else if( nextButton() )
     {
         nextButton()->setAutoDefault( true );
         nextButton()->setDefault( true );
