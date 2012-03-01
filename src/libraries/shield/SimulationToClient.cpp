@@ -231,11 +231,6 @@ void SimulationToClient::Convert( const sword::LogSupplyChangeQuotasAck& from, M
                                                   ( sword::LogSupplyChangeQuotasAck::error_invalid_dotation, MsgsSimToClient::MsgLogSupplyChangeQuotasAck::error_invalid_dotation ));
 }
 
-namespace
-{
-    int tickDuration = 0;
-}
-
 // -----------------------------------------------------------------------------
 // Name: SimulationToClient::Convert
 // Created: MCO 2010-11-09
@@ -252,9 +247,6 @@ void SimulationToClient::Convert( const sword::ControlInformation& from, MsgsSim
     CONVERT( send_vision_cones );
     CONVERT( profiling_enabled );
     CONVERT_DATE( checkpoint_real_time );
-    
-    if ( from.has_tick_duration() )
-        tickDuration = from.tick_duration();
 }
 
 // -----------------------------------------------------------------------------
@@ -1120,12 +1112,14 @@ namespace
             to->mutable_activity_time()->set_activity_time( from.obstacle().activity_time() );
         if( from.obstacle().has_activation_time() )
         {
-            std::string startTime =  bpt::to_iso_string( bpt::from_time_t( 0 ) + bpt::seconds( tickDuration * from.obstacle().activation_time() ) );
-            to->mutable_activity_time()->mutable_start_activity()->set_data( startTime );
+            bpt::time_duration startTimeOffset = bpt::seconds( from.obstacle().activation_time() );
+            ostringstream startTime; startTime << startTimeOffset;
+            to->mutable_activity_time()->mutable_start_activity()->set_data( startTime.str() );
             if( from.obstacle().has_activity_time() )
             {
-                std::string endTime = bpt::to_iso_string( bpt::from_time_t( 0 ) + bpt::seconds( tickDuration * ( from.obstacle().activation_time() + from.obstacle().activity_time() ) ) );
-                to->mutable_activity_time()->mutable_end_activity()->set_data( endTime );
+                bpt::time_duration endTimeOffset = startTimeOffset + bpt::seconds( from.obstacle().activity_time() );
+                ostringstream endTime; endTime << endTimeOffset;
+                to->mutable_activity_time()->mutable_end_activity()->set_data( endTime.str() );
             }
         }
     }
