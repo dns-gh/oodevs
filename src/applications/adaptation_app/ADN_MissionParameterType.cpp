@@ -72,10 +72,8 @@ void ADN_MissionParameterType::DoValueChanged()
     bool isChoice = param->type_.GetData() == eMissionParameterTypeLocationComposite;
     itemConnectors_[ADN_Missions_GUI::eChoiceValues]->Connect( &param->choices_, isChoice );
     bool isNumeric = param->type_.GetData() == eMissionParameterTypeNumeric;
-    if( itemConnectors_[ADN_Missions_GUI::eMinValue] )
-        itemConnectors_[ADN_Missions_GUI::eMinValue]->Connect( &param->minValue_, isNumeric );
-    if( itemConnectors_[ADN_Missions_GUI::eMaxValue] )
-        itemConnectors_[ADN_Missions_GUI::eMaxValue]->Connect( &param->maxValue_, isNumeric );
+    itemConnectors_[ADN_Missions_GUI::eMinValue]->Connect( &param->minValue_, isNumeric );
+    itemConnectors_[ADN_Missions_GUI::eMaxValue]->Connect( &param->maxValue_, isNumeric );
 }
 
 // -----------------------------------------------------------------------------
@@ -89,9 +87,7 @@ void ADN_MissionParameterType::Disconnect()
     {
         itemConnectors_[ADN_Missions_GUI::eParameterValues]->Disconnect( &param->values_ );
         itemConnectors_[ADN_Missions_GUI::eChoiceValues]->Disconnect( &param->choices_ );
-        if( itemConnectors_[ADN_Missions_GUI::eMinValue] )
-            itemConnectors_[ADN_Missions_GUI::eMinValue]->Disconnect( &param->minValue_ );
-        if( itemConnectors_[ADN_Missions_GUI::eMaxValue] )
-            itemConnectors_[ADN_Missions_GUI::eMaxValue]->Disconnect( &param->maxValue_ );
+        itemConnectors_[ADN_Missions_GUI::eMinValue]->Disconnect( &param->minValue_ );
+        itemConnectors_[ADN_Missions_GUI::eMaxValue]->Disconnect( &param->maxValue_ );
     }
 }
