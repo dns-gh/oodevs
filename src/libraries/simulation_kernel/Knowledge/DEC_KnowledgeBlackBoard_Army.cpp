@@ -657,9 +657,10 @@ namespace
     class sResourceNetworkInserter
     {
     public:
-        sResourceNetworkInserter( T_ResourceNetworkVector& container, const TER_Localisation& zone )
+        sResourceNetworkInserter( T_ResourceNetworkVector& container, const TER_Localisation& zone, const std::string& type )
             : pContainer_( container )
             , zone_      ( zone )
+            , type_      ( type )
         {
         }
 
@@ -680,7 +681,7 @@ namespace
         void Execute( MIL_Object_ABC& object ) const
         {
             ResourceNetworkCapacity* capacity = object.Retrieve< ResourceNetworkCapacity >();
-            if( capacity && zone_.Contains( object.GetLocalisation() ) )
+            if( capacity && zone_.Contains( object.GetLocalisation() ) && ( type_.empty() || capacity->ContainsType( type_ ) ) )
             {
                 const T_ResourceNetworkVector& nodes = capacity->GetDECResourceNetworks( object.GetID() );
                 pContainer_.insert( pContainer_.end(), nodes.begin(), nodes.end() );
@@ -690,6 +691,7 @@ namespace
     private:
         T_ResourceNetworkVector& pContainer_;
         const TER_Localisation& zone_;
+        const std::string& type_;
     };
 }
 
@@ -697,9 +699,9 @@ namespace
 // Name: DEC_KnowledgeBlackBoard_Army::GetResourceNetworksInZone
 // Created: JSR 2012-01-17
 // -----------------------------------------------------------------------------
-void DEC_KnowledgeBlackBoard_Army::GetResourceNetworksInZone( T_ResourceNetworkVector& container, const TER_Localisation& zone )
+void DEC_KnowledgeBlackBoard_Army::GetResourceNetworksInZone( T_ResourceNetworkVector& container, const TER_Localisation& zone, const std::string type /*= ""*/ )
 {
-    sResourceNetworkInserter functor( container, zone );
+    sResourceNetworkInserter functor( container, zone, type );
     assert( pKnowledgeUrbanContainer_ );
     assert( pKnowledgeObjectContainer_ );
     pKnowledgeUrbanContainer_->ApplyOnUrbanBlocks( functor );

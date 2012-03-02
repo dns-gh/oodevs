@@ -78,6 +78,8 @@ public:
     void Initialize( const urban::ResourceNetworkAttribute& urbanAttribute );
     void Update( const google::protobuf::RepeatedPtrField< sword::MissionParameter_Value >& list );
 
+    bool ContainsType( const std::string& type ) const;
+
     boost::shared_ptr< resource::NodeProperties> GetNodeProperties() const;
 
     virtual void Register( MIL_Object_ABC& object );

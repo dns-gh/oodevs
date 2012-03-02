@@ -324,3 +324,14 @@ const T_ResourceNetworkVector& ResourceNetworkCapacity::GetDECResourceNetworks( 
     }
     return DECResourceNetworks_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ResourceNetworkCapacity::ContainsType
+// Created: ABR 2012-03-02
+// -----------------------------------------------------------------------------
+bool ResourceNetworkCapacity::ContainsType( const std::string& type ) const
+{
+    std::vector< std::string > availableResources;
+    nodeProperties_->GetAvailableResources( availableResources );
+    return std::find( availableResources.begin(), availableResources.end(), type ) != availableResources.end();
+}

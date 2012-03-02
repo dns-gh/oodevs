@@ -168,6 +168,19 @@ T_ResourceNetworkVector DEC_ResourceNetworkFunctions::GetResourceNetworksInZone(
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_ResourceNetworkFunctions::GetResourceNetworksInZoneByType
+// Created: ABR 2012-03-02
+// -----------------------------------------------------------------------------
+T_ResourceNetworkVector DEC_ResourceNetworkFunctions::GetResourceNetworksInZoneByType( DEC_Decision_ABC* caller, const std::string& type, const TER_Localisation* pLocalisation )
+{
+    T_ResourceNetworkVector result;
+    if( !caller || !pLocalisation )
+        return result;
+    caller->GetPion().GetArmy().GetKnowledge().GetResourceNetworksInZone( result, *pLocalisation, type );
+    return result;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_ResourceNetworkFunctions::CreateResourceNetworkLinkFromObject
 // Created: JSR 2012-01-18
 // -----------------------------------------------------------------------------
