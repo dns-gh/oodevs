@@ -93,10 +93,10 @@ void ADN_Missions_Data::MissionParameterValue::WriteArchive( xml::xostream& outp
 // -----------------------------------------------------------------------------
 ADN_Missions_Data::MissionParameter::MissionParameter()
     : isOptional_( false )
-    , minOccurs_( 1 )
-    , maxOccurs_( 1 )
-    , minValue_( std::numeric_limits< int >::min() )
-    , maxValue_( std::numeric_limits< int >::max() )
+    , minOccurs_ ( 1 )
+    , maxOccurs_ ( 1 )
+    , minValue_  ( std::numeric_limits< int >::min() )
+    , maxValue_  ( std::numeric_limits< int >::max() )
 {
     ADN_Type_Enum< E_MissionParameterType, eNbrMissionParameterType >::SetConverter( &ADN_Tr::ConvertFromMissionParameterType );
     ADN_Type_Enum< E_AnchorType, eNbrAnchorType >::SetConverter( &ADN_Tr::ConvertFromAnchorType );
@@ -484,8 +484,12 @@ ADN_Missions_Data::FragOrder::FragOrder()
 // Created: SBO 2006-12-04
 // -----------------------------------------------------------------------------
 ADN_Missions_Data::FragOrder::FragOrder( unsigned int id )
-    : id_( id )
+    : id_                       ( id )
     , isAvailableWithoutMission_( false )
+    , minOccurs_                ( 1 )
+    , maxOccurs_                ( 1 )
+    , minValue_                 ( std::numeric_limits< int >::min() )
+    , maxValue_                 ( std::numeric_limits< int >::max() )
 {
     ADN_Missions_Data::idFactory_.Reserve( id );
 }
@@ -517,6 +521,10 @@ ADN_Missions_Data::FragOrder* ADN_Missions_Data::FragOrder::CreateCopy()
     FragOrder* newFragOrder = new FragOrder( ADN_Missions_Data::idFactory_.Create() );
     newFragOrder->strName_ = strName_.GetData();
     newFragOrder->diaType_ = diaType_.GetData();
+    newFragOrder->minOccurs_ = minOccurs_.GetData();
+    newFragOrder->maxOccurs_ = maxOccurs_.GetData();
+    newFragOrder->minValue_ = minValue_.GetData();
+    newFragOrder->maxValue_ = maxValue_.GetData();
     newFragOrder->doctrineDescription_ = doctrineDescription_.GetData();
     newFragOrder->usageDescription_ = doctrineDescription_.GetData();
     newFragOrder->parameters_.reserve( parameters_.size() );
@@ -534,15 +542,23 @@ ADN_Missions_Data::FragOrder* ADN_Missions_Data::FragOrder::CreateCopy()
 // -----------------------------------------------------------------------------
 void ADN_Missions_Data::FragOrder::ReadArchive( xml::xistream& input )
 {
-    std::string doctrineDesc, usageDesc;
+    std::string doctrineDesc, usageDesc, max;
     input >> xml::attribute( "name", strName_ )
           >> xml::attribute( "dia-type", diaType_ )
           >> xml::optional >> xml::attribute( "available-without-mission", isAvailableWithoutMission_ )
+          >> xml::optional >> xml::attribute( "min-occurs", minOccurs_ )
+          >> xml::optional >> xml::attribute( "max-occurs", max )
+          >> xml::optional >> xml::attribute( "min-value", minValue_ )
+          >> xml::optional >> xml::attribute( "max-value", maxValue_ )
           >> xml::optional >> xml::start( "description" )
-             >> xml::start( "doctrine" ) >> doctrineDesc >> xml::end
-             >> xml::start( "usage" ) >> usageDesc >> xml::end
+            >> xml::start( "doctrine" ) >> doctrineDesc >> xml::end
+            >> xml::start( "usage" ) >> usageDesc >> xml::end
           >> xml::end
           >> xml::list( "parameter", *this, &ADN_Missions_Data::FragOrder::ReadParameter );
+    if( max == "unbounded" )
+        maxOccurs_ = std::numeric_limits< int >::max();
+    else
+        input >> xml::optional >> xml::attribute( "max-occurs", maxOccurs_ );
     doctrineDescription_ = doctrineDesc;
     usageDescription_ = usageDesc;
 }
@@ -586,6 +602,18 @@ void ADN_Missions_Data::FragOrder::WriteArchive( xml::xostream& output )
             << xml::attribute( "dia-type", diaType_ )
             << xml::attribute( "id", id_ )
             << xml::attribute( "available-without-mission", isAvailableWithoutMission_ );
+    if( maxOccurs_ != 1 )
+    {
+        output << xml::attribute( "min-occurs", minOccurs_ );
+        if( maxOccurs_ == std::numeric_limits< int >::max() )
+            output << xml::attribute( "max-occurs", "unbounded" );
+        else
+            output << xml::attribute( "max-occurs", maxOccurs_ );
+    }
+    if( minValue_ != std::numeric_limits< int >::min() )
+        output << xml::attribute( "min-value", minValue_ );
+    if( maxValue_ != std::numeric_limits< int >::max() )
+        output << xml::attribute( "max-value", maxValue_ );
     if( ! doctrineDescription_.GetData().empty() || ! usageDescription_.GetData().empty() )
     {
         output << xml::start( "description" );
