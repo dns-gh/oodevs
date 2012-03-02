@@ -804,7 +804,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="position" name="Position" optional="false" type="Point"/>
-      <parameter dia-name="bodySearchStrength" name="Pourcentage de foule a desarmer" optional="false" type="Integer"/>
+      <parameter dia-name="bodySearchStrength" max-value="100" min-value="0" name="Pourcentage de foule a desarmer" optional="false" type="Integer"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.tasks.Fixer" dia-type="france.military.platoon.combat.tasks.Fixer" id="2116" name="PION MELEE Fixer" package="attack">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -1496,7 +1496,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objective" name="Position deploiement" optional="false" type="Point"/>
       <parameter dia-name="meetingPoint" name="Point regroupement" optional="false" type="Point"/>
-      <parameter dia-name="jammingTime" name="Délais de brouillage" optional="false" type="Integer"/>
+      <parameter dia-name="jammingTime" max-value="240" min-value="0" name="Délais de brouillage" optional="false" type="Integer"/>
     </mission>
   </units>
   <automats>
@@ -1746,7 +1746,6 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objectives" name="Itineraire" optional="false" type="Path"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.tasks.Decrocher" dia-type="france.military.company.tasks.Decrocher" id="1011" mrt-dia-behavior="france.military.company.tasks.Decrocher" name="AUTOMATE COMMUNES Decrocher" package="move">
@@ -1754,7 +1753,6 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objective" name="Position de regroupement" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
@@ -1768,7 +1766,6 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objective" name="Unite a suivre" optional="false" type="Agent"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.tasks.Stationner" dia-type="france.military.company.tasks.Stationner" id="1013" mrt-dia-behavior="france.military.company.tasks.Stationner" name="AUTOMATE COMMUNES Stationner" package="move">
@@ -1776,7 +1773,6 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="position" name="Position" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
@@ -1790,7 +1786,6 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="peoples" max-occurs="unbounded" min-occurs="1" name="Refugies" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Agent"/>
@@ -1804,7 +1799,6 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="prisoners" max-occurs="unbounded" min-occurs="1" name="Prisonniers" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="camp" name="Camp de prisonniers" optional="false" type="ObjectKnowledge"/>
     </mission>
@@ -1813,7 +1807,6 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="prisoners" max-occurs="unbounded" min-occurs="1" name="Prisonniers" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="objective" name="position" optional="false" type="Point"/>
     </mission>
@@ -1822,7 +1815,6 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objective" name="Site de decontamination" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="destination" name="Destination" optional="false" type="Polygon"/>
     </mission>
@@ -1831,7 +1823,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Objectifs" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
@@ -1861,7 +1853,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Objectifs" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
@@ -1875,7 +1867,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Objectifs" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
@@ -1889,7 +1881,6 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objective" name="Point d'embarquement" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.combat.support.art.tasks.SeDeployer" dia-type="france.military.company.combat.support.art.tasks.SeDeployer" id="1008" mrt-dia-behavior="france.military.company.combat.support.art.tasks.SeDeployer" name="AUTOMATE ASS Se Deployer" package="none">
@@ -1897,7 +1888,6 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="firePositions" max-occurs="unbounded" min-occurs="1" name="Positions ou zones de deploiement" optional="true" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
@@ -1912,7 +1902,6 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objective" name="Zone" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.tasks.Franchir" dia-type="france.military.company.tasks.Franchir" id="1023" mrt-dia-behavior="france.military.company.tasks.Franchir" name="AUTOMATE COMMUNES Franchir" package="move">
@@ -1920,7 +1909,6 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="crossingSite" name="Site de franchissement" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="objective" name="Destination" optional="false" type="Point"/>
     </mission>
@@ -1929,7 +1917,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Objectifs" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
@@ -1946,7 +1934,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Objectifs" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
@@ -1960,7 +1948,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.combat.tasks.Neutraliser" dia-type="france.military.company.combat.tasks.Neutraliser" id="1026" mrt-dia-behavior="france.military.company.combat.tasks.Neutraliser" name="AUTOMATE MELEE Neutraliser" package="attack">
@@ -1968,7 +1956,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.combat.tasks.Fixer" dia-type="france.military.company.combat.tasks.Fixer" id="1022" mrt-dia-behavior="france.military.company.combat.tasks.Fixer" name="AUTOMATE MELEE Fixer" package="attack">
@@ -1976,7 +1964,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles a fixer" optional="false" type="AgentKnowledge"/>
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Postions pour fixer" optional="false" type="Point"/>
     </mission>
@@ -1985,7 +1973,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objective" name="Objectif" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Polygon"/>
@@ -2002,7 +1990,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objective" name="Objectif" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Polygon"/>
@@ -2019,14 +2007,14 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.combat.tasks.Appuyer" dia-type="france.military.company.combat.tasks.Appuyer" id="1031" mrt-dia-behavior="france.military.company.combat.tasks.Appuyer" name="AUTOMATE MELEE Appuyer" package="support" symbol="IdAppuyer_Poly-ligne">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objective" name="Compagnie a soutenir" optional="false" type="Automat"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.combat.tasks.AppuyerSurPosition" dia-type="france.military.company.combat.tasks.AppuyerSurPosition" id="5011" mrt-dia-behavior="france.military.company.combat.tasks.AppuyerSurPosition" name="AUTOMATE MELEE Appuyer Sur Position" package="support" symbol="IdAppuyer_Poly-ligne">
@@ -2034,7 +2022,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objective" name="Compagnie a soutenir" optional="false" type="Automat"/>
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="A partir de" optional="false" type="LocationComposite">
         <choice>
@@ -2056,7 +2044,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objective" name="Objectif" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Polygon"/>
@@ -2069,7 +2057,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Objectifs" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
@@ -2086,7 +2074,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Objectifs" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
@@ -2103,7 +2091,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="entity" name="Compagnie a couvrir" optional="false" type="Automat"/>
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="A partir de" optional="false" type="Point"/>
       <parameter dia-name="directionPoints" max-occurs="unbounded" min-occurs="1" name="Face a" optional="true" type="Point"/>
@@ -2113,7 +2101,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="entity" name="Compagnie a couvrir" optional="false" type="Automat"/>
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="A partir de" optional="false" type="Point"/>
     </mission>
@@ -2122,7 +2110,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objective" name="Objectif" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
@@ -2143,7 +2131,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objective" name="Objectif" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
@@ -2157,7 +2145,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
       <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
@@ -2167,7 +2155,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
       <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
@@ -2177,7 +2165,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="obstacles" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="true" type="PlannedWork"/>
       <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
@@ -2187,7 +2175,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objective" name="Compagnie a relever" optional="false" type="Automat"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.combat.tasks.EffectuerRaid" dia-type="france.military.company.combat.tasks.EffectuerRaid" id="1039" mrt-dia-behavior="france.military.company.combat.tasks.EffectuerRaid" name="AUTOMATE MELEE Effectuer un raid" package="attack" symbol="IdRaid_Poly-ligne">
@@ -2195,7 +2183,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objective" name="Objectif" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
@@ -2209,7 +2197,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objective" name="Unite ou automate" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Automat"/>
@@ -2223,7 +2211,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="position" name="Position" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
@@ -2237,16 +2225,16 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions" optional="false" type="Point"/>
-      <parameter dia-name="bodySearchStrength" name="Pourcentage de foule a desarmer" optional="false" type="Integer"/>
+      <parameter dia-name="bodySearchStrength" max-value="100" min-value="0" name="Pourcentage de foule a desarmer" optional="false" type="Integer"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.stabilisation.tasks.InterdireFoule" dia-type="france.military.company.stabilisation.tasks.InterdireFoule" id="1043" mrt-dia-behavior="france.military.company.stabilisation.tasks.InterdireFoule" name="AUTOMATE MELEE Interdire foules" package="support">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.stabilisation.tasks.ControlerFoule" dia-type="france.military.company.stabilisation.tasks.ControlerFoule" id="1044" mrt-dia-behavior="france.military.company.stabilisation.tasks.ControlerFoule" name="AUTOMATE MELEE Controler foule" package="control">
@@ -2254,7 +2242,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="area" name="Zone" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.stabilisation.tasks.CanaliserFoule" dia-type="france.military.company.stabilisation.tasks.CanaliserFoule" id="1045" mrt-dia-behavior="france.military.company.stabilisation.tasks.CanaliserFoule" name="AUTOMATE MELEE Canaliser foule" package="support">
@@ -2262,7 +2250,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.tasks.SeDeployer" dia-type="france.military.company.tasks.SeDeployer" id="1046" mrt-dia-behavior="france.military.company.tasks.SeDeployer" name="AUTOMATE LOGISTIQUE Se Deployer" package="none">
@@ -2270,7 +2258,6 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objective" name="Position" optional="true" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
@@ -2284,7 +2271,6 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Reseaux de ressources" optional="false" type="ResourceNetwork"/>
       <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
     </mission>
@@ -2293,7 +2279,6 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Reseaux de ressources" optional="false" type="ResourceNetwork"/>
       <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
     </mission>
@@ -2331,7 +2316,6 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="peoples" max-occurs="unbounded" min-occurs="1" name="Refugies" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Agent"/>
@@ -2553,7 +2537,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
+      <parameter dia-name="echelonNumber" max-value="2" min-value="1" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles" optional="false" type="AgentKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.combat.support.circu.tasks.Reconnaitre" dia-type="france.military.company.combat.support.circu.tasks.Reconnaitre" id="3006" mrt-dia-behavior="france.military.company.combat.support.circu.tasks.Reconnaitre" name="AUTOMATE CIRCULATION Reconnaitre" symbol="IdReconnaitre_Poly-ligne">
@@ -2561,7 +2545,6 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objectives" max-occurs="unbounded" min-occurs="1" name="Objectifs" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
@@ -2575,7 +2558,6 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Sites de franchissement" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="typePontage" name="Type pontage" optional="false" type="Enumeration">
         <value id="0" name="continu"/>
@@ -2613,7 +2595,6 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objective" name="Position" optional="true" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
@@ -2627,7 +2608,6 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objectives" name="Itineraire" optional="false" type="Path"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.combat.support.air.tasks.Suivre" dia-type="france.military.company.combat.support.air.tasks.Suivre" id="28767" mrt-dia-behavior="france.military.company.combat.support.air.tasks.Suivre" name="AUTOMATE AIR Suivre">
@@ -2635,7 +2615,6 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="objective" name="Unite a suivre" optional="false" type="Agent"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.combat.support.art.tasks.RecoEtDeploiement" dia-type="france.military.company.combat.support.art.tasks.RecoEtDeploiement" id="28768" mrt-dia-behavior="france.military.company.combat.support.art.tasks.RecoEtDeploiement" name="AUTOMATE ASS Reco Et Deploiement">
@@ -2669,7 +2648,7 @@
         <value id="4" name="double_rideau"/>
         <value id="5" name="simple_rideau"/>
       </parameter>
-      <parameter dia-name="angle" name="Angle" optional="true" type="Integer"/>
+      <parameter dia-name="angle" max-value="360" min-value="1" name="Angle" optional="true" type="Integer"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.combat.support.art.tasks.Surveiller" dia-type="france.military.company.combat.support.art.tasks.Surveiller" id="28771" mrt-dia-behavior="france.military.company.combat.support.art.tasks.Surveiller" name="AUTOMATE ASA Surveiller">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2686,7 +2665,7 @@
         <value id="4" name="double_rideau"/>
         <value id="5" name="simple_rideau"/>
       </parameter>
-      <parameter dia-name="angle" name="Angle" optional="true" type="Integer"/>
+      <parameter dia-name="angle" max-value="360" min-value="1" name="Angle" optional="true" type="Integer"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.combat.support.rens.tasks.Appuyer" dia-type="france.military.company.combat.support.rens.tasks.Appuyer" id="28772" mrt-dia-behavior="france.military.company.combat.support.rens.tasks.Appuyer" name="AUTOMATE RENS ROEM Appuyer">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2695,7 +2674,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="objective" name="Position de déploiement" optional="false" type="Point"/>
       <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
-      <parameter dia-name="jammingTime" name="Délais de brouillage" optional="false" type="Integer"/>
+      <parameter dia-name="jammingTime" max-value="240" min-value="1" name="Délais de brouillage" optional="false" type="Integer"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.combat.support.rens.tasks.ROHUM_RenseignerSur" dia-type="france.military.company.combat.support.rens.tasks.ROHUM_RenseignerSur" id="28773" mrt-dia-behavior="france.military.company.combat.support.rens.tasks.ROHUM_RenseignerSur" name="AUTOMATE RENS ROHUM Renseigner Sur">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2748,7 +2727,6 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="echelonNumber" name="Nombre d'echelons" optional="true" type="Integer"/>
       <parameter dia-name="position" name="Position ou zone de deploiement" optional="true" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
@@ -2778,7 +2756,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="objective" name="Position de déploiement" optional="false" type="Point"/>
       <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
-      <parameter dia-name="jammingTime" name="Délais de brouillage" optional="false" type="Integer"/>
+      <parameter dia-name="jammingTime" max-value="240" min-value="1" name="Délais de brouillage" optional="false" type="Integer"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.combat.support.rens.tasks.Orienter" dia-type="france.military.company.combat.support.rens.tasks.Orienter" id="28783" mrt-dia-behavior="france.military.company.combat.support.rens.tasks.Orienter" name="AUTOMATE RENS Orienter" package="intelligence">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3040,4 +3018,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_RejoindrePointLancement" id="405" name="Rejoindre point de lancement"/>
   </fragorders>
 </missions>
-<!-- signature="3786441210" -->
+<!-- signature="4108930596" -->
