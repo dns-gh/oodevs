@@ -3,8 +3,7 @@ ADN_Rich_ListViewItem.h \
 ADN_Table.h \
 
 
-SOURCES = ADN_WeaponFilter.cpp \
-ADN_ActiveProtectionsListView.cpp \
+SOURCES = ADN_ActiveProtectionsListView.cpp \
 ADN_ActiveProtections_Data.cpp \
 ADN_ActiveProtections_GUI.cpp \
 ADN_ActiveProtections_WeaponsTable.cpp \
@@ -194,6 +193,7 @@ ADN_Urban_GUI.cpp \
 ADN_Weapon_Wizard.cpp \
 ADN_Weapon_Wizard_Page0.cpp \
 ADN_Weapons_Data.cpp \
+ADN_WeaponFilter.cpp \
 ADN_Weapons_GUI.cpp \
 ADN_Weapons_ListView.cpp \
 ADN_Weapons_PhSizeListView.cpp \
