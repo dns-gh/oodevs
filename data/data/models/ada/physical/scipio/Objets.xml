@@ -230,7 +230,8 @@
   </object>
   <object geometry="polygon" name="zone protegee" symbol="G*MPSF----****X" type="safe zone">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
-    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <interact-with-enemy/>
+    <mobility default-speed="5" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <protection geniePrepared="true" max-size="3"/>
   </object>
   <object geometry="point" name="zone implantation canon" symbol="G*FPAP----****X" type="gun artillery deployment area">
@@ -462,4 +463,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="1946943382" -->
+<!-- signature="0171608642" -->
