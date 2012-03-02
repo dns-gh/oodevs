@@ -137,7 +137,7 @@ float PerformanceIndicator::ComputeLoadIndicator( PerformanceIndicator::Indicato
     if ( knowledges < 1.f )
         knowledges = 1.f;
 
-    float load  = units * ( unit_ + blocs * urban_ ) + objects * object_ + terrain * terrain_ + knowledge_ * std::fabs( knowledges - unitknowledge_ * units / knowledges );
+    float load  = units * ( unit_ + blocs * urban_ ) + objects * object_ + terrain * terrain_ + knowledge_ * ( knowledges + unitknowledge_ * units / knowledges );
     load *= globalFactor_;
     if ( load < 0.0f )
         return 0.0f;
