@@ -370,6 +370,7 @@ void PHY_RolePion_Location::SendFullState( client::UnitAttributes& msg ) const
     NET_ASN_Tools::WritePoint( *pvPosition_, *msg().mutable_position() );
     NET_ASN_Tools::WriteDirection( vDirection_, *msg().mutable_direction() );
     msg().set_height( (unsigned int)rHeight_ );
+    msg().set_altitude( (unsigned int)( rHeight_ + MIL_Tools::GetAltitude( *pvPosition_ ) ) );
     msg().set_speed( (unsigned int)MIL_Tools::ConvertSpeedSimToMos( rCurrentSpeed_ ) );
 }
 
