@@ -105,9 +105,15 @@ void ExerciseConfig::LoadExercise( const std::string& file )
 // -----------------------------------------------------------------------------
 void ExerciseConfig::ReadExercise( xml::xistream& xis )
 {
+    startupOrderFiles_.clear();
     xis >> xml::start( "exercise" )
-            >> xml::optional >> xml::attribute( "model-version", modelVersion_ )
-            >> xml::start( "terrain" )
+            >> xml::optional >> xml::attribute( "model-version", modelVersion_ );
+    xis     >> xml::optional >> xml::start( "meta" )
+                >> xml::optional >> xml::start( "orders" )
+                    >> xml::list( "order", *this, &ExerciseConfig::ReadOrder )
+                >> xml::end
+            >> xml::end;
+    xis     >> xml::start( "terrain" )
                 >> xml::attribute( "name", terrain_ )
             >> xml::end
             >> xml::start( "model" )
@@ -144,6 +150,15 @@ void ExerciseConfig::ReadExercise( xml::xistream& xis )
             >> xml::optional >> xml::start( "success-factors" );
     successFactors_ = xis.attribute< std::string >( "file", "success-factors.xml" );
     xis     >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseConfig::ReadOrder
+// Created: JSR 2012-03-02
+// -----------------------------------------------------------------------------
+void ExerciseConfig::ReadOrder( xml::xistream& xis )
+{
+    startupOrderFiles_.push_back( xis.attribute< std::string >( "file" ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -384,6 +399,15 @@ std::string ExerciseConfig::BuildPropagationChildFile( const std::string& path, 
     std::string propagations( propagations_ );
     ResolveRelativePath( BuildDirectoryFile( GetRootDir(), "data" ), propagations );
     return BuildDirectoryFile( BuildDirectoryFile( propagations, path ), file );
+}
+
+// -----------------------------------------------------------------------------
+// Name: std::vector< std::string >& ExerciseConfig::GetStartupOrderFiles
+// Created: JSR 2012-03-02
+// -----------------------------------------------------------------------------
+const std::vector< std::string >& ExerciseConfig::GetStartupOrderFiles() const
+{
+    return startupOrderFiles_;
 }
 
 // -----------------------------------------------------------------------------

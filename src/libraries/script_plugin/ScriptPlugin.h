@@ -93,6 +93,8 @@ private:
     std::string ToUtm( const dispatcher::Position& position );
     dispatcher::Position UtmPosition( const std::string& utm );
 
+    std::string GenerateOrdersScript( const std::vector< std::string >& files );
+
     void ApplyPendings();
     //@}
 

@@ -13,6 +13,7 @@
 #include "GeneralConfig.h"
 #include <memory>
 #include <map>
+#include <vector>
 
 namespace xml
 {
@@ -73,6 +74,8 @@ public:
     virtual std::string GetPropagationFile( const std::string& path ) const;
     virtual std::string BuildPropagationChildFile( const std::string& path, const std::string& file ) const;
 
+    virtual const std::vector< std::string >& GetStartupOrderFiles() const;
+
     virtual void Parse( int argc, char** argv );
     void LoadExercise( const std::string& file ); //$$$ Rien à foutre la ...
     //@}
@@ -106,6 +109,7 @@ private:
     //! @name Helpers
     //@{
     void ReadExercise( xml::xistream& xis );
+    void ReadOrder( xml::xistream& xis );
     //@}
 
 protected:
@@ -185,6 +189,8 @@ private:
     std::string successFactors_;
     std::string population_;
     std::string propagations_;
+
+    std::vector< std::string > startupOrderFiles_;
 
     LogSettings dispatcherProtobufLogSettings_;
     LogSettings shieldLogSettings_;

@@ -52,6 +52,7 @@ public:
     virtual void NotifyCreated( const Exercise& exercise );
     virtual void VisitBriefing( const QString& lang, const QString& text );
     virtual void VisitResource( const QString& name, const QString& file );
+    virtual void VisitOrderFile( const QString& file );
     //@}
 
 protected:
@@ -69,6 +70,8 @@ private slots:
     void OnToggleDisplayMode( bool toggled );
     void OnAddResource();
     void OnDeleteResource();
+    void OnAddOrderFile();
+    void OnDeleteOrderFile();
     //@}
 
 private:
@@ -76,6 +79,7 @@ private:
     //@{
     void Update( const Exercise& exercise );
     void AddResource( const QString& name, const QString& file );
+    void AddOrderFile( const QString& file );
     virtual QSize sizeHint() const;
     //@}
 
@@ -96,6 +100,7 @@ private:
     Q3TextEdit* briefing_;
     T_Briefings briefings_;
     Q3ListView* resources_;
+    Q3ListView* orderFiles_;
     QCheckBox* infiniteDotationsCheckBox_;
     QCheckBox* humanEvolutionCheckBox_;
     //@}

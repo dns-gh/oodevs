@@ -14,6 +14,7 @@
 #include <boost/algorithm/string.hpp>
 #include "tools/ExerciseConfig.h"
 #include <boost/filesystem/path.hpp>
+#include <boost/filesystem/convenience.hpp>
 
 namespace bfs = boost::filesystem;
 
@@ -29,7 +30,7 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
 {
     setModal( false );
     setCaption( tr( "Exercise" ) );
-    Q3GridLayout* grid = new Q3GridLayout( this, 4, 2, 0, 5 );
+    Q3GridLayout* grid = new Q3GridLayout( this, 5, 2, 0, 5 );
     grid->setMargin( 5 );
     grid->setRowStretch( 0, 1 );
     grid->setRowStretch( 1, 10 );
@@ -76,16 +77,32 @@ ExerciseDialog::ExerciseDialog( QWidget* parent, kernel::Controllers& controller
         grid->addMultiCellWidget( box, 2, 2, 0, 2 );
     }
     {
+        Q3GroupBox* box = new Q3HGroupBox( tr( "Order files" ), this );
+        orderFiles_ = new Q3ListView( box );
+        orderFiles_->addColumn( tr( "File" ) );
+        orderFiles_->header()->setMovingEnabled( false );
+        orderFiles_->setAllColumnsShowFocus( true );
+        orderFiles_->setResizeMode( Q3ListView::LastColumn );
+        Q3VBox* tools = new Q3VBox( box );
+        QPushButton* add = new QPushButton( tr( "+" ), tools );
+        add->setMaximumWidth( 40 );
+        connect( add, SIGNAL( clicked() ), this, SLOT( OnAddOrderFile() ) );
+        QPushButton* del = new QPushButton( tr( "-" ), tools );
+        del->setMaximumWidth( 40 );
+        connect( del, SIGNAL( clicked() ), this, SLOT( OnDeleteOrderFile() ) );
+        grid->addMultiCellWidget( box, 3, 3, 0, 2 );
+    }
+    {
         Q3GroupBox* box = new Q3VGroupBox( tr( "Parameters" ), this );
         infiniteDotationsCheckBox_ = new QCheckBox( tr( "Infinite resources" ), box );
         humanEvolutionCheckBox_ = new QCheckBox( tr( "Human factors automatic evolution" ), box );
-        grid->addMultiCellWidget( box, 3, 3, 0, 2 );
+        grid->addMultiCellWidget( box, 4, 4, 0, 2 );
     }
     {
         Q3HBox* box = new Q3HBox( this );
         QPushButton* ok = new QPushButton( tr( "Ok" ), box );
         QPushButton* cancel = new QPushButton( tr( "Cancel" ), box );
-        grid->addWidget( box, 4, 2 );
+        grid->addWidget( box, 5, 2 );
         connect( ok, SIGNAL( clicked() ), SLOT( OnAccept() ) );
         connect( cancel, SIGNAL( clicked() ), SLOT( OnReject() ) );
     }
@@ -119,6 +136,7 @@ void ExerciseDialog::Update( const Exercise& exercise )
     name_->setText( exercise.GetName() );
     briefings_.clear();
     resources_->clear();
+    orderFiles_->clear();
     exercise.Accept( *this );
     OnChangeLang();
 }
@@ -143,6 +161,15 @@ void ExerciseDialog::VisitBriefing( const QString& lang, const QString& text )
 void ExerciseDialog::VisitResource( const QString& name, const QString& file )
 {
     AddResource( name, file );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseDialog::VisitOrderFile
+// Created: JSR 2012-03-01
+// -----------------------------------------------------------------------------
+void ExerciseDialog::VisitOrderFile( const QString& file )
+{
+    AddOrderFile( file );
 }
 
 // -----------------------------------------------------------------------------
@@ -187,6 +214,20 @@ void ExerciseDialog::AddResource( const QString& name, const QString& file )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ExerciseDialog::AddOrderFile
+// Created: JSR 2012-03-01
+// -----------------------------------------------------------------------------
+void ExerciseDialog::AddOrderFile( const QString& file )
+{
+    const QString filename = MakeRelativePath( file, config_ );
+    for( Q3ListViewItemIterator it( orderFiles_ ); it.current(); ++it )
+        if( filename == it.current()->text( 0 ) )
+            return;
+    Q3ListViewItem* item = new Q3ListViewItem( orderFiles_ );
+    item->setText( 0, filename );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ExerciseDialog::OnChangeLang
 // Created: SBO 2010-03-11
 // -----------------------------------------------------------------------------
@@ -195,6 +236,28 @@ void ExerciseDialog::OnChangeLang()
     briefings_[ selectedLang_ ] = briefing_->text();
     selectedLang_ = lang_->GetValue();
     briefing_->setText( briefings_[ selectedLang_ ] );
+}
+
+namespace
+{
+    QString CopyIfAbsolute( const QString& filename, const tools::ExerciseConfig& config, QStringList& list )
+    {
+        try
+        {
+            bfs::path file( filename );
+            if( !file.is_complete() )
+                return filename;
+            list.append( file.leaf().c_str() );
+            bfs::path dest = bfs::path( config.BuildExerciseChildFile( "scripts") ) / "resources";
+            bfs::create_directories( dest );
+            bfs::copy_file( file, dest / file.leaf() );
+            return MakeRelativePath( ( dest / file.leaf() ).native_file_string().c_str(), config );
+        }
+        catch( ... )
+        {
+            return filename;
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -210,6 +273,18 @@ void ExerciseDialog::OnAccept()
     exercise_.ClearResources();
     for( Q3ListViewItemIterator it( resources_ ); it.current(); ++it )
         exercise_.AddResource( it.current()->text( 0 ), it.current()->text( 1 ) );
+    exercise_.ClearOrderFiles();
+    QStringList copiedFiles;
+    for( Q3ListViewItemIterator it( orderFiles_ ); it.current(); ++it )
+        exercise_.AddOrderFile( CopyIfAbsolute( it.current()->text( 0 ), config_, copiedFiles ) );
+    if( !copiedFiles.isEmpty() )
+    {
+        QString message = tr( "The following files will be copied to the exercise scripts/resources subfolder:\n" );
+        QStringListIterator it( copiedFiles );
+        while( it.hasNext() )
+            message.append( "\n- " + it.next() );
+        QMessageBox::information( this, tr( "Exercise" ), message );
+    }
     exercise_.GetSettings().SetValue< bool >( "infinite-dotation", infiniteDotationsCheckBox_->isChecked() );
     exercise_.GetSettings().SetValue< bool >( "human-evolution", humanEvolutionCheckBox_->isChecked() );
     accept();
@@ -263,5 +338,26 @@ void ExerciseDialog::OnAddResource()
 void ExerciseDialog::OnDeleteResource()
 {
     if( Q3ListViewItem* item = resources_->currentItem() )
+        delete item;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseDialog::OnAddOrderFile
+// Created: JSR 2012-03-01
+// -----------------------------------------------------------------------------
+void ExerciseDialog::OnAddOrderFile()
+{
+    const QString filename = Q3FileDialog::getOpenFileName( "", tr( "Order files (*.ord)" ) );
+    if( !filename.isNull() )
+        AddOrderFile( filename );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExerciseDialog::OnDeleteOrderFile
+// Created: JSR 2012-03-01
+// -----------------------------------------------------------------------------
+void ExerciseDialog::OnDeleteOrderFile()
+{
+    if( Q3ListViewItem* item = orderFiles_->currentItem() )
         delete item;
 }

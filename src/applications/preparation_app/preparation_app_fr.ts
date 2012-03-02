@@ -393,6 +393,19 @@
         <source>Human factors automatic evolution</source>
         <translation>Evolution automatique des facteurs humains</translation>
     </message>
+    <message>
+        <source>Order files</source>
+        <translation>Fichiers d'ordre</translation>
+    </message>
+    <message>
+        <source>Order files (*.ord)</source>
+        <translation>Fichiers d'ordres (*ord)</translation>
+    </message>
+    <message>
+        <source>The following files will be copied to the exercise scripts/resources subfolder:
+</source>
+        <translation>Les fichiers suivants seront copiés dans le sous-répertoire scripts/resources de l'exercice:</translation>
+    </message>
 </context>
 <context>
     <name>FileToolbar</name>

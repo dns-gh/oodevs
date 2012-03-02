@@ -37,6 +37,7 @@ public:
     virtual ~ExerciseVisitor_ABC() {}
     virtual void VisitBriefing( const QString& lang, const QString& briefing ) = 0;
     virtual void VisitResource( const QString& name, const QString& file ) = 0;
+    virtual void VisitOrderFile( const QString& file ) = 0;
 };
 
 // =============================================================================
@@ -69,9 +70,11 @@ public:
     void SetName( const QString& name );
     void SetBriefing( const QString& lang, const QString& text );
     void AddResource( const QString& name, const QString& file );
+    void AddOrderFile( const QString& file );
     void SetActionPlanning( const std::string& filename );
     void SetExerciseValidity( bool isValid );
     void ClearResources();
+    void ClearOrderFiles();
     //@}
 
 private:
@@ -79,13 +82,16 @@ private:
     //@{
     void ReadBriefing( xml::xistream& xis );
     void ReadResource( xml::xistream& xis );
+    void ReadOrderFile( xml::xistream& xis );
     void SerializeBriefings( xml::xostream& xos ) const;
     void SerializeResources( xml::xostream& xos ) const;
+    void SerializeOrderFiles( xml::xostream& xos ) const;
     //@}
 
     //! @name Types
     //@{
     typedef std::map< QString, QString > T_Resources;
+    typedef std::set< QString >          T_OrderFiles;
     //@}
 
 private:
@@ -96,6 +102,7 @@ private:
     QString                 name_;
     T_Resources             briefings_;
     T_Resources             resources_;
+    T_OrderFiles            orderFiles_;
     std::string             actionPlanning_;
     bool                    isValid_;
     //@}

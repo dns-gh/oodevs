@@ -40,8 +40,7 @@ namespace
 // Created: AGE 2008-06-12
 // -----------------------------------------------------------------------------
 Script::Script( const std::string& file, dispatcher::Registrable_ABC& registrables )
-    : file_ ( file )
-    , brain_( CreateBrain( file ) )
+    : brain_( CreateBrain( file ) )
     , fsm_  ( new FiniteStateMachine( *brain_ ) )
 {
     registrables.RegisterIn( *brain_ );

@@ -58,6 +58,9 @@ void Exercise::Load( xml::xistream& xis )
                 >> xml::optional >> xml::start( "resources" )
                     >> xml::list( "resource", *this, &Exercise::ReadResource )
                 >> xml::end // end resources
+                >> xml::optional >> xml::start( "orders" )
+                    >> xml::list( "order", *this, &Exercise::ReadOrderFile )
+                >> xml::end // end orders
             >> xml::end // end meta
             >> xml::optional >> xml::start( "action-planning" )
                 >> xml::attribute< std::string >( "file", actionPlanning_ )
@@ -77,7 +80,7 @@ void Exercise::ReadBriefing( xml::xistream& xis )
     std::string lang, text;
     xis >> xml::attribute( "lang", lang )
         >> text;
-    briefings_[lang.c_str()] = text.c_str();
+    briefings_[ lang.c_str() ] = text.c_str();
 }
 
 // -----------------------------------------------------------------------------
@@ -89,8 +92,19 @@ void Exercise::ReadResource( xml::xistream& xis )
     std::string name, file;
     xis >> xml::attribute( "name", name )
         >> xml::attribute( "file", file );
-    resources_[name.c_str()] = file.c_str();
+    resources_[ name.c_str() ] = file.c_str();
 }
+
+// -----------------------------------------------------------------------------
+// Name: Exercise::ReadOrderFile
+// Created: JSR 2012-03-01
+// -----------------------------------------------------------------------------
+void Exercise::ReadOrderFile( xml::xistream& xis )
+{
+    std::string file = xis.attribute< std::string >( "file" );
+    orderFiles_.insert( file.c_str() );
+}
+
 // -----------------------------------------------------------------------------
 // Name: Exercise::Purge
 // Created: SBO 2010-03-08
@@ -100,6 +114,7 @@ void Exercise::Purge()
     name_ = "";
     briefings_.clear();
     resources_.clear();
+    orderFiles_.clear();
     actionPlanning_.clear();
     isValid_ = true;
     settings_.Purge();
@@ -138,6 +153,7 @@ void Exercise::SerializeAndSign( const tools::ExerciseConfig& config, const tool
         xos << xml::start( "name" ) << xml::cdata( name_.ascii() ) << xml::end;
     SerializeBriefings( xos );
     SerializeResources( xos );
+    SerializeOrderFiles( xos );
     xos     << xml::end;
     CopyFromFile( file, xos );
     xos << xml::start( "settings" ) << xml::attribute( "file", config.GetSettingsFileName() ) << xml::end;
@@ -179,6 +195,22 @@ void Exercise::SerializeResources( xml::xostream& xos ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Exercise::SerializeOrderFiles
+// Created: JSR 2012-03-01
+// -----------------------------------------------------------------------------
+void Exercise::SerializeOrderFiles( xml::xostream& xos ) const
+{
+    if( orderFiles_.empty() )
+        return;
+    xos << xml::start( "orders" );
+    for( T_OrderFiles::const_iterator it = orderFiles_.begin(); it != orderFiles_.end(); ++it )
+        xos << xml::start( "order" )
+                << xml::attribute( "file", it->ascii() )
+            << xml::end;
+    xos << xml::end;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Exercise::GetSettings
 // Created: ABR 2011-12-09
 // -----------------------------------------------------------------------------
@@ -212,7 +244,7 @@ void Exercise::SetName( const QString& name )
 // -----------------------------------------------------------------------------
 void Exercise::SetBriefing( const QString& lang, const QString& text )
 {
-    briefings_[lang] = text;
+    briefings_[ lang ] = text;
     controller_.Update( *this );
 }
 
@@ -222,7 +254,17 @@ void Exercise::SetBriefing( const QString& lang, const QString& text )
 // -----------------------------------------------------------------------------
 void Exercise::AddResource( const QString& name, const QString& file )
 {
-    resources_[name] = file;
+    resources_[ name ] = file;
+    controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Exercise::AddOrderFile
+// Created: JSR 2012-03-01
+// -----------------------------------------------------------------------------
+void Exercise::AddOrderFile( const QString& file )
+{
+    orderFiles_.insert( file );
     controller_.Update( *this );
 }
 
@@ -256,6 +298,16 @@ void Exercise::ClearResources()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Exercise::ClearOrderFiles
+// Created: JSR 2012-03-01
+// -----------------------------------------------------------------------------
+void Exercise::ClearOrderFiles()
+{
+    orderFiles_.clear();
+    controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Exercise::Accept
 // Created: SBO 2010-03-11
 // -----------------------------------------------------------------------------
@@ -265,4 +317,6 @@ void Exercise::Accept( ExerciseVisitor_ABC& visitor ) const
         visitor.VisitBriefing( it->first, it->second );
     for( T_Resources::const_iterator it = resources_.begin(); it != resources_.end(); ++it )
         visitor.VisitResource( it->first, it->second );
+    for( T_OrderFiles::const_iterator it = orderFiles_.begin(); it != orderFiles_.end(); ++it )
+        visitor.VisitOrderFile( *it );
 }

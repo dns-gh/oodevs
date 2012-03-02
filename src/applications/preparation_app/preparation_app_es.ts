@@ -393,6 +393,19 @@
         <source>Human factors automatic evolution</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Order files</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Order files (*.ord)</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The following files will be copied to the exercise scripts/resources subfolder:
+</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>FileToolbar</name>

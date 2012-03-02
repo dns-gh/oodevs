@@ -145,6 +145,27 @@
 						</xs:sequence>
 					</xs:complexType>
 				</xs:element>
+				<xs:element name="orders" minOccurs="0">
+					<xs:annotation>
+						<xs:documentation xml:lang="en">Defines order files associated to the exercise.</xs:documentation>
+					</xs:annotation>
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="order" minOccurs="0" maxOccurs="unbounded">
+								<xs:annotation>
+									<xs:documentation xml:lang="en">Defines an order file associated to the exercise.</xs:documentation>
+								</xs:annotation>
+								<xs:complexType>
+									<xs:attribute name="file" type="xs:string" use="required">
+										<xs:annotation>
+											<xs:documentation xml:lang="en">File path relative to current exercise root directory.</xs:documentation>
+										</xs:annotation>
+									</xs:attribute>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
 			</xs:sequence>
 		</xs:complexType>
 	</xs:element>

@@ -194,6 +194,20 @@ void ScriptPlugin::LoadScripts()
         if( !bfs::is_directory( file ) && bfs::extension( file ) == ".lua" )
             LoadScript( file.native_file_string() );
     }
+    const std::vector< std::string >& orderFiles = config_.GetStartupOrderFiles();
+    if( !orderFiles.empty() )
+    {
+        try
+        {
+            const std::string luaFile = GenerateOrdersScript( orderFiles );
+            LoadScript( luaFile );
+            bfs::remove( bfs::path( luaFile ) );
+        }
+        catch( ... )
+        {
+            // NOTHING
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -266,6 +280,43 @@ std::string ScriptPlugin::ToUtm( const dispatcher::Position& position )
 dispatcher::Position ScriptPlugin::UtmPosition( const std::string& utm )
 {
     return dispatcher::ToPosition( converter_->ConvertToXY( utm ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ScriptPlugin::GenerateOrdersScript
+// Created: JSR 2012-03-02
+// -----------------------------------------------------------------------------
+std::string ScriptPlugin::GenerateOrdersScript( const std::vector< std::string >& files )
+{
+    std::string templateFile = config_.BuildResourceChildFile( "StartupOrdersTemplate.lua" );
+    std::ifstream file( templateFile );
+    const bfs::path dest( config_.BuildExerciseChildFile( "scripts/StartupOrders.lua" ), bfs::native );
+    std::ofstream destFile( dest.native_file_string() );
+    char buffer[ 512 ];
+    while( destFile.good() && file.good() )
+    {
+        file.getline( buffer, 512 );
+        if( strcmp( buffer, "$$$$" ) )
+        {
+            destFile.write( buffer, strlen( buffer) );
+            destFile.put( '\n' );
+        }
+        else
+        {
+            for( std::vector< std::string >::const_iterator it = files.begin(); it != files.end(); ++it )
+            {
+                std::string orderFile = *it;
+                std::size_t pos = orderFile.rfind( ".ord" );
+                if( pos != std::string::npos )
+                    orderFile.erase( pos );
+                sprintf_s( buffer, 256, "actions:StartScheduler( \"../../%s\" )", orderFile.c_str() );
+                destFile.write( buffer, strlen( buffer) );
+                destFile.put( '\n' );
+            }
+        }
+    }
+    file.close();
+    return dest.native_file_string();
 }
 
 // -----------------------------------------------------------------------------
