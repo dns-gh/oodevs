@@ -175,7 +175,7 @@ void ADN_Objects_GUI::Build()
         QWidget* constr = new QWidget( constructor );
         constr->setLayout( new Q3GridLayout( 2, 3 ) );
 
-        // Comsumption
+        // Consumption
         builder.AddEnumField< E_ConsumptionType >( constr, tr( "Default consumption" ), vInfosConnectors[ eConstructorCapacity_DefaultConsumption ], ADN_Tr::ConvertFromConsumptionType );
         builder.AddEnumField< E_ConstructorType >( constr, tr( "Model" ), vInfosConnectors[ eConstructorCapacity_UnitType ], ADN_Tr::ConvertFromConstructorType );
         // Buildable
