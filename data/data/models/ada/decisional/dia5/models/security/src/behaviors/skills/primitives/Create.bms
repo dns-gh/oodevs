@@ -25,9 +25,10 @@ rootnode
         Feedback( self.feedbacks.created, { work = additionalParams.work } ) -- return the object created
         self.nextTargetIndex = self.nextTargetIndex + 1
         self.arrived = false
+        self.dismounted = false
     end,
 
-    dismountActionCompleted = function( self )
+    dismountActionCompleted = function( self ) -- from dismount action skill
         self.dismounted = true
     end,
 
