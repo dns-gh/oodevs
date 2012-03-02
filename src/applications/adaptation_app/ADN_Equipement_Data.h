@@ -69,6 +69,7 @@ public:
         ADN_Type_Double rNbrInPackage_;
         ADN_Type_Double rPackageVolume_;
         ADN_Type_Double rPackageWeight_;
+        ADN_Type_Bool   bNetworkUsable_;
     };
     TYPEDEF_FULL_DECLARATION( ADN_Type_Vector_ABC<CategoryInfo>, CategoryInfos_Vector );
 
@@ -213,7 +214,7 @@ public:
         void Initialize();
 
     public:
-        E_DotationFamily      nType_;
+        E_DotationFamily       nType_;
         ADN_Type_String        strName_;
         T_CategoryInfos_Vector categories_;
     };
@@ -230,6 +231,7 @@ public:
 
     T_ResourceInfos_Vector& GetDotations();
     ResourceInfos&          GetDotation( E_DotationFamily nType );
+    T_CategoryInfos_Vector& GetNetworkUsableDotation();
     CategoryInfo*           FindEquipementCategory( const std::string& strDotationName, const std::string& strCategoryName );
     CategoryInfo*           FindEquipementCategory( const std::string& strCategoryName );
 
@@ -245,6 +247,7 @@ private:
     int nNextCatId_;
 
     T_ResourceInfos_Vector resources_;
+    T_CategoryInfos_Vector networkUsableResources_;
 };
 
 // -----------------------------------------------------------------------------
@@ -255,6 +258,16 @@ inline
 ADN_Equipement_Data::T_ResourceInfos_Vector& ADN_Equipement_Data::GetDotations()
 {
     return resources_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Equipement_Data::GetNetworkUsableDotation
+// Created: ABR 2012-02-29
+// -----------------------------------------------------------------------------
+inline
+ADN_Equipement_Data::T_CategoryInfos_Vector& ADN_Equipement_Data::GetNetworkUsableDotation()
+{
+    return networkUsableResources_;
 }
 
 #endif // __ADN_Equipement_Data_h_

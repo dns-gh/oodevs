@@ -1673,6 +1673,22 @@ Arrêt moteur allumé</translation>
         <source>Flare ammo parameters</source>
         <translation>Paramètres Fusée éclairante</translation>
     </message>
+    <message>
+        <source>Usable within a resource network</source>
+        <translation>Utilisable dans un réseau de ressource</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Avertissement</translation>
+    </message>
+    <message>
+        <source>This will delete all the following associated resource network :</source>
+        <translation>Cette opération va supprimer les réseaux de ressources associés :</translation>
+    </message>
+    <message>
+        <source>Proceed anyway ?</source>
+        <translation>Voulez-vous continuer ?</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipement_Postures_GUI</name>

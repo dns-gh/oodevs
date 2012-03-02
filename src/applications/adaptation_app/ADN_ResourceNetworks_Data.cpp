@@ -22,7 +22,7 @@ ADN_ResourceNetworks_Data::ResourceNetworkInfos::ResourceNetworkInfos()
     , strName_    ( "" )
     , strColor_   ( "0xffffff" )
     , nProduction_( 0 )
-    , ptrCategory_( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetDotation( eDotationFamily_Energy ).categories_, 0, "" )
+    , ptrCategory_( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetNetworkUsableDotation(), 0, "" )
 {
     strColor_.SetParentNode( *this );
     nProduction_.SetParentNode( *this );

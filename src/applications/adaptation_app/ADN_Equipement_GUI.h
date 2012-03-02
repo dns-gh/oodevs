@@ -14,11 +14,12 @@
 #include "ADN_Enums.h"
 #include "ADN_Equipement_Data.h"
 
-class ADN_Table;
+class ADN_CheckBox;
+class ADN_ComboBox;
 class ADN_Equipement_AttritionTable;
 class ADN_Equipement_AttritionGraph;
-class ADN_Equipement_AmmoListView;
-class ADN_ComboBox;
+class ADN_ListView;
+class ADN_Table;
 template < class T > class ADN_ComboBox_Vector;
 
 namespace helpers
@@ -81,6 +82,7 @@ public:
         eGuidanceRange,
         eLogisticSupplyClass,
         eIsIED,
+        eNetworkUsable,
         eNbrAmmoGuiElements
     };
 
@@ -106,6 +108,7 @@ public:
         eGenNNOCode,
         eGenNature,
         eGenLogisticSupplyClass,
+        eGenNetworkUsable,
         eNbrGenericGuiElements
     };
 
@@ -131,8 +134,8 @@ public:
 private:
     //! @name Helpers
     //@{
-    void BuildGeneric( E_DotationFamily nType, QTabWidget* pParent );
-    void BuildAmmunition( QTabWidget* pParent );
+    void BuildGeneric( E_DotationFamily nType );
+    void BuildAmmunition();
     //@}
 
 private slots:
@@ -140,23 +143,26 @@ private slots:
     //@{
     void IndirectTypeChanged();
     void SimulationCombosActivated();
+    void NetworkUsableActivated( int state );
     //@}
 
 private:
     //! @name Member data
     //@{
-    ADN_Equipement_Data& data_;
-    ADN_Equipement_AmmoListView* pAmmoListView_;
-    ADN_Equipement_AttritionTable* pAttritionTable_;
-    ADN_Equipement_AttritionGraph* pAttritionGraph_;
-    ADN_ComboBox_Vector< helpers::ArmorInfos >* pArmorCombo_;
-    ADN_ComboBox_Vector< helpers::ADN_UrbanAttritionInfos >* pMaterialCombo_;
-    QButtonGroup* buttonGroup_;
-    Q3GroupBox* pExplosiveParametersGroup_;
-    Q3GroupBox* pSmokeParametersGroup_;
-    Q3GroupBox* pFlareParametersGroup_;
-    Q3GroupBox* pEffectParametersGroup_;
-    Q3GroupBox* pMineParametersGroup_;
+    ADN_Equipement_Data&                                        data_;
+    QTabWidget*                                                 pTabWidget_;
+    std::vector< ADN_ListView* >                                vListViews_;
+    std::vector< ADN_CheckBox* >                                vNetworkUsableCheckBoxs_;
+    ADN_Equipement_AttritionTable*                              pAttritionTable_;
+    ADN_Equipement_AttritionGraph*                              pAttritionGraph_;
+    ADN_ComboBox_Vector< helpers::ArmorInfos >*                 pArmorCombo_;
+    ADN_ComboBox_Vector< helpers::ADN_UrbanAttritionInfos >*    pMaterialCombo_;
+    QButtonGroup*                                               buttonGroup_;
+    Q3GroupBox*                                                 pExplosiveParametersGroup_;
+    Q3GroupBox*                                                 pFlareParametersGroup_;
+    Q3GroupBox*                                                 pEffectParametersGroup_;
+    Q3GroupBox*                                                 pMineParametersGroup_;
+    Q3GroupBox*                                                 pSmokeParametersGroup_;
     //@}
 };
 

@@ -7,6 +7,16 @@
 		</xsl:copy>
 	</xsl:template>
 
+    <xsl:template match="resource/@category">
+        <xsl:choose>
+            <xsl:when test=".='energie'"><xsl:attribute name="network-usable">true</xsl:attribute></xsl:when>
+            <xsl:otherwise><xsl:attribute name="network-usable">false</xsl:attribute></xsl:otherwise>
+        </xsl:choose>
+        <xsl:copy>
+            <xsl:apply-templates select="node()|@*"/>
+        </xsl:copy>
+    </xsl:template>
+
     <xsl:template match="indirect-fire">
       <xsl:element name="indirect-fires">
           <xsl:attribute name="intervention-type"><xsl:value-of select="./@intervention-type"/></xsl:attribute>

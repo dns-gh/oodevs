@@ -13,6 +13,7 @@
 #include "ADN_ComboBox_Equipment_Nature.h"
 #include "ADN_ComboBox_Equipment_LogisticSupplyClass.h"
 #include "ADN_ComboBox_Vector.h"
+#include "ADN_DataException.h"
 #include "ADN_Equipement_AmmoListView.h"
 #include "ADN_Equipement_AttritionGraph.h"
 #include "ADN_Equipement_AttritionTable.h"
@@ -22,6 +23,7 @@
 #include "ADN_GuiBuilder.h"
 #include "ADN_HtmlBuilder.h"
 #include "ADN_MainWindow.h"
+#include "ADN_ResourceNetworks_Data.h"
 #include "ADN_SearchListView.h"
 #include "ADN_Tr.h"
 #include "ADN_UrbanModifiersTable.h"
@@ -77,31 +79,24 @@ void ADN_Equipement_GUI::Build()
     assert( pMainWidget_ == 0 );
 
     // Tab management
-    QTabWidget* pTabWidget = new QTabWidget();
-    BuildAmmunition( pTabWidget );
-    BuildGeneric( eDotationFamily_Carburant, pTabWidget );
-    BuildGeneric( eDotationFamily_Mine, pTabWidget );
-    BuildGeneric( eDotationFamily_Explosif, pTabWidget );
-    BuildGeneric( eDotationFamily_Barbele, pTabWidget );
-    BuildGeneric( eDotationFamily_Ration, pTabWidget );
-    BuildGeneric( eDotationFamily_AgentExtincteur, pTabWidget );
-    BuildGeneric( eDotationFamily_Piece, pTabWidget );
-    BuildGeneric( eDotationFamily_Energy, pTabWidget );
-    BuildGeneric( eDotationFamily_Funeraire, pTabWidget );
+    pTabWidget_ = new QTabWidget();
+    BuildAmmunition(); // eDotationFamily_Munition
+    for( int i = eDotationFamily_Munition + 1; i < eNbrDotationFamily; ++i ) // Change enum order to change tab order.
+        BuildGeneric( static_cast< E_DotationFamily >( i ) );
 
     // Main widget
     pMainWidget_ = new QWidget();
     QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_ );
     pMainLayout->setSpacing( 10 );
     pMainLayout->setMargin( 10 );
-    pMainLayout->addWidget( pTabWidget );
+    pMainLayout->addWidget( pTabWidget_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Equipement_GUI::BuildGeneric
 // Created: APE 2004-12-28
 // -----------------------------------------------------------------------------
-void ADN_Equipement_GUI::BuildGeneric( E_DotationFamily nType, QTabWidget* pParent )
+void ADN_Equipement_GUI::BuildGeneric( E_DotationFamily nType )
 {
     // -------------------------------------------------------------------------
     // Creations
@@ -118,6 +113,10 @@ void ADN_Equipement_GUI::BuildGeneric( E_DotationFamily nType, QTabWidget* pPare
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "CodeNNO" ), vConnectors[ eGenNNOCode ] );
     builder.AddField< ADN_ComboBox_Equipment_Nature >( pInfoHolder, tr( "Nature" ), vConnectors[ eGenNature] );
     builder.AddField< ADN_ComboBox_Equipment_LogisticSupplyClass >( pInfoHolder, tr( "Logistic supply class" ), vConnectors[ eGenLogisticSupplyClass] );
+    ADN_CheckBox* networkUsableCheckBox = builder.AddField< ADN_CheckBox >( pInfoHolder, tr( "Usable within a resource network" ), vConnectors[ eGenNetworkUsable ] );
+    vNetworkUsableCheckBoxs_.push_back( networkUsableCheckBox );
+    connect( networkUsableCheckBox, SIGNAL( stateChanged( int ) ), SLOT( NetworkUsableActivated( int ) ) );
+
     // Packaging
     Q3GroupBox* pPackagingGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Packaging" ) );
     builder.AddField< ADN_EditLine_Double >( pPackagingGroup, tr( "Nbr per package" ), vConnectors[ ePackageNbr ], 0, eGreaterZero );
@@ -138,10 +137,12 @@ void ADN_Equipement_GUI::BuildGeneric( E_DotationFamily nType, QTabWidget* pPare
 
     // List view
     ADN_SearchListView< ADN_Equipement_GenericListView >* pSearchListView = new ADN_SearchListView< ADN_Equipement_GenericListView >( nType, data_.GetDotation( nType ).categories_, vConnectors );
+    vListViews_.push_back( pSearchListView->GetListView() );
+    assert( nType == vListViews_.size() - 1 );
 
     // Main page
     QWidget* pPage = CreateScrollArea( *pContent, pSearchListView );
-    pParent->addTab( pPage, ENT_Tr::ConvertFromDotationFamily( nType, ENT_Tr_ABC::eToTr ).c_str() );
+    pTabWidget_->addTab( pPage, ENT_Tr::ConvertFromDotationFamily( nType, ENT_Tr_ABC::eToTr ).c_str() );
 }
 
 namespace
@@ -158,7 +159,7 @@ namespace
 // Name: ADN_Equipement_GUI::BuildAmmunition
 // Created: APE 2004-12-28
 // -----------------------------------------------------------------------------
-void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
+void ADN_Equipement_GUI::BuildAmmunition()
 {
     // -------------------------------------------------------------------------
     // Creations
@@ -176,7 +177,10 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     builder.AddEnumField< E_MunitionType >( pInfoHolder, tr( "Type" ), vConnectors[ eType ], ENT_Tr::ConvertFromAmmunitionType );
     builder.AddField< ADN_ComboBox_Equipment_Nature >( pInfoHolder, tr( "Nature" ), vConnectors[ eNature ] );
     builder.AddField< ADN_ComboBox_Equipment_LogisticSupplyClass >( pInfoHolder, tr( "Logistic supply class" ), vConnectors[ eLogisticSupplyClass] );
-    builder.AddField<ADN_CheckBox>( pInfoHolder, tr( "Improvised explosive device" ), vConnectors[ eIsIED ] );
+    ADN_CheckBox* networkUsableCheckBox = builder.AddField< ADN_CheckBox >( pInfoHolder, tr( "Usable within a resource network" ), vConnectors[ eNetworkUsable ] );
+    vNetworkUsableCheckBoxs_.push_back( networkUsableCheckBox );
+    connect( networkUsableCheckBox, SIGNAL( stateChanged( int ) ), SLOT( NetworkUsableActivated( int ) ) );
+    builder.AddField< ADN_CheckBox >( pInfoHolder, tr( "Improvised explosive device" ), vConnectors[ eIsIED ] );
 
     // Packaging
     Q3GroupBox* pPackagingGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Packaging" ) );
@@ -298,11 +302,12 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
     // List view
     ADN_SearchListView< ADN_Equipement_AmmoListView >* pSearchListView = new ADN_SearchListView< ADN_Equipement_AmmoListView >( data_.GetDotation( eDotationFamily_Munition ).categories_, vConnectors );
     connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_UsedByInfos& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_UsedByInfos& ) ) );
-    pAmmoListView_ = pSearchListView->GetListView();
+    vListViews_.push_back( pSearchListView->GetListView() );
+    assert( eDotationFamily_Munition == vListViews_.size() - 1 );
 
     // Main page
     QWidget* pPage = CreateScrollArea( *pContent, pSearchListView );
-    pParent->addTab( pPage, ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Munition, ENT_Tr_ABC::eToTr ).c_str() );
+    pTabWidget_->addTab( pPage, ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Munition, ENT_Tr_ABC::eToTr ).c_str() );
 
     IndirectTypeChanged();
 }
@@ -372,6 +377,7 @@ void ADN_Equipement_GUI::IndirectTypeChanged()
     pEffectParametersGroup_->setVisible( buttonGroup_->button( eEffectPresent )->isChecked() );
     pMineParametersGroup_->setVisible( buttonGroup_->button( eMinePresent )->isChecked() );
     pFlareParametersGroup_->setVisible( buttonGroup_->button( eFlarePresent )->isChecked() );
+    data_.Initialize();
 }
 
 // -----------------------------------------------------------------------------
@@ -466,8 +472,62 @@ void ADN_Equipement_GUI::ExportPKs( ADN_HtmlBuilder& builder, ADN_Equipement_Dat
 {
     if( !infos.bDirect_.GetData() )
         return;
-    pAmmoListView_->SetCurrentItem( &infos );
+    assert( vListViews_[ eDotationFamily_Munition ] != 0 );
+    vListViews_[ eDotationFamily_Munition ]->SetCurrentItem( &infos );
     builder.Section( tr( "PKs" ) );
     if( pAttritionTable_ )
         builder.CreateTableFrom( *pAttritionTable_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Equipement_GUI::NetworkUsableActivated
+// Created: ABR 2012-02-29
+// -----------------------------------------------------------------------------
+void ADN_Equipement_GUI::NetworkUsableActivated( int state )
+{
+    assert( pTabWidget_ );
+    int currentIndex = pTabWidget_->currentIndex();
+    ADN_Equipement_Data::T_CategoryInfos_Vector& networkUsableVector = data_.GetNetworkUsableDotation();
+    assert( vListViews_[ currentIndex ] && vNetworkUsableCheckBoxs_[ currentIndex ] );
+    ADN_Equipement_Data::CategoryInfo* current = static_cast< ADN_Equipement_Data::CategoryInfo* >( vListViews_[ currentIndex ]->GetCurrentData() );
+    if( !current )
+        return;
+
+    bool founded = false;
+    for( ADN_Equipement_Data::CIT_CategoryInfos_Vector it = networkUsableVector.begin(); it != networkUsableVector.end() && !founded; ++it )
+        if( ( *it )->nMosId_ == current->nMosId_ )
+            founded = true;
+
+    if( state == Qt::Checked && !founded )
+    {
+        networkUsableVector.AddItem( current );
+    }
+    else if( state == Qt::Unchecked && founded )
+    {
+        ADN_ResourceNetworks_Data::T_ResourceNetworkInfosVector& resourceNetworks = ADN_Workspace::GetWorkspace().GetResourceNetworks().GetData().GetResourceNetworksInfos();
+        QString associatedResourceNetwork;
+        for( ADN_ResourceNetworks_Data::IT_ResourceNetworkInfosVector it = resourceNetworks.begin(); it != resourceNetworks.end(); ++it )
+        {
+            ADN_ResourceNetworks_Data::ResourceNetworkInfos* networkInfo = *it;
+            if( networkInfo )
+            {
+                ADN_Equipement_Data::CategoryInfo* equipmentInfo = networkInfo->ptrCategory_.GetData();
+                if( equipmentInfo && equipmentInfo->nMosId_ == current->nMosId_ )
+                    associatedResourceNetwork += ((*it)->strName_.GetData() + '\n').c_str();
+            }
+        }
+        if( !associatedResourceNetwork.isEmpty() )
+        {
+            int result = QMessageBox::warning( 0,
+                tr( "Warning" ),
+                tr( "This will delete all the following associated resource network :" ) + "\n\n" + associatedResourceNetwork + '\n' + tr( "Proceed anyway ?" ),
+                QMessageBox::Ok, QMessageBox::Cancel );
+            if( result == QMessageBox::Cancel )
+            {
+                vNetworkUsableCheckBoxs_[ currentIndex ]->setCheckState( Qt::Checked );
+                return;
+            }
+        }
+        networkUsableVector.RemItem( current );
+    }
 }

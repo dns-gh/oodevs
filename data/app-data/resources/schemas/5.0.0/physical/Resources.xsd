@@ -176,6 +176,12 @@
 								</xs:complexType>
 							</xs:element>
 						</xs:sequence>
+						<xs:attribute name="network-usable" type="xs:boolean" use="required">
+							<xs:annotation>
+								<xs:documentation xml:lang="en">Usable within a resource network</xs:documentation>
+								<xs:documentation xml:lang="fr">Utilisable dans un réseau de ressource</xs:documentation>
+							</xs:annotation>
+						</xs:attribute>
 						<xs:attribute name="category" type="T_ResourceCategory" use="required">
 							<xs:annotation>
 								<xs:documentation>Catégorie physique de dotation (Munition, Carburant, Mine etc.)</xs:documentation>

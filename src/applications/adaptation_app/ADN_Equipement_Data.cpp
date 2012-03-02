@@ -47,19 +47,20 @@ ADN_Equipement_Data::CategoryInfo::CategoryInfo()
 ADN_Equipement_Data::CategoryInfo::CategoryInfo( ResourceInfos& parentDotation )
     : ADN_Ref_ABC         ( "ADN_Equipement_Data::CategoryInfo" )
     , ADN_DataTreeNode_ABC()
-    , parentResource_   ( parentDotation )
-    , strName_          ()
-    , category_         ( ENT_Tr::ConvertFromDotationFamily( parentDotation.nType_ ) )
-    , nMosId_           ( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetNextCatId() )
-    , strCodeEMAT6_     ()
-    , strCodeEMAT8_     ()
-    , strCodeLFRIL_     ()
-    , strCodeNNO_       ()
-    , ptrResourceNature_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), 0 )
+    , parentResource_        ( parentDotation )
+    , strName_               ()
+    , category_              ( ENT_Tr::ConvertFromDotationFamily( parentDotation.nType_ ) )
+    , nMosId_                ( ADN_Workspace::GetWorkspace().GetEquipements().GetData().GetNextCatId() )
+    , strCodeEMAT6_          ()
+    , strCodeEMAT8_          ()
+    , strCodeLFRIL_          ()
+    , strCodeNNO_            ()
+    , ptrResourceNature_     ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), 0 )
     , ptrLogisticSupplyClass_( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetLogisticSupplyClasses(), 0 )
-    , rNbrInPackage_    ( 1. )
-    , rPackageVolume_   ( 1. )
-    , rPackageWeight_   ( 1. )
+    , rNbrInPackage_         ( 1. )
+    , rPackageVolume_        ( 1. )
+    , rPackageWeight_        ( 1. )
+    , bNetworkUsable_        ( false )
 {
     strName_.SetDataName( "le nom d'" );
     strName_.SetParentNode( *this );
@@ -99,6 +100,7 @@ ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::CategoryInfo::CreateCopy
     pCopy->strCodeEMAT8_ = strCodeEMAT8_.GetData();
     pCopy->strCodeLFRIL_ = strCodeLFRIL_.GetData();
     pCopy->strCodeNNO_ = strCodeNNO_.GetData();
+    pCopy->bNetworkUsable_ = bNetworkUsable_.GetData();
     return pCopy;
 }
 
@@ -123,7 +125,8 @@ void ADN_Equipement_Data::CategoryInfo::ReadArchive( xml::xistream& input )
           >> xml::attribute( "package-mass", rPackageWeight_ )
           >> xml::attribute( "package-volume", rPackageVolume_ )
           >> xml::attribute( "nature", dotationNature )
-          >> xml::attribute( "logistic-supply-class", logisticSupplyClass );
+          >> xml::attribute( "logistic-supply-class", logisticSupplyClass )
+          >> xml::attribute( "network-usable", bNetworkUsable_ );
     helpers::ResourceNatureInfos* pNature = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindDotationNature( dotationNature );
     if( !pNature )
         throw ADN_DataException( tools::translate( "Equipment_Data", "Invalid data" ).ascii(), tools::translate( "Equipment_Data", "Equipment - Invalid resource nature '%1'" ).arg( dotationNature.c_str() ).ascii() );
@@ -172,7 +175,8 @@ void ADN_Equipement_Data::CategoryInfo::WriteContent( xml::xostream& output ) co
            << xml::attribute( "codeEMAT6", strCodeEMAT6_ )
            << xml::attribute( "codeEMAT8", strCodeEMAT8_ )
            << xml::attribute( "codeLFRIL", strCodeLFRIL_ )
-           << xml::attribute( "codeNNO", strCodeNNO_ );
+           << xml::attribute( "codeNNO", strCodeNNO_ )
+           << xml::attribute( "network-usable", bNetworkUsable_ );
 }
 
 //-----------------------------------------------------------------------------
@@ -488,6 +492,7 @@ ADN_Equipement_Data::CategoryInfo* ADN_Equipement_Data::AmmoCategoryInfo::Create
     pCopy->strCodeEMAT8_  = strCodeEMAT8_.GetData();
     pCopy->strCodeLFRIL_  = strCodeLFRIL_.GetData();
     pCopy->strCodeNNO_    = strCodeNNO_.GetData();
+    pCopy->bNetworkUsable_ = bNetworkUsable_.GetData();
 
     pCopy->bIlluminating_ = bIlluminating_.GetData();
     pCopy->bMaintainIllumination_ = bMaintainIllumination_.GetData();
@@ -819,6 +824,20 @@ void ADN_Equipement_Data::ReadArchive( xml::xistream& input )
     input >> xml::start( "resources" )
             >> xml::list( "resource", *this, &ADN_Equipement_Data::ReadResource )
           >> xml::end;
+
+    // Update network usable resources
+    for( IT_ResourceInfos_Vector it = resources_.begin(); it != resources_.end(); ++it )
+    {
+        T_CategoryInfos_Vector& categories = ( *it )->categories_;
+        for( IT_CategoryInfos_Vector itCat = categories.begin(); itCat != categories.end(); ++itCat )
+        {
+            CategoryInfo* category = *itCat;
+            if( !category )
+                continue;
+            if( category->bNetworkUsable_.GetData() == true )
+                networkUsableResources_.AddItem( category );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -886,5 +905,5 @@ int ADN_Equipement_Data::GetNextCatId()
 // -----------------------------------------------------------------------------
 ADN_Equipement_Data::ResourceInfos& ADN_Equipement_Data::GetDotation( E_DotationFamily nType )
 {
-    return * resources_[ nType ];
+    return *resources_[ nType ];
 }

@@ -1673,6 +1673,22 @@ estacionado con motor encendido</translation>
         <source>Flare ammo parameters</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Usable within a resource network</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>This will delete all the following associated resource network :</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Proceed anyway ?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipement_Postures_GUI</name>

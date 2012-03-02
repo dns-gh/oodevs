@@ -113,6 +113,7 @@ void ADN_Equipement_AmmoListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Equipement_GUI::eMineNumber]->Connect( &pInfos->indirectAmmoInfos_.nMineNumber_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eEffectType]->Connect( &pInfos->indirectAmmoInfos_.objectType_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eEffectLifetime]->Connect( &pInfos->indirectAmmoInfos_.effectLifeTime_, bConnect );
+    vItemConnectors_[ADN_Equipement_GUI::eNetworkUsable]->Connect( &pInfos->bNetworkUsable_, bConnect );
 
     vItemConnectors_[ADN_Equipement_GUI::eArmor]->Connect( &ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos(), bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eMaterial]->Connect( &pInfos->modifUrbanBlocks_, bConnect );
