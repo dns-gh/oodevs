@@ -35,6 +35,9 @@ public:
             ADN_TableItem_String *pNameItem = new ADN_TableItem_String( &tab_, obj );
             ADN_TableItem_Int *pIgnitionThresholdItem = new ADN_TableItem_Int( &tab_, obj );
             ADN_TableItem_Int *pMaxCombustionEnergyItem = new ADN_TableItem_Int( &tab_, obj );
+            pIgnitionThresholdItem->GetValidator().setRange( 0, INT_MAX );
+            pMaxCombustionEnergyItem->GetValidator().setRange( 0, INT_MAX );
+
             // add a new row & set new values
             tab_.setItem( i, 0, pNameItem );
             tab_.setItem( i, 1, pIgnitionThresholdItem );

@@ -90,7 +90,7 @@ void ADN_Population_GUI::Build()
     vInfosConnectors[eDecontaminationDelay]->Connect( &data_.decontaminationDelay_ );
 
     // Population parameters
-    Q3GroupBox* pPropertiesGroup = new Q3GroupBox( 4, Qt::Vertical, tr( "Details" ) );
+    Q3GroupBox* pPropertiesGroup = new Q3GroupBox( 5, Qt::Vertical, tr( "Details" ) );
     //{
         // Information
         Q3GroupBox* pInformation = new Q3GroupBox( 3, Qt::Horizontal, "", pPropertiesGroup );
@@ -103,9 +103,12 @@ void ADN_Population_GUI::Build()
         builder.AddField<ADN_EditLine_Double>( pDensity, tr( "Density while moving" ), vInfosConnectors[eMoveDensity], tr( "people/m²" ), eGreaterZero );
         builder.AddField<ADN_EditLine_Double>( pDensity, tr( "Average movement speed" ), vInfosConnectors[eMoveSpeed], tr( "km/h" ), eGreaterZero );
 
+        // Armed
+        Q3GroupBox* pArmed = new Q3GroupBox( 3, Qt::Horizontal, "", pPropertiesGroup );
+        builder.AddField< ADN_EditLine_Int >( pArmed, tr( "Armed individuals" ), vInfosConnectors[ eArmedIndividuals ], tr( "%" ), ePercentage );
+
         // Human
         Q3GroupBox* pHuman = new Q3GroupBox( 3, Qt::Horizontal, "", pPropertiesGroup );
-        builder.AddField< ADN_EditLine_Int >( pHuman, tr( "Armed individuals" ), vInfosConnectors[ eArmedIndividuals ], tr( "%" ), ePercentage );
         ADN_MultiPercentage* pMultiPercentage = new ADN_MultiPercentage( pHuman, builder );
         pMultiPercentage->AddLine( tr( "Males" ), vInfosConnectors[ eMale ] );
         pMultiPercentage->AddLine( tr( "Females" ), vInfosConnectors[ eFemale ] );
