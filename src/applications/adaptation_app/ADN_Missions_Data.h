@@ -169,7 +169,10 @@ public:
         ADN_Type_Bool             isAvailableWithoutMission_;
         ADN_Type_String           doctrineDescription_;
         ADN_Type_String           usageDescription_;
-
+        ADN_Type_Int              minOccurs_;
+        ADN_Type_Int              maxOccurs_;
+        ADN_Type_Int              minValue_;
+        ADN_Type_Int              maxValue_;
     };
 
     typedef ADN_Type_Vector_ABC<FragOrder>  T_FragOrder_Vector;
