@@ -44,7 +44,7 @@ integration.stopSealOffArea  = function( area )
         end
     end
     area.constructedObject = nil
-    DEC_Perception_DesactiverReconnaissanceLocalisation( area.perceptionID )
+    DEC_Perception_DesactiverReconnaissanceLocalisation( area.sealPerceptionID )
     return true
 end
 
