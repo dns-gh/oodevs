@@ -60,7 +60,7 @@ private:
 
     //! @name Helpers
     //@{
-    void ToggleVisionCones();
+    void SendControlEnableVisionCones();
     //@}
 
 private:
