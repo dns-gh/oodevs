@@ -641,5 +641,21 @@ The message sent to the given follower contents the name of the task to activate
                 </type>
             </return>
         </method>
+        <method name="dismount" abstract="false">
+            <description>To goes into dismounting state. Returns 'true' upon action completion, 'false' if it is running.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canDismount" abstract="false">
+            <description>Returns 'true' if this element can dismount. 'False' otherwise.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
     </methods>
 </class>

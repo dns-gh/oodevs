@@ -7,7 +7,7 @@ masalife.brain.communication.setMessageTreatment( "FollowMe",
     end )
 
 -- --------------------------------------------------------------------------------
--- Movement
+-- Movement capability
 -- --------------------------------------------------------------------------------
 method "moveTo" (
     function( self, destination, urgency, pathType )
@@ -21,7 +21,7 @@ method "stopMovement" (
     end )
 
 -- --------------------------------------------------------------------------------
--- Objects creation
+-- Objects creation capability
 -- --------------------------------------------------------------------------------
 method "create" (
     function( self, work )
@@ -39,7 +39,7 @@ method "remove" (
     end )
 
 -- --------------------------------------------------------------------------------
--- Populated area
+-- Populated area capability
 -- --------------------------------------------------------------------------------
 method "alert" (
     function( self, populatedArea )
@@ -72,7 +72,7 @@ method "undoEvacuate" (
     end )
 
 -- --------------------------------------------------------------------------------
--- Systems operations (objects, 
+-- Systems capability
 -- --------------------------------------------------------------------------------
 method "enable" (
     function( self, system )
@@ -90,7 +90,7 @@ method "operate" (
     end )
 
 -- --------------------------------------------------------------------------------
--- Resource nodes
+-- Resource nodes capabilities
 -- --------------------------------------------------------------------------------
 method "increaseResourceProduction" ( masalife.brain.integration.startStopAction( 
 { 
@@ -139,7 +139,7 @@ method "damageResourceProductionCapability" ( masalife.brain.integration.startSt
 } ) )
 
 -- --------------------------------------------------------------------------------
--- Medical evacuation
+-- Medical evacuation capability
 -- --------------------------------------------------------------------------------
 method "ensureVictimsEvacuation" (
     function( self, victimsUnit, medicalUnit )
@@ -152,7 +152,7 @@ method "extractVictims" (
     end )
 
 -- --------------------------------------------------------------------------------
--- Transport
+-- Transport capability
 -- --------------------------------------------------------------------------------
 method "load" (
     function( self, entity )
@@ -165,7 +165,7 @@ method "unload" (
     end )
 
 -- --------------------------------------------------------------------------------
--- Extinguish fires
+-- Extinguish fires capability
 -- --------------------------------------------------------------------------------
 method "extinguish" (
     function( self, fire )
@@ -173,7 +173,7 @@ method "extinguish" (
     end )
 
 -- --------------------------------------------------------------------------------
--- Contamination areas
+-- Contamination capability
 -- --------------------------------------------------------------------------------
 method "decontaminate" (
     function( self, area )
@@ -181,7 +181,7 @@ method "decontaminate" (
     end )
 
 -- --------------------------------------------------------------------------------
--- Specific methods on body
+-- NBC protection capability
 -- --------------------------------------------------------------------------------
 method "equipWithNBCProtection" ( masalife.brain.integration.startStopAction(
 { 
@@ -198,7 +198,7 @@ method "equipWithNBCProtection" ( masalife.brain.integration.startStopAction(
 
 
 -- --------------------------------------------------------------------------------
--- Specific methods for crowd
+-- Specific Crowd transportation capability
 -- --------------------------------------------------------------------------------
 method "loadCrowdConcentration" ( masalife.brain.integration.startStopAction( 
 {
@@ -237,7 +237,7 @@ method "canTransportCrowd" (
     end )
 
 -- --------------------------------------------------------------------------------
--- Wounded entity to heal
+-- Heal capability
 -- --------------------------------------------------------------------------------
 method "heal" ( 
     function( self, wounded )
@@ -245,7 +245,7 @@ method "heal" (
     end )
 
 -- --------------------------------------------------------------------------------
--- Hit target with projectile
+-- Hit target with projectile capability
 -- --------------------------------------------------------------------------------
 method "launchProjectile" ( 
     function( self, target, dotationType, quantity )
@@ -266,7 +266,7 @@ method "isDead" (
     end )
 
 -- --------------------------------------------------------------------------------
--- NBC decontamination
+-- NBC decontamination capability
 -- --------------------------------------------------------------------------------
 method "selfDecontaminate" ( 
     function( self )
@@ -274,7 +274,7 @@ method "selfDecontaminate" (
     end )
 
 -- --------------------------------------------------------------------------------
--- Resources
+-- Resources capability
 -- --------------------------------------------------------------------------------
 method "createResourceLink" ( 
     function( self, resourceNode, resourceReceiver )
@@ -282,7 +282,7 @@ method "createResourceLink" (
     end )
 
 -- --------------------------------------------------------------------------------
--- Check point activation
+-- Check point activation capability
 -- --------------------------------------------------------------------------------
 method "activateFitration" ( 
     function( self, checkpoint, intensity )
@@ -290,7 +290,7 @@ method "activateFitration" (
     end )
 
 -- --------------------------------------------------------------------------------
--- Decontamination
+-- Decontamination capability
 -- --------------------------------------------------------------------------------
 method "beDecontaminated" ( 
     function( self, decontaminationPlot )
@@ -313,11 +313,29 @@ method "makeFollow" ( masalife.brain.integration.startStopAction(
 } ) )
 
 -- --------------------------------------------------------------------------------
--- Reinforcement
+-- Reinforcement capability
 -- --------------------------------------------------------------------------------
 method "reinforce" ( 
     function( self, unit )
         return unit:reinforceIt()
+    end )
+
+-- --------------------------------------------------------------------------------
+-- Dismount capability
+-- --------------------------------------------------------------------------------
+method "dismount" ( masalife.brain.integration.startStopAction( 
+{
+    started = function( self ) 
+        return integration.dismountStarted( self ) 
+    end,
+    stop  = function( self ) 
+        integration.stopDismount( self )
+    end
+} ) )
+
+method "canDismount" ( 
+    function( self, unit )
+        return integration.canDismount( self )
     end )
 
 -- --------------------------------------------------------------------------------

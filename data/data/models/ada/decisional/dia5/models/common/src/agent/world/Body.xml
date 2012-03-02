@@ -543,7 +543,7 @@ Returns 'true' when checkPoint is filtering.</description>
             </return>
         </method>
         <method name="dismount">
-            <description>To dismount from vehicules. Returns 'true' once this element is dismounted, 'false' otherwise.</description>
+            <description>To goes into dismounting state. Returns 'true' upon action completion, 'false' if it is running.</description>
             <return>
                 <type>
                     <simple name="boolean"/>

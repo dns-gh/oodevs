@@ -7,7 +7,7 @@
 -- ****************************************************************************
 rootnode 
 {
-    connections = { skill.links.reach, skill.links.create },
+    connections = { skill.links.reach, skill.links.create, skill.links.dismount },
     feedbacks   = { "created", "creating" },
 
     -- --------------------------------------------------------------------------------
@@ -27,6 +27,10 @@ rootnode
         self.arrived = false
     end,
 
+    dismountActionCompleted = function( self )
+        self.dismounted = true
+    end,
+
     impossibleToCreate = function( self, params ) -- called within this skill
         Feedback( self.feedbacks.notCreated, { work = params.work } )
         self.arrived = false
@@ -38,6 +42,7 @@ rootnode
     -- --------------------------------------------------------------------------------
     create = function( self )
         self.arrived = false
+        self.dismounted = false
         self.nextTargetIndex = 1
     end,
 
@@ -52,7 +57,10 @@ rootnode
             if self.nextTargetIndex <= paramsSize then
                 self.work = self.params.works[ self.nextTargetIndex ]
                 if self.arrived then
-                    -- $$$ MIA Add dismount here
+                    if meKnowledge:canDismount() and not self.dismounted then
+                         Activate( skill.links.dismount, 1 )
+                         return -- until agent is dismounted
+                    end
                     if self.work:canBeCreated() then
                         Activate( skill.links.create, 1, { work = self.work } )
                     elseif not self.params.waitForReinforcement then

@@ -2233,7 +2233,7 @@ A urban block won't be hit (unit cannot launch projectile) if agent doesn't have
     <mission dia-behavior="behaviors.tasks.Reinforce" dia-type="behaviors.tasks.Reinforce" id="4488" name="MLSECURITY - Reinforce">
       <description>
         <doctrine><![CDATA[To reinforce a given unit with agent's physical capabilities (target unit will be aumented with agent's physical capabilities).]]></doctrine>
-        <usage><![CDATA[Agent moves toward the unit. Once it is reached, agent reinforce it.]]></usage>
+        <usage><![CDATA[Agent moves toward the unit. Once it is reached, agent reinforce it. The target unit won't be reinforced if it cannot be reached. In that specific case, the mission ends.]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -2241,9 +2241,9 @@ A urban block won't be hit (unit cannot launch projectile) if agent doesn't have
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="agent" name="unit to reinforce" optional="false" type="Agent"/>
     </mission>
-    <mission dia-behavior="behaviors.tasks.MakeFollow" dia-type="behaviors.tasks.MakeFollow" id="4489" name="MLSECURITY - MakeFollow">
+    <mission dia-behavior="behaviors.tasks.MakeFollow" dia-type="behaviors.tasks.MakeFollow" id="4489" name="MLSECURITY - Make follow">
       <description>
-        <doctrine><![CDATA[To order a set of given units (teammates) to follow agent.]]></doctrine>
+        <doctrine><![CDATA[To order a set of given units (teammates) to follow the subject agent.]]></doctrine>
         <usage><![CDATA[
 The agent moves to each unit by following the order of the units into the list. 
 A unit won't follow if it cannot perform the mission (mission is not set for this type of unit).]]></usage>
@@ -3609,4 +3609,4 @@ A unit won't follow if it cannot perform the mission (mission is not set for thi
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="4217367362" -->
+<!-- signature="0549890479" -->

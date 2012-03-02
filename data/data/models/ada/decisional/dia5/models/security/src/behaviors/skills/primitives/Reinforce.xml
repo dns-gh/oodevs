@@ -4,7 +4,7 @@
 &#xD;
 The target unit won't be reinforced if it cannot be reached. In that specific case, the feeback 'failed' is sent.&#xD;
 &#xD;
-Because the action of reinforcing another agent is &quot;permanent&quot; (reinforcement is effective until the action is triggered), this skill never sends  feedback &quot;done&quot;, only a feedback that gives the information that reinforcement is a success.</description>
+Because the action of reinforcing another agent is &quot;permanent&quot; (reinforcement is effective until the action is triggered), this skill never sends the feedback &quot;done&quot;, but only a feedback that gives the information that reinforcement is a success.</description>
     <parameters>
         <parameter name="entity">
             <description>The entityto reinforce.</description>

@@ -34,6 +34,9 @@ A visited work won't be created and build if agent doesn't have the physical cap
         <link name="create" skill="agent.behaviors.skills.actions.Create">
             <description>To create and build the given works.</description>
         </link>
+        <link name="dismount" skill="agent.behaviors.skills.actions.Dismount">
+            <description>To enact the decision of dismounting (agent may need to dismount to create work). </description>
+        </link>
     </links>
     <feedbacks>
         <feedback name="creating">

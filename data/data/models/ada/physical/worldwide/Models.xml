@@ -2608,7 +2608,7 @@
         <mission name="MLSECURITY - Attack urban blocks within area (with projectiles)"/>
         <mission name="MLSECURITY - Commit suicide attack (on units)"/>
         <mission name="MLSECURITY - Stay in crowd"/>
-        <mission name="MLSECURITY - MakeFollow"/>
+        <mission name="MLSECURITY - Make follow"/>
         <mission name="MLSECURITY - Reinforce"/>
       </missions>
       <fragorders/>
@@ -2629,7 +2629,7 @@
         <mission name="MLSECURITY - Transport"/>
         <mission name="MLSECURITY - Use a checkpoint (filter crowds)"/>
         <mission name="MLSECURITY - Stay in crowd"/>
-        <mission name="MLSECURITY - MakeFollow"/>
+        <mission name="MLSECURITY - Make follow"/>
         <mission name="MLSECURITY - Reinforce"/>
       </missions>
       <fragorders/>
@@ -3867,4 +3867,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0785341969" -->
+<!-- signature="2465992178" -->
