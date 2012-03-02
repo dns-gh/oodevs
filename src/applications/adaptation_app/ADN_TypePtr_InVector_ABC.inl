@@ -213,11 +213,8 @@ bool ADN_TypePtr_InVector_ABC< T >::RemItemPrivate(void *item,bool)
     if( item == 0 )
         return false;
     if( pData_ == item )
-    {
         InvalidatePrivate( item );
-        return true;
-    }
-    return false;
+    return true;
 }
 
 //-----------------------------------------------------------------------------

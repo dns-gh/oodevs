@@ -95,7 +95,6 @@ private:
     int                         nPos_;
     ADN_ListViewItem&           lvi_;
     ADN_ListViewItem::E_TypeCvt eCvt_;
-    T_ConnectorVector        vConnectors_;
 };
 
 //-----------------------------------------------------------------------------
