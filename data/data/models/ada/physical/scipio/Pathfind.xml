@@ -61,6 +61,7 @@
         <object-cost type="installation" value="0"/>
         <object-cost type="urban block" value="10000"/>
         <object-cost type="seal off area" value="10000"/>
+        <object-cost type="fire" value="10000"/>
       </object-costs>
     </rule>
     <rule autonomous="false" flying="false" inherits="base" type="movement">
@@ -228,6 +229,7 @@
         <object-cost type="installation" value="0"/>
         <object-cost type="urban block" value="10000"/>
         <object-cost type="seal off area" value="10000"/>
+        <object-cost type="fire" value="10000"/>
       </object-costs>
     </rule>
     <rule autonomous="false" flying="true" inherits="base" type="movement"/>
@@ -346,6 +348,7 @@
         <object-cost type="installation" value="0"/>
         <object-cost type="urban block" value="10000"/>
         <object-cost type="seal off area" value="10000"/>
+        <object-cost type="fire" value="10000"/>
         <object-cost type="nbc zone" value="0"/>
         <object-cost type="nbc cloud" value="0"/>
       </object-costs>
@@ -404,4 +407,4 @@
     <rule channeling-range="1" cost-out-of-channeling="5000" type="base"/>
   </population-rules>
 </pathfind>
-<!-- signature="2843414907" -->
+<!-- signature="4238519158" -->
