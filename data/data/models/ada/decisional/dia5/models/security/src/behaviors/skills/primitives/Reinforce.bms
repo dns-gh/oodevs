@@ -17,13 +17,15 @@ rootnode
 
     reinforcementActionRunning = function( self, params ) -- from reinforce action skill
         Feedback( self.feedbacks.reinforcing, params )
+        self.reinforcing = true
     end,
 
     -- --------------------------------------------------------------------------------
     -- Init
     -- --------------------------------------------------------------------------------
     create = function( self )
-        self.arrived = false
+        self.arrived     = false
+        self.reinforcing = false
     end,
 
     -- --------------------------------------------------------------------------------
@@ -33,9 +35,14 @@ rootnode
         local Activate = Activate
 
         if self.arrived then
-            Activate( skill.links.reinforce, 1, { entity = self.params.entity } )
+            if self.params.entity:canBeReinforced() or self.reinforcing then
+                Activate( skill.links.reinforce, 1, { entity = self.params.entity } )
+            else
+                meKnowledge:sendReport( eRC_EchecRenforcement )
+                Feedback( self.feedbacks.failed )
+            end
+        else
+            Activate( skill.links.reach, 1, { destination = self.params.entity } )
         end
-        Activate( skill.links.reach, 1, { destination = self.params.entity } )
-        self.arrived = false
     end
 }

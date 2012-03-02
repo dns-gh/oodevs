@@ -303,6 +303,7 @@ method "beDecontaminated" (
 method "makeFollow" ( masalife.brain.integration.startStopAction( 
 {
     start = function( self, agent )
+        meKnowledge:sendReport( eRC_EntityHasBeenOrderedToFollow )
         integration.SendMessage( "FollowMe", agent, { missionName = "behaviors.tasks.Follow", 
           entityToFollow = meKnowledge.source }, { type = "dynamic" } )
     end,

@@ -629,5 +629,9 @@
       <value id="9" name="ligne_identification_accueil"/>
     </parameter>
   </report>
+  <report category="operational" id="445" message="L'entité ne peut pas suivre"/>
+  <report category="operational" id="446" message="Demande à l'unité de suivre"/>
+  <report category="operational" id="447" message="Creation du réseau de resource en cours"/>
+  <report category="operational" id="448" message="Reseau terminé"/>
 </reports>
-<!-- signature="2370438687" -->
+<!-- signature="1224865228" -->

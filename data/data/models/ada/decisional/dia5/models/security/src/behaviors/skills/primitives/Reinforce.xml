@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.skills.primitives.Reinforce" source-version="1.0.0">
-    <description>For an agent to move toward an agent, and reinforce it. &#xD;
-Once the system is reached, the agent starts reinforcing it.</description>
+    <description>For an agent to move toward another agent, and reinforce it.  &#xD;
+&#xD;
+The target unit won't be reinforced if it cannot be reached. In that specific case, the feeback 'failed' is sent.&#xD;
+&#xD;
+Because the action of reinforcing another agent is &quot;permanent&quot; (reinforcement is effective until the action is triggered), this skill never sends  feedback &quot;done&quot;, only a feedback that gives the information that reinforcement is a success.</description>
     <parameters>
         <parameter name="entity">
             <description>The entityto reinforce.</description>
@@ -17,13 +20,16 @@ Once the system is reached, the agent starts reinforcing it.</description>
         <link name="reach" skill="behaviors.skills.primitives.Reach">
             <description>To enact the decision to &quot;reach&quot; the entity. </description>
         </link>
-        <link name="operate" skill="agent.behaviors.skills.actions.Reinforce">
+        <link name="reinforce" skill="agent.behaviors.skills.actions.Reinforce">
             <description>To enact the decision to reinforce the entity once it is reached.</description>
         </link>
     </links>
     <feedbacks>
         <feedback name="reinforcing">
             <description>Sent once the agent is reinforcing the entity.</description>
+        </feedback>
+        <feedback name="failed">
+            <description>Sent if agent cannot reinforce the target parameter. </description>
         </feedback>
     </feedbacks>
 </skill>

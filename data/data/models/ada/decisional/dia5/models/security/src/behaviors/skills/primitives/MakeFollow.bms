@@ -18,14 +18,13 @@ rootnode
     end,
 
     makeFollowActionCompleted = function( self, params ) -- call by MakeFollow node
-         DEC_Trace( "Can follow" )
         Feedback( self.feedbacks.followed, { follower = params.follower }  )
         self.nextTargetIndex = self.nextTargetIndex + 1
         self.arrived = false
     end,
 
     impossibleToMakeFollow = function( self, params ) -- call in this skill
-        --meKnowledge:sendReport( eRC_ElementCannotFollow )
+        meKnowledge:sendReport( eRC_EntityCannotFollow )
         Feedback( self.feedbacks.notFollowed, { follower = params.follower } )
         self.nextTargetIndex = self.nextTargetIndex + 1
         self.arrived = false

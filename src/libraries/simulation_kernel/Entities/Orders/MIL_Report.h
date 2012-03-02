@@ -592,6 +592,10 @@ public:
         eRC_ControlPointEstablished,
         eRC_SystemIsBeingOperated,
         eRC_LimaParameterNotPresent,
+		eRC_EntityCannotFollow,
+		eRC_EntityHasBeenOrderedToFollow,
+		eRC_StartingToCreateResourceLink,
+		eRC_ResouceLinkCreated,
         eLast
     };
     //@}

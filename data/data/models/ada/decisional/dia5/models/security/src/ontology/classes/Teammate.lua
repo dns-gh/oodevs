@@ -100,6 +100,17 @@ method "reinforceIt" ( masalife.brain.integration.startStopAction(
     end
 } ) )
 
+method "canBeReinforced" (
+    function( self )
+    if self:isReached() then
+        return true
+    else
+        -- $$$ MIA: maybe not the good place to do those reports.
+        meKnowledge:sendReport( eRC_ImpossibleAtteindreObjectif )
+        return false
+    end
+    end )
+
 -- --------------------------------------------------------------------------------
 -- Follower
 -- --------------------------------------------------------------------------------

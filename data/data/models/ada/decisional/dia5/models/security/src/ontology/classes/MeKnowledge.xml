@@ -626,7 +626,9 @@ Agent can be decontaminated only if issued decontamination site is being operate
         <method name="makeFollow" abstract="false">
             <description>For the agent, to ask a follower to follow it. Returns 'true' upon action completion.&#xD;
 &#xD;
-This implementation returns 'true' once agent has sent a message to follower asking to follow it. The follower is free to accept or decline the request. This implementation do not take this response into account.</description>
+This implementation returns 'true' once the agent has sent a message to the follower asking to follow it. The follower is free to accept or decline the request. This implementation does not take this response into account (the method will return 'true' even if the follower declines the order).&#xD;
+&#xD;
+The message sent to the given follower contents the name of the task to activate. This task is &quot;behaviors.tasks.Follow&quot;. It should not be renamed, otherwise the message sent should be updated in consequence.</description>
             <argument name="follower">
                 <description>The entity to make follow the agent.</description>
                 <type>

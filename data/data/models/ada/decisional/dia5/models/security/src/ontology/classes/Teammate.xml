@@ -150,5 +150,15 @@ This implementation returns 'true' if agent is able to perform the mission &quot
                 </type>
             </return>
         </method>
+        <method name="canBeReinforced" abstract="false">
+            <description>Returns 'true' if subject agent can reinforce this element, 'false' otherwise.&#xD;
+&#xD;
+This implementation returns 'true' if this element is reached, 'false' otherwise.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
     </methods>
 </class>

@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.tasks.Reinforce" source-version="1.0.0">
     <description>For an agent to move toward an agent, and reinforce it. &#xD;
-Once the agent is reached, the agent starts reinforcing it.</description>
+Once the agent is reached, the agent starts reinforcing it.&#xD;
+&#xD;
+Because the action of reinforcing another agent is &quot;permanent&quot; this mission is permanent. The reinforcement is active until the agent is given onother mission.</description>
     <parameters>
         <parameter name="agent">
             <description>The element to reinforce.</description>
