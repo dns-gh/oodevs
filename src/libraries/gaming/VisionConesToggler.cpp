@@ -48,23 +48,20 @@ VisionConesToggler::~VisionConesToggler()
 // -----------------------------------------------------------------------------
 void VisionConesToggler::OptionChanged( const std::string& name, const OptionVariant& value )
 {
-    bool* pDummy =
-        name == "VisionCones" ? &displayCones_
-      : name == "VisionSurfaces" ? &displaySurfaces_
-      : 0;
-    if( pDummy )
+    if( name == "VisionCones" )
     {
-        *pDummy = value.To< FourStateOption >().IsSet( true, true );
-        ToggleVisionCones();
+        displayCones_ = value.To< FourStateOption >().IsSet( true, true );
+        SendControlEnableVisionCones();
     }
-
-    pDummy =
-          name == "FogOfWar" ? &displayFog_
-        : 0;
-    if( pDummy )
+    else if( name == "VisionSurfaces" )
     {
-        *pDummy = value.To< bool >();
-        ToggleVisionCones();
+        displaySurfaces_ = value.To< FourStateOption >().IsSet( true, true );
+        SendControlEnableVisionCones();
+    }
+    else if( name == "FogOfWar" )
+    {
+        displayFog_ = value.To< bool >();
+        SendControlEnableVisionCones();
     }
 }
 
@@ -74,7 +71,7 @@ void VisionConesToggler::OptionChanged( const std::string& name, const OptionVar
 // -----------------------------------------------------------------------------
 void VisionConesToggler::NotifyUpdated( const Profile_ABC& )
 {
-    ToggleVisionCones();
+    SendControlEnableVisionCones();
 }
 
 // -----------------------------------------------------------------------------
@@ -87,10 +84,10 @@ void VisionConesToggler::NotifyUpdated( const Services& services )
 }
 
 // -----------------------------------------------------------------------------
-// Name: VisionConesToggler::ToggleVisionCones
+// Name: VisionConesToggler::SendControlEnableVisionCones
 // Created: AGE 2007-07-11
 // -----------------------------------------------------------------------------
-void VisionConesToggler::ToggleVisionCones()
+void VisionConesToggler::SendControlEnableVisionCones()
 {
     if( simulation_ )
     {
