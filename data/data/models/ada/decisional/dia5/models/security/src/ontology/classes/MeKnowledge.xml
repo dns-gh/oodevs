@@ -610,11 +610,11 @@ Agent can be decontaminated only if issued decontamination site is being operate
                 </type>
             </return>
         </method>
-        <method name="makeFollow">
-            <description>Returns 'true' once unit has been told to follow, even if issued unit cannot.</description>
-            <argument name="agent">
+        <method name="reinforce" abstract="false">
+            <description>To reinforce the given parameter. Returns 'true' if target parameter has been reinforced. 'False' otherwise.</description>
+            <argument name="unit">
                 <type>
-                    <class name="ontology.classes.Agent"/>
+                    <class name="agent.world.Reinforceable"/>
                 </type>
             </argument>
             <return>
@@ -623,11 +623,14 @@ Agent can be decontaminated only if issued decontamination site is being operate
                 </type>
             </return>
         </method>
-        <method name="reinforce" abstract="false">
-            <description>To reinforce the given parameter. Returns 'true' if target parameter has been reinforced. 'False' otherwise.</description>
-            <argument name="unit">
+        <method name="makeFollow" abstract="false">
+            <description>For the agent, to ask a follower to follow it. Returns 'true' upon action completion.&#xD;
+&#xD;
+This implementation returns 'true' once agent has sent a message to follower asking to follow it. The follower is free to accept or decline the request. This implementation do not take this response into account.</description>
+            <argument name="follower">
+                <description>The entity to make follow the agent.</description>
                 <type>
-                    <class name="agent.world.Reinforceable"/>
+                    <class name="agent.world.Follower"/>
                 </type>
             </argument>
             <return>

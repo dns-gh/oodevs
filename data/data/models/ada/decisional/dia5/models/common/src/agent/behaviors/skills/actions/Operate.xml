@@ -15,7 +15,7 @@ This action allows an agent to make a decontamination site or  a checkpoint runn
     </body-type>
     <feedbacks>
         <feedback name="operateActionRunning">
-            <description>Executed until the agent is operating the system. </description>
+            <description>Executed until the agent is operating the system.</description>
         </feedback>
     </feedbacks>
 </skill>

@@ -542,7 +542,7 @@ Returns 'true' when checkPoint is filtering.</description>
                 </type>
             </return>
         </method>
-        <method name="Dismount">
+        <method name="dismount">
             <description>To dismount from vehicules. Returns 'true' once this element is dismounted, 'false' otherwise.</description>
             <return>
                 <type>
@@ -563,6 +563,20 @@ Returns 'true' when checkPoint is filtering.</description>
             <argument name="unit">
                 <type>
                     <class name="agent.world.Reinforceable"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="makeFollow">
+            <description>For the agent, to ask a follower to follow it. Returns 'true' upon action completion.</description>
+            <argument name="follower">
+                <description>The entity to make follow the agent.</description>
+                <type>
+                    <class name="agent.world.Follower"/>
                 </type>
             </argument>
             <return>

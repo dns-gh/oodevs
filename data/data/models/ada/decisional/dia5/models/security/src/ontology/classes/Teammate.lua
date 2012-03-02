@@ -101,6 +101,14 @@ method "reinforceIt" ( masalife.brain.integration.startStopAction(
 } ) )
 
 -- --------------------------------------------------------------------------------
+-- Follower
+-- --------------------------------------------------------------------------------
+method "canFollowMe" (
+    function( self )
+        return integration.isMissionAvailable( self, "behaviors.tasks.Follow" )
+    end )
+
+-- --------------------------------------------------------------------------------
 -- Information on source object
 -- --------------------------------------------------------------------------------
 method "getPosition" (

@@ -5,6 +5,7 @@
     <realizes>agent.world.Victims</realizes>
     <realizes>agent.world.Transportable</realizes>
     <realizes>agent.world.Reinforceable</realizes>
+    <realizes>agent.world.Follower</realizes>
     <methods>
         <method name="getPosition">
             <return name="simPosition">
@@ -133,6 +134,16 @@ This implementation makes agent Unit &quot;magically&quot; unload 'this' entity 
         </method>
         <method name="reinforceIt" abstract="false">
             <description>To reinforce this element. Returns 'true' if this element has been reinforced.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canFollowMe" abstract="false">
+            <description>Returns 'true' if this element is able to follow  the agent, 'false' otherwise.&#xD;
+&#xD;
+This implementation returns 'true' if agent is able to perform the mission &quot;behaviors.tasks.Follow&quot; regarding to the set of missions defined in authoring tool.</description>
             <return>
                 <type>
                     <simple name="boolean"/>

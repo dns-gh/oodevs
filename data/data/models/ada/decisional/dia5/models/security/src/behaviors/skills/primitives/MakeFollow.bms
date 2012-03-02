@@ -1,0 +1,68 @@
+-- **************************************************************************** 
+-- To make follow a set of specified agents
+-- @params: self.params.Agents, a masalife list of Agents (teammate or 
+-- non-teammate units)
+-- @returns: follower: agent that have told to follow.
+-- @returns: done when all agents have been visited.
+-- ****************************************************************************
+rootnode
+{
+    connections = { skill.links.reach, skill.links.makeFollow },
+    feedbacks   = { "followed", "notfollowed" },
+
+    -- -------------------------------------------------------------------------------- 
+    -- Feedbacks and slots
+    -- --------------------------------------------------------------------------------
+    done = function( self, params, additionalParams ) -- call by reach skill
+        self.arrived = true
+    end,
+
+    makeFollowActionCompleted = function( self, params ) -- call by MakeFollow node
+         DEC_Trace( "Can follow" )
+        Feedback( self.feedbacks.followed, { follower = params.follower }  )
+        self.nextTargetIndex = self.nextTargetIndex + 1
+        self.arrived = false
+    end,
+
+    impossibleToMakeFollow = function( self, params ) -- call in this skill
+        --meKnowledge:sendReport( eRC_ElementCannotFollow )
+        Feedback( self.feedbacks.notFollowed, { follower = params.follower } )
+        self.nextTargetIndex = self.nextTargetIndex + 1
+        self.arrived = false
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Init
+    -- --------------------------------------------------------------------------------
+    create = function( self )
+        self.arrived = false
+        self.nextTargetIndex = 1
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Move to each element and ask to follow me
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        local Activate = Activate
+
+        local paramsSize = #self.params.followers
+        if paramsSize > 0 then 
+            if self.nextTargetIndex <= paramsSize then
+                self.follower = self.params.followers[ self.nextTargetIndex ]
+                if self.arrived then
+                    if self.follower:canFollowMe() then
+                        Activate( skill.links.makeFollow, 1, { follower = self.follower } )
+                    else
+                        self:impossibleToMakeFollow( { follower = self.follower } )
+                    end
+                else
+                    Activate( skill.links.reach, 1, { destination = self.follower } )
+                end
+            else
+                Feedback( self.feedbacks.done )
+            end
+         else 
+            Feedback( self.feedbacks.failed )
+         end
+    end
+}

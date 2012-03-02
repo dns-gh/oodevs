@@ -15,8 +15,8 @@ A unit won't follow if it cannot perform the mission (mission is not set for thi
     <stages>
         <stage label="starting to make agents follow" disable-when-done="true">
             <skills>
-                <skill name="behaviors.skills.MakeFollow" main="true">
-                    <parameter name="units">
+                <skill name="behaviors.skills.primitives.MakeFollow" main="true">
+                    <parameter name="followers">
                         <value>
                             <parameter>units</parameter>
                         </value>

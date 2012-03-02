@@ -12,8 +12,8 @@
     <stages>
         <stage label="starting to make agents follow" disable-when-done="true">
             <skills>
-                <skill name="behaviors.skills.MakeFollow" main="true">
-                    <parameter name="units">
+                <skill name="behaviors.skills.primitives.MakeFollow" main="true">
+                    <parameter name="followers">
                         <value>
                             <parameter>agents</parameter>
                         </value>

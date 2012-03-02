@@ -303,11 +303,8 @@ method "beDecontaminated" (
 method "makeFollow" ( masalife.brain.integration.startStopAction( 
 {
     start = function( self, agent )
-        local missionName = "behaviors.tasks.Follow"
-        if integration.isMissionAvailable( agent, missionName ) then
-           integration.SendMessage( "FollowMe", agent, { missionName = missionName, 
-                        entityToFollow = meKnowledge.source }, { type = "dynamic" } )
-        end
+        integration.SendMessage( "FollowMe", agent, { missionName = "behaviors.tasks.Follow", 
+          entityToFollow = meKnowledge.source }, { type = "dynamic" } )
     end,
     started = function( self )
         return true

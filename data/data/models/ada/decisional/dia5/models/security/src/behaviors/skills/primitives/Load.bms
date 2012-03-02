@@ -37,7 +37,7 @@ rootnode
     end,
 
     -- --------------------------------------------------------------------------------
-    -- Behavior execution
+    -- Move to each element and try to load it.
     -- --------------------------------------------------------------------------------
     activate = function( self )
         local Activate = Activate

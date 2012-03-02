@@ -6,7 +6,6 @@
 rootnode
 {
     feedbacks = { "loadActionCompleted" },
-
     select = function( self )
         if meKnowledge:load( self.params.transportableEntity ) then
             Feedback( self.feedbacks.loadActionCompleted )
