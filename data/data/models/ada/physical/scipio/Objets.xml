@@ -267,7 +267,8 @@
       <geometry symbol="G*MPSF----****X" type="polygon"/>
     </geometries>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
-    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <interact-with-enemy/>
+    <mobility default-speed="5" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <protection geniePrepared="true" max-size="3"/>
   </object>
   <object name="zone implantation canon" type="gun artillery deployment area">
@@ -620,4 +621,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="1009324557" -->
+<!-- signature="1183479075" -->
