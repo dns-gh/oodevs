@@ -91,7 +91,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                         end
                     end
 
-                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptObst, eProgressionReco, eTypeItiMouvement, } )
+                    Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptObst, eProgressionReco, eTypeItiDeminage, } )
 self.done_BEH_Dep_ProgressionVers = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                 elseif switch_1 == eDeminerObstacle then
@@ -234,7 +234,7 @@ node "BEH_Objet_Pion_GEN_Deminer"
 ]]        end
 
         if( DEC_Geometrie_Distance( self.positionProcheObjet, DEC_Agent_Position() ) > 800 ) then
-            Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.positionProcheObjet, eProgressionDirect, eTypeItiMouvement, } )
+            Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.positionProcheObjet, eProgressionDirect, eTypeItiDeminage, } )
         else
             Activate( self.activations.ACT_Obj_Pion_GEN_ReduireObstacle, 1, { self._namedParams.obj, } )
         end

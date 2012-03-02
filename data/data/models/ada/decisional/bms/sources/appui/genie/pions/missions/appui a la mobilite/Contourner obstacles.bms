@@ -140,7 +140,7 @@ node "BEH_Dep_GEN_AllerContournerObstacle"
         end
 
         Activate( self.activations.BEH_Dep_GEN_Ouvrir_ReagirFaceAObjetDeType, 1.1, { DEC_ConnaissanceObjet_Type( self._namedParams.obstacle ), } )
-        Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptObst, eProgressionDirect, eTypeItiMouvement, } )
+        Activate( self.activations.BEH_Dep_ProgressionVers, 1, { self.ptObst, eProgressionDirect, eTypeItiDeminage, } )
     end,
 
 --[[// *****************************************************************************
