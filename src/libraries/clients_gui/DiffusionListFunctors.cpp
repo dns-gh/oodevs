@@ -174,7 +174,6 @@ DiffusionListGenerator::DiffusionListGenerator( const std::string name, const ke
     , generatedDiffusionList_( generatedDiffusionList )
 {
     // NOTHING
-    
 }
 
 // -----------------------------------------------------------------------------
