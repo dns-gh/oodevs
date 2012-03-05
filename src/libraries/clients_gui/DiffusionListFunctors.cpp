@@ -199,7 +199,8 @@ void DiffusionListGenerator::operator()( const Entity_ABC& agent ) const
     assert( type != 0 );
     AttributeType* attribute = type->tools::StringResolver< AttributeType >::Find( name_ );
     assert( attribute != 0 );
-    assert( attribute->IsActive( dico->GetExtensions() ) );
+    if( !attribute->IsActive( dico->GetExtensions() ) )
+        return;
 
     const TacticalHierarchies& hierarchy = agent.Get< TacticalHierarchies >();
     const Entity_ABC* father = hierarchy.GetSuperior();
