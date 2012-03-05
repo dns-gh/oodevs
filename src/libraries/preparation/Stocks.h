@@ -49,6 +49,7 @@ public:
     void SetDotation( const kernel::DotationType& type, unsigned int quantity );
     void AddDotationValue( const kernel::DotationType& type, unsigned int quantity );
     bool HasDotations() const;
+    void Clear();
     double ComputeWeight();
     double ComputeVolume();
     //@}
