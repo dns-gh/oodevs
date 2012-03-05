@@ -318,7 +318,6 @@ private:
     unsigned int nNbrComposanteChanged_;
     double rMajorOperationalState_;
     double rOperationalState_;
-    bool bOperationalStateChanged_;
     PHY_ComposantePion* pMajorComposante_;
     unsigned int nNeutralizationEndTimeStep_;
     unsigned int nNbrUsableComposantes_;
@@ -326,6 +325,7 @@ private:
     T_LoanMap lentComposantes_;
     T_LoanMap borrowedComposantes_;
 
+    bool bOperationalStateChanged_;
     bool bLoansChanged_;
     bool bExternalMustChange_;
     bool bTransportHasChanged_;
