@@ -76,6 +76,7 @@
         <skill name="agent.behaviors.skills.actions.MakeFollow"/>
         <skill name="behaviors.skills.primitives.Reinforce"/>
         <skill name="agent.behaviors.skills.actions.Dismount"/>
+        <skill name="behaviors.skills.Dismount"/>
     </skills>
     <resources>
         <resource name="agent.behaviors.resources.Motion"/>

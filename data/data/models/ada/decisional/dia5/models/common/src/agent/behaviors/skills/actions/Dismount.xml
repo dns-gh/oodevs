@@ -9,7 +9,7 @@
             <description>Sent while action to dismount is running.</description>
         </feedback>
         <feedback name="dismountActionCompleted">
-            <description>Sent upon action completion (even it has failed, means that the subject agent is not dismounted).</description>
+            <description>Sent upon action completion (even it has failed, means that the subject agent cannot dismount and that it is not dismounted).</description>
         </feedback>
     </feedbacks>
 </skill>

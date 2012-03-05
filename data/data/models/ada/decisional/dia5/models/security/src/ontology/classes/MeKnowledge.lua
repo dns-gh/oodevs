@@ -325,8 +325,13 @@ method "reinforce" (
 -- --------------------------------------------------------------------------------
 method "dismount" ( masalife.brain.integration.startStopAction( 
 {
-    started = function( self ) 
-        return integration.dismountStarted( self ) 
+    started = function( self )
+        if not self:canDismount() then
+            meKnowledge:sendReport( eRC_CannotDismount )
+            return true -- action ended
+        else
+            return integration.dismountStarted( self )
+        end
     end,
     stop  = function( self ) 
         integration.stopDismount( self )

@@ -633,5 +633,6 @@
   <report category="operational" id="446" message="Demande à l'unité de suivre"/>
   <report category="operational" id="447" message="Creation du réseau de resource en cours"/>
   <report category="operational" id="448" message="Reseau terminé"/>
+  <report category="operational" id="449" message="L'unité n'a pas les capacités de débarquer"/>
 </reports>
-<!-- signature="1224865228" -->
+<!-- signature="3701485945" -->

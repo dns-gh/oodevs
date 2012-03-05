@@ -460,4 +460,5 @@ eRC_EntityCannotFollow = 445
 eRC_EntityHasBeenOrderedToFollow = 446
 eRC_StartingToCreateResourceLink = 447
 eRC_ResouceLinkCreated = 448
-eNbr = 449
+eRC_CannotDismount = 449
+eNbr = 450

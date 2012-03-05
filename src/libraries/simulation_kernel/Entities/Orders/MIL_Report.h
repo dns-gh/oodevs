@@ -596,6 +596,7 @@ public:
 		eRC_EntityHasBeenOrderedToFollow,
 		eRC_StartingToCreateResourceLink,
 		eRC_ResouceLinkCreated,
+		eRC_CannotDismount,
         eLast
     };
     //@}
