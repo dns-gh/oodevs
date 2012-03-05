@@ -99,6 +99,7 @@ public:
     virtual PHY_DotationStock* GetStock( const PHY_DotationCategory& dotationCategory ) const;
     virtual double AddStockReservation   ( const PHY_DotationCategory& dotationCategory, double rRequestedValue );
     virtual double RemoveStockReservation( const PHY_DotationCategory& dotationCategory, double rRequestedValue );
+    virtual bool   CanReserveStock       ( const PHY_DotationCategory& dotationCategory ) const;
     virtual PHY_ComposantePion* GetAvailableConvoyTransporter( const PHY_DotationCategory& dotationCategory ) const;
     virtual PHY_ComposantePion* GetAvailableConvoyTransporter( const PHY_ComposanteTypePion& type ) const;
 

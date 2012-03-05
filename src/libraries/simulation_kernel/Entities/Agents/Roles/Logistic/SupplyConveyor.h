@@ -41,6 +41,8 @@ public:
     virtual unsigned ApproximateTravelTime( const MT_Vector2D& startPos, const MT_Vector2D& endPos ) const;
     virtual double   Supply               ( const PHY_DotationCategory& dotationCategory, double quantity );
     virtual void     Destroy              ( SupplyConvoyEventsObserver_ABC& eventsObserver );
+    
+    virtual bool     CanTransport         ( const PHY_DotationCategory& dotationCategory ) const;
     //@}
 
 private:

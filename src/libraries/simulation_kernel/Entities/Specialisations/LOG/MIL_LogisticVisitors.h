@@ -317,7 +317,7 @@ class SupplyStockContainerVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion 
                 return;
 
             const PHY_RoleInterface_Supply* candidate = tmp.RetrieveRole< PHY_RoleInterface_Supply >();
-            if( candidate!=0 && candidate->CanContainStock( dotationCategory_ ) )
+            if( candidate!=0 && candidate->CanReserveStock( dotationCategory_ ) )
                 pSelected_ = const_cast<PHY_RoleInterface_Supply*>(candidate);
         }
 

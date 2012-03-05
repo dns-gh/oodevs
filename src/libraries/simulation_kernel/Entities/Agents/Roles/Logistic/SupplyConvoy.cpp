@@ -225,3 +225,15 @@ SupplySupplier_ABC& SupplyConvoy::GetTransportersProvider() const
 {
     return transportersProvider_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: SupplyConvoy::Finish
+// Created: NLD 2011-08-01
+// -----------------------------------------------------------------------------
+bool SupplyConvoy::CanTransport( const PHY_DotationCategory& dotationCategory ) const
+{
+    for( T_Conveyors::const_iterator it = conveyors_.begin(); it != conveyors_.end(); ++it )
+        if( it->second->CanTransport( dotationCategory ) )
+            return true;
+    return false;
+}
