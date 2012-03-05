@@ -289,9 +289,9 @@ dispatcher::Position ScriptPlugin::UtmPosition( const std::string& utm )
 std::string ScriptPlugin::GenerateOrdersScript( const std::vector< std::string >& files )
 {
     std::string templateFile = config_.BuildResourceChildFile( "StartupOrdersTemplate.lua" );
-    std::ifstream file( templateFile );
+    std::ifstream file( templateFile.c_str() );
     const bfs::path dest( config_.BuildExerciseChildFile( "scripts/StartupOrders.lua" ), bfs::native );
-    std::ofstream destFile( dest.native_file_string() );
+    std::ofstream destFile( dest.native_file_string().c_str() );
     char buffer[ 512 ];
     while( destFile.good() && file.good() )
     {
