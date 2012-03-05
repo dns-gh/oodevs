@@ -50,6 +50,7 @@ GlWidget::GlWidget( QWidget* pParent, Controllers& controllers, const tools::Exe
     , iconLayout_  ( iconLayout )
     , passes_      ( passLess( "" ) )
     , currentPass_ ()
+    , bMulti_      ( false )
 {
     setAcceptDrops( true );
     if( context() != context_ || ! context_->isValid() )
@@ -81,6 +82,7 @@ void GlWidget::initializeGL()
     glShadeModel( GL_SMOOTH );
     glEnable( GL_LINE_SMOOTH );
     glEnable( GL_BLEND );
+    bMulti_ = gl::HasMultiTexturing();
 }
 
 // -----------------------------------------------------------------------------
@@ -110,11 +112,14 @@ void GlWidget::updateGL()
 // -----------------------------------------------------------------------------
 void GlWidget::paintGL()
 {
-    setAutoUpdate( false );
-    for( T_RenderPasses::iterator it = passes_.begin(); it != passes_.end(); ++it )
-        RenderPass( **it );
-    Scale().Draw( 20, 20, *this );
-    setAutoUpdate( true );
+    if( bMulti_ ) // $$$$ LGY 2012-03-05: disable painGL : crash in remote desktop
+    {
+        setAutoUpdate( false );
+        for( T_RenderPasses::iterator it = passes_.begin(); it != passes_.end(); ++it )
+            RenderPass( **it );
+        Scale().Draw( 20, 20, *this );
+        setAutoUpdate( true );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -123,7 +128,8 @@ void GlWidget::paintGL()
 // -----------------------------------------------------------------------------
 void GlWidget::PaintLayers()
 {
-    MapWidget::PaintLayers();
+    if( bMulti_ )  // $$$$ LGY 2012-03-05: disable PaintLayers : crash in remote desktop
+        MapWidget::PaintLayers();
 }
 
 // -----------------------------------------------------------------------------

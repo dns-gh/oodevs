@@ -163,6 +163,7 @@ private:
     T_RenderPasses passes_;
     std::string currentPass_;
     QFont currentFont_;
+    bool bMulti_;
     //@}
 };
 
