@@ -26,7 +26,7 @@ namespace dispatcher
 // Name: CreateInstance
 // Created: JMT 2011-09-19
 // -----------------------------------------------------------------------------
-BML_PLUGIN_DLL_API dispatcher::Plugin_ABC* CreateInstance( dispatcher::Model_ABC& dynamicModel, const dispatcher::StaticModel& staticModel, dispatcher::SimulationPublisher_ABC& simulation, dispatcher::ClientPublisher_ABC& /*clients*/, const dispatcher::Config& /*config*/, dispatcher::Logger_ABC& logger, xml::xistream& xis )
+BML_PLUGIN_DLL_API dispatcher::Plugin_ABC* CreateInstance( dispatcher::Model_ABC& /*dynamicModel*/, const dispatcher::StaticModel& /*staticModel*/, dispatcher::SimulationPublisher_ABC& /*simulation*/, dispatcher::ClientPublisher_ABC& /*clients*/, const dispatcher::Config& config, dispatcher::Logger_ABC& logger, xml::xistream& xis )
 {
     try
     {
