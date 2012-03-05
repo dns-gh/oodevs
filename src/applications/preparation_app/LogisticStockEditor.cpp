@@ -321,7 +321,7 @@ void LogisticStockEditor::FindStocks( const kernel::Entity_ABC& rootEntity , con
                 Stocks* stocks = const_cast< Stocks* >( pAgent->Retrieve< Stocks >() );
                 if( stocks )
                 {
-                    stocks->DeleteAll();
+                    stocks->Clear();
                     entStocks.insert( pAgent );
                 }
             }
