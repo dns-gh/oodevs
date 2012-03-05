@@ -16,6 +16,7 @@
 
 namespace dispatcher
 {
+    class ClientPublisher_ABC;
     class StaticModel;
 }
 
@@ -23,7 +24,7 @@ namespace dispatcher
 // Name: CreateInstance
 // Created: SBO 2011-01-28
 // -----------------------------------------------------------------------------
-VRFORCES_PLUGIN_DLL_API dispatcher::Plugin_ABC* CreateInstance( dispatcher::Model_ABC& model, const dispatcher::StaticModel& /*staticModel*/, dispatcher::SimulationPublisher_ABC& simulation, const dispatcher::Config& config, dispatcher::Logger_ABC& logger, xml::xistream& xis )
+VRFORCES_PLUGIN_DLL_API dispatcher::Plugin_ABC* CreateInstance( dispatcher::Model_ABC& model, const dispatcher::StaticModel& /*staticModel*/, dispatcher::SimulationPublisher_ABC& simulation, dispatcher::ClientPublisher_ABC& /*clients*/, const dispatcher::Config& config, dispatcher::Logger_ABC& logger, xml::xistream& xis )
 {
     try
     {
