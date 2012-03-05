@@ -52,6 +52,15 @@ SupplyConveyor::~SupplyConveyor()
 // =============================================================================
 
 // -----------------------------------------------------------------------------
+// Name: SupplyConveyor::CanTransport
+// Created: NLD 2011-07-25
+// -----------------------------------------------------------------------------
+bool SupplyConveyor::CanTransport( const PHY_DotationCategory& dotationCategory ) const
+{
+    return composante_.GetType().CanTransportStock( dotationCategory );
+}
+
+// -----------------------------------------------------------------------------
 // Name: SupplyConveyor::Convoy
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------

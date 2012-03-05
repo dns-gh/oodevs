@@ -210,6 +210,18 @@ double PHY_RolePionLOG_Supply::RemoveStockReservation( const PHY_DotationCategor
     return pStocks_->RemoveReservation( dotationCategory, rRequestedValue );
 }
 
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePionLOG_Supply::CanReserveStock(
+// Created: NLD 2005-02-01
+// -----------------------------------------------------------------------------
+bool PHY_RolePionLOG_Supply::CanReserveStock( const PHY_DotationCategory& dotationCategory ) const
+{ 
+    assert( pStocks_ );
+    if( !bSystemEnabled_ && !pion_.IsDead() ) // <== Stock à terre quand pion mort = libre service
+        return 0.;
+    return GetStockValue( dotationCategory ) > 0;
+}
+
 // =============================================================================
 // TOOLS
 // =============================================================================

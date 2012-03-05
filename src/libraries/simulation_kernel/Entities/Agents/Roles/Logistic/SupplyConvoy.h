@@ -56,6 +56,7 @@ public:
     //! @name Accessors
     //@{
     virtual SupplySupplier_ABC& GetTransportersProvider() const;
+    virtual bool                CanTransport           ( const PHY_DotationCategory& dotationCategory ) const;
     //@}
 
 protected:

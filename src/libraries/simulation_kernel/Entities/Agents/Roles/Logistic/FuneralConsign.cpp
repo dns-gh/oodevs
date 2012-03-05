@@ -290,10 +290,8 @@ void FuneralConsign::OnSupplyConvoyLeaving( boost::shared_ptr< const SupplyConsi
     while( it.HasMoreElements() )
     {
         MIL_AutomateLOG& logisticBase = it.NextElement();
-        if( supplyConsign->WillGoTo( logisticBase ) )
+        if( supplyConsign->WillGoTo( logisticBase ) && ( !packaging_ || supplyConsign->GetConvoy()->CanTransport( packaging_->GetDotationCategory() ) ) )
         {
-            //$$$ contraintes sur poids, nature & co
-//            consign.AddPayload( *this );
             handler_->RemoveSupplyConvoysObserver( *this );
             handler_ = &logisticBase;
             handler_->AddSupplyConvoysObserver( *this );

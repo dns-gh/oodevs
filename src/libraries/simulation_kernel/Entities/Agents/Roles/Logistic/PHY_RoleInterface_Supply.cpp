@@ -149,6 +149,15 @@ double PHY_RoleInterface_Supply::RemoveStockReservation( const PHY_DotationCateg
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RoleInterface_Supply::CanReserveStock(
+// Created: NLD 2005-02-01
+// -----------------------------------------------------------------------------
+bool PHY_RoleInterface_Supply::CanReserveStock( const PHY_DotationCategory& /*dotationCategory*/ ) const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RoleInterface_Supply::GetAvailableConvoyTransporter
 // Created: NLD 2005-02-07
 // -----------------------------------------------------------------------------
