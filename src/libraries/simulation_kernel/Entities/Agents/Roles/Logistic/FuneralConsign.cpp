@@ -83,6 +83,8 @@ FuneralConsign::FuneralConsign( boost::shared_ptr< FuneralRequest_ABC > request 
 FuneralConsign::~FuneralConsign()
 {
     request_->OnBackFromFuneral();
+    if( handler_ )
+        handler_->RemoveSupplyConvoysObserver( *this );
     SendMsgDestruction();
 }
 
@@ -168,6 +170,8 @@ void FuneralConsign::DoWaitForHandling()
         FuneralHandler_ABC& handler = it.NextElement();
         if( handler.FuneralHandleConsign( shared_from_this() ) )
         {
+            if( handler_ )
+                handler_->RemoveSupplyConvoysObserver( *this );
             handler_ = &handler;
             SetState( eTransportingUnpackaged );
             return;
@@ -261,6 +265,8 @@ void FuneralConsign::Cancel()
 {
     SetState( eFinished );
     convoy_.reset();
+    if( handler_ )
+        handler_->RemoveSupplyConvoysObserver( *this );
     handler_ = 0;
 }
 
