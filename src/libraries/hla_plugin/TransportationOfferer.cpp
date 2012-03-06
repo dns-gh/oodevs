@@ -35,8 +35,12 @@ namespace
     unsigned int ResolveMission( xml::xisubstream xis, const MissionResolver_ABC& resolver, const std::string& mission )
     {
         std::string name;
-        xis >> xml::content( mission, name );
-        return resolver.ResolveUnit( name );
+        if( xis.has_child( mission ) )
+        {
+            xis >> xml::content( mission, name );
+            return resolver.ResolveUnit( name );
+        }
+        return 0;
     }
     
     std::string GetFragoName( xml::xisubstream xis, const std::string& frago)
