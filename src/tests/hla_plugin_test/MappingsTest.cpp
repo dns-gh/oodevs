@@ -34,7 +34,7 @@ namespace
 
     char* CMD_LINE[] = { "blah.exe", 
                         "--root-dir=../../data", 
-                        "--exercise=worldwide/Egypt", 
+                        "--exercise=scipio/Poseidon VA", 
                         "--session=default" };
 
     class Fixture
