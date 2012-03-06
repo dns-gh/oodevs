@@ -24,7 +24,11 @@ method "getProximity" (
 
 method "isAccessible" (
     function( self )
-        return integration.isPointTrafficable( self ) or integration.canDismount()
+        if not integration.isPositionInAOR( self ) then
+            return false
+        end
+        return integration.isPositionInAOR( self )
+        and ( integration.isPointTrafficable( self ) or integration.canDismount() )
     end )
 
 method "isReached" (

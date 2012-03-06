@@ -24,8 +24,11 @@ method "isReached" (
 -- --------------------------------------------------------------------------------
 method "isAccessible" (
     function( self )
+        if not integration.isPositionInAOR( self.proxy ) then
+            return false
+        end
         if not integration.isPointTrafficable( self.proxy )
-           and not integration.canDismount() then
+            and not integration.canDismount() then
             return false
         else
             return true

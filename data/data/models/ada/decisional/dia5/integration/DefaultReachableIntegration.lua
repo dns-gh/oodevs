@@ -509,7 +509,8 @@ integration.updateMoveToItArea = function( objective, pathType )
         -- --------------------------------------------------------------------------------
         if objective[ myself ].etat == eEtatActionDeplacement_Termine then
             local distance = DEC_Geometrie_DistanceBetweenPoints( DEC_Agent_Position(), objective:getPosition() )
-            if distance > 0 and objective.destination == objective.initialeDestination then -- mean objective is accessible, no sub-objective to dismount
+            if not DEC_Geometrie_PositionsEgales( objective.initialeDestination, objective:getPosition() ) -- specific case, itinerary computed on my own poition.
+            and distance > 0 and objective.destination == objective.initialeDestination then -- mean objective is accessible, no sub-objective to dismount
                 integration.stopMoveToIt( objective )
                 return integration.startMoveToItArea( objective, pathType )
            end
@@ -656,4 +657,8 @@ end
 
 integration.getUnitPositions = function( simPoint )
     return DEC_Geometrie_CalculerTrafficablePointPourPoint( simPoint )
+end
+
+integration.isPositionInAOR = function( position )
+    return DEC_Geometrie_EstPointDansFuseau( position:getPosition() )
 end
