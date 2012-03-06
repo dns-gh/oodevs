@@ -115,8 +115,17 @@ include "bit.lua"
                 --[[// Objectif de l'unité escorté                ]]
                 if( F_Pion_GetitMvt( self._namedParams.pionAmi ) == nil ) then
                     Activate( self.activations.ACT_Info_Trace, 1, { "Waiting for friendly unit to have a mission", } )
-                    do return end
-                end
+					local myPosition = DEC_Agent_PositionPtr( myself )
+					local protectedUnitPosition = DEC_Agent_PositionPtr( self._namedParams.pionAmi )
+					local distance = DEC_Geometrie_Distance( myPosition, protectedUnitPosition )
+					if( F_Pion_GeteEtatDestruction( self._namedParams.pionAmi ) ~= eEtatDestruction_None ) or ( distance > self.maxStartDistance ) then
+						DEC_Trace( "Protected unit is not operational or out of range" )
+						DEC_RC( eRC_MissionImpossible )
+						self:SendFeedback( eActionImpossible )
+						Halt( self )
+					end
+					do return end
+				end
 
                 --[[//-----------------------------------------------------------------------------
                 ]]--[[// Reconnaissance sur l'axe 
