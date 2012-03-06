@@ -35,8 +35,9 @@ TemplateListView::TemplateListView( QWidget* parent, AgentsModel& agents, Format
     setResizeMode( Q3ListView::AllColumns );
     header()->hide();
     setSorting( -1 );
-
+    setDefaultRenameAction( Q3ListView::Accept );
     connect( this, SIGNAL( itemRenamed( Q3ListViewItem*, int, const QString& ) ), SLOT( OnRename( Q3ListViewItem*, int, const QString& ) ) );
+    connect( this, SIGNAL( contextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ), this, SLOT( OnContextMenuRequested( Q3ListViewItem*, const QPoint&, int ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,6 +71,30 @@ Q3DragObject* TemplateListView::dragObject()
 
     const HierarchyTemplate* pTemplate = pItem->GetValue< HierarchyTemplate >();
     return new ValuedDragObject( pTemplate, this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TemplateListView::OnContextMenuRequested
+// Created: LGY 2012-03-06
+// -----------------------------------------------------------------------------
+void TemplateListView::OnContextMenuRequested( Q3ListViewItem* item, const QPoint& where, int )
+{
+    if( item )
+    {
+        QMenu* menu = new QMenu( this  );
+        menu->addAction( tr( "Rename" ), this, SLOT( OnRename() ) );
+        menu->popup( where );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: TemplateListView::OnRename
+// Created: LGY 2012-03-06
+// -----------------------------------------------------------------------------
+void TemplateListView::OnRename()
+{
+    if( selectedItem() )
+        selectedItem()->startRename( 0 );
 }
 
 // -----------------------------------------------------------------------------

@@ -2198,6 +2198,10 @@
         <source>Template</source>
         <translation>Modèle</translation>
     </message>
+    <message>
+        <source>Rename</source>
+        <translation>Renommer</translation>
+    </message>
 </context>
 <context>
     <name>TemplatesPanel</name>
