@@ -6,25 +6,25 @@
         <munition>munition.xml</munition>
     </mappings>
     <types>
-        <automat>ARMOR.MBT squadron</automat>
+        <automat>ABC . Escadron de Chars LECLERC</automat>
     </types>
     <missions>
         <fragOrders>
-            <pause>Pause maneuver</pause>
-            <resume>Resume maneuver</resume>
-            <cancel>Cancel maneuver</cancel>
+            <pause>Attendre</pause>
+            <resume>Poursuivre</resume>
+            <cancel>Interrompre</cancel>
         </fragOrders>
         <request>
-            <transport>COMMON - request transport</transport>
-            <embarkment>COMMON - request embark</embarkment>
-            <disembarkment>COMMON - request take off</disembarkment>
-            <embarkment>COMMON - request landing</embarkment>
-            <disembarkment>COMMON - request disembark</disembarkment>
+            <transport>AUTOMATE HLA Faire Une Requete de Transport</transport>
+            <embarkment>AUTOMATE HLA Atterrir</embarkment>
+            <disembarkment>AUTOMATE HLA Decoller</disembarkment>
+            <embarkment>AUTOMATE HLA Embarquer</embarkment>
+            <disembarkment>AUTOMATE HLA Debarquer</disembarkment>
         </request>
         <offer>
-            <transport>COMMON - offer transport</transport>
+            <!--transport>COMMON - offer transport</transport>
             <embarkment>COMMON - offer embark</embarkment>
-            <disembarkment>COMMON - offer disembark</disembarkment>
+            <disembarkment>COMMON - offer disembark</disembarkment-->
         </offer>
     </missions>
     <reports>

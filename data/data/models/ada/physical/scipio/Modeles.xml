@@ -4704,6 +4704,8 @@
         <mission name="AUTOMATE MELEE Canaliser foule"/>
         <mission name="AUTOMATE MELEE Maintenir Le Contact"/>
         <mission name="AUTOMATE HLA Faire Une Requete de Transport"/>
+        <mission name="AUTOMATE HLA Debarquer"/>
+        <mission name="AUTOMATE HLA Embarquer"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -4827,6 +4829,8 @@
         <mission name="AUTOMATE MELEE Canaliser foule"/>
         <mission name="AUTOMATE MELEE Controler foule"/>
         <mission name="AUTOMATE MELEE Interdire foules"/>
+        <mission name="AUTOMATE HLA Debarquer"/>
+        <mission name="AUTOMATE HLA Embarquer"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -7264,4 +7268,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0277895853" -->
+<!-- signature="0880504122" -->
