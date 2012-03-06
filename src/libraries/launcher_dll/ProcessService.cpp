@@ -23,7 +23,6 @@
 #include "client_proxy/SwordMessageHandler_ABC.h"
 #include "SwordFacade.h"
 #include "Config.h"
-#include "PauseResumeMessageHandler.h"
 #include "LauncherService.h"
 #include "TimeMessageHandler.h"
 #include "NotificationMessageHandler.h"
@@ -487,10 +486,7 @@ void ProcessService::ExecuteCommand( const std::string& endpoint, const sword::S
         return SendErrorMessage< SessionCommandExecutionResponse >( *server_.ResolveClient( endpoint ), message.exercise(), message.session(), sword::SessionCommandExecutionResponse::session_not_running );
     boost::shared_ptr< SwordFacade > client( it->second );
     if( message.has_set_running() )
-    {
-        ExecutePauseResume( endpoint, message.exercise(), message.session(), message.set_running(), context, *client );
-        ++context;
-    }
+        ExecutePauseResume( endpoint, message.exercise(), message.session(), message.set_running(), *client );
     if( message.has_save_checkpoint() )
     {
         SaveCheckpoint( message.save_checkpoint(), *client );
@@ -575,19 +571,22 @@ void ProcessService::CheckForRunningProcesses()
 // Created: LGY 2011-05-18
 // -----------------------------------------------------------------------------
 void ProcessService::ExecutePauseResume( const std::string& endpoint, const std::string& exercise, const std::string& session,
-                                         bool running, int context, SwordFacade& facade )
+                                         bool running, SwordFacade& facade )
 {
-    facade.RegisterMessageHandler( context,
-        std::auto_ptr< MessageHandler_ABC >( new PauseResumeMessageHandler( server_.ResolveClient( endpoint ), exercise, session ) ) );
+    SessionCommandExecutionResponse executionResponse;
+    executionResponse().set_error_code( sword::SessionCommandExecutionResponse::success );
+    executionResponse().set_running( running );
+    executionResponse().set_exercise( exercise );
+    executionResponse().set_session( session );
     if( running )
     {
         simulation::ControlResume request;
-        request.Send( facade, context );
+        request.Send( facade );
     }
     else
     {
         simulation::ControlPause request;
-        request.Send( facade, context );
+        request.Send( facade );
     }
 }
 

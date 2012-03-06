@@ -69,20 +69,17 @@ BOOST_FIXTURE_TEST_CASE( ClientCanPauseExercise, ExerciseFixture )
 {
     // send pause request
     exercise->Pause( session );
-    VerifySendRequest( "context: 1 message { control_pause { } }" );
+    VerifySendRequest( "context: 0 message { control_pause { } }" );
 
     // retrieve pause response
     client::ControlPauseAck dispatcherResponse;
     dispatcherResponse().set_error_code( sword::ControlAck::no_error );
-    dispatcherResponse.Send( dispatcher, 1 );
+    dispatcherResponse.Send( dispatcher );
 
-    sword::SessionCommandExecutionResponse launcherResponse;
     sword::SessionStatus statusResponse;
-    MOCK_EXPECT( handler, HandleSessionCommandExecutionResponse ).once().with( mock::retrieve( launcherResponse ) );
     MOCK_EXPECT( handler, HandleSessionStatus ).once().with( mock::retrieve( statusResponse ) );
 
-    Wait( launcherResponse );
-    LAUNCHER_CHECK_MESSAGE( launcherResponse, "error_code: success exercise: \"" + exercise->GetName() + "\" session: \"" + session + "\" running: false" );
+    Wait( statusResponse );
     LAUNCHER_CHECK_MESSAGE( statusResponse, "exercise: \"" + exercise->GetName() + "\" session: \"" + session + "\" status: paused" );
 }
 
@@ -94,20 +91,17 @@ BOOST_FIXTURE_TEST_CASE( ClientCanResumeExercise, ExerciseFixture )
 {
     // send resume request
     exercise->Resume( session );
-    VerifySendRequest( "context: 2 message { control_resume { } }" );
+    VerifySendRequest( "context: 0 message { control_resume { } }" );
 
     // retrieve resume response
     client::ControlResumeAck dispatcherResponse;
     dispatcherResponse().set_error_code( sword::ControlAck::error_not_paused );
-    dispatcherResponse.Send( dispatcher, 2 );
+    dispatcherResponse.Send( dispatcher, 0 );
 
-    sword::SessionCommandExecutionResponse launcherResponse;
     sword::SessionStatus statusResponse;
-    MOCK_EXPECT( handler, HandleSessionCommandExecutionResponse ).once().with( mock::retrieve( launcherResponse ) );
     MOCK_EXPECT( handler, HandleSessionStatus ).once().with( mock::retrieve( statusResponse ) );
 
-    Wait( launcherResponse );
-    LAUNCHER_CHECK_MESSAGE( launcherResponse, "error_code: session_already_running exercise: \"" + exercise->GetName() + "\" session: \"" + session + "\" running: true" );
+    Wait( statusResponse );
     LAUNCHER_CHECK_MESSAGE( statusResponse, "exercise: \"" + exercise->GetName() + "\" session: \"" + session + "\" status: running" );
 }
 
@@ -119,12 +113,12 @@ BOOST_FIXTURE_TEST_CASE( ClientCanChangeDateTime, ExerciseFixture )
 {
     // send resume request
     exercise->ChangeDateTime( session, "dateISO860" );
-    VerifySendRequest( "context: 3 message { control_date_time_change { date_time { data: \"dateISO860\" } } }" );
+    VerifySendRequest( "context: 1 message { control_date_time_change { date_time { data: \"dateISO860\" } } }" );
 
     // retrieve resume response
     client::ControlDateTimeChangeAck dispatcherResponse;
     dispatcherResponse().set_error_code( sword::ControlAck::no_error );
-    dispatcherResponse.Send( dispatcher, 3 );
+    dispatcherResponse.Send( dispatcher, 1 );
 
     sword::SessionCommandExecutionResponse launcherResponse;
     MOCK_EXPECT( handler, HandleSessionCommandExecutionResponse ).once().with( mock::retrieve( launcherResponse ) );
