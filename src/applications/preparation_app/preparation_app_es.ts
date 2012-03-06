@@ -1160,6 +1160,10 @@
         <source>Consistency analysis...</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Performance...</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ModelBuilder</name>
@@ -1377,6 +1381,37 @@
     <name>ObjectListView</name>
     <message>
         <source>Create side</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>PerformanceDialog</name>
+    <message>
+        <source>Performance dialog</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of units: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of urban blocs: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of objects: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terrain size: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of knowledge groups: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Load level: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

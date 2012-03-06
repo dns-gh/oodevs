@@ -119,6 +119,9 @@
     <Filter Include="Source Files\Model\Ghosts\Extensions">
       <UniqueIdentifier>{7f647236-3f0e-4840-a508-31c908593702}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Model\Performance">
+      <UniqueIdentifier>{dfa8c364-e048-4ed4-ab14-540845f7d2e1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\preparation\preparation_pch.cpp">
@@ -519,6 +522,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\preparation\GhostPositions.cpp">
       <Filter>Source Files\Model\Ghosts\Extensions</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\PerformanceIndicator.cpp">
+      <Filter>Source Files\Model\Performance</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -971,6 +977,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\ConsistencyErrorTypes.h">
       <Filter>Source Files\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\PerformanceIndicator.h">
+      <Filter>Source Files\Model\Performance</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

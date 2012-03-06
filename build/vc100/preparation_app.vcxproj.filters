@@ -95,6 +95,9 @@
     <Filter Include="Source Files\Panels\Living area">
       <UniqueIdentifier>{ebcc3ace-dec1-47be-92bd-73229501cb0f}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Dialogs\Performance">
+      <UniqueIdentifier>{a8393a5a-4580-43ce-87fd-53fc2c100855}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\preparation_app\Application.cpp">
@@ -474,6 +477,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\LocationEditorToolbar.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\PerformanceDialog.cpp">
+      <Filter>Source Files\Dialogs\Performance</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -891,6 +897,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\LivingAreaPanel.h">
       <Filter>Source Files\Panels\Living area</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\PerformanceDialog.h">
+      <Filter>Source Files\Dialogs\Performance</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

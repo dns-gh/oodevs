@@ -49,6 +49,7 @@ class ScoreDialog;
 class StaticModel;
 class ColorController;
 class DockManager;
+class PerformanceDialog;
 
 // =============================================================================
 /** @class  MainWindow
@@ -157,6 +158,7 @@ private:
     FilterDialogs* filterDialogs_;
     QProgressDialog* progressDialog_;
     ModelConsistencyDialog* consistencyDialog_;
+    PerformanceDialog* performanceDialog_;
     //@}
 };
 

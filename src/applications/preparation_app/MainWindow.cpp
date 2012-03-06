@@ -29,6 +29,7 @@
 #include "ObjectCreationPanel.h"
 #include "InhabitantCreationPanel.h"
 #include "ObjectsLayer.h"
+#include "PerformanceDialog.h"
 #include "PopulationsLayer.h"
 #include "PreparationProfile.h"
 #include "ProfileDialog.h"
@@ -146,6 +147,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     , loading_          ( false )
     , progressDialog_   ( 0 )
     , consistencyDialog_( 0 )
+    , performanceDialog_( 0 )
 {
     QSettings settings;
     settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
@@ -212,6 +214,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     SuccessFactorDialog* successFactorDialog = new SuccessFactorDialog( this, controllers, model_.successFactors_, *factory, staticModel_.successFactorActionTypes_, model_.scores_ );
     fileToolBar_ = new FileToolbar( this, controllers );
     consistencyDialog_ = new ModelConsistencyDialog( this, model, staticModel_, controllers_ );
+    performanceDialog_ = new PerformanceDialog( this, model, staticModel_ );
 
     addToolBar( fileToolBar_ );
     addToolBar( new DisplayToolbar( this, controllers ) );
@@ -223,7 +226,8 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
 
     // Menu
     gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/preparation.xml" ) );
-    menu_ = new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog, *pScoreDialog_, *successFactorDialog, *exerciseDialog, *consistencyDialog_, *factory, expiration, *help );
+    menu_ = new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog, *pScoreDialog_, *successFactorDialog, *exerciseDialog, 
+                    *consistencyDialog_, *performanceDialog_, *factory, expiration, *help );
     setMenuBar( menu_ );
     filterDialogs_ = new FilterDialogs( this, config_, model, *menu_, staticModel_.coordinateConverter_ );
 

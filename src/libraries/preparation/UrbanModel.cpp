@@ -34,6 +34,7 @@
 #include <urban/GeometryAttribute.h>
 #include <urban/ColorAttribute.h>
 #include <urban/TerrainObjectVisitor_ABC.h>
+#include <urban/WorldParameters.h>
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
