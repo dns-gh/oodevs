@@ -9,6 +9,7 @@
 
 #include "MT_FileLogger.h"
 #include <cstdio>
+#include <ctime>
 #include <boost/algorithm/string.hpp>
 #include <boost/filesystem/path.hpp>
 #include <boost/filesystem/operations.hpp>
@@ -37,7 +38,9 @@ MT_FileLogger::MT_FileLogger( const char* strFileName , unsigned int maxFiles, i
     bfs::path pathFileName( fileName_ );
     fileNameNoExtension_ = pathFileName.parent_path().string() + "/" + pathFileName.stem();
     fileNameExtension_ = pathFileName.extension();
-    OpenNewOfstream( fileName_ );
+    filesCount_ = GetOldestFile();
+    std::string startFileName = GetFileName( filesCount_ );
+    OpenNewOfstream( startFileName );
 }
 
 //-----------------------------------------------------------------------------
@@ -95,12 +98,62 @@ void MT_FileLogger::LogString( E_LogLevel nLogLevel, const char* strMessage, con
             sizeCount_ = messageSize;
             if ( ++filesCount_ > maxFiles_ )
                 filesCount_ = 1;
-            if( filesCount_ == 1 )
-                OpenNewOfstream( fileName_ );
-            else
-                OpenNewOfstream( fileNameNoExtension_ + ( "." + boost::lexical_cast< std::string >( filesCount_ - 1 ) ) + fileNameExtension_ );       
+            OpenNewOfstream( GetFileName( filesCount_ ) );     
         }
     }
     *file_ << messageStream.str();
     file_->flush();
+}
+
+//-----------------------------------------------------------------------------
+// Name: MT_FileLogger::GetOldestFile
+// Created:  MMC 2012-03-02
+//-----------------------------------------------------------------------------
+std::string MT_FileLogger::GetFileName( unsigned int fileCount )
+{
+    if( fileCount <= 1 )
+        return fileName_;
+    return fileNameNoExtension_ + ( "." + boost::lexical_cast< std::string >( fileCount - 1 ) ) + fileNameExtension_;
+}
+
+//-----------------------------------------------------------------------------
+// Name: MT_FileLogger::GetOldestFile
+// Created:  MMC 2012-03-02
+//-----------------------------------------------------------------------------
+unsigned int MT_FileLogger::GetOldestFile()
+{
+    if( maxFiles_ == 1 )
+        return 1;
+    try
+    {
+        unsigned int oldest = 1;
+        std::string fileName = GetFileName( 1 );
+        if( bfs::exists( fileName ) )
+        {
+            std::time_t minTime = bfs::last_write_time( fileName );
+            for( unsigned int i = 2; i <= maxFiles_; ++i )
+            {
+                fileName = GetFileName( i );
+                if( bfs::exists( fileName ) )
+                {
+                    std::time_t curTime = bfs::last_write_time( fileName );
+                    if( curTime < minTime )
+                    {
+                        minTime = curTime;
+                        oldest = i;
+                    }
+                }
+                else
+                {
+                    oldest = i;
+                    break;
+                }
+            }
+        }
+        return oldest;
+    }
+    catch( ... )
+    {
+        return 1;
+    }
 }

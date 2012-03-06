@@ -81,7 +81,7 @@ SIM_App::SIM_App( HINSTANCE hinstance, HINSTANCE /* hPrevInstance */ ,LPSTR lpCm
     {
         try
         {
-            pNetworkLogger_.reset( new SIM_NetworkLogger( startupConfig_->GetNetworkLoggerPort(),MT_Logger_ABC::eLogLevel_All ) );
+            pNetworkLogger_.reset( new SIM_NetworkLogger( startupConfig_->GetNetworkLoggerPort(), MT_Logger_ABC::eLogLevel_All ) );
             MT_LOG_REGISTER_LOGGER( *pNetworkLogger_ );
         }
         catch( MT_ScipioException& exception )
