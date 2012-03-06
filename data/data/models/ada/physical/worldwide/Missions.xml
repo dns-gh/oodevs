@@ -1726,7 +1726,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="entities" max-occurs="200" min-occurs="1" name="agents to follow" optional="false" type="LocationComposite">
+      <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="agents to follow" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Agent"/>
           <parameter type="AgentKnowledge"/>
@@ -1735,7 +1735,7 @@ overwhelming force.]]></doctrine>
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
-      <parameter dia-name="positions" max-occurs="200" min-occurs="1" name="positions" optional="true" type="LocationComposite">
+      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="positions" optional="true" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
           <parameter type="Polygon"/>
@@ -1809,7 +1809,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="victimsUnits" max-occurs="200" min-occurs="1" name="victim units" optional="false" type="Agent"/>
+      <parameter dia-name="victimsUnits" max-occurs="unbounded" min-occurs="1" name="victim units" optional="false" type="Agent"/>
       <parameter dia-name="medicalUnit" name="medical unit (TC2)" optional="false" type="Agent"/>
     </mission>
     <mission dia-behavior="tasks.ExtractVictimsFromCrowds" dia-type="tasks.ExtractVictimsFromCrowds" id="4451" name="MLSECURITY - Extract victims from crowds">
@@ -1821,7 +1821,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="crowds" max-occurs="200" min-occurs="1" name="crowds" optional="false" type="LocationComposite">
+      <parameter dia-name="crowds" max-occurs="unbounded" min-occurs="1" name="crowds" optional="false" type="LocationComposite">
         <choice>
           <parameter type="CrowdKnowledge"/>
         </choice>
@@ -1858,7 +1858,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="resourceNodes" max-occurs="1000000" min-occurs="1" name="resourceNodes" optional="false" type="ResourceNetworkNode"/>
+      <parameter dia-name="resourceNodes" max-occurs="unbounded" min-occurs="1" name="resourceNodes" optional="false" type="ResourceNetworkNode"/>
     </mission>
     <mission dia-behavior="tasks.DeactivateResourceNodes" dia-type="tasks.DeactivateResourceNodes" id="4455" name="MLSECURITY - Disable resource nodes">
       <description>
@@ -1869,7 +1869,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="resourceNodes" max-occurs="10000000" min-occurs="1" name="Resource nodes to disable" optional="false" type="ResourceNetworkNode"/>
+      <parameter dia-name="resourceNodes" max-occurs="unbounded" min-occurs="1" name="Resource nodes to disable" optional="false" type="ResourceNetworkNode"/>
     </mission>
     <mission dia-behavior="tasks.Patrol" dia-type="tasks.Patrol" id="4456" name="MLSECURITY - Patrol">
       <description>
@@ -1880,7 +1880,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="destinations" max-occurs="200" min-occurs="1" name="way points" optional="false" type="LocationComposite">
+      <parameter dia-name="destinations" max-occurs="unbounded" min-occurs="1" name="way points" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
           <parameter type="Polygon"/>
@@ -1899,7 +1899,7 @@ Entities are visited in the order of the list and are loaded on agent Unit. Once
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="entitiesToTransport" max-occurs="2000" min-occurs="1" name="Entities to transport" optional="false" type="LocationComposite">
+      <parameter dia-name="entitiesToTransport" max-occurs="unbounded" min-occurs="1" name="Entities to transport" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Agent"/>
           <parameter type="AgentKnowledge"/>
@@ -1979,7 +1979,7 @@ Elements are visited in the order of the list. Agent will protect itself with NB
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="contaminatedElements" max-occurs="1220212" min-occurs="1" name="Elements to decontaminate" optional="false" type="LocationComposite">
+      <parameter dia-name="contaminatedElements" max-occurs="unbounded" min-occurs="1" name="Elements to decontaminate" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Polygon"/>
           <parameter type="UrbanKnowledge"/>
@@ -2048,7 +2048,7 @@ A visited object won't be created and build if agent doesn't have the physical c
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="works" max-occurs="12554" min-occurs="1" name="works to perform" optional="false" type="PlannedWork"/>
+      <parameter dia-name="works" max-occurs="unbounded" min-occurs="1" name="works to perform" optional="false" type="PlannedWork"/>
       <parameter dia-name="waitForReinforcement" name="waitForReinforcement" optional="true" type="Boolean"/>
     </mission>
     <mission dia-behavior="tasks.PerformWorks" dia-type="tasks.PerformWorks2" id="4475" name="MLSECURITY - Resume public works">
@@ -2061,7 +2061,7 @@ A visited object won't be created and build if agent doesn't have the physical c
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="works" max-occurs="12554" min-occurs="1" name="Elements to build" optional="false" type="LocationComposite">
+      <parameter dia-name="works" max-occurs="unbounded" min-occurs="1" name="Elements to build" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Agent"/>
           <parameter type="AgentKnowledge"/>
@@ -2100,7 +2100,7 @@ A visited object won't be created and build if agent doesn't have the physical c
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="works" max-occurs="12554" min-occurs="1" name="Plan of attack" optional="false" type="PlannedWork"/>
+      <parameter dia-name="works" max-occurs="unbounded" min-occurs="1" name="Plan of attack" optional="false" type="PlannedWork"/>
     </mission>
     <mission dia-behavior="tasks.CreateThenOperate" dia-type="tasks.CreateThenOperate" id="4478" name="MLSECURITY - Create and operate a system">
       <description>
@@ -2160,7 +2160,7 @@ A crowd won't be healed if it could not be reached (it has moved away or it is l
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="crowds" max-occurs="465465465" min-occurs="1" name="crowds" optional="false" type="LocationComposite">
+      <parameter dia-name="crowds" max-occurs="unbounded" min-occurs="1" name="crowds" optional="false" type="LocationComposite">
         <choice>
           <parameter type="CrowdKnowledge"/>
         </choice>
@@ -2252,7 +2252,7 @@ A unit won't follow if it cannot perform the mission (mission is not set for thi
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="units" max-occurs="1213" min-occurs="1" name="units to be ordered to follow" optional="false" type="Agent"/>
+      <parameter dia-name="units" max-occurs="unbounded" min-occurs="1" name="units to be ordered to follow" optional="false" type="Agent"/>
     </mission>
   </units>
   <automats>
@@ -3609,4 +3609,4 @@ A unit won't follow if it cannot perform the mission (mission is not set for thi
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="0549890479" -->
+<!-- signature="1398438166" -->
