@@ -2182,6 +2182,10 @@
         <source>Template</source>
         <translation>Plantilla</translation>
     </message>
+    <message>
+        <source>Rename</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>TemplatesPanel</name>

@@ -45,6 +45,8 @@ private slots:
     //! @name Slots
     //@{
     void OnRename( Q3ListViewItem*, int, const QString& );
+    void OnRename();
+    void OnContextMenuRequested( Q3ListViewItem*, const QPoint&, int );
     //@}
 
 private:
