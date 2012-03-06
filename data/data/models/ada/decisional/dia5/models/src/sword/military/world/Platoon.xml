@@ -50,6 +50,15 @@
                 </type>
             </return>
         </method>
+        <method name="dischargeItIn" abstract="false">
+            <description>Action de déchargement d'un élément transporté, dans un conteneur.&#xD;
+            </description>
+            <argument name="object">
+                <type>
+                    <class name="sword.military.knowledge.decisional.Loading"/>
+                </type>
+            </argument>
+        </method>
         <method name="getProximity">
             <description>__INTEGRATION</description>
             <argument name="objective">

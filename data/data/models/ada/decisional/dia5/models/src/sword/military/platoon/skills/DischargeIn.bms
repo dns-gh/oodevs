@@ -53,7 +53,7 @@ node "DischargeIn"
     feedbacks = { "discharged" },
 
     select = function( self )
-        if self.params.camp:dischargeInIt( self.params.element ) then
+        if self.params.element:dischargeItIn( self.params.camp ) then
             Feedback( self.feedbacks.discharged, { element = self.params.element } )
         end
     end
