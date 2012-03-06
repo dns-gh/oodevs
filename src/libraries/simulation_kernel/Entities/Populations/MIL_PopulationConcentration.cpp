@@ -221,7 +221,7 @@ void MIL_PopulationConcentration::Move( const MT_Vector2D& destination )
 // -----------------------------------------------------------------------------
 bool MIL_PopulationConcentration::IsNearPosition( const MT_Vector2D& position ) const
 {
-    static double rPrecision = 100.;
+    static double rPrecision = 10.;
     return position_.Distance( position ) <= rPrecision;
 }
 
