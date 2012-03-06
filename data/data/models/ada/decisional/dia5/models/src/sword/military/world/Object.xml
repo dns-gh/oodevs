@@ -475,15 +475,6 @@
                 </type>
             </return>
         </method>
-        <method name="dischargeInIt" abstract="false">
-            <description>Action de déchargement d'un élément transporté, dans un conteneur.&#xD;
-            </description>
-            <argument name="transportedElement">
-                <type>
-                    <class name="sword.military.knowledge.decisional.Loadable"/>
-                </type>
-            </argument>
-        </method>
         <method name="getType">
             <description>Retourne le type de l'objet.</description>
         </method>

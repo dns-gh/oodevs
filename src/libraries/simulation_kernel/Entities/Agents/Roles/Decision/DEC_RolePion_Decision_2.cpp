@@ -858,6 +858,10 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< void ( boost::shared_ptr< DEC_Knowledge_Agent >, boost::shared_ptr< DEC_Knowledge_Object > )> ( boost::bind(&DEC_ActionFunctions::Refugees_UnloadInCamp , boost::ref( GetPion() ), _1, _2  ) );
     brain[ "DEC_Refugies_EstEmbarque"          ] =
         boost::function< bool ( boost::shared_ptr< DEC_Knowledge_Agent > ) > ( boost::bind ( &DEC_ActionFunctions::PrisonnersRefugees_IsLoaded , boost::ref( GetPion() ), _1  ) );
+    brain[ "DEC_Agent_OrienterEtEmbarquer"  ] = &DEC_ActionFunctions::LoadAgentInCamp;
+    brain[ "DEC_Agent_RefugieEstEmbarque"] = &DEC_ActionFunctions::IsAgentLoaded;
+    brain[ "DEC_Agent_DebarquerRefugiesDansCamp"] = &DEC_ActionFunctions::UnLoadAgentInCamp;
+    brain[ "DEC_Agent_EstRefugie" ] = &DEC_ActionFunctions::IsRefugee;
 
     // Emergency functions
     brain[ "DEC_Start_EmergencyInfluence" ] =

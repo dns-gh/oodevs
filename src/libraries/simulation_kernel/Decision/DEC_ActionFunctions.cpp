@@ -119,6 +119,50 @@ void DEC_ActionFunctions::Refugees_UnloadInCamp( MIL_AgentPion& callerAgent, boo
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_ActionFunctions::LoadAgentInCamp
+// Created: DDA 2012-03-05
+// -----------------------------------------------------------------------------
+void DEC_ActionFunctions::LoadAgentInCamp( DEC_Decision_ABC& callerAgent, DEC_Decision_ABC* pPion )
+{
+    if( !pPion )
+        return;
+    pPion->GetPion().Apply( &refugee::RefugeeActionsNotificationHandler_ABC::Orientate, callerAgent.GetPion() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ActionFunctions::UnLoadAgentInCamp
+// Created: DDA 2012-03-05
+// -----------------------------------------------------------------------------
+void DEC_ActionFunctions::UnLoadAgentInCamp( DEC_Decision_ABC& callerAgent, DEC_Decision_ABC* pPion, boost::shared_ptr< DEC_Knowledge_Object > pCampKnowledge )
+{
+    if( !pPion || !pCampKnowledge || !pCampKnowledge->IsValid() || !pCampKnowledge->GetObjectKnown() )
+        return;
+    pPion->GetPion().Apply( &refugee::RefugeeActionsNotificationHandler_ABC::ReleaseCamp, callerAgent.GetPion(), *pCampKnowledge->GetObjectKnown() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ActionFunctions::IsAgentLoaded
+// Created: DDA 2012-03-05
+// -----------------------------------------------------------------------------
+bool DEC_ActionFunctions::IsAgentLoaded( DEC_Decision_ABC& callerAgent, DEC_Decision_ABC* pPion )
+{
+    if( !pPion )
+        return false;
+    return callerAgent.GetPion().GetRole< transport::PHY_RoleAction_Transport >().IsLoaded( pPion->GetPion() ) ;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ActionFunctions::IsRefugee
+// Created: DDA 2011-03-05
+// -----------------------------------------------------------------------------
+bool DEC_ActionFunctions::IsRefugee( DEC_Decision_ABC& callerAgent, DEC_Decision_ABC* pPion )
+{
+    if( !pPion )
+        return false;
+    return pPion->GetPion().GetType().IsRefugee();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_ActionFunctions::Refugees_IsLoaded
 // Created: NLD 2007-02-26
 // -----------------------------------------------------------------------------

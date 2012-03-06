@@ -384,4 +384,7 @@ return
     isTransported = function( self )
       return integration.isTransported( self )
     end,
+    dischargeItIn = function( self, camp )
+        return integration.dischargeAgentKnowledge( self, camp )
+    end,
 }

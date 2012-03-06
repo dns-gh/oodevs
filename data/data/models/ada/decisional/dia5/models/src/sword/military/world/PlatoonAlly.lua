@@ -814,6 +814,9 @@ return
     getAutomat = function ( self )
         return CreateKnowledge( sword.military.world.Company, DEC_GetAutomate(self.source) )
     end,
+    dischargeItIn = function( self, camp )
+        return integration.dischargeAgent( self, camp )
+    end,
     
     shareKnowledge = masalife.brain.integration.startStopAction(
     {

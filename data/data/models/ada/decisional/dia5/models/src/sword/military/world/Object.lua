@@ -351,9 +351,6 @@ return
         started = integration.updateAttackIt, 
         stop = integration.stopAttackIt
     } ),
-    dischargeInIt = function( self, element )
-        return integration.discharge( element, self ) 
-    end,
     plannedworkToWork = function( self )
         return self
     end,
