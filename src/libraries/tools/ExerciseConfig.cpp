@@ -542,9 +542,9 @@ int ExerciseConfig::GetDispatcherProtobufLogSize() const
 // Name: ExerciseConfig::GetDispatcherLogLevel
 // Created: MMC 2012-02-21
 // -----------------------------------------------------------------------------
-unsigned int ExerciseConfig::GetDispatcherLogLevel() const
+int ExerciseConfig::GetDispatcherLogLevel() const
 {
-    return static_cast< unsigned int >( MT_Logger_ABC::ConvertConfigLevel( dispatcherProtobufLogSettings_.GetLogLevel() ) );
+    return MT_Logger_ABC::ConvertConfigLevel( dispatcherProtobufLogSettings_.GetLogLevel() );
 }
 
 // -----------------------------------------------------------------------------
@@ -605,9 +605,9 @@ int ExerciseConfig::GetSimLogSize() const
 // Name: ExerciseConfig::GetSimLogLevel
 // Created: MMC 2012-02-21
 // -----------------------------------------------------------------------------
-unsigned int ExerciseConfig::GetSimLogLevel() const
+int ExerciseConfig::GetSimLogLevel() const
 {
-    return static_cast< unsigned int >( MT_Logger_ABC::ConvertConfigLevel( simLogSettings_.GetLogLevel() ) );
+    return MT_Logger_ABC::ConvertConfigLevel( simLogSettings_.GetLogLevel() );
 }
 
 // -----------------------------------------------------------------------------
@@ -632,9 +632,9 @@ int ExerciseConfig::GetLoggerPluginLogSize() const
 // Name: ExerciseConfig::GetLoggerPluginLogLevel
 // Created: MMC 2012-02-21
 // -----------------------------------------------------------------------------
-unsigned int ExerciseConfig::GetLoggerPluginLogLevel() const
+int ExerciseConfig::GetLoggerPluginLogLevel() const
 {
-    return static_cast< unsigned int >( MT_Logger_ABC::ConvertConfigLevel( simLoggerPluginSettings_.GetLogLevel() ) );
+    return MT_Logger_ABC::ConvertConfigLevel( simLoggerPluginSettings_.GetLogLevel() );
 }
 
 // -----------------------------------------------------------------------------

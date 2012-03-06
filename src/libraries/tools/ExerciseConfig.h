@@ -89,13 +89,13 @@ public:
     virtual unsigned int GetShieldLogFiles() const;
     virtual int GetShieldLogSize() const;
     virtual unsigned int GetDispatcherLogFiles() const;
-    virtual unsigned int GetDispatcherLogLevel() const;
+    virtual int GetDispatcherLogLevel() const;
     virtual int GetDispatcherLogSize() const;
     virtual unsigned int GetSimLogFiles() const;
-    virtual unsigned int GetSimLogLevel() const;
+    virtual int GetSimLogLevel() const;
     virtual int GetSimLogSize() const;
     virtual unsigned int GetLoggerPluginLogFiles() const;
-    virtual unsigned int GetLoggerPluginLogLevel() const;
+    virtual int GetLoggerPluginLogLevel() const;
     virtual int GetLoggerPluginLogSize() const;
 
     virtual bool IsSimLogInBytes() const;
@@ -138,7 +138,7 @@ protected:
         LogSettings(): logLevel_( elogLevel_all ), maxFiles_( 1 ), maxFileSize_( -1 ), sizeUnit_( eLogSizeType_Lines ), set_( false ) {}
         void SetLogSettings( const std::string& name, xml::xistream& xis );
         void SetLogSettings( int level, int files, int size, const std::string& sizeUnit );
-        unsigned int GetLogLevel() const { return static_cast< unsigned int >( logLevel_ ); }
+        eLogLevel GetLogLevel() const { return logLevel_; }
         unsigned int GetMaxFiles() const { return maxFiles_; }
         int GetMaxSize() const { return maxFileSize_; }
         bool IsSizeInBytes() const { return sizeUnit_ == eLogSizeType_Bytes; }

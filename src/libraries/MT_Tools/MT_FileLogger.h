@@ -34,7 +34,7 @@ class MT_FileLogger : public MT_Logger_ABC
 {
 
 public:
-    explicit MT_FileLogger( const char* strFileName, unsigned int maxFiles = 1, int maxSize = -1, int nLogLevels = eLogLevel_All, 
+    explicit MT_FileLogger( const char* strFileName, unsigned int maxFiles, int maxSize, int nLogLevels,
                             bool bClearPreviousLog = false, E_Type type = eSimulation, bool sizeInBytes = false );
 
     virtual ~MT_FileLogger();
@@ -46,6 +46,8 @@ protected:
     //@{
     virtual void LogString( E_LogLevel level, const char* strMessage, const char* strContext, int nCode );
     void OpenNewOfstream( const std::string fileName );
+    unsigned int GetOldestFile();
+    std::string GetFileName( unsigned int fileCount );
     //@}
 
 private:
