@@ -15,7 +15,7 @@
         <description>Reach each objectives in a specific order.</description>
     </goal>
     <links>
-        <link name="reach" skill="behaviors.skills.primitives.Reach">
+        <link name="reach" skill="agent.behaviors.skills.actions.MoveTo">
             <description>To enact the decision to reach each given entities.</description>
         </link>
     </links>

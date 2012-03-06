@@ -38,7 +38,7 @@ Contrariwise (&quot;instantaneously&quot; parameter is set to 'false'), visited 
         <class name="agent.world.Body"/>
     </body-type>
     <links>
-        <link name="reach" skill="behaviors.skills.primitives.Reach">
+        <link name="reach" skill="agent.behaviors.skills.actions.MoveTo">
             <description>To go to the location where to build the construction. </description>
         </link>
         <link name="deconstruct" skill="agent.behaviors.skills.actions.Deconstruct">

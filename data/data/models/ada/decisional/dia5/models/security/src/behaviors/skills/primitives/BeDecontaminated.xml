@@ -17,7 +17,7 @@ Agent moves toward the given decontamination plot. Once it is reached, agent req
         <link name="beDecontaminated" skill="agent.behaviors.skills.actions.BeDecontaminated">
             <description>To enact the decision of being decontaminated.</description>
         </link>
-        <link name="reach" skill="behaviors.skills.primitives.Reach">
+        <link name="reach" skill="agent.behaviors.skills.actions.MoveTo">
             <description>To enact the decision to reach the decontamination plot.</description>
         </link>
     </links>

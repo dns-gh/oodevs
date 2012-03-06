@@ -37,7 +37,7 @@
         <class name="agent.world.Body"/>
     </body-type>
     <links>
-        <link name="reach" skill="behaviors.skills.primitives.Reach">
+        <link name="reach" skill="agent.behaviors.skills.actions.MoveTo">
             <description>To reach the launch position or the target.</description>
         </link>
         <link name="launchProjectile" skill="agent.behaviors.skills.actions.LaunchProjectile">

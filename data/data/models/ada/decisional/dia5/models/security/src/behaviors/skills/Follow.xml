@@ -32,7 +32,7 @@
         </parameter>
     </parameters>
     <links>
-        <link name="reach" skill="behaviors.skills.primitives.Reach">
+        <link name="reach" skill="agent.behaviors.skills.actions.MoveTo">
             <description>To reach positions to stay close to followed elements.</description>
         </link>
     </links>

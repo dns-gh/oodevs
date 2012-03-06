@@ -20,7 +20,7 @@ Entities won't be unloaded  if they are not beeing transported.</description>
         </parameter>
     </parameters>
     <links>
-        <link name="reach" skill="behaviors.skills.primitives.Reach">
+        <link name="reach" skill="agent.behaviors.skills.actions.MoveTo">
             <description>To enact the decision to &quot;reach&quot; an element to unload. </description>
         </link>
         <link name="unload" skill="agent.behaviors.skills.actions.Unload">

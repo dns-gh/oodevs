@@ -17,7 +17,7 @@ A unit won't follow if it cannot perform the mission (the mission is not activat
         <class name="agent.world.Body"/>
     </body-type>
     <links>
-        <link name="reach" skill="behaviors.skills.primitives.Reach">
+        <link name="reach" skill="agent.behaviors.skills.actions.MoveTo">
             <description>To reach each unit and ask to follow.</description>
         </link>
         <link name="makeFollow" skill="agent.behaviors.skills.actions.MakeFollow">

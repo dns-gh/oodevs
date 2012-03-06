@@ -23,7 +23,7 @@ When several nodes should be visited, the agent acts on each node by following t
         <class name="agent.world.Body"/>
     </body-type>
     <links>
-        <link name="reach" skill="behaviors.skills.primitives.Reach">
+        <link name="reach" skill="agent.behaviors.skills.actions.MoveTo">
             <description>To enact the decision to &quot;reach&quot; a resource node. </description>
         </link>
         <link name="damageProduction" skill="agent.behaviors.skills.actions.DamageProduction">

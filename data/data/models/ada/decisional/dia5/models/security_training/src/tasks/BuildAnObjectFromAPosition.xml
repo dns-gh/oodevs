@@ -18,7 +18,7 @@
         <stage label="Move to planned object">
             <description>To move and prepare the attack.</description>
             <skills>
-                <skill name="behaviors.skills.primitives.Reach" main="true">
+                <skill name="agent.behaviors.skills.actions.MoveTo" main="true">
                     <parameter name="destination">
                         <value>
                             <parameter>plannedWork</parameter>
@@ -30,7 +30,7 @@
         <stage label="move to meeting point">
             <description>Move to position.</description>
             <skills>
-                <skill name="behaviors.skills.primitives.Reach" main="true">
+                <skill name="agent.behaviors.skills.actions.MoveTo" main="true">
                     <parameter name="destination">
                         <value>
                             <parameter>position</parameter>

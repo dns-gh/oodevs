@@ -28,7 +28,7 @@ A visited work won't be created and build if agent doesn't have the physical cap
         <class name="agent.world.Body"/>
     </body-type>
     <links>
-        <link name="reach" skill="behaviors.skills.primitives.Reach">
+        <link name="reach" skill="agent.behaviors.skills.actions.MoveTo">
             <description>To go to the location where to build the construction. </description>
         </link>
         <link name="create" skill="agent.behaviors.skills.actions.Create">

@@ -24,7 +24,7 @@ Because filtering crowds with a checkpoint requires the presence of the agent, a
         <class name="agent.world.Body"/>
     </body-type>
     <links>
-        <link name="reach" skill="behaviors.skills.primitives.Reach">
+        <link name="reach" skill="agent.behaviors.skills.actions.MoveTo">
             <description>To enact the decision to &quot;reach&quot; a resource node. </description>
         </link>
         <link name="filter" skill="agent.behaviors.skills.actions.FilterWith">

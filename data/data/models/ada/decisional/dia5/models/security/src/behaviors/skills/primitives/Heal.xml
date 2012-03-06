@@ -19,7 +19,7 @@ Wounded units won't be healed if it could not be reached (it has moved away or i
         <class name="agent.world.Body"/>
     </body-type>
     <links>
-        <link name="reach" skill="behaviors.skills.primitives.Reach">
+        <link name="reach" skill="agent.behaviors.skills.actions.MoveTo">
             <description>To reach the entity to heal.</description>
         </link>
         <link name="heal" skill="agent.behaviors.skills.actions.Heal">

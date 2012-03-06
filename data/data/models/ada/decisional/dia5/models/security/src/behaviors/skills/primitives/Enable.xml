@@ -18,7 +18,7 @@ Enable/disable skills may be used to model the damage/sabotage of a resource nod
         <class name="agent.world.Body"/>
     </body-type>
     <links>
-        <link name="reach" skill="behaviors.skills.primitives.Reach">
+        <link name="reach" skill="agent.behaviors.skills.actions.MoveTo">
             <description>To go to a specified system. </description>
         </link>
         <link name="enable" skill="agent.behaviors.skills.actions.Enable">

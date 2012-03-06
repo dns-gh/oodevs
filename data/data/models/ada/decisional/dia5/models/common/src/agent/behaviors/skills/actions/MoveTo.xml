@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.skills.primitives.Reach" source-version="1.0.0">
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.behaviors.skills.actions.MoveTo" source-version="1.0.0">
     <description>For an agent to know how to move and reach a destination.</description>
     <parameters>
         <parameter name="destination">
@@ -35,4 +35,7 @@
             <description>An agent cannot move to more than one destination at once. </description>
         </resource>
     </resources>
+    <feedbacks>
+        <feedback name="done"/>
+    </feedbacks>
 </skill>

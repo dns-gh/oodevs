@@ -290,7 +290,8 @@ integration.updateMoveToIt = function( objective, pathType )
     -- -------------------------------------------------------------------------------- 
     -- End of movement, check if objective is traficable
     -- --------------------------------------------------------------------------------    
-    if etat == eEtatActionDeplacement_Termine then -- obective is reached or sub-objective if unit needs to dismount  
+    if etat == eEtatActionDeplacement_Termine then -- obective is reached or sub-objective if unit needs to dismount 
+        -- Specific case if agent is blocked by an obstacle
         if myself.canBeBlocked then
             myself.blocked = true
             myself.canBeBlocked = nil

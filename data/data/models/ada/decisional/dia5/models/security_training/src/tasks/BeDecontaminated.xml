@@ -32,7 +32,7 @@ The agent moves to decontamination site, and when it is reached, ask for deconta
         <stage label="move to garage position" disable-when-done="true">
             <description>Decontamination is over, move to garage position.</description>
             <skills>
-                <skill name="behaviors.skills.primitives.Reach" main="true">
+                <skill name="agent.behaviors.skills.actions.MoveTo" main="true">
                     <parameter name="destination">
                         <value>
                             <parameter>garagePosition</parameter>

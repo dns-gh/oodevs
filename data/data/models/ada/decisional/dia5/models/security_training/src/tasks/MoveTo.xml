@@ -18,7 +18,7 @@
     <stages>
         <stage label="Starting to reach the destination" disable-when-done="true">
             <skills>
-                <skill name="behaviors.skills.primitives.Reach" main="true">
+                <skill name="agent.behaviors.skills.actions.MoveTo" main="true">
                     <parameter name="destination">
                         <value>
                             <parameter>destination</parameter>

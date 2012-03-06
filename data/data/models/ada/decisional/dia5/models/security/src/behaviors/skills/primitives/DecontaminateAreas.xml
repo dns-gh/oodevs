@@ -34,7 +34,7 @@ Areas are visited in the order of the list. </description>
         <class name="agent.world.Body"/>
     </body-type>
     <links>
-        <link name="reach" skill="behaviors.skills.primitives.Reach">
+        <link name="reach" skill="agent.behaviors.skills.actions.MoveTo">
             <description>To go to a populated area. </description>
         </link>
         <link name="decontaminate" skill="agent.behaviors.skills.actions.DecontaminateArea">

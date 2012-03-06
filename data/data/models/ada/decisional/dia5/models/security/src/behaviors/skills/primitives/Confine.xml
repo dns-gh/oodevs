@@ -20,7 +20,7 @@ If the visited area does not contain population, the confinement is not effectiv
         <class name="agent.world.Body"/>
     </body-type>
     <links>
-        <link name="reach" skill="behaviors.skills.primitives.Reach">
+        <link name="reach" skill="agent.behaviors.skills.actions.MoveTo">
             <description>To move to the populated area to confine.</description>
         </link>
         <link name="confine" skill="agent.behaviors.skills.actions.Confine">

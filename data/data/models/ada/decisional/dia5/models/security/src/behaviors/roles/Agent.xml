@@ -13,7 +13,7 @@
         <skill name="behaviors.skills.primitives.EnsureVictimsEvacuation"/>
         <skill name="behaviors.skills.primitives.Evacuate"/>
         <skill name="behaviors.skills.primitives.ExtractVictims"/>
-        <skill name="behaviors.skills.primitives.Reach"/>
+        <skill name="agent.behaviors.skills.actions.MoveTo"/>
         <skill name="behaviors.skills.primitives.UndoConfine"/>
         <skill name="behaviors.skills.primitives.UndoEvacuate"/>
         <skill name="behaviors.skills.MoveAlong"/>

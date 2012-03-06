@@ -20,7 +20,7 @@ If the visited area does not contain population, the lift of the confinement is 
         <class name="agent.world.Body"/>
     </body-type>
     <links>
-        <link name="reach" skill="behaviors.skills.primitives.Reach">
+        <link name="reach" skill="agent.behaviors.skills.actions.MoveTo">
             <description>To move to the populated areas.&#xD;
 </description>
         </link>

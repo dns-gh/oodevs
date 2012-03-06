@@ -21,7 +21,7 @@ Entities won't be loaded if:&#xD;
         <class name="agent.world.Body"/>
     </body-type>
     <links>
-        <link name="reach" skill="behaviors.skills.primitives.Reach">
+        <link name="reach" skill="agent.behaviors.skills.actions.MoveTo">
             <description>To enact the decision to &quot;reach&quot; an element to load. </description>
         </link>
         <link name="load" skill="agent.behaviors.skills.actions.Load">

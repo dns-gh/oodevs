@@ -21,7 +21,7 @@ Wounded human victims won't be extracted if:&#xD;
         <class name="agent.world.Body"/>
     </body-type>
     <links>
-        <link name="reach" skill="behaviors.skills.primitives.Reach">
+        <link name="reach" skill="agent.behaviors.skills.actions.MoveTo">
             <description>To enact the decision to &quot;reach&quot; a resource node. </description>
         </link>
         <link name="extractVictims" skill="agent.behaviors.skills.actions.ExtractVictims">

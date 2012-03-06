@@ -19,7 +19,7 @@ A visited fire won't be extinguished if it is already extinguished or if it does
         <class name="agent.world.Body"/>
     </body-type>
     <links>
-        <link name="reach" skill="behaviors.skills.primitives.Reach">
+        <link name="reach" skill="agent.behaviors.skills.actions.MoveTo">
             <description>To move to the populated area to evacuate</description>
         </link>
         <link name="extinguish" skill="agent.behaviors.skills.actions.Extinguish">
