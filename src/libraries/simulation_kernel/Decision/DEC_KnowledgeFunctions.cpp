@@ -18,6 +18,7 @@
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/Orders/MIL_Fuseau.h"
+#include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Def.h"
@@ -422,6 +423,25 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsColliding( const 
     callerAgent.GetKnowledge().GetObjectsColliding( objectsColliding );
 
     return objectsColliding;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::GetObjectsCollidingFromType
+// Created: GGE 2012-03-06
+// -----------------------------------------------------------------------------
+T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsCollidingFromType( const MIL_AgentPion& callerAgent, const std::string& objectType )
+{
+    T_KnowledgeObjectDiaIDVector result;
+    T_KnowledgeObjectDiaIDVector objectsColliding;
+    callerAgent.GetKnowledge().GetObjectsColliding( objectsColliding );
+    for( CIT_KnowledgeObjectDiaIDVector it = objectsColliding.begin(); it != objectsColliding.end(); ++it )
+    {
+        const MIL_ObjectType_ABC& type = (*it)->GetType();
+        if( type.GetName() == objectType )
+            result.push_back( *it );
+    }
+
+    return result;
 }
 
 // -----------------------------------------------------------------------------

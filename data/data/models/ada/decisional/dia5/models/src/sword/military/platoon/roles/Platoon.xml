@@ -87,6 +87,7 @@
         <skill name="sword.military.platoon.skills.Improve"/>
         <skill name="sword.military.platoon.skills.MobilitySupport"/>
         <skill name="sword.military.platoon.skills.ReactToNBC"/>
+        <skill name="sword.military.platoon.skills.ReactToFireArea"/>
     </skills>
     <resources>
         <resource name="sword.military.platoon.resources.EngageCapacity"/>
@@ -144,6 +145,7 @@
                 </parameter>
             </skill>
             <skill name="sword.military.platoon.skills.ReactToNBC"/>
+            <skill name="sword.military.platoon.skills.ReactToFireArea"/>
         </skills>
     </default-task>
 </role>

@@ -85,3 +85,19 @@ integration.getImplantationObjects = function( area, nbAreas )
     end
     return objectKn
 end
+
+function integration.getCollidingObjectsFromType( type)
+    local lstObjects = DEC_Connaissances_CollisionsObjetsDeType( type )
+    if not lstObjects then
+        return {}
+    end
+    
+    local res = {}
+    local nObjects = #lstObjects
+    local CreateKnowledge = CreateKnowledge
+    for i = 1, nObjects do
+        local object = lstObjects[ i ]
+        res[#res + 1] = CreateKnowledge( integration.ontology.types.object, object )
+    end
+    return res
+end

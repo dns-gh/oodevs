@@ -592,11 +592,12 @@ public:
         eRC_ControlPointEstablished,
         eRC_SystemIsBeingOperated,
         eRC_LimaParameterNotPresent,
-		eRC_EntityCannotFollow,
-		eRC_EntityHasBeenOrderedToFollow,
-		eRC_StartingToCreateResourceLink,
-		eRC_ResouceLinkCreated,
-		eRC_CannotDismount,
+        eRC_EntityCannotFollow,
+        eRC_EntityHasBeenOrderedToFollow,
+        eRC_StartingToCreateResourceLink,
+        eRC_ResouceLinkCreated,
+        eRC_CannotDismount,
+        eRC_DecrochageFaceAIncendie,
         eLast
     };
     //@}
