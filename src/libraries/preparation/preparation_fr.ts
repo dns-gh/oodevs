@@ -637,7 +637,7 @@
     </message>
     <message>
         <source>Living Area/%1</source>
-        <translation type="unfinished"></translation>
+        <translation>Zone de vie/%1</translation>
     </message>
 </context>
 <context>
