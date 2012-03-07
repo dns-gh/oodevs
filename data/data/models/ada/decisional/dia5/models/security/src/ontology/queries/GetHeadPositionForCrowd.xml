@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.queries.GetHeadPositionForCrowd" source-version="1.0.0">
+    <description/>
+    <parameters>
+        <parameter name="crowd">
+            <description/>
+            <type>
+                <class name="ontology.classes.Crowd"/>
+            </type>
+        </parameter>
+    </parameters>
+    <target>
+        <type>
+            <class name="agent.world.Destination"/>
+        </type>
+    </target>
+</query>
