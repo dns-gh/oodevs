@@ -2114,9 +2114,9 @@ A visited object won't be created and build if agent doesn't have the physical c
       <parameter dia-name="plannedWork" name="planned object to operate" optional="false" type="PlannedWork"/>
       <parameter dia-name="removeWork" name="remove installations at the end of mission" optional="true" type="Boolean"/>
     </mission>
-    <mission dia-behavior="tasks.CreateThenFilter" dia-type="tasks.CreateThenFilter" id="4479" name="MLSECURITY - Create and operate a checkpoint">
+    <mission dia-behavior="tasks.CreateThenFilter" dia-type="tasks.CreateThenFilter" id="4479" name="MLSECURITY - Create and use a checkpoint (filter crowds)">
       <description>
-        <doctrine><![CDATA[To create and operate a given object.]]></doctrine>
+        <doctrine><![CDATA[To create and use a given checkpoint object to filter encountered crowds.]]></doctrine>
         <usage><![CDATA[Agent moves toward the planned checkpoint, creates it and then uses it to filter crowds. ]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3609,4 +3609,4 @@ A unit won't follow if it cannot perform the mission (mission is not set for thi
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="1398438166" -->
+<!-- signature="4016803889" -->
