@@ -5,7 +5,7 @@ return
         myself.leadData.deployPositionIndex = 0 
         myself.leadData.objectives = {}
         
-        myself.leadData.firePositionIndex = 0
+        myself.leadData.pionCourant = 0
     end,
 
     getObjective = function( self, params )
@@ -25,11 +25,30 @@ return
     end,
     
     getFirePositions = function( self, params )
+    
         if not meKnowledge.constructedObjects then
           return {}
         end
-        myself.leadData.firePositionIndex = myself.leadData.firePositionIndex % #meKnowledge.constructedObjects + 1        
-        return { meKnowledge.constructedObjects[ myself.leadData.firePositionIndex ] }
+        
+        myself.leadData.pionCourant = myself.leadData.pionCourant + 1  
+        local nbrFront = params.maxNbrFront
+        local objectsFromAutomat = {}
+       
+        if #meKnowledge.constructedObjects > nbrFront then -- plus de PAA que de pions
+          for i=1, #meKnowledge.constructedObjects do
+            if i % nbrFront == myself.leadData.pionCourant % nbrFront then
+              objectsFromAutomat[ #objectsFromAutomat + 1 ] = meKnowledge.constructedObjects[i]
+            end
+          end
+        else                                              -- moins ou nombre égal de PAA que de pions
+          for i=1, nbrFront do
+            if i % #meKnowledge.constructedObjects == myself.leadData.pionCourant % #meKnowledge.constructedObjects then
+              objectsFromAutomat[ #objectsFromAutomat + 1 ] = meKnowledge.constructedObjects[i]
+            end
+          end
+        end
+        
+        return objectsFromAutomat
     end,
     
     getMeetingPoint = function ( self, params ) -- Need to send a list for moveAlong knowledge
