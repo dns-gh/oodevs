@@ -594,5 +594,6 @@
   </report>
   <report category="operational" id="408" message="Vitesse limitée par population"/>
   <report category="operational" id="409" message="Fin de vitesse limitée par population"/>
+  <report category="operational" id="410" message="Décrochage face à un incendie"/>
 </reports>
-<!-- signature="2807020478" -->
+<!-- signature="0391207366" -->

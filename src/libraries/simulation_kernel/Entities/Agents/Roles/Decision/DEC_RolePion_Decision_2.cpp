@@ -437,7 +437,6 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< bool ( const PHY_DotationCategory* ) >( boost::bind( &DEC_AgentFunctions::CanUseDotation, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Agent_IlluminateRange" ] = boost::bind( &DEC_AgentFunctions::GetIlluminatingRange, boost::cref( GetPion() ) );
 
-
     brain[ "DEC_Agent_AutonomieEnDeplacement" ] = boost::bind( &DEC_AgentFunctions::TimeLeftForMoving, boost::cref( GetPion() ) );
     brain[ "DEC_Agent_TempsPourParcourirDistanceEnLigneDroite" ] =
         boost::function< float ( float ) >( boost::bind( &DEC_AgentFunctions::TimeToMoveDistance, boost::cref( GetPion() ), _1 ) );
@@ -623,6 +622,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_Connaissances_ObjetsDansFuseau" ] =
         boost::function< std::vector< boost::shared_ptr< DEC_Knowledge_Object > >( const std::string& ) >( boost::bind( &DEC_KnowledgeFunctions::GetObjectsInFuseau< MIL_AgentPion >, boost::cref( GetPion() ), _1 ) );
     brain[ "DEC_Connaissances_CollisionsObjets" ] = boost::bind( &DEC_KnowledgeFunctions::GetObjectsColliding, boost::ref( GetPion() ) );
+    brain[ "DEC_Connaissances_CollisionsObjetsDeType" ] = 
+        boost::function< std::vector< boost::shared_ptr< DEC_Knowledge_Object > >( const std::string& ) >( boost::bind( &DEC_KnowledgeFunctions::GetObjectsCollidingFromType, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Connaissances_ObjetLePlusProche" ] =
         boost::function< boost::shared_ptr< DEC_Knowledge_Object >( const std::string& ) >( boost::bind( &DEC_KnowledgeFunctions::GetClosestObject, boost::cref( GetPion() ), _1 ) );
     brain[ "DEC_Connaissances_ObjetAmiLePlusProche" ] =

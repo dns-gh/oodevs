@@ -421,4 +421,5 @@ eRC_DifficultMovementProgression = 406
 eRC_LimaParameterNotPresent = 407
 eRC_UrbanCollisionStarted = 408
 eRC_UrbanCollisionStopped = 409
-eNbr = 410
+eRC_DecrochageFaceAIncendie = 410
+eNbr = 411

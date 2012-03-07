@@ -594,5 +594,6 @@
   </report>
   <report category="operational" id="408" message="Speed limited by population"/>
   <report category="operational" id="409" message="End of speed limited by population"/>
+  <report category="operational" id="410" message="withdrawing from fire"/>
 </reports>
-<!-- signature="1572069728" -->
+<!-- signature="2504396924" -->

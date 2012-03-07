@@ -559,6 +559,7 @@ public:
         eRC_LimaParameterNotPresent,
         eRC_UrbanCollisionStarted,
         eRC_UrbanCollisionStopped,
+        eRC_DecrochageFaceAIncendie,
         eLast
     };
     //@}
