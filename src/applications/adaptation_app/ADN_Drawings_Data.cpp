@@ -88,7 +88,7 @@ namespace
 // Name: ADN_Drawings_Data::SymbolInfo::SymbolInfo
 // Created: ABR 2011-04-18
 // -----------------------------------------------------------------------------
-ADN_Drawings_Data::DrawingInfo::DrawingInfo( xml::xistream& xis, svg::TextRenderer& renderer, kernel::GlTools_ABC& tools, const std::string& category )
+ADN_Drawings_Data::DrawingInfo::DrawingInfo( xml::xistream& xis, svg::TextRenderer& renderer, kernel::GlTools_ABC& tools, unsigned int category )
     : template_( new gui::DrawingTemplate( xis, "Tactical graphics", renderer ) ) // $$$$ ABR 2011-04-18: hard coded
     , tools_   ( tools )
     , strName_ ( template_->GetName().ascii() )
@@ -161,7 +161,7 @@ const std::string ADN_Drawings_Data::DrawingInfo::GetGeometry() const
 // Name: ADN_Drawings_Data::GetCategory
 // Created: LGY 2011-08-30
 // -----------------------------------------------------------------------------
-const std::string& ADN_Drawings_Data::DrawingInfo::GetCategory() const
+unsigned int ADN_Drawings_Data::DrawingInfo::GetCategory() const
 {
     return category_;
 }
@@ -329,7 +329,7 @@ ADN_Drawings_Data::~ADN_Drawings_Data()
     for( IT_DrawingsMap it = geometryMap_.begin(); it != geometryMap_.end(); ++it )
         it->second.clear();
     geometryMap_.clear();
-    for( IT_DrawingsMap it = categoryMap_.begin(); it != categoryMap_.end(); ++it )
+    for( IT_CategoriesMap it = categoryMap_.begin(); it != categoryMap_.end(); ++it )
         it->second.clear();
     categoryMap_.clear();
     for( IT_DrawingInfoVector it = drawings_.begin(); it != drawings_.end(); ++it )
@@ -366,6 +366,19 @@ void ADN_Drawings_Data::Reset()
     categoryMap_.clear();
 }
 
+namespace
+{
+    // $$$$ LGY 2012-05-19: hack for scipio
+    static unsigned int TASKS = 1u;
+
+    ADN_Drawings_Data::T_Types Convert( const std::string& name )
+    {
+        if( name == "Taches" || name == "Tasks" )
+            return ADN_Drawings_Data::eTasks;
+        return ADN_Drawings_Data::eGraphics;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Drawings_Data::ReadArchive
 // Created: ABR 2011-04-18
@@ -377,7 +390,7 @@ void ADN_Drawings_Data::ReadArchive( xml::xistream& xis )
     xml::xistringstream xss( "<template name=' - ' type='default'>"
                              "    <segment/>"
                              "</template>" );
-    drawings_.AddItem( new DrawingInfo( xss >> xml::start( "template" ), renderer_, *tools_, "tasks" ) );
+    drawings_.AddItem( new DrawingInfo( xss >> xml::start( "template" ), renderer_, *tools_, TASKS ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -386,9 +399,10 @@ void ADN_Drawings_Data::ReadArchive( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ADN_Drawings_Data::ReadCategory( xml::xistream& xis )
 {
-    const std::string id = xis.attribute< std::string >( "id", "" );
-    if( id != "" ) // $$$$ ABR 2011-04-22: check for hidden to display only tactical graphics category
-        xis >> xml::list( "template", *this, &ADN_Drawings_Data::ReadTemplate, id );
+    const std::string name = xis.attribute< std::string >( "name" );
+    bool hidden = xis.attribute< bool >( "hidden", false );
+    if( hidden ) // $$$$ ABR 2011-04-22: check for hidden to display only tactical graphics category
+        xis >> xml::list( "template", *this, &ADN_Drawings_Data::ReadTemplate, name );
 }
 
 // -----------------------------------------------------------------------------
@@ -399,7 +413,7 @@ void ADN_Drawings_Data::ReadTemplate( xml::xistream& xis, const std::string& nam
 {
     try
     {
-        drawings_.AddItem( new DrawingInfo( xis, renderer_, *tools_, name ) );
+        drawings_.AddItem( new DrawingInfo( xis, renderer_, *tools_, Convert( name ) ) );
     }
     catch( std::runtime_error& e )
     {
@@ -441,12 +455,12 @@ ADN_Drawings_Data::T_DrawingInfoVector& ADN_Drawings_Data::GetGeometryDrawings( 
 // Name: ADN_Drawings_Data::GetCategoryDrawings
 // Created: LGY 2011-08-30
 // -----------------------------------------------------------------------------
-ADN_Drawings_Data::T_DrawingInfoVector& ADN_Drawings_Data::GetCategoryDrawings( const std::string& category )
+ADN_Drawings_Data::T_DrawingInfoVector& ADN_Drawings_Data::GetCategoryDrawings( T_Types category )
 {
     T_DrawingInfoVector& currentVector = categoryMap_[ category ];
     if( currentVector.empty() )
         for( IT_DrawingInfoVector it = drawings_.begin(); it != drawings_.end(); ++it )
-            if( (*it)->GetCategory() == category )
+            if( T_Types( (*it)->GetCategory() ) == category )
                 currentVector.AddItem( *it );
     return currentVector;
 }

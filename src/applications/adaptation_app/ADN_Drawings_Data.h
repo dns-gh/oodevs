@@ -55,7 +55,7 @@ public:
     public:
         //! @name Constructors/Destructor
         //@{
-                 DrawingInfo( xml::xistream& xis, svg::TextRenderer& renderer, kernel::GlTools_ABC& tools, const std::string& category );
+                 DrawingInfo( xml::xistream& xis, svg::TextRenderer& renderer, kernel::GlTools_ABC& tools, unsigned int category );
         virtual ~DrawingInfo();
         //@}
 
@@ -66,7 +66,7 @@ public:
         const QPixmap& GetPixmap() const;
         const std::string GetCode() const;
         const std::string GetGeometry() const;
-        const std::string& GetCategory() const;
+        unsigned int GetCategory() const;
         //@}
 
     private:
@@ -86,7 +86,7 @@ public:
         gui::DrawingTemplate* template_;
         kernel::GlTools_ABC& tools_;
         QPixmap* pixmap_;
-        std::string category_;
+        unsigned int category_;
         //@}
 
     public:
@@ -110,6 +110,15 @@ public:
     typedef T_DrawingInfoVector::const_iterator         CIT_DrawingInfoVector;
     typedef std::map< std::string, T_DrawingInfoVector >  T_DrawingsMap;
     typedef T_DrawingsMap::iterator                      IT_DrawingsMap;
+
+    enum T_Types
+    {
+        eGraphics,
+        eTasks,
+    };
+
+    typedef std::map< T_Types, T_DrawingInfoVector > T_CategoriesMap;
+    typedef T_CategoriesMap::iterator               IT_CategoriesMap;
     //@}
 
     //! @name Operations
@@ -119,7 +128,7 @@ public:
     virtual void Reset();
     DrawingInfo* const GetDrawing( const std::string& code ) const;
     T_DrawingInfoVector& GetGeometryDrawings( const std::string geometries );
-    T_DrawingInfoVector& GetCategoryDrawings( const std::string& category );
+    T_DrawingInfoVector& GetCategoryDrawings( T_Types category );
     //@}
 
 private:
@@ -134,7 +143,7 @@ private:
     //! @name Member data
     //@{
     T_DrawingsMap geometryMap_;
-    T_DrawingsMap categoryMap_;
+    T_CategoriesMap categoryMap_;
     T_DrawingInfoVector drawings_;
     svg::TextRenderer renderer_;
     ::GlToolsSymbols* tools_;
