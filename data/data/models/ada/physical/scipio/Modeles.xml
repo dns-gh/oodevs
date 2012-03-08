@@ -3621,7 +3621,7 @@
         <fragorder name="Debarquer"/>
       </fragorders>
     </unit>
-    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.ASS.RATAC - COBRA">
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.ASS.RATAC">
       <missions>
         <mission name="PION COMMUNES Faire Mouvement"/>
         <mission name="PION COMMUNES Franchir"/>
@@ -4634,6 +4634,45 @@
         <fragorder name="Arreter Silence Radar"/>
       </fragorders>
     </unit>
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.ASS.COBRA">
+      <missions>
+        <mission name="PION COMMUNES Faire Mouvement"/>
+        <mission name="PION COMMUNES Franchir"/>
+        <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
+        <mission name="PION COMMUNES Escorter Refugies Vers Camp"/>
+        <mission name="PION COMMUNES Escorter Prisonniers Vers Camp"/>
+        <mission name="PION COMMUNES Escorter Prisonniers Vers Position"/>
+        <mission name="PION COMMUNES Se Faire Decontaminer"/>
+        <mission name="PION COMMUNES Stationner"/>
+        <mission name="PION COMMUNES Suivre"/>
+        <mission name="PION COMMUNES Decrocher"/>
+        <mission name="PION MELEE Renseigner sur foule"/>
+        <mission name="PION COMMUNES Se Faire Transporter"/>
+        <mission name="PION ASS COBRA Acquerir Objectifs"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Rejoindre"/>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+      </fragorders>
+    </unit>
   </units>
   <automats>
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.SGTIA.INF">
@@ -4704,6 +4743,8 @@
         <mission name="AUTOMATE MELEE Canaliser foule"/>
         <mission name="AUTOMATE MELEE Maintenir Le Contact"/>
         <mission name="AUTOMATE HLA Faire Une Requete de Transport"/>
+        <mission name="AUTOMATE HLA Debarquer"/>
+        <mission name="AUTOMATE HLA Embarquer"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -4827,6 +4868,8 @@
         <mission name="AUTOMATE MELEE Canaliser foule"/>
         <mission name="AUTOMATE MELEE Controler foule"/>
         <mission name="AUTOMATE MELEE Interdire foules"/>
+        <mission name="AUTOMATE HLA Debarquer"/>
+        <mission name="AUTOMATE HLA Embarquer"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -6779,7 +6822,7 @@
         <mission name="AUTOMATE COMMUNES Se Recompleter"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE COMMUNES Franchir"/>
-        <mission name="AUTOMATE ASS Se Deployer"/>
+        <mission name="AUTOMATE ASS TIR Se Deployer"/>
         <mission name="AUTOMATE MELEE Animer Postes De Controle"/>
         <mission name="AUTOMATE MELEE Canaliser foule"/>
         <mission name="AUTOMATE MELEE Interdire foules"/>
@@ -6815,7 +6858,7 @@
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE COMMUNES Franchir"/>
         <mission name="AUTOMATE ASS Reco Et Deploiement"/>
-        <mission name="AUTOMATE ASS Se Deployer"/>
+        <mission name="AUTOMATE ASS TIR Se Deployer"/>
         <mission name="AUTOMATE MELEE Animer Postes De Controle"/>
         <mission name="AUTOMATE MELEE Canaliser foule"/>
         <mission name="AUTOMATE MELEE Interdire foules"/>
@@ -6850,8 +6893,8 @@
         <mission name="AUTOMATE COMMUNES Se Recompleter"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE COMMUNES Franchir"/>
-        <mission name="AUTOMATE ASS Se Deployer"/>
         <mission name="AUTOMATE ASS DLO Acquerir Objectifs"/>
+        <mission name="AUTOMATE ASS Se Deployer"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -6885,7 +6928,7 @@
         <mission name="AUTOMATE COMMUNES Se Recompleter"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE COMMUNES Franchir"/>
-        <mission name="AUTOMATE ASS COBRA Se Deployer"/>
+        <mission name="AUTOMATE ASS Se Deployer"/>
       </missions>
       <fragorders>
         <fragorder name="Mettre Tenue NBC"/>
@@ -7174,7 +7217,7 @@
         <mission name="AUTOMATE COMMUNES Se Recompleter"/>
         <mission name="AUTOMATE COMMUNES Stationner"/>
         <mission name="AUTOMATE COMMUNES Franchir"/>
-        <mission name="AUTOMATE ASS COBRA Se Deployer"/>
+        <mission name="AUTOMATE ASS Se Deployer"/>
         <mission name="AUTOMATE MELEE Animer Postes De Controle"/>
         <mission name="AUTOMATE MELEE Canaliser foule"/>
         <mission name="AUTOMATE MELEE Interdire foules"/>
@@ -7229,12 +7272,6 @@
         <fragorder name="Changer Regles Engagement Civils"/>
       </fragorders>
     </automat>
-    <automat dia-type="france.military.batallion.roles.Batallion" file="BMADA.bms" masalife="true" name="Masalife.Automate.ADA">
-      <missions>
-        <mission name="ADA Faire Mouvement"/>
-      </missions>
-      <fragorders/>
-    </automat>
   </automats>
   <crowd>
     <crowd dia-type="france.military.crowd.roles.Foule" file="BMCrowd.bms" masalife="true" name="Masalife.Foule">
@@ -7270,4 +7307,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="0786286226" -->
+<!-- signature="2944521231" -->
