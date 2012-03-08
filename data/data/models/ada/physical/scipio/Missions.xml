@@ -2935,10 +2935,9 @@
     </fragorder>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_ChangerReglesEngagementPopulation" id="348" name="Changer Regles Engagement Civils">
       <parameter dia-name="orderConduiteChangerReglesEngagementPopulation_" name="Ordre conduite changer regles engagement civils" optional="false" type="Enumeration">
-        <value id="0" name="none"/>
-        <value id="1" name="emploi_force_interdit"/>
-        <value id="2" name="armes_non_letales_autorisees"/>
-        <value id="3" name="armes_letales_autorisees"/>
+        <value id="0" name="emploi_force_interdit"/>
+        <value id="1" name="emploi_armes_non_letales_autorisees"/>
+        <value id="2" name="emploi_armes_letales_autorisees"/>
       </parameter>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Deboucher" id="349" name="Deboucher"/>
@@ -3035,10 +3034,9 @@
     </fragorder>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_ChangerReglesEngagement" id="381" name="Changer les regles d'engagement">
       <parameter dia-name="orderConduiteChangerReglesEngagement_" name="Ordre conduite: changer les regles d'engagement" optional="false" type="Enumeration">
-        <value id="0" name="none"/>
-        <value id="1" name="tir_libre"/>
-        <value id="2" name="tir_sur_riposte"/>
-        <value id="3" name="tir_interdit"/>
+        <value id="0" name="tir_libre"/>
+        <value id="1" name="tir_sur_riposte"/>
+        <value id="2" name="tir_interdit"/>
       </parameter>
     </fragorder>
     <fragorder available-without-mission="true" dia-type="france.military.platoon.tasks.Illuminer" id="382" name="Illuminer">
@@ -3090,4 +3088,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_RejoindrePointLancement" id="405" name="Rejoindre point de lancement"/>
   </fragorders>
 </missions>
-<!-- signature="3459567585" -->
+<!-- signature="2269728956" -->

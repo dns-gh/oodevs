@@ -111,7 +111,6 @@ integration.fireAllowedOnCrowd = function( self )
 end
 
 local ammoClass = {} 
-ammoClass[ eEtatROEPopulation_None ] = "mitraille"
 ammoClass[ eEtatROEPopulation_EmploiForceInterdit ] = "alr"
 ammoClass[ eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux ] = "alr"
 ammoClass[ eEtatROEPopulation_ArmesLetalesAutorisees ] = "mitraille"

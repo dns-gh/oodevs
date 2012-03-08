@@ -123,16 +123,14 @@ eAttitudePopulation_Excitee = 2
 eAttitudePopulation_Agressive = 3
 
 -- ROE states
-eRoeStateNone = 0
-eRoeStateFreeFire = 1
-eRoeStateRestrictedFire = 2
-eRoeStateFireByOrder = 3
+eRoeStateFreeFire = 0
+eRoeStateRestrictedFire = 1
+eRoeStateFireByOrder = 2
 
 -- ROE crowd states
-eEtatROEPopulation_None = 0
-eEtatROEPopulation_EmploiForceInterdit = 1
-eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux = 2
-eEtatROEPopulation_ArmesLetalesAutorisees = 3
+eEtatROEPopulation_EmploiForceInterdit = 0
+eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux = 1
+eEtatROEPopulation_ArmesLetalesAutorisees = 2
 
 -- Il faut 45 min pour passer de 0 à 100%
 g_NaturalEvolutionDomination = 0.0027 / 0.75

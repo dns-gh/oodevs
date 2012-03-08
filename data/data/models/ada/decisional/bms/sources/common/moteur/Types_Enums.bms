@@ -77,16 +77,14 @@ eEtatRapportDeForce_Favorable = 2
 eEtatRapportDeForce_Defavorable = 3
 
 
-eEtatROE_None = 0
-eEtatROE_TirLibre = 1
-eEtatROE_TirSurRiposte = 2
-eEtatROE_TirInterdit = 3
+eEtatROE_TirLibre = 0
+eEtatROE_TirSurRiposte = 1
+eEtatROE_TirInterdit = 2
 
 
-eEtatROEPopulation_None = 0
-eEtatROEPopulation_EmploiForceInterdit = 1
-eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux = 2
-eEtatROEPopulation_ArmesLetalesAutorisees = 3
+eEtatROEPopulation_EmploiForceInterdit = 0
+eEtatROEPopulation_MaintienADistanceParMoyensNonLetaux = 1
+eEtatROEPopulation_ArmesLetalesAutorisees = 2
 
 
 eAttitudePopulation_Calme = 0
