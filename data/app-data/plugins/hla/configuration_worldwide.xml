@@ -1,0 +1,33 @@
+<configuration>
+    <mappings>
+        <aggregate>aggregate_worldwide.xml</aggregate>
+        <surface-vessel>vessel_worldwide.xml</surface-vessel>
+        <component>component_worldwide.xml</component>
+        <munition>munition_worldwide.xml</munition>
+    </mappings>
+    <types>
+        <automat>MBT squadron</automat>
+    </types>
+    <missions>
+        <fragOrders>
+            <pause>Pause maneuver</pause>
+            <resume>Resume maneuver</resume>
+            <cancel>Cancel maneuver</cancel>
+        </fragOrders>
+        <request>
+            <transport>Common - request transport</transport>
+            <embarkment>Common - request embark</embarkment>
+            <disembarkment>Common - request take off</disembarkment>
+            <embarkment>Common - request landing</embarkment>
+            <disembarkment>Common - request disembark</disembarkment>
+        </request>
+        <offer>
+            <transport>Common - offer transport</transport>
+            <embarkment>Common - offer embark</embarkment>
+            <disembarkment>Common - offer disembark</disembarkment>
+        </offer>
+    </missions>
+    <reports>
+        <mission-complete>12</mission-complete>
+    </reports>
+</configuration>
