@@ -2833,8 +2833,8 @@
         <mission name="Common - move parallel"/>
         <mission name="Common - follow"/>
         <mission name="Common - withdraw"/>
-        <mission name="COMMON - request landing"/>
-        <mission name="COMMON - request take off"/>
+        <mission name="Common - request landing"/>
+        <mission name="Common - request take off"/>
         <mission name="Common - request transport"/>
       </missions>
       <fragorders>
@@ -3142,7 +3142,7 @@
         <mission name="Infantry - block"/>
         <mission name="Common - follow"/>
         <mission name="Common - request transport"/>
-        <mission name="COMMON - request embark"/>
+        <mission name="Common - request embark"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3274,8 +3274,8 @@
         <mission name="Common - cross"/>
         <mission name="Common - follow"/>
         <mission name="Common - request transport"/>
-        <mission name="COMMON - request disembark"/>
-        <mission name="COMMON - request embark"/>
+        <mission name="Common - request disembark"/>
+        <mission name="Common - request embark"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -3622,8 +3622,8 @@
         <mission name="Armor - screen"/>
         <mission name="Armor - recon in force (a position)"/>
         <mission name="Common - request transport"/>
-        <mission name="COMMON - request disembark"/>
-        <mission name="COMMON - request embark"/>
+        <mission name="Common - request disembark"/>
+        <mission name="Common - request embark"/>
       </missions>
       <fragorders>
         <fragorder name="NBC suit on"/>
@@ -4201,4 +4201,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1946050021" -->
+<!-- signature="1013308011" -->
