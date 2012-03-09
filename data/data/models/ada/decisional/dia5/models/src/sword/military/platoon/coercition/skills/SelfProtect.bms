@@ -39,7 +39,7 @@ rootnode
 
         -- No entities to safeguard from issued. Get neaby enemies by default
         if self.params.entities == NIL then
-            self.entitiesToSafeguardFrom = sword.military.queries.enemies.getNearbyEnemies[ "execute" ]()
+            self.entitiesToSafeguardFrom = sword.military.queries.enemies.getAgentsEngagingMe[ "execute" ]()
         else
             self.entitiesToSafeguardFrom = self.params.entities
         end
