@@ -38,7 +38,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_AutomateDecision )
 // -----------------------------------------------------------------------------
 DEC_AutomateDecision::DEC_AutomateDecision( MIL_Automate& automate, unsigned int gcPause, unsigned int gcMult )
     : DEC_Decision            ( automate, gcMult, gcPause )
-    , nRulesOfEngagementState_( eRoeStateNone )
+    , nRulesOfEngagementState_( eRoeStateFreeFire )
     , nCloseCombatState_      ( eCloseCombatStateNone )
     , nOperationalState_      ( eOpStateOperational )
     , fuseau_                 ( 0 )
