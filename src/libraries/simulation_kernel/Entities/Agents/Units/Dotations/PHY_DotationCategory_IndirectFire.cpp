@@ -54,7 +54,8 @@ PHY_DotationCategory_IndirectFire_ABC& PHY_DotationCategory_IndirectFire::Create
 // -----------------------------------------------------------------------------
 PHY_DotationCategory_IndirectFire::PHY_DotationCategory_IndirectFire( const PHY_IndirectFireDotationClass& type, const PHY_DotationCategory& dotationCategory, xml::xistream& xis )
     : PHY_DotationCategory_IndirectFire_ABC( type, dotationCategory, xis )
-    , phs_                                 ( PHY_Posture::GetPostures().size(), 1. )
+    , phs_            ( PHY_Posture::GetPostures().size(), 1. )
+    , rDispersionCoef_( 0 ) // $$$$ LGY 2012-03-09: 0 hardcoded for scipio
 {
     rNeutralizationCoef_ = xis.attribute< double >( "neutralization-ratio" );
     if( rNeutralizationCoef_ < 1. )
@@ -113,8 +114,12 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
     MT_Vector2D vRotatedFireDirection = vFireDirection;
     vRotatedFireDirection.Rotate90();
 
-    vFireDirection*= ( rInterventionTypeFired * rDispersionX_ );
-    vRotatedFireDirection *= ( rInterventionTypeFired * rDispersionY_ );
+    double itm1 = std::max( 0., rInterventionTypeFired - 1 );
+    double dispersionFactor = 1 + itm1 * rDispersionCoef_;
+    double phFactor = rInterventionTypeFired / dispersionFactor;
+
+    vFireDirection        *= ( rDispersionX_ +  rDispersionX_ * itm1 * rDispersionCoef_ );
+    vRotatedFireDirection *= ( rDispersionY_ +  rDispersionY_ * itm1 * rDispersionCoef_ );
 
     // Agents
     {
@@ -214,7 +219,7 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
                 targetRoleComposantes.Neutralize();
                 double ratioComposanteHit = target.GetRole< PHY_RoleInterface_UrbanLocation >().ComputeRatioPionInside( attritionSurface );
                 if( ratioComposanteHit > 0 )
-                    targetRoleComposantes.ApplyIndirectFire( dotationCategory_, fireResult, ratioComposanteHit );
+                    targetRoleComposantes.ApplyIndirectFire( dotationCategory_, fireResult, ratioComposanteHit * phFactor );
                 if( pFirer && !bRCSent && pFirer->GetArmy().IsAFriend( target.GetArmy() ) == eTristate_True )
                 {
                     MIL_Report::PostEvent( *pFirer, MIL_Report::eReport_FratricideIndirectFire );
