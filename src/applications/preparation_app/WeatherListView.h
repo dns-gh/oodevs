@@ -48,6 +48,11 @@ private slots:
     virtual void CreateItem();
     //@}
 
+private:
+    //! @name Member data
+    //@{
+    QDateTime exerciceTime_;
+    //@}
 };
 
 #endif // __WeatherListView_h_

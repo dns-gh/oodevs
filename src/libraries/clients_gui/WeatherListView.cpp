@@ -88,13 +88,14 @@ void WeatherListView::DeleteItem()
     if( selectedItem() )
     {
         const QString text = selectedItem()->text( 0 );
+        removeItem( selectedItem() );
+
         for( IT_Weathers it = weathers_.begin(); it != weathers_.end(); ++it )
             if( (*it)->GetName() == text.ascii() )
             {
                 weathers_.erase( it );
                 break;
             }
-            removeItem( selectedItem() );
     }
 }
 

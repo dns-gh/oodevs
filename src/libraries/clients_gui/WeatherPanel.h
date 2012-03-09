@@ -60,6 +60,12 @@ protected:
     };
     //@}
 
+private:
+    //! @name Helpers
+    //@{
+    void EnableLocalParameters( bool enabled, bool isCreated );
+    //@}
+
 private slots:
     //! @name Slots
     //@{
@@ -81,6 +87,7 @@ protected:
     Q3VBox*                 localLayout_;
     Q3VBox*                 globalLayout_;
     Q3GroupBox*             parametersGroup_;
+    QPushButton*            locationButton_;
     WeatherListView*        localWeathers_;
     WeatherWidget*          localWidget_;
     WeatherWidget*          globalWidget_;
