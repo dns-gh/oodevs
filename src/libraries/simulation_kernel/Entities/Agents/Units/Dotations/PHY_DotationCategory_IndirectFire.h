@@ -60,6 +60,7 @@ private:
     //! @name Member data
     //@{
     double rNeutralizationCoef_;
+    double rDispersionCoef_;
     T_PhVector phs_;
     //@}
 };

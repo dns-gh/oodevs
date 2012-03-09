@@ -244,6 +244,7 @@ void ADN_Equipement_GUI::BuildAmmunition()
         vConnectors[ eModifStances ] = &pStance->GetConnector();
         QWidget* pExplosiveParametersGroupHolder = builder.AddFieldHolder( pExplosiveParametersGroup_ );
         builder.AddField< ADN_EditLine_Double >( pExplosiveParametersGroupHolder, tr( "Neutralization ratio" ), vConnectors[ eNeutralizationRatio ] );
+        builder.AddField< ADN_EditLine_Double >( pExplosiveParametersGroupHolder, tr( "Dispersion factor per iteration" ), vConnectors[ eDispersionFactor ], 0, eZeroOne );
         builder.SetValidator( new ADN_DoubleValidator( 1, INT_MAX, 2, this ) );
 
         // Smoke parameters

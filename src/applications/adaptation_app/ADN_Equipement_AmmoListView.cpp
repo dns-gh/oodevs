@@ -106,6 +106,7 @@ void ADN_Equipement_AmmoListView::ConnectItem( bool bConnect )
 
     vItemConnectors_[ADN_Equipement_GUI::eModifStances]->Connect( &pInfos->indirectAmmoInfos_.vModifStance_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eNeutralizationRatio]->Connect( &pInfos->indirectAmmoInfos_.rNeutralizationRatio_, bConnect );
+    vItemConnectors_[ADN_Equipement_GUI::eDispersionFactor]->Connect( &pInfos->indirectAmmoInfos_.rDispersionFactor_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eFlareDeployTime]->Connect( &pInfos->indirectAmmoInfos_.flareDeployTime_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eFlareLifetime]->Connect( &pInfos->indirectAmmoInfos_.flareLifeTime_, bConnect );
     vItemConnectors_[ADN_Equipement_GUI::eSmokeDeployTime]->Connect( &pInfos->indirectAmmoInfos_.smokeDeployTime_, bConnect );

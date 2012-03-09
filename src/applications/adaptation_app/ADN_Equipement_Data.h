@@ -135,6 +135,7 @@ public:
 
         // For explosive ammo
         ADN_Type_Double rNeutralizationRatio_;
+        ADN_Type_Double rDispersionFactor_;
         T_ModificatorPostureInfos_Vector vModifStance_;
 
         // For flare

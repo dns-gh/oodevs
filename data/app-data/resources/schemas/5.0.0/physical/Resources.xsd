@@ -149,6 +149,7 @@
 												<xs:attribute name="type" type="xs:string" use="required"/>
 												<xs:attribute name="object-type" type="xs:string" use="optional"/>
 												<xs:attribute name="neutralization-ratio" type="T_NonNegativeDouble" use="optional"/>
+												<xs:attribute name="dispersion-factor" type="T_ZeroToOneDouble" use="optional"/>
 												<xs:attribute name="setup-time" type="T_Time" use="optional"/>
 												<xs:attribute name="life-time" type="T_Time" use="optional"/>
 												<xs:attribute name="mine-count" type="xs:nonNegativeInteger" use="optional"/>

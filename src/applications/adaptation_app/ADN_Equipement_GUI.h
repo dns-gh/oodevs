@@ -64,6 +64,7 @@ public:
         eMinePresent,
         eEffectPresent,
         eNeutralizationRatio,
+        eDispersionFactor,
         eModifStances,
         eSmokeDeployTime,
         eSmokeLifetime,

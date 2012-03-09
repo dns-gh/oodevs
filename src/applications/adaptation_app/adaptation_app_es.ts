@@ -1689,6 +1689,10 @@ estacionado con motor encendido</translation>
         <source>Proceed anyway ?</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Dispersion factor per iteration</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipement_Postures_GUI</name>

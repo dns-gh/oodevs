@@ -42,6 +42,7 @@
             </xsl:if>
             <xsl:if test="./@type = 'explosif' or ./@type = 'grenade' or ./@type = 'aced'">
                <xsl:attribute name="neutralization-ratio"><xsl:value-of select="./@neutralization-ratio"/></xsl:attribute>
+               <xsl:attribute name="dispersion-factor">0</xsl:attribute>
                <xsl:copy-of select="ph"/>
             </xsl:if>
           </xsl:element>

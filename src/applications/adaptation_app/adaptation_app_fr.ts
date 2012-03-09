@@ -1689,6 +1689,10 @@ Arrêt moteur allumé</translation>
         <source>Proceed anyway ?</source>
         <translation>Voulez-vous continuer ?</translation>
     </message>
+    <message>
+        <source>Dispersion factor per iteration</source>
+        <translation>Facteur de dispersion par itération</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Equipement_Postures_GUI</name>

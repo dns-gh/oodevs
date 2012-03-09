@@ -246,6 +246,7 @@ ADN_Equipement_Data::IndirectAmmoInfos::IndirectAmmoInfos()
     , rDispersionX_        ( 0.0 )
     , rDispersionY_        ( 0.0 )
     , rNeutralizationRatio_( 1 )
+    , rDispersionFactor_   ( 0 )
     , vModifStance_        ()
     , flareDeployTime_     ( "0s" )
     , flareLifeTime_       ( "0s" )
@@ -288,6 +289,7 @@ void ADN_Equipement_Data::IndirectAmmoInfos::CopyFrom( ADN_Equipement_Data::Indi
     rDispersionX_ = ammoInfos.rDispersionX_.GetData();
     rDispersionY_ = ammoInfos.rDispersionY_.GetData();
     rNeutralizationRatio_ = ammoInfos.rNeutralizationRatio_.GetData();
+    rDispersionFactor_ = ammoInfos.rDispersionFactor_.GetData();
 
     for( uint i=0 ; i< eNbrUnitPosture ; ++i)
         vModifStance_[i]->rCoeff_ = ammoInfos.vModifStance_[ i ]->rCoeff_.GetData();
@@ -347,6 +349,7 @@ void ADN_Equipement_Data::IndirectAmmoInfos::ReadIndirectFire( xml::xistream& in
         case eTypeMunitionTirIndirect_Explosif:
             bExplosive_ = true;
             input >> xml::attribute( "neutralization-ratio", rNeutralizationRatio_ )
+                  >> xml::attribute( "dispersion-factor", rDispersionFactor_ )
                   >> xml::list( "ph", *this, &ADN_Equipement_Data::IndirectAmmoInfos::ReadPh );
             break;
         case eTypeMunitionTirIndirect_Fumigene:
@@ -386,7 +389,8 @@ void ADN_Equipement_Data::IndirectAmmoInfos::WriteArchive( xml::xostream& output
     {
         output << xml::start( "indirect-fire" )
                     << xml::attribute( "type", ADN_Tr::ConvertFromTypeMunitionTirIndirect( eTypeMunitionTirIndirect_Explosif ) )
-                    << xml::attribute( "neutralization-ratio", rNeutralizationRatio_ );
+                    << xml::attribute( "neutralization-ratio", rNeutralizationRatio_ )
+                    << xml::attribute( "dispersion-factor", rDispersionFactor_ );
         for( CIT_ModificatorPostureInfos_Vector it = vModifStance_.begin(); it != vModifStance_.end(); ++it )
             ( *it )->WriteArchive( output );
         output << xml::end;
