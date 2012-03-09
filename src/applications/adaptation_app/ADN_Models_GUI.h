@@ -21,8 +21,7 @@
 */
 // Created: APE 2004-12-06
 // =============================================================================
-class ADN_Models_GUI
-: public ADN_GUI_ABC
+class ADN_Models_GUI : public ADN_Tabbed_GUI_ABC
 {
 public:
     enum E_GuiElements
@@ -45,7 +44,7 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-     ADN_Models_GUI( ADN_Models_Data& data );
+             ADN_Models_GUI( ADN_Models_Data& data );
     virtual ~ADN_Models_GUI();
     //@}
 
@@ -53,23 +52,19 @@ public:
     //@{
     void Build();
     void Enable( bool enable );
-    virtual void ChangeCurrentSubTab( int subTab );
     //@}
 
 private:
     //! @name Helpers
     //@{
-    QWidget* BuildPage( QWidget*& pGroup, ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType, ADN_Models_Data::T_ModelInfos_Vector& model );
+    QWidget* BuildPage( ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType, ADN_Models_Data::T_ModelInfos_Vector& model );
     //@}
 
 private:
     //! @name Member data
     //@{
-    ADN_Models_Data&    data_;
-    QTabWidget*         pTabWidget_;
-    QWidget*            pPawnWidget_;
-    QWidget*            pAutomatWidget_;
-    QWidget*            pPopulationWidget_;
+    ADN_Models_Data& data_;
+    QWidget*         pWidgets_[ ADN_Models_Data::ModelInfos::eNbrModelEntityTypes ];
     //@}
 };
 

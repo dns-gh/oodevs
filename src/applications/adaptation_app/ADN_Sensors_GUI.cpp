@@ -40,7 +40,7 @@
 // Created: JDY 03-06-30
 //-----------------------------------------------------------------------------
 ADN_Sensors_GUI::ADN_Sensors_GUI( ADN_Sensors_Data& data )
-    : ADN_GUI_ABC( "ADN_Sensors_GUI" )
+    : ADN_Tabbed_GUI_ABC( "ADN_Sensors_GUI" )
     , data_      ( data )
     , radarGui_  ( *new ADN_Radars_GUI( data.radarData_ ) )
 {
@@ -65,16 +65,16 @@ void ADN_Sensors_GUI::Build()
     assert( pMainWidget_ == 0 );
 
     // Tab management
-    QTabWidget* pTabWidget = new QTabWidget();
-    this->BuildSensorListGui( pTabWidget );
-    this->BuildSpecificParamsGui( pTabWidget );
+    pTabWidget_ = new QTabWidget();
+    this->BuildSensorListGui( pTabWidget_ );
+    this->BuildSpecificParamsGui( pTabWidget_ );
 
     // Main widget
     pMainWidget_ = new QWidget();
     QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_ );
     pMainLayout->setSpacing( 10 );
     pMainLayout->setMargin( 10 );
-    pMainLayout->addWidget( pTabWidget );
+    pMainLayout->addWidget( pTabWidget_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -256,7 +256,8 @@ void ADN_Sensors_GUI::BuildSensorListGui( QTabWidget* pParent )
 
     // List view
     ADN_SearchListView< ADN_ListView_Sensors >* pSearchListView = new ADN_SearchListView< ADN_ListView_Sensors >( data_.GetSensorsInfos(), vConnectors );
-    connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_UsedByInfos& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_UsedByInfos& ) ) );
+    vListViews_.push_back( pSearchListView->GetListView() );
+    connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_NavigationInfos::UsedBy& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_NavigationInfos::UsedBy& ) ) );
 
     // Main page
     QWidget* pPage = CreateScrollArea( *pContent, pSearchListView );
@@ -305,6 +306,7 @@ void ADN_Sensors_GUI::BuildSpecificParamsGui( QTabWidget* pParent )
     // Radar
     radarGui_.Build();
     QWidget* pRadarWidget = radarGui_.GetMainWidget();
+    vListViews_.push_back( radarGui_.GetListView() );
 
     // -------------------------------------------------------------------------
     // Layouts

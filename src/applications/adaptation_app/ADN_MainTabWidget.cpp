@@ -48,11 +48,13 @@ void ADN_MainTabWidget::AddPage( E_WorkspaceElements element, QWidget& page, con
 // -----------------------------------------------------------------------------
 void ADN_MainTabWidget::OnBack()
 {
-    navigating_ = true;
-    assert( currentHistoryIndex_ > 0 );
-    currentHistoryIndex_--;
-    setCurrentIndex( history_[ currentHistoryIndex_ ] );
-    navigating_ = false;
+    if( currentHistoryIndex_ > 0 )
+    {
+        navigating_ = true;
+        currentHistoryIndex_--;
+        setCurrentIndex( history_[ currentHistoryIndex_ ] );
+        navigating_ = false;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -61,11 +63,13 @@ void ADN_MainTabWidget::OnBack()
 // -----------------------------------------------------------------------------
 void ADN_MainTabWidget::OnForward()
 {
-    navigating_ = true;
-    assert( currentHistoryIndex_ < history_.size() - 1 );
-    currentHistoryIndex_++;
-    setCurrentIndex( history_[ currentHistoryIndex_ ] );
-    navigating_ = false;
+    if( currentHistoryIndex_ < static_cast< int >( history_.size() ) - 1 )
+    {
+        navigating_ = true;
+        currentHistoryIndex_++;
+        setCurrentIndex( history_[ currentHistoryIndex_ ] );
+        navigating_ = false;
+    }
 }
 
 // -----------------------------------------------------------------------------

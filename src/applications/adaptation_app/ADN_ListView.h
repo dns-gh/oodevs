@@ -14,7 +14,7 @@
 
 #include "ADN_Gfx_ABC.h"
 #include "ADN_Connector_ABC.h"
-#include "ADN_UsedByInfos.h"
+#include "ADN_NavigationInfos.h"
 #include <boost/function.hpp>
 
 class ADN_ListViewItem;
@@ -48,6 +48,7 @@ public:
 
     ADN_ListViewItem*   ItemAt( int i );
     ADN_ListViewItem*   FindItem( void* pData );
+    ADN_ListViewItem*   FindItem( const QString& itemName, int col = 0 );
     int                 FindNdx( void* pData );
     void*               GetCurrentData();
     void                SetItemConnectors( const T_ConnectorVector& v );
@@ -55,6 +56,7 @@ public:
     void setEnabled( bool b );
 
     void SetDeletionEnabled( bool enable, bool warning = true );
+    void SetGoToOnDoubleClick( E_WorkspaceElements targetTab, int subTargetTab = -1, int col = 0 );
 
     int ComputeNbrPrintPages( const QSize& painterSize ) const;
     void Print( int nPage, QPainter& painter, const QSize& painterSize );
@@ -63,7 +65,8 @@ public:
     void SaveToXls( const QString& path, const QString& sheetName ) const;
 
 public slots:
-    void SetCurrentItem( void* pData );
+    bool SetCurrentItem( void* pData );
+    bool SetCurrentItem( const QString& itemName );
     void OnFilterChanged( const QString& );
     void OnFilterChanged( const QStringList& );
 
@@ -71,6 +74,7 @@ protected:
     virtual void ConnectItem( bool /*bConnect*/ ){}// = 0;
 
     void keyReleaseEvent( QKeyEvent* pEvent );
+    virtual bool eventFilter( QObject * watched, QEvent * event );
 
     virtual void OnContextMenu( const QPoint& pt );
     void FillContextMenuWithDefault( Q3PopupMenu& popupMenu, ADN_ObjectCreator_ABC& objectCreator );
@@ -84,31 +88,35 @@ private:
     void SaveToSheet( YExcel::BasicExcel& xls, const char* sheetName, int sheetNumber, Q3ListViewItem* item, int maxDepth, int nbRow ) const;
     void RecursiveFillSheetFromItem( Q3ListViewItem* qItem, YExcel::BasicExcelWorksheet& sheet, ExcelFormat::XLSFormatManager& fmt_mgr, int depth, int maxDepth, int& row, std::vector< int >& columnMaxContentSize, int nbRow ) const;
     void FillSheetFromItem( Q3ListViewItem* qItem, YExcel::BasicExcelWorksheet& sheet, ExcelFormat::XLSFormatManager& fmt_mgr, int depth, int maxDepth, int& row, std::vector< int >& columnMaxContentSize, int nbRow ) const;
+    ADN_ListViewItem* FindItem( Q3ListViewItem* qItem, const QString& itemName );
 
 private slots:
     virtual void ContextMenuNew();
     virtual void ContextMenuDelete();
     virtual void ContextMenuSearchElements();
 
-    void SetCurrentItem( Q3ListViewItem* pItem );
+    void GoToOnDoubleClicked( Q3ListViewItem* pItem );
+    bool SetCurrentItem( Q3ListViewItem* pItem );
     void OnContextMenuRequested( Q3ListViewItem* pItem, const QPoint& pt, int nCol );
     void UpdateEnableState();
 
 signals:
     void ItemSelected( void* pData );
-    void UsersListRequested( const ADN_UsedByInfos& usedByInfo );
+    void UsersListRequested( const ADN_NavigationInfos::UsedBy& usedByInfo );
+    void GoToRequested( const ADN_NavigationInfos::GoTo& goToInfo );
 
 protected:
-    void*                   pCurData_;
-    T_ConnectorVector       vItemConnectors_;
-    ADN_ObjectCreator_ABC*  pObjectCreator_;
-    bool                    bDeletionEnabled_;
-    bool                    bDeletionWarning_;
-    bool                    bPrinting_;
-    QRect                   toolTipRect_;
-    ADN_UsedByInfos         usedByInfo_;
-    QString                 filterLine_;
-    QStringList             filterList_;
+    void*                       pCurData_;
+    T_ConnectorVector           vItemConnectors_;
+    ADN_ObjectCreator_ABC*      pObjectCreator_;
+    bool                        bDeletionEnabled_;
+    bool                        bDeletionWarning_;
+    bool                        bPrinting_;
+    QRect                       toolTipRect_;
+    ADN_NavigationInfos::UsedBy usedByInfo_;
+    ADN_NavigationInfos::GoTo   goToInfo_;
+    QString                     filterLine_;
+    QStringList                 filterList_;
 };
 
 //-----------------------------------------------------------------------------

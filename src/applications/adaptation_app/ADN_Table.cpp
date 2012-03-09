@@ -27,15 +27,13 @@ using namespace ExcelFormat;
 // Created: JDY 03-07-07
 //-----------------------------------------------------------------------------
 ADN_Table::ADN_Table( QWidget* pParent, const char* szName )
-    : Q3Table             ( pParent, szName )
+    : Q3Table            ( pParent, szName )
     , ADN_Gfx_ABC        ()
     , bRefreshingEnabled_( true )
     , bPrinting_         ( false )
 {
     connect( this, SIGNAL( valueChanged( int, int) ), this, SLOT( doValueChanged( int, int ) ) );
-
     connect( this, SIGNAL( contextMenuRequested ( int, int, const QPoint &) ), this, SLOT( OnContextMenu( int, int, const QPoint & ) ) );
-
     connect( static_cast< ADN_App* >( qApp )->GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
 }
 
@@ -494,5 +492,46 @@ bool ADN_Table::event(QEvent *event)
         return true;
     }
     return Q3Table::event(event);
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::eventFilter
+// Created: ABR 2012-03-09
+// -----------------------------------------------------------------------------
+bool ADN_Table::eventFilter( QObject * watched, QEvent * event )
+{
+    if( QMouseEvent* mouseEvent = dynamic_cast< QMouseEvent* >( event ) )
+        if( mouseEvent && ( mouseEvent->button() == Qt::XButton1 || mouseEvent->button() == Qt::XButton2 ) )
+            return false;
+    return Q3Table::eventFilter( watched, event );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::SetGoToOnDoubleClick
+// Created: ABR 2012-03-09
+// -----------------------------------------------------------------------------
+void ADN_Table::SetGoToOnDoubleClick( E_WorkspaceElements targetTab, int subTargetTab /*= -1*/, int col /*= 0*/ )
+{
+    goToInfo_.targetTab_ = targetTab;
+    goToInfo_.subTargetTab_ = subTargetTab;
+    goToInfo_.sourceColumn_ = col;
+    connect( this, SIGNAL( doubleClicked( int, int, int, const QPoint& ) ), SLOT( GoToOnDoubleClicked( int, int, int, const QPoint& ) ) );
+    connect( this, SIGNAL( GoToRequested( const ADN_NavigationInfos::GoTo& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnGoToRequested( const ADN_NavigationInfos::GoTo& ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::GoToOnDoubleClicked
+// Created: ABR 2012-03-09
+// -----------------------------------------------------------------------------
+void ADN_Table::GoToOnDoubleClicked( int row, int col, int button, const QPoint& )
+{
+    if( button != Qt::LeftButton || !( row >= 0 && row < numRows() && col >= 0 && col < numCols() ) || col != goToInfo_.sourceColumn_ )
+        return;
+    Q3TableItem* qItem = item( row, col );
+    if( !qItem )
+        return;
+    goToInfo_.targetName_ = qItem->text();
+    assert( goToInfo_.targetTab_ != eNbrWorkspaceElements );
+    emit( GoToRequested( goToInfo_ ) );
 }
 

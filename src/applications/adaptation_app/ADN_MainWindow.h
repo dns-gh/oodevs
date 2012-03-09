@@ -59,6 +59,8 @@ public:
 
 protected:
     void closeEvent( QCloseEvent* e );
+    virtual void mousePressEvent( QMouseEvent * event );
+    //virtual bool event( QEvent* event );
 
 signals:
     void OpenModeToggled();

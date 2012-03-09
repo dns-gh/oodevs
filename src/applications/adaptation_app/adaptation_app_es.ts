@@ -2603,11 +2603,11 @@ tirador</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Back  (ctrl + left)</source>
+        <source>Forward (ctrl + right)</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Forward (ctrl + right)</source>
+        <source>Back (ctrl + left)</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -3517,10 +3517,6 @@ Asegúrese que el archivo existe.</translation>
 <context>
     <name>ADN_People_GUI</name>
     <message>
-        <source>Details</source>
-        <translation>Detalles</translation>
-    </message>
-    <message>
         <source>Name</source>
         <translation>Nombre</translation>
     </message>
@@ -3579,6 +3575,10 @@ Asegúrese que el archivo existe.</translation>
     <message>
         <source>Consumptions</source>
         <translation>Consumos</translation>
+    </message>
+    <message>
+        <source>Distribution</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

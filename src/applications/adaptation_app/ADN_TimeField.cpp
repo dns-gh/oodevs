@@ -60,6 +60,14 @@ protected:
         }
     }
 
+    virtual void mousePressEvent( QMouseEvent* event )
+    {
+        if( event && ( event->button() == Qt::XButton1 || event->button() == Qt::XButton2 ) )
+            event->ignore();
+        else
+            QLineEdit::mousePressEvent( event );
+    }
+
 private:
     bool bIsFocusing_;
 };

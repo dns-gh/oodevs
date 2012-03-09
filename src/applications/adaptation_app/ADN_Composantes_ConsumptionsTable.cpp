@@ -125,7 +125,7 @@ ADN_Composantes_ConsumptionsTable::~ADN_Composantes_ConsumptionsTable()
 // Name: ADN_Composantes_ConsumptionsTable::SetListView
 // Created: ABR 2012-01-20
 // -----------------------------------------------------------------------------
-void ADN_Composantes_ConsumptionsTable::SetListView( ADN_ListView_Composantes* listView )
+void ADN_Composantes_ConsumptionsTable::SetListView( ADN_ListView* listView )
 {
     composanteListView_ = listView;
 }

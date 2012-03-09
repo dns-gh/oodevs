@@ -249,3 +249,12 @@ void ADN_ComboBox::UpdateEnableState()
     if( bEnabledOnlyInAdminMode_ && IsAutoEnabled() && pConnector_ )
         setEnabled( static_cast< ADN_Connector_Combo_ABC* >( pConnector_ )->IsConnected() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ComboBox::wheelEvent
+// Created: ABR 2012-03-09
+// -----------------------------------------------------------------------------
+void ADN_ComboBox::wheelEvent( QWheelEvent* event )
+{
+    event->ignore();
+}

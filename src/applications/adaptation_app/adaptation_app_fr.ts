@@ -2603,7 +2603,7 @@ du tireur</translation>
         <translation>Quelque chose s&apos;est mal passé pendant le processus de sauvegarde.</translation>
     </message>
     <message>
-        <source>Back  (ctrl + left)</source>
+        <source>Back (ctrl + left)</source>
         <translation>Précedent (ctrl + gauche)</translation>
     </message>
     <message>
@@ -3517,10 +3517,6 @@ Assurez vous que le fichier existe.</translation>
 <context>
     <name>ADN_People_GUI</name>
     <message>
-        <source>Details</source>
-        <translation>Détails</translation>
-    </message>
-    <message>
         <source>Name</source>
         <translation>Nom</translation>
     </message>
@@ -3579,6 +3575,10 @@ Assurez vous que le fichier existe.</translation>
     <message>
         <source>Angry crowd mission</source>
         <translation>Mission pour les foules en colère</translation>
+    </message>
+    <message>
+        <source>Distribution</source>
+        <translation>Répartition</translation>
     </message>
 </context>
 <context>

@@ -128,7 +128,7 @@ MT_ListViewItem::~MT_ListViewItem()
 // -----------------------------------------------------------------------------
 void MT_ListViewItem::SetFont( uint nColumn, const QFont &font )
 {
-    if( nColumn >= fonts_.size() )
+    if( static_cast< int >( nColumn ) >= fonts_.size() )
         if( pFont_ != 0 )
             fonts_.resize( nColumn + 1, *pFont_ );
         else
@@ -145,7 +145,7 @@ void MT_ListViewItem::SetFont( uint nColumn, const QFont &font )
 // -----------------------------------------------------------------------------
 void MT_ListViewItem::SetFontColor( uint nColumn, const QColor &color )
 {
-    if( nColumn >= fontColors_.size() )
+    if( static_cast< int >( nColumn ) >= fontColors_.size() )
         if( pFontColor_ != 0 )
             fontColors_.resize( nColumn + 1, *pFontColor_ );
         else
@@ -162,7 +162,7 @@ void MT_ListViewItem::SetFontColor( uint nColumn, const QColor &color )
 // -----------------------------------------------------------------------------
 void MT_ListViewItem::SetBackground( uint nColumn, const QColor &color )
 {
-    if( nColumn >= backgrounds_.size() )
+    if( static_cast< int >( nColumn ) >= backgrounds_.size() )
         if( pBackgroundColor_ != 0 )
             backgrounds_.resize( nColumn + 1, *pBackgroundColor_ );
         else
@@ -180,7 +180,7 @@ void MT_ListViewItem::SetFont( const QFont &font )
 {
     delete pFont_;
     pFont_ = new QFont( font );
-    for( uint n = 0; n < fonts_.size(); ++n )
+    for( int n = 0; n < fonts_.size(); ++n )
         fonts_[n] = font;
 }
 
@@ -194,7 +194,7 @@ void MT_ListViewItem::SetFontColor( const QColor &color )
 {
     delete pFontColor_;
     pFontColor_ = new QColor( color );
-    for( uint n = 0; n < fontColors_.size(); ++n )
+    for( int n = 0; n < fontColors_.size(); ++n )
         fontColors_[n] = color;
 }
 
@@ -208,7 +208,7 @@ void MT_ListViewItem::SetBackground( const QColor &color )
 {
     delete pBackgroundColor_;
     pBackgroundColor_ = new QColor( color );
-    for( uint n = 0; n < backgrounds_.size(); ++n )
+    for( int n = 0; n < backgrounds_.size(); ++n )
         backgrounds_[n] = color;
 }
 

@@ -54,8 +54,8 @@ protected slots:
 // Created: APE 2004-12-13
 // -----------------------------------------------------------------------------
 ADN_Equipement_GUI::ADN_Equipement_GUI( ADN_Equipement_Data& data )
-    : ADN_GUI_ABC( "ADN_Equipement_GUI" )
-    , data_      ( data )
+    : ADN_Tabbed_GUI_ABC( "ADN_Equipement_GUI" )
+    , data_           ( data )
     , pAttritionTable_( 0 )
 {
     // NOTHING
@@ -302,7 +302,7 @@ void ADN_Equipement_GUI::BuildAmmunition()
 
     // List view
     ADN_SearchListView< ADN_Equipement_AmmoListView >* pSearchListView = new ADN_SearchListView< ADN_Equipement_AmmoListView >( data_.GetDotation( eDotationFamily_Munition ).categories_, vConnectors );
-    connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_UsedByInfos& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_UsedByInfos& ) ) );
+    connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_NavigationInfos::UsedBy& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_NavigationInfos::UsedBy& ) ) );
     vListViews_.push_back( pSearchListView->GetListView() );
     assert( eDotationFamily_Munition == vListViews_.size() - 1 );
 

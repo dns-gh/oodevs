@@ -70,6 +70,7 @@ void ADN_Breakdowns_GUI::Build()
     QGroupBox* pPartsGroup = new QGroupBox( tr( "Required parts" ) );
     QVBoxLayout* pPartsLayout = new QVBoxLayout( pPartsGroup );
     ADN_Breakdowns_PartsTable* pPartsTable = new ADN_Breakdowns_PartsTable();
+    pPartsTable->SetGoToOnDoubleClick( ::eEquipement );
     vInfosConnectors[eParts] = & pPartsTable->GetConnector();
     pPartsLayout->addWidget( pPartsTable );
 
@@ -87,6 +88,7 @@ void ADN_Breakdowns_GUI::Build()
 
     // List view
     ADN_SearchListView< ADN_Breakdowns_ListView >* pSearchListView = new ADN_SearchListView< ADN_Breakdowns_ListView >( data_.vBreakdowns_, vInfosConnectors );
+    pListView_ = pSearchListView->GetListView();
 
     // Sub content
     QWidget* pSubContent = CreateScrollArea( *pSpecificContent, pSearchListView, false, false, true, 0, 0 );

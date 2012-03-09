@@ -33,7 +33,7 @@ namespace helpers
 */
 // Created: APE 2004-12-06
 // =============================================================================
-class ADN_Equipement_GUI : public ADN_GUI_ABC // $$$$ ABR 2012-01-20: Misnamed, should be ADN_Equipment_GUI ...
+class ADN_Equipement_GUI : public ADN_Tabbed_GUI_ABC // $$$$ ABR 2012-01-20: Misnamed, should be ADN_Equipment_GUI ...
 {
     Q_OBJECT
 
@@ -151,8 +151,6 @@ private:
     //! @name Member data
     //@{
     ADN_Equipement_Data&                                        data_;
-    QTabWidget*                                                 pTabWidget_;
-    std::vector< ADN_ListView* >                                vListViews_;
     std::vector< ADN_CheckBox* >                                vNetworkUsableCheckBoxs_;
     ADN_Equipement_AttritionTable*                              pAttritionTable_;
     ADN_Equipement_AttritionGraph*                              pAttritionGraph_;

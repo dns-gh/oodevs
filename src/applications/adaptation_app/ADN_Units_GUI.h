@@ -15,6 +15,7 @@
 #include "ADN_GUI_ABC.h"
 #include "ADN_EditLine.h"
 #include "ADN_Units_Data.h"
+#include "ADN_NavigationInfos.h"
 
 namespace kernel
 {
@@ -131,7 +132,6 @@ private:
     //! @name Member data
     //@{
     ADN_Units_Data& data_;
-    ADN_ListView_Units* pListView_;
     ADN_EditLine_Int* pOfficersEditLine_;
     ADN_EditLine_Int* pNCOfficersEditLine_;
     QComboBox* pTypeCombo_;

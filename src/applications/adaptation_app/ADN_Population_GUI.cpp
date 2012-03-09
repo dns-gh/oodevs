@@ -16,6 +16,7 @@
 #include "ADN_CommonGfx.h"
 #include "ADN_Population_Data.h"
 #include "ADN_Connector_Vector_ABC.h"
+#include "ADN_GoToButton.h"
 #include "ADN_MultiPercentage.h"
 #include "ADN_Population_ListView.h"
 #include "ADN_Population_SpeedEffect_Attitude_ListView.h"
@@ -87,10 +88,10 @@ void ADN_Population_GUI::Build()
     Q3GroupBox* pPropertiesGroup = new Q3GroupBox( 5, Qt::Vertical, tr( "Details" ) );
     //{
         // Information
-        Q3GroupBox* pInformation = new Q3GroupBox( 3, Qt::Horizontal, "", pPropertiesGroup );
-        builder.AddField<ADN_EditLine_String>( pInformation, tr( "Name" ), vInfosConnectors[eName] );
-        builder.AddField< ADN_ComboBox_Vector<ADN_Models_Data::ModelInfos> >( pInformation, tr( "Behavior model" ), vInfosConnectors[eModel] );
-
+        QWidget* pInfoHolder = builder.AddFieldHolder( pPropertiesGroup );
+        builder.AddField<ADN_EditLine_String>( pInfoHolder, tr( "Name" ), vInfosConnectors[eName] );
+        ADN_GoToButton* goToButton = new ADN_GoToButton( eModels, ADN_Models_Data::ModelInfos::ePopulation );
+        goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector<ADN_Models_Data::ModelInfos> >( pInfoHolder, tr( "Behavior model" ), vInfosConnectors[eModel], 0, eNone, goToButton ) );
         // Density
         Q3GroupBox* pDensity = new Q3GroupBox( 3, Qt::Horizontal, "", pPropertiesGroup );
         builder.AddField<ADN_EditLine_Double>( pDensity, tr( "Density" ), vInfosConnectors[eConcentrationDensity], tr( "people/m²" ), eGreaterZero );
@@ -215,7 +216,8 @@ void ADN_Population_GUI::Build()
 
     // List view
     ADN_SearchListView< ADN_Population_ListView >* pSearchListView = new ADN_SearchListView< ADN_Population_ListView >( data_.GetPopulation(), vInfosConnectors );
-    connect( this, SIGNAL( ApplyFilterList( const ADN_UsedByInfos& ) ), pSearchListView, SLOT( OnApplyFilterList( const ADN_UsedByInfos& ) ) );
+    pListView_ = pSearchListView->GetListView();
+    connect( this, SIGNAL( ApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ), pSearchListView, SLOT( OnApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ) );
 
     // Sub content
     QWidget* pSubContent = CreateScrollArea( *pSpecificContent, pSearchListView );

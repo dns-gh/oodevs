@@ -89,7 +89,6 @@ private:
     //! @name Member data
     //@{
     ADN_Weapons_Data& data_;
-    ADN_Weapons_ListView* pListView_;
     //@}
 };
 

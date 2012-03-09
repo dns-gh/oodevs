@@ -26,7 +26,7 @@
 // Created: APE 2005-03-21
 // -----------------------------------------------------------------------------
 ADN_Missions_GUI::ADN_Missions_GUI( ADN_Missions_Data& data )
-    : ADN_GUI_ABC( "ADN_Missions_GUI" )
+    : ADN_Tabbed_GUI_ABC( "ADN_Missions_GUI" )
     , data_      ( data )
 {
     // NOTHING
@@ -50,18 +50,18 @@ void ADN_Missions_GUI::Build()
     assert( pMainWidget_ == 0 );
 
     // Tab management
-    QTabWidget* pTabWidget = new QTabWidget( pMainWidget_ );
-    pTabWidget->addTab( BuildUnitMissions(), tr( "Unit missions" ) );
-    pTabWidget->addTab( BuildAutomatMissions(), tr( "Automat missions" ) );
-    pTabWidget->addTab( BuildPopulationMissions(), tr( "Crowd missions" ) );
-    pTabWidget->addTab( BuildFragOrders(), tr( "Fragmentary orders" ) );
+    pTabWidget_ = new QTabWidget( pMainWidget_ );
+    pTabWidget_->addTab( BuildUnitMissions(), tr( "Unit missions" ) );
+    pTabWidget_->addTab( BuildAutomatMissions(), tr( "Automat missions" ) );
+    pTabWidget_->addTab( BuildPopulationMissions(), tr( "Crowd missions" ) );
+    pTabWidget_->addTab( BuildFragOrders(), tr( "Fragmentary orders" ) );
 
     // Main widget
     pMainWidget_ = new QWidget();
     QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_ );
     pMainLayout->setSpacing( 10 );
     pMainLayout->setMargin( 10 );
-    pMainLayout->addWidget( pTabWidget );
+    pMainLayout->addWidget( pTabWidget_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -137,7 +137,8 @@ QWidget* ADN_Missions_GUI::BuildMissions( QWidget*& pContent, ADN_Missions_Data:
 
     // List view
     ADN_SearchListView< ADN_ListView_MissionTypes >* pSearchListView = new ADN_SearchListView< ADN_ListView_MissionTypes >( eEntityType, missions, missions, vInfosConnectors );
-    connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_UsedByInfos& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_UsedByInfos& ) ) );
+    connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_NavigationInfos::UsedBy& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_NavigationInfos::UsedBy& ) ) );
+    vListViews_.push_back( pSearchListView->GetListView() );
 
     // Main page
     return CreateScrollArea( *pContent, pSearchListView );
@@ -231,6 +232,7 @@ QWidget* ADN_Missions_GUI::BuildFragOrders()
     // List view
     ADN_SearchListView< ADN_ListView_FragOrderTypes >* pSearchListView = new ADN_SearchListView< ADN_ListView_FragOrderTypes >( data_.fragOrders_, data_.fragOrders_, vInfosConnectors );
     connect( available, SIGNAL( toggled ( bool ) ), pSearchListView->GetListView(), SLOT( OnToogled( bool ) ) );
+    vListViews_.push_back( pSearchListView->GetListView() );
 
     // Main page
     return CreateScrollArea( *pFragOrderWidget_, pSearchListView );

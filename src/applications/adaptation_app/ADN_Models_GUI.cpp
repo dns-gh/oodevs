@@ -30,7 +30,7 @@
 // Created: JDY 03-06-26
 //-----------------------------------------------------------------------------
 ADN_Models_GUI::ADN_Models_GUI( ADN_Models_Data& data )
-    : ADN_GUI_ABC( "ADN_Models_GUI" )
+    : ADN_Tabbed_GUI_ABC( "ADN_Models_GUI" )
     , data_( data )
 {
     // NOTHING
@@ -55,9 +55,9 @@ void ADN_Models_GUI::Build()
 
     // Tab management
     pTabWidget_ = new QTabWidget( pMainWidget_ );
-    pTabWidget_->addTab( BuildPage( pPawnWidget_, ADN_Models_Data::ModelInfos::ePawn, data_.GetUnitModelsInfos() ), tr( "Unit models" ) );
-    pTabWidget_->addTab( BuildPage( pAutomatWidget_, ADN_Models_Data::ModelInfos::eAutomat, data_.GetAutomataModelsInfos() ), tr( "Automata models" ) );
-    pTabWidget_->addTab( BuildPage( pPopulationWidget_, ADN_Models_Data::ModelInfos::ePopulation, data_.GetPopulationModelsInfos() ), tr( "Crowds models" ) );
+    pTabWidget_->addTab( BuildPage( ADN_Models_Data::ModelInfos::ePawn, data_.GetUnitModelsInfos() ), tr( "Unit models" ) );
+    pTabWidget_->addTab( BuildPage( ADN_Models_Data::ModelInfos::eAutomat, data_.GetAutomataModelsInfos() ), tr( "Automata models" ) );
+    pTabWidget_->addTab( BuildPage( ADN_Models_Data::ModelInfos::ePopulation, data_.GetPopulationModelsInfos() ), tr( "Crowds models" ) );
 
     // Main widget
     pMainWidget_ = new QWidget();
@@ -70,7 +70,7 @@ void ADN_Models_GUI::Build()
 // Name: ADN_Models_GUI::BuildPage
 // Created: APE 2005-02-09
 // -----------------------------------------------------------------------------
-QWidget* ADN_Models_GUI::BuildPage( QWidget*& pContent, ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType, ADN_Models_Data::T_ModelInfos_Vector& model )
+QWidget* ADN_Models_GUI::BuildPage( ADN_Models_Data::ModelInfos::E_ModelEntityType eEntityType, ADN_Models_Data::T_ModelInfos_Vector& model )
 {
     // -------------------------------------------------------------------------
     // Creations
@@ -89,15 +89,18 @@ QWidget* ADN_Models_GUI::BuildPage( QWidget*& pContent, ADN_Models_Data::ModelIn
     Q3GroupBox* pMissionsGroup = new Q3HGroupBox( tr( "Missions" ) );
     ADN_ListView_Missions* pListMissions = new ADN_ListView_Missions( eEntityType, pMissionsGroup );
     vInfosConnectors[eMissions] = &pListMissions->GetConnector();
+    pListMissions->SetGoToOnDoubleClick( ::eMissions, static_cast< int >( eEntityType ) );
 
     ADN_ListView_Orders* pListOrders = new ADN_ListView_Orders( true, pMissionsGroup );
     T_ConnectorVector vMissionConnector( eNbrMissionGuiElements, (ADN_Connector_ABC*)0 );
     vMissionConnector[eOrders] = &pListOrders->GetConnector();
+    pListOrders->SetGoToOnDoubleClick( ::eMissions, 3 ); // Frag orders tabulation
 
     // Frag order
     Q3GroupBox* pFragOdersGroup = new Q3HGroupBox( tr( "FragOrders" ) );
     ADN_ListView_Orders* pListFragOrders = new ADN_ListView_Orders( false , pFragOdersGroup );
     vInfosConnectors[eFragOrders] = &pListFragOrders->GetConnector();
+    pListFragOrders->SetGoToOnDoubleClick( ::eMissions, 3 ); // Frag orders tabulation
 
     // Connect
     pListMissions->SetItemConnectors( vMissionConnector );
@@ -106,8 +109,8 @@ QWidget* ADN_Models_GUI::BuildPage( QWidget*& pContent, ADN_Models_Data::ModelIn
     // Layouts
     // -------------------------------------------------------------------------
     // Content layout
-    pContent = new QWidget();
-    QVBoxLayout* pContentLayout = new QVBoxLayout( pContent );
+    pWidgets_[ eEntityType ] = new QWidget();
+    QVBoxLayout* pContentLayout = new QVBoxLayout( pWidgets_[ eEntityType ] );
     pContentLayout->setMargin( 10 );
     pContentLayout->setSpacing( 10 );
     pContentLayout->setAlignment( Qt::AlignTop );
@@ -117,11 +120,12 @@ QWidget* ADN_Models_GUI::BuildPage( QWidget*& pContent, ADN_Models_Data::ModelIn
 
     // List view
     ADN_SearchListView< ADN_ListView_Models >* pSearchListView = new ADN_SearchListView< ADN_ListView_Models >( eEntityType, model, vInfosConnectors, static_cast< int >( eEntityType ) );
-    connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_UsedByInfos& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_UsedByInfos& ) ) );
-    connect( this, SIGNAL( ApplyFilterList( const ADN_UsedByInfos& ) ), pSearchListView, SLOT( OnApplyFilterList( const ADN_UsedByInfos& ) ) );
+    connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_NavigationInfos::UsedBy& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_NavigationInfos::UsedBy& ) ) );
+    connect( this, SIGNAL( ApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ), pSearchListView, SLOT( OnApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ) );
+    vListViews_.push_back( pSearchListView->GetListView() );
 
     // Main page
-    return CreateScrollArea( *pContent, pSearchListView );
+    return CreateScrollArea( *pWidgets_[ eEntityType ], pSearchListView );
 }
 
 // -----------------------------------------------------------------------------
@@ -130,17 +134,6 @@ QWidget* ADN_Models_GUI::BuildPage( QWidget*& pContent, ADN_Models_Data::ModelIn
 // -----------------------------------------------------------------------------
 void ADN_Models_GUI::Enable( bool enable )
 {
-    pPawnWidget_->setEnabled( enable );
-    pAutomatWidget_->setEnabled( enable );
-    pPopulationWidget_->setEnabled( enable );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_Models_GUI::ChangeCurrentSubTab
-// Created: ABR 2012-01-26
-// -----------------------------------------------------------------------------
-void ADN_Models_GUI::ChangeCurrentSubTab( int subTab )
-{
-    assert( subTab >= 0 && subTab < pTabWidget_->count() );
-    pTabWidget_->setCurrentPage( subTab );
+    for( int i = 0; i < ADN_Models_Data::ModelInfos::eNbrModelEntityTypes; ++i )
+        pWidgets_[ i ]->setEnabled( enable );
 }

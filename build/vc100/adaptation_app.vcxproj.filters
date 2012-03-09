@@ -1375,6 +1375,9 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_SearchListView.cpp">
       <Filter>Source Files\Common widgets\Search list view</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_GoToButton.cpp">
+      <Filter>Source Files\Common widgets</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">
@@ -2097,11 +2100,11 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Tab_Container.h">
       <Filter>Source Files\Workspace\Container\Container GUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_UsedByInfos.h">
-      <Filter>Source Files\Common widgets\Search list view</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_SearchLineEdit.h">
       <Filter>Source Files\Common widgets\Search list view</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_NavigationInfos.h">
+      <Filter>Source Files\Common types</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2512,6 +2515,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_SearchListView.h">
       <Filter>Source Files\Common widgets\Search list view</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_GoToButton.h">
+      <Filter>Source Files\Common widgets</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>
