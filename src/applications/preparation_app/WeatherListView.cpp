@@ -57,6 +57,7 @@ void WeatherListView::CommitTo( WeatherModel& model )
 void WeatherListView::Update( const WeatherModel& model )
 {
     Clear();
+    exerciceTime_ = model.time_;
     tools::Iterator< const weather::MeteoLocal& > it( model.Resolver< weather::MeteoLocal >::CreateIterator() );
     while( it.HasMoreElements() )
     {
@@ -76,6 +77,7 @@ void WeatherListView::CreateItem()
 {
     boost::shared_ptr< weather::MeteoLocal > weather = boost::shared_ptr< weather::MeteoLocal >( new weather::MeteoLocal( converter_, tr( "Local weather " ).ascii() ) );
     weather->SetCreated( true );
+    weather->SetPeriod( exerciceTime_, exerciceTime_ );
     Q3ListViewItem* item = new Q3ListViewItem( this );
     item->setText( 0, weather->GetName().c_str() );
     weathers_.push_back( weather );

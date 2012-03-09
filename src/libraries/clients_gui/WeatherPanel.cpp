@@ -32,6 +32,8 @@ WeatherPanel::WeatherPanel( QWidget* parent, PanelStack_ABC& panel, WeatherLayer
     , selectedLocal_( 0 )
     , currentType_  ( eWeatherGlobal )
     , localWeathers_( 0 )
+    , startTime_    ( 0 )
+    , endTime_      ( 0 )
 {
     // Layouts
     QWidget* box = new QWidget( this );
@@ -98,10 +100,22 @@ void WeatherPanel::CreateLocalParameters()
     new QLabel( tr( "End time:" ), parametersGroup_ );
     endTime_ = new QDateTimeEdit( parametersGroup_ );
 
-    QPushButton* btn = new QPushButton( tr( "Set location" ), localLayout_ );
-    connect( btn, SIGNAL( clicked() ), this, SLOT( SetPatchPosition() ) );
+    locationButton_ = new QPushButton( tr( "Set location" ), localLayout_ );
+    connect( locationButton_, SIGNAL( clicked() ), this, SLOT( SetPatchPosition() ) );
 
     OnTypeChanged( 0 );
+    EnableLocalParameters( false, false );
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeatherPanel::EnableLocalParameters
+// Created: ABR 2012-03-09
+// -----------------------------------------------------------------------------
+void WeatherPanel::EnableLocalParameters( bool enabled, bool isCreated )
+{
+    localWidget_->setEnabled( enabled );
+    parametersGroup_->setEnabled( enabled && isCreated );
+    locationButton_->setEnabled( enabled && isCreated );
 }
 
 // -----------------------------------------------------------------------------
@@ -148,17 +162,17 @@ void WeatherPanel::CommitLocalWeather()
 void WeatherPanel::LocalSelectionChanged()
 {
     weather::MeteoLocal* selected = static_cast< weather::MeteoLocal* >( localWeathers_->SelectedItem() );
-    if( selected )
+    CommitLocalWeather();
+    if( selected != 0 )
     {
-        CommitLocalWeather();
         localWidget_->Update( *selected );
         startTime_->setDateTime( selected->GetStartTime() );
         endTime_->setDateTime( selected->GetEndTime() );
-        parametersGroup_->setEnabled( selected->IsCreated() );
         layer_.SetPosition( *selected );
     }
     else
         layer_.Clear();
+    EnableLocalParameters( selected != 0, selected != 0 && selected->IsCreated() );
     selectedLocal_ = selected;
 }
 
