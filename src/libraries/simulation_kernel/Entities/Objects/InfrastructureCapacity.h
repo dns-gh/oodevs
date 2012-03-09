@@ -70,8 +70,8 @@ private:
     //@{
     float functionalState_;
     std::string role_;
-    bool enabled_;
     float threshold_;
+    bool enabled_;
     mutable bool needUpdate_;
     //@}
 };

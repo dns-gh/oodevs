@@ -38,20 +38,20 @@ PHY_RolePion_Posture::PHY_RolePion_Posture( MIL_Agent_ABC& pion )
     , pCurrentPosture_                     ( &PHY_Posture::arret_ )
     , pLastPosture_                        ( &PHY_Posture::arret_ )
     , rPostureCompletionPercentage_        ( 1. )
+    , rElongationFactor_                   ( 1. )
+    , rTimingFactor_                       ( 1. )
+    , rStealthFactor_                      ( 1. ) // 1. == Non furtif
+    , rInstallationState_                  ( 0. )
     , bDiscreteModeEnabled_                ( false )
     , bPostureHasChanged_                  ( true  )
     , bPercentageCrossed50_                ( false )
     , bStealthFactorHasChanged_            ( true  )
     , bPercentageHasChanged_               ( true  )
-    , rLastPostureCompletionPercentageSent_( 0. )
     , bIsStealth_                          ( false )
-    , rTimingFactor_                       ( 1. )
-    , rStealthFactor_                      ( 1. ) // Non furtif
-    , rElongationFactor_                   ( 1. )
-    , rInstallationState_                  ( 0. )
-    , rLastInstallationStateSent_          ( 0. )
     , bInstallationSetUpInProgress_        ( false )
     , bInstallationStateHasChanged_        ( true )
+    , rLastPostureCompletionPercentageSent_( 0. )
+    , rLastInstallationStateSent_          ( 0. )
 {
     // NOTHING
 }

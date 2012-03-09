@@ -82,12 +82,12 @@ private:
     unsigned int nTimeLastUpdate_;
     MT_Vector2D position_;
     double rRelevance_;
-    bool bReconAttributesValid_;
     const MIL_PopulationAttitude* pAttitude_;
     unsigned int nNbrAliveHumans_;
     unsigned int nNbrDeadHumans_;
     const PHY_PerceptionLevel*  pCurrentPerceptionLevel_;
     const PHY_PerceptionLevel* pPreviousPerceptionLevel_;
+    bool bReconAttributesValid_;
     // Network
     bool bHumansUpdated_;
     bool bAttitudeUpdated_;

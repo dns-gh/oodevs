@@ -107,7 +107,6 @@ MedicalTreatmentAttribute::~MedicalTreatmentAttribute()
 // -----------------------------------------------------------------------------
 MedicalTreatmentAttribute& MedicalTreatmentAttribute::operator=( const MedicalTreatmentAttribute& rhs )
 {
-    // medicalTreatmentMap_;
     doctors_ = rhs.doctors_;
     availableDoctors_ = rhs.availableDoctors_;
     initialDoctors_ = rhs.initialDoctors_;
@@ -432,11 +431,6 @@ int MedicalTreatmentAttribute::GetAvailableDoctors() const
 // -----------------------------------------------------------------------------
 bool MedicalTreatmentAttribute::Update( const MedicalTreatmentAttribute& rhs )
 {
-    if( medicalTreatmentMap_ != rhs.medicalTreatmentMap_ )
-    {
-        NotifyAttributeUpdated( eOnUpdate );
-        medicalTreatmentMap_ = rhs.medicalTreatmentMap_;
-    }
     if( doctors_ != rhs.doctors_ )
     {
         NotifyAttributeUpdated( eOnUpdate );

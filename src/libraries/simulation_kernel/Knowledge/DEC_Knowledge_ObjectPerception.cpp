@@ -19,6 +19,10 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectPerception )
 
+namespace {
+    int scounterTmp = 0;
+}
+
 // -----------------------------------------------------------------------------
 // Name: DEC_Knowledge_ObjectPerception constructor
 // Created: NLD 2004-03-11
@@ -29,6 +33,7 @@ DEC_Knowledge_ObjectPerception::DEC_Knowledge_ObjectPerception( const MIL_Agent_
     , pObjectPerceived_        ( &objectPerceived )
     , pCurrentPerceptionLevel_ ( &PHY_PerceptionLevel::notSeen_ )
     , pPreviousPerceptionLevel_( &PHY_PerceptionLevel::notSeen_ )
+    , counterTmp_( scounterTmp++ )
 {
     // NOTHING
 }
@@ -43,6 +48,7 @@ DEC_Knowledge_ObjectPerception::DEC_Knowledge_ObjectPerception()
     , pObjectPerceived_        ( 0 )
     , pCurrentPerceptionLevel_ ( 0 )
     , pPreviousPerceptionLevel_( 0 )
+    , counterTmp_( scounterTmp++ )
 {
     // NOTHING
 }

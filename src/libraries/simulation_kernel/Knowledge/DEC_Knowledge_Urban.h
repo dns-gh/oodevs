@@ -83,10 +83,6 @@ private:
     typedef std::vector< const MIL_Automate* >   T_PerceptionSource;
     typedef T_PerceptionSource::iterator        IT_PerceptionSource;
     typedef T_PerceptionSource::const_iterator CIT_PerceptionSource;
-
-    typedef std::vector< const MIL_Agent_ABC* >       T_PerceptionAgentSource;
-    typedef T_PerceptionAgentSource::iterator        IT_PerceptionAgentSource;
-    typedef T_PerceptionAgentSource::const_iterator CIT_PerceptionAgentSource;
     //@}
 
 private:
@@ -110,13 +106,10 @@ private:
     //@{
     unsigned int armyId_;
     unsigned int objectId_;
-    // Internal attribute
     float rProgressPercent_;
     float rMaxProgressPercent_;
     T_PerceptionSource perceivedByAutomate_;
     T_PerceptionSource previousPerceivedByAutomate_;
-    T_PerceptionAgentSource perceivedByAgent_;
-    // Network
     unsigned int nTimeLastUpdate_;
     bool bCreatedOnNetwork_;
     bool bLastPerceived_;

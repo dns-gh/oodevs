@@ -11,6 +11,7 @@
 #include "DEC_BlackBoard_CanContainKnowledgeUrbanPerception.h"
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_UrbanPerception.h"
+#include "Checkpoints/SerializationTools.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "MT_Tools/MT_ScipioException.h"
 
@@ -41,14 +42,7 @@ DEC_BlackBoard_CanContainKnowledgeUrbanPerception::~DEC_BlackBoard_CanContainKno
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeUrbanPerception::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    std::size_t nNbr;
-    file >> nNbr;
-    while( nNbr-- )
-    {
-        DEC_Knowledge_UrbanPerception* knowledge;
-        file >> knowledge;
-        knowledgeUrbanPerceptionMap_[ knowledge->GetUrbanPerceivedId() ].reset( knowledge );
-    }
+    file >> knowledgeUrbanPerceptionMap_;
 }
 
 // -----------------------------------------------------------------------------
@@ -57,13 +51,7 @@ void DEC_BlackBoard_CanContainKnowledgeUrbanPerception::load( MIL_CheckPointInAr
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeUrbanPerception::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    const std::size_t size = knowledgeUrbanPerceptionMap_.size();
-    file << size;
-    for( CIT_KnowledgeUrbanPerceptionMap it = knowledgeUrbanPerceptionMap_.begin(); it != knowledgeUrbanPerceptionMap_.end(); ++it )
-    {
-        DEC_Knowledge_UrbanPerception* knowledge = it->second.get();
-        file << knowledge;
-    }
+    file << knowledgeUrbanPerceptionMap_;
 }
 
 // -----------------------------------------------------------------------------

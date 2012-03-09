@@ -17,6 +17,7 @@
 #include "SpeedComputer_ABC.h"
 #include "UrbanLocationComputer_ABC.h"
 #include "UrbanLocationComputerFactory_ABC.h"
+#include "Checkpoints/SerializationTools.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Actions/Flying/PHY_RoleAction_InterfaceFlying.h"
 #include "Entities/Agents/Actions/Underground/PHY_RoleAction_MovingUnderground.h"
@@ -57,18 +58,26 @@ PHY_RolePion_UrbanLocation::~PHY_RolePion_UrbanLocation()
 // Name: PHY_RolePion_UrbanLocation::load
 // Created: SLG 2010-04-08
 // -----------------------------------------------------------------------------
-void PHY_RolePion_UrbanLocation::load( MIL_CheckPointInArchive& /*file*/, const unsigned int )
+void PHY_RolePion_UrbanLocation::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    //TODO
+    UrbanObjectWrapper* wrapper;
+    file >> wrapper
+         >> isInCity_
+         >> isFlying_;
+    urbanObject_ = wrapper;
+    if( urbanObject_ )
+        delegate_.reset( new InsideUrbanBlockPosition( *urbanObject_ ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_UrbanLocation::save
 // Created: SLG 2010-04-08
 // -----------------------------------------------------------------------------
-void PHY_RolePion_UrbanLocation::save( MIL_CheckPointOutArchive& /*file*/, const unsigned int ) const
+void PHY_RolePion_UrbanLocation::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    //TODO
+    file << urbanObject_;
+    file << isInCity_
+         << isFlying_;
 }
 
 // -----------------------------------------------------------------------------

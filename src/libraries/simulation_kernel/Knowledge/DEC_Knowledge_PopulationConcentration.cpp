@@ -40,6 +40,7 @@ DEC_Knowledge_PopulationConcentration::DEC_Knowledge_PopulationConcentration( DE
     , nNbrAliveHumans_          ( 0 )
     , nNbrDeadHumans_           ( 0 )
     , pAttitude_                ( 0 )
+    , bReconAttributesValid_    ( false )
     , bHumansUpdated_           ( true )
     , bAttitudeUpdated_         ( true )
     , bRealConcentrationUpdated_( true )
@@ -47,7 +48,6 @@ DEC_Knowledge_PopulationConcentration::DEC_Knowledge_PopulationConcentration( DE
     , rRelevance_               ( 1. )
     , pPreviousPerceptionLevel_ ( &PHY_PerceptionLevel::notSeen_ )
     , pCurrentPerceptionLevel_  ( &PHY_PerceptionLevel::notSeen_ )
-    , bReconAttributesValid_    ( false )
 {
     SendMsgCreation();
 }

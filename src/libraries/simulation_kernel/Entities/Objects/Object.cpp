@@ -105,7 +105,8 @@ const std::string& Object::GetName() const
 void Object::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
     file >> boost::serialization::base_object< MIL_Object >( *this );
-    file >> name_;
+    file >> name_
+         >> externalIdentifier_;
 }
 
 // -----------------------------------------------------------------------------
@@ -115,7 +116,8 @@ void Object::load( MIL_CheckPointInArchive& file, const unsigned int )
 void Object::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
     file << boost::serialization::base_object< MIL_Object >( *this );
-    file << name_;
+    file << name_
+         << externalIdentifier_;
 }
 
 // -----------------------------------------------------------------------------

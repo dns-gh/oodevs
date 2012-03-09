@@ -115,8 +115,8 @@ private:
     //! @name Member data
     //@{
     MIL_AgentPion&        owner_;
-    bool                  bManaged_;
     const MIL_Object_ABC* pCamp_;
+    bool                  bManaged_;
     bool                  bHasChanged_;
     unsigned int          nbrHumansLodgingManaged_;
     float                 lodgingSatisfaction_;

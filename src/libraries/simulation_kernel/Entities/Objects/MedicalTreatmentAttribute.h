@@ -46,9 +46,6 @@ public:
     typedef std::list< T_PatientDiagnosis >                              T_PatientDiagnosisList;
     typedef T_PatientDiagnosisList::iterator                            IT_PatientDiagnosisList;
     typedef T_PatientDiagnosisList::const_iterator                     CIT_PatientDiagnosisList;
-    typedef std::map< int, boost::shared_ptr< T_PatientDiagnosisList > > T_MedicalTreatmentMap;
-    typedef T_MedicalTreatmentMap::iterator                             IT_MedicalTreatmentMap;
-    typedef T_MedicalTreatmentMap::const_iterator                      CIT_MedicalTreatmentMap;
 
     class MedicalCapacity
     {
@@ -171,7 +168,6 @@ private:
 private:
     //! @name Member data
     //@{
-    T_MedicalTreatmentMap medicalTreatmentMap_;
     int doctors_;
     int availableDoctors_;
     int initialDoctors_;

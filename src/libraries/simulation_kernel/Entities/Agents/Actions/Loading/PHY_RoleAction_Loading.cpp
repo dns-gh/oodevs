@@ -35,9 +35,9 @@ namespace transport
 // -----------------------------------------------------------------------------
 PHY_RoleAction_Loading::PHY_RoleAction_Loading( MIL_Agent_ABC& pion )
     : owner_           ( pion )
-    , bIsLoaded_      ( false )
     , nState_         ( eNothing )
     , nEndTimeStep_   ( 0 )
+    , bIsLoaded_      ( false )
     , bHasChanged_    ( true )
     , bHasBeenUpdated_( false )
 {

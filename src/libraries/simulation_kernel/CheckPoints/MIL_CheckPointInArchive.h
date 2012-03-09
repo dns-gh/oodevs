@@ -13,6 +13,7 @@
 #pragma warning( push, 0 )
 #include <boost/serialization/export.hpp>
 #include <boost/archive/binary_iarchive_impl.hpp>
+#include <boost/archive/shared_ptr_helper.hpp>
 #pragma warning( pop )
 
 // =============================================================================
@@ -22,6 +23,7 @@
 // Created: RDS 2008-04-02
 // =============================================================================
 class  MIL_CheckPointInArchive : public boost::archive::binary_iarchive_impl<MIL_CheckPointInArchive, std::istream::char_type, std::istream::traits_type>
+                               , public boost::archive::detail::shared_ptr_helper
 {
 public:
 

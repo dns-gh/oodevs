@@ -80,8 +80,8 @@ private:
     float lodging_;
     T_Motivations motivations_;
     T_Resources resources_;
-    mutable bool healthChanged_;
     mutable float lastSafety_;
+    mutable bool healthChanged_;
     mutable bool lodgingChanged_;
     mutable bool resourceChanged_;
     mutable bool motivationChanged_;

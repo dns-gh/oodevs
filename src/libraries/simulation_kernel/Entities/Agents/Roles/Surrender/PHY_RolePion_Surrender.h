@@ -93,10 +93,10 @@ private:
     //! @name Member data
     //@{
     MIL_AgentPion&        owner_;
-    bool                  bPrisoner_;
-    const MIL_Object_ABC* pPrison_;
-    bool                  bHasChanged_;
-    unsigned int          nbrHumansLodgingManaged_;
+    const MIL_Object_ABC*       pPrison_;
+          bool                  bPrisoner_;
+          bool                  bHasChanged_;
+          unsigned int          nbrHumansLodgingManaged_;
     //@}
 };
 

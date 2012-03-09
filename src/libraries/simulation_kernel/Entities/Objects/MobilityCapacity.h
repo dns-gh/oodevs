@@ -70,7 +70,7 @@ private:
     //! @name Member data
     //@{
     E_SpeedPolicy nSpeedPolicy_;
-    double      rDefaultSpeed_;
+    double        rDefaultSpeed_;
     float         rSpeedPolicyMaxSpeedAgentFactor_;
     //@}
 };

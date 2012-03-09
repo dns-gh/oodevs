@@ -15,6 +15,7 @@
 #include "MIL_IntoxicationEffect.h"
 #include "MIL_ContaminationEffect.h"
 #include "MIL_DecontaminationEffect.h"
+#include "Checkpoints/SerializationTools.h"
 #include "Entities/Populations/Actions/PHY_FireResults_Population.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -284,6 +285,8 @@ void MIL_PopulationElement_ABC::load( MIL_CheckPointInArchive& file, const unsig
     file >> nAttitudeID;
     pAttitude_ = MIL_PopulationAttitude::Find( nAttitudeID );
     assert( pAttitude_ );
+    file >> intoxicationEffects_;
+    file >> contaminationEffects_;
 }
 
 // -----------------------------------------------------------------------------
@@ -297,6 +300,8 @@ void MIL_PopulationElement_ABC::save( MIL_CheckPointOutArchive& file, const unsi
          << rDensity_
          << collidingAgents_
          << attitude;
+    file << intoxicationEffects_;
+    file << contaminationEffects_;
 }
 
 // -----------------------------------------------------------------------------

@@ -109,15 +109,15 @@ private:
 private:
     //! @name Data Members
     //@{
-    MIL_AgentPion&    owner_;
+    MIL_AgentPion& owner_;
     T_NbcAgentTypeSet nbcAgentTypesContaminating_;
-    bool              bNbcProtectionSuitWorn_;
-    double            rContaminationState_;
-    double            rContaminationQuantity_;
-    bool              bHasChanged_;
-    bool              poisoned_;
-    bool              lastStatePoisoning_;
-    bool              immune_;
+    double rContaminationState_;
+    double rContaminationQuantity_;
+    bool bNbcProtectionSuitWorn_;
+    bool bHasChanged_;
+    bool poisoned_;
+    bool intoxicated_;
+    bool immune_;
     //@}
 };
 

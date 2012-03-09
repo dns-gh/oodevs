@@ -24,8 +24,8 @@ BOOST_CLASS_EXPORT_IMPLEMENT( InfrastructureCapacity )
 // -----------------------------------------------------------------------------
 InfrastructureCapacity::InfrastructureCapacity()
     : functionalState_( 1.f )
-    , enabled_        ( true )
     , threshold_      ( 0.3f )
+    , enabled_        ( true )
     , needUpdate_     ( true )
 {
     //NOTHING
@@ -37,8 +37,8 @@ InfrastructureCapacity::InfrastructureCapacity()
 // -----------------------------------------------------------------------------
 InfrastructureCapacity::InfrastructureCapacity( xml::xistream& xis )
     : functionalState_( 1.f )
-    , enabled_        ( true )
     , threshold_      ( 0.3f )
+    , enabled_        ( true )
     , needUpdate_     ( true )
 {
     InitializeData( xis );
@@ -51,8 +51,8 @@ InfrastructureCapacity::InfrastructureCapacity( xml::xistream& xis )
 InfrastructureCapacity::InfrastructureCapacity( const PHY_InfrastructureType& type )
     : functionalState_( 1.f )
     , role_           ( type.GetName() )
-    , enabled_        ( true )
     , threshold_      ( 0.3f )
+    , enabled_        ( true )
     , needUpdate_     ( true )
 {
     //NOTHING

@@ -74,7 +74,8 @@ void PoisoningCapacity::InitializeData( xml::xistream& xis )
 template< typename Archive >
 void PoisoningCapacity::serialize( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
+         & injuryID_;
 }
 
 // -----------------------------------------------------------------------------

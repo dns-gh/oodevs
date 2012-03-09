@@ -142,12 +142,12 @@ private:
     E_RulesOfEngagementState nRulesOfEngagementState_;
     E_CloseCombatState       nCloseCombatState_;
     E_OperationalState       nOperationalState_;
-    bool                     bStateHasChanged_;
     int                      ePhaseMission_;
     int                      eEtatLima_;
     int                      eEtatDec_;
-    float                    rDestruction_;
     int                      eEtatEchelon_;
+    float                    rDestruction_;
+    bool                     bStateHasChanged_;
     bool                     bOrdreAttendre_;
     bool                     bOrdrePoursuivre_;
     bool                     bOrdreRalentir_;

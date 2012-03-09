@@ -125,17 +125,17 @@ private:
     //! @name Data Members
     //@{
     MIL_Agent_ABC&      owner_;
-    const PHY_Posture*  pCurrentPosture_;
-    const PHY_Posture*  pLastPosture_;
-    double              rPostureCompletionPercentage_;
-    double              rElongationFactor_;
-    double              rTimingFactor_;
-    bool                bDiscreteModeEnabled_;
-    double              rStealthFactor_;
-    bool                bIsStealth_;
+    const PHY_Posture* pCurrentPosture_;
+    const PHY_Posture* pLastPosture_;
+    double rPostureCompletionPercentage_;
+    double rElongationFactor_;
+    double rTimingFactor_;
+    double rStealthFactor_;
     // Installation
     double              rInstallationState_;
     bool                bInstallationSetUpInProgress_;
+    bool bDiscreteModeEnabled_;
+    bool bIsStealth_;
     // Network
     bool                bInstallationStateHasChanged_;
     bool                bPostureHasChanged_;

@@ -67,9 +67,9 @@ PHY_RoleAction_Transport::PHY_RoleAction_Transport( MIL_AgentPion& pion )
     : owner_                    ( pion )
     , nState_                   ( eNothing )
     , bLoadUnloadHasBeenUpdated_( false )
-    , rWeightTransported_       ( 0. )
     , bHasChanged_              ( true )
     , transportedPions_         ()
+    , rWeightTransported_       ( 0. )
 {
     // NOTHING
 }

@@ -40,9 +40,9 @@ namespace refugee
 // -----------------------------------------------------------------------------
 PHY_RolePion_Refugee::PHY_RolePion_Refugee( MIL_AgentPion& pion )
     : owner_                    ( pion )
-    , bManaged_                 ( false )
-    , pCamp_                    ( 0 )
-    , bHasChanged_              ( true )
+    , pCamp_      ( 0 )
+    , bManaged_   ( false )
+    , bHasChanged_( true )
     , nbrHumansLodgingManaged_  ( 0 )
     , lodgingSatisfaction_      ( 0.0f )
     , securitySatisfaction_     ( 0.5f )

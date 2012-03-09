@@ -10,6 +10,8 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_ContaminationEffect.h"
 #include "MIL_PopulationHumans.h"
+#include "Checkpoints/MIL_CheckPointInArchive.h"
+#include "Checkpoints/MIL_CheckPointOutArchive.h"
 
 // -----------------------------------------------------------------------------
 // Name: MIL_ContaminationEffect constructor
@@ -17,10 +19,19 @@
 // -----------------------------------------------------------------------------
 MIL_ContaminationEffect::MIL_ContaminationEffect( MIL_PopulationHumans& humans, double delay, unsigned int time )
     : delay_ ( delay )
-    , humans_( humans )
+    , humans_( &humans )
     , time_  ( time )
 {
-    humans_.ApplyContamination();
+    humans_->ApplyContamination();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ContaminationEffect constructor
+// Created: JSR 2012-03-07
+// -----------------------------------------------------------------------------
+MIL_ContaminationEffect::MIL_ContaminationEffect()
+{
+        // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -40,7 +51,29 @@ void MIL_ContaminationEffect::Update( unsigned int time )
 {
     if( time - time_ >= delay_ )
     {
-        humans_.ApplyContamination();
+        humans_->ApplyContamination();
         time_ = time;
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ContaminationEffect::load
+// Created: LDC 2012-03-07
+// -----------------------------------------------------------------------------
+void MIL_ContaminationEffect::load( MIL_CheckPointInArchive& ar, const unsigned int )
+{
+    ar >> delay_;
+    ar >> humans_;
+    ar >> time_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ContaminationEffect::save
+// Created: LDC 2012-03-07
+// -----------------------------------------------------------------------------
+void MIL_ContaminationEffect::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
+{
+    ar << delay_;
+    ar << humans_;
+    ar << time_;
 }

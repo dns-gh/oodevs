@@ -14,6 +14,7 @@
 #include "MIL_AgentServer.h"
 #include "StructuralCapacity.h"
 #include "UrbanObjectWrapper.h"
+#include "Checkpoints/SerializationTools.h"
 #include "Decision/DEC_ResourceNetwork.h"
 #include "protocol/Protocol.h"
 #include "resource_network/NodeProperties.h"
@@ -106,10 +107,8 @@ boost::shared_ptr< resource::NodeProperties> ResourceNetworkCapacity::GetNodePro
 // -----------------------------------------------------------------------------
 void ResourceNetworkCapacity::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    NodeProperties* nodeProperties;
     file >> boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-         >> nodeProperties;
-    nodeProperties_.reset( nodeProperties );
+         >> nodeProperties_;
     nodeProperties_->SetTools( MIL_AgentServer::GetWorkspace().GetResourceTools() );
 }
 
@@ -119,9 +118,8 @@ void ResourceNetworkCapacity::load( MIL_CheckPointInArchive& file, const unsigne
 // -----------------------------------------------------------------------------
 void ResourceNetworkCapacity::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    NodeProperties* nodeProperties = nodeProperties_.get();
     file << boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-         << nodeProperties;
+         << nodeProperties_;
 }
 
 // -----------------------------------------------------------------------------

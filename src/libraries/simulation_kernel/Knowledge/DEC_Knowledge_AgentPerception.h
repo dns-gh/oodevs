@@ -91,9 +91,9 @@ private:
     const PHY_PerceptionLevel* pCurrentPerceptionLevel_;
     const PHY_PerceptionLevel* pPreviousPerceptionLevel_;
     const PHY_PerceptionLevel* pMaxPerceptionLevel_;
+    unsigned int nRecordModeDisablingDelay_;
     bool bRecordModeEnabled_;
     bool bPreviousRecordModeEnabled_;
-    unsigned int nRecordModeDisablingDelay_;
     bool bAttacker_;
     //@}
 };

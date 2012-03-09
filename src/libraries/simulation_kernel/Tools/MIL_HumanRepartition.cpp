@@ -19,8 +19,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_HumanRepartition )
 // Created: MMC 2011-10-07
 // -----------------------------------------------------------------------------
 MIL_HumanRepartition::MIL_HumanRepartition()
-    : hasChanged_( false )
-    , male_( 0.0f )
+    : male_( 0.0f )
     , female_( 0.0f )
     , children_( 0.0f )
 {
@@ -43,8 +42,7 @@ MIL_HumanRepartition::MIL_HumanRepartition( const MIL_HumanRepartition& humanRep
 // Created: MMC 2011-10-07
 // -----------------------------------------------------------------------------
 MIL_HumanRepartition::MIL_HumanRepartition( xml::xistream& xis )
-    : hasChanged_( false )
-    , male_( 0.0f )
+    : male_( 0.0f )
     , female_( 0.0f )
     , children_( 0.0f )
 {
@@ -97,15 +95,6 @@ void MIL_HumanRepartition::save( MIL_CheckPointOutArchive& file, const unsigned 
     file << male_
          << female_
          << children_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_HumanRepartition::HasChanged
-// Created: MMC 2011-10-07
-// -----------------------------------------------------------------------------
-bool MIL_HumanRepartition::HasChanged() const
-{
-    return hasChanged_;
 }
 
 // -----------------------------------------------------------------------------
