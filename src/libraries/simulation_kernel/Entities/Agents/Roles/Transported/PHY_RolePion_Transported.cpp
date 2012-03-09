@@ -81,9 +81,6 @@ void PHY_RolePion_Transported::load( MIL_CheckPointInArchive& file, const unsign
          >> const_cast< MIL_Agent_ABC*& >( pTransporter_ )
          >> vLoadingPosition_
          >> vHumanTransporterPosition_;
-
-//    if( IsTransported() )
-//        CancelTransport();
 }
 
 // -----------------------------------------------------------------------------

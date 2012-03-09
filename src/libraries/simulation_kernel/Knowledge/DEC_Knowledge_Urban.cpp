@@ -167,11 +167,8 @@ void DEC_Knowledge_Urban::UpdatePerceptionSources( const DEC_Knowledge_UrbanPerc
     if( perception.GetCurrentPerceptionLevel() == PHY_PerceptionLevel::notSeen_ )
         return;
     const MIL_Automate* pAutomateSource = &perception.GetPerceiver().GetAutomate();
-    const MIL_Agent_ABC& pionSource = perception.GetPerceiver();
     if( std::find( perceivedByAutomate_.begin(), perceivedByAutomate_.end(), pAutomateSource ) == perceivedByAutomate_.end() )
         perceivedByAutomate_.push_back( pAutomateSource );
-    if( std::find( perceivedByAgent_.begin(), perceivedByAgent_.end(), &pionSource ) == perceivedByAgent_.end() )
-        perceivedByAgent_.push_back( &pionSource );
 }
 
 // -----------------------------------------------------------------------------
@@ -180,11 +177,6 @@ void DEC_Knowledge_Urban::UpdatePerceptionSources( const DEC_Knowledge_UrbanPerc
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Urban::UpdateRelevance()
 {
-    if( perceivedByAgent_.size() > 0  )
-        return;
-    float rTimeRelevanceDegradation = static_cast< float >( ( GetCurrentTimeStep() - nTimeLastUpdate_ ) / 100. ); //config factor
-    SetProgress( rProgressPercent_ - rTimeRelevanceDegradation );
-    nTimeLastUpdate_ = GetCurrentTimeStep();
 }
 
 // -----------------------------------------------------------------------------

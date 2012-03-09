@@ -217,7 +217,9 @@ void PHY_RolePion_Composantes::serialize( Archive& file, const unsigned int )
          & pMajorComposante_
          & nNeutralizationEndTimeStep_
          & maintenanceComposanteStates_
-         & nTickRcMaintenanceQuerySent_;
+         & nTickRcMaintenanceQuerySent_
+         & bIsLoaded_;
+         & bIsSurrender_;
 }
 
 //-----------------------------------------------------------------------------

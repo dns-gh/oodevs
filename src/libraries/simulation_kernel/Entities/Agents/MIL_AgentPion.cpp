@@ -204,7 +204,6 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const unsigned int )
     file >> boost::serialization::base_object< MIL_Agent_ABC >( *this );
     file >> const_cast< bool& >( bIsPC_ )
          >> pAutomate_
-      // >> actions_ // actions non sauvegardées
          >> pKnowledgeBlackBoard_
          >> pAffinities
          >> pExtensions
@@ -265,7 +264,6 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const unsigned int ) c
     file << boost::serialization::base_object< MIL_Agent_ABC >( *this );
     file << bIsPC_
         << pAutomate_
-        // << actions_ // actions non sauvegardées
         << pKnowledgeBlackBoard_
         << pAffinities
         << pExtensions

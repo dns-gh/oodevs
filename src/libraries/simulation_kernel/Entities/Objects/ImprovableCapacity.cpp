@@ -98,7 +98,9 @@ void ImprovableCapacity::load( MIL_CheckPointInArchive& ar, const unsigned int )
     ar >> boost::serialization::base_object< ObjectCapacity_ABC >( *this );
     ar >> consumptionId
        >> dotationId
-       >> nFullNbrDotation_;
+       >> nFullNbrDotation_
+       >> unitType_
+       >> finalised_;
     default_  = PHY_ConsumptionType::FindConsumptionType( consumptionId );
     if( !default_ )
         throw std::runtime_error( __FUNCTION__ " Unknown consumption category" );
@@ -116,7 +118,9 @@ void ImprovableCapacity::save( MIL_CheckPointOutArchive& ar, const unsigned int 
     ar << boost::serialization::base_object< ObjectCapacity_ABC >( *this );
     ar << (const unsigned int&)( default_ ? default_->GetID() : 0 )
        << (const unsigned int&)( dotation_ ? dotation_->GetMosID() : 0 )
-       << nFullNbrDotation_;
+       << nFullNbrDotation_
+       << unitType_
+       << finalised_;
 }
 
 // -----------------------------------------------------------------------------

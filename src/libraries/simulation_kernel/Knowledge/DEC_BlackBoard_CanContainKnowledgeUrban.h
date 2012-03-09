@@ -80,6 +80,8 @@ public:
     template < class UnaryFunction >
     void ApplyOnUrbanBlocks( UnaryFunction& fct ) const
     {
+        if( urbanBlocks_.empty() )
+            const_cast< DEC_BlackBoard_CanContainKnowledgeUrban* >( this )->Finalize();
         for( std::vector< UrbanObjectWrapper* >::const_iterator it = urbanBlocks_.begin(); it != urbanBlocks_.end(); )
         {
             UrbanObjectWrapper* object = *it;

@@ -189,7 +189,11 @@ void DEC_Knowledge_Agent::load( MIL_CheckPointInArchive& file, const unsigned in
          >> bCurrentPerceptionLevelUpdated_
          >> bMaxPerceptionLevelUpdated_
          >> nTimeExtrapolationEnd_
-         >> criticalIntelligence_;
+         >> criticalIntelligence_
+         >> bLocked_
+         >> bValid_
+         >> bCriticalIntelligenceUpdated_
+         >> bPerceptionDistanceHacked_;
     if( rRelevance_ < 0. || rRelevance_ > 1. )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Relevance: major-component not in [0..1]" );
 }
@@ -222,7 +226,11 @@ void DEC_Knowledge_Agent::save( MIL_CheckPointOutArchive& file, const unsigned i
          << bCurrentPerceptionLevelUpdated_
          << bMaxPerceptionLevelUpdated_
          << nTimeExtrapolationEnd_
-         << criticalIntelligence_;
+         << criticalIntelligence_
+         << bLocked_
+         << bValid_
+         << bCriticalIntelligenceUpdated_
+         << bPerceptionDistanceHacked_;
 }
 
 // -----------------------------------------------------------------------------

@@ -181,5 +181,7 @@ void CloudPropagationCapacity::serialize( Archive& file, const unsigned int )
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
          & origin_
          & rCurrentCircleRadius_
-         & rCurrentPropagationLenght_;
+         & rCurrentPropagationLenght_
+         & length_
+         & time_;
 }

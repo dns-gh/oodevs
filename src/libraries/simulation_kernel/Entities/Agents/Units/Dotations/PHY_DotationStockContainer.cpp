@@ -143,7 +143,9 @@ void PHY_DotationStockContainer::serialize( Archive& file, const unsigned int )
 {
     file & pRoleSupply_
          & stocks_
-         & stocksChanged_;
+         & stocksChanged_
+         & bCheckStockCapacities_
+         & bInfiniteDotations_;
 }
 
 // -----------------------------------------------------------------------------

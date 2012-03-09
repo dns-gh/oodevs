@@ -50,8 +50,8 @@ void load_construct_data( Archive& archive, PHY_RolePion_Surrender* role, const 
 // -----------------------------------------------------------------------------
 PHY_RolePion_Surrender::PHY_RolePion_Surrender( MIL_AgentPion& pion )
     : pion_                      ( pion )
-    , bPrisoner_                 ( false )
     , pPrison_                   ( 0 )
+    , bPrisoner_                 ( false )
     , bHasChanged_               ( true )
     , nbrHumansLodgingManaged_   ( 0 )
 {

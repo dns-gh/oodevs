@@ -89,8 +89,8 @@ private:
     double rMajorOperationalState_;
     T_KnowledgeComposanteVector composantes_;
     const MIL_Army_ABC* pArmy_;
-    bool bIsPC_;
     const MIL_AgentType_ABC* pAgentType_; // For 'natures'
+    bool bIsPC_;
     // Network
     bool bOperationalStateChanged_;
     bool bAgentTypeUpdated_;

@@ -98,13 +98,13 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     , nID_                           ( nID )
     , pParentFormation_              ( dynamic_cast< MIL_Formation* >( &parent ) )
     , pParentAutomate_               ( dynamic_cast< MIL_Automate* >( &parent ) )
-    , bEngaged_                      ( true )
     , pKnowledgeGroup_               ( 0 )
     , pOrderManager_                 ( new MIL_AutomateOrderManager( *this ) )
     , pPionPC_                       ( 0 )
     , pions_                         ()
     , recycledPions_                 ()
     , automates_                     ()
+    , bEngaged_                      ( true )
     , bAutomateModeChanged_          ( true )
     , nTickRcDotationSupplyQuerySent_( 0 )
     , pKnowledgeBlackBoard_          ( new DEC_KnowledgeBlackBoard_Automate( *this ) ) // $$$$ MCO : never deleted ?
@@ -250,46 +250,6 @@ const DEC_Decision_ABC& MIL_Automate::GetDecision() const
 DEC_Decision_ABC& MIL_Automate::GetDecision()
 {
     return GetRole< DEC_AutomateDecision >();
-}
-
-namespace boost
-{
-   /* namespace serialization
-    {
-        template< typename Archive >
-        inline
-        void serialize( Archive& file, MIL_Automate::T_SupplyDotationStateMap& map, const unsigned int nVersion )
-        {
-            split_free( file, map, nVersion );
-        }
-
-        template< typename Archive >
-        void save( Archive& file, const MIL_Automate::T_SupplyDotationStateMap& map, const unsigned int )
-        {
-            unsigned size = map.size();
-            file << size;
-            for( MIL_Automate::CIT_SupplyDotationStateMap it = map.begin(); it != map.end(); ++it )
-            {
-                file << it->first;
-                file << it->second;
-            }
-        }
-
-        template< typename Archive >
-        void load( Archive& file, MIL_Automate::T_SupplyDotationStateMap& map, const unsigned int )
-        {
-            unsigned int nNbr;
-
-            file >> nNbr;
-            while ( nNbr-- )
-            {
-                MIL_AutomateLOG* pLogAutomata;
-
-                file >> pLogAutomata;
-                file >> map[ pLogAutomata ];
-            }
-        }
-    }*/
 }
 
 // -----------------------------------------------------------------------------

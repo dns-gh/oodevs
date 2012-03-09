@@ -76,6 +76,7 @@ private:
     MIL_Object_ABC* pObjectPerceived_;
     const PHY_PerceptionLevel* pCurrentPerceptionLevel_;
     const PHY_PerceptionLevel* pPreviousPerceptionLevel_;
+    int counterTmp_;
     //@}
 };
 

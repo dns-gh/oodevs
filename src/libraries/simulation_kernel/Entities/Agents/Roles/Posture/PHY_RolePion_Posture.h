@@ -126,12 +126,12 @@ private:
     double rPostureCompletionPercentage_;
     double rElongationFactor_;
     double rTimingFactor_;
-    bool bDiscreteModeEnabled_;
     double rStealthFactor_;
-    bool bIsStealth_;
     // Installation
     double rInstallationState_;
     bool bInstallationSetUpInProgress_;
+    bool bDiscreteModeEnabled_;
+    bool bIsStealth_;
     // Network
     bool bInstallationStateHasChanged_;
     bool bPostureHasChanged_;

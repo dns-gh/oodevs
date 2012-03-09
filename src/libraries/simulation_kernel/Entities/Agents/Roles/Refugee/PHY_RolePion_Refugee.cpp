@@ -55,8 +55,8 @@ void load_construct_data( Archive& archive, PHY_RolePion_Refugee* role, const un
 // -----------------------------------------------------------------------------
 PHY_RolePion_Refugee::PHY_RolePion_Refugee( MIL_AgentPion& pion )
     : pion_       ( pion )
-    , bManaged_   ( false )
     , pCamp_      ( 0 )
+    , bManaged_   ( false )
     , bHasChanged_( true )
     , nbrHumansLodgingManaged_  ( 0 )
     , lodgingSatisfaction_      ( 0.0f )

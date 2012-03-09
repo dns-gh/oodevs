@@ -181,7 +181,8 @@ void PHY_RolePion_Humans::serialize( Archive& file, const unsigned int )
          & humansStates_
          & nNbrUsableHumans_
          & humansToUpdate_
-         & nTickRcMedicalQuerySent_;
+         & nTickRcMedicalQuerySent_
+         & nEvacuationMode_;
 }
 
 // -----------------------------------------------------------------------------

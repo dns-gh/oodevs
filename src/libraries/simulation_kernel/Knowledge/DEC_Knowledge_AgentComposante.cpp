@@ -66,6 +66,7 @@ void DEC_Knowledge_AgentComposante::load( MIL_CheckPointInArchive& file, const u
     pType_ = PHY_ComposanteTypePion::Find( nMosID );
     file >> bCanFire_
          >> bCanFireWhenUnloaded_
+         >> bMajor_
          >> nMajorScore_;
 }
 
@@ -80,6 +81,7 @@ void DEC_Knowledge_AgentComposante::save( MIL_CheckPointOutArchive& file, const 
     file << equipmenttype_val
          << bCanFire_
          << bCanFireWhenUnloaded_
+         << bMajor_
          << nMajorScore_;
 }
 

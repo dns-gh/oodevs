@@ -16,6 +16,7 @@
 #include "MIL_AgentServer.h"
 #include "KnowledgesVisitor_ABC.h"
 #include "MIL_KnowledgeGroup.h"
+#include "Checkpoints/SerializationTools.h"
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/MIL_Army.h"
 #include "MT_Tools/MT_ScipioException.h"
@@ -90,7 +91,7 @@ namespace boost
             for ( DEC_BlackBoard_CanContainKnowledgeAgent::CIT_KnowledgeAgentMap it = map.begin(); it != map.end(); ++it )
             {
                 file << it->first
-                     << *it->second;
+                     << it->second;
             }
         }
 
@@ -102,12 +103,8 @@ namespace boost
             while ( nNbr-- )
             {
                 MIL_Agent_ABC*       pAgent;
-                boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge( new DEC_Knowledge_Agent() );
-
-                file >> pAgent
-                     >> *pKnowledge;
-
-                map.insert( std::make_pair( pAgent, pKnowledge ) );
+                file >> pAgent;
+                file >> map[ pAgent ];
             }
         }
     }
@@ -121,15 +118,11 @@ void DEC_BlackBoard_CanContainKnowledgeAgent::load( MIL_CheckPointInArchive& fil
 {
     file >> const_cast< MIL_KnowledgeGroup*& >( pKnowledgeGroup_ )
          >> nLastCacheUpdateTick_;
-    std::size_t size;
-    file >> size;
-    for( std::size_t i = 0; i < size; ++i )
+    file >> realAgentMap_;
+    file >> previousAgentMap_;
+    for( CIT_KnowledgeAgentMap itKnowledge = realAgentMap_.begin(); itKnowledge != realAgentMap_.end(); ++itKnowledge )
     {
-        MIL_Agent_ABC* agent;
-        file >> agent;
-        realAgentMap_[ agent ].reset( new DEC_Knowledge_Agent() );
-        file >> *realAgentMap_[ agent ];
-        unitKnowledgeFromIDMap_.insert( std::make_pair( realAgentMap_[ agent ]->GetID(), realAgentMap_[ agent ] ) );
+        unitKnowledgeFromIDMap_[ itKnowledge->second->GetID() ] = itKnowledge->second;
     }
 }
 
@@ -141,14 +134,8 @@ void DEC_BlackBoard_CanContainKnowledgeAgent::save( MIL_CheckPointOutArchive& fi
 {
     file << pKnowledgeGroup_
          << nLastCacheUpdateTick_;
-    std::size_t size = realAgentMap_.size();
-    file << size;
-    for( CIT_KnowledgeAgentMap it = realAgentMap_.begin(); it != realAgentMap_.end(); ++it )
-    {
-        MIL_Agent_ABC* agent = const_cast<MIL_Agent_ABC*>( it->first );
-        file << agent;
-        file << *it->second;
-    }
+    file << realAgentMap_;
+    file << previousAgentMap_;
 }
 
 // -----------------------------------------------------------------------------

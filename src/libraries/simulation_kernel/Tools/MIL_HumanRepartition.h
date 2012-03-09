@@ -40,9 +40,6 @@ public:
     //@{
     template< typename T >
     void SendFullState( T& msg ) const;
-    template< typename T >
-    void UpdateNetwork( T& msg );
-    bool HasChanged() const;
     bool IsExist() const;
     float GetMale() const;
     float GetFemale() const;
@@ -63,7 +60,6 @@ private:
     float male_;
     float female_;
     float children_;
-    bool hasChanged_;
     //@}
 };
 
@@ -80,20 +76,6 @@ void MIL_HumanRepartition::SendFullState( T& msg ) const
     repartition.set_male( male_ );
     repartition.set_female( female_ );
     repartition.set_children( children_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: MIL_HumanRepartition::UpdateNetwork
-// Created: MMC 2011-10-07
-// -----------------------------------------------------------------------------
-template< typename T >
-void MIL_HumanRepartition::UpdateNetwork( T& msg )
-{
-    if( hasChanged_ )
-    {
-        SendFullState( msg );
-        hasChanged_ = false;
-    }
 }
 
 #endif // __MIL_HumanRepartition_h_

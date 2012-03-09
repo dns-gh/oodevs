@@ -41,6 +41,11 @@ DEC_AutomateDecision::DEC_AutomateDecision( MIL_Automate& automate, unsigned int
     , nRulesOfEngagementState_( eRoeStateNone )
     , nCloseCombatState_      ( eCloseCombatStateNone )
     , nOperationalState_      ( eOpStateOperational )
+    , fuseau_                 ( 0 )
+    , ePhaseMission_          ( 0 )
+    , eEtatEchelon_           ( 0 )
+    , eEtatDec_               ( 0 )
+    , eEtatLima_              ( 0 )
     , rDestruction_           ( 0 )
     , bStateHasChanged_       ( true )
     , bOrdreAttendre_         ( false )
@@ -49,10 +54,6 @@ DEC_AutomateDecision::DEC_AutomateDecision( MIL_Automate& automate, unsigned int
     , bOrdreDecrocher_        ( false )
     , bOrdreTenirSurLR_       ( false )
     , bOrdreTenir_            ( false )
-    , fuseau_                 ( 0 )
-    , eEtatEchelon_           ( 0 )
-    , eEtatDec_               ( 0 )
-    , eEtatLima_              ( 0 )
 {
     const DEC_Model_ABC& model = automate.GetType().GetModel();
     try

@@ -87,12 +87,12 @@ void load_construct_data( Archive& archive, PHY_RolePion_NBC* role, const unsign
 // -----------------------------------------------------------------------------
 PHY_RolePion_NBC::PHY_RolePion_NBC( MIL_AgentPion& pion )
     : pion_                  ( pion )
-    , bNbcProtectionSuitWorn_( false )
     , rContaminationState_   ( 0. )
     , rContaminationQuantity_( 0. )
+    , bNbcProtectionSuitWorn_( false )
     , bHasChanged_           ( true )
     , poisoned_              ( false )
-    , lastStatePoisoning_    ( false )
+    , intoxicated_           ( false )
     , immune_                ( false )
 {
     // NOTHING
@@ -116,8 +116,11 @@ void PHY_RolePion_NBC::serialize( Archive& file, const unsigned int )
 {
     file & ::boost::serialization::base_object< PHY_RoleInterface_NBC >( *this )
          & nbcAgentTypesContaminating_
-         & bNbcProtectionSuitWorn_
          & rContaminationState_
+         & rContaminationQuantity_
+         & bNbcProtectionSuitWorn_
+         & poisoned_
+         & intoxicated_
          & immune_;
 }
 
@@ -129,7 +132,7 @@ void PHY_RolePion_NBC::Poison( const MIL_ToxicEffectManipulator& contamination )
 {
     if( bNbcProtectionSuitWorn_ )
         return;
-    if( ! lastStatePoisoning_ && ! poisoned_ )
+    if( ! intoxicated_ && ! poisoned_ )
         MIL_Report::PostEvent( pion_, MIL_Report::eReport_Poisoned );
     poisoned_ = true;
     pion_.Apply( &nbc::ToxicEffectHandler_ABC::ApplyPoisonous, contamination );
@@ -257,7 +260,7 @@ bool PHY_RolePion_NBC::IsContaminated() const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_NBC::IsIntoxicated() const
 {
-    return lastStatePoisoning_;
+    return intoxicated_;
 }
 
 // -----------------------------------------------------------------------------
@@ -321,7 +324,7 @@ void PHY_RolePion_NBC::Update( bool /*bIsDead*/ )
         pion_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
     if( IsContaminated() )
         ContaminateOtherUnits();
-    lastStatePoisoning_ = poisoned_;
+    intoxicated_ = poisoned_;
     poisoned_ = false;
 }
 

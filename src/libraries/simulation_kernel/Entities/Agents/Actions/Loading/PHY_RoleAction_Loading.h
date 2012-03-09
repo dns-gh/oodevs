@@ -137,8 +137,8 @@ private:
     //@{
     MIL_Agent_ABC& pion_;
     E_State nState_;
-    bool bIsLoaded_;
     unsigned int nEndTimeStep_; // Load or unload
+    bool bIsLoaded_;
     bool bHasChanged_;
     bool bHasBeenUpdated_; // Le trigger Load / Unload ou RecoverCarriers a été appelé durant le pas de temps
     //@}

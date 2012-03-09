@@ -50,9 +50,9 @@ void load_construct_data( Archive& archive, PHY_RoleAction_Loading* role, const 
 // -----------------------------------------------------------------------------
 PHY_RoleAction_Loading::PHY_RoleAction_Loading( MIL_Agent_ABC& pion )
     : pion_           ( pion )
-    , bIsLoaded_      ( false )
     , nState_         ( eNothing )
     , nEndTimeStep_   ( 0 )
+    , bIsLoaded_      ( false )
     , bHasChanged_    ( true )
     , bHasBeenUpdated_( false )
 {

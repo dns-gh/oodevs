@@ -13,6 +13,8 @@
 #include <boost/noncopyable.hpp>
 
 class MIL_PopulationHumans;
+class MIL_CheckPointInArchive;
+class MIL_CheckPointOutArchive;
 
 // =============================================================================
 /** @class  MIL_ContaminationEffect
@@ -26,6 +28,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_ContaminationEffect( MIL_PopulationHumans& humans, unsigned int delay, unsigned int time );
+             MIL_ContaminationEffect();
     virtual ~MIL_ContaminationEffect();
     //@}
 
@@ -34,11 +37,19 @@ public:
     void Update( unsigned int time );
     //@}
 
+    //! @name CheckPoints
+    //@{
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
+    //@}
+
 private:
     //! @name Member data
     //@{
     unsigned int delay_;
-    MIL_PopulationHumans& humans_;
+    MIL_PopulationHumans* humans_;
     unsigned int time_;
     //@}
 };

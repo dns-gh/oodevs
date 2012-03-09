@@ -10,6 +10,8 @@
 #include "simulation_kernel_pch.h"
 #include "MIL_IntoxicationEffect.h"
 #include "MIL_PopulationHumans.h"
+#include "CheckPoints/MIL_CheckPointInArchive.h"
+#include "CheckPoints/MIL_CheckPointOutArchive.h"
 #include <boost/foreach.hpp>
 
 // -----------------------------------------------------------------------------
@@ -18,8 +20,18 @@
 // -----------------------------------------------------------------------------
 MIL_IntoxicationEffect::MIL_IntoxicationEffect( MIL_PopulationHumans& humans, unsigned int delay, unsigned int time )
     : delay_ ( delay )
-    , humans_( humans )
+    , humans_( &humans )
     , time_  ( time )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_IntoxicationEffect constructor
+// Created: JSR 2012-03-07
+// -----------------------------------------------------------------------------
+MIL_IntoxicationEffect::MIL_IntoxicationEffect()
+    : humans_( 0 )
 {
     // NOTHING
 }
@@ -39,10 +51,11 @@ MIL_IntoxicationEffect::~MIL_IntoxicationEffect()
 // -----------------------------------------------------------------------------
 void MIL_IntoxicationEffect::Update( unsigned int time )
 {
+    assert( humans_ );
     if( time - time_ >= delay_ )
     {
         BOOST_FOREACH( const T_Effect& effect, effects_ )
-            humans_.ApplyIntoxication( effect.first, effect.second );
+            humans_->ApplyIntoxication( effect.first, effect.second );
         time_ = time;
     }
 }
@@ -53,6 +66,31 @@ void MIL_IntoxicationEffect::Update( unsigned int time )
 // -----------------------------------------------------------------------------
 void MIL_IntoxicationEffect::Add( double woundedPercentage, double deadPercentage )
 {
+    assert( humans_ );
     effects_.push_back( std::make_pair( woundedPercentage, deadPercentage ) );
-    humans_.ApplyIntoxication( woundedPercentage, deadPercentage );
+    humans_->ApplyIntoxication( woundedPercentage, deadPercentage );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_IntoxicationEffect::load
+// Created: LDC 2012-03-07
+// -----------------------------------------------------------------------------
+void MIL_IntoxicationEffect::load( MIL_CheckPointInArchive& ar, const unsigned int )
+{
+    ar >> delay_;
+    ar >> humans_;
+    ar >> time_;
+    ar >> effects_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_IntoxicationEffect::save
+// Created: LDC 2012-03-07
+// -----------------------------------------------------------------------------
+void MIL_IntoxicationEffect::save( MIL_CheckPointOutArchive& ar, const unsigned int ) const
+{
+    ar << delay_;
+    ar << humans_;
+    ar << time_;
+    ar << effects_;
 }

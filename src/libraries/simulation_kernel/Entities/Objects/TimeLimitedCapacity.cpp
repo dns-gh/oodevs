@@ -51,7 +51,7 @@ TimeLimitedCapacity::~TimeLimitedCapacity()
 }
 
 // -----------------------------------------------------------------------------
-// Name: TimeLimitedCapacity::load
+// Name: TimeLimitedCapacity::serialize
 // Created: JCR 2008-07-03
 // -----------------------------------------------------------------------------
 template< typename Archive >

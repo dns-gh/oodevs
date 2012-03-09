@@ -26,6 +26,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_AgentPerception )
 // -----------------------------------------------------------------------------
 DEC_Knowledge_AgentPerception::DEC_Knowledge_AgentPerception( const MIL_Agent_ABC& agentPerceiving, MIL_Agent_ABC& agentPerceived )
     : DEC_Knowledge_ABC()
+    , nCreationTimeStep_         ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
     , pAgentPerceiving_          ( &agentPerceiving )
     , pAgentPerceived_           ( &agentPerceived )
     , pCurrentPerceptionLevel_   ( &PHY_PerceptionLevel::notSeen_ )
@@ -34,10 +35,9 @@ DEC_Knowledge_AgentPerception::DEC_Knowledge_AgentPerception( const MIL_Agent_AB
     , dataDetection_             ()
     , dataRecognition_           ()
     , dataIdentification_        ()
+    , nRecordModeDisablingDelay_ ( 0 )
     , bRecordModeEnabled_        ( false )
     , bPreviousRecordModeEnabled_( false )
-    , nCreationTimeStep_         ( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
-    , nRecordModeDisablingDelay_ ( 0 )
     , bAttacker_                 ( false )
 {
     // NOTHING

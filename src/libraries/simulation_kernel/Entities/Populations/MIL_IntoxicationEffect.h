@@ -14,6 +14,8 @@
 #include <vector>
 
 class MIL_PopulationHumans;
+class MIL_CheckPointInArchive;
+class MIL_CheckPointOutArchive;
 
 // =============================================================================
 /** @class  MIL_IntoxicationEffect
@@ -27,6 +29,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              MIL_IntoxicationEffect( MIL_PopulationHumans& humans, unsigned int delay, unsigned int time );
+             MIL_IntoxicationEffect();
     virtual ~MIL_IntoxicationEffect();
     //@}
 
@@ -34,6 +37,14 @@ public:
     //@{
     void Add( double woundedPercentage, double deadPercentage );
     void Update( unsigned int time );
+    //@}
+
+    //! @name CheckPoints
+    //@{
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
 private:
@@ -47,7 +58,7 @@ private:
     //! @name Member data
     //@{
     unsigned int delay_;
-    MIL_PopulationHumans& humans_;
+    MIL_PopulationHumans* humans_;
     unsigned int time_;
     T_Effects effects_;
     //@}

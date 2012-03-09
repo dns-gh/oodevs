@@ -148,11 +148,11 @@ private:
     MT_Vector2D alternateDestination_; // Used when the flow is splitted
     boost::shared_ptr< DEC_Population_Path > pHeadPath_;
     boost::shared_ptr< DEC_Population_Path > pTailPath_;
-    bool  bHeadMoveFinished_;
     MT_Vector2D direction_;
     double rSpeed_;
     T_PointList flowShape_; // begin() == head ...
     TER_Localisation location_; // For terrain
+    bool bHeadMoveFinished_;
     // Network
     bool bPathUpdated_;
     bool bFlowShapeUpdated_;

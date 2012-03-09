@@ -66,45 +66,6 @@ MIL_DotationSupplyManager::~MIL_DotationSupplyManager()
 // =============================================================================
 // CHEKPOINTS
 // =============================================================================
-namespace boost
-{
-    /*namespace serialization
-    {
-        template< typename Archive >
-        inline
-        void serialize( Archive& file, MIL_DotationSupplyManager::T_SupplyDotationStateMap& map, const unsigned int nVersion )
-        {
-            split_free( file, map, nVersion );
-        }
-
-        template< typename Archive >
-        void save( Archive& file, const MIL_DotationSupplyManager::T_SupplyDotationStateMap& map, const unsigned int )
-        {
-            std::size_t size = map.size();
-            file << size;
-            for ( MIL_DotationSupplyManager::CIT_SupplyDotationStateMap it = map.begin(); it != map.end(); ++it )
-            {
-                file << it->first;
-                file << it->second;
-            }
-        }
-
-        template< typename Archive >
-        void load( Archive& file, MIL_DotationSupplyManager::T_SupplyDotationStateMap& map, const unsigned int )
-        {
-            std::size_t nNbr;
-
-            file >> nNbr;
-            while ( nNbr-- )
-            {
-                MIL_AutomateLOG* pBrainLogistic;
-
-                file >> pBrainLogistic;
-                file >> map[ pBrainLogistic ];
-            }
-        }
-    }*/
-}
 
 // -----------------------------------------------------------------------------
 // Name: MIL_DotationSupplyManager::serialize

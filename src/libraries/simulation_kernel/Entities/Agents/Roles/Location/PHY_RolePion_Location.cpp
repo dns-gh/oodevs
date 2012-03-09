@@ -11,6 +11,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Location.h"
+#include "Checkpoints/SerializationTools.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
@@ -92,10 +93,9 @@ void PHY_RolePion_Location::load( MIL_CheckPointInArchive& file, const unsigned 
     MT_Vector2D vPosition;
     file >> boost::serialization::base_object< PHY_RoleInterface_Location >( *this )
          >> vDirection_
-         >> vPosition
+         >> pvPosition_
          >> bHasDoneMagicMove_
          >> bHasMove_;
-    pvPosition_.reset( new MT_Vector2D( vPosition ) );
 
     UpdatePatch();
 }
@@ -108,7 +108,7 @@ void PHY_RolePion_Location::save( MIL_CheckPointOutArchive& file, const unsigned
 {
     file << boost::serialization::base_object< PHY_RoleInterface_Location >( *this )
          << vDirection_
-         << *pvPosition_
+         << pvPosition_
          << bHasDoneMagicMove_
          << bHasMove_;
 }

@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "AnimatorAttribute.h"
 #include "Object.h"
+#include "Entities/Agents/MIL_Agent_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( AnimatorAttribute )
@@ -64,14 +65,35 @@ AnimatorAttribute& AnimatorAttribute::operator=( const AnimatorAttribute& rhs )
 }
 
 // -----------------------------------------------------------------------------
-// Name: template< typename Archive > void AnimatorAttribute::serialize
-// Created: JCR 2008-07-03
+// Name: template< typename Archive > void AnimatorAttribute::load
+// Created: LDC 2012-03-07
 // -----------------------------------------------------------------------------
-template< typename Archive >
-void AnimatorAttribute::serialize( Archive& file, const unsigned int )
+template< typename Archive > void AnimatorAttribute::load( Archive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectAttribute_ABC >( *this );
-    file & maxAnimators_;
+    file >> boost::serialization::base_object< ObjectAttribute_ABC >( *this );
+    file >> maxAnimators_;
+    std::size_t number;
+    file >> number;
+    while( number-- )
+    {
+        MIL_Agent_ABC* agent;
+        file >> agent;
+        animators_.insert( agent );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: template< typename Archive > void AnimatorAttribute::save
+// Created: LDC 2012-03-07
+// -----------------------------------------------------------------------------
+template< typename Archive > void AnimatorAttribute::save( Archive& file, const unsigned int ) const
+{
+    file << boost::serialization::base_object< ObjectAttribute_ABC >( *this );
+    file << maxAnimators_;
+    std::size_t number = animators_.size();
+    file << number;
+    for( CIT_AgentSet it = animators_.begin(); it != animators_.end(); ++it )
+        file << *it;
 }
 
 // -----------------------------------------------------------------------------

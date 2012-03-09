@@ -84,8 +84,8 @@ private:
     //@}
 
           MIL_AgentPion&        pion_;
-          bool                  bPrisoner_;
     const MIL_Object_ABC*       pPrison_;
+          bool                  bPrisoner_;
           bool                  bHasChanged_;
           unsigned int          nbrHumansLodgingManaged_;
 

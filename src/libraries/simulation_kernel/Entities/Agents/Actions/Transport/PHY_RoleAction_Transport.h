@@ -166,8 +166,8 @@ private:
     //! @name Member data
     //@{
     MIL_AgentPion&        transporter_;
-    bool                  bHasChanged_;
     E_State               nState_;
+    bool                  bHasChanged_;
     bool                  bLoadUnloadHasBeenUpdated_;
     T_TransportedPionMap  transportedPions_;
     double              rWeightTransported_;

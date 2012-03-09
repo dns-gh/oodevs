@@ -61,7 +61,8 @@ void InteractIfHeightCapacity::CanInteractWith( const MIL_Object_ABC& object, co
 template< typename Archive > void InteractIfHeightCapacity::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-         & boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this );
+         & boost::serialization::base_object< MIL_InteractiveContainer_ABC >( *this )
+         & height_;
 }
 
 // -----------------------------------------------------------------------------

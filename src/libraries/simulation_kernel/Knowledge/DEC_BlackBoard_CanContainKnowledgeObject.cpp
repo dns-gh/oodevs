@@ -15,10 +15,12 @@
 #include "DEC_KnowledgeSource_ABC.h"
 #include "DEC_Knowledge_Object.h"
 #include "KnowledgesVisitor_ABC.h"
+#include "Checkpoints/SerializationTools.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityManager_ABC.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
+#include "Knowledge/MIL_KnowledgeGroup.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include <boost/serialization/export.hpp>
 
@@ -84,8 +86,9 @@ namespace boost
             file << size;
             for ( DEC_BlackBoard_CanContainKnowledgeObject::CIT_KnowledgeObjectMap it = map.begin(); it != map.end(); ++it )
             {
-                file << it->first
-                     << *it->second;
+                boost::shared_ptr< DEC_Knowledge_Object > tmp = it->second;
+                file << it->first;
+                file << tmp;
             }
         }
 
@@ -98,8 +101,7 @@ namespace boost
             {
                 MIL_Object_ABC* pObject;
                 file >> pObject;
-                map[ pObject ].reset( new DEC_Knowledge_Object() );
-                file >> *map[ pObject ];
+                file >> map[ pObject ];
             }
         }
     }
@@ -110,6 +112,7 @@ namespace boost
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeObject::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
+    file >> pKnowledgeGroup_;
     file >> objectMap_;
     for( CIT_KnowledgeObjectMap it = objectMap_.begin(); it != objectMap_.end(); ++it )
     {
@@ -124,6 +127,7 @@ void DEC_BlackBoard_CanContainKnowledgeObject::load( MIL_CheckPointInArchive& fi
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeObject::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
+    file << pKnowledgeGroup_;
     file << objectMap_;
 }
 

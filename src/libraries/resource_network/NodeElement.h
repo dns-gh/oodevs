@@ -116,7 +116,6 @@ private:
     unsigned long resourceId_;
     std::string resourceName_;
     T_ResourceLinks links_;
-    bool isActivated_;
     unsigned int productionCapacity_;
     unsigned int stockCapacity_;
     unsigned int stockMaxCapacity_;
@@ -126,13 +125,14 @@ private:
     unsigned int maxConsumption_;
     unsigned int currentConsumption_;
     double externalConsumption_;
-    bool consumptionCritical_;
     float modifier_;
-    mutable bool needUpdate_;
-    bool magicChanged_;
     float functionalState_;
     mutable float oldFunctionalState_;
     float consumptionState_;
+    bool isActivated_;
+    bool consumptionCritical_;
+    mutable bool needUpdate_;
+    bool magicChanged_;
     //@}
 };
 

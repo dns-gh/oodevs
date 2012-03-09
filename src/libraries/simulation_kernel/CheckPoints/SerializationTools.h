@@ -10,9 +10,11 @@
 #ifndef __SerializationTools_h_
 #define __SerializationTools_h_
 
+
 // =============================================================================
 // BOOST AUTO_PTR serialization
 // =============================================================================
+
 
 namespace boost {
     namespace serialization {
@@ -55,38 +57,9 @@ inline void serialize(
     boost::serialization::split_free(ar, t, file_version);
 }
 
-template<class Archive, class T>
-inline void save(
-    Archive & ar,
-    const boost::shared_ptr<T> &t,
-    const unsigned int /*file_version*/
-){
-    // only the raw pointer has to be saved
-    // the ref count is rebuilt automatically on load
-    T* tmp = t.get();
-    ar << tmp;
-}
-
-template<class Archive, class T>
-inline void load(
-    Archive & ar,
-    boost::shared_ptr<T> &t,
-    const unsigned int /*file_version*/
-){
-    T *pTarget;
-    ar >> pTarget;
-    t.reset(pTarget);
-}
-
-template<class Archive, class T>
-inline void serialize(
-    Archive & ar,
-    boost::shared_ptr< T > & t,
-    const unsigned int file_version ){
-    boost::serialization::split_free(ar, t, file_version);
-}
-
     } // end namespace serialization
 } // end namespace boost
+
+#include <boost/serialization/shared_ptr.hpp>
 
 #endif // __SerializationTools_h_

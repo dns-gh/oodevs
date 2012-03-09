@@ -11,6 +11,7 @@
 #include "DEC_BlackBoard_CanContainKnowledgeUrban.h"
 #include "DEC_Knowledge_Urban.h"
 #include "MIL_AgentServer.h"
+#include "Checkpoints/SerializationTools.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityManager.h"
@@ -86,15 +87,7 @@ DEC_BlackBoard_CanContainKnowledgeUrban::~DEC_BlackBoard_CanContainKnowledgeUrba
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeUrban::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    std::size_t size = 0;
-    file >> size;
-    for( unsigned int i = 0; i < size; ++i )
-    {
-        boost::shared_ptr< DEC_Knowledge_Urban > pKnowledge;
-        DEC_Knowledge_Urban* knowledge;
-        file >> knowledge;
-        urbanMapFromConcrete_[ knowledge->GetObjectKnownId() ].reset( knowledge );
-    }
+    file >> urbanMapFromConcrete_;
 }
 
 // -----------------------------------------------------------------------------
@@ -103,13 +96,7 @@ void DEC_BlackBoard_CanContainKnowledgeUrban::load( MIL_CheckPointInArchive& fil
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeUrban::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
 {
-    std::size_t size = urbanMapFromConcrete_.size();
-    file << size;
-    for( CIT_KnowledgeUrbanMap it = urbanMapFromConcrete_.begin(); it != urbanMapFromConcrete_.end(); ++it )
-    {
-        DEC_Knowledge_Urban* knowledge = it->second.get();
-        file << knowledge;
-    }
+    file << urbanMapFromConcrete_;
 }
 
 // -----------------------------------------------------------------------------

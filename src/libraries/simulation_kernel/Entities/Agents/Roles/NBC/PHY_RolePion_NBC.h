@@ -104,12 +104,12 @@ private:
     //@{
     MIL_AgentPion& pion_;
     T_NbcAgentTypeSet nbcAgentTypesContaminating_;
-    bool bNbcProtectionSuitWorn_;
     double rContaminationState_;
     double rContaminationQuantity_;
+    bool bNbcProtectionSuitWorn_;
     bool bHasChanged_;
     bool poisoned_;
-    bool lastStatePoisoning_;
+    bool intoxicated_;
     bool immune_;
     //@}
 

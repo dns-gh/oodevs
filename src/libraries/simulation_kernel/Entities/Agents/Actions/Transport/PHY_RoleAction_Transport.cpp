@@ -82,12 +82,12 @@ PHY_RoleAction_Transport::sTransportData::sTransportData( double rTotalWeight, b
 // Created: NLD 2004-09-13
 // -----------------------------------------------------------------------------
 PHY_RoleAction_Transport::PHY_RoleAction_Transport( MIL_AgentPion& pion )
-    : transporter_             ( pion )
+    : transporter_              ( pion )
     , nState_                   ( eNothing )
     , bLoadUnloadHasBeenUpdated_( false )
-    , rWeightTransported_       ( 0. )
     , bHasChanged_              ( true )
     , transportedPions_         ()
+    , rWeightTransported_       ( 0. )
 {
     // NOTHING
 }

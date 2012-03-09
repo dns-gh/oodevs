@@ -15,6 +15,7 @@
 #include "PHY_HumanRank.h"
 #include "PHY_HumanWound.h"
 #include "MIL_Singletons.h"
+#include "Checkpoints/SerializationTools.h"
 #include "Entities/Agents/Roles/Logistic/PHY_MedicalHumanState.h"
 #include "Entities/Agents/Roles/Logistic/FuneralConsign.h"
 #include "Entities/Agents/Roles/Logistic/FuneralRequest.h"
@@ -111,7 +112,8 @@ void PHY_Human::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> bContamined_
          >> nLocation_
          >> pMedicalState_
-         >> nDeathTimeStep_;
+         >> nDeathTimeStep_
+         >> funeralConsign_;
 }
 
 // -----------------------------------------------------------------------------
@@ -132,7 +134,8 @@ void PHY_Human::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
          << bContamined_
          << nLocation_
          << pMedicalState_
-         << nDeathTimeStep_;
+         << nDeathTimeStep_
+         << funeralConsign_;
 }
 
 // -----------------------------------------------------------------------------
