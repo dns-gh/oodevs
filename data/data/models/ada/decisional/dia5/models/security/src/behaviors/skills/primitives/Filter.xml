@@ -16,7 +16,7 @@ Because filtering crowds with a checkpoint requires the presence of the agent, a
                 <simple name="numeric"/>
             </type>
             <default>
-                <number>1.0</number>
+                <number>100.0</number>
             </default>
         </parameter>
     </parameters>

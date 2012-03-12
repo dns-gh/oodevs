@@ -88,12 +88,12 @@ method "createLinkWith" (
 -- --------------------------------------------------------------------------------
 method "disableIt" (
     function( self )
-        return true -- $$$ TODO
+        return true -- $$$ MIA TODO
     end )
 
 method "enableIt" (
     function( self )
-        return true -- $$$ TODO
+        return true -- $$$ MIA TODO
     end )
 
 method "operateIt" ( masalife.brain.integration.startStopAction( 

@@ -16,7 +16,7 @@ The object won't be created and build if agent doesn't have the physical capabil
                 <simple name="numeric"/>
             </type>
             <default>
-                <number>1.0</number>
+                <number>100.0</number>
             </default>
         </parameter>
         <parameter name="removeWork">

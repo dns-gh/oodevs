@@ -15,7 +15,7 @@ Because the action of reinforcing another agent is &quot;permanent&quot; this mi
     <stages>
         <stage label="Reinforce" permanent="true">
             <skills>
-                <skill name="agent.behaviors.skills.actions.Reinforce">
+                <skill name="behaviors.skills.primitives.Reinforce">
                     <parameter name="entity">
                         <value>
                             <parameter>agent</parameter>

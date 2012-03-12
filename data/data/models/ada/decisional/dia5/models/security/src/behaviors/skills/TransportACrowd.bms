@@ -18,9 +18,6 @@ rootnode
         self.arrived = true
         if params.destination == self.params.loadingPosition then
             self.loadConcentration = true
-            if not self.params.crowd:hasConcentration( self.params.loadingPosition ) then
-                Feedback( self.feedbacks.done ) -- no concentration nearby
-            end
         end
         if params.destination == self.params.finalPosition then
             self.loadConcentration = false
@@ -42,6 +39,9 @@ rootnode
     -- Call when gent has finished to unload loaded humans on the final destination
     -- --------------------------------------------------------------------------------
     unloaded = function( self ) -- from skill.nodes.UnloadCrowdConcentration
+        if not self.params.crowd:hasConcentration( self.params.loadingPosition ) then
+            Feedback( self.feedbacks.done ) -- no concentration nearby
+        end
         self.arrived = false
         self.currentDestination = self.params.loadingPosition
     end,
@@ -53,8 +53,10 @@ rootnode
         self.arrived = false
         self.currentDestination = self.params.loadingPosition
         self.loadConcentration = true
-        if not meKnowledge:canTransportCrowd( self.params.crowd ) then
-            Feedback( self.feedbacks.failed ) -- agent has not the capability to transport crowds
+        if not meKnowledge:canTransportCrowd( self.params.crowd ) 
+        or not self.params.crowd:hasConcentration( self.params.loadingPosition ) then
+            Feedback( self.feedbacks.failed ) -- agent has not the capability to transport the crowd
+            return -- no need to evaluate the end of the skill
         end
     end,
 

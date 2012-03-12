@@ -1,4 +1,11 @@
 -- --------------------------------------------------------------------------------
+-- Distance for Crowd transportation
+-- $$$ MIA TEMP: change with a new DEC method that return the nearby concentration 
+-- of the issued crowd with the issued position
+-- --------------------------------------------------------------------------------
+local nearbyCrowdConcentrationDistance = 100 -- meters
+
+-- --------------------------------------------------------------------------------
 -- Communication treatment
 -- --------------------------------------------------------------------------------
 masalife.brain.communication.setMessageTreatment( "FollowMe",
@@ -203,7 +210,7 @@ method "equipWithNBCProtection" ( masalife.brain.integration.startStopAction(
 method "loadCrowdConcentration" ( masalife.brain.integration.startStopAction( 
 {
     start = function( self, crowd, destination )
-        local concentration = integration.getNearbyConcentration( crowd, destination, 10 )
+        local concentration = integration.getNearbyConcentration( crowd, destination, nearbyCrowdConcentrationDistance )
         if concentration ~= nil then
             return integration.startLoadCrowd( crowd, concentration )
         else
