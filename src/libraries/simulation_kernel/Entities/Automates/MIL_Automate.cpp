@@ -1096,6 +1096,8 @@ void MIL_Automate::OnReceiveMagicActionMoveTo( const sword::UnitMagicAction& msg
         throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     MT_Vector2D vPosTmp;
     MIL_Tools::ConvertCoordMosToSim( point.location().coordinates().elem( 0 ), vPosTmp );
+    if( !pPionPC_ )
+        throw NET_AsnException< sword::UnitActionAck_ErrorCode >( sword::UnitActionAck::error_invalid_parameter );
     const MT_Vector2D vTranslation( vPosTmp - pPionPC_->GetRole< PHY_RoleInterface_Location >().GetPosition() );
     for( CIT_PionVector itPion = pions_.begin(); itPion != pions_.end(); ++itPion )
         ( **itPion ).OnReceiveMagicActionMoveTo( ( **itPion ).GetRole< PHY_RoleInterface_Location >().GetPosition() + vTranslation );
