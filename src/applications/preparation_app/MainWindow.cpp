@@ -225,7 +225,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     addToolBar( locEditToolBar );
 
     // Dock widgets
-    pDockManager_.reset( new DockManager( this, controllers_, automats, formation, *icons, *modelBuilder_, *factory, model_, staticModel_, config_, *symbols, *strategy_, *paramLayer, *weatherLayer, *glProxy_ ) );
+    pDockManager_.reset( new DockManager( this, controllers_, automats, formation, *icons, *modelBuilder_, *factory, model_, staticModel_, config_, *symbols, *strategy_, *paramLayer, *weatherLayer, *glProxy_, *colorController_ ) );
 
     // Menu
     gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/preparation.xml" ) );

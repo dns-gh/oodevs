@@ -31,7 +31,7 @@ using namespace kernel;
 // -----------------------------------------------------------------------------
 CreationPanels::CreationPanels( QWidget* parent, kernel::Controllers& controllers, const ::StaticModel& staticModel, const Model& model,
                                 const tools::ExerciseConfig& config, gui::ItemFactory_ABC& factory, gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy,
-                                gui::ParametersLayer& paramLayer, gui::WeatherLayer& weatherLayer, gui::GlProxy& glProxy )
+                                gui::ParametersLayer& paramLayer, gui::WeatherLayer& weatherLayer, gui::GlProxy& glProxy, ColorController& colorController )
     : Panels( parent )
 {
     AddPanel( new gui::UnitsPanel ( this, *this, controllers, staticModel.types_, factory, icons, colorStrategy ) );
@@ -42,7 +42,7 @@ CreationPanels::CreationPanels( QWidget* parent, kernel::Controllers& controller
     AddPanel( objectCreationPanel_ );
     ghostPanel_ = new GhostsPanel( this, *this, controllers, model.GetSymbolsFactory(), icons, colorStrategy );
     AddPanel( ghostPanel_ );
-    AddPanel( new TemplatesPanel( this, *this, controllers, model.agents_, model.formations_, staticModel.types_ ) );
+    AddPanel( new TemplatesPanel( this, *this, controllers, model.agents_, model.formations_, staticModel.types_, colorController ) );
     AddPanel( new gui::DrawerPanel( this, *this, paramLayer, controllers, model.drawings_, config ) );
     AddPanel( new WeatherPanel( this, *this, controllers, staticModel.coordinateConverter_, weatherLayer ) );
 }

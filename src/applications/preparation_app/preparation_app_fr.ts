@@ -85,10 +85,6 @@
         <translation>Créer un groupe de connaissance</translation>
     </message>
     <message>
-        <source>Create sub knowledge group</source>
-        <translation>Créer un sous-groupe de connaissance</translation>
-    </message>
-    <message>
         <source>Change knowledge group</source>
         <translation>Changer de groupe de connaissance</translation>
     </message>

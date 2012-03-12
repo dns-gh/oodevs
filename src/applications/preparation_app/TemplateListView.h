@@ -13,9 +13,10 @@
 namespace kernel { class Entity_ABC; class AgentTypes; }
 namespace xml    { class xistream; }
 
-class HierarchyTemplate;
 class AgentsModel;
+class ColorController;
 class FormationModel;
+class HierarchyTemplate;
 
 // =============================================================================
 /** @class  TemplateListView
@@ -30,7 +31,7 @@ class TemplateListView : public Q3ListView
 public:
     //! @name Constructors/Destructor
     //@{
-             TemplateListView( QWidget* parent, AgentsModel& agents, FormationModel& formations, const kernel::AgentTypes& types );
+             TemplateListView( QWidget* parent, AgentsModel& agents, FormationModel& formations, const kernel::AgentTypes& types, ColorController& colorController );
     virtual ~TemplateListView();
     //@}
 
@@ -78,7 +79,7 @@ private:
     AgentsModel& agents_;
     FormationModel& formations_;
     const kernel::AgentTypes& types_;
-
+    ColorController& colorController_;
     T_Templates templates_;
     //@}
 };

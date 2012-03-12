@@ -85,10 +85,6 @@
         <translation>Crear grupo de información</translation>
     </message>
     <message>
-        <source>Create sub knowledge group</source>
-        <translation>Crear subgrupo de información</translation>
-    </message>
-    <message>
         <source>Change knowledge group</source>
         <translation type="unfinished"></translation>
     </message>

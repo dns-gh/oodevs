@@ -46,7 +46,7 @@ DockManager::DockManager( QMainWindow* parent, kernel::Controllers& controllers,
                           gui::ItemFactory_ABC& factory, Model& model, StaticModel& staticModel,
                           const tools::ExerciseConfig& config, gui::SymbolIcons& symbols,
                           gui::ColorStrategy_ABC& colorStrategy, gui::ParametersLayer& paramLayer, gui::WeatherLayer& weatherLayer,
-                          gui::GlProxy& glProxy )
+                          gui::GlProxy& glProxy, ColorController& colorController )
     : parent_            ( parent )
     , controllers_       ( controllers )
     , logisticListView_  ( 0 )
@@ -133,7 +133,7 @@ DockManager::DockManager( QMainWindow* parent, kernel::Controllers& controllers,
         pCreationDockWnd->setObjectName( "creation" );
         parent->addDockWidget( Qt::RightDockWidgetArea, pCreationDockWnd );
         pCreationDockWnd->hide();
-        pCreationPanel_ = new CreationPanels( pCreationDockWnd, controllers, staticModel, model, config, factory, symbols, colorStrategy, paramLayer, weatherLayer, glProxy );
+        pCreationPanel_ = new CreationPanels( pCreationDockWnd, controllers, staticModel, model, config, factory, symbols, colorStrategy, paramLayer, weatherLayer, glProxy, colorController );
         pCreationDockWnd->setWidget( pCreationPanel_ );
         pCreationDockWnd->setWindowTitle( tools::translate( "DockManager", "Creation" ) );
         dockWidgets_.push_back( pCreationDockWnd );

@@ -25,11 +25,12 @@ using namespace gui;
 // Name: TemplateListView constructor
 // Created: AGE 2007-05-30
 // -----------------------------------------------------------------------------
-TemplateListView::TemplateListView( QWidget* parent, AgentsModel& agents, FormationModel& formations, const kernel::AgentTypes& types )
-    : Q3ListView  ( parent )
-    , agents_    ( agents )
-    , formations_( formations )
-    , types_     ( types )
+TemplateListView::TemplateListView( QWidget* parent, AgentsModel& agents, FormationModel& formations, const kernel::AgentTypes& types, ColorController& colorController )
+    : Q3ListView( parent )
+    , agents_         ( agents )
+    , formations_     ( formations )
+    , types_          ( types )
+    , colorController_( colorController )
 {
     addColumn( tr( "Template" ) );
     setResizeMode( Q3ListView::AllColumns );
@@ -55,7 +56,7 @@ TemplateListView::~TemplateListView()
 // -----------------------------------------------------------------------------
 void TemplateListView::CreateTemplate( const kernel::Entity_ABC& entity )
 {
-    templates_.push_back( new HierarchyTemplate( agents_, formations_, entity ) );
+    templates_.push_back( new HierarchyTemplate( agents_, formations_, entity, true, colorController_ ) );
     CreateItem( *templates_.back() );
 }
 
@@ -155,7 +156,7 @@ void TemplateListView::SaveTemplates( const std::string& filename ) const
 // -----------------------------------------------------------------------------
 void TemplateListView::ReadTemplate( xml::xistream& input )
 {
-    templates_.push_back( new HierarchyTemplate( agents_, formations_, types_, input ) );
+    templates_.push_back( new HierarchyTemplate( agents_, formations_, types_, input, colorController_ ) );
     CreateItem( *templates_.back() );
 }
 
