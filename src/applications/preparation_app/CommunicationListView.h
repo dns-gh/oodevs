@@ -39,7 +39,6 @@ class CommunicationListView : public gui::HierarchyListView< kernel::Communicati
                             , public tools::ElementObserver_ABC< kernel::KnowledgeGroup_ABC >
                             , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
                             , public kernel::ContextMenuObserver_ABC< kernel::Automat_ABC > // LTO
-                            , public kernel::ContextMenuObserver_ABC< kernel::KnowledgeGroup_ABC > // LTO
                             , public gui::ChangeSuperior_ABC
 {
     Q_OBJECT
@@ -72,9 +71,6 @@ private:
     virtual void NotifyContextMenu( const kernel::Team_ABC& agent, kernel::ContextMenu& menu );
     virtual void NotifyContextMenu( const kernel::Automat_ABC& agent, kernel::ContextMenu& menu );
     virtual bool Drop( const kernel::Entity_ABC& draggedEntity, const kernel::Entity_ABC& target );
-    // LTO begin
-    virtual void NotifyContextMenu( const kernel::KnowledgeGroup_ABC& knowledgegroup, kernel::ContextMenu& menu );
-    // LTO end
     virtual void keyPressEvent( QKeyEvent* event );
    //@}
 

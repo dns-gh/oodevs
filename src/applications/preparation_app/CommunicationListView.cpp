@@ -155,8 +155,6 @@ bool CommunicationListView::CanChangeSuperior( const kernel::Entity_ABC& entity,
         const Entity_ABC* team = dynamic_cast< const Entity_ABC* >( &superior );
         if( com && com == team )
             return true;
-        else if( group && ( knowledgegroup != group ) )
-            return com == &superior.Get< CommunicationHierarchies >().GetTop();
     }
     return false;
 }
@@ -208,19 +206,6 @@ void CommunicationListView::NotifyContextMenu( const kernel::Automat_ABC& /*agen
 }
 
 // -----------------------------------------------------------------------------
-// Name: CommunicationListView::NotifyContextMenu
-// Created: FHD 2009-11-19
-// LTO
-// -----------------------------------------------------------------------------
-void CommunicationListView::NotifyContextMenu( const kernel::KnowledgeGroup_ABC& /*knowledgegroup*/, kernel::ContextMenu& menu )
-{
-    if( !isVisible() )
-        return;
-    menu.InsertItem( "Creation", tools::translate( "CommunicationListView", "Create sub knowledge group" ), &modelBuilder_, SLOT( OnCreateCommunication() ) );
-    menu.InsertItem( "Command", tr( "Change knowledge group" ), this, SLOT( OnChangeKnowledgeGroup() ) );
-}
-
-// -----------------------------------------------------------------------------
 // Name: CommunicationListView::Drop
 // Created: SBO 2006-09-26
 // LTO
@@ -246,15 +231,7 @@ bool CommunicationListView::Drop( const Entity_ABC& draggedEntity, const Entity_
         // moving a knowledgegroup under knowledgegroup
         const KnowledgeGroup_ABC* knowledgegroup = dynamic_cast< const KnowledgeGroup_ABC* >( &draggedEntity );
         const Entity_ABC* team = dynamic_cast< const Entity_ABC* >( &target );
-        if( knowledgegroup && group && ( knowledgegroup != group ) )
-        {
-            CommunicationHierarchies& com = const_cast< CommunicationHierarchies& >( knowledgegroup->Get< CommunicationHierarchies >() );
-            if( &com.GetTop() != &target.Get< CommunicationHierarchies >().GetTop() )
-                return false;
-            static_cast< AutomatCommunications& >( com ).ChangeSuperior( const_cast< Entity_ABC& >( target ) );
-            return true;
-        }
-        else if( knowledgegroup && team )
+        if( knowledgegroup && team )
         {
             // moving knowledgegroup under side
             CommunicationHierarchies& com = const_cast< CommunicationHierarchies& >( knowledgegroup->Get< CommunicationHierarchies >() );
