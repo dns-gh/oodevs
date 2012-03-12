@@ -70,6 +70,7 @@ public:
 
     virtual void HealAllHumans() = 0;
     virtual void ChangeHumansAvailability( const PHY_HumanRank& rank, unsigned int nNbrAvailable ) = 0;
+    virtual bool HasHumansAvailable( const PHY_HumanRank& rank ) = 0;
     //@}
 
 private:

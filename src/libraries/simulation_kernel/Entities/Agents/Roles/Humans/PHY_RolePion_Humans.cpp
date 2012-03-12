@@ -515,6 +515,15 @@ void PHY_RolePion_Humans::ChangeHumansAvailability( const PHY_HumanRank& rank, u
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Humans::HasHumansAvailable
+// Created: JSR 2012-03-12
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_Humans::HasHumansAvailable( const PHY_HumanRank& rank )
+{
+    return( GetNbrOperational( rank ) > 0 );
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Humans::CureAllHumans
 // Created: NLD 2004-09-21
 // -----------------------------------------------------------------------------

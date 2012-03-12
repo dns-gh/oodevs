@@ -80,6 +80,7 @@ public:
 
     virtual void HealAllHumans();
     virtual void ChangeHumansAvailability( const PHY_HumanRank& rank, unsigned int nNbrAvailable );
+    virtual bool HasHumansAvailable( const PHY_HumanRank& rank );
     //@}
 
     //! @name Network
