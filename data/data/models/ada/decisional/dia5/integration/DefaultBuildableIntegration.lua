@@ -311,7 +311,12 @@ end
 -- Create object on position
 -- --------------------------------------------------------------------------------
 integration.buildInstantlyObjectOn = function( typeObject, position )  -- A appeler une seule fois.
-    local localisation = DEC_Geometrie_ConvertirPointEnLocalisation( position.source )
+    local localisation
+    if masalife.brain.core.class.isOfType( position, sword.military.world.Area) then
+        localisation = position.source
+    else
+        localisation = DEC_Geometrie_ConvertirPointEnLocalisation( position.source )
+    end
     local object = integration.obtenirObjetProcheDe( localisation, S_TypeObject_ToString( typeObject ), 10 )
     if object == nil then -- need to create a object
         DEC_CreerObjetSansDelais( S_TypeObject_ToString( typeObject ), localisation )
@@ -321,7 +326,12 @@ end
 -- Destroy object on position
 -- --------------------------------------------------------------------------------
 integration.destroyInstantlyObjectOn = function( typeObject, position )
-    local localisation = DEC_Geometrie_ConvertirPointEnLocalisation( position.source )
+    local localisation
+    if masalife.brain.core.class.isOfType( position, sword.military.world.Area) then
+        localisation = position.source
+    else
+        localisation = DEC_Geometrie_ConvertirPointEnLocalisation( position.source )
+    end
     local object = integration.obtenirObjetProcheDe( localisation, S_TypeObject_ToString( typeObject ), 10 )
     if object  then
         DEC_DetruireObjetSansDelais( object ) -- destroy it
