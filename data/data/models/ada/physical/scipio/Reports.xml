@@ -564,7 +564,7 @@
   <report category="operational" id="392" message="Pas de position pour neutraliser les cibles"/>
   <report category="operational" id="393" message="Pas de position pour se mettre à couvert"/>
   <report category="operational" id="394" message="Pas de position pour observer les cibles"/>
-  <report category="operational" id="395" message="Pas de position pour atteindre les cibles"/>
+  <report category="operational" id="395" message="Pas de position pour atteindre les cibles ou les cibles sont dans un bloc urbain non trafficable"/>
   <report category="operational" id="396" message="Reconnaissance impossible (l'objectif n'est pas accessible)"/>
   <report category="operational" id="397" message="L'objectif n'est pas accessible"/>
   <report category="operational" id="398" message="Pas de point clés dans la zone"/>
@@ -636,4 +636,4 @@
   <report category="operational" id="449" message="L'unité n'a pas les capacités de débarquer"/>
   <report category="operational" id="450" message="Décrochage face à un incendie"/>
 </reports>
-<!-- signature="1286959489" -->
+<!-- signature="1594147702" -->
