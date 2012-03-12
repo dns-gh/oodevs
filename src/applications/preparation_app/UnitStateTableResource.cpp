@@ -11,9 +11,15 @@
 #include "UnitStateTableResource.h"
 #include "moc_UnitStateTableResource.cpp"
 #include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/AgentComposition.h"
+#include "clients_kernel/AgentType.h"
+#include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/ComponentType.h"
 #include "clients_kernel/ContextMenu.h"
+#include "clients_kernel/DotationCapacityType.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Entity_ABC.h"
+#include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "preparation/InitialState.h"
 #include "preparation/InitialStateResource.h"
@@ -63,6 +69,7 @@ namespace
 UnitStateTableResource::UnitStateTableResource( QWidget* parent, const StaticModel& staticModel )
     : gui::UnitStateTableResource( parent, tools::translate( "UnitStateTableResource", "Default capacity" ) )
     , staticModel_( staticModel )
+    , typeId_     ( 0 )
 {
     delegate_.AddSpinBoxOnColumn( eQuantity, 0, std::numeric_limits< int >::max(), 10 );
 }
@@ -144,7 +151,28 @@ void UnitStateTableResource::AddItem( int id )
 {
     const kernel::DotationType* dotation = staticModel_.objectTypes_.kernel::Resolver2< kernel::DotationType >::Find( id );
     assert( dotation != 0 );
-    AddLine( dotation->GetName().c_str(), dotation->GetCategoryDisplay().c_str() );
+    double consumption = 0;
+    kernel::AgentType* agent = staticModel_.types_.tools::Resolver< kernel::AgentType >::Find( typeId_ );
+    if( agent )
+    {
+        tools::Iterator< const kernel::AgentComposition& > agentCompositionIterator = agent->CreateIterator();
+        while( agentCompositionIterator.HasMoreElements() )
+        {
+            const kernel::AgentComposition& agentComposition = agentCompositionIterator.NextElement();
+            const kernel::EquipmentType& equipmentType = staticModel_.objectTypes_.tools::Resolver< kernel::EquipmentType >::Get( agentComposition.GetType().GetId() );
+            tools::Iterator< const kernel::DotationCapacityType& > dotationIterator = equipmentType.CreateResourcesIterator();
+            while( dotationIterator.HasMoreElements() )
+            {
+                const kernel::DotationCapacityType& type = dotationIterator.NextElement();
+                if( type.GetName() == dotation->GetName() )
+                {
+                    consumption += agentComposition.GetCount() * type.GetNormalizedConsumption();
+                    break;
+                }
+            }
+        }
+    }
+    AddLine( dotation->GetName().c_str(), dotation->GetCategoryDisplay().c_str(), 0, 0, 0, consumption );
 }
 
 // -----------------------------------------------------------------------------
@@ -194,6 +222,8 @@ bool UnitStateTableResource::HasChanged( kernel::Entity_ABC& selected ) const
 void UnitStateTableResource::Load( kernel::Entity_ABC& selected )
 {
     assert( selected.GetTypeName() == kernel::Agent_ABC::typeName_ );
+    kernel::Agent_ABC& agent = static_cast< kernel::Agent_ABC& >( selected );
+    typeId_ = agent.GetType().GetId();
     InitialState& extension = selected.Get< InitialState >();
     for( InitialState::CIT_Resources it = extension.resources_.begin(); it != extension.resources_.end(); ++it )
         MergeLine( it->name_, it->category_, it->number_, it->maximum_, it->threshold_, it->consumption_ );
@@ -210,11 +240,10 @@ void UnitStateTableResource::Commit( kernel::Entity_ABC& selected ) const
     extension.resources_.clear();
 
     for( int row = 0; row < dataModel_.rowCount(); ++row )
-        if( GetUserData( row, eQuantity ).toUInt() != 0 )
-            extension.resources_.push_back( InitialStateResource( GetDisplayData( row, eName ),
-                                                                  GetDisplayData( row, eCategory ),
-                                                                  GetUserData( row, eQuantity ).toUInt(),
-                                                                  GetUserData( row, eMaximum ).toUInt(),
-                                                                  GetUserData( row, eThreshold ).toDouble(),
-                                                                  GetUserData( row, eConsumption ).toDouble() ) );
+        extension.resources_.push_back( InitialStateResource( GetDisplayData( row, eName ),
+                                                              GetDisplayData( row, eCategory ),
+                                                              GetUserData( row, eQuantity ).toUInt(),
+                                                              GetUserData( row, eMaximum ).toUInt(),
+                                                              GetUserData( row, eThreshold ).toDouble(),
+                                                              GetUserData( row, eConsumption ).toDouble() ) );
 }

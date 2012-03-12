@@ -118,6 +118,7 @@ void InitialState::ReadResource( xml::xistream& xis )
 {
     InitialStateResource resource = InitialStateResource( xis );
     resource.category_ = RetrieveResourceCategory( resource.name_ );
+    resource.consumption_ = RetrieveNormalizedConsumption( resource.name_ );
     resources_.push_back( resource );
 }
 
@@ -265,6 +266,33 @@ const QString InitialState::RetrieveResourceCategory( const QString& resourceNam
 {
     const kernel::DotationType& category = staticModel_.objectTypes_.kernel::Resolver2< kernel::DotationType >::Get( resourceName.ascii() );
     return category.GetCategoryName().c_str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: InitialState::RetrieveNormalizedConsumption
+// Created: JSR 2012-03-09
+// -----------------------------------------------------------------------------
+double InitialState::RetrieveNormalizedConsumption( const QString& resourceName ) const
+{
+    double normalizedConsumption = 0;
+    kernel::AgentType& agent = staticModel_.types_.tools::Resolver< kernel::AgentType >::Get( typeId_ );
+    tools::Iterator< const kernel::AgentComposition& > agentCompositionIterator = agent.CreateIterator();
+    while( agentCompositionIterator.HasMoreElements() )
+    {
+        const kernel::AgentComposition& agentComposition = agentCompositionIterator.NextElement();
+        const kernel::EquipmentType& equipmentType = staticModel_.objectTypes_.tools::Resolver< kernel::EquipmentType >::Get( agentComposition.GetType().GetId() );
+        tools::Iterator< const kernel::DotationCapacityType& > dotationIterator = equipmentType.CreateResourcesIterator();
+        while( dotationIterator.HasMoreElements() )
+        {
+            const kernel::DotationCapacityType& type = dotationIterator.NextElement();
+            if( type.GetName() == resourceName.ascii() )
+            {
+                normalizedConsumption += agentComposition.GetCount() * type.GetNormalizedConsumption();
+                break;
+            }
+        }
+    }
+    return normalizedConsumption;
 }
 
 // -----------------------------------------------------------------------------

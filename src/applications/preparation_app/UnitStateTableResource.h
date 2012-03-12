@@ -62,6 +62,7 @@ private:
     //! @name Member data
     //@{
     const StaticModel& staticModel_;
+    unsigned int typeId_;
     //@}
 };
 

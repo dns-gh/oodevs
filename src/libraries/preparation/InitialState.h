@@ -86,6 +86,7 @@ private:
     bool IsEquipmentsSaveNeeded() const;
     bool IsResourcesSaveNeeded() const;
     const QString RetrieveResourceCategory( const QString& resourceName ) const;
+    double RetrieveNormalizedConsumption( const QString& resourceName ) const;
     //@}
 
 public:
