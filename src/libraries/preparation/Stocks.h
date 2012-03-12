@@ -46,13 +46,11 @@ public:
              Stocks( kernel::Controller& controller, kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dico );
              Stocks( xml::xistream& xis, kernel::Controller& controller, kernel::Entity_ABC& entity, const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver, kernel::PropertiesDictionary& dico );
     virtual ~Stocks();
-    void SetDotation( const kernel::DotationType& type, unsigned int quantity );
-    void AddDotationValue( const kernel::DotationType& type, unsigned int quantity );
+    void SetDotation( const kernel::DotationType& type, unsigned int quantity, bool add );
     void DeleteAll();
     bool HasDotations() const;
     void Clear();
-    double ComputeWeight();
-    double ComputeVolume();
+    void ComputeWeightAndVolume( const std::string& dotationNature, double& weight, double& volume );
     //@}
 
 private:

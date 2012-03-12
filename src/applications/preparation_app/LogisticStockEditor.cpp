@@ -244,11 +244,8 @@ void LogisticStockEditor::SupplyHierarchy( kernel::SafePointer< kernel::Entity_A
             if( dataModel_->item( row )->checkState() == Qt::Checked )
                 SupplyLogisticBaseStocks( pLogHierarchy->GetEntity(), supplyClass, requirements );
         }
-        
-        static const unsigned distribPass = 10;
-        static const double distribFactor = 1. / static_cast< double >( distribPass );
-        for( unsigned int i = 0; i < distribPass; ++i )
-            SupplyStocks( entStocks, requirements, distribFactor, i > 0 );
+
+        SupplyStocks( entStocks, requirements );
     }
 }
 
@@ -349,10 +346,7 @@ void LogisticStockEditor::ComputeRequirements( const kernel::Agent_ABC& agent, c
             const kernel::DotationCapacityType& dotationCapacity = resourcesIterator.NextElement();
             const kernel::DotationType& category = staticModel_.objectTypes_.kernel::Resolver2< kernel::DotationType >::Get( dotationCapacity.GetName() );
             if( &category.GetLogisticSupplyClass() == &logType )
-            {
-                const double normConso = dotationCapacity.GetNormalizedConsumption();
-                requirements[ &category ] += normConso * agentComposition.GetCount();
-            }
+                requirements[ &category ] += agentComposition.GetCount() * dotationCapacity.GetNormalizedConsumption();
         }
     }
 }
@@ -380,71 +374,111 @@ void LogisticStockEditor::ComputeAvailableCapacity( const kernel::Agent_ABC& ent
             }
     }
     Stocks& stocks = const_cast< Stocks& >( entStock.Get< Stocks >() );
-    weight = std::max( weightCapacity - stocks.ComputeWeight(), 0. );
-    volume = std::max( volumeCapacity - stocks.ComputeVolume(), 0. );
+    double stockWeight;
+    double stockVolume;
+    stocks.ComputeWeightAndVolume( dotationType.GetNature(), stockWeight, stockVolume );
+    weight = std::max( weightCapacity - stockWeight, 0. );
+    volume = std::max( volumeCapacity - stockVolume, 0. );
 }
 
 // -----------------------------------------------------------------------------
 // Name: LogisticStockEditor::DoDotationDistribution
 // Created: MMC 2012-02-17
 // -----------------------------------------------------------------------------
-unsigned int LogisticStockEditor::DoDotationDistribution( std::set< const kernel::Agent_ABC* >& entStocks, const kernel::DotationType& dotationType, unsigned int quantity, bool additive /* = false */ )
+double LogisticStockEditor::DoDotationDistribution( std::set< const kernel::Agent_ABC* >& entStocks, const kernel::DotationType& dotationType, double quantity )
 {
-    unsigned int surplus = 0;
-    double quantityRequest = static_cast< double >( quantity );
+    if( entStocks.empty() || quantity < entStocks.size() )
+        return quantity;
+
+    int quantityMean = static_cast< int >( quantity / entStocks.size() );
+
+    std::set< const kernel::Agent_ABC* > toErase;
     for( std::set< const kernel::Agent_ABC* >::iterator itEnt = entStocks.begin(); itEnt != entStocks.end(); ++itEnt )
     {
-        const kernel::Agent_ABC& entStock = **itEnt;                
-        if( IsStockValid( entStock, dotationType ) )
+        const kernel::Agent_ABC& entStock = **itEnt;
+        double weightCapacity, volumeCapacity;
+        ComputeAvailableCapacity( entStock, dotationType, weightCapacity, volumeCapacity );
+        double dotationWeight = quantityMean * dotationType.GetUnitWeight();
+        double dotationVolume = quantityMean * dotationType.GetUnitVolume();
+        if( dotationWeight > 0 && dotationVolume > 0 && ( dotationWeight >= weightCapacity || dotationVolume >= volumeCapacity ) )
         {
-            double weightCapacity, volumeCapacity;
-            ComputeAvailableCapacity( entStock, dotationType, weightCapacity, volumeCapacity );
-            double dotationWeight = quantityRequest * dotationType.GetUnitWeight();
-            double dotationVolume = quantityRequest * dotationType.GetUnitVolume();                        
-            double quantitySupply = quantityRequest;
-            if( dotationWeight > weightCapacity && dotationType.GetUnitWeight() > 0. )
-                quantitySupply = weightCapacity / dotationType.GetUnitWeight();
-            if( dotationVolume > volumeCapacity && dotationType.GetUnitVolume() > 0. )
-                quantitySupply = std::min( volumeCapacity / dotationType.GetUnitVolume(), quantitySupply );
-            unsigned int supply = static_cast< unsigned int >( std::max( quantitySupply, 0. ) );
-            if( supply < quantity )
-                surplus += quantity - supply;
-
             Stocks& stocks = const_cast< Stocks& >( entStock.Get< Stocks >() );
-            if( additive )
-                stocks.AddDotationValue( dotationType, supply );
-            else
-                stocks.SetDotation( dotationType, supply );
+            int quantitySupply = static_cast< int >( std::min( weightCapacity / dotationType.GetUnitWeight(), volumeCapacity / dotationType.GetUnitVolume() ) );
+            stocks.SetDotation( dotationType, quantitySupply, true );
+            toErase.insert( *itEnt );
+            quantity -= quantitySupply;
         }
     }
-    return surplus;
+
+    if( toErase.empty() )
+    {
+        for( std::set< const kernel::Agent_ABC* >::iterator itEnt = entStocks.begin(); itEnt != entStocks.end(); ++itEnt )
+        {
+            const kernel::Agent_ABC& entStock = **itEnt;
+            Stocks& stocks = const_cast< Stocks& >( entStock.Get< Stocks >() );
+            stocks.SetDotation( dotationType, quantityMean, true );
+            quantity -= quantityMean;
+        }
+        return quantity;
+    }
+
+    for( std::set< const kernel::Agent_ABC* >::const_iterator itErase = toErase.begin(); itErase != toErase.end(); ++itErase )
+        entStocks.erase( *itErase );
+
+    return DoDotationDistribution( entStocks, dotationType, quantity );
 };
 
 // -----------------------------------------------------------------------------
 // Name: LogisticStockEditor::SupplyStocks
 // Created: MMC 2011-08-31
 // -----------------------------------------------------------------------------
-void LogisticStockEditor::SupplyStocks( std::set< const kernel::Agent_ABC* >& entStocks, const T_Requirements& requirements, double distribFactor, bool additive /* = false */ )
+void LogisticStockEditor::SupplyStocks( std::set< const kernel::Agent_ABC* >& entStocks, const T_Requirements& requirements )
 {
-    T_DaysMap days;
-    tools::Iterator< const kernel::LogisticSupplyClass& > itLogClass = staticModel_.objectTypes_.tools::StringResolver< kernel::LogisticSupplyClass >::CreateIterator();
-    for( int row = 0; itLogClass.HasMoreElements(); ++row )
-    {
-        const kernel::LogisticSupplyClass& supplyClass = itLogClass.NextElement();
-        if( dataModel_->item( row )->checkState() == Qt::Checked )
-            days[ &supplyClass ] = dataModel_->item( row, 1 )->data( Qt::EditRole ).asInt();
-    }
-
     for( CIT_Requirements itRequired = requirements.begin(); itRequired != requirements.end(); ++itRequired )
     {
         const kernel::DotationType& dotationType = *itRequired->first;
-        CIT_DaysMap itDays = days.find( &dotationType.GetLogisticSupplyClass() );
-        if( itDays != days.end() )
+        
+        tools::Iterator< const kernel::LogisticSupplyClass& > itLogClass = staticModel_.objectTypes_.tools::StringResolver< kernel::LogisticSupplyClass >::CreateIterator();
+        int row = 0;
+        for( ; itLogClass.HasMoreElements(); ++row )
         {
-            unsigned int quantity = static_cast< unsigned int>( ceil( static_cast< double >( itDays->second ) * itRequired->second * distribFactor ) );
-            unsigned int surplus = DoDotationDistribution( entStocks, dotationType, quantity, additive );
-            if( surplus > 0 )
-                DoDotationDistribution( entStocks, dotationType, surplus, true );       
+            const kernel::LogisticSupplyClass& supplyClass = itLogClass.NextElement();
+            if( supplyClass.GetId() == dotationType.GetLogisticSupplyClass().GetId() )
+                break;
+        }
+
+        if( dataModel_->item( row )->checkState() == Qt::Checked )
+        {
+            int days = dataModel_->item( row, 1 )->data( Qt::EditRole ).asInt();
+            double quantity = static_cast< unsigned int >( days * itRequired->second + 0.5 );
+            if( quantity == 0 )
+                continue;
+            std::set< const kernel::Agent_ABC* > entDotationStocks;
+            for( std::set< const kernel::Agent_ABC* >::const_iterator it = entStocks.begin(); it != entStocks.end(); ++it )
+                if( IsStockValid( **it, dotationType ) )
+                {
+                    Stocks& stocks = const_cast< Stocks& >( ( *it )->Get< Stocks >() );
+                    stocks.SetDotation( dotationType, 0, false );
+                    entDotationStocks.insert( *it );
+                }
+            std::set< const kernel::Agent_ABC* > copyEntDotationStocks = entDotationStocks;
+            double surplus = DoDotationDistribution( entDotationStocks, dotationType, quantity );
+            if( surplus >= 1 && copyEntDotationStocks.size() > 0 )
+            {
+                int remaining = static_cast< int >( surplus );
+                int size = static_cast< int >( copyEntDotationStocks.size() );
+                int mean =  remaining / size;
+                int rest = remaining - size * mean;
+                for( std::set< const kernel::Agent_ABC* >::iterator itEnt = copyEntDotationStocks.begin(); itEnt != copyEntDotationStocks.end(); ++itEnt )
+                {
+                    const kernel::Agent_ABC& entStock = **itEnt;
+                    Stocks& stocks = const_cast< Stocks& >( entStock.Get< Stocks >() );
+                    stocks.SetDotation( dotationType, mean + rest, true );
+                    remaining -= mean + rest;
+                    rest = 0;
+                }
+                assert( remaining == 0);
+            }
         }
     }
 }

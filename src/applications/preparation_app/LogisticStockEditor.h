@@ -67,8 +67,6 @@ public:
 private:
     //! @name Types
     //@{
-    typedef std::map< const kernel::LogisticSupplyClass*, int > T_DaysMap;
-    typedef T_DaysMap::const_iterator                         CIT_DaysMap;
     typedef std::map< const kernel::DotationType*, double > T_Requirements;
     typedef T_Requirements::const_iterator                CIT_Requirements;
     enum
@@ -87,11 +85,11 @@ private:
     void SupplyLogisticBaseStocks( const kernel::Entity_ABC& logBase, const kernel::LogisticSupplyClass& logType, T_Requirements& requirements );
     void FindStocks( const kernel::Entity_ABC& rootEntity , const kernel::Entity_ABC& entity, std::set< const kernel::Agent_ABC* >& entStocks );
     void ComputeRequirements( const kernel::Agent_ABC& agent, const kernel::LogisticSupplyClass& logType, T_Requirements& requirements );
-    void SupplyStocks( std::set< const kernel::Agent_ABC* >& entStocks, const T_Requirements& requirements, double distribFactor, bool additive = false );
+    void SupplyStocks( std::set< const kernel::Agent_ABC* >& entStocks, const T_Requirements& requirements );
     bool IsStockValid(  const kernel::Agent_ABC& stockUnit, const kernel::DotationType& dotation );
     void FillSupplyRequirements( const kernel::Entity_ABC& entity,const kernel::LogisticSupplyClass& logType, T_Requirements& requirements );
     void ComputeAvailableCapacity( const kernel::Agent_ABC& entStock, const kernel::DotationType& dotationType, double& weight, double& volume );
-    unsigned int DoDotationDistribution( std::set< const kernel::Agent_ABC* >& entStocks, const kernel::DotationType& dotationType, unsigned int quantity, bool additive = false );
+    double DoDotationDistribution( std::set< const kernel::Agent_ABC* >& entStocks, const kernel::DotationType& dotationType, double quantity );
     //@}
 
 private slots:
