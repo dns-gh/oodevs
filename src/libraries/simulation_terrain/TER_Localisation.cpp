@@ -411,7 +411,6 @@ bool TER_Localisation::Reset( const T_PointList& pointList )
 //-----------------------------------------------------------------------------
 void TER_Localisation::Reset( const TER_Localisation& localisation, double pointSize )
 {
-    Reset();
     nType_         = localisation.GetType        ();
     pointVector_   = localisation.GetPoints      ();
     bWasCircle_    = localisation.WasACircle     ();
@@ -932,8 +931,7 @@ void TER_Localisation::Scale( double rDist )
     }
     else if( nType_ == ePoint )
     {
-            static double rRectSize = 250;
-            double rNewRectSize = rRectSize + rDist;
+            double rNewRectSize = boundingBox_.GetWidth()/2 + rDist;
             // Transformation du point en rectangle
             MT_Vector2D vPos = pointVector_.front();
             pointVector_.clear(); pointVector_.reserve( 5 );

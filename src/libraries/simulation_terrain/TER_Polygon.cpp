@@ -112,6 +112,8 @@ TER_Polygon::~TER_Polygon()
 //-----------------------------------------------------------------------------
 TER_Polygon& TER_Polygon::operator=( const TER_Polygon& rhs )
 {
+    if( &rhs == this )
+        return *this;
     rhs.pData_->ref();                // beware of r = r
     Detach();
     pData_ = rhs.pData_;
