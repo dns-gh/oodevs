@@ -11,6 +11,7 @@
 #include "DEC_Gen_Object.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/MIL_EntityManager_ABC.h"
+#include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_AsnException.h"
 #include "protocol/Protocol.h"
@@ -24,6 +25,18 @@ BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Gen_Object )
 DEC_Gen_Object::DEC_Gen_Object()
 {
     // NOTHING
+}
+
+namespace
+{
+    void SetLocationSize( const MIL_EntityManager_ABC& entityManager, const std::string& type, TER_Localisation& localisation )
+    {
+        if( !type.empty() && localisation.GetType() == TER_Localisation::ePoint )
+        {
+            const MIL_ObjectType_ABC& objectType = entityManager.FindObjectType( type );
+            localisation.Reset( localisation, objectType.GetPointSize() );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -44,6 +57,7 @@ DEC_Gen_Object::DEC_Gen_Object( const sword::PlannedWork& msg, const MIL_EntityM
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
     if( !NET_ASN_Tools::ReadLocation( msg.position(), localisation_ ) )
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
+    SetLocationSize( entityManager, type_, localisation_ );
     if( msg.combat_train().id() != 0 )
     {
         pTC2_ = entityManager.FindAutomate( msg.combat_train().id() );
@@ -70,6 +84,7 @@ DEC_Gen_Object::DEC_Gen_Object( const sword::PlannedWork& msg, const MIL_EntityM
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
     if( !NET_ASN_Tools::ReadLocation( msg.position(), localisation_ ) )
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_invalid_parameter );
+    SetLocationSize( entityManager, type_, localisation_ );
     if( msg.combat_train().id() != 0 )
     {
         pTC2_ = entityManager.FindAutomate( msg.combat_train().id() );
