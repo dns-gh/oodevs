@@ -662,6 +662,7 @@ bool PHY_RolePion_Dotations::HasDotationForFiring( const PHY_DotationCategory& c
 {
     FireData firerWeapons( category );
     std::auto_ptr< firing::WeaponAvailabilityComputer_ABC > weaponAvailabilityComputer( pion_.GetAlgorithms().weaponAvailabilityComputerFactory_->Create( firerWeapons ) );
+    pion_.Execute( *weaponAvailabilityComputer );
     return( GetDotationNumber( category ) >= iterations * firerWeapons.number_ );
 }
 
