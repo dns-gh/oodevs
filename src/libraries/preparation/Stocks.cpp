@@ -77,11 +77,16 @@ void Stocks::ReadDotation( xml::xistream& xis, const tools::Resolver_ABC< Dotati
 // Name: Stocks::SetDotation
 // Created: MMC 2011-08-09
 // -----------------------------------------------------------------------------
-void Stocks::SetDotation( const kernel::DotationType& type, unsigned int quantity )
+void Stocks::SetDotation( const kernel::DotationType& type, unsigned int quantity, bool add )
 {
     Dotation* pDotation = Find( type.GetId() );
     if( pDotation )
-        pDotation->quantity_ = quantity;
+    {
+        if( add )
+            pDotation->quantity_ += quantity;
+        else
+            pDotation->quantity_ = quantity;
+    }
     else
     {
         Dotation* pDotation = new Dotation( type, quantity );
@@ -89,18 +94,6 @@ void Stocks::SetDotation( const kernel::DotationType& type, unsigned int quantit
         Register( pDotation->type_.GetId(), *pDotation );
         controller_.Update( *this );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Stocks::AddDotationValue
-// Created: MMC 2011-08-09
-// -----------------------------------------------------------------------------
-void Stocks::AddDotationValue( const kernel::DotationType& type, unsigned int quantity )
-{
-    Dotation* pDotation = Find( type.GetId() );
-    if ( pDotation )
-        quantity += pDotation->quantity_;
-    SetDotation( type, quantity );
 }
 
 // -----------------------------------------------------------------------------
@@ -141,39 +134,24 @@ bool Stocks::HasDotations() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Stocks::ComputeWeight
-// Created: MMC 2012-02-17
+// Name: Stocks::ComputeWeightAndVolume
+// Created: JSR 2012-03-08
 // -----------------------------------------------------------------------------
-double Stocks::ComputeWeight()
+void Stocks::ComputeWeightAndVolume( const std::string& dotationNature, double& weight, double& volume )
 {
-    double weight = 0.;
+    weight = 0;
+    volume = 0;
     if( item_ )
     {
         tools::Iterator< const Dotation& > it = item_->CreateIterator();
         while( it.HasMoreElements() )
         {
             const Dotation& dotation = it.NextElement();
-            weight += static_cast< double >( dotation.quantity_ ) * dotation.type_.GetUnitWeight();
+            if( dotation.type_.GetNature() == dotationNature )
+            {
+                weight += dotation.quantity_ * dotation.type_.GetUnitWeight();
+                volume += dotation.quantity_ * dotation.type_.GetUnitVolume();
+            }
         }
     }
-    return weight;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Stocks::ComputeVolume
-// Created: MMC 2012-02-17
-// -----------------------------------------------------------------------------
-double Stocks::ComputeVolume()
-{
-    double volume = 0.;
-    if( item_ )
-    {
-        tools::Iterator< const Dotation& > it = item_->CreateIterator();
-        while( it.HasMoreElements() )
-        {
-            const Dotation& dotation = it.NextElement();
-            volume += static_cast< double >( dotation.quantity_ ) * dotation.type_.GetUnitVolume();
-        }
-    }
-    return volume;
 }
