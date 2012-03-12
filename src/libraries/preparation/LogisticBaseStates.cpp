@@ -13,10 +13,8 @@
 #include "Dotation.h"
 #include "DotationsItem.h"
 #include "clients_kernel/DotationType.h"
-#include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Positions.h"
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
@@ -73,12 +71,10 @@ void LogisticBaseStates::Draw( const geometry::Point2f& where, const kernel::Vie
     if( ! displayLinks && ! displayMissing )
         return;
 
-    const kernel::Formation_ABC& formation = static_cast< const kernel::Formation_ABC& >( GetEntity() );
-
     glPushAttrib( GL_LINE_BIT | GL_CURRENT_BIT );
     glLineWidth( 3.f );
     glColor4f( COLOR_YELLOW );
-    DrawLink( where, tools, 0.5f, displayLinks, displayMissing && formation.GetLogisticLevel()!=kernel::LogisticLevel::none_);
+    DrawLink( where, tools, 0.5f, displayLinks, displayMissing );
     glPopAttrib();
 }
 
