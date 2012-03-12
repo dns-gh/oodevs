@@ -283,9 +283,9 @@ return
     getPositions = function( self )
         return integration.getUrbanBlockPositions( self )
     end,
-	getLocalisation = function( self )
-	    return DEC_Geometrie_CalculerLocalisationsBU( self.source )
-	end,
+    getLocalisation = function( self )
+        return DEC_PolygoneBlocUrbain( self.source )
+    end,
     getCoverAndConcealmentLevelFor = function( self, entity, objective )
         return integration.getUrbanBlockCoverAndConcealmentLevelFor( self, entity, objective )
     end,
