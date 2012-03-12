@@ -311,9 +311,9 @@ void MIL_Formation::SendFullState( unsigned int context /*= 0*/ ) const
         message().mutable_formation()->set_id( nID_ );
         pExtensions_->SendFullState( message );
         message.Send( NET_Publisher_ABC::Publisher() );
-        if( pBrainLogistic_.get() )
-            pBrainLogistic_->SendFullState();
     }
+    if( pBrainLogistic_.get() )
+        pBrainLogistic_->SendFullState();
     tools::Resolver< MIL_Formation >::Apply( boost::bind( &MIL_Formation::SendFullState, _1, context ) );
     tools::Resolver< MIL_Automate >::Apply( boost::bind( &MIL_Automate::SendFullState, _1, context ) );
 }
