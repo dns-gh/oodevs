@@ -136,6 +136,26 @@
         <source>Male\Female\Children/Repartition</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Type:</source>
+        <translation type="unfinished">Tipo :</translation>
+    </message>
+    <message>
+        <source>Healthy:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Contaminated:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wounded:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Dead:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>DelayAttribute</name>

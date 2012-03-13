@@ -28,7 +28,7 @@
     </message>
     <message>
         <source>Info/Type</source>
-        <translation type="unfinished">Info/Type</translation>
+        <translation>Info/Type</translation>
     </message>
     <message>
         <source>Info/Command post</source>
@@ -53,7 +53,7 @@
     <name>Application</name>
     <message>
         <source>SWORD</source>
-        <translation type="unfinished">SWORD</translation>
+        <translation>SWORD</translation>
     </message>
 </context>
 <context>
@@ -68,7 +68,7 @@
     </message>
     <message>
         <source>Info/Type</source>
-        <translation type="unfinished">Info/Type</translation>
+        <translation>Info/Type</translation>
     </message>
 </context>
 <context>
@@ -135,6 +135,26 @@
     <message>
         <source>Info/Critical Intelligence</source>
         <translation>Info/Renseignement critique</translation>
+    </message>
+    <message>
+        <source>Type:</source>
+        <translation>Type:</translation>
+    </message>
+    <message>
+        <source>Healthy:</source>
+        <translation>Sains:</translation>
+    </message>
+    <message>
+        <source>Contaminated:</source>
+        <translation>Contaminés:</translation>
+    </message>
+    <message>
+        <source>Wounded:</source>
+        <translation>Blessés:</translation>
+    </message>
+    <message>
+        <source>Dead:</source>
+        <translation>Morts:</translation>
     </message>
 </context>
 <context>

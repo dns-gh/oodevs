@@ -12,6 +12,7 @@
 
 #include "EnumTypes.h"
 #include "PopulationRepartition.h"
+#include "clients_kernel/Displayable_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Units.h"
@@ -41,6 +42,7 @@ class IdManager;
 class Population : public kernel::EntityImplementation< kernel::Population_ABC >
                  , public kernel::Extension_ABC
                  , public kernel::Serializable_ABC
+                 , public kernel::Displayable_ABC
                  , private boost::noncopyable
 {
 public:
@@ -59,6 +61,7 @@ public:
     virtual unsigned int GetContaminatedHumans() const;
     virtual unsigned int GetDeadHumans() const;
     unsigned int GetTotalLivingHumans() const;
+    virtual void DisplayInTooltip( kernel::Displayer_ABC& ) const;
     //@}
 
 private:
