@@ -164,7 +164,6 @@ end
 -- -----------------------------------------------------------------------------
 integration.updateBuildItSecu = function( object )
     if object[ myself ].actionBuildState == eActionObjetTerminee and object.knowledge ~= nil then
-        integration.pionRC( eRC_FinTravauxObjet, object.knowledge.source )
         object[ myself ].actionBuild = DEC__StopAction( object[ myself ].actionBuild )
         object[ myself ].actionBuildState = nil
         return true

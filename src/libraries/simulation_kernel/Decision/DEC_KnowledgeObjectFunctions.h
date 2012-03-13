@@ -35,6 +35,7 @@ public:
     static bool IsNearEffectArea( boost::shared_ptr< MT_Vector2D > point, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, double distance );
     static int IsBypassed( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static int IsBreached( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+	static int IsConstructed( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static bool IsReservedObstacleActivated( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static bool IsReservedObstacle( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static bool IsKnowledgeValid( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );

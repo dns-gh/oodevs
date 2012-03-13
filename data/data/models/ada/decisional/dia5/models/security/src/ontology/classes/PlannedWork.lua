@@ -20,7 +20,7 @@ method "createIt" ( masalife.brain.integration.startStopAction(
 method "isBuilt" ( 
     function( self )
         if self.knowledge ~= nil then
-            return integration.buildLevel( self.knowledge ) == 100
+            return integration.isConstructed( self.knowledge )
         else
             return false
         end

@@ -351,12 +351,19 @@ method "canDismount" (
     end )
 
 -- --------------------------------------------------------------------------------
--- Reports
+-- Reports / Messages
 -- --------------------------------------------------------------------------------
 method "sendReport" ( masalife.brain.integration.startStopAction( 
 { 
     start = function( self, ... )
         self:RC( ... )
+    end
+} ) )
+
+method "sendMessage" ( masalife.brain.integration.startStopAction( 
+{ 
+    start = function( self, message )
+        integration.displayTrace( message )
     end
 } ) )
 

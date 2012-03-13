@@ -282,6 +282,17 @@ int DEC_KnowledgeObjectFunctions::IsBypassed( boost::shared_ptr< DEC_Knowledge_O
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::IsConstructed
+// Created: MIA 2012-03-13
+// -----------------------------------------------------------------------------
+int DEC_KnowledgeObjectFunctions::IsConstructed( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{
+    if( pKnowledge && pKnowledge->IsValid() )
+        return static_cast< int >( pKnowledge->IsConstructed() ? eTristate_True : eTristate_False );
+    return static_cast< int >( eTristate_DontKnow );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeObjectFunctions::IsBreached
 // Created: LDC 2011-08-05
 // -----------------------------------------------------------------------------

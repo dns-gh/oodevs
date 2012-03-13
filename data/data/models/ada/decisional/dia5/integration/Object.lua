@@ -4,3 +4,10 @@ end
 integration.requestForDecontamination = function( decontaminationPlot )
     DEC_ConnaissanceObjet_DemandeDeDecontamination( decontaminationPlot.source )
 end
+
+integration.isConstructed = function( object )
+    if DEC_ConnaissanceObjet_EstConstuit( object.source ) == eTristate_True then
+        return true
+    end
+    return false
+end

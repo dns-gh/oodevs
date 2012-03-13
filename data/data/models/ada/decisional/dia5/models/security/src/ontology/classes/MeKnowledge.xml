@@ -657,5 +657,13 @@ The message sent to the given follower contents the name of the task to activate
                 </type>
             </return>
         </method>
+        <method name="sendMessage" abstract="false">
+            <description>To send and display a string message.</description>
+            <argument name="message">
+                <type>
+                    <simple name="string"/>
+                </type>
+            </argument>
+        </method>
     </methods>
 </class>

@@ -70,6 +70,11 @@ DEC_RC = function( id, ... )
     end
 end
 
+
+integration.displayTrace = function ( stringMessage )
+    DEC_Trace( stringMessage )
+end
+
 DEC_Message = function( id, ... )
     if tableRC[id] then 
         return RC_WithParams( tableRC[id], type_message, id, {...} )

@@ -19,7 +19,7 @@ method "createIt" ( masalife.brain.integration.startStopAction(
 
 method "isBuilt" (
     function( self )
-        return integration.buildLevel( self ) == 100
+        return integration.isConstructed( self )
     end )
 
 method "canBeCreated" (

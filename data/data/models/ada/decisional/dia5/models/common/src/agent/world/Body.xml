@@ -585,5 +585,13 @@ Returns 'true' when checkPoint is filtering.</description>
                 </type>
             </return>
         </method>
+        <method name="sendMessage">
+            <description>To send and display a string message.</description>
+            <argument name="message">
+                <type>
+                    <simple name="string"/>
+                </type>
+            </argument>
+        </method>
     </methods>
 </interface>
