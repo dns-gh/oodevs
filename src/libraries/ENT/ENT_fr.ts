@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE TS>
-<TS version="2.0">
+<TS version="2.0" language="fr_FR">
 <context>
     <name>ENT_Tr</name>
     <message>
@@ -333,7 +333,7 @@
     </message>
     <message>
         <source>unit returning</source>
-        <translation>unit en cours de retour</translation>
+        <translation>équipement en retour vers unité d&apos;origine</translation>
     </message>
     <message>
         <source>finished</source>
@@ -753,27 +753,27 @@
     </message>
     <message>
         <source>waiting for handling</source>
-        <translation type="unfinished"></translation>
+        <translation>en attente de prise en charge</translation>
     </message>
     <message>
         <source>transporting unpackaged</source>
-        <translation type="unfinished"></translation>
+        <translation>en cours de transport, non conditionné</translation>
     </message>
     <message>
         <source>waiting for packaging</source>
-        <translation type="unfinished"></translation>
+        <translation>en attente de conditionnement</translation>
     </message>
     <message>
         <source>packaging</source>
-        <translation type="unfinished"></translation>
+        <translation>conditionnement</translation>
     </message>
     <message>
         <source>waiting for transporter</source>
-        <translation type="unfinished"></translation>
+        <translation>en attente de transporteur</translation>
     </message>
     <message>
         <source>transporting packaged</source>
-        <translation type="unfinished"></translation>
+        <translation>en ours de transport, conditionné</translation>
     </message>
     <message>
         <source>Logistic - Fuel</source>
