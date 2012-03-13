@@ -13,6 +13,7 @@
 #include "clients_kernel/PopulationType.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/Styles.h"
 #include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -146,6 +147,22 @@ unsigned int Population::GetDeadHumans() const
 unsigned int Population::GetTotalLivingHumans() const
 {
     return healthy_ + wounded_ + contaminated_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Population::DisplayInTooltip
+// Created: JSR 2012-03-13
+// -----------------------------------------------------------------------------
+void Population::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
+{
+    QString id = QString( "[%1]" ).arg( GetId() );
+    displayer.Item( "" ).Start( Styles::bold ).Add( static_cast< const Population_ABC* >( this ) ).AddToDisplay( id );
+    displayer.End();
+    displayer.Display( tools::translate( "Crowd", "Type:" ), type_ );
+    displayer.Display( tools::translate( "Crowd", "Healthy:" ), healthy_ );
+    displayer.Display( tools::translate( "Crowd", "Contaminated:" ), contaminated_ );
+    displayer.Display( tools::translate( "Crowd", "Wounded:" ), wounded_ );
+    displayer.Display( tools::translate( "Crowd", "Dead:" ), dead_ );
 }
 
 // -----------------------------------------------------------------------------
