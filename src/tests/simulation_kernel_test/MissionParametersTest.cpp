@@ -549,7 +549,8 @@ BOOST_AUTO_TEST_CASE( TestMIL_PlannedWorkParameter )
     in.set_activity_time( 2 );
     MockMIL_EntityManager_ABC entityManager;
     MockMIL_ObjectType_ABC objectType;
-    MOCK_EXPECT( entityManager, FindObjectType ).once().returns( boost::cref( objectType ) );
+    MOCK_EXPECT( entityManager, FindObjectType ).returns( boost::cref( objectType ) );
+    MOCK_EXPECT( objectType, GetPointSize ).returns( 250. );
     MIL_PlannedWorkParameter param( in, entityManager );
     in.mutable_position()->mutable_coordinates()->Clear();
     MissionParameter_Value out;
