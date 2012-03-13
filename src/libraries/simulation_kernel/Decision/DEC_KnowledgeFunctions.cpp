@@ -43,7 +43,8 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetDetectedAgentsInFuseau( c
 // -----------------------------------------------------------------------------
 T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetDetectedAgentsInZone( const MIL_AgentPion& callerAgent, const TER_Localisation* area )
 {
-    assert( area );
+    if( !area )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     T_ConstKnowledgeAgentVector knowledges;
     callerAgent.GetKnowledgeGroup().GetKnowledge().GetDetectedAgentsInZone( knowledges, *area );
     return knowledges;
@@ -190,7 +191,8 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetLivingEnemiesPerceivedInF
 // -----------------------------------------------------------------------------
 T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetLivingEnemiesInZone( const MIL_AgentPion& callerAgent, TER_Localisation* pZone )
 {
-    assert( pZone );
+    if( !pZone )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
 
     T_ConstKnowledgeAgentVector knowledges;
     callerAgent.GetKnowledgeGroup().GetKnowledge().GetLivingEnemiesInZone( knowledges, *pZone );
@@ -216,7 +218,8 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetLivingEnemiesInFuseau( co
 // -----------------------------------------------------------------------------
 T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetLivingEnemiesInCircle( const MIL_AgentPion& callerAgent, const MT_Vector2D* pCenter, float radius )
 {
-    assert( pCenter );
+    if( !pCenter )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
 
     T_ConstKnowledgeAgentVector knowledges;
     callerAgent.GetKnowledgeGroup().GetKnowledge().GetLivingEnemiesInCircle( knowledges, *pCenter, radius );
@@ -376,7 +379,8 @@ T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetNearbySurrenderedAgents( 
 // -----------------------------------------------------------------------------
 bool DEC_KnowledgeFunctions::EnemyPresenceInCircle( const MIL_AgentPion& callerAgent, const MT_Vector2D* center, double radius )
 {
-    assert( center );
+    if( !center )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     return callerAgent.GetKnowledgeGroup().GetKnowledge().EnemyPresenceInCircle( *center, radius );
 }
 
