@@ -110,17 +110,6 @@ public:
     void SendFullState        ( client::UnitAttributes& asn ) const;
     //@}
 
-private:
-    //! @name Tools
-    //@{
-    PHY_DotationGroup* GetDotationGroup   ( const PHY_DotationType& dotationType ) const;
-    PHY_DotationGroup& CreateDotationGroup( const PHY_DotationType& dotationType );
-    //@}
-    //! @name Helpers
-    //@{
-    void ReadDotation ( xml::xistream& xis );
-    //@}
-
 public:
     //! @name Types
     //@{
@@ -129,6 +118,19 @@ public:
 
     typedef std::set< const PHY_Dotation* > T_DotationSet;
     typedef T_DotationSet::const_iterator CIT_DotationSet;
+    //@}
+
+private:
+    //! @name Tools
+    //@{
+    PHY_DotationGroup* GetDotationGroup          ( const PHY_DotationType& dotationType ) const;
+    PHY_DotationGroup& CreateDotationGroup       ( const PHY_DotationType& dotationType );
+    void               PurgeDotationNotOverloaded( PHY_Dotation& dotation, const T_DotationSet& overloadedDotations );
+    //@}
+
+    //! @name Helpers
+    //@{
+    void ReadDotation ( xml::xistream& xis, T_DotationSet& overloadedDotations );
     //@}
 
 private:

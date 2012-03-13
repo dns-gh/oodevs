@@ -59,7 +59,7 @@ public:
 
     //! @name Init
     //@{
-    void ReadValues( xml::xistream& xis, const PHY_DotationCategory& category ); //$$$ A VIRER
+    PHY_Dotation& ReadValues( xml::xistream& xis, const PHY_DotationCategory& category ); //$$$ A VIRER
     //@}
 
     //! @name Operations
@@ -78,7 +78,6 @@ public:
     double GetValue( const PHY_DotationCategory& category ) const;
     double Consume ( const PHY_DotationCategory& category, double rNbr );
     double Supply  ( const PHY_DotationCategory& category, double rNbr );
-    void Reset();
 
     const PHY_DotationCategory* GetIlluminationDotations( float range, bool permanent ) const;
     float GetIlluminatingRange( ) const;
