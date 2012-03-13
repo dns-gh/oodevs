@@ -635,9 +635,9 @@
   <report category="operational" id="448" message="Resource link created"/>
   <report category="operational" id="449" message="The unit cannot dismount"/>
   <report category="operational" id="450" message="Withdrawing from fire"/>
-  <report category="operational" id="411" message="Caught"/>
-  <report category="operational" id="412" message="Take hostage %1">
+  <report category="operational" id="451" message="Caught"/>
+  <report category="operational" id="452" message="Take hostage %1">
     <parameter type="AgentKnowledge"/>
   </report>
 </reports>
-<!-- signature="3130097882" -->
+<!-- signature="0189024495" -->
