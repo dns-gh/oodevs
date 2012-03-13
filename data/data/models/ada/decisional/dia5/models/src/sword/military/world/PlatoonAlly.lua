@@ -48,8 +48,9 @@ masalife.brain.communication.setMessageTreatment( "obstacleByPassed",
     end )
 
 --The unit is caught
-masalife.brain.communication.setMessageTreatment( "terroristCaught",
+masalife.brain.communication.setMessageTreatment( "capture",
     function( content, sender )
+        meKnowledge:RC( eRC_Capture )
         myself.isCaught = true
     end )
 
@@ -712,11 +713,11 @@ return
     { 
         start = function( self, blockingStrength , bodySearchStrength , position )
             integration.buildInstantlyCheckPointOn( position )
-            myself.CR_TerroristsFounded = {}
+            myself.CRCaptureSomeone = {}
         end,
         started = function( self, blockingStrength , bodySearchStrength , position )
             integration.doFiltration( bodySearchStrength, blockingStrength, position )
-            integration.captureTerrorists( integration.getNearbyTerrorists() ) 
+            integration.capture( integration.getNearbyTerrorists(), eRC_TerroristCaptured ) 
         end,
         stop = function( self, blockingStrength , bodySearchStrength , position )
             integration.destroyInstantlyCheckpointOn( position )

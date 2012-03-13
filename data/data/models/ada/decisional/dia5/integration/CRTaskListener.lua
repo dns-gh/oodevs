@@ -50,6 +50,7 @@ tableRC[ eRC_ObstacleEnAttenteActivation ] = function( typeMessage, id, list ) r
 tableRC[ eRC_criticalIntelligence ] = function( typeMessage, id, list ) return DEC_RC_String( myself, typeMessage, id, list[1] ) end
 tableRC[ eRC_RiposteContrePopulation ] = function( typeMessage, id, list ) return DEC_RC_PopulationKnowledge( myself, typeMessage, id, list[1] ) end
 tableRC[ eRC_TerroristCaptured ] = function( typeMessage, id, list ) return DEC_RC_AgentKnowledge( myself, typeMessage, id, list[1] ) end
+tableRC[ eRC_TakeHostage ] = function( typeMessage, id, list ) return DEC_RC_AgentKnowledge( myself, typeMessage, id, list[1] ) end
 tableRC[ eRC_TimeInUndergroundNetwork ] = function( typeMessage, id, list ) return DEC_RC_String( myself, typeMessage, id, list[1] ) end
 tableRC[ eRC_PreparationMission ] = function( typeMessage, id, list ) return DEC_RC_Float( myself, typeMessage, id, list[1] ) end
 tableRC[ eRC_LimaParameterNotPresent ] = function( typeMessage, id, list ) return DEC_RC_Id( myself, typeMessage, id, list[1] ) end

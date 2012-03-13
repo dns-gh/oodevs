@@ -77,13 +77,6 @@ integration.selfDestruct = function( agent )
     DEC_Suicide()
 end
 
---hostage
-integration.takeAsHostage = function( unit )
-    DEC_Agent_ForcerSilenceRadio( unit.source, true )
-    DEC_UnitDecisionalState( unit.source, "hostage", "true" )
-    return true
-end
-
 --refugee
 integration.takeAsRefugee = function( unit )
     -- $$$ MIA TODO
@@ -105,18 +98,18 @@ end
 -- capture de terroristes détectés
 -- changemement de leur état en "otage"
 
-integration.captureTerrorists = function( terrorists )
-    if not myself.CR_TerroristsFounded then return end
-    for _, terrorist in pairs( terrorists ) do
-        if not myself.CR_TerroristsFounded[terrorist] then
-            DEC_Agent_ForcerSilenceRadio( terrorist.source, true )
-            DEC_UnitDecisionalState( terrorist.source, "hostage", "true" )
-            DEC_Connaissance_Transporter( myself, terrorist.source )
-            meKnowledge:RC( eRC_TerroristCaptured, terrorist.source )
-            myself.CR_TerroristsFounded[ terrorist ] = true
-            terrorist.capture = true
-            integration.SendMessage( "terroristCaught", integration.getAgentFromKnowledge( terrorist ), { element = myself }, { type = "dynamic" } )
-            DEC_ChangerSuperieurLogistiqueConnaissance( myself, terrorist.source )
+integration.capture = function( units, message )
+    if not myself.CRCaptureSomeone then return end
+    for _, unit in pairs( units ) do
+        if not myself.CRCaptureSomeone[unit] then
+            DEC_Agent_ForcerSilenceRadio( unit.source, true )
+            DEC_UnitDecisionalState( unit.source, "hostage", "true" )
+            DEC_Connaissance_Transporter( myself, unit.source )
+            meKnowledge:RC( message, unit.source )
+            myself.CRCaptureSomeone[ unit ] = true
+            unit.capture = true
+            integration.SendMessage( "capture", integration.getAgentFromKnowledge( unit ), { element = myself }, { type = "dynamic" } )
+            DEC_ChangerSuperieurLogistiqueConnaissance( myself, unit.source )
         end
     end
 end

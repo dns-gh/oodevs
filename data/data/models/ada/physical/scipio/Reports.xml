@@ -595,5 +595,9 @@
   <report category="operational" id="408" message="Vitesse limitée par population"/>
   <report category="operational" id="409" message="Fin de vitesse limitée par population"/>
   <report category="operational" id="410" message="Décrochage face à un incendie"/>
+  <report category="operational" id="411" message="Capturé"/>
+  <report category="operational" id="412" message="Prise en otage de %1">
+    <parameter type="AgentKnowledge"/>
+  </report>
 </reports>
-<!-- signature="2112136822" -->
+<!-- signature="2239697446" -->

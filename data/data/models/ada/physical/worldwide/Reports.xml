@@ -594,6 +594,10 @@
   </report>
   <report category="operational" id="408" message="Speed limited by population"/>
   <report category="operational" id="409" message="End of speed limited by population"/>
-  <report category="operational" id="410" message="withdrawing from fire"/>
+  <report category="operational" id="410" message="Withdrawing from fire"/>
+  <report category="operational" id="411" message="Caught"/>
+  <report category="operational" id="412" message="Take hostage %1">
+    <parameter type="AgentKnowledge"/>
+  </report>
 </reports>
-<!-- signature="2504396924" -->
+<!-- signature="3948914570" -->

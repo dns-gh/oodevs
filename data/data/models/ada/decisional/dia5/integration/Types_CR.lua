@@ -422,4 +422,6 @@ eRC_LimaParameterNotPresent = 407
 eRC_UrbanCollisionStarted = 408
 eRC_UrbanCollisionStopped = 409
 eRC_DecrochageFaceAIncendie = 410
-eNbr = 411
+eRC_Capture = 411
+eRC_TakeHostage = 412
+eNbr = 413

@@ -560,6 +560,8 @@ public:
         eRC_UrbanCollisionStarted,
         eRC_UrbanCollisionStopped,
         eRC_DecrochageFaceAIncendie,
+        eRC_Capture,
+        eRC_TakeHostage,
         eLast
     };
     //@}

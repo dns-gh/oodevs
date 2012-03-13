@@ -345,7 +345,9 @@ return
         stop = integration.stopInterrogatePion
     } ),
     takeAsHostage = function( self )
-        return integration.takeAsHostage( self )
+        myself.CRCaptureSomeone = {}
+        integration.capture( {self}, eRC_TakeHostage )
+        return true
     end,
     takeAsPrisoner = masalife.brain.integration.startStopAction( 
     { 
