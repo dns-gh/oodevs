@@ -10,8 +10,12 @@
 #ifndef __TemplateElement_ABC_h_
 #define __TemplateElement_ABC_h_
 
-namespace kernel { class Entity_ABC; }
-namespace xml    { class xostream; class xistream; }
+namespace kernel
+{
+    class Entity_ABC;
+}
+
+class ColorController;
 
 // =============================================================================
 /** @class  TemplateElement_ABC
@@ -24,13 +28,13 @@ class TemplateElement_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             TemplateElement_ABC() {};
-    virtual ~TemplateElement_ABC() {};
+             TemplateElement_ABC() {}
+    virtual ~TemplateElement_ABC() {}
     //@}
 
     //! @name Operations
     //@{
-    virtual kernel::Entity_ABC* Instanciate( kernel::Entity_ABC& superior, const geometry::Point2f& center ) = 0;
+    virtual kernel::Entity_ABC* Instanciate( kernel::Entity_ABC& superior, const geometry::Point2f& center, ColorController& colorController ) = 0;
     virtual void Serialize( xml::xostream& output ) = 0;
     virtual bool IsCompatible( const kernel::Entity_ABC& superior ) const = 0;
     virtual QString GetName() const = 0;

@@ -10,14 +10,18 @@
 #ifndef __HierarchyTemplate_h_
 #define __HierarchyTemplate_h_
 
-namespace kernel { class Entity_ABC; class AgentTypes; }
-namespace xml    { class xostream; class xistream; }
+namespace kernel
+{
+    class Entity_ABC;
+    class AgentTypes;
+}
 
-class TemplateElement_ABC;
 class AgentFactory_ABC;
-class FormationFactory_ABC;
 class AgentsModel;
+class ColorController;
+class FormationFactory_ABC;
 class FormationModel;
+class TemplateElement_ABC;
 
 // =============================================================================
 /** @class  HierarchyTemplate
@@ -30,8 +34,8 @@ class HierarchyTemplate
 public:
     //! @name Constructors/Destructor
     //@{
-             HierarchyTemplate( AgentsModel& agents, FormationModel& formations, const kernel::Entity_ABC& base, bool root = true );
-             HierarchyTemplate( AgentsModel& agents, FormationModel& formations, const kernel::AgentTypes& types, xml::xistream& input );
+             HierarchyTemplate( AgentsModel& agents, FormationModel& formations, const kernel::Entity_ABC& base, bool root, ColorController& colorController );
+             HierarchyTemplate( AgentsModel& agents, FormationModel& formations, const kernel::AgentTypes& types, xml::xistream& input, ColorController& colorController );
     virtual ~HierarchyTemplate();
     //@}
 
@@ -72,6 +76,7 @@ private:
     std::auto_ptr< TemplateElement_ABC > element_;
     geometry::Point2f referencePosition_;
     QString name_;
+    ColorController& colorController_;
     //@}
 };
 

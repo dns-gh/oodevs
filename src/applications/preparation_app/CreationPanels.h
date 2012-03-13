@@ -32,6 +32,7 @@ namespace gui
     class WeatherLayer;
 }
 
+class ColorController;
 class GhostsPanel;
 class InhabitantCreationPanel;
 class Model;
@@ -51,7 +52,7 @@ public:
     //@{
              CreationPanels( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel, const Model& model,
                              const tools::ExerciseConfig& config, gui::ItemFactory_ABC& factory, gui::SymbolIcons& icons, gui::ColorStrategy_ABC& colorStrategy,
-                             gui::ParametersLayer& paramLayer, gui::WeatherLayer& weatherLayer, gui::GlProxy& glProxy );
+                             gui::ParametersLayer& paramLayer, gui::WeatherLayer& weatherLayer, gui::GlProxy& glProxy, ColorController& colorController );
     virtual ~CreationPanels();
     //@}
 

@@ -26,8 +26,9 @@ using namespace kernel;
 // Name: HierarchyTemplate constructor
 // Created: AGE 2007-05-29
 // -----------------------------------------------------------------------------
-HierarchyTemplate::HierarchyTemplate( AgentsModel& agents, FormationModel& formations, const kernel::Entity_ABC& base, bool root /* =true*/ )
-    : name_( "" )
+HierarchyTemplate::HierarchyTemplate( AgentsModel& agents, FormationModel& formations, const kernel::Entity_ABC& base, bool root, ColorController& colorController )
+    : name_           ( "" )
+    , colorController_( colorController )
 {
     element_.reset( CreateElement( agents, formations, base ) );
     if( element_.get() )
@@ -37,7 +38,7 @@ HierarchyTemplate::HierarchyTemplate( AgentsModel& agents, FormationModel& forma
         tools::Iterator< const Entity_ABC& > children = hierarchies->CreateSubordinateIterator();
         while( children.HasMoreElements() )
         {
-            subTemplates_.push_back( new HierarchyTemplate( agents, formations, children.NextElement(), false ) );
+            subTemplates_.push_back( new HierarchyTemplate( agents, formations, children.NextElement(), false, colorController_ ) );
             referencePosition_.Set( referencePosition_.X() + subTemplates_.back()->referencePosition_.X(),
                                     referencePosition_.Y() + subTemplates_.back()->referencePosition_.Y() );
         }
@@ -53,8 +54,9 @@ HierarchyTemplate::HierarchyTemplate( AgentsModel& agents, FormationModel& forma
 // Name: HierarchyTemplate constructor
 // Created: AGE 2007-05-29
 // -----------------------------------------------------------------------------
-HierarchyTemplate::HierarchyTemplate( AgentsModel& agents, FormationModel& formations, const kernel::AgentTypes& types, xml::xistream& input )
-    : name_( "" )
+HierarchyTemplate::HierarchyTemplate( AgentsModel& agents, FormationModel& formations, const kernel::AgentTypes& types, xml::xistream& input, ColorController& colorController )
+    : name_           ( "" )
+    , colorController_( colorController )
 {
     element_.reset( CreateElement( agents, formations, types, input ) );
     input >> xml::list( "template", *this, &HierarchyTemplate::ReadSubTemplate, agents, formations, types );
@@ -66,7 +68,7 @@ HierarchyTemplate::HierarchyTemplate( AgentsModel& agents, FormationModel& forma
 // -----------------------------------------------------------------------------
 void HierarchyTemplate::ReadSubTemplate( xml::xistream& input, AgentsModel& agents, FormationModel& formations, const kernel::AgentTypes& types )
 {
-    subTemplates_.push_back( new HierarchyTemplate( agents, formations, types, input ) );
+    subTemplates_.push_back( new HierarchyTemplate( agents, formations, types, input, colorController_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -110,7 +112,7 @@ void HierarchyTemplate::Instanciate( kernel::Entity_ABC& superior, const geometr
     {
         geometry::Point2f position( referencePosition_.X() + center.X(),
                                     referencePosition_.Y() + center.Y() );
-        kernel::Entity_ABC* entity = element_->Instanciate( superior, position );
+        kernel::Entity_ABC* entity = element_->Instanciate( superior, position, colorController_ );
         if( entity )
             for( CIT_Templates it = subTemplates_.begin(); it != subTemplates_.end(); ++it )
                 (*it)->Instanciate( *entity, center );

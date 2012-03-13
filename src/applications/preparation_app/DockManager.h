@@ -39,6 +39,7 @@ namespace tools
     class ExerciseConfig;
 }
 
+class ColorController;
 class ModelBuilder;
 class Model;
 class StaticModel;
@@ -66,7 +67,7 @@ public:
                           gui::ItemFactory_ABC& factory, Model& model, StaticModel& staticModel,
                           const tools::ExerciseConfig& config, gui::SymbolIcons& symbols,
                           gui::ColorStrategy_ABC& colorStrategy, gui::ParametersLayer& paramLayer, gui::WeatherLayer& weatherLayer,
-                          gui::GlProxy& glProxy );
+                          gui::GlProxy& glProxy, ColorController& colorController );
     virtual ~DockManager();
     //@}
 

@@ -12,6 +12,10 @@
 
 #include "TemplateElement_ABC.h"
 #include "tools/Resolver_ABC.h"
+#include "clients_kernel/Color_ABC.h"
+#include <boost/noncopyable.hpp>
+#include <boost/optional/optional.hpp>
+
 class AgentsModel;
 
 namespace kernel
@@ -27,6 +31,7 @@ namespace kernel
 // Created: AGE 2007-05-29
 // =============================================================================
 class AgentTemplateElement : public TemplateElement_ABC
+                           , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -38,7 +43,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual kernel::Entity_ABC* Instanciate( kernel::Entity_ABC& superior, const geometry::Point2f& center );
+    virtual kernel::Entity_ABC* Instanciate( kernel::Entity_ABC& superior, const geometry::Point2f& center, ColorController& colorController );
     virtual void Serialize( xml::xostream& output );
     virtual bool IsCompatible( const kernel::Entity_ABC& superior ) const;
     virtual QString GetName() const;
@@ -46,10 +51,9 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
+    //! @name Helpers
     //@{
-    AgentTemplateElement( const AgentTemplateElement& );            //!< Copy constructor
-    AgentTemplateElement& operator=( const AgentTemplateElement& ); //!< Assignment operator
+    void ReadExtension( xml::xistream& xis );
     //@}
 
 private:
@@ -59,6 +63,8 @@ private:
     const kernel::AgentType& type_;
     bool cp_;
     QString name_;
+    boost::optional< kernel::Color_ABC::T_Color > color_;
+    std::map< std::string, std::string > extensions_;
     //@}
 };
 
