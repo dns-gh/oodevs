@@ -40,7 +40,7 @@ public:
     //@{
     template< typename T >
     void SendFullState( T& msg ) const;
-    bool IsExist() const;
+    bool IsCivilian() const;
     float GetMale() const;
     float GetFemale() const;
     float GetChildren() const;

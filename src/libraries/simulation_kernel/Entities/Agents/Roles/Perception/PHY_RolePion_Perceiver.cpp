@@ -1169,18 +1169,18 @@ void PHY_RolePion_Perceiver::NotifyPerception( MIL_Object_ABC& object, const PHY
 // Name: PHY_RolePion_Perceiver::NotifyPerception
 // Created: NLD 2005-10-11
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Perceiver::NotifyPerception( MIL_PopulationConcentration& concentration, const PHY_PerceptionLevel& level )
+bool PHY_RolePion_Perceiver::NotifyPerception( MIL_PopulationConcentration& concentration, const PHY_PerceptionLevel& level )
 {
-    pion_.GetKnowledge().GetKsPerception().NotifyPerception( concentration, level, bRecordModeEnabled_ );
+    return pion_.GetKnowledge().GetKsPerception().NotifyPerception( concentration, level, bRecordModeEnabled_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::NotifyPerception
 // Created: NLD 2005-10-12
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Perceiver::NotifyPerception( MIL_PopulationFlow& flow, const PHY_PerceptionLevel& level, const T_PointVector& shape )
+bool PHY_RolePion_Perceiver::NotifyPerception( MIL_PopulationFlow& flow, const PHY_PerceptionLevel& level, const T_PointVector& shape )
 {
-    pion_.GetKnowledge().GetKsPerception().NotifyPerception( flow, level, shape, bRecordModeEnabled_ );
+    return pion_.GetKnowledge().GetKsPerception().NotifyPerception( flow, level, shape, bRecordModeEnabled_ );
 }
 
 // -----------------------------------------------------------------------------

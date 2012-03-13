@@ -57,10 +57,11 @@ public:
     //! @name Events
     //@{
     // Called by ::Talk()
+    // Return true if a new perception is created
     bool NotifyPerception( MIL_Agent_ABC& agentPerceived, const PHY_PerceptionLevel& level, bool bRecordModeEnabled );
     void NotifyPerception( MIL_Object_ABC& objectPerceived, const PHY_PerceptionLevel& level, bool bRecordModeEnabled );
-    void NotifyPerception( MIL_PopulationConcentration& concentrationPerceived, const PHY_PerceptionLevel& level, bool bRecordModeEnabled );
-    void NotifyPerception( MIL_PopulationFlow& flowPerceived, const PHY_PerceptionLevel& level, const T_PointVector& shape, bool bRecordModeEnabled );
+    bool NotifyPerception( MIL_PopulationConcentration& concentrationPerceived, const PHY_PerceptionLevel& level, bool bRecordModeEnabled );
+    bool NotifyPerception( MIL_PopulationFlow& flowPerceived, const PHY_PerceptionLevel& level, const T_PointVector& shape, bool bRecordModeEnabled );
     void NotifyPerception( const UrbanObjectWrapper& object, const PHY_PerceptionLevel& level );
     // Not called by ::Talk()
     void NotifyExternalPerception( MIL_Agent_ABC& agentPerceived, const PHY_PerceptionLevel& level );

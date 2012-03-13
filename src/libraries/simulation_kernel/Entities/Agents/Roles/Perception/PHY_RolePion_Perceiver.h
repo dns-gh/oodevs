@@ -90,8 +90,8 @@ public:
     void NotifyPerception( MIL_Agent_ABC& agent, const PHY_PerceptionLevel& level, bool bPerceptionRecorded );
     bool NotifyPerception( MIL_Agent_ABC& agent, const PHY_PerceptionLevel& level );
     void NotifyPerception( MIL_Object_ABC& object, const PHY_PerceptionLevel& level );
-    void NotifyPerception( MIL_PopulationConcentration& concentration, const PHY_PerceptionLevel& level );
-    void NotifyPerception( MIL_PopulationFlow& flow, const PHY_PerceptionLevel& level, const T_PointVector& shape );
+    bool NotifyPerception( MIL_PopulationConcentration& concentration, const PHY_PerceptionLevel& level );
+    bool NotifyPerception( MIL_PopulationFlow& flow, const PHY_PerceptionLevel& level, const T_PointVector& shape );
     void NotifyPerception( const MIL_Effect_IndirectFire& flyingShell ) const;
     void NotifyPerception( const UrbanObjectWrapper& block, const PHY_PerceptionLevel& level ) const;
     //@}

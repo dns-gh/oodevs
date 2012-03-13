@@ -1733,4 +1733,11 @@ void MIL_AgentPion::OnReceiveUnloadUnit( const sword::MissionParameters& msg )
     role->MagicUnloadPion( *target );
 }
 
-
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::IsCivilian
+// Created: LDC 2012-03-13
+// -----------------------------------------------------------------------------
+bool MIL_AgentPion::IsCivilian() const
+{
+    return pHumanRepartition_->IsCivilian();
+}
