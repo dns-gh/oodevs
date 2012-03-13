@@ -70,7 +70,8 @@ void DEC_KnowledgeFunctions::ShareKnowledgesInZoneWith( const T& caller, DEC_Dec
 template< typename T > 
 T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsInCircle( const T& caller, const MT_Vector2D* pCenter, double rRadius, const std::vector< std::string >& filters )
 {
-    assert( pCenter );
+    if( !pCenter )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     MIL_ObjectFilter filter( filters );
     T_KnowledgeObjectDiaIDVector knowledges;
     caller.GetArmy().GetKnowledge().GetObjectsInCircle( knowledges, filter, *pCenter, rRadius );
@@ -84,7 +85,8 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsInCircle( const T
 template< typename T > 
 T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsInZone( const T& caller, const TER_Localisation* pLoc, const std::vector< std::string >& parameters )
 {
-    assert( pLoc );
+    if( !pLoc )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     MIL_ObjectFilter filter( parameters );
     T_KnowledgeObjectDiaIDVector knowledges;
     caller.GetArmy().GetKnowledge().GetObjectsInZone( knowledges, filter, *pLoc );
@@ -113,7 +115,8 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsInFuseau( const T
 template< typename T > 
 T_ConstKnowledgeAgentVector DEC_KnowledgeFunctions::GetFriendsInZone( const T& caller, const TER_Localisation* location )
 {
-    assert( location );
+    if( !location )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     T_ConstKnowledgeAgentVector results;
     caller.GetKnowledgeGroup().GetKnowledge().GetFriendsInZone( results, *location );
     return results;
