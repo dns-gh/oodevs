@@ -152,7 +152,7 @@ void PHY_PerceptionView::Execute( const TER_Agent_ABC::T_AgentPtrVector& perceiv
             if ( perceiver_.GetKnowledgeGroup().IsPerceptionDistanceHacked( agent ) )
                 perceiver_.NotifyPerception( agent, perceiver_.GetKnowledgeGroup().GetPerceptionLevel( agent ) );
             else if( detectionComputer->CanBeSeen() && perceiver_.NotifyPerception( agent, Compute( agent ) ) )
-                if( !civiliansEncountered && agent.GetType().IsRefugee() )
+                if( !civiliansEncountered && agent.IsCivilian() )
                 {
                     MIL_Report::PostEvent( perceiver_.GetPion(), MIL_Report::eReport_CiviliansEncountered );
                     civiliansEncountered = true;
@@ -273,6 +273,7 @@ void PHY_PerceptionView::Execute( const TER_PopulationFlow_ABC::T_ConstPopulatio
 {
     if( bIsEnabled_ )
     {
+        bool civiliansEncountered = false;
         for( TER_PopulationFlow_ABC::T_ConstPopulationFlowVector::const_iterator it = perceivableFlows.begin(); it != perceivableFlows.end(); ++it )
         {
             MIL_PopulationFlow& flow = const_cast< MIL_PopulationFlow& >( static_cast< const MIL_PopulationFlow& >( **it ) ); // $$$ RC LDC Should propagate constness to called methods instead
@@ -280,11 +281,15 @@ void PHY_PerceptionView::Execute( const TER_PopulationFlow_ABC::T_ConstPopulatio
             T_PointVector shape;
             const PHY_PerceptionLevel& level = Compute( flow, shape );
 
+            bool mustReport = false;
             if ( perceiver_.GetKnowledgeGroup().IsPerceptionDistanceHacked( flow.GetPopulation() ) )
-                perceiver_.NotifyPerception( flow, perceiver_.GetKnowledgeGroup().GetPerceptionLevel( flow.GetPopulation()), shape );
+                mustReport = perceiver_.NotifyPerception( flow, perceiver_.GetKnowledgeGroup().GetPerceptionLevel( flow.GetPopulation()), shape );
             else
-                perceiver_.NotifyPerception( flow, level, shape );
+                mustReport = perceiver_.NotifyPerception( flow, level, shape );
+            civiliansEncountered |= mustReport;
         }
+        if( civiliansEncountered )
+            MIL_Report::PostEvent( perceiver_.GetPion(), MIL_Report::eReport_CiviliansEncountered );
     }
 }
 
@@ -322,15 +327,22 @@ const PHY_PerceptionLevel& PHY_PerceptionView::Compute( const MIL_PopulationConc
 void PHY_PerceptionView::Execute( const TER_PopulationConcentration_ABC::T_ConstPopulationConcentrationVector perceivableConcentrations )
 {
     if( bIsEnabled_ )
+    {
+        bool civiliansEncountered = false;
         for( TER_PopulationConcentration_ABC::T_ConstPopulationConcentrationVector::const_iterator it = perceivableConcentrations.begin(); it != perceivableConcentrations.end(); ++it )
         {
             MIL_PopulationConcentration& concentration = const_cast< MIL_PopulationConcentration& >( static_cast< const MIL_PopulationConcentration& >( **it ) ); // $$$ RC LDC Should propagate constness to called methods instead
 
+            bool mustReport = false;
             if ( perceiver_.GetKnowledgeGroup().IsPerceptionDistanceHacked( concentration.GetPopulation() ) )
-                perceiver_.NotifyPerception( concentration, perceiver_.GetKnowledgeGroup().GetPerceptionLevel( concentration.GetPopulation() ) );
+                mustReport = perceiver_.NotifyPerception( concentration, perceiver_.GetKnowledgeGroup().GetPerceptionLevel( concentration.GetPopulation() ) );
             else
-                perceiver_.NotifyPerception( concentration, Compute( concentration ) );
+                mustReport = perceiver_.NotifyPerception( concentration, Compute( concentration ) );
+            civiliansEncountered |= mustReport;
         }
+        if( civiliansEncountered )
+            MIL_Report::PostEvent( perceiver_.GetPion(), MIL_Report::eReport_CiviliansEncountered );
+    }
 }
 
 // -----------------------------------------------------------------------------

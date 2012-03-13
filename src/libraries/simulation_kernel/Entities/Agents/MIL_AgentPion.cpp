@@ -1654,6 +1654,15 @@ void MIL_AgentPion::OnReceiveUnloadUnit( const sword::MissionParameters& msg )
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::IsCivilian
+// Created: LDC 2012-03-13
+// -----------------------------------------------------------------------------
+bool MIL_AgentPion::IsCivilian() const
+{
+    return pHumanRepartition_->IsCivilian();
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_AgentPion::OnReloadBrain
 // Created: SLI 2011-09-20
 // -----------------------------------------------------------------------------

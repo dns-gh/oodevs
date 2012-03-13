@@ -217,11 +217,11 @@ bool DEC_KS_Perception::NotifyPerception( MIL_Agent_ABC& agentPerceived, const P
     assert( pBlackBoard_ );
 
     DEC_Knowledge_AgentPerception* pKnowledge = pBlackBoard_->GetKnowledgeAgentPerceptionContainer().GetKnowledgeAgentPerception( agentPerceived );
-    bool ret = ( pKnowledge == 0 );
-    if( ret )
+    bool isNewlyPerceived = ( pKnowledge == 0 );
+    if( isNewlyPerceived )
         pKnowledge = &pBlackBoard_->GetKnowledgeAgentPerceptionContainer().CreateKnowledgeAgentPerception( pBlackBoard_->GetPion(), agentPerceived );
     pKnowledge->Update( level, bRecordModeEnabled );
-    return ret;
+    return isNewlyPerceived;
 }
 
 // -----------------------------------------------------------------------------
@@ -246,36 +246,40 @@ void DEC_KS_Perception::NotifyPerception( MIL_Object_ABC& objectPerceived, const
 // Name: DEC_KS_Perception::NotifyPerception
 // Created: NLD 2005-10-11
 // -----------------------------------------------------------------------------
-void DEC_KS_Perception::NotifyPerception( MIL_PopulationConcentration& concentrationPerceived, const PHY_PerceptionLevel& level, bool /*bRecordModeEnabled*/ )
+bool DEC_KS_Perception::NotifyPerception( MIL_PopulationConcentration& concentrationPerceived, const PHY_PerceptionLevel& level, bool /*bRecordModeEnabled*/ )
 {
     if( level == PHY_PerceptionLevel::notSeen_ )
-        return;
+        return false;
 
     assert( pBlackBoard_ );
 
     DEC_Knowledge_PopulationPerception* pKnowledge = pBlackBoard_->GetKnowledgePopulationPerceptionContainer().GetKnowledgePopulationPerception( concentrationPerceived.GetPopulation() );
-    if( !pKnowledge )
+    bool isNewlyPerceived = ( pKnowledge == 0 );
+    if( isNewlyPerceived )
         pKnowledge = &pBlackBoard_->GetKnowledgePopulationPerceptionContainer().CreateKnowledgePopulationPerception( pBlackBoard_->GetPion(), concentrationPerceived.GetPopulation() );
 
     pKnowledge->Update( concentrationPerceived, level );
+    return isNewlyPerceived;
 }
 
 // -----------------------------------------------------------------------------
 // Name: DEC_KS_Perception::NotifyPerception
 // Created: NLD 2005-10-12
 // -----------------------------------------------------------------------------
-void DEC_KS_Perception::NotifyPerception( MIL_PopulationFlow& flowPerceived, const PHY_PerceptionLevel& level, const T_PointVector& shape, bool /*bRecordModeEnabled*/ )
+bool DEC_KS_Perception::NotifyPerception( MIL_PopulationFlow& flowPerceived, const PHY_PerceptionLevel& level, const T_PointVector& shape, bool /*bRecordModeEnabled*/ )
 {
     if( level == PHY_PerceptionLevel::notSeen_ )
-        return;
+        return false;
 
     assert( pBlackBoard_ );
 
     DEC_Knowledge_PopulationPerception* pKnowledge = pBlackBoard_->GetKnowledgePopulationPerceptionContainer().GetKnowledgePopulationPerception( flowPerceived.GetPopulation() );
-    if( !pKnowledge )
+    bool isNewlyPerceived = ( pKnowledge == 0 );
+    if( isNewlyPerceived )
         pKnowledge = &pBlackBoard_->GetKnowledgePopulationPerceptionContainer().CreateKnowledgePopulationPerception( pBlackBoard_->GetPion(), flowPerceived.GetPopulation() );
 
     pKnowledge->Update( flowPerceived, level, shape );
+    return isNewlyPerceived;
 }
 
 // -----------------------------------------------------------------------------

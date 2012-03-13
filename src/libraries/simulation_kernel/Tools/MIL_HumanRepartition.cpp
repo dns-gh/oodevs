@@ -125,10 +125,10 @@ float MIL_HumanRepartition::GetChildren() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_HumanRepartition::IsExist
+// Name: MIL_HumanRepartition::IsCivilian
 // Created: MMC 2011-10-07
 // -----------------------------------------------------------------------------
-bool MIL_HumanRepartition::IsExist() const
+bool MIL_HumanRepartition::IsCivilian() const
 {
     return ( male_ > 0.0f || female_ > 0.0f || children_ > 0.0f );
 }
