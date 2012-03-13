@@ -423,9 +423,12 @@ void PHY_DotationStockContainer::SendChangedState( client::LogSupplyState& asn )
     if( stocksChanged_.empty() )
         return;
 
-    for( CIT_StockSet itStock = stocksChanged_.begin(); itStock != stocksChanged_.end(); ++itStock )
+    // Stupid modification just for THALES (SWBUG-7374): don't merge this crap out of the scipio branch !
+    // OLD CODE : for( CIT_StockSet itStock = stocksChanged_.begin(); itStock != stocksChanged_.end(); ++itStock )
+    for( CIT_StockMap itStock = stocks_.begin(); itStock != stocks_.end(); ++itStock )
     {
-        const PHY_DotationStock& dotation = **itStock;
+        //const PHY_DotationStock& dotation = **itStock;
+        const PHY_DotationStock& dotation = *itStock->second;
         sword::DotationStock& asnRessource = *asn().mutable_stocks()->add_elem();
         asnRessource.mutable_resource()->set_id( dotation.GetCategory().GetMosID() );
         asnRessource.set_quantity( (unsigned int)dotation.GetValue() );
