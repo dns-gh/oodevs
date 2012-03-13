@@ -122,15 +122,6 @@ PHY_DotationStock* PHY_RoleInterface_Supply::GetStock( const PHY_DotationCategor
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleInterface_Supply::GetStockAvailablity
-// Created: NLD 2005-02-01
-// -----------------------------------------------------------------------------
-double PHY_RoleInterface_Supply::GetStockAvailablity( const PHY_DotationCategory& /*dotationCategory*/, double /*rRequestedValue*/ ) const
-{
-    return 0.;
-}
-
-// -----------------------------------------------------------------------------
 // Name: PHY_RoleInterface_Supply::AddStockReservation
 // Created: NLD 2005-02-01
 // -----------------------------------------------------------------------------

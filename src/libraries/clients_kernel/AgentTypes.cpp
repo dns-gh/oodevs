@@ -427,6 +427,7 @@ void AgentTypes::CreateMagicActionTypes()
     RegisterActionType( *new MagicActionType( "change_dotation", sword::UnitMagicAction::change_dotation ) );
     RegisterActionType( *new MagicActionType( "create_wounds", sword::UnitMagicAction::create_wounds ) );
     RegisterActionType( *new MagicActionType( "create_breakdowns", sword::UnitMagicAction::create_breakdowns ) );
+    RegisterActionType( *new MagicActionType( "log_finish_handlings", sword::UnitMagicAction::log_finish_handlings ) );
 
     // Knowledge Magic Actions
     RegisterActionType( *new MagicActionType( "knowledge_group_enable", sword::KnowledgeMagicAction::enable ) );

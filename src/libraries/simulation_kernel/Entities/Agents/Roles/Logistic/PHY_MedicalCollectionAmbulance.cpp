@@ -112,7 +112,7 @@ bool PHY_MedicalCollectionAmbulance::RegisterHuman( PHY_MedicalCollectionConsign
     switch( nState_ )
     {
         case eWaiting: break;
-        case eLoading: consign.EnterStateCollectionLoading(); break;
+        case eLoading: consign.EnterStateCollectionLoading(); rInfoTimer_ += 1. / pCompAmbulance_->GetType().GetNbrHumansLoadedForCollectionPerTimeStep(); break;
         default:
             return false;
     }
@@ -129,8 +129,8 @@ bool PHY_MedicalCollectionAmbulance::RegisterHuman( PHY_MedicalCollectionConsign
 void PHY_MedicalCollectionAmbulance::UnregisterHuman( PHY_MedicalCollectionConsign& consign )
 {
     IT_ConsignVector itConsign = std::find( consigns_.begin(), consigns_.end(), &consign );
-    assert( itConsign != consigns_.end() );
-    consigns_.erase( itConsign );
+    if( itConsign != consigns_.end() )
+        consigns_.erase( itConsign );
     if( consigns_.empty() )
         EnterStateFinished();
 }
@@ -148,7 +148,7 @@ void PHY_MedicalCollectionAmbulance::EnterStateLoading()
     nState_           = eLoading;
     nTimer_           = 0;
     rNbrHumanHandled_ = 0.;
-
+    rInfoTimer_ = consigns_.size() / pCompAmbulance_->GetType().GetNbrHumansLoadedForCollectionPerTimeStep();
     for( CIT_ConsignVector itConsign = consigns_.begin(); itConsign != consigns_.end(); ++itConsign )
         (**itConsign).EnterStateCollectionLoading();
 }
@@ -161,7 +161,7 @@ bool PHY_MedicalCollectionAmbulance::DoLoading()
 {
     assert( pCompAmbulance_ );
     assert( pMedical_ );
-
+    -- rInfoTimer_;
     rNbrHumanHandled_ += pCompAmbulance_->GetType().GetNbrHumansLoadedForCollectionPerTimeStep();
 
     CIT_ConsignVector itConsign;
@@ -261,7 +261,7 @@ void PHY_MedicalCollectionAmbulance::EnterStateUnloading()
     nState_           = eUnloading;
     nTimer_           = 0;
     rNbrHumanHandled_ = 0.;
-
+    rInfoTimer_ = consigns_.size() / pCompAmbulance_->GetType().GetNbrHumansUnloadedForCollectionPerTimeStep();
     for( CIT_ConsignVector itConsign = consigns_.begin(); itConsign != consigns_.end(); ++itConsign )
         (**itConsign).EnterStateCollectionUnloading();
 }
@@ -274,7 +274,7 @@ bool PHY_MedicalCollectionAmbulance::DoUnloading()
 {
     assert( pSortingArea_ );
     assert( pCompAmbulance_ );
-
+    -- rInfoTimer_;
     rNbrHumanHandled_ += pCompAmbulance_->GetType().GetNbrHumansUnloadedForCollectionPerTimeStep();
     while( rNbrHumanHandled_ >= 1. && !consigns_.empty() )
     {
@@ -353,10 +353,37 @@ unsigned int PHY_MedicalCollectionAmbulance::GetNbrHumans() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_MedicalCollectionAmbulance::GetNbrHumans
+// Created: NLD 2005-01-11
+// -----------------------------------------------------------------------------
+int PHY_MedicalCollectionAmbulance::GetTimer() const
+{
+    if( nState_ == eLoading )
+        return rInfoTimer_;
+    else if( nState_ == eUnloading )
+        return rInfoTimer_;
+    else
+        return nTimer_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_MedicalCollectionAmbulance::IsAnEmergency
 // Created: NLD 2005-01-11
 // -----------------------------------------------------------------------------
 bool PHY_MedicalCollectionAmbulance::IsAnEmergency() const
 {
     return bEmergencyAmbulance_;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalCollectionAmbulance::GetNbrHumans
+// Created: NLD 2005-01-11
+// -----------------------------------------------------------------------------
+void PHY_MedicalCollectionAmbulance::Cancel()
+{
+    T_ConsignVector tmpConsigns = consigns_;
+    for( CIT_ConsignVector itConsign = tmpConsigns.begin(); itConsign != tmpConsigns.end(); ++itConsign )
+        (**itConsign).EnterStateWaitingForCollection();
+    EnterStateFinished();
 }

@@ -50,6 +50,16 @@ bool LogisticConsigns_ABC< ConcreteExtension, Consign >::IsRelevant() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: LogisticConsigns::IsHandlingConsigns
+// Created: NLD 2012-01-09
+// -----------------------------------------------------------------------------
+template< typename ConcreteExtension, typename Consign >
+bool LogisticConsigns_ABC< ConcreteExtension, Consign >::IsHandlingConsigns() const
+{
+    return !handled_.empty();
+}
+
+// -----------------------------------------------------------------------------
 // Name: LogisticConsigns_ABC::AddConsign
 // Created: SBO 2007-03-30
 // -----------------------------------------------------------------------------

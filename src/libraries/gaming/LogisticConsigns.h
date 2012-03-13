@@ -43,6 +43,7 @@ public:
     //! @name Operations
     //@{
     bool IsRelevant() const;
+    bool IsHandlingConsigns() const;
 
     void AddConsign      ( Consign& consign );
     void RemoveConsign   ( Consign& consign );

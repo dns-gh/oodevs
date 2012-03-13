@@ -40,6 +40,7 @@ public:
     //! @name Operations
     //@{
     bool Update();
+    void Cancel();
 
     bool RegisterHuman  ( PHY_MedicalCollectionConsign& consign );
     void UnregisterHuman( PHY_MedicalCollectionConsign& consign );
@@ -49,6 +50,7 @@ public:
     //@{
     bool IsAnEmergency() const;
     unsigned int GetNbrHumans () const;
+    int          GetTimer() const;
     //@}
 
 private:
@@ -97,6 +99,7 @@ private:
     bool                        bEmergencyAmbulance_;
     double                    rNbrHumanHandled_;
     PHY_RoleInterface_Medical*  pSortingArea_;
+    double                      rInfoTimer_;
     //@}
 };
 

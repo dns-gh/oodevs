@@ -49,7 +49,7 @@ LogisticConsignFactory::~LogisticConsignFactory()
 // -----------------------------------------------------------------------------
 LogMaintenanceConsign* LogisticConsignFactory::CreateMaintenanceConsign( const sword::LogMaintenanceHandlingCreation& message )
 {
-    return new LogMaintenanceConsign( controllers_.controller_, message, model_.agents_, static_.types_, static_.objectTypes_ );
+    return new LogMaintenanceConsign( controllers_.controller_, message, model_.agents_, static_.types_, static_.objectTypes_, simulation_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +67,7 @@ LogSupplyConsign* LogisticConsignFactory::CreateSupplyConsign( const sword::LogS
 // -----------------------------------------------------------------------------
 LogMedicalConsign* LogisticConsignFactory::CreateMedicalConsign( const sword::LogMedicalHandlingCreation& message )
 {
-    return new LogMedicalConsign( controllers_.controller_, model_.agents_, message );
+    return new LogMedicalConsign( controllers_.controller_, model_.agents_, simulation_, message );
 }
 
 // -----------------------------------------------------------------------------

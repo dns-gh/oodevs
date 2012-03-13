@@ -72,6 +72,8 @@ public:
     virtual int GetAvailabilityScoreForRepair( const PHY_MaintenanceComposanteState& composanteState ) const;
 
     virtual void NotifyComponentHasChanged();
+
+    virtual void FinishAllHandlingsSuccessfullyWithoutDelay();
     //@}
 
     //! @name Tools

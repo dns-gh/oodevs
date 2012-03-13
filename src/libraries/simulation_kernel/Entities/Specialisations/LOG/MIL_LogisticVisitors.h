@@ -34,7 +34,7 @@ class MaintenanceTransportVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion 
 {
     public:
         MaintenanceTransportVisitor( const PHY_ComposantePion& composante )
-            : nScore_    (  std::numeric_limits< int >::min() )
+            : nScore_    ( std::numeric_limits< int >::min() )
             , pSelected_ ( 0 )
             , composante_( composante )
         {
@@ -43,7 +43,7 @@ class MaintenanceTransportVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion 
         void Visit( const MIL_AgentPion& tmp )
         {
             const PHY_RoleInterface_Maintenance* candidate = tmp.RetrieveRole< PHY_RoleInterface_Maintenance >();
-            const int nNewScore = candidate!=0 ? candidate->GetAvailabilityScoreForTransport( composante_ ) : 0;
+            const int nNewScore = candidate!=0 ? candidate->GetAvailabilityScoreForTransport( composante_ ) : std::numeric_limits< int >::min();
             if( nNewScore > nScore_ )
             {
                 nScore_    = nNewScore;
@@ -70,7 +70,7 @@ class MaintenanceRepairVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
         void Visit( const MIL_AgentPion& tmp )
         {
             const PHY_RoleInterface_Maintenance* candidate = tmp.RetrieveRole< PHY_RoleInterface_Maintenance >();
-            const int nNewScore = candidate!=0 ? candidate->GetAvailabilityScoreForRepair( state_ ) : 0;
+            const int nNewScore = candidate!=0 ? candidate->GetAvailabilityScoreForRepair( state_ ) : std::numeric_limits< int >::min();
             if( nNewScore > nScore_ )
             {
                 nScore_    = nNewScore;
@@ -100,8 +100,7 @@ class MedicalThirdPartyEvacuationVisitor : public MIL_EntityVisitor_ABC< MIL_Age
         void Visit( const MIL_AgentPion& tmp )
         {
             const PHY_RoleInterface_Medical* candidate = tmp.RetrieveRole< PHY_RoleInterface_Medical >();
-            pState_ = (candidate!= 0 ?
-                    const_cast<PHY_RoleInterface_Medical*>(candidate)->HandleHumanEvacuatedByThirdParty( pion_, human_ ) : 0);
+            pState_ = (candidate!= 0 ? const_cast<PHY_RoleInterface_Medical*>(candidate)->HandleHumanEvacuatedByThirdParty( pion_, human_ ) : 0);
         }
 
     public:
@@ -123,7 +122,7 @@ class MedicalEvacuationVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
         void Visit( const MIL_AgentPion& tmp )
         {
             const PHY_RoleInterface_Medical* candidate = tmp.RetrieveRole< PHY_RoleInterface_Medical >();
-            const int nNewScore = (candidate!=0? candidate->GetAvailabilityScoreForEvacuation( human_ ) : 0);
+            const int nNewScore = (candidate!=0? candidate->GetAvailabilityScoreForEvacuation( human_ ) : std::numeric_limits< int >::min());
             if( nNewScore > nScore_ )
             {
                 nScore_    = nNewScore;
@@ -150,7 +149,7 @@ class MedicalCollectionVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
         void Visit( const MIL_AgentPion& tmp )
         {
             const PHY_RoleInterface_Medical* candidate = tmp.RetrieveRole< PHY_RoleInterface_Medical >();
-            const int nNewScore = (candidate!=0 ? candidate->GetAvailabilityScoreForCollection( humanState_ ) : 0);
+            const int nNewScore = (candidate!=0 ? candidate->GetAvailabilityScoreForCollection( humanState_ ) : std::numeric_limits< int >::min());
             if( nNewScore > nScore_ )
             {
                 nScore_    = nNewScore;
@@ -167,9 +166,8 @@ class MedicalCollectionVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
 class MedicalSortingVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
 {
     public:
-        MedicalSortingVisitor( const PHY_MedicalCollectionAmbulance& ambulance )
+        MedicalSortingVisitor()
             : nScore_    ( std::numeric_limits< int >::min() )
-            , ambulance_ ( ambulance )
             , pSelected_ ( 0 )
         {
         }
@@ -177,7 +175,7 @@ class MedicalSortingVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
         void Visit( const MIL_AgentPion& tmp )
         {
             const PHY_RoleInterface_Medical* candidate = tmp.RetrieveRole< PHY_RoleInterface_Medical >();
-            const int nNewScore = (candidate!=0 ? candidate->GetAvailabilityScoreForSorting( ambulance_ ) : 0);
+            const int nNewScore = (candidate!=0 ? candidate->GetAvailabilityScoreForSorting() : std::numeric_limits< int >::min());
             if( nNewScore > nScore_ )
             {
                 nScore_    = nNewScore;
@@ -187,7 +185,6 @@ class MedicalSortingVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
 
     public:
               int                             nScore_;
-        const PHY_MedicalCollectionAmbulance& ambulance_;
               PHY_RoleInterface_Medical*      pSelected_;
 };
 
@@ -204,7 +201,7 @@ class MedicalHealingVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
         void Visit( const MIL_AgentPion& tmp )
         {
             const PHY_RoleInterface_Medical* candidate = tmp.RetrieveRole< PHY_RoleInterface_Medical >();
-            const int nNewScore = (candidate!=0 ? candidate->GetAvailabilityScoreForHealing( humanState_ ) : 0 );
+            const int nNewScore = (candidate!=0 ? candidate->GetAvailabilityScoreForHealing( humanState_ ) : std::numeric_limits< int >::min() );
             if( nNewScore > nScore_ )
             {
                 nScore_    = nNewScore;
@@ -239,44 +236,6 @@ class MedicalCollectionAmbulanceAuthorizedToGoVisitor : public MIL_EntityVisitor
     public:
         const PHY_MedicalCollectionAmbulance& ambulance_;
               bool                            bAuthorized_;
-};
-
-// =============================================================================
-// SUPPLY
-// =============================================================================
-class SupplyStockAvailabilityVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
-{
-    public:
-        SupplyStockAvailabilityVisitor( const PHY_DotationCategory& dotationCategory, double rRequestedValue )
-            : rScore_          ( 0. )
-            , dotationCategory_( dotationCategory )
-            , rRequestedValue_ ( rRequestedValue )
-            , pSelected_       ( 0 )
-        {
-        }
-
-        void Visit( const MIL_AgentPion& tmp )
-        {
-            // NLD 2011-04-07 : Totally bugged ...
-            // We must not use BL internal TC2 for external use
-            //MIL_AutomateLOG* testBrain = tmp.GetAutomate().GetBrainLogistic();
-            //if( bExternalTransfert_ && testBrain )
-            //    return;
-
-            const PHY_RoleInterface_Supply* candidate = tmp.RetrieveRole< PHY_RoleInterface_Supply >();
-            const double rNewScore = candidate!=0 ? candidate->GetStockAvailablity( dotationCategory_, rRequestedValue_ ) : 0;
-            if( rNewScore > rScore_ )
-            {
-                rScore_    = rNewScore;
-                pSelected_ = const_cast<MIL_AgentPion*>(&tmp);
-            }
-        }
-
-    public:
-              double                 rScore_;
-        const PHY_DotationCategory&  dotationCategory_;
-        const double                 rRequestedValue_;
-              MIL_AgentPion*         pSelected_;
 };
 
 class SupplyStockReservationVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >

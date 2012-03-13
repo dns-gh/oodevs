@@ -40,9 +40,15 @@ public:
     //! @name Operations
     //@{
     bool Update();
+    void Cancel();
 
     bool RegisterHuman  ( PHY_MedicalEvacuationConsign& consign );
     void UnregisterHuman( PHY_MedicalEvacuationConsign& consign );
+    //@}
+
+    //! @name Accessors
+    //@{
+    int GetTimer() const;
     //@}
 
 private:
@@ -84,7 +90,8 @@ private:
     T_ConsignVector             consigns_;
     E_State                     nState_;
     int                         nTimer_;
-    double                    rNbrHumanHandled_;
+    double                      rNbrHumanHandled_;
+    double                      rInfoTimer_;
     //@}
 };
 

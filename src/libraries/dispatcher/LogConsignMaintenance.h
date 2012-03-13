@@ -68,6 +68,7 @@ private:
     const unsigned int  nBreakdownType_; // XML reference - not resolved by dispatcher
     const kernel::Agent_ABC* pTreatingAgent_;
     sword::LogMaintenanceHandlingUpdate::EnumLogMaintenanceHandlingStatus nState_;
+    unsigned long currentStateEndTick_;
     bool bDiagnosed_;
     //@}
 };

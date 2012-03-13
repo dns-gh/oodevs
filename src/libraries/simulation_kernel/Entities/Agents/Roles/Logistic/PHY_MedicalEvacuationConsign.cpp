@@ -58,6 +58,16 @@ PHY_MedicalEvacuationConsign::PHY_MedicalEvacuationConsign()
 // -----------------------------------------------------------------------------
 PHY_MedicalEvacuationConsign::~PHY_MedicalEvacuationConsign()
 {
+    if( pDoctor_ )
+    {
+        GetPionMedical().StopUsingForLogistic( *pDoctor_ );
+        pDoctor_ = 0;
+    }
+    if( pEvacuationAmbulance_ )
+    {
+        pEvacuationAmbulance_->UnregisterHuman( *this );
+        pEvacuationAmbulance_ = 0;
+    }
 }
 
 // =============================================================================
@@ -86,11 +96,18 @@ void PHY_MedicalEvacuationConsign::serialize( Archive& file, const unsigned int 
 void PHY_MedicalEvacuationConsign::EnterStateWaitingForEvacuation()
 {
     assert( pHumanState_ );
-    assert( !pDoctor_ );
-    assert( !pEvacuationAmbulance_ );
-
+    if( pDoctor_ )
+    {
+        GetPionMedical().StopUsingForLogistic( *pDoctor_ );
+        pDoctor_ = 0;
+    }
+    if( pEvacuationAmbulance_ )
+    {
+        pEvacuationAmbulance_->UnregisterHuman( *this );
+        pEvacuationAmbulance_ = 0;
+    }
     SetState( eWaitingForEvacuation );
-    nTimer_ = 0;
+    ResetTimer( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -103,7 +120,23 @@ void PHY_MedicalEvacuationConsign::CreateEvacuationAmbulance()
     assert( !pDoctor_ );
 
     if( !pEvacuationAmbulance_ )
+    {
         pEvacuationAmbulance_ = GetPionMedical().GetAvailableEvacuationAmbulance( *this );
+        if( !pEvacuationAmbulance_ )
+        {
+            // Find alternative evacuation unit
+            MIL_AutomateLOG* pLogisticManager = GetPionMedical().GetPion().FindLogisticManager();
+            if( pLogisticManager )
+            {
+                PHY_RoleInterface_Medical* newPion = pLogisticManager->MedicalFindAlternativeEvacuationHandler( *pHumanState_ );
+                if( newPion && newPion != &GetPionMedical() && newPion->HandleHumanForEvacuation( *pHumanState_ ) )
+                {
+                    EnterStateFinished();
+                    pHumanState_ = 0; // Crade
+                }
+            }
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -118,7 +151,7 @@ void PHY_MedicalEvacuationConsign::EnterStateEvacuationGoingTo()
     assert( !pDoctor_ );
     assert( GetState() == eWaitingForEvacuation );
     SetState( eEvacuationGoingTo );
-    nTimer_ = 0;
+    ResetTimer( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -133,7 +166,7 @@ void PHY_MedicalEvacuationConsign::EnterStateEvacuationLoading()
     assert( !pDoctor_ );
     assert( GetState() == eEvacuationGoingTo || GetState() == eWaitingForEvacuation );
     SetState( eEvacuationLoading );
-    nTimer_ = 0;
+    ResetTimer( 0 );
     pHumanState_->NotifyHandledByMedical();
 }
 
@@ -148,7 +181,7 @@ bool PHY_MedicalEvacuationConsign::EnterStateEvacuationWaitingForFullLoading()
     assert( pEvacuationAmbulance_ );
     assert( !pDoctor_ );
 
-    nTimer_ = 0;
+    ResetTimer( 0 );
     if( GetState() == eEvacuationLoading )
     {
         SetState( eEvacuationWaitingForFullLoading );
@@ -170,7 +203,7 @@ void PHY_MedicalEvacuationConsign::EnterStateEvacuationGoingFrom()
     assert( !pDoctor_ );
     assert( GetState() == eEvacuationWaitingForFullLoading );
     SetState( eEvacuationGoingFrom );
-    nTimer_ = 0;
+    ResetTimer( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -185,7 +218,7 @@ void PHY_MedicalEvacuationConsign::EnterStateEvacuationUnloading()
     assert( !pDoctor_ );
     assert( GetState() == eEvacuationGoingFrom );
     SetState( eEvacuationUnloading );
-    nTimer_ = 0;
+    ResetTimer( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -201,7 +234,7 @@ void PHY_MedicalEvacuationConsign::ChooseStateAfterEvacuation()
     pHumanState_->SetHumanPosition( GetPionMedical().GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition() );
     pEvacuationAmbulance_ = 0;
 
-    nTimer_ = 0;
+    ResetTimer( 0 );
     if( pHumanState_->NeedDiagnosis() )
         SetState( eWaitingForDiagnostic );
     else
@@ -237,7 +270,7 @@ void PHY_MedicalEvacuationConsign::EnterStateDiagnosing()
     assert( !pEvacuationAmbulance_ );
 
     SetState( eDiagnosing );
-    nTimer_ = PHY_HumanWound::GetDiagnosticTime();
+    ResetTimer( PHY_HumanWound::GetDiagnosticTime() );
 }
 
 
@@ -254,7 +287,7 @@ void PHY_MedicalEvacuationConsign::EnterStateWaitingForCollection()
     GetPionMedical().StopUsingForLogistic( *pDoctor_ );
     pDoctor_ = 0;
     pHumanState_->NotifyDiagnosed();
-    nTimer_ = 0;
+    ResetTimer( 0 );
     SetState( eWaitingForCollection );
 }
 
@@ -288,7 +321,7 @@ bool PHY_MedicalEvacuationConsign::DoWaitingForCollection()
 // -----------------------------------------------------------------------------
 bool PHY_MedicalEvacuationConsign::Update()
 {
-    if( --nTimer_ > 0 )
+    if( DecrementTimer() )
         return GetState() == eFinished;
 
     switch( GetState() )
@@ -306,6 +339,8 @@ bool PHY_MedicalEvacuationConsign::Update()
         default:
             assert( false );
     }
+    if( pEvacuationAmbulance_ )
+        SendExternalTimerValue( pEvacuationAmbulance_->GetTimer() );
     return GetState() == eFinished;
 }
 

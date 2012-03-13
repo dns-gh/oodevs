@@ -32,6 +32,7 @@ PHY_MedicalEvacuationAmbulance::PHY_MedicalEvacuationAmbulance( PHY_RoleInterfac
     , nTimer_          ( 0 )
     , rNbrHumanHandled_( 0. )
     , consigns_        ()
+    , rInfoTimer_      ( 0. )
 {
     pMedical_->StartUsingForLogistic( *pCompAmbulance_ );
 }
@@ -47,6 +48,7 @@ PHY_MedicalEvacuationAmbulance::PHY_MedicalEvacuationAmbulance()
     , nTimer_          ( 0 )
     , rNbrHumanHandled_( 0. )
     , consigns_        ()
+    , rInfoTimer_      ( 0. )
 {
 }
 
@@ -74,7 +76,8 @@ void PHY_MedicalEvacuationAmbulance::serialize( Archive& file, const unsigned in
          & consigns_
          & nState_
          & nTimer_
-         & rNbrHumanHandled_;
+         & rNbrHumanHandled_
+         & rInfoTimer_;
 }
 
 // -----------------------------------------------------------------------------
@@ -96,7 +99,7 @@ bool PHY_MedicalEvacuationAmbulance::RegisterHuman( PHY_MedicalEvacuationConsign
     {
         case eWaiting: break;
         case eGoingTo: consign.EnterStateEvacuationGoingTo(); break;
-        case eLoading: consign.EnterStateEvacuationLoading(); break;
+        case eLoading: consign.EnterStateEvacuationLoading(); rInfoTimer_ += 1. / pCompAmbulance_->GetType().GetNbrHumansLoadedForEvacuationPerTimeStep(); break;
         default:
             return false;
     }
@@ -111,8 +114,8 @@ bool PHY_MedicalEvacuationAmbulance::RegisterHuman( PHY_MedicalEvacuationConsign
 void PHY_MedicalEvacuationAmbulance::UnregisterHuman( PHY_MedicalEvacuationConsign& consign )
 {
     IT_ConsignVector itConsign = std::find( consigns_.begin(), consigns_.end(), &consign );
-    assert( itConsign != consigns_.end() );
-    consigns_.erase( itConsign );
+    if( itConsign != consigns_.end() )
+        consigns_.erase( itConsign );
     if( consigns_.empty() )
         EnterStateFinished();
 }
@@ -149,6 +152,7 @@ void PHY_MedicalEvacuationAmbulance::EnterStateLoading()
     nTimer_           = 0;
     rNbrHumanHandled_ = 0.;
 
+    rInfoTimer_ = consigns_.size() / pCompAmbulance_->GetType().GetNbrHumansLoadedForEvacuationPerTimeStep();
     for( CIT_ConsignVector itConsign = consigns_.begin(); itConsign != consigns_.end(); ++itConsign )
         (**itConsign).EnterStateEvacuationLoading();
 }
@@ -160,7 +164,7 @@ void PHY_MedicalEvacuationAmbulance::EnterStateLoading()
 bool PHY_MedicalEvacuationAmbulance::DoLoading()
 {
     assert( pCompAmbulance_ );
-
+    -- rInfoTimer_;
     rNbrHumanHandled_ += pCompAmbulance_->GetType().GetNbrHumansLoadedForEvacuationPerTimeStep();
     CIT_ConsignVector itConsign;
     for( itConsign = consigns_.begin(); itConsign != consigns_.end() && rNbrHumanHandled_ >= 1.; ++itConsign )
@@ -203,7 +207,7 @@ void PHY_MedicalEvacuationAmbulance::EnterStateUnloading()
     nState_           = eUnloading;
     nTimer_           = 0;
     rNbrHumanHandled_ = 0.;
-
+    rInfoTimer_ = consigns_.size() / pCompAmbulance_->GetType().GetNbrHumansUnloadedForEvacuationPerTimeStep();
     for( CIT_ConsignVector itConsign = consigns_.begin(); itConsign != consigns_.end(); ++itConsign )
         (**itConsign).EnterStateEvacuationUnloading();
 }
@@ -215,7 +219,7 @@ void PHY_MedicalEvacuationAmbulance::EnterStateUnloading()
 bool PHY_MedicalEvacuationAmbulance::DoUnloading()
 {
     assert( pCompAmbulance_ );
-
+    -- rInfoTimer_;
     rNbrHumanHandled_ += pCompAmbulance_->GetType().GetNbrHumansUnloadedForEvacuationPerTimeStep();
     while( rNbrHumanHandled_ >= 1. && !consigns_.empty() )
     {
@@ -259,4 +263,30 @@ bool PHY_MedicalEvacuationAmbulance::Update()
             assert( false );
     }
     return nState_ == eFinished;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalEvacuationAmbulance::GetNbrHumans
+// Created: NLD 2005-01-11
+// -----------------------------------------------------------------------------
+int PHY_MedicalEvacuationAmbulance::GetTimer() const
+{
+    if( nState_ == eLoading )
+        return rInfoTimer_;
+    else if( nState_ == eUnloading )
+        return rInfoTimer_;
+    else
+        return nTimer_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MedicalEvacuationAmbulance::GetNbrHumans
+// Created: NLD 2005-01-11
+// -----------------------------------------------------------------------------
+void PHY_MedicalEvacuationAmbulance::Cancel()
+{
+    T_ConsignVector tmpConsigns = consigns_;
+    for( CIT_ConsignVector itConsign = tmpConsigns.begin(); itConsign != tmpConsigns.end(); ++itConsign )
+        (**itConsign).EnterStateWaitingForEvacuation();
+    EnterStateFinished();
 }

@@ -27,6 +27,8 @@ namespace sword
     class LogMedicalHandlingUpdate;
 }
 
+class Simulation;
+
 // =============================================================================
 /** @class  LogMedicalConsign
     @brief  LogMedicalConsign
@@ -38,7 +40,7 @@ class LogMedicalConsign : public kernel::Drawable_ABC
 public:
     //! @name Operations
     //@{
-             LogMedicalConsign( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, const sword::LogMedicalHandlingCreation& message );
+             LogMedicalConsign( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, const Simulation& simulation, const sword::LogMedicalHandlingCreation& message );
     virtual ~LogMedicalConsign();
     //@}
 
@@ -61,6 +63,7 @@ private:
     //@{
     kernel::Controller& controller_;
     const tools::Resolver_ABC< kernel::Agent_ABC >& resolver_;
+    const Simulation& simulation_;
     unsigned int nID_;
     kernel::Agent_ABC& consumer_;
     kernel::Agent_ABC* pPionLogHandling_;
@@ -69,6 +72,7 @@ private:
     bool    diagnosed_;
     E_HumanWound wound_;
     E_LogMedicalHandlingStatus nState_;
+    unsigned int currentStateEndTick_;
     //@}
 };
 

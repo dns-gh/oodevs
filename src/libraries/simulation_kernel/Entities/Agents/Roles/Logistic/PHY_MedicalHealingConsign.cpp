@@ -49,7 +49,11 @@ PHY_MedicalHealingConsign::PHY_MedicalHealingConsign()
 // -----------------------------------------------------------------------------
 PHY_MedicalHealingConsign::~PHY_MedicalHealingConsign()
 {
-    // NOTHING
+    if( pDoctor_ )
+    {
+        GetPionMedical().StopUsingForLogistic( *pDoctor_ );
+        pDoctor_ = 0;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -72,7 +76,7 @@ void PHY_MedicalHealingConsign::EnterStateWaitingForHealing()
     assert( pHumanState_ );
     assert( !pDoctor_ );
     SetState( eWaitingForHealing );
-    nTimer_ = 0;
+    ResetTimer( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -87,8 +91,17 @@ bool PHY_MedicalHealingConsign::DoWaitingForHealing()
     pDoctor_ = GetPionMedical().GetAvailableDoctorForHealing( pHumanState_->GetHuman() );
     if( !pDoctor_ )
     {
-        if( !GetPionMedical().HasUsableDoctorForHealing( pHumanState_->GetHuman(), true /*Bypass priorities*/ ) )
-            EnterStateSearchingForHealingArea();
+        // Find alternative healing unit
+        MIL_AutomateLOG* pLogisticManager = GetPionMedical().GetPion().FindLogisticManager();
+        if( pLogisticManager )
+        {
+            PHY_RoleInterface_Medical* newPion = pLogisticManager->MedicalFindAlternativeHealingHandler( *pHumanState_ );
+            if( newPion && newPion != &GetPionMedical() && newPion->HandleHumanForHealing( *pHumanState_ ) )
+            {
+                EnterStateFinished();
+                pHumanState_ = 0; // Crade
+            }
+        }
         return false;
     }
 
@@ -105,7 +118,7 @@ void PHY_MedicalHealingConsign::EnterStateHealing()
     assert( pHumanState_ );
     assert( pDoctor_ );
     SetState( eHealing );
-    nTimer_ = (unsigned int)( pDoctor_->GetHealingTime( pHumanState_->GetHuman() ) );
+    ResetTimer( pDoctor_->GetHealingTime( pHumanState_->GetHuman() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -118,7 +131,7 @@ void PHY_MedicalHealingConsign::EnterStateResting()
     assert( pDoctor_ );
 
     // Healing time elapsed
-    nTimer_ = pHumanState_->Heal( *pDoctor_ ); // Returns resting time
+    ResetTimer( pHumanState_->Heal( *pDoctor_ ) ); // Returns resting time
     GetPionMedical().StopUsingForLogistic( *pDoctor_ );
     pDoctor_ = 0;
     SetState( eResting );
@@ -153,7 +166,7 @@ void PHY_MedicalHealingConsign::EnterStateSearchingForHealingArea()
     assert( pHumanState_ );
     assert( !pDoctor_ );
     SetState( eSearchingForHealingArea );
-    nTimer_ = 0;
+    ResetTimer( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -166,7 +179,7 @@ void PHY_MedicalHealingConsign::DoSearchForHealingArea()
     if( pLogisticManager && pLogisticManager->MedicalHandleHumanForHealing( *pHumanState_ ) )
     {
         SetState( eFinished );
-        nTimer_ = 0;
+        ResetTimer( 0 );
         pHumanState_ = 0;
         return;
     }
@@ -182,7 +195,7 @@ void PHY_MedicalHealingConsign::EnterStateWaitingForCollection()
     assert( pHumanState_ );
     assert( !pDoctor_ );
     pHumanState_->SetHumanPosition( GetPionMedical().GetPion().GetRole< PHY_RoleInterface_Location >().GetPosition() );
-    nTimer_ = 0;
+    ResetTimer( 0 );
     SetState( eWaitingForCollection );
 }
 
@@ -225,7 +238,7 @@ void PHY_MedicalHealingConsign::DoReturnHuman()
 // -----------------------------------------------------------------------------
 bool PHY_MedicalHealingConsign::Update()
 {
-    if( --nTimer_ > 0 )
+    if( DecrementTimer() )
         return GetState() == eFinished;
 
     switch( GetState() )

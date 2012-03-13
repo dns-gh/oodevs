@@ -1077,6 +1077,9 @@ void MIL_AgentPion::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg,
     case sword::UnitMagicAction::unload_unit:
         OnReceiveUnloadUnit( msg.parameters() );
         break;
+    case sword::UnitMagicAction::log_finish_handlings:
+        OnReceiveFinishLogisticHandlings(); 
+        break;
     default:
         assert( false );
         break;
@@ -1667,5 +1670,20 @@ void MIL_AgentPion::OnReloadBrain( const sword::MissionParameters& msg )
     }
     GetDecision().Reload();
     pOrderManager_->CancelMission();
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::OnReceiveFinishLogisticHandlings
+// Created: NLD 2012-01-09
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::OnReceiveFinishLogisticHandlings()
+{
+    PHY_RoleInterface_Maintenance* roleMaintenance = RetrieveRole< PHY_RoleInterface_Maintenance >();
+    if( roleMaintenance )
+        roleMaintenance->FinishAllHandlingsSuccessfullyWithoutDelay();
+
+    PHY_RoleInterface_Medical* roleMedical = RetrieveRole< PHY_RoleInterface_Medical >();
+    if( roleMedical )
+        roleMedical->FinishAllHandlingsSuccessfullyWithoutDelay();
 }
 

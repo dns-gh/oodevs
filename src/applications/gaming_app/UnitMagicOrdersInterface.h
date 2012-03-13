@@ -85,6 +85,7 @@ private slots:
     void RecoverHumanTransporters();
     void SurrenderTo( int );
     void ReloadBrain( QAction* );
+    void FinishLogisticHandlings();
     //@}
 
 private:
