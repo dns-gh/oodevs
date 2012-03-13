@@ -112,7 +112,7 @@ bool PHY_MedicalCollectionAmbulance::RegisterHuman( PHY_MedicalCollectionConsign
     switch( nState_ )
     {
         case eWaiting: break;
-        case eLoading: consign.EnterStateCollectionLoading(); break;
+        case eLoading: consign.EnterStateCollectionLoading(); rInfoTimer_ += 1. / pCompAmbulance_->GetType().GetNbrHumansLoadedForCollectionPerTimeStep(); break;
         default:
             return false;
     }
@@ -148,7 +148,7 @@ void PHY_MedicalCollectionAmbulance::EnterStateLoading()
     nState_           = eLoading;
     nTimer_           = 0;
     rNbrHumanHandled_ = 0.;
-
+    rInfoTimer_ = consigns_.size() / pCompAmbulance_->GetType().GetNbrHumansLoadedForCollectionPerTimeStep();
     for( CIT_ConsignVector itConsign = consigns_.begin(); itConsign != consigns_.end(); ++itConsign )
         (**itConsign).EnterStateCollectionLoading();
 }
@@ -161,7 +161,7 @@ bool PHY_MedicalCollectionAmbulance::DoLoading()
 {
     assert( pCompAmbulance_ );
     assert( pMedical_ );
-
+    -- rInfoTimer_;
     rNbrHumanHandled_ += pCompAmbulance_->GetType().GetNbrHumansLoadedForCollectionPerTimeStep();
 
     CIT_ConsignVector itConsign;
@@ -261,7 +261,7 @@ void PHY_MedicalCollectionAmbulance::EnterStateUnloading()
     nState_           = eUnloading;
     nTimer_           = 0;
     rNbrHumanHandled_ = 0.;
-
+    rInfoTimer_ = consigns_.size() / pCompAmbulance_->GetType().GetNbrHumansUnloadedForCollectionPerTimeStep();
     for( CIT_ConsignVector itConsign = consigns_.begin(); itConsign != consigns_.end(); ++itConsign )
         (**itConsign).EnterStateCollectionUnloading();
 }
@@ -274,7 +274,7 @@ bool PHY_MedicalCollectionAmbulance::DoUnloading()
 {
     assert( pSortingArea_ );
     assert( pCompAmbulance_ );
-
+    -- rInfoTimer_;
     rNbrHumanHandled_ += pCompAmbulance_->GetType().GetNbrHumansUnloadedForCollectionPerTimeStep();
     while( rNbrHumanHandled_ >= 1. && !consigns_.empty() )
     {
@@ -358,7 +358,12 @@ unsigned int PHY_MedicalCollectionAmbulance::GetNbrHumans() const
 // -----------------------------------------------------------------------------
 int PHY_MedicalCollectionAmbulance::GetTimer() const
 {
-    return nTimer_;
+    if( nState_ == eLoading )
+        return rInfoTimer_;
+    else if( nState_ == eUnloading )
+        return rInfoTimer_;
+    else
+        return nTimer_;
 }
 
 // -----------------------------------------------------------------------------

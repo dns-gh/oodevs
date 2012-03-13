@@ -99,6 +99,7 @@ private:
     bool                        bEmergencyAmbulance_;
     double                    rNbrHumanHandled_;
     PHY_RoleInterface_Medical*  pSortingArea_;
+    double                      rInfoTimer_;
     //@}
 };
 

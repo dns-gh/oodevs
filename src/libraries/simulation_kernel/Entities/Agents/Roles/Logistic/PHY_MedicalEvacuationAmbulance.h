@@ -91,6 +91,7 @@ private:
     E_State                     nState_;
     int                         nTimer_;
     double                      rNbrHumanHandled_;
+    double                      rInfoTimer_;
     //@}
 };
 
