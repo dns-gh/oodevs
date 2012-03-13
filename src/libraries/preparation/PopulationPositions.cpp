@@ -81,6 +81,7 @@ void PopulationPositions::UpdatePosition()
         const float density = owner_.GetType().GetDensity();
         if( density > 0 )
             radius_ = std::sqrt( ( livingHumans_ / density ) * oneOnpi );
+        radius_ = std::max( radius_, 50.f );
         const geometry::Vector2f diag( radius_, radius_ );
         boundingBox_ = geometry::Rectangle2f( center_ - diag, center_ + diag );
     }
