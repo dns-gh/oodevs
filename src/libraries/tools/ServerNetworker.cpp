@@ -221,3 +221,12 @@ bool ServerNetworker::HasAnsweredSinceLastTick( const std::string& endpoint )
 {
     return sockets_->HasAnsweredSinceLastTick( endpoint );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ServerNetworker::IsQueueFlooded
+// Created: LDC 2012-03-13
+// -----------------------------------------------------------------------------
+bool ServerNetworker::IsQueueFlooded( const std::string& endpoint )
+{
+    return sockets_->IsQueueFlooded( endpoint );
+}

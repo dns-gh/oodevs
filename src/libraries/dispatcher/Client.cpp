@@ -125,3 +125,12 @@ bool Client::HasAnsweredSinceLastTick()
 {
     return sender_.HasAnsweredSinceLastTick( endpoint_ );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Client::IsQueueFlooded
+// Created: LDC 2012-03-13
+// -----------------------------------------------------------------------------
+bool Client::IsQueueFlooded()
+{
+    return sender_.IsQueueFlooded( endpoint_ );
+}

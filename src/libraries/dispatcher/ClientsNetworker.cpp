@@ -349,13 +349,20 @@ ClientPublisher_ABC& ClientsNetworker::GetPublisher( const std::string& link )
 void ClientsNetworker::OnNewTick()
 {
     std::vector< std::string > errors;
+    std::vector< std::string > disconnectList;
     for( IT_Clients it = clients_.begin(); it != clients_.end(); ++it )
     {
         if( false == it->second->HasAnsweredSinceLastTick() )
             errors.push_back( it->first );
+        if( it->second->IsQueueFlooded() )
+            disconnectList.push_back( it->first );
     }
     for( std::vector< std::string >::const_iterator it = errors.begin(); it != errors.end(); ++it )
     {
         MT_LOG_ERROR_MSG( "Client hasn't answered messages from last tick! Client should be checked or disconnected: " << *it );
+    }
+    for( std::vector< std::string >::const_iterator it = disconnectList.begin(); it != disconnectList.end(); ++it )
+    {
+        ConnectionError( *it, "Message queue too big." );
     }
 }

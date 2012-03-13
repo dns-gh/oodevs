@@ -211,3 +211,12 @@ bool ClientNetworker::HasAnsweredSinceLastTick( const std::string& endpoint )
 {
     return sockets_->HasAnsweredSinceLastTick( endpoint );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ClientNetworker::IsQueueFlooded
+// Created: JSR 2012-03-13
+// -----------------------------------------------------------------------------
+bool ClientNetworker::IsQueueFlooded( const std::string& endpoint )
+{
+    return sockets_->IsQueueFlooded( endpoint );
+}

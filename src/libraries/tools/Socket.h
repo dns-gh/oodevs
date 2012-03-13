@@ -45,6 +45,7 @@ public:
     const std::string& Endpoint() const;
 
     bool HasAnsweredSinceLastTick();
+    bool IsQueueFlooded();
     //@}
 
 private:

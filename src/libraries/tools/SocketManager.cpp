@@ -113,3 +113,15 @@ bool SocketManager::HasAnsweredSinceLastTick( const std::string& endpoint )
         return false;
     return it->second->HasAnsweredSinceLastTick();
 }
+
+// -----------------------------------------------------------------------------
+// Name: SocketManager::IsQueueFlooded
+// Created: JSR 2012-03-13
+// -----------------------------------------------------------------------------
+bool SocketManager::IsQueueFlooded( const std::string& endpoint )
+{
+    const CIT_Sockets it = sockets_.find( endpoint );
+    if( it == sockets_.end() )
+        return false;
+    return it->second->IsQueueFlooded();
+}

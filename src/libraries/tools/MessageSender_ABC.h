@@ -67,6 +67,7 @@ public:
     //@{
     virtual unsigned long GetNbMessagesSent() const = 0;
     virtual bool HasAnsweredSinceLastTick( const std::string& endpoint ) = 0;
+    virtual bool IsQueueFlooded( const std::string& endpoint ) = 0;
     //@}
 };
 

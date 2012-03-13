@@ -54,7 +54,8 @@ void Socket::Close()
 namespace
 {
     const int bigSize = 1000;
-    const int reclaimSize = 100;    
+    const int reclaimSize = 100;  
+    const int maxSize = 500000; // $$$$ RETEX Scipio CEPC performance tests
 }
 
 // -----------------------------------------------------------------------------
@@ -193,4 +194,13 @@ bool Socket::HasAnsweredSinceLastTick()
     bool result = queue_.empty() || answered_;
     answered_ = false;
     return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Socket::IsQueueFlooded
+// Created: JSR 2012-03-13
+// -----------------------------------------------------------------------------
+bool Socket::IsQueueFlooded()
+{
+    return ( queue_.size() > maxSize );
 }

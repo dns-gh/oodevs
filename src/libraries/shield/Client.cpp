@@ -166,6 +166,15 @@ bool Client::HasAnsweredSinceLastTick( const std::string& endpoint )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Client::IsQueueFlooded
+// Created: LDC 2012-03-13
+// -----------------------------------------------------------------------------
+bool Client::IsQueueFlooded( const std::string& endpoint )
+{
+    return sender_.IsQueueFlooded( endpoint );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Client::Send
 // Created: MCO 2010-10-27
 // -----------------------------------------------------------------------------

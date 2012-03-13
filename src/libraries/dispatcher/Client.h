@@ -52,6 +52,7 @@ public:
     void Send( unsigned long tag, tools::Message& message ) const;
 
     bool HasAnsweredSinceLastTick();
+    bool IsQueueFlooded();
     //@}
 
 private:
