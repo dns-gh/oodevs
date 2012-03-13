@@ -462,4 +462,6 @@ eRC_StartingToCreateResourceLink = 447
 eRC_ResouceLinkCreated = 448
 eRC_CannotDismount = 449
 eRC_DecrochageFaceAIncendie = 450
-eNbr = 451
+eRC_Capture = 451
+eRC_TakeHostage = 452
+eNbr = 453

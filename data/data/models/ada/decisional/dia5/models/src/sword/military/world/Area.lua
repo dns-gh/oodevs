@@ -192,10 +192,10 @@ return
     {
         start = function( self )
             integration.startSearchArea( self )
-            myself.CR_TerroristsFounded = {}
+            myself.CRCaptureSomeone = {}
         end,
         started = function( self )
-                    integration.captureTerrorists( integration.getDestroyableInObjective( self ) )
+                    integration.capture( integration.getDestroyableInObjective( self ), eRC_TerroristCaptured )
                   end,
         stop = integration.stopSearchArea
     } ),

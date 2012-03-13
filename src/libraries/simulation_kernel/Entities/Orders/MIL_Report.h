@@ -598,6 +598,8 @@ public:
         eRC_ResouceLinkCreated,
         eRC_CannotDismount,
         eRC_DecrochageFaceAIncendie,
+        eRC_Capture,
+        eRC_TakeHostage,
         eLast
     };
     //@}

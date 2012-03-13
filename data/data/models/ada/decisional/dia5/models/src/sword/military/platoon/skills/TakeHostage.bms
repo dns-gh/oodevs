@@ -48,7 +48,6 @@ node "CaptureHostage"
 
     create = function( self )
         if self.params.unit:takeAsHostage() then
-            self.params.unit.desactiveSelfProtection = true -- $$$ MIA temp?
             Feedback( self.feedbacks.captured )
        end
     end,

@@ -243,12 +243,12 @@ return
     {
         start = function( self )
             integration.startSearchUrbanBlock( self )
-            myself.CR_TerroristsFounded = {}
+            myself.CRCaptureSomeone = {}
         end,
         
         started = function( self )
             integration.startedSearchUrbanBlock( self )
-            integration.captureTerrorists(integration.getDestroyableInObjective( self ) ) 
+            integration.capture(integration.getDestroyableInObjective( self ), eRC_TerroristCaptured ) 
         end,
         stop = integration.stopSearchUrbanBlock
     } ),

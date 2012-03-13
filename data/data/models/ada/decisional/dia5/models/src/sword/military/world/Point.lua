@@ -219,10 +219,10 @@ return
     {
           start = function( self )
             integration.startSearchPoint( self )
-            myself.CR_TerroristsFounded = {}
+            myself.CRCaptureSomeone = {}
         end,
         started = function( self)
-                    integration.captureTerrorists( integration.getDestroyableInObjective( self ) )
+                    integration.capture( integration.getDestroyableInObjective( self ), eRC_TerroristCaptured )
                   end,
         stop = integration.stopSearchPoint
     } ),
