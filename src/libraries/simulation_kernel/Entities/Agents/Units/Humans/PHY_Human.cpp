@@ -112,8 +112,7 @@ void PHY_Human::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> bContamined_
          >> nLocation_
          >> pMedicalState_
-         >> nDeathTimeStep_
-         >> funeralConsign_;
+         >> nDeathTimeStep_;
 }
 
 // -----------------------------------------------------------------------------
@@ -134,8 +133,7 @@ void PHY_Human::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
          << bContamined_
          << nLocation_
          << pMedicalState_
-         << nDeathTimeStep_
-         << funeralConsign_;
+         << nDeathTimeStep_;
 }
 
 // -----------------------------------------------------------------------------
