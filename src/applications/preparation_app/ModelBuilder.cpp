@@ -14,6 +14,7 @@
 #include "preparation/Model.h"
 #include "preparation/TeamsModel.h"
 #include "preparation/AgentsModel.h"
+#include "preparation/EntityCommunications.h"
 #include "preparation/FormationModel.h"
 #include "preparation/KnowledgeGroupsModel.h"
 #include "preparation/LimitsModel.h"
@@ -138,7 +139,7 @@ void ModelBuilder::CreateLimit( const T_PointVector& points )
 {
     const Entity_ABC* element = selectedFormation_ ? (const Entity_ABC*)selectedFormation_ : (const Entity_ABC*)selectedAutomat_;
     if( element )
-        model_.limits_.CreateLimit( points, *const_cast< kernel::Entity_ABC* >( element ) );
+        model_.limits_.CreateLimit( points, *const_cast< Entity_ABC* >( element ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -149,14 +150,14 @@ void ModelBuilder::CreateLima( const T_PointVector& points )
 {
     const Entity_ABC* element = selectedFormation_ ? (const Entity_ABC*)selectedFormation_ : (const Entity_ABC*)selectedAutomat_;
     if( element )
-        model_.limits_.CreateLima( points, *const_cast< kernel::Entity_ABC* >( element ) );
+        model_.limits_.CreateLima( points, *const_cast< Entity_ABC* >( element ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ModelBuilder::NotifyContextMenu
 // Created: SBO 2006-11-28
 // -----------------------------------------------------------------------------
-void ModelBuilder::NotifyContextMenu( const kernel::Entity_ABC& entity, kernel::ContextMenu& menu )
+void ModelBuilder::NotifyContextMenu( const Entity_ABC& entity, ContextMenu& menu )
 {
     if( &entity != &model_.teams_.GetNoSideTeam() )
     {
@@ -169,10 +170,10 @@ namespace
 {
     bool HasHierarchy( const Entity_ABC& entity )
     {
-        const kernel::Hierarchies* hierarchy = entity.Retrieve< kernel::TacticalHierarchies >();
+        const Hierarchies* hierarchy = entity.Retrieve< TacticalHierarchies >();
         if( !hierarchy || !hierarchy->CreateSubordinateIterator().HasMoreElements() )
         {
-            hierarchy = entity.Retrieve< kernel::CommunicationHierarchies >();
+            hierarchy = entity.Retrieve< CommunicationHierarchies >();
             if( !hierarchy || !hierarchy->CreateSubordinateIterator().HasMoreElements() )
                 return false;
         }
@@ -194,7 +195,7 @@ void ModelBuilder::OnDelete()
 // Name: ModelBuilder::Delete
 // Created: LGY 2011-11-28
 // -----------------------------------------------------------------------------
-void ModelBuilder::DeleteEntity( const kernel::Entity_ABC& entity )
+void ModelBuilder::DeleteEntity( const Entity_ABC& entity )
 {
     if( &entity == &model_.teams_.GetNoSideTeam() )
         return;
@@ -223,7 +224,7 @@ namespace
     {
         for( std::vector< const Entity_ABC* >::iterator it = vect.begin(); it != vect.end(); ++it )
         {
-            if( const kernel::TacticalHierarchies* hierarchies2 = ( *it )->Retrieve< kernel::TacticalHierarchies >() )
+            if( const TacticalHierarchies* hierarchies2 = ( *it )->Retrieve< TacticalHierarchies >() )
             {
                 tools::Iterator< const Entity_ABC& > it2 = hierarchies2->CreateSubordinateIterator();
                 while( it2.HasMoreElements() )
@@ -242,21 +243,47 @@ namespace
 // -----------------------------------------------------------------------------
 void ModelBuilder::Delete( const Entity_ABC& entity )
 {
-    if( const kernel::TacticalHierarchies* hierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
+    if( const TacticalHierarchies* hierarchies = entity.Retrieve< TacticalHierarchies >() )
     {
         tools::Iterator< const Entity_ABC& > it = hierarchies->CreateSubordinateIterator();
         while( it.HasMoreElements() )
             Delete( it.NextElement() );
     }
-    if( const kernel::CommunicationHierarchies* hierarchies = entity.Retrieve< kernel::CommunicationHierarchies >() )
+    if( const CommunicationHierarchies* hierarchies = entity.Retrieve< CommunicationHierarchies >() )
     {
         tools::Iterator< const Entity_ABC& > it = hierarchies->CreateSubordinateIterator();
         std::vector< const Entity_ABC* > subordinate;
         while( it.HasMoreElements() )
             subordinate.push_back( &it.NextElement() );
         EntityToDelete( subordinate );   // $$$$ _RC_ SLG 2010-11-12: supprime les automates d'automates afin d'éviter un crash de la sim
-        for( std::vector< const Entity_ABC* >::iterator it = subordinate.begin(); it != subordinate.end(); ++it )
-            Delete( **it );
+        const KnowledgeGroup_ABC* kg = dynamic_cast< const KnowledgeGroup_ABC* >( &entity );
+        KnowledgeGroup_ABC* kgTarget = 0;
+        if( kg )
+        {
+            const Entity_ABC& top = kg->Get< CommunicationHierarchies >().GetTop();
+            const CommunicationHierarchies& teamHierarchy = top.Get< CommunicationHierarchies >();
+            tools::Iterator< const Entity_ABC& > it = teamHierarchy.CreateSubordinateIterator();
+            while( it.HasMoreElements() )
+            {
+                kgTarget = dynamic_cast< KnowledgeGroup_ABC* >( const_cast< Entity_ABC* >( &it.NextElement() ) );
+                if( kgTarget && kgTarget != &entity )
+                {
+                    const CommunicationHierarchies& comHierarchy = kg->Get< CommunicationHierarchies >();
+                    tools::Iterator< const Entity_ABC& > it = comHierarchy.CreateSubordinateIterator();
+                    while( it.HasMoreElements() )
+                    {
+                        Entity_ABC& sub = const_cast< Entity_ABC& >( it.NextElement() );
+                        EntityCommunications* subComHierarchy = dynamic_cast< EntityCommunications* >( &sub.Get< CommunicationHierarchies >() );
+                        if( subComHierarchy)
+                            subComHierarchy->ChangeSuperior( *kgTarget );
+                    }
+                    break;
+                }
+            }
+        }
+        if( !kgTarget )
+            for( std::vector< const Entity_ABC* >::iterator it = subordinate.begin(); it != subordinate.end(); ++it )
+                Delete( **it );
     }
     delete &entity;
 }
@@ -337,7 +364,7 @@ void ModelBuilder::Select( const Formation_ABC& element )
 // Name: ModelBuilder::Select
 // Created: AGE 2006-10-10
 // -----------------------------------------------------------------------------
-void ModelBuilder::Select( const kernel::Automat_ABC& element )
+void ModelBuilder::Select( const Automat_ABC& element )
 {
     ClearSelection();
     selectedAutomat_ = &element;
@@ -347,7 +374,7 @@ void ModelBuilder::Select( const kernel::Automat_ABC& element )
 // Name: ModelBuilder::Select
 // Created: ABR 2011-10-20
 // -----------------------------------------------------------------------------
-void ModelBuilder::Select( const kernel::Ghost_ABC& element )
+void ModelBuilder::Select( const Ghost_ABC& element )
 {
     ClearSelection();
     selectedGhost_ = &element;
