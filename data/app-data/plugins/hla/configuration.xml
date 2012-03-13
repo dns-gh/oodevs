@@ -10,7 +10,7 @@
     </types>
     <missions>
         <fragOrders>
-            <pause>Attendre</pause>
+            <pause>Attendre Se Poster</pause>
             <resume>Poursuivre</resume>
             <cancel>Interrompre</cancel>
         </fragOrders>
