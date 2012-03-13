@@ -65,6 +65,7 @@ public:
         eStartingCountry,
         eStartingDate,
         eInformationOrigin,
+        eEquipmentCategory,
         eHasEmbarkTimes,
         eEmbarkingTimePerPerson,
         eDisembarkingTimePerPerson,

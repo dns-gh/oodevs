@@ -1229,6 +1229,10 @@ estacionado con motor encendido</translation>
         <source>Information origin:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Equipment category:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Composantes_RadarsListView</name>

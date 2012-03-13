@@ -1229,6 +1229,10 @@ Arrêt moteur allumé</translation>
         <source>Information origin:</source>
         <translation>Origine des données</translation>
     </message>
+    <message>
+        <source>Equipment category:</source>
+        <translation>Catégorie d&apos;équipement</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Composantes_RadarsListView</name>

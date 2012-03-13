@@ -75,6 +75,7 @@ void ADN_ListView_Composantes::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Composantes_GUI::eStartingCountry]->Connect( &pInfos->strStartingCountry_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eStartingDate]->Connect( &pInfos->strStartingDate_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eInformationOrigin]->Connect( &pInfos->strInformationOrigin_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eEquipmentCategory]->Connect( &pInfos->equipmentCategory_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eEmbarkingTimePerPerson]->Connect( &pInfos->embarkingTimePerPerson_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eDisembarkingTimePerPerson]->Connect( &pInfos->disembarkingTimePerPerson_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eHasEmbarkTimes]->Connect( &pInfos->bTroopEmbarkingTimes_, bConnect );
