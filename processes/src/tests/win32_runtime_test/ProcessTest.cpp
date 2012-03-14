@@ -24,8 +24,13 @@ using test::MockApi;
 
 namespace
 {
-    const HANDLE dummy = reinterpret_cast< HANDLE >( 0xCAFEBABE );
-    const HANDLE thread = reinterpret_cast< HANDLE >( 0xBAADF00D );
+    HANDLE MakeHandle( intptr_t value )
+    {
+        return reinterpret_cast< HANDLE >( value );
+    }
+
+    const HANDLE dummy  = MakeHandle( 0xCAFEBABE );
+    const HANDLE thread = MakeHandle( 0xBAADF00D );
     const std::wstring wname = L"Zebulon";
 
     int FakeGetProcessName( HANDLE handle, wchar_t* name, int size )
