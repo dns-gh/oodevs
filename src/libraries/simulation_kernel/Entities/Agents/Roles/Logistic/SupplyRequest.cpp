@@ -89,14 +89,26 @@ bool SupplyRequest::AffectSupplier( SupplySupplier_ABC& supplier )
 // -----------------------------------------------------------------------------
 bool SupplyRequest::AffectSupplier( boost::shared_ptr< LogisticLink_ABC > supplier )
 {
+    if( supplier_ )
+        return true;
+
     if( !AffectSupplier( supplier->GetSuperior() ) )
         return false;
 
-    double tmp = supplier->ConsumeQuota( dotationCategory_, requestedQuantity_ );
-    if( tmp <= 0 )
+    double authorizedQuantity_ = supplier->ConsumeQuota( dotationCategory_, requestedQuantity_ );
+    if( authorizedQuantity_ <= 0 )
+    {
+        supplier_ = 0;
         return false;
+    }
+    assert( authorizedQuantity_ <= requestedQuantity_ );
+    
+    // Update the requested quantities according to the quota limitations
+    const double ratio = authorizedQuantity_ / requestedQuantity_;
+    BOOST_FOREACH( T_ResourceRequests::value_type& data, resourceRequests_ )
+        data.second *= ratio; 
     supplierQuotas_ = supplier;
-    requestedQuantity_ = tmp;
+    requestedQuantity_ = authorizedQuantity_;
     return true;
 }
 
@@ -189,12 +201,21 @@ const PHY_DotationCategory& SupplyRequest::GetDotationCategory() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: SupplyRequest::GetGrantedValue
+// Name: SupplyRequest::GetGrantedQuantity
 // Created: NLD 2005-01-24
 // -----------------------------------------------------------------------------
-double SupplyRequest::GetGrantedValue() const
+double SupplyRequest::GetGrantedQuantity() const
 {
     return grantedQuantity_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyRequest::GetRequestedQuantity
+// Created: NLD 2012-03-11
+// -----------------------------------------------------------------------------
+double SupplyRequest::GetRequestedQuantity() const
+{
+    return requestedQuantity_;
 }
 
 // -----------------------------------------------------------------------------

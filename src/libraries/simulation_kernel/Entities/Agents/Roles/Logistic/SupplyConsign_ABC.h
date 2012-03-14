@@ -41,7 +41,7 @@ public:
     virtual void AddRequest( SupplyRecipient_ABC& recipient, boost::shared_ptr< SupplyRequest_ABC > request ) = 0;
     virtual void Activate  () = 0;
     virtual bool Update    () = 0;
-    virtual bool IsSupplying( const PHY_DotationCategory& dotationCategory ) const = 0;
+    virtual bool IsSupplying( const PHY_DotationCategory& dotationCategory, const SupplyRecipient_ABC& recipient ) const = 0;
     virtual bool IsFinished() const = 0;
     //@}
 

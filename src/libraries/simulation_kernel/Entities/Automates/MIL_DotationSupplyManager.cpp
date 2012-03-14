@@ -15,6 +15,7 @@
 #include "Entities/Agents/Roles/Logistic/SupplyRequestContainer.h"
 #include "Entities/Agents/Roles/Logistic/SupplyDotationRequestBuilder.h"
 #include "Entities/Agents/Roles/Logistic/SupplyRequestHierarchyDispatcher.h"
+#include "Entities/Agents/Roles/Logistic/SupplyConsign_ABC.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationCategory.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Orders/MIL_Report.h"
@@ -129,7 +130,7 @@ void MIL_DotationSupplyManager::Clean()
 // -----------------------------------------------------------------------------
 void MIL_DotationSupplyManager::NotifyDotationSupplyNeeded( const PHY_DotationCategory& dotationCategory )
 {
-    if( bDotationSupplyNeeded_ || supplyRequests_->IsSupplying( dotationCategory ) )
+    if( bDotationSupplyNeeded_ || IsSupplyInProgress( dotationCategory ) )
         return;
     bDotationSupplyNeeded_ = true;
 
@@ -148,6 +149,18 @@ void MIL_DotationSupplyManager::RequestDotationSupply()
 {
     bDotationSupplyNeeded_              = true;
     bDotationSupplyExplicitlyRequested_ = true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_DotationSupplyManager::IsSupplyInProgress
+// Created: NLD 2005-12-14
+// -----------------------------------------------------------------------------
+bool MIL_DotationSupplyManager::IsSupplyInProgress( const PHY_DotationCategory& dotationCategory ) const
+{
+    for( T_Supplies::const_iterator it = scheduledSupplies_.begin(); it != scheduledSupplies_.end(); ++it )
+        if( (*it)->IsSupplying( dotationCategory, *this ) )
+            return true;
+    return false;
 }
 
 // =============================================================================
@@ -173,22 +186,33 @@ const MIL_AgentPion& MIL_DotationSupplyManager::GetPC() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_StockSupplyManager::OnSupplyScheduled
+// Created: NLD 2005-01-25
+// -----------------------------------------------------------------------------
+void MIL_DotationSupplyManager::OnSupplyScheduled( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign )
+{
+    scheduledSupplies_.insert( supplyConsign );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_DotationSupplyManager::OnSupplyCanceled
 // Created: NLD 2005-01-25
 // -----------------------------------------------------------------------------
-void MIL_DotationSupplyManager::OnSupplyCanceled()
+void MIL_DotationSupplyManager::OnSupplyCanceled( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign )
 {
     MIL_Report::PostEvent( *pAutomate_, MIL_Report::eReport_DotationSupplyCanceled );
     bDotationSupplyNeeded_ = true;
+    scheduledSupplies_.erase( supplyConsign );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_DotationSupplyManager::OnSupplyDone
 // Created: NLD 2005-01-25
 // -----------------------------------------------------------------------------
-void MIL_DotationSupplyManager::OnSupplyDone()
+void MIL_DotationSupplyManager::OnSupplyDone( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign )
 {
     MIL_Report::PostEvent( *pAutomate_, MIL_Report::eReport_DotationSupplyDone );
+    scheduledSupplies_.erase( supplyConsign );
 }
 
 // -----------------------------------------------------------------------------

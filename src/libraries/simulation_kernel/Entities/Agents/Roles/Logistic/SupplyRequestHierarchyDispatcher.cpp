@@ -48,20 +48,24 @@ SupplyRequestHierarchyDispatcher::~SupplyRequestHierarchyDispatcher()
 // -----------------------------------------------------------------------------
 void SupplyRequestHierarchyDispatcher::Dispatch( SupplyRequest_ABC& request )
 {
+    // Filter out too small requests (0.xyz as quantity)
+    if( (int)request.GetRequestedQuantity() < 1 )
+        return;
+
     tools::Iterator< boost::shared_ptr< LogisticLink_ABC > > it = logisticHierarchy_.CreateSuperiorLinksIterator();
+    if( request.IsComplementary() )
+        ++ nbComplementaryRequests_;
+    else
+        ++ nbMandatoryRequests_;
     while( it.HasMoreElements() )
     {
-        if( request.IsComplementary() )
-            ++ nbComplementaryRequests_;
-        else
-            ++ nbMandatoryRequests_;
-
         if( request.AffectSupplier( it.NextElement() ) )
         {
             if( request.IsComplementary() )
                 ++ nbComplementaryRequestsSatisfied_;
             else
                 ++ nbMandatoryRequestsSatisfied_;
+            return;
         }
     }
 }

@@ -46,8 +46,9 @@ public:
 
     //! @name Events
     //@{
-    virtual void OnSupplyCanceled      () = 0;
-    virtual void OnSupplyDone          () = 0;
+    virtual void OnSupplyCanceled      ( boost::shared_ptr< const SupplyConsign_ABC > supplyConsign ) = 0;
+    virtual void OnSupplyDone          ( boost::shared_ptr< const SupplyConsign_ABC > supplyConsign ) = 0;
+    virtual void OnSupplyScheduled     ( boost::shared_ptr< const SupplyConsign_ABC > supplyConsign ) = 0;
     virtual void OnSupplyConvoyArriving( boost::shared_ptr< const SupplyConsign_ABC > supplyConsign ) = 0;
     virtual void OnSupplyConvoyLeaving ( boost::shared_ptr< const SupplyConsign_ABC > supplyConsign ) = 0;
     //@}

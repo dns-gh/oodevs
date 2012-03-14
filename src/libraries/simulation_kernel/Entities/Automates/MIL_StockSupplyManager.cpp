@@ -20,6 +20,7 @@
 #include "Entities/Agents/Roles/Logistic/SupplyRequestHierarchyDispatcher.h"
 #include "Entities/Agents/Roles/Logistic/SupplyStockPullFlowRequestBuilder.h"
 #include "Entities/Agents/Roles/Logistic/SupplyRequestManualDispatcher.h"
+#include "Entities/Agents/Roles/Logistic/SupplyConsign_ABC.h"
 #include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
 #include "Entities/MIL_EntityManager.h"
@@ -139,10 +140,8 @@ void MIL_StockSupplyManager::Clean()
 // -----------------------------------------------------------------------------
 bool MIL_StockSupplyManager::IsSupplyInProgress( const PHY_DotationCategory& dotationCategory ) const
 {
-    if( autoSupplyRequest_->IsSupplying( dotationCategory ) )
-        return true;
-    BOOST_FOREACH( const T_SupplyRequests::value_type& data, manualSupplyRequests_ )
-        if( data->IsSupplying( dotationCategory ) )
+    for( T_Supplies::const_iterator it = scheduledSupplies_.begin(); it != scheduledSupplies_.end(); ++it )
+        if( (*it)->IsSupplying( dotationCategory, *this ) )
             return true;
     return false;
 }
@@ -191,22 +190,33 @@ const MIL_AgentPion& MIL_StockSupplyManager::GetPC() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_StockSupplyManager::OnSupplyScheduled
+// Created: NLD 2005-01-25
+// -----------------------------------------------------------------------------
+void MIL_StockSupplyManager::OnSupplyScheduled( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign )
+{
+    scheduledSupplies_.insert( supplyConsign );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_StockSupplyManager::OnSupplyCanceled
 // Created: NLD 2005-01-25
 // -----------------------------------------------------------------------------
-void MIL_StockSupplyManager::OnSupplyCanceled()
+void MIL_StockSupplyManager::OnSupplyCanceled( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign )
 {
     MIL_Report::PostEvent( *pAutomate_, MIL_Report::eReport_StockSupplyCanceled );
     bStockSupplyNeeded_ = true; //$$ ..
+    scheduledSupplies_.erase( supplyConsign );
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_StockSupplyManager::OnSupplyDone
 // Created: NLD 2005-01-25
 // -----------------------------------------------------------------------------
-void MIL_StockSupplyManager::OnSupplyDone()
+void MIL_StockSupplyManager::OnSupplyDone( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign )
 {
     MIL_Report::PostEvent( *pAutomate_, MIL_Report::eReport_StockSupplyDone );
+    scheduledSupplies_.erase( supplyConsign );
 }
 
 // -----------------------------------------------------------------------------

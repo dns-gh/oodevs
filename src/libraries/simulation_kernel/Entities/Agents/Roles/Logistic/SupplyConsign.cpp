@@ -51,7 +51,7 @@ SupplyConsign::~SupplyConsign()
     convoy_->Finish();
     SendMsgDestruction();
     BOOST_FOREACH( const T_RecipientRequests::value_type& data, requestsQueued_ )
-        data.first->OnSupplyCanceled();
+        data.first->OnSupplyCanceled( shared_from_this() );
 }
 
 // =============================================================================
@@ -91,8 +91,10 @@ void SupplyConsign::Activate()
         {
             boost::shared_ptr< SupplyRequest_ABC > request = requestData.second;
             request->ReserveStock();
-            resources_[ &request->GetDotationCategory() ] += request->GetGrantedValue();
+            resources_[ &request->GetDotationCategory() ] += request->GetGrantedQuantity();
         }
+    BOOST_FOREACH( const T_RecipientRequests::value_type& data, requestsQueued_ )
+        data.first->OnSupplyScheduled( shared_from_this() );
     supplier_.SupplyHandleRequest( shared_from_this() );
     requestsNeedNetworkUpdate_ = true;
 }
@@ -136,13 +138,13 @@ void SupplyConsign::SupplyCurrentRecipient()
     assert( !requestsQueued_.empty() );
     assert( currentRecipient_ == requestsQueued_.front().first );
 
+    currentRecipient_->OnSupplyDone( shared_from_this() ); //$$$ CRADE MUST BE CALL BEFORE convoy_->Supply() to allow recipient to reschedule supply immediately
     BOOST_FOREACH( T_Requests::value_type& data, requestsQueued_.front().second )
     {
         boost::shared_ptr< SupplyRequest_ABC > request = data.second;
         double quantitySupplied = request->Supply();
         convoy_->Supply( *currentRecipient_, request->GetDotationCategory(), quantitySupplied );
     }
-    currentRecipient_->OnSupplyDone();
     requestsQueued_.pop_front();
     requestsNeedNetworkUpdate_ = true;
 }
@@ -151,9 +153,18 @@ void SupplyConsign::SupplyCurrentRecipient()
 // Name: SupplyConsign::IsSupplying
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
-bool SupplyConsign::IsSupplying( const PHY_DotationCategory& dotationCategory ) const
+bool SupplyConsign::IsSupplying( const PHY_DotationCategory& dotationCategory, const SupplyRecipient_ABC& recipient ) const
 {
-    return resources_.find( &dotationCategory ) != resources_.end();
+    BOOST_FOREACH( const T_RecipientRequests::value_type& data, requestsQueued_ )
+    {
+        if( data.first == &recipient )
+        {
+            const T_Requests& requests = data.second;
+            return requests.find( &dotationCategory ) != requests.end();
+        }
+        data.first->OnSupplyScheduled( shared_from_this() );
+    }
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -166,7 +177,7 @@ bool SupplyConsign::IsFinished() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: SupplyConsign::SetState
+// Name: (Supply)Consign::SetState
 // Created: NLD 2011-07-25
 // -----------------------------------------------------------------------------
 void SupplyConsign::SetState( E_State newState )
