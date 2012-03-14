@@ -48,7 +48,7 @@ namespace
             boost::algorithm::split( s, v, boost::algorithm::is_any_of( "." ), boost::algorithm::token_compress_on );
             std::vector< int > result;
             std::transform( s.begin(), s.end(), std::back_inserter( result ), &boost::lexical_cast< int, std::string > );
-            BOOST_REQUIRE_EQUAL( 3u, result.size() );
+            BOOST_CHECK( 2u <= result.size() );
             return result;
         }
         std::string Build( const std::vector< int >& v )
