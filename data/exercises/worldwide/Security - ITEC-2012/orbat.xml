@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.4/exercise/orbat.xsd">
+<orbat model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.0.0/exercise/orbat.xsd">
   <parties>
     <party id="1" name="Camp 1" type="friend">
       <objects>
@@ -412,10 +412,10 @@
                 <resource name="7.62-mm Bullet" quantity="2300"/>
                 <resource name="5.56-mm Bullet" quantity="3480"/>
                 <resource name="Diesel" quantity="2191"/>
-                <resource name="UR NTI1 MOB" quantity="30"/>
-                <resource name="UR NTI1 EA" quantity="6"/>
                 <resource name="Food" quantity="123"/>
                 <resource name="Water" quantity="738"/>
+                <resource name="UR NTI1 MOB" quantity="30"/>
+                <resource name="UR NTI1 EA" quantity="6"/>
               </stocks>
             </unit>
           </automat>
@@ -882,7 +882,26 @@
       <communication>
         <knowledge-group id="141" name="Groupe de connaissance [141]" type="Standard"/>
       </communication>
-      <populations/>
+      <populations>
+        <population attitude="calme" id="189" name="Standard Crowd [189]" position="29TNF3610454044" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="1000" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
+            <adhesion party="138" value="0"/>
+          </adhesions>
+        </population>
+        <population attitude="calme" id="192" name="Standard Crowd [192]" position="29TNF3599554231" type="Standard Crowd">
+          <composition contaminated="0" dead="0" healthy="10000" wounded="0"/>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
+            <adhesion party="138" value="0"/>
+          </adhesions>
+        </population>
+      </populations>
       <inhabitants/>
       <logistics/>
     </party>
@@ -951,6 +970,36 @@
             <construction completion="0.1"/>
           </attributes>
         </object>
+        <object id="185" name="Flood Origin [185]" type="flood">
+          <shape type="point">
+            <points>
+              <point>29TNF3590553784</point>
+            </points>
+          </shape>
+          <attributes>
+            <flood depth="50" reference-distance="450"/>
+          </attributes>
+        </object>
+        <object id="186" name="Flood Origin [186]" type="flood">
+          <shape type="point">
+            <points>
+              <point>29TNF3567154293</point>
+            </points>
+          </shape>
+          <attributes>
+            <flood depth="50" reference-distance="450"/>
+          </attributes>
+        </object>
+        <object id="187" name="Flood Origin [187]" type="flood">
+          <shape type="point">
+            <points>
+              <point>29TNF3503954569</point>
+            </points>
+          </shape>
+          <attributes>
+            <flood depth="50" reference-distance="450"/>
+          </attributes>
+        </object>
       </objects>
     </no-party>
   </parties>
@@ -977,4 +1026,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="2101832027" -->
+<!-- signature="3803829852" -->
