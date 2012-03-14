@@ -26,28 +26,14 @@ return
     
     getFirePositions = function( self, params )
     
-        if not meKnowledge.constructedObjects then
-          return {}
-        end
-        
-        myself.leadData.pionCourant = myself.leadData.pionCourant + 1  
-        local nbrFront = params.maxNbrFront
         local objectsFromAutomat = {}
-       
-        if #meKnowledge.constructedObjects > nbrFront then -- plus de PAA que de pions
-          for i=1, #meKnowledge.constructedObjects do
-            if i % nbrFront == myself.leadData.pionCourant % nbrFront then
+        local zone = self:getObjective( params )
+        for i=1, #meKnowledge.constructedObjects do
+          local objet = meKnowledge.constructedObjects[i]
+          if integration.isPointInLocalisation(objet, zone[1]) then
               objectsFromAutomat[ #objectsFromAutomat + 1 ] = meKnowledge.constructedObjects[i]
-            end
-          end
-        else                                              -- moins ou nombre égal de PAA que de pions
-          for i=1, nbrFront do
-            if i % #meKnowledge.constructedObjects == myself.leadData.pionCourant % #meKnowledge.constructedObjects then
-              objectsFromAutomat[ #objectsFromAutomat + 1 ] = meKnowledge.constructedObjects[i]
-            end
           end
         end
-        
         return objectsFromAutomat
     end,
     

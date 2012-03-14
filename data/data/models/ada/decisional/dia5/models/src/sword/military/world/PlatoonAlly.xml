@@ -1160,6 +1160,14 @@ que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe
                 </type>
             </argument>
         </method>
+        <method name="sendConstructedObjectInitialized">
+            <description>The automat.</description>
+            <argument name="receiver">
+                <type>
+                    <class name="sword.military.world.Company"/>
+                </type>
+            </argument>
+        </method>
         <method name="sendCanGiveRouteForEscorting">
             <description>The unit can send a route for escorting.</description>
             <argument name="receiver">

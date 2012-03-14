@@ -29,6 +29,7 @@ rootnode
        self.nextTargetIndex = 1
        self.reconnoitered = false
        self.isDeployed = false
+       meKnowledge:sendConstructedObjectInitialized( integration.GetSuperiorKnowledge( meKnowledge) )
     end,
 
     activate = function( self )

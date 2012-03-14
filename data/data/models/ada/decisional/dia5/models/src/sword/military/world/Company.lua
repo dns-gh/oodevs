@@ -23,6 +23,11 @@ masalife.brain.communication.setMessageTreatment( "constructedObject",
       meKnowledge.constructedObjects = meKnowledge.constructedObjects or {}
       meKnowledge.constructedObjects[#meKnowledge.constructedObjects + 1] = content.object
     end )
+    
+masalife.brain.communication.setMessageTreatment( "initializeConstructedObject",
+    function( content, sender )
+      meKnowledge.constructedObjects ={}
+    end )
 
 masalife.brain.communication.setMessageTreatment( "obstacleShouldBeActivated",
     function( content, sender )
