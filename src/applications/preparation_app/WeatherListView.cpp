@@ -48,6 +48,8 @@ void WeatherListView::CommitTo( WeatherModel& model )
         else
             QMessageBox::warning( this, weather->GetName().c_str(), tr( "Time parameters or location are incorrect" ) );
     }
+    QMessageBox::warning( this, tr( "Weather" ), tr( "Weather modifications applied" ) );
+    setSelected( selectedItem(), false );
 }
 
 // -----------------------------------------------------------------------------
