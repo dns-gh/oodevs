@@ -809,6 +809,10 @@ return
         integration.SendMessage( "constructedObject", receiver, { object = object }, { type = "dynamic" } )
     end,
     
+    sendConstructedObjectInitialized = function( self, receiver, object )
+        integration.SendMessage( "initializeConstructedObject", receiver, {}, { type = "dynamic" } )
+    end,
+    
     sendEndOfMission= function( self, receiver, sender, bCancel )
         integration.SendMessage( "EndOfMission", receiver, { cancel = bCancel, me = sender.source }, { type = "dynamic" } )
     end,

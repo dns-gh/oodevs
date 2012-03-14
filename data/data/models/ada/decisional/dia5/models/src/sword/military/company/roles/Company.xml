@@ -21,6 +21,7 @@
 		<skill name="sword.military.company.skills.AssignSETask"/>
 		<skill name="sword.military.company.skills.LeadGEN"/>
 		<skill name="sword.military.company.skills.SupportManagerForGen"/>
+		<skill name="sword.military.company.skills.LeadWithOrder"/>
 	</skills>
 	<default-task label="Prise en compte des ordres de conduite et de la sauvegarde." permanent="true">
 		<description>Gestion par défaut des ordres de conduite</description>
