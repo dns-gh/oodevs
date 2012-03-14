@@ -6,6 +6,7 @@
 // Copyright (c) 2012 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
+
 #include "runtime_test.h"
 #include <string>
 
