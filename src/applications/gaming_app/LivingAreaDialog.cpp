@@ -13,8 +13,8 @@
 #include "clients_kernel/LivingArea_ABC.h"
 #include "clients_kernel/controllers.h"
 #include "clients_kernel/Inhabitant_ABC.h"
+#include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/tools.h"
-#include "clients_gui/TerrainObjectProxy.h"
 #include "clients_gui/RichLabel.h"
 #include "clients_gui/ItemFactory_ABC.h"
 #include "reports/RcEntityResolver_ABC.h"
@@ -189,7 +189,7 @@ void LivingAreaDialog::Visit( unsigned int id, unsigned int resident, bool alert
     {
         const unsigned int rows = table_->numRows();
         table_->insertRows( rows );
-        gui::RichLabel* label = factory_.CreateLabel( rcResolver_.CreateLink( gui::TerrainObjectProxy::typeName_, id ), table_ );
+        gui::RichLabel* label = factory_.CreateLabel( rcResolver_.CreateLink( kernel::Object_ABC::typeName_, id ), table_ );
         table_->setCellWidget( rows, 0, label );
         table_->setItem( rows, 1, new IntegerTableItem( table_, Q3TableItem::Never, boost::lexical_cast< std::string >( resident ).c_str() ) );
         table_->setItem( rows, 2, new FloatTableItem( table_, Q3TableItem::Never, boost::lexical_cast< std::string >( angriness ).c_str() ) );
