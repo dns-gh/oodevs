@@ -13,10 +13,9 @@
 #include "RcEntityResolver_ABC.h"
 #include "Tools.h"
 #include "clients_kernel/Agent_ABC.h"
-#include "clients_kernel/AgentKnowledge_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/ObjectKnowledge_ABC.h"
-#include "clients_kernel/PopulationKnowledge_ABC.h"
+#include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/EquipmentType.h"
 #include "protocol/Protocol.h"
@@ -160,11 +159,11 @@ QString ReportFactory::RenderParameter( const sword::MissionParameter_Value& val
     if( value.has_automat() )
         return rcResolver_.CreateLink( Automat_ABC::typeName_, value.automat().id() );
     if( value.has_agentknowledge() )
-        return rcResolver_.CreateLink( AgentKnowledge_ABC::typeName_, value.agentknowledge().id() );
+        return rcResolver_.CreateLink( Agent_ABC::typeName_, value.agentknowledge().id() );
     if( value.has_objectknowledge() )
-        return rcResolver_.CreateLink( ObjectKnowledge_ABC::typeName_, value.objectknowledge().id() );
+        return rcResolver_.CreateLink( Object_ABC::typeName_, value.objectknowledge().id() );
     if( value.has_crowdknowledge() )
-        return rcResolver_.CreateLink( PopulationKnowledge_ABC::typeName_, value.crowdknowledge().id() );
+        return rcResolver_.CreateLink( Population_ABC::typeName_, value.crowdknowledge().id() );
     if( value.has_equipmenttype() )
         return equipmentResolver_.Get( value.equipmenttype().id() ).GetName().c_str();
     if( value.has_resourcetype() )

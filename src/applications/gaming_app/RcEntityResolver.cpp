@@ -11,9 +11,7 @@
 #include "RcEntityResolver.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/ObjectKnowledge_ABC.h"
-#include "clients_kernel/AgentKnowledge_ABC.h"
-#include "clients_kernel/PopulationKnowledge_ABC.h"
+#include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_gui/TerrainObjectProxy.h"
@@ -81,54 +79,18 @@ void RcEntityResolver::NotifyDeleted( const Automat_ABC& element )
 // Name: RcEntityResolver::NotifyCreated
 // Created: SBO 2006-09-18
 // -----------------------------------------------------------------------------
-void RcEntityResolver::NotifyCreated( const ObjectKnowledge_ABC& element )
+void RcEntityResolver::NotifyCreated( const Population_ABC& element )
 {
-    tools::Resolver< ObjectKnowledge_ABC >::Register( element.GetId(), const_cast< ObjectKnowledge_ABC& >( element ) );
+    tools::Resolver< Population_ABC >::Register( element.GetId(), const_cast< Population_ABC& >( element ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: RcEntityResolver::NotifyDeleted
 // Created: SBO 2006-09-18
 // -----------------------------------------------------------------------------
-void RcEntityResolver::NotifyDeleted( const ObjectKnowledge_ABC& element )
+void RcEntityResolver::NotifyDeleted( const Population_ABC& element )
 {
-    tools::Resolver< ObjectKnowledge_ABC >::Remove( element.GetId() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RcEntityResolver::NotifyCreated
-// Created: SBO 2006-09-18
-// -----------------------------------------------------------------------------
-void RcEntityResolver::NotifyCreated( const AgentKnowledge_ABC& element )
-{
-    tools::Resolver< AgentKnowledge_ABC >::Register( element.GetId(), const_cast< AgentKnowledge_ABC& >( element ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RcEntityResolver::NotifyDeleted
-// Created: SBO 2006-09-18
-// -----------------------------------------------------------------------------
-void RcEntityResolver::NotifyDeleted( const AgentKnowledge_ABC& element )
-{
-    tools::Resolver< AgentKnowledge_ABC >::Remove( element.GetId() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RcEntityResolver::NotifyCreated
-// Created: SBO 2006-09-18
-// -----------------------------------------------------------------------------
-void RcEntityResolver::NotifyCreated( const PopulationKnowledge_ABC& element )
-{
-    tools::Resolver< PopulationKnowledge_ABC >::Register( element.GetId(), const_cast< PopulationKnowledge_ABC& >( element ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: RcEntityResolver::NotifyDeleted
-// Created: SBO 2006-09-18
-// -----------------------------------------------------------------------------
-void RcEntityResolver::NotifyDeleted( const PopulationKnowledge_ABC& element )
-{
-    tools::Resolver< PopulationKnowledge_ABC >::Remove( element.GetId() );
+    tools::Resolver< Population_ABC >::Remove( element.GetId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -137,8 +99,7 @@ void RcEntityResolver::NotifyDeleted( const PopulationKnowledge_ABC& element )
 // -----------------------------------------------------------------------------
 void RcEntityResolver::NotifyCreated( const Object_ABC& element )
 {
-    if( element.GetTypeName() == TerrainObjectProxy::typeName_ )
-        tools::Resolver< Object_ABC >::Register( element.GetId(), const_cast< Object_ABC& >( element ) );
+    tools::Resolver< Object_ABC >::Register( element.GetId(), const_cast< Object_ABC& >( element ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -147,8 +108,7 @@ void RcEntityResolver::NotifyCreated( const Object_ABC& element )
 // -----------------------------------------------------------------------------
 void RcEntityResolver::NotifyDeleted( const Object_ABC& element )
 {
-    if( element.GetTypeName() == TerrainObjectProxy::typeName_ )
-        tools::Resolver< Object_ABC >::Remove( element.GetId() );
+    tools::Resolver< Object_ABC >::Remove( element.GetId() );
 }
 
 // -----------------------------------------------------------------------------
@@ -161,14 +121,10 @@ QString RcEntityResolver::CreateLink( const QString& type, unsigned long id ) co
         return CreateLink< Agent_ABC >( id );
     else if( type == Automat_ABC::typeName_ )
         return CreateLink< Automat_ABC >( id );
-    else if( type == ObjectKnowledge_ABC::typeName_ )
-        return CreateLink< ObjectKnowledge_ABC >( id );
-    else if( type == AgentKnowledge_ABC::typeName_ )
-        return CreateLink< AgentKnowledge_ABC >( id );
-    else if( type == PopulationKnowledge_ABC::typeName_ )
-        return CreateLink< PopulationKnowledge_ABC >( id );
-    else if( type == TerrainObjectProxy::typeName_ )
+    else if( type == Object_ABC::typeName_ )
         return CreateLink< Object_ABC >( id );
+    else if( type == Population_ABC::typeName_ )
+        return CreateLink< Population_ABC >( id );
     return QString::number( id );
 }
 
