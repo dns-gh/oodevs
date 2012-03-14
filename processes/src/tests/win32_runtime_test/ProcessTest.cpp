@@ -52,11 +52,6 @@ namespace
         *code = STILL_ACTIVE;
         return true;
     }
-
-    bool CheckRoutine( LPTHREAD_START_ROUTINE actual, LPTHREAD_START_ROUTINE expected )
-    {
-        return actual == expected;
-    }
 }
 
 BOOST_AUTO_TEST_CASE( process_with_handle_constructs )
@@ -87,7 +82,7 @@ BOOST_AUTO_TEST_CASE( process_joins )
     BOOST_CHECK( done );
 }
 
-BOOST_AUTO_TEST_CASE( active_process_safe_terminates )
+BOOST_AUTO_TEST_CASE( active_process_terminates_safely )
 {
     MockApi api;
     std::auto_ptr< Process > process = MakeProcess( api, 42, wname );
@@ -95,13 +90,13 @@ BOOST_AUTO_TEST_CASE( active_process_safe_terminates )
     MOCK_EXPECT( api.GetExitCodeProcess ).once().calls( boost::bind( FakeGetExitCodeProcess, _1, _2 ) );
     LPTHREAD_START_ROUTINE exit = reinterpret_cast< LPTHREAD_START_ROUTINE >( 0xDEADBEEF );
     MOCK_EXPECT( api.GetExitProcessPointer ).once().returns( exit );
-    MOCK_EXPECT( api.CreateRemoteThreadExt ).once().with( dummy, mock::any, 0U, boost::bind( CheckRoutine, _1, exit ), mock::any, 0, mock::any, mock::any ).returns( thread );
+    MOCK_EXPECT( api.CreateRemoteThreadExt ).once().with( dummy, mock::any, 0U, mock::equal( exit ), mock::any, 0, mock::any, mock::any ).returns( thread );
     MOCK_EXPECT( api.WaitForSingleObjectEx ).once().with( dummy, msTimeout, false ).returns( WAIT_OBJECT_0 );
     MOCK_EXPECT( api.CloseHandle ).once().with( thread ).returns( true );
     process->Kill( msTimeout );
 }
 
-BOOST_AUTO_TEST_CASE( corrupted_process_unsafe_terminates )
+BOOST_AUTO_TEST_CASE( corrupted_process_terminates_unsafely )
 {
     MockApi api;
     std::auto_ptr< Process > process = MakeProcess( api, 42, wname );
