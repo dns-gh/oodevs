@@ -31,7 +31,7 @@ namespace
     int FakeGetProcessName( HANDLE handle, wchar_t* name, int size )
     {
         BOOST_CHECK_EQUAL( handle, dummy );
-        int count = std::min< int >( size, wname.size() );
+        int count = std::min( size, static_cast< int >( wname.size() ) );
         std::copy( wname.begin(), wname.begin() + count, name );
         name[count] = 0;
         return count + 1;
@@ -51,6 +51,11 @@ namespace
         BOOST_CHECK( code );
         *code = STILL_ACTIVE;
         return true;
+    }
+
+    bool CheckRoutine( LPTHREAD_START_ROUTINE actual, LPTHREAD_START_ROUTINE expected )
+    {
+        return actual == expected;
     }
 }
 
@@ -90,7 +95,7 @@ BOOST_AUTO_TEST_CASE( active_process_safe_terminates )
     MOCK_EXPECT( api.GetExitCodeProcess ).once().calls( boost::bind( FakeGetExitCodeProcess, _1, _2 ) );
     LPTHREAD_START_ROUTINE exit = reinterpret_cast< LPTHREAD_START_ROUTINE >( 0xDEADBEEF );
     MOCK_EXPECT( api.GetExitProcessPointer ).once().returns( exit );
-    MOCK_EXPECT( api.CreateRemoteThreadExt ).once().with( dummy, mock::any, 0U, exit, mock::any, 0, mock::any, mock::any ).returns( thread );
+    MOCK_EXPECT( api.CreateRemoteThreadExt ).once().with( dummy, mock::any, 0U, boost::bind( CheckRoutine, _1, exit ), mock::any, 0, mock::any, mock::any ).returns( thread );
     MOCK_EXPECT( api.WaitForSingleObjectEx ).once().with( dummy, msTimeout, false ).returns( WAIT_OBJECT_0 );
     MOCK_EXPECT( api.CloseHandle ).once().with( thread ).returns( true );
     process->Kill( msTimeout );

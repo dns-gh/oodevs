@@ -48,7 +48,7 @@ namespace
         BOOST_CHECK_EQUAL( handle, dummy );
         std::string name = boost::lexical_cast< std::string >( dummy );
         std::wstring wname = Utf8Convert( name );
-        int count = std::min< int >( size, wname.size() );
+        int count = std::min( size, static_cast< int >( wname.size() ) );
         std::copy( wname.begin(), wname.begin() + count, dst );
         dst[count] = 0;
         return count + 1;

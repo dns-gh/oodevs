@@ -9,6 +9,7 @@
 #ifndef HANDLE_H__
 #define HANDLE_H__
 #include <boost/noncopyable.hpp>
+#define  NOMINMAX
 #include <windows.h>
 
 namespace process

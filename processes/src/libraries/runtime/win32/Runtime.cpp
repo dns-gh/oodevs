@@ -28,7 +28,7 @@ namespace
     bool Enumerate( const Api_ABC& api, Runtime::T_Processes& list, std::vector< T >& pids )
     {
         DWORD size = 0;
-        bool done = api.EnumProcesses( &pids[0], pids.size() * sizeof T, &size );
+        bool done = api.EnumProcesses( &pids[0], static_cast< DWORD >( pids.size() * sizeof T ), &size );
         if( !done )
             return true;
         if( size == pids.size() * sizeof T )

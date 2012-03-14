@@ -9,6 +9,7 @@
 #ifndef API_ABC_H__
 #define API_ABC_H__
 #include <boost/noncopyable.hpp>
+#define  NOMINMAX
 #include <windows.h>
 
 namespace process

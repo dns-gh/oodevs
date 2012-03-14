@@ -56,10 +56,10 @@ namespace
         MOCK_METHOD( GetHeader, 1 );
     };
 
-    Runtime_ABC::T_Processes FakeProcesses( size_t size)
+    Runtime_ABC::T_Processes FakeProcesses( int size)
     {
         Runtime_ABC::T_Processes list;
-        for( size_t idx = 0; idx < size; ++idx )
+        for( int idx = 0; idx < size; ++idx )
             list.push_back( boost::make_shared< MockProcess >( idx + 1, "process_" +
                 boost::lexical_cast< std::string >( idx + 1 ) ) );
         return list;
@@ -79,7 +79,7 @@ namespace
         return boost::xpressive::regex_replace( data, httpHeaderRegex, "" );
     }
 
-    template< size_t size >
+    template< int size >
     struct RuntimeFixture
     {
         RuntimeFixture()
@@ -91,7 +91,7 @@ namespace
         MockRuntime runtime;
     };
 
-    template< size_t size >
+    template< int size >
     struct Fixture : public RuntimeFixture< size >
     {
         Fixture()

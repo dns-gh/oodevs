@@ -8,8 +8,11 @@
 // *****************************************************************************
 #include "Utf8.h"
 #include <vector>
+#ifndef  _WIN64
 #define  BOOST_BIND_ENABLE_STDCALL
+#endif
 #include <boost/bind.hpp>
+#define  NOMINMAX
 #include <windows.h>
 
 using namespace process;
@@ -23,12 +26,13 @@ namespace
     template< typename T, typename U, typename V, typename W >
     U Convert( const T& text, const W& converter )
     {
-        int required = converter( text.data(), text.size(), reinterpret_cast< V* >( 0 ), 0 );
+        int text_size = static_cast< int >( text.size() );
+        int required = converter( text.data(), text_size, reinterpret_cast< V* >( 0 ), 0 );
         if( required <= 0 )
             throw std::runtime_error( "unable to convert text" );
 
         std::vector< V > data( required + 1, 0 );
-        int size = converter( text.data(), text.size(), &data[0], required );
+        int size = converter( text.data(), text_size, &data[0], required );
         return size > 0 ? U( &data[0], required ) : U();
     }
 }

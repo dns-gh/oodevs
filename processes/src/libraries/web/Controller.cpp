@@ -184,8 +184,8 @@ std::string Controller::List( int offset, int limit )
 
     boost::shared_lock< boost::shared_mutex > lock( *access_ );
     T_Processes::const_iterator it = processes_.begin();
-    offset = Clip< int >( offset, 0, processes_.size() );
-    limit  = Clip< int >( limit, 0, processes_.size() - offset );
+    offset = Clip< int >( offset, 0, static_cast< int >( processes_.size() ) );
+    limit  = Clip< int >( limit, 0, static_cast< int >( processes_.size() ) - offset );
     std::advance( it, offset );
     for( int idx = 0; idx < limit; ++idx, ++it )
         reply += ( idx ? ", " : "" ) + ToJson( *it->second );

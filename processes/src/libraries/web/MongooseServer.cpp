@@ -103,8 +103,8 @@ T_Values ParseParameters( const mg_request_info* request )
 T_Values ParseHeaders( const mg_request_info* request )
 {
     T_Values args;
-    int count = std::min< size_t >( request->num_headers, COUNT_OF( request->http_headers ) );
-    for( int i = 0; i < count; ++i )
+    size_t count = std::min( static_cast< size_t >( request->num_headers ), COUNT_OF( request->http_headers ) );
+    for( size_t i = 0; i < count; ++i )
         args.insert( std::make_pair( request->http_headers[i].name, request->http_headers[i].value ) );
     return args;
 }
