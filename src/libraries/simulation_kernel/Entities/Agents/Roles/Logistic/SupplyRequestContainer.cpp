@@ -117,19 +117,6 @@ bool SupplyRequestContainer::Execute( SupplyRequestDispatcher_ABC& dispatcher )
     return mandatoryRequestsFullySatisfied;
 }
 
-// -----------------------------------------------------------------------------
-// Name: SupplyRequestContainer::IsSupplying
-// Created: NLD 2005-01-24
-// -----------------------------------------------------------------------------
-bool SupplyRequestContainer::IsSupplying( const PHY_DotationCategory& dotationCategory ) const
-{
-    BOOST_FOREACH( const T_Consigns::value_type& data, consigns_ )
-        if( data.second->IsSupplying( dotationCategory ) )
-            return true;
-    return false;
-}
-
-
 // =============================================================================
 // Main
 // =============================================================================

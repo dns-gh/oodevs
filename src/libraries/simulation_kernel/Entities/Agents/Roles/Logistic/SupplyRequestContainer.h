@@ -66,7 +66,6 @@ public:
 
     //! @name Main
     bool Execute    ( SupplyRequestDispatcher_ABC& dispatcher );
-    bool IsSupplying( const PHY_DotationCategory& dotationCategory ) const;
     bool Update     (); // Return true if all consigns are finished
     void Clean      ();
     //@}

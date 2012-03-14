@@ -54,9 +54,10 @@ public:
     
     //! @name Accessors
     //@{
-    virtual       SupplySupplier_ABC*   GetSupplier        () const = 0;
-    virtual const PHY_DotationCategory& GetDotationCategory() const = 0;
-    virtual       double                GetGrantedValue    () const = 0;
+    virtual       SupplySupplier_ABC*   GetSupplier         () const = 0;
+    virtual const PHY_DotationCategory& GetDotationCategory () const = 0;
+    virtual       double                GetGrantedQuantity  () const = 0;
+    virtual       double                GetRequestedQuantity() const = 0;
     //@}
 
     //! @name Network

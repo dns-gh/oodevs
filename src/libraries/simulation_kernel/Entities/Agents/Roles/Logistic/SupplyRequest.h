@@ -46,10 +46,11 @@ public:
 
     //! @name Accessors
     //@{
-    virtual       SupplySupplier_ABC*   GetSupplier        () const;
-    virtual const PHY_DotationCategory& GetDotationCategory() const;
-    virtual       double                GetGrantedValue    () const;
-    virtual       bool                  IsComplementary    () const;
+    virtual       SupplySupplier_ABC*   GetSupplier         () const;
+    virtual const PHY_DotationCategory& GetDotationCategory () const;
+    virtual       double                GetGrantedQuantity  () const;
+    virtual       double                GetRequestedQuantity() const;
+    virtual       bool                  IsComplementary     () const;
     //@}
 
     //! @name Network

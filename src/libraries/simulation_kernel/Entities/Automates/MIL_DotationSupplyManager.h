@@ -62,8 +62,9 @@ public:
     virtual const MT_Vector2D&   GetPosition() const;
     virtual const MIL_AgentPion& GetPC      () const;
     virtual bool                 BelongsToLogisticBase( const MIL_AutomateLOG& logisticBase ) const;
-    virtual void OnSupplyCanceled();
-    virtual void OnSupplyDone    ();
+    virtual void OnSupplyScheduled     ( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign );
+    virtual void OnSupplyCanceled      ( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign );
+    virtual void OnSupplyDone          ( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign );
     virtual void OnSupplyConvoyArriving( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign );
     virtual void OnSupplyConvoyLeaving ( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign );
     virtual void Serialize( sword::AutomatId& msg ) const;
@@ -76,6 +77,18 @@ public:
     //@}
 
 private:
+    //! @name Types
+    //@{
+    bool IsSupplyInProgress( const PHY_DotationCategory& dotationCategory ) const;
+    //@}
+
+private:
+    //! @name Types
+    //@{
+    typedef std::set< boost::shared_ptr< const logistic::SupplyConsign_ABC > > T_Supplies;
+    //@}
+
+private:
     MIL_Automate* pAutomate_;
 
     bool                     bDotationSupplyNeeded_;
@@ -83,6 +96,7 @@ private:
     boost::shared_ptr< logistic::SupplyRequestBuilder_ABC > supplyRequestBuilder_;
     std::auto_ptr< logistic::SupplyRequestContainer > supplyRequests_;
     unsigned int                     nTickRcDotationSupplyQuerySent_;
+    T_Supplies scheduledSupplies_;
 };
 
 BOOST_CLASS_EXPORT_KEY2( MIL_DotationSupplyManager, "MIL_DotationSupplyManager" )

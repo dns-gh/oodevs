@@ -151,13 +151,14 @@ double LogisticLink::ConsumeQuota( const PHY_DotationCategory& dotationCategory,
         else
         {
             sDotationQuota& quota = it->second;
+            const double oldQuota = quota.quota_;
             quantity = std::min( quantity, quota.quota_ );
             if( quantity > 0 )
             {
                 quota.quota_ -= quantity;
                 quotasUpdated_ = true;
             }
-            if( quota.quota_ <= quota.quotaThreshold_ )
+            if( quota.quota_ <= quota.quotaThreshold_ && oldQuota > quota.quotaThreshold_ )
                 owner_->NotifyQuotaThresholdReached( dotationCategory );
         }
     }
