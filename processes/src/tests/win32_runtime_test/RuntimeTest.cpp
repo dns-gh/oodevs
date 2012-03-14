@@ -54,7 +54,7 @@ namespace
         return count + 1;
     }
 
-    bool FakeCreateProcess( const wchar_t* app, const std::string expected_app,
+    bool FakeCreateProcess( const wchar_t* app, const std::string& expected_app,
                             wchar_t* args, const std::vector< std::string >& expected_args,
                             const wchar_t* lpCurrentDirectory, const std::string& expected_dir,
                             STARTUPINFOW* lpStartupInfo, PROCESS_INFORMATION* lpProcessInformation )

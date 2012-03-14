@@ -61,7 +61,7 @@ private:
     //@{
     std::string List( int offset, int limit );
     std::string List( const Request_ABC& request );
-    std::string Start( const std::string& app, const std::vector< std::string > args, const std::string& run );
+    std::string Start( const std::string& app, const std::vector< std::string >& args, const std::string& run );
     std::string Start( const Request_ABC& request );
     std::string Stop( int pid );
     std::string Stop( const Request_ABC& request );

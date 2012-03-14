@@ -219,7 +219,7 @@ void Controller::AddProcess( boost::shared_ptr< Process_ABC > ptr )
 // Name: Controller::Start
 // Created: BAX 2012-03-07
 // -----------------------------------------------------------------------------
-std::string Controller::Start( const std::string& app, const std::vector< std::string > args, const std::string& run )
+std::string Controller::Start( const std::string& app, const std::vector< std::string >& args, const std::string& run )
 {
     boost::shared_ptr< Process_ABC > ptr = runtime_.Start( app, args, run );
     if( !ptr )
