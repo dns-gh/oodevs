@@ -692,7 +692,7 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="zone_" name="Area to breach" optional="false" type="Location"/>
+      <parameter dia-name="zone_" name="Area to breach" optional="false" type="Polygon"/>
     </mission>
     <mission dia-behavior="MIS_Pion_GEN_Renforcer" dia-type="T_Mission_Pion_GEN_Renforcer" id="76" name="ENG - reinforce">
       <description>
@@ -3609,4 +3609,4 @@ A unit won't follow if it cannot perform the mission (mission is not set for thi
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="4016803889" -->
+<!-- signature="2119972909" -->
