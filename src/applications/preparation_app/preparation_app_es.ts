@@ -2324,6 +2324,14 @@
         <source>Local weather </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Weather</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Weather modifications applied</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WeatherPanel</name>

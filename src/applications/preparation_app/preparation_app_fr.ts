@@ -2325,6 +2325,14 @@
         <source>Local weather </source>
         <translation>Météo locale </translation>
     </message>
+    <message>
+        <source>Weather</source>
+        <translation>Météo</translation>
+    </message>
+    <message>
+        <source>Weather modifications applied</source>
+        <translation>Modifications de météo prises en compte</translation>
+    </message>
 </context>
 <context>
     <name>WeatherPanel</name>
