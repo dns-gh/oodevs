@@ -84,7 +84,7 @@ return
     end,
     buildPriority = function( self )
         local obstacleType = 0 -- First build preliminary obstacles,at the end build maneuver obstacles
-        if DEC_GenObject_TypeObstacleManoeuvre( self.source ) == false then
+        if DEC_ConnaissanceObjet_EstObstacleDeManoeuvre( self.source ) == false then
             obstacleType = 1
         end
         return ( ( self:proximityLevel() / 100 + obstacleType ) ) / 2
