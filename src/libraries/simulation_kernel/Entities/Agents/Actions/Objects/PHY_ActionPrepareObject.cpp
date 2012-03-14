@@ -47,7 +47,8 @@ PHY_ActionPrepareObject::~PHY_ActionPrepareObject()
 // -----------------------------------------------------------------------------
 void PHY_ActionPrepareObject::StopAction()
 {
-    pObject_->RetrieveAttribute< ConstructionAttribute >()->NotifyStopBuildByGen();
+    if( pObject_ )
+        pObject_->RetrieveAttribute< ConstructionAttribute >()->NotifyStopBuildByGen();
     Callback( role_.GetFinalReturnCode() );
 }
 
