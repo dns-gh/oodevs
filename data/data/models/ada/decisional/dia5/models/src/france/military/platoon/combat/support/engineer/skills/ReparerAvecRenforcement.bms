@@ -15,8 +15,13 @@ rootnode
     done = function( self ) end,
 
     elementFailed = function( self, params, additionalParams )
-        integration.setNeedReinforcement( meKnowledge, "build", additionalParams.element, true )
-        self.report = eRC_AttenteRenforcement
+        if additionalParams.reason == eRC_PasDotationConstructionObjet then
+            integration.setNeedReinforcement( meKnowledge, "build", additionalParams.element, true )
+            self.report = eRC_AttenteRenforcement
+        else
+            integration.setNeedReinforcement( meKnowledge, "build", additionalParams.element, false )
+            self.report = eRC_AttenteRenforcement
+        end
     end,
 
     elementRepaired = function( self, params, additionalParams )
