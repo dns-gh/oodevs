@@ -1591,8 +1591,8 @@
         <update name="masalife/brain" version="2011-1.1.x/sword" package="net.masagroup.life.brain.ide-win32.win32.x86.zip" todir="${out.dir}"/>
         <update name="masalife/brain" version="2011-1.1.x/sword" package="directia.core.bml" todir="${models.dir}/directia.core" clean="true"/>
         <update name="hla" version="1.0" package="include" todir="${include.dir}"/>
-        <update name="hla" version="1.0" package="lib" todir="${lib.dir}"/>
-        <update name="hla" version="1.0" package="dll" todir="${run.dir}/plugins/hla"/>
+        <update name="hla" version="1.0" package="lib/${platform}" todir="${lib.dir}"/>
+        <update name="hla" version="1.0" package="dll/${platform}" todir="${run.dir}/plugins/hla"/>
         <update name="hla" version="1.0" package="federation_app" todir="${bin.dir}"/>
         <update name="tools" version="1.0"/>
         <update name="log4cxx" version="0.10.0"/>
@@ -1610,8 +1610,8 @@
         <update name="openssl" version="1.0.0d"/>
         <update name="excel" version="1.0"/>
         <update name="mak" version="4.0" package="include" todir="${include.dir}"/>
-        <update name="mak" version="4.0" package="lib" todir="${lib.dir}"/>
-        <update name="mak" version="4.0" package="dll" todir="${run.dir}/plugins/vrforces"/>
+        <update name="mak" version="4.0" package="lib/${platform}" todir="${lib.dir}"/>
+        <update name="mak" version="4.0" package="dll/${platform}" todir="${run.dir}/plugins/vrforces"/>
         <update name="wise" version="3.9"/>
         <antcall target="deploy-application-data"/>
         <antcall target="generate-database"/>
