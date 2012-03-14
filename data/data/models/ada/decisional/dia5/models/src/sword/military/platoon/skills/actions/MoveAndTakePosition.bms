@@ -54,7 +54,6 @@ node "TakePosition"
             end
         else
             myself.blockForcesContinue = nil
-            Feedback( self.feedbacks.failed, { reason = "blocked", element = self.params.position } ) -- un obstacle ou l'eau me bloque
         end
     end
 }
