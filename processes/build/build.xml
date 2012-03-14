@@ -1,0 +1,70 @@
+<?xml version="1.0"?>
+<project name="process_server" default="all">
+
+    <property environment="env"/>
+    <property name="env.PONEY_HOME" value="//install/masa/common/dev/common/poney"/>
+    <import file="${env.PONEY_HOME}/poney.xml"/>
+
+    <property name="samples.dir" value="../src/samples"/>
+
+    <condition property="os.platform" value="windows" else="linux">
+        <os family="windows"/>
+    </condition>
+
+    <!-- Libraries -->
+    <target name="libraries" depends="runtime,web" description="build all libraries"/>
+
+    <target name="runtime" description="build runtime library">
+        <build-lib name="runtime"/>
+    </target>
+
+    <target name="web" description="build web library">
+        <build-lib name="web" />
+    </target>
+
+    <!-- Samples -->
+    <target name="samples" depends="sample_server" description="build all samples"/>
+
+    <target name="sample_server" depends="runtime,web" description="build sample web server application">
+        <build-app name="sample_server" subsystem="console" depends="boost" root="${samples.dir}" libs="mongoose@{suffix},runtime@{suffix},web@{suffix}">
+            <syslibset libs="ws2_32" />
+        </build-app>
+    </target>
+
+    <!-- Tests -->
+    <target name="tests" depends="win32_runtime_test,web_test" description="build tests"/>
+
+    <target name="win32_runtime_test" depends="runtime" description="build win32 runtime tests">
+        <build-test name="win32_runtime" depends="boost" libs="runtime@{suffix}"/>
+    </target>
+
+    <target name="web_test" depends="web" description="build web tests">
+        <build-test name="web" depends="boost" libs="web@{suffix}"/>
+    </target>
+
+    <!-- Reports -->
+    <target name="reports" description="generate reports">
+        <cppcheck-report>
+            <arg line="--suppress=useAutoPointerCopy"/>
+            <arg line="--suppress=unusedFunction"/>
+        </cppcheck-report>
+        <headers name="runtime"/>
+        <headers name="web"/>
+    </target>
+
+    <!-- Configure -->
+    <target name="configure" description="retrieve dependencies">
+        <update name="boost"/>
+        <update name="mongoose"/>
+        <update name="turtle" version="trunk"/>
+    </target>
+
+    <!-- Clean -->
+    <target name="clean" description="clean intermediate build artifacts">
+        <delete dir="${reports.dir}"/>
+        <delete dir="${out.dir}"/>
+    </target>
+
+    <!-- All -->
+    <target name="all" depends="clean,configure,libraries,tests,reports"/>
+</project>
