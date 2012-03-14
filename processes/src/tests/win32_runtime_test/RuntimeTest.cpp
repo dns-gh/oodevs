@@ -38,7 +38,7 @@ namespace
         size = std::min< int >( size, cb / sizeof *ids );
         for( int i = 0; i < size; ++i )
             ids[i] = i + 1;
-        BOOST_CHECK( pBytesReturned );
+        BOOST_REQUIRE( pBytesReturned );
         *pBytesReturned = size * sizeof *ids;
         return true;
     }

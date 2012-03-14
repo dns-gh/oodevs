@@ -48,7 +48,7 @@ namespace
     bool FakeGetExitCodeProcess( HANDLE handle, DWORD* code )
     {
         BOOST_CHECK_EQUAL( handle, dummy );
-        BOOST_CHECK( code );
+        BOOST_REQUIRE( code );
         *code = STILL_ACTIVE;
         return true;
     }
