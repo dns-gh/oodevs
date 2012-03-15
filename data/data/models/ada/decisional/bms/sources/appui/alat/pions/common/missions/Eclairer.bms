@@ -55,6 +55,9 @@ include "bit.lua"
                 end
 
                 DEC_Copie_Point( self._namedParams.mission.pointRegroupement_, myself.pointRegroupement_ )
+                if not DEC_Agent_EstDansLeFuseau() then
+                    self.pointFinFuseau = self._namedParams.mission.pointRegroupement_
+                end
             end
         end
 
@@ -113,7 +116,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
                     Activate( self.activations.ACT_Obs_EtablirVisionCur, 1, emptyTable )
                     Activate( self.activations.BEH_Eni_Pion_ALAT_GererUnitesDetectes, GetMotivation( "MOT_Manoeuvrer" ), emptyTable )
                     Activate( self.activations.ACT_Maj_Pions_ObjectifEsquive, 1, { self.pointFinFuseau, } )
-                    Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, GetMotivation( "MOT_Manoeuvrer" ), { self.pointFinFuseau, eProgressionDefaut, eTypeItiReconnaissance, } )
+					Activate( self.activations.BEH_Dep_Pion_ALAT_RejoindrePoint, GetMotivation( "MOT_Manoeuvrer" ), { self.pointFinFuseau, eProgressionDefaut, eTypeItiReconnaissance, } )
 self.done_BEH_Dep_Pion_ALAT_RejoindrePoint = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                 elseif switch_1 == eSExfiltrer then
