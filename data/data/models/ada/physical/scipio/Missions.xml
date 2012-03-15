@@ -2987,29 +2987,29 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_StopperEmission" id="361" name="Pion Stopper Emission"/>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_RenforcerEnVSRAM" id="362" name="Pion Renforcer En VSRAM">
       <parameter dia-name="pionARenforcer_" name="Pion a renforcer" optional="false" type="Agent"/>
-      <parameter dia-name="nbrAmbulances_" name="Nbr ambulances" optional="false" type="Integer"/>
+      <parameter dia-name="nbrAmbulances_" min-value="1" name="Nbr ambulances" optional="false" type="Integer"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_TransfererVSRAM" id="363" name="Pion Transferer VSRAM">
       <parameter dia-name="pionRenforce_" name="Pion renforce" optional="false" type="Agent"/>
       <parameter dia-name="pionARenforcer_" name="Pion a renforcer" optional="false" type="Agent"/>
-      <parameter dia-name="nbrAmbulances_" name="Nbr ambulances" optional="false" type="Integer"/>
+      <parameter dia-name="nbrAmbulances_" min-value="1" name="Nbr ambulances" optional="false" type="Integer"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ReprendreAuxOrdresVSRAM" id="364" name="Pion Reprendre Aux Ordres VSRAM">
       <parameter dia-name="pionRenforce_" name="Pion renforce" optional="false" type="Agent"/>
-      <parameter dia-name="nbrAmbulances_" name="Nbr ambulances" optional="false" type="Integer"/>
+      <parameter dia-name="nbrAmbulances_" min-value="1" name="Nbr ambulances" optional="false" type="Integer"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_RenforcerEnRemorqueurs" id="365" name="Pion Renforcer En Remorqueurs">
       <parameter dia-name="pionARenforcer_" name="Pion a renforcer" optional="false" type="Agent"/>
-      <parameter dia-name="nbrRemorqueurs_" name="Nbr remorqueurs" optional="false" type="Integer"/>
+      <parameter dia-name="nbrRemorqueurs_" min-value="1" name="Nbr remorqueurs" optional="false" type="Integer"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_TransfererRemorqueurs" id="366" name="Pion Transferer Remorqueurs">
       <parameter dia-name="pionRenforce_" name="Pion renforce" optional="false" type="Agent"/>
       <parameter dia-name="pionARenforcer_" name="Pion a renforcer" optional="false" type="Agent"/>
-      <parameter dia-name="nbrRemorqueurs_" name="Nbr remorqueurs" optional="false" type="Integer"/>
+      <parameter dia-name="nbrRemorqueurs_" min-value="1" name="Nbr remorqueurs" optional="false" type="Integer"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_Pion_ReprendreAuxOrdresRemorqueurs" id="367" name="Pion Reprendre Aux Ordres Remorqueurs">
       <parameter dia-name="pionRenforce_" name="Pion renforce" optional="false" type="Agent"/>
-      <parameter dia-name="nbrRemorqueurs_" name="Nbr remorqueurs" optional="false" type="Integer"/>
+      <parameter dia-name="nbrRemorqueurs_" min-value="1" name="Nbr remorqueurs" optional="false" type="Integer"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_ModifierRegimeTravailMaintenance" id="368" name="Modifier Regime Travail Maintenance">
       <parameter dia-name="orderConduiteModifierRegimeTravailMaintenance_" name="Ordre conduite modifier regime travail maintenance" optional="false" type="Enumeration">
@@ -3080,7 +3080,7 @@
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_Pion_AutoriserToutesMunitions" id="387" name="Pion Autoriser Toutes Munitions"/>
     <fragorder available-without-mission="true" dia-type="france.military.platoon.combat.support.art.tasks.UtiliserALR" id="388" name="Utiliser ALR">
       <parameter dia-name="munitions_" name="Munitions" optional="false" type="ResourceType"/>
-      <parameter dia-name="nbIT_" name="Intervention Type" optional="false" type="Integer"/>
+      <parameter dia-name="nbIT_" min-value="1" name="Intervention Type" optional="false" type="Integer"/>
       <parameter dia-name="pointCible_" name="Cible" optional="false" type="Point"/>
     </fragorder>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PasserEnSilenceRadioPartiel" id="389" name="Passer En Silence Radio Partiel"/>
@@ -3092,7 +3092,7 @@
     </fragorder>
     <fragorder available-without-mission="false" dia-type="france.military.platoon.combat.support.art.tasks.AppliquerFeux" id="392" name="Pion Appliquer Feux">
       <parameter dia-name="munitions_" name="Munitions" optional="false" type="ResourceType"/>
-      <parameter dia-name="nbIT_" name="Nb IT" optional="false" type="Integer"/>
+      <parameter dia-name="nbIT_" min-value="1" name="Nb IT" optional="false" type="Integer"/>
       <parameter dia-name="pointCible_" name="Cible" optional="false" type="Point"/>
     </fragorder>
     <fragorder available-without-mission="true" dia-type="france.military.platoon.tasks.Embarquer" id="394" name="Embarquer"/>
@@ -3108,7 +3108,7 @@
       <parameter dia-name="agentKnowledge_" name="Unite" optional="false" type="AgentKnowledge"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="france.military.platoon.combat.support.air.tasks.ModifierAltitude" id="402" name="Modifier altitude">
-      <parameter dia-name="nbIT_" name="Altitude" optional="false" type="Integer"/>
+      <parameter dia-name="nbIT_" min-value="0" name="Altitude" optional="false" type="Integer"/>
     </fragorder>
     <fragorder available-without-mission="false" dia-type="france.military.platoon.combat.support.engineer.tasks.ActiverObstacles" id="403" name="Activer Obstacles">
       <parameter dia-name="objectKnowledge_" max-occurs="unbounded" min-occurs="1" name="Obstacles" optional="false" type="ObjectKnowledge"/>
@@ -3116,4 +3116,4 @@
     <fragorder available-without-mission="false" dia-type="Rep_OrderConduite_RejoindrePointLancement" id="405" name="Rejoindre point de lancement"/>
   </fragorders>
 </missions>
-<!-- signature="0186158474" -->
+<!-- signature="3035243298" -->
