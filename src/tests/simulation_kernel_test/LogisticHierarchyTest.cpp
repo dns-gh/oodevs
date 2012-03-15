@@ -196,7 +196,6 @@ BOOST_AUTO_TEST_CASE( TestLogisticHierarchyQuota )
     BOOST_CHECK_EQUAL( linkBrainLog1->ConsumeQuota( *PHY_DotationType::FindDotationCategory( 43 ), 10 ), 5 );
     MOCK_EXPECT( owner, NotifyQuotaThresholdReached ).once();
     BOOST_CHECK_EQUAL( linkBrainLog1->ConsumeQuota( *PHY_DotationType::FindDotationCategory( 42 ), 10 ), 4 );
-    MOCK_EXPECT( owner, NotifyQuotaThresholdReached ).once();
     BOOST_CHECK_EQUAL( linkBrainLog1->ConsumeQuota( *PHY_DotationType::FindDotationCategory( 42 ), 10 ), 0 );
     linkBrainLog1->ReturnQuota( *PHY_DotationType::FindDotationCategory( 42 ), 1.1 );
     MOCK_EXPECT( owner, NotifyQuotaThresholdReached ).once();
