@@ -301,7 +301,7 @@
   </object>
   <object name="Bridge destruction" type="bridge destruction">
     <geometries>
-      <geometry symbol="G*MPORC---****X" type="point"/>
+      <geometry symbol="G*MPO-----****X" type="point"/>
     </geometries>
     <activable/>
     <avoidable distance="100"/>
@@ -611,7 +611,7 @@
   </object>
   <object name="Flood Origin" type="flood">
     <geometries>
-      <geometry symbol="G*MPSF----****X" type="point"/>
+      <geometry symbol="O*VPF-----*****" type="point"/>
     </geometries>
     <flood>
       <injuries>
@@ -798,4 +798,4 @@
     </urban-destruction>
   </object>
 </objects>
-<!-- signature="3992786427" -->
+<!-- signature="3315923416" -->

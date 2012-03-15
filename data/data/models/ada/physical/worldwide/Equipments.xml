@@ -1160,6 +1160,7 @@
       <object construction-time-factor="1s" destruction-time-factor="1s" devalorization-time="1s" initial-construction-time="1s" initial-destruction-time="0s" type="sensors"/>
       <object construction-time-factor="1s" destruction-time-factor="1s" devalorization-time="1s" extinguishing-time="1s" initial-construction-time="1s" initial-destruction-time="1s" type="movement forbidden area" valorization-time="1s"/>
       <object construction-time-factor="1s" destruction-time-factor="1s" devalorization-time="1s" extinguishing-time="1s" initial-construction-time="1s" initial-destruction-time="1s" type="dyke" valorization-time="1s"/>
+      <object construction-time-factor="30s" destruction-time-factor="30s" initial-construction-time="20m" initial-destruction-time="20m" type="mobility enhanced area"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="MOB Breakdown 1 EB"/>
@@ -10864,4 +10865,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="2678585638" -->
+<!-- signature="1896867868" -->

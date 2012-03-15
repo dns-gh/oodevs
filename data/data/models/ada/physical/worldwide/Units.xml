@@ -2131,12 +2131,13 @@
     <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat/mechanized"/>
     <equipments>
       <equipment count="2" crew="1" major="true" type="ENG.Bridge Vehicle"/>
+      <equipment count="1" crew="1" major="true" type="ENG.Engineer CP"/>
     </equipments>
     <sensors-range range="0"/>
     <equipments-range range="0"/>
     <crew-ranks>
       <crew-rank count="0" type="Officier"/>
-      <crew-rank count="0" type="SousOfficier"/>
+      <crew-rank count="1" type="SousOfficier"/>
     </crew-ranks>
     <logistics>
       <category name="munition">
@@ -3273,4 +3274,4 @@
     <crossing-height height="1m"/>
   </unit>
 </units>
-<!-- signature="4263017976" -->
+<!-- signature="1284163847" -->
