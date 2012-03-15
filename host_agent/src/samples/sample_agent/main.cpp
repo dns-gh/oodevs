@@ -7,6 +7,7 @@
 //
 // *****************************************************************************
 #include <runtime/Factory.h>
+#include <host/Agent.h>
 #include <web/Controller.h>
 #include <web/MongooseServer.h>
 
@@ -14,7 +15,8 @@ int main( int /*argc*/, const char* /*argv*/[] )
 {
 
     process::Factory factory;
-    web::Controller controller( factory.GetRuntime() );
+    host::Agent agent( factory.GetRuntime() );
+    web::Controller controller( agent );
     web::MongooseServer server( controller );
     getc( stdin );
 }

@@ -14,6 +14,7 @@
 #include "web_test.h"
 #include <runtime/Process_ABC.h>
 #include <runtime/Runtime_ABC.h>
+#include <host/Agent.h>
 #include <web/Controller.h>
 #include <web/Observer_ABC.h>
 #include <web/Request_ABC.h>
@@ -26,6 +27,7 @@
 
 using namespace process;
 using namespace web;
+using namespace host;
 
 namespace
 {
@@ -95,7 +97,8 @@ namespace
     struct Fixture : public RuntimeFixture< size >
     {
         Fixture()
-            : controller( RuntimeFixture< size >::runtime )
+            : agent( RuntimeFixture< size >::runtime )
+            , controller( agent )
         {
             // NOTHING
         }
@@ -114,6 +117,7 @@ namespace
             BOOST_CHECK_EQUAL( expected, EraseHttpHeader( reply ));
         }
         MockRequest request;
+        Agent agent;
         Controller controller;
     };
 }
@@ -189,5 +193,5 @@ BOOST_FIXTURE_TEST_CASE( web_controller_stops, Fixture< 16 > )
     SetRequest( "GET", "/stop", boost::assign::map_list_of( "pid", boost::lexical_cast< std::string >( pid ) ) );
     MockProcess& process = dynamic_cast< MockProcess& >( *processes[ pid - 1 ] );
     MOCK_EXPECT( process.Kill ).once().with( mock::any ).returns( true );
-    CheckNotify( 200, "" );
+    CheckNotify( 200, "{ \"pid\" : 7, \"name\" : \"process_7\" }" );
 }

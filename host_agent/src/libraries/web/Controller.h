@@ -11,21 +11,12 @@
 #define CONTROLLER_H
 
 #include "Observer_ABC.h"
-
-#include <boost/shared_ptr.hpp>
 #include <string>
-#include <vector>
 
-namespace boost
+namespace host
 {
-    class shared_mutex;
-}
-
-namespace process
-{
-    class Process_ABC;
-    class Runtime_ABC;
-}
+    class Agent_ABC;
+};
 
 namespace web
 {
@@ -42,7 +33,7 @@ class Controller : public Observer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Controller( const process::Runtime_ABC& runtime );
+             Controller( host::Agent_ABC& host );
     virtual ~Controller();
     //@}
 
@@ -52,29 +43,17 @@ public:
     //@}
 
 private:
-    //! @name Private typedef helpers
-    //@{
-    typedef std::map< int, boost::shared_ptr< process::Process_ABC > > T_Processes;
-    //@}
-
     //! @name Private operations
     //@{
-    std::string List( int offset, int limit );
     std::string List( const Request_ABC& request );
-    std::string Start( const std::string& app, const std::vector< std::string >& args, const std::string& run );
     std::string Start( const Request_ABC& request );
-    std::string Stop( int pid );
     std::string Stop( const Request_ABC& request );
-    boost::shared_ptr< process::Process_ABC > Extract( int pid );
-    void AddProcess( boost::shared_ptr< process::Process_ABC > ptr );
     //@}
 
 private:
     //! @name Member data
     //@{
-    const process::Runtime_ABC& runtime_;
-    std::auto_ptr< boost::shared_mutex > access_;
-    T_Processes processes_;
+    host::Agent_ABC& agent_;
     //@}
 };
 

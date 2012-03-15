@@ -1,5 +1,5 @@
 <?xml version="1.0"?>
-<project name="process_server" default="all">
+<project name="host_agent" default="all">
 
     <property environment="env"/>
     <property name="env.PONEY_HOME" value="//install/masa/common/dev/common/poney"/>
@@ -12,10 +12,14 @@
     </condition>
 
     <!-- Libraries -->
-    <target name="libraries" depends="runtime,web" description="build all libraries"/>
+    <target name="libraries" depends="runtime,host,web" description="build all libraries"/>
 
     <target name="runtime" description="build runtime library">
         <build-lib name="runtime"/>
+    </target>
+
+    <target name="host" description="build host library">
+        <build-lib name="host"/>
     </target>
 
     <target name="web" description="build web library">
@@ -23,10 +27,10 @@
     </target>
 
     <!-- Samples -->
-    <target name="samples" depends="sample_server" description="build all samples"/>
+    <target name="samples" depends="sample_agent" description="build all samples"/>
 
-    <target name="sample_server" depends="runtime,web" description="build sample web server application">
-        <build-app name="sample_server" subsystem="console" depends="boost" root="${samples.dir}" libs="mongoose@{suffix},runtime@{suffix},web@{suffix}">
+    <target name="sample_agent" depends="runtime,host,web" description="build sample host agent">
+        <build-app name="sample_agent" subsystem="console" depends="boost" root="${samples.dir}" libs="mongoose@{suffix},runtime@{suffix},host@{suffix},web@{suffix}">
             <syslibset libs="ws2_32" />
         </build-app>
     </target>
@@ -39,7 +43,7 @@
     </target>
 
     <target name="web_test" depends="web" description="build web tests">
-        <build-test name="web" depends="boost" libs="web@{suffix}"/>
+        <build-test name="web" depends="boost" libs="host@{suffix},web@{suffix}"/>
     </target>
 
     <!-- Reports -->
@@ -48,6 +52,7 @@
             <arg line="--suppress=useAutoPointerCopy"/>
             <arg line="--suppress=unusedFunction"/>
         </cppcheck-report>
+        <headers name="host"/>
         <headers name="runtime"/>
         <headers name="web"/>
     </target>

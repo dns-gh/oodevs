@@ -13,38 +13,24 @@
 
 #include "Controller.h"
 #include "Request_ABC.h"
-#include <runtime/Runtime_ABC.h>
-#include <runtime/Process_ABC.h>
+#include <host/Agent_ABC.h>
 #include <boost/algorithm/string/split.hpp>
 #include <boost/algorithm/string.hpp>
-#include <boost/foreach.hpp>
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/static_assert.hpp>
 
-#ifdef _MSC_VER
-#   pragma warning( push )
-#   pragma warning( disable : 4244 )
-#endif
-#include <boost/thread/locks.hpp>
-#include <boost/thread/shared_mutex.hpp>
-#ifdef _MSC_VER
-#   pragma warning( pop )
-#endif
-
 using namespace web;
-using namespace process;
+using namespace host;
 
 // -----------------------------------------------------------------------------
 // Name: Controller::Controller
 // Created: BAX 2012-03-07
 // -----------------------------------------------------------------------------
-Controller::Controller( const Runtime_ABC& runtime )
-    : runtime_( runtime )
-    , access_ ( new boost::shared_mutex() )
+Controller::Controller( Agent_ABC& agent )
+    : agent_( agent )
 {
-    BOOST_FOREACH( Runtime_ABC::T_Processes::value_type ptr, runtime_.GetProcesses() )
-        processes_.insert( std::make_pair( ptr->GetPid(), ptr ) );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -69,6 +55,7 @@ namespace
         int code;
         const char* text;
     };
+
     static const HttpCode httpCodes[] =
     {
         { 200, "OK" },
@@ -102,8 +89,9 @@ namespace
     // Name: WriteHttpReply
     // Created: BAX 2012-02-28
     // -----------------------------------------------------------------------------
-    std::string WriteHttpReply( const HttpCode& status, const std::string& content = std::string() )
+    std::string WriteHttpReply( HttpStatusCode code, const std::string& content = std::string() )
     {
+        const HttpCode& status = httpCodes[ code ];
         return ( boost::format(
             "HTTP/1.1 %1% %2%\r\n"
             "Content-Type: text/plain\r\n"
@@ -117,6 +105,11 @@ namespace
             % content
         ).str();
     }
+
+    std::string WriteHttpReply( const host::Reply& reply )
+    {
+        return WriteHttpReply( reply.valid ? Ok : InternalServerError, reply.data );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -126,7 +119,7 @@ namespace
 std::string Controller::Notify( const Request_ABC& request )
 {
     if( request.GetMethod() != "GET" )
-        return WriteHttpReply( httpCodes[ BadRequest ], "Invalid method type" );
+        return WriteHttpReply( BadRequest, "Invalid method type" );
 
     const std::string& uri = request.GetUri();
     if( uri == "/list" )
@@ -136,22 +129,11 @@ std::string Controller::Notify( const Request_ABC& request )
     else if( uri == "/stop" )
         return Stop( request );
 
-    return WriteHttpReply( httpCodes[ NotFound ] );
+    return WriteHttpReply( NotFound, "Unknown URI" );
 }
 
 namespace
 {
-    // -----------------------------------------------------------------------------
-    // Name: ToJson
-    // Created: BAX 2012-03-07
-    // -----------------------------------------------------------------------------
-    std::string ToJson( const Process_ABC& process )
-    {
-        return (boost::format(
-            "{ \"pid\" : %1%, \"name\" : \"%2%\" }" )
-        % process.GetPid() % process.GetName() ).str();
-    }
-
     // -----------------------------------------------------------------------------
     // Name: GetParameter
     // Created: BAX 2012-03-08
@@ -164,36 +146,6 @@ namespace
     }
 }
 
-namespace
-{
-    template< typename T >
-    T Clip( T value, T min, T max )
-    {
-        assert( min <= max );
-        return std::min( std::max( value, min ), max );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Controller::List
-// Created: BAX 2012-03-07
-// -----------------------------------------------------------------------------
-std::string Controller::List( int offset, int limit )
-{
-    std::string reply;
-
-    boost::shared_lock< boost::shared_mutex > lock( *access_ );
-    T_Processes::const_iterator it = processes_.begin();
-    offset = Clip< int >( offset, 0, static_cast< int >( processes_.size() ) );
-    limit  = Clip< int >( limit, 0, static_cast< int >( processes_.size() ) - offset );
-    std::advance( it, offset );
-    for( int idx = 0; idx < limit; ++idx, ++it )
-        reply += ( idx ? ", " : "" ) + ToJson( *it->second );
-    lock.unlock();
-
-    return WriteHttpReply( httpCodes[ Ok ], "[ " + reply + " ]" );
-}
-
 // -----------------------------------------------------------------------------
 // Name: Controller::List
 // Created: BAX 2012-03-07
@@ -202,31 +154,7 @@ std::string Controller::List( const Request_ABC& request )
 {
     int offset = GetParameter< int >( "offset", request, 0 );
     int limit = GetParameter< int >( "limit", request, 10 );
-    return List( offset, limit );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Controller::AddProcess
-// Created: BAX 2012-03-07
-// -----------------------------------------------------------------------------
-void Controller::AddProcess( boost::shared_ptr< Process_ABC > ptr )
-{
-    boost::lock_guard< boost::shared_mutex > lock( *access_ );
-    processes_.insert( std::make_pair( ptr->GetPid(), ptr ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Controller::Start
-// Created: BAX 2012-03-07
-// -----------------------------------------------------------------------------
-std::string Controller::Start( const std::string& app, const std::vector< std::string >& args, const std::string& run )
-{
-    boost::shared_ptr< Process_ABC > ptr = runtime_.Start( app, args, run );
-    if( !ptr )
-        return WriteHttpReply( httpCodes[ InternalServerError ] ); //TODO Add LastError()
-
-    AddProcess( ptr );
-    return WriteHttpReply( httpCodes[ Ok ], ToJson( *ptr ) );
+    return WriteHttpReply( agent_.List( offset, limit ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -240,40 +168,7 @@ std::string Controller::Start( const Request_ABC& request )
     const std::string run = GetParameter< std::string >( "run", request, "" );
     std::vector< std::string > args;
     boost::split( args, cmd, boost::is_any_of( "," ), boost::token_compress_on );
-    return Start( app, args, run );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Controller::Extract
-// Created: BAX 2012-03-12
-// -----------------------------------------------------------------------------
-boost::shared_ptr< Process_ABC > Controller::Extract( int pid )
-{
-    boost::lock_guard< boost::shared_mutex > lock( *access_ );
-    T_Processes::iterator it = processes_.find( pid );
-    if( it == processes_.end() )
-        return boost::shared_ptr< Process_ABC >();
-
-    boost::shared_ptr< Process_ABC > reply = it->second;
-    processes_.erase( it );
-    return reply;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Controller::Stop
-// Created: BAX 2012-03-07
-// -----------------------------------------------------------------------------
-std::string Controller::Stop( int pid )
-{
-    boost::shared_ptr< Process_ABC > ptr = Extract( pid );
-    if( !ptr )
-        return WriteHttpReply( httpCodes[ NotFound ] );
-
-    bool done = ptr->Kill( 3 * 1000 );
-    if( !done )
-        return WriteHttpReply( httpCodes[ InternalServerError ] ); //TODO Add LastError()
-
-    return WriteHttpReply( httpCodes[ Ok ] );
+    return WriteHttpReply( agent_.Start( app, args, run ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -284,6 +179,6 @@ std::string Controller::Stop( const Request_ABC& request )
 {
     boost::optional< std::string > pid = request.GetParameter( "pid" );
     if( pid == boost::none )
-        return WriteHttpReply( httpCodes[ BadRequest ] );
-    return Stop( boost::lexical_cast< int >( *pid ) );
+        return WriteHttpReply( BadRequest, "Missing pid parameter" );
+    return WriteHttpReply( agent_.Stop( boost::lexical_cast< int >( *pid ) ) );
 }

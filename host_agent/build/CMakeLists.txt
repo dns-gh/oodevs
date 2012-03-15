@@ -1,5 +1,5 @@
 cmake_minimum_required( VERSION 2.8 )
-project( process_server )
+project( host_agent )
 enable_testing()
 
 include( MasaMacros.cmake )
@@ -36,16 +36,27 @@ add_static_library( web ${files} )
 add_target_include( web ${root_dir}/src/libraries )
 
 ################################################################################
-# sample_server
+# host
 ################################################################################
 file( GLOB files
-    "${root_dir}/src/samples/sample_server/*.cpp"
+    "${root_dir}/src/libraries/host/*.h"
+    "${root_dir}/src/libraries/host/*.cpp"
 )
-add_executable_target( sample_server ${files} )
-add_target_include( sample_server ${root_dir}/src/libraries )
-add_target_external_library( sample_server mongoose_d mongoose )
-target_link_libraries( sample_server
+add_static_library( host ${files} )
+add_target_include( host ${root_dir}/src/libraries )
+
+################################################################################
+# sample_agent
+################################################################################
+file( GLOB files
+    "${root_dir}/src/samples/sample_agent/*.cpp"
+)
+add_executable_target( sample_agent ${files} )
+add_target_include( sample_agent ${root_dir}/src/libraries )
+add_target_external_library( sample_agent mongoose_d mongoose )
+target_link_libraries( sample_agent
     runtime
+    host
     web
     ws2_32
 )
@@ -76,6 +87,7 @@ add_executable_target( web_test ${files} )
 set_target_folder( web_test tests )
 add_target_include( web_test ${root_dir}/src/libraries )
 target_link_libraries( web_test
+    host
     web
 )
 add_test_target( web_test web )
