@@ -4,9 +4,9 @@ joinFederationExecution yes
 resignFederationExecution yes
 registerFederationSynchronizationPoint no
 confirmSynchronizationPointRegistration no
-announceSynchronizationPoint yes
-synchronizationPointAchieved yes
-federationSynchronized yes
+announceSynchronizationPoint no
+synchronizationPointAchieved no
+federationSynchronized no
 requestFederationSave no
 initiateFederateSave no
 federateSaveBegun no
@@ -115,4 +115,4 @@ disableInteractionRelevanceAdvisorySwitch no
 initializeRTI no
 finalizeRTI no
 evokeCallback no
-evokeMultipleCallbacks yes
+evokeMultipleCallbacks no

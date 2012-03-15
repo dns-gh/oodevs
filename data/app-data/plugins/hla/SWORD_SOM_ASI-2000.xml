@@ -23,7 +23,7 @@
                        order="Receive"
                        ownership="NoTransfer"
                        semantics="The unique identifier for the entity instance."
-                       sharing="Publish"
+                       sharing="PublishSubscribe"
                        transportation="HLAbestEffort"
                        updateCondition="N/A"
                        updateType="Static"/>
@@ -63,14 +63,14 @@
                           order="Receive"
                           ownership="NoTransfer"
                           semantics="An indicator of the extent of association of objects form an operating group."
-                          sharing="Publish"
+                          sharing="PublishSubscribe"
                           transportation="HLAbestEffort"
                           updateCondition="On change"
                           updateType="Conditional"/>
                <attribute dataType="DimensionStruct" dimensions="NA" name="Dimensions" order="Receive"
                           ownership="NoTransfer"
                           semantics="The size of the area covered by the units in the aggregate."
-                          sharing="Publish"
+                          sharing="PublishSubscribe"
                           transportation="HLAbestEffort"
                           updateCondition="AggSizeChange"
                           updateType="Conditional"/>
@@ -79,7 +79,7 @@
                           order="Receive"
                           ownership="NoTransfer"
                           semantics="The identification of entities that are contained within the aggregate."
-                          sharing="Publish"
+                          sharing="PublishSubscribe"
                           transportation="HLAbestEffort"
                           updateCondition="On change"
                           updateType="Conditional"/>
@@ -94,7 +94,7 @@
                <attribute dataType="FormationEnum32" dimensions="NA" name="Formation" order="Receive"
                           ownership="NoTransfer"
                           semantics="The category of positional arrangement of the entities within the aggregate."
-                          sharing="Publish"
+                          sharing="PublishSubscribe"
                           transportation="HLAbestEffort"
                           updateCondition="On change"
                           updateType="Conditional"/>
@@ -122,7 +122,7 @@
                           order="Receive"
                           ownership="NoTransfer"
                           semantics="The numbers and types, of slient aggregates contained in the aggregate.  Silent aggregates are sub-aggregates that are in the aggregate, but that are not separately represented in the virtual world."
-                          sharing="Publish"
+                          sharing="PublishSubscribe"
                           transportation="HLAbestEffort"
                           updateCondition="On change"
                           updateType="Conditional"/>
@@ -142,7 +142,7 @@
                           order="Receive"
                           ownership="NoTransfer"
                           semantics="The identifications of aggregates represented in the virtual world that are contained in the aggregate."
-                          sharing="Publish"
+                          sharing="PublishSubscribe"
                           transportation="HLAbestEffort"
                           updateCondition="On change"
                           updateType="Conditional"/>
@@ -5307,14 +5307,14 @@
                                  transportation="HLAreliable">
                   <interactionClass dimensions="NA" name="HLAsetTiming" order="Receive"
                                     semantics="Adjust the time period between updates of the             HLAmanager.HLAfederate object instance for the             specified joined federate. If this interaction is             never sent, the RTI shall not perform periodic             updates"
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAseconds" name="HLAreportPeriod"
                                 semantics="Number of seconds between updates of instance               attribute values of the HLAfederate object               instance               (A zero value causes periodic updates to cease)"/>
                   </interactionClass>
                   <interactionClass dimensions="NA" name="HLAmodifyAttributeState" order="Receive"
                                     semantics="Modify the ownership state of an attribute of an             object instance for the specified joined federate.             If the interaction is used to give ownership of the             instance attribute to the specified joined federate             and another joined federate currently owns the             instance attribute, the owning joined federate             shall be divested of ownership of the instance             attribute before ownership is granted to the             specified joined federate. No notification of             change of ownership of the instance attribute shall             be provided to either joined federate. In order for             ownership of the instance attribute to be granted             to the specified joined federate, the following             conditions shall be true:             - the specified joined federate knows about the object             instance             - the specified joined federate is publishing the             corresponding class attribute at the known class             of the specified object instance at that joined             federate             - the specified instance attribute is not owned             by the RTI (i.e., it's not a predefined attribute             of a MOM object class)             If one or more of the above conditions are not             met, then the interaction shall have no effect and             an error shall be reported via an interaction of             class HLAmanager. HLAfederate.HLAreport.             HLAreportMOMexception."
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAhandle" name="HLAobjectInstance"
                                 semantics="Handle of the object instance whose attribute               state is being changed"/>
@@ -5325,21 +5325,21 @@
                   </interactionClass>
                   <interactionClass dimensions="NA" name="HLAsetServiceReporting" order="Receive"
                                     semantics="Specify whether to report service invocations to0             or from the specified joined federate via             HLAmanager.HLAfederate.             HLAreport.HLAreportServiceInvocation interactions             (enable or disable servicereporting). If the             specified joined federate is subscribed to the             HLAmanager.HLAfederate.HLAreport.             HLAreportServiceInvocation interaction, all             attempts to enable service reporting for that             joined federate by sending an             HLAmanager.HLAfederate.HLAadjust.             HLAsetServiceReporting interaction with an             HLAreportingState parameter value of HLAtrue shall             fail and be reported via the normal MOM interaction             failure means"
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAboolean" name="HLAreportingState"
                                 semantics="Whether the RTI should report service               invocations (default = HLAfalse)"/>
                   </interactionClass>
                   <interactionClass dimensions="NA" name="HLAsetExceptionReporting" order="Receive"
                                     semantics="Specify whether the RTI shall report service             invocation exceptions via             HLAmanager.HLAfederate.HLAreport.             HLAreportException interactions"
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAboolean" name="HLAreportingState"
                                 semantics="Whether the RTI should report exceptions               (default = HLAfalse)"/>
                   </interactionClass>
                   <interactionClass dimensions="NA" name="HLAsetSwitches" order="Receive"
                                     semantics="Set the values of several HLA switches."
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAswitch" name="HLAconveyRegionDesignatorSets"
                                 semantics="Set the federation-wide Convey Region Designator Sets Switch                                  to the provided value (this parameter is required only when a change                                   of this switch value is needed)."/>
@@ -5351,55 +5351,55 @@
                                  transportation="HLAreliable">
                   <interactionClass dimensions="NA" name="HLArequestPublications" order="Receive"
                                     semantics="Request that the RTI send report interactions that             contain the publication data of a joined federate.             It shall result in one interaction of class             HLAmanager. HLAfederate.HLAreport.             HLAreportInteractionPublication and one             interaction of class HLAmanager.HLAfederate.             HLAreport.HLAreportObjectClassPublication for each             object class published"
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable"/>
                   <interactionClass dimensions="NA" name="HLArequestSubscriptions" order="Receive"
                                     semantics="Request that the RTI send report interactions that             contain the subscription data of a joined federate. It             shall result in one interaction of class HLAmanager.             HLAfederate.HLAreport.             HLAreportInteractionSubscription and one             interaction of class HLAmanager.HLAfederate.             HLAreport.HLAreportObjectClassSubscription for each             object class published"
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable"/>
                   <interactionClass dimensions="NA" name="HLArequestObjectInstancesThatCanBeDeleted"
                                     order="Receive"
                                     semantics="Request that the RTI send a report interaction that             contains the object instances that can be deleted             at the joined federate. It shall result in one             interaction of class             HLAmanager.HLAfederate.HLAreport.             HLAreportObjectInstancesThatCanBeDeleted"
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable"/>
                   <interactionClass dimensions="NA" name="HLArequestObjectInstancesUpdated" order="Receive"
                                     semantics="Request that the RTI send a report interaction that             contains the object instance updating             responsibility of a joined federate. It shall             result in one interaction of             class HLAmanager.HLAfederate.HLAreport.             HLAreportObjectInstancesUpdated"
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable"/>
                   <interactionClass dimensions="NA" name="HLArequestObjectInstancesReflected" order="Receive"
                                     semantics="Request that the RTI send a report interaction that             contains the objects instances for which a joined             federate has had a Reflect Attribute Values service             invocation. It shall result in one interaction             ofclass HLAmanager.HLAfederate.HLAreport.             HLAreportObjectInstancesReflected"
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable"/>
                   <interactionClass dimensions="NA" name="HLArequestUpdatesSent" order="Receive"
                                     semantics="Request that the RTI send a report interaction that             contains the number of updates that a joined             federate has generated. It shall result in one             interaction of class             HLAmanager.HLAfederate.HLAreport.             HLAreportUpdatesSent for each transportation type             that is used to send updates"
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable"/>
                   <interactionClass dimensions="NA" name="HLArequestInteractionsSent" order="Receive"
                                     semantics="Request that the RTI send a report interaction that             contains the number of interactions that a joined             federate has generated. This count shall include             interactions sent with region. It shall result in             one interaction of class             HLAmanager.HLAfederate.HLAreport.             HLAreportInteractionsSent for each transportation             type that is used to send interactions"
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable"/>
                   <interactionClass dimensions="NA" name="HLArequestReflectionsReceived" order="Receive"
                                     semantics="Request that the RTI send a report interaction that             contains the number of reflections that a joined             federate has received. It shall result in one             interaction of class             HLAmanager.HLAfederate.HLAreport.             HLAreportReflectionsReceived for each             transportation type used in receiving             reflections"
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable"/>
                   <interactionClass dimensions="NA" name="HLArequestInteractionsReceived" order="Receive"
                                     semantics="Request that the RTI send a report interaction that             contains the number of interactions that a joined             federate has received. It shall result in one             interaction of class             HLAmanager.HLAfederate.HLAreport.             HLAreportInteractionsReceived for each             transportation typeused in receiving             interactions"
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable"/>
                   <interactionClass dimensions="NA" name="HLArequestObjectInstanceInformation" order="Receive"
                                     semantics="Request that the RTI send a report interaction that             contains the information that a joined federate             maintains on a single object instance. It shall             result in one interaction of class             HLAmanager.HLAfederate.HLAreport.             HLAreportObjectInstanceInformation"
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAhandle" name="HLAobjectInstance"
                                 semantics="Handle of the object instance for which               information is being requested"/>
                   </interactionClass>
                   <interactionClass dimensions="NA" name="HLArequestSynchronizationPoints" order="Receive"
                                     semantics="Request that the RTI send a report interaction that             contains a list of all in-progress federation             synchronization points. It shall result in one             interaction class             HLAmanager.HLAfederate.HLAreport.             HLAreportSynchronizationPoints"
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable"/>
                   <interactionClass dimensions="NA" name="HLArequestSynchronizationPointStatus" order="Receive"
                                     semantics="Request that the RTI send a report interaction that             contains a list that includes each federate (and its             synchronization point status) that is associated             with a particular synchronization point. It shall             result in one interaction of class             HLAmanager.HLAfederate.HLAreport.             HLAreportSynchronizationPointStaus"
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable"/>
                </interactionClass>
                <interactionClass dimensions="NA" name="HLAreport" order="Receive"
@@ -5408,7 +5408,7 @@
                                  transportation="HLAreliable">
                   <interactionClass dimensions="Federate" name="HLAreportObjectClassPublication" order="Receive"
                                     semantics="The interaction shall be sent by the RTI in             response to an interaction of class             HLAmanager.HLAfederate.             HLArequest.HLArequestPublications. It shall report             the attributes of one object class published by the             joined federate. One of these interactions shall be             sent for each object class containing attributes             that are published by the joined federate"
-                                    sharing="Publish"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAcount" name="HLAnumberOfClasses"
                                 semantics="The number of object classes for which the joined               federate publishes attributes"/>
@@ -5419,7 +5419,7 @@
                   </interactionClass>
                   <interactionClass dimensions="Federate" name="HLAreportObjectClassSubscription" order="Receive"
                                     semantics="The interaction shall be sent by the RTI in             response to an interaction of class             HLAmanager.HLAfederate.             HLArequest.HLArequestSubscriptions. It shall             report the attributes of one object class             subscribed to by the joined federate. One of these             interactions shall be sent for each object class             that is subscribed to by the joined federate. This             information shall reflect related DDM usage."
-                                    sharing="Publish"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAcount" name="HLAnumberOfClasses"
                                 semantics="The number of object classes for which the joined               federate subscribes to attributes. This               information shall reflect related DDM usage."/>
@@ -5432,14 +5432,14 @@
                   </interactionClass>
                   <interactionClass dimensions="Federate" name="HLAreportInteractionPublication" order="Receive"
                                     semantics="The interaction shall be sent by the RTI in response             to an interaction of class HLAmanager.HLAfederate.             HLArequest.HLArequestPublications. It shall report             the interaction classes published by the joined             federate"
-                                    sharing="Publish"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAhandleList" name="HLAinteractionClassList"
                                 semantics="List of interaction classes that the joined               federate is publishing"/>
                   </interactionClass>
                   <interactionClass dimensions="Federate" name="HLAreportInteractionSubscription" order="Receive"
                                     semantics="The interaction shall be sent by the RTI in response             to an interaction of class HLAmanager.HLAfederate.             HLArequest.HLArequestSubscriptions. It shall             report the interaction classes subscribed to by the             joined federate. This information shall reflect             related DDM usage."
-                                    sharing="Publish"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAinteractionSubList" name="HLAinteractionClassList"
                                 semantics="List of interaction class/subscription type               pairs. Each pair consists of the handle of an               interaction class that the joined federate is               subscribed to and whether the joined federate is               actively subscribing. This information shall               reflect related DDM usage."/>
@@ -5447,28 +5447,28 @@
                   <interactionClass dimensions="Federate" name="HLAreportObjectInstancesThatCanBeDeleted"
                                     order="Receive"
                                     semantics="The interaction shall be sent by the RTI in             response to an interaction of class             HLAmanager.HLAfederate.HLArequest.HLArequestObject             InstancesThatCanBeDeleted. It shall report the             number of object instances (by registered class of             the object instances) whose             HLAprivilegeToDeleteObject attribute areowned by             the joined federate."
-                                    sharing="Publish"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAobjectClassBasedCounts" name="HLAobjectInstanceCounts"
                                 semantics="A list of object instance counts. Each object               instance count consists of an object class               handle and the number of object instances of               that class"/>
                   </interactionClass>
                   <interactionClass dimensions="Federate" name="HLAreportObjectInstancesUpdated" order="Receive"
                                     semantics="The interaction shall be sent by the RTI in             response to an interaction of class             HLAmanager.HLAfederate.             HLArequest.HLArequestObjectInstancessUpdated. It             shall report the number of object instances (by             registered class of the object instances) for which             the joined federate has invoked the Update             Attribute Values service."
-                                    sharing="Publish"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAobjectClassBasedCounts" name="HLAobjectInstanceCounts"
                                 semantics="List of object instance counts. Each object               instance count consists of an object class               handle and the number of object instances of               that class."/>
                   </interactionClass>
                   <interactionClass dimensions="Federate" name="HLAreportObjectInstancesReflected" order="Receive"
                                     semantics="The interaction shall be sent by the RTI in             response to an interaction of class             HLAmanager.HLAfederate.             HLArequest.HLArequestObjectInstancessReflected.             It shall report the number of object instances             (by registered class of the object instances)             for which the joined federate has had a Reflect             Attribute Values service invocation."
-                                    sharing="Publish"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAobjectClassBasedCounts" name="HLAobjectInstanceCounts"
                                 semantics="List of object instance counts. Each object               instance count consists of an object class               handle and the number of object instances of               that class."/>
                   </interactionClass>
                   <interactionClass dimensions="Federate" name="HLAreportUpdatesSent" order="Receive"
                                     semantics="The interaction shall be sent by the RTI in             response to an interaction of class             HLAmanager.HLAfederate.             HLArequest.HLArequestUpdatesSent. It shall report             the number of updates sent (by registered class of             the object instances of the updates) by the joined             federate since the beginning of the federation             execution. One interaction of this class shall be             sent by the RTI for each transportation type             used."
-                                    sharing="Publish"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAtransportationName" name="HLAtransportation"
                                 semantics="Transportation type used in sending updates"/>
@@ -5477,7 +5477,7 @@
                   </interactionClass>
                   <interactionClass dimensions="Federate" name="HLAreportReflectionsReceived" order="Receive"
                                     semantics="The interaction shall be sent by the RTI in             response to an interaction of class             HLAmanager.HLAfederate.             HLArequest.HLArequestReflectionsReceived. It shall             report the number of reflections received (by             registered class of the object instances of the             reflects) by the joined federate since the             beginning of the federation execution. One             interaction of this class shall be sent by the RTI             for each transportation type used."
-                                    sharing="Publish"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAtransportationName" name="HLAtransportation"
                                 semantics="Transportation type used in receiving               reflections"/>
@@ -5486,7 +5486,7 @@
                   </interactionClass>
                   <interactionClass dimensions="Federate" name="HLAreportInteractionsSent" order="Receive"
                                     semantics="The interaction shall be sent by the RTI in             response to an interaction of class             HLAmanager.HLAfederate.             HLArequest.HLArequestInteractionsSent. It shall             report the number of interactions sent (by sent             class of the interactions) by the joined federate             since the beginning of the federation execution.             This count shall include interactions sent with             region. One interaction of this class shall be sent             by the RTI for each transportation type used."
-                                    sharing="Publish"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAtransportationName" name="HLAtransportation"
                                 semantics="Transportation type used in sending               interactions"/>
@@ -5495,7 +5495,7 @@
                   </interactionClass>
                   <interactionClass dimensions="Federate" name="HLAreportInteractionsReceived" order="Receive"
                                     semantics="The interaction shall be sent by the RTI in             response to an interaction of class             HLAmanager.HLAfederate.             HLArequest. HLArequestInteractionsReceived. It             shall report the number of interactions received             (by sent class of the interactions) by the joined             federate since the beginning of the federation             execution. One interaction of this class shall be             sent by the RTI for each transportation type             used."
-                                    sharing="Publish"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAtransportationName" name="HLAtransportation"
                                 semantics="Transportation type used in receiving               interactions"/>
@@ -5504,7 +5504,7 @@
                   </interactionClass>
                   <interactionClass dimensions="Federate" name="HLAreportObjectInstanceInformation" order="Receive"
                                     semantics="The interaction shall be sent by the RTI in             response to an interaction of class             HLAmanager.HLAfederate.             HLArequest.HLArequestObjectInstance Information.             It shall report on a single object instance and             portray the attributes of that object instance that             are owned by the joined federate, the registered             class of the object instance, and the known class             of the object instance at the joined federate."
-                                    sharing="Publish"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAhandle" name="HLAobjectInstance"
                                 semantics="Handle of the object instance for which the               interaction was sent"/>
@@ -5517,7 +5517,7 @@
                   </interactionClass>
                   <interactionClass dimensions="Federate" name="HLAreportException" order="Receive"
                                     semantics="The interaction shall be sent by the RTI when an             exception occurs as the result of a service             invocation at the indicated joined federate. This             interaction shall be sent only if the last             HLAmanager.HLAfederate.HLAadjust.             HLAsetExceptionReporting interaction changing the             HLAreportingState parameter sets the parameter to             HLAtrue, for the indicated joined federate."
-                                    sharing="Publish"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAunicodeString" name="HLAservice"
                                 semantics="Name of the service that raised the exception"/>
@@ -5527,7 +5527,7 @@
                   <interactionClass dimensions="Federate ServiceGroup" name="HLAreportServiceInvocation"
                                     order="Receive"
                                     semantics="This interaction shall be sent by the RTI whenever             an HLA service is invoked, either by the indicated             joined federate or by the RTI at the indicated             joined federate, and Service Reporting is Enabled             for the indicated joined federate. This interaction             shall always contain the arguments supplied by the             service invoker. If the service invocation was             successful, the interaction also shall contain the             value returned to the invoker (if the service             returns a value); otherwise, the interaction also             shall contain an indication of the exception that             shall be raised to the invoker."
-                                    sharing="Publish"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAunicodeString" name="HLAservice"
                                 semantics="Textual name of the service"/>
@@ -5544,7 +5544,7 @@
                   </interactionClass>
                   <interactionClass dimensions="Federate" name="HLAreportMOMexception" order="Receive"
                                     semantics="The interaction shall be sent by the RTI when one             the following occurs:             - a MOM interaction without all the necessary             parameters is sent or             - an interaction that imitates a federate's             invocation of an RTI service is sent and not all             of the service's pre-conditions are met."
-                                    sharing="Publish"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAunicodeString" name="HLAservice"
                                 semantics="Name of the service interaction that had a               problem or raised the exception"/>
@@ -5555,7 +5555,7 @@
                   </interactionClass>
                   <interactionClass dimensions="Federate" name="HLAreportSynchronizationPoints" order="Receive"
                                     semantics="The interaction shall be sent by the RTI in             response to an interaction of class             HLAmanager.HLAfederate.             HLArequest.HLArequestSynchronizationPoints. It             shall report the list of active synchronization             points in the federation execution."
-                                    sharing="Publish"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAsynchPointList" name="HLAsyncPoints"
                                 semantics="List of the in progress federation execution               synchronization points"/>
@@ -5563,7 +5563,7 @@
                   <interactionClass dimensions="Federate" name="HLAreportSynchronizationPointStatus"
                                     order="Receive"
                                     semantics="The interaction shall be sent by the RTI in             response to an interaction of class             HLAmanager.HLAfederate.             HLArequest.HLArequestSynchronizationPointStatus.             It shall report the status of a particular             synchronization point. This shall be a list that             includes each federate (and its synchronization             status) that is associated with a particular             synchronization point."
-                                    sharing="Publish"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAunicodeString" name="HLAsyncPointName"
                                 semantics="Name of a particular synchronization point"/>
@@ -5577,39 +5577,39 @@
                                  transportation="HLAreliable">
                   <interactionClass dimensions="NA" name="HLAresignFederationExecution" order="Receive"
                                     semantics="Cause the joined federate to resign from the             federation execution. A joined federate shall be             able to send this interaction anytime."
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAresignAction" name="HLAresignAction"
                                 semantics="Action that the RTI is to take in conjunction               with the resignation"/>
                   </interactionClass>
                   <interactionClass dimensions="NA" name="HLAsynchronizationPointAchieved" order="Receive"
                                     semantics="Mimic the federate's report of achieving a             synchronization point."
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAunicodeString" name="HLAlabel"
                                 semantics="Label associated with the synchronization             point"/>
                   </interactionClass>
                   <interactionClass dimensions="NA" name="HLAfederateSaveBegun" order="Receive"
                                     semantics="Mimic the federate's report of starting a save"
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable"/>
                   <interactionClass dimensions="NA" name="HLAfederateSaveComplete" order="Receive"
                                     semantics="Mimic the joined federate's report of completion             of a save. A joined federate shall be able to send             this interaction during a federation save."
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAboolean" name="HLAsuccessIndicator"
                                 semantics="Whether the save was successful"/>
                   </interactionClass>
                   <interactionClass dimensions="NA" name="HLAfederateRestoreComplete" order="Receive"
                                     semantics="Mimic the joined federate's report of completion             of a restore. A joined federate shall be able to             send this interaction during a federation             restore."
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAboolean" name="HLAsuccessIndicator"
                                 semantics="Whether the restore was successful"/>
                   </interactionClass>
                   <interactionClass dimensions="NA" name="HLApublishObjectClassAttributes" order="Receive"
                                     semantics="Set the joined federate's publication status of             attributes belonging to an object class"
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAhandle" name="HLAobjectClass"
                                 semantics="Object class for which the joined federate's               publication shall change"/>
@@ -5618,7 +5618,7 @@
                   </interactionClass>
                   <interactionClass dimensions="NA" name="HLAunpublishObjectClassAttributes" order="Receive"
                                     semantics="Cause the joined federate no longer to publish             attributes of an object class"
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAhandle" name="HLAobjectClass"
                                 semantics="Object class for which the joined federate's               unpublication shall change"/>
@@ -5627,21 +5627,21 @@
                   </interactionClass>
                   <interactionClass dimensions="NA" name="HLApublishInteractionClass" order="Receive"
                                     semantics="Set the joined federate's publication status of an             interaction class"
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAhandle" name="HLAinteractionClass"
                                 semantics="Interaction class that the joined federate               shall publish"/>
                   </interactionClass>
                   <interactionClass dimensions="NA" name="HLAunpublishInteractionClass" order="Receive"
                                     semantics="Cause the joined federate no longer to publish an             interaction class"
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAhandle" name="HLAinteractionClass"
                                 semantics="Interaction class that the joined federate               shall no longer publish"/>
                   </interactionClass>
                   <interactionClass dimensions="NA" name="HLAsubscribeObjectClassAttributes" order="Receive"
                                     semantics="Set the joined federate's subscription status of             attributes belonging to an object class"
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAhandle" name="HLAobjectClass"
                                 semantics="Object class for which the joined federate's               subscription shall change"/>
@@ -5652,7 +5652,7 @@
                   </interactionClass>
                   <interactionClass dimensions="NA" name="HLAunsubscribeObjectClassAttributes" order="Receive"
                                     semantics="Cause the joined federate no longer to subscribe to             attributes of an object class"
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAhandle" name="HLAobjectClass"
                                 semantics="Object class for which the joined federate's               subscription shall change"/>
@@ -5661,7 +5661,7 @@
                   </interactionClass>
                   <interactionClass dimensions="NA" name="HLAsubscribeInteractionClass" order="Receive"
                                     semantics="Set the joined federate's subscription status to an             interaction class."
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAhandle" name="HLAinteractionClass"
                                 semantics="Interaction class to which the federate shall               subscribe"/>
@@ -5670,14 +5670,14 @@
                   </interactionClass>
                   <interactionClass dimensions="NA" name="HLAunsubscribeInteractionClass" order="Receive"
                                     semantics="Cause the joined federate no longer to subscribe             to an interaction class"
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAhandle" name="HLAinteractionClass"
                                 semantics="Interaction class to which the joined federate               will no longer be subscribed"/>
                   </interactionClass>
                   <interactionClass dimensions="NA" name="HLAdeleteObjectInstance" order="Receive"
                                     semantics="Cause an object instance to be deleted from the             federation."
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAhandle" name="HLAobjectInstance"
                                 semantics="Handle of the object instance that is to be               deleted"/>
@@ -5688,14 +5688,14 @@
                   </interactionClass>
                   <interactionClass dimensions="NA" name="HLAlocalDeleteObjectInstance" order="Receive"
                                     semantics="Inform the RTI that it shall treat the specified             object instance as if thejoined federate did not             know about the object instance."
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAhandle" name="HLAobjectInstance"
                                 semantics="Handle of the object instance that is to be               deleted"/>
                   </interactionClass>
                   <interactionClass dimensions="NA" name="HLAchangeAttributeTransportationType" order="Receive"
                                     semantics="Change the transportation type used by the joined             federate when sending attributes belonging to the             object instance"
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAhandle" name="HLAobjectInstance"
                                 semantics="Handle of the object instance whose attribute               transportation type is to be changed"/>
@@ -5706,7 +5706,7 @@
                   </interactionClass>
                   <interactionClass dimensions="NA" name="HLAchangeInteractionTransportationType" order="Receive"
                                     semantics="Change the transportation type used by the joined             federate when sending a class of interaction"
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAhandle" name="HLAinteractionClass"
                                 semantics="Interaction class whose transportation type is               changed by this service invocation"/>
@@ -5716,7 +5716,7 @@
                   <interactionClass dimensions="NA" name="HLAunconditionalAttributeOwnershipDivestiture"
                                     order="Receive"
                                     semantics="Cause the ownership of attributes of an object             instance to be unconditionally divested by the             joined federate"
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAhandle" name="HLAobjectInstance"
                                 semantics="Handle of the object instance whose attributes'               ownership is to be divested"/>
@@ -5725,71 +5725,71 @@
                   </interactionClass>
                   <interactionClass dimensions="NA" name="HLAenableTimeRegulation" order="Receive"
                                     semantics="Cause the joined federate to begin regulating the             logical time of other joined federates"
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAtimeInterval" name="HLAlookahead"
                                 semantics="Lookahead to be used by the joined federate               while regulating other joined federates"/>
                   </interactionClass>
                   <interactionClass dimensions="NA" name="HLAdisableTimeRegulation" order="Receive"
                                     semantics="Cause the joined federate to cease regulating the             logical time of other joined federates"
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable"/>
                   <interactionClass dimensions="NA" name="HLAenableTimeConstrained" order="Receive"
                                     semantics="Cause the logical time of the joined federate to             begin being constrained by the logical times of             other joined federates"
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable"/>
                   <interactionClass dimensions="NA" name="HLAdisableTimeConstrained" order="Receive"
                                     semantics="Cause the logical time of the joined federate to             cease being constrained by the logical times of             other joined federates"
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable"/>
                   <interactionClass dimensions="NA" name="HLAtimeAdvanceRequest" order="Receive"
                                     semantics="Request an advance of the joined federate's             logical time on behalf of the joined federate, and             release zero or more messages for delivery to the             joined federate"
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAlogicalTime" name="HLAtimeStamp" semantics="Time stamp requested"/>
                   </interactionClass>
                   <interactionClass dimensions="NA" name="HLAtimeAdvanceRequestAvailable" order="Receive"
                                     semantics="Request an advance of the joined federate's             logical time, on behalf of the joined federate, and             release zero or more messages for delivery to the             joined federate"
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAlogicalTime" name="HLAtimeStamp" semantics="Time stamp requested"/>
                   </interactionClass>
                   <interactionClass dimensions="NA" name="HLAnextMessageRequest" order="Receive"
                                     semantics="Request the logical time of the joined federate to             be advanced to the time stamp of the next TSO             message that shall be delivered to the joined             federate, provided that the message shall have a             time stamp no greater than the logical time             specified in the request, and release zero             or more messages for delivery to the joined             federate."
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAlogicalTime" name="HLAtimeStamp" semantics="Time stamp requested"/>
                   </interactionClass>
                   <interactionClass dimensions="NA" name="HLAnextMessageRequestAvailable" order="Receive"
                                     semantics="Request the logical time of the joined federate to             be advanced to the time stamp of the next TSO             message that shall be delivered to the joined             federate, provided that the message shall have a             time stamp no greater than the logical time             specified in the request, and release zero or more             messages for delivery to the joined federate."
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAlogicalTime" name="HLAtimeStamp" semantics="Time stamp requested"/>
                   </interactionClass>
                   <interactionClass dimensions="NA" name="HLAflushQueueRequest" order="Receive"
                                     semantics="Request the logical time of the joined federate to             be advanced as far as possible, provided that the             time stamp is less than or equal to the logical             time specified in the request. All TSO and RO             messages shall be delivered to the joined             federate."
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAlogicalTime" name="HLAtimeStamp" semantics="Time stamp requested"/>
                   </interactionClass>
                   <interactionClass dimensions="NA" name="HLAenableAsynchronousDelivery" order="Receive"
                                     semantics="Cause the RTI to deliver receive-order messages to             the joined federate at any time, even if the joined             federate is time-constrained."
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable"/>
                   <interactionClass dimensions="NA" name="HLAdisableAsynchronousDelivery" order="Receive"
                                     semantics="When the joined federate is time-constrained,             cause the RTI to deliver receive-order messages to             the joined federate only when its time manager             state is Time Advancing."
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable"/>
                   <interactionClass dimensions="NA" name="HLAmodifyLookahead" order="Receive"
                                     semantics="Change the lookahead value used by the joined             federate"
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAtimeInterval" name="HLAlookahead"
                                 semantics="New value for lookahead"/>
                   </interactionClass>
                   <interactionClass dimensions="NA" name="HLAchangeAttributeOrderType" order="Receive"
                                     semantics="Change the ordering type used by the joined             federate when sending attributes belonging to the             object instance"
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAhandle" name="HLAobjectInstance"
                                 semantics="Handle of the object instance whose attribute               order type is to be changed"/>
@@ -5800,7 +5800,7 @@
                   </interactionClass>
                   <interactionClass dimensions="NA" name="HLAchangeInteractionOrderType" order="Receive"
                                     semantics="Change the order type used by the joined             federate when sending a class of interaction"
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAhandle" name="HLAinteractionClass"
                                 semantics="Interaction class whose order type is changed by               this service invocation"/>
@@ -5819,7 +5819,7 @@
                                  transportation="HLAreliable">
                   <interactionClass dimensions="NA" name="HLAsetSwitches" order="Receive"
                                     semantics="Set the values of several HLA switches."
-                                    sharing="Subscribe"
+                                    sharing="Neither"
                                     transportation="HLAreliable">
                      <parameter dataType="HLAswitch" name="HLAautoProvide"
                                 semantics="Set the federation-wide Auto Provide Switch to               the provided value (this parameter is required               only when a change of this switch value is               needed)."/>

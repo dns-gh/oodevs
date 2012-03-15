@@ -111,7 +111,7 @@
                     <dimensions/>
                     <transportation>HLAbestEffort</transportation>
                     <order>Receive</order>
-                    <sharing>Publish</sharing>
+                    <sharing>PublishSubscribe</sharing>
                     <semantics></semantics>
                 </attribute>
                 <attribute>
@@ -158,7 +158,7 @@
                         <dimensions/>
                         <transportation>HLAbestEffort</transportation>
                         <order>Receive</order>
-                        <sharing>Publish</sharing>
+                        <sharing>PublishSubscribe</sharing>
                         <semantics></semantics>
                     </attribute>
                     <attribute>
@@ -167,7 +167,7 @@
                         <dimensions/>
                         <transportation>HLAbestEffort</transportation>
                         <order>Receive</order>
-                        <sharing>Publish</sharing>
+                        <sharing>PublishSubscribe</sharing>
                         <semantics></semantics>
                     </attribute>
                     <attribute>
@@ -176,7 +176,7 @@
                         <dimensions/>
                         <transportation>HLAbestEffort</transportation>
                         <order>Receive</order>
-                        <sharing>Publish</sharing>
+                        <sharing>PublishSubscribe</sharing>
                         <semantics></semantics>
                     </attribute>
                     <attribute>
@@ -194,7 +194,7 @@
                         <dimensions/>
                         <transportation>HLAbestEffort</transportation>
                         <order>Receive</order>
-                        <sharing>Publish</sharing>
+                        <sharing>PublishSubscribe</sharing>
                         <semantics></semantics>
                     </attribute>
                     <attribute>
@@ -220,7 +220,7 @@
                         <dimensions/>
                         <transportation>HLAbestEffort</transportation>
                         <order>Receive</order>
-                        <sharing>Publish</sharing>
+                        <sharing>PublishSubscribe</sharing>
                         <semantics></semantics>
                     </attribute>
                     <attribute>
@@ -238,7 +238,7 @@
                         <dimensions/>
                         <transportation>HLAbestEffort</transportation>
                         <order>Receive</order>
-                        <sharing>Publish</sharing>
+                        <sharing>PublishSubscribe</sharing>
                         <semantics></semantics>
                     </attribute>
                     <attribute>
