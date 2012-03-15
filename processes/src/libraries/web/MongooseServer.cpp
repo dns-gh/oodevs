@@ -69,58 +69,6 @@ MongooseServer::~MongooseServer()
 
 namespace
 {
-
-#define COUNT_OF( X ) ( sizeof( X ) / sizeof*( X ) )
-
-typedef std::map< std::string, std::string > T_Values;
-
-// -----------------------------------------------------------------------------
-// Name: ParseParameters
-// Created: BAX 2012-03-08
-// -----------------------------------------------------------------------------
-T_Values ParseParameters( const mg_request_info* request )
-{
-    if( !request->query_string )
-        return T_Values();
-
-    T_Values args;
-    std::vector< std::string > tokens;
-    boost::split( tokens, request->query_string, boost::is_any_of("&"), boost::token_compress_on );
-    BOOST_FOREACH( const std::string& token, tokens )
-    {
-        std::vector< std::string > tuple;
-        boost::split( tuple, token, boost::is_any_of("="), boost::token_compress_on );
-        if( tuple.size() == 2 )
-            args.insert( std::make_pair( tuple[0], tuple[1] ) );
-    }
-    return args;
-}
-
-// -----------------------------------------------------------------------------
-// Name: ParseHeaders
-// Created: BAX 2012-03-08
-// -----------------------------------------------------------------------------
-T_Values ParseHeaders( const mg_request_info* request )
-{
-    T_Values args;
-    size_t count = std::min( static_cast< size_t >( request->num_headers ), COUNT_OF( request->http_headers ) );
-    for( size_t i = 0; i < count; ++i )
-        args.insert( std::make_pair( request->http_headers[i].name, request->http_headers[i].value ) );
-    return args;
-}
-
-// -----------------------------------------------------------------------------
-// Name: FindInto
-// Created: BAX 2012-03-08
-// -----------------------------------------------------------------------------
-boost::optional< std::string > FindInto( const T_Values& data, const std::string& name )
-{
-    T_Values::const_iterator it = data.find( name );
-    if( it == data.end() )
-        return boost::optional< std::string >();
-    return it->second;
-}
-
 // =============================================================================
 /** @class  MongooseRequest
     @brief  MongooseRequest definition
@@ -134,11 +82,11 @@ class MongooseRequest : public Request_ABC
     // Name: MongooseRequest::MongooseRequest
     // Created: BAX 2012-03-08
     // -----------------------------------------------------------------------------
-    MongooseRequest( const mg_request_info* request )
-        : method_    ( request->request_method )
-        , uri_       ( request->uri )
-        , parameters_( ParseParameters( request ) )
-        , headers_   ( ParseHeaders( request ) )
+    MongooseRequest( const mg_connection* link, const mg_request_info* request )
+        : link_   ( link )
+        , method_ ( request->request_method )
+        , uri_    ( request->uri )
+        , query_  ( request->query_string ? request->query_string : "" )
     {
         // NOTHING
     }
@@ -176,7 +124,11 @@ class MongooseRequest : public Request_ABC
     // -----------------------------------------------------------------------------
     boost::optional< std::string > GetParameter( const std::string& name ) const
     {
-        return FindInto( parameters_, name );
+        std::vector< char > buffer( 256 );
+        int len = mg_get_var( query_.data(), query_.size(), name.c_str(), &buffer[0], buffer.size() );
+        if( len == -1 )
+            return boost::none;
+        return std::string( &buffer[0], len );
     }
 
     // -----------------------------------------------------------------------------
@@ -185,16 +137,19 @@ class MongooseRequest : public Request_ABC
     // -----------------------------------------------------------------------------
     boost::optional< std::string > GetHeader( const std::string& name ) const
     {
-        return FindInto( headers_, name );
+        const char* reply = mg_get_header( link_, name.data() );
+        if( !reply )
+            return boost::none;
+        return reply;
     }
 
 private:
     //! @name Members
     //@{
+    const mg_connection* link_;
     const std::string method_;
     const std::string uri_;
-    const T_Values parameters_;
-    const T_Values headers_;
+    const std::string query_;
     //@}
 };
 
@@ -206,7 +161,7 @@ private:
 // -----------------------------------------------------------------------------
 void MongooseServer::Notify( mg_connection* link, const mg_request_info* mg_request )
 {
-    MongooseRequest request( mg_request );
+    MongooseRequest request( link, mg_request );
     const std::string reply = observer_.Notify( request );
     mg_write( link, reply.data(), reply.size() );
 }
