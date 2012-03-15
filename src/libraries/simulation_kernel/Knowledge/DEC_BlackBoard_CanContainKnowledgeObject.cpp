@@ -303,7 +303,7 @@ void DEC_BlackBoard_CanContainKnowledgeObject::UpdateUniversalObjects( const MIL
     const std::set< MIL_Object_ABC* >& universalObjects = MIL_EntityManager_ABC::GetSingleton().GetUniversalObjects();
     for( std::set< MIL_Object_ABC* >::const_iterator it = universalObjects.begin(); it != universalObjects.end(); ++it )
     {
-        if( !HasKnowledgeObject( **it ) )
+        if( !HasKnowledgeObject( **it ) && !(*it)->IsMarkedForDestruction() )
         {
             boost::shared_ptr< DEC_Knowledge_Object > knowledge = CreateKnowledgeObject( team, **it );
             knowledge->Update( PHY_PerceptionLevel::identified_ );
