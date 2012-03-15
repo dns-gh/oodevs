@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "Formatter.h"
+#include <assert.h>
 
 namespace kernel
 {
@@ -34,7 +35,14 @@ template< typename T >
 inline
 Displayer_ABC& Displayer_ABC::Display( const QString& name, const T& element )
 {
-    SubItem( name ).Display( element );
+    try
+    {
+        SubItem( name ).Display( element );
+    }
+    catch( std::runtime_error& e )
+    {
+        assert( !e.what() );
+    }
     return *this;
 }
 
