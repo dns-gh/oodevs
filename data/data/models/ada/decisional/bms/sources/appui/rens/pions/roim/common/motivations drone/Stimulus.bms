@@ -145,7 +145,7 @@ motivation_plugin.stimuli["STIM_PresenceZoneTirInterdit"] = function()
         local _continue = true
 do
                 local eValidite = nil
-                if( DEC_ConnaissanceObjet_Type( objet, eValidite ) == eTypeObjectZoneInterditeTir ) then
+                if( DEC_ConnaissanceObjet_Type( objet ) == eTypeObjectZoneInterditeTir ) then
                     SetStimulus( "STIM_PresenceZoneTirInterdit", 2 )
                 end
 

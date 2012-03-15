@@ -271,7 +271,7 @@ node "BEH_Objet_Automate_GEN_VerifierRenfortPourDetruireObjet"
         for _,pion in pairs( listePions or emptyTable ) do
         local _continue = true
 do
-                if( DEC_Automate_PionPeutDetruireObjet( pion, DEC_ConnaissanceObjet_Type( self._namedParams.objet, eValidite ) ) ) then
+                if( DEC_Automate_PionPeutDetruireObjet( pion, DEC_ConnaissanceObjet_Type( self._namedParams.objet ) ) ) then
                     do return end
 --[[// au moins un pion est capable
 ]]                end
@@ -351,7 +351,7 @@ node "BEH_Objet_Automate_GEN_VerifierRenfortPourContourner"
         for _,pion in pairs( listePions or emptyTable ) do
         local _continue = true
 do
-                if( DEC_Automate_PionPeutConstruireContournementObjet( pion, DEC_ConnaissanceObjet_Type( self._namedParams.objet, eValidite ) ) ) then
+                if( DEC_Automate_PionPeutConstruireContournementObjet( pion, DEC_ConnaissanceObjet_Type( self._namedParams.objet ) ) ) then
                     do return end
 --[[// au moins un pion est capable
 ]]                end

@@ -80,7 +80,7 @@ end
 ]]function S_Obj_Pion_GEN_VerifierMoyensPourFranchissement( site, type )
     local _returnValue = false
     local eValid = nil
-    if( DEC_ConnaissanceObjet_Type( site, eValid ) ~= eTypeObjectSiteFranchissement ) then
+    if( DEC_ConnaissanceObjet_Type( site ) ~= eTypeObjectSiteFranchissement ) then
         do
             _returnValue = true
                         do return _returnValue end

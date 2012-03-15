@@ -156,7 +156,7 @@ do
                                 rIterateur = rIterateur + 1
                 local eValide = nil--[[// Si on peut détruire l'objet
 ]]
-                local eType = DEC_ConnaissanceObjet_Type( objet, eValide )
+                local eType = DEC_ConnaissanceObjet_Type( objet )
                 if( DEC_Agent_PeutDetruireObjet( eType ) ) then
                     Activate( self.activations.BEH_Objet_Pion_GEN_Deminer, S_Force_DistancePt( S_Obj_Position( objet ) ), { objet, } )
                 else

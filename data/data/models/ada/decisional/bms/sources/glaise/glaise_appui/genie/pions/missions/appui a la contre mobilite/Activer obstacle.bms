@@ -46,7 +46,7 @@ local emptyTable = emptyTable
         --[[//-----------------------------------------------------------------
 ]]--[[// Verification de la faisabilité
 ]]--[[//-----------------------------------------------------------------
-]]if( not DEC_Agent_PeutActiverObjet( DEC_ConnaissanceObjet_Type( self._namedParams.mis.obstacle_, self.eValidite ) ) ) then
+]]if( not DEC_Agent_PeutActiverObjet( DEC_ConnaissanceObjet_Type( self._namedParams.mis.obstacle_ ) ) ) then
             do
                 Activate( self.activations.ACT_RC, 1, { eRC_AttenteRenforcement, } )
                                 do return end
@@ -145,7 +145,7 @@ self.done_BEH_Ordre_Inopine = function( self, _, v ) self.eEtatOrdreFinMission =
 self.done_ACT_Obj_Pion_GEN_ActiverObstacle = function( self, _, v ) self.eEtat = v[1] end
                     _continue = false
                 elseif switch_1 == eValoriserObstacle then
-                    if( not DEC_Agent_PeutValoriserObjet( DEC_ConnaissanceObjet_Type( self._namedParams.mis.obstacle_, self.eValidite ) ) ) then
+                    if( not DEC_Agent_PeutValoriserObjet( DEC_ConnaissanceObjet_Type( self._namedParams.mis.obstacle_ ) ) ) then
                         do
                             self.ePhaseMission = eFinMission
                                                         do return end
