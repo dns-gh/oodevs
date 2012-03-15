@@ -61,7 +61,6 @@ end
 integration.startApplyFireOnPoint = function( point, munition, interventionType )
   point[myself] = point[myself] or {}
   point[myself].firstTime = true
-  meKnowledge:RC( eRC_PremierCoupParti )
   point[myself].actionIndirectFire = DEC_StartTirIndirectSurPosition( munition, interventionType, point.source )
   actionCallbacks[ point[myself].actionIndirectFire ] = function( arg ) point[myself].eIndirectFireState = arg end
   return false
