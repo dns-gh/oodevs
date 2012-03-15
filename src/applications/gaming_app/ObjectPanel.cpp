@@ -98,7 +98,7 @@ ObjectPanel::ObjectPanel( QWidget* parent, gui::PanelStack_ABC& panel, kernel::C
 
     GetBuilder().AddGroup( tools::findTranslation( "Object", "Fire" ) )
                 .AddLabel( tools::findTranslation( "Object", "Fire class:" ) )
-                .AddLabel( tools::findTranslation( "Object", "Fire temperature:" ) );
+                .AddLabel( tools::findTranslation( "Object", "Max combustion energy:" ) );
 
     Displayer_ABC& infos = GetBuilder().Group( tools::findTranslation( "Object", "Information" ) );
     construction_  = dynamic_cast< gui::SpinBoxDisplayer* > ( & infos.Item( tools::findTranslation( "Object", "Construction:" ) ) );

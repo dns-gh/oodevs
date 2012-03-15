@@ -89,7 +89,7 @@ ObjectKnowledgePanel::ObjectKnowledgePanel( QWidget* parent, PanelStack_ABC& pan
 
     display_->AddGroup( tools::findTranslation( "Object", "Fire" ) )
                 .AddLabel( tools::findTranslation( "Object", "Fire class:" ) )
-                .AddLabel( tools::findTranslation( "Object", "Fire temperature:" ) );
+                .AddLabel( tools::findTranslation( "Object", "Max combustion energy:" ) );
 
     pPerceptionListView_ = new ListDisplayer< ObjectKnowledgePanel >( this, *this, factory );
     pPerceptionListView_->AddColumn( tools::translate( "ObjectKnowledgePanel", "Agent" ) );
