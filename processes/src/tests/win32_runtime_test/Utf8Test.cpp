@@ -34,6 +34,12 @@ namespace
     };
 }
 
+BOOST_AUTO_TEST_CASE( empty_string_converts )
+{
+    BOOST_CHECK( std::string()  == Utf8Convert( std::wstring() ) );
+    BOOST_CHECK( std::wstring() == Utf8Convert( std::string()  ) );
+}
+
 BOOST_AUTO_TEST_CASE( utf8_to_unicode_converts )
 {
     const std::string input( reinterpret_cast< const char* >( tamil_utf8 ), COUNT_OF( tamil_utf8 ) );
