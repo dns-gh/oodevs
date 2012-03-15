@@ -222,7 +222,7 @@
     <mobility default-speed="10" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
     <trafficability default="true" max-weight="100"/>
   </object>
-  <object geometry="point" name="poste tir" symbol="G*FPAP----****X" type="firing post">
+  <object geometry="point" name="poste tir" point-size="10" symbol="G*FPAP----****X" type="firing post">
     <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
@@ -234,21 +234,21 @@
     <mobility default-speed="5" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <protection geniePrepared="true" max-size="3"/>
   </object>
-  <object geometry="point" name="zone implantation canon" symbol="G*FPAP----****X" type="gun artillery deployment area">
+  <object geometry="point" name="zone implantation canon" point-size="10" symbol="G*FPAP----****X" type="gun artillery deployment area">
     <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <protection geniePrepared="false" max-size="1"/>
     <workable max-animator="1"/>
   </object>
-  <object geometry="point" name="zone implantation cobra" symbol="G*FPAP----****X" type="cobra deployment area">
+  <object geometry="point" name="zone implantation cobra" point-size="10" symbol="G*FPAP----****X" type="cobra deployment area">
     <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <protection geniePrepared="false" max-size="1"/>
     <workable max-animator="1"/>
   </object>
-  <object geometry="point" name="zone implantation lrm" symbol="G*FPAP----****X" type="mrls deployment area">
+  <object geometry="point" name="zone implantation lrm" point-size="10" symbol="G*FPAP----****X" type="mrls deployment area">
     <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
@@ -270,11 +270,11 @@
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
     <propagation model="cloud"/>
   </object>
-  <object geometry="point" name="plot ravitaillement" symbol="G*SPPR----****X" type="logistic support area">
+  <object geometry="point" name="plot ravitaillement" point-size="10" symbol="G*SPPR----****X" type="logistic support area">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <supply/>
   </object>
-  <object geometry="point" name="site decontamination" symbol="G*MPNDP---****X" type="decontamination site">
+  <object geometry="point" name="site decontamination" point-size="50" symbol="G*MPNDP---****X" type="decontamination site">
     <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <decontamination/>
@@ -369,7 +369,7 @@
     <fire-forbidden/>
     <interaction-height height="6000"/>
   </object>
-  <object geometry="point" name="zone implantation mortier" symbol="G*FPAP----****X" type="mortar deployment area">
+  <object geometry="point" name="zone implantation mortier" point-size="10" symbol="G*FPAP----****X" type="mortar deployment area">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <protection geniePrepared="false" max-size="1"/>
     <workable max-animator="1"/>
@@ -381,7 +381,7 @@
     <mobility default-speed="10" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
     <trafficability default="true" max-weight="100"/>
   </object>
-  <object geometry="point" name="installation" symbol="S*GPI-----*****" type="installation">
+  <object geometry="point" name="installation" point-size="10" symbol="S*GPI-----*****" type="installation">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <interaction-height height="2"/>
   </object>
@@ -409,19 +409,19 @@
   <object geometry="polygon" name="mouvement population" symbol="" type="population moving">
     <interaction-height height="2"/>
   </object>
-  <object geometry="point" name="station de metro" symbol="G*EXIT*********" type="metro station">
+  <object geometry="point" name="station de metro" point-size="10" symbol="G*EXIT*********" type="metro station">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <mobility default-speed="5" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <underground-network/>
     <universal/>
   </object>
-  <object geometry="point" name="noeud de reseau de ressource" symbol="G*SPPR----****X" type="ressource network element">
+  <object geometry="point" name="noeud de reseau de ressource" point-size="10" symbol="G*SPPR----****X" type="ressource network element">
     <constructor default-consumption-mode="ArretMoteurAllume" unit-type="raw"/>
     <resources/>
     <universal/>
     <workable max-animator="3"/>
   </object>
-  <object geometry="point" name="souterrain egout" symbol="G*EXIT*********" type="sewer entry">
+  <object geometry="point" name="souterrain egout" point-size="10" symbol="G*EXIT*********" type="sewer entry">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <mobility default-speed="5" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <underground-network/>
@@ -463,4 +463,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="0171608642" -->
+<!-- signature="3024941830" -->
