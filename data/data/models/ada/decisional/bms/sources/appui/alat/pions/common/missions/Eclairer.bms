@@ -55,6 +55,9 @@ include "bit.lua"
                 end
 
                 DEC_Copie_Point( self._namedParams.mission.pointRegroupement_, myself.pointRegroupement_ )
+                if not DEC_Agent_EstDansLeFuseau() then
+                    self.pointFinFuseau = self._namedParams.mission.pointRegroupement_
+                end
             end
         end
 
