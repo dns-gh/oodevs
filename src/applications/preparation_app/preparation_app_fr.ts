@@ -926,8 +926,8 @@
         <translation>Pas de fichier chargé</translation>
     </message>
     <message>
-        <source>New ORBAT</source>
-        <translation>Nouvel ODB</translation>
+        <source>Untitled</source>
+        <translation>Sans titre</translation>
     </message>
     <message>
         <source>Preparation - [%1]</source>

@@ -708,7 +708,7 @@ void MainWindow::SetWindowTitle( bool needsSaving )
     QString filename = tr( "No file loaded" );
     if( model_.IsLoaded() )
     {
-        filename = model_.GetName().isEmpty() ? tr( "New ORBAT" ) : model_.GetName();
+        filename = model_.GetName().isEmpty() ? tr( "Untitled" ) : model_.GetName();
         if( needsSaving )
             filename += "*";
     }

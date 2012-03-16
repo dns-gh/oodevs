@@ -926,7 +926,7 @@
         <translation type="unfinished">No hay archivo cargado</translation>
     </message>
     <message>
-        <source>New ORBAT</source>
+        <source>Untitled</source>
         <translation type="unfinished">Nuevo ORBAT</translation>
     </message>
     <message>
