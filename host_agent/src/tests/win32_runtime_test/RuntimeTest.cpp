@@ -68,6 +68,19 @@ namespace
         lpProcessInformation->hThread = thread;
         return true;
     }
+
+    void ExpectOpenProcess( MockApi& api, HANDLE handle, int pid )
+    {
+        MOCK_EXPECT( api.OpenProcess ).once().with( mock::any, false, pid ).returns( handle );
+        MOCK_EXPECT( api.GetProcessName ).once().calls( boost::phoenix::bind( &FakeGetProcessName, _1, _2, _3, handle ) );
+        MOCK_EXPECT( api.CloseHandle ).once().with( handle ).returns( true );
+    }
+
+    void CheckProcess( MockApi& api, const Process_ABC& process, int pid, HANDLE handle )
+    {
+        BOOST_CHECK_EQUAL( process.GetPid(),  pid );
+        BOOST_CHECK_EQUAL( process.GetName(), boost::lexical_cast< std::string >( handle ) );
+    }
 }
 
 BOOST_AUTO_TEST_CASE( runtime_process_lists )
@@ -77,17 +90,21 @@ BOOST_AUTO_TEST_CASE( runtime_process_lists )
     int size = 64;
     MOCK_EXPECT( api.EnumProcesses ).once().calls( boost::phoenix::bind( &FakeEnumProcesses, _1, _2, _3, size ) );
     for( int i = 0; i < size; ++i )
-    {
-        HANDLE handle = reinterpret_cast< HANDLE >( 0xDEADBEEF + i );
-        MOCK_EXPECT( api.OpenProcess ).once().with( mock::any, false, i + 1 ).returns( handle );
-        MOCK_EXPECT( api.GetProcessName ).once().calls( boost::phoenix::bind( &FakeGetProcessName, _1, _2, _3, handle ) );
-        MOCK_EXPECT( api.CloseHandle ).once().with( handle ).returns( true );
-    }
+        ExpectOpenProcess( api, reinterpret_cast< HANDLE >( 0xDEADBEEF + i ), i + 1 );
     Runtime::T_Processes list = runtime.GetProcesses();
     BOOST_CHECK_EQUAL( static_cast< size_t >( size ), list.size() );
     int idx = size >> 1;
-    BOOST_CHECK_EQUAL( list[ idx ]->GetPid(), idx + 1 );
-    BOOST_CHECK_EQUAL( list[ idx ]->GetName(), boost::lexical_cast< std::string >( reinterpret_cast< HANDLE >( 0xDEADBEEF + idx ) ) );
+    CheckProcess( api, *list[ idx ], idx + 1, reinterpret_cast< HANDLE >( 0xDEADBEEF + idx ) );
+}
+
+BOOST_AUTO_TEST_CASE( runtime_process_gets )
+{
+    MockApi api;
+    Runtime runtime( api );
+    const int pid = 1337;
+    ExpectOpenProcess( api, dummy, pid );
+    boost::shared_ptr< Process_ABC > ptr = runtime.GetProcess( pid );
+    CheckProcess( api, *ptr, pid, dummy );
 }
 
 BOOST_AUTO_TEST_CASE( runtime_process_starts )

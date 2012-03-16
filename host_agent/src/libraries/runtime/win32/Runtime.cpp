@@ -77,6 +77,15 @@ Runtime::T_Processes Runtime::GetProcesses() const
     return list;
 }
 
+// -----------------------------------------------------------------------------
+// Name: Runtime::GetProcess
+// Created: BAX 2012-03-16
+// -----------------------------------------------------------------------------
+boost::shared_ptr< Process_ABC > Runtime::GetProcess( int pid ) const
+{
+    return boost::make_shared< Process >( api_, pid );
+}
+
 namespace
 {
     // -----------------------------------------------------------------------------

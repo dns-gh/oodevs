@@ -41,6 +41,7 @@ public:
     //! @name Operations
     //@{
     virtual T_Processes GetProcesses() const = 0;
+    virtual boost::shared_ptr< Process_ABC > GetProcess( int pid ) const = 0;
     virtual boost::shared_ptr< Process_ABC > Start( const std::string& cmd,
                                                     const std::vector< std::string >& args,
                                                     const std::string& run ) const = 0;
