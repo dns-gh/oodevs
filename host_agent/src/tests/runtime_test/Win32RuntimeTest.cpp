@@ -76,7 +76,7 @@ namespace
         MOCK_EXPECT( api.CloseHandle ).once().with( handle ).returns( true );
     }
 
-    void CheckProcess( MockApi& api, const Process_ABC& process, int pid, HANDLE handle )
+    void CheckProcess( const Process_ABC& process, int pid, HANDLE handle )
     {
         BOOST_CHECK_EQUAL( process.GetPid(),  pid );
         BOOST_CHECK_EQUAL( process.GetName(), boost::lexical_cast< std::string >( handle ) );
@@ -94,7 +94,7 @@ BOOST_AUTO_TEST_CASE( runtime_process_lists )
     Runtime::T_Processes list = runtime.GetProcesses();
     BOOST_CHECK_EQUAL( static_cast< size_t >( size ), list.size() );
     int idx = size >> 1;
-    CheckProcess( api, *list[ idx ], idx + 1, reinterpret_cast< HANDLE >( 0xDEADBEEF + idx ) );
+    CheckProcess( *list[ idx ], idx + 1, reinterpret_cast< HANDLE >( 0xDEADBEEF + idx ) );
 }
 
 BOOST_AUTO_TEST_CASE( runtime_process_gets )
@@ -104,7 +104,7 @@ BOOST_AUTO_TEST_CASE( runtime_process_gets )
     const int pid = 1337;
     ExpectOpenProcess( api, dummy, pid );
     boost::shared_ptr< Process_ABC > ptr = runtime.GetProcess( pid );
-    CheckProcess( api, *ptr, pid, dummy );
+    CheckProcess( *ptr, pid, dummy );
 }
 
 BOOST_AUTO_TEST_CASE( runtime_process_starts )
