@@ -600,6 +600,7 @@ public:
         eRC_DecrochageFaceAIncendie,
         eRC_Capture,
         eRC_TakeHostage,
+        eRC_AttenteOrdrePoursuivreConvoi,
         eLast
     };
     //@}

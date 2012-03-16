@@ -468,7 +468,8 @@ eRC_CannotDismount = 449
 eRC_DecrochageFaceAIncendie = 450
 eRC_Capture = 451
 eRC_TakeHostage = 452
-eNbr = 453
+eRC_AttenteOrdrePoursuivreConvoi = 453
+eNbr = 454
 
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : delai (float),

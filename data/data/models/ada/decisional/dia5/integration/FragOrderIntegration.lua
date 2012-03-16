@@ -77,6 +77,7 @@ integration.mustBePropagate = function( self )
          orderType == "Rep_OrderConduite_Interrompre" or
          orderType == "Rep_OrderConduite_AttendreSePoster" or
          orderType == "Rep_OrderConduite_Poursuivre" or
+         orderType == "Rep_OrderConduite_PoursuivreConvoi" or
          orderType == "Rep_OrderConduite_PasserEnSilenceRadar" or
          orderType == "Rep_OrderConduite_ArreterSilenceRadar" or
          orderType == "Rep_OrderConduite_PasserEnSilenceRadio" or

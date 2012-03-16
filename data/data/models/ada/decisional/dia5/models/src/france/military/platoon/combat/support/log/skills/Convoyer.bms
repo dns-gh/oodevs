@@ -7,10 +7,23 @@ end,
 
 create = function( self )
     self.arrived = false
+    self.fragOrderReceived = false
+    self.sendCR = false
 end,
 
  activate = function( self )
     self.ePhase = integration.getActionCouranteConvoi()
+
+    if integration.query.getFirstFragOrderFromType( "Rep_OrderConduite_PoursuivreConvoi" )  then
+        self.fragOrderReceived = true
+    end
+    
+    local continueConvoy = self.fragOrderReceived  or F_Pion_GetpionEnEscorte( meKnowledge.source ) 
+    
+    if self.ePhase == eConvoyerAction_MoveToSupplier or self.ePhase == eConvoyerAction_MoveToSupplyRecipient then
+        self.sendCR = true
+    end
+    
     -- Action de chargement
     if self.ePhase == eConvoyerAction_Load then
         self.arrived = false
@@ -20,24 +33,26 @@ end,
         self.arrived = false
         Activate( skill.nodes.RC, 1, { RC = eRC_Convoi_DechargementEnCours, } )
     -- Action de déplacement vers le ravitailleur
-    elseif self.ePhase == eConvoyerAction_MoveToSupplier then
+    elseif self.ePhase == eConvoyerAction_MoveToSupplier and continueConvoy then
         Activate( skill.nodes.RC, 1, { RC = eRC_Convoi_DeplacementVersPointChargement, } )
         self.ravitailleur = CreateKnowledge( sword.military.world.PlatoonAlly, integration.getRavitailleur() )
         Activate( skill.links.moveAlong, 1, { entities = { self.ravitailleur:getMyPosition()} } )
         if( self.arrived ) then
             self.arrived = false
-            integration.deplacementVersRavitailleurEffectue();
+            self.fragOrderReceived = false
+            integration.deplacementVersRavitailleurEffectue()
         end
     -- Action de déplacement vers le destinataire du convoi
-     elseif self.ePhase == eConvoyerAction_MoveToSupplyRecipient then
+     elseif self.ePhase == eConvoyerAction_MoveToSupplyRecipient and continueConvoy then     
         Activate( skill.nodes.RC, 1, { RC = eRC_Convoi_DeplacementVersPointDechargement, } )
         self.destinataireCourant = CreateKnowledge( sword.military.world.PlatoonAlly, integration.getDestinataireCourant() )
         Activate( skill.links.moveAlong, 1, { entities = { self.destinataireCourant:getMyPosition()} } )
         if( self.arrived ) then
             self.arrived = false
+            self.fragOrderReceived = false
             integration.deplacementVersDestinataireEffectue()
-         end
-    -- Action de déplacement vers le transporteur qui a prêter les véhicules
+        end
+    -- Action de déplacement vers le transporteur qui a prêté les véhicules
      elseif self.ePhase == eConvoyerAction_MoveToTransportersProvider then
         Activate( skill.nodes.RC, 1, { RC = eRC_Convoi_Retour, } )
         self.transporteur = CreateKnowledge( sword.military.world.PlatoonAlly, integration.getTransporter() )
@@ -47,6 +62,12 @@ end,
             integration.deplacementVersTransporteurEffectue()
         end
      end
+
+    if self.sendCR then
+        Activate( skill.nodes.RC, 1, { RC = eRC_AttenteOrdrePoursuivreConvoi, } )
+        self.sendCR = false
+    end
+
  end,
  
  destroy = function( self )
