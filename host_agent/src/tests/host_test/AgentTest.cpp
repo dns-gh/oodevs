@@ -26,6 +26,7 @@ namespace
     MOCK_BASE_CLASS( MockRuntime, Runtime_ABC )
     {
         MOCK_METHOD( GetProcesses, 0 );
+        MOCK_METHOD( GetProcess, 1 );
         MOCK_METHOD( Start, 3 );
     };
 
@@ -57,7 +58,7 @@ namespace
         RuntimeFixture()
             : processes( FakeProcesses( size ) )
         {
-            MOCK_EXPECT( runtime.GetProcesses ).once().returns( processes );
+            MOCK_EXPECT( runtime.GetProcesses ).returns( processes );
         }
         Runtime_ABC::T_Processes processes;
         MockRuntime runtime;
@@ -123,7 +124,9 @@ BOOST_FIXTURE_TEST_CASE( agent_starts, Fixture< 5 > )
 BOOST_FIXTURE_TEST_CASE( agent_stops, Fixture< 16 > )
 {
     const int pid = 7;
-    MockProcess& process = dynamic_cast< MockProcess& >( *processes[ pid - 1 ] );
+    boost::shared_ptr< Process_ABC > ptr = processes[ pid - 1 ];
+    MockProcess& process = dynamic_cast< MockProcess& >( *ptr );
+    MOCK_EXPECT( runtime.GetProcess ).once().with( pid ).returns( ptr );
     MOCK_EXPECT( process.Kill ).once().with( mock::any ).returns( true );
     CheckReply( agent.Stop( pid ), "{ \"pid\" : 7, \"name\" : \"process_7\" }" );
 }

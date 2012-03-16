@@ -10,18 +10,7 @@
 #include "Agent.h"
 #include <runtime/Process_ABC.h>
 #include <runtime/Runtime_ABC.h>
-#include <boost/foreach.hpp>
 #include <boost/format.hpp>
-
-#ifdef _MSC_VER
-#   pragma warning( push )
-#   pragma warning( disable : 4244 )
-#endif
-#include <boost/thread/locks.hpp>
-#include <boost/thread/shared_mutex.hpp>
-#ifdef _MSC_VER
-#   pragma warning( pop )
-#endif
 
 using namespace host;
 using namespace process;
@@ -32,10 +21,8 @@ using namespace process;
 // -----------------------------------------------------------------------------
 Agent::Agent( const Runtime_ABC& runtime )
     : runtime_( runtime )
-    , access_ ( new boost::shared_mutex() )
 {
-    BOOST_FOREACH( Runtime_ABC::T_Processes::value_type ptr, runtime_.GetProcesses() )
-        processes_.insert( std::make_pair( ptr->GetPid(), ptr ) );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -78,28 +65,15 @@ namespace
 // -----------------------------------------------------------------------------
 Reply Agent::List( int offset, int limit ) const
 {
+    Runtime_ABC::T_Processes processes = runtime_.GetProcesses();
+    offset = Clip< int >( offset, 0, static_cast< int >( processes.size() ) );
+    limit  = Clip< int >( limit, 0, static_cast< int >( processes.size() ) - offset );
+    Runtime_ABC::T_Processes::const_iterator it = processes.begin();
+    std::advance( it , offset );
     std::string data;
-
-    boost::shared_lock< boost::shared_mutex > lock( *access_ );
-    T_Processes::const_iterator it = processes_.begin();
-    offset = Clip< int >( offset, 0, static_cast< int >( processes_.size() ) );
-    limit  = Clip< int >( limit, 0, static_cast< int >( processes_.size() ) - offset );
-    std::advance( it, offset );
-    for( int idx = 0; idx < limit; ++idx, ++it )
-        data += ( idx ? ", " : "" ) + ToJson( *it->second );
-    lock.unlock();
-
+    for( int i = 0; i < limit; ++i, ++it )
+        data += ( i ? ", " : "" ) + ToJson( **it );
     return Reply( "[" + data + "]" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::AddProcess
-// Created: BAX 2012-03-07
-// -----------------------------------------------------------------------------
-void Agent::AddProcess( boost::shared_ptr< Process_ABC > ptr )
-{
-    boost::lock_guard< boost::shared_mutex > lock( *access_ );
-    processes_.insert( std::make_pair( ptr->GetPid(), ptr ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,25 +85,7 @@ Reply Agent::Start( const std::string& app, const std::vector< std::string >& ar
     boost::shared_ptr< Process_ABC > ptr = runtime_.Start( app, args, run );
     if( !ptr )
         return Reply( "Unable to create process", false ); // TODO Add LastError()
-
-    AddProcess( ptr );
     return Reply( ToJson( *ptr ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::Extract
-// Created: BAX 2012-03-12
-// -----------------------------------------------------------------------------
-boost::shared_ptr< Process_ABC > Agent::Extract( int pid )
-{
-    boost::lock_guard< boost::shared_mutex > lock( *access_ );
-    T_Processes::iterator it = processes_.find( pid );
-    if( it == processes_.end() )
-        return boost::shared_ptr< Process_ABC >();
-
-    boost::shared_ptr< Process_ABC > reply = it->second;
-    processes_.erase( it );
-    return reply;
 }
 
 // -----------------------------------------------------------------------------
@@ -138,7 +94,7 @@ boost::shared_ptr< Process_ABC > Agent::Extract( int pid )
 // -----------------------------------------------------------------------------
 Reply Agent::Stop( int pid )
 {
-    boost::shared_ptr< Process_ABC > ptr = Extract( pid );
+    boost::shared_ptr< Process_ABC > ptr = runtime_.GetProcess( pid );
     if( !ptr )
         return Reply( ( boost::format( "Unable to find process %1%" ) % pid ).str(), false );
 

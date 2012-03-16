@@ -11,17 +11,9 @@
 #define AGENT_H
 
 #include "Agent_ABC.h"
-#include <boost/shared_ptr.hpp>
-#include <map>
-
-namespace boost
-{
-    class shared_mutex;
-}
 
 namespace process
 {
-    class Process_ABC;
     class Runtime_ABC;
 }
 
@@ -50,23 +42,9 @@ public:
     //@}
 
 private:
-    //! @name Private typedef helpers
-    //@{
-    typedef std::map< int, boost::shared_ptr< process::Process_ABC > > T_Processes;
-    //@}
-
-    //! @name Private operations
-    //@{
-    boost::shared_ptr< process::Process_ABC > Extract( int pid );
-    void AddProcess( boost::shared_ptr< process::Process_ABC > ptr );
-    //@}
-
-private:
     //! @name Member data
     //@{
     const process::Runtime_ABC& runtime_;
-    std::auto_ptr< boost::shared_mutex > access_;
-    T_Processes processes_;
     //@}
 };
 
