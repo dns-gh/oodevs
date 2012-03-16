@@ -143,7 +143,11 @@
           <formation color="0x647dff" id="109" level="iii" name="ZRAV">
             <automat color="0x647dff" engaged="true" id="118" knowledge-group="7" name="SH [118]" type="LOG . Secteur approvisionnement (SH)">
               <unit color="0x647dff" command-post="true" id="119" name="LOG . PC LOG BLD Secteur Ravitaillement" position="29TNF3251065928" type="LOG . PC LOG BLD Secteur Ravitaillement"/>
-              <unit color="0x647dff" command-post="false" id="120" name="LOG . Groupe Appro Vivre Eau" position="29TNF3301365432" type="LOG . Groupe Appro Vivre Eau"/>
+              <unit color="0x647dff" command-post="false" id="120" name="LOG . Groupe Appro Vivre Eau" position="29TNF3301365432" type="LOG . Groupe Appro Vivre Eau">
+                <stocks>
+                  <resource name="EAU MINERALE 1L T 1" quantity="2000"/>
+                </stocks>
+              </unit>
             </automat>
             <automat color="0x647dff" engaged="true" id="129" knowledge-group="7" name="MUN [129]" type="LOG . Secteur munitions">
               <unit color="0x647dff" command-post="true" id="130" name="LOG . PC LOG BLD Secteur Ravitaillement" position="29TNF3228765676" type="LOG . PC LOG BLD Secteur Ravitaillement"/>
@@ -406,4 +410,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="0728987521" -->
+<!-- signature="3579964501" -->
