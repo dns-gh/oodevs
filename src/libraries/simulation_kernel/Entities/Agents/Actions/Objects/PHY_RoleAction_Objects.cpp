@@ -649,7 +649,7 @@ bool PHY_RoleAction_Objects::CanDestroyWithReinforcement( const MIL_ObjectType_A
 // -----------------------------------------------------------------------------
 bool PHY_RoleAction_Objects::CanDemineWithReinforcement( const MIL_ObjectType_ABC& object, const TER_Localisation& localisation ) const
 {
-    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eDemine, object, &localisation, false );
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( owner_, eDemine, object, &localisation, false );
     return capabilityComputer.HasCapability();
 }
 
