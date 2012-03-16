@@ -89,6 +89,7 @@ private:
     int activationTime_;
     int activityTime_;
     int endActivity_;
+    unsigned int creationTime_;
     //@}
 };
 

@@ -1105,6 +1105,7 @@ message ObjectAttributeObstacle {
    optional bool                              activated       = 2; //!< Whether the obstacle is activated or not
    optional int32                             activation_time = 3; //!< The activation time @todo unit ?
    optional int32                             activity_time   = 4; //!< The activity time @todo unit ?
+   optional uint32                            creation_time   = 5; //!< The creation time
 }
 
 /** @struct ObjectAttributeLifeTime

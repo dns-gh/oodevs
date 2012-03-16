@@ -9,10 +9,11 @@
 
 #include "simulation_kernel_pch.h"
 #include "ObstacleAttribute.h"
+#include "MIL_AgentServer.h"
 #include "Object.h"
-#include "Knowledge/DEC_Knowledge_Object.h"
 #include "CheckPoints/MIL_CheckPointInArchive.h"
 #include "CheckPoints/MIL_CheckPointOutArchive.h"
+#include "Knowledge/DEC_Knowledge_Object.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -31,6 +32,7 @@ ObstacleAttribute::ObstacleAttribute()
     , activationTime_( 0 )
     , activityTime_  ( 0 )
     , endActivity_   ( 0 )
+    , creationTime_  ( MIL_AgentServer::GetWorkspace().GetRealTime() )
 {
     // NOTHING
 }
@@ -45,6 +47,7 @@ ObstacleAttribute::ObstacleAttribute( bool reserved )
     , activationTime_( 0 )
     , activityTime_  ( 0 )
     , endActivity_   ( 0 )
+    , creationTime_  ( MIL_AgentServer::GetWorkspace().GetRealTime() )
 {
     // NOTHING
 }
@@ -79,6 +82,7 @@ ObstacleAttribute::ObstacleAttribute( xml::xistream& xis )
     , bActivated_    ( xis.attribute< bool >( "activated", false ) )
     , activationTime_( 0 )
     , activityTime_  ( 0 )
+    , creationTime_  (  MIL_AgentServer::GetWorkspace().GetRealTime() )
 {
     xis >> xml::optional
         >> xml::start( "activation-time" )
@@ -103,6 +107,7 @@ ObstacleAttribute::ObstacleAttribute( const sword::MissionParameter_Value& attri
     , activationTime_( attributes.list( 3 ).quantity() )
     , activityTime_  ( 0 )
     , endActivity_   ( 0 )
+    , creationTime_  ( MIL_AgentServer::GetWorkspace().GetRealTime() )
 {
     if( attributes.list_size() > 4 )
         activityTime_  = attributes.list( 4 ).quantity();
@@ -131,7 +136,8 @@ template < typename Archive > void ObstacleAttribute::serialize( Archive& file, 
          & bActivated_
          & activationTime_
          & activityTime_
-         & endActivity_;
+         & endActivity_
+         & creationTime_;
 }
 
 // -----------------------------------------------------------------------------
@@ -258,6 +264,7 @@ void ObstacleAttribute::SendFullState( sword::ObjectAttributes& asn ) const
     asn.mutable_obstacle()->set_activated( bActivated_ );
     asn.mutable_obstacle()->set_activation_time( activationTime_ );
     asn.mutable_obstacle()->set_activity_time( activityTime_ );
+    asn.mutable_obstacle()->set_creation_time( creationTime_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -272,6 +279,7 @@ bool ObstacleAttribute::SendUpdate( sword::ObjectAttributes& asn ) const
         asn.mutable_obstacle()->set_type( obstacle_ );
         asn.mutable_obstacle()->set_activation_time( activationTime_ );
         asn.mutable_obstacle()->set_activity_time( activityTime_ );
+        asn.mutable_obstacle()->set_creation_time( creationTime_ );
         Reset( eOnUpdate );
         return true;
     }
@@ -313,6 +321,7 @@ ObstacleAttribute& ObstacleAttribute::operator=( const ObstacleAttribute& rhs )
     activationTime_ = rhs.activationTime_;
     activityTime_ = rhs.activityTime_;
     endActivity_ = rhs.endActivity_;
+    creationTime_ = rhs.creationTime_;
     return *this;
 }
 
@@ -354,6 +363,11 @@ bool ObstacleAttribute::Update( const ObstacleAttribute& rhs )
     {
         NotifyAttributeUpdated( eOnUpdate );
         activityTime_ = rhs.activityTime_;
+    }
+    if( creationTime_ != rhs.creationTime_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate );
+        creationTime_ = rhs.creationTime_;
     }
     return NeedUpdate( eOnUpdate );
 }
