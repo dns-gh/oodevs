@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <objects model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.0.0/physical/Objects.xsd">
-  <object name="bouchon mines" type="mines">
+  <object name="bouchon mines" point-size="50" type="mines">
     <geometries>
       <geometry symbol="G*MPOMC---****X" type="point"/>
     </geometries>
@@ -23,7 +23,6 @@
       <terrain type="bridge" value="8"/>
       <terrain type="suburb" value="7"/>
     </heuristic>
-    <interact-with-enemy/>
     <interaction-height height="2"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.1"/>
@@ -91,12 +90,11 @@
       <terrain type="highway" value="2"/>
       <terrain type="main road" value="5"/>
     </heuristic>
-    <interact-with-enemy/>
     <interaction-height height="2"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
   </object>
-  <object name="abattis" type="abattis">
+  <object name="abattis" point-size="75" type="abattis">
     <geometries>
       <geometry symbol="G*MPOS----****X" type="point"/>
     </geometries>
@@ -122,12 +120,11 @@
       <terrain type="country road" value="3"/>
       <terrain type="secondary road" value="1"/>
     </heuristic>
-    <interact-with-enemy/>
     <interaction-height height="2"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
   </object>
-  <object name="barricade" type="barricade">
+  <object name="barricade" point-size="75" type="barricade">
     <geometries>
       <geometry symbol="G*MPORC---****X" type="point"/>
     </geometries>
@@ -188,7 +185,7 @@
     <population-filter density="0.5"/>
     <trafficability default="true" max-weight="0.1"/>
   </object>
-  <object name="destruction route" type="road destruction">
+  <object name="destruction route" point-size="75" type="road destruction">
     <geometries>
       <geometry symbol="G*MPORC---****X" type="point"/>
     </geometries>
@@ -217,7 +214,7 @@
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
   </object>
-  <object name="destruction pont" type="bridge destruction">
+  <object name="destruction pont" point-size="75" type="bridge destruction">
     <geometries>
       <geometry symbol="G*MPORC---****X" type="point"/>
     </geometries>
@@ -253,7 +250,7 @@
     <mobility default-speed="10" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
     <trafficability default="true" max-weight="100"/>
   </object>
-  <object name="poste tir" type="firing post">
+  <object name="poste tir" point-size="10" type="firing post">
     <geometries>
       <geometry symbol="G*FPAP----****X" type="point"/>
     </geometries>
@@ -271,7 +268,7 @@
     <mobility default-speed="5" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <protection geniePrepared="true" max-size="3"/>
   </object>
-  <object name="zone implantation canon" type="gun artillery deployment area">
+  <object name="zone implantation canon" point-size="10" type="gun artillery deployment area">
     <geometries>
       <geometry symbol="G*FPAP----****X" type="point"/>
     </geometries>
@@ -281,7 +278,7 @@
     <protection geniePrepared="false" max-size="1"/>
     <workable max-animator="1"/>
   </object>
-  <object name="zone implantation cobra" type="cobra deployment area">
+  <object name="zone implantation cobra" point-size="10" type="cobra deployment area">
     <geometries>
       <geometry symbol="G*FPAP----****X" type="point"/>
     </geometries>
@@ -291,7 +288,7 @@
     <protection geniePrepared="false" max-size="1"/>
     <workable max-animator="1"/>
   </object>
-  <object name="zone implantation lrm" type="mrls deployment area">
+  <object name="zone implantation lrm" point-size="10" type="mrls deployment area">
     <geometries>
       <geometry symbol="G*FPAP----****X" type="point"/>
     </geometries>
@@ -322,14 +319,14 @@
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
     <propagation model="cloud"/>
   </object>
-  <object name="plot ravitaillement" type="logistic support area">
+  <object name="plot ravitaillement" point-size="10" type="logistic support area">
     <geometries>
       <geometry symbol="G*SPPR----****X" type="point"/>
     </geometries>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <supply/>
   </object>
-  <object name="site decontamination" type="decontamination site">
+  <object name="site decontamination" point-size="50" type="decontamination site">
     <geometries>
       <geometry symbol="G*MPNDP---****X" type="point"/>
     </geometries>
@@ -426,7 +423,7 @@
     <lodging/>
     <logistic/>
   </object>
-  <object name="poste controle" point-size="100" type="checkpoint">
+  <object name="poste controle" point-size="75" type="checkpoint">
     <geometries>
       <geometry symbol="G*GPGPPK--****X" type="point"/>
     </geometries>
@@ -472,7 +469,7 @@
     <fire-forbidden/>
     <interaction-height height="6000"/>
   </object>
-  <object name="zone implantation mortier" type="mortar deployment area">
+  <object name="zone implantation mortier" point-size="10" type="mortar deployment area">
     <geometries>
       <geometry symbol="G*FPAP----****X" type="point"/>
     </geometries>
@@ -491,7 +488,7 @@
     <mobility default-speed="10" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
     <trafficability default="true" max-weight="100"/>
   </object>
-  <object name="installation" type="installation">
+  <object name="installation" point-size="10" type="installation">
     <geometries>
       <geometry symbol="S*GPI-----*****" type="point"/>
     </geometries>
@@ -520,7 +517,7 @@
     <population-filter density="0"/>
     <workable max-animator="10"/>
   </object>
-  <object name="incendie" type="fire">
+  <object name="incendie" point-size="75" type="fire">
     <geometries>
       <geometry symbol="O*VPA-----*****" type="point"/>
     </geometries>
@@ -534,7 +531,7 @@
     </geometries>
     <interaction-height height="2"/>
   </object>
-  <object name="station de metro" type="metro station">
+  <object name="station de metro" point-size="10" type="metro station">
     <geometries>
       <geometry symbol="G*EXIT*********" type="point"/>
     </geometries>
@@ -543,7 +540,7 @@
     <underground-network/>
     <universal/>
   </object>
-  <object name="noeud de reseau de ressource" type="ressource network element">
+  <object name="noeud de reseau de ressource" point-size="10" type="ressource network element">
     <geometries>
       <geometry symbol="G*SPPR----****X" type="point"/>
     </geometries>
@@ -552,7 +549,7 @@
     <universal/>
     <workable max-animator="3"/>
   </object>
-  <object name="souterrain egout" type="sewer entry">
+  <object name="souterrain egout" point-size="10" type="sewer entry">
     <geometries>
       <geometry symbol="G*EXIT*********" type="point"/>
     </geometries>
@@ -621,4 +618,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="1183479075" -->
+<!-- signature="0559395104" -->
