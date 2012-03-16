@@ -272,7 +272,7 @@ void RegisterAreaFunctions( directia::brain::Brain& brain )
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Decision::RegisterUrbanBlockFunctions
+// Name: DEC_Decision::RegisterFuseauFunctions
 // Created: DDA 2010-12-03
 // -----------------------------------------------------------------------------
 void RegisterFuseauFunctions( directia::brain::Brain& brain )

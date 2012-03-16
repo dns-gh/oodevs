@@ -1401,3 +1401,12 @@ bool DEC_AgentFunctions::AgentHasRadar( const DEC_Decision_ABC* agent, int typeR
         throw std::runtime_error( "Invalid radar in AgentHasTappingRadar" );
     return !agentPerceiver.GetRadars( *radar ).empty();
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::AgentHasFuseau
+// Created: GGE 2010-03-25
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::AgentHasFuseau(const MIL_Agent_ABC& callerAgent )
+{ 
+    return !callerAgent.GetOrderManager().GetFuseau().IsNull();
+}
