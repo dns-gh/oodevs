@@ -28,6 +28,7 @@
 #include "Entities/Objects/FloodAttribute.h"
 #include "Entities/Objects/ObstacleAttribute.h"
 #include "Entities/Objects/TrafficabilityAttribute.h"
+#include "Entities/Objects/MineAttribute.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -646,6 +647,18 @@ bool DEC_Knowledge_Object::IsBypassed() const
 {
     if( const BypassAttribute* bypass = RetrieveAttribute< BypassAttribute >() )
         return bypass->IsBypassed();
+    return false;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Knowledge_Object::IsMined
+// Created: DDA 2012-03-16
+// -----------------------------------------------------------------------------
+bool DEC_Knowledge_Object::IsMined() const
+{
+    if( const MineAttribute* attr = RetrieveAttribute< MineAttribute >() )
+        return attr->GetState() > 0.;
     return false;
 }
 

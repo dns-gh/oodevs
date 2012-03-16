@@ -5,6 +5,9 @@
 -- @author PSN
 -- @release 2010-03-30
 integration.canRemoveIt = function( object )
+  if DEC_ConnaissanceObjet_EstValorise( object.source ) and not DEC_Agent_PeutDevaloriserObjet( object.source ) then
+     return false
+  end
   return DEC_Agent_PeutDetruireObjet( object.source )
 end
 

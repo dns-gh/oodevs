@@ -391,6 +391,15 @@ bool DEC_AgentFunctions::CanDestroyObject( const MIL_Agent_ABC& callerAgent, boo
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::CanDemineObject
+// Created: DDA 2012-03-16
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::CanDemineObject( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge )
+{
+    return objectKnowledge && objectKnowledge->IsValid() && callerAgent.GetRole< PHY_RoleAction_Objects >().CanDemineWithReinforcement( objectKnowledge->GetType(), objectKnowledge->GetLocalisation() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::CanMineObject
 // Created: NLD 2005-09-08
 // -----------------------------------------------------------------------------

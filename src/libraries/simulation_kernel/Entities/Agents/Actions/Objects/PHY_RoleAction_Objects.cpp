@@ -644,6 +644,16 @@ bool PHY_RoleAction_Objects::CanDestroyWithReinforcement( const MIL_ObjectType_A
 }
 
 // -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Objects::CanDemineWithReinforcement
+// Created: DDA 2012-03-16
+// -----------------------------------------------------------------------------
+bool PHY_RoleAction_Objects::CanDemineWithReinforcement( const MIL_ObjectType_ABC& object, const TER_Localisation& localisation ) const
+{
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( pion_, eDemine, object, &localisation, false );
+    return capabilityComputer.HasCapability();
+}
+
+// -----------------------------------------------------------------------------
 // Name: PHY_RoleAction_Objects::CanMineWithReinforcement
 // Created: NLD 2005-09-08
 // -----------------------------------------------------------------------------

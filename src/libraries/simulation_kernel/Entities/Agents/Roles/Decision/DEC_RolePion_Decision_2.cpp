@@ -98,6 +98,7 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions ( directia::brain::Br
     brain[ "DEC_ConnaissanceObjet_EstObstacleDeManoeuvreActif" ] = &DEC_KnowledgeObjectFunctions::IsReservedObstacleActivated;
     brain[ "DEC_ConnaissanceObjet_EstObstacleDeManoeuvre" ] = &DEC_KnowledgeObjectFunctions::IsReservedObstacle;
     brain[ "DEC_ConnaissanceObjet_EstContourne" ] = &DEC_KnowledgeObjectFunctions::IsBypassed;
+    brain[ "DEC_ConnaissanceObjet_EstValorise" ] = &DEC_KnowledgeObjectFunctions::IsMined;
     brain[ "DEC_ConnaissanceObjet_EstBreche" ] = &DEC_KnowledgeObjectFunctions::IsBreached;
 	brain[ "DEC_ConnaissanceObjet_EstConstuit" ] = &DEC_KnowledgeObjectFunctions::IsConstructed;
     brain[ "DEC_ConnaissanceObjet_NiveauConstruction" ] = &DEC_KnowledgeObjectFunctions::GetConstructionLevel;
@@ -422,6 +423,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< bool ( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_AgentFunctions::CanDestroyObject, boost::cref( GetPion() ), _1 ) );
     brain[ "DEC_Agent_PeutValoriserObjet" ] =
         boost::function< bool ( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_AgentFunctions::CanMineObject, boost::cref( GetPion() ), _1 ) );
+    brain[ "DEC_Agent_PeutDevaloriserObjet" ] =
+        boost::function< bool ( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_AgentFunctions::CanDemineObject, boost::cref( GetPion() ), _1 ) );
     brain[ "DEC_Agent_ActiverModeDiscret" ] = boost::bind( &DEC_AgentFunctions::EnableDiscreteMode, boost::ref( GetPion() ) );
     brain[ "DEC_Agent_DesactiverModeDiscret" ] = boost::bind( &DEC_AgentFunctions::DisableDiscreteMode, boost::ref( GetPion() ) );
     brain[ "DEC_Agent_EstNeutralise" ] = boost::bind( &DEC_AgentFunctions::IsNeutralized, boost::ref( GetPion() ) );

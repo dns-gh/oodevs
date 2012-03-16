@@ -63,6 +63,7 @@ public:
     static bool CanBypassObject( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
     static bool CanDestroyObject( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
     static bool CanMineObject( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
+    static bool CanDemineObject( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
     static bool CanActivateObject( boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
     static void EnableDiscreteMode( MIL_Agent_ABC& callerAgent );
     static void DisableDiscreteMode( MIL_Agent_ABC& callerAgent );

@@ -64,6 +64,7 @@ public:
     static bool CanPionConstructObjectWithLocalisation( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* pion, const std::string& type, const TER_Localisation* localisation );
     static bool CanPionBypassObject( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* pion, boost::shared_ptr< DEC_Knowledge_Object > knowledgeId );
     static bool CanPionDestroyObject( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* pion, boost::shared_ptr< DEC_Knowledge_Object > knowledgeId );
+    static bool CanPionDemineObject( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* pion, boost::shared_ptr< DEC_Knowledge_Object > objectKnowledge );
     static boost::shared_ptr< MT_Vector2D > ComputePointBeforeLimaForPion( int phaseLine, float distanceBefore, const DEC_Decision_ABC* pion );
     static boost::shared_ptr< MT_Vector2D > ComputePionNearestLocalisationPointInFuseau( const TER_Localisation* location, const DEC_Decision_ABC* pion );
     static unsigned int GetPionEfficiency( const DEC_Decision_ABC* pion, int pionEfficiency );

@@ -107,6 +107,7 @@ public:
     //@{
     bool IsRecon() const;
     bool IsBypassed() const;
+    bool IsMined() const;
     bool IsConstructed() const;
     bool IsReservedObstacle() const;
     bool IsReservedObstacleActivated() const;
