@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <objects model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Objects.xsd">
-  <object geometry="point" name="bouchon mines" symbol="G*MPOMC---****X" type="mines">
+  <object geometry="point" name="bouchon mines" point-size="50" symbol="G*MPOMC---****X" type="mines">
     <activable/>
     <attrition attrition-surface="0" category="mine classique" ph="0"/>
     <avoidable distance="250"/>
@@ -20,7 +20,6 @@
       <terrain type="bridge" value="8"/>
       <terrain type="suburb" value="7"/>
     </heuristic>
-    <interact-with-enemy/>
     <interaction-height height="2"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.1"/>
@@ -79,12 +78,11 @@
       <terrain type="highway" value="2"/>
       <terrain type="main road" value="5"/>
     </heuristic>
-    <interact-with-enemy/>
     <interaction-height height="2"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
   </object>
-  <object geometry="point" name="abattis" symbol="G*MPOS----****X" type="abattis">
+  <object geometry="point" name="abattis" point-size="75" symbol="G*MPOS----****X" type="abattis">
     <activable/>
     <attrition attrition-surface="0" category="mine classique" ph="0"/>
     <avoidable distance="1000"/>
@@ -107,12 +105,11 @@
       <terrain type="country road" value="3"/>
       <terrain type="secondary road" value="1"/>
     </heuristic>
-    <interact-with-enemy/>
     <interaction-height height="2"/>
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
   </object>
-  <object geometry="point" name="barricade" symbol="G*MPORC---****X" type="barricade">
+  <object geometry="point" name="barricade" point-size="75" symbol="G*MPORC---****X" type="barricade">
     <avoidable distance="500"/>
     <bypassable bypass-speed="10"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
@@ -167,7 +164,7 @@
     <population-filter density="0.5"/>
     <trafficability default="true" max-weight="0.1"/>
   </object>
-  <object geometry="point" name="destruction route" symbol="G*MPORC---****X" type="road destruction">
+  <object geometry="point" name="destruction route" point-size="75" symbol="G*MPORC---****X" type="road destruction">
     <activable/>
     <avoidable distance="500"/>
     <bypassable bypass-speed="10"/>
@@ -193,7 +190,7 @@
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
   </object>
-  <object geometry="point" name="destruction pont" symbol="G*MPORC---****X" type="bridge destruction">
+  <object geometry="point" name="destruction pont" point-size="75" symbol="G*MPORC---****X" type="bridge destruction">
     <activable/>
     <avoidable distance="100"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
@@ -335,7 +332,7 @@
     <lodging/>
     <logistic/>
   </object>
-  <object geometry="point" name="poste controle" point-size="100" symbol="G*GPGPPK--****X" type="checkpoint">
+  <object geometry="point" name="poste controle" point-size="75" symbol="G*GPGPPK--****X" type="checkpoint">
     <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <detection>
@@ -401,7 +398,7 @@
     <population-filter density="0"/>
     <workable max-animator="10"/>
   </object>
-  <object geometry="point" name="incendie" symbol="O*VPA-----*****" type="fire">
+  <object geometry="point" name="incendie" point-size="75" symbol="O*VPA-----*****" type="fire">
     <avoidable distance="20"/>
     <burn/>
     <interaction-height height="100"/>
@@ -463,4 +460,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="3024941830" -->
+<!-- signature="2157867275" -->
