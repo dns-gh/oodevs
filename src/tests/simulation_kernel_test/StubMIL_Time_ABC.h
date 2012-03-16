@@ -30,6 +30,10 @@ public:
     { return 0; }
     virtual unsigned int GetTickDuration() const
     { return 1; }
+    virtual unsigned int GetRealTime() const
+    { return 2; }
+    virtual unsigned int GetCurrentTimeStep() const
+    { return 3; }
 };
 
 #endif // __StubMIL_Time_ABC_h_

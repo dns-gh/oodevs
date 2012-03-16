@@ -403,6 +403,8 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectCapacity_Interaction_Mine, ObjectCapacityFi
         );
         loader.Initialize( xis );
     }
+    MockMIL_Time_ABC time;
+    MOCK_EXPECT( time, GetRealTime ).once().returns( 3u );
     const MIL_ObjectType_ABC& type = loader.GetType( "mines" );
     MockArmy army;
     MOCK_EXPECT( army, RegisterObject ).once();

@@ -29,6 +29,8 @@ public:
     //@{
     virtual unsigned int GetCurrentTick() const = 0;
     virtual unsigned int GetTickDuration() const = 0;
+    virtual unsigned int GetRealTime() const = 0;
+    virtual unsigned int GetCurrentTimeStep() const = 0;
     //@}
 };
 
