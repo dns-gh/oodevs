@@ -282,7 +282,7 @@ int DEC_KnowledgeObjectFunctions::IsBypassed( boost::shared_ptr< DEC_Knowledge_O
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_KnowledgeObjectFunctions::IsBypassed
+// Name: DEC_KnowledgeObjectFunctions::IsMined
 // Created: DDA 2012-03-16
 // -----------------------------------------------------------------------------
 int DEC_KnowledgeObjectFunctions::IsMined( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )

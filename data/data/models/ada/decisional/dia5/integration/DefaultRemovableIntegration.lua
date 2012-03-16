@@ -1,14 +1,19 @@
 --Default Removable Implementation
+integration.isMined = function( object )
+    return DEC_ConnaissanceObjet_EstValorise( object.source ) == eTristate_True and true or false
+end
+
 
 --- Return if the unit has the capacity to remove the selected object
 -- @param knowledge on an object
 -- @author PSN
 -- @release 2010-03-30
 integration.canRemoveIt = function( object )
-  if DEC_ConnaissanceObjet_EstValorise( object.source ) and not DEC_Agent_PeutDevaloriserObjet( object.source ) then
-     return false
+  if integration.isMined( object ) then
+     return DEC_Agent_PeutDevaloriserObjet( object.source )
+  else
+    return DEC_Agent_PeutDetruireObjet( object.source )
   end
-  return DEC_Agent_PeutDetruireObjet( object.source )
 end
 
 --- Return current advancement of object removal
