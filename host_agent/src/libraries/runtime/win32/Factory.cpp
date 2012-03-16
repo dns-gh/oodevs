@@ -6,7 +6,7 @@
 // Copyright (c) 2012 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-#include "../Factory.h"
+#include <runtime/Factory.h>
 #include "Api.h"
 #include "Runtime.h"
 

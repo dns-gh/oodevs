@@ -24,6 +24,7 @@ if( WIN32 )
     list( APPEND files ${win32_files} )
 endif()
 add_static_library( runtime ${files} )
+add_target_include( runtime ${root_dir}/src/libraries )
 
 ################################################################################
 # web_server

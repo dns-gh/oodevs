@@ -8,7 +8,7 @@
 // *****************************************************************************
 #ifndef RUNTIME_H
 #define RUNTIME_H
-#include "../Runtime_ABC.h"
+#include <runtime/Runtime_ABC.h>
 
 namespace runtime
 {

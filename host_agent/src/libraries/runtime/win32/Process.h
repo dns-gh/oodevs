@@ -8,7 +8,7 @@
 // *****************************************************************************
 #ifndef PROCESS_H__
 #define PROCESS_H__
-#include "../Process_ABC.h"
+#include <runtime/Process_ABC.h>
 #include <memory>
 
 namespace runtime
