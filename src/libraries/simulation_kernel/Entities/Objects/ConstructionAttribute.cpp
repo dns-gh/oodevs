@@ -151,6 +151,12 @@ bool ConstructionAttribute::Update( const ConstructionAttribute& rhs )
         density_ = rhs.density_;
     }
 
+    if ( bBuildByGen_ != rhs.bBuildByGen_ )
+    {
+        NotifyAttributeUpdated( eOnUpdate );
+        bBuildByGen_ = rhs.bBuildByGen_;
+    }
+
     return NeedUpdate( eOnUpdate );
 }
 

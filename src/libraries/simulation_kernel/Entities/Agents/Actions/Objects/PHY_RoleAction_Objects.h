@@ -93,6 +93,7 @@ public:
     bool CanConstructWithoutReinforcement( const std::string& objectType, const TER_Localisation* localisation, bool bWithLoaded ) const;
     bool CanBypassWithReinforcement( const MIL_ObjectType_ABC& object, const TER_Localisation& localisation ) const;
     bool CanDestroyWithReinforcement( const MIL_ObjectType_ABC& object, const TER_Localisation& localisation ) const;
+    bool CanDemineWithReinforcement( const MIL_ObjectType_ABC& object, const TER_Localisation& localisation ) const;
     bool CanMineWithReinforcement( const MIL_ObjectType_ABC& object, const TER_Localisation& localisation ) const;
     bool EnoughtDotationForBuilding( const std::string& objectType, MIL_Agent_ABC& pion, bool bWithLoaded ) const;
     bool CanMineTypeWithReinforcement( const std::string& strType, const TER_Localisation* localisation ) const;

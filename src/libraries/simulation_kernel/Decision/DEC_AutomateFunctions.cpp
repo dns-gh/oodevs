@@ -286,6 +286,19 @@ bool DEC_AutomateFunctions::CanPionDestroyObject( const MIL_Automate& callerAuto
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_AutomateFunctions::CanPionDemineObject
+// Created: DDA 2012-03-16
+// -----------------------------------------------------------------------------
+bool DEC_AutomateFunctions::CanPionDemineObject( const MIL_Automate& callerAutomate, const DEC_Decision_ABC* pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{
+    if( !pion || !IsPionInAutomate( callerAutomate, pion->GetPion() ) )
+        throw std::runtime_error( "Invalid pion in CanPionDestroyObject" );
+    if( pKnowledge && pKnowledge->IsValid() )
+        return pion->GetPion().GetRole< PHY_RoleAction_Objects >().CanDemineWithReinforcement( pKnowledge->GetType(), pKnowledge->GetLocalisation() );
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_AutomateFunctions::PionTimeToMoveDistance
 // Created: NLD 2005-03-21
 // -----------------------------------------------------------------------------
