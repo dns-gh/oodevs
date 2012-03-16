@@ -12,7 +12,7 @@
 #include <memory>
 #include <boost/noncopyable.hpp>
 
-namespace process
+namespace runtime
 {
     class Runtime_ABC;
 

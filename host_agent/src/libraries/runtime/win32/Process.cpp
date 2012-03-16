@@ -11,7 +11,7 @@
 #include "Handle.h"
 #include "../Utf8.h"
 
-using namespace process;
+using namespace runtime;
 
 // -----------------------------------------------------------------------------
 // Name: Process::Process

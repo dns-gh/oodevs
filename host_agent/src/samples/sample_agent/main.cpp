@@ -14,7 +14,7 @@
 int main( int /*argc*/, const char* /*argv*/[] )
 {
 
-    process::Factory factory;
+    runtime::Factory factory;
     host::Agent agent( factory.GetRuntime() );
     web::Controller controller( agent );
     web::MongooseServer server( controller );

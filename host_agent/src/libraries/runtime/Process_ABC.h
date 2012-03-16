@@ -12,7 +12,7 @@
 #include <boost/noncopyable.hpp>
 #include <string>
 
-namespace process
+namespace runtime
 {
 
 // =============================================================================

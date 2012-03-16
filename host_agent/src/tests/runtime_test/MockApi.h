@@ -13,7 +13,7 @@
 
 namespace test
 {
-    MOCK_BASE_CLASS( MockApi, process::Api_ABC )
+    MOCK_BASE_CLASS( MockApi, runtime::Api_ABC )
     {
         MOCK_METHOD( EnumProcesses, 3 );
         MOCK_METHOD( CreateProcess, 10 );

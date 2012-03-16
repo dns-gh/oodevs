@@ -10,7 +10,7 @@
 #include "Api.h"
 #include "Runtime.h"
 
-namespace process
+namespace runtime
 {
 
 // =============================================================================
@@ -27,8 +27,8 @@ struct Factory::Private
     {
         // NOTHING
     }
-    process::Api     api;
-    process::Runtime runtime;
+    runtime::Api     api;
+    runtime::Runtime runtime;
 };
 
 // -----------------------------------------------------------------------------

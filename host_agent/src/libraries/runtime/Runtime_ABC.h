@@ -13,7 +13,7 @@
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 
-namespace process
+namespace runtime
 {
 
 class Process_ABC;

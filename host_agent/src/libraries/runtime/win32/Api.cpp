@@ -13,7 +13,7 @@
     #pragma comment( lib, "psapi.lib" )
 #endif
 
-using namespace process;
+using namespace runtime;
 
 // -----------------------------------------------------------------------------
 // Name: Api::Api

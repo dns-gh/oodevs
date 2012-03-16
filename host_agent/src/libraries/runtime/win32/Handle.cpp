@@ -9,7 +9,7 @@
 #include "Handle.h"
 #include "Api_ABC.h"
 
-using namespace process;
+using namespace runtime;
 
 // -----------------------------------------------------------------------------
 // Name: Handle::Handle

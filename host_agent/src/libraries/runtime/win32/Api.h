@@ -10,7 +10,7 @@
 #define API_H__
 #include "Api_ABC.h"
 
-namespace process
+namespace runtime
 {
 
 // =============================================================================

@@ -16,7 +16,7 @@
 #include <boost/ref.hpp>
 #include <boost/algorithm/string/join.hpp>
 
-using namespace process;
+using namespace runtime;
 
 namespace
 {

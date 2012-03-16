@@ -12,7 +12,7 @@
 #define  NOMINMAX
 #include <windows.h>
 
-namespace process
+namespace runtime
 {
 
 class Api_ABC;

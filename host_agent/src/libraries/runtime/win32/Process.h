@@ -11,7 +11,7 @@
 #include "../Process_ABC.h"
 #include <memory>
 
-namespace process
+namespace runtime
 {
 
 class Api_ABC;
@@ -19,11 +19,11 @@ class Handle;
 
 // =============================================================================
 /** @class  Process
-    @brief  Win32 process class definition
+    @brief  Win32 runtime class definition
 */
 // Created: BAX 2012-03-07
 // =============================================================================
-class Process : public process::Process_ABC
+class Process : public runtime::Process_ABC
 {
 public:
     //! @name Constructor/Destructor

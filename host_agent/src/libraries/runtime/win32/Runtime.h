@@ -10,7 +10,7 @@
 #define RUNTIME_H
 #include "../Runtime_ABC.h"
 
-namespace process
+namespace runtime
 {
 
 class Api_ABC;

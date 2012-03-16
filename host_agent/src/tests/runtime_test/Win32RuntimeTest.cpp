@@ -23,7 +23,7 @@
 #include <boost/spirit/home/phoenix/core/argument.hpp>
 #include <boost/algorithm/string/join.hpp>
 
-using namespace process;
+using namespace runtime;
 using test::MockApi;
 using namespace boost::phoenix::arg_names;
 

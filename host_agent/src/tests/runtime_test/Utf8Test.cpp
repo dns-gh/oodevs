@@ -10,7 +10,7 @@
 #include "runtime_test.h"
 #include <runtime/Utf8.h>
 
-using namespace process;
+using namespace runtime;
 
 namespace
 {

@@ -10,7 +10,7 @@
 #define UTF8_H__
 #include <string>
 
-namespace process
+namespace runtime
 {
 // -----------------------------------------------------------------------------
 // Name: Utf8Convert

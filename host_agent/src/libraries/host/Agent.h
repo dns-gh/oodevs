@@ -12,7 +12,7 @@
 
 #include "Agent_ABC.h"
 
-namespace process
+namespace runtime
 {
     class Runtime_ABC;
 }
@@ -30,7 +30,7 @@ class Agent : public Agent_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Agent( const process::Runtime_ABC& runtime );
+             Agent( const runtime::Runtime_ABC& runtime );
     virtual ~Agent();
     //@}
 
@@ -44,7 +44,7 @@ public:
 private:
     //! @name Member data
     //@{
-    const process::Runtime_ABC& runtime_;
+    const runtime::Runtime_ABC& runtime_;
     //@}
 };
 

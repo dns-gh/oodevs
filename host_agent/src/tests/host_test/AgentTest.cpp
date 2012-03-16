@@ -18,7 +18,7 @@
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
 
-using namespace process;
+using namespace runtime;
 using namespace host;
 
 namespace

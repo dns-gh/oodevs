@@ -19,7 +19,7 @@
 #include <runtime/win32/Handle.h>
 #include <boost/bind.hpp>
 
-using namespace process;
+using namespace runtime;
 using test::MockApi;
 
 namespace

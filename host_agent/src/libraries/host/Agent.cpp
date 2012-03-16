@@ -13,7 +13,7 @@
 #include <boost/format.hpp>
 
 using namespace host;
-using namespace process;
+using namespace runtime;
 
 // -----------------------------------------------------------------------------
 // Name: Agent::Agent

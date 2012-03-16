@@ -15,7 +15,7 @@
 #define  NOMINMAX
 #include <windows.h>
 
-using namespace process;
+using namespace runtime;
 
 namespace
 {
@@ -44,7 +44,7 @@ namespace
 // Name: Utf8Convert
 // Created: BAX 2012-03-07
 // -----------------------------------------------------------------------------
-std::wstring process::Utf8Convert( const std::string& text )
+std::wstring runtime::Utf8Convert( const std::string& text )
 {
     return Convert< std::string, std::wstring, wchar_t >( text,
         boost::bind( MultiByteToWideChar, CP_UTF8, 0, _1, _2, _3, _4 ) );
@@ -54,7 +54,7 @@ std::wstring process::Utf8Convert( const std::string& text )
 // Name: Utf8Convert
 // Created: BAX 2012-03-07
 // -----------------------------------------------------------------------------
-std::string process::Utf8Convert( const std::wstring& text )
+std::string runtime::Utf8Convert( const std::wstring& text )
 {
     return Convert< std::wstring, std::string, char >( text,
         boost::bind( WideCharToMultiByte, CP_UTF8, 0, _1, _2, _3, _4,
