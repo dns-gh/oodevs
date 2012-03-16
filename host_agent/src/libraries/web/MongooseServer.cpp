@@ -124,7 +124,7 @@ class MongooseRequest : public Request_ABC
     // -----------------------------------------------------------------------------
     boost::optional< std::string > GetParameter( const std::string& name ) const
     {
-        std::vector< char > buffer( std::max( 1U, query_.size() ) );
+        std::vector< char > buffer( std::max< size_t >( 1, query_.size() ) );
         int len = mg_get_var( query_.data(), query_.size(), name.c_str(), &buffer[0], buffer.size() );
         if( len == -1 )
             return boost::none;
