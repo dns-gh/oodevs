@@ -942,7 +942,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>New ORBAT</source>
+        <source>Untitled</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
