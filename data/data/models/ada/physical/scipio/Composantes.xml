@@ -249,8 +249,8 @@
     </speeds>
     <composition>
       <category name="ration">
-        <resource capacity="30" logistic-threshold="30" name="RATION DE COMBAT 1" normalized-consumption="100"/>
-        <resource capacity="180" logistic-threshold="30" name="EAU MINERALE 1L T 1" normalized-consumption="600"/>
+        <resource capacity="30" logistic-threshold="30" name="RATION DE COMBAT 1" normalized-consumption="1"/>
+        <resource capacity="180" logistic-threshold="30" name="EAU MINERALE 1L T 1" normalized-consumption="6"/>
       </category>
     </composition>
     <sensors>
@@ -261,8 +261,8 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <resource category="ration" name="RATION DE COMBAT 1" value="0.41"/>
-        <resource category="ration" name="EAU MINERALE 1L T 1" value="2.5"/>
+        <resource category="ration" name="RATION DE COMBAT 1" value="0.04"/>
+        <resource category="ration" name="EAU MINERALE 1L T 1" value="0.25"/>
       </consumption>
     </consumptions>
     <weapon-systems/>
@@ -35328,5 +35328,59 @@
     </objects>
     <equipment-category>Hommes</equipment-category>
   </equipment>
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="371" max-slope="0.6" name="150 Individus" protection="Combattant" size="Personnel" weight="0.5">
+    <speeds max="8">
+      <speed terrain="unknown" value="6"/>
+      <speed terrain="forest" value="6"/>
+      <speed terrain="orchard" value="6"/>
+      <speed terrain="swamp" value="2"/>
+      <speed terrain="dune" value="3"/>
+      <speed terrain="urban area" value="6"/>
+      <speed terrain="lake" value="0"/>
+      <speed terrain="glacier" value="5"/>
+      <speed terrain="forest edge" value="6"/>
+      <speed terrain="suburb" value="6"/>
+      <speed terrain="waterfront" value="6"/>
+      <speed terrain="orchard edge" value="5"/>
+      <speed terrain="swamp edge" value="5"/>
+      <speed terrain="dune edge" value="5"/>
+      <speed terrain="glacier edge" value="5"/>
+      <speed terrain="country road" value="8"/>
+      <speed terrain="highway" value="8"/>
+      <speed terrain="main road" value="8"/>
+      <speed terrain="secondary road" value="8"/>
+      <speed terrain="stream" value="1"/>
+      <speed terrain="river" value="1"/>
+      <speed terrain="main river" value="0"/>
+      <speed terrain="bridge" value="8"/>
+      <speed terrain="cliff" value="0"/>
+      <speed terrain="railroad" value="5"/>
+      <speed terrain="crossroad" value="8"/>
+      <speed terrain="mountain" value="0"/>
+      <speed terrain="mountain edge" value="0"/>
+    </speeds>
+    <composition>
+      <category name="ration">
+        <resource capacity="100" logistic-threshold="30" name="RATION DE COMBAT 1" normalized-consumption="150"/>
+        <resource capacity="600" logistic-threshold="30" name="EAU MINERALE 1L T 1" normalized-consumption="900"/>
+      </category>
+    </composition>
+    <sensors>
+      <sensor height="2" type="Oeil"/>
+      <sensor height="2" type="Oreille"/>
+    </sensors>
+    <radars/>
+    <transports/>
+    <consumptions>
+      <consumption status="ArretMoteurEteint">
+        <resource category="ration" name="RATION DE COMBAT 1" value="6"/>
+        <resource category="ration" name="EAU MINERALE 1L T 1" value="375"/>
+      </consumption>
+    </consumptions>
+    <weapon-systems/>
+    <human-protections/>
+    <objects/>
+    <equipment-category>Hommes</equipment-category>
+  </equipment>
 </equipments>
-<!-- signature="2841376398" -->
+<!-- signature="3730176081" -->
