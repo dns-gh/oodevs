@@ -19,6 +19,7 @@
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/static_assert.hpp>
+#include <boost/uuid/uuid_generators.hpp>
 
 using namespace web;
 using namespace host;
@@ -122,12 +123,16 @@ std::string Controller::Notify( const Request_ABC& request )
         return WriteHttpReply( BadRequest, "Invalid method type" );
 
     const std::string& uri = request.GetUri();
-    if( uri == "/list" )
-        return List( request );
-    else if( uri == "/start" )
-        return Start( request );
-    else if( uri == "/stop" )
-        return Stop( request );
+    if( uri == "/list_sessions" )
+        return ListSessions( request );
+    if( uri == "/count_sessions" )
+        return CountSessions( request );
+    if( uri == "/get_session" )
+        return GetSession( request );
+    if( uri == "/create_session" )
+        return CreateSession( request );
+    if( uri == "/delete_session" )
+        return DeleteSession( request );
 
     return WriteHttpReply( NotFound, "Unknown URI" );
 }
@@ -141,44 +146,61 @@ namespace
     template< typename T >
     T GetParameter( const std::string& name, const Request_ABC& data, const T& value )
     {
-        boost::optional< std::string > option = data.GetParameter( name );
+        const boost::optional< std::string > option = data.GetParameter( name );
         return option == boost::none ? value : boost::lexical_cast< T >( *option );
     }
 }
 
 // -----------------------------------------------------------------------------
-// Name: Controller::List
-// Created: BAX 2012-03-07
+// Name: Controller::ListSessions
+// Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-std::string Controller::List( const Request_ABC& request )
+std::string Controller::ListSessions( const Request_ABC& request )
 {
-    int offset = GetParameter< int >( "offset", request, 0 );
-    int limit = GetParameter< int >( "limit", request, 10 );
-    return WriteHttpReply( agent_.List( offset, limit ) );
+    const int offset = GetParameter( "offset", request, 0 );
+    const int limit  = GetParameter( "limit",  request, 10 );
+    return WriteHttpReply( agent_.ListSessions( offset, limit ) );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Controller::Start
-// Created: BAX 2012-03-07
+// Name: Controller::CountSessions
+// Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-std::string Controller::Start( const Request_ABC& request )
+std::string Controller::CountSessions( const Request_ABC& /*request*/ )
 {
-    const std::string app = GetParameter< std::string >( "app", request, "" );
-    const std::string cmd = GetParameter< std::string >( "cmd", request, "" );
-    const std::string run = GetParameter< std::string >( "run", request, "" );
-    std::vector< std::string > args;
-    boost::split( args, cmd, boost::is_any_of( "," ), boost::token_compress_on );
-    return WriteHttpReply( agent_.Start( app, args, run ) );
+    return WriteHttpReply( agent_.CountSessions() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Controller::Stop
-// Created: BAX 2012-03-07
+// Name: Controller::GetSession
+// Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-std::string Controller::Stop( const Request_ABC& request )
+std::string Controller::GetSession( const Request_ABC& request )
 {
-    boost::optional< std::string > pid = request.GetParameter( "pid" );
-    if( pid == boost::none )
-        return WriteHttpReply( BadRequest, "Missing pid parameter" );
-    return WriteHttpReply( agent_.Stop( boost::lexical_cast< int >( *pid ) ) );
+    const boost::optional< std::string > uuid = request.GetParameter( "tag" );
+    if( uuid == boost::none )
+        return WriteHttpReply( BadRequest, "Missing tag parameter" );
+    return WriteHttpReply( agent_.GetSession( boost::uuids::string_generator()( *uuid ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::CreateSession
+// Created: BAX 2012-03-16
+// -----------------------------------------------------------------------------
+std::string Controller::CreateSession( const Request_ABC& request )
+{
+    const int port = GetParameter( "port", request, 80 );
+    return WriteHttpReply( agent_.CreateSession( port ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::DeleteSession
+// Created: BAX 2012-03-16
+// -----------------------------------------------------------------------------
+std::string Controller::DeleteSession( const Request_ABC& request )
+{
+    const boost::optional< std::string > uuid = request.GetParameter( "tag" );
+    if( uuid == boost::none )
+        return WriteHttpReply( BadRequest, "Missing tag parameter" );
+    return WriteHttpReply( agent_.DeleteSession( boost::uuids::string_generator()( *uuid ) ) );
 }

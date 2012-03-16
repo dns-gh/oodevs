@@ -11,6 +11,7 @@
 #define AGENT_ABC_H
 
 #include <boost/noncopyable.hpp>
+#include <boost/uuid/uuid.hpp>
 #include <string>
 #include <vector>
 
@@ -49,11 +50,13 @@ public:
     virtual ~Agent_ABC() {}
     //@}
 
-    //! @name Operations
+    //! @name Session Methods
     //@{
-    virtual Reply List( int offset, int limit ) const = 0;
-    virtual Reply Start( const std::string& app, const std::vector< std::string >& args, const std::string& run ) = 0;
-    virtual Reply Stop( int pid ) = 0;
+    virtual Reply ListSessions ( int offset, int limit ) const = 0;
+    virtual Reply CountSessions() const = 0;
+    virtual Reply GetSession   ( const boost::uuids::uuid& tag ) const = 0;
+    virtual Reply CreateSession( int port ) = 0;
+    virtual Reply DeleteSession( const boost::uuids::uuid& tag ) = 0;
     //@}
 };
 

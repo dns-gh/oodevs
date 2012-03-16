@@ -43,11 +43,13 @@ public:
     //@}
 
 private:
-    //! @name Private operations
+    //! @name Session Methods
     //@{
-    std::string List( const Request_ABC& request );
-    std::string Start( const Request_ABC& request );
-    std::string Stop( const Request_ABC& request );
+    std::string ListSessions ( const Request_ABC& request );
+    std::string CountSessions( const Request_ABC& request );
+    std::string GetSession   ( const Request_ABC& request );
+    std::string CreateSession( const Request_ABC& request );
+    std::string DeleteSession( const Request_ABC& request );
     //@}
 
 private:

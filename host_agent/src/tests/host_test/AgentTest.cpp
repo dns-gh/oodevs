@@ -7,6 +7,10 @@
 //
 // *****************************************************************************
 
+#ifdef _MSC_VER
+#   define _SCL_SECURE_NO_WARNINGS
+#endif
+
 #include "host_test.h"
 
 #include <runtime/Process_ABC.h>
@@ -15,14 +19,22 @@
 #include <host/Agent.h>
 
 #include <boost/assign/list_of.hpp>
+#include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
+#include <boost/uuid/uuid_generators.hpp>
+#include <boost/xpressive/xpressive.hpp>
 
 using namespace runtime;
 using namespace host;
 
 namespace
 {
+    const std::string default_tag_string = "01234567-89ab-cdef-0123-456789abcdef";
+    const boost::uuids::uuid default_tag = boost::uuids::string_generator()( default_tag_string );
+    const boost::xpressive::sregex session_regex = boost::xpressive::sregex::compile(
+        "{ \"tag\" : \"[0-9a-fA-F]{8,8}-[0-9a-fA-F]{4,4}-[0-9a-fA-F]{4,4}-[0-9a-fA-F]{4,4}-[0-9a-fA-F]{12,12}\", \"pid\" : -?\\d+, \"name\" : \"\" }" );
+
     MOCK_BASE_CLASS( MockRuntime, Runtime_ABC )
     {
         MOCK_METHOD( GetProcesses, 0 );
@@ -43,32 +55,10 @@ namespace
         MOCK_METHOD( Kill, 1 );
     };
 
-    Runtime_ABC::T_Processes FakeProcesses( int size)
-    {
-        Runtime_ABC::T_Processes list;
-        for( int idx = 0; idx < size; ++idx )
-            list.push_back( boost::make_shared< MockProcess >( idx + 1, "process_" +
-                boost::lexical_cast< std::string >( idx + 1 ) ) );
-        return list;
-    }
-
-    template< int size >
-    struct RuntimeFixture
-    {
-        RuntimeFixture()
-            : processes( FakeProcesses( size ) )
-        {
-            MOCK_EXPECT( runtime.GetProcesses ).returns( processes );
-        }
-        Runtime_ABC::T_Processes processes;
-        MockRuntime runtime;
-    };
-
-    template< int size >
-    struct Fixture : public RuntimeFixture< size >
+    struct Fixture
     {
         Fixture()
-            : agent( RuntimeFixture< size >::runtime )
+            : agent( runtime )
         {
             // NOTHING
         }
@@ -77,56 +67,45 @@ namespace
             BOOST_CHECK_EQUAL( reply.valid, valid );
             BOOST_CHECK_EQUAL( reply.data, expected );
         }
+        void RegexReply( const Reply& reply, const boost::xpressive::sregex& expected, bool valid = true )
+        {
+            BOOST_CHECK_EQUAL( reply.valid, valid );
+            BOOST_CHECK( boost::xpressive::regex_match( reply.data, expected, boost::xpressive::regex_constants::format_perl ) );
+        }
+        MockRuntime runtime;
         Agent agent;
     };
 }
 
-BOOST_FIXTURE_TEST_CASE( agent_lists, Fixture< 16 > )
+BOOST_FIXTURE_TEST_CASE( agent_list_sessions, Fixture )
 {
-    CheckReply( agent.List( 5, 3 ), "["
-        "{ \"pid\" : 6, \"name\" : \"process_6\" }, "
-        "{ \"pid\" : 7, \"name\" : \"process_7\" }, "
-        "{ \"pid\" : 8, \"name\" : \"process_8\" }"
-        "]"
-    );
+    CheckReply( agent.ListSessions( 5, 3 ), "[]" );
 }
 
-BOOST_FIXTURE_TEST_CASE( agent_clips_invalid_list_parameters, Fixture< 16 > )
+BOOST_FIXTURE_TEST_CASE( agent_count_sessions, Fixture )
 {
-    CheckReply( agent.List( -20, 2 ), "["
-        "{ \"pid\" : 1, \"name\" : \"process_1\" }, "
-        "{ \"pid\" : 2, \"name\" : \"process_2\" }"
-        "]"
-    );
-
-    CheckReply( agent.List( 27, 20 ), "[]" );
-
-    CheckReply( agent.List( 5, -20 ), "[]" );
-
-    CheckReply( agent.List( 14, 18 ), "["
-        "{ \"pid\" : 15, \"name\" : \"process_15\" }, "
-        "{ \"pid\" : 16, \"name\" : \"process_16\" }"
-        "]"
-    );
+    CheckReply( agent.CountSessions(), "{ \"count\" : 0 }" );
 }
 
-BOOST_FIXTURE_TEST_CASE( agent_starts, Fixture< 5 > )
+BOOST_FIXTURE_TEST_CASE( agent_get_session, Fixture )
 {
-    const std::string app = "e:/my_app.exe", run = "e:/run_dir/vc100";
-    const std::vector< std::string> args = boost::assign::list_of
-        ( "--root-dir=../../data" )
-        ( "--exercise=worldwide/Egypt" )
-        ( "--session=default" );
-    MOCK_EXPECT( runtime.Start ).once().with( app, args, run ).returns( boost::make_shared< MockProcess >( 42, "Zebulon" ) );
-    CheckReply( agent.Start( app, args, run ), "{ \"pid\" : 42, \"name\" : \"Zebulon\" }" );
+    CheckReply( agent.GetSession( default_tag ), "unable to find session " + default_tag_string, false );
 }
 
-BOOST_FIXTURE_TEST_CASE( agent_stops, Fixture< 16 > )
+BOOST_AUTO_TEST_CASE( session_regex_works )
 {
-    const int pid = 7;
-    boost::shared_ptr< Process_ABC > ptr = processes[ pid - 1 ];
-    MockProcess& process = dynamic_cast< MockProcess& >( *ptr );
-    MOCK_EXPECT( runtime.GetProcess ).once().with( pid ).returns( ptr );
-    MOCK_EXPECT( process.Kill ).once().with( mock::any ).returns( true );
-    CheckReply( agent.Stop( pid ), "{ \"pid\" : 7, \"name\" : \"process_7\" }" );
+    boost::format fmt( "{ \"tag\" : \"%1%\", \"pid\" : %2%, \"name\" : \"\" }" );
+    BOOST_CHECK( boost::xpressive::regex_match( ( fmt % default_tag_string % -1 ).str(), session_regex ) );
+    BOOST_CHECK( !boost::xpressive::regex_match( ( fmt % ( default_tag_string + "a" ) % -1 ).str(), session_regex ) );
+    BOOST_CHECK( !boost::xpressive::regex_match( ( fmt % default_tag_string % "b" ).str(), session_regex ) );
+}
+
+BOOST_FIXTURE_TEST_CASE( agent_create_session, Fixture )
+{
+    RegexReply( agent.CreateSession( 8080 ), session_regex );
+}
+
+BOOST_FIXTURE_TEST_CASE( agent_delete_session, Fixture )
+{
+    CheckReply( agent.DeleteSession( default_tag ), "unable to find session " + default_tag_string, false );
 }

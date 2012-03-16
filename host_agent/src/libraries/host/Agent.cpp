@@ -7,10 +7,29 @@
 //
 // *****************************************************************************
 
+#ifdef _MSC_VER
+#   define _SCL_SECURE_NO_WARNINGS
+#endif
+
 #include "Agent.h"
+#include "Session_ABC.h"
+#include "Session.h"
 #include <runtime/Process_ABC.h>
 #include <runtime/Runtime_ABC.h>
 #include <boost/format.hpp>
+#include <boost/lexical_cast.hpp>
+#include <boost/make_shared.hpp>
+#include <boost/uuid/uuid_io.hpp>
+
+#ifdef _MSC_VER
+#   pragma warning( push )
+#   pragma warning( disable : 4244 )
+#endif
+#include <boost/thread/locks.hpp>
+#include <boost/thread/shared_mutex.hpp>
+#ifdef _MSC_VER
+#   pragma warning( pop )
+#endif
 
 using namespace host;
 using namespace runtime;
@@ -21,6 +40,7 @@ using namespace runtime;
 // -----------------------------------------------------------------------------
 Agent::Agent( const Runtime_ABC& runtime )
     : runtime_( runtime )
+    , access_ ( new boost::shared_mutex() )
 {
     // NOTHING
 }
@@ -37,17 +57,6 @@ Agent::~Agent()
 namespace
 {
     // -----------------------------------------------------------------------------
-    // Name: ToJson
-    // Created: BAX 2012-03-07
-    // -----------------------------------------------------------------------------
-    std::string ToJson( const Process_ABC& process )
-    {
-        return (boost::format(
-            "{ \"pid\" : %1%, \"name\" : \"%2%\" }" )
-        % process.GetPid() % process.GetName() ).str();
-    }
-
-    // -----------------------------------------------------------------------------
     // Name: Clip
     // Created: BAX 2012-03-07
     // -----------------------------------------------------------------------------
@@ -60,47 +69,100 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
-// Name: Agent::List
-// Created: BAX 2012-03-07
+// Name: Agent::ListSessions
+// Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-Reply Agent::List( int offset, int limit ) const
+Reply Agent::ListSessions( int offset, int limit ) const
 {
-    Runtime_ABC::T_Processes processes = runtime_.GetProcesses();
-    offset = Clip< int >( offset, 0, static_cast< int >( processes.size() ) );
-    limit  = Clip< int >( limit, 0, static_cast< int >( processes.size() ) - offset );
-    Runtime_ABC::T_Processes::const_iterator it = processes.begin();
-    std::advance( it , offset );
     std::string data;
-    for( int i = 0; i < limit; ++i, ++it )
-        data += ( i ? ", " : "" ) + ToJson( **it );
+
+    boost::shared_lock< boost::shared_mutex > lock( *access_ );
+    T_Sessions::const_iterator it = sessions_.begin();
+    offset = Clip< int >( offset, 0, static_cast< int >( sessions_.size() ) );
+    limit  = Clip< int >( limit,  0, static_cast< int >( sessions_.size() ) - offset );
+    std::advance( it , offset );
+    for( int idx = 0; idx < limit; ++idx, ++it )
+        data += ( idx ? ", " : "" ) + it->second->ToJson();
+    lock.unlock();
+
     return Reply( "[" + data + "]" );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Agent::Start
-// Created: BAX 2012-03-07
+// Name: Agent::CountSessions
+// Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-Reply Agent::Start( const std::string& app, const std::vector< std::string >& args, const std::string& run )
+Reply Agent::CountSessions() const
 {
-    boost::shared_ptr< Process_ABC > ptr = runtime_.Start( app, args, run );
-    if( !ptr )
-        return Reply( "Unable to create process", false ); // TODO Add LastError()
-    return Reply( ToJson( *ptr ) );
+    boost::shared_lock< boost::shared_mutex > lock( *access_ );
+    return Reply( ( boost::format( "{ \"count\" : %1% }" ) % sessions_.size() ).str() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Agent::Stop
-// Created: BAX 2012-03-07
+// Name: Agent::GetSession
+// Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-Reply Agent::Stop( int pid )
+Reply Agent::GetSession( const boost::uuids::uuid& tag ) const
 {
-    boost::shared_ptr< Process_ABC > ptr = runtime_.GetProcess( pid );
+    boost::shared_lock< boost::shared_mutex > lock( *access_ );
+    T_Sessions::const_iterator it = sessions_.find( tag );
+    if( it == sessions_.end() )
+        return Reply( ( boost::format( "unable to find session %1%" ) % tag ).str(), false );
+    return Reply( it->second->ToJson() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::AddSession
+// Created: BAX 2012-03-16
+// -----------------------------------------------------------------------------
+void Agent::AddSession( boost::shared_ptr< Session_ABC > ptr )
+{
+    boost::lock_guard< boost::shared_mutex > lock( *access_ );
+    sessions_.insert( std::make_pair( ptr->GetTag(), ptr ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::CreateSession
+// Created: BAX 2012-03-16
+// -----------------------------------------------------------------------------
+Reply Agent::CreateSession( int port )
+{
+    SessionConfig config;
+    config.port = port;
+    boost::shared_ptr< Session_ABC > ptr = boost::make_shared< Session >( config );
     if( !ptr )
-        return Reply( ( boost::format( "Unable to find process %1%" ) % pid ).str(), false );
+        return Reply( "unable to create new session", false ); // TODO add better error message
+    AddSession( ptr );
+    ptr->Start();
+    return Reply( ptr->ToJson() );
+}
 
-    bool done = ptr->Kill( 3 * 1000 );
-    if( !done )
-        return Reply( ( boost::format( "Unable to kill process %1%" ) % pid ).str(), false ); // TODO Add LastError()
+// -----------------------------------------------------------------------------
+// Name: Agent::ExtractSession
+// Created: BAX 2012-03-16
+// -----------------------------------------------------------------------------
+boost::shared_ptr< Session_ABC > Agent::ExtractSession( const boost::uuids::uuid& tag )
+{
+    boost::lock_guard< boost::shared_mutex > lock( *access_ );
+    T_Sessions::iterator it = sessions_.find( tag );
+    if( it == sessions_.end() )
+        return boost::shared_ptr< Session_ABC >();
 
-    return Reply( ToJson( *ptr ) );
+    boost::shared_ptr< Session_ABC > ptr = it->second;
+    sessions_.erase( it );
+    return ptr;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::DeleteSession
+// Created: BAX 2012-03-16
+// -----------------------------------------------------------------------------
+Reply Agent::DeleteSession( const boost::uuids::uuid& tag )
+{
+    boost::shared_ptr< Session_ABC > ptr = ExtractSession( tag );
+    if( !ptr )
+        return Reply( ( boost::format( "unable to find session %1%" ) % tag ).str(), false );
+
+    ptr->Stop();
+    return Reply( ptr->ToJson() );
 }
