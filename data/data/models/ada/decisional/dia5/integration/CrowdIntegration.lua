@@ -350,5 +350,5 @@ integration.healWoundedInCrowd = function( crowd )
 end
 
 integration.getNbWoundedInCrowd = function( crowd )
-    return DEC_Crowd_GetNbreOfWoundedHumans()
+    return DEC_Crowd_GetNbreOfWoundedHumans( crowd.source )
 end
