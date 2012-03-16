@@ -163,11 +163,11 @@ end
 -- --------------------------------------------------------------------------------
 integration.buildInstantlyCheckPointOn = function( position )  -- A appeler une seule fois.
     if not position.constructedObject then
-    local localisation = DEC_Geometrie_ConvertirPointEnLocalisation( position.source )
-    local checkpoint = integration.obtenirObjetProcheDe( localisation, 
+        local localisation = DEC_Geometrie_ConvertirPointEnLocalisation( position.source )
+        local checkpoint = integration.obtenirObjetProcheDe( localisation, 
                         S_TypeObject_ToString( eTypeObjectPosteControle ), 10 )
-    if checkpoint == nil then -- need to create a checkpoint object
-        DEC_CreerObjetSansDelais( 
+        if checkpoint == nil then -- need to create a checkpoint object
+            DEC_CreerObjetSansDelais( 
                 S_TypeObject_ToString( eTypeObjectPosteControle ), localisation )
         end
         meKnowledge:RC( eRC_MiseEnPlaceFiltrage )
