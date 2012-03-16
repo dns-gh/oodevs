@@ -9,6 +9,7 @@ set( root_dir ${CMAKE_SOURCE_DIR}/.. )
 
 include_directories( ${dev_dir}/include )
 link_directories( ${dev_dir}/lib/${platform} )
+include_directories( ${root_dir}/src/libraries )
 
 ################################################################################
 # runtime
@@ -24,7 +25,6 @@ if( WIN32 )
     list( APPEND files ${win32_files} )
 endif()
 add_static_library( runtime ${files} )
-add_target_include( runtime ${root_dir}/src/libraries )
 
 ################################################################################
 # web_server
@@ -34,7 +34,6 @@ file( GLOB files
     "${root_dir}/src/libraries/web/*.cpp"
 )
 add_static_library( web ${files} )
-add_target_include( web ${root_dir}/src/libraries )
 
 ################################################################################
 # host
@@ -44,7 +43,6 @@ file( GLOB files
     "${root_dir}/src/libraries/host/*.cpp"
 )
 add_static_library( host ${files} )
-add_target_include( host ${root_dir}/src/libraries )
 
 ################################################################################
 # sample_agent
@@ -53,7 +51,6 @@ file( GLOB files
     "${root_dir}/src/samples/sample_agent/*.cpp"
 )
 add_executable_target( sample_agent ${files} )
-add_target_include( sample_agent ${root_dir}/src/libraries )
 add_target_external_library( sample_agent mongoose_d mongoose )
 target_link_libraries( sample_agent
     runtime
@@ -79,7 +76,6 @@ if( WIN32 )
 endif()
 add_executable_target( runtime_test ${files} )
 set_target_folder( runtime_test tests )
-add_target_include( runtime_test ${root_dir}/src/libraries )
 target_link_libraries( runtime_test
     runtime
 )
@@ -94,7 +90,6 @@ file( GLOB files
 )
 add_executable_target( host_test ${files} )
 set_target_folder( host_test tests )
-add_target_include( host_test ${root_dir}/src/libraries )
 target_link_libraries( host_test
     host
 )
@@ -109,7 +104,6 @@ file( GLOB files
 )
 add_executable_target( web_test ${files} )
 set_target_folder( web_test tests )
-add_target_include( web_test ${root_dir}/src/libraries )
 target_link_libraries( web_test
     web
 )
