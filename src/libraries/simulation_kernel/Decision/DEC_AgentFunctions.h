@@ -52,7 +52,8 @@ public:
     static bool IsInCity( const MIL_Agent_ABC& callerAgent );
     static bool IsInCrowd( const MIL_Agent_ABC& callerAgent );
     static std::string GetMilPionType( DEC_Decision_ABC* pion );
-
+    
+    static bool AgentHasFuseau( const MIL_Agent_ABC&  agent );
     static bool CanConstructObject( const MIL_Agent_ABC& callerAgent, const std::string& type );
     static bool CanConstructObjectWithLocalisation( const MIL_Agent_ABC& callerAgent, const std::string& type, const TER_Localisation* location );
     static bool CanConstructWithoutReinforcement( const MIL_Agent_ABC& callerAgent, const std::string& type );
