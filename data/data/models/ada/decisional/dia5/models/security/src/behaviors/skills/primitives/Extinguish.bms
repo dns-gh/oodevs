@@ -63,7 +63,7 @@ rootnode
                 Feedback( self.feedbacks.done )
             end
         else
-            Feedback( self.feedbacks.done ) -- if no fires issued, we assume that fires have been extinguished
+            Feedback( self.feedbacks.failed ) -- if no fires issued
         end
     end
 }
