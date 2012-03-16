@@ -639,6 +639,6 @@
   <report category="operational" id="452" message="Prise en otage de %1">
     <parameter type="AgentKnowledge"/>
   </report>
-  <report category="operational" id="413" message="En attente d'une escorte ou d'ordre poursuivre convoi"/>
+  <report category="operational" id="453" message="En attente d'une escorte ou d'ordre poursuivre convoi"/>
 </reports>
-<!-- signature="0967792527" -->
+<!-- signature="1440308226" -->
