@@ -36,14 +36,18 @@
     </target>
 
     <!-- Tests -->
-    <target name="tests" depends="win32_runtime_test,web_test" description="build tests"/>
+    <target name="tests" depends="host_test,win32_runtime_test,web_test" description="build tests"/>
 
     <target name="win32_runtime_test" depends="runtime" description="build win32 runtime tests">
         <build-test name="win32_runtime" depends="boost" libs="runtime@{suffix}"/>
     </target>
 
+    <target name="host_test" depends="host" description="build host tests">
+        <build-test name="host" depends="boost" libs="host@{suffix}"/>
+    </target>
+
     <target name="web_test" depends="web" description="build web tests">
-        <build-test name="web" depends="boost" libs="host@{suffix},web@{suffix}"/>
+        <build-test name="web" depends="boost" libs="web@{suffix}"/>
     </target>
 
     <!-- Reports -->

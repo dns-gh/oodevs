@@ -89,7 +89,7 @@ Reply Agent::List( int offset, int limit ) const
         data += ( idx ? ", " : "" ) + ToJson( *it->second );
     lock.unlock();
 
-    return Reply( "[ " + data + " ]" );
+    return Reply( "[" + data + "]" );
 }
 
 // -----------------------------------------------------------------------------

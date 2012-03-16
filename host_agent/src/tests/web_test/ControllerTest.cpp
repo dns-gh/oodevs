@@ -12,42 +12,28 @@
 #endif
 
 #include "web_test.h"
-#include <runtime/Process_ABC.h>
-#include <runtime/Runtime_ABC.h>
-#include <host/Agent.h>
+
+#include <host/Agent_ABC.h>
+
 #include <web/Controller.h>
 #include <web/Observer_ABC.h>
 #include <web/Request_ABC.h>
+
 #include <boost/algorithm/string/join.hpp>
 #include <boost/assign/list_of.hpp>
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/make_shared.hpp>
 #include <boost/xpressive/xpressive.hpp>
 
-using namespace process;
 using namespace web;
-using namespace host;
 
 namespace
 {
-    MOCK_BASE_CLASS( MockRuntime, Runtime_ABC )
+    MOCK_BASE_CLASS( MockAgent, host::Agent_ABC )
     {
-        MOCK_METHOD( GetProcesses, 0 );
+        MOCK_METHOD( List, 2 );
         MOCK_METHOD( Start, 3 );
-    };
-
-    MOCK_BASE_CLASS( MockProcess, Process_ABC )
-    {
-        MockProcess( int pid, const std::string& name )
-        {
-            MOCK_EXPECT( GetPid ).returns( pid );
-            MOCK_EXPECT( GetName ).returns( name );
-        }
-        MOCK_METHOD( GetPid, 0 );
-        MOCK_METHOD( GetName, 0 );
-        MOCK_METHOD( Join, 1 );
-        MOCK_METHOD( Kill, 1 );
+        MOCK_METHOD( Stop, 1 );
     };
 
     MOCK_BASE_CLASS( MockRequest, Request_ABC )
@@ -57,15 +43,6 @@ namespace
         MOCK_METHOD( GetParameter, 1 );
         MOCK_METHOD( GetHeader, 1 );
     };
-
-    Runtime_ABC::T_Processes FakeProcesses( int size)
-    {
-        Runtime_ABC::T_Processes list;
-        for( int idx = 0; idx < size; ++idx )
-            list.push_back( boost::make_shared< MockProcess >( idx + 1, "process_" +
-                boost::lexical_cast< std::string >( idx + 1 ) ) );
-        return list;
-    }
 
     const boost::xpressive::sregex httpCodeRegex = boost::xpressive::sregex::compile( "^HTTP\\/1\\.1\\s+(\\d+)\\s+.+\r\n" );
     bool CheckHttpCode( int code, const std::string& data )
@@ -81,24 +58,10 @@ namespace
         return boost::xpressive::regex_replace( data, httpHeaderRegex, "" );
     }
 
-    template< int size >
-    struct RuntimeFixture
-    {
-        RuntimeFixture()
-            : processes( FakeProcesses( size ) )
-        {
-            MOCK_EXPECT( runtime.GetProcesses ).once().returns( processes );
-        }
-        Runtime_ABC::T_Processes processes;
-        MockRuntime runtime;
-    };
-
-    template< int size >
-    struct Fixture : public RuntimeFixture< size >
+    struct Fixture
     {
         Fixture()
-            : agent( RuntimeFixture< size >::runtime )
-            , controller( agent )
+            : controller( agent )
         {
             // NOTHING
         }
@@ -117,61 +80,23 @@ namespace
             BOOST_CHECK_EQUAL( expected, EraseHttpHeader( reply ));
         }
         MockRequest request;
-        Agent agent;
+        MockAgent agent;
         Controller controller;
     };
 }
 
-BOOST_FIXTURE_TEST_CASE( web_controller_lists, Fixture< 16 > )
+BOOST_FIXTURE_TEST_CASE( web_controller_lists, Fixture )
 {
     SetRequest( "GET", "/list", boost::assign::map_list_of
         ( "offset", "5" )
         ( "limit", "3" )
     );
-    CheckNotify( 200, "[ "
-        "{ \"pid\" : 6, \"name\" : \"process_6\" }, "
-        "{ \"pid\" : 7, \"name\" : \"process_7\" }, "
-        "{ \"pid\" : 8, \"name\" : \"process_8\" }"
-        " ]"
-    );
+    const std::string expected = "some data";
+    MOCK_EXPECT( agent.List ).once().with( 5, 3 ).returns( expected );
+    CheckNotify( 200, expected );
 }
 
-BOOST_FIXTURE_TEST_CASE( web_controller_clips_invalid_list_parameters, Fixture< 16 > )
-{
-    SetRequest( "GET", "/list", boost::assign::map_list_of
-        ( "offset", "-20" )
-        ( "limit", "2" )
-    );
-    CheckNotify( 200, "[ "
-        "{ \"pid\" : 1, \"name\" : \"process_1\" }, "
-        "{ \"pid\" : 2, \"name\" : \"process_2\" }"
-        " ]"
-    );
-
-    SetRequest( "GET", "/list", boost::assign::map_list_of
-        ( "offset", "27" )
-        ( "limit", "10" )
-    );
-    CheckNotify( 200, "[  ]" );
-
-    SetRequest( "GET", "/list", boost::assign::map_list_of
-        ( "offset", "5" )
-        ( "limit", "-20" )
-    );
-    CheckNotify( 200, "[  ]" );
-
-    SetRequest( "GET", "/list", boost::assign::map_list_of
-        ( "offset", "14" )
-        ( "limit", "18" )
-    );
-    CheckNotify( 200, "[ "
-        "{ \"pid\" : 15, \"name\" : \"process_15\" }, "
-        "{ \"pid\" : 16, \"name\" : \"process_16\" }"
-        " ]"
-    );
-}
-
-BOOST_FIXTURE_TEST_CASE( web_controller_starts, Fixture< 5 > )
+BOOST_FIXTURE_TEST_CASE( web_controller_starts, Fixture )
 {
     const std::string app = "e:/my_app.exe", run = "e:/run_dir/vc100";
     const std::vector< std::string> args = boost::assign::list_of
@@ -183,15 +108,16 @@ BOOST_FIXTURE_TEST_CASE( web_controller_starts, Fixture< 5 > )
         ( "cmd", boost::algorithm::join( args, "," ) )
         ( "run", run )
     );
-    MOCK_EXPECT( runtime.Start ).once().with( app, args, run ).returns( boost::make_shared< MockProcess >( 42, "Zebulon" ) );
-    CheckNotify( 200, "{ \"pid\" : 42, \"name\" : \"Zebulon\" }" );
+    const std::string expected = "some data";
+    MOCK_EXPECT( agent.Start ).once().with( app, args, run ).returns( expected );
+    CheckNotify( 200, expected );
 }
 
-BOOST_FIXTURE_TEST_CASE( web_controller_stops, Fixture< 16 > )
+BOOST_FIXTURE_TEST_CASE( web_controller_stops, Fixture )
 {
     const int pid = 7;
     SetRequest( "GET", "/stop", boost::assign::map_list_of( "pid", boost::lexical_cast< std::string >( pid ) ) );
-    MockProcess& process = dynamic_cast< MockProcess& >( *processes[ pid - 1 ] );
-    MOCK_EXPECT( process.Kill ).once().with( mock::any ).returns( true );
-    CheckNotify( 200, "{ \"pid\" : 7, \"name\" : \"process_7\" }" );
+    const std::string expected = "some data";
+    MOCK_EXPECT( agent.Stop ).once().with( pid ).returns( expected );
+    CheckNotify( 200, expected );
 }

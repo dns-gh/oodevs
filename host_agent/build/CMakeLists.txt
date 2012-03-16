@@ -77,6 +77,21 @@ target_link_libraries( win32_runtime_test
 add_test_target( win32_runtime_test win32_runtime )
 
 ################################################################################
+# host_test
+################################################################################
+file( GLOB files
+    "${root_dir}/src/tests/host_test/*.cpp"
+    "${root_dir}/src/tests/host_test/*.h"
+)
+add_executable_target( host_test ${files} )
+set_target_folder( host_test tests )
+add_target_include( host_test ${root_dir}/src/libraries )
+target_link_libraries( host_test
+    host
+)
+add_test_target( host_test host )
+
+################################################################################
 # web_test
 ################################################################################
 file( GLOB files
@@ -87,7 +102,6 @@ add_executable_target( web_test ${files} )
 set_target_folder( web_test tests )
 add_target_include( web_test ${root_dir}/src/libraries )
 target_link_libraries( web_test
-    host
     web
 )
 add_test_target( web_test web )
