@@ -8,7 +8,7 @@
 // *****************************************************************************
 
 #include "runtime_test.h"
-#include <runtime/win32/Utf8.h>
+#include <runtime/Utf8.h>
 
 using namespace process;
 

@@ -6,7 +6,7 @@
 // Copyright (c) 2012 Mathématiques Appliquées SA (MASA)
 //
 // *****************************************************************************
-#include "Utf8.h"
+#include "../Utf8.h"
 #include <vector>
 #ifndef  _WIN64
 #define  BOOST_BIND_ENABLE_STDCALL

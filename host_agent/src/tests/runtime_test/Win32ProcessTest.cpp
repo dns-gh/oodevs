@@ -13,10 +13,10 @@
 
 #include "runtime_test.h"
 #include "MockApi.h"
+#include <runtime/Utf8.h>
 #include <runtime/win32/Api_ABC.h>
 #include <runtime/win32/Process.h>
 #include <runtime/win32/Handle.h>
-#include <runtime/win32/Utf8.h>
 #include <boost/bind.hpp>
 
 using namespace process;

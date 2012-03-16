@@ -62,19 +62,27 @@ target_link_libraries( sample_agent
 )
 
 ################################################################################
-# win32_runtime_test
+# runtime_test
 ################################################################################
 file( GLOB files
-    "${root_dir}/src/tests/win32_runtime_test/*.cpp"
-    "${root_dir}/src/tests/win32_runtime_test/*.h"
+    "${root_dir}/src/tests/runtime_test/runtime_test.cpp"
+    "${root_dir}/src/tests/runtime_test/runtime_test.h"
+    "${root_dir}/src/tests/runtime_test/Utf8Test.cpp"
 )
-add_executable_target( win32_runtime_test ${files} )
-set_target_folder( win32_runtime_test tests )
-add_target_include( win32_runtime_test ${root_dir}/src/libraries )
-target_link_libraries( win32_runtime_test
+if( WIN32 )
+    file( GLOB win32_files
+        "${root_dir}/src/tests/runtime_test/Win32ProcessTest.cpp"
+        "${root_dir}/src/tests/runtime_test/Win32RuntimeTest.cpp"
+    )
+    list( APPEND files ${win32_files} )
+endif()
+add_executable_target( runtime_test ${files} )
+set_target_folder( runtime_test tests )
+add_target_include( runtime_test ${root_dir}/src/libraries )
+target_link_libraries( runtime_test
     runtime
 )
-add_test_target( win32_runtime_test win32_runtime )
+add_test_target( runtime_test runtime )
 
 ################################################################################
 # host_test

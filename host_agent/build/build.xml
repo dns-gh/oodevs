@@ -36,10 +36,10 @@
     </target>
 
     <!-- Tests -->
-    <target name="tests" depends="host_test,win32_runtime_test,web_test" description="build tests"/>
+    <target name="tests" depends="host_test,runtime_test,web_test" description="build tests"/>
 
-    <target name="win32_runtime_test" depends="runtime" description="build win32 runtime tests">
-        <build-test name="win32_runtime" depends="boost" libs="runtime@{suffix}"/>
+    <target name="runtime_test" depends="runtime" description="build runtime tests">
+        <build-test name="runtime" depends="boost" libs="runtime@{suffix}"/>
     </target>
 
     <target name="host_test" depends="host" description="build host tests">
