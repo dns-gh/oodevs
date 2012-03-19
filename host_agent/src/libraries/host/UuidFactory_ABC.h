@@ -33,7 +33,7 @@ public:
 
     //! @name Methods
     //@{
-    virtual boost::uuids::uuid GetRandom() const = 0;
+    virtual boost::uuids::uuid Create() const = 0;
     //@}
 };
 

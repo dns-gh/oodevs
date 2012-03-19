@@ -25,7 +25,7 @@ BOOST_AUTO_TEST_CASE( uuid_factory_returns_valid_uuids )
     const boost::xpressive::sregex session_regex = boost::xpressive::sregex::compile(
         x +"{8,8}-" + x + "{4,4}-" + x + "{4,4}-" + x + "{4,4}-" + x + "{12,12}" );
     host::UuidFactory uuids;
-    const std::string uuid = boost::lexical_cast< std::string >( uuids.GetRandom() );
+    const std::string uuid = boost::lexical_cast< std::string >( uuids.Create() );
     bool valid = boost::xpressive::regex_match( uuid, session_regex );
     BOOST_CHECK( valid );
 }

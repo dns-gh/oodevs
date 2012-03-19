@@ -38,7 +38,7 @@ namespace
         MOCK_METHOD( ListSessions, 2 );
         MOCK_METHOD( CountSessions, 0 );
         MOCK_METHOD( GetSession, 1 );
-        MOCK_METHOD( CreateSession, 1 );
+        MOCK_METHOD( CreateSession, 2 );
         MOCK_METHOD( DeleteSession, 1 );
     };
 
@@ -120,9 +120,14 @@ BOOST_FIXTURE_TEST_CASE( controller_get_session, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( controller_create_session, Fixture )
 {
-    SetRequest( "GET", "/create_session", boost::assign::map_list_of( "port", "3030" ) );
+    const std::string exercise = "Noname";
+    const int port = 3030;
+    SetRequest( "GET", "/create_session", boost::assign::map_list_of
+        ( "port", boost::lexical_cast< std::string >( port ) )
+        ( "exercise", exercise )
+    );
     const std::string expected = "a json session";
-    MOCK_EXPECT( agent.CreateSession ).once().with( 3030 ).returns( expected );
+    MOCK_EXPECT( agent.CreateSession ).once().with( exercise, port ).returns( expected );
     CheckNotify( 200, expected );
 }
 

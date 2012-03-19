@@ -12,13 +12,12 @@
 #endif
 
 #include "Agent.h"
-#include "Session_ABC.h"
 #include "Session.h"
-#include <runtime/Process_ABC.h>
-#include <runtime/Runtime_ABC.h>
+#include "Session_ABC.h"
+#include "SessionFactory_ABC.h"
+
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/make_shared.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
 #ifdef _MSC_VER
@@ -38,8 +37,8 @@ using namespace runtime;
 // Name: Agent::Agent
 // Created: BAX 2012-03-07
 // -----------------------------------------------------------------------------
-Agent::Agent( const Runtime_ABC& runtime )
-    : runtime_( runtime )
+Agent::Agent( const SessionFactory_ABC& sessionFactory )
+    : sessionFactory_( sessionFactory )
     , access_ ( new boost::shared_mutex() )
 {
     // NOTHING
@@ -125,11 +124,11 @@ void Agent::AddSession( boost::shared_ptr< Session_ABC > ptr )
 // Name: Agent::CreateSession
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-Reply Agent::CreateSession( int port )
+Reply Agent::CreateSession( const std::string& exercise, int port )
 {
     SessionConfig config;
     config.port = port;
-    boost::shared_ptr< Session_ABC > ptr = boost::make_shared< Session >( config );
+    boost::shared_ptr< Session_ABC > ptr = sessionFactory_.Create( exercise, config );
     if( !ptr )
         return Reply( "unable to create new session", false ); // TODO add better error message
     AddSession( ptr );

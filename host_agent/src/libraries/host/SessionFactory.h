@@ -7,16 +7,14 @@
 //
 // *****************************************************************************
 
-#ifndef SESSION_H
-#define SESSION_H
+#ifndef SESSION_FACTORY_H
+#define SESSION_FACTORY_H
 
-#include "Session_ABC.h"
 #include "SessionFactory_ABC.h"
 
 namespace runtime
 {
     class Runtime_ABC;
-    class Process_ABC;
 }
 
 namespace host
@@ -25,41 +23,34 @@ namespace host
     class FileSystem_ABC;
 
 // =============================================================================
-/** @class  Session
-    @brief  Session class definition
+/** @class  SessionFactory
+    @brief  SessionFactory interface
 */
-// Created: BAX 2012-03-16
+// Created: BAX 2012-03-19
 // =============================================================================
-class Session : public Session_ABC
+class SessionFactory : public SessionFactory_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Session( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
-                      const FileSystem_ABC& system, const std::string& exercise, const SessionConfig& config );
-    virtual ~Session();
+             SessionFactory( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids, const FileSystem_ABC& system );
+    virtual ~SessionFactory();
     //@}
 
-    //! @name Overrided methods
+    //! @name Methods
     //@{
-    virtual boost::uuids::uuid GetTag() const;
-    virtual std::string ToJson() const;
-    virtual void Start();
-    virtual void Stop();
+    virtual boost::shared_ptr< Session_ABC > Create( const std::string& exercise, const SessionConfig& config ) const;
     //@}
 
 private:
-    //! @name Member data
+    //! @name Private members
     //@{
     const runtime::Runtime_ABC& runtime_;
+    const UuidFactory_ABC& uuids_;
     const FileSystem_ABC& system_;
-    const boost::uuids::uuid tag_;
-    const SessionConfig config_;
-    const std::string exercise_;
-    boost::shared_ptr< runtime::Process_ABC > process_;
     //@}
 };
 
 }
 
-#endif // SESSION_H
+#endif // SESSION_FACTORY_H

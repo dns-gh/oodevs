@@ -11,35 +11,39 @@
 #   define _SCL_SECURE_NO_WARNINGS
 #endif
 
-#include "UuidFactory.h"
+#include "SessionFactory.h"
+#include "Session.h"
 
-#include <boost/uuid/uuid_generators.hpp>
+#include <boost/make_shared.hpp>
 
 using namespace host;
 
 // -----------------------------------------------------------------------------
-// Name: UuidFactory::UuidFactory
+// Name: SessionFactory::SessionFactory
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
-UuidFactory::UuidFactory()
+SessionFactory::SessionFactory( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids, const FileSystem_ABC& system )
+    : runtime_( runtime )
+    , uuids_  ( uuids )
+    , system_ ( system )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: UuidFactory::~UuidFactory
+// Name: SessionFactory::~SessionFactory
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
-UuidFactory::~UuidFactory()
+SessionFactory::~SessionFactory()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: UuidFactory::GetRandom
+// Name: SessionFactory::Create
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
-boost::uuids::uuid UuidFactory::Create() const
+boost::shared_ptr< Session_ABC > SessionFactory::Create( const std::string& exercise, const SessionConfig& config ) const
 {
-    return boost::uuids::random_generator()();
+    return boost::make_shared< Session >( runtime_, uuids_, system_, exercise, config );
 }

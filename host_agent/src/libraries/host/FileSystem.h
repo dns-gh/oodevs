@@ -7,35 +7,39 @@
 //
 // *****************************************************************************
 
-#ifndef UUID_FACTORY_H
-#define UUID_FACTORY_H
+#ifndef FILE_SYSTEM_H
+#define FILE_SYSTEM_H
 
-#include "UuidFactory_ABC.h"
+#include "FileSystem_ABC.h"
 
 namespace host
 {
 
 // =============================================================================
-/** @class  UuidFactory
-    @brief  UuidFactory interface
+/** @class  FileSystem
+    @brief  FileSystem interface
 */
 // Created: BAX 2012-03-19
 // =============================================================================
-class UuidFactory : public UuidFactory_ABC
+class FileSystem : public FileSystem_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             UuidFactory();
-    virtual ~UuidFactory();
+             FileSystem();
+    virtual ~FileSystem();
     //@}
 
     //! @name Methods
     //@{
-    virtual boost::uuids::uuid Create() const;
+    virtual bool IsFile( const boost::filesystem::wpath& path ) const;
+    virtual bool IsDirectory( const boost::filesystem::wpath& path ) const;
+    virtual bool Exists( const boost::filesystem::wpath& path ) const;
+    virtual void Copy( const boost::filesystem::wpath& dst, const boost::filesystem::wpath& src ) const;
+    virtual void CreateDirectory( const boost::filesystem::wpath& path ) const;
     //@}
 };
 
 }
 
-#endif // SESSION_H
+#endif // FILE_SYSTEM_H

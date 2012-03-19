@@ -19,14 +19,10 @@ namespace boost
     class shared_mutex;
 }
 
-namespace runtime
-{
-    class Runtime_ABC;
-}
-
 namespace host
 {
     class Session_ABC;
+    class SessionFactory_ABC;
 
 // =============================================================================
 /** @class  Agent
@@ -39,7 +35,7 @@ class Agent : public Agent_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Agent( const runtime::Runtime_ABC& runtime );
+             Agent( const SessionFactory_ABC& session_ );
     virtual ~Agent();
     //@}
 
@@ -48,7 +44,7 @@ public:
     virtual Reply ListSessions ( int offset, int limit ) const;
     virtual Reply CountSessions() const;
     virtual Reply GetSession   ( const boost::uuids::uuid& tag ) const;
-    virtual Reply CreateSession( int port );
+    virtual Reply CreateSession( const std::string& exercise, int port );
     virtual Reply DeleteSession( const boost::uuids::uuid& tag );
     //@}
 
@@ -66,7 +62,7 @@ private:
 
     //! @name Member data
     //@{
-    const runtime::Runtime_ABC& runtime_;
+    const SessionFactory_ABC& sessionFactory_;
     std::auto_ptr< boost::shared_mutex > access_;
     T_Sessions sessions_;
     //@}

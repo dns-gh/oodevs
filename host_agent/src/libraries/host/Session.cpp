@@ -8,29 +8,61 @@
 // *****************************************************************************
 
 #ifdef  _MSC_VER
-#define _SCL_SECURE_NO_WARNINGS
+#   define _SCL_SECURE_NO_WARNINGS
 #endif
 
 #include "Session.h"
+#include "FileSystem_ABC.h"
+#include "UuidFactory_ABC.h"
 
 #include <runtime/Process_ABC.h>
+#include <runtime/Runtime_ABC.h>
+#include <runtime/Utf8.h>
 
+#include <boost/assign/list_of.hpp>
+#include <boost/filesystem/operations.hpp>
+#include <boost/foreach.hpp>
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/uuid/uuid_generators.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
 using namespace host;
+
+namespace
+{
+    const int MAX_KILL_TIMEOUT = 3*1000;
+
+    // -----------------------------------------------------------------------------
+    // Name: Utf8Convert
+    // Created: BAX 2012-03-19
+    // -----------------------------------------------------------------------------
+    std::string Utf8Convert( const boost::filesystem::wpath& path )
+    {
+        return runtime::Utf8Convert( path.string() );
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: Session::Session
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-Session::Session( const SessionConfig& config )
-    : tag_   ( boost::uuids::random_generator()() )
-    , config_( config )
+Session::Session( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
+                  const FileSystem_ABC& system, const std::string& exercise, const SessionConfig& config )
+    : runtime_ ( runtime )
+    , system_  ( system )
+    , tag_     ( uuids.Create() )
+    , config_  ( config )
+    , exercise_( exercise )
 {
-    // NOTHING
+    if( !system_.IsDirectory( config.data ) )
+        throw std::runtime_error( Utf8Convert( config.data ) + " is not a directory" );
+    if( !system_.IsDirectory( config.applications ) )
+        throw std::runtime_error( Utf8Convert( config.applications ) + " is not a directory " );
+    const boost::filesystem::wpath app = config.applications / L"simulation_app.exe";
+    if( !system_.Exists( app ) )
+        throw std::runtime_error( Utf8Convert( app ) + " is missing" );
+    if( !system_.IsFile( app ) )
+        throw std::runtime_error( Utf8Convert( app ) + " is not a file" );
 }
 
 // -----------------------------------------------------------------------------
@@ -69,7 +101,18 @@ std::string Session::ToJson() const
 // -----------------------------------------------------------------------------
 void Session::Start()
 {
-    // NOTHING
+    const boost::filesystem::wpath root = config_.output / boost::lexical_cast< std::wstring >( tag_ );
+    system_.CreateDirectory( root );
+    system_.Copy( config_.data / L"exercises" / runtime::Utf8Convert( exercise_ ), root );
+    process_ = runtime_.Start( Utf8Convert( config_.applications / L"simulation_app.exe" ),
+        boost::assign::list_of
+            (  "--root-dir="      + Utf8Convert( config_.data ) )
+            (  "--exercises-dir=" + Utf8Convert( root ) )
+            (  "--terrains-dir="  + Utf8Convert( config_.data / L"data/terrains" ) )
+            (  "--models-dir="    + Utf8Convert( config_.data / L"data/models" ) )
+            (  "--exercise="      + exercise_ )
+            (  "--session=default" ), Utf8Convert( config_.applications )
+    );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,5 +121,6 @@ void Session::Start()
 // -----------------------------------------------------------------------------
 void Session::Stop()
 {
-    // NOTHING
+    if( process_ )
+        process_->Kill( MAX_KILL_TIMEOUT );
 }

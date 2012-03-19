@@ -13,14 +13,20 @@
 
 #include <runtime/Factory.h>
 #include <host/Agent.h>
+#include <host/UuidFactory.h>
+#include <host/FileSystem.h>
+#include <host/SessionFactory.h>
 #include <web/Controller.h>
 #include <web/MongooseServer.h>
 
 int main( int /*argc*/, const char* /*argv*/[] )
 {
 
-    runtime::Factory factory;
-    host::Agent agent( factory.GetRuntime() );
+    runtime::Factory runtime;
+    host::UuidFactory uuids;
+    host::FileSystem system;
+    host::SessionFactory factory( runtime.GetRuntime(), uuids, system );
+    host::Agent agent( factory );
     web::Controller controller( agent );
     web::MongooseServer server( controller );
     getc( stdin );
