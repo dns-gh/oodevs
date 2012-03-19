@@ -65,10 +65,10 @@ bool FileSystem::Exists( const boost::filesystem::wpath& path ) const
 void FileSystem::Copy( const boost::filesystem::wpath& src, const boost::filesystem::wpath& dst ) const
 {
     if( IsFile( src ) )
-        boost::filesystem::copy_file( src, dst );
+        return boost::filesystem::copy_file( src, dst / src.filename() );
     else if( !IsDirectory( src ) )
         return;
-    const boost::filesystem::wpath sub = dst / src.leaf();
+    const boost::filesystem::wpath sub = dst / src.filename();
     if( !boost::filesystem::create_directory( sub ) )
         throw std::runtime_error( "unable to create " + runtime::Utf8Convert( sub.string() ) );
     for( boost::filesystem::wdirectory_iterator it( src ); it != boost::filesystem::wdirectory_iterator(); ++it )
