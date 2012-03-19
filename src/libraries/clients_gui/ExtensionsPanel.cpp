@@ -116,6 +116,8 @@ void ExtensionsPanel::NotifySelected( const Entity_ABC* element )
                 pGroupBox_->setMargin( 5 );
                 for( ExtensionType::RCIT_AttributesTypes it = attributes.rbegin(); it != attributes.rend(); ++it )
                     AddWidget( **it );
+                QHBoxLayout* layout = static_cast< QHBoxLayout* >( pGroupBox_->layout() );
+                layout->addStretch( 2 );
                 UpdateDependencies();
                 const DictionaryExtensions* ext = selected_->Retrieve< DictionaryExtensions >();
                 if( !ext )
@@ -282,6 +284,16 @@ void ExtensionsPanel::AddWidget( const kernel::AttributeType& attribute )
     switch( attribute.GetType() )
     {
     case AttributeType::ETypeString:
+        if( attribute.GetName() == "Information" ) // $$$$ ABR 2012-03-19: Hack caused by this f**** frozen icd, TODO replace by a 'longstring' type.
+        {
+            QTextEdit* edit = new QTextEdit( box, attribute.GetName().c_str() );
+            edit->insert( value.c_str() );
+            edit->setFixedHeight( 90 );
+            box->setStretchFactor( edit, 1 );
+            widgets_.push_back( edit );
+            connect( edit, SIGNAL( textChanged() ), SLOT( Commit() ) );
+        }
+        else
         {
             QLineEdit* edit = new QLineEdit( box, attribute.GetName().c_str() );
             if( min != -1 || max != -1 )
@@ -429,6 +441,13 @@ void ExtensionsPanel::Commit()
             case AttributeType::ETypeAlphanumeric:
             case AttributeType::ETypeNumeric:
             case AttributeType::ETypeDiffusionList:
+                if( attribute->GetName() == "Information" ) // $$$$ ABR 2012-03-19: Hack caused by this f**** frozen icd, TODO replace by a 'longstring' type.
+                {
+                    QTextEdit* edit = static_cast< QTextEdit* >( *it );
+                    QString text = edit->text();
+                    ext->SetValue( edit->name(), enabled ? text.ascii() : "" );
+                }
+                else
                 {
                     QLineEdit* edit = static_cast< QLineEdit* >( *it );
                     QString text = edit->text();
@@ -504,6 +523,12 @@ void ExtensionsPanel::UpdateDisplay()
             case AttributeType::ETypeAlphanumeric:
             case AttributeType::ETypeNumeric:
             case AttributeType::ETypeDiffusionList:
+                if( attribute->GetName() == "Information" ) // $$$$ ABR 2012-03-19: Hack caused by this f**** frozen icd, TODO replace by a 'longstring' type.
+                {
+                    QTextEdit* edit = static_cast< QTextEdit* >( *it );
+                    edit->setText( enabled ? value : "" );
+                }
+                else
                 {
                     QLineEdit* edit = static_cast< QLineEdit* >( *it );
                     edit->setText( enabled ? value : "" );
