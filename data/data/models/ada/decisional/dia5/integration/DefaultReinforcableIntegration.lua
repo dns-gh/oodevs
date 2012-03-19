@@ -86,7 +86,7 @@ integration.unitsAbleToReinforce = function ( unitToSupport, units, obstacle, ac
     for _, unit in pairs ( units ) do 
         list[#list + 1] = unit.source
     end
-    local localisationObject = DEC_ConnaissanceObjet_Localisation( obstacle.source )
+    local localisationObject = obstacle:getLocalisation()
     local localisationisOK = false
     if localisationObject ~= nil then
         localisationisOK = true
