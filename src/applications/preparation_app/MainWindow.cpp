@@ -584,6 +584,8 @@ void MainWindow::SaveAs()
     bfs::copy_file( config_.GetExerciseFile(), exerciseFile );
     config_.LoadExercise( exerciseFile.string() );
     model_.exercise_.SetName( name );
+    filterDialogs_->Purge();
+    filterDialogs_->Load();
     needsSaving_ = true;
     Save();
 }
@@ -707,7 +709,9 @@ void MainWindow::SetWindowTitle( bool needsSaving )
     QString filename = tr( "No file loaded" );
     if( model_.IsLoaded() )
     {
-        filename = model_.exercise_.GetName().isEmpty() ? tr( "Untitled" ) : model_.exercise_.GetName();
+        filename = model_.exercise_.GetName().isEmpty()
+            ? ( config_.GetExerciseName().empty() ? tr( "Untitled" ) : config_.GetExerciseName().c_str() )
+            : model_.exercise_.GetName();
         if( needsSaving )
             filename += "*";
     }

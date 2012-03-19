@@ -25,6 +25,7 @@ namespace xml
 class Filter_ABC;
 class FilterManager;
 class Menu;
+class Model;
 class QSize;
 
 // =============================================================================
@@ -41,7 +42,7 @@ class FilterDialog : public QDialog
 public:
     //! @name Constructors/Destructor
     //@{
-             FilterDialog( QWidget* parent, xml::xistream& xis, const tools::ExerciseConfig& config );
+             FilterDialog( QWidget* parent, xml::xistream& xis, const tools::ExerciseConfig& config, Model& model );
     virtual ~FilterDialog();
     //@}
 

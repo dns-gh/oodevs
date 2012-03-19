@@ -14,6 +14,7 @@
 #include "frontend/ProcessObserver_ABC.h"
 
 class FilterInputArgument;
+class Model;
 
 // =============================================================================
 /** @class  FilterCommand
@@ -29,7 +30,7 @@ class FilterCommand : public Filter
 public:
     //! @name Constructors/Destructor
     //@{
-             FilterCommand( xml::xistream& xis, const tools::ExerciseConfig& config );
+             FilterCommand( xml::xistream& xis, const tools::ExerciseConfig& config, Model& model );
     virtual ~FilterCommand();
     //@}
 
@@ -85,6 +86,7 @@ private:
     //! @name Member data
     //@{
     const tools::ExerciseConfig& config_;
+    Model&                       model_;
     const std::string            command_;
     std::string                  argumentsLine_;
     T_Arguments                  arguments_;

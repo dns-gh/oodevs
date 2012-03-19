@@ -14,6 +14,8 @@
 #include "clients_kernel/Tools.h"
 #include "frontend/SpawnCommand.h"
 #include "frontend/ProcessWrapper.h"
+#include "preparation/Model.h"
+#include "preparation/Exercise.h"
 #include "tools/ExerciseConfig.h"
 #pragma warning( push, 0 )
 #include <boost/algorithm/string.hpp>
@@ -42,9 +44,10 @@ namespace
 // Name: FilterCommand constructor
 // Created: ABR 2011-06-17
 // -----------------------------------------------------------------------------
-FilterCommand::FilterCommand( xml::xistream& xis, const tools::ExerciseConfig& config )
+FilterCommand::FilterCommand( xml::xistream& xis, const tools::ExerciseConfig& config, Model& model )
     : Filter( xis )
     , config_        ( config )
+    , model_         ( model )
     , command_       ( xis.attribute< std::string >( "command" ) )
     , reloadExercise_( xis.attribute< bool >( "reload-exercise", false ) )
     , minimalDisplay_( xis.attribute< bool >( "minimal-display", false ) )
@@ -104,7 +107,7 @@ std::string FilterCommand::ConvertArgumentVariable( const std::string& value ) c
     if( value == "$rootdir$" )
         result = config_.GetRootDir();
     else if( value == "$exercise$" )
-        result = config_.GetExerciseName();
+        result = model_.IsLoaded() && !model_.exercise_.GetName().isEmpty() ? model_.exercise_.GetName().ascii() : config_.GetExerciseName();
     else if( value == "$exercise_dir$" )
         result = config_.GetExerciseDir( config_.GetExerciseName() );
     else if( value == "$orbat_file$" )

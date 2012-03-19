@@ -25,6 +25,7 @@ namespace xml
 }
 
 class Filter_ABC;
+class Model;
 class QListBox;
 class QWidgetStack;
 
@@ -40,7 +41,7 @@ class FilterManager : private boost::noncopyable
 public:
     //! @name Constructors/Destructor
     //@{
-             FilterManager( xml::xistream& xis, const tools::ExerciseConfig& config, Q3ListBox& list, Q3WidgetStack& stack, QWidget& parent );
+             FilterManager( xml::xistream& xis, const tools::ExerciseConfig& config, Q3ListBox& list, Q3WidgetStack& stack, QWidget& parent, Model& model );
     virtual ~FilterManager();
     //@}
 
@@ -72,6 +73,7 @@ private:
     //@{
     const tools::ExerciseConfig& config_;
     const std::string            id_;
+    Model&                       model_;
     QWidget&                     parent_;
     kernel::XmlDescription       description_;
     T_Filters                    filters_;
