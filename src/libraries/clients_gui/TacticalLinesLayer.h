@@ -95,6 +95,7 @@ protected:
     gui::ColorStrategy_ABC& strategy_;
     gui::ParametersLayer& parameters_;
     bool isLimit_;
+    bool isEditing_;
     kernel::SafePointer< kernel::TacticalLine_ABC > selected_;
     //@}
 };
