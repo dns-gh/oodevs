@@ -12,7 +12,7 @@
 
 #include "ObjectAttribute_ABC.h"
 #include "UpdatableAttribute_ABC.h"
-#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyRecon.h"
+#include "Knowledge/DEC_Knowledge_ObjectAttributeProxyPerceptionPassThrough.h"
 #include <boost/serialization/export.hpp>
 
 namespace logistic
@@ -38,7 +38,7 @@ class LogisticAttribute : public ObjectAttribute_ABC
                         , private UpdatableAttribute_ABC
 {
 public:
-    typedef DEC_Knowledge_ObjectAttributeProxyRecon< LogisticAttribute > T_KnowledgeProxyType;
+    typedef DEC_Knowledge_ObjectAttributeProxyPerceptionPassThrough< LogisticAttribute > T_KnowledgeProxyType;
 
 public:
     //! @name Constructors/Destructor

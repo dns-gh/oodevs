@@ -26,8 +26,8 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( LogisticAttribute )
 
-BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyRecon< LogisticAttribute > )
-BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyRecon< LogisticAttribute > )
+BOOST_CLASS_EXPORT_KEY( DEC_Knowledge_ObjectAttributeProxyPerceptionPassThrough< LogisticAttribute > )
+BOOST_CLASS_EXPORT_IMPLEMENT( DEC_Knowledge_ObjectAttributeProxyPerceptionPassThrough< LogisticAttribute > )
 
 // -----------------------------------------------------------------------------
 // Name: LogisticAttribute constructor
