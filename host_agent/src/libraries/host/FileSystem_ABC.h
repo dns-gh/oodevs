@@ -38,6 +38,7 @@ public:
     virtual bool Exists( const boost::filesystem::wpath& path ) const = 0;
     virtual void Copy( const boost::filesystem::wpath& dst, const boost::filesystem::wpath& src ) const = 0;
     virtual void CreateDirectory( const boost::filesystem::wpath& path ) const = 0;
+    virtual void Remove( const boost::filesystem::wpath& path ) const = 0;
     //@}
 };
 

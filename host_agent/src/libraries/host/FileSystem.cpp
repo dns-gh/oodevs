@@ -83,3 +83,12 @@ void FileSystem::CreateDirectory( const boost::filesystem::wpath& path ) const
 {
     boost::filesystem::create_directories( path );
 }
+
+// -----------------------------------------------------------------------------
+// Name: FileSystem::Remove
+// Created: BAX 2012-03-19
+// -----------------------------------------------------------------------------
+void FileSystem::Remove( const boost::filesystem::wpath& path ) const
+{
+    boost::filesystem::remove_all( path );
+}
