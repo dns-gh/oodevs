@@ -56,6 +56,7 @@ public:
     int                         FindNdx( void * data) const;
     ADN_ComboBoxItem*           GetItem( int ndx );
     int                         GetEnumIndexFromGUI( int index ) const;
+    void                        HideItem( const QString txt );
 
     void setEnabled( bool b );
 
@@ -66,6 +67,7 @@ protected:
     T_ConnectorVector           vItemConnectors_;
     T_PtrComboBoxItem_Vector    vItems_;
     std::vector< int >          vItemsEnum_;
+    std::vector< QString >      vHiddenItem_;
     bool                        fromView_;
 
 private slots:

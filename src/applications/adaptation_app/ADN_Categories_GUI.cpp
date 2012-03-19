@@ -79,6 +79,7 @@ void ADN_Categories_GUI::Build()
     builder.AddField<ADN_EditLine_String>( pHolder, tr( "Name" ), vArmorInfosConnectors[eArmorName], 0, eVarName );
 
     pComboType_ = builder.AddEnumField<E_ProtectionType>( pHolder, tr( "Type" ), vArmorInfosConnectors[eArmorType], ADN_Tr::ConvertFromProtectionType );
+    pComboType_->HideItem( ADN_Tr::ConvertFromProtectionType( eProtectionType_Crowd ).c_str() );
     connect( pComboType_, SIGNAL( activated( int ) ), this, SLOT( OnTypeChanged( int ) ) );
 
     Q3GroupBox* pArmorNeutralizationGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Neutralization" ), pArmorInfoGroup );
@@ -157,16 +158,6 @@ void ADN_Categories_GUI::Build()
 // -----------------------------------------------------------------------------
 void ADN_Categories_GUI::OnTypeChanged( int index )
 {
-    int crowdIndex = -1;
-    for( int i = 0; i < pComboType_->count(); ++i )
-        if( pComboType_->GetEnumIndexFromGUI( i ) == eProtectionType_Crowd )
-        {
-            crowdIndex = i;
-            break;
-        }
-    if( crowdIndex != -1 )
-        static_cast< QComboBox* >( pComboType_ )->removeItem( crowdIndex );
-
     if( pComboType_->GetEnumIndexFromGUI( index ) == eProtectionType_Human )
     {
         pArmorBreakdownGroup_->hide();

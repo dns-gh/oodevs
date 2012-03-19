@@ -130,8 +130,10 @@ void ADN_ComboBox::ItemSelected( int ndx )
 //-----------------------------------------------------------------------------
 void ADN_ComboBox::insertItem( const QString& txt, int index )
 {
-   // If no index is specified, find an index so that the combo is sorted alphabetically.
-   if( index == -1 )
+    if( std::find( vHiddenItem_.begin(), vHiddenItem_.end(), txt ) != vHiddenItem_.end() )
+        return;
+    // If no index is specified, find an index so that the combo is sorted alphabetically.
+    if( index == -1 )
         for( index = 0; index < this->count(); ++index )
             if( txt.compare( this->text( index ) ) < 0 )
                 break;
@@ -245,4 +247,13 @@ void ADN_ComboBox::UpdateEnableState()
 {
     if( bEnabledOnlyInAdminMode_ && IsAutoEnabled() )
         setEnabled( static_cast< ADN_Connector_Combo_ABC* >( pConnector_ )->IsConnected() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ComboBox::HideItem
+// Created: ABR 2012-03-19
+// -----------------------------------------------------------------------------
+void ADN_ComboBox::HideItem( const QString txt )
+{
+    vHiddenItem_.push_back( txt );
 }
