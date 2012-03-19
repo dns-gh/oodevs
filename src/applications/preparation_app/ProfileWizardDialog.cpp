@@ -157,6 +157,7 @@ void ProfileWizardDialog::OnConfirmation( int result )
 {
     if( result == QMessageBox::Yes )
     {
+        qApp->setOverrideCursor( Qt::WaitCursor );
         profiles_.Purge();
         if( checkBoxes_[ eANIBAS ]->isChecked() )
             generator_->GenerateANIBAS();
@@ -174,5 +175,6 @@ void ProfileWizardDialog::OnConfirmation( int result )
             generator_->GenerateGESTIM();
         if( profiles_.CheckUnicityAndRename() )
             QMessageBox::warning( this, tr( "Warning" ), tr( "Some profiles have similar names. Please edit them manually.") );
+        qApp->restoreOverrideCursor();
     }
 }
