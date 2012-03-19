@@ -52,11 +52,6 @@ namespace
         return ptr;
     }
 
-    bool CheckSessionConfig( const SessionConfig& lhs, int port )
-    {
-        return lhs.port == port;
-    }
-
     void CheckReply( const Reply& reply, const std::string& expected, bool valid = true )
     {
         BOOST_CHECK_EQUAL( reply.valid, valid );
@@ -77,7 +72,7 @@ namespace
             uuid.resize( uuid.size() - suffix.size() );
             uuid += suffix;
             boost::shared_ptr< MockSession > session = CreateMockSession( uuid, exercise + "_" + suffix, port );
-            MOCK_EXPECT( factory.Create ).once().with( exercise, boost::bind( &CheckSessionConfig, _1, port ) ).returns( session );
+            MOCK_EXPECT( factory.Create ).once().with( exercise, port ).returns( session );
             MOCK_EXPECT( session->Start ).once();
             CheckReply( agent.CreateSession( exercise, port ), session->ToJson() );
             return session;

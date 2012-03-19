@@ -77,10 +77,8 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( session_starts_and_stops, Fixture )
 {
-    SessionConfig cfg;
-    cfg.port = 8080;
     MOCK_EXPECT( uuids.Create ).once().returns( default_tag );
-    Session session( runtime, uuids, system, "noname", cfg );
+    Session session( runtime, uuids, system, L"", L"", L"", "noname", 8080 );
     boost::shared_ptr< MockProcess > process = boost::make_shared< MockProcess >();
     MOCK_EXPECT( runtime.Start ).once().with( mock::any, mock::any, mock::any ).returns( process );
     session.Start();

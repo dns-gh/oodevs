@@ -33,13 +33,15 @@ class SessionFactory : public SessionFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SessionFactory( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids, const FileSystem_ABC& system );
+             SessionFactory( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids, const FileSystem_ABC& system,
+                             const boost::filesystem::wpath& data, const boost::filesystem::wpath& applications,
+                             const boost::filesystem::wpath& output );
     virtual ~SessionFactory();
     //@}
 
     //! @name Methods
     //@{
-    virtual boost::shared_ptr< Session_ABC > Create( const std::string& exercise, const SessionConfig& config ) const;
+    virtual boost::shared_ptr< Session_ABC > Create( const std::string& exercise, int port ) const;
     //@}
 
 private:
@@ -48,6 +50,9 @@ private:
     const runtime::Runtime_ABC& runtime_;
     const UuidFactory_ABC& uuids_;
     const FileSystem_ABC& system_;
+    const boost::filesystem::wpath& data_;
+    const boost::filesystem::wpath& applications_;
+    const boost::filesystem::wpath& output_;
     //@}
 };
 

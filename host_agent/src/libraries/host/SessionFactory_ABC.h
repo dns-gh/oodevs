@@ -19,20 +19,6 @@ namespace host
     class Session_ABC;
 
 // =============================================================================
-/** @class  SessionConfig
-    @brief  SessionConfig class definition
-*/
-// Created: BAX 2012-03-19
-// =============================================================================
-struct SessionConfig
-{
-    int port;
-    boost::filesystem::wpath applications;
-    boost::filesystem::wpath data;
-    boost::filesystem::wpath output;
-};
-
-// =============================================================================
 /** @class  SessionFactory_ABC
     @brief  SessionFactory_ABC interface
 */
@@ -49,7 +35,7 @@ public:
 
     //! @name Methods
     //@{
-    virtual boost::shared_ptr< Session_ABC > Create( const std::string& exercise, const SessionConfig& config ) const = 0;
+    virtual boost::shared_ptr< Session_ABC > Create( const std::string& exercise, int port ) const = 0;
     //@}
 };
 

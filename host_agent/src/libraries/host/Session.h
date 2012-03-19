@@ -36,7 +36,9 @@ public:
     //! @name Constructors/Destructor
     //@{
              Session( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
-                      const FileSystem_ABC& system, const std::string& exercise, const SessionConfig& config );
+                      const FileSystem_ABC& system, const boost::filesystem::wpath& data,
+                      const boost::filesystem::wpath& applications, const boost::filesystem::wpath& output,
+                      const std::string& exercise, int port );
     virtual ~Session();
     //@}
 
@@ -54,8 +56,11 @@ private:
     const runtime::Runtime_ABC& runtime_;
     const FileSystem_ABC& system_;
     const boost::uuids::uuid tag_;
-    const SessionConfig config_;
+    const boost::filesystem::wpath& data_;
+    const boost::filesystem::wpath& applications_;
+    const boost::filesystem::wpath& output_;
     const std::string exercise_;
+    int port_;
     boost::shared_ptr< runtime::Process_ABC > process_;
     //@}
 };
