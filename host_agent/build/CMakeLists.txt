@@ -25,6 +25,7 @@ if( WIN32 )
     list( APPEND files ${win32_files} )
 endif()
 add_static_library( runtime ${files} )
+set_target_folder( runtime libraries )
 
 ################################################################################
 # web_server
@@ -34,6 +35,7 @@ file( GLOB files
     "${root_dir}/src/libraries/web/*.cpp"
 )
 add_static_library( web ${files} )
+set_target_folder( web libraries )
 
 ################################################################################
 # host
@@ -43,6 +45,7 @@ file( GLOB files
     "${root_dir}/src/libraries/host/*.cpp"
 )
 add_static_library( host ${files} )
+set_target_folder( host libraries )
 
 ################################################################################
 # sample_agent
@@ -51,6 +54,7 @@ file( GLOB files
     "${root_dir}/src/samples/sample_agent/*.cpp"
 )
 add_executable_target( sample_agent ${files} )
+set_target_folder( sample_agent samples )
 add_target_external_library( sample_agent mongoose_d mongoose )
 target_link_libraries( sample_agent
     runtime
