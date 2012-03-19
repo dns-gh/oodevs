@@ -55,9 +55,9 @@ Session::Session( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uu
     , tag_         ( uuids.Create() )
     , data_        ( data )
     , applications_( applications )
-    , output_      ( output )
+    , output_      ( output / boost::lexical_cast< std::wstring >( tag_ ) )
     , exercise_    ( exercise )
-    , port_        (  port )
+    , port_        ( port )
 {
     if( !system_.IsDirectory( data_ ) )
         throw std::runtime_error( Utf8Convert( data_ ) + " is not a directory" );
@@ -106,13 +106,12 @@ std::string Session::ToJson() const
 // -----------------------------------------------------------------------------
 void Session::Start()
 {
-    const boost::filesystem::wpath root = output_ / boost::lexical_cast< std::wstring >( tag_ );
-    system_.CreateDirectory( root );
-    system_.Copy( data_ / L"exercises" / runtime::Utf8Convert( exercise_ ), root );
+    system_.CreateDirectory( output_ );
+    system_.Copy( data_ / L"exercises" / runtime::Utf8Convert( exercise_ ), output_ );
     process_ = runtime_.Start( Utf8Convert( applications_ / L"simulation_app.exe" ),
         boost::assign::list_of
             (  "--root-dir="      + Utf8Convert( data_ ) )
-            (  "--exercises-dir=" + Utf8Convert( root ) )
+            (  "--exercises-dir=" + Utf8Convert( output_ ) )
             (  "--terrains-dir="  + Utf8Convert( data_ / L"data/terrains" ) )
             (  "--models-dir="    + Utf8Convert( data_ / L"data/models" ) )
             (  "--exercise="      + exercise_ )
