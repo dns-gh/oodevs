@@ -33,6 +33,7 @@ TacticalLinesLayer::TacticalLinesLayer( kernel::Controllers& controllers, const 
     , strategy_    ( strategy )
     , parameters_  ( parameters )
     , isLimit_     ( true )
+    , isEditing_   ( false )
     , selected_    ( controllers_ )
 {
     controllers_.Update( *this );
@@ -112,6 +113,11 @@ bool TacticalLinesLayer::CanCreateLine()
 // -----------------------------------------------------------------------------
 void TacticalLinesLayer::NotifySelected( const kernel::TacticalLine_ABC* element )
 {
+    if( isEditing_ && ( !element || element->GetId() != selected_->GetId() ) )
+    {
+        parameters_.Reset();
+        isEditing_ = false;
+    }
     selected_ = element;
     gui::EntityLayer< kernel::TacticalLine_ABC >::NotifySelected( element );
 }
@@ -136,6 +142,7 @@ void TacticalLinesLayer::VisitLines( const T_PointVector& points )
         CreateLimit( points );
     else
         CreateLima( points );
+    isEditing_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -145,6 +152,7 @@ void TacticalLinesLayer::VisitLines( const T_PointVector& points )
 void TacticalLinesLayer::OnCreateLimit()
 {
     isLimit_ = true;
+    isEditing_ = true;
     parameters_.StartLine( *this );
 }
 
@@ -155,6 +163,7 @@ void TacticalLinesLayer::OnCreateLimit()
 void TacticalLinesLayer::OnCreateLima()
 {
     isLimit_ = false;
+    isEditing_ = true;
     parameters_.StartLine( *this );
 }
 
