@@ -58,7 +58,7 @@ private:
     const boost::uuids::uuid tag_;
     const boost::filesystem::wpath& data_;
     const boost::filesystem::wpath& applications_;
-    const boost::filesystem::wpath& output_;
+    const boost::filesystem::wpath output_;
     const std::string exercise_;
     int port_;
     boost::shared_ptr< runtime::Process_ABC > process_;

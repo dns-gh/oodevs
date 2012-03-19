@@ -50,9 +50,9 @@ private:
     const runtime::Runtime_ABC& runtime_;
     const UuidFactory_ABC& uuids_;
     const FileSystem_ABC& system_;
-    const boost::filesystem::wpath& data_;
-    const boost::filesystem::wpath& applications_;
-    const boost::filesystem::wpath& output_;
+    const boost::filesystem::wpath data_;
+    const boost::filesystem::wpath applications_;
+    const boost::filesystem::wpath output_;
     //@}
 };
 
