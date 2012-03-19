@@ -4,7 +4,7 @@
     <method name="getObjective">
       <return>
         <type>
-          <class name="sword.military.world.Area"/>
+          <class name="sword.military.knowledge.decisional.Reachable"/>
         </type>
       </return>
     </method>

@@ -2823,7 +2823,13 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="area" name="Zone de regroupement" optional="false" type="Polygon"/>
+      <parameter dia-name="objective" name="Lieu de regroupement" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="Polygon"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
     </mission>
     <mission cdt-dia-behavior="france.military.company.combat.support.rens.tasks.Appuyer" dia-type="france.military.company.combat.support.rens.tasks.Appuyer2" id="28782" mrt-dia-behavior="france.military.company.combat.support.rens.tasks.Appuyer" name="AUTOMATE RENS ROEM Brouiller">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3117,4 +3123,4 @@
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PoursuivreConvoi" id="406" name="Poursuivre convoi"/>
   </fragorders>
 </missions>
-<!-- signature="1277265419" -->
+<!-- signature="3413825576" -->
