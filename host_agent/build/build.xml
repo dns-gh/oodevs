@@ -42,8 +42,8 @@
         <build-test name="runtime" depends="boost" libs="runtime@{suffix}"/>
     </target>
 
-    <target name="host_test" depends="host" description="build host tests">
-        <build-test name="host" depends="boost" libs="host@{suffix}"/>
+    <target name="host_test" depends="host,runtime" description="build host tests">
+        <build-test name="host" depends="boost" libs="host@{suffix},runtime@{suffix}"/>
     </target>
 
     <target name="web_test" depends="web" description="build web tests">
