@@ -563,6 +563,8 @@ public:
         eRC_Capture,
         eRC_TakeHostage,
         eRC_AttenteOrdrePoursuivreConvoi,
+        eRC_DebutDevalorisation,
+        eRC_FinDevalorisation,
         eLast
     };
     //@}

@@ -3,9 +3,11 @@
 -- --------------------------------------------------------------------------------
 
 integration.dischargeAgent = function( unit, camp )
-    if DEC_Agent_RefugieEstEmbarque( meKnowledge.source, unit.source ) then
-        DEC_Agent_DebarquerRefugiesDansCamp( meKnowledge.source, unit.source, camp.source )
-        return true
+    if DEC_Agent_EstRefugie( meKnowledge.source, unit.source ) then
+        if DEC_Agent_RefugieEstEmbarque( meKnowledge.source, unit.source ) then
+            DEC_Agent_DebarquerRefugiesDansCamp( meKnowledge.source, unit.source, camp.source )
+            return true
+        end
     end
     return false
 end
@@ -15,12 +17,9 @@ end
 -- --------------------------------------------------------------------------------
 
 integration.dischargeAgentKnowledge = function( ennemy, camp )
-    DEC_Trace("dischargeAgentKnowledge")
-    if DEC_ConnaissanceAgent_EstRefugie( ennemy.source ) then
-        DEC_Trace("est refugie")
+     if DEC_ConnaissanceAgent_EstRefugie( ennemy.source ) then
         if DEC_Refugies_EstEmbarque( ennemy.source ) then
             DEC_Refugies_DebarquerDansCamp( ennemy.source, camp.source )
-            DEC_Trace("debarquer AgentKnowledge")
             return true
         end
     elseif DEC_ConnaissanceAgent_EstPrisonnier( ennemy.source ) then

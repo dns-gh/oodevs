@@ -54,7 +54,7 @@ rootnode
 -- ****************************************************************************
 node "removeElement"
 {
-    connections = { skill.links.moveAndTakePosition, skill.nodes.remove,
+    connections = { skill.links.moveAndTakePosition, skill.nodes.Remove, skill.nodes.Demine,
                     skill.links.observe },
 
     feedbacks = { "cancelled" },
@@ -85,8 +85,14 @@ node "removeElement"
         Activate( skill.links.observe, 1, { entity = self.params.entity } )
 
         if self.arrived then
-            if self.params.entity:canRemoveIt() then
-                Activate( skill.nodes.remove, 1, { entity = self.params.entity } )
+            if self.params.entity:isMined() then
+                if self.params.entity:canDemineIt() then
+                  Activate( skill.nodes.Demine, 1, { entity = self.params.entity } )
+                else
+                  Feedback( self.feedbacks.failed, {element = self.params.entity} )
+                end
+            elseif self.params.entity:canRemoveIt() then
+                Activate( skill.nodes.Remove, 1, { entity = self.params.entity } )
             else
                 Feedback( self.feedbacks.failed, {element = self.params.entity} )
             end
@@ -102,9 +108,23 @@ node "removeElement"
     end,
 }
 -- **************************************************************************** 
--- remove action on the removable element 
+-- Demine action on the removable element 
 -- ****************************************************************************
-node "remove"
+node "Demine"
+{
+    feedbacks = { "done" };
+    
+    acquire = { [ skill.resources.buildCapacity ] = 1 };
+
+    select = function( self )
+        self.params.entity:demineIt()
+    end
+}
+
+-- **************************************************************************** 
+-- Remove action on the removable element 
+-- ****************************************************************************
+node "Remove"
 {
     feedbacks = { "done" };
     

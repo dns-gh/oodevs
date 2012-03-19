@@ -221,6 +221,25 @@
         <method name="removeIt">
             <description>$$$$</description>
         </method>
+        <method name="isMined">
+            <description>Renvoie vraie si l'ojet est valorisé.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canDemineIt">
+            <description>Renvoie vraie si l'ojet peut etre dévalorisé.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="demineIt">
+            <description>$$$$</description>
+        </method>
         <method name="removalLevel">
             <description>Le niveau de dégagement de l'objet.</description>
             <return>

@@ -292,6 +292,18 @@ return
         started = integration.updateRemoveIt, 
         stop = integration.stopRemoveIt
      } ),
+    isMined = function( self )
+        return integration.isMined( self )
+    end,
+    canDemineIt = function( self )
+        return integration.canDemineIt( self )
+    end,
+    demineIt = masalife.brain.integration.startStopAction( 
+    { 
+        start = integration.startDemineIt, 
+        started = integration.updateDemineIt, 
+        stop = integration.stopDemineIt
+     } ),
     canBypassIt = function( self )
         return integration.canBypassIt( self )
     end,
