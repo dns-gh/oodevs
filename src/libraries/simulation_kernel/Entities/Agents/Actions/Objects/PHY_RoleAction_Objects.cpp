@@ -169,48 +169,33 @@ int PHY_RoleAction_Objects::Destroy( boost::shared_ptr< DEC_Knowledge_Object >& 
     MIL_Object_ABC& object = *pObject;
     if( !object().CanBeDestroyed() )
         return eImpossible;
-    if( object().IsMined() )
+    PHY_RoleAction_Objects_DataComputer dataComputer( owner_, eDestroy, object );
+
+    const double rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
+    if( rDeltaPercentage == std::numeric_limits< double >::max() )
+        return eNoCapacity;
+
+    // $$$$ TODO: refactor to handle more than a single resource
+    const ConstructionAttribute& attribute = object.GetAttribute< ConstructionAttribute >();
+    const unsigned int nDotationRecovered = attribute.GetDotationRecoveredWhenDestroying( rDeltaPercentage );
+    object().Destroy( rDeltaPercentage );
+
+    if( nDotationRecovered && pObject->GetArmy() && owner_.GetArmy() == *pObject->GetArmy() )
     {
-        PHY_RoleAction_Objects_DataComputer dataComputer( owner_, eDemine, object );
-
-        const double rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
-        if( rDeltaPercentage == std::numeric_limits< double >::max() )
-            return eNoCapacity;
-
-        owner_.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
-        object().Demine( rDeltaPercentage );
-        return eRunning;
+        BuildableCapacity* pCapacity = object.Retrieve< BuildableCapacity >();
+        if( pCapacity )
+        {
+            const PHY_DotationCategory* pDotationCategory  = pCapacity->GetDotationCategory();
+            dataComputer.RecoverDotations( *pDotationCategory, nDotationRecovered );
+        }
     }
-    else
+    if( attribute.GetState() == 0. )
     {
-        PHY_RoleAction_Objects_DataComputer dataComputer( owner_, eDestroy, object );
-
-        const double rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
-        if( rDeltaPercentage == std::numeric_limits< double >::max() )
-            return eNoCapacity;
-
-        // $$$$ TODO: refactor to handle more than a single resource
-        const ConstructionAttribute& attribute = object.GetAttribute< ConstructionAttribute >();
-        const unsigned int nDotationRecovered = attribute.GetDotationRecoveredWhenDestroying( rDeltaPercentage );
-        object().Destroy( rDeltaPercentage );
-
-        if( nDotationRecovered && pObject->GetArmy() && owner_.GetArmy() == *pObject->GetArmy() )
-        {
-            BuildableCapacity* pCapacity = object.Retrieve< BuildableCapacity >();
-            if( pCapacity )
-            {
-                const PHY_DotationCategory* pDotationCategory  = pCapacity->GetDotationCategory();
-                dataComputer.RecoverDotations( *pDotationCategory, nDotationRecovered );
-            }
-        }
-        if( attribute.GetState() == 0. )
-        {
-            owner_.GetArmy().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( pKnowledge );
-            return eFinished;
-        }
-        owner_.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
-        return eRunning;
+        owner_.GetArmy().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( pKnowledge );
+        return eFinished;
     }
+    owner_.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
+    return eRunning;
 }
 
 // -----------------------------------------------------------------------------

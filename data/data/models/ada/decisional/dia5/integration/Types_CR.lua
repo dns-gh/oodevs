@@ -425,4 +425,6 @@ eRC_DecrochageFaceAIncendie = 410
 eRC_Capture = 411
 eRC_TakeHostage = 412
 eRC_AttenteOrdrePoursuivreConvoi = 413
-eNbr = 414
+eRC_DebutDevalorisation = 414
+eRC_FinDevalorisation = 415
+eNbr = 416

@@ -469,7 +469,9 @@ eRC_DecrochageFaceAIncendie = 450
 eRC_Capture = 451
 eRC_TakeHostage = 452
 eRC_AttenteOrdrePoursuivreConvoi = 453
-eNbr = 454
+eRC_DebutDevalorisation = 454
+eRC_FinDevalorisation = 455
+eNbr = 456
 
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : delai (float),

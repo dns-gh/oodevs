@@ -2532,6 +2532,9 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ResourceNetworkTypeParameter.cpp">
       <Filter>Source Files\Entities\Orders\Parameters</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_ActionDemineObject.cpp">
+      <Filter>Source Files\Entities\Agents\Actions\Objects</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL.h">
@@ -4969,6 +4972,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Orders\MIL_ResourceNetworkTypeParameter.h">
       <Filter>Source Files\Entities\Orders\Parameters</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_ActionDemineObject.h">
+      <Filter>Source Files\Entities\Agents\Actions\Objects</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
