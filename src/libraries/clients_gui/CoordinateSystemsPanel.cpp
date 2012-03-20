@@ -26,6 +26,7 @@ CoordinateSystemsPanel::CoordinateSystemsPanel( QWidget* parent, kernel::Control
     , controllers_ ( controllers )
     , options_  ( controllers.options_ )
     , coordinateSystems_( coordSystems )
+    , previousCoordinateSystem_( 0 )
 {
     Q3GroupBox* box = new Q3GroupBox( 2, Qt::Vertical, tr( "Coordinate System" ), this );
     new QLabel( tr( "Select current coordinate system:" ), box );
