@@ -54,12 +54,6 @@ private:
     typedef std::map< boost::uuids::uuid, boost::shared_ptr< Session_ABC > > T_Sessions;
     //@}
 
-    //! @name Private operations
-    //@{
-    boost::shared_ptr< Session_ABC > ExtractSession( const boost::uuids::uuid& tag );
-    void AddSession( boost::shared_ptr< Session_ABC > ptr );
-    //@}
-
     //! @name Member data
     //@{
     const SessionFactory_ABC& sessionFactory_;

@@ -110,14 +110,39 @@ Reply Agent::GetSession( const boost::uuids::uuid& tag ) const
     return Reply( it->second->ToJson() );
 }
 
+
+
+namespace
+{
+
 // -----------------------------------------------------------------------------
-// Name: Agent::AddSession
+// Name: AddSession
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-void Agent::AddSession( boost::shared_ptr< Session_ABC > ptr )
+template< typename T, typename U >
+void AddSession( T& mutex, U& sessions, boost::shared_ptr< Session_ABC > ptr )
 {
-    boost::lock_guard< boost::shared_mutex > lock( *access_ );
-    sessions_.insert( std::make_pair( ptr->GetTag(), ptr ) );
+    boost::lock_guard< T > lock( mutex );
+    sessions.insert( std::make_pair( ptr->GetTag(), ptr ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ExtractSession
+// Created: BAX 2012-03-16
+// -----------------------------------------------------------------------------
+template< typename T, typename U >
+boost::shared_ptr< Session_ABC > ExtractSession( T& mutex, U& sessions, const boost::uuids::uuid& tag )
+{
+    boost::lock_guard< T > lock( mutex );
+    typename U::iterator it = sessions.find( tag );
+    if( it == sessions.end() )
+        return boost::shared_ptr< Session_ABC >();
+
+    boost::shared_ptr< Session_ABC > ptr = it->second;
+    sessions.erase( it );
+    return ptr;
+}
+
 }
 
 // -----------------------------------------------------------------------------
@@ -130,25 +155,9 @@ Reply Agent::CreateSession( const std::string& exercise, const std::string& name
     boost::shared_ptr< Session_ABC > ptr = sessionFactory_.Create( exercise, name, port );
     if( !ptr )
         return Reply( "unable to create new session", false ); // TODO add better error message
-    AddSession( ptr );
+    AddSession( *access_, sessions_, ptr );
     ptr->Start();
     return Reply( ptr->ToJson() );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Agent::ExtractSession
-// Created: BAX 2012-03-16
-// -----------------------------------------------------------------------------
-boost::shared_ptr< Session_ABC > Agent::ExtractSession( const boost::uuids::uuid& tag )
-{
-    boost::lock_guard< boost::shared_mutex > lock( *access_ );
-    T_Sessions::iterator it = sessions_.find( tag );
-    if( it == sessions_.end() )
-        return boost::shared_ptr< Session_ABC >();
-
-    boost::shared_ptr< Session_ABC > ptr = it->second;
-    sessions_.erase( it );
-    return ptr;
 }
 
 // -----------------------------------------------------------------------------
@@ -157,7 +166,7 @@ boost::shared_ptr< Session_ABC > Agent::ExtractSession( const boost::uuids::uuid
 // -----------------------------------------------------------------------------
 Reply Agent::DeleteSession( const boost::uuids::uuid& tag )
 {
-    boost::shared_ptr< Session_ABC > ptr = ExtractSession( tag );
+    boost::shared_ptr< Session_ABC > ptr = ExtractSession( *access_, sessions_, tag );
     if( !ptr )
         return Reply( ( boost::format( "unable to find session %1%" ) % tag ).str(), false );
 
