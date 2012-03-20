@@ -30,32 +30,64 @@ PerformanceDialog::PerformanceDialog( QWidget* parent, Model& model, const Stati
     , units_( new QLabel( this ) )
     , urbanBlocs_( new QLabel( this ) )
     , objects_( new QLabel( this ) )
+    , populations_( new QLabel( this ) )
+    , crowds_( new QLabel( this ) )
     , terrainLoad_( new QLabel( this ) )
     , knowledges_( new QLabel( this ) )
     , loadLevel_( new QLabel( this ) )
     , limitValue_( new QLabel( this ) )
     , limitLine_ ( new QLabel( this ) )
+    , terrainSize_ ( new QLabel( this ) )
+    , profiles_ ( new QLabel( this ) )
+    , maxAutomatsKG_ ( new QLabel( this ) )
+    , maxUnitsKG_ ( new QLabel( this ) )
+    , avgAutomatKG_ ( new QLabel( this ) )
+    , avgUnitsKG_ ( new QLabel( this ) )
     , progressLimit_( 40 )
+    , textEdit_( new QTextEdit( this ) )
 {
     setCaption( tr( "Performance dialog" ) );
-    setFixedSize( 350, 200 );
+    setFixedSize( 600, 700 );
 
-    QGridLayout* layout = new QGridLayout( this, 6, 2 );
+    QGridLayout* layout = new QGridLayout( this, 16, 2 );
     layout->setMargin( 15 );
-    layout->setColumnMinimumWidth( 0, 230 );
+    layout->setColumnMinimumWidth( 0, 520 );
     layout->setAlignment( Qt::AlignHCenter );
-    layout->addWidget( units_, 0, 0 );
-    layout->addWidget( urbanBlocs_, 1, 0 );
-    layout->addWidget( objects_, 2, 0 );
-    layout->addWidget( terrainLoad_, 3, 0 );
-    layout->addWidget( knowledges_, 4, 0 );
-    layout->addWidget( loadLevel_, 5, 0 );
-    layout->addWidget( progressValue_ , 0, 1, 6, 1 );
+    layout->addWidget( progressValue_ , 0, 1, 13, 1 );
+    layout->addWidget( profiles_, 0, 0 );
+    layout->addWidget( units_, 1, 0 );
+    layout->addWidget( populations_, 2, 0 );
+    layout->addWidget( crowds_, 3, 0 );
+    layout->addWidget( urbanBlocs_, 4, 0 );
+    layout->addWidget( objects_, 5, 0 );
+    layout->addWidget( knowledges_, 6, 0 );
+    layout->addWidget( terrainLoad_, 7, 0 );
+    layout->addWidget( terrainSize_, 8, 0 );
+    layout->addWidget( maxAutomatsKG_, 9, 0 );
+    layout->addWidget( maxUnitsKG_, 10, 0 );
+    layout->addWidget( avgAutomatKG_, 11, 0 );
+    layout->addWidget( avgUnitsKG_, 12, 0 );
+    layout->addWidget( loadLevel_ , 13, 0 );
+    layout->addWidget( new QLabel( "<b>" + tr( "Detail: " ) + "<\b>" ), 14, 0, 1, 2 );
+    layout->addWidget( textEdit_, 15, 0, 1, 2 );
+    textEdit_->setReadOnly( true );
+    textEdit_->setLineWrapMode( QTextEdit::NoWrap );
     loadLevel_->setMinimumWidth( 280 );
     loadLevel_->setMinimumHeight( 40 );
-    loadLevel_->setAlignment( Qt::AlignBottom );
+    loadLevel_->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
     progressValue_->setOrientation( Qt::Vertical );
     limitLine_->setText( "<b>____<\b>" );
+
+    QDesktopWidget* pDesktop = QApplication::desktop();
+    if( pDesktop )
+    {
+        QWidget* pScreen = pDesktop->screen( pDesktop->primaryScreen() );
+        if( pScreen )
+        {
+            QRect scr = pScreen->geometry();
+            move( ( scr.x() + scr.width() - size().width() ) / 2, ( scr.y() + scr.height() - size().height() ) / 2 - 50 );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -73,7 +105,34 @@ PerformanceDialog::~PerformanceDialog()
 // -----------------------------------------------------------------------------
 void PerformanceDialog::showEvent( QShowEvent* /* pEvent */ )
 {
+    if( parent() && parent()->parent() )
+    {
+        QPoint parentPos = static_cast< QWidget* >( parent()->parent() )->pos();
+        QSize parentSize = static_cast< QWidget* >( parent()->parent() )->size();
+        move( ( parentPos.x() + parentSize.width() - size().width() ) / 2, ( parentPos.y() + parentSize.height() - size().height() ) / 2 );
+    }
+
     UpdateDisplay();
+}
+ 
+namespace
+{
+    void UpdateBar( const PerformanceIndicator::Values& values, QProgressBar* progressBar, int limit )
+    {
+        QColor barColor;
+        assert( values.limit_ > 0 );
+        float factor = values.performance_ / static_cast< float >( values.limit_ ); 
+        bool aboveLimit = factor > 1.f;
+        float limitFactor = aboveLimit ? 1.f - 1.f / factor  : 0.f;
+        float fProgressLimit = static_cast< float >( limit );
+        float progressValue = aboveLimit ? fProgressLimit + ( 100.f - fProgressLimit ) * limitFactor : fProgressLimit * factor; 
+        barColor.setRed( aboveLimit ? 155 + static_cast< int >( 100.f * limitFactor ) : 0 );
+        barColor.setGreen( !aboveLimit ? 200 : 0 );
+        QPalette pal = progressBar->palette();
+        pal.setColor( QColorGroup::Highlight, barColor );
+        progressBar->setPalette( pal );
+        progressBar->setValue( static_cast< int >( progressValue ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -82,33 +141,68 @@ void PerformanceDialog::showEvent( QShowEvent* /* pEvent */ )
 // -----------------------------------------------------------------------------
 void PerformanceDialog::UpdateDisplay()
 {
-    PerformanceIndicator::IndicatorValues values;
-    float loadLevel = model_.performanceIndicator_.ComputeLoadIndicator( values );
-
-    units_      ->setText( tr( "Number of units: " )            + QString::number( values.units_ ) );
-    urbanBlocs_ ->setText( tr( "Number of urban blocs: " )      + QString::number( values.blocs_ ) );
-    objects_    ->setText( tr( "Number of objects: " )          + QString::number( values.objects_ ) );
-    terrainLoad_->setText( tr( "Terrain size: " ) + QString::number( values.terrainLoad_ ) + QString( " Mo" ) ) ;
-    knowledges_ ->setText( tr( "Number of knowledge groups: " ) + QString::number( values.knowledges_ ) );
-    loadLevel_  ->setText( "<b>" + tr( "Load level: " )         + QString::number( static_cast< unsigned int >( loadLevel ) ) + " / " + QString::number( values.limit_ ) + "<\b>" );
-    limitValue_ ->setText( "<b>" + QString::number( values.limit_ ) + "<\b>" );
+    const PerformanceIndicator::Values& values =  model_.performanceIndicator_.ComputeValues();
+    profiles_       ->setText( tr( "Number of profiles: " )                 + QString::number( values.profiles_ ) );
+    units_          ->setText( tr( "Number of units: " )                    + QString::number( values.units_ ) );
+    populations_    ->setText( tr( "Number of populations: " )              + QString::number( values.populations_ ) );
+    crowds_         ->setText( tr( "Number of crowds: " )                   + QString::number( values.crowds_ ) );
+    urbanBlocs_     ->setText( tr( "Number of urban blocs: " )              + QString::number( values.blocs_ ) );
+    objects_        ->setText( tr( "Number of objects: " )                  + QString::number( values.objects_ ) );
+    knowledges_     ->setText( tr( "Number of knowledge groups: " )         + QString::number( values.knowledgeGroups_ ) );
+    terrainLoad_    ->setText( tr( "Terrain memory size: " )                + QString::number( values.terrainLoad_, 'f', 3 ) + " Mo" ) ;
+    terrainSize_    ->setText( tr( "Terrain size: " )                       + QString::number( values.terrainWidth_ ) + " km x "
+                                                                            + QString::number( values.terrainHeight_ ) + " km" );
+    maxAutomatsKG_  ->setText( tr( "Max automats in a knowledge group: " )  + QString::number( values.maxAutomatsKG_ ) );
+    maxUnitsKG_     ->setText( tr( "Max units in a knowledge group:" )      + QString::number( values.maxUnitsKG_ ) );
+    avgAutomatKG_   ->setText( tr( "Average automats by knowledge group: " )+ QString::number( values.avgAutomatsKG_ ) );
+    avgUnitsKG_     ->setText( tr( "Average units by knowledge group: " )   + QString::number( values.avgUnitsKG_ ) );
+    loadLevel_      ->setText( "<b>" + tr( "Load level: " )                 + QString::number( static_cast< unsigned int >( values.performance_ ) ) + " / " + QString::number( values.limit_ ) + "<\b>" );
+    limitValue_     ->setText( "<b>" + QString::number( values.limit_ ) + "<\b>" );
     limitLine_->move( progressValue_->pos().x() - 3,
                       progressValue_->pos().y() + progressValue_->size().height() * ( 100 - progressLimit_ ) / 100 - limitLine_->size().height() / 2 - 6 );
     limitValue_->move( progressValue_->pos().x() + progressValue_->size().width() + 6,
                        progressValue_->pos().y() + progressValue_->size().height() * ( 100 - progressLimit_ ) / 100 - limitValue_->size().height() / 2 );
+    UpdateBar( values, progressValue_, progressLimit_ );
 
-    assert( values.limit_ > 0 );
-    float factor = loadLevel / static_cast< float >( values.limit_ ); 
-    bool aboveLimit = factor > 1.f;
-    float limitFactor = aboveLimit ? 1.f - 1.f / factor  : 0.f;
-    float fProgressLimit = static_cast< float >( progressLimit_ );
-    float progressValue = aboveLimit ? fProgressLimit + ( 100.f - fProgressLimit ) * limitFactor : fProgressLimit * factor;
-
-    QColor barColor;
-    barColor.setRed( aboveLimit ? 155 + static_cast< int >( 100.f * limitFactor ) : 0 );
-    barColor.setGreen( !aboveLimit ? 200 : 0 );
-    QPalette pal = progressValue_->palette();
-    pal.setColor( QColorGroup::Highlight, barColor );
-    progressValue_->setPalette( pal );
-    progressValue_->setValue( static_cast< int >( progressValue ) );
+    QString detail;
+    detail +=        tr( "Exercise: " )         + QString::fromStdString( values.exercise_ ) + "\n";
+    detail += "\n" + tr( "Teams: " )            + QString::number( values.teams_ );
+    detail += "\n" + tr( "Profiles: ")          + QString::number( values.profiles_ );
+    detail += "\n" + tr( "Automats: ")          + QString::number( values.automats_ );
+    detail += "\n" + tr( "Units: ")             + QString::number( values.units_ );
+    detail += "\n" + tr( "Crowds: ")            + QString::number( values.crowds_ );
+    detail += "\n" + tr( "Populations: ")       + QString::number( values.populations_ );
+    detail += "\n" + tr( "Urban blocs: ")       + QString::number( values.blocs_ );
+    detail += "\n" + tr( "Objects: ")           + QString::number( values.objects_ );
+    detail += "\n" + tr( "Knowledge groups: ")  + QString::number( values.knowledgeGroups_ );
+    detail += "\n" + tr( "Terrain: ")           + QString::number( values.terrainWidth_ ) + " km x " + QString::number( values.terrainHeight_ ) + " km";
+    detail += "\n" + tr( "Terrain memory size: " ) + " " + QString::number( values.terrainLoad_, 'f', 6 ) + " Mo";
+    detail += "\n" + tr( "Max automats in a knowledge group: " )     + QString::number( values.maxAutomatsKG_ );
+    detail += "\n" + tr( "Max units in a knowledge group:" )         + QString::number( values.maxUnitsKG_ );
+    detail += "\n" + tr( "Average automats by knowledge group: " )   + QString::number( values.avgAutomatsKG_ );
+    detail += "\n" + tr( "Average units by knowledge group: " )      + QString::number( values.avgUnitsKG_ );
+    detail += "\n" + tr( "Load level: " )                            + QString::number( values.performance_, 'f', 2 ) + " / " + QString::number( values.limit_ );
+    for( PerformanceIndicator::CIT_TeamsDatas it = values.teamsDatas_.begin(); it != values.teamsDatas_.end(); ++it )
+    {
+        const PerformanceIndicator::TeamData& teamData = it->second;
+        detail += "\n\n" + tr( "Team: " ) + QString::fromStdString( teamData.name_ );
+        detail += "\n\t" + tr( "Formation: " ) + QString::number( teamData.formations_ );
+        detail += "\n\t" + tr( "Automats: " ) + QString::number( teamData.automats_ );
+        for( PerformanceIndicator::CIT_EntityTypeCount subIt = teamData.automatTypes_.begin(); subIt != teamData.automatTypes_.end(); ++subIt )
+            detail += "\n\t\t" + QString::fromStdString( subIt->first ) + QString( ": " ) + QString::number( subIt->second );
+        detail += "\n\n\t" + tr( "Units: " ) + QString::number( teamData.units_ );
+        for( PerformanceIndicator::CIT_EntityTypeCount subIt = teamData.unitTypes_.begin(); subIt != teamData.unitTypes_.end(); ++subIt )
+            detail += "\n\t\t" + QString::fromStdString( subIt->first ) + QString( ": " ) + QString::number( subIt->second );
+        detail += "\n\n\t" + tr( "Crowds: " ) + QString::number( teamData.crowds_ );
+        detail += "\n\t" + tr( "Populations: " ) + QString::number( teamData.populations_ );
+        detail += "\n\t" + tr( "Objects: " ) + QString::number( teamData.objects_ );
+        for( PerformanceIndicator::CIT_EntityTypeCount subIt = teamData.objectTypes_.begin(); subIt != teamData.objectTypes_.end(); ++subIt )
+            detail += "\n\t\t" + QString::fromStdString( subIt->first ) + QString( ": " ) + QString::number( subIt->second );
+        detail += "\n\n\t" + tr( "Knowledge groups: " ) + QString::number( teamData.knowledgeGroups_ );
+        for( PerformanceIndicator::CIT_KGDatas subIt = teamData.datasKG_.begin(); subIt != teamData.datasKG_.end(); ++subIt )
+            detail += "\n\t\t" + QString::fromStdString( subIt->first ) + QString( ": \t" ) + tr( "Automats: " ) + QString::number( subIt->second.automats_ ) + QString( "\t" )
+            + tr( "Units: " ) + QString::number( subIt->second.units_ );
+    }
+    detail += "\n";
+    textEdit_->setText( detail );
 }

@@ -60,6 +60,7 @@ public:
     const std::string& GetSymbol() const;
     const std::string& GetLevelSymbol() const;
     const std::string& GetHQSymbol() const;
+    const std::string& GetTypeName() const;
 
     unsigned int GetNbrOfficers() const;
     unsigned int GetNbrWarrantOfficers() const;

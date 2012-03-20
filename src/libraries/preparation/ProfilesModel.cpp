@@ -282,3 +282,12 @@ void ProfilesModel::Visit( T_Profiles& profiles ) const
     for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
         profiles.insert( (*it)->GetLogin().ascii() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ProfilesModel::profilesCount
+// Created: MMC 2012-03-06
+// -----------------------------------------------------------------------------
+unsigned int ProfilesModel::GetProfilesCount() const
+{
+    return static_cast< unsigned int >( userProfiles_.size() );
+}

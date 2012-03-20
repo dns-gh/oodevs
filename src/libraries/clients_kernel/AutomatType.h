@@ -47,6 +47,7 @@ public:
     std::string GetName() const;
     const AgentType* GetTypePC() const;
     std::string GetSymbol() const;
+    std::string GetTypeName() const;
     const DecisionalModel& GetDecisionalModel() const;
     tools::Iterator< const AutomatComposition& > CreateIterator() const;
 
