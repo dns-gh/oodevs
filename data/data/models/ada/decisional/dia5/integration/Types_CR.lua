@@ -427,4 +427,5 @@ eRC_TakeHostage = 412
 eRC_AttenteOrdrePoursuivreConvoi = 413
 eRC_DebutDevalorisation = 414
 eRC_FinDevalorisation = 415
-eNbr = 416
+eRC_TrafficablePositionFindingInZone = 416
+eNbr = 417

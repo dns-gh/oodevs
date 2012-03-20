@@ -73,15 +73,45 @@ integration.getImplantationObjects = function( area, nbAreas )
     local existingObject
     local localisation
     local barycentre
+    local nonTrafficablePosition = false
+    local positions = {}
+    local index = 0
     local subAreas = DEC_Geometry_SplitLocalisation( area.source, nbAreas, nil )
     for _, subArea in pairs( subAreas.first ) do
+        index = index + 1
         barycentre = DEC_Geometrie_CalculerBarycentreLocalisation( subArea )
-        localisation = DEC_Geometrie_ConvertirPointEnLocalisation( barycentre )
-        existingObject = integration.obtenirObjetProcheDe( localisation,  eTypeObjectZoneImplantationCanon, 10 )
-        local object = DEC_CreateDynamicGenObject( S_TypeObject_ToString( eTypeObjectZoneImplantationCanon ), localisation, 0  )
-        local toto = CreateKnowledge( sword.military.world.EngineerObject, object )
-        toto.knowledge = existingObject
-        objectKn[#objectKn+1] = toto
+        local platoons = DEC_Pion_PionsAvecPC()
+        for i = 1, #platoons do -- Est ce que ce point est trafficable pour tous les pions de l'automate
+            if not integration.isPointInUrbanBlockTrafficableForPlatoon( platoons[i],barycentre ) then
+                nonTrafficablePosition = true
+            end
+        end
+        if nonTrafficablePosition then -- Ce point n'est pas trafficable pour au moins un pion de l'automate.
+            positions = integration.getPointPositions(CreateKnowledge( sword.military.world.Point, barycentre ))
+            local positionInLocalisation = {}
+            for j = 1, #positions do
+                if integration.isPointInLocalisation(CreateKnowledge( sword.military.world.Point, positions[j] ), area) then
+                    positionInLocalisation[#positionInLocalisation + 1] = positions[j]
+                end
+            end
+            local resultIndex = index % ( #positionInLocalisation + 1 )
+            if positionInLocalisation[resultIndex] then
+                localisation = DEC_Geometrie_ConvertirPointEnLocalisation( positionInLocalisation[resultIndex] )
+            elseif next(positionInLocalisation) then
+                localisation = DEC_Geometrie_ConvertirPointEnLocalisation( next(positionInLocalisation) )
+            else
+                meKnowledge:RC( eRC_TrafficablePositionFindingInZone )
+                localisation = DEC_Geometrie_ConvertirPointEnLocalisation( barycentre )
+            end
+        else 
+            localisation = DEC_Geometrie_ConvertirPointEnLocalisation( barycentre )
+        end
+            existingObject = integration.obtenirObjetProcheDe( localisation,  eTypeObjectZoneImplantationCanon, 10 )
+            local object = DEC_CreateDynamicGenObject( S_TypeObject_ToString( eTypeObjectZoneImplantationCanon ), localisation, 0  )
+            local toto = CreateKnowledge( sword.military.world.EngineerObject, object )
+            toto.knowledge = existingObject
+            objectKn[#objectKn+1] = toto
+        
     end
     return objectKn
 end

@@ -1097,6 +1097,15 @@ bool DEC_GeometryFunctions::IsPointInUrbanBlockTrafficable( MIL_AgentPion& pion,
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_GeometryFunctions::IsPointInUrbanBlockTrafficableForPlatoon
+// Created: LMT 2012-03-15
+// -----------------------------------------------------------------------------
+bool DEC_GeometryFunctions::IsPointInUrbanBlockTrafficableForPlatoon( DEC_Decision_ABC* pion, const MT_Vector2D& point )
+{
+    return DEC_GeometryFunctions::IsPointInUrbanBlockTrafficable( pion->GetPion(), point );
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::IsPointInCity
 // Created: LDC 2010-11-18
 // -----------------------------------------------------------------------------

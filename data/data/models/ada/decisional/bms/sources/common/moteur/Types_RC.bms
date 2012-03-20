@@ -471,7 +471,8 @@ eRC_TakeHostage = 452
 eRC_AttenteOrdrePoursuivreConvoi = 453
 eRC_DebutDevalorisation = 454
 eRC_FinDevalorisation = 455
-eNbr = 456
+eRC_TrafficablePositionFindingInZone = 456
+eNbr = 457
 
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : delai (float),

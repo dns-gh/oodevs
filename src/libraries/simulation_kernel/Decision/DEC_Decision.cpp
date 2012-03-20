@@ -226,6 +226,8 @@ void RegisterGeometryFunctions( directia::brain::Brain& brain)
     brain[ "DEC_Geometrie_FindRoadIntersectionWithZone" ] = &DEC_TerrainFunctions::GetRoadIntersectionsWithZone;
     brain[ "DEC_Geometrie_CalculerTrafficablePointPourPoint" ] =
         boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( const MT_Vector2D& ) >( boost::bind( &DEC_GeometryFunctions::ComputeTrafficableLocalisation, _1 ) );
+    brain[ "DEC_IsPointInUrbanBlockTrafficableForPlatoon" ] =
+        boost::function< bool( DEC_Decision_ABC*, MT_Vector2D& ) >( boost::bind( &DEC_GeometryFunctions::IsPointInUrbanBlockTrafficableForPlatoon, _1, _2 ) );
     brain[ "DEC_Geometrie_PositionsParRapportALocalisation" ] =
         boost::function< std::vector< boost::shared_ptr< MT_Vector2D > >( const std::vector< DEC_Decision_ABC* >&, TER_Localisation*, MT_Vector2D*, double ) >( boost::bind( &DEC_GeometryFunctions ::ComputeLocalisationPointsForPionsInFuseau, _1, _2, _3, _4 ) );
     brain[ "DEC_Geometrie_CalculerPointArriveePourFuseau" ] =

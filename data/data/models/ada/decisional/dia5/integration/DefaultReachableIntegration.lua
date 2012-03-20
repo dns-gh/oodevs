@@ -77,8 +77,15 @@ integration.getEngineerObjectPosition = function( object )
   return object.getEngineerObjectPositionResult 
 end
 integration.getAreaPosition = function( area )
-    area.getAreaPositionResult = area.getAreaPositionResult or DEC_Geometrie_CalculerBarycentreLocalisation( area.source )
+    area.getAreaPositionResult = integration.getCentralAreaPosition( area )
+    if integration.isPointInUrbanBlockTrafficable(CreateKnowledge( sword.military.world.Point, area.getAreaPositionResult), true ) == 0 then
+        return integration.getAreaPositions( area )[0]
+    end
     return area.getAreaPositionResult
+end
+integration.getCentralAreaPosition = function( area )
+    area.getCentralAreaPositionResult = area.getCentralAreaPositionResult or DEC_Geometrie_CalculerBarycentreLocalisation( area.source )
+    return area.getCentralAreaPositionResult
 end
 integration.getUrbanBlockPosition = function( urbanBlock )
   urbanBlock.getUrbanBlockPosition = urbanBlock.getUrbanBlockPosition or DEC_ConnaissanceUrbanBlock_BarycentreDansBU( urbanBlock.source )
@@ -89,8 +96,20 @@ integration.getUrbanBlockPositions = function( urbanBlock )
   return urbanBlock.getUrbanBlockPositionsResult
 end
 integration.getAreaPositions = function( area )
-    area.getAreaPositionsResult = area.getAreaPositionsResult or DEC_Geometrie_CalculerTrafficablePointPourPoint( integration.getAreaPosition( area ) )
-    return area.getAreaPositionsResult
+    area.getAreaPositionsResult = area.getAreaPositionsResult or DEC_Geometrie_CalculerTrafficablePointPourPoint( integration.getCentralAreaPosition( area ) )
+    area.getTrafficableAreaPositionsResult = area.getTrafficableAreaPositionsResult or {}
+    if not next(area.getTrafficableAreaPositionsResult ) then
+        for i = 1, #area.getAreaPositionsResult do -- On ne veut que les positions qui sont dans la zone
+            if integration.isPointInLocalisation(CreateKnowledge( sword.military.world.Point, area.getAreaPositionsResult[i] ), area) then
+               area.getTrafficableAreaPositionsResult[#area.getTrafficableAreaPositionsResult] = area.getAreaPositionsResult[i]
+            end
+        end
+    end
+    if next(area.getTrafficableAreaPositionsResult) then
+        return area.getTrafficableAreaPositionsResult
+    else
+        return area.getAreaPositionsResult
+    end
 end
 integration.getPointPositions = function( point )
   point.getPointPositionsResult = point.getPointPositionsResult or DEC_Geometrie_CalculerTrafficablePointPourPoint( point.source )
@@ -662,4 +681,8 @@ end
 
 integration.isPositionInAOR = function( position )
     return DEC_Geometrie_EstPointDansFuseau( position:getPosition() )
+end
+
+integration.isPointInUrbanBlockTrafficableForPlatoon = function( platoon, localisation )
+    return DEC_IsPointInUrbanBlockTrafficableForPlatoon( platoon, localisation)
 end
