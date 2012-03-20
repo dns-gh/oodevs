@@ -55,7 +55,7 @@ void MineAttribute::Display( kernel::Displayer_ABC& displayer ) const
                 .Add( " " ).Add( valorization_ ).End();
     if( density_.IsSet() )
         displayer.Group( tools::translate( "Object", "Mine parameters" ) )
-                 .Display( tools::translate( "Object", "Density:" ), density_ * Units::minesPerMeter );
+                 .Display( tools::translate( "Object", "Density:" ), density_ * Units::percentage );
 }
 
 // -----------------------------------------------------------------------------

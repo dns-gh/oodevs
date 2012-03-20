@@ -21,10 +21,7 @@ using namespace kernel;
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
 MineAttribute::MineAttribute( kernel::PropertiesDictionary& dico )
-    : rValorizationPercentage_ ( 0. )
-    , nDotationValorization_   ( 0 )
-    , valorization_            ( 0 )
-    , density_                 ( 1, Units::minesPerMeter )
+    : density_                 ( 1, Units::percentage )
 {
     CreateDictionary( dico );
 }
@@ -34,14 +31,8 @@ MineAttribute::MineAttribute( kernel::PropertiesDictionary& dico )
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
 MineAttribute::MineAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico )
-    : rValorizationPercentage_ ( 0. )
-    , nDotationValorization_   ( 0 )
-    , valorization_            ( 0 )
-    , density_     ( 1, Units::minesPerMeter )
+    : density_     ( xis.attribute< float >( "density", 1. ) * 100., Units::percentage )
 {
-    std::string density;
-    xis >> xml::optional >> xml::content( "density", density );
-    density_.value_ = QString( density.c_str() ).toDouble();
     CreateDictionary( dico );
 }
 
@@ -55,30 +46,12 @@ MineAttribute::~MineAttribute()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MineAttribute::Display
-// Created: SBO 2007-02-08
-// -----------------------------------------------------------------------------
-void MineAttribute::Display( kernel::Displayer_ABC& displayer ) const
-{
-    displayer.Group( tools::translate( "Object", "Information" ) )
-             .Display( tools::translate( "Object", "Mining:" ), rValorizationPercentage_ * Units::percentage );
-
-    displayer.Group( tools::translate( "Object", "Information" ) )
-             .Item( tools::translate( "Object", "Development resource:" ) )
-                .Start( nDotationValorization_ )
-                .Add( " " ).Add( valorization_ ).End();
-
-    displayer.Group( tools::translate( "Object", "Mine parameters" ) )
-             .Display( tools::translate( "Object", "Density:" ), density_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: MineAttribute::DisplayInTooltip
 // Created: JCR 2008-06-10
 // -----------------------------------------------------------------------------
 void MineAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
-    displayer.Display( tools::translate( "Object", "Mining:" ), rValorizationPercentage_ * Units::percentage );
+    displayer.Display( tools::translate( "Object", "Mining:" ), density_.value_ * Units::percentage );
 }
 
 // -----------------------------------------------------------------------------
@@ -87,9 +60,7 @@ void MineAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void MineAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << xml::start( "mine" )
-            << xml::content( "density", density_.value_ )
-        << xml::end;
+    xos << xml::start( "mine" ) << xml::attribute( "density", density_.value_ / 100. ) << xml::end;
 }
 
 // -----------------------------------------------------------------------------

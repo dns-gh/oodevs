@@ -60,7 +60,7 @@ public:
     //@{
     const PHY_ConsumptionType&  GetDefaultConsumptionMode() const;
     const PHY_DotationCategory* GetDotationCategory() const;
-    unsigned int                        GetMaxDotation() const;
+    unsigned int GetMaxDotation() const;
     ConstructionCapacity::E_UnitType GetUnit() const;
     //@}
 

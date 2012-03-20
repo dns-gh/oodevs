@@ -78,6 +78,18 @@ ConstructionAttribute::~ConstructionAttribute()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ConstructionAttribute::SetDotations
+// Created: ABR 2012-03-20
+// -----------------------------------------------------------------------------
+void ConstructionAttribute::SetDotations( const PHY_DotationCategory& category, unsigned int nFullNbrDotation, float density /*= 1.0f*/ )
+{
+    nFullNbrDotation_    = nFullNbrDotation;
+    nCurrentNbrDotation_ = nFullNbrDotation;
+    dotation_            = &category;
+    density_             = density;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ConstructionAttribute::Load
 // Created: JCR 2008-08-26
 // -----------------------------------------------------------------------------

@@ -71,7 +71,7 @@ MineAttribute::MineAttribute( const sword::MissionParameter_Value& attributes  )
 // -----------------------------------------------------------------------------
 void MineAttribute::Load( xml::xistream& xis )
 {
-    const double completion = xis.attribute< double >( "completion", 1.f );
+    const double completion = xis.attribute< double >( "density", 1.f );
     if( completion > 0. && completion <= 1. )
         miningPercentage_.Set( completion );
     nCurrentNbrDotation_ = static_cast< unsigned int >( miningPercentage_.Get() * nFullNbrDotation_ );
@@ -84,6 +84,17 @@ void MineAttribute::Load( xml::xistream& xis )
 MineAttribute::~MineAttribute()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: MineAttribute::SetDotations
+// Created: ABR 2012-03-20
+// -----------------------------------------------------------------------------
+void MineAttribute::SetDotations( const PHY_DotationCategory& category, unsigned int nFullNbrDotation )
+{
+    dotation_            = &category;
+    nFullNbrDotation_    = nFullNbrDotation;
+    nCurrentNbrDotation_ = nFullNbrDotation;
 }
 
 // -----------------------------------------------------------------------------
@@ -138,9 +149,7 @@ void MineAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned int ) con
 // -----------------------------------------------------------------------------
 void MineAttribute::WriteODB( xml::xostream& xos ) const
 {
-    xos << xml::start( "mine" )
-            << xml::attribute( "completion", miningPercentage_.Get() )
-        << xml::end;
+    xos << xml::start( "mine" ) << xml::attribute( "density", miningPercentage_.Get() ) << xml::end;
 }
 
 // -----------------------------------------------------------------------------

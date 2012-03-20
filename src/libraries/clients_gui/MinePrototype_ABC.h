@@ -14,7 +14,7 @@
 
 namespace gui
 {
-    class LoadableLineEdit;
+    class LoadableSpinBox;
 
 // =============================================================================
 /** @class  MinePrototype_ABC
@@ -41,9 +41,8 @@ public:
 protected:
     //! @name Member data
     //@{
-    LoadableLineEdit* density_;
+    LoadableSpinBox* density_;
     QLabel* densityLabel_;
-    Q3HBox* densityBox_;
     //@}
 };
 

@@ -13,7 +13,7 @@
 #include "MinePrototype_ABC.h"
 #include "clients_kernel/Units.h"
 #include "Tools.h"
-#include "LoadableLineEdit.h"
+#include "LoadableSpinBox.h"
 
 using namespace kernel;
 using namespace gui;
@@ -26,11 +26,9 @@ MinePrototype_ABC::MinePrototype_ABC( QWidget* parent )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::MinePrototype_ABC", "Mine parameters" ) )
 {
     densityLabel_ = new QLabel( tools::translate( "gui::MinePrototype_ABC", "Density:" ), this );
-    densityBox_ = new Q3HBox( this );
-    density_ = new LoadableLineEdit( densityBox_ );
-    density_->setText( QString::number( 0. ) );
-    density_->setValidator( new QDoubleValidator( 0, 5, 3, density_ ) );
-    new QLabel( Units::minesPerMeter.AsString(), densityBox_ );
+    density_ = new LoadableSpinBox( 1, 100, 1, this );
+    density_->setSuffix( kernel::Units::percentage.AsString() );
+    density_->setValue( 100 );
 }
 
 // -----------------------------------------------------------------------------
@@ -58,7 +56,7 @@ bool MinePrototype_ABC::CheckValidity() const
 void MinePrototype_ABC::SetMineField( bool minefield )
 {
     densityLabel_->setShown( minefield );
-    densityBox_->setShown( minefield );
+    density_->setShown( minefield );
 }
 
 // -----------------------------------------------------------------------------

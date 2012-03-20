@@ -12,7 +12,7 @@
 #include "clients_kernel/Units.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
-#include "clients_gui/LoadableLineEdit.h"
+#include "clients_gui/LoadableSpinBox.h"
 #include "preparation/MineAttribute.h"
 
 using namespace kernel;
@@ -48,7 +48,7 @@ void MinePrototype::Commit()
     {
         PropertiesDictionary& dico = creation_->Get< PropertiesDictionary >();
         MineAttribute* attribute = new MineAttribute( dico );
-        attribute->SetDensity( density_->text().toFloat() );
+        attribute->SetDensity( static_cast< float >( density_->value() ) );
         creation_->Attach( *attribute );
     }
 }

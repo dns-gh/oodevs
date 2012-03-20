@@ -21,6 +21,7 @@
 #include "LodgingPrototype.h"
 #include "LogisticPrototype.h"
 #include "MedicalTreatmentPrototype.h"
+#include "MinePrototype.h"
 #include "NBCPrototype.h"
 #include "TrafficabilityPrototype.h"
 #include "ObstaclePrototype.h"
@@ -43,13 +44,11 @@ namespace
 {
     typedef ObjectAttributePrototypeFactory_ABC::T_AttributeContainer  T_AttributeContainer;
 
-    void ConstructorAttribute( xml::xistream& /*xis*/, T_AttributeContainer& container, QWidget* parent, Object_ABC*& object )
+    void ConstructorAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, Object_ABC*& object )
     {
-        // $$$$ SBO 2009-06-09: TODO...
-//        const bool density = xis.attribute< std::string >( "unit-type" ) == "density";
-//        xis >> xml::optional >> xml::list( "buildable", builder, &ConstructorBuilder::BuildPrototype, density );
-//        xis >> xml::optional >> xml::list( "improvable", builder, &ConstructorBuilder::ImprovePrototype, density );
         container.push_back( new ConstructionPrototype( parent, object ) );
+        if( xis.has_child( "improvable" ) )
+            container.push_back( new MinePrototype( parent, object ) );
     }
 
     void BypassableAttribute( T_AttributeContainer& /*container*/, QWidget* /*parent*/, Object_ABC*& /*object*/ )
