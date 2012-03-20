@@ -173,6 +173,9 @@ return
     { 
         start = integration.beginReinforcementCompany,
     } ),
+    changeAutomate = function( self )
+        integration.changeAutomate( self, true )
+    end,
 
     -- -------------------------------------------------------------------------------- 
     -- Intagration and specific methods

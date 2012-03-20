@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.circu.skills.ConstruireZoneDeMobiliteReduiteOuAmelioree" source-version="1.0.0">
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="france.military.platoon.combat.support.circu.skills.ConstruireZone" source-version="1.0.0">
 	<parameters>
 		<parameter name="zone">
 			<type>

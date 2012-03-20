@@ -863,8 +863,9 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="objective" name="Unite a renforcer" optional="false" type="LocationComposite">
+      <parameter dia-name="objective" name="Unite ou compagnie a renforcer" optional="false" type="LocationComposite">
         <choice>
+          <parameter type="Automat"/>
           <parameter type="Agent"/>
         </choice>
       </parameter>
@@ -3059,4 +3060,4 @@
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PoursuivreConvoi" id="406" name="Poursuivre convoi"/>
   </fragorders>
 </missions>
-<!-- signature="4035588884" -->
+<!-- signature="0911574484" -->

@@ -10,7 +10,7 @@
     <stages>
         <stage label="Bloquer la zone">
             <skills>
-                <skill name="france.military.platoon.combat.support.circu.skills.ConstruireZoneDeMobiliteReduiteOuAmelioree" main="true">
+                <skill name="france.military.platoon.combat.support.circu.skills.ConstruireZone" main="true">
                     <parameter name="zone">
                         <value>
                             <parameter>zone</parameter>
