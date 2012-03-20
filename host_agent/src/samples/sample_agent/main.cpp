@@ -26,7 +26,7 @@ int main( int /*argc*/, const char* /*argv*/[] )
     host::UuidFactory uuids;
     host::FileSystem system;
     host::SessionFactory factory( runtime.GetRuntime(), uuids, system,
-        L"d:/apps/sword_434_data", L"d:/apps/sword_434/applications", L"e:/sword_tmp" );
+        L"d:/apps/sword_434_data", L"d:/apps/sword_434/applications" );
     host::Agent agent( factory );
     web::Controller controller( agent );
     web::MongooseServer server( controller );

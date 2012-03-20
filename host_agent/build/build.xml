@@ -15,7 +15,7 @@
     <target name="libraries" depends="runtime,host,web" description="build all libraries"/>
 
     <target name="runtime" description="build runtime library">
-        <build-lib name="runtime"/>
+        <build-lib name="runtime" depends="xerces"/>
     </target>
 
     <target name="host" description="build host library">
@@ -66,6 +66,8 @@
         <update name="boost"/>
         <update name="mongoose"/>
         <update name="turtle" version="trunk"/>
+        <update name="xeumeuleu"/>
+        <update name="xerces-c"/>
     </target>
 
     <!-- Clean -->

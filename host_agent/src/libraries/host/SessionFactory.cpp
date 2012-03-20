@@ -23,14 +23,12 @@ using namespace host;
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
 SessionFactory::SessionFactory( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids, const FileSystem_ABC& system,
-                                const boost::filesystem::wpath& data, const boost::filesystem::wpath& applications,
-                                const boost::filesystem::wpath& output )
+                                const boost::filesystem::wpath& data, const boost::filesystem::wpath& applications )
     : runtime_     ( runtime )
     , uuids_       ( uuids )
     , system_      ( system )
     , data_        ( data )
     , applications_( applications )
-    , output_      ( output )
 {
     // NOTHING
 }
@@ -50,5 +48,5 @@ SessionFactory::~SessionFactory()
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Session_ABC > SessionFactory::Create( const std::string& exercise, int port  ) const
 {
-    return boost::make_shared< Session >( runtime_, uuids_, system_, data_, applications_, output_, exercise, port );
+    return boost::make_shared< Session >( runtime_, uuids_, system_, data_, applications_, exercise, port );
 }

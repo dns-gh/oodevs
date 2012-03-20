@@ -6,6 +6,7 @@ include( MasaMacros.cmake )
 
 set( dev_dir  e:/dev )
 set( root_dir ${CMAKE_SOURCE_DIR}/.. )
+set( run_dir  ${root_dir}/run/${platform} )
 
 include_directories( ${dev_dir}/include )
 link_directories( ${dev_dir}/lib/${platform} )
@@ -45,7 +46,10 @@ file( GLOB files
     "${root_dir}/src/libraries/host/*.cpp"
 )
 add_static_library( host ${files} )
-target_link_libraries( host runtime )
+target_link_libraries( host
+    runtime
+    xerces-c_3
+)
 set_target_folder( host libraries )
 
 ################################################################################

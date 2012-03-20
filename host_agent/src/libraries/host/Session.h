@@ -37,8 +37,7 @@ public:
     //@{
              Session( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
                       const FileSystem_ABC& system, const boost::filesystem::wpath& data,
-                      const boost::filesystem::wpath& applications, const boost::filesystem::wpath& output,
-                      const std::string& exercise, int port );
+                      const boost::filesystem::wpath& applications, const std::string& exercise, int port );
     virtual ~Session();
     //@}
 
@@ -51,6 +50,11 @@ public:
     //@}
 
 private:
+    //! @name Private Operations
+    //@{
+    void WriteConfiguration( const boost::filesystem::wpath& filename );
+    //@}
+
     //! @name Member data
     //@{
     const runtime::Runtime_ABC& runtime_;
@@ -58,7 +62,6 @@ private:
     const boost::uuids::uuid tag_;
     const boost::filesystem::wpath& data_;
     const boost::filesystem::wpath& applications_;
-    const boost::filesystem::wpath output_;
     const std::string exercise_;
     int port_;
     boost::shared_ptr< runtime::Process_ABC > process_;

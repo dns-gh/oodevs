@@ -34,8 +34,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              SessionFactory( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids, const FileSystem_ABC& system,
-                             const boost::filesystem::wpath& data, const boost::filesystem::wpath& applications,
-                             const boost::filesystem::wpath& output );
+                             const boost::filesystem::wpath& data, const boost::filesystem::wpath& applications );
     virtual ~SessionFactory();
     //@}
 
