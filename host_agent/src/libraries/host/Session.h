@@ -51,11 +51,6 @@ public:
     //@}
 
 private:
-    //! @name Private Operations
-    //@{
-    void WriteConfiguration( const boost::filesystem::wpath& filename );
-    //@}
-
     //! @name Member data
     //@{
     const runtime::Runtime_ABC& runtime_;

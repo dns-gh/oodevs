@@ -22,6 +22,7 @@
 #include <xeumeuleu/xml.h>
 
 #include <boost/assign/list_of.hpp>
+#include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/foreach.hpp>
 #include <boost/format.hpp>
@@ -42,6 +43,20 @@ namespace
     {
         return runtime::Utf8Convert( path.string() );
     }
+
+    // -----------------------------------------------------------------------------
+    // Name: SessionPort Enums
+    // Created: BAX 2012-03-20
+    // -----------------------------------------------------------------------------
+    enum SessionPort
+    {
+        SIMULATION_PORT,
+        DISPATCHER_PORT,
+        WEB_CONTROL_PORT,
+        DIA_DEBUGGER_PORT,
+        NETWORK_LOGGER_PORT,
+        SESSION_PORT_COUNT,
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -90,91 +105,116 @@ boost::uuids::uuid Session::GetTag() const
     return tag_;
 }
 
+namespace
+{
+
+// -----------------------------------------------------------------------------
+// Name: ToJson
+// Created: BAX 2012-03-20
+// -----------------------------------------------------------------------------
+std::string ToJson( const runtime::Process_ABC& process )
+{
+    return (boost::format( "{ \"pid\" : %1%, \"name\" : \"%2%\" }" ) % process.GetPid() % process.GetName() ).str();
+}
+
+}
+
 // -----------------------------------------------------------------------------
 // Name: Session::ToJson
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
 std::string Session::ToJson() const
 {
-    const int pid = process_ ? process_->GetPid() : -1;
-    const std::string& name = process_ ? process_->GetName() : "";
-    return (boost::format( "{ \"tag\" : \"%1%\", \"pid\" : %2%, \"name\" : \"%3%\" }" )
-        % boost::lexical_cast< std::string >( tag_ ) % pid % name ).str();
+    const std::string process = process_ ? ::ToJson( *process_ ) : "{}";
+    return (boost::format( "{ \"tag\" : \"%1%\", \"process\" : %2%, \"name\" : \"%3%\", \"port\" : %4%" )
+        % tag_ % process % name_ % port_ ).str();
+}
+
+namespace
+{
+
+// -----------------------------------------------------------------------------
+// Name: WriteDispatchConfiguration
+// Created: BAX 2012-03-20
+// -----------------------------------------------------------------------------
+void WriteDispatcherConfiguration( xml::xostringstream& xos, int base )
+{
+    xos << xml::start( "dispatcher" )
+            << xml::start( "network" )
+                << xml::attribute( "client", "localhost:" + boost::lexical_cast< std::string >( base + SIMULATION_PORT ) )
+                << xml::attribute( "server", base + DISPATCHER_PORT )
+            << xml::end //  network
+        << xml::end; // dispatcher
 }
 
 // -----------------------------------------------------------------------------
-// Name: Session::Start
+// Name: WriteSimulationConfiguration
 // Created: BAX 2012-03-20
 // -----------------------------------------------------------------------------
-void Session::WriteConfiguration( const boost::filesystem::wpath& filename )
+void WriteSimulationConfiguration( xml::xostringstream& xos, int base )
+{
+    xos << xml::start( "simulation" )
+            << xml::start( "GarbageCollector" )
+                << xml::attribute( "setpause", 100 )
+                << xml::attribute( "setstepmul", 100 )
+            << xml::end //  GarbageCollector
+            << xml::start( "checkpoint" )
+                << xml::attribute( "frequency", "100000h" )
+                << xml::attribute( "keep", 1 )
+                << xml::attribute( "usecrc", true )
+            << xml::end //  checkpoint
+            << xml::start( "debug" )
+                << xml::attribute( "decisional", false )
+                << xml::attribute( "diadebugger", false )
+                << xml::attribute( "diadebuggerport", base + DIA_DEBUGGER_PORT )
+                << xml::attribute( "networklogger", false )
+                << xml::attribute( "networkloggerport", base + NETWORK_LOGGER_PORT )
+                << xml::attribute( "pathfind", false )
+            << xml::end //  debug
+            << xml::start( "decisional" )
+                << xml::attribute( "useonlybinaries", false )
+            << xml::end //  decisional
+            << xml::start( "dispatcher" )
+                << xml::attribute( "embedded", true )
+            << xml::end //  dispatcher
+            << xml::start( "network" )
+                << xml::attribute( "port", base + SIMULATION_PORT )
+            << xml::end //  network
+            << xml::start( "orbat" )
+                << xml::attribute( "checkcomposition", false )
+            << xml::end //  orbat
+            << xml::start( "pathfinder" )
+                << xml::attribute( "threads", 1 )
+            << xml::end //  pathfinder
+            << xml::start( "profiling" )
+                << xml::attribute( "enabled", false )
+            << xml::end //  profiling
+            << xml::start( "time" )
+                << xml::attribute( "factor", 10 )
+                << xml::attribute( "step", 10 )
+            << xml::end //  time
+        << xml::end; // simulation
+}
+
+// -----------------------------------------------------------------------------
+// Name: WriteConfiguration
+// Created: BAX 2012-03-20
+// -----------------------------------------------------------------------------
+std::string WriteConfiguration( const std::string& name, int base )
 {
     xml::xostringstream xos( xml::encoding( "UTF-8" ) );
     xos << xml::start( "session" )
-            << xml::start( "config" )
-                << xml::start( "dispatcher" )
-                    << xml::start( "network" )
-                        << xml::attribute( "client", "localhost:10000" )
-                        << xml::attribute( "server", 10001 )
-                    << xml::end //  network
-                    << xml::start( "plugins" )
-                        << xml::start( "recorder" )
-                            << xml::attribute( "fragmentfreq", 200 )
-                            << xml::attribute( "keyframesfreq", 100 )
-                        << xml::end //  recorder
-                    << xml::end //  plugins
-                << xml::end //  dispatcher
-                << xml::start( "gaming" )
-                    << xml::start( "network" )
-                        << xml::attribute( "server", "localhost:10001" )
-                    << xml::end //  network
-                << xml::end //  gaming
-                << xml::start( "simulation" )
-                    << xml::start( "GarbageCollector" )
-                        << xml::attribute( "setpause", 100 )
-                        << xml::attribute( "setstepmul", 100 )
-                    << xml::end //  GarbageCollector
-                    << xml::start( "checkpoint" )
-                        << xml::attribute( "frequency", "100000h" )
-                        << xml::attribute( "keep", 1 )
-                        << xml::attribute( "usecrc", true )
-                    << xml::end //  checkpoint
-                    << xml::start( "debug" )
-                        << xml::attribute( "decisional", false )
-                        << xml::attribute( "diadebugger", false )
-                        << xml::attribute( "diadebuggerport", 15000 )
-                        << xml::attribute( "networklogger", true )
-                        << xml::attribute( "networkloggerport", 20000 )
-                        << xml::attribute( "pathfind", false )
-                    << xml::end //  debug
-                    << xml::start( "decisional" )
-                        << xml::attribute( "useonlybinaries", false )
-                    << xml::end //  decisional
-                    << xml::start( "dispatcher" )
-                        << xml::attribute( "embedded", true )
-                    << xml::end //  dispatcher
-                    << xml::start( "network" )
-                        << xml::attribute( "port", 10000 )
-                    << xml::end //  network
-                    << xml::start( "orbat" )
-                        << xml::attribute( "checkcomposition", false )
-                    << xml::end //  orbat
-                    << xml::start( "pathfinder" )
-                        << xml::attribute( "threads", 1 )
-                    << xml::end //  pathfinder
-                    << xml::start( "profiling" )
-                        << xml::attribute( "enabled", false )
-                    << xml::end //  profiling
-                    << xml::start( "time" )
-                        << xml::attribute( "factor", 10 )
-                        << xml::attribute( "step", 10 )
-                    << xml::end //  time
-                << xml::end //  simulation
-            << xml::end //  config
             << xml::start( "meta" )
                 << xml::content( "comment", "Auto-generated by Cloud Host Agent" )
-                << xml::content( "date", "00000000T000000" ) // TODO use real date
-                << xml::content( "name", "default" );
-    system_.WriteFile( filename, xos.str() );
+                << xml::content( "date", boost::posix_time::to_iso_string( boost::posix_time::second_clock::local_time() ) )
+                << xml::content( "name", name )
+            << xml::end //  meta
+            << xml::start( "config" );
+    WriteDispatcherConfiguration( xos, base );
+    WriteSimulationConfiguration( xos, base );
+    return xos.str();
+}
+
 }
 
 // -----------------------------------------------------------------------------
@@ -186,7 +226,7 @@ void Session::Start()
     const std::wstring exercise = runtime::Utf8Convert( exercise_ );
     const boost::filesystem::wpath sessionPath = data_ / L"exercises" / exercise / L"sessions" / boost::lexical_cast< std::wstring >( tag_ );
     system_.CreateDirectory( sessionPath );
-    WriteConfiguration( sessionPath / L"session.xml" );
+    system_.WriteFile( sessionPath / L"session.xml", WriteConfiguration( name_, port_ ) );
     process_ = runtime_.Start( Utf8Convert( applications_ / L"simulation_app.exe" ),
         boost::assign::list_of
             ( "--root-dir="      + Utf8Convert( data_ ) )
