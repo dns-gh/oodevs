@@ -9,6 +9,8 @@
 
 #include "FileSystem.h"
 
+#include <boost/filesystem/fstream.hpp>
+
 #include <runtime/Utf8.h>
 
 using namespace host;
@@ -91,4 +93,13 @@ void FileSystem::CreateDirectory( const boost::filesystem::wpath& path ) const
 void FileSystem::Remove( const boost::filesystem::wpath& path ) const
 {
     boost::filesystem::remove_all( path );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FileSystem::WriteFile
+// Created: BAX 2012-03-20
+// -----------------------------------------------------------------------------
+void FileSystem::WriteFile( const boost::filesystem::wpath& path, const std::string& content ) const
+{
+    boost::filesystem::ofstream( path ) << content;
 }

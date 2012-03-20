@@ -58,6 +58,7 @@ namespace
         MOCK_METHOD( Copy, 2 );
         MOCK_METHOD( CreateDirectory, 1 );
         MOCK_METHOD( Remove, 1 );
+        MOCK_METHOD( WriteFile, 2 );
     };
 
     struct Fixture
