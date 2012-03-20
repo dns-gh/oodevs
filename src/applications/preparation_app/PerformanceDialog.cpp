@@ -186,7 +186,7 @@ void PerformanceDialog::UpdateDisplay()
     {
         const PerformanceIndicator::TeamData& teamData = it->second;
         detail += "\n\n" + tr( "Team: " ) + QString::fromStdString( teamData.name_ );
-        detail += "\n\t" + tr( "Formation: " ) + QString::number( teamData.formations_ );
+        detail += "\n\t" + tr( "Formations: " ) + QString::number( teamData.formations_ );
         detail += "\n\t" + tr( "Automats: " ) + QString::number( teamData.automats_ );
         for( PerformanceIndicator::CIT_EntityTypeCount subIt = teamData.automatTypes_.begin(); subIt != teamData.automatTypes_.end(); ++subIt )
             detail += "\n\t\t" + QString::fromStdString( subIt->first ) + QString( ": " ) + QString::number( subIt->second );

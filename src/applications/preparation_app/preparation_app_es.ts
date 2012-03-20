@@ -1499,7 +1499,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Formation: </source>
+        <source>Formations: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -1483,10 +1483,6 @@
         <translation>Camp: </translation>
     </message>
     <message>
-        <source>Formation: </source>
-        <translation>Formation: </translation>
-    </message>
-    <message>
         <source>Crowds: </source>
         <translation>Foules: </translation>
     </message>
@@ -1501,6 +1497,10 @@
     <message>
         <source>Number of crowds: </source>
         <translation>Nombre de foules: </translation>
+    </message>
+    <message>
+        <source>Formations: </source>
+        <translation>Formations: </translation>
     </message>
 </context>
 <context>
