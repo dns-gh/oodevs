@@ -199,6 +199,7 @@ private:
     T_SupplyConsigns supplyConsigns_;
     T_SupplyRequests supplyRequests_; // Pushed flows
     T_SupplyConvoysObservers supplyConvoysObserver_;
+    unsigned int nextConvoyInstanceId_;
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const MIL_AutomateLOG* pion, const unsigned int /*version*/ );
     template< typename Archive > friend  void load_construct_data( Archive& archive, MIL_AutomateLOG* pion, const unsigned int /*version*/ );

@@ -403,7 +403,7 @@ void MIL_Automate::ReadAutomatSubordinate( xml::xistream& xis )
 // Name: MIL_Automate::CreatePion
 // Created: NLD 2005-02-08
 // -----------------------------------------------------------------------------
-MIL_AgentPion& MIL_Automate::CreatePion( const MIL_AgentTypePion& type, const MT_Vector2D& vPosition, unsigned int nCtx )
+MIL_AgentPion& MIL_Automate::CreatePion( const MIL_AgentTypePion& type, const MT_Vector2D& vPosition, const std::string& name, unsigned int nCtx )
 {
     for( RIT_PionVector it = recycledPions_.rbegin(); it != recycledPions_.rend(); ++it )
     {
@@ -417,7 +417,7 @@ MIL_AgentPion& MIL_Automate::CreatePion( const MIL_AgentTypePion& type, const MT
             return pion;
         }
     }
-    return MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( type, *this, vPosition, nCtx );
+    return MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( type, *this, vPosition, name, nCtx );
 }
 
 // -----------------------------------------------------------------------------

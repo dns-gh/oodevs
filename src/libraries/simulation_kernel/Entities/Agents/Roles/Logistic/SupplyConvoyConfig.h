@@ -46,6 +46,7 @@ public:
     static MT_InterpolatedFunction< double > coefSpeedModificator_;
     static const MIL_AgentTypePion* convoyAgentType_;
     static const MIL_MissionType_ABC* convoyMissionType_;
+    static const std::string convoyUnitBaseName_;
 };
 
 } // end namespace logistic

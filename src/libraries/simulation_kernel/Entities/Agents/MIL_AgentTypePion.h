@@ -67,8 +67,8 @@ public:
 
     //! @name Accessors
     //@{
-    virtual const PHY_UnitType&               GetUnitType                      () const;
-    const DEC_Model_ABC&                      GetModel                         () const;
+    virtual const PHY_UnitType&             GetUnitType                      () const;
+    const DEC_Model_ABC&                    GetModel                         () const;
           double                            GetDistanceAvantPoint            ( const TerrainData& nType ) const;
           double                            GetDistanceAvantLima             () const;
           double                            GetRapForIncreasePerTimeStepValue() const;

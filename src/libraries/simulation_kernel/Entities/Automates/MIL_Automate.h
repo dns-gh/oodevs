@@ -159,6 +159,7 @@ public:
     virtual void Clean           ();
     const std::string& GetNationality() const;
     void ChangeNationality( const std::string& nationality );
+    const MIL_DictionaryExtensions& GetExtensions() const { return *pExtensions_; }
 
     template< typename T > void ApplyOnHierarchy( T& functor )
     {
@@ -217,7 +218,7 @@ public:
 
     //! @name Dynamic pions
     //@{
-    MIL_AgentPion& CreatePion ( const MIL_AgentTypePion& type, const MT_Vector2D& vPosition, unsigned int nCtx = 0 );
+    MIL_AgentPion& CreatePion ( const MIL_AgentTypePion& type, const MT_Vector2D& vPosition, const std::string& name, unsigned int nCtx = 0 );
     void           DestroyPion( MIL_AgentPion& pion );
     //@}
 

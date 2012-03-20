@@ -38,6 +38,7 @@
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Actions/PHY_ActionLogistic.h"
 #include "Entities/Orders/MIL_Report.h"
+#include "Entities/Agents/Roles/Logistic/SupplyConvoyConfig.h"
 #include "MT_Tools/MT_Logger.h"
 #include "Network/NET_AsnException.h"
 #include "Network/NET_Publisher_ABC.h"
@@ -72,7 +73,7 @@ MIL_AutomateLOG::MIL_AutomateLOG( MIL_Formation& formation, const PHY_LogisticLe
     , pLogisticHierarchy_         ( new logistic::LogisticHierarchy( *this, true /*use quotas*/ ) )
     , pLogLevel_                  ( &logLevel )
     , supplyConsigns_             ()
- //   , pExplicitStockSupplyState_  ( 0 )
+    , nextConvoyInstanceId_       ( 1 )
 {
 }
 
@@ -86,7 +87,7 @@ MIL_AutomateLOG::MIL_AutomateLOG( MIL_Automate& automate, const PHY_LogisticLeve
     , pLogLevel_                  ( &logLevel )
     , pLogisticHierarchy_         ( new logistic::LogisticHierarchy( *this, true /*use quotas*/ ) )
     , supplyConsigns_             ()
-//    , pExplicitStockSupplyState_  ( 0 )
+    , nextConvoyInstanceId_       ( 1 )
 {
 }
 // -----------------------------------------------------------------------------
@@ -99,9 +100,10 @@ MIL_AutomateLOG::MIL_AutomateLOG( const PHY_LogisticLevel& level )
     , pLogLevel_                  ( &level )
     , pLogisticHierarchy_         ( 0 )
     , supplyConsigns_             ()
-//  , pExplicitStockSupplyState_  ( 0 )
+    , nextConvoyInstanceId_       ( 1 )
 {
 }
+
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateLOG destructor
 // Created: NLD 2004-12-21
@@ -139,7 +141,8 @@ void MIL_AutomateLOG::serialize( Archive& file, const unsigned int )
          & pAssociatedAutomate_
          & pAssociatedFormation_
          & pLogisticHierarchy_
-    ;/*     & pExplicitStockSupplyState_;
+         & nextConvoyInstanceId_;
+    /*     & pExplicitStockSupplyState_;
          & supplyConsigns_;*/
 }
 
@@ -424,7 +427,11 @@ MIL_AgentPion* MIL_AutomateLOG::SupplyCreateConvoyPion( const MIL_AgentTypePion&
     if( !pConvoyAutomate )
         return 0;
     const MT_Vector2D& location = pConvoyAutomate->GetPionPC().GetRole<PHY_RoleInterface_Location>().GetPosition();
-    MIL_AgentPion* convoyPion = &pConvoyAutomate->CreatePion( type, location );
+
+    std::stringstream ssName;
+    ssName << logistic::SupplyConvoyConfig::convoyUnitBaseName_ << nextConvoyInstanceId_;
+
+    MIL_AgentPion* convoyPion = &pConvoyAutomate->CreatePion( type, location, ssName.str() );
     PHY_RoleInterface_Supply* itf = convoyPion->RetrieveRole< PHY_RoleInterface_Supply >();
     if( itf )
         itf->AssignConvoy( convoy );
@@ -514,7 +521,14 @@ void MIL_AutomateLOG::OnSupplyConvoyLeaving( boost::shared_ptr< const logistic::
 // -----------------------------------------------------------------------------
 bool MIL_AutomateLOG::BelongsToLogisticBase( const MIL_AutomateLOG& logisticBase ) const
 {
-    return &logisticBase == this;
+    if( &logisticBase == this )
+        return true;
+   /* if( pAssociatedAutomate_ )
+        return pAssociatedAutomate_-> FindLogisticManager()->BelongsToLogisticBase(logisticBase);
+    if( pAssociatedFormation_ )
+        return pAssociatedFormation_->FindLogisticManager()->BelongsToLogisticBase(logisticBase);
+    */
+    return false;
 }
 
 // =============================================================================
@@ -522,7 +536,7 @@ bool MIL_AutomateLOG::BelongsToLogisticBase( const MIL_AutomateLOG& logisticBase
 // =============================================================================
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::BelongsToLogisticBase
+// Name: MIL_AutomateLOG::AddSupplyConvoysObserver
 // Created: NLD 2011-07-20
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::AddSupplyConvoysObserver( logistic::SupplyConvoysObserver_ABC& observer )
@@ -531,7 +545,7 @@ void MIL_AutomateLOG::AddSupplyConvoysObserver( logistic::SupplyConvoysObserver_
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::BelongsToLogisticBase
+// Name: MIL_AutomateLOG::RemoveSupplyConvoysObserver
 // Created: NLD 2011-07-20
 // -----------------------------------------------------------------------------
 void MIL_AutomateLOG::RemoveSupplyConvoysObserver( logistic::SupplyConvoysObserver_ABC& observer )
@@ -540,7 +554,7 @@ void MIL_AutomateLOG::RemoveSupplyConvoysObserver( logistic::SupplyConvoysObserv
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::BelongsToLogisticBase
+// Name: MIL_AutomateLOG::FuneralHandleConsign
 // Created: NLD 2011-07-20
 // -----------------------------------------------------------------------------
 bool MIL_AutomateLOG::FuneralHandleConsign( boost::shared_ptr< logistic::FuneralConsign_ABC > consign )
@@ -549,7 +563,7 @@ bool MIL_AutomateLOG::FuneralHandleConsign( boost::shared_ptr< logistic::Funeral
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AutomateLOG::BelongsToLogisticBase
+// Name: MIL_AutomateLOG::FuneralGetNextPackagingResource
 // Created: NLD 2011-07-20
 // -----------------------------------------------------------------------------
 const logistic::FuneralPackagingResource* MIL_AutomateLOG::FuneralGetNextPackagingResource( const logistic::FuneralPackagingResource* currentPackaging )

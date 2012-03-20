@@ -82,6 +82,7 @@
 #include "MT_Tools/MT_FormatString.h"
 #include <boost/serialization/vector.hpp>
 #include <boost/foreach.hpp>
+#include <boost/regex.hpp>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AgentPion )
 
@@ -127,6 +128,16 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
 {
     pColor_.reset( new MIL_Color( automate.GetColor() ) );
     automate.RegisterPion( *this );
+
+    //$$$ What a nice shit !
+    const std::string& longNameBase = automate.GetExtensions().GetExtension( "NomLong" ); 
+    if( !longNameBase.empty() )
+    {
+        boost::regex regex( "[^a-zA-Z0-9.]" );
+        std::string longName = GetName() + "." + longNameBase;
+        longName = boost::regex_replace( longName , regex, "" );
+        pExtensions_->SetExtension( "NomLong", longName );
+    }
 }
 
 // -----------------------------------------------------------------------------

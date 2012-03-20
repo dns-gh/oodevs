@@ -530,7 +530,7 @@ bool SupplyConsign::WillGoTo( const MIL_AutomateLOG& destination ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: SupplyConsign::WillGoTo
+// Name: SupplyConsign::IsAt
 // Created: NLD 2004-12-29
 // -----------------------------------------------------------------------------
 bool SupplyConsign::IsAt( const MIL_AutomateLOG& destination ) const
