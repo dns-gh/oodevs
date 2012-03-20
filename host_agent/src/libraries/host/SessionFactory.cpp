@@ -15,7 +15,6 @@
 #include "PortFactory_ABC.h"
 #include "Session.h"
 
-#include <boost/make_shared.hpp>
 #include <boost/ref.hpp>
 
 using namespace host;
@@ -51,5 +50,5 @@ SessionFactory::~SessionFactory()
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Session_ABC > SessionFactory::Create( const std::string& exercise, const std::string& name ) const
 {
-    return boost::make_shared< Session >( runtime_, uuids_, system_, data_, applications_, exercise, name, boost::ref( ports_.Create() ) );
+    return boost::shared_ptr< Session >( new Session( runtime_, uuids_, system_, data_, applications_, exercise, name, ports_.Create() ) );
 }
