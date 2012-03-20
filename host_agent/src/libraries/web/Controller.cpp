@@ -179,7 +179,7 @@ std::string Controller::GetSession( const Request_ABC& request )
 {
     const boost::optional< std::string > uuid = request.GetParameter( "tag" );
     if( uuid == boost::none )
-        return WriteHttpReply( BadRequest, "Missing tag parameter" );
+        return WriteHttpReply( BadRequest, "Missing \"tag\" parameter" );
     return WriteHttpReply( agent_.GetSession( boost::uuids::string_generator()( *uuid ) ) );
 }
 
@@ -191,10 +191,10 @@ std::string Controller::CreateSession( const Request_ABC& request )
 {
     const boost::optional< std::string > exercise = request.GetParameter( "exercise" );
     if( exercise == boost::none )
-        return WriteHttpReply( BadRequest, "Missing exercise parameter" );
+        return WriteHttpReply( BadRequest, "Missing \"exercise\" parameter" );
     const boost::optional< std::string> name = request.GetParameter( "name" );
     if( name == boost::none )
-        return WriteHttpReply( BadRequest, "Missing name parameter" );
+        return WriteHttpReply( BadRequest, "Missing \"name\" parameter" );
     return WriteHttpReply( agent_.CreateSession( *exercise, *name ) );
 }
 
@@ -206,6 +206,6 @@ std::string Controller::DeleteSession( const Request_ABC& request )
 {
     const boost::optional< std::string > uuid = request.GetParameter( "tag" );
     if( uuid == boost::none )
-        return WriteHttpReply( BadRequest, "Missing tag parameter" );
+        return WriteHttpReply( BadRequest, "Missing \"tag\" parameter" );
     return WriteHttpReply( agent_.DeleteSession( boost::uuids::string_generator()( *uuid ) ) );
 }
