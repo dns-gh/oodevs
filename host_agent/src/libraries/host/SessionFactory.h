@@ -19,8 +19,9 @@ namespace runtime
 
 namespace host
 {
-    class UuidFactory_ABC;
     class FileSystem_ABC;
+    class PortFactory_ABC;
+    class UuidFactory_ABC;
 
 // =============================================================================
 /** @class  SessionFactory
@@ -33,14 +34,14 @@ class SessionFactory : public SessionFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SessionFactory( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids, const FileSystem_ABC& system,
+             SessionFactory( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids, const FileSystem_ABC& system, PortFactory_ABC& ports,
                              const boost::filesystem::wpath& data, const boost::filesystem::wpath& applications );
     virtual ~SessionFactory();
     //@}
 
     //! @name Methods
     //@{
-    virtual boost::shared_ptr< Session_ABC > Create( const std::string& exercise, const std::string& name, int port ) const;
+    virtual boost::shared_ptr< Session_ABC > Create( const std::string& exercise, const std::string& name ) const;
     //@}
 
 private:
@@ -49,6 +50,7 @@ private:
     const runtime::Runtime_ABC& runtime_;
     const UuidFactory_ABC& uuids_;
     const FileSystem_ABC& system_;
+    PortFactory_ABC& ports_;
     const boost::filesystem::wpath data_;
     const boost::filesystem::wpath applications_;
     const boost::filesystem::wpath output_;

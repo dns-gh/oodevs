@@ -33,7 +33,7 @@ namespace
 {
     MOCK_BASE_CLASS( MockSessionFactory, SessionFactory_ABC )
     {
-        MOCK_METHOD( Create, 3 );
+        MOCK_METHOD( Create, 2 );
     };
 
     MOCK_BASE_CLASS( MockSession, Session_ABC )
@@ -72,7 +72,7 @@ namespace
             uuid.resize( uuid.size() - suffix.size() );
             uuid += suffix;
             boost::shared_ptr< MockSession > session = CreateMockSession( uuid, exercise, name );
-            MOCK_EXPECT( factory.Create ).once().with( exercise, name, mock::any ).returns( session );
+            MOCK_EXPECT( factory.Create ).once().with( exercise, name ).returns( session );
             MOCK_EXPECT( session->Start ).once();
             CheckReply( agent.CreateSession( exercise, name ), session->ToJson() );
             return session;

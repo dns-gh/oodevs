@@ -12,9 +12,11 @@
 #endif
 
 #include "SessionFactory.h"
+#include "PortFactory_ABC.h"
 #include "Session.h"
 
 #include <boost/make_shared.hpp>
+#include <boost/ref.hpp>
 
 using namespace host;
 
@@ -22,11 +24,12 @@ using namespace host;
 // Name: SessionFactory::SessionFactory
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
-SessionFactory::SessionFactory( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids, const FileSystem_ABC& system,
+SessionFactory::SessionFactory( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids, const FileSystem_ABC& system, PortFactory_ABC& ports,
                                 const boost::filesystem::wpath& data, const boost::filesystem::wpath& applications )
     : runtime_     ( runtime )
     , uuids_       ( uuids )
     , system_      ( system )
+    , ports_       ( ports )
     , data_        ( data )
     , applications_( applications )
 {
@@ -46,7 +49,7 @@ SessionFactory::~SessionFactory()
 // Name: SessionFactory::Create
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
-boost::shared_ptr< Session_ABC > SessionFactory::Create( const std::string& exercise, const std::string& name, int port  ) const
+boost::shared_ptr< Session_ABC > SessionFactory::Create( const std::string& exercise, const std::string& name ) const
 {
-    return boost::make_shared< Session >( runtime_, uuids_, system_, data_, applications_, exercise, name, port );
+    return boost::make_shared< Session >( runtime_, uuids_, system_, data_, applications_, exercise, name, boost::ref( ports_.Create() ) );
 }

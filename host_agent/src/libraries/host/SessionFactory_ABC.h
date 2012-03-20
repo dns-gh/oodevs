@@ -35,7 +35,7 @@ public:
 
     //! @name Methods
     //@{
-    virtual boost::shared_ptr< Session_ABC > Create( const std::string& exercise, const std::string& name, int port ) const = 0;
+    virtual boost::shared_ptr< Session_ABC > Create( const std::string& exercise, const std::string& name ) const = 0;
     //@}
 };
 

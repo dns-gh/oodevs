@@ -39,7 +39,7 @@ using namespace runtime;
 // -----------------------------------------------------------------------------
 Agent::Agent( const SessionFactory_ABC& sessionFactory )
     : sessionFactory_( sessionFactory )
-    , access_ ( new boost::shared_mutex() )
+    , access_        ( new boost::shared_mutex() )
 {
     // NOTHING
 }
@@ -110,8 +110,6 @@ Reply Agent::GetSession( const boost::uuids::uuid& tag ) const
     return Reply( it->second->ToJson() );
 }
 
-
-
 namespace
 {
 
@@ -151,8 +149,7 @@ boost::shared_ptr< Session_ABC > ExtractSession( T& mutex, U& sessions, const bo
 // -----------------------------------------------------------------------------
 Reply Agent::CreateSession( const std::string& exercise, const std::string& name )
 {
-    const int port = 10000; // TODO add port management
-    boost::shared_ptr< Session_ABC > ptr = sessionFactory_.Create( exercise, name, port );
+    boost::shared_ptr< Session_ABC > ptr = sessionFactory_.Create( exercise, name );
     if( !ptr )
         return Reply( "unable to create new session", false ); // TODO add better error message
     AddSession( *access_, sessions_, ptr );

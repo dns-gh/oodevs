@@ -35,7 +35,7 @@ class Agent : public Agent_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Agent( const SessionFactory_ABC& session_ );
+             Agent( const SessionFactory_ABC& sessionFactory );
     virtual ~Agent();
     //@}
 

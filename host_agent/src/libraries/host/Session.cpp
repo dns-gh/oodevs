@@ -13,6 +13,7 @@
 
 #include "Session.h"
 #include "FileSystem_ABC.h"
+#include "PortFactory_ABC.h"
 #include "UuidFactory_ABC.h"
 
 #include <runtime/Process_ABC.h>
@@ -66,7 +67,8 @@ namespace
 Session::Session( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
                   const FileSystem_ABC& system, const boost::filesystem::wpath& data,
                   const boost::filesystem::wpath& applications,
-                  const std::string& exercise, const std::string& name, int port )
+                  const std::string& exercise, const std::string& name,
+                  std::auto_ptr< Port_ABC > port )
     : runtime_     ( runtime )
     , system_      ( system )
     , tag_         ( uuids.Create() )
@@ -127,7 +129,7 @@ std::string Session::ToJson() const
 {
     const std::string process = process_ ? ::ToJson( *process_ ) : "{}";
     return (boost::format( "{ \"tag\" : \"%1%\", \"process\" : %2%, \"name\" : \"%3%\", \"port\" : %4%" )
-        % tag_ % process % name_ % port_ ).str();
+        % tag_ % process % name_ % port_->Get() ).str();
 }
 
 namespace
@@ -226,7 +228,7 @@ void Session::Start()
     const std::wstring exercise = runtime::Utf8Convert( exercise_ );
     const boost::filesystem::wpath sessionPath = data_ / L"exercises" / exercise / L"sessions" / boost::lexical_cast< std::wstring >( tag_ );
     system_.CreateDirectory( sessionPath );
-    system_.WriteFile( sessionPath / L"session.xml", WriteConfiguration( name_, port_ ) );
+    system_.WriteFile( sessionPath / L"session.xml", WriteConfiguration( name_, port_->Get() ) );
     process_ = runtime_.Start( Utf8Convert( applications_ / L"simulation_app.exe" ),
         boost::assign::list_of
             ( "--root-dir="      + Utf8Convert( data_ ) )
