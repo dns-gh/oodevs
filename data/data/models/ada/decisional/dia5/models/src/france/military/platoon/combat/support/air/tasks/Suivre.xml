@@ -56,7 +56,7 @@
 				</skill>
 			</skills>
 		</stage>
-		<stage label="Atterrissage" disable-when-done="true">
+		<stage label="Aterrissage" disable-when-done="true">
 			<skills>
 				<skill name="france.military.platoon.combat.support.air.skills.Atterrir" main="true"/>
 			</skills>
