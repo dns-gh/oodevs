@@ -17,7 +17,6 @@ connections = { skill.links.moveToward, skill.nodes.RC },
             Activate( skill.nodes.RC, 1, { RC = eRC_EnExfiltration } )
         else
             Activate( skill.nodes.RC, 1, { RC = eRC_AttenteConditionFavorablePourInfiltration } )
-            Feedback( self.feedbacks.done )
         end
     end,
     
