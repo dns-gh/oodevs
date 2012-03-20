@@ -20,7 +20,6 @@ end
 -- @release 2011-01-13
 local function issueMission ( self, tasks, nbrFront, echelon, entities )
     local tasks = explode( ";", tasks )
-    DEC_Trace("Tasks "..tostringr(tasks))
     entities = entities or self.entitiesWithoutMission
     local bestUnits = findBests( entities, tasks, self.companyTask, self.parameters, nbrFront ) --Save the nbrFront best couple unit/task
     self.entitiesWithoutMission = removeFromListForLead( bestUnits, self.entitiesWithoutMission )
