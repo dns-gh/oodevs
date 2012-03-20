@@ -24,6 +24,7 @@
 				</type>
 			</argument>
 		</method>
+		<method name="changeAutomate"/>
 		<method name="sendTaskToPion">
 			<description>__INTEGRATION : envoyer une mission d'un automate vers un autre pion du même groupe de communication.</description>
 			<argument>
