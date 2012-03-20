@@ -2250,6 +2250,10 @@
         <mission name="PION MELEE Controler foule"/>
         <mission name="PION MELEE Interdire foule"/>
         <mission name="PION MELEE Renseigner sur foule"/>
+        <mission name="PION MELEE Freiner"/>
+        <mission name="PION MELEE Neutraliser"/>
+        <mission name="PION MELEE Renseigner Sur"/>
+        <mission name="PION MELEE Tenir"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -2318,6 +2322,11 @@
         <mission name="PION MELEE Interdire foule"/>
         <mission name="PION MELEE Renseigner sur foule"/>
         <mission name="PION MELEE Organiser Accueil Colonne Refugies"/>
+        <mission name="PION MELEE Freiner"/>
+        <mission name="PION MELEE Interdire"/>
+        <mission name="PION MELEE Neutraliser"/>
+        <mission name="PION MELEE Renseigner Sur"/>
+        <mission name="PION MELEE Tenir"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -2416,6 +2425,9 @@
         <mission name="PION MELEE Surveiller"/>
         <mission name="PION MELEE Animer Poste De Controle"/>
         <mission name="PION MELEE Renseigner sur foule"/>
+        <mission name="PION MELEE Controler foule"/>
+        <mission name="PION MELEE Organiser Accueil Colonne Refugies"/>
+        <mission name="PION MELEE Reconnaitre"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -2469,6 +2481,13 @@
         <mission name="PION MELEE Surveiller"/>
         <mission name="PION MELEE Animer Poste De Controle"/>
         <mission name="PION MELEE Renseigner sur foule"/>
+        <mission name="PION MELEE Interdire foule"/>
+        <mission name="PION MELEE Couvrir"/>
+        <mission name="PION MELEE Flanc-Garder"/>
+        <mission name="PION MELEE Freiner"/>
+        <mission name="PION MELEE Interdire"/>
+        <mission name="PION MELEE Organiser Accueil Colonne Refugies"/>
+        <mission name="PION MELEE Reconnaitre"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -2512,6 +2531,9 @@
         <mission name="PION MELEE Appuyer"/>
         <mission name="PION MELEE Interdire foule"/>
         <mission name="PION MELEE Renseigner sur foule"/>
+        <mission name="PION MELEE Animer Poste De Controle"/>
+        <mission name="PION MELEE Controler"/>
+        <mission name="PION MELEE Flanc-Garder"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -5288,9 +5310,6 @@
         <mission name="AUTOMATE MELEE Interdire">
           <fragorder name="Activer Obstacles"/>
         </mission>
-        <mission name="AUTOMATE MELEE Intercepter">
-          <fragorder name="Activer Obstacles"/>
-        </mission>
         <mission name="AUTOMATE MELEE Jalonner">
           <fragorder name="Activer Obstacles"/>
         </mission>
@@ -5431,9 +5450,6 @@
           <fragorder name="Activer Obstacles"/>
         </mission>
         <mission name="AUTOMATE MELEE Interdire">
-          <fragorder name="Activer Obstacles"/>
-        </mission>
-        <mission name="AUTOMATE MELEE Intercepter">
           <fragorder name="Activer Obstacles"/>
         </mission>
         <mission name="AUTOMATE MELEE Neutraliser"/>
@@ -5630,9 +5646,6 @@
         <mission name="AUTOMATE MELEE Escorter"/>
         <mission name="AUTOMATE MELEE Fixer"/>
         <mission name="AUTOMATE MELEE Flanc-Garder"/>
-        <mission name="AUTOMATE MELEE Intercepter">
-          <fragorder name="Activer Obstacles"/>
-        </mission>
         <mission name="AUTOMATE MELEE Jalonner">
           <fragorder name="Activer Obstacles"/>
         </mission>
@@ -7321,4 +7334,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3160688465" -->
+<!-- signature="2343738899" -->
