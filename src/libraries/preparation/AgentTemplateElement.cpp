@@ -41,6 +41,13 @@ AgentTemplateElement::AgentTemplateElement( AgentsModel& agents, const kernel::A
     , cp_    ( IsCommandPost( agent ) )
     , name_  ( agent.GetName() )
 {
+    QRegExp regExp( "(.*) \\[\\d+\\]$" );
+    if( regExp.exactMatch( name_ ) )
+    {
+        QStringList groups = regExp.capturedTexts();
+        if( groups.size() == 2 )
+            name_ = groups[ 1 ];
+    }
     const kernel::DictionaryExtensions& extensions = agent.Get< kernel::DictionaryExtensions >();
     if( extensions.IsEnabled() )
         extensions_ = extensions.GetExtensions();
