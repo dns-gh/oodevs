@@ -67,14 +67,10 @@ BOOST_FIXTURE_TEST_CASE( ClientCanStartExercise, ExerciseFixture )
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( ClientCanPauseExercise, ExerciseFixture )
 {
-    // send pause request
-    exercise->Pause( session );
-    VerifySendRequest( "context: 0 message { control_pause { } }" );
-
     // retrieve pause response
     client::ControlPauseAck dispatcherResponse;
     dispatcherResponse().set_error_code( sword::ControlAck::no_error );
-    dispatcherResponse.Send( dispatcher );
+    dispatcherResponse.Send( dispatcher, 0 );
 
     sword::SessionStatus statusResponse;
     MOCK_EXPECT( handler, HandleSessionStatus ).once().with( mock::retrieve( statusResponse ) );
@@ -89,14 +85,10 @@ BOOST_FIXTURE_TEST_CASE( ClientCanPauseExercise, ExerciseFixture )
 // -----------------------------------------------------------------------------
 BOOST_FIXTURE_TEST_CASE( ClientCanResumeExercise, ExerciseFixture )
 {
-    // send resume request
-    exercise->Resume( session );
-    VerifySendRequest( "context: 0 message { control_resume { } }" );
-
     // retrieve resume response
     client::ControlResumeAck dispatcherResponse;
     dispatcherResponse().set_error_code( sword::ControlAck::error_not_paused );
-    dispatcherResponse.Send( dispatcher, 0 );
+    dispatcherResponse.Send( dispatcher, 1 );
 
     sword::SessionStatus statusResponse;
     MOCK_EXPECT( handler, HandleSessionStatus ).once().with( mock::retrieve( statusResponse ) );
@@ -105,49 +97,6 @@ BOOST_FIXTURE_TEST_CASE( ClientCanResumeExercise, ExerciseFixture )
     LAUNCHER_CHECK_MESSAGE( statusResponse, "exercise: \"" + exercise->GetName() + "\" session: \"" + session + "\" status: running" );
 }
 
-// -----------------------------------------------------------------------------
-// Name: ClientCanChangeDateTime
-// Created: LGY 2011-06-22
-// -----------------------------------------------------------------------------
-BOOST_FIXTURE_TEST_CASE( ClientCanChangeDateTime, ExerciseFixture )
-{
-    // send resume request
-    exercise->ChangeDateTime( session, "dateISO860" );
-    VerifySendRequest( "context: 1 message { control_date_time_change { date_time { data: \"dateISO860\" } } }" );
-
-    // retrieve resume response
-    client::ControlDateTimeChangeAck dispatcherResponse;
-    dispatcherResponse().set_error_code( sword::ControlAck::no_error );
-    dispatcherResponse.Send( dispatcher, 1 );
-
-    sword::SessionCommandExecutionResponse launcherResponse;
-    MOCK_EXPECT( handler, HandleSessionCommandExecutionResponse ).once().with( mock::retrieve( launcherResponse ) );
-
-    Wait( launcherResponse );
-    LAUNCHER_CHECK_MESSAGE( launcherResponse, "error_code: success exercise: \"" + exercise->GetName() + "\" session: \"" + session + "\"" );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ClientCanSaveCheckPoint
-// Created: AHC 2011-05-20
-// -----------------------------------------------------------------------------
-BOOST_FIXTURE_TEST_CASE( ClientCanSaveCheckPoint, ExerciseFixture )
-{
-    // send checkpoint request
-    exercise->SaveCheckpoint( session, "checkpoint" );
-    VerifySendRequest( "context: 0 message { control_checkpoint_save_now { name: \"checkpoint\" } }" );
-
-    // retrieve checkpoint response
-    client::ControlCheckPointSaveEnd dispatcherResponse;
-    dispatcherResponse().set_name( "checkpoint" );
-    dispatcherResponse.Send( dispatcher, 0 );
-
-    sword::SessionCommandExecutionResponse launcherResponse;
-    MOCK_EXPECT( handler, HandleSessionCommandExecutionResponse ).once().with( mock::retrieve( launcherResponse ) );
-
-    Wait( launcherResponse );
-    LAUNCHER_CHECK_MESSAGE( launcherResponse, "error_code: success exercise: \"" + exercise->GetName() + "\" session: \"" + session + "\" saved_checkpoint: \"checkpoint\"" );
-}
 
 // -----------------------------------------------------------------------------
 // Name: NotifyUnitExtension

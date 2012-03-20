@@ -578,6 +578,7 @@ void ProcessService::ExecutePauseResume( const std::string& endpoint, const std:
     executionResponse().set_running( running );
     executionResponse().set_exercise( exercise );
     executionResponse().set_session( session );
+    executionResponse.Send( *server_.ResolveClient( endpoint ) );
     if( running )
     {
         simulation::ControlResume request;

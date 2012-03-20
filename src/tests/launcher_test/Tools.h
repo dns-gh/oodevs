@@ -249,16 +249,6 @@ namespace launcher_test
            std::remove( savePath.string().c_str() );
         }
 
-        void VerifySendRequest( const std::string& expected )
-        {
-            sword::ClientToSim message;
-            MOCK_EXPECT( dispatcher, ReceiveSim ).once().with( mock::any, mock::retrieve( message ) );
-            timeout.Start();
-            while( !message.IsInitialized()&& !timeout.Expired() )
-                Update();
-            LAUNCHER_CHECK_MESSAGE( message, expected );
-            mock::verify();
-        }
         void VerifySendAuthRequest( const std::string& expected )
         {
             sword::ClientToAuthentication message;
