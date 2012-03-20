@@ -606,5 +606,6 @@
   <report category="operational" id="415" message="Fin de valorisation pour l'objet : %1">
     <parameter type="ObjectKnowledge"/>
   </report>
+  <report category="operational" id="416" message="Pas de position trafficable dans la zone"/>
 </reports>
-<!-- signature="2421588073" -->
+<!-- signature="2248133878" -->

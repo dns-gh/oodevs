@@ -599,5 +599,13 @@
   <report category="operational" id="412" message="Prise en otage de %1">
     <parameter type="AgentKnowledge"/>
   </report>
+  <report category="operational" id="413" message="En attente d'une escorte ou d'ordre poursuivre convoi"/>
+  <report category="operational" id="414" message="Debbut de devalorisation pour l'objet : %1">
+    <parameter type="ObjectKnowledge"/>
+  </report>
+  <report category="operational" id="415" message="Fin de valorisation pour l'objet : %1">
+    <parameter type="ObjectKnowledge"/>
+  </report>
+  <report category="operational" id="416" message="Pas de position trafficable dans la zone"/>
 </reports>
-<!-- signature="1222529323" -->
+<!-- signature="1223879414" -->
