@@ -192,8 +192,10 @@ std::string Controller::CreateSession( const Request_ABC& request )
     const boost::optional< std::string > exercise = request.GetParameter( "exercise" );
     if( exercise == boost::none )
         return WriteHttpReply( BadRequest, "Missing exercise parameter" );
-    const int port = GetParameter( "port", request, 80 );
-    return WriteHttpReply( agent_.CreateSession( *exercise, port ) );
+    const boost::optional< std::string> name = request.GetParameter( "name" );
+    if( name == boost::none )
+        return WriteHttpReply( BadRequest, "Missing name parameter" );
+    return WriteHttpReply( agent_.CreateSession( *exercise, *name ) );
 }
 
 // -----------------------------------------------------------------------------

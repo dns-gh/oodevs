@@ -51,13 +51,14 @@ namespace
 Session::Session( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
                   const FileSystem_ABC& system, const boost::filesystem::wpath& data,
                   const boost::filesystem::wpath& applications,
-                  const std::string& exercise, int port )
+                  const std::string& exercise, const std::string& name, int port )
     : runtime_     ( runtime )
     , system_      ( system )
     , tag_         ( uuids.Create() )
     , data_        ( data )
     , applications_( applications )
     , exercise_    ( exercise )
+    , name_        ( name )
     , port_        ( port )
 {
     if( !system_.IsDirectory( data_ ) )

@@ -46,7 +46,7 @@ SessionFactory::~SessionFactory()
 // Name: SessionFactory::Create
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
-boost::shared_ptr< Session_ABC > SessionFactory::Create( const std::string& exercise, int port  ) const
+boost::shared_ptr< Session_ABC > SessionFactory::Create( const std::string& exercise, const std::string& name, int port  ) const
 {
-    return boost::make_shared< Session >( runtime_, uuids_, system_, data_, applications_, exercise, port );
+    return boost::make_shared< Session >( runtime_, uuids_, system_, data_, applications_, exercise, name, port );
 }

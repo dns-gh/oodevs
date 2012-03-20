@@ -124,9 +124,10 @@ void Agent::AddSession( boost::shared_ptr< Session_ABC > ptr )
 // Name: Agent::CreateSession
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-Reply Agent::CreateSession( const std::string& exercise, int port )
+Reply Agent::CreateSession( const std::string& exercise, const std::string& name )
 {
-    boost::shared_ptr< Session_ABC > ptr = sessionFactory_.Create( exercise, port );
+    const int port = 10000; // TODO add port management
+    boost::shared_ptr< Session_ABC > ptr = sessionFactory_.Create( exercise, name, port );
     if( !ptr )
         return Reply( "unable to create new session", false ); // TODO add better error message
     AddSession( ptr );

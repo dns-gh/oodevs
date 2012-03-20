@@ -44,7 +44,7 @@ public:
     virtual Reply ListSessions ( int offset, int limit ) const;
     virtual Reply CountSessions() const;
     virtual Reply GetSession   ( const boost::uuids::uuid& tag ) const;
-    virtual Reply CreateSession( const std::string& exercise, int port );
+    virtual Reply CreateSession( const std::string& exercise, const std::string& name );
     virtual Reply DeleteSession( const boost::uuids::uuid& tag );
     //@}
 

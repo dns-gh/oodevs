@@ -120,14 +120,14 @@ BOOST_FIXTURE_TEST_CASE( controller_get_session, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( controller_create_session, Fixture )
 {
-    const std::string exercise = "Noname";
-    const int port = 3030;
+    const std::string exercise = "exercise_name";
+    const std::string name = "session_name";
     SetRequest( "GET", "/create_session", boost::assign::map_list_of
-        ( "port", boost::lexical_cast< std::string >( port ) )
         ( "exercise", exercise )
+        ( "name", name )
     );
     const std::string expected = "a json session";
-    MOCK_EXPECT( agent.CreateSession ).once().with( exercise, port ).returns( expected );
+    MOCK_EXPECT( agent.CreateSession ).once().with( exercise, name ).returns( expected );
     CheckNotify( 200, expected );
 }
 
