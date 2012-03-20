@@ -54,39 +54,11 @@ namespace
 {
     typedef ObjectAttributePrototypeFactory_ABC::T_AttributeContainer  T_AttributeContainer;
 
-    class ConstructorBuilder
-    {
-    public:
-        ConstructorBuilder( T_AttributeContainer& container, QWidget* parent, ParameterList*& attributesList )
-            : container_ ( container )
-            , parent_ ( parent )
-            , attributesList_ ( attributesList ) {}
-
-        void BuildPrototype( xml::xistream& /*xis*/, bool /*density*/ )
-        {
-        }
-
-        void ImprovePrototype( xml::xistream& /*xis*/, bool /*density*/ )
-        {
-        }
-    private:
-        ConstructorBuilder& operator=( const ConstructorBuilder& );
-        ConstructorBuilder( const ConstructorBuilder& );
-
-    private:
-        T_AttributeContainer& container_;
-        QWidget* parent_;
-        ParameterList*& attributesList_;
-    };
-
     void ConstructorAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, ParameterList*& attributesList )
     {
-        ConstructorBuilder builder( container, parent, attributesList );
-        std::string type( xis.attribute< std::string >( "unit-type" ) );
-
-        bool density = ( type == "density" );
-        xis >> xml::optional >> xml::list( "buildable", builder, &ConstructorBuilder::BuildPrototype, density );
-        xis >> xml::optional >> xml::list( "improvable", builder, &ConstructorBuilder::ImprovePrototype, density );
+        // $$$$ ABR 2012-03-20: TODO for AM
+        //if( xis.has_child( "improvable" ) )
+        //    container.push_back( new MinePrototype( parent, attributesList ) );
     }
 
     void BridgingAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, ParameterList*& attributesList )
@@ -94,10 +66,6 @@ namespace
         if( xis.attribute< std::string >( "type" ) == "" || xis.attribute< std::string >( "type" ) == "bridge" )
             container.push_back( new CrossingSitePrototype( parent, attributesList ) );
     }
-
-    //void BypassableAttribute( T_AttributeContainer& /*container*/, QWidget* /*parent*/, Object_ABC*& /*object*/ )
-    //{
-    //}
 
     void LogisticAttribute( T_AttributeContainer& container, QWidget* parent, kernel::Controllers& controllers, ParameterList*& attributesList )
     {

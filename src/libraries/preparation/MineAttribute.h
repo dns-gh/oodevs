@@ -45,7 +45,6 @@ public:
 
     //! @name Operations
     //@{
-    virtual void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void DisplayInTooltip( kernel::Displayer_ABC& displayer ) const;
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     //@}
@@ -70,9 +69,6 @@ private:
 private:
     //! @name Member data
     //@{
-    float                               rValorizationPercentage_;
-    unsigned int                        nDotationValorization_;
-    kernel::DotationType*               valorization_;
     kernel::UnitedValue< double >       density_;
     //@}
 };

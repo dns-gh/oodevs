@@ -10,6 +10,7 @@
 #include "gaming_app_pch.h"
 #include "MinePrototype.h"
 #include "protocol/Protocol.h"
+#include "clients_gui/LoadableSpinBox.h"
 #include "actions/ParameterList.h"
 
 using namespace sword;
@@ -39,5 +40,7 @@ MinePrototype::~MinePrototype()
 // -----------------------------------------------------------------------------
 void MinePrototype::Commit()
 {
-    // NOTHING
+    // $$$$ ABR 2012-03-20: TODO for AM
+    //actions::parameters::ParameterList& list = attributesList_->AddList( "mine" );
+    //list.AddQuantity( "density", density_->value() );
 }

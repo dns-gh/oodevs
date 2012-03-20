@@ -457,10 +457,6 @@
         <translation>Tiempo de actividad :</translation>
     </message>
     <message>
-        <source>Density:</source>
-        <translation>Densidad :</translation>
-    </message>
-    <message>
         <source>%1 [%2]</source>
         <translation>%1 [%2]</translation>
     </message>
@@ -495,10 +491,6 @@
     <message>
         <source>Bypass:</source>
         <translation>Paso :</translation>
-    </message>
-    <message>
-        <source>Development resource:</source>
-        <translation>Dotación de desarrollo :</translation>
     </message>
     <message>
         <source>Info/Identifier</source>

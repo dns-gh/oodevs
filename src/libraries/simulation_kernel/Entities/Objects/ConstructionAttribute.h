@@ -85,6 +85,7 @@ public:
     void NotifyBuildByGen();
     void NotifyStopBuildByGen();
     void Set( double percentage );
+    void SetDotations( const PHY_DotationCategory& category, unsigned int nFullNbrDotation, float density = 1.0f );
     //@}
 
     //! @name Accessors

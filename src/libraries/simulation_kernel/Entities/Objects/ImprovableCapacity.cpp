@@ -142,7 +142,7 @@ void ImprovableCapacity::Finalize( MIL_Object_ABC& object )
     {
         TER_Localisation localisation = object.GetLocalisation();
         nFullNbrDotation_ = GetDotationNumber( localisation );
-        object.GetAttribute< MineAttribute >() = MineAttribute( *dotation_, nFullNbrDotation_ );
+        object.GetAttribute< MineAttribute >().SetDotations( *dotation_, nFullNbrDotation_ );
     }
     finalised_ = true; // $$$$ LDC FIXME the nFullNbrDotation_ should be in the object or attribute not the capacity
 }

@@ -54,13 +54,8 @@ ConstructionAttribute::~ConstructionAttribute()
 // -----------------------------------------------------------------------------
 void ConstructionAttribute::Display( kernel::Displayer_ABC& displayer ) const
 {
-    displayer.Group( tools::translate( "Object", "Information" ) )
+    displayer.Group( tools::translate( "Object", "Information" ) ) // $$$$ ABR 2012-03-20: Used ?
              .Display( tools::translate( "Object", "Construction:" ), completion_ );
-
-//    displayer.Group( tools::translate( "Object", "Information" ) )
-//             .Item( tools::translate( "Object", "Construction resource:" ) )
-//                .Start( nDotationConstruction_ )
-//                .Add( " " ).Add( construction_ ).End(); // $$$$ AGE 2006-02-22: End devrait renvoyer le parent
 }
 
 // -----------------------------------------------------------------------------
