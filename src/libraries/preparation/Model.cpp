@@ -288,15 +288,14 @@ void Model::Load( const tools::ExerciseConfig& config )
     config.GetLoader().LoadFile( config.GetExerciseFile(), boost::bind( &Exercise::Load, &exercise_, _1 ) );
     config.GetLoader().LoadFile( config.GetSettingsFile(), boost::bind( &tools::ExerciseSettings::Load, &exercise_.GetSettings(), _1 ) );
     symbolsFactory_.Load( config );
-    performanceIndicator_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "PerformanceIndicator.xml" ) );
 
     //$$ LOADING DE FICHIERS A UNIFIER
     const std::string directoryPath = boost::filesystem::path( config.GetTerrainFile() ).branch_path().native_file_string();
     const bfs::path urbanFile = bfs::path( directoryPath, bfs::native ) / "urban" / "urban.xml";
+    urban::WorldParameters world( directoryPath );
     if( bfs::exists( urbanFile ) )
     {
         config.GetLoader().CheckFile( urbanFile.native_file_string() );
-        urban::WorldParameters world( directoryPath );
         urban_.Load( directoryPath, world, *this );
         const std::string urbanStateFile = config.GetUrbanStateFile() ;
         if( bfs::exists( bfs::path( urbanStateFile, bfs::native ) ) )
@@ -317,7 +316,8 @@ void Model::Load( const tools::ExerciseConfig& config )
     LoadOptional( config.GetLoader(), config.GetProfilesFile(), profiles_, schemaWriter );
     LoadOptional( config.GetLoader(), config.GetScoresFile(), scores_, schemaWriter );
     LoadOptional( config.GetLoader(), config.GetSuccessFactorsFile(), successFactors_, schemaWriter );
-    LoadOptional( config.GetLoader(), config.GetDrawingsFile(), drawings_, schemaWriter );
+
+    performanceIndicator_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "PerformanceIndicator.xml" ), world );
     SetLoaded( true );
 }
 

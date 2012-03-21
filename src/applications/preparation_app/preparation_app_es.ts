@@ -1406,6 +1406,94 @@
         <source>Load level: </source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Detail: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of profiles: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of populations: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Number of crowds: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terrain memory size: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max automats in a knowledge group: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Max units in a knowledge group:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Average automats by knowledge group: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Average units by knowledge group: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Exercise: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Teams: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Profiles: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Automats: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Units: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crowds: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Populations: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Urban blocs: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Objects: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Knowledge groups: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Terrain: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Team: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Formations: </source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>PopulationListView</name>

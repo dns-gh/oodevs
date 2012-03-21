@@ -91,6 +91,8 @@ public:
     virtual void NotifyDeleted( const kernel::Formation_ABC& formation );
     virtual void NotifyDeleted( const kernel::Automat_ABC& automat );
     virtual void NotifyDeleted( const kernel::Population_ABC& population );
+
+    unsigned int GetProfilesCount() const;
     //@}
 
 private:

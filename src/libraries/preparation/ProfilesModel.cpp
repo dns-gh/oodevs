@@ -387,3 +387,12 @@ void ProfilesModel::RemoveEmptyProfile()
     BOOST_FOREACH( const QString& profile, emptyProfiles )
         DeleteProfile( profile );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ProfilesModel::profilesCount
+// Created: MMC 2012-03-06
+// -----------------------------------------------------------------------------
+unsigned int ProfilesModel::GetProfilesCount() const
+{
+    return static_cast< unsigned int >( userProfiles_.size() );
+}

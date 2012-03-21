@@ -54,11 +54,21 @@ private:
     QLabel* units_;
     QLabel* urbanBlocs_;
     QLabel* objects_;
-    QLabel* terrainLoad_;
+    QLabel* populations_;
+    QLabel* crowds_;
     QLabel* knowledges_;
     QLabel* loadLevel_;
     QLabel* limitValue_;
     QLabel* limitLine_;
+    QLabel* terrainLoad_;
+    QLabel* terrainSize_;
+    QLabel* profiles_;
+    QLabel* maxAutomatsKG_;
+    QLabel* maxUnitsKG_;
+    QLabel* avgAutomatKG_;
+    QLabel* avgUnitsKG_;
+    QTextEdit* textEdit_;
+
     const int progressLimit_;
 };
 

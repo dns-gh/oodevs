@@ -13,7 +13,24 @@
 #include "AgentsModel.h"
 #include "KnowledgeGroupsModel.h"
 #include "ObjectsModel.h"
+#include "ProfilesModel.h"
+#include "TeamsModel.h"
 #include "UrbanModel.h"
+#include "preparation/Agent.h"
+#include "preparation/Automat.h"
+#include "clients_kernel/Agent_ABC.h"
+#include "clients_kernel/AgentType.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/AutomatType.h"
+#include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Inhabitant_ABC.h"
+#include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "clients_kernel/Object_ABC.h"
+#include "clients_kernel/ObjectType.h"
+#include "clients_kernel/Population_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Team_ABC.h"
 #include "tools/Loader_ABC.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/WorldParameters.h"
@@ -23,7 +40,6 @@
 #include <xeumeuleu/xml.hpp>
 #include <xeuseuleu/xsl.hpp>
 #include <urban/WorldParameters.h>
-
 
 namespace bfs = boost::filesystem;
 
@@ -41,8 +57,6 @@ PerformanceIndicator::PerformanceIndicator( const Model& model )
     , terrain_( 0.f )
     , knowledge_( 0.f )
     , unitknowledge_( 0.f )
-    , loaded_( false )
-    , terrainMemorySizeIndicator_( 0.f )
 {
     // NOTHING
 }
@@ -60,24 +74,27 @@ PerformanceIndicator::~PerformanceIndicator()
 // Name: PerformanceIndicator::Load
 // Created: MMC 2012-02-02
 // -----------------------------------------------------------------------------
-void PerformanceIndicator::Load( const tools::ExerciseConfig& config, const std::string& file )
+void PerformanceIndicator::Load( const tools::ExerciseConfig& config, const std::string& file, urban::WorldParameters& world )
 {
+    values_.exercise_ = config.GetExerciseName();
+    values_.limit_ = static_cast< unsigned int >( limit_ );
+    values_.terrainWidth_ = static_cast< unsigned int >( world.GetWidth() / 1000.f );
+    values_.terrainHeight_ = static_cast< unsigned int >( world.GetHeight() / 1000.f );
+    float terrainMemSize = 0.f;
     try
     {
-        terrainMemorySizeIndicator_ = 0.f;
         tools::WorldParameters worlParameters( config );
         boost::filesystem::path detectionPath( worlParameters.detectionDirectory_ );
         if( bfs::exists( detectionPath ) && bfs::is_directory( detectionPath ) )
             for( bfs::directory_iterator it( detectionPath ); it != bfs::directory_iterator(); ++it )
                 if( !bfs::is_directory( *it ) && bfs::extension( *it ) == ".dat" )
-                    terrainMemorySizeIndicator_ += static_cast< float>( bfs::file_size( *it ) );        
-        terrainMemorySizeIndicator_ += static_cast< float>( bfs::exists( worlParameters.pathfindGraph_ )? bfs::file_size( worlParameters.pathfindGraph_ ) : 0 );
-        terrainMemorySizeIndicator_ += static_cast< float>( bfs::exists( worlParameters.pathfindLinks_ )? bfs::file_size( worlParameters.pathfindLinks_ ) : 0 );
-        terrainMemorySizeIndicator_ += static_cast< float>( bfs::exists( worlParameters.pathfindNodes_ )? bfs::file_size( worlParameters.pathfindNodes_ ) : 0 );
+                    terrainMemSize += static_cast< float>( bfs::file_size( *it ) );        
+        terrainMemSize += static_cast< float>( bfs::exists( worlParameters.pathfindGraph_ )? bfs::file_size( worlParameters.pathfindGraph_ ) : 0 );
+        terrainMemSize += static_cast< float>( bfs::exists( worlParameters.pathfindLinks_ )? bfs::file_size( worlParameters.pathfindLinks_ ) : 0 );
+        terrainMemSize += static_cast< float>( bfs::exists( worlParameters.pathfindNodes_ )? bfs::file_size( worlParameters.pathfindNodes_ ) : 0 );
 
         if( bfs::exists( file ) )
         {
-            loaded_ = true;
             config.GetLoader().CheckFile( file );
             config.GetLoader().LoadFile( file, boost::bind( &PerformanceIndicator::Read, this, _1 ) );
         }
@@ -86,6 +103,7 @@ void PerformanceIndicator::Load( const tools::ExerciseConfig& config, const std:
     {
         // NOTHING
     }
+    values_.terrainLoad_ = terrainMemSize / 1000000.f;
 }
 
 // -----------------------------------------------------------------------------
@@ -107,36 +125,63 @@ void PerformanceIndicator::Read( xml::xistream& xis )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PerformanceIndicator::ComputeLoadIndicator
+// Name: PerformanceIndicator::ComputeValues
 // Created: MMC 2012-02-02
 // -----------------------------------------------------------------------------
-float PerformanceIndicator::ComputeLoadIndicator()
+const PerformanceIndicator::Values& PerformanceIndicator::ComputeValues()
 {
-    PerformanceIndicator::IndicatorValues values;
-    return ComputeLoadIndicator( values );
+    Update();
+    return values_;
 }
 
 // -----------------------------------------------------------------------------
-// Name: PerformanceIndicator::ComputeLoadIndicator
+// Name: PerformanceIndicator::Update
 // Created: MMC 2012-02-02
 // -----------------------------------------------------------------------------
-float PerformanceIndicator::ComputeLoadIndicator( PerformanceIndicator::IndicatorValues& values )
+void PerformanceIndicator::Update()
 {
-    values.limit_ = static_cast< unsigned int >( limit_ );
-    values.units_ = static_cast< tools::Resolver< kernel::Agent_ABC >* >( &model_.agents_ )->Count();
-    values.blocs_ = static_cast< tools::Resolver< gui::TerrainObjectProxy >* >( &model_.urban_ )->Count();
-    values.objects_ = model_.objects_.Count();
-    values.terrainLoad_ = static_cast< unsigned int >( terrainMemorySizeIndicator_ / 1e6 );
-    values.knowledges_ = model_.knowledgeGroups_.Count();
+    Values values;
+    TeamGetInfoFunctor teamsGetInfo( values );
+    ObjectGetInfoFunctor objectsGetInfo( values );
+    KGGetInfoFunctor knowledgeGroupsGetInfo( values );
+    model_.teams_.Apply( teamsGetInfo );
+    model_.objects_.Apply( objectsGetInfo );
+    model_.knowledgeGroups_.Apply( knowledgeGroupsGetInfo );
+    UpdatePopulation( values );
+    UpdateCrowds( values );
+    values.exercise_        = values_.exercise_;
+    values.terrainLoad_     = values_.terrainLoad_;
+    values.terrainWidth_    = values_.terrainWidth_;
+    values.terrainHeight_   = values_.terrainHeight_;
+    values.limit_           = static_cast< unsigned int >( limit_ );
+    values.profiles_        = model_.profiles_.GetProfilesCount();
+    values.teams_           = model_.teams_.tools::Resolver< kernel::Team_ABC >::Count();
+    values.units_           = model_.agents_.tools::Resolver< kernel::Agent_ABC >::Count();
+    values.automats_        = model_.agents_.tools::Resolver< kernel::Automat_ABC >::Count();
+    values.objects_         = model_.objects_.tools::Resolver< kernel::Object_ABC >::Count();
+    values.blocs_           = model_.urban_.tools::Resolver< gui::TerrainObjectProxy >::Count();
+    values.crowds_          = model_.agents_.tools::Resolver< kernel::Population_ABC >::Count();
+    values.populations_     = model_.agents_.tools::Resolver< kernel::Inhabitant_ABC >::Count();
+    values.knowledgeGroups_ = model_.knowledgeGroups_.tools::Resolver< kernel::KnowledgeGroup_ABC >::Count();
+    values.avgAutomatsKG_   = values.knowledgeGroups_? values.automatsKG_ / values.knowledgeGroups_ : 0;
+    values.avgUnitsKG_      = values.knowledgeGroups_? values.unitsKG_ / values.knowledgeGroups_ : 0;
+    values.performance_     = ComputeFormulaIndicator( values );
+    values_                 = values;
+}
 
+// -----------------------------------------------------------------------------
+// Name: PerformanceIndicator::ComputeFormulaIndicator
+// Created: MMC 2012-03-06
+// -----------------------------------------------------------------------------
+float PerformanceIndicator::ComputeFormulaIndicator( Values& values )
+{
     float units = static_cast< float >( values.units_ );
     float blocs = static_cast< float >( values.blocs_ );
     float objects = static_cast< float >( values.objects_ );
-    float terrain = static_cast< float >( values.terrainLoad_ );
-    float knowledges = static_cast< float >( values.knowledges_ );
+    float terrain = values.terrainLoad_;
+    float knowledges = static_cast< float >( values.knowledgeGroups_ );
     if ( knowledges < 1.f )
         knowledges = 1.f;
-
     float load  = units * ( unit_ + blocs * urban_ ) + objects * object_ + terrain * terrain_ + knowledge_ * ( knowledges + unitknowledge_ * units / knowledges );
     load *= globalFactor_;
     if ( load < 0.0f )
@@ -145,10 +190,147 @@ float PerformanceIndicator::ComputeLoadIndicator( PerformanceIndicator::Indicato
 }
 
 // -----------------------------------------------------------------------------
-// Name: PerformanceIndicator::IsLoaded
-// Created: MMC 2012-02-02
+// Name: PerformanceIndicator::TeamGetInfoFunctor::operator
+// Created: MMC 2012-03-06
 // -----------------------------------------------------------------------------
-bool PerformanceIndicator::IsLoaded()
+void PerformanceIndicator::TeamGetInfoFunctor::operator()( const kernel::Team_ABC& team ) const
 {
-    return loaded_;
+    TeamData& teamData = values_.teamsDatas_[ team.GetId() ];
+    teamData.name_ = team.GetName();
+    Compute( teamData, team );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PerformanceIndicator::TeamGetInfoFunctor::Compute
+// Created: MMC 2012-03-06
+// -----------------------------------------------------------------------------
+void PerformanceIndicator::TeamGetInfoFunctor::Compute( TeamData& teamData, const kernel::Entity_ABC& entity ) const
+{
+    const kernel::TacticalHierarchies& hierarchies = entity.Get< kernel::TacticalHierarchies >();
+    tools::Iterator< const kernel::Entity_ABC& > itSub = hierarchies.CreateSubordinateIterator();
+    while( itSub.HasMoreElements() )
+    {
+        const kernel::Entity_ABC& entity = itSub.NextElement();
+        if( dynamic_cast< const kernel::Formation_ABC* >( &entity ) )
+        {
+            teamData.formations_++;
+            Compute( teamData, entity );
+        }
+        else if( dynamic_cast< const kernel::Automat_ABC* >( &entity ) )
+        {
+            teamData.automats_++;
+            const Automat* pAutomat = dynamic_cast< const Automat* >( &entity );
+            if( pAutomat )
+                teamData.automatTypes_[ pAutomat->GetType().GetTypeName() ]++;
+            Compute( teamData, entity );
+        }
+        else if( dynamic_cast< const kernel::Agent_ABC* >( &entity ) )
+        {
+            teamData.units_++;
+            const Agent* pAgent = dynamic_cast< const Agent* >( &entity );
+            if( pAgent )
+                teamData.unitTypes_[ pAgent->GetType().GetTypeName() ]++;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PerformanceIndicator::ObjectGetInfoFunctor::operator
+// Created: MMC 2012-03-06
+// -----------------------------------------------------------------------------
+void PerformanceIndicator::ObjectGetInfoFunctor::operator()( const kernel::Object_ABC& object ) const
+{
+    const kernel::TacticalHierarchies& hierarchies = object.Get< kernel::TacticalHierarchies >();
+    const kernel::Team_ABC* pTeam = dynamic_cast< const kernel::Team_ABC* >( &hierarchies.GetTop() );
+    if( pTeam )
+    {
+        TeamData& teamData = values_.teamsDatas_[ pTeam->GetId() ];
+        teamData.name_ = pTeam->GetName();
+        teamData.objects_++;
+        teamData.objectTypes_[ object.GetType().GetType() ]++;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PerformanceIndicator::KGGetInfoFunctor::operator
+// Created: MMC 2012-03-06
+// -----------------------------------------------------------------------------
+void PerformanceIndicator::KGGetInfoFunctor::operator()( const kernel::KnowledgeGroup_ABC& kg ) const
+{
+    unsigned int unitCount = 0, automatCount = 0;
+    tools::Iterator< const kernel::Entity_ABC& > it = kg.Get< kernel::CommunicationHierarchies >().CreateSubordinateIterator();
+    while( it.HasMoreElements() )
+    {
+        const kernel::Entity_ABC* entity = &it.NextElement();
+        if( entity && dynamic_cast< const kernel::Automat_ABC* >( entity ) )
+        {
+            ++automatCount;
+            tools::Iterator< const kernel::Entity_ABC& > itSub = entity->Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
+            while( itSub.HasMoreElements() )
+            {
+                const kernel::Entity_ABC* subEntity = &itSub.NextElement();
+                if( dynamic_cast< const kernel::Agent_ABC* >( subEntity ) )
+                    ++unitCount;
+            }
+        }
+    }
+
+    values_.maxAutomatsKG_  = std::max( automatCount, values_.maxAutomatsKG_ );
+    values_.maxUnitsKG_     = std::max( unitCount, values_.maxUnitsKG_ );
+    values_.automatsKG_     += automatCount;
+    values_.unitsKG_        += unitCount;
+
+    const kernel::CommunicationHierarchies& hierarchies = kg.Get< kernel::CommunicationHierarchies >();
+    const kernel::Team_ABC* pTeam = dynamic_cast< const kernel::Team_ABC* >( &hierarchies.GetTop() );
+    if( pTeam )
+    {
+        TeamData& teamData = values_.teamsDatas_[ pTeam->GetId() ];
+        teamData.name_ = pTeam->GetName();
+        teamData.knowledgeGroups_++;
+        KnowledgeGroupData& dataKG = teamData.datasKG_[ kg.GetName().toStdString() ];
+        dataKG.automats_    += automatCount;
+        dataKG.units_       += unitCount;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PerformanceIndicator::UpdatePopulation
+// Created: MMC 2012-03-06
+// -----------------------------------------------------------------------------
+void PerformanceIndicator::UpdatePopulation( Values& values ) const
+{
+    tools::Iterator< const kernel::Inhabitant_ABC& > it = model_.GetInhabitantResolver().CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const kernel::Inhabitant_ABC& entity = it.NextElement();
+        const kernel::TacticalHierarchies& hierarchies = entity.Get< kernel::TacticalHierarchies >();
+        const kernel::Team_ABC* pTeam = dynamic_cast< const kernel::Team_ABC* >( &hierarchies.GetTop() );
+        if( pTeam )
+        {
+            TeamData& teamData = values.teamsDatas_[ pTeam->GetId() ];
+            teamData.name_ = pTeam->GetName();
+            teamData.populations_++;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: PerformanceIndicator::UpdateCrowds
+// Created: MMC 2012-03-06
+// -----------------------------------------------------------------------------
+void PerformanceIndicator::UpdateCrowds( Values& values ) const
+{
+    tools::Iterator< const kernel::Population_ABC& > it = model_.GetPopulationResolver().CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const kernel::Entity_ABC* entity = static_cast< const kernel::Entity_ABC* >( &it.NextElement() );
+        const kernel::TacticalHierarchies& hierarchies = entity->Get< kernel::TacticalHierarchies >();
+        const kernel::Team_ABC* pTeam = dynamic_cast< const kernel::Team_ABC* >( &hierarchies.GetTop() );
+        if( pTeam )
+        {
+            TeamData& teamData = values.teamsDatas_[ pTeam->GetId() ];
+            teamData.name_ = pTeam->GetName();
+            teamData.crowds_++;
+        }
+    }
 }

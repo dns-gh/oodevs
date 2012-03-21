@@ -1406,6 +1406,94 @@
         <source>Load level: </source>
         <translation>Niveau de charge de l&apos;exercice: </translation>
     </message>
+    <message>
+        <source>Number of profiles: </source>
+        <translation>Nombre de profils: </translation>
+    </message>
+    <message>
+        <source>Max automats in a knowledge group: </source>
+        <translation>Maximum d&apos;automates dans un groupe de connaissance: </translation>
+    </message>
+    <message>
+        <source>Max units in a knowledge group:</source>
+        <translation>Maximum de pions dans un groupe de connaissance: </translation>
+    </message>
+    <message>
+        <source>Detail: </source>
+        <translation>Détail:</translation>
+    </message>
+    <message>
+        <source>Average automats by knowledge group: </source>
+        <translation>Moyenne d&apos;automates par groupe de connaissance: </translation>
+    </message>
+    <message>
+        <source>Terrain memory size: </source>
+        <translation>Taille mémoire du terrain: </translation>
+    </message>
+    <message>
+        <source>Average units by knowledge group: </source>
+        <translation>Moyenne de pions par groupe de connaissance: </translation>
+    </message>
+    <message>
+        <source>Exercise: </source>
+        <translation>Exercice: </translation>
+    </message>
+    <message>
+        <source>Teams: </source>
+        <translation>Camps: </translation>
+    </message>
+    <message>
+        <source>Profiles: </source>
+        <translation>Profils: </translation>
+    </message>
+    <message>
+        <source>Automats: </source>
+        <translation>Automates: </translation>
+    </message>
+    <message>
+        <source>Units: </source>
+        <translation>Pions: </translation>
+    </message>
+    <message>
+        <source>Urban blocs: </source>
+        <translation>Blocs urbains: </translation>
+    </message>
+    <message>
+        <source>Objects: </source>
+        <translation>Objets: </translation>
+    </message>
+    <message>
+        <source>Knowledge groups: </source>
+        <translation>Groupes de connaissance: </translation>
+    </message>
+    <message>
+        <source>Terrain: </source>
+        <translation>Terrain: </translation>
+    </message>
+    <message>
+        <source>Team: </source>
+        <translation>Camp: </translation>
+    </message>
+    <message>
+        <source>Crowds: </source>
+        <translation>Foules: </translation>
+    </message>
+    <message>
+        <source>Populations: </source>
+        <translation>Populations: </translation>
+    </message>
+    <message>
+        <source>Number of populations: </source>
+        <translation>Nombre de populations: </translation>
+    </message>
+    <message>
+        <source>Number of crowds: </source>
+        <translation>Nombre de foules: </translation>
+    </message>
+    <message>
+        <source>Formations: </source>
+        <translation>Formations: </translation>
+    </message>
 </context>
 <context>
     <name>PopulationListView</name>
