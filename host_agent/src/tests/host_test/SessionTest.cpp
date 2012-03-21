@@ -40,10 +40,19 @@ namespace
 
     MOCK_BASE_CLASS( MockProcess, runtime::Process_ABC )
     {
+        MockProcess( int pid, const std::string& name )
+            : pid_( pid ), name_( name )
+        {
+            MOCK_EXPECT( this->GetPid ).returns( pid_ );
+            MOCK_EXPECT( this->GetName ).returns( name_ );
+        }
         MOCK_METHOD( GetPid, 0 );
         MOCK_METHOD( GetName, 0 );
         MOCK_METHOD( Join, 1 );
         MOCK_METHOD( Kill, 1 );
+    private:
+        int pid_;
+        const std::string name_;
     };
 
     MOCK_BASE_CLASS( MockUuidFactory, UuidFactory_ABC )
@@ -78,6 +87,7 @@ namespace
             MOCK_EXPECT( system.Exists ).with( mock::any ).returns( true );
             MOCK_EXPECT( system.CreateDirectory ).with( mock::any );
             MOCK_EXPECT( system.Copy ).with( mock::any, mock::any );
+            MOCK_EXPECT( system.WriteFile ).with( mock::any, mock::any );
         }
         MockRuntime runtime;
         MockUuidFactory uuids;
@@ -91,9 +101,8 @@ BOOST_FIXTURE_TEST_CASE( session_starts_and_stops, Fixture )
     MockPort* ptr = new MockPort();
     MOCK_EXPECT( ptr->Get ).returns( 10000 );
     Session session( runtime, uuids, system, L"data", L"apps", "exercise_name", "session_name", std::auto_ptr< Port_ABC >( ptr ) );
-    boost::shared_ptr< MockProcess > process = boost::make_shared< MockProcess >();
+    boost::shared_ptr< MockProcess > process = boost::make_shared< MockProcess >( 1337, "noname" );
     MOCK_EXPECT( runtime.Start ).once().with( mock::any, mock::any, mock::any ).returns( process );
-    MOCK_EXPECT( system.WriteFile ).once().with( mock::any, mock::any );
     session.Start();
     MOCK_EXPECT( process->Kill ).once().with( mock::any ).returns( true );
     session.Stop();
