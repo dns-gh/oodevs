@@ -54,6 +54,7 @@ public:
     //! @name Methods
     //@{
     virtual std::auto_ptr< Port_ABC > Create() = 0;
+    virtual std::auto_ptr< Port_ABC > Create( int port ) = 0;
     //@}
 };
 

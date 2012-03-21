@@ -87,7 +87,7 @@ std::auto_ptr< Port_ABC > PortFactory::Acquire( int port )
 }
 
 // -----------------------------------------------------------------------------
-// Name: PortFactory::Acquire
+// Name: PortFactory::Create
 // Created: BAX 2012-03-20
 // -----------------------------------------------------------------------------
 std::auto_ptr< Port_ABC > PortFactory::Create()
@@ -105,6 +105,21 @@ std::auto_ptr< Port_ABC > PortFactory::Create()
     if( idx >= max_ )
         throw std::runtime_error( "unable to find any available port" );
     return Acquire( idx );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PortFactory::Create
+// Created: BAX 2012-03-21
+// -----------------------------------------------------------------------------
+std::auto_ptr< Port_ABC > PortFactory::Create( int port )
+{
+    if( port < min_ || max_ <= port || ( ( port - min_ ) % period_ ) )
+        throw std::runtime_error( ( boost::format( "invalid port value %1%" ) % port ).str() );
+
+    boost::lock_guard< boost::shared_mutex > lock( *access_ );
+    if( ports_.count( port ) )
+        throw std::runtime_error( ( boost::format( "unable to acquire port %1%" ) % port ).str() );
+    return Acquire( port );
 }
 
 // -----------------------------------------------------------------------------

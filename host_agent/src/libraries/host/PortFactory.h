@@ -39,6 +39,7 @@ public:
     //! @name Methods
     //@{
     virtual std::auto_ptr< Port_ABC > Create();
+    virtual std::auto_ptr< Port_ABC > Create( int port );
     //@}
 
 private:
