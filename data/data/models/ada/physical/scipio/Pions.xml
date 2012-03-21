@@ -13762,7 +13762,7 @@
     <efficiencies combat="10" combat-support="50" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="70" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ONG PC" id="469" name="ONG PC" type="Pion INF">
+  <unit decisional-model="Masalife.ONG PC" id="469" name="ONG PC" type="Pion Organization">
     <nature atlas-nature="PC" level="none" nature-app6="mootw/ong"/>
     <equipments>
       <equipment count="1" crew="2" major="true" type="VTC P4"/>
@@ -18837,4 +18837,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="0000830373" -->
+<!-- signature="0491406543" -->
