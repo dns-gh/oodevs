@@ -1002,12 +1002,15 @@ void MIL_EntityManager::ProcessAutomatCreationRequest( const UnitMagicAction& ms
         const MIL_AutomateType* pType = MIL_AutomateType::FindAutomateType( id.value().Get( 0 ).identifier() );
         if( !pType )
             throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_unit );
-
+        
         const MissionParameter& groupId = msg.parameters().elem( 1 );
         if( groupId.value_size() != 1 || ! ( groupId.value().Get( 0 ).has_identifier() || groupId.value().Get( 0 ).has_knowledgegroup() ) )
             throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_parameter );
 
         unsigned int theGroupId = groupId.value().Get( 0 ).has_identifier() ? groupId.value().Get( 0 ).identifier() : groupId.value().Get( 0 ).knowledgegroup().id();
+        MIL_KnowledgeGroup* group = entity.GetArmy().FindKnowledgeGroup( theGroupId );
+        if( !group || group->IsJammed() )
+            throw NET_AsnException< UnitActionAck_ErrorCode >( UnitActionAck::error_invalid_parameter );
 
         std::string name;
         if( msg.parameters().elem_size() > 2 )
