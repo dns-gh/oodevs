@@ -144,13 +144,13 @@ public:
     //@{
     void SetInitialRealTime( unsigned int time );
     unsigned int GetSimTime () const; // Durée en secondes depuis le début de la SIM
-    unsigned int GetRealTime() const; // Temps simulé en secondes depuis 01/01/1970
+    virtual unsigned int GetRealTime() const; // Temps simulé en secondes depuis 01/01/1970
     unsigned int RealTimeToTick( unsigned int rt   ) const;
     unsigned int TickToRealTime( unsigned int tick ) const;
 
     virtual unsigned int GetCurrentTick() const;
     virtual unsigned int GetTickDuration() const;
-    unsigned int GetCurrentTimeStep() const; // $$$$ AGE 2007-08-10: degager
+    virtual unsigned int GetCurrentTimeStep() const; // $$$$ AGE 2007-08-10: degager
     unsigned int GetTimeStepDuration() const;  // $$$$ AGE 2007-08-13: degager
     //@}
 

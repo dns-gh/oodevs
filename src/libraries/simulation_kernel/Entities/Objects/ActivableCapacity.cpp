@@ -22,7 +22,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( ActivableCapacity )
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 ActivableCapacity::ActivableCapacity( xml::xistream& /*xis*/ )
-    : timeOfCreation_( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
+    : timeOfCreation_( MIL_Singletons::GetTime().GetCurrentTimeStep() )
 {
     // NOTHING
 }
@@ -32,7 +32,7 @@ ActivableCapacity::ActivableCapacity( xml::xistream& /*xis*/ )
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 ActivableCapacity::ActivableCapacity()
-    : timeOfCreation_( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
+    : timeOfCreation_( MIL_Singletons::GetTime().GetCurrentTimeStep() )
 {
     // NOTHING
 }
@@ -42,7 +42,7 @@ ActivableCapacity::ActivableCapacity()
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------
 ActivableCapacity::ActivableCapacity( const ActivableCapacity& /*from*/ )
-    : timeOfCreation_( MIL_AgentServer::GetWorkspace().GetCurrentTimeStep() )
+    : timeOfCreation_( MIL_Singletons::GetTime().GetCurrentTimeStep() )
 {
     // NOTHING
 }

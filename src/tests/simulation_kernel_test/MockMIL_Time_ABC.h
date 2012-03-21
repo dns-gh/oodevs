@@ -20,6 +20,8 @@ MOCK_BASE_CLASS( MockMIL_Time_ABC, MIL_Time_ABC )
 
     MOCK_METHOD( GetCurrentTick, 0 );
     MOCK_METHOD( GetTickDuration, 0 );
+    MOCK_METHOD( GetRealTime, 0 );
+    MOCK_METHOD( GetCurrentTimeStep, 0 );
 };
 
 #endif // __MockMIL_Time_ABC_h_
