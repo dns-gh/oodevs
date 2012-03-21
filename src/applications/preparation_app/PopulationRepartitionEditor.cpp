@@ -18,7 +18,7 @@
 // Created: JSR 2011-03-08
 // -----------------------------------------------------------------------------
 PopulationRepartitionEditor::PopulationRepartitionEditor( QDialog*& self, QWidget* parent, kernel::Controller& controller )
-    : QDialog( parent, 0, true )
+    : ModalDialog( parent, "PopulationRepartitionEditor" )
     , self_      ( self )
     , controller_( controller )
 {

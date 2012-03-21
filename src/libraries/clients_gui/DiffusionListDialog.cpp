@@ -27,7 +27,7 @@ using namespace kernel;
 // Created: ABR 2011-05-10
 // -----------------------------------------------------------------------------
 DiffusionListDialog::DiffusionListDialog( QWidget* parent, kernel::Controllers& controllers, const tools::Resolver< Agent_ABC >& agents, const tools::Resolver< kernel::Formation_ABC >& formations, const kernel::ExtensionTypes& extensions, const char* name )
-    : QDialog( parent, name, true )
+    : ModalDialog( parent, name )
     , contextMenuEntry_( true )
     , controllers_     ( controllers )
     , currentTeam_     ( controllers )

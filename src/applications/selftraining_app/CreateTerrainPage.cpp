@@ -30,6 +30,7 @@ CreateTerrainPage::CreateTerrainPage( Q3WidgetStack* pages, Page_ABC& previous, 
     , progressPage_( new ProgressPage( pages, *this ) )
     , available_   ( frontend::CreateTerrain::IsAvailable() )
 {
+    setName( "CreateTerrainPage" );
     Q3VBox* mainBox = new Q3VBox( this );
     mainBox->setMargin( 5 );
     {

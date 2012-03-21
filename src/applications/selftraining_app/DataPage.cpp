@@ -27,6 +27,7 @@ DataPage::DataPage( QWidget* parent, Q3WidgetStack* pages, Page_ABC& previous, c
     , parent_( parent )
     , config_( config )
 {
+    setName( "DataPage" );
     Q3VBox* mainBox = new Q3VBox( this );
     mainBox->setMargin( 5 );
     mainTabs_ = new QTabWidget( mainBox );

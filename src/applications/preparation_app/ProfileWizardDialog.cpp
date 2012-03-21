@@ -19,7 +19,7 @@
 // Created: SBO 2007-11-07
 // -----------------------------------------------------------------------------
 ProfileWizardDialog::ProfileWizardDialog( QWidget* parent, const Model& model, ProfilesModel& profiles )
-    : QDialog( parent, "ProfileWizardDialog" )
+    : ModalDialog( parent, "ProfileWizardDialog" )
     , generator_( new ProfilesGenerator( model, profiles ) )
     , profiles_( profiles )
 {

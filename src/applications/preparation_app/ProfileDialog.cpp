@@ -22,7 +22,7 @@
 // -----------------------------------------------------------------------------
 ProfileDialog::ProfileDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons,
                               Model& model, const kernel::ExtensionTypes& extensions )
-    : QDialog( parent, "ProfileDialog" )
+    : ModalDialog( parent, "ProfileDialog" )
     , pChecher_( new ProfilesChecker() )
 {
     setCaption( tr( "User profiles" ) );

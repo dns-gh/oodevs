@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
+<widgets>
+  <widget name="default"    page="ADN_Interface_and_Database"/>
+  <widget name="ScrollArea" page="ADN_Description_and_Settings"/>
+ </widgets>
+<!-- signature="3187913421" -->

@@ -32,6 +32,7 @@ AuthoringPage::AuthoringPage( QWidget* parent, Q3WidgetStack* pages, Page_ABC& p
     , config_     ( config )
     , controllers_( controllers )
 {
+    setName( "AuthoringPage" );
     progressPage_ = new ProgressPage( pages, *this );
     dataPage_     = new DataPage( parent, pages, *this, config );
 

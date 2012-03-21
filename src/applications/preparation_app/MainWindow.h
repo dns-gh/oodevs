@@ -36,6 +36,7 @@ namespace gui
     class LayerFilter_ABC;
     class AutomatsLayer;
     class FormationLayer;
+    class HelpSystem;
 }
 
 class Config;
@@ -86,6 +87,7 @@ public:
 public slots:
     //! @name Slots
     //@{
+    void ShowHelp();
     void New();
     void Open();
     bool Close();
@@ -159,6 +161,7 @@ private:
     QProgressDialog* progressDialog_;
     ModelConsistencyDialog* consistencyDialog_;
     PerformanceDialog* performanceDialog_;
+    gui::HelpSystem* help_;
     //@}
 };
 

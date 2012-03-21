@@ -23,7 +23,7 @@ using namespace gui;
 // Created: SBO 2006-11-10
 // -----------------------------------------------------------------------------
 DotationsEditor::DotationsEditor( QDialog*& self, QWidget* parent, const tools::Resolver_ABC< DotationType, std::string >& dotationTypes, DotationsItem*& /*value*/ )
-    : QDialog( parent, "DotationsEditor", true )
+    : ModalDialog( parent, "DotationsEditor" )
     , dotationTypes_( dotationTypes )
     , value_ ( 0 )
     , self_( self )

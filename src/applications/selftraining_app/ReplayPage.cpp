@@ -34,6 +34,7 @@ ReplayPage::ReplayPage( Q3WidgetStack* pages, Page_ABC& previous, const frontend
     , controllers_( controllers )
     , progressPage_( new ProgressPage( pages, *this ) )
 {
+    setName( "ReplayPage" );
     Q3VBox* mainBox = new Q3VBox( this );
     {
         Q3HBox* hbox = new Q3HBox( mainBox );

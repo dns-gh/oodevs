@@ -138,6 +138,7 @@ ScenarioLauncherPage::ScenarioLauncherPage( Q3WidgetStack* pages, Page_ABC& prev
     , progressPage_( new ProgressPage( pages, *this ) )
     , exercise_( 0 )
 {
+    setName( "ScenarioLauncherPage" );
     Q3VBox* box = new Q3VBox( this );
     box->setMargin( 5 );
     {

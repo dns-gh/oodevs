@@ -225,9 +225,9 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     pDockManager_.reset( new DockManager( this, controllers_, automats, formation, *icons, *modelBuilder_, *factory, model_, staticModel_, config_, *symbols, *strategy_, *paramLayer, *weatherLayer, *glProxy_, *colorController_ ) );
 
     // Menu
-    gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/preparation.xml" ) );
+    help_ = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/preparation.xml" ) );
     menu_ = new Menu( this, controllers, *prefDialog, *profileDialog, *profileWizardDialog, *pScoreDialog_, *successFactorDialog, *exerciseDialog, 
-                    *consistencyDialog_, *performanceDialog_, *factory, expiration, *help );
+                    *consistencyDialog_, *performanceDialog_, *factory, expiration, *help_ );
     setMenuBar( menu_ );
     filterDialogs_ = new FilterDialogs( this, config_, model, *menu_, staticModel_.coordinateConverter_ );
 
@@ -337,6 +337,15 @@ void MainWindow::CreateLayers( ParametersLayer& parameters, gui::Layer_ABC& loca
     forward_->Register( metrics );
     forward_->Register( elevation3d );
     forward_->SetDefault( defaultLayer );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::ShowHelp
+// Created: JSR 2012-03-20
+// -----------------------------------------------------------------------------
+void MainWindow::ShowHelp()
+{
+    help_->ShowHelp();
 }
 
 // -----------------------------------------------------------------------------

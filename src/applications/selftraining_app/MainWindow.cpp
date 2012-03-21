@@ -15,6 +15,7 @@
 #include "LinkInterpreter.h"
 #include "MessageDialog.h"
 #include "SessionTray.h"
+#include "clients_gui/HelpSystem.h"
 #include "clients_gui/resources.h"
 #include "clients_gui/Tools.h"
 #include "tools/GeneralConfig.h"
@@ -40,6 +41,7 @@ MainWindow::MainWindow( Config& config, const tools::Loader_ABC& fileLoader, ker
     CenterWindow();
     if( !config.GetPackageFile().empty() )
         home->InstallPackage( config.GetPackageFile().c_str() );
+    new gui::HelpSystem( this, tools::GeneralConfig::BuildResourceChildFile( "help/frontend.xml" ) );
     sessionTray_.reset( new SessionTray( this ) );
 }
 

@@ -22,6 +22,7 @@
 SelfTrainingPage::SelfTrainingPage( Q3WidgetStack* pages, Page_ABC& previous, const Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter )
     : MenuPage( pages, previous, eButtonBack | eButtonQuit )
 {
+    setName( "SelfTrainingPage" );
     singleButton_ = AddLink( *new ScenarioLauncherPage( pages, *this, controllers, config, fileLoader, launcher, interpreter ) );
     multiButton_ = AddLink( *new BattleCenterPage( pages, *this, config, fileLoader, controllers, launcher, interpreter ) );
 }

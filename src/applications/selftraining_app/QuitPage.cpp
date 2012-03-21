@@ -20,6 +20,7 @@
 QuitPage::QuitPage( Q3WidgetStack* pages, Page_ABC& previous )
     : MenuPage( pages, *this, 0 )
 {
+    setName( "QuitPage" );
     yesButton_ = AddLink( *this, SLOT( OnQuit() ) );
     noButton_ = AddLink( previous );
 }

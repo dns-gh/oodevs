@@ -105,6 +105,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\HelpSystem.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\LinkInterpreter_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\LogisticListView.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\ModalDialog.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\NatureEditionCategory.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\NatureEditionWidget.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\Logger.cpp" />
@@ -518,6 +519,7 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\LogisticList.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\LongNameHelper.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\ModalDialog.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\OrbatPanel.h">
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>

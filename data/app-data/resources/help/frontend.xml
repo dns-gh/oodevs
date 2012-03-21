@@ -1,13 +1,18 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
 <widgets>
-  <widget name="TerrainCreationPanel" page="index.htm"/>
-  <widget name="CreateExercisePanel"  page="index.htm"/>
-  <widget name="EditExercisePanel"    page="index.htm"/>
-  <widget name="StartExercisePanel"   page="index.htm"/>
-  <widget name="GameConfigPanel"      page="index.htm"/>
-  <widget name="RestartExercisePanel" page="index.htm"/>
-  <widget name="JoinExercisePanel"    page="index.htm"/>
-  <widget name="StartAnalysisPanel"   page="index.htm"/>
-  <widget name="JoinAnalysisPanel"    page="index.htm"/>
+  <widget name="AuthoringPage"              page="FRONTEND_Adapt"/>
+  <widget name="BattleCenterJoinPage"       page="FRONTEND_Play"/>
+  <widget name="BattleCenterLauncherPage"   page="FRONTEND_Play"/>
+  <widget name="BattleCenterPage"           page="FRONTEND_Play"/>
+  <widget name="CreateTerrainPage"          page="FRONTEND_Adapt"/>
+  <widget name="DataPage"                   page="FRONTEND_Adapt"/>
+  <widget name="HomePage"                   page="FRONTEND_Introduction"/>
+  <widget name="OptionsPage"                page="FRONTEND_Introduction"/>
+  <widget name="QuitPage"                   page="FRONTEND_Introduction"/>
+  <widget name="RemoteControlPage"          page="FRONTEND_Play"/>
+  <widget name="ReplayPage"                 page="FRONTEND_Replay"/>
+  <widget name="ScenarioEditPage"           page="FRONTEND_Prepare"/>
+  <widget name="ScenarioLauncherPage"       page="FRONTEND_Play"/>
+  <widget name="SelfTrainingPage"           page="FRONTEND_Play"/>
 </widgets>
 <!-- signature="1848962441" -->

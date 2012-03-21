@@ -12,6 +12,7 @@
 
 #include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
+#include "ModalDialog.h"
 
 namespace kernel
 {
@@ -30,7 +31,7 @@ namespace gui
 */
 // Created: SBO 2008-12-09
 // =============================================================================
-class DiplomacyDialog_ABC : public QDialog
+class DiplomacyDialog_ABC : public ModalDialog
                           , public tools::Observer_ABC
                           , public tools::ElementObserver_ABC< kernel::Team_ABC >
                           , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >

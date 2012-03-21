@@ -649,8 +649,8 @@ Please check access permissions or write protection.</source>
 <context>
     <name>gui::HelpSystem</name>
     <message>
-        <source>help/en/Reference Guide.chm</source>
-        <translation>help/fr/Guide de Reference.chm</translation>
+        <source>Reference Guide</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
