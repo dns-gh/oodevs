@@ -54,7 +54,7 @@ namespace
 {
     typedef ObjectAttributePrototypeFactory_ABC::T_AttributeContainer  T_AttributeContainer;
 
-    void ConstructorAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, ParameterList*& attributesList )
+    void ConstructorAttribute( xml::xistream& /*xis*/, T_AttributeContainer& /*container*/, QWidget* /*parent*/, ParameterList*& /*attributesList*/ )
     {
         // $$$$ ABR 2012-03-20: TODO for AM
         //if( xis.has_child( "improvable" ) )
