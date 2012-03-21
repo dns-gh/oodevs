@@ -34,6 +34,7 @@ namespace
     MOCK_BASE_CLASS( MockSessionFactory, SessionFactory_ABC )
     {
         MOCK_METHOD( Create, 2 );
+        MOCK_METHOD( Reload, 0 );
     };
 
     MOCK_BASE_CLASS( MockSession, Session_ABC )

@@ -21,6 +21,8 @@
 #include <host/Session.h>
 #include <host/UuidFactory_ABC.h>
 
+#include <xeumeuleu/xml.hpp>
+
 #include <boost/make_shared.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 
@@ -29,7 +31,6 @@ using namespace host;
 namespace
 {
     const std::string default_tag_string = "12345678-90AB-CDEF-9876-543210123456";
-    const boost::uuids::uuid default_tag = boost::uuids::string_generator()( default_tag_string );
 
     MOCK_BASE_CLASS( MockRuntime, runtime::Runtime_ABC )
     {
@@ -76,34 +77,101 @@ namespace
     MOCK_BASE_CLASS( MockPort, Port_ABC )
     {
         MOCK_METHOD( Get, 0 );
+        MockPort( int port )
+        {
+            MOCK_EXPECT( this->Get ).returns( port );
+        }
+    };
+
+    MOCK_BASE_CLASS( MockPortFactory, PortFactory_ABC )
+    {
+        MOCK_METHOD_EXT( Create, 0, std::auto_ptr< Port_ABC >(), Create0 );
+        MOCK_METHOD_EXT( Create, 1, std::auto_ptr< Port_ABC >( int ), Create1 );
     };
 
     struct Fixture
     {
-        Fixture()
-        {
-            MOCK_EXPECT( system.IsDirectory ).with( mock::any ).returns( true );
-            MOCK_EXPECT( system.IsFile ).with( mock::any ).returns( true );
-            MOCK_EXPECT( system.Exists ).with( mock::any ).returns( true );
-            MOCK_EXPECT( system.CreateDirectory ).with( mock::any );
-            MOCK_EXPECT( system.Copy ).with( mock::any, mock::any );
-            MOCK_EXPECT( system.WriteFile ).with( mock::any, mock::any );
-        }
-        MockRuntime runtime;
+        MockRuntime     runtime;
         MockUuidFactory uuids;
-        MockFileSystem system;
+        MockFileSystem  system;
+        MockPortFactory ports;
+        const boost::uuids::uuid tag;
+        const int port;
+        const boost::filesystem::wpath data;
+        const boost::filesystem::wpath apps;
+        const std::string exercise;
+        const std::string name;
+        const int processPid;
+        const std::string processName;
+        Fixture()
+            : tag        ( boost::uuids::string_generator()( default_tag_string ) )
+            , port       ( 10000 )
+            , data       ( L"data" )
+            , apps       ( L"apps" )
+            , exercise   ( "my_exercise" )
+            , name       ( "my_name" )
+            , processPid ( 1337 )
+            , processName( "bidule.exe" )
+        {
+            MOCK_EXPECT( system.CreateDirectory );
+            MOCK_EXPECT( system.IsDirectory ).with( data ).returns( true );
+            MOCK_EXPECT( system.IsDirectory ).with( apps ).returns( true );
+            MOCK_EXPECT( system.Exists ).with( apps / L"/simulation_app.exe" ).returns( true );
+            MOCK_EXPECT( system.IsFile ).with( apps / L"/simulation_app.exe" ).returns( true );
+        }
+
+        boost::shared_ptr< Session > MakeSession()
+        {
+            MOCK_EXPECT( uuids.Create ).once().returns( tag );
+            MOCK_EXPECT( ports.Create0 ).once().returns( std::auto_ptr< Port_ABC >( new MockPort( port ) ) );
+            return boost::shared_ptr< Session >( new Session( runtime, uuids, system, data, apps, exercise, name, ports ) );
+        }
+
+        boost::shared_ptr< Session > MakeSession( const std::string& sessionTag, boost::shared_ptr< MockProcess > process )
+        {
+            MOCK_EXPECT( runtime.GetProcess ).once().with( processPid ).returns( process );
+            MOCK_EXPECT( ports.Create1 ).once().returns( std::auto_ptr< Port_ABC >( new MockPort( port ) ) );
+            return boost::shared_ptr< Session >( new Session( runtime, system, data, apps, xml::xistringstream( sessionTag ), ports ) );
+        }
+
+        boost::shared_ptr< MockProcess > StartSession( Session& session, std::string* sessionTag = 0 )
+        {
+            boost::shared_ptr< MockProcess > reply = boost::make_shared< MockProcess >( processPid, processName );
+            MOCK_EXPECT( runtime.Start ).once().returns( reply );
+            MOCK_EXPECT( system.WriteFile ).once();
+            if( sessionTag  )
+                MOCK_EXPECT( system.WriteFile ).once().with( mock::any, mock::retrieve( *sessionTag ) );
+            else
+                MOCK_EXPECT( system.WriteFile ).once();
+            session.Start();
+            return reply;
+        }
+
+        void StopSession( Session& session, MockProcess& process )
+        {
+            MOCK_EXPECT( process.Kill ).once().returns( true );
+            session.Stop();
+        }
     };
 }
 
 BOOST_FIXTURE_TEST_CASE( session_starts_and_stops, Fixture )
 {
-    MOCK_EXPECT( uuids.Create ).once().returns( default_tag );
-    MockPort* ptr = new MockPort();
-    MOCK_EXPECT( ptr->Get ).returns( 10000 );
-    Session session( runtime, uuids, system, L"data", L"apps", "exercise_name", "session_name", std::auto_ptr< Port_ABC >( ptr ) );
-    boost::shared_ptr< MockProcess > process = boost::make_shared< MockProcess >( 1337, "noname" );
-    MOCK_EXPECT( runtime.Start ).once().with( mock::any, mock::any, mock::any ).returns( process );
-    session.Start();
-    MOCK_EXPECT( process->Kill ).once().with( mock::any ).returns( true );
-    session.Stop();
+    boost::shared_ptr< Session > session = MakeSession();
+    boost::shared_ptr< MockProcess > process = StartSession( *session );
+    StopSession( *session, *process );
+}
+
+BOOST_FIXTURE_TEST_CASE( session_reloads, Fixture )
+{
+    boost::shared_ptr< MockProcess > process;
+    std::string sessionTag;
+    {
+        boost::shared_ptr< Session > session = MakeSession();
+        process = StartSession( *session, &sessionTag );
+    }
+    {
+        boost::shared_ptr< Session > session = MakeSession( sessionTag, process );
+        StopSession( *session, *process );
+    }
 }

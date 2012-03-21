@@ -19,9 +19,15 @@ namespace runtime
     class Process_ABC;
 }
 
+namespace xml
+{
+    class xistream;
+};
+
 namespace host
 {
     class FileSystem_ABC;
+    class PortFactory_ABC;
     class Port_ABC;
     class UuidFactory_ABC;
 
@@ -40,7 +46,10 @@ public:
                       const FileSystem_ABC& system, const boost::filesystem::wpath& data,
                       const boost::filesystem::wpath& applications,
                       const std::string& exercise, const std::string& name,
-                      std::auto_ptr< Port_ABC > port );
+                      PortFactory_ABC& ports );
+             Session( const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system,
+                      const boost::filesystem::wpath& data, const boost::filesystem::wpath& applications,
+                      xml::xistream& xis, PortFactory_ABC& ports );
     virtual ~Session();
     //@}
 
@@ -50,6 +59,13 @@ public:
     virtual std::string ToJson() const;
     virtual void Start();
     virtual void Stop();
+    //@}
+
+private:
+    //! @name Private methods
+    //@{
+    void CheckPaths() const;
+    std::string ToXml() const;
     //@}
 
 private:

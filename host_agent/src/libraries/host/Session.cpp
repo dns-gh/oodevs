@@ -20,21 +20,23 @@
 #include <runtime/Runtime_ABC.h>
 #include <runtime/Utf8.h>
 
-#include <xeumeuleu/xml.h>
+#include <xeumeuleu/xml.hpp>
 
+#include <boost/algorithm/string.hpp>
+#include <boost/algorithm/string/split.hpp>
 #include <boost/assign/list_of.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/filesystem/operations.hpp>
-#include <boost/foreach.hpp>
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/uuid/uuid_io.hpp>
+#include <boost/uuid/uuid_generators.hpp>
 
 using namespace host;
 
 namespace
 {
-    const int MAX_KILL_TIMEOUT = 3*1000;
+    const int MAX_KILL_TIMEOUT_MS = 3*1000;
 
     // -----------------------------------------------------------------------------
     // Name: Utf8Convert
@@ -58,6 +60,18 @@ namespace
         NETWORK_LOGGER_PORT,
         SESSION_PORT_COUNT,
     };
+
+    template< typename T >
+    T ParseItem( xml::xisubstream xis, const std::string& path )
+    {
+        T value;
+        std::vector< std::string > tokens;
+        boost::algorithm::split( tokens, path, boost::is_any_of("/"), boost::token_compress_on );
+        for( size_t i = 0; i < tokens.size() - 1; ++i )
+            xis >> xml::start( tokens[i] );
+        xis >> xml::attribute( tokens.back(), value );
+        return value;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +82,7 @@ Session::Session( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uu
                   const FileSystem_ABC& system, const boost::filesystem::wpath& data,
                   const boost::filesystem::wpath& applications,
                   const std::string& exercise, const std::string& name,
-                  std::auto_ptr< Port_ABC > port )
+                  PortFactory_ABC& ports )
     : runtime_     ( runtime )
     , system_      ( system )
     , tag_         ( uuids.Create() )
@@ -76,7 +90,39 @@ Session::Session( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uu
     , applications_( applications )
     , exercise_    ( exercise )
     , name_        ( name )
-    , port_        ( port )
+    , port_        ( ports.Create() )
+{
+    CheckPaths();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Session::Session
+// Created: BAX 2012-03-21
+// -----------------------------------------------------------------------------
+Session::Session( const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system,
+                  const boost::filesystem::wpath& data, const boost::filesystem::wpath& applications,
+                  xml::xistream& xis, PortFactory_ABC& ports )
+    : runtime_     ( runtime )
+    , system_      ( system )
+    , tag_         ( boost::uuids::string_generator()( ParseItem< std::string >( xis, "session/tag" ) ) )
+    , data_        ( data )
+    , applications_( applications )
+    , exercise_    ( ParseItem< std::string >( xis, "session/exercise" ) )
+    , name_        ( ParseItem< std::string >( xis, "session/name" ) )
+    , port_        ( ports.Create( ParseItem< int >( xis, "session/port" ) ) )
+{
+    CheckPaths();
+    const int pid = ParseItem< int >( xis, "session/pid" );
+    process_ = runtime_.GetProcess( pid );
+    if( !process_ )
+        throw std::runtime_error( "unable to open process " + boost::lexical_cast< std::string >( pid ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Session::CheckPaths
+// Created: BAX 2012-03-21
+// -----------------------------------------------------------------------------
+void Session::CheckPaths() const
 {
     if( !system_.IsDirectory( data_ ) )
         throw std::runtime_error( Utf8Convert( data_ ) + " is not a directory" );
@@ -130,6 +176,22 @@ std::string Session::ToJson() const
     const std::string process = process_ ? ::ToJson( *process_ ) : "{}";
     return (boost::format( "{ \"tag\" : \"%1%\", \"process\" : %2%, \"name\" : \"%3%\", \"port\" : %4%" )
         % tag_ % process % name_ % port_->Get() ).str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Session::ToXml
+// Created: BAX 2012-03-21
+// -----------------------------------------------------------------------------
+std::string Session::ToXml() const
+{
+    xml::xostringstream xos;
+    xos << xml::start( "session" )
+            << xml::attribute( "tag", boost::lexical_cast< std::string >( tag_ ) )
+            << xml::attribute( "exercise", exercise_ )
+            << xml::attribute( "name", name_ )
+            << xml::attribute( "port", port_->Get() )
+            << xml::attribute( "pid", process_->GetPid() );
+    return xos.str();
 }
 
 namespace
@@ -245,6 +307,8 @@ void Session::Start()
             ( "--session="       + boost::lexical_cast< std::string >( tag_ ) ),
         Utf8Convert( applications_ )
     );
+    if( process_ )
+        system_.WriteFile( sessionPath / L"session.tag", ToXml() );
 }
 
 // -----------------------------------------------------------------------------
@@ -254,5 +318,5 @@ void Session::Start()
 void Session::Stop()
 {
     if( process_ )
-        process_->Kill( MAX_KILL_TIMEOUT );
+        process_->Kill( MAX_KILL_TIMEOUT_MS );
 }

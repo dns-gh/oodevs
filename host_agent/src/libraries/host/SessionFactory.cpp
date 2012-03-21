@@ -13,8 +13,12 @@
 
 #include "SessionFactory.h"
 #include "PortFactory_ABC.h"
+#include "FileSystem_ABC.h"
 #include "Session.h"
 
+#include <xeumeuleu/xml.hpp>
+
+#include <boost/foreach.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/ref.hpp>
 
@@ -51,6 +55,25 @@ SessionFactory::~SessionFactory()
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Session_ABC > SessionFactory::Create( const std::string& exercise, const std::string& name ) const
 {
-    std::auto_ptr< Port_ABC > port = ports_.Create();
-    return boost::make_shared< Session>( runtime_, uuids_, system_, data_, applications_, exercise, name, boost::ref( port ) );
+    return boost::make_shared< Session>( runtime_, uuids_, system_, data_, applications_, exercise, name, boost::ref( ports_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SessionFactory::Reload
+// Created: BAX 2012-03-21
+// -----------------------------------------------------------------------------
+std::vector< boost::shared_ptr< Session_ABC > > SessionFactory::Reload() const
+{
+    std::vector< boost::shared_ptr< Session_ABC > > sessions;
+    BOOST_FOREACH( const boost::filesystem::wpath& path, system_.Glob( data_ / L"exercises", L"session.tag" ) )
+        try
+        {
+            xml::xistringstream xis( system_.ReadFile( path ) );
+            sessions.push_back( boost::make_shared< Session >( runtime_, system_, data_, applications_, boost::ref( xis ), boost::ref( ports_ ) ) );
+        }
+        catch( const std::exception& )
+        {
+            continue; // skip invalid session
+        }
+    return sessions;
 }

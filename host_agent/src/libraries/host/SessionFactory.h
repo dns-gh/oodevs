@@ -42,6 +42,7 @@ public:
     //! @name Methods
     //@{
     virtual boost::shared_ptr< Session_ABC > Create( const std::string& exercise, const std::string& name ) const;
+    virtual std::vector< boost::shared_ptr< Session_ABC > > Reload() const;
     //@}
 
 private:
