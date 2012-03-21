@@ -15,7 +15,7 @@ using namespace host;
 
 namespace
 {
-    typedef std::vector< std::shared_ptr< Port_ABC > > T_Ports;
+    typedef std::vector< boost::shared_ptr< Port_ABC > > T_Ports;
 
     template< size_t size >
     struct Fixture
@@ -24,13 +24,13 @@ namespace
             : factory( 1, 0, size )
         {
             for( size_t i = 0; i < size; ++i )
-                ports.push_back( factory.Create() );
+                ports.push_back( boost::shared_ptr< Port_ABC >( factory.Create().release() ) );
         }
         void RemoveAddCheck( size_t idx )
         {
             int unused = ports[idx]->Get();
             ports.erase( ports.begin() + idx );
-            ports.push_back( factory.Create() );
+            ports.push_back( boost::shared_ptr< Port_ABC >( factory.Create().release() ) );
             BOOST_CHECK_EQUAL( unused, ports.back()->Get() );
         }
         PortFactory factory;

@@ -131,7 +131,8 @@ namespace
         {
             MOCK_EXPECT( runtime.GetProcess ).once().with( processPid ).returns( process );
             MOCK_EXPECT( ports.Create1 ).once().returns( std::auto_ptr< Port_ABC >( new MockPort( port ) ) );
-            return boost::shared_ptr< Session >( new Session( runtime, system, data, apps, xml::xistringstream( sessionTag ), ports ) );
+            xml::xistringstream xis( sessionTag );
+            return boost::shared_ptr< Session >( new Session( runtime, system, data, apps, xis, ports ) );
         }
 
         boost::shared_ptr< MockProcess > StartSession( Session& session, std::string* sessionTag = 0 )
