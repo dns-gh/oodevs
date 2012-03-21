@@ -52,9 +52,6 @@ protected:
     QSpinBox* windDirection_;
     QSpinBox* windSpeed_;
     QSpinBox* temperature_;
-    QSpinBox* cloudFloor_;
-    QSpinBox* cloudCeiling_;
-    QSpinBox* cloudDensity_;
     gui::ValuedComboBox< E_WeatherType >* type_;
     //@}
 };

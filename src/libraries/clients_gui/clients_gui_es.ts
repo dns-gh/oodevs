@@ -1896,10 +1896,6 @@ Voulez-vous le supprimer?</translation>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Clouds floor/ceiling/density:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Weather type:</source>
         <translation type="unfinished"></translation>
     </message>

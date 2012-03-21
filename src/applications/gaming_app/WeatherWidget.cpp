@@ -43,8 +43,8 @@ void WeatherWidget::CreateParameters( actions::MagicAction& action, tools::Itera
     action.AddParameter( *new actions::parameters::Numeric( it.NextElement(), static_cast< float >( temperature_->value() ) ) );
     action.AddParameter( *new actions::parameters::Numeric( it.NextElement(), static_cast< float >( windSpeed_->value() ) ) );
     action.AddParameter( *new actions::parameters::Direction( it.NextElement(), windDirection_->value() ) );
-    action.AddParameter( *new actions::parameters::Numeric( it.NextElement(), static_cast< float >( cloudFloor_->value() ) ) );
-    action.AddParameter( *new actions::parameters::Numeric( it.NextElement(), static_cast< float >( cloudCeiling_->value() ) ) );
-    action.AddParameter( *new actions::parameters::Numeric( it.NextElement(), static_cast< float >( cloudDensity_->value() ) ) );
+    action.AddParameter( *new actions::parameters::Numeric( it.NextElement(), 0.f ) ); // cloud flood
+    action.AddParameter( *new actions::parameters::Numeric( it.NextElement(), 0.f ) ); // cloud ceiling
+    action.AddParameter( *new actions::parameters::Numeric( it.NextElement(), 0.f ) ); // cloud density
     action.AddParameter( *new actions::parameters::Enumeration( it.NextElement(), type_->GetValue() ) );
 }

@@ -38,15 +38,6 @@ WeatherWidget::WeatherWidget( QWidget* parent, const QString& title )
     temperature_ = new QSpinBox( -20, 40, 1, this );
     temperature_->setSuffix( "°C" );
 
-    new QLabel( tools::translate( "gui::WeatherWidget", "Clouds floor/ceiling/density:" ), this );
-    box = new Q3HBox( this );
-    box->layout()->setSpacing( 5 );
-    cloudFloor_   = new QSpinBox( 0, 100000, 100, box );
-    cloudFloor_->setSuffix( Units::meters.AsString() );
-    cloudCeiling_ = new QSpinBox( 0, 100000, 100, box );
-    cloudCeiling_->setSuffix( Units::meters.AsString() );
-    cloudDensity_ = new QSpinBox( 0, 10, 1, box );
-
     new QLabel( tools::translate( "gui::WeatherWidget", "Weather type:" ), this );
     type_ = new gui::ValuedComboBox< E_WeatherType >( this );
     assert( eNbrWeatherType > 0 );
@@ -72,9 +63,6 @@ void WeatherWidget::Clear()
     windSpeed_->setValue( 0 );
     windDirection_->setValue( 0 );
     temperature_->setValue( 0 );
-    cloudFloor_->setValue( 0 );
-    cloudCeiling_->setValue( 0 );
-    cloudDensity_->setValue( 0 );
     type_->setCurrentItem( 0 );
 }
 
@@ -87,9 +75,6 @@ void WeatherWidget::Update( const weather::Meteo& meteo )
     windSpeed_->setValue( static_cast< int >( meteo.GetWind().rSpeed_ / meteo.GetConversionFactor() ) );
     windDirection_->setValue( static_cast< int >( meteo.GetWind().eAngle_ ) );
     temperature_->setValue( meteo.GetTemperature() );
-    cloudDensity_->setValue( meteo.GetCloud().nDensityPercentage_ );
-    cloudFloor_->setValue( meteo.GetCloud().nFloor_ );
-    cloudCeiling_->setValue( meteo.GetCloud().nCeiling_ );
     E_WeatherType type = meteo.GetPrecipitation().GetID();
     assert( type >= eWeatherType_None && type < eNbrWeatherType );
     type_->setCurrentItem( static_cast< int >( type ) );
@@ -105,11 +90,6 @@ void WeatherWidget::CommitTo( weather::Meteo& meteo ) const
     wind.rSpeed_ = windSpeed_->value() * meteo.GetConversionFactor();
     wind.eAngle_ = windDirection_->value();
     weather::Meteo::sCloudData cloud;
-    cloud.nFloor_ = cloudFloor_->value();
-    cloud.nCeiling_ = cloudCeiling_->value();
-    cloud.nDensityPercentage_ = cloudDensity_->value();
-    cloud.rDensity_ = cloudDensity_->value() / 100.;
-
     meteo.SetWind( wind );
     meteo.SetCloud( cloud );
     meteo.SetTemperature( temperature_->value() );

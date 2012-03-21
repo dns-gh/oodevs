@@ -1895,10 +1895,6 @@ Voulez-vous le supprimer?</translation>
         <translation>Vitesse/direction du vent:</translation>
     </message>
     <message>
-        <source>Clouds floor/ceiling/density:</source>
-        <translation>Plancher/plafond/densité nuages:</translation>
-    </message>
-    <message>
         <source>Weather type:</source>
         <translation>Type de temps:</translation>
     </message>
