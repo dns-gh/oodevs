@@ -1112,15 +1112,13 @@ namespace
             to->mutable_activity_time()->set_activity_time( from.obstacle().activity_time() );
         if( from.obstacle().has_activation_time() )
         {
-            bpt::time_duration startTimeOffset = bpt::seconds( from.obstacle().activation_time() );
-            ostringstream startTime; startTime << startTimeOffset;
-            to->mutable_activity_time()->mutable_start_activity()->set_data( startTime.str() );
-            if( from.obstacle().has_activity_time() )
-            {
-                bpt::time_duration endTimeOffset = startTimeOffset + bpt::seconds( from.obstacle().activity_time() );
-                ostringstream endTime; endTime << endTimeOffset;
-                to->mutable_activity_time()->mutable_end_activity()->set_data( endTime.str() );
-            }
+            unsigned int startTimeStamp = from.obstacle().activation_time() + ( from.obstacle().has_creation_time()? from.obstacle().creation_time() : 0 );
+            std::string startTime = bpt::to_iso_string( bpt::from_time_t( 0 ) + bpt::seconds( startTimeStamp ) );
+            to->mutable_activity_time()->mutable_start_activity()->set_data( startTime );
+
+            unsigned int endTimeStamp = startTimeStamp + ( from.obstacle().has_activity_time()? from.obstacle().activity_time() : 0 );
+            std::string endTime = bpt::to_iso_string( bpt::from_time_t( 0 ) + bpt::seconds( endTimeStamp ) );
+            to->mutable_activity_time()->mutable_end_activity()->set_data( endTime );
         }
     }
     template< typename From, typename To >

@@ -774,8 +774,8 @@ message ObjectAttributeObstacle {
 message ObjectAttributeActivityTime {
    optional int32                       activity_time       = 1;        // 600 s (message sent at 12:00)
    optional int32                       activation_time     = 2;        // 3600s
-   optional MsgDateTime                 start_activity      = 3;        // 13:00
-   optional MsgDateTime                 end_activity        = 4;        // 13:10
+   optional MsgDateTime                 start_activity      = 3;
+   optional MsgDateTime                 end_activity        = 4;
 }
 
 message ObjectAttributeBypass {

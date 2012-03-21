@@ -47,6 +47,7 @@ private:
     bool isActivated_;
     int activationTime_;
     int activityTime_;
+    unsigned int creationTime_;
     //@}
 };
 
