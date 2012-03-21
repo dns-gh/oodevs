@@ -84,7 +84,6 @@ private:
     const kernel::Entity_ABC& owner_;
     const kernel::ObjectType* type_;
     std::string position_;
-    kernel::Object_ABC* pRealObject_;
     unsigned long entityId_;
     const kernel::Team_ABC* pTeam_;
     std::string symbol_;

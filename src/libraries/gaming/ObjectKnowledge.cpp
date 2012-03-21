@@ -36,25 +36,25 @@ ObjectKnowledge::ObjectKnowledge( const Entity_ABC& owner, const sword::ObjectKn
     , owner_         ( owner )
     , objectResolver_( objectResolver )
     , type_          ( & typeResolver.Get( message.type().id() ) )
-    , pRealObject_   ( objectResolver_.Find( message.object().id() ) )
     , entityId_      ( message.object().id() )
     , pTeam_         ( 0 )
 {
     RegisterSelf( *this );
 
     //$$ NLD - 2010-11-03 - Ce bloc sucks
-    if( pRealObject_ )
+    kernel::Object_ABC* pRealObject = objectResolver_.Find( entityId_ );
+    if( pRealObject )
     {
-        const Hierarchies* hierarchies = pRealObject_->Retrieve< TacticalHierarchies >();
+        const Hierarchies* hierarchies = pRealObject->Retrieve< TacticalHierarchies >();
         if( ! hierarchies )
-            hierarchies = pRealObject_->Retrieve< CommunicationHierarchies >();
-        const ObjectPositions* positions = static_cast< ObjectPositions* >( pRealObject_->Retrieve< Positions >() );
+            hierarchies = pRealObject->Retrieve< CommunicationHierarchies >();
+        const ObjectPositions* positions = static_cast< ObjectPositions* >( pRealObject->Retrieve< Positions >() );
         if( positions && type_ && positions->GetLocation() )
         {
             const std::string locationType = positions->GetLocation()->GetTypeName();
             symbol_ = type_->GetSymbol( locationType );
         }
-        const Entity_ABC& tmp = hierarchies ? hierarchies->GetTop() : *pRealObject_;
+        const Entity_ABC& tmp = hierarchies ? hierarchies->GetTop() : *pRealObject;
         pTeam_ = dynamic_cast< const kernel::Team_ABC* >( &tmp );
     }
 }
@@ -76,11 +76,11 @@ void ObjectKnowledge::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
 {
     if( message.has_object()  )
     {
-        pRealObject_ = objectResolver_.Find( message.object().id() );
-        if( pRealObject_ )
+        kernel::Object_ABC* pRealObject = objectResolver_.Find( message.object().id() );
+        if( pRealObject )
         {
-            entityId_ = pRealObject_->GetId();
-            const ObjectPositions* positions = static_cast< ObjectPositions* >( pRealObject_->Retrieve< kernel::Positions >() );
+            entityId_ = pRealObject->GetId();
+            const ObjectPositions* positions = static_cast< ObjectPositions* >( pRealObject->Retrieve< kernel::Positions >() );
             if( positions && type_ && positions->GetLocation() )
             {
                 const std::string locationType = positions->GetLocation()->GetTypeName();
@@ -103,7 +103,7 @@ void ObjectKnowledge::Display( Displayer_ABC& displayer ) const
 {
     displayer.Group( tools::translate( "Object", "Information" ) )
                 .Display( tools::translate( "Object", "Identifier:" ), id_ )
-                .Display( tools::translate( "Object", "Associated object:" ), pRealObject_ )
+                .Display( tools::translate( "Object", "Associated object:" ), objectResolver_.Find( entityId_ ) )
                 .Display( tools::translate( "Object", "Type:" ), type_ )
                 .Display( tools::translate( "Object", "Perceived:" ), bIsPerceived_ )
                 .Display( tools::translate( "Object", "Relevance:" ), nRelevance_ );
@@ -119,8 +119,9 @@ void ObjectKnowledge::Display( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void ObjectKnowledge::DisplayInList( Displayer_ABC& displayer ) const
 {
-    if( pRealObject_ )
-        displayer.Display( tools::findTranslation( "ObjectKnowledgePanel", "Known objects" ), pRealObject_ );
+    kernel::Object_ABC* pRealObject = objectResolver_.Find( entityId_ );
+    if( pRealObject )
+        displayer.Display( tools::findTranslation( "ObjectKnowledgePanel", "Known objects" ), pRealObject );
     else
         displayer.Display( tools::findTranslation( "ObjectKnowledgePanel", "Known objects" ), id_ );
 }
@@ -141,7 +142,8 @@ void ObjectKnowledge::DisplayInSummary( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 QString ObjectKnowledge::GetName() const
 {
-    return pRealObject_ ? pRealObject_->GetName() : tools::translate( "Object", "Unknown object" );
+    kernel::Object_ABC* pRealObject = objectResolver_.Find( entityId_ );
+    return pRealObject ? pRealObject->GetName() : tools::translate( "Object", "Unknown object" );
 }
 
 // -----------------------------------------------------------------------------
@@ -150,7 +152,7 @@ QString ObjectKnowledge::GetName() const
 // -----------------------------------------------------------------------------
 const Object_ABC* ObjectKnowledge::GetEntity() const
 {
-    return pRealObject_;
+    return objectResolver_.Find( entityId_ );;
 }
 
 // -----------------------------------------------------------------------------
