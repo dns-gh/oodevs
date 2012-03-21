@@ -27,7 +27,7 @@ namespace
     };
 
     template< typename T >
-    void RemoveAddBackAndCheck( PortFactory& factory, T& data, int idx )
+    void RemoveAddBackAndCheck( PortFactory& factory, T& data, size_t idx )
     {
         int unused = data[ idx ]->Get();
         typename T::iterator it = data.begin();
