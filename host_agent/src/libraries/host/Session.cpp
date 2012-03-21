@@ -146,6 +146,12 @@ void WriteDispatcherConfiguration( xml::xostream& xos, int base )
                 << xml::attribute( "client", "localhost:" + boost::lexical_cast< std::string >( base + SIMULATION_PORT ) )
                 << xml::attribute( "server", base + DISPATCHER_PORT )
             << xml::end //  network
+            << xml::start( "plugins" )
+                << xml::start( "web_control" )
+                    << xml::attribute( "server", base + WEB_CONTROL_PORT )
+                    << xml::attribute( "library", "web_control_plugin_dll-vc100-mt" )
+                << xml::end // web_control
+            << xml::end // plugins
         << xml::end; // dispatcher
 }
 
