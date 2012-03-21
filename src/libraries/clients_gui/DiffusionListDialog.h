@@ -10,11 +10,11 @@
 #ifndef gui_DiffusionListDialog_h_
 #define gui_DiffusionListDialog_h_
 
-#include <boost/noncopyable.hpp>
+#include "ModalDialog.h"
 #include "clients_kernel/ContextMenuObserver_ABC.h"
-
 #include "clients_kernel/SafePointer.h"
 #include "tools/Resolver.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -41,7 +41,7 @@ namespace gui
 */
 // Created: ABR 2011-04-29
 // =============================================================================
-class DiffusionListDialog : public QDialog
+class DiffusionListDialog : public ModalDialog
                           , public tools::Observer_ABC
                           , public kernel::ContextMenuObserver_ABC< kernel::Team_ABC >
                           , private boost::noncopyable

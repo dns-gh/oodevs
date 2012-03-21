@@ -19,7 +19,7 @@
 // Created: AME 2010-03-08
 // -----------------------------------------------------------------------------
 PositionEditor::PositionEditor( QDialog*& self, QWidget* parent, kernel::Controllers& controllers, const kernel::CoordinateConverter_ABC& converter )
-    : QDialog( parent, 0, true )
+    : ModalDialog( parent, "PositionEditor" )
     , converter_( converter )
     , value_( 0 )
     , self_( self )

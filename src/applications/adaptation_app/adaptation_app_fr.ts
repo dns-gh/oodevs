@@ -2544,6 +2544,10 @@ du tireur</translation>
         <source>Forward (ctrl + right)</source>
         <translation>Suivant (ctrl + droite)</translation>
     </message>
+    <message>
+        <source>Help</source>
+        <translation>Aide</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Maintenance_GUI</name>

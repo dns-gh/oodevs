@@ -27,6 +27,7 @@ HomePage::HomePage( QWidget* parent, Q3WidgetStack* pages, Config& config, const
     , config_( config )
     , optionsPage_( new OptionsPage( parent, pages, *this, config ) )
 {
+    setName( "HomePage" );
     adapt_ =   AddLink( *new AuthoringPage( parent, pages, *this, config, controllers ) );
     editPage_ = new ScenarioEditPage( parent, pages, *this, config, fileLoader, controllers, launcher );
     prepare_ = AddLink( *editPage_ );

@@ -19,20 +19,39 @@
 
 using namespace gui;
 
+namespace
+{
+    QString ReadLang()
+    {
+        QSettings settings;
+        settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
+        return settings.readEntry( "/Common/Language", QTextCodec::locale() );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: HelpSystem constructor
 // Created: AGE 2008-08-18
 // -----------------------------------------------------------------------------
 HelpSystem::HelpSystem( QWidget* root, const std::string& config )
     : QObject( root )
-    , root_( root )
+    , root_  ( root )
+    , locale_( ReadLang() )
 {
-    xml::xifstream xis( config );
-    xis >> xml::start( "widgets" )
-            >> xml::list( "widget", *this, &HelpSystem::ReadWidget )
-        >> xml::end;
-    Q3Action* helpAction = new Q3Action( "Help", QKeySequence( Qt::Key_F1 ), this );
-    connect( helpAction, SIGNAL( activated() ), this, SLOT( ShowHelp() ) );
+    try
+    {
+        xml::xifstream xis( config );
+        xis >> xml::start( "widgets" )
+                >> xml::list( "widget", *this, &HelpSystem::ReadWidget )
+            >> xml::end;
+    }
+    catch( ... )
+    {
+        // NOTHING (file not present)
+    }
+    QShortcut* s = new QShortcut( QKeySequence( Qt::Key_F1 ), root );
+    s->setContext( Qt::ApplicationShortcut );
+    connect( s, SIGNAL( activated() ), this, SLOT( ShowHelp() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,27 +76,23 @@ void HelpSystem::ReadWidget( xml::xistream& xis )
 // Name: HelpSystem::FindWidget
 // Created: AGE 2008-08-18
 // -----------------------------------------------------------------------------
-std::string HelpSystem::FindWidget( const QWidget* root )
+std::string HelpSystem::FindWidget( const QObject* root )
 {
     if( root )
     {
-        CIT_Anchors it = anchors_.find( root->name() );
-        if( it != anchors_.end() && root->hasMouse() )
-            return it->second;
-        if( const QObjectList* l = &root->children() )
+        const QWidget* widget = dynamic_cast< const QWidget* >( root );
+        if( widget )
         {
-            QObjectList children( *l );
-            for (QObjectList::iterator it = children.begin() ; it != children.end() ; ++it )
-            {
-                if( ( *it ) && ( *it )->inherits( "QWidget" ) )
-                {
-                    const std::string result = FindWidget( static_cast< const QWidget* >( (*it ) ) );
-                    if( ! result.empty() )
-                        return result;
-                }
-            }
+const char* test =  widget->name();
+            CIT_Anchors it = anchors_.find( widget->name() );
+            if( it != anchors_.end() )
+                return it->second;
         }
+        return FindWidget( root->parent() );//root
     }
+    CIT_Anchors it = anchors_.find( "default" );
+    if( it != anchors_.end() )
+        return it->second;
     return std::string();
 }
 
@@ -87,10 +102,12 @@ std::string HelpSystem::FindWidget( const QWidget* root )
 // -----------------------------------------------------------------------------
 void HelpSystem::ShowHelp()
 {
-    std::string resource = tools::GeneralConfig::BuildResourceChildFile( tools::translate( "gui::HelpSystem", "help/en/Reference Guide.chm" ).ascii() );
-    const std::string page = FindWidget( root_ );
+    static const std::string strHelp = "help/";
+    const std::string strGuide = tools::translate( "gui::HelpSystem", "Reference Guide" ).ascii();
+    std::string resource =  tools::GeneralConfig::BuildResourceChildFile( strHelp + locale_.ascii() + "/" + strGuide + ".chm" );
+    const std::string page = FindWidget( qApp->widgetAt( QCursor::pos() ) );
     if( !page.empty() )
-        resource += "::/" + page;
+        resource += std::string( "::/Sword_General_User_Guide/" ) + page + "/" + page + ".htm";
 
     HtmlHelp( 0, resource.c_str(), HH_DISPLAY_TOPIC, NULL);
 }

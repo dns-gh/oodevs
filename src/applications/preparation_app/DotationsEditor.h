@@ -10,6 +10,7 @@
 #ifndef __DotationsEditor_h_
 #define __DotationsEditor_h_
 
+#include "clients_gui/ModalDialog.h"
 #include "tools/Resolver.h"
 #include "clients_kernel/ValueEditor.h"
 
@@ -27,7 +28,7 @@ class DotationsItem;
 */
 // Created: SBO 2006-11-10
 // =============================================================================
-class DotationsEditor : public QDialog
+class DotationsEditor : public ModalDialog
                       , public kernel::ValueEditor< DotationsItem* >
 {
     Q_OBJECT;

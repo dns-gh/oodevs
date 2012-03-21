@@ -28,7 +28,7 @@ using namespace gui;
 // Created: SBO 2008-12-09
 // -----------------------------------------------------------------------------
 DiplomacyDialog_ABC::DiplomacyDialog_ABC( QWidget* parent, kernel::Controllers& controllers, const kernel::Profile_ABC& profile )
-    : QDialog( parent, "ChangeDiplomacyDialog", true )
+    : ModalDialog( parent, "ChangeDiplomacyDialog" )
     , controllers_( controllers )
     , profile_    ( profile )
 {

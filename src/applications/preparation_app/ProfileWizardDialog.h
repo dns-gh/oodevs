@@ -10,6 +10,8 @@
 #ifndef __ProfileWizardDialog_h_
 #define __ProfileWizardDialog_h_
 
+#include "clients_gui/ModalDialog.h"
+
 class Model;
 class ProfilesModel;
 class ProfilesGenerator;
@@ -20,7 +22,7 @@ class ProfilesGenerator;
 */
 // Created: SBO 2007-11-07
 // =============================================================================
-class ProfileWizardDialog : public QDialog
+class ProfileWizardDialog : public ModalDialog
 {
     Q_OBJECT
 

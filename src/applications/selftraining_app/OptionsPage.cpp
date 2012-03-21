@@ -63,6 +63,7 @@ OptionsPage::OptionsPage( QWidget* parent, Q3WidgetStack* pages, Page_ABC& previ
     , hasChanged_        ( false )
     , languageHasChanged_( false )
 {
+    setName( "OptionsPage" );
     if( TransformLang( selectedLanguage_ ) )
     {
         hasChanged_ = true;

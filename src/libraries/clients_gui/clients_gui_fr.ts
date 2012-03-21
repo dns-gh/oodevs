@@ -671,8 +671,8 @@ Please check access permissions or write protection.</source>
 <context>
     <name>gui::HelpSystem</name>
     <message>
-        <source>help/en/Reference Guide.chm</source>
-        <translation>help/fr/Guide_Utilisateur_General_Sword.chm</translation>
+        <source>Reference Guide</source>
+        <translation>Guide_Utilisateur_General_Sword</translation>
     </message>
 </context>
 <context>

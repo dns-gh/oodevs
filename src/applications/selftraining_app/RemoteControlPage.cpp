@@ -48,6 +48,7 @@ RemoteControlPage::RemoteControlPage( Q3WidgetStack* pages, Page_ABC& previous, 
     , exercise_         ( 0 )
     , runningExercise_  ( 0 )
 {
+    setName( "RemoteControlPage" );
     Q3VBox* box = new Q3VBox( this );
     box->setMargin( 10 );
     box->setSpacing( 10 );

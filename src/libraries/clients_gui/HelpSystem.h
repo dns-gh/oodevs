@@ -41,16 +41,10 @@ public slots:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    HelpSystem( const HelpSystem& );            //!< Copy constructor
-    HelpSystem& operator=( const HelpSystem& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
+        //! @name Helpers
     //@{
     void ReadWidget( xml::xistream& xis );
-    std::string FindWidget( const QWidget* root );
+    std::string FindWidget( const QObject* root );
     //@}
 
     //! @name Types
@@ -62,7 +56,8 @@ private:
 private:
     //! @name Member data
     //@{
-    QWidget* root_;
+    QString locale_;
+    QWidget* root_; // à virer
     T_Anchors anchors_;
     //@}
 };

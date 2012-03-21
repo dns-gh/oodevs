@@ -28,6 +28,7 @@
 #include "ADN_ProgressBar.h"
 #include "ADN_SplashScreen.h"
 #include "ADN_FileLoaderObserver.h"
+#include "clients_gui/HelpSystem.h"
 #include "tools/DefaultLoader.h"
 #include "tools/GeneralConfig.h"
 #include "tools/Version.h"
@@ -200,8 +201,11 @@ void ADN_MainWindow::Build()
 
     // Help menu
     {
+        gui::HelpSystem* help = new gui::HelpSystem( this, generalConfig_->BuildResourceChildFile( "help/adaptation.xml" ) );
         pHelpMenu_ = new Q3PopupMenu( this );
         menuBar()->insertItem( tr( "&Help" ), pHelpMenu_ );
+        pHelpMenu_->insertItem( tr( "Help" ), help, SLOT( ShowHelp() ) );
+        pHelpMenu_->insertSeparator();
         pHelpMenu_->insertItem( tr( "&About" ), this, SLOT(About()), Qt::CTRL+Qt::Key_F1 );
     }
 

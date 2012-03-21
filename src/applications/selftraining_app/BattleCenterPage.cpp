@@ -23,6 +23,7 @@
 BattleCenterPage::BattleCenterPage( Q3WidgetStack* pages, Page_ABC& previous, const Config& config, const tools::Loader_ABC& fileLoader, kernel::Controllers& controllers, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter )
     : MenuPage( pages, previous, eButtonBack | eButtonQuit )
 {
+    setName( "BattleCenterPage" );
     bcLauncher_ =     AddLink( *new BattleCenterLauncherPage( pages, *this, controllers, config, fileLoader, launcher, interpreter ) );
     bcJoin_ =         AddLink( *new BattleCenterJoinPage( pages, *this, controllers, config, fileLoader, launcher ) );
     remoteControle_ = AddLink( *new RemoteControlPage( pages, *this, controllers, config, fileLoader, launcher ) );

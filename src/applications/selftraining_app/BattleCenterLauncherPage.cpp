@@ -28,7 +28,7 @@
 BattleCenterLauncherPage::BattleCenterLauncherPage( Q3WidgetStack* pages, Page_ABC& previous, kernel::Controllers& controllers, const frontend::Config& config, const tools::Loader_ABC& fileLoader, frontend::LauncherClient& launcher, gui::LinkInterpreter_ABC& interpreter )
     : ScenarioLauncherPage( pages, previous, controllers, config, fileLoader, launcher, interpreter )
 {
-    // NOTHING
+    setName( "BattleCenterLauncherPage" );
 }
 
 // -----------------------------------------------------------------------------

@@ -10,6 +10,8 @@
 #ifndef __PreferencesDialog_h_
 #define __PreferencesDialog_h_
 
+#include "ModalDialog.h"
+
 namespace kernel
 {
     class CoordinateSystems;
@@ -34,7 +36,7 @@ namespace gui
 */
 // Created: SBO 2006-05-03
 // =============================================================================
-class PreferencesDialog : public QDialog
+class PreferencesDialog : public ModalDialog
 {
     Q_OBJECT
 

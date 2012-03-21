@@ -10,6 +10,7 @@
 #ifndef __PopulationRepartitionEditor_h_
 #define __PopulationRepartitionEditor_h_
 
+#include "clients_gui/ModalDialog.h"
 #include "clients_kernel/ValueEditor.h"
 
 namespace kernel
@@ -25,7 +26,7 @@ class PopulationRepartition;
 */
 // Created: JSR 2011-03-08
 // =============================================================================
-class PopulationRepartitionEditor : public QDialog
+class PopulationRepartitionEditor : public ModalDialog
                                   , public kernel::ValueEditor< PopulationRepartition* >
 {
     Q_OBJECT

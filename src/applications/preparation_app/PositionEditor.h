@@ -10,6 +10,7 @@
 #ifndef __PositionEditor_h_
 #define __PositionEditor_h_
 
+#include "clients_gui/ModalDialog.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/ValueEditor.h"
 
@@ -30,7 +31,7 @@ namespace gui
 */
 // Created: AME 2010-03-08
 // =============================================================================
-class PositionEditor : public QDialog
+class PositionEditor : public ModalDialog
                      , public kernel::ValueEditor< kernel::Moveable_ABC* >
 {
     Q_OBJECT;

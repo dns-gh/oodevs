@@ -160,7 +160,7 @@ Menu::Menu( QMainWindow* pParent, Controllers& controllers, QDialog& prefDialog,
 
     menu = new kernel::ContextMenu( this );
     addMenu( menu );
-    menu->insertItem( tools::translate( "Menu", "Help" ), &help, SLOT( ShowHelp() ), Qt::Key_F1 );
+    menu->insertItem( tools::translate( "Menu", "Help" ), &help, SLOT( ShowHelp() ) );
     menu->insertSeparator();
     AboutDialog* about = new AboutDialog( this, factory, tools::translate( "Application", "Preparation" ) + " " + QString( tools::AppProjectVersion() ), license );
     menu->insertItem( tools::translate( "Menu", "About" ), about, SLOT( open() ) );

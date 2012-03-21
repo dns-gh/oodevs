@@ -39,6 +39,7 @@ ScenarioEditPage::ScenarioEditPage( QWidget* parent, Q3WidgetStack* pages, Page_
     , controllers_ ( controllers )
     , progressPage_( new ProgressPage( pages, *this ) )
 {
+    setName( "ScenarioEditPage" );
     Q3VBox* box = new Q3VBox( this );
     box->setMargin( 5 );
     {

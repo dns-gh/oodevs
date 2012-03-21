@@ -35,7 +35,7 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers, LightingProxy& lighting, kernel::CoordinateSystems& coordSystems,
                                       const Painter_ABC& painter )
-    : QDialog( parent, "PreferencesDialog" )
+    : ModalDialog( parent, "PreferencesDialog" )
     , controllers_      ( controllers )
     , painter_          ( painter )
     , pGraphicPrefPanel_( 0 )

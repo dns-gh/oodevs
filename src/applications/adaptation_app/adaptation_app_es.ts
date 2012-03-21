@@ -2544,6 +2544,10 @@ tirador</translation>
         <source>Forward (ctrl + right)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Help</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Maintenance_GUI</name>

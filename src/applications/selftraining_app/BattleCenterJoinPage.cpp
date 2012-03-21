@@ -52,6 +52,7 @@ BattleCenterJoinPage::BattleCenterJoinPage( Q3WidgetStack* pages, Page_ABC& prev
     , progressPage_     ( new ProgressPage( pages, *this ) )
     , exercise_         ( 0 )
 {
+    setName( "BattleCenterJoinPage" );
     Q3VBox* box = new Q3VBox( this );
     box->setMargin( 10 );
     box->setSpacing( 10 );

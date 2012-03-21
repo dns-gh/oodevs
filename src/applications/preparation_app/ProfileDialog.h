@@ -10,6 +10,8 @@
 #ifndef __ProfileDialog_h_
 #define __ProfileDialog_h_
 
+#include "clients_gui/ModalDialog.h"
+
 namespace kernel
 {
     class Controllers;
@@ -33,7 +35,7 @@ class ControlsChecker_ABC;
 */
 // Created: SBO 2007-01-16
 // =============================================================================
-class ProfileDialog : public QDialog
+class ProfileDialog : public ModalDialog
 {
     Q_OBJECT;
 

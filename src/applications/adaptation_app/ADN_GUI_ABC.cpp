@@ -42,6 +42,7 @@ QWidget* ADN_GUI_ABC::CreateScrollArea( QWidget& content, QWidget* list /*= 0*/,
 {
     // Content area
     QScrollArea* scrollArea = new QScrollArea();
+    scrollArea->setName( "ScrollArea");
     scrollArea->setWidget( &content );
     scrollArea->setWidgetResizable( true );
 

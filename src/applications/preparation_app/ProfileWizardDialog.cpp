@@ -46,7 +46,7 @@ namespace
 // Created: SBO 2007-11-07
 // -----------------------------------------------------------------------------
 ProfileWizardDialog::ProfileWizardDialog( QWidget* parent, const Model& model, ProfilesModel& profiles )
-    : QDialog( parent, "ProfileWizardDialog" )
+    : ModalDialog( parent, "ProfileWizardDialog" )
     , generator_   ( new ProfilesGenerator( model, profiles ) )
     , profiles_    ( profiles )
     , confirmation_( new ConfirmationBox( tr( "Warning" ), tr( "All existing profiles will be deleted, do you want to continue?" ), boost::bind( &ProfileWizardDialog::OnConfirmation, this, _1 ) ) )
