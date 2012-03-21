@@ -60,6 +60,8 @@ namespace
         MOCK_METHOD( CreateDirectory, 1 );
         MOCK_METHOD( Remove, 1 );
         MOCK_METHOD( WriteFile, 2 );
+        MOCK_METHOD( ReadFile, 1 );
+        MOCK_METHOD( Glob, 2 );
     };
 
     MOCK_BASE_CLASS( MockPort, Port_ABC )

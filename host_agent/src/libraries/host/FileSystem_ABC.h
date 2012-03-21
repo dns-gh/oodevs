@@ -40,6 +40,8 @@ public:
     virtual void CreateDirectory( const boost::filesystem::wpath& path ) const = 0;
     virtual void Remove( const boost::filesystem::wpath& path ) const = 0;
     virtual void WriteFile( const boost::filesystem::wpath& path, const std::string& content ) const = 0;
+    virtual std::string ReadFile( const boost::filesystem::wpath& path ) const = 0;
+    virtual std::vector< boost::filesystem::wpath > Glob( const boost::filesystem::wpath& path, const std::wstring& name ) const = 0;
     //@}
 };
 

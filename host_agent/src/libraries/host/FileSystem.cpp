@@ -103,3 +103,27 @@ void FileSystem::WriteFile( const boost::filesystem::wpath& path, const std::str
 {
     boost::filesystem::ofstream( path ) << content;
 }
+
+// -----------------------------------------------------------------------------
+// Name: FileSystem::ReadFile
+// Created: BAX 2012-03-21
+// -----------------------------------------------------------------------------
+std::string FileSystem::ReadFile( const boost::filesystem::wpath& path ) const
+{
+    std::string reply;
+    boost::filesystem::ifstream( path ) >> reply;
+    return reply;
+}
+
+// -----------------------------------------------------------------------------
+// Name: FileSystem::Glob
+// Created: BAX 2012-03-21
+// -----------------------------------------------------------------------------
+std::vector< boost::filesystem::wpath > FileSystem::Glob( const boost::filesystem::wpath& path, const std::wstring& name ) const
+{
+    std::vector< boost::filesystem::wpath > paths;
+    for( boost::filesystem::wrecursive_directory_iterator it( path ); it != boost::filesystem::wrecursive_directory_iterator(); ++it )
+        if( IsFile( *it ) && it->filename() == name )
+            paths.push_back( *it );
+    return paths;
+}
