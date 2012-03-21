@@ -14,8 +14,6 @@
 #include "Controller.h"
 #include "Request_ABC.h"
 #include <host/Agent_ABC.h>
-#include <boost/algorithm/string/split.hpp>
-#include <boost/algorithm/string.hpp>
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/static_assert.hpp>

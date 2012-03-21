@@ -7,19 +7,10 @@
 //
 // *****************************************************************************
 
-#ifdef _MSC_VER
-#   define _SCL_SECURE_NO_WARNINGS
-#endif
-
 #include "MongooseServer.h"
 #include "Observer_ABC.h"
 #include "Request_ABC.h"
-#include <algorithm>
-#include <stdexcept>
 #include <vector>
-#include <boost/foreach.hpp>
-#include <boost/algorithm/string.hpp>
-#include <boost/algorithm/string/split.hpp>
 #include <mongoose/mongoose.h>
 
 using namespace web;
