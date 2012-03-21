@@ -43,7 +43,7 @@ BOOST_FIXTURE_TEST_CASE( port_factory_throws_when_filled, Fixture< 10 > )
     BOOST_CHECK_THROW( factory.Create(), std::exception );
 }
 
-BOOST_FIXTURE_TEST_CASE( factory_can_return_first_unused_port, Fixture<10> )
+BOOST_FIXTURE_TEST_CASE( factory_can_return_first_unused_port, Fixture< 10 > )
 {
     RemoveAddCheck( 0 );
 }
