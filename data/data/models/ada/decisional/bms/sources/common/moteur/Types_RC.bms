@@ -472,7 +472,8 @@ eRC_AttenteOrdrePoursuivreConvoi = 453
 eRC_DebutDevalorisation = 454
 eRC_FinDevalorisation = 455
 eRC_TrafficablePositionFindingInZone = 456
-eNbr = 457
+eRC_PrisSousTirMunition = 457
+eNbr = 458
 
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : delai (float),

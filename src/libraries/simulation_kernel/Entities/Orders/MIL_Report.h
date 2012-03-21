@@ -142,6 +142,7 @@ public:
         eReport_SectionUndeployed,
         eReport_StartUndeploy,
         eReport_DifficultMovementProgression,
+        eReport_UnderIndirectFire,
         eNbrReport
     };
 
@@ -603,6 +604,8 @@ public:
         eRC_AttenteOrdrePoursuivreConvoi,
         eRC_DebutDevalorisation,
         eRC_FinDevalorisation,
+        eRC_TrafficablePositionFindingInZone,
+        eRC_PrisSousTirMunition,
         eLast
     };
     //@}

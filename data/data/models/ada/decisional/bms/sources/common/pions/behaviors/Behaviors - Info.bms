@@ -108,7 +108,7 @@ local emptyTable = emptyTable
 
         if( myself:DEC_Agent_EstNeutralise() ) then
             Activate( self.activations.ACT_Warning, 1, { eRC_DebutNeutralisation, } )
-            Activate( self.activations.ACT_RC, 1, { eRC_PrisSousTirArtillerie, } )
+            --Activate( self.activations.ACT_RC, 1, { eRC_PrisSousTirArtillerie, } )
         else
             Activate( self.activations.ACT_Warning, 1, { eRC_FinNeutralisation, } )
         end
