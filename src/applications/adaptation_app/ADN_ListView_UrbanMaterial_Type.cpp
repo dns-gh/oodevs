@@ -52,11 +52,11 @@ private:
 // Name: ADN_ListView_UrbanMaterial_Type constructor
 // Created: SLG 2010-03-10
 //-----------------------------------------------------------------------------
-ADN_ListView_UrbanMaterial_Type::ADN_ListView_UrbanMaterial_Type(QWidget * parent, const char * name, Qt::WFlags f)
-:   ADN_ListView(parent,name,f)
+ADN_ListView_UrbanMaterial_Type::ADN_ListView_UrbanMaterial_Type(QWidget * parent, Qt::WFlags f)
+:   ADN_ListView(parent,"Material",f)
 {
     // Add a column && disable sorting
-    addColumn( tools::translate( "ADN_ListView_UrbanMaterial_Type", name ) );
+    addColumn( tools::translate( "ADN_ListView_UrbanMaterial_Type", "Material" ) );
     setSorting( -1, true );
     setResizeMode( Q3ListView::AllColumns );
 

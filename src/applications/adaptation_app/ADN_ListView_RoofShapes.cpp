@@ -19,10 +19,10 @@
 // Name: ADN_ListView_RoofShapes constructor
 // Created: LGY 2011-09-21
 // -----------------------------------------------------------------------------
-ADN_ListView_RoofShapes::ADN_ListView_RoofShapes( QWidget* pParent, const char* szName, Qt::WFlags f )
-    :  ADN_ListView( pParent, szName, f )
+ADN_ListView_RoofShapes::ADN_ListView_RoofShapes( QWidget* pParent, Qt::WFlags f )
+    :  ADN_ListView( pParent, "RoofShape", f )
 {
-    addColumn( tools::translate( "ADN_ListView_RoofShapes", szName ) );
+    addColumn( tools::translate( "ADN_ListView_RoofShapes", "RoofShape" ) );
     setSorting( -1, true );
     setResizeMode( Q3ListView::AllColumns );
     pConnector_ = new ADN_Connector_ListView< ADN_Urban_Data::RoofShapeInfos >( *this );

@@ -48,11 +48,11 @@ private:
 // Name: ADN_ListView_UrbanInfrastructure_Type constructor
 // Created: SLG 2010-12-20
 //-----------------------------------------------------------------------------
-ADN_ListView_UrbanInfrastructure_Type::ADN_ListView_UrbanInfrastructure_Type(QWidget * parent, const char * name, Qt::WFlags f)
-:   ADN_ListView(parent,name,f)
+ADN_ListView_UrbanInfrastructure_Type::ADN_ListView_UrbanInfrastructure_Type(QWidget * parent, Qt::WFlags f)
+:   ADN_ListView(parent,"Infrastructure",f)
 {
     // Add a column && disable sorting
-    addColumn( tools::translate( "ADN_ListView_UrbanInfrastructure_Type", name ) );
+    addColumn( tools::translate( "ADN_ListView_UrbanInfrastructure_Type", "Infrastructure" ) );
     setSorting( -1, true );
     setResizeMode( Q3ListView::LastColumn );
 

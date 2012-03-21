@@ -19,10 +19,10 @@
 // Name: ADN_ListView_Templates constructor
 // Created: LGY 2011-09-20
 // -----------------------------------------------------------------------------
-ADN_ListView_Templates::ADN_ListView_Templates( QWidget* pParent, const char* szName, Qt::WFlags f )
-    :  ADN_ListView( pParent, szName, f )
+ADN_ListView_Templates::ADN_ListView_Templates( QWidget* pParent, Qt::WFlags f )
+    :  ADN_ListView( pParent, "Template", f )
 {
-    addColumn( tools::translate( "ADN_ListView_UrbanAccommodation_Type", szName ) );
+    addColumn( tools::translate( "ADN_ListView_UrbanAccommodation_Type", "Template" ) );
     setSorting( -1, true );
     setResizeMode( Q3ListView::AllColumns );
     pConnector_ = new ADN_Connector_ListView< ADN_Urban_Data::UrbanTemplateInfos >( *this );

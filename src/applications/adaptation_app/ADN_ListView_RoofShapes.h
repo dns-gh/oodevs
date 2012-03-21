@@ -23,7 +23,7 @@ class ADN_ListView_RoofShapes : public ADN_ListView
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_ListView_RoofShapes( QWidget* pParent = 0, const char* szName = 0, Qt::WFlags f = 0 );
+             ADN_ListView_RoofShapes( QWidget* pParent = 0, Qt::WFlags f = 0 );
     virtual ~ADN_ListView_RoofShapes();
     //@}
 
