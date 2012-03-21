@@ -24,13 +24,13 @@ namespace
             : factory( 1, 0, size )
         {
             for( size_t i = 0; i < size; ++i )
-                ports.push_back( boost::shared_ptr< Port_ABC >( factory.Create().release() ) );
+                ports.push_back( boost::shared_ptr< Port_ABC >( factory.Create() ) );
         }
         void RemoveAddCheck( size_t idx )
         {
             int unused = ports[idx]->Get();
             ports.erase( ports.begin() + idx );
-            ports.push_back( boost::shared_ptr< Port_ABC >( factory.Create().release() ) );
+            ports.push_back( boost::shared_ptr< Port_ABC >( factory.Create() ) );
             BOOST_CHECK_EQUAL( unused, ports.back()->Get() );
         }
         PortFactory factory;
