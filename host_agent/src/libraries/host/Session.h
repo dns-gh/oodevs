@@ -58,8 +58,8 @@ private:
     const runtime::Runtime_ABC& runtime_;
     const FileSystem_ABC& system_;
     const boost::uuids::uuid tag_;
-    const boost::filesystem::wpath& data_;
-    const boost::filesystem::wpath& applications_;
+    const boost::filesystem::wpath data_;
+    const boost::filesystem::wpath applications_;
     const std::string exercise_;
     const std::string name_;
     std::auto_ptr< Port_ABC > port_;
