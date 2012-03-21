@@ -233,8 +233,7 @@ double PHY_Speeds::GetMaxSpeed( const TerrainData& data ) const
 // -----------------------------------------------------------------------------
 bool PHY_Speeds::IsPassable( const TerrainData& data ) const
 {
-    if( ( data.Linear() & nLinearPassabilityMask_ )
-     || ( data.Area()   & nAreaPassabilityMask_   ) )
+    if( data.Linear() & nLinearPassabilityMask_ )
         return true;
     if( ( data.Linear() & nLinearImpassabilityMask_ )
      || ( data.Border() & nBorderImpassabilityMask_ ) )
