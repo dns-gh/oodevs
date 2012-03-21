@@ -42,7 +42,7 @@ namespace
         return count + 1;
     }
 
-    std::auto_ptr< Process > MakeProcess( const MockApi& api, int pid, const std::wstring wname )
+    std::auto_ptr< Process > MakeProcess( const MockApi& api, int pid, const std::wstring& wname )
     {
         MOCK_EXPECT( api.OpenProcess ).once().with( mock::any, false, pid ).returns( dummy );
         MOCK_EXPECT( api.GetProcessName ).once().calls( boost::bind( &FakeGetProcessName, _1, _2, _3 ) );
