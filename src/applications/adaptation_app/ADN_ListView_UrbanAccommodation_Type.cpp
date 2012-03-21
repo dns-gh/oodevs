@@ -50,11 +50,11 @@ private:
 // Name: ADN_ListView_UrbanAccommodation_Type constructor
 // Created: SLG 2010-12-20
 //-----------------------------------------------------------------------------
-ADN_ListView_UrbanAccommodation_Type::ADN_ListView_UrbanAccommodation_Type( QWidget* parent, const char* name, Qt::WFlags f )
-    : ADN_ListView( parent, name, f )
+ADN_ListView_UrbanAccommodation_Type::ADN_ListView_UrbanAccommodation_Type( QWidget* parent, Qt::WFlags f )
+    : ADN_ListView( parent, "Activity", f )
 {
     // Add a column && disable sorting
-    addColumn( tools::translate( "ADN_ListView_UrbanAccommodation_Type", name ) );
+    addColumn( tools::translate( "ADN_ListView_UrbanAccommodation_Type", "Activity" ) );
     setSorting( -1, true );
     setResizeMode( Q3ListView::AllColumns );
     // Connector creation

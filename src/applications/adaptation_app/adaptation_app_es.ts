@@ -2331,6 +2331,13 @@ tirador</translation>
     </message>
 </context>
 <context>
+    <name>ADN_ListView_RoofShapes</name>
+    <message>
+        <source>RoofShape</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_ListView_Sensors</name>
     <message>
         <source>Sensors</source>
@@ -2365,6 +2372,14 @@ tirador</translation>
         <source>Delete</source>
         <translation>Eliminar</translation>
     </message>
+    <message>
+        <source>Template</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Activity</source>
+        <translation type="unfinished">Actividad</translation>
+    </message>
 </context>
 <context>
     <name>ADN_ListView_UrbanInfrastructure_Type</name>
@@ -2374,6 +2389,10 @@ tirador</translation>
     </message>
     <message>
         <source>Delete</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Infrastructure</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -2387,6 +2406,10 @@ tirador</translation>
         <source>Delete</source>
         <translation>Eliminar</translation>
     </message>
+    <message>
+        <source>Material</source>
+        <translation type="unfinished">Material</translation>
+    </message>
 </context>
 <context>
     <name>ADN_ListView_Urban_Type</name>
@@ -2397,6 +2420,10 @@ tirador</translation>
     <message>
         <source>Delete</source>
         <translation>Eliminar</translation>
+    </message>
+    <message>
+        <source>Facade</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

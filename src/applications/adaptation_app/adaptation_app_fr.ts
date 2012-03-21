@@ -2331,6 +2331,13 @@ du tireur</translation>
     </message>
 </context>
 <context>
+    <name>ADN_ListView_RoofShapes</name>
+    <message>
+        <source>RoofShape</source>
+        <translation>Forme de toit</translation>
+    </message>
+</context>
+<context>
     <name>ADN_ListView_Sensors</name>
     <message>
         <source>Sensors</source>
@@ -2365,6 +2372,14 @@ du tireur</translation>
         <source>Delete</source>
         <translation>Supprimer</translation>
     </message>
+    <message>
+        <source>Template</source>
+        <translation>Patron</translation>
+    </message>
+    <message>
+        <source>Activity</source>
+        <translation>Activité</translation>
+    </message>
 </context>
 <context>
     <name>ADN_ListView_UrbanInfrastructure_Type</name>
@@ -2375,6 +2390,10 @@ du tireur</translation>
     <message>
         <source>Delete</source>
         <translation>Supprimer</translation>
+    </message>
+    <message>
+        <source>Infrastructure</source>
+        <translation>Infrastructure</translation>
     </message>
 </context>
 <context>
@@ -2387,6 +2406,10 @@ du tireur</translation>
         <source>Delete</source>
         <translation>Supprimer</translation>
     </message>
+    <message>
+        <source>Material</source>
+        <translation>Matériau</translation>
+    </message>
 </context>
 <context>
     <name>ADN_ListView_Urban_Type</name>
@@ -2397,6 +2420,10 @@ du tireur</translation>
     <message>
         <source>Delete</source>
         <translation>Supprimer</translation>
+    </message>
+    <message>
+        <source>Facade</source>
+        <translation>Façade</translation>
     </message>
 </context>
 <context>

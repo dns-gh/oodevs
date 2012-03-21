@@ -69,7 +69,7 @@ void ADN_Urban_GUI::Build()
     Q3GroupBox* pGroupMaterials = new Q3VGroupBox( tr( "Materials" ) );
     {
         // materials list
-        pListMaterial_ = new ADN_ListView_UrbanMaterial_Type( pGroupMaterials, "Material" );
+        pListMaterial_ = new ADN_ListView_UrbanMaterial_Type( pGroupMaterials );
         pListMaterial_->setFixedHeight( 180 );
         static_cast< ADN_Connector_Vector_ABC* >( &pListMaterial_->GetConnector() )->Connect( &data_.GetMaterialsInfos() );
 
@@ -90,7 +90,7 @@ void ADN_Urban_GUI::Build()
     Q3GroupBox* pGroupFacades = new Q3VGroupBox( tr( "Facades" ) );
     {
         // facades list
-        pListFacade_= new ADN_ListView_Urban_Type( pGroupFacades, "Facade" );
+        pListFacade_= new ADN_ListView_Urban_Type( pGroupFacades );
         static_cast< ADN_Connector_Vector_ABC* >( &pListFacade_->GetConnector() )->Connect( &data_.GetFacadesInfos() );
 
         // facade
@@ -105,7 +105,7 @@ void ADN_Urban_GUI::Build()
     Q3GroupBox* pGroupRoofShapes = new Q3VGroupBox( tr( "RoofShapes" ) );
     {
         // roofshapes list
-        pListRoofShape_= new ADN_ListView_RoofShapes( pGroupRoofShapes, "RoofShape" );
+        pListRoofShape_= new ADN_ListView_RoofShapes( pGroupRoofShapes );
         static_cast< ADN_Connector_Vector_ABC* >( &pListRoofShape_->GetConnector() )->Connect( &data_.GetRoofShapesInfos() );
 
         // roofsape
@@ -125,7 +125,7 @@ void ADN_Urban_GUI::Build()
         builder.AddField< ADN_EditLine_Double >( pHolder, tr( "Default maximal capacity" ), data_.defaultMaxCapacity_, tr( "persons/m2" ), eGreaterZero );
 
         // accommodations list
-        pListAccommodation_= new ADN_ListView_UrbanAccommodation_Type( pGroupAccommodations, "Activity" );
+        pListAccommodation_= new ADN_ListView_UrbanAccommodation_Type( pGroupAccommodations );
         pListAccommodation_->setFixedHeight( 180 );
         static_cast< ADN_Connector_Vector_ABC* >( &pListAccommodation_->GetConnector() )->Connect( &data_.GetAccommodationsInfos() );
 
@@ -144,7 +144,7 @@ void ADN_Urban_GUI::Build()
     Q3GroupBox* pGroupInfrastructures = new Q3VGroupBox( tr( "Infrastructures" ) );
     {
         // infrastructures list
-        pListInfrastructure_= new ADN_ListView_UrbanInfrastructure_Type( pGroupInfrastructures, "Infrastructure" );
+        pListInfrastructure_= new ADN_ListView_UrbanInfrastructure_Type( pGroupInfrastructures );
         //pListInfrastructure_->setFixedHeight( 250 );
         static_cast< ADN_Connector_Vector_ABC* >( &pListInfrastructure_->GetConnector() )->Connect( &data_.GetInfrastructuresInfos() );
 
@@ -172,7 +172,7 @@ void ADN_Urban_GUI::Build()
     // Templates
     Q3GroupBox* pTemplates = new Q3VGroupBox( tr( "Templates" ) );
     {
-        pListTemplate_ = new ADN_ListView_Templates( pTemplates, "Template" );
+        pListTemplate_ = new ADN_ListView_Templates( pTemplates );
         pListTemplate_->setFixedHeight( 180 );
         static_cast< ADN_Connector_Vector_ABC* >( &pListTemplate_->GetConnector() )->Connect( &data_.GetTemplatesInfos() );
         Q3GroupBox* pGroupTemplate = new Q3VGroupBox( tr( "Template" ), pTemplates );
