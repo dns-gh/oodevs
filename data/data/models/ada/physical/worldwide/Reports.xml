@@ -607,5 +607,8 @@
     <parameter type="ObjectKnowledge"/>
   </report>
   <report category="operational" id="416" message="No trafficable position in zone"/>
+  <report category="operational" id="417" message="Pris sous tir de: %1">
+    <parameter type="ResourceType"/>
+  </report>
 </reports>
-<!-- signature="2496271349" -->
+<!-- signature="3927735137" -->

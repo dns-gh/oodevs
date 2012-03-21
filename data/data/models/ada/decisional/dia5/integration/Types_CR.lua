@@ -428,4 +428,5 @@ eRC_AttenteOrdrePoursuivreConvoi = 413
 eRC_DebutDevalorisation = 414
 eRC_FinDevalorisation = 415
 eRC_TrafficablePositionFindingInZone = 416
-eNbr = 417
+eRC_PrisSousTirMunition = 417
+eNbr = 418

@@ -144,6 +144,7 @@ public:
         eReport_DifficultMovementProgression,
         eReport_UrbanCollisionStarted,
         eReport_UrbanCollisionStopped,
+        eReport_UnderIndirectFire,
         eNbrReport
     };
 
@@ -565,6 +566,8 @@ public:
         eRC_AttenteOrdrePoursuivreConvoi,
         eRC_DebutDevalorisation,
         eRC_FinDevalorisation,
+        eRC_TrafficablePositionFindingInZone,
+        eRC_PrisSousTirMunition,
         eLast
     };
     //@}
