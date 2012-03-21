@@ -33,9 +33,11 @@
 #include "DEC_Knowledge_Population.h"
 #include "DEC_Knowledge_UrbanPerception.h"
 #include "MIL_KnowledgeGroup.h"
+#include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Agents/Roles/HumanFactors/PHY_RoleInterface_HumanFactors.h"
 #include "Entities/Agents/Units/HumanFactors/PHY_Morale.h"
+#include "MT_Tools/MT_Logger.h"
 #include "protocol/Protocol.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KnowledgeBlackBoard_AgentPion )
@@ -401,6 +403,11 @@ void DEC_KnowledgeBlackBoard_AgentPion::GetObjectsColliding( T_KnowledgeObjectDi
     {
         boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = pPion_->GetKnowledgeGroup().GetKnowledge().ResolveKnowledgeObject( (**itObjectColliding).GetObject() );
         assert( pKnowledge && pKnowledge->IsValid() );
+        if( !pKnowledge || !pKnowledge->IsValid() )
+        {
+            MT_LOG_ERROR_MSG( "Invalid knowledge on object collision: " << (**itObjectColliding).GetObject().GetID() << " for agent " << pPion_->GetID() );
+            continue;
+        }
         container.push_back( pKnowledge );
     }
 }

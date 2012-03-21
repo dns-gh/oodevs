@@ -363,6 +363,8 @@ void PHY_RolePion_Communications::UpdateKnowledgesFromObjectCollision( const DEC
 {
     boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = pJammingKnowledgeGroup_->GetKnowledge().ResolveKnowledgeObject( collision.GetObject() );
 
+    if( collision.GetObject().IsMarkedForDestruction() )
+        return;
     if( !pKnowledge || !pKnowledge->IsValid() )
         pKnowledge = pJammingKnowledgeGroup_->CreateKnowledgeObject( entity_.GetArmy(), collision.GetObject() );
 

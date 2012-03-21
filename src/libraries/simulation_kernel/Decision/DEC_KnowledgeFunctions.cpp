@@ -440,9 +440,12 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsCollidingFromType
     callerAgent.GetKnowledge().GetObjectsColliding( objectsColliding );
     for( CIT_KnowledgeObjectDiaIDVector it = objectsColliding.begin(); it != objectsColliding.end(); ++it )
     {
-        const MIL_ObjectType_ABC& type = (*it)->GetType();
-        if( type.GetName() == objectType )
-            result.push_back( *it );
+        if( *it )
+        {
+            const MIL_ObjectType_ABC& type = (*it)->GetType();
+            if( type.GetName() == objectType )
+                result.push_back( *it );
+        }
     }
 
     return result;
