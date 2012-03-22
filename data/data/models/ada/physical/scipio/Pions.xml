@@ -648,7 +648,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Equipe Reco" id="22" name="ASS . Equipe Reco Mortier" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/field artillery"/>
+    <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/field artillery/target acquisition"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="VAB VIT"/>
     </equipments>
@@ -14270,7 +14270,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.Appui Mortier" id="477" name="INF . Groupe MO81 VBCI" type="Pion INF">
-    <nature atlas-nature="ASS" level="oo" nature-app6="combat/field artillery"/>
+    <nature atlas-nature="ASS" level="oo" nature-app6="combat/field artillery/mortar"/>
     <equipments>
       <equipment count="2" crew="5" loadable="true" major="true" type="Eqp Mortier 81"/>
       <equipment count="1" crew="2" type="GBC 180"/>
@@ -14301,7 +14301,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.MILAN" id="478" name="INF . Groupe MMP VBCI" type="Pion INF">
-    <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/field artillery"/>
+    <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/anti armor"/>
     <equipments>
       <equipment count="2" crew="2" loadable="true" major="true" type="Equipe + POST TIR MILAN"/>
       <equipment count="1" crew="3" major="true" type="VBCI"/>
@@ -14522,7 +14522,7 @@
     <nature atlas-nature="None" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="4" crew="1" loadable="true" type="Milicien AK47"/>
-      <equipment count="1" crew="1" type="Milicien RPG"/>
+      <equipment count="1" crew="1" loadable="true" type="Milicien RPG"/>
       <equipment count="1" crew="2" major="true" type="PICK UP 23/2"/>
     </equipments>
     <sensors-range range="0"/>
@@ -17498,7 +17498,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.EI" id="593" name="GLAISE - ABC . Peloton SCORPION" type="Pion ABC">
-    <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/wheeled"/>
+    <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/track"/>
     <equipments>
       <equipment count="3" crew="3" major="true" type="SCORPION"/>
     </equipments>
@@ -18707,10 +18707,10 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.START - STAIR - ELODEE" id="636" name="RENS . Module Interception START" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.START - STAIR - ELODEE" id="636" name="RENS . Module Interception SAEC" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/direction finding"/>
     <equipments>
-      <equipment count="5" crew="3" major="true" type="VLRA START"/>
+      <equipment count="5" crew="3" major="true" type="VLRA SAEC"/>
       <equipment count="4" crew="2" type="VTC P4 7,62"/>
       <equipment count="1" crew="3" type="TRM 2000"/>
     </equipments>
@@ -19233,5 +19233,337 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
+  <unit decisional-model="Masalife.Milice" id="654" name="MILICE OXYDE . PICK UP 14.5" type="Pion MILICE">
+    <nature atlas-nature="None" level="oo" nature-app6="combat"/>
+    <equipments>
+      <equipment count="8" crew="1" loadable="true" type="Milicien AK47"/>
+      <equipment count="1" crew="2" type="PICK UP"/>
+    </equipments>
+    <sensors-range range="1500"/>
+    <equipments-range range="400"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <setup footprint-radius="10" speed-modifier="0.7"/>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.Milice" id="655" name="MILICE OXYDE . PICK UP AK47" type="Pion MILICE">
+    <nature atlas-nature="None" level="oo" nature-app6="combat"/>
+    <equipments>
+      <equipment count="6" crew="1" loadable="true" type="Milicien AK47"/>
+      <equipment count="2" crew="1" loadable="true" type="Milicien RPG"/>
+      <equipment count="1" crew="2" major="true" type="PICK UP 14,5"/>
+    </equipments>
+    <sensors-range range="1500"/>
+    <equipments-range range="1800"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <setup footprint-radius="10" speed-modifier="0.7"/>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.Milice" id="656" name="MILICE OXYDE . PICK UP CDT 14.5" type="Pion MILICE">
+    <nature atlas-nature="PC" level="ooo" nature-app6="combat"/>
+    <equipments>
+      <equipment count="6" crew="1" loadable="true" type="Milicien AK47"/>
+      <equipment count="1" crew="2" major="true" type="PICK UP 14,5"/>
+      <equipment count="1" crew="2" loadable="true" type="Milicien RPG"/>
+    </equipments>
+    <sensors-range range="1500"/>
+    <equipments-range range="1800"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <setup footprint-radius="10" speed-modifier="0.7"/>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.Milice" id="657" name="MILICE OXYDE . PICK UP CDT AK47" type="Pion MILICE">
+    <nature atlas-nature="PC" level="ooo" nature-app6="combat"/>
+    <equipments>
+      <equipment count="8" crew="1" loadable="true" type="Milicien AK47"/>
+      <equipment count="1" crew="2" major="true" type="PICK UP"/>
+    </equipments>
+    <sensors-range range="1500"/>
+    <equipments-range range="400"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <setup footprint-radius="10" speed-modifier="0.7"/>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.LOG.PC" id="658" name="LOG . TC2 Stock" type="Pion LOG TC2">
+    <nature atlas-nature="PC" level="i" nature-app6="combat service support"/>
+    <equipments>
+      <equipment count="0" crew="1" major="true" type="Stock"/>
+    </equipments>
+    <sensors-range range="1500"/>
+    <equipments-range range="1000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <stocks>
+      <stock category="Unite essence" threshold="30"/>
+      <stock category="Unite vivre" threshold="30"/>
+      <stock category="Unite tranche D" threshold="30"/>
+      <stock category="Unite non tranche D" threshold="30"/>
+      <stock category="Pieces" threshold="30"/>
+    </stocks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="900s"/>
+      <posture name="Poste" setup-time="1800s"/>
+      <posture name="PosteAmenage" setup-time="2700s"/>
+      <posture name="PostePrepareGenie" setup-time="2700s"/>
+    </postures>
+    <setup installation-time="60s" uninstallation-time="30m"/>
+    <nbc decontamination-delay="21600s"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.ASS.Section Tir" id="659" name="MILICE . PICK UP MO60" type="Pion ASS">
+    <nature atlas-nature="None" level="oo" nature-app6="combat"/>
+    <equipments>
+      <equipment count="1" crew="2" major="true" type="Pick Up LADA Mo 60"/>
+      <equipment count="2" crew="2" loadable="true" type="Eqp Mortier 60 Oxyde"/>
+    </equipments>
+    <sensors-range range="3000"/>
+    <equipments-range range="4000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <setup footprint-radius="10" speed-modifier="0.7"/>
+    <nbc decontamination-delay="1500s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.ASS.Section Tir" id="660" name="MILICE . PICK UP BM8" type="Pion ASS">
+    <nature atlas-nature="None" level="oo" nature-app6="combat"/>
+    <equipments>
+      <equipment count="4" crew="1" loadable="true" type="Milicien AK47"/>
+      <equipment count="1" crew="2" major="true" type="Pick Up LADA BM 8"/>
+    </equipments>
+    <sensors-range range="1500"/>
+    <equipments-range range="15000"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <setup footprint-radius="10" speed-modifier="0.7"/>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.ASS.Section Tir" id="661" name="MILICE . PICK UP SA7" type="Pion ASS">
+    <nature atlas-nature="None" level="oo" nature-app6="combat/air defense"/>
+    <equipments>
+      <equipment count="2" crew="2" loadable="true" type="Milicien AK47"/>
+      <equipment count="1" crew="2" major="true" type="Pick Up LADA SA7"/>
+    </equipments>
+    <sensors-range range="4000"/>
+    <equipments-range range="4200"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <setup footprint-radius="10" speed-modifier="0.7"/>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.ASS.PC" id="662" name="MILICE OXYDE . PICK UP CDT SA7" type="Pion ASS">
+    <nature atlas-nature="PC" level="ooo" nature-app6="combat"/>
+    <equipments>
+      <equipment count="8" crew="1" loadable="true" type="Milicien AK47"/>
+      <equipment count="1" crew="2" major="true" type="PICK UP"/>
+    </equipments>
+    <sensors-range range="1500"/>
+    <equipments-range range="400"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <setup footprint-radius="10" speed-modifier="0.7"/>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.Milice" id="663" name="MILICE OXYDE . PICK UP ZU23/2" type="Pion MILICE">
+    <nature atlas-nature="None" level="oo" nature-app6="combat"/>
+    <equipments>
+      <equipment count="6" crew="1" loadable="true" type="Milicien AK47"/>
+      <equipment count="2" crew="1" loadable="true" type="Milicien RPG"/>
+      <equipment count="1" crew="2" major="true" type="PICK UP 23/2"/>
+    </equipments>
+    <sensors-range range="2300"/>
+    <equipments-range range="2200"/>
+    <crew-ranks>
+      <crew-rank count="0" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <setup footprint-radius="10" speed-modifier="0.7"/>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
+  <unit decisional-model="Masalife.Milice" id="664" name="MILICE OXYDE . PICK UP CDT ZU23/2" type="Pion MILICE">
+    <nature atlas-nature="PC" level="ooo" nature-app6="combat"/>
+    <equipments>
+      <equipment count="6" crew="1" loadable="true" type="Milicien AK47"/>
+      <equipment count="2" crew="1" loadable="true" type="Milicien RPG"/>
+      <equipment count="1" crew="2" major="true" type="PICK UP 23/2"/>
+    </equipments>
+    <sensors-range range="2300"/>
+    <equipments-range range="2200"/>
+    <crew-ranks>
+      <crew-rank count="1" type="Officier"/>
+      <crew-rank count="0" type="SousOfficier"/>
+    </crew-ranks>
+    <postures>
+      <posture name="PosteReflexe" setup-time="30s"/>
+      <posture name="Poste" setup-time="300s"/>
+      <posture name="PosteAmenage" setup-time="1800s"/>
+      <posture name="PostePrepareGenie" setup-time="1800s"/>
+    </postures>
+    <setup footprint-radius="10" speed-modifier="0.7"/>
+    <nbc decontamination-delay="600s"/>
+    <distance-before-points>
+      <distance-before-point type="forest" value="500"/>
+      <distance-before-point type="urban area" value="500"/>
+      <distance-before-point type="crossroad" value="500"/>
+      <distance-before-point type="bridge" value="500"/>
+    </distance-before-points>
+    <drill-blow length="300" width="300"/>
+    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <crossing-height height="0m"/>
+  </unit>
 </units>
-<!-- signature="4226015112" -->
+<!-- signature="2825715240" -->
