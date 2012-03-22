@@ -1159,7 +1159,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.TRANS.PC TAC" id="39" name="INF . GTIA  AMX10P AV 2 + 2" type="Pion TRANS">
-    <nature atlas-nature="Vehicule" level="iii" nature-app6="combat/infantry/mechanized"/>
+    <nature atlas-nature="Vehicule" level="ii" nature-app6="combat/infantry/mechanized"/>
     <equipments>
       <equipment count="4" crew="2" type="VTC P4"/>
       <equipment count="1" crew="2" type="TRM 2000"/>
@@ -1318,7 +1318,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.TRANS.PC TAC" id="44" name="INF . GTIA  VAB AV 2 + 2" type="Pion TRANS">
-    <nature atlas-nature="Vehicule" level="iii" nature-app6="combat/infantry/motorized"/>
+    <nature atlas-nature="Vehicule" level="ii" nature-app6="combat/infantry/motorized"/>
     <equipments>
       <equipment count="5" crew="2" type="VTC P4"/>
       <equipment count="1" crew="1" type="TRM 4000"/>
@@ -4632,7 +4632,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.TRANS.PC TAC" id="159" name="GLAISE - TRANS . PC BAT PRINCIPAL" type="Pion TRANS">
-    <nature atlas-nature="PC" level="iii" nature-app6="combat support/signal unit"/>
+    <nature atlas-nature="PC" level="ii" nature-app6="combat support/signal unit"/>
     <equipments>
       <equipment count="5" crew="2" type="UAZ 469"/>
       <equipment count="10" crew="2" type="KAMAZ 5320"/>
@@ -4662,7 +4662,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.TRANS.PC TAC" id="160" name="GLAISE - TRANS . PC BGDE PRINCIPAL" type="Pion TRANS">
-    <nature atlas-nature="PC" level="xx" nature-app6="combat support/signal unit"/>
+    <nature atlas-nature="PC" level="x" nature-app6="combat support/signal unit"/>
     <equipments>
       <equipment count="2" crew="2" type="UAZ 469"/>
       <equipment count="3" crew="3" major="true" type="GAZ 66"/>
@@ -4687,7 +4687,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.TRANS.PC DIV" id="161" name="GLAISE - TRANS . PC DIV PRINCIPAL" type="Pion TRANS">
-    <nature atlas-nature="PC" level="xxx" nature-app6="combat support/signal unit"/>
+    <nature atlas-nature="PC" level="xx" nature-app6="combat support/signal unit"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="UAZ 469"/>
       <equipment count="17" crew="3" type="MAZ 537"/>
@@ -8655,7 +8655,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.TRANS.PC TAC" id="294" name="LOG . BLOG PCP" type="Pion TRANS">
-    <nature atlas-nature="Log" level="iii" nature-app6="combat service support/supply"/>
+    <nature atlas-nature="Log" level="ii" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="8" crew="1" type="VTC P4"/>
       <equipment count="10" crew="1" major="true" type="GBC 180"/>
@@ -8678,7 +8678,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.TRANS.PC TAC" id="295" name="LOG . ZFMAINT PCP" type="Pion TRANS">
-    <nature atlas-nature="Log" level="ii" nature-app6="combat service support/maintenance"/>
+    <nature atlas-nature="Log" level="i" nature-app6="combat service support/maintenance"/>
     <equipments>
       <equipment count="3" crew="1" type="VTC P4"/>
       <equipment count="3" crew="1" major="true" type="GBC 180"/>
@@ -8701,7 +8701,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.TRANS.PC TAC" id="296" name="LOG . ZFRAV PCP" type="Pion TRANS">
-    <nature atlas-nature="Log" level="ii" nature-app6="combat service support/supply"/>
+    <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="3" crew="1" type="VTC P4"/>
       <equipment count="3" crew="1" major="true" type="GBC 180"/>
@@ -8724,7 +8724,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.TRANS.PC TAC" id="297" name="LOG . ZFSAN PCP" type="Pion TRANS">
-    <nature atlas-nature="Log" level="ii" nature-app6="combat service support/medical"/>
+    <nature atlas-nature="Log" level="i" nature-app6="combat service support/medical"/>
     <equipments>
       <equipment count="3" crew="1" type="VTC P4"/>
       <equipment count="3" crew="1" major="true" type="GBC 180"/>
@@ -8747,7 +8747,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.TRANS.PC TAC" id="298" name="GEN . PC RG - AV 2 + 2" type="Pion TRANS">
-    <nature atlas-nature="PC" level="iii" nature-app6="combat/engineer"/>
+    <nature atlas-nature="PC" level="ii" nature-app6="combat/engineer"/>
     <equipments>
       <equipment count="6" crew="1" type="VTC P4"/>
       <equipment count="2" crew="2" major="true" type="GBC 180"/>
@@ -8778,7 +8778,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.TRANS.PC TAC" id="299" name="GEN . PC RG - AV 3 + 1" type="Pion TRANS">
-    <nature atlas-nature="PC" level="iii" nature-app6="combat/engineer"/>
+    <nature atlas-nature="PC" level="ii" nature-app6="combat/engineer"/>
     <equipments>
       <equipment count="6" crew="1" type="VTC P4"/>
       <equipment count="2" crew="2" major="true" type="GBC 180"/>
@@ -8869,7 +8869,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.TRANS.PC TAC" id="302" name="ASS . DAFA" type="Pion TRANS">
-    <nature atlas-nature="PC" level="oo" nature-app6="combat/field artillery"/>
+    <nature atlas-nature="PC" level="c" nature-app6="combat/field artillery"/>
     <equipments>
       <equipment count="1" crew="1" type="VTC P4"/>
       <equipment count="1" crew="1" major="true" type="GBC 180"/>
@@ -8913,7 +8913,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.TRANS.PC TAC" id="304" name="ASS . PCRA" type="Pion TRANS">
-    <nature atlas-nature="PC" level="iii" nature-app6="combat/field artillery"/>
+    <nature atlas-nature="PC" level="ii" nature-app6="combat/field artillery"/>
     <equipments>
       <equipment count="1" crew="1" type="VTC P4"/>
       <equipment count="2" crew="2" major="true" type="GBC 180"/>
@@ -14849,7 +14849,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.TRANS.Section TRANS" id="512" name="TRANS . PC" type="Pion TRANS">
-    <nature atlas-nature="None" level="iii" nature-app6="combat support/signal unit"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat support/signal unit"/>
     <equipments>
       <equipment count="1" crew="2" major="true" type="VTC P4"/>
     </equipments>
@@ -15071,7 +15071,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.TRANS.PC TAC" id="519" name="TRANS . PC BDE AV" type="Pion TRANS">
-    <nature atlas-nature="PC" level="xx" nature-app6="combat support/signal unit"/>
+    <nature atlas-nature="PC" level="x" nature-app6="combat support/signal unit"/>
     <equipments>
       <equipment count="1" crew="2" major="true" type="Eqp CMAI"/>
       <equipment count="1" crew="1" major="true" type="FH Simple"/>
@@ -19131,4 +19131,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="1049154835" -->
+<!-- signature="0792603458" -->
