@@ -62,6 +62,7 @@
 #include "TimelinePanel.h"
 #include "UserProfileDialog.h"
 #include "WeatherLayer.h"
+#include "OrbatPanel.h"
 #include "actions_gui/InterfaceBuilder.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Options.h"
@@ -169,6 +170,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     lighting_ = new SimulationLighting( controllers, this );
     gui::RichItemFactory* factory = new  gui::RichItemFactory( this ); // $$$$ AGE 2006-05-11: aggregate somewhere
     gui::PreferencesDialog* prefDialog = new gui::PreferencesDialog( this, controllers, *lighting_, staticModel.coordinateSystems_, *pPainter_ );
+    prefDialog->AddPage( tr( "Orbat" ), *new OrbatPanel( prefDialog, controllers ) );
     new VisionConesToggler( controllers, publisher, this );
 
     glProxy_ = new gui::GlProxy();

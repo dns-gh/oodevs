@@ -1141,29 +1141,6 @@ Voulez-vous le supprimer?</translation>
     </message>
 </context>
 <context>
-    <name>gui::OrbatPanel</name>
-    <message>
-        <source>Operational state color</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Neutralized:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Tactically destroyed:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Totally destroyed:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Phantom:</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>gui::PopulationListView</name>
     <message>
         <source>Crowds</source>
@@ -1288,10 +1265,6 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>2D/Population</source>
         <translation>2D/Population couvrante</translation>
-    </message>
-    <message>
-        <source>Orbat</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

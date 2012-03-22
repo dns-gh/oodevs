@@ -98,6 +98,9 @@
     <Filter Include="Source Files\Dialogs\Performance">
       <UniqueIdentifier>{a8393a5a-4580-43ce-87fd-53fc2c100855}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Panels\Preferences">
+      <UniqueIdentifier>{922beeb5-8e60-4730-9c60-ef9deec3624c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\preparation_app\Application.cpp">
@@ -480,6 +483,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\preparation_app\PerformanceDialog.cpp">
       <Filter>Source Files\Dialogs\Performance</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\preparation_app\OrbatPanel.cpp">
+      <Filter>Source Files\Panels\Preferences</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -900,6 +906,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\preparation_app\PerformanceDialog.h">
       <Filter>Source Files\Dialogs\Performance</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\OrbatPanel.h">
+      <Filter>Source Files\Panels\Preferences</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

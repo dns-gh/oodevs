@@ -165,6 +165,7 @@
     <ClCompile Include="..\..\src\applications\preparation_app\ModelBuilder.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\ModelConsistencyDialog.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\NewProfileDialog.cpp" />
+    <ClCompile Include="..\..\src\applications\preparation_app\OrbatPanel.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\PerformanceDialog.cpp" />
     <ClCompile Include="..\..\src\applications\preparation_app\preparation_app_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
@@ -527,6 +528,14 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc%27ing "%(FullPath)"</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing "%(FullPath)"</Message>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\preparation_app\OrbatPanel.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing "%(FullPath)"</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\preparation_app\preparation_app_pch.h" />
     <ClInclude Include="..\..\src\applications\preparation_app\PreparationProfile.h" />

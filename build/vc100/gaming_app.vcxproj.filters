@@ -161,8 +161,8 @@
     <Filter Include="Source Files\Dialogs\Magic actions\Unit state">
       <UniqueIdentifier>{a616015c-fb09-44ee-b04d-7fddc560343e}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Panels\Profiles">
-      <UniqueIdentifier>{73648679-2390-4a48-98e3-73cf550eb177}</UniqueIdentifier>
+    <Filter Include="Source Files\Panels\Preferences">
+      <UniqueIdentifier>{c38c4f1c-939e-4cea-9a40-e7a7ce285b71}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
   <ItemGroup>
@@ -215,6 +215,9 @@
       <Filter>Source Files\Dialogs</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\EfficientRangeDialog.cpp">
+      <Filter>Source Files\Dialogs</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\LivingAreaDialog.cpp">
       <Filter>Source Files\Dialogs</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\LoginDialog.cpp">
@@ -778,6 +781,8 @@
     <ClCompile Include="..\..\src\applications\gaming_app\InfoFuneralDialog.cpp">
       <Filter>Source Files\Panels\Info\dialogs</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\gaming_app\OrbatPanel.cpp">
+      <Filter>Source Files\Panels\Preferences</Filter>
     <ClCompile Include="..\..\src\applications\gaming_app\ProfilesPanel.cpp">
       <Filter>Source Files\Panels\Profiles</Filter>
     </ClCompile>
@@ -1440,6 +1445,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\ProfilesPanel.h">
       <Filter>Source Files\Panels\Profiles</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\gaming_app\OrbatPanel.h">
+      <Filter>Source Files\Panels\Preferences</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\gaming_app\InhabitantPanel.h">
       <Filter>Source Files\Panels</Filter>

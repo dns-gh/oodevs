@@ -969,6 +969,10 @@
         <source>Phantom</source>
         <translation>Fantôme</translation>
     </message>
+    <message>
+        <source>Orbat</source>
+        <translation>ODB</translation>
+    </message>
 </context>
 <context>
     <name>Menu</name>
@@ -1382,6 +1386,17 @@
     <message>
         <source>Create side</source>
         <translation>Créer un camp</translation>
+    </message>
+</context>
+<context>
+    <name>OrbatPanel</name>
+    <message>
+        <source>Phantom:</source>
+        <translation>Fantôme:</translation>
+    </message>
+    <message>
+        <source>Edition</source>
+        <translation>Edition</translation>
     </message>
 </context>
 <context>

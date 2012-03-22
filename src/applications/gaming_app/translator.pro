@@ -91,6 +91,7 @@ ObjectReportPanel.cpp \
 ObjectPanel.cpp \
 ObjectPrototype.cpp \
 ObjectsLayer.cpp \
+OrbatPanel.cpp \
 OrbatToolbar.cpp \
 PopulationChangeAffinitiesDialog.cpp \
 PopulationChangeHealthStateDialog.cpp \

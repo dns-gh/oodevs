@@ -2483,6 +2483,25 @@ Motivo: %3
     </message>
 </context>
 <context>
+    <name>OrbatPanel</name>
+    <message>
+        <source>Operational state color</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Neutralized:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Tactically destroyed:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Totally destroyed:</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>OrbatToolbar</name>
     <message>
         <source>Remove filter</source>

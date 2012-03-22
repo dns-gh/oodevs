@@ -55,6 +55,7 @@ public:
     virtual void reject();
     GraphicPreferences& GetPreferences() const; // $$$$ SBO 2006-05-04:
 
+    void AddPage( const QString& name, PreferencePanel_ABC& page );
     void AddLayer( const QString& name, gui::Layer_ABC& layer );
     void AddLayer( const QString& name, gui::Elevation2dLayer& layer ); // $$$$ AGE 2007-01-17:
     //@}
@@ -71,11 +72,6 @@ private:
     //@{
     PreferencesDialog( const PreferencesDialog& );            //!< Copy constructor
     PreferencesDialog& operator=( const PreferencesDialog& ); //!< Assignment operator
-    //@}
-
-    //! @name Helpers
-    //@{
-    void AddPage( const QString& name, PreferencePanel_ABC& page );
     //@}
 
     //! @name Types

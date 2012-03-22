@@ -2483,6 +2483,25 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
 </context>
 <context>
+    <name>OrbatPanel</name>
+    <message>
+        <source>Operational state color</source>
+        <translation>Couleur des états opérationnels</translation>
+    </message>
+    <message>
+        <source>Neutralized:</source>
+        <translation>Neutralisé :</translation>
+    </message>
+    <message>
+        <source>Tactically destroyed:</source>
+        <translation>Détruit tactiquement :</translation>
+    </message>
+    <message>
+        <source>Totally destroyed:</source>
+        <translation>Détruit totalement :</translation>
+    </message>
+</context>
+<context>
     <name>OrbatToolbar</name>
     <message>
         <source>Remove filter</source>

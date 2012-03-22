@@ -43,6 +43,7 @@ ModelConsistencyDialog.cpp \
 NewProfileDialog.cpp \
 ObjectCreationPanel.cpp \
 ObjectListView.cpp \
+OrbatPanel.cpp \
 PeopleAffinitiesDialog.cpp \
 PerformanceDialog.cpp \
 PopulationListView.cpp \
