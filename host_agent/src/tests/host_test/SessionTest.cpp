@@ -130,7 +130,7 @@ namespace
         boost::shared_ptr< Session > MakeSession( const std::string& sessionTag, boost::shared_ptr< MockProcess > process )
         {
             MOCK_EXPECT( runtime.GetProcess ).once().with( processPid ).returns( process );
-            MOCK_EXPECT( ports.Create1 ).once().returns( std::auto_ptr< Port_ABC >( new MockPort( port ) ) );
+            MOCK_EXPECT( ports.Create1 ).once().returns( new MockPort( port ) );
             xml::xistringstream xis( sessionTag );
             return boost::shared_ptr< Session >( new Session( runtime, system, data, apps, xis, ports ) );
         }
@@ -165,14 +165,7 @@ BOOST_FIXTURE_TEST_CASE( session_starts_and_stops, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( session_reloads, Fixture )
 {
-    boost::shared_ptr< MockProcess > process;
     std::string sessionTag;
-    {
-        boost::shared_ptr< Session > session = MakeSession();
-        process = StartSession( *session, &sessionTag );
-    }
-    {
-        boost::shared_ptr< Session > session = MakeSession( sessionTag, process );
-        StopSession( *session, *process );
-    }
+    boost::shared_ptr< MockProcess > process = StartSession( *MakeSession(), &sessionTag );
+    StopSession( *MakeSession( sessionTag, process ), *process );
 }

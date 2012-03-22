@@ -10,24 +10,36 @@
 #include "MongooseServer.h"
 #include "Observer_ABC.h"
 #include "Request_ABC.h"
+
+#include <boost/assign/list_of.hpp>
 #include <vector>
 #include <mongoose/mongoose.h>
+
+#ifdef _MSC_VER
+#   pragma warning( disable : 4355 )
+#endif
 
 using namespace web;
 
 namespace
 {
-    // -----------------------------------------------------------------------------
-    // Name: web_callback
-    // Created: BAX 2012-02-28
-    // -----------------------------------------------------------------------------
-    void* web_callback( mg_event event, mg_connection* link, const mg_request_info* request )
+    void* WebCallback( mg_event event, mg_connection* link, const mg_request_info* request )
     {
         if( event != MG_NEW_REQUEST )
             return 0;
-        MongooseServer* ptr = reinterpret_cast< MongooseServer* >( request->user_data );
-        ptr->Notify( link, request );
+        MongooseServer* server = reinterpret_cast< MongooseServer* >( request->user_data );
+        server->Notify( link, request );
         return link;
+    }
+
+    boost::shared_ptr< mg_context > Start( MongooseServer& server )
+    {
+        std::vector< const char* > options = boost::assign::list_of
+            ( "enable_directory_listing" )( "false" )( 0 );
+        mg_context* ptr = mg_start( &WebCallback, &server, &options[0] );
+        if( !ptr )
+            throw std::runtime_error( "unable to start mongoose server" );
+        return boost::shared_ptr< mg_context >( ptr, &mg_stop );
     }
 }
 
@@ -37,16 +49,9 @@ namespace
 // -----------------------------------------------------------------------------
 MongooseServer::MongooseServer( Observer_ABC& observer )
     : observer_( observer )
+    , context_ ( Start( *this ) )
 {
-    const char* options[] = {
-        "enable_directory_listing", "false",
-        NULL
-    };
-    mg_context* next = mg_start( web_callback, this, options );
-    if( !next )
-        throw std::runtime_error( "unable to start mongoose server" );
-
-    context_.reset( next, mg_stop );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -74,10 +79,10 @@ class MongooseRequest : public Request_ABC
     // Created: BAX 2012-03-08
     // -----------------------------------------------------------------------------
     MongooseRequest( const mg_connection* link, const mg_request_info* request )
-        : link_   ( link )
-        , method_ ( request->request_method )
-        , uri_    ( request->uri )
-        , query_  ( request->query_string ? request->query_string : "" )
+        : link_  ( link )
+        , method_( request->request_method )
+        , uri_   ( request->uri )
+        , query_ ( request->query_string ? request->query_string : "" )
     {
         // NOTHING
     }
@@ -152,7 +157,6 @@ private:
 // -----------------------------------------------------------------------------
 void MongooseServer::Notify( mg_connection* link, const mg_request_info* mg_request )
 {
-    MongooseRequest request( link, mg_request );
-    const std::string reply = observer_.Notify( request );
+    const std::string reply = observer_.Notify( MongooseRequest( link, mg_request ) );
     mg_write( link, reply.data(), reply.size() );
 }
