@@ -42,18 +42,12 @@ public:
     //@}
 
 private:
-    //! @name Private operations
-    //@{
-    void FetchName();
-    //@}
-
-private:
     //! @name Member data
     //@{
     const Api_ABC& api_;
     int pid_;
     std::auto_ptr< Handle > handle_;
-    std::string name_;
+    const std::string name_;
     //@}
 };
 

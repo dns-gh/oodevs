@@ -10,8 +10,35 @@
 #include "Api_ABC.h"
 #include "Handle.h"
 #include <runtime/Utf8.h>
+#include <boost/format.hpp>
 
 using namespace runtime;
+
+namespace
+{
+    std::auto_ptr< Handle > MakeHandle( const Api_ABC& api, int pid )
+    {
+        int flags = 0;
+        flags |= PROCESS_QUERY_INFORMATION; // CreateRemoteThread
+        flags |= SYNCHRONIZE;               // WaitForSingleObjectEx
+        flags |= PROCESS_TERMINATE;         // TerminateProcess
+        flags |= PROCESS_CREATE_THREAD;     // CreateRemoteThread
+        flags |= PROCESS_VM_OPERATION;      // CreateRemoteThread
+        flags |= PROCESS_VM_WRITE;          // CreateRemoteThread
+        flags |= PROCESS_VM_READ;           // CreateRemoteThread
+        HANDLE handle = api.OpenProcess( flags, false, pid );
+        if( !handle )
+            throw std::runtime_error( ( boost::format( "unable to open process %1%" ) % pid ).str() );
+        return std::auto_ptr< Handle >( new Handle( api, handle ) );
+    }
+
+    std::string GetName( const Api_ABC& api, const Handle& handle )
+    {
+        wchar_t name[MAX_PATH];
+        int size = api.GetProcessName( handle.value_, name, sizeof name - 1 );
+        return size ? Utf8Convert( name ) : "";
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: Process::Process
@@ -20,18 +47,10 @@ using namespace runtime;
 Process::Process( const Api_ABC& api, int pid )
     : api_( api )
     , pid_( pid )
+    , handle_( MakeHandle( api_, pid_ ) )
+    , name_( ::GetName( api_, *handle_ ) )
 {
-    int flags = 0;
-    flags |= PROCESS_QUERY_INFORMATION; // CreateRemoteThread
-    flags |= SYNCHRONIZE;               // WaitForSingleObjectEx
-    flags |= PROCESS_TERMINATE;         // TerminateProcess
-    flags |= PROCESS_CREATE_THREAD;     // CreateRemoteThread
-    flags |= PROCESS_VM_OPERATION;      // CreateRemoteThread
-    flags |= PROCESS_VM_WRITE;          // CreateRemoteThread
-    flags |= PROCESS_VM_READ;           // CreateRemoteThread
-    HANDLE handle = api_.OpenProcess( flags, false, pid_ );
-    handle_ = std::auto_ptr< Handle >( new Handle( api_, handle ) );
-    FetchName();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -42,8 +61,9 @@ Process::Process( const Api_ABC& api, int pid, std::auto_ptr< Handle > handle )
     : api_   ( api )
     , pid_   ( pid )
     , handle_( handle )
+    , name_  ( ::GetName( api_, *handle_ ) )
 {
-    FetchName();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -71,25 +91,6 @@ int Process::GetPid() const
 const std::string& Process::GetName() const
 {
     return name_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Process::FetchName
-// Created: BAX 2012-03-07
-// -----------------------------------------------------------------------------
-void Process::FetchName()
-{
-    wchar_t name[1<<8];
-    int size = api_.GetProcessName( handle_->value_, name, sizeof name - 1 );
-    if( size )
-        try
-        {
-            name_ = Utf8Convert( name );
-        }
-        catch( const std::exception& )
-        {
-            // NOTHING
-        }
 }
 
 // -----------------------------------------------------------------------------
