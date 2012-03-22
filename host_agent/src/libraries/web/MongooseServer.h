@@ -31,7 +31,7 @@ class MongooseServer : public boost::noncopyable
 {
 public:
     //! @name Destructor
-    explicit MongooseServer( Observer_ABC& observer );
+             MongooseServer( Observer_ABC& observer, int port );
     virtual ~MongooseServer();
     //@}
 

@@ -30,6 +30,6 @@ int main( int /*argc*/, const char* /*argv*/[] )
     host::SessionFactory sessions( runtime.GetRuntime(), uuids, system, ports, L"d:/apps/sword_434_data", L"d:/apps/sword_434/applications" );
     host::Agent agent( sessions );
     web::Controller controller( agent );
-    web::MongooseServer server( controller );
+    web::MongooseServer server( controller, 15000 );
     getc( stdin );
 }

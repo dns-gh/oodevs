@@ -12,6 +12,7 @@
 #include "Request_ABC.h"
 
 #include <boost/assign/list_of.hpp>
+#include <boost/lexical_cast.hpp>
 #include <vector>
 #include <mongoose/mongoose.h>
 
@@ -32,10 +33,12 @@ namespace
         return link;
     }
 
-    boost::shared_ptr< mg_context > Start( MongooseServer& server )
+    boost::shared_ptr< mg_context > Start( MongooseServer& server, const std::string& port )
     {
         std::vector< const char* > options = boost::assign::list_of
-            ( "enable_directory_listing" )( "false" )( 0 );
+            ( "enable_directory_listing" )( "false" )
+            ( "listening_ports" )( port.c_str() )
+            ( 0 );
         mg_context* ptr = mg_start( &WebCallback, &server, &options[0] );
         if( !ptr )
             throw std::runtime_error( "unable to start mongoose server" );
@@ -47,9 +50,9 @@ namespace
 // Name: MongooseServer::MongooseServer
 // Created: BAX 2012-02-28
 // -----------------------------------------------------------------------------
-MongooseServer::MongooseServer( Observer_ABC& observer )
+MongooseServer::MongooseServer( Observer_ABC& observer, int port )
     : observer_( observer )
-    , context_ ( Start( *this ) )
+    , context_ ( Start( *this, boost::lexical_cast< std::string >( port ) ) )
 {
     // NOTHING
 }
