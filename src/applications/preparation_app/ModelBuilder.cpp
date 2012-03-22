@@ -168,13 +168,7 @@ namespace
     bool HasHierarchy( const Entity_ABC& entity )
     {
         const Hierarchies* hierarchy = entity.Retrieve< TacticalHierarchies >();
-        if( !hierarchy || !hierarchy->CreateSubordinateIterator().HasMoreElements() )
-        {
-            hierarchy = entity.Retrieve< CommunicationHierarchies >();
-            if( !hierarchy || !hierarchy->CreateSubordinateIterator().HasMoreElements() )
-                return false;
-        }
-        return true;
+        return( hierarchy && hierarchy->CreateSubordinateIterator().HasMoreElements() );
     }
 }
 
