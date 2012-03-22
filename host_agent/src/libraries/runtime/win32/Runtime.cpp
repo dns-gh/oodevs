@@ -35,11 +35,15 @@ namespace
             return false;
         pids.resize( size / sizeof size );
         BOOST_FOREACH( const T& id, pids )
-        {
-            boost::shared_ptr< Process_ABC > next = boost::make_shared< Process >( api, id );
-            if( !next->GetName().empty() )
-                list.push_back( next );
-        }
+            try
+            {
+                list.push_back( boost::make_shared< Process >( api, id ) );
+            }
+            catch( const std::exception& /*err*/ )
+            {
+                // LOG_ERROR
+                continue;
+            }
         return true;
     }
 }
@@ -63,7 +67,6 @@ Runtime::~Runtime()
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: Runtime::Processes
 // Created: BAX 2012-03-07
@@ -83,7 +86,15 @@ Runtime::T_Processes Runtime::GetProcesses() const
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Process_ABC > Runtime::GetProcess( int pid ) const
 {
-    return boost::make_shared< Process >( api_, pid );
+    try
+    {
+        return boost::make_shared< Process >( api_, pid );
+    }
+    catch( const std::exception& /*err*/ )
+    {
+        // LOG_ERROR
+        return boost::shared_ptr< Process_ABC >();
+    }
 }
 
 namespace
