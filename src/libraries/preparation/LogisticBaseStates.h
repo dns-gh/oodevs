@@ -21,7 +21,7 @@
 namespace kernel
 {
     class DotationType;
-    class Controller;
+    class Controllers;
     class Entity_ABC;
     class PropertiesDictionary;
 }
@@ -44,7 +44,7 @@ class LogisticBaseStates : public kernel::EntityHierarchies< LogisticHierarchies
 public:
     //! @name Constructors/Destructor
     //@{
-             LogisticBaseStates( kernel::Controller& controller, kernel::Entity_ABC& entity,
+             LogisticBaseStates( kernel::Controllers& controllers, kernel::Entity_ABC& entity,
                  const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver, kernel::PropertiesDictionary& dico, bool canHaveQuotas = true, bool isVisible = true );
     virtual ~LogisticBaseStates();
     //@}
@@ -53,6 +53,7 @@ public:
     //@{
     virtual void SetLogisticSuperior( const kernel::LogisticBaseSuperior& superior );
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    bool HasLogisticBaseSuperior() const;
     //@}
 
 private:
@@ -74,7 +75,7 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controller& controller_;
+    kernel::Controllers& controllers_;
     kernel::Entity_ABC& entity_;
     const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver_;
     DotationsItem* item_;

@@ -27,6 +27,7 @@ namespace kernel
     class FormationLevels;
     class HierarchyLevel_ABC;
     class Ghost_ABC;
+    class GlTools_ABC;
 }
 
 class AutomatDecisions;
@@ -54,7 +55,8 @@ class TacticalListView : public gui::HierarchyListView< kernel::TacticalHierarch
 public:
     //! @name Constructors/Destructor
     //@{
-             TacticalListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory, gui::EntitySymbols& icons, ModelBuilder& modelBuilder, const kernel::FormationLevels& levels );
+             TacticalListView( QWidget* pParent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory,gui::EntitySymbols& icons,
+                               ModelBuilder& modelBuilder, const kernel::FormationLevels& levels, const kernel::GlTools_ABC& tools );
     virtual ~TacticalListView();
     //@}
 
@@ -112,6 +114,7 @@ private:
     //@{
     ModelBuilder& modelBuilder_;
     const kernel::FormationLevels& levels_;
+    const kernel::GlTools_ABC& tools_;
     QPixmap lock_;
     gui::ChangeSuperiorDialog* changeSuperiorDialog_;
     //@}

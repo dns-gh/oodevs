@@ -62,6 +62,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     gui::ColorButton* pGhostColor_;
+    gui::ColorButton* pLinkColor_;
     //@}
 };
 

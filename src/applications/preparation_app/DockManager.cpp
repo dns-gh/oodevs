@@ -70,7 +70,7 @@ DockManager::DockManager( QMainWindow* parent, kernel::Controllers& controllers,
         QTabWidget* pAgentsTabWidget = new QTabWidget( pListsTabWidget );
         Q3VBox* listsTabBox = new Q3VBox( pListsTabWidget );
         new gui::EntitySearchBox< kernel::Agent_ABC >( listsTabBox, controllers );
-        new TacticalListView( listsTabBox, controllers, factory, icons, modelBuilder, model.formations_.levels_ );
+        new TacticalListView( listsTabBox, controllers, factory, icons, modelBuilder, model.formations_.levels_, glProxy );
         pAgentsTabWidget->addTab( listsTabBox, tools::translate( "DockManager","Tactical" ) );
 
         listsTabBox = new Q3VBox( pListsTabWidget );

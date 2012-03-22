@@ -31,6 +31,7 @@ Team::Team( Controllers& controllers, IdManager& idManager )
     name_ = tools::translate( "Preparation", "Army %1" ).arg( id_ );
     RegisterSelf( *this );
     CreateDictionary( controllers.controller_ );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -44,6 +45,7 @@ Team::Team( xml::xistream& xis, Controllers& controllers, IdManager& idManager )
     RegisterSelf( *this );
     idManager.Lock( id_ );
     CreateDictionary( controllers.controller_ );
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -52,6 +54,7 @@ Team::Team( xml::xistream& xis, Controllers& controllers, IdManager& idManager )
 // -----------------------------------------------------------------------------
 Team::~Team()
 {
+    controllers_.Unregister( *this );
     Destroy();
 }
 
@@ -94,7 +97,7 @@ void Team::CreateDictionary( Controller& controller )
 // -----------------------------------------------------------------------------
 void Team::OptionChanged( const std::string& name, const kernel::OptionVariant& /*value*/ )
 {
-    if( name == "Color/Phantom" )
+    if( name == "Color/Phantom" || name == "Color/MissingLogisticLinks" || name == "MissingLogisticLinks" )
     {
         if( const kernel::TacticalHierarchies* pTactical = Retrieve< kernel::TacticalHierarchies >() )
             controllers_.controller_.Update( *pTactical );

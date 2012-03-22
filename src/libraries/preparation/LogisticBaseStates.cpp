@@ -17,8 +17,10 @@
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Positions.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/LogisticLevel.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -28,10 +30,10 @@ using namespace kernel;
 // Name: LogisticBaseStates constructor
 // Created: AHC 2010-09-29
 // -----------------------------------------------------------------------------
-LogisticBaseStates::LogisticBaseStates( Controller& controller, Entity_ABC& entity,
+LogisticBaseStates::LogisticBaseStates( Controllers& controllers, Entity_ABC& entity,
                                         const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver, PropertiesDictionary& dico, bool canHaveQuotas /*=true*/, bool isVisible /*=true*/ )
-    : kernel::EntityHierarchies< LogisticHierarchiesBase >( controller, entity, 0 )
-    , controller_   ( controller )
+    : kernel::EntityHierarchies< LogisticHierarchiesBase >( controllers.controller_, entity, 0 )
+    , controllers_  ( controllers )
     , entity_       ( entity )
     , resolver_     ( resolver )
     , item_         ( 0 )
@@ -61,7 +63,7 @@ void LogisticBaseStates::CreateDictionary( kernel::PropertiesDictionary& dico, k
     dico.Register( *(const LogisticHierarchiesBase*)this, tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Superior" ), superior_, *this, &LogisticBaseStates::SetLogisticSuperior );
     if( canHaveQuotas_ )
     {
-        item_ = new DotationsItem( controller_, entity, dico, tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Quotas" ), *(Resolver< Dotation >*)this );
+        item_ = new DotationsItem( controllers_.controller_, entity, dico, tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Quotas" ), *(Resolver< Dotation >*)this );
         dico.Register( entity, tools::translate( "LogisticBaseStates", "Logistic/LogisticBase/Quotas" ), item_ );
     }
 }
@@ -107,7 +109,7 @@ void LogisticBaseStates::ReadDotation( xml::xistream& xis )
         Dotation* dotation = new Dotation( xis, resolver_ );
         item_->AddDotation( *dotation );
         tools::Resolver< Dotation >::Register( dotation->type_.GetId(), *dotation );
-        controller_.Update( *this );
+        controllers_.controller_.Update( *this );
     }
     else
         MT_LOG_ERROR_MSG( "Defining quotas on automat which doesn't allow them." );
@@ -119,8 +121,12 @@ void LogisticBaseStates::ReadDotation( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void LogisticBaseStates::SetSuperiorInternal( kernel::Entity_ABC* superior )
 {
+    bool changed = superior != superior_;
     superior_ = superior;
     kernel::EntityHierarchies< LogisticHierarchiesBase >::SetSuperiorInternal( superior );
+    if( changed )
+        if( const kernel::TacticalHierarchies* pTactical = entity_.Retrieve< kernel::TacticalHierarchies >() )
+            controllers_.controller_.Update( *pTactical );
 }
 
 // -----------------------------------------------------------------------------
@@ -131,11 +137,11 @@ void LogisticBaseStates::SetLogisticSuperior( const LogisticBaseSuperior& superi
 {
     const kernel::Entity_ABC* tmp = superior;
     kernel::EntityHierarchies< LogisticHierarchiesBase >::SetSuperior( const_cast< kernel::Entity_ABC* >( tmp ) );
-    controller_.Update( *this );
+    controllers_.controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
-// Name: LogisticBaseStates::const
+// Name: LogisticBaseStates::HasMissingLogisticLinks
 // Created: LGY 2012-03-22
 // -----------------------------------------------------------------------------
 bool LogisticBaseStates::HasMissingLogisticLinks() const
@@ -157,6 +163,15 @@ void LogisticBaseStates::DrawLink( const geometry::Point2f& where, const kernel:
         tools.DrawCurvedArrow( where, superior_->Get< kernel::Positions >().GetPosition(), curve );
     else if( HasMissingLogisticLinks() && displayMissings )
         tools.DrawCircle( geometry::Point2f( where.X(), where.Y() + 150 ), 300.0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticBaseStates::HasLogisticBaseSuperior
+// Created: LGY 2012-03-22
+// -----------------------------------------------------------------------------
+bool LogisticBaseStates::HasLogisticBaseSuperior() const
+{
+    return superior_ != 0;
 }
 
 // -----------------------------------------------------------------------------

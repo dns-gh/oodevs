@@ -82,7 +82,7 @@ kernel::Formation_ABC* FormationFactory::Create( kernel::Entity_ABC& parent, con
     formation->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol() );
     formation->Attach< kernel::TacticalHierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent, symbolsFactory_ ) );
     formation->Attach< kernel::Positions >( *new FormationPositions( *formation ) );
-    formation->Attach< LogisticHierarchiesBase>( *new LogisticBaseStates( controllers_.controller_, *formation, staticModel_.objectTypes_, dico, true, false ) );
+    formation->Attach< LogisticHierarchiesBase>( *new LogisticBaseStates( controllers_, *formation, staticModel_.objectTypes_, dico, true, false ) );
     formation->Attach( *new TacticalLines() );
     formation->Attach< kernel::Color_ABC >( *new Color( parent ) );
     formation->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", staticModel_.extensions_ ) );
@@ -105,7 +105,7 @@ kernel::Formation_ABC* FormationFactory::Create( xml::xistream& xis, kernel::Ent
     formation->Attach< kernel::TacticalHierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent, symbolsFactory_ ) );
     formation->Attach< kernel::Positions >( *new FormationPositions( *formation ) );
     formation->Attach( *new LogisticLevelAttritube( controllers_, xis, *formation, true, dico ) );
-    formation->Attach< LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_.controller_, *formation, staticModel_.objectTypes_, dico, true, formation->GetLogisticLevel() != LogisticLevel::none_ ) );
+    formation->Attach< LogisticHierarchiesBase >( *new LogisticBaseStates( controllers_, *formation, staticModel_.objectTypes_, dico, true, formation->GetLogisticLevel() != LogisticLevel::none_ ) );
     formation->Attach( *new TacticalLines() );
     formation->Attach< kernel::Color_ABC >( *new Color( xis ) );
     formation->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", xis, staticModel_.extensions_ ) );

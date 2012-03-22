@@ -1390,6 +1390,10 @@
         <source>Edition</source>
         <translation>Edition</translation>
     </message>
+    <message>
+        <source>Missing logistic links:</source>
+        <translation>Liens logistiques manquants :</translation>
+    </message>
 </context>
 <context>
     <name>PerformanceDialog</name>

@@ -22,6 +22,7 @@ OrbatPanel::OrbatPanel( QWidget* parent, kernel::Controllers& controllers )
     : gui::PreferencePanel_ABC( parent, "OrbatPanel" )
     , controllers_( controllers )
     , pGhostColor_( 0 )
+    , pLinkColor_ ( 0 )
 {
     QWidget* main = new QWidget( this );
     QBoxLayout* layout = new QBoxLayout( QBoxLayout::TopToBottom, main );
@@ -36,8 +37,18 @@ OrbatPanel::OrbatPanel( QWidget* parent, kernel::Controllers& controllers )
     ghostLayout->addWidget( pGhostColor_ );
     mainLayout->addLayout( ghostLayout );
 
+    // Missing logistic links
+    QHBoxLayout* linkLayout = new QHBoxLayout();
+    linkLayout->addWidget( new QLabel( tr( "Missing logistic links:" ) ) );
+    pLinkColor_ = new gui::ColorButton( main, "", QColor( 255, 255, 0 ) );
+    linkLayout->addWidget( pLinkColor_ );
+    mainLayout->addLayout( linkLayout );
+
     if( controllers_.options_.GetOption( "Color/Phantom", QString( "" ) ).To< QString >() == "" )
         controllers_.options_.Change( "Color/Phantom", pGhostColor_->GetColor().name() );
+
+    if( controllers_.options_.GetOption( "Color/MissingLogisticLinks", QString( "" ) ).To< QString >() == "" )
+        controllers_.options_.Change( "Color/MissingLogisticLinks", pLinkColor_->GetColor().name() );
 
     setWidget( main );
     controllers_.Register( *this );
@@ -59,7 +70,9 @@ OrbatPanel::~OrbatPanel()
 void OrbatPanel::Commit()
 {
     pGhostColor_->Commit();
+    pLinkColor_->Commit();
     controllers_.options_.Change( "Color/Phantom", pGhostColor_->GetColor().name() );
+    controllers_.options_.Change( "Color/MissingLogisticLinks", pLinkColor_->GetColor().name() );
 }
 
 // -----------------------------------------------------------------------------
@@ -84,5 +97,10 @@ void OrbatPanel::OptionChanged( const std::string& name, const kernel::OptionVar
     {
         pGhostColor_->SetColor( QColor( value.To< QString >() ) );
         pGhostColor_->Commit();
+    }
+    else if( option[ 1 ] == "MissingLogisticLinks" )
+    {
+        pLinkColor_->SetColor( QColor( value.To< QString >() ) );
+        pLinkColor_->Commit();
     }
 }

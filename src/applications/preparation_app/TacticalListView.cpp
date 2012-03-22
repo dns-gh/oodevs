@@ -16,8 +16,11 @@
 #include "preparation/TacticalHierarchies.h"
 #include "preparation/EntityCommunications.h"
 #include "Preparation/Formation.h"
+#include "preparation/LogisticHierarchiesBase.h"
+#include "preparation/LogisticBaseStates.h"
 #include "preparation/ProfileHierarchies_ABC.h"
 #include "preparation/ProfileHierarchies.h"
+#include "preparation/LogisticLevelAttritube.h"
 #include "clients_gui/ChangeSuperiorDialog.h"
 #include "clients_kernel/Level.h"
 #include "clients_kernel/EntityImplementation.h"
@@ -27,7 +30,9 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
+#include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/CommandPostAttributes_ABC.h"
 #include "icons.h"
 
@@ -59,10 +64,12 @@ namespace
 // Name: TacticalListView constructor
 // Created: SBO 2006-08-29
 // -----------------------------------------------------------------------------
-TacticalListView::TacticalListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory, EntitySymbols& icons, ModelBuilder& modelBuilder, const FormationLevels& levels )
+TacticalListView::TacticalListView( QWidget* pParent, Controllers& controllers, ItemFactory_ABC& factory, EntitySymbols& icons,
+                                    ModelBuilder& modelBuilder, const FormationLevels& levels, const kernel::GlTools_ABC& tools )
     : HierarchyListView< kernel::TacticalHierarchies >( pParent, controllers, factory, PreparationProfile::GetProfile(), icons )
     , modelBuilder_        ( modelBuilder )
     , levels_              ( levels )
+    , tools_               ( tools )
     , lock_                ( MAKE_PIXMAP( lock ) )
     , changeSuperiorDialog_( 0 )
 {
@@ -113,6 +120,22 @@ void TacticalListView::setColumnWidth( int column, int w )
     Q3ListView::setColumnWidth( column, column == 0 ? visibleWidth() - columnWidth( 1 ) : w );
 }
 
+namespace
+{
+    bool HasMissingLogisticLinks( const Entity_ABC& entity )
+    {
+        const LogisticBaseStates* pHierarchy = static_cast< const LogisticBaseStates* >( entity.Retrieve< LogisticHierarchiesBase >() );
+        if( !pHierarchy )
+            return false;
+        if( entity.GetTypeName() == kernel::Automat_ABC::typeName_ )
+            return !pHierarchy->HasLogisticBaseSuperior();
+        if( const LogisticLevelAttritube* attribute = entity.Retrieve< LogisticLevelAttritube >() )
+            if( attribute->GetLogisticLevel() == kernel::LogisticLevel::logistic_base_ )
+                return !pHierarchy->HasLogisticBaseSuperior();
+        return false;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: TacticalListView::Display
 // Created: AGE 2006-09-20
@@ -124,6 +147,8 @@ void TacticalListView::Display( const Entity_ABC& entity, ValuedListItem* item )
     QColor color = Qt::transparent;
     if( dynamic_cast< const Ghost_ABC* >( &entity ) != 0 )
         color = QColor( controllers_.options_.GetOption( "Color/Phantom", QString( "" ) ).To< QString >() );
+    if( HasMissingLogisticLinks( entity ) && tools_.ShouldDisplay( "MissingLogisticLinks" ) )
+        color = QColor( controllers_.options_.GetOption( "Color/MissingLogisticLinks", QString( "" ) ).To< QString >() );
     item->SetBackgroundColor( color );
     HierarchyListView< kernel::TacticalHierarchies >::Display( entity, item );
 }
