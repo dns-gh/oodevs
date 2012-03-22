@@ -167,7 +167,7 @@ std::string ToJson( const runtime::Process_ABC& process )
 std::string Session::ToJson() const
 {
     const std::string process = process_ ? ::ToJson( *process_ ) : "{}";
-    return (boost::format( "{ \"tag\" : \"%1%\", \"process\" : %2%, \"name\" : \"%3%\", \"port\" : %4%" )
+    return (boost::format( "{ \"tag\" : \"%1%\", \"process\" : %2%, \"name\" : \"%3%\", \"port\" : %4% }" )
         % tag_ % process % name_ % port_->Get() ).str();
 }
 
