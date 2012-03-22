@@ -66,6 +66,7 @@ bool FileSystem::Exists( const boost::filesystem::wpath& path ) const
 // -----------------------------------------------------------------------------
 void FileSystem::Copy( const boost::filesystem::wpath& src, const boost::filesystem::wpath& dst ) const
 {
+    // TODO Use wrecursive_directory_iterator
     if( IsFile( src ) )
         return boost::filesystem::copy_file( src, dst / src.filename() );
     else if( !IsDirectory( src ) )
