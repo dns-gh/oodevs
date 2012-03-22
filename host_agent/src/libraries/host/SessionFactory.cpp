@@ -62,14 +62,15 @@ boost::shared_ptr< Session_ABC > SessionFactory::Create( const std::string& exer
 // Name: SessionFactory::Reload
 // Created: BAX 2012-03-21
 // -----------------------------------------------------------------------------
-std::vector< boost::shared_ptr< Session_ABC > > SessionFactory::Reload() const
+SessionFactory_ABC::T_Sessions SessionFactory::Reload() const
 {
-    std::vector< boost::shared_ptr< Session_ABC > > sessions;
+    SessionFactory_ABC::T_Sessions sessions;
     BOOST_FOREACH( const boost::filesystem::wpath& path, system_.Glob( data_ / L"exercises", L"session.tag" ) )
         try
         {
             xml::xistringstream xis( system_.ReadFile( path ) );
-            sessions.push_back( boost::make_shared< Session >( runtime_, system_, data_, applications_, boost::ref( xis ), boost::ref( ports_ ) ) );
+            boost::shared_ptr< Session_ABC > ptr = boost::make_shared< Session >( runtime_, system_, data_, applications_, boost::ref( xis ), boost::ref( ports_ ) );
+            sessions.insert( std::make_pair( ptr->GetTag(), ptr ) );
         }
         catch( const std::exception& )
         {

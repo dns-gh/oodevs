@@ -34,17 +34,6 @@
 using namespace host;
 using namespace runtime;
 
-namespace
-{
-    Agent::T_Sessions Reload( const SessionFactory_ABC& factory )
-    {
-        Agent::T_Sessions reply;
-        BOOST_FOREACH( boost::shared_ptr< Session_ABC > ptr, factory.Reload() )
-            reply.insert( std::make_pair( ptr->GetTag(), ptr ) );
-        return reply;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: Agent::Agent
 // Created: BAX 2012-03-07
@@ -52,7 +41,7 @@ namespace
 Agent::Agent( const SessionFactory_ABC& sessionFactory )
     : sessionFactory_( sessionFactory )
     , access_        ( new boost::shared_mutex() )
-    , sessions_      ( Reload( sessionFactory_ ) )
+    , sessions_      ( sessionFactory_.Reload() )
 {
     // NOTHING
 }

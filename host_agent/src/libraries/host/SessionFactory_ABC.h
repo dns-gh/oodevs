@@ -13,6 +13,8 @@
 #include <boost/filesystem.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
+#include <boost/uuid/uuid.hpp>
+#include <map>
 
 namespace host
 {
@@ -33,10 +35,15 @@ public:
     virtual ~SessionFactory_ABC() {}
     //@}
 
+    //! @name Type helpers
+    //@{
+    typedef std::map< boost::uuids::uuid, boost::shared_ptr< Session_ABC > > T_Sessions;
+    //@}
+
     //! @name Methods
     //@{
     virtual boost::shared_ptr< Session_ABC > Create( const std::string& exercise, const std::string& name ) const = 0;
-    virtual std::vector< boost::shared_ptr< Session_ABC > > Reload() const = 0;
+    virtual T_Sessions Reload() const = 0;
     //@}
 };
 
