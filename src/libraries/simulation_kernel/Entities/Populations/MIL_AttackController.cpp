@@ -42,19 +42,26 @@ MIL_AttackController::~MIL_AttackController()
 void MIL_AttackController::Attack( MIL_PopulationElement_ABC& attacking )
 {
     T_Effects updated;
-    TER_PopulationConcentration_ABC::T_PopulationConcentrationVector concentrations;
-    TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinLocalisation( attacking.GetLocation(), concentrations );
-    for( TER_PopulationConcentration_ABC::CIT_PopulationConcentrationVector it = concentrations.begin(); it != concentrations.end(); ++it )
+    if( attacking.GetHealthyHumans() > 0 )
     {
-        MIL_PopulationConcentration* pElement = static_cast< MIL_PopulationConcentration* >( *it );
-        if( pElement && pElement->GetID() != attacking.GetID() && pElement->GetHealthyHumans() > 0 && attacking.GetHealthyHumans() > 0 )
+        TER_PopulationConcentration_ABC::T_PopulationConcentrationVector concentrations;
+        TER_World::GetWorld().GetPopulationManager().GetConcentrationManager().GetListWithinLocalisation( attacking.GetLocation(), concentrations );
+        for( TER_PopulationConcentration_ABC::CIT_PopulationConcentrationVector it = concentrations.begin(); it != concentrations.end(); ++it )
         {
-            const unsigned int id = pElement->GetID();
-            T_Effect& effect = effects_[ id ];
-            if( !effect )
-                effect.reset( new MIL_Effect_AttackPopulation( attacking, *pElement ) );
-            MIL_EffectManager::GetEffectManager().Register( *effect );
-            updated[ id ] = effect;
+            MIL_PopulationConcentration* pElement = static_cast< MIL_PopulationConcentration* >( *it );
+            const unsigned int attackerId = attacking.GetID();
+            if( pElement )
+            {
+                const unsigned int id = pElement->GetID();
+                if( id != attackerId && pElement->GetHealthyHumans() > 0 )
+                {
+                    T_Effect& effect = effects_[ id ];
+                    if( !effect )
+                        effect.reset( new MIL_Effect_AttackPopulation( attacking, *pElement ) );
+                    MIL_EffectManager::GetEffectManager().Register( *effect );
+                    updated[ id ] = effect;
+                }
+            }
         }
     }
     effects_ = updated;
