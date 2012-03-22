@@ -48,12 +48,12 @@ public:
     virtual Reply DeleteSession( const boost::uuids::uuid& tag );
     //@}
 
-private:
-    //! @name Private helpers
+    //! @name Type helpers
     //@{
     typedef std::map< boost::uuids::uuid, boost::shared_ptr< Session_ABC > > T_Sessions;
     //@}
 
+private:
     //! @name Member data
     //@{
     const SessionFactory_ABC& sessionFactory_;
