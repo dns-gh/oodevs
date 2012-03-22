@@ -22,7 +22,7 @@ namespace runtime
 namespace xml
 {
     class xistream;
-};
+}
 
 namespace host
 {
