@@ -72,6 +72,11 @@
                             <parameter>taskForSupporting</parameter>
                         </value>
                     </parameter>
+                    <parameter name="manageAddedAndDeletedUnits">
+                        <value>
+                            <boolean>false</boolean>
+                        </value>
+                    </parameter>
                 </skill>
             </skills>
         </stage>
