@@ -35,6 +35,10 @@ namespace
     {
         MOCK_METHOD( Create, 2 );
         MOCK_METHOD( Reload, 0 );
+        MockSessionFactory()
+        {
+            MOCK_EXPECT( this->Reload ).once().returns( SessionFactory_ABC::T_Sessions() );
+        }
     };
 
     MOCK_BASE_CLASS( MockSession, Session_ABC )
