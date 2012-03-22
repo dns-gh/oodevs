@@ -1529,7 +1529,7 @@
     <unit max-occurs="1" min-occurs="1" type="GLAISE - RENS . Patrouille URH"/>
   </automat>
   <automat decisional-model="Masalife.Automate.LOG" id="998" name="LOG . TC2 LOG Stock" type="Automate LOG TC2">
-    <unit min-occurs="1" type="LOG . TC2 Stock"/>
+    <unit command-post="true" min-occurs="1" type="LOG . TC2 Stock"/>
   </automat>
   <automat decisional-model="Masalife.Automate.Milice" id="999" name="MILICE OXYDE" type="Automate MILICE">
     <unit command-post="true" min-occurs="1" type="MILICE OXYDE . PICK UP CDT AK47"/>
@@ -1541,4 +1541,4 @@
     <unit type="MILICE OXYDE . PICK UP ZU23/2"/>
   </automat>
 </automats>
-<!-- signature="0372462580" -->
+<!-- signature="4150335716" -->
