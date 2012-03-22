@@ -17,11 +17,14 @@ namespace
 {
     typedef std::vector< boost::shared_ptr< Port_ABC > > T_Ports;
 
+    const int period = 17;
+    const int offset = 23;
+
     template< size_t size >
     struct Fixture
     {
         Fixture()
-            : factory( 1, 0, size )
+            : factory( period, offset, offset + size*period )
         {
             for( size_t i = 0; i < size; ++i )
                 ports.push_back( boost::shared_ptr< Port_ABC >( factory.Create() ) );
@@ -38,23 +41,35 @@ namespace
     };
 }
 
-BOOST_FIXTURE_TEST_CASE( port_factory_throws_when_filled, Fixture< 10 > )
+BOOST_FIXTURE_TEST_CASE( factory_throws_when_filled, Fixture< 10 > )
 {
     BOOST_CHECK_THROW( factory.Create(), std::exception );
 }
 
-BOOST_FIXTURE_TEST_CASE( factory_can_return_first_unused_port, Fixture< 10 > )
+BOOST_FIXTURE_TEST_CASE( factory_returns_first_unused_port, Fixture< 10 > )
 {
     RemoveAddCheck( 0 );
 }
 
-BOOST_FIXTURE_TEST_CASE( factory_can_return_last_unused_port, Fixture< 10 > )
+BOOST_FIXTURE_TEST_CASE( factory_returns_last_unused_port, Fixture< 10 > )
 {
     RemoveAddCheck( ports.size() - 1 );
 }
 
-BOOST_FIXTURE_TEST_CASE( factory_can_return_any_unused_port, Fixture< 10 > )
+BOOST_FIXTURE_TEST_CASE( factory_returns_any_unused_port, Fixture< 10 > )
 {
     for( size_t i = 0; i < ports.size(); ++i )
         RemoveAddCheck( i );
+}
+
+BOOST_FIXTURE_TEST_CASE( factory_throws_on_creating_used_custom_port, Fixture< 10 > )
+{
+    BOOST_CHECK_THROW( factory.Create( ports[0]->Get() ), std::exception );
+}
+
+BOOST_FIXTURE_TEST_CASE( factory_creates_unused_custom_port, Fixture< 10 > )
+{
+    const int unused = ports[ 5 ]->Get();
+    ports.erase( ports.begin() + 5 );
+    factory.Create( unused );
 }
