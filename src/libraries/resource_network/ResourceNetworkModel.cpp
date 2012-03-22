@@ -9,6 +9,7 @@
 
 #include "ResourceNetworkModel.h"
 #include <boost/bind.hpp>
+#include "MT_Tools/MT_Logger.h"
 
 using namespace resource;
 
@@ -75,6 +76,9 @@ void ResourceNetworkModel::Push( unsigned int id, int quantity, unsigned long re
 {
     NodeProperties* node = Find( id );
     if( !node )
-        throw std::exception( "Node not found" );
+    {
+        MT_LOG_ERROR_MSG( "Resource network node not found " << id );
+        return;
+    }
     node->Push( quantity, resourceId );
 }
