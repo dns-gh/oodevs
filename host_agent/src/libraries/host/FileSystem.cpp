@@ -110,9 +110,7 @@ void FileSystem::WriteFile( const boost::filesystem::wpath& path, const std::str
 // -----------------------------------------------------------------------------
 std::string FileSystem::ReadFile( const boost::filesystem::wpath& path ) const
 {
-    std::string reply;
-    boost::filesystem::ifstream( path ) >> reply;
-    return reply;
+    return std::string( std::istreambuf_iterator< char >( boost::filesystem::ifstream( path ) ), std::istreambuf_iterator< char >() );
 }
 
 // -----------------------------------------------------------------------------
