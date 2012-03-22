@@ -68,12 +68,14 @@ private:
     void SerializeQuotas( xml::xostream& xos ) const;
 
     void DrawLink( const geometry::Point2f& where, const kernel::GlTools_ABC& tools, float curve, bool displayLinks, bool displayMissings ) const;
+    bool HasMissingLogisticLinks() const;
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controller& controller_;
+    kernel::Entity_ABC& entity_;
     const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver_;
     DotationsItem* item_;
     kernel::LogisticBaseSuperior superior_;

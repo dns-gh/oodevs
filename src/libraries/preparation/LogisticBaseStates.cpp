@@ -12,10 +12,13 @@
 #include "clients_kernel/Tools.h"
 #include "Dotation.h"
 #include "DotationsItem.h"
+#include "LogisticLevelAttritube.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Positions.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/LogisticLevel.h"
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -26,12 +29,13 @@ using namespace kernel;
 // Created: AHC 2010-09-29
 // -----------------------------------------------------------------------------
 LogisticBaseStates::LogisticBaseStates( Controller& controller, Entity_ABC& entity,
-                                       const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver, PropertiesDictionary& dico, bool canHaveQuotas /*=true*/, bool isVisible /*=true*/ )
+                                        const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver, PropertiesDictionary& dico, bool canHaveQuotas /*=true*/, bool isVisible /*=true*/ )
     : kernel::EntityHierarchies< LogisticHierarchiesBase >( controller, entity, 0 )
-    , controller_( controller )
-    , resolver_( resolver )
-    , item_( 0 )
-    , superior_( 0 )
+    , controller_   ( controller )
+    , entity_       ( entity )
+    , resolver_     ( resolver )
+    , item_         ( 0 )
+    , superior_     ( 0 )
     , canHaveQuotas_( canHaveQuotas )
 {
     CreateDictionary( dico, entity );
@@ -131,6 +135,19 @@ void LogisticBaseStates::SetLogisticSuperior( const LogisticBaseSuperior& superi
 }
 
 // -----------------------------------------------------------------------------
+// Name: LogisticBaseStates::const
+// Created: LGY 2012-03-22
+// -----------------------------------------------------------------------------
+bool LogisticBaseStates::HasMissingLogisticLinks() const
+{
+    if( entity_.GetTypeName() == kernel::Automat_ABC::typeName_ && ! superior_ )
+        return true;
+    if( const LogisticLevelAttritube* attribute = entity_.Retrieve< LogisticLevelAttritube >() )
+        return attribute->GetLogisticLevel() == kernel::LogisticLevel::logistic_base_ && ! superior_;
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: LogisticBaseStates::DrawLink
 // Created: SBO 2007-03-27
 // -----------------------------------------------------------------------------
@@ -138,7 +155,7 @@ void LogisticBaseStates::DrawLink( const geometry::Point2f& where, const kernel:
 {
     if( superior_ && displayLinks )
         tools.DrawCurvedArrow( where, superior_->Get< kernel::Positions >().GetPosition(), curve );
-    else if( ! superior_ && displayMissings )
+    else if( HasMissingLogisticLinks() && displayMissings )
         tools.DrawCircle( geometry::Point2f( where.X(), where.Y() + 150 ), 300.0 );
 }
 
