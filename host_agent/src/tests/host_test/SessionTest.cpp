@@ -169,3 +169,15 @@ BOOST_FIXTURE_TEST_CASE( session_reloads, Fixture )
     boost::shared_ptr< MockProcess > process = StartSession( *MakeSession(), &sessionTag );
     StopSession( *MakeSession( sessionTag, process ), *process );
 }
+
+BOOST_FIXTURE_TEST_CASE( session_converts_to_json, Fixture )
+{
+    boost::shared_ptr< Session > ptr = MakeSession();
+    BOOST_CHECK_EQUAL( ptr->ToJson(),
+        "{ \"tag\" : \"12345678-90ab-cdef-9876-543210123456\", \"process\" : {}, \"name\" : \"my_name\", \"port\" : 10000 }"
+    );
+    StartSession( *ptr );
+    BOOST_CHECK_EQUAL( ptr->ToJson(),
+        "{ \"tag\" : \"12345678-90ab-cdef-9876-543210123456\", \"process\" : { \"pid\" : 1337, \"name\" : \"bidule.exe\" }, \"name\" : \"my_name\", \"port\" : 10000 }"
+    );
+}
