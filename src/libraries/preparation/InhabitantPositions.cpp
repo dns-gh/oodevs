@@ -10,10 +10,14 @@
 #include "preparation_pch.h"
 #include "InhabitantPositions.h"
 #include "UrbanModel.h"
+#include "clients_kernel/AccommodationTypes.h"
+#include "clients_kernel/AccommodationType.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Infrastructure_ABC.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
+#include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_gui/TerrainObjectProxy.h"
 #include "clients_kernel/Tools.h"
@@ -72,6 +76,10 @@ InhabitantPositions::InhabitantPositions( kernel::Controller& controller, const 
     , inhabitant_( inhabitant )
     , dictionary_( dictionary )
     , position_  ( 0, 0 )
+    , livingUrbanObjects_( 0 )
+    , nominalCapacity_( 0 )
+    , infrastructures_( 0 )
+    , medicalInfrastructures_( 0 )
 {
     IntersectionVisitor visitor( urbanModel, boost::bind( &InhabitantPositions::Add, this, _1, _2 ) );
     location.Accept( visitor );
@@ -91,6 +99,10 @@ InhabitantPositions::InhabitantPositions( xml::xistream& xis, kernel::Controller
     , inhabitant_( inhabitant )
     , dictionary_( dictionary )
     , position_  ( 0, 0 )
+    , livingUrbanObjects_( 0 )
+    , nominalCapacity_( 0 )
+    , infrastructures_( 0 )
+    , medicalInfrastructures_( 0 )
 {
     xis >> xml::start( "living-area" )
             >> xml::list( "urban-block" , *this, &InhabitantPositions::ReadLivingUrbanBlock )
@@ -236,8 +248,34 @@ void InhabitantPositions::Draw( const geometry::Point2f& /*where*/, const kernel
 // -----------------------------------------------------------------------------
 void InhabitantPositions::UpdateDictionary()
 {
+    accomodationCapacties_.clear();
+    infrastructures_ = medicalInfrastructures_ = nominalCapacity_ = 0.;
     for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
-        dictionary_.Register( inhabitant_, tools::translate( "Population", "Living Area/%1" ).arg( ( *it ).get< 0 >() ), ( *it ).get< 1 >() );
+    {
+        const gui::TerrainObjectProxy* pProxy = it->get< 2 >();
+        nominalCapacity_ += static_cast< unsigned int >( pProxy->GetNominalCapacity() );
+        if( pProxy->Retrieve< kernel::MedicalTreatmentAttribute_ABC >() )
+            ++medicalInfrastructures_;
+        else if( pProxy->Retrieve< kernel::Infrastructure_ABC >() )
+            ++infrastructures_;
+        const kernel::AccommodationTypes& accommodations = pProxy->GetAccommodations();
+        tools::Iterator< const kernel::AccommodationType& > itAcco = accommodations.CreateIterator();
+        while( itAcco.HasMoreElements() )
+        {
+            const const kernel::AccommodationType& accomodation = itAcco.NextElement();
+            accomodationCapacties_[ QString::fromStdString( accomodation.GetRole() ) ] += static_cast< unsigned int >( pProxy->GetNominalCapacity( accomodation.GetRole() ) );
+        }
+    }
+
+    livingUrbanObjects_ = static_cast< unsigned int >( livingUrbanObject_.size() );
+    dictionary_.Register( inhabitant_, tools::translate( "Population", "Living Area/Urban blocks number" ), static_cast< const unsigned int& >( livingUrbanObjects_ ) );
+    dictionary_.Register( inhabitant_, tools::translate( "Population", "Living Area/Total capacity" ), static_cast< const unsigned int& >( nominalCapacity_ ) );
+    dictionary_.Register( inhabitant_, tools::translate( "Population", "Living Area/Medical infrastructures" ), static_cast< const unsigned int& >( medicalInfrastructures_ ) );
+    dictionary_.Register( inhabitant_, tools::translate( "Population", "Living Area/Non medical infrastructures" ), static_cast< const unsigned int& >( infrastructures_ ) );
+    for( QMap< QString, unsigned int >::const_iterator it = accomodationCapacties_.constBegin(); it != accomodationCapacties_.constEnd(); ++it )
+        dictionary_.Register( inhabitant_, tools::translate( "Population", "Living Area/Capacities/%1" ).arg( it.key() ), it.value() );
+    for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
+        dictionary_.Register( inhabitant_, tools::translate( "Population", "Living Area/Urban blocks/%1" ).arg( ( *it ).get< 0 >() ), ( *it ).get< 1 >() );
 }
 
 // -----------------------------------------------------------------------------
@@ -322,7 +360,7 @@ void InhabitantPositions::StartEdition()
 void InhabitantPositions::Accept()
 {
     for( CIT_UrbanObjectVector it = edition_.begin(); it != edition_.end(); ++it )
-        dictionary_.Remove( tools::translate( "Population", "Living Area/%1" ).arg( ( *it ).get< 0 >() ) );
+        dictionary_.Remove( tools::translate( "Population", "Living Area/Urban blocks/%1" ).arg( ( *it ).get< 0 >() ) );
     UpdateDictionary();
     controller_.Update( inhabitant_ );
 }
@@ -334,7 +372,7 @@ void InhabitantPositions::Accept()
 void InhabitantPositions::Reject()
 {
     for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
-        dictionary_.Remove( tools::translate( "Population", "Living Area/%1" ).arg( ( *it ).get< 0 >() ) );
+        dictionary_.Remove( tools::translate( "Population", "Living Area/Urban blocks/%1" ).arg( ( *it ).get< 0 >() ) );
     livingUrbanObject_ = edition_;
     UpdateDictionary();
     controller_.Update( inhabitant_ );

@@ -84,6 +84,7 @@ private:
     //@{
     void DoUpdate( const sword::PopulationUpdate& message );
     void CreateDictionary();
+    void UpdateUrbanObjectsDictionnary();
     //@}
 
 private:
@@ -117,6 +118,11 @@ private:
     geometry::Rectangle2f boundingBox_;
     geometry::Point2f position_;
     std::string motivation_;
+    unsigned int livingUrbanObjects_;
+    unsigned int nominalCapacity_;
+    unsigned int infrastructures_;
+    unsigned int medicalInfrastructures_;
+    QMap< QString, unsigned int > accomodationCapacties_;
     //@}
 };
 

@@ -648,8 +648,28 @@
         <translation>%1 [%2]</translation>
     </message>
     <message>
-        <source>Living Area/%1</source>
-        <translation>Zone de vie/%1</translation>
+        <source>Living Area/Urban blocks/%1</source>
+        <translation>Zone de vie/Blocs urbains/%1</translation>
+    </message>
+    <message>
+        <source>Living Area/Urban blocks number</source>
+        <translation>Zone de vie/Nombre de blocs urbains</translation>
+    </message>
+    <message>
+        <source>Living Area/Total capacity</source>
+        <translation>Zone de vie/Capacité totale</translation>
+    </message>
+    <message>
+        <source>Living Area/Medical infrastructures</source>
+        <translation>Zone de vie/Infrastructures médicales</translation>
+    </message>
+    <message>
+        <source>Living Area/Non medical infrastructures</source>
+        <translation>Zone de vie/Infrastructures non médicales</translation>
+    </message>
+    <message>
+        <source>Living Area/Capacities/%1</source>
+        <translation>Zone de vie/Capacités/%1</translation>
     </message>
 </context>
 <context>

@@ -10,10 +10,14 @@
 #include "gaming_pch.h"
 #include "Inhabitant.h"
 #include "UrbanModel.h"
+#include "clients_kernel/AccommodationTypes.h"
+#include "clients_kernel/AccommodationType.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/DotationType.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Infrastructure_ABC.h"
 #include "clients_kernel/InhabitantType.h"
+#include "clients_kernel/ObjectExtensions.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/Styles.h"
@@ -46,6 +50,10 @@ Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controller& co
     , female_          ( ToInt( type_.GetFemalePercentage() ) )
     , children_        ( ToInt( type_.GetChildrenPercentage() ) )
     , dotationResolver_( dotationResolver )
+    , livingUrbanObjects_       ( 0 )
+    , nominalCapacity_          ( 0 )
+    , infrastructures_          ( 0 )
+    , medicalInfrastructures_   ( 0 )
 {
     if( name_.isEmpty() )
         name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.id().id() );
@@ -95,7 +103,8 @@ void Inhabitant::CreateDictionary()
     dictionary.Register( selfEntity, tools::translate( "Inhabitant", "M\\F\\C Repartition/Children" ), self.children_ );
     dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Satisfactions/Health" ), self.healthSatisfaction_ );
     dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Satisfactions/Safety" ), self.safetySatisfaction_ );
-    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Satisfactions/Lodging" ), self.lodgingSatisfaction_ );
+    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Satisfactions/Lodging" ), self.lodgingSatisfaction_ );    
+    UpdateUrbanObjectsDictionnary();
 }
 
 // -----------------------------------------------------------------------------
@@ -155,6 +164,7 @@ void Inhabitant::DoUpdate( const sword::PopulationUpdate& msg )
     }
     if( msg.has_motivation() )
         motivation_ = msg.motivation();
+    UpdateUrbanObjectsDictionnary();
     controller_.Update( *static_cast< Entity_ABC* >( this ) );
 }
 
@@ -271,4 +281,42 @@ bool Inhabitant::CanAggregate() const
 bool Inhabitant::IsAggregated() const
 {
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Inhabitant::UpdateUrbanObjectsDictionnary
+// Created: MMC 2011-03-21
+// -----------------------------------------------------------------------------
+void Inhabitant::UpdateUrbanObjectsDictionnary()
+{
+    PropertiesDictionary& dictionary = Get< PropertiesDictionary >();
+
+    accomodationCapacties_.clear();
+    infrastructures_ = medicalInfrastructures_ = nominalCapacity_ = 0;
+    for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
+    {
+        const gui::TerrainObjectProxy* pProxy = it->second;
+        if( !pProxy )
+            continue;
+        nominalCapacity_ += static_cast< unsigned int >( pProxy->GetNominalCapacity() );
+        if( pProxy->Retrieve< kernel::MedicalTreatmentAttribute_ABC >() )
+            ++medicalInfrastructures_;
+        else if( pProxy->Retrieve< kernel::Infrastructure_ABC >() )
+            ++infrastructures_;
+        const kernel::AccommodationTypes& accommodations = pProxy->GetAccommodations();
+        tools::Iterator< const kernel::AccommodationType& > itAcco = accommodations.CreateIterator();
+        while( itAcco.HasMoreElements() )
+        {
+            const const kernel::AccommodationType& accomodation = itAcco.NextElement();
+            accomodationCapacties_[ QString::fromStdString( accomodation.GetRole() ) ] += static_cast< unsigned int >( pProxy->GetNominalCapacity( accomodation.GetRole() ) );
+        }
+    }
+
+    livingUrbanObjects_ = static_cast< unsigned int >( livingUrbanObject_.size() );
+    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Inhabitant", "Living Area/Urban blocks number" ), static_cast< const unsigned int& >( livingUrbanObjects_ ) );
+    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Inhabitant", "Living Area/Total capacity" ), static_cast< const unsigned int& >( nominalCapacity_ ) );
+    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Inhabitant", "Living Area/Medical infrastructures" ), static_cast< const unsigned int& >( medicalInfrastructures_ ) );
+    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Inhabitant", "Living Area/Non medical infrastructures" ), static_cast< const unsigned int& >( infrastructures_ ) );
+    for( QMap< QString, unsigned int >::const_iterator it = accomodationCapacties_.constBegin(); it != accomodationCapacties_.constEnd(); ++it )
+        dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Inhabitant", "Living Area/Capacities/%1" ).arg( it.key() ), it.value() );
 }

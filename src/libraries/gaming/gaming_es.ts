@@ -712,6 +712,26 @@
         <source>Motivation:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Living Area/Total capacity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Living Area/Medical infrastructures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Living Area/Non medical infrastructures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Living Area/Capacities/%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Living Area/Urban blocks number</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>KnowledgeGroup</name>
