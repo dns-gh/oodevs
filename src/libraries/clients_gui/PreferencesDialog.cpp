@@ -24,7 +24,6 @@
 #include "resources.h"
 #include "ElevationPanel.h"
 #include "Elevation2dLayer.h"
-#include "OrbatPanel.h"
 
 using namespace kernel;
 using namespace gui;
@@ -71,17 +70,17 @@ PreferencesDialog::PreferencesDialog( QWidget* parent, Controllers& controllers,
     list_ = new PreferencesList( box, *pages );
     grid->addWidget( box, 1, 0 );
 
-    pGraphicPrefPanel_       = new GraphicsPanel( pages, controllers );
-    layersPanel_             = new LayersPanel( pages, controllers );
-    pCoordinateSystemsPanel_ = new CoordinateSystemsPanel( pages, controllers, coordSystems );
+    pGraphicPrefPanel_       = new GraphicsPanel( this, controllers );
+    layersPanel_             = new LayersPanel( this, controllers );
+    pCoordinateSystemsPanel_ = new CoordinateSystemsPanel( this, controllers, coordSystems );
 
     AddPage( tr( "Coordinate System" ), *pCoordinateSystemsPanel_ );
-    AddPage( tr( "Visualisation Scales" ), *new VisualisationScalesPanel( pages, controllers ) );
-    AddPage( tr( "3D" ), *new LightingPanel( pages, lighting, controllers ) );
+    AddPage( tr( "Visualisation Scales" ), *new VisualisationScalesPanel( this, controllers ) );
+    AddPage( tr( "3D" ), *new LightingPanel( this, lighting, controllers ) );
     AddPage( tr( "2D" ), *layersPanel_ );
     AddPage( tr( "2D/Terrain" ), *pGraphicPrefPanel_ );
-    AddPage( tr( "2D/Population" ), *new InhabitantPanel( pages, controllers ) );
-    AddPage( tr( "Orbat" ), *new OrbatPanel( pages, controllers ) );
+    AddPage( tr( "2D/Population" ), *new InhabitantPanel( this, controllers ) );
+//    AddPage( tr( "Orbat" ), *new OrbatPanel( this, controllers ) );
 
     box = new Q3HBox( this );
     box->setMargin( 5 );

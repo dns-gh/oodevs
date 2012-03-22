@@ -43,6 +43,7 @@
 #include "DockManager.h"
 #include "LocationEditorToolbar.h"
 #include "LivingAreaPanel.h"
+#include "OrbatPanel.h"
 #include "clients_gui/AutomatsLayer.h"
 #include "clients_gui/CircularEventStrategy.h"
 #include "clients_gui/ColorStrategy.h"
@@ -197,6 +198,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     ProfileDialog* profileDialog = new ProfileDialog( this, controllers, *factory, *icons, model_, staticModel_.extensions_ );
     ProfileWizardDialog* profileWizardDialog = new ProfileWizardDialog( this, model_, model_.profiles_ );
     PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers, *lighting_, staticModel_.coordinateSystems_, *pPainter_ );
+    prefDialog->AddPage( tr( "Orbat" ), *new OrbatPanel( prefDialog, controllers ) );
     new Dialogs( this, controllers, staticModel, PreparationProfile::GetProfile(), *strategy_, *colorController_, *icons, config, model_.GetSymbolsFactory(), *symbols );
 
     // A few layers

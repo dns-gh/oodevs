@@ -949,6 +949,10 @@
         <source>Preparation - [%1]</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Orbat</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Menu</name>
@@ -1373,6 +1377,17 @@
     <name>ObjectListView</name>
     <message>
         <source>Create side</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>OrbatPanel</name>
+    <message>
+        <source>Phantom:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Edition</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

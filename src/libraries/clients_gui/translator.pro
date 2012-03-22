@@ -60,7 +60,6 @@ ObjectPanel.cpp \
 ObjectPrototype_ABC.cpp \
 ObstaclePrototype_ABC.cpp \
 OptionsPanel.cpp \
-OrbatPanel.cpp \
 PopulationListView.cpp \
 PopulationPanel.cpp \
 PopulationTypesListView.cpp \

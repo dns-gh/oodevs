@@ -10,7 +10,7 @@
 #ifndef __OrbatPanel_h_
 #define __OrbatPanel_h_
 
-#include "PreferencePanel_ABC.h"
+#include "clients_gui/PreferencePanel_ABC.h"
 #include "clients_kernel/OptionsObserver_ABC.h"
 #include <boost/noncopyable.hpp>
 
@@ -23,13 +23,15 @@ namespace kernel
 namespace gui
 {
     class ColorButton;
+}
+
 // =============================================================================
 /** @class  OrbatPanel
-    @brief  OrbatPanel
+    @brief  Orbat panel
 */
-// Created: LGY 2011-10-21
+// Created: LGY 2012-03-22
 // =============================================================================
-class OrbatPanel : public PreferencePanel_ABC
+class OrbatPanel : public gui::PreferencePanel_ABC
                  , public tools::Observer_ABC
                  , public kernel::OptionsObserver_ABC
                  , private boost::noncopyable
@@ -59,12 +61,10 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    ColorButton* pNColor_;
-    ColorButton* pADColor_;
-    ColorButton* pODColor_;
-    ColorButton* pGhostColor_;
+    gui::ColorButton* pNColor_;
+    gui::ColorButton* pADColor_;
+    gui::ColorButton* pODColor_;
     //@}
 };
 
-}
 #endif // __OrbatPanel_h_

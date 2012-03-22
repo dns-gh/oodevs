@@ -160,6 +160,7 @@
     <ClCompile Include="..\..\src\applications\gaming_app\main.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\MainWindow.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\EventToolbar.cpp" />
+    <ClCompile Include="..\..\src\applications\gaming_app\OrbatPanel.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\OrbatToolbar.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\ReplayerToolbar.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\SIMControlToolbar.cpp" />
@@ -890,6 +891,14 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\gaming_app\LogisticListView.h" />
+    <CustomBuild Include="..\..\src\applications\gaming_app\OrbatPanel.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(Filename).h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
     <ClInclude Include="..\..\src\applications\gaming_app\PopulationChangeAffinitiesDialog.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\PopulationChangeHealthStateDialog.h" />
     <ClInclude Include="..\..\src\applications\gaming_app\ResourceLinksDialog.h" />
