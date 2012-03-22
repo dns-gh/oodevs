@@ -9616,35 +9616,6 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.TRANS.PC TAC" id="320" name="ASS . DLGEN" type="Pion ASS">
-    <nature atlas-nature="None" level="o" nature-app6="combat"/>
-    <equipments>
-      <equipment count="1" crew="4" major="true" type="VTC P4"/>
-    </equipments>
-    <sensors-range range="1500"/>
-    <equipments-range range="300"/>
-    <crew-ranks>
-      <crew-rank count="1" type="Officier"/>
-      <crew-rank count="1" type="SousOfficier"/>
-    </crew-ranks>
-    <postures>
-      <posture name="PosteReflexe" setup-time="30s"/>
-      <posture name="Poste" setup-time="300s"/>
-      <posture name="PosteAmenage" setup-time="1800s"/>
-      <posture name="PostePrepareGenie" setup-time="1800s"/>
-    </postures>
-    <setup footprint-radius="10" speed-modifier="0.7"/>
-    <nbc decontamination-delay="600s"/>
-    <distance-before-points>
-      <distance-before-point type="forest" value="500"/>
-      <distance-before-point type="urban area" value="500"/>
-      <distance-before-point type="crossroad" value="500"/>
-      <distance-before-point type="bridge" value="500"/>
-    </distance-before-points>
-    <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
-    <crossing-height height="0m"/>
-  </unit>
   <unit decisional-model="Masalife.ASA.PC" id="321" name="ASA . PC Batterie MISTRAL" type="Pion ASA">
     <nature atlas-nature="ASA" level="i" nature-app6="combat/air defense"/>
     <equipments>
@@ -19566,4 +19537,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="2825715240" -->
+<!-- signature="0657673701" -->
