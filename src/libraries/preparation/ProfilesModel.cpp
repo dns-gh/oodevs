@@ -382,7 +382,7 @@ void ProfilesModel::RemoveEmptyProfile()
 {
     std::vector< QString > emptyProfiles;
     for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
-        if( (*it)->Count() == 0 )
+        if( (*it)->GetProfilesCount() == 0 )
             emptyProfiles.push_back( (*it)->GetLogin() );
     BOOST_FOREACH( const QString& profile, emptyProfiles )
         DeleteProfile( profile );

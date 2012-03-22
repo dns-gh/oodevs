@@ -54,7 +54,8 @@ public:
     bool IsWriteable( const kernel::Entity_ABC& entity ) const;
     std::string GetUserRole() const;
     void Visit( std::vector< unsigned long >& elements ) const;
-    unsigned int Count() const;
+    unsigned int GetWriteProfilesCount();
+    unsigned int GetProfilesCount() const;
     //@}
 
     //! @name Setters

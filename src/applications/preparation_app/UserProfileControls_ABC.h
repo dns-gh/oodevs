@@ -49,7 +49,7 @@ public:
 
     virtual void Display( UserProfile& profile );
     void Update( bool supervisor, UserProfile& profile );
-    void Clear();
+    void Initialize( bool collapse = true );
     //@}
 
 protected:

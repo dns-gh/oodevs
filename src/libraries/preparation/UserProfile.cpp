@@ -497,10 +497,19 @@ void UserProfile::Visit( std::vector< unsigned long >& elements ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfile::Count
+// Name: UserProfile::GetWriteProfilesCount
+// Created: LGY 2012-03-22
+// -----------------------------------------------------------------------------
+unsigned int UserProfile::GetWriteProfilesCount()
+{
+    return static_cast< unsigned int >( writeSides_.size() + writeFormations_.size() + writeAutomats_.size() + writePopulations_.size() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::GetProfilesCount
 // Created: LGY 2012-02-07
 // -----------------------------------------------------------------------------
-unsigned int UserProfile::Count() const
+unsigned int UserProfile::GetProfilesCount() const
 {
     return static_cast< unsigned int >( writeSides_.size() + writeFormations_.size() + writeAutomats_.size() + writePopulations_.size() +
                                         readSides_.size()  + readFormations_.size() + readAutomats_.size() + readPopulations_.size() );

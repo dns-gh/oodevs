@@ -227,7 +227,7 @@ void UserProfileWidget::OnUserRole( const QString& role )
     {
         const std::string& key = userRoleDico_->GetKey( role.ascii(), dicoKind_, dicoLanguage_ );
         profile_->SetUserRole( key );
-        pUnits_->Clear();
+        pUnits_->Initialize();
         Update();
     }
     controllers_.controller_.Update( profile_ );
@@ -280,7 +280,7 @@ void UserProfileWidget::Show()
 // -----------------------------------------------------------------------------
 void UserProfileWidget::Hide()
 {
-    pUnits_->Clear();
+    pUnits_->Initialize();
 }
 
 // -----------------------------------------------------------------------------

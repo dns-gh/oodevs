@@ -84,7 +84,7 @@ void UserProfileControls_ABC::Commit()
 // -----------------------------------------------------------------------------
 void UserProfileControls_ABC::Display( UserProfile& profile )
 {
-    Clear();
+    Initialize( profile.GetWriteProfilesCount() != 0 );
     listView_->setDisabled( false );
     profile_ = &profile;
     ValuedListItem* child = static_cast< ValuedListItem* >( listView_->firstChild() );
@@ -142,7 +142,7 @@ bool UserProfileControls_ABC::IsControlled( gui::ValuedListItem* item ) const
 // Name: UserProfileControls_ABC::CanWrite
 // Created: LDC 2012-03-01
 // -----------------------------------------------------------------------------
-bool UserProfileControls_ABC::CanWrite( const kernel::Entity_ABC* entity ) const
+bool UserProfileControls_ABC::CanWrite( const kernel::Entity_ABC* /*entity*/ ) const
 {
     return true;
 }
@@ -253,17 +253,18 @@ void UserProfileControls_ABC::OnItemClicked( Q3ListViewItem* item, const QPoint&
 }
 
 // -----------------------------------------------------------------------------
-// Name: UserProfileControls_ABC::Clear
+// Name: UserProfileControls_ABC::Initialize
 // Created: LGY 2011-09-12
 // -----------------------------------------------------------------------------
-void UserProfileControls_ABC::Clear()
+void UserProfileControls_ABC::Initialize( bool collapse )
 {
     for( Q3ListViewItemIterator it( listView_ ); it.current(); ++it )
     {
         (*it)->setPixmap( 1, QPixmap() );
         (*it)->setText( 2, QString::number( eNothing ) );
         static_cast< ValuedListItem* >( *it )->SetFontColor( QColor( 0, 0, 0 ) );
-        listView_->setOpen( *it, false );
+        if( collapse )
+            listView_->setOpen( *it, false );
     }
     profile_ = 0;
 }
