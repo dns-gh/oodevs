@@ -89,9 +89,6 @@
     <Filter Include="Source Files\Model\Urban\Extensions">
       <UniqueIdentifier>{53ab22ec-3e36-4db8-b583-68b09b9dd2e3}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Model\Urban\Infra">
-      <UniqueIdentifier>{5a3a0fda-d56e-42e6-9880-616e9ed53e99}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Model\Inhabitants">
       <UniqueIdentifier>{50426ffb-2e16-4750-82bd-b7784553e49a}</UniqueIdentifier>
     </Filter>
@@ -400,9 +397,6 @@
     <ClCompile Include="..\..\src\libraries\preparation\Usages.cpp">
       <Filter>Source Files\Model\Urban\Extensions</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\preparation\InfrastructureAttribute.cpp">
-      <Filter>Source Files\Model\Urban\Infra</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\preparation\Inhabitant.cpp">
       <Filter>Source Files\Model\Inhabitants</Filter>
     </ClCompile>
@@ -528,6 +522,9 @@
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\preparation\PerformanceIndicator.cpp">
       <Filter>Source Files\Model\Performance</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\InfrastructureAttribute.cpp">
+      <Filter>Source Files\Model\Urban\Extensions</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -837,9 +834,6 @@
     <ClInclude Include="..\..\src\libraries\preparation\Usages.h">
       <Filter>Source Files\Model\Urban\Extensions</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\preparation\InfrastructureAttribute.h">
-      <Filter>Source Files\Model\Urban\Infra</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\Inhabitant.h">
       <Filter>Source Files\Model\Inhabitants</Filter>
     </ClInclude>
@@ -989,6 +983,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\PerformanceIndicator.h">
       <Filter>Source Files\Model\Performance</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\InfrastructureAttribute.h">
+      <Filter>Source Files\Model\Urban\Extensions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

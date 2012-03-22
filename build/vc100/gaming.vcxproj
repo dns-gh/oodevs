@@ -557,7 +557,9 @@
     <None Include="..\..\src\libraries\gaming\Sector.inl" />
     <None Include="..\..\src\libraries\gaming\LogisticConsigns.inl" />
     <None Include="..\..\src\libraries\gaming\gaming_es.ts" />
-    <None Include="..\..\src\libraries\gaming\gaming_fr.ts" />
+    <None Include="..\..\src\libraries\gaming\gaming_fr.ts">
+      <SubType>Designer</SubType>
+    </None>
     <CustomBuild Include="..\..\src\libraries\gaming\translator.pro">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">lupdate -noobsolete -verbose "%(FullPath)"
 lrelease -verbose "%(FullPath)"

@@ -110,6 +110,11 @@ private:
     geometry::Point2f position_;
     T_UrbanObjectVector livingUrbanObject_;
     T_UrbanObjectVector edition_;
+    unsigned int livingUrbanObjects_;
+    unsigned int nominalCapacity_;
+    unsigned int infrastructures_;
+    unsigned int medicalInfrastructures_;
+    QMap< QString, unsigned int > accomodationCapacties_;
     //@}
 
 };

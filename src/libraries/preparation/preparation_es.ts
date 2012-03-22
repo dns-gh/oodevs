@@ -648,7 +648,27 @@
         <translation type="unfinished">%1 [%2]</translation>
     </message>
     <message>
-        <source>Living Area/%1</source>
+        <source>Living Area/Urban blocks/%1</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Living Area/Urban blocks number</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Living Area/Total capacity</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Living Area/Medical infrastructures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Living Area/Non medical infrastructures</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Living Area/Capacities/%1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

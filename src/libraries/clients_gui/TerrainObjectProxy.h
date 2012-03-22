@@ -81,6 +81,8 @@ public:
     void NotifyUpdated( const UrbanDisplayOptions& );
     float GetLivingSpace() const;
     double GetNominalCapacity() const;
+    double GetNominalCapacity( const std::string& motivation ) const;
+    const kernel::AccommodationTypes& GetAccommodations() const;
     //@}
 
 private:
@@ -96,7 +98,6 @@ private:
     void UpdateDensity();
     unsigned int GetHumans() const;
     void UpdateColor();
-    double GetNominalCapacity( const std::string& motivation ) const;
     //@}
 
     //! @name Types

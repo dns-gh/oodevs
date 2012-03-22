@@ -282,3 +282,12 @@ double TerrainObjectProxy::GetNominalCapacity( const std::string& motivation ) c
         return GetLivingSpace() * Get< Usages_ABC >().Find( motivation ) * 0.01 * acc->GetNominalCapacity();
     return 0;
 }
+
+// -----------------------------------------------------------------------------
+// Name: TerrainObjectProxy::GetAccommodations
+// Created: MMC 2012-03-21
+// -----------------------------------------------------------------------------
+const kernel::AccommodationTypes& TerrainObjectProxy::GetAccommodations() const
+{
+    return accommodations_;
+}
