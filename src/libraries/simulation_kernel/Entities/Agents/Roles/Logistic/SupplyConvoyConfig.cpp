@@ -25,7 +25,7 @@ MT_InterpolatedFunction< double > SupplyConvoyConfig::unloadingTime_;
 MT_InterpolatedFunction< double > SupplyConvoyConfig::coefSpeedModificator_;
 const MIL_AgentTypePion* SupplyConvoyConfig::convoyAgentType_ = 0;
 const MIL_MissionType_ABC* SupplyConvoyConfig::convoyMissionType_ = 0;
-const std::string SupplyConvoyConfig::convoyUnitBaseName_( "POUET" );
+const std::string SupplyConvoyConfig::convoyUnitBaseName_( "TR" );
 
 // =============================================================================
 // Ugly static initialization
