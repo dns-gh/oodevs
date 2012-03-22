@@ -22,8 +22,6 @@
 
 #include <xeumeuleu/xml.hpp>
 
-#include <boost/algorithm/string.hpp>
-#include <boost/algorithm/string/split.hpp>
 #include <boost/assign/list_of.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/filesystem/operations.hpp>
@@ -62,15 +60,10 @@ namespace
     };
 
     template< typename T >
-    T ParseItem( xml::xisubstream xis, const std::string& path )
+    T ParseItem( xml::xisubstream xis, const std::string& name )
     {
-        T value;
-        std::vector< std::string > tokens;
-        boost::algorithm::split( tokens, path, boost::is_any_of("/"), boost::token_compress_on );
-        for( size_t i = 0; i < tokens.size() - 1; ++i )
-            xis >> xml::start( tokens[i] );
-        xis >> xml::attribute( tokens.back(), value );
-        return value;
+        xis >> xml::start( "session" );
+        return xis.attribute< T >( name );
     }
 }
 
@@ -104,15 +97,15 @@ Session::Session( const runtime::Runtime_ABC& runtime, const FileSystem_ABC& sys
                   xml::xistream& xis, PortFactory_ABC& ports )
     : runtime_     ( runtime )
     , system_      ( system )
-    , tag_         ( boost::uuids::string_generator()( ParseItem< std::string >( xis, "session/tag" ) ) )
+    , tag_         ( boost::uuids::string_generator()( ParseItem< std::string >( xis, "tag" ) ) )
     , data_        ( data )
     , applications_( applications )
-    , exercise_    ( ParseItem< std::string >( xis, "session/exercise" ) )
-    , name_        ( ParseItem< std::string >( xis, "session/name" ) )
-    , port_        ( ports.Create( ParseItem< int >( xis, "session/port" ) ) )
+    , exercise_    ( ParseItem< std::string >( xis, "exercise" ) )
+    , name_        ( ParseItem< std::string >( xis, "name" ) )
+    , port_        ( ports.Create( ParseItem< int >( xis, "port" ) ) )
 {
     CheckPaths();
-    const int pid = ParseItem< int >( xis, "session/pid" );
+    const int pid = ParseItem< int >( xis, "pid" );
     process_ = runtime_.GetProcess( pid );
     if( !process_ )
         throw std::runtime_error( "unable to open process " + boost::lexical_cast< std::string >( pid ) );
