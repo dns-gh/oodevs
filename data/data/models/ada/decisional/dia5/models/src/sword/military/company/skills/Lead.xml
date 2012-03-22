@@ -99,6 +99,14 @@
 				<boolean>false</boolean>
 			</default>
 		</parameter>
+		<parameter name="manageAddedAndDeletedUnits" nullable="true">
+			<type>
+				<simple name="boolean"/>
+			</type>
+			<default>
+				<boolean>true</boolean>
+			</default>
+		</parameter>
 	</parameters>
 	<modifiers/>
 	<links>
