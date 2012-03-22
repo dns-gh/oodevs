@@ -1580,7 +1580,7 @@
     ============================================================================
     -->
     <target name="configure" description="initialize local project structure with libraries">
-        <update name="geometry" version="1.0"/>
+        <update name="geometry" version="1.0.1"/>
         <update name="geocoord" version="1.0"/>
         <update name="terrain" version="5.0" modules="terrain,graphics,spatialcontainer,pathfind,analysis,vmap,geodata,gdal_ogr,urban"/>
         <update name="terrain" version="5.0" package="terraintools_${platform}.zip"/>
