@@ -6278,6 +6278,10 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <source>Equipment - Invalid sensor type &apos;%1&apos;</source>
         <translation>Equipement - Type de capteur invalide &apos;%1&apos;</translation>
     </message>
+    <message>
+        <source>Do you want to save anyway ?</source>
+        <translation>Voulez-vous sauver quand même?</translation>
+    </message>
 </context>
 <context>
     <name>Composantes_Data</name>
