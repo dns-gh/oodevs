@@ -32023,7 +32023,7 @@
     <objects/>
     <equipment-category>Hommes</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="334" max-slope="0.6" name="Vehicule 4X4 civil _ H" protection="VehiculeNonProtege" size="Petit" weight="2">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="334" max-slope="0.6" name="Vehicule 4X4 civil H" protection="VehiculeNonProtege" size="Petit" weight="2">
     <speeds max="130">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="20"/>
@@ -35874,4 +35874,4 @@
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="0672841383" -->
+<!-- signature="1483769497" -->
