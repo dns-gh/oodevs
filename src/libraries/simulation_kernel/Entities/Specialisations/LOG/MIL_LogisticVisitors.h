@@ -14,6 +14,7 @@
 
 #include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Units/Humans/PHY_Human.h"
 #include "Entities/Agents/Roles/Logistic/FuneralConfig.h"
@@ -21,11 +22,30 @@
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Maintenance.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Medical.h"
 #include "Entities/Agents/Roles/Logistic/PHY_RoleInterface_Supply.h"
+#include "Entities/Agents/Roles/Logistic/PHY_MaintenanceComposanteState.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
+#include "Entities/Agents/Roles/Logistic/PHY_MedicalHumanState.h"
+#include "Entities/Specialisations/LOG/LogisticHierarchy_ABC.h"
 #include <boost/foreach.hpp>
 
 class MIL_AutomateLOG;
 
+inline bool IsTC2For(const MIL_Automate& candidate, const MIL_Agent_ABC& pion)
+{
+    return pion.GetAutomate().GetLogisticHierarchy().GetPrimarySuperior() == candidate.GetBrainLogistic();
+}
+inline bool IsTC2For(const MIL_Automate& candidate, const MIL_Automate& automate)
+{
+    return automate.GetLogisticHierarchy().GetPrimarySuperior()  == candidate.GetBrainLogistic();
+}
+inline bool IsTC2For(const MIL_Automate& candidate, const PHY_ComposantePion& composante)
+{
+    return IsTC2For( candidate, composante.GetRole().GetPion() );
+}
+inline bool IsTC2For(const MIL_Automate& candidate, const PHY_MaintenanceComposanteState& composanteState)
+{
+    return IsTC2For( candidate, composanteState.GetComposante() );
+}
 
 // =============================================================================
 // MAINTENANCE
@@ -42,6 +62,10 @@ class MaintenanceTransportVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion 
 
         void Visit( const MIL_AgentPion& tmp )
         {
+            // Do not use TC2 of BL
+            if( tmp.GetAutomate().GetBrainLogistic() && !IsTC2For( tmp.GetAutomate(), composante_ ) )
+                return ;
+
             const PHY_RoleInterface_Maintenance* candidate = tmp.RetrieveRole< PHY_RoleInterface_Maintenance >();
             const int nNewScore = candidate!=0 ? candidate->GetAvailabilityScoreForTransport( composante_ ) : std::numeric_limits< int >::min();
             if( nNewScore > nScore_ )
@@ -69,6 +93,10 @@ class MaintenanceRepairVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
 
         void Visit( const MIL_AgentPion& tmp )
         {
+            // Do not use TC2 of BL
+            if( tmp.GetAutomate().GetBrainLogistic() && !IsTC2For( tmp.GetAutomate(), state_ ) )
+                return ;
+
             const PHY_RoleInterface_Maintenance* candidate = tmp.RetrieveRole< PHY_RoleInterface_Maintenance >();
             const int nNewScore = candidate!=0 ? candidate->GetAvailabilityScoreForRepair( state_ ) : std::numeric_limits< int >::min();
             if( nNewScore > nScore_ )
@@ -148,6 +176,9 @@ class MedicalCollectionVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
 
         void Visit( const MIL_AgentPion& tmp )
         {
+            if( tmp.GetAutomate().GetBrainLogistic() && !IsTC2For( tmp.GetAutomate(), humanState_.GetAutomate() ) )
+                return ;
+
             const PHY_RoleInterface_Medical* candidate = tmp.RetrieveRole< PHY_RoleInterface_Medical >();
             const int nNewScore = (candidate!=0 ? candidate->GetAvailabilityScoreForCollection( humanState_ ) : std::numeric_limits< int >::min());
             if( nNewScore > nScore_ )
@@ -200,6 +231,9 @@ class MedicalHealingVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
 
         void Visit( const MIL_AgentPion& tmp )
         {
+            if( tmp.GetAutomate().GetBrainLogistic() && !IsTC2For( tmp.GetAutomate(), humanState_.GetAutomate() ) )
+                return ;
+
             const PHY_RoleInterface_Medical* candidate = tmp.RetrieveRole< PHY_RoleInterface_Medical >();
             const int nNewScore = (candidate!=0 ? candidate->GetAvailabilityScoreForHealing( humanState_ ) : std::numeric_limits< int >::min() );
             if( nNewScore > nScore_ )
