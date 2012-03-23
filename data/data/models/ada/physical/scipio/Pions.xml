@@ -5693,7 +5693,7 @@
   <unit decisional-model="Masalife.Milice" id="192" name="HUMUS - RENS . Societe Militaire Privee" type="Pion RENS">
     <nature atlas-nature="None" level="oo" nature-app6="special operation forces/unit ground/military intelligence"/>
     <equipments>
-      <equipment count="1" crew="1" major="true" type="Vehicule 4X4 civil _ H"/>
+      <equipment count="1" crew="1" major="true" type="Vehicule 4X4 civil H"/>
       <equipment count="4" crew="1" loadable="true" type="Fantassin AK47"/>
     </equipments>
     <sensors-range range="2000"/>
@@ -7369,7 +7369,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.AMX" id="247" name="ABC . Peloton ERC 90 CDP OFF" type="Pion ABC">
-    <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/wheeled"/>
+    <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/wheeled/light"/>
     <equipments>
       <equipment count="1" crew="3" type="VBL 12,7"/>
       <equipment count="2" crew="3" type="VBL 7,62"/>
@@ -7431,7 +7431,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.AMX" id="249" name="ABC . Peloton ERC 90 CDP SOFF" type="Pion ABC">
-    <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/wheeled"/>
+    <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/wheeled/light"/>
     <equipments>
       <equipment count="1" crew="3" type="VBL 12,7"/>
       <equipment count="2" crew="3" type="VBL 7,62"/>
@@ -12204,7 +12204,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.LOG.TC2" id="428" name="LOG . ART . TC2 BAT 32AUF1" type="Pion LOG TC2">
-    <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/supply"/>
+    <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="4" crew="3" type="Poste Secours"/>
       <equipment count="5" crew="2" major="true" type="Lot 7"/>
@@ -15865,7 +15865,7 @@
   <unit decisional-model="Masalife.INF.HOT" id="548" name="HUMUS - INF . Groupe AC" type="Pion INF">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/anti armor/armored/wheeled"/>
     <equipments>
-      <equipment count="2" crew="2" type="Vehicule 4X4 civil _ H"/>
+      <equipment count="2" crew="2" type="Vehicule 4X4 civil H"/>
       <equipment count="2" crew="2" loadable="true" major="true" type="Equipe SR 75"/>
     </equipments>
     <sensors-range range="2000"/>
@@ -19131,4 +19131,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="0792603458" -->
+<!-- signature="0082589938" -->
