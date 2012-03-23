@@ -10,6 +10,7 @@
 #ifndef __gui_UnitStateTable_ABC_h_
 #define __gui_UnitStateTable_ABC_h_
 
+#include "clients_kernel/SafePointer.h"
 #include "clients_kernel/Tools.h"
 #include "CommonDelegate.h"
 #include "RichWidget.h"
@@ -46,7 +47,8 @@ public:
     //! @name Operations
     //@{
     virtual void Purge();
-    void RecursiveLoad( kernel::Entity_ABC& selected );
+    virtual bool IsReadOnlyForType( const std::string& typeName ) const = 0;
+    void RecursiveLoad( kernel::Entity_ABC& entity );
     void SetReadOnly( bool readOnly );
     bool IsReadOnly() const;
     //@}
@@ -77,6 +79,7 @@ protected:
     QSortFilterProxyModel proxyModel_;
     CommonDelegate        delegate_;
     QStringList           horizontalHeaders_;
+    bool                  agregated_;
     //@}
 };
 

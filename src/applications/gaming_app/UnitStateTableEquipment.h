@@ -11,7 +11,6 @@
 #define __UnitStateTableEquipment_h_
 
 #include "clients_gui/UnitStateTableEquipment.h"
-#include "clients_kernel/SafePointer.h"
 #include <tools/ElementObserver_ABC.h>
 #include <tools/Observer_ABC.h>
 

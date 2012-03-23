@@ -38,6 +38,12 @@ public:
     virtual ~UnitStateTableEquipment();
     //@}
 
+public:
+    //! @name Operations
+    //@{
+    virtual bool IsReadOnlyForType( const std::string& typeName ) const;
+    //@}
+
 protected:
     //! @name Helpers
     //@{

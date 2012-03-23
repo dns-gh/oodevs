@@ -21,6 +21,7 @@
 #include "clients_kernel/Entity_ABC.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/ObjectTypes.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "preparation/InitialState.h"
 #include "preparation/InitialStateResource.h"
 #include "preparation/StaticModel.h"
@@ -89,7 +90,7 @@ UnitStateTableResource::~UnitStateTableResource()
 // -----------------------------------------------------------------------------
 void UnitStateTableResource::contextMenuEvent( QContextMenuEvent* e )
 {
-    if( IsReadOnly() )
+    if( agregated_ || IsReadOnly() )
         return;
     kernel::ContextMenu menu( this );
     kernel::ContextMenu targetMenu( &menu );
@@ -187,32 +188,72 @@ bool UnitStateTableResource::IsDotationAlreadyPresent( const QString& name ) con
     return false;
 }
 
+namespace 
+{
+    int RecursiveQuantity( const kernel::Entity_ABC& entity, const QString& name, const QString& category )
+    {
+        int quantity = 0;
+        if( entity.GetTypeName() == kernel::Agent_ABC::typeName_)
+        {
+            const InitialState& extension = entity.Get< InitialState >();
+            for( InitialState::CIT_Resources it = extension.resources_.begin(); it != extension.resources_.end(); ++it )
+                if( name == it->name_ && category == it->category_ )
+                    quantity += it->number_;
+        }
+        else
+        {
+            const kernel::TacticalHierarchies& hierarchy = entity.Get< kernel::TacticalHierarchies >();
+            tools::Iterator< const kernel::Entity_ABC& > it = hierarchy.CreateSubordinateIterator();
+            while( it.HasMoreElements() )
+            {
+                const kernel::Entity_ABC& subEntity = it.NextElement();
+                quantity += RecursiveQuantity( subEntity, name, category );
+            }
+        }
+        return quantity;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: UnitStateTableResource::HasChanged
 // Created: ABR 2011-07-11
 // -----------------------------------------------------------------------------
 bool UnitStateTableResource::HasChanged( kernel::Entity_ABC& selected ) const
 {
-    if( selected.GetTypeName() != kernel::Agent_ABC::typeName_ )
-        return false;
-
-    InitialState& extension = selected.Get< InitialState >();
-    if( extension.resources_.size() != static_cast< unsigned int >( dataModel_.rowCount() ) )
-        return true;
-    for( InitialState::CIT_Resources it = extension.resources_.begin(); it != extension.resources_.end(); ++it )
+    rowChanged_.clear();
+    bool ret = false;
+    if( selected.GetTypeName() == kernel::Agent_ABC::typeName_ )
+    {
+        InitialState& extension = selected.Get< InitialState >();
+        if( extension.resources_.size() != static_cast< unsigned int >( dataModel_.rowCount() ) )
+            return true;
+        for( InitialState::CIT_Resources it = extension.resources_.begin(); it != extension.resources_.end(); ++it )
+        {
+            for( int row = 0; row < dataModel_.rowCount(); ++row )
+                if( GetDisplayData( row, eName ) == it->name_ &&
+                    GetDisplayData( row, eCategory ) == it->category_ )
+                {
+                    if( it->number_ != GetUserData( row, eQuantity ).toUInt() ||
+                        it->maximum_ != GetUserData( row, eMaximum ).toUInt() ||
+                        it->threshold_ != GetUserData( row, eThreshold ).toDouble() )
+                        return true;
+                    break;
+                }
+        }
+    }
+    else
     {
         for( int row = 0; row < dataModel_.rowCount(); ++row )
-            if( GetDisplayData( row, eName ) == it->name_ &&
-                GetDisplayData( row, eCategory ) == it->category_ )
+        {
+            unsigned int quantity = RecursiveQuantity( selected, GetDisplayData( row, eName ), GetDisplayData( row, eCategory ) );
+            if( quantity != GetUserData( row, eQuantity ).toUInt() )
             {
-                if( it->number_ != GetUserData( row, eQuantity ).toUInt() ||
-                    it->maximum_ != GetUserData( row, eMaximum ).toUInt() ||
-                    it->threshold_ != GetUserData( row, eThreshold ).toDouble() )
-                    return true;
-                break;
+                ret = true;
+                rowChanged_.push_back( row );
             }
+        }
     }
-    return false;
+    return ret;
 }
 
 // -----------------------------------------------------------------------------
@@ -229,21 +270,79 @@ void UnitStateTableResource::Load( kernel::Entity_ABC& selected )
         MergeLine( it->name_, it->category_, it->number_, it->maximum_, it->threshold_, it->consumption_ );
 }
 
+namespace
+{
+    void RecursiveChangeResource( kernel::Entity_ABC& entity, const QString& name, const QString& category, double percentage, unsigned int& quantity, kernel::Entity_ABC*& last )
+    {
+        if( quantity == 0 )
+            return;
+        if( entity.GetTypeName() == kernel::Agent_ABC::typeName_)
+        {
+            InitialState& extension = entity.Get< InitialState >();
+            for( InitialState::IT_Resources it = extension.resources_.begin(); it != extension.resources_.end(); ++it )
+                if( name == it->name_ && category == it->category_ )
+                {
+                    last = &entity;
+                    unsigned int newQuantity = std::min( quantity, static_cast< unsigned int >( it->maximum_ * percentage ) );
+                    it->number_ = newQuantity;
+                    quantity -= newQuantity;
+                }
+        }
+        else
+        {
+            const kernel::TacticalHierarchies& hierarchy = entity.Get< kernel::TacticalHierarchies >();
+            tools::Iterator< const kernel::Entity_ABC& > it = hierarchy.CreateSubordinateIterator();
+            while( it.HasMoreElements() )
+            {
+                const kernel::Entity_ABC& subEntity = it.NextElement();
+                RecursiveChangeResource( const_cast< kernel::Entity_ABC& >( subEntity ), name, category, percentage, quantity, last );
+            }
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: UnitStateTableResource::Commit
 // Created: ABR 2011-07-05
 // -----------------------------------------------------------------------------
 void UnitStateTableResource::Commit( kernel::Entity_ABC& selected ) const
 {
-    assert( selected.GetTypeName() == kernel::Agent_ABC::typeName_ );
-    InitialState& extension = selected.Get< InitialState >();
-    extension.resources_.clear();
+    if( selected.GetTypeName() == kernel::Agent_ABC::typeName_ )
+    {
+        InitialState& extension = selected.Get< InitialState >();
+        extension.resources_.clear();
 
-    for( int row = 0; row < dataModel_.rowCount(); ++row )
-        extension.resources_.push_back( InitialStateResource( GetDisplayData( row, eName ),
-                                                              GetDisplayData( row, eCategory ),
-                                                              GetUserData( row, eQuantity ).toUInt(),
-                                                              GetUserData( row, eMaximum ).toUInt(),
-                                                              GetUserData( row, eThreshold ).toDouble(),
-                                                              GetUserData( row, eConsumption ).toDouble() ) );
+        for( int row = 0; row < dataModel_.rowCount(); ++row )
+            extension.resources_.push_back( InitialStateResource( GetDisplayData( row, eName ),
+                                                                    GetDisplayData( row, eCategory ),
+                                                                    GetUserData( row, eQuantity ).toUInt(),
+                                                                    GetUserData( row, eMaximum ).toUInt(),
+                                                                    GetUserData( row, eThreshold ).toDouble(),
+                                                                    GetUserData( row, eConsumption ).toDouble() ) );
+    }
+    else
+    {
+        int nResult = QMessageBox::information( const_cast< UnitStateTableResource* >( this ), "Sword", tr( "Your modifications will be applied to all sub-units of this entity, do you want to validate ?" ), QMessageBox::Yes, QMessageBox::No );
+        if( nResult == QMessageBox::No )
+            return;
+        for( int i = 0; i < rowChanged_.size(); ++i )
+        {
+            int row = rowChanged_[ i ];
+            const QString name = GetDisplayData( row, eName );
+            const QString category = GetDisplayData( row, eCategory );
+            double percentage = GetUserData( row, ePercentage ).toDouble() * 0.01;
+            unsigned int quantity = GetUserData( row, eQuantity ).toUInt();
+            kernel::Entity_ABC* last = 0;
+            RecursiveChangeResource( selected, name, category, percentage, quantity, last );
+            if( quantity > 0 && last )
+            {
+                InitialState& extension = last->Get< InitialState >();
+                for( InitialState::IT_Resources it = extension.resources_.begin(); it != extension.resources_.end(); ++it )
+                    if( name == it->name_ && category == it->category_ )
+                        it->number_ += quantity;
+            }
+        }
+        const_cast< UnitStateTableResource* >( this )->Purge();
+        const_cast< UnitStateTableResource* >( this )->RecursiveLoad( selected );
+    }
 }

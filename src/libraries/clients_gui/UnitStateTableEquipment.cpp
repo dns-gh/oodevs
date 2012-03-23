@@ -48,6 +48,15 @@ UnitStateTableEquipment::~UnitStateTableEquipment()
 }
 
 // -----------------------------------------------------------------------------
+// Name: UnitStateTableEquipment::IsReadOnlyForType
+// Created: JSR 2012-03-22
+// -----------------------------------------------------------------------------
+bool UnitStateTableEquipment::IsReadOnlyForType( const std::string& typeName ) const
+{
+    return typeName != kernel::Agent_ABC::typeName_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: UnitStateTableEquipment::Purge
 // Created: ABR 2011-10-11
 // -----------------------------------------------------------------------------

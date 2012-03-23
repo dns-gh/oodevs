@@ -83,7 +83,12 @@ void UnitStateTableCrew::NotifyUpdated( const Troops& troops )
 // -----------------------------------------------------------------------------
 bool UnitStateTableCrew::HasChanged( kernel::Entity_ABC& selected ) const
 {
-    assert( selected_ == &selected && selected.GetTypeName() == kernel::Agent_ABC::typeName_ );
+    if( IsReadOnly() || selected.GetTypeName() != kernel::Agent_ABC::typeName_ )
+        return false;
+    // todo
+
+    assert( selected_ == &selected );
+
     Troops& troops = selected.Get< Troops >();
 
     unsigned int nbFound = 0;

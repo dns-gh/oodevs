@@ -3620,6 +3620,10 @@ Los datos no pueden ser proyectados.</translation>
         <oldsource>Resources</oldsource>
         <translation>Capacidad máxima</translation>
     </message>
+    <message>
+        <source>Your modifications will be applied to all sub-units of this entity, do you want to validate ?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Urban</name>

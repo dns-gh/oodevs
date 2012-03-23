@@ -17,6 +17,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_gui/RichWidget.h"
 #include "preparation/InitialState.h"
@@ -59,16 +60,40 @@ void UnitStateDialog::Validate() const
     controllers_.controller_.Update( *selected_ );
 }
 
+namespace
+{
+    void RecursiveReset( kernel::Entity_ABC& entity, kernel::Controller& controller )
+    {
+        if( entity.GetTypeName() == kernel::Agent_ABC::typeName_ )
+        {
+            InitialState* extension = entity.Retrieve< InitialState >();
+            if( extension )
+            {
+                extension->Reset();
+                controller.Update( entity );
+            }
+        }
+        else
+        {
+            const kernel::TacticalHierarchies& hierarchy = entity.Get< kernel::TacticalHierarchies >();
+            tools::Iterator< const kernel::Entity_ABC& > it = hierarchy.CreateSubordinateIterator();
+            while( it.HasMoreElements() )
+            {
+                const kernel::Entity_ABC& subEntity = it.NextElement();
+                RecursiveReset( const_cast< kernel::Entity_ABC& >( subEntity ), controller );
+            }
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: UnitStateDialog::Reset
 // Created: ABR 2011-07-06
 // -----------------------------------------------------------------------------
 void UnitStateDialog::Reset()
 {
-    InitialState& extension = selected_.ConstCast()->Get< InitialState >();
-    extension.Reset();
+    RecursiveReset( *selected_.ConstCast(), controllers_.controller_ );
     gui::UnitStateDialog::Reset();
-    controllers_.controller_.Update( *selected_ );
 }
 
 // -----------------------------------------------------------------------------

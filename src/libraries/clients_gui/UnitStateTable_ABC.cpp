@@ -29,6 +29,7 @@ UnitStateTable_ABC::UnitStateTable_ABC( const QString& objectName, QWidget* pare
     , dataModel_ ( parent )
     , proxyModel_( parent )
     , delegate_  ( parent )
+    , agregated_ ( false )
 {
     dataModel_.setColumnCount( numCols );
     proxyModel_.setSourceModel( &dataModel_ );
@@ -60,6 +61,7 @@ UnitStateTable_ABC::~UnitStateTable_ABC()
 // -----------------------------------------------------------------------------
 void UnitStateTable_ABC::Purge()
 {
+    agregated_ = false;
     dataModel_.clear();
     dataModel_.setHorizontalHeaderLabels( horizontalHeaders_ );
     horizontalHeader()->setResizeMode( QHeaderView::ResizeToContents );
@@ -70,15 +72,16 @@ void UnitStateTable_ABC::Purge()
 // Name: UnitStateTable_ABC::RecursiveLoad
 // Created: ABR 2011-07-06
 // -----------------------------------------------------------------------------
-void UnitStateTable_ABC::RecursiveLoad( kernel::Entity_ABC& selected )
+void UnitStateTable_ABC::RecursiveLoad( kernel::Entity_ABC& entity )
 {
-    const std::string& typeName = selected.GetTypeName();
+    const std::string& typeName = entity.GetTypeName();
     if( typeName == kernel::Agent_ABC::typeName_ )
-        Load( selected );
+        Load( entity );
     else
     {
+        agregated_ = true;
         assert( typeName == kernel::Automat_ABC::typeName_ || typeName == kernel::Formation_ABC::typeName_ || typeName == kernel::Team_ABC::typeName_ );
-        const kernel::TacticalHierarchies& hierarchy = selected.Get< kernel::TacticalHierarchies >();
+        const kernel::TacticalHierarchies& hierarchy = entity.Get< kernel::TacticalHierarchies >();
         tools::Iterator< const kernel::Entity_ABC& > it = hierarchy.CreateSubordinateIterator();
         while( it.HasMoreElements() )
             RecursiveLoad( const_cast< kernel::Entity_ABC& >( it.NextElement() ) );

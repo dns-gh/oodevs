@@ -11,6 +11,7 @@
 #include "UnitStateTableCrew.h"
 #include "moc_UnitStateTableCrew.cpp"
 #include "clients_kernel/Tools.h"
+#include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/ContextMenu.h"
 
 using namespace gui;
@@ -41,6 +42,15 @@ UnitStateTableCrew::UnitStateTableCrew( QWidget* parent )
 UnitStateTableCrew::~UnitStateTableCrew()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitStateTableCrew::IsReadOnlyForType
+// Created: JSR 2012-03-22
+// -----------------------------------------------------------------------------
+bool UnitStateTableCrew::IsReadOnlyForType( const std::string& typeName ) const
+{
+    return typeName != kernel::Agent_ABC::typeName_;
 }
 
 // -----------------------------------------------------------------------------

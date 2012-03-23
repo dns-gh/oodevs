@@ -31,6 +31,12 @@ public:
     virtual ~UnitStateTableCrew();
     //@}
 
+public:
+    //! @name Operations
+    //@{
+    virtual bool IsReadOnlyForType( const std::string& typeName ) const;
+    //@}
+
 protected:
     //! @name Types
     //@{

@@ -63,6 +63,7 @@ private:
     //@{
     const StaticModel& staticModel_;
     unsigned int typeId_;
+    mutable std::vector< int > rowChanged_;
     //@}
 };
 

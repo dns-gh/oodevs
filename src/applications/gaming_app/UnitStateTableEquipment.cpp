@@ -121,6 +121,7 @@ unsigned int UnitStateTableEquipment::BreakdownComboIndexToId( const QStringList
 // -----------------------------------------------------------------------------
 void UnitStateTableEquipment::NotifyUpdated( const Equipments& equipments )
 {
+    // todo
     if( selected_ && selected_->Retrieve< Equipments >() == &equipments )
     {
         Purge();
@@ -134,7 +135,11 @@ void UnitStateTableEquipment::NotifyUpdated( const Equipments& equipments )
 // -----------------------------------------------------------------------------
 bool UnitStateTableEquipment::HasChanged( kernel::Entity_ABC& selected ) const
 {
-    assert( selected_ == &selected && selected.GetTypeName() == kernel::Agent_ABC::typeName_ );
+    if( IsReadOnly() || selected.GetTypeName() != kernel::Agent_ABC::typeName_ )
+        return false;
+
+    assert( selected_ == &selected );
+
     rowsChanged_.clear();
     for( auto it = selected.Get< Equipments >().CreateIterator(); it.HasMoreElements(); )
     {
@@ -202,7 +207,6 @@ namespace
 // -----------------------------------------------------------------------------
 void UnitStateTableEquipment::Load( kernel::Entity_ABC& selected )
 {
-    selected_ = &selected;
     assert( selected.GetTypeName() == kernel::Agent_ABC::typeName_ );
     const bool isUnknown = IsReadOnly() && controllers_.GetCurrentMode() != eModes_Replay;
     for( auto it = selected.Get< Equipments >().CreateIterator(); it.HasMoreElements(); )

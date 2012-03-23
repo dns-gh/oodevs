@@ -31,6 +31,12 @@ public:
     virtual ~UnitStateTableResource();
     //@}
 
+public:
+    //! @name Operations
+    //@{
+    virtual bool IsReadOnlyForType( const std::string& typeName ) const;
+    //@}
+
 protected:
     //! @name Types
     //@{
@@ -47,6 +53,12 @@ protected slots:
     //! @name Helpers
     //@{
     void OnItemChanged( QStandardItem* item );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    bool blockSlots_;
     //@}
 };
 }
