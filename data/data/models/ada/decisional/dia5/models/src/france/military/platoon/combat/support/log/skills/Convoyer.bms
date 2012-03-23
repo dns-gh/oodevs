@@ -9,6 +9,9 @@ create = function( self )
     self.arrived = false
     self.fragOrderReceived = false
     self.sendCR = false
+    
+    self.transporteur = CreateKnowledge( sword.military.world.PlatoonAlly, integration.getTransporter() )
+    self.fluxTire = integration.distance(self.transporteur, meKnowledge) < 10
 end,
 
  activate = function( self )
@@ -19,68 +22,87 @@ end,
     end
     
     local continueConvoy = self.fragOrderReceived  or F_Pion_GetpionEnEscorte( meKnowledge.source ) 
-    
-    if self.ePhase == eConvoyerAction_MoveToSupplyRecipient or self.ePhase == eConvoyerAction_MoveToTransportersProvider then
-        self.sendCR = true
-    end
-    
     -- Action de chargement
     if self.ePhase == eConvoyerAction_Load then
         self.arrived = false
+        self.sendCR = false
+        self.fragOrderReceived = false
         Activate(skill.nodes.RC, 1, { RC = eRC_Convoi_ChargementEnCours, } )
     -- Action de déchargement
     elseif self.ePhase == eConvoyerAction_Unload  then
         self.arrived = false
+        self.sendCR = false
+        self.fragOrderReceived = false
         Activate( skill.nodes.RC, 1, { RC = eRC_Convoi_DechargementEnCours, } )
     -- Action de déplacement vers le ravitailleur
     elseif self.ePhase == eConvoyerAction_MoveToSupplier then
-        Activate( skill.nodes.RC, 1, { RC = eRC_Convoi_DeplacementVersPointChargement, } )
-        self.ravitailleur = CreateKnowledge( sword.military.world.PlatoonAlly, integration.getRavitailleur() )
-        Activate( skill.links.moveAlong, 1, { entities = { self.ravitailleur:getMyPosition()} } )
-        if( self.arrived ) then
-            self.arrived = false
-            integration.deplacementVersRavitailleurEffectue()
-        end
+        if continueConvoy or not self.fluxTire  then
+            self.sendCR = false
+            Activate( skill.nodes.RC, 1, { RC = eRC_Convoi_DeplacementVersPointChargement, } )
+            self.ravitailleur = CreateKnowledge( sword.military.world.PlatoonAlly, integration.getRavitailleur() )
+            if not self.itineraryToSupplier then
+                local itinerary = integration.getItineraireVersProchaineDestination()
+                self.itineraryToSupplier = {}
+                for _, pos in pairs( itinerary ) do
+                  self.itineraryToSupplier[#self.itineraryToSupplier + 1] = CreateKnowledge( sword.military.world.Point, pos )
+                end
+                self.itineraryToSupplier[#self.itineraryToSupplier + 1] = self.ravitailleur:getMyPosition()
+            end
+            Activate( skill.links.moveAlong, 1, { entities = self.itineraryToSupplier } )
+            if( self.arrived ) then
+                self.arrived = false
+                integration.deplacementVersRavitailleurEffectue()
+            end
+         else
+            self.sendCR = true
+         end
     -- Action de déplacement vers le destinataire du convoi
-     elseif self.ePhase == eConvoyerAction_MoveToSupplyRecipient and continueConvoy then
-        Activate( skill.nodes.RC, 1, { RC = eRC_Convoi_DeplacementVersPointDechargement, } )
-        self.destinataireCourant = CreateKnowledge( sword.military.world.PlatoonAlly, integration.getDestinataireCourant() )
-        if not self.itineraryToSupplyRecipient then
-            local itinerary = integration.getItineraireVersProchaineDestination()
-            self.itineraryToSupplyRecipient = {}
-            for _, pos in pairs( itinerary ) do
-              self.itineraryToSupplyRecipient[#self.itineraryToSupplyRecipient + 1] = CreateKnowledge( sword.military.world.Point, pos )
+     elseif self.ePhase == eConvoyerAction_MoveToSupplyRecipient then
+        if continueConvoy then
+            self.sendCR = false
+            Activate( skill.nodes.RC, 1, { RC = eRC_Convoi_DeplacementVersPointDechargement, } )
+            self.destinataireCourant = CreateKnowledge( sword.military.world.PlatoonAlly, integration.getDestinataireCourant() )
+            if not self.itineraryToSupplyRecipient then
+                local itinerary = integration.getItineraireVersProchaineDestination()
+                self.itineraryToSupplyRecipient = {}
+                for _, pos in pairs( itinerary ) do
+                  self.itineraryToSupplyRecipient[#self.itineraryToSupplyRecipient + 1] = CreateKnowledge( sword.military.world.Point, pos )
+                end
+                self.itineraryToSupplyRecipient[#self.itineraryToSupplyRecipient + 1] = self.destinataireCourant:getMyPosition()
             end
-            self.itineraryToSupplyRecipient[#self.itineraryToSupplyRecipient + 1] = self.destinataireCourant:getMyPosition()
-        end
-        Activate( skill.links.moveAlong, 1, { entities = self.itineraryToSupplyRecipient } )
-        if( self.arrived ) then
-            self.arrived = false
-            self.fragOrderReceived = false
-            integration.deplacementVersDestinataireEffectue()
-        end
+            Activate( skill.links.moveAlong, 1, { entities = self.itineraryToSupplyRecipient } )
+            if( self.arrived ) then
+                self.arrived = false
+                integration.deplacementVersDestinataireEffectue()
+            end
+         else
+            self.sendCR = true
+         end
     -- Action de déplacement vers le transporteur qui a prêté les véhicules
-     elseif self.ePhase == eConvoyerAction_MoveToTransportersProvider and continueConvoy then
-        Activate( skill.nodes.RC, 1, { RC = eRC_Convoi_Retour, } )
-        self.transporteur = CreateKnowledge( sword.military.world.PlatoonAlly, integration.getTransporter() )
-        if not self.itineraryToTransportersProvider then
-            local itinerary = integration.getItineraireVersProchaineDestination()
-            self.itineraryToTransportersProvider = {}
-            for _, pos in pairs( itinerary ) do
-              self.itineraryToTransportersProvider[#self.itineraryToTransportersProvider + 1] = CreateKnowledge( sword.military.world.Point, pos )
+     elseif self.ePhase == eConvoyerAction_MoveToTransportersProvider then
+        if continueConvoy or self.fluxTire then
+            self.sendCR = false
+            Activate( skill.nodes.RC, 1, { RC = eRC_Convoi_Retour, } )
+            if not self.itineraryToTransportersProvider then
+                local itinerary = integration.getItineraireVersProchaineDestination()
+                self.itineraryToTransportersProvider = {}
+                for _, pos in pairs( itinerary ) do
+                  self.itineraryToTransportersProvider[#self.itineraryToTransportersProvider + 1] = CreateKnowledge( sword.military.world.Point, pos )
+                end
+                self.itineraryToTransportersProvider[#self.itineraryToTransportersProvider + 1] = self.transporteur:getMyPosition()
             end
-            self.itineraryToTransportersProvider[#self.itineraryToTransportersProvider + 1] = self.transporteur:getMyPosition()
-        end
-        Activate( skill.links.moveAlong, 1, { entities = self.itineraryToTransportersProvider } )
-        if( self.arrived ) then
-            self.arrived = false
-            self.fragOrderReceived = false
-            integration.deplacementVersTransporteurEffectue()
-        end
+            Activate( skill.links.moveAlong, 1, { entities = self.itineraryToTransportersProvider } )
+            if( self.arrived ) then
+                self.arrived = false
+                integration.deplacementVersTransporteurEffectue()
+            end
+         else
+            self.sendCR = true
+         end
      end
 
     if self.sendCR then
-        Activate( skill.nodes.RC, 1, { RC = eRC_AttenteOrdrePoursuivreConvoi, } )
+        Activate( skill.nodes.RC, 1, { RC = eRC_AttenteOrdrePoursuivreConvoi } )
         self.sendCR = false
     end
 
