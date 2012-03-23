@@ -2,6 +2,7 @@ package web;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Iterator;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -14,12 +15,16 @@ import org.thymeleaf.TemplateEngine;
 import org.thymeleaf.context.Context;
 import org.thymeleaf.templateresolver.FileTemplateResolver;
 
+import eu.medsea.mimeutil.MimeType;
+import eu.medsea.mimeutil.MimeUtil2;
+
 public class Handler extends AbstractHandler {
 
     @SuppressWarnings("unused")
     private static final Logger log_ = Logger.getLogger(Handler.class);
     private final TemplateEngine engine_;
     private final File root_;
+    private final MimeUtil2 mimes_;
 
     public Handler(final String root) throws Exception {
         root_ = new File(root);
@@ -31,10 +36,18 @@ public class Handler extends AbstractHandler {
         resolver.setSuffix(".html");
         engine_ = new TemplateEngine();
         engine_.setTemplateResolver(resolver);
+        mimes_ = new MimeUtil2();
+        mimes_.registerMimeDetector("eu.medsea.mimeutil.detector.ExtensionMimeDetector");
     }
 
-    private static void serveFile(final HttpServletResponse response, final File file) throws IOException {
-        response.setContentType("bwahaha");
+    private String getContentType(final File file) {
+        @SuppressWarnings("unchecked")
+        final Iterator<MimeType> it = mimes_.getMimeTypes(file).iterator();
+        return it.hasNext() ? it.next().toString() : "";
+    }
+
+    private void serveFile(final HttpServletResponse response, final File file) throws IOException {
+        response.setContentType(getContentType(file));
         response.setStatus(HttpServletResponse.SC_OK);
         FileUtils.copyFile(file, response.getOutputStream());
     }
