@@ -3,6 +3,7 @@ package web;
 import java.io.File;
 import java.io.IOException;
 import java.util.Iterator;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -53,10 +54,14 @@ public class Handler extends AbstractHandler {
         FileUtils.copyFile(file, response.getOutputStream());
     }
 
-    private void serveTemplate(final HttpServletResponse response, final String target) throws IOException {
+    private void serveTemplate(final HttpServletResponse response, final Request request, final String target) throws IOException {
         response.setContentType("text/html");
         response.setStatus(HttpServletResponse.SC_OK);
         final Context ctx = new Context();
+        @SuppressWarnings("unchecked")
+        final Map<String, String[]> map = request.getParameterMap();
+        for (final Map.Entry<String, String[]> it : map.entrySet())
+            ctx.setVariable(it.getKey(), it.getValue()[0]);
         engine_.process(target, ctx, response.getWriter());
     }
 
@@ -70,7 +75,7 @@ public class Handler extends AbstractHandler {
         else if ((target = new File(root_, uri)).isFile())
             serveFile(response, target);
         else if ((target = new File(root_, uri + ".html")).isFile())
-            serveTemplate(response, uri);
+            serveTemplate(response, base, uri);
         else
             response.sendError(HttpServletResponse.SC_NOT_FOUND);
         base.setHandled(true);

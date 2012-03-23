@@ -18,32 +18,32 @@
                     <li class="nav-header">
                         Sword Node
                     </li>
-                    <li>
-                        <a href="#">
+                    <li th:class="${pg}=='home'?'active'">
+                        <a href="?pg=home">
                             <img src="img/tango/32x32/places/user-home.png" />
                             Home
                         </a>
                     </li>
-                    <li>
-                        <a href="#">
+                    <li th:class="${pg}=='sessions'?'active'">
+                        <a href="?pg=sessions">
                             <img src="img/tango/32x32/actions/document-new.png" />
                             Sessions
                         </a>
                     </li>
-                    <li>
-                        <a href="#">
+                    <li th:class="${pg}=='data'?'active'">
+                        <a href="/?pg=data">
                             <img src="img/tango/32x32/mimetypes/package-x-generic.png" />
                             Data
                         </a>
                     </li>
-                    <li>
-                        <a href="#">
+                    <li th:class="${pg}=='users'?'active'">
+                        <a href="?pg=users">
                             <img src="img/tango/32x32/apps/system-users.png" />
                             Users
                         </a>
                     </li>
-                    <li>
-                        <a href="#">
+                    <li th:class="${pg}=='settings'?'active'">
+                        <a href="?pg=settings">
                             <img src="img/tango/32x32/categories/preferences-system.png" />
                             Settings
                         </a>
