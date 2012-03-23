@@ -35530,7 +35530,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
     </breakdowns>
-    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
+    <equipment-category>VNBLIN</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="374" name="Eqp Mortier 60 Oxyde" protection="CombattantProtege" size="Personnel" weight="0.18">
     <speeds max="6">
@@ -35691,7 +35691,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
     </breakdowns>
-    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
+    <equipment-category>VNBLIN</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="376" name="Pick Up LADA SA7" protection="VehiculeNonProtege" size="Petit" weight="2">
     <speeds max="100">
@@ -35776,7 +35776,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
     </breakdowns>
-    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
+    <equipment-category>VNBLIN</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="377" name="Pick Up LADA 23/2" protection="VehiculeNonProtege" size="Petit" weight="2">
     <speeds max="100">
@@ -35871,7 +35871,7 @@
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3 Evac"/>
       <breakdown origin="attrition" percentage="5" type="Panne Glaise NTI 3"/>
     </breakdowns>
-    <equipment-category>VNBLIN = Véhicule non blindé</equipment-category>
+    <equipment-category>VNBLIN</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="0530814389" -->
+<!-- signature="0163098819" -->
