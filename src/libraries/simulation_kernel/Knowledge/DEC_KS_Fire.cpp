@@ -15,9 +15,11 @@
 #include "DEC_BlackBoard_CanContainKnowledgeAgentPerception.h"
 #include "DEC_BlackBoard_CanContainKnowledgePopulationPerception.h"
 #include "DEC_Knowledge_AgentPerception.h"
+#include "Entities/Agents/Perceptions/PHY_ZURBPerceptionComputer.h"
 #include "DEC_Knowledge_PopulationPerception.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_KS_Fire )
@@ -92,6 +94,15 @@ void DEC_KS_Fire::Talk( int /*currentTimeStep*/ )
         // On ne gére la connaissance que lorsque le tireur est à distance inférieure de la distance max de détection
         if( agentInteracting.GetRole< PHY_RoleInterface_Perceiver >().GetMaxAgentPerceptionDistance() <= agentInteracting.GetRole< PHY_RoleInterface_Location >().GetPosition().Distance( attacker.GetRole< PHY_RoleInterface_Location >().GetPosition() ) )
             continue;
+
+        // Si la cible est dans une zone urbaine
+        if( agentInteracting.GetRole< PHY_RoleInterface_UrbanLocation >().IsInCity() )
+        {
+            // On vérifie que le tireur voit toujours sa cible (afin d'éviter les tirs a travers les blocs urbains)
+            PHY_ZURBPerceptionComputer computer( attacker, 0, 0 );
+            if( computer.ComputePerception( agentInteracting ) == PHY_PerceptionLevel::notSeen_ )
+                continue;
+        }
 
         DEC_Knowledge_AgentPerception* pKnowledge = pBlackBoard_->GetKnowledgeAgentPerceptionContainer().GetKnowledgeAgentPerception( attacker );
         if( !pKnowledge )
