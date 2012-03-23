@@ -23,13 +23,23 @@ namespace kernel
 
 class TeamFactory_ABC;
 
+class TeamModelResolver : public tools::Resolver< kernel::Team_ABC >
+{
+    public:
+        TeamModelResolver();
+        virtual ~TeamModelResolver();
+        virtual kernel::Team_ABC* Find( const unsigned long& identifier ) const;
+        virtual kernel::Team_ABC& Get ( const unsigned long& identifier ) const;
+        virtual kernel::Team_ABC& GetNoSideTeam() const = 0;
+};
+
 // =============================================================================
 /** @class  TeamsModel
     @brief  TeamsModel
 */
 // Created: AGE 2006-02-10
 // =============================================================================
-class TeamsModel : public tools::Resolver< kernel::Team_ABC >
+class TeamsModel : public TeamModelResolver
                  , public tools::Resolver< kernel::Formation_ABC >
 {
 public:
@@ -49,7 +59,7 @@ public:
 
     kernel::Team_ABC& GetTeam( unsigned long id );
     kernel::Team_ABC* FindTeam( const QString& team );
-    const kernel::Team_ABC& GetNoSideTeam() const;
+    virtual kernel::Team_ABC& GetNoSideTeam() const;
     kernel::Formation_ABC& GetFormation( unsigned long id );
     kernel::Formation_ABC* FindFormation( unsigned long id );
     //@}

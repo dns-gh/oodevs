@@ -90,9 +90,47 @@ void TeamsModel::DestroyFormation( const sword::FormationDestruction& message )
 // -----------------------------------------------------------------------------
 Team_ABC& TeamsModel::GetTeam( unsigned long id )
 {
-    if( id != 0 )
-        return tools::Resolver< Team_ABC >::Get( id );
-    return *noSideTeam_;
+    return TeamModelResolver::Get( id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TeamsModel::TeamModelResolver
+// Created: JSR 2012-03-23
+// -----------------------------------------------------------------------------
+TeamModelResolver::TeamModelResolver()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: TeamsModel::~TeamModelResolver
+// Created: JSR 2012-03-23
+// -----------------------------------------------------------------------------
+TeamModelResolver::~TeamModelResolver()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: TeamModelResolver::Find
+// Created: LDC 2012-03-23
+// -----------------------------------------------------------------------------
+kernel::Team_ABC* TeamModelResolver::Find( const unsigned long& identifier ) const
+{
+    if( 0 == identifier )
+        return &GetNoSideTeam();
+    return tools::Resolver< Team_ABC >::Find( identifier );
+}
+    
+// -----------------------------------------------------------------------------
+// Name: TeamModelResolver::Get
+// Created: LDC 2012-03-23
+// -----------------------------------------------------------------------------
+kernel::Team_ABC& TeamModelResolver::Get( const unsigned long& identifier ) const
+{
+    if( 0 == identifier )
+        return GetNoSideTeam();
+    return tools::Resolver< Team_ABC >::Get( identifier );
 }
 
 // -----------------------------------------------------------------------------
@@ -111,7 +149,7 @@ Team_ABC* TeamsModel::FindTeam( const QString& team )
 // Name: TeamsModel::GetNoSideTeam
 // Created: JSR 2011-11-10
 // -----------------------------------------------------------------------------
-const kernel::Team_ABC& TeamsModel::GetNoSideTeam() const
+kernel::Team_ABC& TeamsModel::GetNoSideTeam() const
 {
     return *noSideTeam_;
 }
