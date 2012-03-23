@@ -24,6 +24,21 @@
     </message>
 </context>
 <context>
+    <name>ListParameter</name>
+    <message>
+        <source>Add</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished">Remover</translation>
+    </message>
+    <message>
+        <source>Clear list</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>MissionInteface_ABC</name>
     <message>
         <source>Doctrine</source>

@@ -100,13 +100,7 @@ QWidget* ListParameter< ConcreteElement >::BuildInterface( QWidget* parent )
 template< typename ConcreteElement >
 void ListParameter< ConcreteElement >::OnRequestPopup( Q3ListViewItem* item, const QPoint& pos )
 {
-    kernel::ContextMenu* menu = new kernel::ContextMenu( list_ );
-    if( createEnabled_ )
-        menu->insertItem( tools::translate( "ListParameter", "Add" ), this, SLOT( OnCreate() ) );
-    if( item )
-        menu->insertItem( tools::translate( "ListParameter", "Remove" ), this, SLOT( OnDeleteSelectedItem() ) );
-    menu->insertItem( tools::translate( "ListParameter", "Clear list" ), this, SLOT( OnClear() ) );
-    menu->popup( pos );
+    CreateListMenu( list_, item, pos, createEnabled_ );
 }
 
 // -----------------------------------------------------------------------------
