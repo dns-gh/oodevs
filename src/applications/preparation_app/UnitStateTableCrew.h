@@ -28,7 +28,7 @@ class UnitStateTableCrew : public gui::UnitStateTableCrew
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UnitStateTableCrew( QWidget* parent );
+    explicit UnitStateTableCrew( QWidget* parent, kernel::Controllers& controllers );
     virtual ~UnitStateTableCrew();
     //@}
 

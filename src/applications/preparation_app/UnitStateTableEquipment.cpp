@@ -20,8 +20,8 @@
 // Name: UnitStateTableEquipment constructor
 // Created: ABR 2011-07-05
 // -----------------------------------------------------------------------------
-UnitStateTableEquipment::UnitStateTableEquipment( QWidget* parent )
-    : gui::UnitStateTableEquipment( parent )
+UnitStateTableEquipment::UnitStateTableEquipment( QWidget* parent, kernel::Controllers& controllers )
+    : gui::UnitStateTableEquipment( parent, controllers )
 {
     // NOTHING
 }

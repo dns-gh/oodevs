@@ -19,8 +19,8 @@
 // Name: UnitStateTableCrew constructor
 // Created: ABR 2011-07-05
 // -----------------------------------------------------------------------------
-UnitStateTableCrew::UnitStateTableCrew( QWidget* parent )
-    : gui::UnitStateTableCrew( parent )
+UnitStateTableCrew::UnitStateTableCrew( QWidget* parent, kernel::Controllers& controllers )
+    : gui::UnitStateTableCrew( parent, controllers )
 {
     // NOTHING
 }

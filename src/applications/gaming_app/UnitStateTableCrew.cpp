@@ -31,12 +31,11 @@
 // -----------------------------------------------------------------------------
 UnitStateTableCrew::UnitStateTableCrew( kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel,
                                        const kernel::Time_ABC& simulation, QWidget* parent )
-    : gui::UnitStateTableCrew( parent )
+    : gui::UnitStateTableCrew( parent, controllers )
     , controllers_ ( controllers )
     , staticModel_ ( staticModel )
     , actionsModel_( actionsModel )
     , simulation_  ( simulation )
-    , selected_    ( controllers )
 {
     PopulateEnumOrderParameters< E_HumanRank >( "HumanRank", "enumeration", eRank, eNbrHumanRank );
     PopulateEnumOrderParameters< E_HumanState >( "HumanState", "enumeration", eState, eNbrHumanState );
@@ -73,7 +72,7 @@ void UnitStateTableCrew::NotifyUpdated( const Troops& troops )
     if( selected_ && selected_->Retrieve< Troops >() == &troops )
     {
         Purge();
-        RecursiveLoad( *selected_.ConstCast() );
+        RecursiveLoad( *selected_.ConstCast(), true );
     }
 }
 
@@ -83,7 +82,12 @@ void UnitStateTableCrew::NotifyUpdated( const Troops& troops )
 // -----------------------------------------------------------------------------
 bool UnitStateTableCrew::HasChanged( kernel::Entity_ABC& selected ) const
 {
-    assert( selected_ == &selected && selected.GetTypeName() == kernel::Agent_ABC::typeName_ );
+    if( IsReadOnly() || selected.GetTypeName() != kernel::Agent_ABC::typeName_ )
+        return false;
+    // todo
+
+    assert( selected_ == &selected );
+
     Troops& troops = selected.Get< Troops >();
 
     unsigned int nbFound = 0;
@@ -117,7 +121,6 @@ bool UnitStateTableCrew::HasChanged( kernel::Entity_ABC& selected ) const
 // -----------------------------------------------------------------------------
 void UnitStateTableCrew::Load( kernel::Entity_ABC& selected )
 {
-    selected_ = &selected;
     assert( selected.GetTypeName() == kernel::Agent_ABC::typeName_ );
     Troops& troops = selected.Get< Troops >();
 
@@ -140,7 +143,7 @@ void UnitStateTableCrew::Commit( kernel::Entity_ABC& selected ) const
     if( selected_ != &selected || selected.GetTypeName() != kernel::Agent_ABC::typeName_ )
         return;
     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( staticModel_.types_ ).Get( "change_human_state" );
-    actions::UnitMagicAction* action = new actions::UnitMagicAction( *selected_, actionType, controllers_.controller_, tools::translate( "UnitStateTableCrew", "Change human state" ), true );
+    actions::UnitMagicAction* action = new actions::UnitMagicAction( selected, actionType, controllers_.controller_, tools::translate( "UnitStateTableCrew", "Change human state" ), true );
 
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     actions::parameters::ParameterList* parameterList = new actions::parameters::ParameterList( it.NextElement() );
@@ -165,6 +168,6 @@ void UnitStateTableCrew::Commit( kernel::Entity_ABC& selected ) const
         }
     }
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-    action->Attach( *new actions::ActionTasker( selected_, false ) );
+    action->Attach( *new actions::ActionTasker( &selected, false ) );
     action->RegisterAndPublish( actionsModel_ );
 }

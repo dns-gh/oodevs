@@ -11,7 +11,6 @@
 #define __UnitStateTableEquipment_h_
 
 #include "clients_gui/UnitStateTableEquipment.h"
-#include "clients_kernel/SafePointer.h"
 #include "tools/ElementObserver_ABC.h"
 #include "tools/Observer_ABC.h"
 
@@ -81,7 +80,6 @@ private:
     const StaticModel&                        staticModel_;
     actions::ActionsModel&                    actionsModel_;
     const kernel::Time_ABC&                   simulation_;
-    kernel::SafePointer< kernel::Entity_ABC > selected_;
     mutable T_Changes                         rowsChanged_;
     //@}
 };

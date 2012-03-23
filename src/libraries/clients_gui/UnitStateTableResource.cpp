@@ -20,8 +20,9 @@ using namespace gui;
 // Name: UnitStateTableResource constructor
 // Created: ABR 2011-07-05
 // -----------------------------------------------------------------------------
-UnitStateTableResource::UnitStateTableResource( QWidget* parent, const QString maximalCapacityLabel )
-    : UnitStateTable_ABC( parent, 7 )
+UnitStateTableResource::UnitStateTableResource( QWidget* parent, const QString maximalCapacityLabel, kernel::Controllers& controllers )
+    : UnitStateTable_ABC( parent, 7, controllers )
+    , blockSlots_( false )
 {
     horizontalHeaders_ << tr( "Resources" )
                        << tr( "Category" )
@@ -31,6 +32,7 @@ UnitStateTableResource::UnitStateTableResource( QWidget* parent, const QString m
                        << tr( "Logistic threshold (%)" )
                        << tr( "Normalized consumption" );
     delegate_.AddDoubleSpinBoxOnColumn( eThreshold, 0, 100, 0.5 );
+    delegate_.AddDoubleSpinBoxOnColumn( ePercentage, 0, std::numeric_limits< double >::max(), 0.5 );
     connect( &dataModel_, SIGNAL( itemChanged( QStandardItem* ) ), SLOT( OnItemChanged( QStandardItem* ) ) );
 }
 
@@ -41,6 +43,15 @@ UnitStateTableResource::UnitStateTableResource( QWidget* parent, const QString m
 UnitStateTableResource::~UnitStateTableResource()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitStateTableResource::IsReadOnlyForType
+// Created: JSR 2012-03-22
+// -----------------------------------------------------------------------------
+bool UnitStateTableResource::IsReadOnlyForType( QString typeName ) const
+{
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -72,10 +83,10 @@ void UnitStateTableResource::AddLine( const QString& name, const QString& catego
     int row = dataModel_.rowCount();
     AddItem( row, eName, name, name );
     AddItem( row, eCategory, category, category );
-    AddItem( row, ePercentage, "", "" );
+    AddItem( row, ePercentage, "", "", Qt::ItemIsEditable );
     AddItem( row, eMaximum, QString::number( maximum ), maximum );
     AddItem( row, eQuantity, QString::number( quantity ), quantity, Qt::ItemIsEditable );
-    AddItem( row, eThreshold, QString::number( threshold, 'f', 2 ), threshold, Qt::ItemIsEditable );
+    AddItem( row, eThreshold, QString::number( threshold, 'f', 2 ), threshold, agregated_ ? Qt::ItemFlags( 0 ) : Qt::ItemIsEditable );
     AddItem( row, eConsumption, QString::number( consumption ), consumption );
 }
 
@@ -85,18 +96,46 @@ void UnitStateTableResource::AddLine( const QString& name, const QString& catego
 // -----------------------------------------------------------------------------
 void UnitStateTableResource::OnItemChanged( QStandardItem* item )
 {
-    if( item && item->column() == eQuantity )
+    if( blockSlots_ || !item )
+        return;
+    int quantity = 0;
+    int maximum = 0;
+    bool changed = false;
+    if( item->column() == ePercentage && dataModel_.item( item->row(), eQuantity ) && dataModel_.item( item->row(), eMaximum ) )
     {
-        int quantity = GetUserData( item->row(), eQuantity ).toInt();
-        int maximum = GetUserData( item->row(), eMaximum ).toInt();
+        double percentage = 0.01 * GetUserData( item->row(), ePercentage ).toDouble();
+        maximum = GetUserData( item->row(), eMaximum ).toInt();
+        quantity = static_cast< int >( maximum * percentage );
+        int oldQuantity = GetUserData( item->row(), eQuantity ).toInt();
+        double oldPercentage = oldQuantity / static_cast< double >( maximum );
+        if( static_cast< int >( 10000 * percentage ) != static_cast< int >( 10000 * oldPercentage ) )
+        {
+            blockSlots_ = true;
+            SetData( item->row(), eQuantity, QString::number( quantity ), quantity );
+            blockSlots_ = false;
+            changed = true;
+        }
+    }
+    else if( item->column() == eQuantity )
+    {
+        changed = true;
+        quantity = GetUserData( item->row(), eQuantity ).toInt();
+        maximum = GetUserData( item->row(), eMaximum ).toInt();
+        blockSlots_ = true;
         if( quantity == 0 && maximum == 0 )
             SetData( item->row(), ePercentage, "0.00", 0 );
         else
         {
-            double percentage = std::min( quantity * 100. / static_cast< double >( maximum ), 100. );
+            double percentage = quantity * 100. / static_cast< double >( maximum );
             SetData( item->row(), ePercentage, QString::number( percentage, 'f', 2 ), percentage );
         }
-        dataModel_.item( item->row(), eMaximum )->setBackground( ( quantity <= maximum ) ? item->background() : QBrush( Qt::gray ) );
-        dataModel_.item( item->row(), ePercentage )->setBackground( ( quantity <= maximum ) ? item->background() : QBrush( Qt::gray ) );
+        blockSlots_ = false;
+    }
+    if( changed )
+    {
+        QBrush brush = ( quantity <= maximum ) ? dataModel_.item( item->row() )->background() : QBrush( QColor( 255, 128, 128 ) );
+        dataModel_.item( item->row(), eQuantity )->setBackground( brush);
+        dataModel_.item( item->row(), eMaximum )->setBackground( brush );
+        dataModel_.item( item->row(), ePercentage )->setBackground( brush );
     }
 }

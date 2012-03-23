@@ -36,12 +36,11 @@
 // -----------------------------------------------------------------------------
 UnitStateTableEquipment::UnitStateTableEquipment( kernel::Controllers& controllers, const StaticModel& staticModel, actions::ActionsModel& actionsModel,
                                                   const kernel::Time_ABC& simulation, QWidget* parent )
-    : gui::UnitStateTableEquipment( parent )
+    : gui::UnitStateTableEquipment( parent, controllers )
     , controllers_ ( controllers )
     , staticModel_ ( staticModel )
     , actionsModel_( actionsModel )
     , simulation_  ( simulation )
-    , selected_    ( controllers )
 {
     controllers_.Register( *this );
 }
@@ -117,10 +116,11 @@ unsigned int UnitStateTableEquipment::BreakdownComboIndexToId( const QStringList
 // -----------------------------------------------------------------------------
 void UnitStateTableEquipment::NotifyUpdated( const Equipments& equipments )
 {
+    // todo
     if( selected_ && selected_->Retrieve< Equipments >() == &equipments )
     {
         Purge();
-        RecursiveLoad( *selected_.ConstCast() );
+        RecursiveLoad( *selected_.ConstCast(), true );
     }
 }
 
@@ -130,7 +130,11 @@ void UnitStateTableEquipment::NotifyUpdated( const Equipments& equipments )
 // -----------------------------------------------------------------------------
 bool UnitStateTableEquipment::HasChanged( kernel::Entity_ABC& selected ) const
 {
-    assert( selected_ == &selected && selected.GetTypeName() == kernel::Agent_ABC::typeName_ );
+    if( IsReadOnly() || selected.GetTypeName() != kernel::Agent_ABC::typeName_ )
+        return false;
+
+    assert( selected_ == &selected );
+
     tools::Iterator< const Equipment& > itEquip = selected.Get< Equipments >().CreateIterator();
     rowsChanged_.clear();
     while( itEquip.HasMoreElements() )
@@ -160,7 +164,6 @@ bool UnitStateTableEquipment::HasChanged( kernel::Entity_ABC& selected ) const
 // -----------------------------------------------------------------------------
 void UnitStateTableEquipment::Load( kernel::Entity_ABC& selected )
 {
-    selected_ = &selected;
     assert( selected.GetTypeName() == kernel::Agent_ABC::typeName_ );
     tools::Iterator< const Equipment& > itEquip = selected.Get< Equipments >().CreateIterator();
     while( itEquip.HasMoreElements() )
@@ -193,7 +196,7 @@ void UnitStateTableEquipment::Commit( kernel::Entity_ABC& selected ) const
     if( selected_ != &selected || selected.GetTypeName() != kernel::Agent_ABC::typeName_ )
         return;
     kernel::MagicActionType& actionType = static_cast< tools::Resolver< kernel::MagicActionType, std::string >& > ( staticModel_.types_ ).Get( "change_equipment_state" );
-    actions::UnitMagicAction* action = new actions::UnitMagicAction( *selected_, actionType, controllers_.controller_, tools::translate( "UnitStateTableEquipment", "Change equipment state" ), true );
+    actions::UnitMagicAction* action = new actions::UnitMagicAction( selected, actionType, controllers_.controller_, tools::translate( "UnitStateTableEquipment", "Change equipment state" ), true );
 
     tools::Iterator< const kernel::OrderParameter& > it = actionType.CreateIterator();
     actions::parameters::ParameterList* parameterList = new actions::parameters::ParameterList( it.NextElement() );
@@ -223,6 +226,6 @@ void UnitStateTableEquipment::Commit( kernel::Entity_ABC& selected ) const
             }
     }
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );
-    action->Attach( *new actions::ActionTasker( selected_, false ) );
+    action->Attach( *new actions::ActionTasker( &selected, false ) );
     action->RegisterAndPublish( actionsModel_ );
 }

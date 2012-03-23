@@ -27,8 +27,14 @@ class UnitStateTableEquipment : public UnitStateTable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UnitStateTableEquipment( QWidget* parent );
+    explicit UnitStateTableEquipment( QWidget* parent, kernel::Controllers& controllers );
     virtual ~UnitStateTableEquipment();
+    //@}
+
+public:
+    //! @name Operations
+    //@{
+    virtual bool IsReadOnlyForType( QString typeName ) const;
     //@}
 
 protected:

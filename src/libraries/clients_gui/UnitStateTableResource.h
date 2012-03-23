@@ -27,8 +27,14 @@ class UnitStateTableResource : public UnitStateTable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UnitStateTableResource( QWidget* parent, const QString maximalCapacityLabel );
+    explicit UnitStateTableResource( QWidget* parent, const QString maximalCapacityLabel, kernel::Controllers& controllers );
     virtual ~UnitStateTableResource();
+    //@}
+
+public:
+    //! @name Operations
+    //@{
+    virtual bool IsReadOnlyForType( QString typeName ) const;
     //@}
 
 protected:
@@ -47,6 +53,12 @@ protected slots:
     //! @name Helpers
     //@{
     void OnItemChanged( QStandardItem* item );
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    bool blockSlots_;
     //@}
 };
 }

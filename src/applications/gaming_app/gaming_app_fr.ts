@@ -3265,6 +3265,10 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <source>Change dotations</source>
         <translation>Modifier les dotations</translation>
     </message>
+    <message>
+        <source>Your modifications will be applied to all sub-units of this entity, do you want to validate ?</source>
+        <translation>Vos modifications seront appliquées à toutes les sous-unités de cette entité, voulez-vous valider?</translation>
+    </message>
 </context>
 <context>
     <name>Urban</name>

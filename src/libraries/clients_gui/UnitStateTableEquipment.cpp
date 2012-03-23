@@ -12,6 +12,7 @@
 #include "clients_gui_pch.h"
 #include "UnitStateTableEquipment.h"
 #include "moc_UnitStateTableEquipment.cpp"
+#include "clients_kernel/Agent_ABC.h"
 
 using namespace gui;
 
@@ -19,8 +20,8 @@ using namespace gui;
 // Name: UnitStateTableEquipment constructor
 // Created: ABR 2011-02-24
 // -----------------------------------------------------------------------------
-UnitStateTableEquipment::UnitStateTableEquipment( QWidget* parent )
-    : UnitStateTable_ABC( parent, 3 )
+UnitStateTableEquipment::UnitStateTableEquipment( QWidget* parent, kernel::Controllers& controllers )
+    : UnitStateTable_ABC( parent, 3, controllers )
 {
     horizontalHeaders_ << tr( "Equipments" )
                        << tr( "State" )
@@ -35,6 +36,15 @@ UnitStateTableEquipment::UnitStateTableEquipment( QWidget* parent )
 UnitStateTableEquipment::~UnitStateTableEquipment()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitStateTableEquipment::IsReadOnlyForType
+// Created: JSR 2012-03-22
+// -----------------------------------------------------------------------------
+bool UnitStateTableEquipment::IsReadOnlyForType( QString typeName ) const
+{
+    return typeName != kernel::Agent_ABC::typeName_;
 }
 
 // -----------------------------------------------------------------------------

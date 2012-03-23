@@ -2340,10 +2340,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Display initial state</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Export</source>
         <translation type="unfinished"></translation>
     </message>
@@ -2376,6 +2372,10 @@
     </message>
     <message>
         <source>Remove resource</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Your modifications will be applied to all sub-units of this entity, do you want to validate ?</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

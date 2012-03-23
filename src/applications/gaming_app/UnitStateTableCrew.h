@@ -11,7 +11,6 @@
 #define __UnitStateTableCrew_h_
 
 #include "clients_gui/UnitStateTableCrew.h"
-#include "clients_kernel/SafePointer.h"
 #include "tools/ElementObserver_ABC.h"
 #include "tools/Observer_ABC.h"
 #include "ENT/ENT_Tr_ABC.h"
@@ -80,7 +79,6 @@ private:
     const StaticModel&                        staticModel_;
     actions::ActionsModel&                    actionsModel_;
     const kernel::Time_ABC&                   simulation_;
-    kernel::SafePointer< kernel::Entity_ABC > selected_;
     T_OrderParameterMap                       orderParameterMap_;
     //@}
 };

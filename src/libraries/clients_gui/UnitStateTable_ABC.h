@@ -12,6 +12,7 @@
 
 #include <boost/noncopyable.hpp>
 #include <boost/filesystem/path.hpp>
+#include "clients_kernel/SafePointer.h"
 #include "clients_kernel/Tools.h"
 #include "ComboTableItem.h"
 #include "CommonDelegate.h"
@@ -19,6 +20,7 @@
 namespace kernel
 {
     class Entity_ABC;
+    class Controllers;
 }
 
 namespace gui
@@ -36,7 +38,7 @@ class UnitStateTable_ABC : public QTableView
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitStateTable_ABC( QWidget* parent, int numCols );
+             UnitStateTable_ABC( QWidget* parent, int numCols, kernel::Controllers& controllers );
     virtual ~UnitStateTable_ABC();
     //@}
 
@@ -50,7 +52,8 @@ public:
     //! @name Operations
     //@{
     virtual void Purge();
-    void RecursiveLoad( kernel::Entity_ABC& selected );
+    virtual bool IsReadOnlyForType( QString typeName ) const = 0;
+    void RecursiveLoad( kernel::Entity_ABC& entity, bool isSelectedEntity );
     void SetReadOnly( bool readOnly );
     void Serialize( const boost::filesystem::path& path ) const;
     bool IsReadOnly() const;
@@ -81,6 +84,8 @@ protected:
     QSortFilterProxyModel proxyModel_;
     CommonDelegate        delegate_;
     QStringList           horizontalHeaders_;
+    bool                  agregated_;
+    kernel::SafePointer< kernel::Entity_ABC > selected_;
     //@}
 };
 

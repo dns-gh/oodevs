@@ -14,6 +14,7 @@
 #include "moc_UnitStateTableCrew.cpp"
 #include "SpinTableItem.h"
 #include "clients_kernel/Tools.h"
+#include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/ContextMenu.h"
 
 using namespace gui;
@@ -22,8 +23,8 @@ using namespace gui;
 // Name: UnitStateTableCrew constructor
 // Created: ABR 2011-02-24
 // -----------------------------------------------------------------------------
-UnitStateTableCrew::UnitStateTableCrew( QWidget* parent )
-    : UnitStateTable_ABC( parent, 7 )
+UnitStateTableCrew::UnitStateTableCrew( QWidget* parent, kernel::Controllers& controllers )
+    : UnitStateTable_ABC( parent, 7, controllers )
     , updating_( false )
 {
     horizontalHeaders_ << tr( "Rank" )
@@ -44,6 +45,15 @@ UnitStateTableCrew::UnitStateTableCrew( QWidget* parent )
 UnitStateTableCrew::~UnitStateTableCrew()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitStateTableCrew::IsReadOnlyForType
+// Created: JSR 2012-03-22
+// -----------------------------------------------------------------------------
+bool UnitStateTableCrew::IsReadOnlyForType( QString typeName ) const
+{
+    return typeName != kernel::Agent_ABC::typeName_;
 }
 
 // -----------------------------------------------------------------------------

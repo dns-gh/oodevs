@@ -27,8 +27,14 @@ class UnitStateTableCrew : public UnitStateTable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UnitStateTableCrew( QWidget* parent );
+    explicit UnitStateTableCrew( QWidget* parent, kernel::Controllers& controllers );
     virtual ~UnitStateTableCrew();
+    //@}
+
+public:
+    //! @name Operations
+    //@{
+    virtual bool IsReadOnlyForType( QString typeName ) const;
     //@}
 
 protected:

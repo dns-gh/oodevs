@@ -17,6 +17,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
 #include "preparation/InitialState.h"
 #include <boost/filesystem.hpp>
@@ -34,9 +35,9 @@ UnitStateDialog::UnitStateDialog( QWidget* parent, kernel::Controllers& controll
     assert( tabWidget_ );
     exportButton_ = new QPushButton( tr( "Export" ) );
     buttons_->addWidget( exportButton_, 0, 2 );
-    tabs_.push_back( boost::shared_ptr< UnitStateTableCrew >     ( new UnitStateTableCrew(      tabWidget_ ) ) );
-    tabs_.push_back( boost::shared_ptr< UnitStateTableEquipment >( new UnitStateTableEquipment( tabWidget_ ) ) );
-    tabs_.push_back( boost::shared_ptr< UnitStateTableResource > ( new UnitStateTableResource(  tabWidget_, staticModel ) ) );
+    tabs_.push_back( boost::shared_ptr< UnitStateTableCrew >     ( new UnitStateTableCrew(      tabWidget_, controllers ) ) );
+    tabs_.push_back( boost::shared_ptr< UnitStateTableEquipment >( new UnitStateTableEquipment( tabWidget_, controllers ) ) );
+    tabs_.push_back( boost::shared_ptr< UnitStateTableResource > ( new UnitStateTableResource(  tabWidget_, staticModel, controllers ) ) );
     tabWidget_->addTab( tabs_[ eCrew      ].get(), tools::translate( "UnitStateDialog", "Crew" ) );
     tabWidget_->addTab( tabs_[ eEquipment ].get(), tools::translate( "UnitStateDialog", "Equipments" ) );
     tabWidget_->addTab( tabs_[ eResources ].get(), tools::translate( "UnitStateDialog", "Resources" ) );
@@ -62,16 +63,40 @@ void UnitStateDialog::Validate() const
     controllers_.controller_.Update( *selected_ );
 }
 
+namespace
+{
+    void RecursiveReset( kernel::Entity_ABC& entity, kernel::Controller& controller )
+    {
+        if( entity.GetTypeName() == kernel::Agent_ABC::typeName_ )
+        {
+            InitialState* extension = entity.Retrieve< InitialState >();
+            if( extension )
+            {
+                extension->Reset();
+                controller.Update( entity );
+            }
+        }
+        else
+        {
+            const kernel::TacticalHierarchies& hierarchy = entity.Get< kernel::TacticalHierarchies >();
+            tools::Iterator< const kernel::Entity_ABC& > it = hierarchy.CreateSubordinateIterator();
+            while( it.HasMoreElements() )
+            {
+                const kernel::Entity_ABC& subEntity = it.NextElement();
+                RecursiveReset( const_cast< kernel::Entity_ABC& >( subEntity ), controller );
+            }
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: UnitStateDialog::Reset
 // Created: ABR 2011-07-06
 // -----------------------------------------------------------------------------
 void UnitStateDialog::Reset()
 {
-    InitialState& extension = selected_.ConstCast()->Get< InitialState >();
-    extension.Reset();
+    RecursiveReset( *selected_.ConstCast(), controllers_.controller_ );
     gui::UnitStateDialog::Reset();
-    controllers_.controller_.Update( *selected_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,7 +127,7 @@ void UnitStateDialog::NotifyContextMenu( const kernel::Agent_ABC& entity, kernel
 void UnitStateDialog::NotifyContextMenu( const kernel::Automat_ABC& entity, kernel::ContextMenu& menu )
 {
     selected_ = const_cast< kernel::Automat_ABC* > ( &entity );
-    menu.InsertItem( "Update", tools::translate( "UnitStateDialog", "Display initial state" ), this, SLOT( Show() ) );
+    menu.InsertItem( "Update", tools::translate( "UnitStateDialog", "Change initial state" ), this, SLOT( Show() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -112,7 +137,7 @@ void UnitStateDialog::NotifyContextMenu( const kernel::Automat_ABC& entity, kern
 void UnitStateDialog::NotifyContextMenu( const kernel::Formation_ABC& entity, kernel::ContextMenu& menu )
 {
     selected_ = const_cast< kernel::Formation_ABC* > ( &entity );
-    menu.InsertItem( "Update", tools::translate( "UnitStateDialog", "Display initial state" ), this, SLOT( Show() ) );
+    menu.InsertItem( "Update", tools::translate( "UnitStateDialog", "Change initial state" ), this, SLOT( Show() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -122,7 +147,7 @@ void UnitStateDialog::NotifyContextMenu( const kernel::Formation_ABC& entity, ke
 void UnitStateDialog::NotifyContextMenu( const kernel::Team_ABC& entity, kernel::ContextMenu& menu )
 {
     selected_ = const_cast< kernel::Team_ABC* > ( &entity );
-    menu.InsertItem( "Update", tools::translate( "UnitStateDialog", "Display initial state" ), this, SLOT( Show() ) );
+    menu.InsertItem( "Update", tools::translate( "UnitStateDialog", "Change initial state" ), this, SLOT( Show() ) );
 }
 
 // -----------------------------------------------------------------------------

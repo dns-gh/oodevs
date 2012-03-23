@@ -2340,10 +2340,6 @@
         <translation>Modifier l&apos;état initial</translation>
     </message>
     <message>
-        <source>Display initial state</source>
-        <translation>Afficher l&apos;état initial</translation>
-    </message>
-    <message>
         <source>Export</source>
         <translation>Exporter</translation>
     </message>
@@ -2377,6 +2373,10 @@
     <message>
         <source>Remove resource</source>
         <translation>Supprimer la ressource</translation>
+    </message>
+    <message>
+        <source>Your modifications will be applied to all sub-units of this entity, do you want to validate ?</source>
+        <translation>Vos modifications seront appliquées à toutes les sous-unités de cette entité, voulez-vous valider?</translation>
     </message>
 </context>
 <context>
