@@ -90,7 +90,7 @@ bool PHY_ActionMove::CreateJoiningPath( const MT_Vector2D* lastJoiningPoint )
     if( lastJoiningPoint && vTestPos == *lastJoiningPoint )
         return false; // $$$$ LDC Could try to find a point beyond the obstacle...
     pJoiningPath_.reset( new DEC_Agent_Path( pion_, pMainPath_->GetPointOnPathCloseTo( vPionPos ), pMainPath_->GetPathType() ) );
-    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pJoiningPath_ );
+    pJoiningPath_->ComputePath( pJoiningPath_ );
     return( vPionPos != vTestPos );
 }
 
@@ -309,7 +309,7 @@ void PHY_ActionMove::CreateFinalPath()
     assert( pMainPath_.get() );
     const MT_Vector2D& vPionPos = pion_.GetRole< PHY_RoleInterface_Location >().GetPosition();
     boost::shared_ptr< DEC_Agent_Path > pNewMainPath( new DEC_Agent_Path( pion_, vPionPos, pMainPath_->GetPathType() ) );
-    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pNewMainPath );
+    pNewMainPath->ComputePath( pNewMainPath );
     role_.MoveCanceled( pMainPath_ );
     pMainPath_->Cancel();
     pMainPath_ = pNewMainPath;
@@ -327,7 +327,7 @@ int PHY_ActionMove::CreatePathAfterObjectCollision( boost::shared_ptr< DEC_PathR
     if( vPionPos != vTestPos )
     {
         pJoiningPath_.reset( new DEC_Agent_Path( pion_, vTestPos, pMainPath_->GetPathType() ) );
-        MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pJoiningPath_ );
+        pJoiningPath_->ComputePath( pJoiningPath_ );        
         pCurrentPath = pJoiningPath_;
     }
     else
