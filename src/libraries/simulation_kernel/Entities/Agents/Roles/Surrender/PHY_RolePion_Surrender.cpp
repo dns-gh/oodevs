@@ -80,7 +80,7 @@ void PHY_RolePion_Surrender::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_RoleInterface_Surrender >( *this )
          & bPrisoner_
-         & const_cast< MIL_Object_ABC*& >( pPrison_ )
+         & pPrison_
          & nbrHumansLodgingManaged_;
 }
 
@@ -96,7 +96,7 @@ void PHY_RolePion_Surrender::Update( bool /*bIsDead*/ )
 {
     if( pPrison_ && pPrison_->IsMarkedForDestruction() )
     {
-        LodgingAttribute* pLodgingAttribute = const_cast< MIL_Object_ABC* >( pPrison_ )->RetrieveAttribute< LodgingAttribute >();
+        LodgingAttribute* pLodgingAttribute = pPrison_->RetrieveAttribute< LodgingAttribute >();
         if ( pLodgingAttribute )
             pLodgingAttribute->UnmanageResident( pion_ );
 
@@ -160,7 +160,7 @@ bool PHY_RolePion_Surrender::Release()
 
     if ( pPrison_ )
     {
-        LodgingAttribute* pLodgingAttribute = const_cast< MIL_Object_ABC* >( pPrison_ )->RetrieveAttribute< LodgingAttribute >();
+        LodgingAttribute* pLodgingAttribute = pPrison_->RetrieveAttribute< LodgingAttribute >();
         if ( pLodgingAttribute )
             pLodgingAttribute->UnmanageResident( pion_ );
     }
@@ -181,9 +181,9 @@ bool PHY_RolePion_Surrender::Imprison( const MIL_Object_ABC& camp )
 {
     if( !IsSurrendered() || !bPrisoner_ )
         return false;
-    pPrison_ = &camp;
+    pPrison_ = const_cast< MIL_Object_ABC* >( &camp );
 
-    LodgingAttribute* pLodgingAttribute = const_cast< MIL_Object_ABC* >( pPrison_ )->RetrieveAttribute< LodgingAttribute >();
+    LodgingAttribute* pLodgingAttribute = pPrison_->RetrieveAttribute< LodgingAttribute >();
     if ( pLodgingAttribute )
         pLodgingAttribute->ManageResident( pion_ );
 

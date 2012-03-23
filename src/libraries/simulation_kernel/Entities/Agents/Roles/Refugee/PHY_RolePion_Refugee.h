@@ -84,14 +84,14 @@ private:
     void AddAffinityNearUnit( DEC_Knowledge_Agent& knowledge );
     //@}
 
-    MIL_AgentPion&        pion_;
-    const MIL_Object_ABC* pCamp_;
-    bool                  bManaged_;
-    bool                  bHasChanged_;
-    unsigned int          nbrHumansLodgingManaged_;
-    float                 lodgingSatisfaction_;
-    float                 securitySatisfaction_;
-    float                 healthSatisfaction_;
+    MIL_AgentPion&  pion_;
+    MIL_Object_ABC* pCamp_;
+    bool            bManaged_;
+    bool            bHasChanged_;
+    unsigned int    nbrHumansLodgingManaged_;
+    float           lodgingSatisfaction_;
+    float           securitySatisfaction_;
+    float           healthSatisfaction_;
 
     struct NearbyUnitsAffinity
     {

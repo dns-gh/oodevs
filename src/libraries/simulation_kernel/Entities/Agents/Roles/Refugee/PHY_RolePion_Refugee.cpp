@@ -84,7 +84,7 @@ void PHY_RolePion_Refugee::serialize( Archive& file, const unsigned int )
 {
     file & boost::serialization::base_object< PHY_RoleInterface_Refugee >( *this )
          & bManaged_
-         & const_cast< MIL_Object_ABC*& >( pCamp_ )
+         & pCamp_
          & nbrHumansLodgingManaged_;
          & lodgingSatisfaction_;
          & securitySatisfaction_;
@@ -147,7 +147,7 @@ void PHY_RolePion_Refugee::ReleaseCamp( MIL_AgentPion& callerAgent, const MIL_Ob
 
     if( !pion_.GetType().IsRefugee() || !bManaged_ )
         return;
-    pCamp_       = &camp;
+    pCamp_       = const_cast< MIL_Object_ABC* >( &camp );
     bManaged_    = true;
     bHasChanged_ = true;
     pion_.GetAutomate().NotifyRefugeeReleased( camp );
@@ -268,7 +268,7 @@ void PHY_RolePion_Refugee::ManageLodgingCamp()
     if ( !pCamp_ )
         UpdateLodging( 0 );
 
-    LodgingAttribute* pLodgingAttribute = const_cast< MIL_Object_ABC* >( pCamp_ )->RetrieveAttribute< LodgingAttribute >();
+    LodgingAttribute* pLodgingAttribute = pCamp_->RetrieveAttribute< LodgingAttribute >();
     if ( pLodgingAttribute )
         pLodgingAttribute->ManageResident( pion_ );
 
@@ -284,7 +284,7 @@ void PHY_RolePion_Refugee::UnmanageLodgingCamp()
     if ( !pCamp_ )
         return;
 
-    LodgingAttribute* pLodgingAttribute = const_cast< MIL_Object_ABC* >( pCamp_ )->RetrieveAttribute< LodgingAttribute >();
+    LodgingAttribute* pLodgingAttribute = pCamp_->RetrieveAttribute< LodgingAttribute >();
     if ( pLodgingAttribute )
         pLodgingAttribute->UnmanageResident( pion_ );
 
