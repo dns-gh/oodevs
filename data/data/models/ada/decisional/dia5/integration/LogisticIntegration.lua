@@ -14,7 +14,9 @@ end
 integration.getTransporter = function()
     return DEC_Ravitaillement_Convoi_Transporteur()
 end
-
+integration.getItineraireVersProchaineDestination = function()
+    return DEC_Ravitaillement_Convoi_ItineraireVersProchaineDestination()
+end
 integration.deplacementVersRavitailleurEffectue = function()
     DEC_Ravitaillement_Convoi_DeplacementVersRavitailleurEffectue()
 end

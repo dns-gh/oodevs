@@ -45,7 +45,15 @@ end,
      elseif self.ePhase == eConvoyerAction_MoveToSupplyRecipient and continueConvoy then
         Activate( skill.nodes.RC, 1, { RC = eRC_Convoi_DeplacementVersPointDechargement, } )
         self.destinataireCourant = CreateKnowledge( sword.military.world.PlatoonAlly, integration.getDestinataireCourant() )
-        Activate( skill.links.moveAlong, 1, { entities = { self.destinataireCourant:getMyPosition()} } )
+        if not self.itineraryToSupplyRecipient then
+            local itinerary = integration.getItineraireVersProchaineDestination()
+            self.itineraryToSupplyRecipient = {}
+            for _, pos in pairs( itinerary ) do
+              self.itineraryToSupplyRecipient[#self.itineraryToSupplyRecipient + 1] = CreateKnowledge( sword.military.world.Point, pos )
+            end
+            self.itineraryToSupplyRecipient[#self.itineraryToSupplyRecipient + 1] = self.destinataireCourant:getMyPosition()
+        end
+        Activate( skill.links.moveAlong, 1, { entities = self.itineraryToSupplyRecipient } )
         if( self.arrived ) then
             self.arrived = false
             self.fragOrderReceived = false
@@ -55,7 +63,15 @@ end,
      elseif self.ePhase == eConvoyerAction_MoveToTransportersProvider and continueConvoy then
         Activate( skill.nodes.RC, 1, { RC = eRC_Convoi_Retour, } )
         self.transporteur = CreateKnowledge( sword.military.world.PlatoonAlly, integration.getTransporter() )
-        Activate( skill.links.moveAlong, 1, { entities = { self.transporteur:getMyPosition()} } )
+        if not self.itineraryToTransportersProvider then
+            local itinerary = integration.getItineraireVersProchaineDestination()
+            self.itineraryToTransportersProvider = {}
+            for _, pos in pairs( itinerary ) do
+              self.itineraryToTransportersProvider[#self.itineraryToTransportersProvider + 1] = CreateKnowledge( sword.military.world.Point, pos )
+            end
+            self.itineraryToTransportersProvider[#self.itineraryToTransportersProvider + 1] = self.transporteur:getMyPosition()
+        end
+        Activate( skill.links.moveAlong, 1, { entities = self.itineraryToTransportersProvider } )
         if( self.arrived ) then
             self.arrived = false
             self.fragOrderReceived = false
