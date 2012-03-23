@@ -16,18 +16,19 @@
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Objects/ConstructionAttribute.h"
 #include "Decision/DEC_Tools.h"
+#include "Decision/DEC_Gen_Object.h"
 #include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionPrepareObject constructor
 // Prepared: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionPrepareObject::PHY_ActionPrepareObject( MIL_AgentPion& pion, const std::string& strType, const TER_Localisation* pLocalisation,
-                                                  unsigned int externalIdentifier, const std::string& name )
+PHY_ActionPrepareObject::PHY_ActionPrepareObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Gen_Object > pGenObject )
     : PHY_DecisionCallbackAction_ABC( pion )
     , role_( pion.GetRole< PHY_RoleAction_Objects >() )
-    , pObject_( MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( pion.GetArmy(), strType, pLocalisation, sword::ObstacleType_DemolitionTargetType_reserved, externalIdentifier, name ) )
+    , pObject_( MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( pion.GetArmy(), pGenObject->GetTypeName(), &pGenObject->GetLocalisation(), pGenObject->GetObstacleType(), pGenObject->GetExternalIdentifier(), pGenObject->GetName() ) )
 {
+    pObject_->Initialize( *pGenObject.get() );
     pObject_->RetrieveAttribute< ConstructionAttribute >()->Set( 0. );
     pObject_->RetrieveAttribute< ConstructionAttribute >()->NotifyBuildByGen();
     Callback( role_.GetInitialReturnCode() );

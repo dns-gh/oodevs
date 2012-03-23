@@ -638,11 +638,13 @@ function DEC_Connaissances_ObjetsDansCercle( position, radius, ... )
 end
 
 function DEC_StartCreerObjet( knowledge, type, localisation )
-    return DEC_StartCreateObject( type, localisation, 0, "" )
+    local genObject = DEC_CreateDynamicGenObject( type, localisation, true )
+    return DEC_StartCreateObject( genObject )
 end
 
 function DEC_StartPreparerObjet( knowledge, type, localisation )
-    return DEC_StartPrepareObject( type, localisation, 0, "" )
+    local genObject = DEC_CreateDynamicGenObject( type, localisation, false )
+    return DEC_StartPrepareObject( genObject )
 end
 
 function DEC_Copie_Liste( source )

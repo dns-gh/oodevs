@@ -36,6 +36,7 @@ namespace sword
 }
 
 class DEC_Knowledge_Object;
+class DEC_Gen_Object;
 class MIL_Agent_ABC;
 class MIL_Army_ABC;
 class MIL_KnowledgeGroup;
@@ -65,6 +66,7 @@ public:
     //! @name Init
     //@{
     virtual void Initialize( const TER_Localisation& localisation );
+    virtual void Initialize( const DEC_Gen_Object& genObject );
     //@}
 
     //! @name CheckPoints

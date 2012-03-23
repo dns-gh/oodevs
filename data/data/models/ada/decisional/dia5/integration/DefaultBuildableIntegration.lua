@@ -42,9 +42,9 @@ integration.startBuildIt = function( object )
     local externalIdentifier = DEC_GenObject_ExternalIdentifier( object.source )
     local name = object.source:DEC_GenObject_Name()
     if DEC_GenObject_TypeObstacleManoeuvre( object.source ) then
-        object[myself].actionBuild = DEC_StartPrepareObject( typeObject, DEC_GenObject_Localisation( object.source ), externalIdentifier, name )
+        object[myself].actionBuild = DEC_StartPrepareObject( object.source )
     else
-        object[myself].actionBuild = DEC_StartCreateObject( typeObject, DEC_GenObject_Localisation( object.source ), externalIdentifier, name )
+        object[myself].actionBuild = DEC_StartCreateObject( object.source )
     end
     actionCallbacks[ object[myself].actionBuild ] = function( arg ) object[myself].actionBuildState = arg end
     actionKnowledgeCallbacks[ object[myself].actionBuild ] = function( arg )
@@ -303,7 +303,8 @@ end
 integration.startAffectMobility = function( target, affectionType )
     meKnowledge:RC( eRC_DebutTravaux )
     target[myself] = target[myself] or {}
-    target[myself].actionBuild = DEC_StartCreateObject( S_TypeObject_ToString( affectionType ), target:getLocalisation(), 0, "" )
+    local genObject = DEC_CreateDynamicGenObject( S_TypeObject_ToString( affectionType ), target:getLocalisation(), true )
+    target[myself].actionBuild = DEC_StartCreateObject( genObject )
     actionCallbacks[ target[myself].actionBuild ] = function( arg ) target[myself].actionBuildState = arg end
     actionKnowledgeCallbacks[ target[myself].actionBuild ] = function( arg ) target[myself].mobility = arg end
     return false
@@ -337,7 +338,8 @@ end
 integration.startEquipBridge = function( site, typePont )
     meKnowledge:RC( eRC_DebutTravaux )
     site[myself] = site[myself] or {}
-    site[myself].actionBuild = DEC_StartCreateObject( S_TypeObject_ToString( typePont ), site:getLocalisation(), 0, "" )
+    local genObject = DEC_CreateDynamicGenObject( S_TypeObject_ToString( typePont ), site:getLocalisation(), true )
+    site[myself].actionBuild = DEC_StartCreateObject( genObject )
     actionCallbacks[ site[myself].actionBuild ] = function( arg ) site[myself].actionBuildState = arg end
     actionKnowledgeCallbacks[ site[myself].actionBuild ] = function( arg ) site[myself].bridge = arg end
     return false
