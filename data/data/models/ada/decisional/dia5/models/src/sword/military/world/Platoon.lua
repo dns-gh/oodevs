@@ -104,7 +104,6 @@ return
         and self:isPerceived()
         and not self:isDestroyed()
         and meKnowledge:isOperational()
-        and meKnowledge:computeDestructionCapability( self, meKnowledge ) > 0
 
     end,
     canNeutralizeIt = function( self )
@@ -112,7 +111,6 @@ return
         and self:isPerceived()
         and self:isOperational()
         and meKnowledge:isOperational()
-        and meKnowledge:computeNeutralisationCapability( self, meKnowledge ) > 0
     end,
     canApproachIt = function( self )
        return meKnowledge:isSupported()
