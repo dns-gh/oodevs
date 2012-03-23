@@ -350,3 +350,18 @@ bool Param_ABC::IsInParam() const
 {
     return parentParameter_ != 0;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Param_ABC::CreateListMenu
+// Created: ABR 2012-03-23
+// -----------------------------------------------------------------------------
+void Param_ABC::CreateListMenu( Q3ListView* list, Q3ListViewItem* item, const QPoint& pos, bool createEnabled )
+{
+    kernel::ContextMenu* menu = new kernel::ContextMenu( list );
+    if( createEnabled )
+        menu->insertItem( tools::translate( "ListParameter", "Add" ), this, SLOT( OnCreate() ) );
+    if( item )
+        menu->insertItem( tools::translate( "ListParameter", "Remove" ), this, SLOT( OnDeleteSelectedItem() ) );
+    menu->insertItem( tools::translate( "ListParameter", "Clear list" ), this, SLOT( OnClear() ) );
+    menu->popup( pos );
+}

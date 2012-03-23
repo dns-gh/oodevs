@@ -123,6 +123,7 @@ protected:
     bool IsInParam() const;
     virtual kernel::ContextMenu::T_MenuVariant CreateMenu( kernel::ContextMenu& menu );
     virtual void CreateInternalMenu( kernel::ContextMenu& menu );
+    void CreateListMenu( Q3ListView* list, Q3ListViewItem* item, const QPoint& pos, bool createEnabled ); // $$$$ ABR 2012-03-23: Here for translation ... enjoy Qt translation
     //@}
 
 private:
