@@ -152,6 +152,10 @@ activate = function( self )
 
     manageAddedAndDeletedUnits( self )
 
+    if myself.needCR then -- On affiche un CR demandant l'ordre de conduite poursuivre
+        Activate( skill.nodes.RC, 1, { RC = eRC_AttenteOrdrePoursuivre } )
+    end
+
     local echelons = integration.getPionsInEchelons( self.parameters.commandingEntities )
     local pionsPE =  echelons[1]
 

@@ -38,6 +38,7 @@ rootnode
         local objective = self.params.objectives[ self.nextTargetIndex ]
         
         if self.isDeployed then
+          meKnowledge:sendNeedRC( meKnowledge:getAutomat(), eRC_AttenteOrdrePoursuivre)
           Activate( skill.links.moveToward, 1, { entities = { self.params.meetingPoint }, 
                                                  positions = { self.params.meetingPoint } } )
           return
