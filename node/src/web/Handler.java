@@ -61,7 +61,9 @@ public class Handler extends AbstractHandler {
     }
 
     @Override
-    public void handle(final String uri, final Request base, final HttpServletRequest request, final HttpServletResponse response) throws IOException {
+    public void handle(String uri, final Request base, final HttpServletRequest request, final HttpServletResponse response) throws IOException {
+        if (uri.equals("/"))
+            uri = "/index";
         File target;
         if (base.getMethod() != "GET")
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "invalid method " + base.getMethod());
