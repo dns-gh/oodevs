@@ -565,3 +565,20 @@ waitInMin = function( self, delay )
     self[myself].tempsDebut = self[myself].tempsDebut or DEC_TempsSim()
     return  delay * 60 <= DEC_TempsSim() - self[myself].tempsDebut
 end
+
+getBetterReachingEfficiencyInList = function( elements, entity )
+    local nPosition = #elements
+    local bestPosition = -1
+    local currentPositionReach = -1	
+    local bestReturnPosition = nil
+    for i = 1, nPosition do
+        local position = elements[i]
+        currentPositionReach = position:reachEfficiency( entity )
+        local distance = integration.distance( position, entity)
+        if currentPositionReach > bestPosition then
+            bestPosition = currentPositionReach
+            bestReturnPosition = position
+        end
+    end	
+    return bestReturnPosition
+end
