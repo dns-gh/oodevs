@@ -6319,6 +6319,10 @@ Click &quot;Ok&quot; to delete it.</source>
         <source>Equipment - Invalid sensor type &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Do you want to save anyway ?</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Composantes_Data</name>
