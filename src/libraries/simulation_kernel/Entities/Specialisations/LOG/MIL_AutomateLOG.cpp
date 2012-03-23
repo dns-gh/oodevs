@@ -430,6 +430,7 @@ MIL_AgentPion* MIL_AutomateLOG::SupplyCreateConvoyPion( const MIL_AgentTypePion&
 
     std::stringstream ssName;
     ssName << logistic::SupplyConvoyConfig::convoyUnitBaseName_ << nextConvoyInstanceId_;
+    ++nextConvoyInstanceId_;
 
     MIL_AgentPion* convoyPion = &pConvoyAutomate->CreatePion( type, location, ssName.str() );
     PHY_RoleInterface_Supply* itf = convoyPion->RetrieveRole< PHY_RoleInterface_Supply >();
@@ -521,14 +522,7 @@ void MIL_AutomateLOG::OnSupplyConvoyLeaving( boost::shared_ptr< const logistic::
 // -----------------------------------------------------------------------------
 bool MIL_AutomateLOG::BelongsToLogisticBase( const MIL_AutomateLOG& logisticBase ) const
 {
-    if( &logisticBase == this )
-        return true;
-   /* if( pAssociatedAutomate_ )
-        return pAssociatedAutomate_-> FindLogisticManager()->BelongsToLogisticBase(logisticBase);
-    if( pAssociatedFormation_ )
-        return pAssociatedFormation_->FindLogisticManager()->BelongsToLogisticBase(logisticBase);
-    */
-    return false;
+    return( &logisticBase == this );
 }
 
 // =============================================================================
