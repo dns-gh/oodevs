@@ -26,7 +26,7 @@ public class Handler extends AbstractHandler {
     private final File root_;
     private final MimeUtil2 mimes_;
 
-    public Handler(final String root) throws Exception {
+    public Handler(final String root, final boolean isDebug) throws Exception {
         root_ = new File(root);
         if (!root_.isDirectory())
             throw new Exception(root_ + " is not a directory");
@@ -34,6 +34,7 @@ public class Handler extends AbstractHandler {
         resolver.setTemplateMode("HTML5");
         resolver.setPrefix(root_.getAbsolutePath());
         resolver.setSuffix(".html");
+        resolver.setCacheable(!isDebug);
         engine_ = new TemplateEngine();
         engine_.setTemplateResolver(resolver);
         mimes_ = new MimeUtil2();

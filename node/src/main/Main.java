@@ -17,7 +17,7 @@ class Main {
 
         final Server server = new Server(8080);
         try {
-            server.setHandler(new Handler("e:/cloud_hg/node/www"));
+            server.setHandler(new Handler("e:/cloud_hg/node/www", true));
             server.start();
         } catch (final Exception e) {
             log_.error(e.toString());
