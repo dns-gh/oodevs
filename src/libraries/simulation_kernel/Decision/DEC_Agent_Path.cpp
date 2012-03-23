@@ -574,11 +574,6 @@ void DEC_Agent_Path::Execute( TerrainPathfinder& pathfind )
     }
     assert( resultList_.empty() );
 
-    if( !IsDestinationTrafficable() )
-    {
-        queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().SendRC( MIL_Report::eReport_DifficultTerrain );
-        Cancel();
-    }
     DEC_Path::Execute( pathfind );
     DEC_PathResult::E_State nPathState = GetState();
     if( nPathState == DEC_Path_ABC::eImpossible )
@@ -663,4 +658,19 @@ bool DEC_Agent_Path::IsWaypoint( const MT_Vector2D& point ) const
         if( *it == point )
             return true;
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Agent_Path::ComputePath
+// Created: LDC 2012-03-23
+// -----------------------------------------------------------------------------
+void DEC_Agent_Path::ComputePath( boost::shared_ptr< DEC_Path_ABC > pPath )
+{
+    if( !IsDestinationTrafficable() )
+    {
+        queryMaker_.GetRole< moving::PHY_RoleAction_Moving >().SendRC( MIL_Report::eReport_DifficultTerrain );
+        Cancel();
+    }
+    else
+        MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pPath );
 }

@@ -67,8 +67,8 @@ boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPoint( MIL_Agen
     assert( pEnd );
     const DEC_PathType* pPathType = DEC_PathType::Find( pathType );
     assert( pPathType );
-    boost::shared_ptr< DEC_Path_ABC > pPath( new DEC_Agent_Path( callerAgent, *pEnd, *pPathType ) );
-    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pPath );
+    boost::shared_ptr< DEC_Agent_Path > pPath( new DEC_Agent_Path( callerAgent, *pEnd, *pPathType ) );
+    pPath->ComputePath( pPath );
     return pPath;
 }
 
@@ -81,8 +81,8 @@ boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPoint( MIL_Agen
     assert( pEnd );
     const DEC_PathType* pPathType = DEC_PathType::Find( pathType );
     assert( pPathType );
-    boost::shared_ptr< DEC_Path_ABC > pPath( new DEC_Agent_Path( callerAgent, *pEnd, *pPathType, loaded ) );
-    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pPath );
+    boost::shared_ptr< DEC_Agent_Path > pPath( new DEC_Agent_Path( callerAgent, *pEnd, *pPathType, loaded ) );
+    pPath->ComputePath( pPath );
     return pPath;
 }
 
@@ -95,8 +95,8 @@ boost::shared_ptr< DEC_Path_ABC > DEC_PathFunctions::CreatePathToPointList( MIL_
     assert( !listPt.empty() );
     const DEC_PathType* pPathType = DEC_PathType::Find( pathType );
     assert( pPathType );
-    boost::shared_ptr< DEC_Path_ABC > pPath( new DEC_Agent_Path( callerAgent, listPt, *pPathType ) );
-    MIL_AgentServer::GetWorkspace().GetPathFindManager().StartCompute( pPath );
+    boost::shared_ptr< DEC_Agent_Path > pPath( new DEC_Agent_Path( callerAgent, listPt, *pPathType ) );
+    pPath->ComputePath( pPath );
     return pPath;
 }
 

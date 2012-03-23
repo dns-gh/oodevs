@@ -63,6 +63,7 @@ public:
     virtual void CleanAfterComputation();
     virtual bool NeedRefine() const;
     virtual bool UseStrictClosest() const;
+    void ComputePath( boost::shared_ptr< DEC_Path_ABC > pPath );
     //@}
 
     //! @name Accessors
