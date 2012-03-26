@@ -36,11 +36,12 @@ using namespace urbanLocation;
 // Created: SLG 2010-04-08
 // -----------------------------------------------------------------------------
 PHY_RolePion_UrbanLocation::PHY_RolePion_UrbanLocation( MIL_Agent_ABC& pion )
-    : owner_      ( pion )
-    , urbanObject_( 0 )
-    , delegate_   ( new OutsideUrbanBlockPosition() )
-    , isInCity_   ( false )
-    , isFlying_   ( false )
+    : owner_       ( pion )
+    , urbanObject_ ( 0 )
+    , delegate_    ( new OutsideUrbanBlockPosition() )
+    , isInCity_    ( false )
+    , isFlying_    ( false )
+    , hasCollision_( false )
 {
     // NOTHING
 }
@@ -299,4 +300,22 @@ void PHY_RolePion_UrbanLocation::Land()
     isFlying_ = false;
     if( urbanObject_ )
         delegate_.reset( new InsideUrbanBlockPosition( *urbanObject_ ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_UrbanLocation::SetInhabitantCollision
+// Created: LGY 2012-03-26
+// -----------------------------------------------------------------------------
+void PHY_RolePion_UrbanLocation::SetInhabitantCollision( bool value )
+{
+    hasCollision_ = value;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_UrbanLocation::HasInhabitantCollision
+// Created: LGY 2012-03-26
+// -----------------------------------------------------------------------------
+bool PHY_RolePion_UrbanLocation::HasInhabitantCollision() const
+{
+    return hasCollision_;
 }

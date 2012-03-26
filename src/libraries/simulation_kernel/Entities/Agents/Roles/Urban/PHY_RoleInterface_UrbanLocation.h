@@ -40,6 +40,7 @@ public:
     //@{
     virtual void MagicMove( MT_Vector2D vPosition ) = 0;
     virtual double ComputeUrbanProtection( const PHY_DotationCategory& dotationCategory ) const = 0;
+    virtual void SetInhabitantCollision( bool value ) = 0;
     virtual MT_Vector2D GetFirerPosition( MIL_Agent_ABC& target ) const = 0;
     virtual MT_Vector2D GetTargetPosition( MIL_Agent_ABC& target ) const = 0;
     virtual double ComputeDistanceInsideSameUrbanBlock( MIL_Agent_ABC& target  ) const = 0;
@@ -52,6 +53,7 @@ public:
     virtual const UrbanObjectWrapper* GetCurrentUrbanBlock() const = 0;
     virtual bool IsInCity() const = 0;
     virtual bool CanMount() const = 0;
+    virtual bool HasInhabitantCollision() const = 0;
     //@}
 };
 

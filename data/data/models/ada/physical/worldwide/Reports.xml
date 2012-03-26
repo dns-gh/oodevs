@@ -650,5 +650,7 @@
   <report category="operational" id="457" message="Under fire: %1">
     <parameter type="ResourceType"/>
   </report>
+  <report category="operational" id="458" message="Speed limited by population"/>
+  <report category="operational" id="459" message="End of speed limited by population"/>
 </reports>
-<!-- signature="1683269099" -->
+<!-- signature="4035859821" -->

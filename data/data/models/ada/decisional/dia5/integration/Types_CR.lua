@@ -470,4 +470,6 @@ eRC_DebutDevalorisation = 454
 eRC_FinDevalorisation = 455
 eRC_TrafficablePositionFindingInZone = 456
 eRC_PrisSousTirMunition = 457
-eNbr = 458
+eRC_UrbanCollisionStarted = 458
+eRC_UrbanCollisionStopped = 459
+eNbr = 460

@@ -66,6 +66,7 @@ public:
     //@{
     virtual void MagicMove( MT_Vector2D vPosition );
     virtual double ComputeUrbanProtection( const PHY_DotationCategory& dotationCategory ) const;
+    virtual void SetInhabitantCollision( bool value );
     virtual MT_Vector2D GetFirerPosition( MIL_Agent_ABC& target ) const;
     virtual MT_Vector2D GetTargetPosition( MIL_Agent_ABC& target ) const;
     virtual double ComputeDistanceInsideSameUrbanBlock( MIL_Agent_ABC& target ) const;
@@ -92,6 +93,7 @@ public:
     //@{
     virtual const UrbanObjectWrapper* GetCurrentUrbanBlock() const;
     virtual bool IsInCity() const;
+    virtual bool HasInhabitantCollision() const;
     //@}
 
     //! @name Serialization
@@ -107,6 +109,7 @@ private:
     std::auto_ptr< UrbanBlockPosition_ABC > delegate_;
     bool                                    isInCity_;
     bool                                    isFlying_;
+    bool                                    hasCollision_;
     //@}
 };
 

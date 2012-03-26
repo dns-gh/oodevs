@@ -11,6 +11,7 @@
 #define __CrowdCapacity_h_
 
 #include "ObjectCapacity_ABC.h"
+#include "MIL_InteractiveContainer_ABC.h"
 #include "MIL.h"
 #include <boost/serialization/export.hpp>
 
@@ -24,12 +25,13 @@ class MIL_Entity_ABC;
 // Created: JCR 2008-06-02
 // =============================================================================
 class CrowdCapacity : public ObjectCapacity_ABC
+                    , public MIL_InteractiveContainer_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
              CrowdCapacity();
-    explicit CrowdCapacity( const MIL_PopulationType& type, double density );
+             CrowdCapacity( const MIL_PopulationType& type, double density );
     virtual ~CrowdCapacity();
     //@}
 
@@ -44,6 +46,10 @@ public:
     //@{
     virtual void Register( MIL_Object_ABC& object );
     virtual void Instanciate( MIL_Object_ABC& object ) const;
+
+    virtual void ProcessAgentEntering( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
+    virtual void ProcessAgentExiting( MIL_Object_ABC& object, MIL_Agent_ABC& agent );
+
     double ApplySpeedPolicy( const MIL_Entity_ABC& entity ) const;
     double GetDensity() const;
     void SetDensityFactor( double densityFactor );

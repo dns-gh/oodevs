@@ -650,5 +650,7 @@
   <report category="operational" id="457" message="Pris sous tir de: %1">
     <parameter type="ResourceType"/>
   </report>
+  <report category="operational" id="458" message="Vitesse limitée par population"/>
+  <report category="operational" id="459" message="Fin de vitesse limitée par population"/>
 </reports>
-<!-- signature="3584952764" -->
+<!-- signature="4220127804" -->

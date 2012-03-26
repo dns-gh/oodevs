@@ -143,6 +143,8 @@ public:
         eReport_StartUndeploy,
         eReport_DifficultMovementProgression,
         eReport_UnderIndirectFire,
+        eReport_UrbanCollisionStarted,
+        eReport_UrbanCollisionStopped,
         eNbrReport
     };
 
@@ -606,6 +608,8 @@ public:
         eRC_FinDevalorisation,
         eRC_TrafficablePositionFindingInZone,
         eRC_PrisSousTirMunition,
+        eRC_UrbanCollisionStarted,
+        eRC_UrbanCollisionStopped,
         eLast
     };
     //@}
