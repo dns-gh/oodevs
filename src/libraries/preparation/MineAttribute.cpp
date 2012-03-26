@@ -51,7 +51,7 @@ MineAttribute::~MineAttribute()
 // -----------------------------------------------------------------------------
 void MineAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
 {
-    displayer.Display( tools::translate( "Object", "Mining:" ), density_.value_ * Units::percentage );
+    displayer.Display( tools::translate( "Object", "Improvable:" ), density_.value_ * Units::percentage );
 }
 
 // -----------------------------------------------------------------------------
@@ -78,5 +78,5 @@ void MineAttribute::SetDensity( float density )
 // -----------------------------------------------------------------------------
 void MineAttribute::CreateDictionary( kernel::PropertiesDictionary& dico )
 {
-    dico.Register( *this, tools::translate( "MineAttribute", "Info/Mine parameters/Density" ), density_ );
+    dico.Register( *this, tools::translate( "MineAttribute", "Info/Improvable/Value" ), density_ );
 }
