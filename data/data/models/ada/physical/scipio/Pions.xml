@@ -648,7 +648,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Equipe Reco" id="22" name="ASS . Equipe Reco Mortier" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/field artillery/target acquisition"/>
+    <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/field artillery/target acquisition/colt fist/dismounted"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="VAB VIT"/>
     </equipments>
@@ -685,10 +685,10 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="23" name="ASS . Section Mortier 120" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery"/>
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/mortar"/>
     <equipments>
-      <equipment count="4" crew="6" loadable="true" major="true" type="120 RTF1"/>
-      <equipment count="4" crew="4" type="VAB 7,62"/>
+      <equipment count="4" crew="5" loadable="true" major="true" type="120 RTF1"/>
+      <equipment count="4" crew="3" type="VAB 7,62"/>
     </equipments>
     <sensors-range range="1500"/>
     <equipments-range range="28000"/>
@@ -1034,7 +1034,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.PC" id="34" name="ASS . PC Batterie Mortier" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="i" nature-app6="combat/field artillery"/>
+    <nature atlas-nature="Vehicule" level="i" nature-app6="combat/field artillery/mortar"/>
     <equipments>
       <equipment count="1" crew="4" major="true" type="VAB PC 7.62"/>
       <equipment count="1" crew="2" type="VTC P4"/>
@@ -3175,7 +3175,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="108" name="ASS . Artillerie Animation AUF1" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/mortar/self-propelled wheeled"/>
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/howiltzer gun/self-propelled"/>
     <equipments>
       <equipment count="4" crew="4" major="true" type="Char AUF1 Animation"/>
     </equipments>
@@ -3866,9 +3866,10 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="130" name="ASS . Groupe Mortier 120 OFF 2 pieces" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery"/>
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/mortar"/>
     <equipments>
-      <equipment count="3" crew="3" major="true" type="BMP 1 + AT4"/>
+      <equipment count="2" crew="5" loadable="true" major="true" type="120 RTF1"/>
+      <equipment count="2" crew="3" type="VAB 7,62"/>
     </equipments>
     <sensors-range range="5000"/>
     <equipments-range range="2500"/>
@@ -3902,7 +3903,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="131" name="ASS . Groupe Mortier 120 OFF 3 pieces" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery"/>
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/mortar"/>
     <equipments>
       <equipment count="3" crew="5" loadable="true" major="true" type="120 RTF1"/>
       <equipment count="3" crew="3" type="VAB 7,62"/>
@@ -3938,7 +3939,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="132" name="ASS . Groupe Mortier 120 S/OFF 3 pieces" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery"/>
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/mortar"/>
     <equipments>
       <equipment count="3" crew="5" loadable="true" major="true" type="120 RTF1"/>
       <equipment count="3" crew="3" type="VAB 7,62"/>
@@ -3974,10 +3975,10 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="133" name="ASS . Groupe Mortier 120 OFF 4 pieces" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery"/>
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/mortar"/>
     <equipments>
-      <equipment count="4" crew="4" loadable="true" major="true" type="120 RTF1"/>
-      <equipment count="4" crew="4" type="VAB 7,62"/>
+      <equipment count="4" crew="5" loadable="true" major="true" type="120 RTF1"/>
+      <equipment count="4" crew="3" type="VAB 7,62"/>
     </equipments>
     <sensors-range range="1500"/>
     <equipments-range range="12800"/>
@@ -4010,10 +4011,10 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="134" name="ASS . Groupe Mortier 120 S/OFF 4 pieces" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery"/>
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/mortar"/>
     <equipments>
-      <equipment count="4" crew="4" loadable="true" major="true" type="120 RTF1"/>
-      <equipment count="4" crew="4" type="VAB 7,62"/>
+      <equipment count="4" crew="5" loadable="true" major="true" type="120 RTF1"/>
+      <equipment count="4" crew="3" type="VAB 7,62"/>
     </equipments>
     <sensors-range range="1500"/>
     <equipments-range range="12800"/>
@@ -4046,10 +4047,10 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="135" name="ASS . Groupe Mortier 120 S/OFF 2 pieces" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery"/>
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/mortar"/>
     <equipments>
-      <equipment count="2" crew="6" loadable="true" major="true" type="120 RTF1"/>
-      <equipment count="2" crew="2" type="VAB 7,62"/>
+      <equipment count="2" crew="5" loadable="true" major="true" type="120 RTF1"/>
+      <equipment count="2" crew="3" type="VAB 7,62"/>
     </equipments>
     <sensors-range range="1500"/>
     <equipments-range range="12800"/>
@@ -4115,7 +4116,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.PC" id="137" name="ASS . PC Batterie Mortier 120" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="i" nature-app6="combat/field artillery/howiltzer gun/light"/>
+    <nature atlas-nature="Vehicule" level="i" nature-app6="combat/field artillery/mortar"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="VAB PC 12.7"/>
       <equipment count="2" crew="1" type="TRM 10000"/>
@@ -5454,10 +5455,10 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="182" name="ASS . Section Mortier 120 OFF 2 pcs Pour SIC" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/howiltzer gun/light"/>
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/mortar"/>
     <equipments>
-      <equipment count="2" crew="6" loadable="true" major="true" type="120 RTF1"/>
-      <equipment count="2" crew="2" type="VAB 7,62"/>
+      <equipment count="2" crew="5" loadable="true" major="true" type="120 RTF1"/>
+      <equipment count="2" crew="3" type="VAB 7,62"/>
     </equipments>
     <sensors-range range="1500"/>
     <equipments-range range="12800"/>
@@ -5490,10 +5491,10 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="183" name="ASS . Section Mortier 120 SOFF 2 pcs Pour SIC" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/howiltzer gun/light"/>
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/mortar"/>
     <equipments>
-      <equipment count="2" crew="6" loadable="true" major="true" type="120 RTF1"/>
-      <equipment count="2" crew="2" type="VAB 7,62"/>
+      <equipment count="2" crew="5" loadable="true" major="true" type="120 RTF1"/>
+      <equipment count="2" crew="3" type="VAB 7,62"/>
     </equipments>
     <sensors-range range="1500"/>
     <equipments-range range="12800"/>
@@ -5526,7 +5527,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="184" name="ASS . Section Mortier 120 OFF 3 pcs Pour SIC" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/howiltzer gun/light"/>
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/mortar"/>
     <equipments>
       <equipment count="3" crew="5" loadable="true" major="true" type="120 RTF1"/>
       <equipment count="3" crew="3" type="VAB 7,62"/>
@@ -5562,9 +5563,9 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="185" name="ASS . Section Mortier 120 SOFF 3 pcs Pour SIC" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/howiltzer gun/light"/>
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/mortar"/>
     <equipments>
-      <equipment count="3" crew="3" loadable="true" major="true" type="120 RTF1"/>
+      <equipment count="3" crew="5" loadable="true" major="true" type="120 RTF1"/>
       <equipment count="3" crew="3" type="VAB 7,62"/>
     </equipments>
     <sensors-range range="1500"/>
@@ -5598,10 +5599,10 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="186" name="ASS . Section Mortier 120 OFF 4 pcs Pour SIC" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/howiltzer gun/light"/>
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/mortar"/>
     <equipments>
-      <equipment count="4" crew="4" loadable="true" major="true" type="120 RTF1"/>
-      <equipment count="4" crew="4" type="VAB 7,62"/>
+      <equipment count="4" crew="5" loadable="true" major="true" type="120 RTF1"/>
+      <equipment count="4" crew="3" type="VAB 7,62"/>
     </equipments>
     <sensors-range range="1500"/>
     <equipments-range range="12800"/>
@@ -5634,10 +5635,10 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="187" name="ASS . Section Mortier 120 SOFF 4 pcs Pour SIC" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/howiltzer gun/light"/>
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/mortar"/>
     <equipments>
-      <equipment count="4" crew="4" loadable="true" major="true" type="120 RTF1"/>
-      <equipment count="4" crew="4" type="VAB 7,62"/>
+      <equipment count="4" crew="5" loadable="true" major="true" type="120 RTF1"/>
+      <equipment count="4" crew="3" type="VAB 7,62"/>
     </equipments>
     <sensors-range range="1500"/>
     <equipments-range range="12800"/>
@@ -5851,7 +5852,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Equipe Reco" id="193" name="ASS . PC Equipe Reco Mortier" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery"/>
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/target acquisition/colt fist/dismounted"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="VAB VIT"/>
     </equipments>
@@ -6690,7 +6691,7 @@
     <efficiencies combat="20" combat-support="20" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.INF.PC" id="219" name="ABC . Patrouille SRR CDT" type="Pion INF">
+  <unit decisional-model="Masalife.INF.PC" id="219" name="INF . Patrouille SRR CDT" type="Pion INF">
     <nature atlas-nature="PC" level="ooo" nature-app6="combat/reconnaissance"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="VBL 7,62"/>
@@ -7949,7 +7950,7 @@
     <efficiencies combat="30" combat-support="70" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="70"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ABC.Milan" id="261" name="ABC . Patrouille SRR ACMP" type="Pion ABC">
+  <unit decisional-model="Masalife.ABC.Milan" id="261" name="INF . Patrouille SRR ACMP" type="Pion ABC">
     <nature atlas-nature="Blinde" level="oo" nature-app6="combat/anti armor"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="VBL MILAN"/>
@@ -7978,7 +7979,7 @@
     <efficiencies combat="30" combat-support="70" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="70"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ABC.Milan" id="262" name="ABC . Patrouille SRR 2SOFF" type="Pion ABC">
+  <unit decisional-model="Masalife.ABC.Milan" id="262" name="INF . Patrouille SRR 2SOFF" type="Pion ABC">
     <nature atlas-nature="PC" level="oo" nature-app6="combat/reconnaissance"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="VBL ERYX"/>
@@ -8008,7 +8009,7 @@
     <efficiencies combat="30" combat-support="70" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="70"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ABC.Milan" id="263" name="ABC . Patrouille SRR 1SOFF" type="Pion ABC">
+  <unit decisional-model="Masalife.ABC.Milan" id="263" name="INF . Patrouille SRR 1SOFF" type="Pion ABC">
     <nature atlas-nature="PC" level="oo" nature-app6="combat/reconnaissance"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="VBL ERYX"/>
@@ -16198,7 +16199,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.Appui Mortier" id="549" name="HUMUS - INF . Grp mortier 82" type="Pion INF">
-    <nature atlas-nature="ASS" level="oo" nature-app6="combat/field artillery/howiltzer gun/light"/>
+    <nature atlas-nature="ASS" level="oo" nature-app6="combat/field artillery/mortar"/>
     <equipments>
       <equipment count="3" crew="2" loadable="true" major="true" type="Equipe Mortier 82 H"/>
       <equipment count="9" crew="1" loadable="true" type="Fantassin AK47"/>
@@ -16229,7 +16230,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.Appui Mortier" id="550" name="HUMUS - INF . Grp mortier 60" type="Pion INF">
-    <nature atlas-nature="ASS" level="oo" nature-app6="combat/field artillery/howiltzer gun/light"/>
+    <nature atlas-nature="ASS" level="oo" nature-app6="combat/field artillery/mortar"/>
     <equipments>
       <equipment count="3" crew="3" loadable="true" type="Fantassin AK47"/>
       <equipment count="3" crew="2" major="true" type="BTR 60 PB"/>
@@ -16648,7 +16649,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.Appui Mortier" id="564" name="GLAISE - INF . Groupe Mortier 81" type="Pion INF">
-    <nature atlas-nature="ASS" level="oo" nature-app6="combat/field artillery/howiltzer gun/light"/>
+    <nature atlas-nature="ASS" level="oo" nature-app6="combat/field artillery/mortar"/>
     <equipments>
       <equipment count="2" crew="3" type="BTR 70"/>
       <equipment count="2" crew="3" loadable="true" major="true" type="Eqp Mortier 81 glaise"/>
@@ -17469,7 +17470,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ABC.EI" id="592" name="GLAISE - ABC . Peloton SCORPION" type="Pion ABC">
-    <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/track"/>
+    <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/wheeled"/>
     <equipments>
       <equipment count="3" crew="3" major="true" type="SCORPION"/>
     </equipments>
@@ -19537,4 +19538,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="0743474133" -->
+<!-- signature="2045609674" -->
