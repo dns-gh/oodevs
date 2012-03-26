@@ -21,7 +21,7 @@ using namespace kernel;
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
 MineAttribute::MineAttribute( kernel::PropertiesDictionary& dico )
-    : density_                 ( 1, Units::percentage )
+    : density_( 0, Units::percentage )
 {
     CreateDictionary( dico );
 }
@@ -31,7 +31,7 @@ MineAttribute::MineAttribute( kernel::PropertiesDictionary& dico )
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
 MineAttribute::MineAttribute( xml::xistream& xis, kernel::PropertiesDictionary& dico )
-    : density_     ( xis.attribute< float >( "density", 1. ) * 100., Units::percentage )
+    : density_     ( xis.attribute< float >( "density", 0. ) * 100., Units::percentage )
 {
     CreateDictionary( dico );
 }
@@ -60,7 +60,7 @@ void MineAttribute::DisplayInTooltip( Displayer_ABC& displayer ) const
 // -----------------------------------------------------------------------------
 void MineAttribute::SerializeAttributes( xml::xostream& xos ) const
 {
-    xos << xml::start( "mine" ) << xml::attribute( "density", density_.value_ / 100. ) << xml::end;
+    xos << xml::start( "mine" ) << xml::attribute( "density", ( density_.value_ != 0 ) ? density_.value_ / 100. : 0. ) << xml::end;
 }
 
 // -----------------------------------------------------------------------------

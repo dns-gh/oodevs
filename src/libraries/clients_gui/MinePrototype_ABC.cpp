@@ -23,10 +23,10 @@ using namespace gui;
 // Created: SBO 2007-02-08
 // -----------------------------------------------------------------------------
 MinePrototype_ABC::MinePrototype_ABC( QWidget* parent )
-    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::MinePrototype_ABC", "Mine parameters" ) )
+    : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::MinePrototype_ABC", "Improvable" ) )
 {
-    densityLabel_ = new QLabel( tools::translate( "gui::MinePrototype_ABC", "Density:" ), this );
-    density_ = new LoadableSpinBox( 1, 100, 1, this );
+    densityLabel_ = new QLabel( tools::translate( "gui::MinePrototype_ABC", "Value:" ), this );
+    density_ = new LoadableSpinBox( 0, 100, 1, this );
     density_->setSuffix( kernel::Units::percentage.AsString() );
     density_->setValue( 100 );
 }
