@@ -4976,6 +4976,9 @@
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_ActionDemineObject.h">
       <Filter>Source Files\Entities\Agents\Actions\Objects</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Specialisations\LOG\MIL_LogisticVisitors.h">
+      <Filter>Source Files\Entities\Specialisations\LOG</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\simulation_kernel\Network\NET_AsnException.inl">

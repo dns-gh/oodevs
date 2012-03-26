@@ -11,6 +11,7 @@
 #define __MIL_VisitableEntity_ABC_h_
 
 template< typename T > class MIL_EntityVisitor_ABC;
+class MIL_EntitiesVisitor_ABC;
 
 // =============================================================================
 /** @class  MIL_VisitableEntity_ABC
@@ -31,6 +32,7 @@ public:
     //! @name Operations
     //@{
     virtual void Apply( MIL_EntityVisitor_ABC< T >& visitor ) const = 0;
+    virtual void Apply( MIL_EntitiesVisitor_ABC& visitor ) const = 0;
     //@}
 };
 

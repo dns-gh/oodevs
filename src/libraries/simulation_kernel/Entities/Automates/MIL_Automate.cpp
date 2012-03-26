@@ -1244,6 +1244,17 @@ void MIL_Automate::Apply( MIL_EntityVisitor_ABC< MIL_AgentPion >& visitor ) cons
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Automate::Apply
+// Created: NLD 2012-03-20
+// -----------------------------------------------------------------------------
+void MIL_Automate::Apply( MIL_EntitiesVisitor_ABC& visitor ) const
+{
+    if( visitor.Visit( *this ) )
+        for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
+            visitor.Visit( **it );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Automate::Apply2
 // Created: NLD 2011-08-03
 // -----------------------------------------------------------------------------
