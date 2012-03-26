@@ -812,10 +812,6 @@
         <translation type="unfinished">Cancelar</translation>
     </message>
     <message>
-        <source>Supply stocks</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Ok</source>
         <translation type="unfinished">Ok</translation>
     </message>
@@ -832,8 +828,12 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Generate Quotas</source>
-        <translation type="unfinished"></translation>
+        <source>Edit Stocks</source>
+        <translation>Editer les stocks</translation>
+    </message>
+    <message>
+        <source>Edit Quotas</source>
+        <translation>Editer les quotas</translation>
     </message>
 </context>
 <context>
@@ -2132,6 +2132,17 @@
     </message>
 </context>
 <context>
+    <name>StocksEditionDialog</name>
+    <message>
+        <source>Stocks Edition</source>
+        <translation type="unfinished">Edition des stocks</translation>
+    </message>
+    <message>
+        <source>Quotas Edition</source>
+        <translation type="unfinished">Edition des quotas</translation>
+    </message>
+</context>
+<context>
     <name>SuccessFactorConditionItem</name>
     <message>
         <source>equals to</source>
@@ -2260,13 +2271,6 @@
     <message>
         <source>Delete</source>
         <translation>Borrar</translation>
-    </message>
-</context>
-<context>
-    <name>SupplyStocksDialog</name>
-    <message>
-        <source>Supply stocks</source>
-        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
