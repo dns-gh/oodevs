@@ -29,6 +29,7 @@ BuildableCapacity::BuildableCapacity()
     , dotation_( 0 )
     , nFullNbrDotation_( 0 )
     , unitType_( ConstructionCapacity::eRaw )
+    , finalised_( false )
 {
     // NOTHING
 }
@@ -42,6 +43,7 @@ BuildableCapacity::BuildableCapacity( const BuildableCapacity& from )
     , dotation_( from.dotation_ )
     , nFullNbrDotation_( from.nFullNbrDotation_ )
     , unitType_( from.unitType_ )
+    , finalised_( false )
 {
     // NOTHING
 }
@@ -55,6 +57,7 @@ BuildableCapacity::BuildableCapacity( const PHY_ConsumptionType& consumption, Co
     , dotation_( 0 )
     , nFullNbrDotation_( 0 )
     , unitType_( type )
+    , finalised_( false )
 {
     xis >> xml::optional
         >> xml::start( "resources" )
@@ -99,7 +102,8 @@ void BuildableCapacity::load( MIL_CheckPointInArchive& ar, const unsigned int )
     ar >> consumptionId
        >> dotationId
        >> nFullNbrDotation_
-       >> unitType_;
+       >> unitType_
+       >> finalised_;
     default_  = PHY_ConsumptionType::FindConsumptionType( consumptionId );
     if( !default_ )
         throw std::runtime_error( __FUNCTION__ " Unknown consumption category" );
@@ -118,7 +122,8 @@ void BuildableCapacity::save( MIL_CheckPointOutArchive& ar, const unsigned int )
     ar << (const unsigned int&)default_->GetID()
        << (const unsigned int&)( dotation_ ? dotation_->GetMosID() : 0 )
        << nFullNbrDotation_
-       << unitType_;
+       << unitType_
+       << finalised_;
 }
 
 // -----------------------------------------------------------------------------
