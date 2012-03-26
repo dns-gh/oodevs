@@ -3619,7 +3619,7 @@
                       sharing="Neither">
             <objectClass name="HLAfederate"
                          semantics="This object class shall contain RTI state variables         relating to a joined federate. The RTI shall publish it         and shall register one object instance for each joined         federate in a federation. Dynamic attributes that shall         be contained in an object instance shall be updated         periodically, where the period should be determined by         an interaction of the class HLAmanager.         HLAfederate.HLAadjust.HLAsetTiming. If this value is         never set or is set to zero, no periodic up-date shall         be performed by the RTI."
-                         sharing="Publish">
+                         sharing="Neither">
                <attribute dataType="HLAhandle" dimensions="Federate" name="HLAfederateHandle"
                           order="Receive"
                           ownership="NoTransfer"
@@ -3859,7 +3859,7 @@
             </objectClass>
             <objectClass name="HLAfederation"
                          semantics="This object class shall contain RTI state variables         relating to a federation execution. The RTI shall         publish it and shall register one object instance for         the federation execution. It shall not automatically         update the values of the instance attributes; a joined         federate shall use a Request Attribute Value Update         service to obtain values for the instance attributes."
-                         sharing="Publish">
+                         sharing="Neither">
                <attribute dataType="HLAunicodeString" dimensions="NA" name="HLAfederationName"
                           order="Receive"
                           ownership="NoTransfer"

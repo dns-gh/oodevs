@@ -29,8 +29,8 @@ subscribeObjectClassAttributes yes
 unsubscribeObjectClassAttributes no
 subscribeInteractionClass yes
 unsubscribeInteractionClass no
-startRegistrationForObjectClass yes
-stopRegistrationForObjectClass yes
+startRegistrationForObjectClass no
+stopRegistrationForObjectClass no
 turnInteractionsOn no
 turnInteractionsOff no
 reserveObjectInstanceName yes
