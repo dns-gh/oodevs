@@ -79,21 +79,31 @@ void Stocks::ReadDotation( xml::xistream& xis, const tools::Resolver_ABC< Dotati
 // -----------------------------------------------------------------------------
 void Stocks::SetDotation( const kernel::DotationType& type, unsigned int quantity, bool add )
 {
+    if( !item_ )
+        return;
+
     Dotation* pDotation = Find( type.GetId() );
     if( pDotation )
     {
         if( add )
             pDotation->quantity_ += quantity;
         else
+        {
             pDotation->quantity_ = quantity;
+            if( quantity == 0 )
+            {
+                item_->RemoveDotation( type );
+                Remove( type.GetId() );
+            }
+        }
     }
-    else
+    else if( quantity > 0 )
     {
         Dotation* pDotation = new Dotation( type, quantity );
         item_->AddDotation( *pDotation );
         Register( pDotation->type_.GetId(), *pDotation );
-        controller_.Update( *this );
     }
+    controller_.Update( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -102,15 +112,16 @@ void Stocks::SetDotation( const kernel::DotationType& type, unsigned int quantit
 // -----------------------------------------------------------------------------
 void Stocks::SerializeAttributes( xml::xostream& xos ) const
 {
-    if( elements_.empty() )
+    if( !IsToSerialize() )
         return;
     xos << xml::start( "stocks" );
     for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
-    {
-        xos << xml::start( "resource" );
-        it->second->SerializeAttributes( xos );
-        xos << xml::end;
-    }
+        if( it->second->quantity_ > 0 )
+        {
+            xos << xml::start( "resource" );
+            it->second->SerializeAttributes( xos );
+            xos << xml::end;
+        }
     xos << xml::end;
 }
 
@@ -154,4 +165,16 @@ void Stocks::ComputeWeightAndVolume( const std::string& dotationNature, double& 
             }
         }
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Stocks::IsToSerialize
+// Created: MMC 2012-03-23
+// -----------------------------------------------------------------------------
+bool Stocks::IsToSerialize() const
+{
+    for( CIT_Elements it = elements_.begin(); it != elements_.end(); ++it )
+        if( it->second->quantity_ > 0 )
+            return true;
+    return false;
 }

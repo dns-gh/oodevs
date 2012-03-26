@@ -64,6 +64,7 @@ private:
     void CreateDictionary( kernel::Entity_ABC& entity, kernel::PropertiesDictionary& dico );
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     void ReadDotation( xml::xistream& xis, const tools::Resolver_ABC< kernel::DotationType, std::string >& resolver );
+    bool IsToSerialize() const;
     //@}
 
 private:

@@ -831,6 +831,10 @@
         <source>Logistic</source>
         <translation>Logistique</translation>
     </message>
+    <message>
+        <source>Generate Quotas</source>
+        <translation>Générer les quotas</translation>
+    </message>
 </context>
 <context>
     <name>LongNameEditor</name>

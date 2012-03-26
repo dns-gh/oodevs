@@ -831,6 +831,10 @@
         <source>Logistic</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Generate Quotas</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>LongNameEditor</name>

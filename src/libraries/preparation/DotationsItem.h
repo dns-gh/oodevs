@@ -42,6 +42,7 @@ public:
     tools::Iterator< const Dotation& > CreateIterator() const;
     void AddDotation( const kernel::DotationType& dotation, unsigned long quantity );
     void AddDotation( const Dotation& dotation );
+    void RemoveDotation( const kernel::DotationType& dotation );
     void Clear();
     void Update();
     unsigned long CountDotations() const;

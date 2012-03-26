@@ -14,6 +14,7 @@
 #include "clients_kernel/SafePointer.h"
 
 class StaticModel;
+class LogisticHierarchiesBase;
 
 namespace gui
 {
@@ -92,6 +93,8 @@ private:
     void FillSupplyRequirements( const kernel::Entity_ABC& entity, const E_StockCategory logType, T_Requirements& requirements );
     void ComputeAvailableCapacity( const kernel::Agent_ABC& entStock, const kernel::DotationType& dotationType, double& weight, double& volume );
     double DoDotationDistribution( std::set< const kernel::Agent_ABC* >& entStocks, const kernel::DotationType& dotationType, double quantity );
+    void GenerateLogChildrenQuotas( const LogisticHierarchiesBase& logHierarchy );
+    void SetQuotas( const LogisticHierarchiesBase& logHierarchy, const T_Requirements& requirements );
     //@}
 
 private slots:
@@ -115,6 +118,7 @@ private:
     QTableView* tableView_;
     QPushButton* validateButton_;
     QPushButton* cancelButton_;
+    QCheckBox* quotasCheckBox_;
     //@}
 };
 
