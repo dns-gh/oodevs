@@ -12,6 +12,7 @@
 #include "meteo/PHY_Lighting.h"
 #include "meteo/PHY_Precipitation.h"
 #include "MIL_AgentServer.h"
+#include "PHY_MeteoDataManager.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "Tools/MIL_Tools.h"
@@ -150,7 +151,7 @@ void PHY_LocalMeteo::UpdateMeteoPatch( int date, weather::PHY_RawVisionData_ABC&
     }
     else if( bIsPatched_ && !bNeedToBePatched )
     {
-        dataVision.UnregisterMeteoPatch( geometry::Point2d( upLeft_.rX_, upLeft_.rY_) , geometry::Point2d( downRight_.rX_, downRight_.rY_ ) );
+        dataVision.UnregisterMeteoPatch( geometry::Point2d( upLeft_.rX_, upLeft_.rY_), geometry::Point2d( downRight_.rX_, downRight_.rY_ ), meteo );
         bIsPatched_ = false;
         modified_ = false;
         SendDestruction();
@@ -196,4 +197,13 @@ void PHY_LocalMeteo::SendDestruction() const
     client::ControlLocalWeatherDestruction msg;
     msg().mutable_weather()->set_id( id_ );
     msg.Send( NET_Publisher_ABC::Publisher() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_LocalMeteo::IsPatched
+// Created: ABR 2012-03-21
+// -----------------------------------------------------------------------------
+bool PHY_LocalMeteo::IsPatched() const
+{
+    return bIsPatched_;
 }

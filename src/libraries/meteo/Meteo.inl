@@ -156,3 +156,24 @@ bool Meteo::IsInside( const geometry::Point2f& /*point*/ ) const
 {
     return true;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Meteo::IsPatched
+// Created: ABR 2012-03-21
+// -----------------------------------------------------------------------------
+inline
+bool Meteo::IsPatched() const
+{
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Meteo::IsYounger
+// Created: ABR 2012-03-23
+// -----------------------------------------------------------------------------
+inline
+bool Meteo::IsOlder( const weather::Meteo& /*other*/ ) const
+{
+    return true;
+}
+

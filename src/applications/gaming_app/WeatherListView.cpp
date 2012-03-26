@@ -42,9 +42,9 @@ WeatherListView::~WeatherListView()
 void WeatherListView::Update( const MeteoModel& model )
 {
     Clear();
-    const weather::MeteoManager_ABC::T_MeteoSet& meteos = model.GetLocalMeteos();
+    const weather::MeteoManager_ABC::T_Meteos& meteos = model.GetLocalMeteos();
     unsigned int maxId = 0;
-    for( weather::MeteoManager_ABC::CIT_MeteoSet it = meteos.begin(); it != meteos.end(); ++it )
+    for( weather::MeteoManager_ABC::CIT_Meteos it = meteos.begin(); it != meteos.end(); ++it )
     {
         boost::shared_ptr< weather::MeteoLocal > weather = boost::shared_ptr< weather::MeteoLocal >( new weather::MeteoLocal( *static_cast< weather::MeteoLocal* >( ( *it ).get() ) ) );
         weathers_.push_back( weather );

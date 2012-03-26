@@ -30,9 +30,9 @@ class MeteoManager_ABC
 public:
     //! @name Types
     //@{
-    typedef std::set< boost::shared_ptr< Meteo > > T_MeteoSet;
-    typedef T_MeteoSet::iterator                  IT_MeteoSet;
-    typedef T_MeteoSet::const_iterator           CIT_MeteoSet;
+    typedef std::vector< boost::shared_ptr< Meteo > > T_Meteos;
+    typedef T_Meteos::iterator                       IT_Meteos;
+    typedef T_Meteos::const_iterator                CIT_Meteos;
     //@}
 
 public:
@@ -49,17 +49,17 @@ public:
     virtual void AddMeteo( weather::Meteo& element ) = 0;
     Meteo* Find( unsigned int id ) const
     {
-        for( CIT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
+        for( CIT_Meteos it = meteos_.begin(); it != meteos_.end(); ++it )
             if( ( *it )->GetId() == id )
                 return ( *it ).get();
         return 0;
     }
     bool Remove( unsigned long id )
     {
-        for( CIT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
+        for( CIT_Meteos it = meteos_.begin(); it != meteos_.end(); ++it )
             if( ( *it )->GetId() == id )
             {
-                meteos_.erase( *it );
+                meteos_.erase( it );
                 return true;
             }
         return false;
@@ -69,7 +69,7 @@ public:
 protected:
     //! @name Member data
     //@{
-    T_MeteoSet meteos_;
+    T_Meteos meteos_;
     //@}
 };
 

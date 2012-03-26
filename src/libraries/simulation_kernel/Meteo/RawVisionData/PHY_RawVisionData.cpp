@@ -11,6 +11,7 @@
 #include "PHY_RawVisionData.h"
 #include "PHY_AmmoEffect.h"
 #include "MIL_AgentServer.h"
+#include "meteo/PHY_MeteoDataManager.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_FormatString.h"
 #include "MT_Tools/MT_Ellipse.h"
@@ -104,7 +105,7 @@ void PHY_RawVisionData::RegisterMeteoPatch( const geometry::Point2d& upLeft, con
 // Name: PHY_RawVisionData::UnregisterLocalMeteoPatch
 // Created: SLG 2010-03-19
 //-----------------------------------------------------------------------------
-void PHY_RawVisionData::UnregisterMeteoPatch( const geometry::Point2d& upLeft, const geometry::Point2d& downRight )
+void PHY_RawVisionData::UnregisterMeteoPatch( const geometry::Point2d& upLeft, const geometry::Point2d& downRight, boost::shared_ptr< weather::Meteo > pMeteo )
 {
     assert( ppCells_ );
     unsigned int nXEnd = std::min( GetCol( downRight.X() ), nNbrCol_ - 1 );
@@ -118,12 +119,19 @@ void PHY_RawVisionData::UnregisterMeteoPatch( const geometry::Point2d& upLeft, c
     if( nYEnd < nYBeg )
         std::swap( nYEnd, nYBeg );
 
+    assert( MIL_AgentServer::IsInitialized() );
+    PHY_MeteoDataManager& meteoManager = MIL_AgentServer::GetWorkspace().GetMeteoDataManager();
+
     while( nXBeg <= nXEnd )
     {
         for( unsigned int y = nYBeg; y <= nYEnd; ++y )
         {
             sCell& cell = ppCells_[ nXBeg ][ y ];
-            cell.pMeteo.reset();
+            weather::Meteo* meteo = meteoManager.GetLocalWeather( geometry::Point2f( static_cast< float >( nXBeg * rCellSize_ ), static_cast< float >( y * rCellSize_ ) ), pMeteo );
+            if( meteo && cell.pMeteo.get() != meteo )
+                cell.pMeteo.reset( meteo );
+            else if( !meteo )
+                cell.pMeteo.reset();
         }
         ++nXBeg;
     }

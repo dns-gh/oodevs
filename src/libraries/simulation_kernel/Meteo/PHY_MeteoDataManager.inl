@@ -34,6 +34,5 @@ inline
 void PHY_MeteoDataManager::AddMeteo( weather::Meteo& meteo )
 {
     meteo.Update( pEphemeride_->GetLightingBase() );
-    if( ! meteos_.insert( boost::shared_ptr< weather::Meteo >( &meteo ) ).second )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
+    meteos_.push_back( boost::shared_ptr< weather::Meteo >( &meteo ) );
 }

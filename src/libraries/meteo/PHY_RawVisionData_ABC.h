@@ -35,7 +35,7 @@ public:
     //! @name Operations
     //@{
     virtual void RegisterMeteoPatch  ( const geometry::Point2d& topLeft, const geometry::Point2d& bottomRight, boost::shared_ptr< Meteo > weather ) = 0;
-    virtual void UnregisterMeteoPatch( const geometry::Point2d& topleft, const geometry::Point2d& bottomRight ) = 0;
+    virtual void UnregisterMeteoPatch( const geometry::Point2d& topleft, const geometry::Point2d& bottomRight, boost::shared_ptr< Meteo > weather ) = 0;
     //@}
 };
 
