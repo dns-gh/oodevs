@@ -9,7 +9,8 @@
     </tstamp>
 
     <property environment="env"/>
-    <property name="env.PONEY_HOME" value="//install/masa/common/dev/common/poney"/>
+    <!--property name="env.PONEY_HOME" value="//install/masa/common/dev/common/poney"/-->
+    <property name="env.PONEY_HOME" value="C:/Users/Nicolas/Documents/dev/poney/poney/"/>
     <import file="${env.PONEY_HOME}/poney.xml"/>
 
     <property name="version.project.major" value="trunk"/>

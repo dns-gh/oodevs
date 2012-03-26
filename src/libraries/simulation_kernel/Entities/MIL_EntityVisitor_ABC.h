@@ -32,4 +32,16 @@ public:
     //@}
 };
 
+class MIL_Formation;
+class MIL_Automate;
+class MIL_AgentPion;
+
+class MIL_EntitiesVisitor_ABC
+{
+public:
+    virtual bool Visit( const MIL_Formation& formation ) = 0;
+    virtual bool Visit( const MIL_Automate& automat) = 0;
+    virtual void Visit( const MIL_AgentPion& unit ) = 0;
+};
+
 #endif // __MIL_EntityVisitor_ABC_h_

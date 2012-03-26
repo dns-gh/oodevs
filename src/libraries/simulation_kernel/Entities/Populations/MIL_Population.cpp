@@ -1434,6 +1434,16 @@ void MIL_Population::Apply( MIL_EntityVisitor_ABC< MIL_PopulationElement_ABC >& 
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Population::Apply
+// Created: SBO 2006-02-24
+// -----------------------------------------------------------------------------
+void MIL_Population::Apply( MIL_EntitiesVisitor_ABC& ) const
+{
+    // Nothing
+}
+
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Population::GetKnowledge
 // Created: NLD 2005-12-01
 // -----------------------------------------------------------------------------

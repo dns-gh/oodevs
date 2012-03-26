@@ -43,7 +43,7 @@ class MIL_AutomateType : private boost::noncopyable
 public:
              MIL_AutomateType( const std::string& strName, xml::xistream& xis );
     virtual ~MIL_AutomateType();
-
+        
     //! @name Manager
     //@{
     static void Initialize( xml::xistream& xis );
@@ -77,6 +77,7 @@ public:
     //! @name Logistic
     //@{
     virtual bool IsLogistic() const;
+    virtual bool IsLogisticBase() const;
     virtual bool IsRefugee () const;
     virtual bool IsInjuredHuman() const;
     //@}

@@ -26,11 +26,53 @@
 
 class MIL_AutomateLOG;
 
+// =============================================================================
+// Visitor
+// =============================================================================
+class MIL_LogisticEntitiesVisitor : public MIL_EntitiesVisitor_ABC
+{
+public:
+    MIL_LogisticEntitiesVisitor( )
+        : initialLogisticBase_( 0 )
+    {
+    }
+
+    virtual bool Visit( const MIL_Formation& formation )
+    {
+       return ShouldVisit( formation );
+    }
+
+    virtual bool Visit( const MIL_Automate& automat)
+    {
+        return ShouldVisit( automat );
+    }
+
+    virtual void Visit( const MIL_AgentPion& )
+    {
+        // Nothing
+    }
+
+private:
+    template< typename T >
+    bool ShouldVisit( const T& entity )
+    {
+        const MIL_AutomateLOG* logisticBase = entity.GetBrainLogistic();
+        if( initialLogisticBase_ && logisticBase )
+            return false;
+        if( logisticBase )
+            initialLogisticBase_ = logisticBase;
+        return true;
+    }
+
+private:
+    const MIL_AutomateLOG* initialLogisticBase_;
+};
+
 
 // =============================================================================
 // MAINTENANCE
 // =============================================================================
-class MaintenanceTransportVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
+class MaintenanceTransportVisitor : public MIL_LogisticEntitiesVisitor
 {
     public:
         MaintenanceTransportVisitor( const PHY_ComposantePion& composante )
@@ -40,7 +82,7 @@ class MaintenanceTransportVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion 
         {
         }
 
-        void Visit( const MIL_AgentPion& tmp )
+        virtual void Visit( const MIL_AgentPion& tmp )
         {
             const PHY_RoleInterface_Maintenance* candidate = tmp.RetrieveRole< PHY_RoleInterface_Maintenance >();
             const int nNewScore = candidate!=0 ? candidate->GetAvailabilityScoreForTransport( composante_ ) : std::numeric_limits< int >::min();
@@ -52,12 +94,12 @@ class MaintenanceTransportVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion 
         }
 
     public:
-                int                       nScore_;
+                int                            nScore_;
                 PHY_RoleInterface_Maintenance* pSelected_;
-        const PHY_ComposantePion&       composante_;
+        const PHY_ComposantePion&              composante_;
 };
 
-class MaintenanceRepairVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
+class MaintenanceRepairVisitor : public MIL_LogisticEntitiesVisitor
 {
     public:
         MaintenanceRepairVisitor( const PHY_MaintenanceComposanteState& state )
@@ -87,7 +129,7 @@ class MaintenanceRepairVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
 // =============================================================================
 // MEDICAL
 // =============================================================================
-class MedicalThirdPartyEvacuationVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
+class MedicalThirdPartyEvacuationVisitor : public MIL_LogisticEntitiesVisitor
 {
     public:
         MedicalThirdPartyEvacuationVisitor( MIL_AgentPion& pion, Human_ABC& human )
@@ -109,7 +151,7 @@ class MedicalThirdPartyEvacuationVisitor : public MIL_EntityVisitor_ABC< MIL_Age
         PHY_MedicalHumanState* pState_;
 };
 
-class MedicalEvacuationVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
+class MedicalEvacuationVisitor : public MIL_LogisticEntitiesVisitor
 {
     public:
         MedicalEvacuationVisitor( const Human_ABC& human )
@@ -136,7 +178,7 @@ class MedicalEvacuationVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
               PHY_RoleInterface_Medical* pSelected_;
 };
 
-class MedicalCollectionVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
+class MedicalCollectionVisitor : public MIL_LogisticEntitiesVisitor
 {
     public:
         MedicalCollectionVisitor( const PHY_MedicalHumanState& humanState )
@@ -163,7 +205,7 @@ class MedicalCollectionVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
               PHY_RoleInterface_Medical*  pSelected_;
 };
 
-class MedicalSortingVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
+class MedicalSortingVisitor : public MIL_LogisticEntitiesVisitor
 {
     public:
         MedicalSortingVisitor()
@@ -188,7 +230,7 @@ class MedicalSortingVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
               PHY_RoleInterface_Medical*      pSelected_;
 };
 
-class MedicalHealingVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
+class MedicalHealingVisitor : public MIL_LogisticEntitiesVisitor
 {
     public:
         MedicalHealingVisitor( const PHY_MedicalHumanState& humanState )
@@ -215,7 +257,7 @@ class MedicalHealingVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
               PHY_RoleInterface_Medical*  pSelected_;
 };
 
-class MedicalCollectionAmbulanceAuthorizedToGoVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
+class MedicalCollectionAmbulanceAuthorizedToGoVisitor : public MIL_LogisticEntitiesVisitor
 {
     public:
         MedicalCollectionAmbulanceAuthorizedToGoVisitor( const PHY_MedicalCollectionAmbulance& ambulance  )
@@ -238,7 +280,7 @@ class MedicalCollectionAmbulanceAuthorizedToGoVisitor : public MIL_EntityVisitor
               bool                            bAuthorized_;
 };
 
-class SupplyStockReservationVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
+class SupplyStockReservationVisitor : public MIL_LogisticEntitiesVisitor
 {
     public:
         SupplyStockReservationVisitor( const PHY_DotationCategory& dotationCategory, double requestedQuantity )
@@ -271,7 +313,7 @@ class SupplyStockReservationVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPio
 
 };
 
-class SupplyStockReturnVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
+class SupplyStockReturnVisitor : public MIL_LogisticEntitiesVisitor
 {
     public:
         SupplyStockReturnVisitor( const PHY_DotationCategory& dotationCategory, double quantity )
@@ -302,7 +344,7 @@ class SupplyStockReturnVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
         double quantity_;
 };
 
-class SupplyStockContainerVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
+class SupplyStockContainerVisitor : public MIL_LogisticEntitiesVisitor
 {
     public:
         SupplyStockContainerVisitor( const PHY_DotationCategory& dotationCategory )
@@ -326,7 +368,7 @@ class SupplyStockContainerVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion 
               PHY_RoleInterface_Supply*   pSelected_;
 };
 
-class SupplyConvoyAvailabilityVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
+class SupplyConvoyAvailabilityVisitor : public MIL_LogisticEntitiesVisitor
 {
     public:
         SupplyConvoyAvailabilityVisitor( const PHY_DotationCategory& dotationCategory )
@@ -362,7 +404,7 @@ class SupplyConvoyAvailabilityVisitor : public MIL_EntityVisitor_ABC< MIL_AgentP
               MIL_AgentPion*         pSelected_;
 };
 
-class SupplyConvoyTransporterVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
+class SupplyConvoyTransporterVisitor : public MIL_LogisticEntitiesVisitor
 {
     public:
         SupplyConvoyTransporterVisitor( const PHY_ComposanteTypePion& type )
@@ -398,7 +440,7 @@ class SupplyConvoyTransporterVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPi
               MIL_AgentPion*          pSelected_;
 };
 
-class SupplyConvoyCapacityVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
+class SupplyConvoyCapacityVisitor : public MIL_LogisticEntitiesVisitor
 {
     public:
         SupplyConvoyCapacityVisitor()
@@ -432,7 +474,7 @@ class SupplyConvoyCapacityVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion 
         MIL_AgentPion*  pSelected_;
 };
 
-
+//??? XXX
 class PCVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
 {
     public:
@@ -455,7 +497,7 @@ class PCVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
 // FUNERAL
 // =============================================================================
 
-class FuneralPackagingResourceVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
+class FuneralPackagingResourceVisitor : public MIL_LogisticEntitiesVisitor
 {
     public:
         FuneralPackagingResourceVisitor( const logistic::FuneralPackagingResource* currentPackagingResource )
@@ -486,64 +528,6 @@ class FuneralPackagingResourceVisitor : public MIL_EntityVisitor_ABC< MIL_AgentP
         const logistic::FuneralPackagingResource* nextPackagingResource_;
         std::vector< const logistic::FuneralPackagingResource* > packagingResourcesToSearchFor_;
 };
-
-
-//$$$$$ TODO pour remplacer le bExternalTransfert
-/*
-template< typename T >
-class LogisticVisitor : public MIL_EntityVisitor_ABC< MIL_AgentPion >
-{
-public:
-    LogisticVisitor()
-        : score_    ( std::numeric_limits< int >::min() )
-        , pSelected_( 0 )
-    {
-    }
-
-    void Visit( const MIL_AgentPion& tmp )
-    {
-        //$$ TEST pas de sous hierarchie log dans log( = TC2 de la BL)
-
-        const T* candidate = tmp.RetrieveRole< T >();
-        if( !candidate )
-            return;
-
-        const int newScore = ComputeScore( *candidate );
-        if( newScore > score_ )
-        {
-            score_ = newScore;
-            pSelected_ = const_cast< T* >( candidate );
-        }
-    }
-
-protected:
-    virtual int ComputeScore( const T& role ) = 0;
-
-public:
-    T* pSelected_;
-
-private:
-    int score_;
-};
-*/
-
-/*class TestLogisticVisitor : public LogisticVisitor< PHY_RoleInterface_Maintenance >
-{
-public:
-    TestLogisticVisitor( const PHY_ComposantePion& composante )
-        : composante_( composante )
-    {
-    }
-
-private:
-    virtual int ComputeScore( const PHY_RoleInterface_Maintenance& role )
-    {
-        return role.GetAvailabilityScoreForTransport( composante_ );
-    }
-
-private:
-    const PHY_ComposantePion& composante_;
-};*/
 
 
 #endif // __MIL_LogisticVisitor_h_

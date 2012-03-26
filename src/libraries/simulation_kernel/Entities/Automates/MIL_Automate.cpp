@@ -209,7 +209,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
         pParentAutomate_->RegisterAutomate( *this );
     }
 
-    if( type.IsLogistic() )
+    if( type.IsLogisticBase() )
     {
         pBrainLogistic_.reset( new MIL_AutomateLOG( *this, PHY_LogisticLevel::logistic_base_ ) );
         pLogisticAction_.reset( new PHY_ActionLogistic<MIL_AutomateLOG>( *pBrainLogistic_.get() ) );
@@ -1217,6 +1217,17 @@ void MIL_Automate::Apply( MIL_EntityVisitor_ABC< MIL_AgentPion >& visitor ) cons
     for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
         visitor.Visit( **it );
     //$$ Manque automates_
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::Apply
+// Created: NLD 2012-03-20
+// -----------------------------------------------------------------------------
+void MIL_Automate::Apply( MIL_EntitiesVisitor_ABC& visitor ) const
+{
+    if( visitor.Visit( *this ) )
+        for( CIT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
+            visitor.Visit( **it );
 }
 
 // -----------------------------------------------------------------------------

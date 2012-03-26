@@ -87,6 +87,7 @@ public:
     //! @name Visitor
     //@{
     virtual void Apply( MIL_EntityVisitor_ABC< MIL_AgentPion >& visitor ) const;
+    virtual void Apply( MIL_EntitiesVisitor_ABC& visitor ) const;
     //@}
 
     //! @name Network

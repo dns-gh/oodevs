@@ -15,6 +15,7 @@
 #include "Entities/Agents/Units/Logistic/PHY_LogisticLevel.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
+#include "Entities/MIL_EntityVisitor_ABC.h"
 #include "Network/NET_Publisher_ABC.h"
 #include "protocol/ClientSenders.h"
 #include "simulation_kernel/FormationFactory_ABC.h"
@@ -407,9 +408,10 @@ MIL_AutomateLOG* MIL_Formation::FindLogisticManager() const
 
 namespace
 {
+    template< typename T >
     struct VisitorApplyer
     {
-        VisitorApplyer( MIL_EntityVisitor_ABC< MIL_AgentPion >& visitor)
+        VisitorApplyer( T& visitor)
             : visitor_( &visitor )
         {}
         void operator()(const MIL_Formation& f) const
@@ -420,7 +422,7 @@ namespace
         {
             f.Apply( *visitor_ );
         }
-        MIL_EntityVisitor_ABC< MIL_AgentPion >* visitor_;
+        T* visitor_;
     };
 }
 
@@ -430,9 +432,23 @@ namespace
 // -----------------------------------------------------------------------------
 void MIL_Formation::Apply( MIL_EntityVisitor_ABC< MIL_AgentPion >& visitor ) const
 {
-    VisitorApplyer applyer( visitor );
+    VisitorApplyer< MIL_EntityVisitor_ABC< MIL_AgentPion > > applyer( visitor );
     tools::Resolver< MIL_Formation >::Apply( applyer );
-    tools::Resolver< MIL_Automate >::Apply( applyer );
+    tools::Resolver< MIL_Automate  >::Apply( applyer );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Formation::Apply
+// Created: NLD 2012-03-20
+// -----------------------------------------------------------------------------
+void MIL_Formation::Apply( MIL_EntitiesVisitor_ABC& visitor ) const
+{
+    if( visitor.Visit( *this ) )
+    {
+        VisitorApplyer< MIL_EntitiesVisitor_ABC > applyer( visitor );
+        tools::Resolver< MIL_Formation >::Apply( applyer );
+        tools::Resolver< MIL_Automate  >::Apply( applyer );
+    }
 }
 
 // =============================================================================
