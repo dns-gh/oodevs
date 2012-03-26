@@ -43,6 +43,7 @@
 #include "clients_gui/LocationCreator.h"
 #include "clients_gui/ParametersLayer.h"
 #include "clients_gui/resources.h"
+#include "clients_gui/LongNameHelper.h"
 #include "protocol/SimulationSenders.h"
 #include <boost/bind.hpp>
 #include <boost/noncopyable.hpp>
@@ -862,6 +863,15 @@ void LogisticSupplyPushFlowDialog::OnRecipientSelectionChanged( Q3ListViewItem* 
     AddResourceItem();
 }
 
+namespace
+{
+    QString GetDisplayName( const kernel::Entity_ABC& entity )
+    {
+        std::string longName = LongNameHelper::GetEntityLongName( entity );
+        return longName.empty() ? entity.GetName() : longName.c_str();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: LogisticSupplyPushFlowDialog::ComputeRecipients
 // Created: MMC 2011-09-19
@@ -878,7 +888,7 @@ void LogisticSupplyPushFlowDialog::ComputeRecipients()
         {
             const kernel::AutomatType& type = automat.GetType();
             if( type.IsLogisticSupply() && &automat.Get< kernel::TacticalHierarchies >().GetTop() == &team )
-                recipientsNames_[ automat.GetName() ] = &automat;
+                recipientsNames_[ GetDisplayName( automat ) + QString( " [" ) + QString::number( automat.GetId() ) + QString( "]" ) ] = &automat;
         }
     }
 }
