@@ -72,13 +72,6 @@ ObjectPrototype_ABC::ObjectPrototype_ABC( QWidget* parent, Controllers& controll
         locationLabel_->setFrameStyle( Q3Frame::Box | Q3Frame::Sunken );
 
         locationCreator_ = new LocationCreator( position_, tr( "New object" ), layer, *this );
-
-        new QWidget( infoBox );
-        loadFromFileButton_ = new QPushButton(  tr( "Load from file" ), infoBox );
-        loadFromFileButton_->setToggleButton( true );
-        connect( loadFromFileButton_, SIGNAL( toggled( bool ) ), this, SLOT( LoadFromFile( bool ) ) );
-        new QWidget( infoBox );
-        loadFromFilePathLabel_ = new QLabel( infoBox );
     }
 
     // Attribute box
@@ -266,7 +259,6 @@ void ObjectPrototype_ABC::NotifyDeleted( const Team_ABC& team )
 // -----------------------------------------------------------------------------
 void ObjectPrototype_ABC::OnTypeChanged()
 {
-    LoadFromFile( false );
     if( objectTypes_->Count() != 0 )
     {
         const ObjectType* type = objectTypes_->GetValue();
@@ -321,50 +313,6 @@ void ObjectPrototype_ABC::Draw( const kernel::Location_ABC& location, const geom
     if( isVisible() )
         if( const kernel::ObjectType* type = objectTypes_->GetValue() )
             tools.DrawTacticalGraphics( type->GetSymbol(), location, true );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ObjectPrototype_ABC::LoadFromFile
-// Created: BCI 2011-05-09
-// -----------------------------------------------------------------------------
-void ObjectPrototype_ABC::LoadFromFile( bool mustLoadFromFile )
-{
-    loader_.reset();
-    loadFromFilePathLabel_->setText( QString::null );
-    if( mustLoadFromFile )
-    {
-        const ObjectType* type = objectTypes_->Count() != 0 ? objectTypes_->GetValue() : 0;
-        if( type )
-        {
-
-            QString filename = QFileDialog::getOpenFileName(
-                QString::null,
-                "Shapefile (*.shp)",
-                this,
-                "open file dialog",
-                tr( "Choose a file" ) );
-
-            if( !filename.isNull() )
-            {
-                try
-                {
-                    loader_.reset( new ObjectPrototypeShapeFileLoader( coordinateConverter_, this, filename, *type ) );
-                    loadFromFilePathLabel_->setText( filename );
-                } catch( const ObjectPrototypeLoader_ABC::LoadCancelledException& )
-                {
-                    //NOTHING
-                }
-                catch( const std::exception& e )
-                {
-                    QMessageBox::warning( this, tr( "Cannot load %1" ).arg( filename ), e.what(), QMessageBox::Ok, QMessageBox::NoButton );
-                }
-            }
-        }
-    }
-
-    loadFromFileButton_->setOn( loader_.get() != 0 );
-    name_->SetLoader( loader_.get() );
-    attributes_->SetLoader( loader_.get() );
 }
 
 // -----------------------------------------------------------------------------

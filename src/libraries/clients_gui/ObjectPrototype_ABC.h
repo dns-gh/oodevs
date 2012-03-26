@@ -84,7 +84,6 @@ private slots:
     //! @name Slots
     //@{
     void OnTypeChanged();
-    void LoadFromFile( bool );
     //@}
 
 private:
@@ -133,8 +132,6 @@ protected:
 private:
     kernel::Location_ABC* location_;
     std::auto_ptr< ObjectPrototypeLoader_ABC > loader_;
-    QPushButton* loadFromFileButton_;
-    QLabel* loadFromFilePathLabel_;
 };
 
 }
