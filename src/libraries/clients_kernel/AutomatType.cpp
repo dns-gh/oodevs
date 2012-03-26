@@ -146,7 +146,8 @@ bool AutomatType::HasLogistics() const
 // -----------------------------------------------------------------------------
 bool AutomatType::IsTC2() const
 {
-    return type_ == "Automate LOG TC2";
+    return type_ == "Automate LOG TC2"
+        || type_ == "Automate Organization";
 }
 
 // -----------------------------------------------------------------------------
