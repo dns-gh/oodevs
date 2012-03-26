@@ -1191,6 +1191,14 @@
         <source>Delete &apos;%1&apos;?</source>
         <translation>Borrar &quot;%1&quot; ?</translation>
     </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished">Alerta</translation>
+    </message>
+    <message>
+        <source>Unable to delete the knowledge group. At least one knowledge group must exists for each side.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ModelConsistencyDialog</name>

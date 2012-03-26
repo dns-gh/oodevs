@@ -12,6 +12,7 @@
 
 #include "tools/Resolver.h"
 #include "clients_kernel/KnowledgeGroupFactory_ABC.h"
+#include "tools/ElementObserver_ABC.h"
 
 namespace kernel
 {
@@ -37,6 +38,8 @@ class Model;
 // Created: AGE 2006-02-15
 // =============================================================================
 class KnowledgeGroupsModel : public tools::Resolver< kernel::KnowledgeGroup_ABC >
+                           , public tools::Observer_ABC
+                           , public tools::ElementObserver_ABC< kernel::KnowledgeGroup_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -48,11 +51,16 @@ public:
     //! @name Operations
     //@{
     void Purge();
-    virtual tools::Iterator< const kernel::KnowledgeGroup_ABC& > CreateIterator() const;
     void Create( kernel::Team_ABC& parent ); // LTO
     void Create( xml::xistream& xis, kernel::Team_ABC& parent, Model& model );
     void CreateSubKnowledgeGroup( kernel::KnowledgeGroup_ABC& parent ); // LTO
     void CreateSubKnowledgeGroup( xml::xistream& xis, kernel::KnowledgeGroup_ABC& parent, Model& model );
+    //@}
+
+private:
+    //! @name Operations
+    //@{
+    virtual void NotifyDeleted( const kernel::KnowledgeGroup_ABC& group );
     //@}
 
 private:

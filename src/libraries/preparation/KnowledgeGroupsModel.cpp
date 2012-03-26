@@ -24,7 +24,7 @@ KnowledgeGroupsModel::KnowledgeGroupsModel( kernel::Controllers& controllers, ke
     : controllers_( controllers )
     , knowledgeGroupFactory_( knowledgeGroupFactory ) // LTO
 {
-    // NOTHING
+    controllers_.Register( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -33,7 +33,7 @@ KnowledgeGroupsModel::KnowledgeGroupsModel( kernel::Controllers& controllers, ke
 // -----------------------------------------------------------------------------
 KnowledgeGroupsModel::~KnowledgeGroupsModel()
 {
-    // NOTHING
+    controllers_.Unregister( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -46,15 +46,6 @@ void KnowledgeGroupsModel::Purge()
 }
 
 // LTO begin
-// -----------------------------------------------------------------------------
-// Name: tools::Iterator< const kernel::KnowledgeGroup_ABC& > KnowledgeGroupsModel::CreateIterator
-// Created: AGE 2006-09-19
-// -----------------------------------------------------------------------------
-tools::Iterator< const kernel::KnowledgeGroup_ABC& > KnowledgeGroupsModel::CreateIterator() const
-{
-    throw std::runtime_error( "not implemented" );
-}
-
 // -----------------------------------------------------------------------------
 // Name: void KnowledgeGroupsModel::Create
 // Created:  FHD 2009-11-19:
@@ -117,3 +108,12 @@ void KnowledgeGroupsModel::CreateSubKnowledgeGroup( xml::xistream& xis, kernel::
     }
 }
 // LTO end
+
+// -----------------------------------------------------------------------------
+// Name: KnowledgeGroupsModel::NotifyDeleted
+// Created: LGY 2012-03-26
+// -----------------------------------------------------------------------------
+void KnowledgeGroupsModel::NotifyDeleted( const kernel::KnowledgeGroup_ABC& group )
+{
+    tools::Resolver< KnowledgeGroup_ABC >::Remove( group.GetId() );
+}
