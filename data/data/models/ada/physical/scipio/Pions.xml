@@ -267,11 +267,11 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="10" name="ASS . Section de Tir AUF1 CDS OFF" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery"/>
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/howiltzer gun/self-propelled"/>
     <equipments>
       <equipment count="4" crew="4" major="true" type="Char AUF1"/>
       <equipment count="1" crew="2" type="VTC P4"/>
-      <equipment count="1" crew="4" type="VAB ATILA"/>
+      <equipment count="1" crew="3" type="VAB ATLAS"/>
     </equipments>
     <sensors-range range="1500"/>
     <equipments-range range="28000"/>
@@ -365,7 +365,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Equipe Reco" id="13" name="ASS . Section de Reco AUF1" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery"/>
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/target acquisition/colt fist/dismounted"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="VAB VIT"/>
       <equipment count="1" crew="3" type="VAB 7,62"/>
@@ -516,7 +516,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Equipe Reco" id="18" name="ASS . Section de Reco TRF1" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery"/>
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/target acquisition/colt fist/dismounted"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="VAB VIT"/>
       <equipment count="2" crew="2" type="VAB 12,7"/>
@@ -548,14 +548,14 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="19" name="ASS . Section de Tir TRF1 CDS OFF" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery"/>
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/howiltzer gun"/>
     <equipments>
       <equipment count="4" crew="8" major="true" type="Canon TRF1"/>
       <equipment count="4" crew="3" type="TRM 10000 12,7"/>
       <equipment count="1" crew="2" type="VTC P4"/>
       <equipment count="1" crew="3" type="TRM 10000"/>
       <equipment count="1" crew="3" type="VAB VIT"/>
-      <equipment count="1" crew="4" type="VAB ATILA"/>
+      <equipment count="1" crew="3" type="VAB ATLAS"/>
     </equipments>
     <sensors-range range="1500"/>
     <equipments-range range="28000"/>
@@ -812,11 +812,11 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="27" name="ASS . Section de Tir AUF1 CDS SOFF" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery"/>
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/howiltzer gun/self-propelled"/>
     <equipments>
       <equipment count="4" crew="4" major="true" type="Char AUF1"/>
       <equipment count="1" crew="2" type="VTC P4"/>
-      <equipment count="1" crew="4" type="VAB ATILA"/>
+      <equipment count="1" crew="3" type="VAB ATLAS"/>
     </equipments>
     <sensors-range range="1500"/>
     <equipments-range range="28000"/>
@@ -1002,13 +1002,13 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.PC" id="33" name="ASS . PC Batterie de Tir TRF1" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="i" nature-app6="combat/field artillery"/>
+    <nature atlas-nature="Vehicule" level="i" nature-app6="combat/field artillery/howiltzer gun"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="VTC P4"/>
       <equipment count="2" crew="2" type="TRM 2000 7,62"/>
       <equipment count="1" crew="1" type="Moto CAGIVA 350"/>
       <equipment count="1" crew="2" type="TRM 2000"/>
-      <equipment count="1" crew="4" major="true" type="VAB ATILA"/>
+      <equipment count="1" crew="3" type="VAB ATLAS"/>
     </equipments>
     <sensors-range range="1500"/>
     <equipments-range range="600"/>
@@ -1708,7 +1708,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Genie.PC" id="56" name="GEN . PC Cie APP" type="Pion GEN">
-    <nature atlas-nature="None" level="i" nature-app6="combat/engineer/combat/mechanized"/>
+    <nature atlas-nature="None" level="i" nature-app6="combat/engineer/undefined"/>
     <equipments>
       <equipment count="3" crew="2" type="VTC P4"/>
       <equipment count="1" crew="1" type="Moto CAGIVA 350"/>
@@ -1776,7 +1776,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Genie.PC" id="58" name="GEN . PC CIE Travaux Lourd" type="Pion GEN">
-    <nature atlas-nature="PC" level="i" nature-app6="combat/engineer/combat"/>
+    <nature atlas-nature="PC" level="i" nature-app6="combat/engineer/undefined"/>
     <equipments>
       <equipment count="2" crew="2" type="VTC P4"/>
       <equipment count="1" crew="3" major="true" type="TRM 2000 PC"/>
@@ -1907,7 +1907,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Genie.PC" id="62" name="GEN . PC EAU NRJ" type="Pion GEN">
-    <nature atlas-nature="None" level="i" nature-app6="combat service support/supply/water"/>
+    <nature atlas-nature="None" level="i" nature-app6="combat/engineer"/>
     <equipments>
       <equipment count="3" crew="2" type="VTC P4"/>
       <equipment count="1" crew="3" major="true" type="TRM 2000 PC"/>
@@ -1937,7 +1937,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Genie.PC" id="63" name="GEN . PC NRJ" type="Pion GEN">
-    <nature atlas-nature="None" level="i" nature-app6="combat/engineer/combat/heavy"/>
+    <nature atlas-nature="None" level="i" nature-app6="combat/engineer/undefined"/>
     <equipments>
       <equipment count="3" crew="2" type="VTC P4"/>
       <equipment count="1" crew="3" major="true" type="TRM 2000 PC"/>
@@ -2043,7 +2043,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Genie.PAA - EFA" id="67" name="GEN . Groupe PAA" type="Pion GEN">
-    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/combat/recon"/>
+    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/undefined"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="PAA"/>
       <equipment count="2" crew="3" type="TRM 10000 12,7"/>
@@ -2067,7 +2067,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Genie.PAA - EFA" id="68" name="GEN . Groupe PAA CDT" type="Pion GEN">
-    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/combat/recon"/>
+    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/undefined"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="PAA"/>
       <equipment count="1" crew="3" type="TRM 10000 12,7"/>
@@ -2092,7 +2092,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Genie.PAA - EFA" id="69" name="GEN . Groupe EFA" type="Pion GEN">
-    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/combat/recon"/>
+    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/undefined"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="EFA"/>
       <equipment count="1" crew="3" type="TRM 10000"/>
@@ -2115,7 +2115,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Genie.PAA - EFA" id="70" name="GEN . Groupe EFA CDT" type="Pion GEN">
-    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/combat/recon"/>
+    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/undefined"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="EFA"/>
       <equipment count="1" crew="2" type="VTC P4"/>
@@ -2164,7 +2164,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Genie.DISP - OT - MLF - MFRD - Enfouisseur - Chantier" id="72" name="GEN . Groupe Disperseur" type="Pion GEN">
-    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/combat/mechanized"/>
+    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/undefined"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="MINOTAURE"/>
       <equipment count="2" crew="3" type="TRM 10000 12,7"/>
@@ -2187,7 +2187,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Genie.DISP - OT - MLF - MFRD - Enfouisseur - Chantier" id="73" name="GEN . Groupe OT" type="Pion GEN">
-    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/combat/mechanized"/>
+    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/undefined"/>
     <equipments>
       <equipment count="2" crew="1" major="true" type="NX 7"/>
       <equipment count="2" crew="2" major="true" type="CBH + EMAD"/>
@@ -2210,7 +2210,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Genie.DISP - OT - MLF - MFRD - Enfouisseur - Chantier" id="74" name="GEN . Groupe Enfouisseur" type="Pion GEN">
-    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/combat/mechanized"/>
+    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/undefined"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="Enfouisseur Mines"/>
       <equipment count="2" crew="3" type="TRM 10000 12,7"/>
@@ -2233,7 +2233,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Genie.DISP - OT - MLF - MFRD - Enfouisseur - Chantier" id="75" name="GEN . Groupe Chantier" type="Pion GEN">
-    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/combat/mechanized"/>
+    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/undefined"/>
     <equipments>
       <equipment count="2" crew="1" major="true" type="MPG"/>
       <equipment count="2" crew="2" type="CBH + TN D6 D"/>
@@ -2257,7 +2257,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Genie.DISP - OT - MLF - MFRD - Enfouisseur - Chantier" id="76" name="GEN . Groupe MLF CDT" type="Pion GEN">
-    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/combat/mechanized"/>
+    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/undefined"/>
     <equipments>
       <equipment count="4" crew="3" major="true" type="MLF"/>
     </equipments>
@@ -2279,7 +2279,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Genie.DISP - OT - MLF - MFRD - Enfouisseur - Chantier" id="77" name="GEN . Groupe MLF" type="Pion GEN">
-    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/combat/mechanized"/>
+    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/undefined"/>
     <equipments>
       <equipment count="4" crew="3" major="true" type="MLF"/>
     </equipments>
@@ -2301,7 +2301,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Genie.DISP - OT - MLF - MFRD - Enfouisseur - Chantier" id="78" name="GEN . Demi Groupe MFRD CDT" type="Pion GEN">
-    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/combat/mechanized"/>
+    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/undefined"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="MFRD"/>
       <equipment count="1" crew="3" type="TRM 10000 12,7"/>
@@ -2324,7 +2324,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Genie.DISP - OT - MLF - MFRD - Enfouisseur - Chantier" id="79" name="GEN . Demi Groupe MFRD" type="Pion GEN">
-    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/combat/mechanized"/>
+    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/undefined"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="MFRD"/>
       <equipment count="1" crew="3" type="TRM 10000 12,7"/>
@@ -2349,7 +2349,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Genie.SOUVIM - Deminage lourd" id="80" name="GEN . Section Deminage Lourd D9" type="Pion GEN">
-    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat/mechanized"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/undefined"/>
     <equipments>
       <equipment count="3" crew="2" major="true" type="Char AMX 30 B2 DT"/>
       <equipment count="2" crew="8" type="VAB GEN 12,7"/>
@@ -2374,7 +2374,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Genie.SOUVIM - Deminage lourd" id="81" name="GEN . Section SOUVIM" type="Pion GEN">
-    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat/mechanized"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/undefined"/>
     <equipments>
       <equipment count="1" crew="5" major="true" type="SOUVIM"/>
       <equipment count="2" crew="2" type="VTC P4"/>
@@ -2400,7 +2400,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Genie.MADEZ" id="82" name="GEN . Groupe MADEZ" type="Pion GEN">
-    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/combat/mechanized"/>
+    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/undefined"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="MADEZ"/>
       <equipment count="1" crew="8" type="VAB GEN 12,7"/>
@@ -2544,7 +2544,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Genie.Section travaux" id="87" name="GEN . Section Travaux Lourd" type="Pion GEN">
-    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/undefined"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="CBH + TN D6 D"/>
       <equipment count="2" crew="3" major="true" type="SRQ + PH 688"/>
@@ -2578,7 +2578,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Genie.MATS" id="88" name="GEN . Groupe MATS" type="Pion GEN">
-    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/combat/mechanized"/>
+    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/undefined"/>
     <equipments>
       <equipment count="3" crew="1" major="true" type="TRM 10000 MATS"/>
       <equipment count="3" crew="3" type="TRM 10000 12,7"/>
@@ -2626,7 +2626,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Genie.Equipement zone de poser et plage" id="90" name="GEN . Section Equipement Zone Poser" type="Pion GEN">
-    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat/mechanized"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/undefined"/>
     <equipments>
       <equipment count="1" crew="2" type="VTC P4"/>
       <equipment count="4" crew="2" type="Tracteur Niveleur"/>
@@ -2657,7 +2657,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Genie.Equipement zone de poser et plage" id="91" name="GEN . Section Equipement Plage" type="Pion GEN">
-    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat/mechanized"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/undefined"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="Tracteur Niveleur"/>
       <equipment count="1" crew="2" type="VTC P4 12,7"/>
@@ -2739,14 +2739,14 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="94" name="ASS . Section de Tir TRF1 CDS SOFF" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery"/>
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/howiltzer gun"/>
     <equipments>
       <equipment count="4" crew="8" major="true" type="Canon TRF1"/>
       <equipment count="4" crew="3" type="TRM 10000 12,7"/>
       <equipment count="1" crew="2" type="VTC P4"/>
       <equipment count="1" crew="3" type="VAB VIT"/>
-      <equipment count="1" crew="4" type="VAB ATILA"/>
       <equipment count="1" crew="3" type="TRM 10000"/>
+      <equipment count="1" crew="3" type="VAB ATLAS"/>
     </equipments>
     <sensors-range range="1500"/>
     <equipments-range range="28000"/>
@@ -3024,7 +3024,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.TRANS.PC TAC" id="103" name="INF . PC GTIA INF Debarque" type="Pion TRANS">
-    <nature atlas-nature="Vehicule" level="i" nature-app6="combat/infantry/motorized"/>
+    <nature atlas-nature="Personnel a pied" level="ii" nature-app6="combat/infantry/undefined"/>
     <equipments>
       <equipment count="2" crew="2" type="VTC P4"/>
       <equipment count="3" crew="2" major="true" type="VTT AEROT BLIND AU1"/>
@@ -3555,7 +3555,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="120" name="GLAISE - ASS . Section BM22" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/air defense/theater missile defense unit"/>
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/rocket/multi rocket launcher"/>
     <equipments>
       <equipment count="6" crew="6" major="true" type="BM 22"/>
     </equipments>
@@ -3588,7 +3588,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="121" name="GLAISE - ASS . Section BM30" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/air defense/theater missile defense unit"/>
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/rocket/multi rocket launcher"/>
     <equipments>
       <equipment count="6" crew="4" major="true" type="BM 30"/>
     </equipments>
@@ -5260,7 +5260,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Equipe Reco" id="177" name="ASS . Equipe de Reco TRF1" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="o" nature-app6="combat/field artillery"/>
+    <nature atlas-nature="Vehicule" level="o" nature-app6="combat/field artillery/target acquisition/colt fist/dismounted"/>
     <equipments>
       <equipment count="1" crew="5" major="true" type="VAB VIT"/>
     </equipments>
@@ -5289,7 +5289,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="178" name="ASS . Section de Tir AUF1 CDS OFF Pour SIC" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery"/>
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/howiltzer gun/self-propelled"/>
     <equipments>
       <equipment count="4" crew="4" major="true" type="Char AUF1"/>
       <equipment count="1" crew="2" type="VTC P4"/>
@@ -5329,7 +5329,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="179" name="ASS . Section de Tir AUF1 CDS SOFF Pour SIC" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery"/>
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/howiltzer gun/self-propelled"/>
     <equipments>
       <equipment count="4" crew="4" major="true" type="Char AUF1"/>
       <equipment count="1" crew="2" type="VTC P4"/>
@@ -5369,7 +5369,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="180" name="ASS . Section de Tir TRF1 CDS OFF Pour SIC" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery"/>
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/howiltzer gun"/>
     <equipments>
       <equipment count="4" crew="8" major="true" type="Canon TRF1"/>
       <equipment count="4" crew="3" type="TRM 10000 12,7"/>
@@ -5412,7 +5412,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="181" name="ASS . Section de Tir TRF1 CDS SOFF Pour SIC" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery"/>
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/field artillery/howiltzer gun"/>
     <equipments>
       <equipment count="4" crew="8" major="true" type="Canon TRF1"/>
       <equipment count="4" crew="3" type="TRM 10000 12,7"/>
@@ -5949,7 +5949,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Equipe Reco" id="196" name="ASS . PC Batterie de Reco TRF1" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="i" nature-app6="combat/field artillery"/>
+    <nature atlas-nature="Vehicule" level="i" nature-app6="combat/field artillery/target acquisition/colt fist/dismounted"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="VAB VIT"/>
       <equipment count="2" crew="2" type="VAB 12,7"/>
@@ -6068,7 +6068,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.MILAN" id="200" name="INF . Groupe ACMP AMX10P" type="Pion INF">
-    <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/anti armor/armored/wheeled"/>
+    <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/anti armor/armored/tracked"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="AMX10P"/>
       <equipment count="2" crew="2" loadable="true" major="true" type="Equipe + POST TIR MILAN"/>
@@ -6097,7 +6097,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.MILAN" id="201" name="INF . Groupe ACMP VAB" type="Pion INF">
-    <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/anti armor/armored/wheeled"/>
+    <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/anti armor/motorized"/>
     <equipments>
       <equipment count="2" crew="2" loadable="true" major="true" type="Equipe + POST TIR MILAN"/>
       <equipment count="1" crew="3" major="true" type="VAB 7,62"/>
@@ -7151,7 +7151,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.Appui Mortier" id="234" name="INF . Groupe INF MO81 AMX10P" type="Pion INF">
-    <nature atlas-nature="ASS" level="oo" nature-app6="undefined"/>
+    <nature atlas-nature="Personnel a pied" level="oo" nature-app6="combat/field artillery/mortar"/>
     <equipments>
       <equipment count="2" crew="2" loadable="true" major="true" type="Eqp Mortier 81"/>
       <equipment count="2" crew="1" loadable="true" type="Fantassin + AA 5.56 MINIMI FELIN"/>
@@ -7182,7 +7182,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.Appui Mortier" id="235" name="INF . Groupe INF MO81 VAB" type="Pion INF">
-    <nature atlas-nature="ASS" level="oo" nature-app6="combat/field artillery/howiltzer gun/light"/>
+    <nature atlas-nature="Personnel a pied" level="oo" nature-app6="combat/field artillery/mortar"/>
     <equipments>
       <equipment count="2" crew="2" loadable="true" major="true" type="Eqp Mortier 81"/>
       <equipment count="2" crew="1" loadable="true" type="Fantassin + AA 5.56 MINIMI FELIN"/>
@@ -7214,7 +7214,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.Appui Mortier" id="236" name="INF . Groupe INF MO81 Section quaternaire" type="Pion INF">
-    <nature atlas-nature="ASS" level="oo" nature-app6="combat/field artillery/howiltzer gun/light"/>
+    <nature atlas-nature="Personnel a pied" level="oo" nature-app6="combat/field artillery/mortar"/>
     <equipments>
       <equipment count="2" crew="3" loadable="true" major="true" type="Eqp Mortier 81"/>
       <equipment count="2" crew="1" loadable="true" type="Fantassin + AA 5.56 MINIMI FELIN"/>
@@ -7245,7 +7245,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.Appui Mortier" id="237" name="INF . Groupe INF MO81 section quaternaire X10" type="Pion INF">
-    <nature atlas-nature="ASS" level="oo" nature-app6="combat/field artillery/howiltzer gun/light"/>
+    <nature atlas-nature="Personnel a pied" level="oo" nature-app6="combat/field artillery/mortar"/>
     <equipments>
       <equipment count="2" crew="2" loadable="true" major="true" type="Eqp Mortier 81"/>
       <equipment count="1" crew="1" loadable="true" type="Fantassin + AA 5.56 MINIMI FELIN"/>
@@ -9251,7 +9251,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.PC" id="308" name="ASS . PC Batterie TRF1" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="i" nature-app6="combat/field artillery"/>
+    <nature atlas-nature="Vehicule" level="i" nature-app6="combat/field artillery/howiltzer gun"/>
     <equipments>
       <equipment count="1" crew="2" type="VTC P4"/>
       <equipment count="2" crew="2" type="TRM 2000 7,62"/>
@@ -9487,7 +9487,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.PC" id="315" name="ASS . PC Batterie AUF1" type="Pion ASS">
-    <nature atlas-nature="Vehicule" level="i" nature-app6="combat/field artillery"/>
+    <nature atlas-nature="Vehicule" level="i" nature-app6="combat/field artillery/howiltzer gun/self-propelled"/>
     <equipments>
       <equipment count="1" crew="2" type="VTC P4"/>
       <equipment count="2" crew="2" type="TRM 2000 7,62"/>
@@ -9518,7 +9518,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Genie.AD" id="316" name="GEN . Section Aide au Deploiement" type="Pion GEN">
-    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/combat/mechanized"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/undefined"/>
     <equipments>
       <equipment count="2" crew="1" major="true" type="CBH 320"/>
       <equipment count="2" crew="2" major="true" type="CBH + EMAD"/>
@@ -9544,7 +9544,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Genie.Energie" id="317" name="GEN . Groupe Energie 400 kW" type="Pion GEN">
-    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/combat/heavy"/>
+    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/undefined"/>
     <equipments>
       <equipment count="2" crew="1" major="true" type="Centrale GE 400 kW"/>
       <equipment count="1" crew="1" type="TRM 10000"/>
@@ -9569,7 +9569,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Genie.Energie" id="318" name="GEN . Groupe Energie 80 kW" type="Pion GEN">
-    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/combat/heavy"/>
+    <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/undefined"/>
     <equipments>
       <equipment count="1" crew="1" type="TRM 10000"/>
       <equipment count="1" crew="1" type="VTL R Remorque"/>
@@ -9593,7 +9593,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Genie.Traitement des eaux" id="319" name="GEN . Section Traitement Eau" type="Pion GEN">
-    <nature atlas-nature="None" level="ooo" nature-app6="combat service support/supply/water"/>
+    <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer/undefined"/>
     <equipments>
       <equipment count="2" crew="5" loadable="true" major="true" type="MATEM"/>
       <equipment count="2" crew="6" type="GBC 8 KT 7.62"/>
@@ -9780,7 +9780,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.PIA" id="325" name="PIA Dominante INF" type="Pion INF">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
+    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/undefined"/>
     <equipments>
       <equipment count="4" crew="2" major="true" type="VAB 12,7"/>
       <equipment count="9" crew="1" loadable="true" type="Fantassin + FAMAS 5.56 INF"/>
@@ -11860,7 +11860,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.LOG.Sante.Ramassage" id="406" name="LOG . Equipe HM EVASAN BLIAT" type="Pion LOG BLT Sante">
-    <nature atlas-nature="Log" level="oo" nature-app6="combat service support/medical"/>
+    <nature atlas-nature="Log" level="o" nature-app6="combat service support/medical"/>
     <equipments>
       <equipment count="10" crew="6" major="true" type="SA330 EVASAN"/>
     </equipments>
@@ -12374,7 +12374,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.LOG.TC2" id="426" name="LOG . ALAT . TC2 SGAM" type="Pion LOG TC2">
-    <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/supply"/>
+    <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="4" crew="2" type="VTC P4"/>
       <equipment convoyer="true" count="3" crew="1" type="TRM 4000 12.7"/>
@@ -13402,58 +13402,6 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.TC2" id="447" name="LOG . TC2 RGT AMX30B2 BRENNUS" type="Pion LOG TC2">
-    <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/supply"/>
-    <equipments>
-      <equipment count="3" crew="2" major="true" type="Lot 7"/>
-      <equipment count="5" crew="3" type="Ambulance J5"/>
-      <equipment convoyer="true" count="15" crew="2" type="TRM 2000"/>
-      <equipment count="2" crew="1" type="Moto CAGIVA 350"/>
-      <equipment count="12" crew="3" type="VBL 7,62"/>
-      <equipment count="4" crew="4" major="true" type="X30 DEPANNAGE AP M1"/>
-      <equipment convoyer="true" count="6" crew="3" type="VTL R Remorque"/>
-      <equipment convoyer="true" count="7" crew="2" major="true" type="CCT GBC TD5 11"/>
-      <equipment convoyer="true" count="6" crew="3" type="TRM 10000"/>
-      <equipment count="2" crew="3" major="true" type="TRM 10000 CLD"/>
-      <equipment count="4" crew="3" type="VAB 7,62"/>
-      <equipment count="12" crew="3" type="VBL 12,7"/>
-      <equipment count="6" crew="2" type="CELLULE SANITAIRE 2"/>
-      <equipment count="10" crew="1" type="VTC P4"/>
-      <equipment convoyer="true" count="38" crew="1" type="GBC 180 12,7"/>
-      <equipment count="2" crew="2" type="Eqp NTI1 EA"/>
-      <equipment count="7" crew="2" major="true" type="Eqp NTI1 MOB"/>
-      <equipment count="4" crew="2" type="Eqp NTI1 TCT"/>
-      <equipment count="5" crew="1" type="Eqp diagnostic"/>
-    </equipments>
-    <sensors-range range="1500"/>
-    <equipments-range range="1000"/>
-    <crew-ranks>
-      <crew-rank count="9" type="Officier"/>
-      <crew-rank count="54" type="SousOfficier"/>
-    </crew-ranks>
-    <logistics>
-      <category name="ration">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
-      </category>
-    </logistics>
-    <stocks>
-      <stock category="Unite essence" threshold="50"/>
-      <stock category="Unite tranche D" threshold="50"/>
-      <stock category="Unite non tranche D" threshold="50"/>
-      <stock category="Unite vivre" threshold="50"/>
-      <stock category="Pieces" threshold="50"/>
-    </stocks>
-    <postures>
-      <posture name="PosteReflexe" setup-time="900s"/>
-      <posture name="Poste" setup-time="1800s"/>
-      <posture name="PosteAmenage" setup-time="2700s"/>
-      <posture name="PostePrepareGenie" setup-time="2700s"/>
-    </postures>
-    <setup footprint-radius="10" installation-time="60s" speed-modifier="0.7" uninstallation-time="30m"/>
-    <nbc decontamination-delay="21600s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
-    <crossing-height height="0m"/>
-  </unit>
   <unit decisional-model="Masalife.LOG.TC2" id="448" name="GLAISE - LOG . TC2" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
@@ -14242,7 +14190,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.INF.Appui Mortier" id="476" name="INF . Groupe MO81 VBCI" type="Pion INF">
-    <nature atlas-nature="ASS" level="oo" nature-app6="combat/field artillery/mortar"/>
+    <nature atlas-nature="Personnel a pied" level="oo" nature-app6="combat/field artillery/mortar"/>
     <equipments>
       <equipment count="2" crew="5" loadable="true" major="true" type="Eqp Mortier 81"/>
       <equipment count="1" crew="2" type="GBC 180"/>
@@ -15535,7 +15483,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.TRANS.PC TAC" id="525" name="TRANS . PC GTIA INF Debarque" type="Pion TRANS">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/armor/wheeled/medium"/>
+    <nature atlas-nature="Personnel a pied" level="ii" nature-app6="combat/infantry"/>
     <equipments>
       <equipment count="2" crew="2" type="VTC P4"/>
       <equipment count="3" crew="2" major="true" type="VTT AEROT BLIND AU1"/>
@@ -15563,42 +15511,8 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.TRANS.PC TAC" id="526" name="TRANS . PC RGT AMX30B2 BRENNUS" type="Pion TRANS">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/armor/track/heavy"/>
-    <equipments>
-      <equipment count="7" crew="3" type="VBL 7,62"/>
-      <equipment count="2" crew="2" major="true" type="AMX10P PC"/>
-      <equipment count="2" crew="2" type="VAB 12,7"/>
-      <equipment count="3" crew="2" type="GBC 8 KT 12.7"/>
-      <equipment count="1" crew="2" type="VTC P4 7,62"/>
-      <equipment count="8" crew="2" type="TRM 2000"/>
-      <equipment count="1" crew="1" type="Moto CAGIVA 350"/>
-    </equipments>
-    <sensors-range range="1500"/>
-    <equipments-range range="300"/>
-    <crew-ranks>
-      <crew-rank count="0" type="Officier"/>
-      <crew-rank count="20" type="SousOfficier"/>
-    </crew-ranks>
-    <postures>
-      <posture name="PosteReflexe" setup-time="30s"/>
-      <posture name="Poste" setup-time="300s"/>
-      <posture name="PosteAmenage" setup-time="1800s"/>
-      <posture name="PostePrepareGenie" setup-time="500s"/>
-    </postures>
-    <setup footprint-radius="10" installation-time="45m" speed-modifier="0.7" uninstallation-time="10m"/>
-    <nbc decontamination-delay="8700s"/>
-    <distance-before-points>
-      <distance-before-point type="forest" value="500"/>
-      <distance-before-point type="urban area" value="500"/>
-      <distance-before-point type="crossroad" value="500"/>
-      <distance-before-point type="bridge" value="500"/>
-    </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
-    <crossing-height height="0m"/>
-  </unit>
   <unit decisional-model="Masalife.TRANS.PC TAC" id="527" name="TRANS . PC TAC" type="Pion TRANS">
-    <nature atlas-nature="PC" level="i" nature-app6="combat support/signal unit"/>
+    <nature atlas-nature="PC" level="ii" nature-app6="combat support/signal unit"/>
     <equipments>
       <equipment count="1" crew="3" type="VBL 7,62"/>
       <equipment count="1" crew="2" major="true" type="Eqp CMAI"/>
@@ -15685,7 +15599,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.TRANS.PC TAC" id="530" name="TRANS . PC TAC GTIA AMX10P" type="Pion TRANS">
-    <nature atlas-nature="Vehicule" level="ii" nature-app6="combat/infantry/motorized"/>
+    <nature atlas-nature="Vehicule" level="ii" nature-app6="combat/infantry/mechanized"/>
     <equipments>
       <equipment count="1" crew="3" type="VBL 7,62"/>
       <equipment count="1" crew="2" major="true" type="AMX10P PC"/>
@@ -18890,7 +18804,7 @@
     <crossing-height height="0m"/>
   </unit>
   <unit can-fly="true" decisional-model="Masalife.RENS.Patrouille Viviane" id="642" name="RENS . Patrouille Rens Viviane" type="Pion RENS">
-    <nature atlas-nature="Helicoptere" level="oo" nature-app6="combat/aviation/rotary wing"/>
+    <nature atlas-nature="Helicoptere" level="ooo" nature-app6="combat/aviation/rotary wing"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="Helicoptere HAV"/>
     </equipments>
@@ -19538,4 +19452,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="1716170316" -->
+<!-- signature="0779728930" -->
