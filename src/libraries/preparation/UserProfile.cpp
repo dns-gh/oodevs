@@ -152,7 +152,7 @@ void UserProfile::Serialize( xml::xostream& xos ) const
         {
             while( itReceiver.HasMoreElements() )
             {
-                long id = itReceiver.NextElement().GetId();
+                unsigned long id = itReceiver.NextElement().GetId();
                 bool readwrite = false;
                 for( T_Ids::const_iterator it = writeSides_.begin(); it != writeSides_.end(); ++it )
                 {

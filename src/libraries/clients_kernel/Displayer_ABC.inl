@@ -42,6 +42,7 @@ Displayer_ABC& Displayer_ABC::Display( const QString& name, const T& element )
     catch( std::runtime_error& e )
     {
         assert( !e.what() );
+        (void)e;
     }
     return *this;
 }

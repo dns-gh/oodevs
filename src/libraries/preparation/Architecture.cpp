@@ -19,7 +19,7 @@
 Architecture::Architecture( const urban::Architecture& architecture, std::auto_ptr< kernel::Architecture_ABC > pArchitecture )
     : pArchitecture_( pArchitecture )
 {
-    Initialize( architecture.GetHeight(), architecture.GetFloorNumber(), architecture.GetParkingFloors(), architecture.GetRoofShape(),
+    Initialize( static_cast< float >( architecture.GetHeight() ), architecture.GetFloorNumber(), architecture.GetParkingFloors(), architecture.GetRoofShape(),
                 architecture.GetMaterial(), architecture.GetOccupation(), architecture.GetTrafficability() );
 }
 

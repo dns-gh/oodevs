@@ -251,7 +251,7 @@ void InhabitantPositions::Draw( const geometry::Point2f& /*where*/, const kernel
 void InhabitantPositions::UpdateDictionary()
 {
     accomodationCapacties_.clear();
-    infrastructures_ = medicalInfrastructures_ = nominalCapacity_ = 0.;
+    infrastructures_ = medicalInfrastructures_ = nominalCapacity_ = 0;
     for( CIT_UrbanObjectVector it = livingUrbanObject_.begin(); it != livingUrbanObject_.end(); ++it )
     {
         const gui::TerrainObjectProxy* pProxy = it->get< 2 >();
@@ -264,7 +264,7 @@ void InhabitantPositions::UpdateDictionary()
         tools::Iterator< const kernel::AccommodationType& > itAcco = accommodations.CreateIterator();
         while( itAcco.HasMoreElements() )
         {
-            const const kernel::AccommodationType& accomodation = itAcco.NextElement();
+            const kernel::AccommodationType& accomodation = itAcco.NextElement();
             accomodationCapacties_[ QString::fromStdString( accomodation.GetRole() ) ] += static_cast< unsigned int >( pProxy->GetNominalCapacity( accomodation.GetRole() ) );
         }
     }
