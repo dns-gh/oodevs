@@ -5,7 +5,7 @@
     <parameter type="ObjectKnowledge"/>
   </report>
   <report category="operational" id="2" message="bypassing obstacle"/>
-  <report category="operational" id="3" message="mission impossible, operational context inconsistent"/>
+  <report category="exceptional" id="3" message="mission impossible, operational context inconsistent"/>
   <report category="operational" id="4" message="advancing"/>
   <report category="operational" id="5" message="advancing towards deployment area"/>
   <report category="operational" id="6" message="posted"/>
@@ -262,9 +262,9 @@
   <report category="operational" id="200" message="wounded just died"/>
   <report category="operational" id="201" message="wounded dead during transportation"/>
   <report category="operational" id="202" message="wounded dead during hospitalization"/>
-  <report category="operational" id="203" message="mission impossible: subordinated units not operational"/>
-  <report category="operational" id="204" message="mission impossible: invalid phase line"/>
-  <report category="operational" id="205" message="mission impossible: objective outside boundaries"/>
+  <report category="exceptional" id="203" message="mission impossible: subordinated units not operational"/>
+  <report category="exceptional" id="204" message="mission impossible: invalid phase line"/>
+  <report category="exceptional" id="205" message="mission impossible: objective outside boundaries"/>
   <report category="operational" id="206" message="very low force ratio"/>
   <report category="operational" id="207" message="impossible to go through this!"/>
   <report category="operational" id="208" message="out of oil"/>
@@ -653,4 +653,4 @@
   <report category="operational" id="458" message="Speed limited by population"/>
   <report category="operational" id="459" message="End of speed limited by population"/>
 </reports>
-<!-- signature="4035859821" -->
+<!-- signature="3319449339" -->
