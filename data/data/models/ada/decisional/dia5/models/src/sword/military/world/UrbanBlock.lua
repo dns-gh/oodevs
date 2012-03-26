@@ -248,7 +248,6 @@ return
         
         started = function( self )
             integration.startedSearchUrbanBlock( self )
-            integration.capture(integration.getDestroyableInObjective( self ), eRC_TerroristCaptured ) 
         end,
         stop = integration.stopSearchUrbanBlock
     } ),

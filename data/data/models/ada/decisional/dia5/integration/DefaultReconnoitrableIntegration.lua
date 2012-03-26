@@ -46,16 +46,20 @@ integration.startSearchUrbanBlock = function( urbanBlock )
         DEC_Perception_ActivateLocationProgressiveRecce( urbanBlock.area, buSearchSpeed )
     urbanBlock.recceObj = DEC_Perception_ActiverDetectionObjetLocalisation( urbanBlock.area, urbanBlock:getPosition(), buSearchSpeed )
     urbanBlock.bActionSearchFinished = false
+    urbanBlock.recoFinished = true
     perceptionReconnaissanceCallbacks[ urbanBlock.actionSearch ] = function( arg )
-        urbanBlock.bActionSearchFinished = true
+        urbanBlock.recoFinished = true
     end
     meKnowledge:RC( eRC_DebutFouilleBlocUrbain )
     return true
 end
 
 integration.startedSearchUrbanBlock = function( urbanBlock )
-    if urbanBlock.bActionSearchFinished then
-        DEC_Connaissances_IdentifierToutesUnitesDansZone( urbanBlock.area )
+    if  urbanBlock.recoFinished then
+        DEC_Connaissances_IdentifierToutesUnitesDansZone( urbanBlock.area )     
+        if integration.capture(integration.getDestroyableInObjective( urbanBlock ), eRC_TerroristCaptured ) then
+            urbanBlock.bActionSearchFinished = true
+        end
     end
 end
 
