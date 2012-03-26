@@ -55,6 +55,7 @@ void DEC_Path::CleanAfterComputation()
 void DEC_Path::Cancel()
 {
     bJobCanceled_ = true;
+    nState_ = eCanceled;
     for( CIT_PathSectionVector itPathSection = pathSections_.begin(); itPathSection != pathSections_.end(); ++itPathSection )
         ( *itPathSection )->Cancel();
 }
