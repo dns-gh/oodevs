@@ -72,7 +72,7 @@
   </object>
   <object name="fosse anti char" type="anti tank obstacle">
     <geometries>
-      <geometry symbol="G*MPOADC--****X" type="polygon"/>
+      <geometry symbol="G*MPOADC--****X" type="line"/>
     </geometries>
     <attrition attrition-surface="0" category="mine classique" ph="0"/>
     <avoidable distance="500"/>
@@ -602,4 +602,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="1444485249" -->
+<!-- signature="1091873286" -->
