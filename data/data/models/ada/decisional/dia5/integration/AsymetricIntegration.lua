@@ -99,7 +99,9 @@ end
 -- changemement de leur état en "otage"
 
 integration.capture = function( units, message )
-    if not myself.CRCaptureSomeone then return end
+
+    if not myself.CRCaptureSomeone then return true end
+
     for _, unit in pairs( units ) do
         if not myself.CRCaptureSomeone[unit] then
             DEC_Agent_ForcerSilenceRadio( unit.source, true )
@@ -112,6 +114,8 @@ integration.capture = function( units, message )
             DEC_ChangerSuperieurLogistiqueConnaissance( myself, unit.source )
         end
     end
+
+    return true
 end
 
 integration.dropUnit = function( unit )
