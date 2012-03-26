@@ -368,8 +368,8 @@
 <context>
     <name>MineAttribute</name>
     <message>
-        <source>Info/Mine parameters/Density</source>
-        <translation>Info/Parámetros de minas/Densidad</translation>
+        <source>Info/Improvable/Value</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -483,10 +483,6 @@
     <message>
         <source>Construction:</source>
         <translation>Construcción :</translation>
-    </message>
-    <message>
-        <source>Mining:</source>
-        <translation>Minado :</translation>
     </message>
     <message>
         <source>Bypass:</source>
@@ -606,6 +602,10 @@
     </message>
     <message>
         <source>Info/Demolition target parameters/Activity time</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Improvable:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

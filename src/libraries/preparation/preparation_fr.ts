@@ -368,8 +368,8 @@
 <context>
     <name>MineAttribute</name>
     <message>
-        <source>Info/Mine parameters/Density</source>
-        <translation>Info/Paramètres des mines/Densité</translation>
+        <source>Info/Improvable/Value</source>
+        <translation>Info/Valorisation/Valeur</translation>
     </message>
 </context>
 <context>
@@ -483,10 +483,6 @@
     <message>
         <source>Construction:</source>
         <translation>Construction :</translation>
-    </message>
-    <message>
-        <source>Mining:</source>
-        <translation>Valorisation :</translation>
     </message>
     <message>
         <source>Bypass:</source>
@@ -607,6 +603,10 @@
     <message>
         <source>Info/Demolition target parameters/Activity time</source>
         <translation>Info/Attributs de destruction/Durée d&apos;activité</translation>
+    </message>
+    <message>
+        <source>Improvable:</source>
+        <translation>Valorisation:</translation>
     </message>
 </context>
 <context>
