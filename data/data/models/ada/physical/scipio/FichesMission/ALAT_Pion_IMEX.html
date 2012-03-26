@@ -19,22 +19,22 @@
 			</effects>
 		</span><h2>Variantes et modalités d'exécution</h2><span class="normal" style="font-weight: bold;"><span class="space"></span></span><ol>
 			<li>
-				<step>Se déplacer en se plaçant à 7000m de distance et à l'opposé de la direction dangereuse par rapport aux unités à supporteres unités à escorter ;</step>
+				<step>Ravitaillement si la mission indique "Ravitaillement en début de mission";</step>
 			</li>
 			<li>
-				<step>La chaîne médicale est désactivée pour les unités à supporter ;</step>
+				<step>Suit à 7000 mètres des unités à appuyer dans la direction opposée à la direction dangereuses;</step>
 			</li>
 			<li>
-				<step>En cas de panne de l'unité à supporter ou de blessures du personnel, l'unité se déplace vers l'unité à supporter et prend en charge le personnel ;</step>
+				<step>Désactivation de la gestion des blessés entre les unités gérées et leurs TC2 (Cf. chaine logistique);</step>
 			</li>
 			<li>
-				<step>L'unité évacue vers le TC2 le personnel ;</step>
+				<step>Extrrait les blessés de la position où ils ont été déclarés vers le TC2 de la patrouille IMEXs;</step>
 			</li>
 			<li>
-				<step>Pendant toute la durée de la mission, l'unité peut être amenée à se ravitailler sur un plot de ravitaillement ou au niveau de son TC2 avant de reprendre sa mission. Le ravitaillement dépend de l'ordre de conduite "Changer parametres recompletement ALAT" ;</step>
+				<step>ROE par défaut : Tir Restreint;</step>
 			</li>
 			<li>
-				<step>Fin de mission sur ordre de conduite "Interrompre". Elle s'exfiltre vers le point de regroupement.</step>
+				<step>Fin de mission sur ordre de conduite "Interrompre".</step>
 			</li>
 		</ol><br><table style="text-align: left; page-break-before:always" cellpadding="10" cellspacing="2">
 			<tbody>
@@ -43,11 +43,11 @@
 						<h2> Schéma de modélisation </h2>
 						<h3>IMEX</h3><img src="./Images/ALAT_Pion_IMEX/Mission.png" width="400" height="400"><br></td>
 					<td class="table" style="vertical-align: top;">
-						<h2>Paramètres obligatoires</h2><span class="param" style="font-weight: normal;">Fuseau : Limite gauche / Limite droite</span><br><span style="font-weight: normal;" class="normal">Zone de responsabilité.</span><br><span class="param" style="font-weight: normal;">Unités à supporter</span><br><span style="font-weight: normal;" class="normal">Les unités à supporter.</span><br><span class="param" style="font-weight: normal;">Point de regroupement</span><br><span style="font-weight: normal;" class="normal">Le point à rejoindre en fin de mission.</span><br><span class="param" style="font-weight: normal;">Plots de ravitaillement</span><br><span style="font-weight: normal;" class="normal">Les plots passés en paramètre pouront être utilisés dans le cadre de la mission. Cette liste est automatiquement mise à jour avec les plots créés dans le fuseau de la mission.</span><br></td>
+						<h2>Paramètres obligatoires</h2><span class="param" style="font-weight: normal;">Fuseau : Limite gauche / Limite droite</span><br><span style="font-weight: normal;" class="normal">Zone de responsabilité.</span><br><span class="param" style="font-weight: normal;">Unites à appuyer</span><br><span style="font-weight: normal;" class="normal">Liste de(s) unité(s) à appuyer. Dans le cas où l'on souhaite appuyer une compagnie entière dont l'automate de commandement est embrayé, il suffit de passer son PC en paramètre.</span><br><span class="param" style="font-weight: normal;">Point de regroupement</span><br><span style="font-weight: normal;" class="normal">Point à rejoindre une fois que la mission est terminée.</span><br><span class="param" style="font-weight: normal;">Portee Action</span><br><span style="font-weight: normal;" class="normal">Permet, en association de l'Ambiance Mission de déterminer les quantités de carburant et de munition à embarquer à chaque ravitaillement.</span><br></td>
 				</tr>
 				<tr>
 					<td class="table" style="vertical-align: top;">
-						<h2>Paramètres optionnels</h2><span class="normal param_2">Limas [LDM/LFM] pour orienter le fuseau</span><br><br><span class="normal param_2">Direction Dangereuse : Orientation privilégiée des capteurs</span><br><br></td>
+						<h2>Paramètres optionnels</h2><span class="normal param_2">Limite gauche / Limite droite : Zone d’action</span><br><br><span class="normal param_2">Lignes de Début et Fin de mission [LDM/LFM] : permettent d'orienter le fuseau.</span><br><br><span class="normal param_2">Lignes de Changement d'attitude [LCA] : Passage en vol tactique</span><br><br><span class="normal param_2">Lignes de Coordination [LC] : la patrouille se poste en attente de l'ODC Poursuivre.</span><br><br><span class="normal param_2">Plots ravitaillement : Les plots passés en paramètre pouront être utilisés dans le cadre de la mission. Cette liste est automatiquement mise à jour avec les plots créés dans le fuseau de la mission. Si l'ANIBAS n'a pas précisé les limites droite et gauche de la mission, la patrouille s'autorisera à utiliser tous les plots de ravitaillement connus.</span><br><br><span class="normal param_2">Ravitaillement en Début de Mission : cette option permet d'indiquer si le pion doit aller se ravitailler au début de la mission.</span><br><br></td>
 				</tr>
 			</tbody>
 		</table>

@@ -19,10 +19,10 @@
 			</effects>
 		</span><h2>Variantes et modalités d'exécution</h2><span class="normal" style="font-weight: bold;"><span class="space"></span></span><ol>
 			<li>
-				<step>Toutes les unités reçoivent la mission "Aller Se Recompleter" ;</step>
+				<step>L'automate donne à ses subordonnés la mission "Aller Se Recompleter". </step>
 			</li>
 			<li>
-				<step>Fin de mission lorsque les unités sont toutes ravitaillées et sont postées au point de regroupement.</step>
+				<step>Fin de mission sur ordre de conduite "Interrompre". </step>
 			</li>
 		</ol><br><table style="text-align: left; page-break-before:always" cellpadding="10" cellspacing="2">
 			<tbody>
@@ -31,7 +31,7 @@
 						<h2> Schéma de modélisation </h2>
 						<h3>Aller Se Recompleter</h3><img src="./Images/ALAT_Automate_AllerSeRecompleter/Mission.png" width="400" height="400"><br></td>
 					<td class="table" style="vertical-align: top;">
-						<h2>Paramètres obligatoires</h2><span class="param" style="font-weight: normal;">Fuseau : Limite gauche / Limite droite</span><br><span style="font-weight: normal;" class="normal">Zone de responsabilité.</span><br><span class="param" style="font-weight: normal;">Point de regroupement</span><br><span style="font-weight: normal;" class="normal">Le point à rejoindre en fin de mission.</span><br><span class="param" style="font-weight: normal;">Plots de ravitaillement</span><br><span style="font-weight: normal;" class="normal">Les plots passés en paramètre pouront être utilisés dans le cadre de la mission. Cette liste est automatiquement mise à jour avec les plots créés dans le fuseau de la mission.</span><br></td>
+						<h2>Paramètres obligatoires</h2><span class="param" style="font-weight: normal;">Fuseau : Limite gauche / Limite droite</span><br><span style="font-weight: normal;" class="normal">Zone de responsabilité.</span><br><span class="param" style="font-weight: normal;">Portee Action</span><br><span style="font-weight: normal;" class="normal">Permet, en association de l'Ambiance Mission de déterminer les quantités de carburant et de munition à embarquer à chaque ravitaillement.</span><br><span class="param" style="font-weight: normal;">Ambiance Mission</span><br><span style="font-weight: normal;" class="normal">Permet, en association de la Portée Action de déterminer les quantités de carburant et de munition à embarquer à chaque ravitaillement.</span><br></td>
 				</tr>
 				<tr>
 					<td class="table" style="vertical-align: top;">
