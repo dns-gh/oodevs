@@ -752,7 +752,7 @@ void LogisticSupplyPushFlowDialog::ClearRouteData()
 void LogisticSupplyPushFlowDialog::EraseRecipientData( const QString& recipient )
 {
     const kernel::Automat_ABC* pRecipient = recipientsNames_[ recipient ];
-    std::remove( recipients_.begin(), recipients_.end(), pRecipient );
+    recipients_.erase( std::remove( recipients_.begin(), recipients_.end(), pRecipient ), recipients_.end() );
 
     T_RecipientSupplies::iterator itSupplies = recipientSupplies_.begin();
     while( itSupplies != recipientSupplies_.end() )
