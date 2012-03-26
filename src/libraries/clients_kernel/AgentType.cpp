@@ -237,7 +237,8 @@ unsigned int AgentType::GetNbrWarrantOfficers() const
 // -----------------------------------------------------------------------------
 bool AgentType::IsTC2() const
 {
-    return type_ == "Pion LOG TC2";
+    return type_ == "Pion LOG TC2"
+        || type_ == "Pion Organization";
 }
 
 // -----------------------------------------------------------------------------
