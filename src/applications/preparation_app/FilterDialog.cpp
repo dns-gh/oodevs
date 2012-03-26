@@ -34,6 +34,7 @@ FilterDialog::FilterDialog( QWidget* parent, xml::xistream& xis, const tools::Ex
         Q3GroupBox* box = new Q3GroupBox( 1, Qt::Horizontal, tools::translate( "FilterDialog", "Select filter:" ), this, "FilterDialog_FiltersGroupBox" );
         list_ = new Q3ListBox( box, "FilterDialog_FiltersListBox" );
         connect( list_, SIGNAL( highlighted( int ) ), SLOT( OnSelectFilter( int ) ) );
+        connect( list_, SIGNAL( returnPressed( Q3ListBoxItem* ) ), SLOT( OnAccept() ) );
         mainLayout->addWidget( box );
     }
     // Descriptions
@@ -56,6 +57,7 @@ FilterDialog::FilterDialog( QWidget* parent, xml::xistream& xis, const tools::Ex
         box->setMaximumHeight( 40 );
         okButton_ = new QPushButton( tools::translate( "FilterDialog", "Ok" ), box, "FilterDialog_OkButton" );
         okButton_->setDefault( true );
+        okButton_->setAutoDefault( true );
         QPushButton* cancelBtn = new QPushButton( tools::translate( "FilterDialog", "Cancel" ), box, "FilterDialog_CancelButton" );
         connect( okButton_, SIGNAL( clicked() ), SLOT( OnAccept() ) );
         connect( cancelBtn, SIGNAL( clicked() ), SLOT( OnReject() ) );
@@ -111,6 +113,8 @@ void FilterDialog::OnSelectFilter( int index )
 // -----------------------------------------------------------------------------
 void FilterDialog::OnAccept()
 {
+    if( !okButton_->isEnabled() )
+        return;
     try
     {
         Filter_ABC& filter = filterManager_->GetFilter( list_->currentItem() );
