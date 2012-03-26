@@ -705,7 +705,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Chantiers" optional="false" type="PlannedWork"/>
-      <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="false" type="Boolean"/>
+      <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="true" type="Point"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.AppuiContreMobilite" dia-type="france.military.platoon.combat.support.engineer.tasks.AppuiContreMobilite" id="2078" name="PION MILICE Appui contre mobilite" package="support">
@@ -714,7 +714,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Chantiers" optional="false" type="PlannedWork"/>
-      <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="false" type="Boolean"/>
+      <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.Valoriser" dia-type="france.military.platoon.combat.support.engineer.tasks.Valoriser" id="5010" name="PION GENIE Valoriser" package="support">
@@ -736,7 +736,7 @@
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
-      <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="false" type="Boolean"/>
+      <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="france.military.platoon.combat.support.engineer.tasks.ActiverObstacles" dia-type="france.military.platoon.combat.support.engineer.tasks.ActiverObstacles" id="2104" name="PION GENIE Activer Obstacles" package="support">
@@ -1056,7 +1056,7 @@
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
-      <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="false" type="Boolean"/>
+      <parameter dia-name="valoriserObstacles_" name="Valoriser obstacles" optional="true" type="Boolean"/>
       <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="france.military.platoon.tasks.Produire" dia-type="france.military.platoon.tasks.Produire" id="2145" name="PION Produire et alimenter" package="none">
@@ -2395,7 +2395,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Chantiers" optional="false" type="PlannedWork"/>
-      <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="false" type="Boolean"/>
+      <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.combat.support.engineer.tasks.RetablirItineraire" dia-type="france.military.company.combat.support.engineer.tasks.RetablirItineraire" id="1053" mrt-dia-behavior="france.military.company.combat.support.engineer.tasks.RetablirItineraire" name="AUTOMATE GENIE Retablir Itineraire" package="support">
@@ -2504,7 +2504,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Chantiers" optional="false" type="PlannedWork"/>
-      <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="false" type="Boolean"/>
+      <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
       <parameter dia-name="meetingPoint" name="Position de regroupement" optional="false" type="Point"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.combat.support.engineer.tasks.SeDeployer" dia-type="france.military.company.combat.support.engineer.tasks.SeDeployer" id="28749" mrt-dia-behavior="france.military.company.combat.support.engineer.tasks.SeDeployer" name="AUTOMATE GENIE Se Deployer" package="none">
@@ -3124,4 +3124,4 @@
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PoursuivreConvoi" id="406" name="Poursuivre convoi"/>
   </fragorders>
 </missions>
-<!-- signature="1073272570" -->
+<!-- signature="4043698742" -->

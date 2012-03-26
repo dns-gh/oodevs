@@ -13,11 +13,14 @@
 				<nil/>
 			</default>
 		</parameter>
-		<parameter name="withImprovement">
+		<parameter name="withImprovement" nullable="true">
 			<description>Si la valeur est vraie, on continue la construction en valorisant l'objectif.</description>
 			<type>
 				<simple name="boolean"/>
 			</type>
+			<default>
+				<boolean>false</boolean>
+			</default>
 		</parameter>
 	</parameters>
 	<goal>
