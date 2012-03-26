@@ -303,7 +303,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.RATAC" id="11" name="ASS . Groupe RATAC" type="Pion ASS">
@@ -332,7 +332,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.EO" id="12" name="ASS . EO CHEF OFF sur AMX10P" type="Pion ASS">
@@ -361,7 +361,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Equipe Reco" id="13" name="ASS . Section de Reco AUF1" type="Pion ASS">
@@ -392,7 +392,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.PC" id="14" name="ASS . PC Batterie ASS" type="Pion ASS">
@@ -423,7 +423,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Equipe Reco" id="15" name="ASS . Equipe de Reco LRM" type="Pion ASS">
@@ -452,7 +452,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.COBRA" id="16" name="ASS . Station COBRA" type="Pion ASS">
@@ -483,7 +483,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Equipe Reco" id="17" name="ASS . Equipe Reco COBRA" type="Pion ASS">
@@ -512,7 +512,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Equipe Reco" id="18" name="ASS . Section de Reco TRF1" type="Pion ASS">
@@ -544,7 +544,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="19" name="ASS . Section de Tir TRF1 CDS OFF" type="Pion ASS">
@@ -587,7 +587,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.EOP" id="20" name="ASS . EOP CHEF OFF" type="Pion ASS">
@@ -616,7 +616,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit can-fly="true" decisional-model="Cougar Horizon" id="21" name="ALAT - Cougar Horizon" type="Pion RENS">
@@ -681,7 +681,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="23" name="ASS . Section Mortier 120" type="Pion ASS">
@@ -719,7 +719,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.PC" id="24" name="ASS . PC Batterie COBRA" type="Pion ASS">
@@ -750,7 +750,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.EO" id="25" name="ASS . Groupe CDT DLO" type="Pion ASS">
@@ -780,7 +780,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.PC" id="26" name="GLAISE - ASS . PC Batterie BM21" type="Pion ASS">
@@ -848,7 +848,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.RATAC" id="28" name="ASS . PC RATAC" type="Pion ASS">
@@ -876,7 +876,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.EO" id="29" name="ASS . EO CHEF SOFF sur AMX10P" type="Pion ASS">
@@ -905,7 +905,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.EOP" id="30" name="ASS . EOP CHEF SOFF" type="Pion ASS">
@@ -934,7 +934,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.PC" id="31" name="ASS . Section CDT Batterie LRU" type="Pion ASS">
@@ -966,7 +966,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.PC" id="32" name="ASS . Section CDT Batterie LRM" type="Pion ASS">
@@ -998,7 +998,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.PC" id="33" name="ASS . PC Batterie de Tir TRF1" type="Pion ASS">
@@ -1030,7 +1030,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.PC" id="34" name="ASS . PC Batterie Mortier" type="Pion ASS">
@@ -1061,7 +1061,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.JOINT" id="35" name="JOINT . 2 CTM" type="Pion JOINT">
@@ -2320,7 +2320,7 @@
     </postures>
     <setup footprint-radius="10" speed-modifier="0.7"/>
     <nbc decontamination-delay="1200s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="100" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Genie.DISP - OT - MLF - MFRD - Enfouisseur - Chantier" id="79" name="GEN . Demi Groupe MFRD" type="Pion GEN">
@@ -2345,7 +2345,7 @@
     </postures>
     <setup footprint-radius="10" speed-modifier="0.7"/>
     <nbc decontamination-delay="1900s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="100" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Genie.SOUVIM - Deminage lourd" id="80" name="GEN . Section Deminage Lourd D9" type="Pion GEN">
@@ -2735,7 +2735,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="94" name="ASS . Section de Tir TRF1 CDS SOFF" type="Pion ASS">
@@ -2778,7 +2778,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.EO" id="95" name="ASS . EO CHEF OFF sur VAB" type="Pion ASS">
@@ -2807,7 +2807,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.EO" id="96" name="ASS . EO CHEF SOFF sur VAB" type="Pion ASS">
@@ -2836,7 +2836,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="97" name="ASS . Section de Tir LRM CDS OFF" type="Pion ASS">
@@ -2867,7 +2867,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.TRANS.PC TAC" id="98" name="ASS . PC BAT 24LRM" type="Pion TRANS">
@@ -2897,7 +2897,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit can-fly="true" decisional-model="Masalife.TRANS.PC TAC" id="99" name="ALAT . PC SGAM" type="Pion ALAT">
@@ -2928,7 +2928,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="100"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit can-fly="true" decisional-model="Patrouille HAC" id="100" name="ALAT - Patrouille 3HAC" type="Pion ALAT">
@@ -2989,7 +2989,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="100"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit can-fly="true" decisional-model="Masalife.TRANS.PC TAC" id="102" name="ALAT . PC GAM603" type="Pion ALAT">
@@ -3020,7 +3020,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="100"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.TRANS.PC TAC" id="103" name="INF . PC GTIA INF Debarque" type="Pion TRANS">
@@ -3080,7 +3080,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="100"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit can-fly="true" decisional-model="Patrouille HR" id="105" name="ALAT - Patrouille 2HR" type="Pion ALAT">
@@ -3171,7 +3171,7 @@
     </postures>
     <setup footprint-radius="10" installation-time="45m" speed-modifier="0.7" uninstallation-time="10m"/>
     <nbc decontamination-delay="9000s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="30" combat-support="50" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="70"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="108" name="ASS . Artillerie Animation AUF1" type="Pion ASS">
@@ -3209,7 +3209,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="109" name="ASS . Artillerie Animation LRU" type="Pion ASS">
@@ -3242,7 +3242,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="110" name="ASS . Artillerie Animation LRM" type="Pion ASS">
@@ -3275,7 +3275,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit can-fly="true" decisional-model="Patrouille HM" id="111" name="ALAT - Patrouille 3HM Sea King" type="Pion ALAT">
@@ -3833,7 +3833,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Equipe Reco" id="129" name="ASS . Equipe Reco M120 VAB" type="Pion ASS">
@@ -3862,7 +3862,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="130" name="ASS . Groupe Mortier 120 OFF 2 pieces" type="Pion ASS">
@@ -3899,7 +3899,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="500" width="500"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="131" name="ASS . Groupe Mortier 120 OFF 3 pieces" type="Pion ASS">
@@ -3935,7 +3935,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="132" name="ASS . Groupe Mortier 120 S/OFF 3 pieces" type="Pion ASS">
@@ -3971,7 +3971,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="133" name="ASS . Groupe Mortier 120 OFF 4 pieces" type="Pion ASS">
@@ -4007,7 +4007,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="134" name="ASS . Groupe Mortier 120 S/OFF 4 pieces" type="Pion ASS">
@@ -4043,7 +4043,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="135" name="ASS . Groupe Mortier 120 S/OFF 2 pieces" type="Pion ASS">
@@ -4079,7 +4079,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="136" name="GLAISE - ASS . Section BM 21" type="Pion ASS">
@@ -4144,7 +4144,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="138" name="GLAISE - ASS . Section 122D30" type="Pion ASS">
@@ -5053,7 +5053,7 @@
     </postures>
     <setup footprint-radius="10" speed-modifier="0.7"/>
     <nbc decontamination-delay="3600s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.TRANS.PC TAC" id="170" name="ASS . DLART" type="Pion ASS">
@@ -5083,7 +5083,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.EO" id="171" name="ASS . EO VAB" type="Pion ASS">
@@ -5112,7 +5112,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.EO" id="172" name="ASS . EO AMX10P" type="Pion ASS">
@@ -5141,7 +5141,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.EOP" id="173" name="ASS . EOP" type="Pion ASS">
@@ -5170,7 +5170,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.TRANS.PC TAC" id="174" name="GEN . DLGEN" type="Pion ASS">
@@ -5199,7 +5199,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.TRANS.Section TRANS" id="175" name="GEN . PC" type="Pion TRANS">
@@ -5256,7 +5256,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Equipe Reco" id="177" name="ASS . Equipe de Reco TRF1" type="Pion ASS">
@@ -5285,7 +5285,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="178" name="ASS . Section de Tir AUF1 CDS OFF Pour SIC" type="Pion ASS">
@@ -5325,7 +5325,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="179" name="ASS . Section de Tir AUF1 CDS SOFF Pour SIC" type="Pion ASS">
@@ -5365,7 +5365,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="180" name="ASS . Section de Tir TRF1 CDS OFF Pour SIC" type="Pion ASS">
@@ -5408,7 +5408,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="181" name="ASS . Section de Tir TRF1 CDS SOFF Pour SIC" type="Pion ASS">
@@ -5451,7 +5451,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="182" name="ASS . Section Mortier 120 OFF 2 pcs Pour SIC" type="Pion ASS">
@@ -5487,7 +5487,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="183" name="ASS . Section Mortier 120 SOFF 2 pcs Pour SIC" type="Pion ASS">
@@ -5523,7 +5523,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="184" name="ASS . Section Mortier 120 OFF 3 pcs Pour SIC" type="Pion ASS">
@@ -5559,7 +5559,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="185" name="ASS . Section Mortier 120 SOFF 3 pcs Pour SIC" type="Pion ASS">
@@ -5595,7 +5595,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="186" name="ASS . Section Mortier 120 OFF 4 pcs Pour SIC" type="Pion ASS">
@@ -5631,7 +5631,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="187" name="ASS . Section Mortier 120 SOFF 4 pcs Pour SIC" type="Pion ASS">
@@ -5667,7 +5667,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Equipe Reco" id="188" name="ASS . Equipe de Reco CAESAR" type="Pion ASS">
@@ -5696,7 +5696,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="189" name="ASS . Section de Tir CAESAR CDS OFF Pour SIC" type="Pion ASS">
@@ -5742,7 +5742,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="190" name="ASS . Section de Tir CAESAR CDS SOFF Pour SIC" type="Pion ASS">
@@ -5788,7 +5788,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.EO" id="191" name="ASS . Groupe CDT DLOP" type="Pion ASS">
@@ -5818,7 +5818,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Milice" id="192" name="HUMUS - RENS . Societe Militaire Privee" type="Pion RENS">
@@ -5885,7 +5885,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Equipe Reco" id="194" name="ASS . PC Batterie de Reco AUF1" type="Pion ASS">
@@ -5916,7 +5916,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Equipe Reco" id="195" name="ASS . PC Batterie de Reco LRM" type="Pion ASS">
@@ -5945,7 +5945,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Equipe Reco" id="196" name="ASS . PC Batterie de Reco TRF1" type="Pion ASS">
@@ -5977,7 +5977,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASA.PC" id="197" name="GLAISE - ASA . PC Section" type="Pion ASA">
@@ -8788,7 +8788,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.TRANS.PC TAC" id="290" name="LOG . BLOG PCMR" type="Pion TRANS">
@@ -9121,7 +9121,7 @@
     </postures>
     <setup footprint-radius="10" speed-modifier="0.7"/>
     <nbc decontamination-delay="3600s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.TRANS.PC TAC" id="303" name="ASS . DAFV" type="Pion TRANS">
@@ -9144,7 +9144,7 @@
     </postures>
     <setup footprint-radius="10" speed-modifier="0.7"/>
     <nbc decontamination-delay="3600s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.TRANS.PC TAC" id="304" name="ASS . PCRA" type="Pion TRANS">
@@ -9167,7 +9167,7 @@
     </postures>
     <setup footprint-radius="10" speed-modifier="0.7"/>
     <nbc decontamination-delay="3600s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.TRANS.PC TAC" id="305" name="ASS . PCRV" type="Pion TRANS">
@@ -9190,7 +9190,7 @@
     </postures>
     <setup footprint-radius="10" speed-modifier="0.7"/>
     <nbc decontamination-delay="3600s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASA.PC" id="306" name="GLAISE - ASA . PC SA14" type="Pion ASA">
@@ -9278,7 +9278,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Equipe Reco" id="309" name="ASS . Equipe de Reco LRU" type="Pion ASS">
@@ -9307,7 +9307,7 @@
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.PC" id="310" name="ASS . PC Batterie LRU" type="Pion ASS">
@@ -9338,7 +9338,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="311" name="ASS . Section de Tir LRU CDS OFF" type="Pion ASS">
@@ -9374,7 +9374,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="312" name="ASS . Section de Tir LRU CDS SOFF" type="Pion ASS">
@@ -9405,7 +9405,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.ASS.Section Tir" id="313" name="ASS . Section de Tir CAESAR pour FOB" type="Pion ASS">
@@ -9451,7 +9451,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.TRANS.PC TAC" id="314" name="RENS . Section CDT et TC1 BRB" type="Pion TRANS">
@@ -9514,7 +9514,7 @@
       <distance-before-point type="crossroad" value="500"/>
       <distance-before-point type="bridge" value="500"/>
     </distance-before-points>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Genie.AD" id="316" name="GEN . Section Aide au Deploiement" type="Pion GEN">
@@ -10289,7 +10289,7 @@
     </postures>
     <setup footprint-radius="10" speed-modifier="0.7"/>
     <nbc decontamination-delay="600s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <repartition children="0" female="0" male="1"/>
     <crossing-height height="0m"/>
   </unit>
@@ -13622,7 +13622,7 @@
     </postures>
     <setup footprint-radius="10" speed-modifier="0.7"/>
     <nbc decontamination-delay="7800s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.CIRCU.Patrouille Circulation" id="452" name="CIRCU . Patrouille P4" type="Pion CIRCULATION">
@@ -13647,7 +13647,7 @@
     <setup footprint-radius="10" speed-modifier="0.7"/>
     <nbc decontamination-delay="300s"/>
     <drill-blow length="500" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.CIRCU.PC Appui Mob" id="453" name="CIRCU . Peloton CDT ESC TRPT BLD" type="Pion CIRCULATION">
@@ -13676,7 +13676,7 @@
     <setup footprint-radius="10" speed-modifier="0.7"/>
     <nbc decontamination-delay="750s"/>
     <drill-blow length="300" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.CIRCU.Patrouille Circulation" id="454" name="CIRCU . PC sur P4" type="Pion CIRCULATION">
@@ -13700,7 +13700,7 @@
     </postures>
     <setup footprint-radius="10" speed-modifier="0.7"/>
     <nbc decontamination-delay="1200s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.CIRCU.Patrouille Circulation" id="455" name="CIRCU . PC sur VAB" type="Pion CIRCULATION">
@@ -13725,7 +13725,7 @@
     </postures>
     <setup footprint-radius="10" speed-modifier="0.7"/>
     <nbc decontamination-delay="1200s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.CIRCU.Patrouille Circulation" id="456" name="CIRCU . Patrouille VAB" type="Pion CIRCULATION">
@@ -13748,7 +13748,7 @@
     </postures>
     <setup footprint-radius="10" speed-modifier="0.7"/>
     <nbc decontamination-delay="1200s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="457" name="CIRCU . Peloton Transport Blindes CL50" type="Pion CIRCULATION">
@@ -13770,7 +13770,7 @@
     </postures>
     <setup footprint-radius="10" speed-modifier="0.7"/>
     <nbc decontamination-delay="7800s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="458" name="CIRCU . Peloton Bus Renault" type="Pion CIRCULATION">
@@ -13792,7 +13792,7 @@
     </postures>
     <setup footprint-radius="10" speed-modifier="0.7"/>
     <nbc decontamination-delay="7800s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="459" name="CIRCU . Peloton Bus Mercedes" type="Pion CIRCULATION">
@@ -13814,7 +13814,7 @@
     </postures>
     <setup footprint-radius="10" speed-modifier="0.7"/>
     <nbc decontamination-delay="7800s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="460" name="CIRCU . Peloton Bus Volvo" type="Pion CIRCULATION">
@@ -13836,7 +13836,7 @@
     </postures>
     <setup footprint-radius="10" speed-modifier="0.7"/>
     <nbc decontamination-delay="7800s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="100" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="461" name="CIRCU . PC ESC TRANSP BUS" type="Pion CIRCULATION">
@@ -13858,7 +13858,7 @@
     </postures>
     <setup footprint-radius="10" speed-modifier="0.7"/>
     <nbc decontamination-delay="7800s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="462" name="CIRCU . Peloton Bus IVECO" type="Pion CIRCULATION">
@@ -13880,7 +13880,7 @@
     </postures>
     <setup footprint-radius="10" speed-modifier="0.7"/>
     <nbc decontamination-delay="7800s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="463" name="CIRCU . Peloton Bus MAN" type="Pion CIRCULATION">
@@ -13902,7 +13902,7 @@
     </postures>
     <setup footprint-radius="10" speed-modifier="0.7"/>
     <nbc decontamination-delay="7800s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="464" name="Train" type="Pion CIRCULATION">
@@ -14352,7 +14352,7 @@
     </postures>
     <setup footprint-radius="10" speed-modifier="0.7"/>
     <nbc decontamination-delay="1200s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.CIRCU.Patrouille Circulation" id="480" name="CIRCU . Patrouille PVP" type="Pion CIRCULATION">
@@ -14376,7 +14376,7 @@
     <setup footprint-radius="10" speed-modifier="0.7"/>
     <nbc decontamination-delay="300s"/>
     <drill-blow length="500" width="300"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.TRANS.PC TAC" id="481" name="CIRCU . EM GCR" type="Pion TRANS">
@@ -14400,7 +14400,7 @@
     </postures>
     <setup footprint-radius="10" speed-modifier="0.7"/>
     <nbc decontamination-delay="3600s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.TRANS.PC TAC" id="482" name="CIRCU . Peloton  CDT ECR" type="Pion TRANS">
@@ -14425,7 +14425,7 @@
     </postures>
     <setup footprint-radius="10" speed-modifier="0.7"/>
     <nbc decontamination-delay="3600s"/>
-    <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
+    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
   <unit decisional-model="Masalife.Milice" id="483" name="MILICE . PICK UP 10 Miliciens" type="Pion MILICE">
@@ -19538,4 +19538,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="2563439007" -->
+<!-- signature="1716170316" -->
