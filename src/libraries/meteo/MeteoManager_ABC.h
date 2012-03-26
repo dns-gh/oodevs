@@ -56,7 +56,7 @@ public:
     }
     bool Remove( unsigned long id )
     {
-        for( CIT_Meteos it = meteos_.begin(); it != meteos_.end(); ++it )
+        for( IT_Meteos it = meteos_.begin(); it != meteos_.end(); ++it ) // $$$$ ABR 2012-03-26: F*!@#% vc80 ... should become CIT_Meteos when we'll drop vc80.
             if( ( *it )->GetId() == id )
             {
                 meteos_.erase( it );
