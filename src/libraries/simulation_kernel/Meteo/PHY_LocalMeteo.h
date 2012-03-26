@@ -43,6 +43,7 @@ public:
     //@{
     virtual void UpdateMeteoPatch( int date, weather::PHY_RawVisionData_ABC& dataVision, boost::shared_ptr< weather::Meteo > meteo );
     virtual void Update( const sword::MissionParameters& msg );
+    virtual bool IsPatched() const;
     //@}
 
     //! @name CheckPoints

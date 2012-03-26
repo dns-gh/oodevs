@@ -100,7 +100,7 @@ void MeteoModel::Accept( kernel::ModelVisitor_ABC& visitor )
 {
     if( MeteoGlobal* global = static_cast< MeteoGlobal* >( globalMeteo_.get() ) )
         visitor.Visit( *global );
-    for( CIT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
+    for( CIT_Meteos it = meteos_.begin(); it != meteos_.end(); ++it )
         visitor.Visit( static_cast< MeteoLocal& >( **it ) );
 }
 
@@ -156,10 +156,10 @@ void MeteoModel::OnReceiveMsgLocalMeteoCreation( const sword::ControlLocalWeathe
 // -----------------------------------------------------------------------------
 void MeteoModel::OnReceiveMsgLocalMeteoDestruction( const sword::ControlLocalWeatherDestruction& message )
 {
-    for( IT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
+    for( IT_Meteos it = meteos_.begin(); it != meteos_.end(); ++it )
         if( (*it)->GetId() == message.weather().id() )
         {
-            meteos_.erase( *it );
+            meteos_.erase( it );
             return;
         }
 }

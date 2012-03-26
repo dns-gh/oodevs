@@ -307,7 +307,7 @@ void Inhabitant::UpdateUrbanObjectsDictionnary()
         tools::Iterator< const kernel::AccommodationType& > itAcco = accommodations.CreateIterator();
         while( itAcco.HasMoreElements() )
         {
-            const const kernel::AccommodationType& accomodation = itAcco.NextElement();
+            const kernel::AccommodationType& accomodation = itAcco.NextElement();
             accomodationCapacties_[ QString::fromStdString( accomodation.GetRole() ) ] += static_cast< unsigned int >( pProxy->GetNominalCapacity( accomodation.GetRole() ) );
         }
     }

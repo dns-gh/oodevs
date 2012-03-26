@@ -118,7 +118,7 @@ public:
     void GetVisionObjectsInSurface( const T& localisation, unsigned int& rEmptySurface, unsigned int& rForestSurface, unsigned int& rUrbanSurface ) const;
 
     void RegisterMeteoPatch  ( const geometry::Point2d&, const geometry::Point2d&, boost::shared_ptr< weather::Meteo > pMeteo );
-    void UnregisterMeteoPatch( const geometry::Point2d&, const geometry::Point2d& );
+    void UnregisterMeteoPatch( const geometry::Point2d&, const geometry::Point2d&, boost::shared_ptr< weather::Meteo > pMeteo );
 
     void RegisterWeatherEffect  ( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& weaponCategory );
     void UnregisterWeatherEffect( const MT_Ellipse& surface, const PHY_IndirectFireDotationClass& weaponCategory );

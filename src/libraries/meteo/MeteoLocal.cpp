@@ -286,3 +286,17 @@ void MeteoLocal::SendDestruction( dispatcher::ClientPublisher_ABC& publisher ) c
     msg().mutable_weather()->set_id( id_ );
     msg.Send( publisher );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Meteo::IsYounger
+// Created: ABR 2012-03-23
+// -----------------------------------------------------------------------------
+bool MeteoLocal::IsOlder( const weather::Meteo& other ) const
+{
+    if( const MeteoLocal* localOther = dynamic_cast< const MeteoLocal* >( &other ) )
+    {
+        return startTime_ < localOther->GetStartTime();
+    }
+    else
+        return true;
+}

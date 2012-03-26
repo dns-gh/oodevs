@@ -192,7 +192,7 @@ void PHY_MeteoDataManager::load( MIL_CheckPointInArchive& file, const unsigned i
     for( ; size > 0; --size )
     {
         file >> meteo;
-        meteos_.insert( boost::shared_ptr< weather::Meteo >( meteo ) );
+        meteos_.push_back( boost::shared_ptr< weather::Meteo >( meteo ) );
     }
 }
 
@@ -208,7 +208,7 @@ void PHY_MeteoDataManager::save( MIL_CheckPointOutArchive& file, const unsigned 
          << pGlobalMeteo_
          << pEphemeride_
          << size;
-    for( CIT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
+    for( CIT_Meteos it = meteos_.begin(); it != meteos_.end(); ++it )
     {
         PHY_LocalMeteo* local = static_cast< PHY_LocalMeteo* >( it->get() );
         file << local;
@@ -247,11 +247,11 @@ void PHY_MeteoDataManager::Update( unsigned int date )
     {
         MT_LOG_INFO_MSG( MT_FormatString( "Ephemeris is now: %s", pEphemeride_->GetLightingBase().GetName().c_str() ) );
         pGlobalMeteo_->Update( pEphemeride_->GetLightingBase() );
-        for( CIT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
+        for( CIT_Meteos it = meteos_.begin(); it != meteos_.end(); ++it )
             ( *it )->Update( pEphemeride_->GetLightingBase() );
     }
     pGlobalMeteo_->UpdateMeteoPatch( date, *pRawData_, boost::shared_ptr< weather::Meteo >() );
-    for( CIT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
+    for( CIT_Meteos it = meteos_.begin(); it != meteos_.end(); ++it )
         ( *it )->UpdateMeteoPatch( date, *pRawData_, *it );
 }
 
@@ -262,6 +262,21 @@ void PHY_MeteoDataManager::Update( unsigned int date )
 void PHY_MeteoDataManager::SendStateToNewClient()
 {
     pGlobalMeteo_->SendCreation();
-    for( IT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
+    for( IT_Meteos it = meteos_.begin(); it != meteos_.end(); ++it )
       ( *it )->SendCreation();
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_MeteoDataManager::GetLocalWeather
+// Created: ABR 2012-03-21
+// -----------------------------------------------------------------------------
+weather::Meteo* PHY_MeteoDataManager::GetLocalWeather( const geometry::Point2f& position, boost::shared_ptr< weather::Meteo > pMeteo ) const
+{
+    weather::Meteo* result = 0;
+    for( CIT_Meteos it = meteos_.begin(); it != meteos_.end(); ++it )
+    {
+        if( ( *it )->IsPatched() && ( *it )->IsInside( position ) && ( !result || result->IsOlder( **it ) ) && it->get() != pMeteo.get() )
+            result = it->get();
+    }
+    return result;
 }

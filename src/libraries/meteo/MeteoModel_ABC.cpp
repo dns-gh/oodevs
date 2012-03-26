@@ -52,6 +52,5 @@ void MeteoModel_ABC::Purge()
 // -----------------------------------------------------------------------------
 void MeteoModel_ABC::AddMeteo( weather::Meteo& element )
 {
-    if( ! meteos_.insert( boost::shared_ptr< weather::Meteo >( &element ) ).second )
-        throw std::runtime_error( __FUNCTION__ "Insert failed" );
+    meteos_.push_back( boost::shared_ptr< weather::Meteo >( &element ) );
 }

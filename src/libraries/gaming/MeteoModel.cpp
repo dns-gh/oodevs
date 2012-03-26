@@ -54,9 +54,9 @@ const weather::Meteo* MeteoModel::GetGlobalMeteo() const
 // -----------------------------------------------------------------------------
 const weather::Meteo* MeteoModel::GetMeteo( const geometry::Point2f& point ) const
 {
-    for( CIT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
-        if( (*it)->IsInside( point ) )
-            return ( *it ).get();
+    for( T_Meteos::const_reverse_iterator rit = meteos_.rbegin(); rit != meteos_.rend(); ++rit )
+        if( ( *rit )->IsInside( point ) )
+            return ( *rit ).get();
     return GetGlobalMeteo();
 }
 
@@ -64,7 +64,7 @@ const weather::Meteo* MeteoModel::GetMeteo( const geometry::Point2f& point ) con
 // Name: std::set< weather::Meteo* >& MeteoModel::GetLocalMeteos
 // Created: ABR 2011-06-06
 // -----------------------------------------------------------------------------
-const weather::MeteoManager_ABC::T_MeteoSet& MeteoModel::GetLocalMeteos() const
+const weather::MeteoManager_ABC::T_Meteos& MeteoModel::GetLocalMeteos() const
 {
     return meteos_;
 }
@@ -106,10 +106,10 @@ void MeteoModel::OnReceiveMsgLocalMeteoCreation( const sword::ControlLocalWeathe
 // -----------------------------------------------------------------------------
 void MeteoModel::OnReceiveMsgLocalMeteoDestruction( const sword::ControlLocalWeatherDestruction& message )
 {
-    for( IT_MeteoSet it = meteos_.begin(); it != meteos_.end(); ++it )
+    for( IT_Meteos it = meteos_.begin(); it != meteos_.end(); ++it )
         if( (*it)->GetId() == message.weather().id() )
         {
-            meteos_.erase( *it );
+            meteos_.erase( it );
             controller_.Update( *this );
             return;
         }
