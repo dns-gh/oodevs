@@ -449,7 +449,7 @@ node "BEH_Dep_Pion_ALAT_RejoindreParItineraire"
 --[[// calcul de l'itineraire uniquement si en vol (pour le calcul d'évitement des objets)
 ]]        end
 
-        if( DEC_Agent_EstEnVol() and not self.bCalculItineraire ) then
+        if( not self.bCalculItineraire ) then
             do
                 self.itineraire = DEC_CreerItineraireListe( self._namedParams.listePoints, self._namedParams.ePathType )
                 self.bCalculItineraire = true
