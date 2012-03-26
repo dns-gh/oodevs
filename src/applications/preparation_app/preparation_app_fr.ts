@@ -1171,6 +1171,14 @@
         <source>Delete &apos;%1&apos;?</source>
         <translation>Supprimer &quot;%1&quot; ?</translation>
     </message>
+    <message>
+        <source>Warning</source>
+        <translation>Avertissement</translation>
+    </message>
+    <message>
+        <source>Unable to delete the knowledge group. At least one knowledge group must exists for each side.</source>
+        <translation>Impossible de supprimer le groupe de la connaissance. Au moins un groupe de connaissances doit exister pour chaque camp.</translation>
+    </message>
 </context>
 <context>
     <name>ModelConsistencyDialog</name>

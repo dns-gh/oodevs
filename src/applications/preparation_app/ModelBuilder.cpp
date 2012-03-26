@@ -182,6 +182,33 @@ void ModelBuilder::OnDelete()
         DeleteEntity( *toDelete_ );
 }
 
+namespace
+{
+    bool IsLastKnowledgeGroup( const kernel::Entity_ABC& entity, const Model& model )
+    {
+        const kernel::KnowledgeGroup_ABC* knowledgeGroup = dynamic_cast< const kernel::KnowledgeGroup_ABC* >( &entity );
+        if( !knowledgeGroup )
+            return false;
+        const kernel::CommunicationHierarchies* hierarchies = knowledgeGroup->Retrieve< kernel::CommunicationHierarchies >();
+        if( !hierarchies )
+            return false;
+        const kernel::Entity_ABC* superior = hierarchies->GetSuperior();
+        if( !superior )
+            return false;
+        unsigned int count = 0u;
+        tools::Iterator< const kernel::KnowledgeGroup_ABC& > it = model.knowledgeGroups_.CreateIterator();
+        while( it.HasMoreElements() )
+        {
+            const kernel::KnowledgeGroup_ABC& group = it.NextElement();
+            if( const kernel::CommunicationHierarchies* itHierarchies = group.Retrieve< kernel::CommunicationHierarchies >() )
+                if( const kernel::Entity_ABC* itSuperior = itHierarchies->GetSuperior() )
+                    if( itSuperior->GetId() == superior->GetId() )
+                        ++count;
+        }
+        return count == 1;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ModelBuilder::Delete
 // Created: LGY 2011-11-28
@@ -189,6 +216,11 @@ void ModelBuilder::OnDelete()
 void ModelBuilder::DeleteEntity( const Entity_ABC& entity )
 {
     toDelete_ = &entity;
+    if( IsLastKnowledgeGroup( *toDelete_, model_ ) )
+    {
+        QMessageBox::warning( 0, tr( "Warning" ), tr( "Unable to delete the knowledge group. At least one knowledge group must exists for each side." ) );
+        return;
+    }
     if( HasHierarchy( entity ) )
         confirmation_->setText( tr( "Delete '%1' and all its subordinates?" ).arg( entity.GetName() ) );
     else
@@ -226,6 +258,7 @@ namespace
         }
     }
 }
+
 // -----------------------------------------------------------------------------
 // Name: ModelBuilder::Delete
 // Created: AGE 2006-11-28
