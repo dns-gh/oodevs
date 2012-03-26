@@ -662,11 +662,11 @@
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . PC Patrouille Eclairage Regimentaire CP SOFF"/>
     <unit max-occurs="2" min-occurs="2" type="ABC . Patrouille Eclairage Regimentaire CP SOFF"/>
   </automat>
-  <automat decisional-model="Masalife.Automate.ABC.EI" id="813" name="ABC . Section RECONNAISSANCE REGIMENTAIRE" type="Automate ABC">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . Patrouille SRR CDT"/>
-    <unit max-occurs="2" min-occurs="2" type="ABC . Patrouille SRR 2SOFF"/>
-    <unit max-occurs="1" min-occurs="1" type="ABC . Patrouille SRR ACMP"/>
-    <unit max-occurs="1" min-occurs="1" type="ABC . Patrouille SRR 1SOFF"/>
+  <automat decisional-model="Masalife.Automate.ABC.EI" id="813" name="INF . Section RECONNAISSANCE REGIMENTAIRE" type="Automate ABC">
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="INF . Patrouille SRR CDT"/>
+    <unit max-occurs="2" min-occurs="2" type="INF . Patrouille SRR 2SOFF"/>
+    <unit max-occurs="1" min-occurs="1" type="INF . Patrouille SRR ACMP"/>
+    <unit max-occurs="1" min-occurs="1" type="INF . Patrouille SRR 1SOFF"/>
   </automat>
   <automat decisional-model="Masalife.Automate.ABC.PIR" id="814" name="ABC . Peloton Protection PC" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . Peloton Protection PC"/>
@@ -682,7 +682,7 @@
   <automat decisional-model="Masalife.Automate.ABC.Blinde Ecl" id="817" name="ABC . Ssgpt Blinde Eclairage" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . PC Eclairage"/>
     <unit max-occurs="3" min-occurs="3" type="ABC . Patrouille Eclairage Regimentaire CP SOFF"/>
-    <unit max-occurs="1" min-occurs="1" type="ABC . Patrouille SRR ACMP"/>
+    <unit max-occurs="1" min-occurs="1" type="INF . Patrouille SRR ACMP"/>
     <unit max-occurs="3" min-occurs="3" type="ABC . PLT AMX 10 RC CDP OFF"/>
   </automat>
   <automat decisional-model="Masalife.Automate.ABC.Blinde Inf" id="818" name="ABC . Ssgpt Blinde Infanterie" type="Automate ABC">
@@ -693,7 +693,7 @@
   <automat decisional-model="Masalife.Automate.ABC.Char Ecl" id="819" name="ABC . Ssgpt Char Eclairage" type="Automate ABC">
     <unit command-post="true" max-occurs="1" min-occurs="1" type="ABC . Peloton LECLERC CDT ESC"/>
     <unit max-occurs="3" min-occurs="3" type="ABC . Patrouille Eclairage Regimentaire CP SOFF"/>
-    <unit max-occurs="1" min-occurs="1" type="ABC . Patrouille SRR ACMP"/>
+    <unit max-occurs="1" min-occurs="1" type="INF . Patrouille SRR ACMP"/>
     <unit max-occurs="2" min-occurs="2" type="ABC . Peloton LECLERC CDP OFF"/>
     <unit max-occurs="1" min-occurs="1" type="ABC . Peloton d appui direct"/>
   </automat>
@@ -1538,4 +1538,4 @@
     <unit type="MILICE OXYDE . PICK UP ZU23/2"/>
   </automat>
 </automats>
-<!-- signature="2252241201" -->
+<!-- signature="0180020159" -->
