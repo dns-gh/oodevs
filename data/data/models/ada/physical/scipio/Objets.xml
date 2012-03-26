@@ -129,7 +129,6 @@
       <geometry symbol="G*MPORC---****X" type="point"/>
     </geometries>
     <avoidable distance="500"/>
-    <bypassable bypass-speed="10"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable>
         <resources>
@@ -161,7 +160,6 @@
     </geometries>
     <activable/>
     <avoidable distance="500"/>
-    <bypassable bypass-speed="10"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
       <buildable>
         <resources>
@@ -254,7 +252,6 @@
     <geometries>
       <geometry symbol="G*FPAP----****X" type="point"/>
     </geometries>
-    <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
     <protection geniePrepared="true" max-size="1"/>
@@ -272,7 +269,6 @@
     <geometries>
       <geometry symbol="G*FPAP----****X" type="point"/>
     </geometries>
-    <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <protection geniePrepared="false" max-size="1"/>
@@ -282,7 +278,6 @@
     <geometries>
       <geometry symbol="G*FPAP----****X" type="point"/>
     </geometries>
-    <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <protection geniePrepared="false" max-size="1"/>
@@ -292,7 +287,6 @@
     <geometries>
       <geometry symbol="G*FPAP----****X" type="point"/>
     </geometries>
-    <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <protection geniePrepared="false" max-size="1"/>
@@ -311,7 +305,6 @@
       <geometry symbol="G*MPNL----****X" type="point"/>
     </geometries>
     <avoidable distance="100"/>
-    <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <contamination max-toxic="1"/>
     <interaction-height height="100"/>
@@ -330,7 +323,6 @@
     <geometries>
       <geometry symbol="G*MPNDP---****X" type="point"/>
     </geometries>
-    <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <decontamination/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
@@ -340,7 +332,6 @@
     <geometries>
       <geometry symbol="G*ROTA*********" type="point"/>
     </geometries>
-    <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <contamination max-toxic="-1"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
@@ -349,7 +340,6 @@
     <geometries>
       <geometry symbol="G*MPNR----****X" type="circle"/>
     </geometries>
-    <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <contamination max-toxic="1"/>
     <interaction-height height="100"/>
@@ -407,7 +397,6 @@
     <geometries>
       <geometry symbol="G*SPAD----****X" type="polygon"/>
     </geometries>
-    <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <lodging/>
     <logistic/>
@@ -416,7 +405,6 @@
     <geometries>
       <geometry symbol="G*SPAH----****X" type="polygon"/>
     </geometries>
-    <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="density">
       <buildable/>
     </constructor>
@@ -427,7 +415,6 @@
     <geometries>
       <geometry symbol="G*GPGPPK--****X" type="point"/>
     </geometries>
-    <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <detection>
       <acquisition-times/>
@@ -455,7 +442,6 @@
     <geometries>
       <geometry symbol="G*MPOGZ---****X" type="polygon"/>
     </geometries>
-    <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <interaction-height height="6000"/>
     <population-filter density="0.5"/>
@@ -464,7 +450,6 @@
     <geometries>
       <geometry symbol="G*FPAN----****X" type="polygon"/>
     </geometries>
-    <bypassable bypass-speed="-1"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <fire-forbidden/>
     <interaction-height height="6000"/>
@@ -483,7 +468,6 @@
       <geometry symbol="S*GPEVEB--*****" type="line"/>
     </geometries>
     <bridging type="bridge"/>
-    <bypassable bypass-speed="10"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <mobility default-speed="10" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
     <trafficability default="true" max-weight="100"/>
@@ -618,4 +602,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="0559395104" -->
+<!-- signature="1444485249" -->
