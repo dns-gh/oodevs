@@ -1343,7 +1343,7 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>No orbat.xml found</source>
+        <source>No orbat.xml found. The orbat.xml file will be created after the first save.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

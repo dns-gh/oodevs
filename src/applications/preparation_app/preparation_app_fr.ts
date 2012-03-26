@@ -1343,8 +1343,8 @@
         <translation>Erreur</translation>
     </message>
     <message>
-        <source>No orbat.xml found</source>
-        <translation>Orbat.xml non présent</translation>
+        <source>No orbat.xml found. The orbat.xml file will be created after the first save.</source>
+        <translation>Orbat.xml non présent. Le fichier orbat.xml sera créé après la première sauvegarde.</translation>
     </message>
 </context>
 <context>
