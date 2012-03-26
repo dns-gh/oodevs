@@ -206,7 +206,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
     if( !nationality.empty() )
         pExtensions_->SetExtension( "Nationalite", nationality );
 
-    if( type.IsLogistic() )
+    if( type.IsLogisticBase() )
     {
         pBrainLogistic_.reset( new MIL_AutomateLOG( *this, PHY_LogisticLevel::logistic_base_ ) );
         pLogisticAction_.reset( new PHY_ActionLogistic<MIL_AutomateLOG>( *pBrainLogistic_.get() ) );

@@ -19,6 +19,7 @@
 #include "MIL_AgentServer.h"
 #include "Entities/Specialisations/ASA/MIL_AutomateTypeASA.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateTypeLOG.h"
+#include "Entities/Specialisations/LOG/MIL_AutomateTypeBaseLOG.h"
 #include "Entities/Specialisations/REFUGIE/MIL_AutomateTypeREFUGIE.h"
 #include "Entities/Agents/Units/Humans/MIL_AutomateTypeInjuredHuman.h"
 #include "Knowledge/DEC_Knowledge_RapFor_ABC.h"
@@ -62,8 +63,8 @@ void MIL_AutomateType::Initialize( xml::xistream& xis )
     automateTypeAllocators_[ "Automate CIRCULATION"            ] = &MIL_AutomateType       ::Create;
     automateTypeAllocators_[ "Automate GEN"                    ] = &MIL_AutomateType       ::Create;
     automateTypeAllocators_[ "Automate INF"                    ] = &MIL_AutomateType       ::Create;
+    automateTypeAllocators_[ "Automate LOG TC2"                ] = &MIL_AutomateTypeBaseLOG::Create;
     automateTypeAllocators_[ "Automate JOINT"                  ] = &MIL_AutomateType       ::Create;
-    automateTypeAllocators_[ "Automate LOG TC2"                ] = &MIL_AutomateTypeLOG    ::Create;
     automateTypeAllocators_[ "Automate LOG BLD Sante"          ] = &MIL_AutomateTypeLOG    ::Create;
     automateTypeAllocators_[ "Automate LOG BLD Maintenance"    ] = &MIL_AutomateTypeLOG    ::Create;
     automateTypeAllocators_[ "Automate LOG BLD Ravitaillement" ] = &MIL_AutomateTypeLOG    ::Create;
@@ -77,7 +78,7 @@ void MIL_AutomateType::Initialize( xml::xistream& xis )
     automateTypeAllocators_[ "Automate TRANS"                  ] = &MIL_AutomateType       ::Create;
     automateTypeAllocators_[ "Automate SGTIA"                  ] = &MIL_AutomateType       ::Create;
     automateTypeAllocators_[ "Automate Emergency"              ] = &MIL_AutomateType       ::Create;
-    automateTypeAllocators_[ "Automate Organization"           ] = &MIL_AutomateTypeLOG    ::Create;
+    automateTypeAllocators_[ "Automate Organization"           ] = &MIL_AutomateTypeBaseLOG::Create;
     automateTypeAllocators_[ "Automate Notable"                ] = &MIL_AutomateType       ::Create;
     automateTypeAllocators_[ "Automate Journalist"             ] = &MIL_AutomateType       ::Create;
     automateTypeAllocators_[ "Automate Civilian"               ] = &MIL_AutomateType       ::Create;
@@ -391,6 +392,15 @@ const std::string& MIL_AutomateType::GetName() const
 // Created: NLD 2004-12-23
 // -----------------------------------------------------------------------------
 bool MIL_AutomateType::IsLogistic() const
+{
+    return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AutomateType::IsLogisticBase
+// Created: NLD 2004-12-23
+// -----------------------------------------------------------------------------
+bool MIL_AutomateType::IsLogisticBase() const
 {
     return false;
 }

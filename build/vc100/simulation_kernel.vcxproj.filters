@@ -2535,6 +2535,9 @@
     <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Agents\Actions\Objects\PHY_ActionDemineObject.cpp">
       <Filter>Source Files\Entities\Agents\Actions\Objects</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\simulation_kernel\Entities\Specialisations\LOG\MIL_AutomateTypeBaseLOG.cpp">
+      <Filter>Source Files\Entities\Specialisations\LOG</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\MIL.h">
@@ -4977,6 +4980,9 @@
       <Filter>Source Files\Entities\Agents\Actions\Objects</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Specialisations\LOG\MIL_LogisticVisitors.h">
+      <Filter>Source Files\Entities\Specialisations\LOG</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\simulation_kernel\Entities\Specialisations\LOG\MIL_AutomateTypeBaseLOG.h">
       <Filter>Source Files\Entities\Specialisations\LOG</Filter>
     </ClInclude>
   </ItemGroup>
