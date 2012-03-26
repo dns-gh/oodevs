@@ -53,6 +53,8 @@ public:
     //@{
     virtual void SetLogisticSuperior( const kernel::LogisticBaseSuperior& superior );
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void ClearDotations();
+    virtual void SetDotation( const kernel::DotationType& type, unsigned int quantity );
     //@}
 
 private:
@@ -68,6 +70,7 @@ private:
     void SerializeQuotas( xml::xostream& xos ) const;
 
     void DrawLink( const geometry::Point2f& where, const kernel::GlTools_ABC& tools, float curve, bool displayLinks, bool displayMissings ) const;
+    bool IsToSerializeQuotas() const;
     bool HasMissingLogisticLinks() const;
     //@}
 

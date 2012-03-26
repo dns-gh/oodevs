@@ -63,6 +63,20 @@ void DotationsItem::AddDotation( const DotationType& type, unsigned long quantit
 }
 
 // -----------------------------------------------------------------------------
+// Name: DotationsItem::RemoveDotation
+// Created: MMC 2012-03-23
+// -----------------------------------------------------------------------------
+void DotationsItem::RemoveDotation( const DotationType& type )
+{
+    Dotation* dotation = dotations_.Find( type.GetId() );
+    if( dotation )
+    {
+        dico_.Remove( propertyName_ + "/" + type.GetName().c_str() );
+        dotations_.Remove( type.GetId() );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: DotationsItem::CountDotations
 // Created: ABR 2011-09-22
 // -----------------------------------------------------------------------------

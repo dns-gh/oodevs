@@ -83,6 +83,48 @@ void LogisticBaseStates::Draw( const geometry::Point2f& where, const kernel::Vie
 }
 
 // -----------------------------------------------------------------------------
+// Name: MaintenanceStates::ClearDotations
+// Created: MMC 2012-03-23
+// -----------------------------------------------------------------------------
+void LogisticBaseStates::ClearDotations()
+{
+    item_->Clear();
+    item_->Update();
+    controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MaintenanceStates::SetDotation
+// Created: MMC 2012-03-23
+// -----------------------------------------------------------------------------
+void LogisticBaseStates::SetDotation( const kernel::DotationType& type, unsigned int quantity )
+{
+    if( !item_ )
+        return;
+
+    Dotation* dotation = tools::Resolver< Dotation >::Find( type.GetId() );
+    if( !dotation )
+    {   
+        if( quantity > 0 )
+        {
+            dotation = new Dotation( type, quantity );
+            item_->AddDotation( *dotation );
+            tools::Resolver< Dotation >::Register( type.GetId(), *dotation );
+        }
+    }
+    else
+    {
+        dotation->quantity_ = quantity;
+        if( quantity == 0 )
+        {
+            item_->RemoveDotation( type );
+            tools::Resolver< Dotation >::Remove( type.GetId() );
+        }
+    }
+    controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
 // Name: LogisticBaseStates::Load
 // Created: SBO 2006-11-16
 // -----------------------------------------------------------------------------
@@ -163,18 +205,22 @@ void LogisticBaseStates::DrawLink( const geometry::Point2f& where, const kernel:
 // -----------------------------------------------------------------------------
 void LogisticBaseStates::SerializeQuotas( xml::xostream& xos ) const
 {
+    if( !IsToSerializeQuotas() )
+        return;
+
+    xos << xml::start( "quotas" );
     tools::Iterator< const Dotation& > it = tools::Resolver< Dotation >::CreateIterator();
-    if( it.HasMoreElements() )
+    while( it.HasMoreElements() )
     {
-        xos << xml::start( "quotas" );
-        while( it.HasMoreElements() )
+        const Dotation& dotation = it.NextElement();
+        if( dotation.quantity_ > 0 )
         {
-            xos << xml::start( "resource" );
-            it.NextElement().SerializeAttributes( xos );
+            xos << xml::start( "resource" );                        
+            dotation.SerializeAttributes( xos );
             xos << xml::end;
         }
-        xos << xml::end;
     }
+    xos << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -202,4 +248,17 @@ void LogisticBaseStates::SerializeLogistics( xml::xostream& xos ) const
         xos << xml::end;
     }
     xos << xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticBaseStates::IsToSerializeQuotas
+// Created: MMC 2012-03-23
+// -----------------------------------------------------------------------------
+bool LogisticBaseStates::IsToSerializeQuotas() const
+{
+    tools::Iterator< const Dotation& > it = tools::Resolver< Dotation >::CreateIterator();
+    while( it.HasMoreElements() )
+        if( it.NextElement().quantity_ > 0 )
+            return true;
+    return false;
 }

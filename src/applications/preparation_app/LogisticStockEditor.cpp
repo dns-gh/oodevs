@@ -28,6 +28,7 @@
 #include "clients_kernel/LogisticSupplyClass.h"
 #include "clients_kernel/tools.h"
 #include "preparation/Dotation.h"
+#include "preparation/LogisticBaseStates.h"
 #include "preparation/LogisticHierarchiesBase.h"
 #include "preparation/StaticModel.h"
 #include "preparation/Stocks.h"
@@ -44,6 +45,7 @@ LogisticStockEditor::LogisticStockEditor( QWidget* parent, kernel::Controllers& 
 {
     controllers_.Register( *this );
     setCaption( tools::translate( "SupplyStocksDialog", "Supply stocks" ) );
+    setMinimumSize( 350, 300 );
 
     dataModel_ = new QStandardItemModel( this );
 
@@ -60,11 +62,15 @@ LogisticStockEditor::LogisticStockEditor( QWidget* parent, kernel::Controllers& 
 
     validateButton_ = new QPushButton( tr( "Ok" ), this );
     cancelButton_   = new QPushButton( tr( "Cancel" ), this );
+    quotasCheckBox_ = new QCheckBox( tr( "Generate Quotas"), this );
+    quotasCheckBox_->setTristate( false );
+    quotasCheckBox_->setCheckState( Qt::Unchecked );
 
-    QGridLayout* layout = new QGridLayout( this, 2, 2, 10 );
+    QGridLayout* layout = new QGridLayout( this, 3, 2, 10 );
     layout->addMultiCellWidget( tableView_, 0, 0, 0, 1 );
-    layout->addWidget( validateButton_, 1, 0 );
-    layout->addWidget( cancelButton_, 1, 1 );
+    layout->addWidget( quotasCheckBox_, 1, 0, 1, 2 );
+    layout->addWidget( validateButton_, 2, 0 );
+    layout->addWidget( cancelButton_, 2, 1 );
 
     connect( dataModel_, SIGNAL( itemChanged( QStandardItem* ) ), SLOT( OnValueChanged( QStandardItem* ) ) );
     connect( validateButton_, SIGNAL( clicked() ), SLOT( Validate() ) );
@@ -246,6 +252,9 @@ void LogisticStockEditor::SupplyHierarchy( kernel::SafePointer< kernel::Entity_A
         }
 
         SupplyStocks( entStocks, requirements );
+
+        if( quotasCheckBox_->state() == Qt::Checked )
+            GenerateLogChildrenQuotas( *pLogHierarchy );
     }
 }
 
@@ -450,9 +459,8 @@ void LogisticStockEditor::SupplyStocks( std::set< const kernel::Agent_ABC* >& en
         if( dataModel_->item( row )->checkState() == Qt::Checked )
         {
             int days = dataModel_->item( row, 1 )->data( Qt::EditRole ).asInt();
-            double quantity = static_cast< unsigned int >( days * itRequired->second + 0.5 );
-            if( quantity == 0 )
-                continue;
+            unsigned int quantity = static_cast< unsigned int >( days * itRequired->second + 0.5 );
+ 
             std::set< const kernel::Agent_ABC* > entDotationStocks;
             for( std::set< const kernel::Agent_ABC* >::const_iterator it = entStocks.begin(); it != entStocks.end(); ++it )
                 if( IsStockValid( **it, dotationType ) )
@@ -461,8 +469,10 @@ void LogisticStockEditor::SupplyStocks( std::set< const kernel::Agent_ABC* >& en
                     stocks.SetDotation( dotationType, 0, false );
                     entDotationStocks.insert( *it );
                 }
+            if( quantity == 0 )
+                continue;
             std::set< const kernel::Agent_ABC* > copyEntDotationStocks = entDotationStocks;
-            double surplus = DoDotationDistribution( entDotationStocks, dotationType, quantity );
+            double surplus = DoDotationDistribution( entDotationStocks, dotationType, static_cast< double >( quantity ) );
             if( surplus >= 1 && copyEntDotationStocks.size() > 0 )
             {
                 int remaining = static_cast< int >( surplus );
@@ -492,3 +502,62 @@ bool LogisticStockEditor::IsStockValid( const kernel::Agent_ABC& stockUnit, cons
     kernel::AgentType& agentType = staticModel_.types_.tools::Resolver< kernel::AgentType >::Get( stockUnit.GetType().GetId() );
     return agentType.IsStockCategoryDefined( dotation.GetLogisticSupplyClass() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: LogisticStockEditor::GenerateLogChildrenQuotas
+// Created: MMC 2012-03-23
+// -----------------------------------------------------------------------------
+void LogisticStockEditor::GenerateLogChildrenQuotas( const LogisticHierarchiesBase& logHierarchy )
+{
+    tools::Iterator< const kernel::Entity_ABC& > itLogChildren = logHierarchy.CreateSubordinateIterator();
+    while( itLogChildren.HasMoreElements() )
+    {
+        const kernel::Entity_ABC& logChildren = itLogChildren.NextElement();
+        if( IsLogisticBase( logChildren ) )
+        {
+            const LogisticHierarchiesBase* pLogChildrenHierarchy = logChildren.Retrieve< LogisticHierarchiesBase >();
+            if( pLogChildrenHierarchy )
+            {
+                T_Requirements requirements;
+                tools::Iterator< const kernel::LogisticSupplyClass& > itLogClass = staticModel_.objectTypes_.tools::StringResolver< kernel::LogisticSupplyClass >::CreateIterator();
+                for( int row = 0; itLogClass.HasMoreElements(); ++row )
+                {
+                    const kernel::LogisticSupplyClass& supplyClass = itLogClass.NextElement();
+                    if( dataModel_->item( row )->checkState() == Qt::Checked )
+                        SupplyLogisticBaseStocks( pLogChildrenHierarchy->GetEntity(), supplyClass, requirements );
+                }
+                SetQuotas( *pLogChildrenHierarchy, requirements );
+            }
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticStockEditor::SetQuotas
+// Created: MMC 2012-03-23
+// -----------------------------------------------------------------------------
+void LogisticStockEditor::SetQuotas( const LogisticHierarchiesBase& logHierarchy, const T_Requirements& requirements )
+{
+    const LogisticBaseStates* pBaseStates = dynamic_cast< const LogisticBaseStates* >( &logHierarchy );
+    if( !pBaseStates )
+        return;
+
+    LogisticBaseStates& baseStates = *const_cast< LogisticBaseStates* >( pBaseStates );
+    for( CIT_Requirements itRequired = requirements.begin(); itRequired != requirements.end(); ++itRequired )
+    {
+        const kernel::DotationType& dotationType = *itRequired->first;
+        tools::Iterator< const kernel::LogisticSupplyClass& > itLogClass = staticModel_.objectTypes_.tools::StringResolver< kernel::LogisticSupplyClass >::CreateIterator();
+        for( int row = 0; itLogClass.HasMoreElements(); ++row )
+            if( dataModel_->item( row )->checkState() == Qt::Checked )
+            {
+                const kernel::LogisticSupplyClass& supplyClass = itLogClass.NextElement();
+                if( supplyClass.GetId() == dotationType.GetLogisticSupplyClass().GetId() )
+                {
+                    int days = dataModel_->item( row, 1 )->data( Qt::EditRole ).asInt();
+                    unsigned int quantity = static_cast< unsigned int >( days * itRequired->second + 0.5 );
+                    baseStates.SetDotation( dotationType, quantity );
+                }
+            }
+    }
+}
+
