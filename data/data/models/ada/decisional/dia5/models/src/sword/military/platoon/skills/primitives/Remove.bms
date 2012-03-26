@@ -19,7 +19,7 @@ rootnode
     end,
 
     failed = function( self, params, additionalParams )
-        Feedback( self.feedbacks.elementFailed, { element = additionalParams.element } )
+        Feedback( self.feedbacks.elementFailed, { element = additionalParams.element, NeedReinforcement = "destroy" } )
     end,
 
     cancelled = function( self, params, additionalParams )
@@ -62,6 +62,10 @@ node "removeElement"
     done = function( self, params, additionalParams )  -- feedback from moveAndTakePosition
         self.arrived = true
     end, 
+    
+    failed = function( self, params, additionalParams )
+       Feedback( self.feedbacks.failed, { element = additionalParams.element } )
+    end,
 
     create = function( self )
         self.arrived = false
@@ -117,7 +121,9 @@ node "Demine"
     acquire = { [ skill.resources.buildCapacity ] = 1 };
 
     select = function( self )
-        self.params.entity:demineIt()
+        if not self.params.entity:demineIt() then
+            Feedback( self.feedbacks.failed,{ element = self.params.entity } )
+        end
     end
 }
 
@@ -131,6 +137,8 @@ node "Remove"
     acquire = { [ skill.resources.buildCapacity ] = 1 };
 
     select = function( self )
-        self.params.entity:removeIt()
+        if not self.params.entity:removeIt() then
+            Feedback( self.feedbacks.failed,{ element = self.params.entity } )
+        end
     end
 }

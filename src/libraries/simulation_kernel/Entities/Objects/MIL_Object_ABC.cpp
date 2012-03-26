@@ -297,6 +297,17 @@ bool MIL_Object_ABC::IsInside( const MT_Vector2D& vPos ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Object_ABC::IsOnBorder
+// Created: CMA 2012-03-14
+// -----------------------------------------------------------------------------
+bool MIL_Object_ABC::IsOnBorder( const MT_Vector2D& vPos ) const
+{
+    if( const FloodAttribute* flood = RetrieveAttribute< FloodAttribute >() )
+        return flood->GetLocalisation().IsInside( vPos );
+    return TER_Object_ABC::IsOnBorder( vPos );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Object_ABC::MarkForDestruction
 // Created: NLD 2004-07-01
 // -----------------------------------------------------------------------------

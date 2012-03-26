@@ -56,6 +56,7 @@ public:
     void Terminate();
 
     virtual bool IsInside( const MT_Vector2D& vPos ) const;
+    virtual bool IsOnBorder( const MT_Vector2D& vPos ) const;
     bool Intersect2D( const MT_Line& orientedLine, T_PointSet& collisions ) const;
     bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius ) const; // NB : return true if the circle is inside
     bool Intersect2DWithLocalisation( const TER_Localisation& localisation ) const;
@@ -92,6 +93,7 @@ private:
     //@{
     TER_Localisation location_;
     T_Hint hint_;
+    static const double epsilon_;
     //@}
 };
 

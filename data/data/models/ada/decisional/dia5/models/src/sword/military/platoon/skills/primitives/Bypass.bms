@@ -19,7 +19,7 @@ rootnode
     end,
 
     failed = function( self, params, additionalParams )
-        Feedback( self.feedbacks.elementFailed, { element = additionalParams.element } )
+        Feedback( self.feedbacks.elementFailed, { element = additionalParams.element, NeedReinforcement = "bypass" } )
     end,
 
     notBypassable = function( self, params, additionalParams )
@@ -65,6 +65,10 @@ node "bypassElement"
     done = function( self, params, additionalParams )  -- feedback from moveAndTakePosition
         self.arrived = true
     end, 
+    
+    failed = function( self, params, additionalParams )
+       Feedback( self.feedbacks.failed, { element = additionalParams.element } )
+    end,
 
     create = function( self )
         self.arrived = false
@@ -120,6 +124,8 @@ node "bypass"
     acquire = { [ skill.resources.buildCapacity ] = 1 };
 
     select = function( self )
-        self.params.entity:bypassIt()
+        if not self.params.entity:bypassIt() then
+            Feedback( self.feedbacks.failed,{ element = self.params.entity } )
+        end
     end
 }

@@ -102,7 +102,7 @@ public:
     /** @name Geometry */
     //-------------------------------------------------------------------------
     //@{
-    const MT_Rect& GetBoundingBox               () const;
+    const MT_Rect& GetBoundingBox             () const;
     double       GetArea                      () const;
     double       GetLength                    () const;
     double       GetIntersectionAreaWithCircle( const MT_Circle& circle ) const;
@@ -110,15 +110,15 @@ public:
     bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius ) const; // NB : return true if the circle is inside
     bool Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, double rRadius, T_PointVector& shape ) const; // NB : return true if the circle is inside
     bool IsInside             ( const MT_Vector2D& vPos, double rPrecision = rPrecision_ ) const;
-    bool IsOnBorder           ( const MT_Vector2D& vPos ) const;
-    bool IsIntersecting       ( const TER_Localisation& localisation ) const;
-    bool IsIntersecting       ( const TER_Polygon& polygon ) const;
+    bool IsOnBorder           ( const MT_Vector2D& vPos, double rPrecision = rPrecision_ ) const;
+    bool IsIntersecting       ( const TER_Localisation& localisation, double rPrecision = rPrecision_ ) const;
+    bool IsIntersecting       ( const TER_Polygon& polygon, double rPrecision = rPrecision_ ) const;
     bool Intersect2D          ( const MT_Line& orientedLine, T_PointSet& collisions, double rPrecision = rPrecision_ ) const;
-    bool Intersect2D          ( const MT_Line& line ) const;
-    bool Contains( const TER_Localisation& localisation ) const;
+    bool Intersect2D          ( const MT_Line& line, double rPrecision = rPrecision_ ) const;
+    bool Contains             ( const TER_Localisation& localisation, double rPrecision = rPrecision_ ) const;
 
     bool ComputeNearestPoint            ( const MT_Vector2D& vSrc, MT_Vector2D& vResult ) const; // Calcule la position de la localisation la plus proche de vSrc
-    bool ComputeNearestOutsidePoint( const MT_Vector2D& vSrc, MT_Vector2D& vResult ) const;
+    bool ComputeNearestOutsidePoint     ( const MT_Vector2D& vSrc, MT_Vector2D& vResult ) const;
     bool ComputeNearestPoint            ( const TER_Localisation& localisation, MT_Vector2D& vResult, double& rMinDistance ) const;
     void GetPointsClippedByPolygon      ( const TER_Polygon& polygon, T_PointVector& clippedPointVector ) const;
     void GetPointsClippedByLocalisation ( const TER_Localisation& localisation, T_PointVector& clippedPointVector ) const;

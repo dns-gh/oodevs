@@ -11,7 +11,10 @@ rootnode
     -- bypass skill feedback
     done = function( self, params, additionalParams )
         self.nextTargetIndex = self.nextTargetIndex + 1
-        if self.nextTargetIndex > #self.params.entities then
+        if self.nextTargetIndex > #self.obstacles then
+            self.BypassedElement = additionalParams.element
+            self.obstacles = {}
+            self.nextTargetIndex = 1
             Feedback( self.feedbacks.done )
         end
     end,
@@ -24,7 +27,7 @@ rootnode
     end,
 
     elementFailed = function( self, params, additionalParams )
-        integration.setNeedReinforcement( meKnowledge, "bypass", additionalParams.element, false )
+        integration.setNeedReinforcement( meKnowledge, additionalParams.NeedReinforcement, additionalParams.element, false )
         self.report = eRC_AttenteRenforcement
     end,
 
@@ -39,7 +42,8 @@ rootnode
         self.nextTargetIndex = 1
         self.report = nil
         self.elementToRemove = nil
-        self.positions = sword.military.queries.tactical.getPositionsToBypass[ "execute" ]({elementsToBypass = self.params.entities})
+        self.BypassedElement = nil
+        self.obstacles = {}
     end,
 
     -- -------------------------------------------------------------------------------- 
@@ -49,6 +53,15 @@ rootnode
     activate = function( self )
         local Activate = Activate
         if self.params.entities == NIL then
+            if #self.obstacles < 1 then
+               self.obstacles = sword.military.queries.objects.getObstaclesOnPath[ "execute" ]()
+               removeFromList(self.BypassedElement, self.obstacles)
+           end
+        else 
+            self.obstacles = self.params.entities
+        end    
+        self.positions = sword.military.queries.tactical.getPositionsToBypass[ "execute" ]({elementsToBypass = self.obstacles})
+        if #self.obstacles < 1 then
             Feedback( self.feedbacks.done ) -- no obstacles to remove
             return
         end
@@ -58,11 +71,11 @@ rootnode
             Activate( skill.nodes.CR, 1, { RC = self.report } ) 
         end
 
-        if self.elementToRemove == self.params.entities[ self.nextTargetIndex ] then
-            Activate( skill.links.remove, 1, { entities  = { self.params.entities[ self.nextTargetIndex ] }, 
+        if self.elementToRemove == self.obstacles[ self.nextTargetIndex ] then
+            Activate( skill.links.remove, 1, { entities  = { self.obstacles[ self.nextTargetIndex ] }, 
                                           positions = self.positions } )
         else
-            Activate( skill.links.bypass, 1, { entities  = { self.params.entities[ self.nextTargetIndex ] }, 
+            Activate( skill.links.bypass, 1, { entities  = { self.obstacles[ self.nextTargetIndex ] }, 
                                           positions = self.positions } )
         end
         self.report = nil

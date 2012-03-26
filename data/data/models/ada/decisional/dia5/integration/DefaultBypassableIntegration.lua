@@ -26,20 +26,26 @@ end
 
 integration.updateBypassIt = function( object )
     if object[myself].actionBypassState == eActionObjetImpossible then
-        DEC_Trace( "impossible works" ) 
+        DEC_Trace( "impossible works" )
+        return false 
     elseif object[myself].actionBypassState == eActionObjetManqueDotation then
-        DEC_Trace( "not enough dotation" ) 
+        DEC_Trace( "not enough dotation" )
+        return false 
     elseif object[myself].actionBypassState == eActionObjetPasDeCapacite then
-        DEC_Trace( "no capacity" ) 
+        DEC_Trace( "no capacity" )
+        return false 
     end
+    return true
 end
 
 integration.stopBypassIt = function( object )
     object[myself] = object[myself] or {}
     if object[myself].actionBypassState == eActionObjetTerminee then
         meKnowledge:RC( eRC_FinTravaux )
+        return true
     else
         DEC_Trace( "pause work bypass" )
+        return false
     end
     
     object[myself].actionBypass = DEC__StopAction( object[myself].actionBypass )
