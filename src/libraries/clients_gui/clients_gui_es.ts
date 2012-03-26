@@ -269,8 +269,8 @@
         <translation>Construction</translation>
     </message>
     <message>
-        <source>Construction:</source>
-        <translation>Construction:</translation>
+        <source>Value:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -991,12 +991,12 @@ Voulez-vous le supprimer?</translation>
 <context>
     <name>gui::MinePrototype_ABC</name>
     <message>
-        <source>Mine parameters</source>
-        <translation>Paramètres des mines</translation>
+        <source>Improvable</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Density:</source>
-        <translation>Densité:</translation>
+        <source>Value:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
