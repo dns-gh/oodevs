@@ -28,6 +28,7 @@ Unit::Unit( const QString& symbol, double minValue, double maxValue )
 const Unit Units::meters            ( tools::translate( "Units", "m" )      , 0., std::numeric_limits< int >::max() );
 const Unit Units::degrees           ( tools::translate( "Units", "°" )      , 0., 360. );
 const Unit Units::percentage        ( tools::translate( "Units", "%" )      , 0., 100. );
+const Unit Units::percentageGTzero  ( tools::translate( "Units", "%" )      , 1., 100. );
 const Unit Units::metersPerSecond   ( tools::translate( "Units", "m/s" )    , 0., std::numeric_limits< int >::max() );
 const Unit Units::vehiclesPerHour   ( tools::translate( "Units", "veh/h" )  , 0., std::numeric_limits< int >::max() );
 const Unit Units::tons              ( tools::translate( "Units", "t" )      , 0., std::numeric_limits< int >::max() );

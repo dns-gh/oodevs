@@ -48,6 +48,7 @@ public:
     static const Unit meters;
     static const Unit degrees;
     static const Unit percentage;
+    static const Unit percentageGTzero;
     static const Unit metersPerSecond;
     static const Unit vehiclesPerHour;
     static const Unit tons;
