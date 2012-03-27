@@ -557,7 +557,7 @@ void ADN_Composantes_GUI::OnProtectionTypeChanged()
         pBreakdownsGroup_->setEnabled( false );
     else
     {
-        if( pInfos->ptrArmor_.GetData()->nType_ == eProtectionType_Material )
+        if( pInfos->ptrArmor_.GetData() && pInfos->ptrArmor_.GetData()->nType_ == eProtectionType_Material )
         {
             pBreakdownsGroup_->show();
             pBreakdownsGroup_->setEnabled( true );
