@@ -3,7 +3,6 @@ body{padding-top:60px;padding-bottom:40px;}
 .run{border-color:#000000;position:relative;background-color:#93c47d;}
 .pause{border-color:#000000;position:relative;background-color:#ffd966;}
 .replay{border-color:#000000;position:relative;background-color:#6fa8dc;}
-.tab_replay{padding-left:48px;}
 .stop{border-color:#000000;position:relative;background-color:#e06666;}
 .session_row{position:relative;min-height:64px;}
 .session_name{font-size:large;font-weight:bold;}
