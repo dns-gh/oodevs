@@ -22,7 +22,6 @@
 
 int main( int /*argc*/, const char* /*argv*/[] )
 {
-
     runtime::Factory runtime;
     host::UuidFactory uuids;
     host::FileSystem system;
