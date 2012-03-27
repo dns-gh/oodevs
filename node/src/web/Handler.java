@@ -3,6 +3,7 @@ package web;
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Iterator;
@@ -71,6 +72,9 @@ public class Handler extends AbstractHandler {
     private void serveFile(final HttpServletResponse response, final File file) throws IOException {
         response.setContentType(getContentType(file));
         response.setStatus(HttpServletResponse.SC_OK);
+        response.setDateHeader("Date", new Date().getTime());
+        response.setDateHeader("Last-Modified", file.lastModified());
+        response.setHeader("Etag", String.valueOf(file.lastModified()));
         FileUtils.copyFile(file, response.getOutputStream());
     }
 
