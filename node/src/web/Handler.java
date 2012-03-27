@@ -38,7 +38,11 @@ public class Handler extends AbstractHandler {
     @SuppressWarnings("serial")
     private static final Set<String> forwards_ = new HashSet<String>() {
         {
+            add("list_sessions");
+            add("count_sessions");
+            add("get_session");
             add("create_session");
+            add("delete_session");
         }
     };
     private final Configuration cfg_;
