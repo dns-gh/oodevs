@@ -123,3 +123,10 @@ BOOST_FIXTURE_TEST_CASE( agent_list_exercises, Fixture )
     MOCK_EXPECT( factory.GetExercises ).once().returns( list );
     CheckReply( agent.ListExercises( 0, 10 ), "[\"a\", \"b\", \"c\"]" );
 }
+
+BOOST_FIXTURE_TEST_CASE( agent_list_empty_exercises, Fixture )
+{
+    const std::vector< std::string > list;
+    MOCK_EXPECT( factory.GetExercises ).once().returns( list );
+    CheckReply( agent.ListExercises( 0, INT_MAX ), "[]" );
+}

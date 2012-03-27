@@ -181,6 +181,8 @@ Reply Agent::DeleteSession( const boost::uuids::uuid& tag )
 Reply Agent::ListExercises( int offset, int limit ) const
 {
     std::vector< std::string > exercises = sessionFactory_.GetExercises();
+    if( exercises.empty() )
+        return Reply( "[]" );
     offset = Clip< int >( offset, 0, static_cast< int >( exercises.size() ) );
     if( offset > 0 )
         exercises.erase( exercises.begin(), exercises.begin() + offset );
