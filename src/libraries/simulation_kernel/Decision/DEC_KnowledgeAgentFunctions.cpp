@@ -229,6 +229,15 @@ bool DEC_KnowledgeAgentFunctions::IsPrisoner( boost::shared_ptr< DEC_Knowledge_A
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeAgentFunctions::IsPrisoner
+// Created: DDA 2012-03-27
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgeAgentFunctions::IsTerrorist( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge )
+{
+    return pKnowledge&& pKnowledge->IsValid() && pKnowledge->IsTerrorist();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeAgentFunctions::IsSurrenderToMyArmy
 // Created: EVH 2011-05-16
 // -----------------------------------------------------------------------------

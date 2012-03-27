@@ -195,7 +195,7 @@ return
             myself.CRCaptureSomeone = {}
         end,
         started = function( self )
-                    integration.capture( integration.getDestroyableInObjective( self ), eRC_TerroristCaptured )
+                    integration.capture( integration.getTerroristsInObjective( self ), eRC_TerroristCaptured )
                   end,
         stop = integration.stopSearchArea
     } ),

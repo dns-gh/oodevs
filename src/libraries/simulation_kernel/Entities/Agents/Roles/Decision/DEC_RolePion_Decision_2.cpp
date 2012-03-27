@@ -502,12 +502,12 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::CanBeIlluminate, boost::cref( GetPion() ), _1 ) );
     brain[ "DEC_ConnaissanceAgent_PeutIlluminer" ] =
         boost::function< bool() >( boost::bind( &DEC_KnowledgeAgentFunctions::CanIlluminate, boost::cref( GetPion() ) ) );
-    brain[ "DEC_ConnaissanceAgent_EnAgent" ] =
-        boost::function< DEC_Decision_ABC*( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::GetAgent, _1 ) );
+    brain[ "DEC_ConnaissanceAgent_EnAgent" ] = &DEC_KnowledgeAgentFunctions::GetAgent;
     brain[ "DEC_ConnaissanceAgent_EstTransporte" ] =
         boost::function< bool( boost::shared_ptr< DEC_Knowledge_Agent > ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsTransported, boost::cref( GetPion() ), _1 ) );
     brain[ "DEC_KnowledgeAgent_IsInObject" ] =
         boost::function< bool( const std::string&, boost::shared_ptr< DEC_Knowledge_Agent >, int ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsInObject, boost::cref( GetPion() ), _1, _2, _3 ) );
+    brain[ "DEC_ConnaissanceAgent_EstTerroriste" ] = &DEC_KnowledgeAgentFunctions::IsTerrorist;
 
     // Object knowledges accessors
     brain[ "DEC_ConnaissanceObjet_EstUnEnnemi" ] =

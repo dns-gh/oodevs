@@ -326,6 +326,32 @@ integration.getDestroyableInObjective = function( objective )
 end
 
 -- -------------------------------------------------------------------------------- 
+-- Param an objective
+-- Return a list of terrorist knowledge
+-- @author DDA
+-- @release 2012-03-12
+-- --------------------------------------------------------------------------------
+integration.getTerroristsInObjective = function( objective )
+    local res = {}
+    local enemies = {}
+    if masalife.brain.core.class.isOfType( objective, sword.military.world.Area ) then
+        enemies = DEC_Connaissances_UnitesEnnemiesVivantesDansZone( objective.source ) 
+    elseif masalife.brain.core.class.isOfType( objective, sword.military.world.UrbanBlock ) then
+        enemies = DEC_Connaissances_UnitesEnnemiesVivantesDansBlocUrbain( objective.source )           
+    else
+        enemies = DEC_Connaissances_UnitesEnnemiesVivantesDansCercle( objective:getPosition(), 600 )
+    end
+    
+    local nEnemies = #enemies
+    for i = 1,nEnemies do
+        local enemy = enemies[i]
+        if DEC_ConnaissanceAgent_EstTerroriste( enemy ) then
+            res[#res + 1] = CreateKnowledge( sword.military.world.Platoon, enemy )
+        end
+    end
+    return res
+end
+-- -------------------------------------------------------------------------------- 
 -- Param an automate
 -- Return PC from Automate
 -- @author EVH

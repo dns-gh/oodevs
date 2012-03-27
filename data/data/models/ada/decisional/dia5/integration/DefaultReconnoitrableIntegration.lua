@@ -57,7 +57,8 @@ end
 integration.startedSearchUrbanBlock = function( urbanBlock )
     if  urbanBlock.recoFinished then
         DEC_Connaissances_IdentifierToutesUnitesDansZone( urbanBlock.area )     
-        if integration.capture(integration.getDestroyableInObjective( urbanBlock ), eRC_TerroristCaptured ) then
+        local terroristsInUB = integration.getTerroristsInObjective( urbanBlock )     
+        if integration.capture(terroristsInUB, eRC_TerroristCaptured ) then
             urbanBlock.bActionSearchFinished = true
         end
     end
