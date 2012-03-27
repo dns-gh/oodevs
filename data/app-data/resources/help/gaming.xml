@@ -1,49 +1,15 @@
 <?xml version="1.0" encoding="ISO-8859-1" standalone="no" ?>
 <widgets>
-  <widget name="MapWidget"               page="index.htm#workspace_overview/workspace_overview.htm"/> <!--2.5     Using the map -->
-  <widget name="Widget3D"                page="index.htm#workspace_overview/workspace_overview.htm"/> 
-  <widget name="HierarchyListView"       page="index.htm#workspace_overview/workspace_overview.htm"/> <!--2.4     Using hierarchical views -->
-  <widget name="EntitySearchBox"         page="index.htm#workspace_overview/workspace_overview.htm"/> <!-- 2.4.3       Searching -->
-  <widget name="PreferencesDialog"       page="index.htm#workspace_overview/workspace_overview.htm"/> <!--2.5.1.4      Customizing layers order and transparency -->
-  <widget name="LayersPanel"             page="index.htm#workspace_overview/workspace_overview.htm"/>
-  <widget name="ElevationPanel"          page="index.htm#workspace_overview/workspace_overview.htm"/><!--2.5.1.5      Customizing elevation layer-->
-  <widget name="GraphicsPanel"           page="index.htm#workspace_overview/workspace_overview.htm"/><!--2.5.1.6      Customizing vector map (VMAP) layer-->
-  <widget name="LightingPanel"           page="index.htm#workspace_overview/workspace_overview.htm"/><!--2.5.2.3      Customizing the 3D display-->
-  <widget name="automatic status bar"    page="index.htm#workspace_overview/workspace_overview.htm"/><!--2.5.3       Status bar information-->
-  <widget name="location editor"         page="index.htm#workspace_overview/workspace_overview.htm"/><!--2.5.4       Using the measurement tool-->
-  <widget name="sim control toolbar"     page="index.htm#gaming/gaming.htm"/><!--4.3.2.1      Simulation control-->
-  <widget name="UnitsPanel"              page="index.htm#exercise_preparation/exercise_preparation.htm"/><!--3.2.3.2.2     Adding automats-->
-  <widget name="ObjectCreationPanel"     page="index.htm#exercise_preparation/exercise_preparation.htm"/><!--3.2.3.6      Adding Tactical objects-->
-  <widget name="IntelligencesPanel"      page="index.htm#exercise_preparation/exercise_preparation.htm"/><!--3.2.3.8      Adding Intelligences-->
-  <widget name="UserProfileList"         page="index.htm#exercise_preparation/exercise_preparation.htm"/><!--3.2.4.2      Manual creation and edition-->
-  <widget name="UserProfileWidget"       page="index.htm#exercise_preparation/exercise_preparation.htm"/>
-  <widget name="UserProfileDialog"       page="index.htm#exercise_preparation/exercise_preparation.htm"/>
-  <widget name="miniviews"               page="index.htm#gaming/gaming.htm"/><!--4.3.3.4      Miniviews-->
-  <widget name="MiniView"                page="index.htm#gaming/gaming.htm"/>
-  <widget name="InfoWidget"              page="index.htm#gaming/gaming.htm"/><!--4.3.4.1      Information panel-->
-  <widget name="info"                    page="index.htm#gaming/gaming.htm"/>
-  <widget name="InfoConflictsTab"        page="index.htm#gaming/gaming.htm"/>
-  <widget name="InfoMissionsTab"         page="index.htm#gaming/gaming.htm"/>
-  <widget name="InfoReportsTab"          page="index.htm#gaming/gaming.htm"/>
-  <widget name="InfoSummariesWidget"     page="index.htm#gaming/gaming.htm"/>
-  <widget name="InfoSubordinatesWidget"  page="index.htm#gaming/gaming.htm"/>
-  <widget name="InfoStatusWidget"        page="index.htm#gaming/gaming.htm"/>
-  <widget name="InfoStancesWidget"       page="index.htm#gaming/gaming.htm"/>
-  <widget name="InfoEventsWidget"        page="index.htm#gaming/gaming.htm"/>
-  <widget name="InfoButtonsWidget"       page="index.htm#gaming/gaming.htm"/>
-  <widget name="AlarmsWidget"            page="index.htm#gaming/gaming.htm"/><!--4.3.5       Using the clock and alarms-->
-  <widget name="clock"                   page="index.htm#gaming/gaming.htm"/>
-  <widget name="ClockWidget"             page="index.htm#gaming/gaming.htm"/>
-  <widget name="actions"                 page="index.htm#gaming/gaming.htm"/><!--4.3.6       Using the action recorder-->
-  <widget name="ActionsToolbar"          page="index.htm#gaming/gaming.htm"/>
-  <widget name="ActionsListView"         page="index.htm#gaming/gaming.htm"/>
-  <widget name="TimelineListView"        page="index.htm#gaming/gaming.htm"/><!--4.3.6.3      Using the actions timeline-->
-  <widget name="timeline"                page="index.htm#gaming/gaming.htm"/>
-  <widget name="TimelineView"            page="index.htm#gaming/gaming.htm"/>
-  <widget name="TimelineWidget"          page="index.htm#gaming/gaming.htm"/>
-  <widget name="replay control toolbar"  page="index.htm#after_action_review/after_action_review.htm"/><!-- 5.3.1       Controlling the replay-->
-  <widget name="AfterActionFunctionList" page="index.htm#after_action_review/after_action_review.htm"/><!-- 5.3.2.1      Creating a query-->
-  <widget name="AfterActionRequestList"  page="index.htm#after_action_review/after_action_review.htm"/>
-  <widget name="AfterActionPlot"         page="index.htm#after_action_review/after_action_review.htm"/><!--5.3.2.2      Displaying a query-->
+  <widget name="default"                page="REFERENCE_GUIDE_Workspace_overview"/>
+  <widget name="simControl"             page="REFERENCE_GUIDE_Gaming"/>
+  <widget name="UnitsPanel"             page="REFERENCE_GUIDE_Gaming"/>
+  <widget name="ObjectCreationPanel"    page="REFERENCE_GUIDE_Gaming"/>
+  <widget name="UserProfileDialog"      page="REFERENCE_GUIDE_Gaming"/>
+  <widget name="miniviews"              page="REFERENCE_GUIDE_Gaming"/>
+  <widget name="infoDock"               page="REFERENCE_GUIDE_Gaming"/>
+  <widget name="clock"                  page="REFERENCE_GUIDE_Gaming"/>
+  <widget name="timeLine"               page="REFERENCE_GUIDE_Gaming"/>
+  <widget name="replay control toolbar" page="REFERENCE_GUIDE_After_Action_Review"/>
+  <widget name="aar"                    page="REFERENCE_GUIDE_After_Action_Review"/>
 </widgets>
-<!-- signature="1066286308" -->
+<!-- signature="4066074984" -->

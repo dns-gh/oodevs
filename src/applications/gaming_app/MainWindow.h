@@ -50,6 +50,7 @@ namespace gui
     class TerrainPicker;
     class Painter_ABC;
     class LayerFilter_ABC;
+    class HelpSystem;
 }
 
 class Config;
@@ -100,6 +101,7 @@ public:
 public slots:
     //! @name Slots
     //@{
+    void ShowHelp();
     void Close();
     void OnPlanifStateChange();
     void OnNameChanged();
@@ -124,12 +126,6 @@ private:
    void CreateLayers( MissionPanel& missions, CreationPanels& creationPanels, gui::ParametersLayer& parameters, gui::Layer_ABC& locationsLayer,
                       gui::AgentsLayer& agents, gui::AutomatsLayer& automats, gui::FormationLayer& formationLayer, gui::TerrainLayer& terrain, gui::Layer_ABC& weather, gui::Layer_ABC& profilerLayer,
                       gui::PreferencesDialog& preferences, const kernel::Profile_ABC& profile, const Simulation& simulation, gui::TerrainPicker& picker );
-
-    //! @name Copy/Assignment
-    //@{
-    MainWindow( const MainWindow& );
-    MainWindow& operator=( const MainWindow& );
-    //@}
 
 private:
     //! @name Member data
@@ -159,12 +155,13 @@ private:
     QByteArray docks_;
     QByteArray toolbars_;
     bool connected_;
+    bool onPlanif_;
     MissionPanel* pMissionPanel_;
     QDockWidget* pExtensionsPanel_;
     QString planifName_;
-    bool onPlanif_;
     std::auto_ptr< ProfileFilter > pProfile_;
     QString savedState_;
+    gui::HelpSystem* help_;
     //@}
 };
 

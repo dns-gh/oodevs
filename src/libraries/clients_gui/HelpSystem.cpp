@@ -83,7 +83,6 @@ std::string HelpSystem::FindWidget( const QObject* root )
         const QWidget* widget = dynamic_cast< const QWidget* >( root );
         if( widget )
         {
-const char* test =  widget->name();
             CIT_Anchors it = anchors_.find( widget->name() );
             if( it != anchors_.end() )
                 return it->second;
