@@ -38,13 +38,14 @@
 // Created: MMC 2011-07-21
 // -----------------------------------------------------------------------------
 LogisticStockEditor::LogisticStockEditor( QWidget* parent, kernel::Controllers& controllers, const StaticModel& staticModel )
-    : QDialog( parent, "SupplyStocksDialog", 0, Qt::WStyle_Customize | Qt::WStyle_Title )
+    : QDialog( parent, "StocksEditionDialog", 0, Qt::WStyle_Customize | Qt::WStyle_Title )
     , controllers_( controllers )
     , selected_   ( controllers )
     , staticModel_( staticModel )
+    , showStocks_( true )
 {
     controllers_.Register( *this );
-    setCaption( tools::translate( "SupplyStocksDialog", "Supply stocks" ) );
+    setCaption( tools::translate( "StocksEditionDialog", "Stocks Edition" ) );
     setMinimumSize( 350, 300 );
 
     dataModel_ = new QStandardItemModel( this );
@@ -62,15 +63,11 @@ LogisticStockEditor::LogisticStockEditor( QWidget* parent, kernel::Controllers& 
 
     validateButton_ = new QPushButton( tr( "Ok" ), this );
     cancelButton_   = new QPushButton( tr( "Cancel" ), this );
-    quotasCheckBox_ = new QCheckBox( tr( "Generate Quotas"), this );
-    quotasCheckBox_->setTristate( false );
-    quotasCheckBox_->setCheckState( Qt::Unchecked );
 
-    QGridLayout* layout = new QGridLayout( this, 3, 2, 10 );
+    QGridLayout* layout = new QGridLayout( this, 2, 2, 10 );
     layout->addMultiCellWidget( tableView_, 0, 0, 0, 1 );
-    layout->addWidget( quotasCheckBox_, 1, 0, 1, 2 );
-    layout->addWidget( validateButton_, 2, 0 );
-    layout->addWidget( cancelButton_, 2, 1 );
+    layout->addWidget( validateButton_, 1, 0 );
+    layout->addWidget( cancelButton_, 1, 1 );
 
     connect( dataModel_, SIGNAL( itemChanged( QStandardItem* ) ), SLOT( OnValueChanged( QStandardItem* ) ) );
     connect( validateButton_, SIGNAL( clicked() ), SLOT( Validate() ) );
@@ -181,6 +178,28 @@ void LogisticStockEditor::closeEvent( QCloseEvent* /*pEvent*/ )
 }
 
 // -----------------------------------------------------------------------------
+// Name: LogisticStockEditor::ShowStocksDialog
+// Created: MMC 2011-07-21
+// -----------------------------------------------------------------------------
+void LogisticStockEditor::ShowStocksDialog()
+{
+    setCaption( tools::translate( "StocksEditionDialog", "Stocks Edition" ) );
+    showStocks_ = true;
+    show();
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticStockEditor::ShowQuotasDialog
+// Created: MMC 2011-07-21
+// -----------------------------------------------------------------------------
+void LogisticStockEditor::ShowQuotasDialog()
+{
+    setCaption( tools::translate( "StocksEditionDialog", "Quotas Edition" ) );
+    showStocks_ = false;
+    show();
+}
+
+// -----------------------------------------------------------------------------
 // Name: LogisticStockEditor::NotifyContextMenu
 // Created: MMC 2011-07-21
 // -----------------------------------------------------------------------------
@@ -208,7 +227,8 @@ void LogisticStockEditor::Update( const kernel::Entity_ABC& entity, kernel::Cont
 {
     selected_ = const_cast< kernel::Entity_ABC* >( &entity );
     kernel::ContextMenu* pSubMenu = menu.SubMenu( "Logistic", tr( "Logistic" ) );
-    pSubMenu->insertItem( tools::translate( "LogisticStockEditor", "Supply stocks" ), this, SLOT( show() ) );
+    pSubMenu->insertItem( tools::translate( "LogisticStockEditor", "Edit Stocks" ), this, SLOT( ShowStocksDialog() ) );
+    pSubMenu->insertItem( tools::translate( "LogisticStockEditor", "Edit Quotas" ), this, SLOT( ShowQuotasDialog() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -237,8 +257,10 @@ void LogisticStockEditor::SupplyHierarchy( kernel::SafePointer< kernel::Entity_A
     const LogisticHierarchiesBase* pLogHierarchy = entity->Retrieve< LogisticHierarchiesBase >();
     if( !pLogHierarchy )
         return;
+    if( !IsLogisticBase( *entity ) )
+        return;
 
-    if( IsLogisticBase( *entity ) )
+    if( showStocks_ )
     {
         std::set< const kernel::Agent_ABC* > entStocks;
         FindStocks( *entity, *entity, entStocks );
@@ -252,10 +274,9 @@ void LogisticStockEditor::SupplyHierarchy( kernel::SafePointer< kernel::Entity_A
         }
 
         SupplyStocks( entStocks, requirements );
-
-        if( quotasCheckBox_->state() == Qt::Checked )
-            GenerateLogChildrenQuotas( *pLogHierarchy );
     }
+    else
+        GenerateLogChildrenQuotas( *pLogHierarchy );
 }
 
 // -----------------------------------------------------------------------------

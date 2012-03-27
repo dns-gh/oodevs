@@ -103,6 +103,8 @@ private slots:
     void Accept();
     void Reject();
     void closeEvent( QCloseEvent* pEvent );
+    void ShowStocksDialog();
+    void ShowQuotasDialog();
     //@}
 
 private:
@@ -116,7 +118,7 @@ private:
     QTableView* tableView_;
     QPushButton* validateButton_;
     QPushButton* cancelButton_;
-    QCheckBox* quotasCheckBox_;
+    bool showStocks_;
     //@}
 };
 
