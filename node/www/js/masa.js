@@ -1,5 +1,5 @@
 (function() {
-  var ajax, invalidate_session, on_session_click, on_session_hide;
+  var ajax, invalidate_session, on_session_click, on_session_hide, on_session_load;
 
   ajax = function(url, data, success, error) {
     return $.ajax({
@@ -45,8 +45,34 @@
     return $("#session_create .modal-footer .alert").hide();
   };
 
+  on_session_load = function() {
+    var done, error, select;
+    select = $("#session_exercise");
+    select.children().remove().end();
+    done = function(data) {
+      var item, _i, _len, _results;
+      _results = [];
+      for (_i = 0, _len = data.length; _i < _len; _i++) {
+        item = data[_i];
+        _results.push(select.append("<option>" + item + "</option>"));
+      }
+      return _results;
+    };
+    error = function(obj, text, data) {
+      var box;
+      box = $("#session_create .modal-footer .alert");
+      box.html("Unexpected error " + text + " " + data);
+      return box.show();
+    };
+    return ajax("list_exercises", {
+      limit: 40
+    }, done, error);
+  };
+
   $("#session_create .modal-footer .btn_click").click(on_session_click);
 
   $("#session_create").on("hidden", on_session_hide);
+
+  $("#session_create").on("show", on_session_load);
 
 }).call(this);

@@ -26,5 +26,17 @@ on_session_hide = () ->
     $( "#session_name" ).parent().parent().removeClass( "error" )
     $( "#session_create .modal-footer .alert" ).hide()
 
+on_session_load = () ->
+    select = $( "#session_exercise" )
+    select.children().remove().end()
+    done = ( data ) ->
+        select.append( "<option>" + item + "</option>" ) for item in data
+    error = ( obj, text, data ) ->
+        box = $( "#session_create .modal-footer .alert" )
+        box.html( "Unexpected error " + text + " " + data )
+        box.show()
+    ajax( "list_exercises", { limit: 40 }, done, error )
+
 $( "#session_create .modal-footer .btn_click" ).click( on_session_click )
 $( "#session_create" ).on( "hidden", on_session_hide )
+$( "#session_create" ).on( "show", on_session_load )
