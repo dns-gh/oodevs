@@ -217,6 +217,10 @@
         <mission name="PION MELEE Controler foule"/>
         <mission name="PION MELEE Interdire foule"/>
         <mission name="PION MELEE Renseigner sur foule"/>
+        <mission name="PION Entrer dans un reseau souterrain"/>
+        <mission name="PION Faire mouvement dans reseau souterrain"/>
+        <mission name="PION Faire mouvement via reseau souterrain"/>
+        <mission name="PION Sortir du reseau souterrain"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -7334,4 +7338,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2343738899" -->
+<!-- signature="0017301306" -->
