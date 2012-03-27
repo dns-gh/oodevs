@@ -19,7 +19,7 @@ rootnode
     end,
 
     failed = function( self, params, additionalParams )
-        Feedback( self.feedbacks.elementFailed, { element = additionalParams.element, NeedReinforcement = "destroy" } )
+        Feedback( self.feedbacks.elementFailed, { element = additionalParams.element, needReinforcement = "destroy" } )
     end,
 
     cancelled = function( self, params, additionalParams )

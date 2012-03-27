@@ -47,6 +47,6 @@ integration.stopBypassIt = function( object )
         DEC_Trace( "pause work bypass" )
         return false
     end
-    
     object[myself].actionBypass = DEC__StopAction( object[myself].actionBypass )
+    return true
 end

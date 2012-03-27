@@ -303,7 +303,7 @@ bool MIL_Object_ABC::IsInside( const MT_Vector2D& vPos ) const
 bool MIL_Object_ABC::IsOnBorder( const MT_Vector2D& vPos ) const
 {
     if( const FloodAttribute* flood = RetrieveAttribute< FloodAttribute >() )
-        return flood->GetLocalisation().IsInside( vPos );
+        return flood->GetLocalisation().IsOnBorder( vPos );
     return TER_Object_ABC::IsOnBorder( vPos );
 }
 

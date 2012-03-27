@@ -155,7 +155,7 @@ MT_Vector2D DEC_PathResult::GetNextPointOutsideObstacle( const MT_Vector2D& posT
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathResult::GetNextKeyOnPath
+// Name: DEC_PathResult::GetCurrentKeyOnPath
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
 DEC_PathResult::CIT_PathPointList DEC_PathResult::GetCurrentKeyOnPath( const MT_Vector2D& vPos ) const
@@ -287,24 +287,27 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos,
         MT_Rect objectBBox = objectLocation.GetBoundingBox();
         if( !bbox.Intersect2D( objectBBox ) && !bbox.Contains( objectBBox ) && !objectBBox.Contains( bbox ) )
             continue;
-        bool hullIntersected = false;
-        const T_PointVector& borderPoints = pathHull.GetBorderPoints();
-        if( borderPoints.empty() )
-            continue;
-        T_PointVector::const_iterator itPathHullPoint = borderPoints.begin();
-        const MT_Vector2D* pPrevPathHullPos = &(*itPathHullPoint);
-        itPathHullPoint++;
-        for( ; itPathHullPoint != borderPoints.end(); ++itPathHullPoint )
+        if( hullIntersectionIsFaster )
         {
-            MT_Line lineTmp( *pPrevPathHullPos, *itPathHullPoint );
-            TER_DistanceLess colCmp( *pPrevPathHullPos );
-            T_PointSet collisions( colCmp );
+            const T_PointVector& borderPoints = pathHull.GetBorderPoints();
+            if( borderPoints.empty() )
+                continue;
+            T_PointVector::const_iterator itPathHullPoint = borderPoints.begin();
+            const MT_Vector2D* pPrevPathHullPos = &(*itPathHullPoint);
+            itPathHullPoint++;
+            bool hullIntersected = false;
+            for( ; !hullIntersected && itPathHullPoint != borderPoints.end(); ++itPathHullPoint )
+            {
+                MT_Line lineTmp( *pPrevPathHullPos, *itPathHullPoint );
+                TER_DistanceLess colCmp( *pPrevPathHullPos );
+                T_PointSet collisions( colCmp );
 
-            hullIntersected = hullIntersected || !( hullIntersectionIsFaster && !objectLocation.Intersect2D( lineTmp, collisions, epsilon ) );
-            pPrevPathHullPos = &(*itPathHullPoint);
+                hullIntersected |= objectLocation.Intersect2D( lineTmp, collisions, epsilon );
+                pPrevPathHullPos = &(*itPathHullPoint);
+            }
+            if( !hullIntersected )
+                continue;
         }
-        if( !hullIntersected )
-            continue;
         const MT_Vector2D* pPrevPos = &(*itCurrentPathPoint)->GetPos();
         for( CIT_PathPointList itPathPoint = itNextPathPoint; itPathPoint != resultList_.end(); ++itPathPoint )
         {

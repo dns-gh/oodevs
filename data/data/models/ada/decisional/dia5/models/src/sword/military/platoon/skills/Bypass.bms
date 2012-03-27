@@ -12,7 +12,7 @@ rootnode
     done = function( self, params, additionalParams )
         self.nextTargetIndex = self.nextTargetIndex + 1
         if self.nextTargetIndex > #self.obstacles then
-            self.BypassedElement = additionalParams.element
+            self.bypassedElement = additionalParams.element
             self.obstacles = {}
             self.nextTargetIndex = 1
             Feedback( self.feedbacks.done )
@@ -27,7 +27,7 @@ rootnode
     end,
 
     elementFailed = function( self, params, additionalParams )
-        integration.setNeedReinforcement( meKnowledge, additionalParams.NeedReinforcement, additionalParams.element, false )
+        integration.setNeedReinforcement( meKnowledge, additionalParams.needReinforcement, additionalParams.element, false )
         self.report = eRC_AttenteRenforcement
     end,
 
@@ -42,7 +42,7 @@ rootnode
         self.nextTargetIndex = 1
         self.report = nil
         self.elementToRemove = nil
-        self.BypassedElement = nil
+        self.bypassedElement = nil
         self.obstacles = {}
     end,
 
@@ -55,7 +55,7 @@ rootnode
         if self.params.entities == NIL then
             if #self.obstacles < 1 then
                self.obstacles = sword.military.queries.objects.getObstaclesOnPath[ "execute" ]()
-               removeFromList(self.BypassedElement, self.obstacles)
+               removeFromList(self.bypassedElement, self.obstacles)
            end
         else 
             self.obstacles = self.params.entities

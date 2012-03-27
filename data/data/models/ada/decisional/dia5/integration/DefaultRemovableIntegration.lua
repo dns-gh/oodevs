@@ -35,6 +35,7 @@ integration.updateDemineIt = function( object )
         DEC_Trace( "no capacity" )
         return false 
     end
+    return true
 end
 
 integration.stopDemineIt = function( object )
@@ -46,8 +47,8 @@ integration.stopDemineIt = function( object )
         DEC_Trace( "pause work demine" )
         return false
     end
-    
     object[myself].actionDemine = DEC__StopAction( object[myself].actionDemine )
+    return true
 end
 --- Return if the unit has the capacity to remove the selected object
 -- @param knowledge on an object
@@ -96,8 +97,8 @@ integration.stopRemoveIt = function( object )
         DEC_Trace( "pause work remove" )
         return false
     end
-    
     object[myself].actionRemove = DEC__StopAction( object[myself].actionRemove )
+    return true
 end
 
 integration.isInAvoidanceArea = function( object )
