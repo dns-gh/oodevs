@@ -386,8 +386,8 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
         pExtensionsPanel_->hide();
     }
 
-    gui::HelpSystem* help = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/gaming.xml" ) );
-    setMenuBar( new Menu( this, controllers, staticModel_, *prefDialog, *profileDialog, *factory, license, *help, *interpreter, network_, logger ) );
+    help_ = new gui::HelpSystem( this, config_.BuildResourceChildFile( "help/gaming.xml" ) );
+    setMenuBar( new Menu( this, controllers, staticModel_, *prefDialog, *profileDialog, *factory, license, *help_, *interpreter, network_, logger ) );
 
     CreateLayers( *pMissionPanel_, *creationPanels, *parameters_, *locationsLayer, *agentsLayer, *automatsLayer, *formationLayer, *terrainLayer, *meteoLayer, *profilerLayer, *prefDialog, profile, simulation, *picker );
     ::StatusBar* pStatus_ = new ::StatusBar( statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_, controllers_, pProfilerDockWnd_ );
@@ -528,6 +528,15 @@ void MainWindow::Load()
         QMessageBox::critical( this, tools::translate( "Application", "SWORD" )
                                    , ( tools::translate( "MainWindow", "Error loading exercise: " ) + e.what() ).ascii() );
     }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MainWindow::ShowHelp
+// Created: JSR 2012-03-27
+// -----------------------------------------------------------------------------
+void MainWindow::ShowHelp()
+{
+    help_->ShowHelp();
 }
 
 // -----------------------------------------------------------------------------

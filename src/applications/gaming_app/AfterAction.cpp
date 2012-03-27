@@ -52,7 +52,7 @@ AfterAction::~AfterAction()
 void AfterAction::CreateAfterActionDock( QMainWindow* window, Controllers& controllers, ItemFactory_ABC& factory, AfterActionModel& model, IndicatorPlotFactory& plotFactory, actions::gui::InterfaceBuilder_ABC& interfaceBuilder )
 {
     aarDock_ = new QDockWidget( "aar", window );
-    aarDock_->setObjectName( tools::translate( "AfterAction", "After action review" ) );
+    aarDock_->setObjectName( "aar" );
     window->addDockWidget( Qt::LeftDockWidgetArea, aarDock_ );
     Q3VBox* box = new Q3VBox( aarDock_ );
     box->setMinimumSize( 250, 200 );
