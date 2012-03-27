@@ -43,6 +43,7 @@ public class Handler extends AbstractHandler {
             add("get_session");
             add("create_session");
             add("delete_session");
+            add("list_exercises");
         }
     };
     private final Configuration cfg_;
