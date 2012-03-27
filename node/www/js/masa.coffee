@@ -12,7 +12,7 @@ on_session_click = () ->
     exercise = $( "#session_exercise" )
     if !name.val().length
         return invalidate_session( name, box, "name" )
-    if !exercise.val().length
+    if !exercise.val()?
         return invalidate_session( exercise, box, "exercise" )
     data = { name: name.val(), exercise: exercise.val() }
     done = () ->
