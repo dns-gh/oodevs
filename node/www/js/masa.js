@@ -18,6 +18,7 @@
       return $("#session_create").modal("hide");
     };
     error = function(obj, textStatus, data) {
+      box = $("#session_create .modal-footer .alert");
       box.html("Unexpected error " + textStatus + " " + data);
       return box.show();
     };

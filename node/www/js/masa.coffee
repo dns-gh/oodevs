@@ -11,6 +11,7 @@ $("#session_create .modal-footer .btn_click").click( (event) -> (
         $("#session_create").modal("hide")
     )
     error = (obj, textStatus, data) -> (
+        box = $("#session_create .modal-footer .alert")
         box.html("Unexpected error " + textStatus + " " + data)
         box.show()
     )
