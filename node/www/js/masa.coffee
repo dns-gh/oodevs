@@ -33,7 +33,7 @@ on_session_load = () ->
         select.append( "<option>" + item + "</option>" ) for item in data
     error = ( obj, text, data ) ->
         box = $( "#session_create .modal-footer .alert" )
-        box.html( "Unexpected error " + text + " " + data )
+        box.html( data + " [" + text + "]" )
         box.show()
     ajax( "list_exercises", { limit: 40 }, done, error )
 

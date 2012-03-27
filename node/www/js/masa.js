@@ -61,7 +61,7 @@
     error = function(obj, text, data) {
       var box;
       box = $("#session_create .modal-footer .alert");
-      box.html("Unexpected error " + text + " " + data);
+      box.html(data + " [" + text + "]");
       return box.show();
     };
     return ajax("list_exercises", {
