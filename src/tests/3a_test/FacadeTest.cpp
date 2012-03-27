@@ -160,6 +160,37 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestDistanceBetweenTwoUnits, Fixture )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Facade_TestUnitsInZone
+// Created: JSR 2012-03-22
+// -----------------------------------------------------------------------------
+BOOST_FIXTURE_TEST_CASE( Facade_TestUnitsInZone, Fixture )
+{
+    xml::xistringstream xis( "<indicator>"
+        "    <extract function='positions' id='pos'/>"
+        "    <constant type='zone' value='circle(31TBN7728449218,31TBN7728449222)' id='zone'/>"
+        "    <transform function='contains' input='zone,pos' id='selected-pos'/>"
+        "    <transform function='filter' type='position' input='selected-pos,pos' id='pos-in-zone'/>"
+        "    <reduce function='count' input='pos-in-zone' type='position' id='count'/>"
+        "    <result function='plot' input='count' type='float'/>"
+        "</indicator>" ) ;
+    boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakePosition( "31TBN7728449218", 1 ) );
+    task->Receive( TestTools::MakePosition( "31TBN7728449218", 2 ) );
+    task->Receive( TestTools::MakePosition( "31TBN7728449218", 3 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakePosition( "31TBN7728449223", 1 ) );
+    task->Receive( TestTools::EndTick() );
+    task->Receive( TestTools::BeginTick() );
+    task->Receive( TestTools::MakePosition( "31TBN7728449223", 2 ) );
+    task->Receive( TestTools::EndTick() );
+    const T_Result expectedResult = boost::assign::list_of< float >( 3 )( 2 )( 1 );
+    MakeExpectation( expectedResult );
+    task->Commit();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Facade_TestMountedUnit
 // Created: SBO 2010-07-12
 // -----------------------------------------------------------------------------
