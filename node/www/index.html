@@ -74,29 +74,28 @@
                         </div>
                         <div class="modal-body">
                             <form class="form-horizontal">
-                                <fieldset>
-                                    <div class="control-group">
-                                        <label class="control-label" for="session_name">Name</label>
-                                        <div class="controls">
-                                            <input type="text" class="input-large" id="session_name"/>
-                                        </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="session_name">Name</label>
+                                    <div class="controls">
+                                        <input type="text" class="input-large" id="session_name"/>
                                     </div>
-                                    <div class="control-group">
-                                        <label class="control-label" for="session_exercise">Exercise</label>
-                                        <div class="controls">
-                                            <select id="session_exercise">
-                                                <option>Cabourg</option>
-                                                <option>Egypt</option>
-                                                <option>Paris</option>
-                                            </select>
-                                        </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label" for="session_exercise">Exercise</label>
+                                    <div class="controls">
+                                        <select id="session_exercise">
+                                            <option>Cabourg</option>
+                                            <option>Egypt</option>
+                                            <option>Paris</option>
+                                        </select>
                                     </div>
-                                </fieldset>
+                                </div>
                             </form>
                         </div>
                         <div class="modal-footer">
-                            <a href="#" class="btn"> Create</a>
-                            <a href="#" class="btn btn-primary" data-dismiss="modal"> Cancel</a>
+                            <span class="alert alert-error" style="display:none"></span>
+                            <a class="btn btn_click"> Create</a>
+                            <a class="btn btn-primary" data-dismiss="modal"> Cancel</a>
                         </div>
                     </div>
 
@@ -244,4 +243,5 @@
     [#-- script include order is required --]
     <script src="js/jquery-1.7.2.min.js"></script>
     <script src="js/bootstrap-2.0.2.min.js"></script>
+    <script src="js/masa.js"></script>
 </html>
