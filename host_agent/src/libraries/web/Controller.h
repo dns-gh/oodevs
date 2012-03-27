@@ -45,12 +45,13 @@ public:
 private:
     //! @name Session Methods
     //@{
-    std::string ListSessions ( const Request_ABC& request );
-    std::string CountSessions( const Request_ABC& request );
-    std::string GetSession   ( const Request_ABC& request );
-    std::string CreateSession( const Request_ABC& request );
-    std::string DeleteSession( const Request_ABC& request );
-    std::string ListExercises( const Request_ABC& request );
+    std::string ListSessions  ( const Request_ABC& request );
+    std::string CountSessions ( const Request_ABC& request );
+    std::string GetSession    ( const Request_ABC& request );
+    std::string CreateSession ( const Request_ABC& request );
+    std::string DeleteSession ( const Request_ABC& request );
+    std::string ListExercises ( const Request_ABC& request );
+    std::string CountExercises( const Request_ABC& request );
     //@}
 
 private:

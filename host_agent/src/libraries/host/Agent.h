@@ -50,7 +50,8 @@ public:
 
     //! @name Other Methods
     //@{
-    virtual Reply ListExercises( int offset, int limit ) const;
+    virtual Reply ListExercises ( int offset, int limit ) const;
+    virtual Reply CountExercises() const;
     //@}
 
     //! @name Type helpers

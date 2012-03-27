@@ -44,6 +44,7 @@ public class Handler extends AbstractHandler {
             add("create_session");
             add("delete_session");
             add("list_exercises");
+            add("count_exercises");
         }
     };
     private final Configuration cfg_;

@@ -188,3 +188,13 @@ Reply Agent::ListExercises( int offset, int limit ) const
     exercises.resize( limit );
     return Reply( "[\"" + boost::algorithm::join( exercises, "\", \"" ) + "\"]" );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Agent::CountExercises
+// Created: BAX 2012-03-27
+// -----------------------------------------------------------------------------
+Reply Agent::CountExercises() const
+{
+    std::vector< std::string > exercises = sessionFactory_.GetExercises();
+    return Reply( ( boost::format("{ \"count\" : %1% }") % exercises.size() ).str() );
+}

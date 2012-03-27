@@ -61,7 +61,8 @@ public:
 
     //! @name Other Methods
     //@{
-    virtual Reply ListExercises( int offset, int limit ) const = 0;
+    virtual Reply ListExercises ( int offset, int limit ) const = 0;
+    virtual Reply CountExercises() const = 0;
     //@}
 };
 

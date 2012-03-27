@@ -133,6 +133,8 @@ std::string Controller::Notify( const Request_ABC& request )
         return DeleteSession( request );
     if( uri == "/list_exercises")
         return ListExercises( request );
+    if( uri == "/count_exercises" )
+        return CountExercises( request );
 
     return WriteHttpReply( NotFound, "Unknown URI" );
 }
@@ -220,3 +222,13 @@ std::string Controller::ListExercises( const Request_ABC& request )
     const int limit  = GetParameter( "limit",  request, 10 );
     return WriteHttpReply( agent_.ListExercises( offset, limit ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: Controller::CountExercises
+// Created: BAX 2012-03-27
+// -----------------------------------------------------------------------------
+std::string Controller::CountExercises( const Request_ABC& /*request*/ )
+{
+    return WriteHttpReply( agent_.CountExercises() );
+}
+

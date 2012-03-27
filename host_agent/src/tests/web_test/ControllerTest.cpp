@@ -41,6 +41,7 @@ namespace
         MOCK_METHOD( CreateSession, 2 );
         MOCK_METHOD( DeleteSession, 1 );
         MOCK_METHOD( ListExercises, 2 );
+        MOCK_METHOD( CountExercises, 0 );
     };
 
     MOCK_BASE_CLASS( MockRequest, Request_ABC )
