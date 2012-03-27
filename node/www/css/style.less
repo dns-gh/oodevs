@@ -1,1 +1,60 @@
 /* MASA Group Style */
+
+@run:    #93C47D;
+@pause:  #FFD966;
+@replay: #6FA8DC;
+@stop:   #E06666;
+
+body {
+    padding-top:    60px;
+    padding-bottom: 40px;
+}
+
+.session {
+    border-color:   #000000;
+    position:       relative;
+}
+
+.run {
+    .session;
+    background-color: @run;
+}
+
+.pause {
+    .session;
+    background-color: @pause;
+}
+
+.replay {
+    .session;
+    background-color: @replay;
+}
+
+.stop {
+    .session;
+    background-color: @stop;
+}
+
+@session_border: 8px;
+
+.tools {
+    position:   absolute;
+    top:        @session_border;
+    right:      @session_border;
+}
+
+.more {
+    position:   absolute;
+    right:      @session_border;
+    bottom:     @session_border;
+}
+
+.session_name {
+    font-size:      large;
+    font-weight:    bold;
+}
+
+.session_exercise {
+    padding-top:    12px;
+    padding-left:   24px;
+}

@@ -1,0 +1,10 @@
+body{padding-top:60px;padding-bottom:40px;}
+.session{border-color:#000000;position:relative;}
+.run{border-color:#000000;position:relative;background-color:#93c47d;}
+.pause{border-color:#000000;position:relative;background-color:#ffd966;}
+.replay{border-color:#000000;position:relative;background-color:#6fa8dc;}
+.stop{border-color:#000000;position:relative;background-color:#e06666;}
+.tools{position:absolute;top:8px;right:8px;}
+.more{position:absolute;right:8px;bottom:8px;}
+.session_name{font-size:large;font-weight:bold;}
+.session_exercise{padding-top:12px;padding-left:24px;}

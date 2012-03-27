@@ -5,26 +5,24 @@
     <head>
         <meta charset="utf-8" />
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-        <title></title>
+        <title>Sword Node</title>
         <meta name="description" content="" />
         <link rel="stylesheet" href="css/bootstrap-2.0.2.min.css" />
-        <link rel="stylesheet/less" type="text/css" href="css/style.less" />
-        <script src="js/less-1.3.0.min.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/style.css" />
     </head>
-
-    <body style="padding-top: 60px; padding-bottom: 40px">
+    <body>
 
         <div class="navbar navbar-fixed-top">
             <div class="navbar-inner">
-                <div class="container-fluid">
+                <div class="container">
                     <a class="brand">Sword Node</a>
                     <ul class="nav pull-right">
                         <li class="dropdown">
-                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> John Doe <b class="caret"></b></a>
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown"> John Doe <span class="caret"></span></a>
                         <ul class="dropdown-menu">
                             <a><b>John Doe</b><br/>john.doe@masagroup.net</a>
                             <li class="divider"></li>
-                            <li><a href=""><i class="i"></i> Log Out</a></li>
+                            <li><a href=""><i class="i"></i> Log Out </a></li>
                         </ul>
                         </li>
                     </ul>
@@ -32,8 +30,9 @@
             </div>
         </div>
 
-        <div class="container-fluid">
-            <div class="row-fluid">
+        <div class="container">
+            <div class="row">
+
                 <div class="span3">
                     <div class="well sidebar-nav">
                         <ul class="nav nav-list">
@@ -48,18 +47,113 @@
                         </ul>
                     </div>
                 </div>
+
                 <div class="span9">
+
+                    <div class="well run" style="position:relative">
+                        <div class="row-fluid">
+                            <div class="span3">
+                                <div class="session_name">Bob Training</div>
+                                <div class="session_exercise">Egypt</div>
+                            </div>
+                            <div class="span6">
+                                <div>Started 2012-01-12 at 18:52:12</div>
+                                <div>Time running 00:01:36</div>
+                                <div>3 clients connected</div>
+                            </div>
+                            <div class="btn-group tools">
+                                <a href="#" class="btn"><i class="icon-pause" ></i></a>
+                                <a href="#" class="btn"><i class="icon-stop" ></i></a>
+                                <a href="#" class="btn"><i class="icon-file" ></i></a>
+                            </div>
+                            <span class="more">
+                                <a href="#" class="btn"><i class="icon-th-list" ></i> Logs <span class="caret"></span></a>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="well pause" style="position:relative">
+                        <div class="row-fluid">
+                            <div class="span3">
+                                <div class="session_name">Frank Exercise</div>
+                                <div class="session_exercise">Egypt</div>
+                            </div>
+                            <div class="span6">
+                                <div>Started 2012-01-12 at 13:24:05</div>
+                                <div>Time running 05:12:19</div>
+                                <div>2 clients connected</div>
+                            </div>
+                            <div class="btn-group tools">
+                                <a href="#" class="btn"><i class="icon-play" ></i></a>
+                                <a href="#" class="btn"><i class="icon-stop" ></i></a>
+                                <a href="#" class="btn"><i class="icon-file" ></i></a>
+                            </div>
+                            <span class="more">
+                                <a href="#" class="btn"><i class="icon-th-list" ></i> Logs <span class="caret"></span></a>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="well replay" style="position:relative">
+                        <div class="row-fluid">
+                            <div class="span3">
+                                <div class="session_name">Session 12</div>
+                                <div class="session_exercise">Test Scenario</div>
+                            </div>
+                            <div class="span6">
+                                <div>Started 2012-01-12 at 15:36:24</div>
+                                <div>Time running 00:05:10</div>
+                                <div>1 clients connected</div>
+                            </div>
+                            <div class="btn-group tools">
+                                <a href="#" class="btn"><i class="icon-stop" ></i></a>
+                                <a href="#" class="btn"><i class="icon-file" ></i></a>
+                            </div>
+                            <span class="more">
+                                <a href="#" class="btn"><i class="icon-th-list" ></i> Logs <span class="caret"></span></a>
+                            </span>
+                        </div>
+                    </div>
+
+                    <div class="well stop" style="position:relative">
+                        <div class="row-fluid">
+                            <div class="span3">
+                                <div class="session_name">Albert</div>
+                                <div class="session_exercise">Cabourg</div>
+                            </div>
+                            <div class="span3">
+                                <div>Checkpoints available</div>
+                                <div>Replay available</div>
+                                <div>Length: 00:05:10</div>
+                            </div>
+                            <div class="btn-group tools">
+                                <a href="#" class="btn dropdown-toggle" data-toggle="dropdown"><i class="icon-play" ></i> <span class="caret"></span></a>
+                                <ul class="dropdown-menu">
+                                    <a href="/">Start</a>
+                                    <a href="/">Checkpoint A</a>
+                                    <a href="/">Checkpoint B</a>
+                                    <a href="/">Checkpoint C</a>
+                                </ul>
+                                <a href="#" class="btn"><i class="icon-repeat" ></i> </a>
+                                <a href="#" class="btn"><i class="icon-cog" ></i></a>
+                                <a href="#" class="btn"><i class="icon-file" ></i></a>
+                                <a href="#" class="btn"><i class="icon-download" ></i></a>
+                            </div>
+                            <span class="more">
+                                <a href="#" class="btn"><i class="icon-th-list" ></i> Logs <span class="caret"></span></a>
+                            </span>
+                        </div>
+                    </div>
+
                 </div>
+
             </div>
-
-            <hr/>
-            <footer>
+            <hr />
             <p>&copy; MASA Group 2012</p>
-            </footer>
         </div>
-    </body>
 
-    <!-- script include order is required -->
+    </body>
+    [#-- script include order is required --]
     <script src="js/jquery-1.7.2.min.js"></script>
     <script src="js/bootstrap-2.0.2.min.js"></script>
 </html>
