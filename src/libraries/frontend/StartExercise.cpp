@@ -36,9 +36,7 @@ namespace
 // -----------------------------------------------------------------------------
 StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, bool attach, bool launchDispatchedIfNotEmbedded /*= true*/, std::string commanderEndpoint /*= ""*/, bool makeSilent /*= false*/ )
     : SpawnCommand( config, "simulation_app.exe", attach, commanderEndpoint, makeSilent )
-    , exercise_ ( exercise.ascii() )
-    , session_ ( session.ascii() )
-    , configManipulator_ ( new ConfigurationManipulator( config_, exercise_, session_ ) )
+    , configManipulator_ ( new ConfigurationManipulator( config_, exercise.ascii(), session.ascii() ) )
     , percentage_( 0 )
 {
     if( ! HasEmbeddedDispatcher( *configManipulator_ ) && launchDispatchedIfNotEmbedded )
@@ -57,9 +55,7 @@ StartExercise::StartExercise( const tools::GeneralConfig& config, const QString&
 // -----------------------------------------------------------------------------
 StartExercise::StartExercise( const tools::GeneralConfig& config, const QString& exercise, const QString& session, const QString& checkpoint, bool attach, bool launchDispatchedIfNotEmbedded /*= true*/, std::string commanderEndpoint /*= ""*/, bool makeSilent /*= false*/ )
     : SpawnCommand( config, "simulation_app.exe", attach, commanderEndpoint, makeSilent )
-    , exercise_ ( exercise.ascii() )
-    , session_ ( session.ascii() )
-    , configManipulator_ ( new ConfigurationManipulator( config_, exercise_, session_ ) )
+    , configManipulator_ ( new ConfigurationManipulator( config_, exercise.ascii(), session.ascii() ) )
     , percentage_( 0 )
 {
     if( ! HasEmbeddedDispatcher( *configManipulator_ ) && launchDispatchedIfNotEmbedded )
@@ -126,32 +122,3 @@ QString StartExercise::GetStatus() const
         return tools::translate( "StartExercise", "Starting simulation..." );
     return tools::translate( "StartExercise", "Simulation started" );
 }
-
-// -----------------------------------------------------------------------------
-// Name: StartExercise::GetStartedExercise
-// Created: LDC 2008-10-23
-// -----------------------------------------------------------------------------
-std::string StartExercise::GetStartedExercise() const
-{
-    return GetPercentage() == 100 ? exercise_ : std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: StartExercise::GetExercise
-// Created: RPD 2011-09-12
-// -----------------------------------------------------------------------------
-std::string StartExercise::GetExercise() const
-{
-    return exercise_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: StartExercise::GetSession
-// Created: RPD 2011-09-12
-// -----------------------------------------------------------------------------
-std::string StartExercise::GetSession() const
-{
-    return session_;
-}
-
-

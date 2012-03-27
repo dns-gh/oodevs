@@ -32,22 +32,8 @@ class AttachCommand : public SpawnCommand
 public:
     //! @name Constructors/Destructor
     //@{
-             AttachCommand( const tools::GeneralConfig& config, unsigned long processId, bool attach, const std::string& exercise, const std::string& session );
+             AttachCommand( const tools::GeneralConfig& config, unsigned long processId, bool attach );
     virtual ~AttachCommand();
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual std::string  GetExercise() const;
-    virtual std::string  GetSession() const;
-    virtual std::string  GetStartedExercise() const;
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    const std::string exercise_;
-    const std::string session_;
     //@}
 };
 

@@ -16,11 +16,8 @@ using namespace frontend;
 // Name: AttachCommand constructor
 // Created: JSR 2011-12-14
 // -----------------------------------------------------------------------------
-AttachCommand::AttachCommand( const tools::GeneralConfig& config, unsigned long processId, bool attach,
-                              const std::string& exercise, const std::string& session )
+AttachCommand::AttachCommand( const tools::GeneralConfig& config, unsigned long processId, bool attach )
     : SpawnCommand( config, processId, attach )
-    , exercise_( exercise )
-    , session_ ( session )
 {
         // NOTHING
 }
@@ -32,31 +29,4 @@ AttachCommand::AttachCommand( const tools::GeneralConfig& config, unsigned long 
 AttachCommand::~AttachCommand()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: AttachCommand::GetExercise
-// Created: JSR 2011-12-14
-// -----------------------------------------------------------------------------
-std::string AttachCommand::GetExercise() const
-{
-    return exercise_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AttachCommand::GetSession
-// Created: JSR 2011-12-14
-// -----------------------------------------------------------------------------
-std::string AttachCommand::GetSession() const
-{
-    return session_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: AttachCommand::GetStartedExercise
-// Created: JSR 2011-12-14
-// -----------------------------------------------------------------------------
-std::string AttachCommand::GetStartedExercise() const
-{
-    return exercise_;
 }

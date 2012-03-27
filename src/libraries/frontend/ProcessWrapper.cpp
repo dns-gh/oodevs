@@ -148,34 +148,6 @@ QString ProcessWrapper::GetStatus() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ProcessWrapper::GetStartedExercise
-// Created: LDC 2008-10-23
-// -----------------------------------------------------------------------------
-std::string ProcessWrapper::GetStartedExercise() const
-{
-    return process_->GetStartedExercise();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ProcessWrapper::GetExercise
-// Created: RPD 2011-09-12
-// -----------------------------------------------------------------------------
-std::string ProcessWrapper::GetExercise() const
-{
-    return process_->GetExercise();
-}
-
-// -----------------------------------------------------------------------------
-// Name: ProcessWrapper::GetSession
-// Created: RPD 2011-09-12
-// -----------------------------------------------------------------------------
-std::string ProcessWrapper::GetSession() const
-{
-    return process_->GetSession();
-}
-
-
-// -----------------------------------------------------------------------------
 // Name: ProcessWrapper::GetProcess
 // Created: RPD 2011-09-12
 // -----------------------------------------------------------------------------

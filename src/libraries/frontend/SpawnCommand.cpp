@@ -311,33 +311,6 @@ QString SpawnCommand::GetStatus() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: SpawnCommand::GetStartedExercise
-// Created: LDC 2008-10-23
-// -----------------------------------------------------------------------------
-std::string SpawnCommand::GetStartedExercise() const
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: SpawnCommand::GetExercise
-// Created: RPD 2011-09-12
-// -----------------------------------------------------------------------------
-std::string SpawnCommand::GetExercise() const
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
-// Name: SpawnCommand::GetSession
-// Created: RPD 2011-09-12
-// -----------------------------------------------------------------------------
-std::string SpawnCommand::GetSession() const
-{
-    return std::string();
-}
-
-// -----------------------------------------------------------------------------
 // Name: SpawnCommand::SetWorkingDirectory
 // Created: SBO 2009-06-12
 // -----------------------------------------------------------------------------

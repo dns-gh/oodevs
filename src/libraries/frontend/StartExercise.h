@@ -40,9 +40,6 @@ public:
     //@{
     virtual void         Start();
     virtual unsigned int GetPercentage() const;
-    virtual std::string  GetStartedExercise() const;
-    virtual std::string  GetExercise() const;
-    virtual std::string  GetSession() const;
     //@}
 
 private:
@@ -60,8 +57,6 @@ private:
 private:
     //! @name Member data
     //@{
-    std::string exercise_;
-    std::string session_ ;
     std::auto_ptr< SpawnCommand > dispatcher_;
     std::auto_ptr< ConfigurationManipulator > configManipulator_;
     unsigned int percentage_;

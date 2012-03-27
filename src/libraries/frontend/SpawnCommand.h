@@ -49,9 +49,6 @@ public:
     virtual void         Stop( bool forceProcessStop = true );
     virtual unsigned int GetPercentage() const;
     virtual QString      GetStatus() const;
-    virtual std::string  GetStartedExercise() const;
-    virtual std::string  GetExercise() const;
-    virtual std::string  GetSession() const;
     void                 Attach( boost::shared_ptr< Process_ABC > process );
     void                 SetWorkingDirectory( const QString& directory );
     const std::string&   GetCommanderEndpoint() const;

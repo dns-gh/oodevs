@@ -363,9 +363,10 @@ void ProcessService::NotifyError( const std::string& error, std::string commande
             {
                 SessionStatus statusMessage;
                 statusMessage().set_status( sword::SessionStatus::breakdown );
+                const std::pair< std::string, std::string >& key = it->first;
                 statusMessage().set_breakdown_information( error );
-                statusMessage().set_exercise( command->GetExercise() );
-                statusMessage().set_session( command->GetSession() );
+                statusMessage().set_exercise( key.first );
+                statusMessage().set_session( key.second );
                 statusMessage.Send( publisher );
                 processes_.erase( it );
                 break;
@@ -552,7 +553,7 @@ void ProcessService::CheckForRunningProcesses()
                 return;
             }
             boost::shared_ptr< frontend::SpawnCommand > command;
-            command.reset( new frontend::AttachCommand( config_, pe32.th32ProcessID, false, exercise, session ) );
+            command.reset( new frontend::AttachCommand( config_, pe32.th32ProcessID, false ) );
             boost::shared_ptr< SwordFacade > wrapper( new SwordFacade( server_, "", pe32.szExeFile == dispatcherApp ) );
             {
                 boost::recursive_mutex::scoped_lock locker( mutex_ );
@@ -695,8 +696,9 @@ void ProcessService::SendSessionsStatuses( const std::string& endpoint )
             if( command && command->GetCommanderEndpoint() == endpoint )
             {
                 SessionStatus statusMessage;
-                std::string exercise = command->GetExercise();
-                std::string session = command->GetSession();
+                const std::pair< std::string, std::string >& key = it->first;
+                std::string exercise = key.first;
+                std::string session = key.second;
                 statusMessage().set_status( IsRunning( exercise, session )? sword::SessionStatus::running : sword::SessionStatus::not_running );
                 statusMessage().set_exercise( exercise );
                 statusMessage().set_session( session );
