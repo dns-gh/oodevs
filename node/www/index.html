@@ -67,10 +67,43 @@
 
                 <div class="span9">
 
+                    <div id="session_create" class="modal fade hide" style="display:none">
+                        <div class="modal-header">
+                            <a class="close" data-dismiss="modal">×</a>
+                            <h3>Create New Session</h3>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal">
+                                <fieldset>
+                                    <div class="control-group">
+                                        <label class="control-label" for="session_name">Name</label>
+                                        <div class="controls">
+                                            <input type="text" class="input-large" id="session_name">
+                                        </div>
+                                    </div>
+                                    <div class="control-group">
+                                        <label class="control-label" for="session_exercise">Exercise</label>
+                                        <div class="controls">
+                                            <select id="session_exercise">
+                                                <option>Cabourg</option>
+                                                <option>Egypt</option>
+                                                <option>Paris</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <a href="#" class="btn"> Create</a>
+                            <a href="#" class="btn btn-primary" data-dismiss="modal"> Cancel</a>
+                        </div>
+                    </div>
+
                     <div class="row">
                         <div class="span9">
                             <span class="session_actions">
-                                <a href="/" class="btn"><i class="icon-plus"></i> Create</a>
+                                <a data-toggle="modal" href="#session_create" class="btn"><i class="icon-plus"></i> Create...</a>
                                 <a href="/" class="btn"><i class="icon-share-alt"></i> Restore</a>
                             </span>
                             <form class="form-search session_search">
