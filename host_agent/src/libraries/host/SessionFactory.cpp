@@ -15,6 +15,7 @@
 #include "PortFactory_ABC.h"
 #include "FileSystem_ABC.h"
 #include "Session.h"
+#include "runtime/Utf8.h"
 
 #include <xeumeuleu/xml.hpp>
 
@@ -77,4 +78,21 @@ SessionFactory_ABC::T_Sessions SessionFactory::Reload() const
             continue; // skip invalid session
         }
     return sessions;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SessionFactory::GetExercises
+// Created: BAX 2012-03-27
+// -----------------------------------------------------------------------------
+std::vector< std::string > SessionFactory::GetExercises() const
+{
+    std::vector< std::string > exercises;
+    const boost::filesystem::wpath root = data_ / L"exercises";
+    size_t offset = root.string().size() + 1;
+    BOOST_FOREACH( boost::filesystem::wpath path, system_.Glob( root, L"exercise.xml" ) )
+    {
+        const std::wstring leaf = path.remove_filename().string();
+        exercises.push_back( runtime::Utf8Convert( leaf.substr( offset, leaf.size() - offset - 1 ) ) );
+    }
+    return exercises;
 }

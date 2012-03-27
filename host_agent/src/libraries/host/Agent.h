@@ -48,6 +48,11 @@ public:
     virtual Reply DeleteSession( const boost::uuids::uuid& tag );
     //@}
 
+    //! @name Other Methods
+    //@{
+    virtual Reply ListExercises( int offset, int limit ) const;
+    //@}
+
     //! @name Type helpers
     //@{
     typedef std::map< boost::uuids::uuid, boost::shared_ptr< Session_ABC > > T_Sessions;

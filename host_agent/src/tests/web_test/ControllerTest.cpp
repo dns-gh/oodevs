@@ -40,6 +40,7 @@ namespace
         MOCK_METHOD( GetSession, 1 );
         MOCK_METHOD( CreateSession, 2 );
         MOCK_METHOD( DeleteSession, 1 );
+        MOCK_METHOD( ListExercises, 2 );
     };
 
     MOCK_BASE_CLASS( MockRequest, Request_ABC )
@@ -136,5 +137,16 @@ BOOST_FIXTURE_TEST_CASE( controller_delete_session, Fixture )
     SetRequest( "GET", "/delete_session", boost::assign::map_list_of( "tag", default_tag_string ) );
     const std::string expected = "a json session";
     MOCK_EXPECT( agent.DeleteSession ).once().with( default_tag ).returns( expected );
+    CheckNotify( 200, expected );
+}
+
+BOOST_FIXTURE_TEST_CASE( controller_list_exercises, Fixture )
+{
+    SetRequest( "GET", "/list_exercises", boost::assign::map_list_of
+        ( "offset", "5" )
+        ( "limit",  "3" )
+    );
+    const std::string expected = "a json list";
+    MOCK_EXPECT( agent.ListExercises ).once().with( 5, 3 ).returns( expected );
     CheckNotify( 200, expected );
 }

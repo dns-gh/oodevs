@@ -35,6 +35,7 @@ namespace
     {
         MOCK_METHOD( Create, 2 );
         MOCK_METHOD( Reload, 0 );
+        MOCK_METHOD( GetExercises, 0 );
         MockSessionFactory()
         {
             MOCK_EXPECT( this->Reload ).once().returns( SessionFactory_ABC::T_Sessions() );
@@ -114,4 +115,11 @@ BOOST_FIXTURE_TEST_CASE( agent_deletes_session, Fixture )
     CheckReply( agent.DeleteSession( session->GetTag() ), session->ToJson() );
     CheckReply( agent.CountSessions(), "{ \"count\" : 0 }" );
     CheckReply( agent.ListSessions( 0, 10 ), "[]" );
+}
+
+BOOST_FIXTURE_TEST_CASE( agent_list_exercises, Fixture )
+{
+    const std::vector< std::string > list = boost::assign::list_of( "a" )( "b" )( "c" );
+    MOCK_EXPECT( factory.GetExercises ).once().returns( list );
+    CheckReply( agent.ListExercises( 0, 10 ), "[\"a\", \"b\", \"c\"]" );
 }

@@ -131,6 +131,8 @@ std::string Controller::Notify( const Request_ABC& request )
         return CreateSession( request );
     if( uri == "/delete_session" )
         return DeleteSession( request );
+    if( uri == "/list_exercises")
+        return ListExercises( request );
 
     return WriteHttpReply( NotFound, "Unknown URI" );
 }
@@ -206,4 +208,15 @@ std::string Controller::DeleteSession( const Request_ABC& request )
     if( uuid == boost::none )
         return WriteHttpReply( BadRequest, "Missing \"tag\" parameter" );
     return WriteHttpReply( agent_.DeleteSession( boost::uuids::string_generator()( *uuid ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::ListExercises
+// Created: BAX 2012-03-27
+// -----------------------------------------------------------------------------
+std::string Controller::ListExercises( const Request_ABC& request )
+{
+    const int offset = GetParameter( "offset", request, 0 );
+    const int limit  = GetParameter( "limit",  request, 10 );
+    return WriteHttpReply( agent_.ListExercises( offset, limit ) );
 }

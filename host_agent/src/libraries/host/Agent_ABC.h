@@ -58,6 +58,11 @@ public:
     virtual Reply CreateSession( const std::string& exercise, const std::string& name ) = 0;
     virtual Reply DeleteSession( const boost::uuids::uuid& tag ) = 0;
     //@}
+
+    //! @name Other Methods
+    //@{
+    virtual Reply ListExercises( int offset, int limit ) const = 0;
+    //@}
 };
 
 }

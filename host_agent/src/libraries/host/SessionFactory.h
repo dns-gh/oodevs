@@ -43,6 +43,7 @@ public:
     //@{
     virtual boost::shared_ptr< Session_ABC > Create( const std::string& exercise, const std::string& name ) const;
     virtual T_Sessions Reload() const;
+    virtual std::vector< std::string > GetExercises() const;
     //@}
 
 private:

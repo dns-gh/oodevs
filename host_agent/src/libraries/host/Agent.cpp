@@ -16,6 +16,7 @@
 #include "Session_ABC.h"
 #include "SessionFactory_ABC.h"
 
+#include <boost/algorithm/string/join.hpp>
 #include <boost/foreach.hpp>
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
@@ -171,4 +172,19 @@ Reply Agent::DeleteSession( const boost::uuids::uuid& tag )
 
     ptr->Stop();
     return Reply( ptr->ToJson() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::ListExercises
+// Created: BAX 2012-03-27
+// -----------------------------------------------------------------------------
+Reply Agent::ListExercises( int offset, int limit ) const
+{
+    std::vector< std::string > exercises = sessionFactory_.GetExercises();
+    offset = Clip< int >( offset, 0, static_cast< int >( exercises.size() ) );
+    if( offset > 0 )
+        exercises.erase( exercises.begin(), exercises.begin() + offset );
+    limit  = Clip< int >( limit,  0, static_cast< int >( exercises.size() ) );
+    exercises.resize( limit );
+    return Reply( "[\"" + boost::algorithm::join( exercises, "\", \"" ) + "\"]" );
 }
