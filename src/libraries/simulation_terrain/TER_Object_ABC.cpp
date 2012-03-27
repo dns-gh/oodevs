@@ -14,6 +14,8 @@
 #include "TER_World.h"
 #include "TER_ObjectManager.h"
 
+const double TER_Object_ABC::epsilon_ = 1e-8;
+
 // -----------------------------------------------------------------------------
 // Name: TER_Object_ABC constructor
 // Created: AGE 2005-01-31
@@ -58,7 +60,16 @@ void TER_Object_ABC::Terminate()
 // -----------------------------------------------------------------------------
 bool TER_Object_ABC::IsInside( const MT_Vector2D& vPos ) const
 {
-    return location_.IsInside( vPos );
+    return location_.IsInside( vPos, epsilon_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TER_Object_ABC::IsOnBorder
+// Created: CMA 2012-03-14
+// -----------------------------------------------------------------------------
+bool TER_Object_ABC::IsOnBorder( const MT_Vector2D& vPos ) const
+{
+    return location_.IsOnBorder( vPos, epsilon_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -67,7 +78,7 @@ bool TER_Object_ABC::IsInside( const MT_Vector2D& vPos ) const
 // -----------------------------------------------------------------------------
 bool TER_Object_ABC::Intersect2D( const MT_Line& orientedLine, T_PointSet& collisions ) const
 {
-    return location_.Intersect2D( orientedLine, collisions );
+    return location_.Intersect2D( orientedLine, collisions, epsilon_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,7 +96,7 @@ bool TER_Object_ABC::Intersect2DWithCircle( const MT_Vector2D& vCircleCenter, do
 // -----------------------------------------------------------------------------
 bool TER_Object_ABC::Intersect2DWithLocalisation( const TER_Localisation& localisation ) const
 {
-    return location_.IsIntersecting( localisation );
+    return location_.IsIntersecting( localisation, epsilon_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,7 +105,7 @@ bool TER_Object_ABC::Intersect2DWithLocalisation( const TER_Localisation& locali
 // -----------------------------------------------------------------------------
 bool TER_Object_ABC::IsContainedByLocalisation( const TER_Localisation& localisation ) const
 {
-    return localisation.Contains( location_ );
+    return localisation.Contains( location_, epsilon_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -148,4 +159,3 @@ void TER_Object_ABC::InsertInWorld()
 {
     hint_ = TER_World::GetWorld().GetObjectManager().UpdatePosition( *this, hint_ );
 }
-

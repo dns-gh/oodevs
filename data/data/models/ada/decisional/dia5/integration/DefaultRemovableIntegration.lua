@@ -26,23 +26,29 @@ end
 
 integration.updateDemineIt = function( object )
     if object[myself].actionDemineState == eActionObjetImpossible then
-        DEC_Trace( "impossible works" ) 
+        DEC_Trace( "impossible works" )
+        return false 
     elseif object[myself].actionDemineState == eActionObjetManqueDotation then
         DEC_Trace( "not enough dotation" ) 
+        return false
     elseif object[myself].actionDemineState == eActionObjetPasDeCapacite then
-        DEC_Trace( "no capacity" ) 
+        DEC_Trace( "no capacity" )
+        return false 
     end
+    return true
 end
 
 integration.stopDemineIt = function( object )
     object[myself] = object[myself] or {} 
     if object[myself].actionDemineState == eActionObjetTerminee then
         meKnowledge:RC( eRC_FinDevalorisation, object.source )
+        return true
     else
         DEC_Trace( "pause work demine" )
+        return false
     end
-    
     object[myself].actionDemine = DEC__StopAction( object[myself].actionDemine )
+    return true
 end
 --- Return if the unit has the capacity to remove the selected object
 -- @param knowledge on an object
@@ -70,23 +76,29 @@ end
 
 integration.updateRemoveIt = function( object )
     if object[myself].actionRemoveState == eActionObjetImpossible then
-        DEC_Trace( "impossible works" ) 
+        DEC_Trace( "impossible works" )
+        return false 
     elseif object[myself].actionRemoveState == eActionObjetManqueDotation then
-        DEC_Trace( "not enough dotation" ) 
+        DEC_Trace( "not enough dotation" )
+        return false 
     elseif object[myself].actionRemoveState == eActionObjetPasDeCapacite then
-        DEC_Trace( "no capacity" ) 
+        DEC_Trace( "no capacity" )
+        return false 
     end
+    return true
 end
 
 integration.stopRemoveIt = function( object )
     object[myself] = object[myself] or {} 
     if object[myself].actionRemoveState == eActionObjetTerminee then
         meKnowledge:RC( eRC_FinDegagement )
+        return true
     else
         DEC_Trace( "pause work remove" )
+        return false
     end
-    
     object[myself].actionRemove = DEC__StopAction( object[myself].actionRemove )
+    return true
 end
 
 integration.isInAvoidanceArea = function( object )

@@ -951,28 +951,28 @@ void TER_Localisation::Scale( double rDist )
 // Name: TER_Localisation::IsIntersecting
 // Created: NLD 2007-04-17
 // -----------------------------------------------------------------------------
-bool TER_Localisation::IsIntersecting( const TER_Polygon& polygon ) const
+bool TER_Localisation::IsIntersecting( const TER_Polygon& polygon, double rPrecision ) const
 {
     CIT_PointVector itPoint = pointVector_.begin();
     const MT_Vector2D* pPrevPoint = &*itPoint;
     for( ++itPoint; itPoint != pointVector_.end(); ++itPoint )
     {
         const MT_Vector2D* pCurPoint = &*itPoint;
-        if( polygon.IsInside( *pPrevPoint ) || polygon.Intersect2D( MT_Line( *pPrevPoint, *pCurPoint ), rPrecision_ ) )
+        if( polygon.IsInside( *pPrevPoint, rPrecision ) || polygon.Intersect2D( MT_Line( *pPrevPoint, *pCurPoint ), rPrecision ) )
             return true;
         pPrevPoint = pCurPoint;
     }
-    if( polygon.IsInside( *pPrevPoint ) )
+    if( polygon.IsInside( *pPrevPoint, rPrecision ) )
         return true;
     // ici, les deux localisations sont disjointes OU polygon est inclu dans *this
-    return IsInside( polygon.GetBorderPoints().front() );
+    return IsInside( polygon.GetBorderPoints().front(), rPrecision );
 }
 
 // -----------------------------------------------------------------------------
 // Name: TER_Localisation::IsIntersecting
 // Created: JVT 2005-01-19
 // -----------------------------------------------------------------------------
-bool TER_Localisation::IsIntersecting( const TER_Localisation& localisation ) const
+bool TER_Localisation::IsIntersecting( const TER_Localisation& localisation, double rPrecision ) const
 {
     if( localisation.GetPoints().empty() || pointVector_.empty() ) // Nécessaire au dernier test...
         return false;
@@ -981,25 +981,25 @@ bool TER_Localisation::IsIntersecting( const TER_Localisation& localisation ) co
     for( ++itPoint; itPoint != pointVector_.end(); ++itPoint )
     {
         const MT_Vector2D* pCurPoint = &*itPoint;
-        if( localisation.IsInside( *pPrevPoint ) || localisation.Intersect2D( MT_Line( *pPrevPoint, *pCurPoint ) ) )
+        if( localisation.IsInside( *pPrevPoint, rPrecision ) || localisation.Intersect2D( MT_Line( *pPrevPoint, *pCurPoint ), rPrecision ) )
             return true;
         pPrevPoint = pCurPoint;
     }
-    if( localisation.IsInside( *pPrevPoint ) )
+    if( localisation.IsInside( *pPrevPoint, rPrecision ) )
         return true;
     // ici, les deux localisations sont dijointes OU localisation est inclu dans *this
-    return IsInside( localisation.GetPoints().front() );
+    return IsInside( localisation.GetPoints().front(), rPrecision );
 }
 
 // -----------------------------------------------------------------------------
 // Name: TER_Localisation::Contains
 // Created: BCI 2011-02-24
 // -----------------------------------------------------------------------------
-bool TER_Localisation::Contains( const TER_Localisation& other ) const
+bool TER_Localisation::Contains( const TER_Localisation& other, double rPrecision ) const
 {
     for( CIT_PointVector it = other.pointVector_.begin(); it != other.pointVector_.end(); ++it )
     {
-        if( !IsInside( *it ) )
+        if( !IsInside( *it, rPrecision ) )
             return false;
     }
     return true;

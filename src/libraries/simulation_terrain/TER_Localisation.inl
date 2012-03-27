@@ -130,14 +130,14 @@ bool TER_Localisation::IsInside( const MT_Vector2D& vPos, double rPrecision ) co
 // Created: NLD 2003-10-03
 // -----------------------------------------------------------------------------
 inline
-bool TER_Localisation::IsOnBorder( const MT_Vector2D& vPos ) const
+bool TER_Localisation::IsOnBorder( const MT_Vector2D& vPos, double rPrecision ) const
 {
     switch( nType_ )
     {
-//        case ePoint:   return vPos.SquareDistance( pointVector_[0] ) <= ( rPrecision_ * rPrecision_ );
-        case ePoint:   return boundingBox_.IsInside( vPos, rPrecision_ ) && polygon_ .IsOnBorder( vPos, rPrecision_ );
-        case ePolygon: return boundingBox_.IsInside( vPos, rPrecision_ ) && polygon_ .IsOnBorder( vPos, rPrecision_ );
-        case eLine:    return boundingBox_.IsInside( vPos, rPrecision_ ) && polyline_.IsInside  ( vPos, rPrecision_ );
+//        case ePoint:   return vPos.SquareDistance( pointVector_[0] ) <= ( rPrecision * rPrecision );
+        case ePoint:   return boundingBox_.IsInside( vPos, rPrecision_ ) && polygon_ .IsOnBorder( vPos, rPrecision );
+        case ePolygon: return boundingBox_.IsInside( vPos, rPrecision_ ) && polygon_ .IsOnBorder( vPos, rPrecision );
+        case eLine:    return boundingBox_.IsInside( vPos, rPrecision_ ) && polyline_.IsInside  ( vPos, rPrecision );
         default:
             return false;
     }
@@ -174,14 +174,14 @@ bool TER_Localisation::Intersect2D( const MT_Line& orientedLine, T_PointSet& col
 // Created: NLD 2003-07-24
 //-----------------------------------------------------------------------------
 inline
-bool TER_Localisation::Intersect2D( const MT_Line& line ) const
+bool TER_Localisation::Intersect2D( const MT_Line& line, double rPrecision /*= rPrecision_*/ ) const
 {
     switch( nType_ )
     {
-//        case ePoint:   return line.IsInside( pointVector_[0], rPrecision_ );
-        case ePoint:   return polygon_ .IntersectWithBorder( line, rPrecision_ );
-        case ePolygon: return polygon_ .IntersectWithBorder( line, rPrecision_ );
-        case eLine:    return polyline_.Intersect2D        ( line, rPrecision_ );
+//        case ePoint:   return line.IsInside( pointVector_[0], rPrecision );
+        case ePoint:   return polygon_ .IntersectWithBorder( line, rPrecision );
+        case ePolygon: return polygon_ .IntersectWithBorder( line, rPrecision );
+        case eLine:    return polyline_.Intersect2D        ( line, rPrecision );
         default:
             return false;
     }

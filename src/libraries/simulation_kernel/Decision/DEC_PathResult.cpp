@@ -154,7 +154,7 @@ MT_Vector2D DEC_PathResult::GetNextPointOutsideObstacle( const MT_Vector2D& posT
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_PathResult::GetNextKeyOnPath
+// Name: DEC_PathResult::GetCurrentKeyOnPath
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
 DEC_PathResult::CIT_PathPointList DEC_PathResult::GetCurrentKeyOnPath( const MT_Vector2D& vPos ) const
@@ -246,6 +246,7 @@ MT_Vector2D DEC_PathResult::GetFuturePosition( const MT_Vector2D& vStartPos, dou
 // -----------------------------------------------------------------------------
 bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, double& rDistanceBefore, double& rDistanceAfter, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) const
 {
+    static const double epsilon = 1e-8;
     rDistanceBefore = std::numeric_limits< double >::max();
     rDistanceAfter = std::numeric_limits< double >::max(); 
     pObject.reset();
@@ -265,10 +266,10 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos,
     TER_Polygon pathHull;
     T_PointVector hullPoints;
     hullPoints.reserve( 1 + resultList_.size() );
-    for( CIT_PathPointList itPathPoint = itNextPathPoint; itPathPoint != resultList_.end(); ++itPathPoint )
+    for( CIT_PathPointList itPathPoint = itCurrentPathPoint; itPathPoint != resultList_.end(); ++itPathPoint )
         hullPoints.push_back( (*itPathPoint)->GetPos() );
-    if( itNextPathPoint != resultList_.end() )
-        hullPoints.push_back( (*itNextPathPoint)->GetPos() );
+    if( itCurrentPathPoint != resultList_.end() )
+        hullPoints.push_back( (*itCurrentPathPoint)->GetPos() );
     pathHull.Reset( hullPoints, true );
     MT_Rect bbox = pathHull.GetBoundingBox();
     // Optimisation: Check bounding box instead of doing 345 intersection checks in case we have 345 points in the path (which happens)
@@ -283,17 +284,36 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos,
         boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = *itKnowledge;
         const TER_Localisation& objectLocation = pKnowledge->GetLocalisation();
         MT_Rect objectBBox = objectLocation.GetBoundingBox();
-        if( !bbox.Intersect2D( objectBBox ) && !bbox.Contains( objectBBox ) )
+        if( !bbox.Intersect2D( objectBBox ) && !bbox.Contains( objectBBox ) && !objectBBox.Contains( bbox ) )
             continue;
-        if( hullIntersectionIsFaster && !objectLocation.IsIntersecting( pathHull ) )
-            continue;
-        const MT_Vector2D* pPrevPos = &vStartPos;
+        if( hullIntersectionIsFaster )
+        {
+            const T_PointVector& borderPoints = pathHull.GetBorderPoints();
+            if( borderPoints.empty() )
+                continue;
+            T_PointVector::const_iterator itPathHullPoint = borderPoints.begin();
+            const MT_Vector2D* pPrevPathHullPos = &(*itPathHullPoint);
+            itPathHullPoint++;
+            bool hullIntersected = false;
+            for( ; !hullIntersected && itPathHullPoint != borderPoints.end(); ++itPathHullPoint )
+            {
+                MT_Line lineTmp( *pPrevPathHullPos, *itPathHullPoint );
+                TER_DistanceLess colCmp( *pPrevPathHullPos );
+                T_PointSet collisions( colCmp );
+
+                hullIntersected |= objectLocation.Intersect2D( lineTmp, collisions, epsilon );
+                pPrevPathHullPos = &(*itPathHullPoint);
+            }
+            if( !hullIntersected )
+                continue;
+        }
+        const MT_Vector2D* pPrevPos = &(*itCurrentPathPoint)->GetPos();
         for( CIT_PathPointList itPathPoint = itNextPathPoint; itPathPoint != resultList_.end(); ++itPathPoint )
         {
             MT_Line lineTmp( *pPrevPos, (*itPathPoint)->GetPos() );
             TER_DistanceLess colCmp( *pPrevPos );
             T_PointSet collisions( colCmp );
-            if( objectLocation.Intersect2D( lineTmp, collisions ) )
+            if( objectLocation.Intersect2D( lineTmp, collisions, epsilon ) )
             {
                 if( collisions.empty() ) // should never happen
                     continue;
