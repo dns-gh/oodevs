@@ -135,9 +135,9 @@ namespace
             return boost::shared_ptr< Session >( new Session( runtime, system, data, apps, xis, ports ) );
         }
 
-        boost::shared_ptr< MockProcess > StartSession( Session& session, std::string* sessionTag = 0 )
+        boost::shared_ptr< MockProcess > StartSession( Session& session, std::string* sessionTag = 0, const std::string& name = std::string() )
         {
-            boost::shared_ptr< MockProcess > reply = boost::make_shared< MockProcess >( processPid, processName );
+            boost::shared_ptr< MockProcess > reply = boost::make_shared< MockProcess >( processPid, name.empty() ? processName : name );
             MOCK_EXPECT( runtime.Start ).once().returns( reply );
             MOCK_EXPECT( system.WriteFile ).once();
             if( sessionTag  )
@@ -180,4 +180,11 @@ BOOST_FIXTURE_TEST_CASE( session_converts_to_json, Fixture )
     BOOST_CHECK_EQUAL( ptr->ToJson(),
         "{ \"tag\" : \"12345678-90ab-cdef-9876-543210123456\", \"process\" : { \"pid\" : 1337, \"name\" : \"bidule.exe\" }, \"name\" : \"my_name\", \"port\" : 10000 }"
     );
+}
+
+BOOST_FIXTURE_TEST_CASE( session_process_name_does_not_contain_backslashes, Fixture )
+{
+    boost::shared_ptr< Session > ptr = MakeSession();
+    StartSession( *ptr, 0, "\\Device\\With\\Backslashes" );
+    BOOST_CHECK_EQUAL( ptr->ToJson().find( '\\' ), std::string::npos );
 }

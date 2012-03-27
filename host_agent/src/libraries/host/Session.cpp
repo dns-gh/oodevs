@@ -155,7 +155,9 @@ namespace
 // -----------------------------------------------------------------------------
 std::string ToJson( const runtime::Process_ABC& process )
 {
-    return (boost::format( "{ \"pid\" : %1%, \"name\" : \"%2%\" }" ) % process.GetPid() % process.GetName() ).str();
+    std::string name = process.GetName();
+    std::replace( name.begin(), name.end(), '\\', '/' );
+    return (boost::format( "{ \"pid\" : %1%, \"name\" : \"%2%\" }" ) % process.GetPid() % name ).str();
 }
 
 }
