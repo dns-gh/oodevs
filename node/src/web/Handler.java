@@ -2,17 +2,27 @@ package web;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.Iterator;
+import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
+import java.util.Set;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import org.apache.commons.io.FileUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.eclipse.jetty.client.ContentExchange;
+import org.eclipse.jetty.client.HttpClient;
+import org.eclipse.jetty.client.HttpExchange;
 import org.eclipse.jetty.server.Request;
 import org.eclipse.jetty.server.handler.AbstractHandler;
+import org.eclipse.jetty.util.UrlEncoded;
 
 import eu.medsea.mimeutil.MimeType;
 import eu.medsea.mimeutil.MimeUtil2;
@@ -23,13 +33,20 @@ import freemarker.template.TemplateException;
 
 public class Handler extends AbstractHandler {
 
-    @SuppressWarnings("unused")
     private static final Logger log_ = Logger.getLogger(Handler.class);
+    @SuppressWarnings("serial")
+    private static final Set<String> forwards_ = new HashSet<String>() {
+        {
+            add("create_session");
+        }
+    };
     private final Configuration cfg_;
     private final File root_;
     private final MimeUtil2 mimes_;
+    private final HttpClient host_;
+    private final int port_;
 
-    public Handler(final String root, final boolean isDebug) throws IOException {
+    public Handler(final HttpClient host, final int port, final String root, final boolean isDebug) throws Exception {
         root_ = new File(root);
         if (!root_.isDirectory())
             throw new IOException(root_ + " is not a directory");
@@ -41,6 +58,8 @@ public class Handler extends AbstractHandler {
         cfg_.setOutputEncoding("UTF-8");
         mimes_ = new MimeUtil2();
         mimes_.registerMimeDetector("eu.medsea.mimeutil.detector.ExtensionMimeDetector");
+        host_ = host;
+        port_ = port;
     }
 
     private String getContentType(final File file) {
@@ -74,6 +93,33 @@ public class Handler extends AbstractHandler {
         }
     }
 
+    private void forwardRequest(final HttpServletResponse response, final Request request, final String uri) throws IOException {
+        String dst = "http://localhost:" + port_ + "/" + uri;
+        final List<String> params = new ArrayList<String>();
+        for (final Map.Entry<String, String[]> it : getParams(request))
+            params.add(UrlEncoded.encodeString(it.getKey()) + "=" + UrlEncoded.encodeString(it.getValue()[0]));
+        if (!params.isEmpty())
+            dst += "?" + StringUtils.join(params, "&");
+
+        final ContentExchange exchange = new ContentExchange(true);
+        exchange.setURL(dst);
+        exchange.setMethod(request.getMethod());
+        host_.send(exchange);
+        int state = HttpExchange.STATUS_EXCEPTED;
+        try {
+            state = exchange.waitForDone();
+        } catch (final InterruptedException err) {
+        }
+        if (state != HttpExchange.STATUS_COMPLETED)
+            throw new IOException("unable to forward query " + dst + " (" + state + ")");
+
+        response.setContentType("text/plain");
+        response.setStatus(exchange.getResponseStatus());
+        final String reply = exchange.getResponseContent();
+        log_.debug(reply);
+        response.getWriter().print(reply);
+    }
+
     @Override
     public void handle(String uri, final Request base, final HttpServletRequest request, final HttpServletResponse response) throws IOException {
         if (uri.equals("/"))
@@ -83,6 +129,8 @@ public class Handler extends AbstractHandler {
         File target;
         if (base.getMethod() != "GET")
             response.sendError(HttpServletResponse.SC_BAD_REQUEST, "invalid method " + base.getMethod());
+        else if (forwards_.contains(uri))
+            forwardRequest(response, base, uri);
         else if ((target = new File(root_, uri)).isFile())
             serveFile(response, target);
         else if ((target = new File(root_, uri + ".html")).isFile())
