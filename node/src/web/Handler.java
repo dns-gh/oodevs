@@ -55,14 +55,17 @@ public class Handler extends AbstractHandler {
         FileUtils.copyFile(file, response.getOutputStream());
     }
 
+    @SuppressWarnings("unchecked")
+    private static Set<Entry<String, String[]>> getParams(final Request request) {
+        return request.getParameterMap().entrySet();
+    }
+
     private void serveTemplate(final HttpServletResponse response, final Request request, final String target) throws IOException {
         response.setContentType("text/html");
         response.setStatus(HttpServletResponse.SC_OK);
         final Template ctx = cfg_.getTemplate(target);
         final Map<String, String> root = new HashMap<String, String>();
-        @SuppressWarnings("unchecked")
-        final Map<String, String[]> map = request.getParameterMap();
-        for (final Map.Entry<String, String[]> it : map.entrySet())
+        for (final Map.Entry<String, String[]> it : getParams(request))
             root.put(it.getKey(), it.getValue()[0]);
         try {
             ctx.process(root, response.getWriter());
