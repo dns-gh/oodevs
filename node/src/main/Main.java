@@ -2,9 +2,8 @@ package main;
 
 import org.apache.log4j.Logger;
 import org.apache.log4j.PropertyConfigurator;
-import org.eclipse.jetty.server.Server;
 
-import web.Handler;
+import web.Agent;
 
 class Main {
 
@@ -14,13 +13,11 @@ class Main {
 
         PropertyConfigurator.configure("log4j.properties");
         log_.info("Sword Node - copyright Masa Group 2012");
-
-        final Server server = new Server(8080);
         try {
-            server.setHandler(new Handler("e:/cloud_hg/node/www", true));
-            server.start();
-        } catch (final Exception e) {
-            log_.error(e.toString());
+            final Agent agent = new Agent("e:/cloud_hg/node/www", 8080, 15000, true);
+            agent.exec();
+        } catch (final Exception err) {
+            log_.error("Unexpected error: " + err.toString());
         }
     }
 }

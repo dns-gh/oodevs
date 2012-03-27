@@ -29,10 +29,10 @@ public class Handler extends AbstractHandler {
     private final File root_;
     private final MimeUtil2 mimes_;
 
-    public Handler(final String root, final boolean isDebug) throws Exception {
+    public Handler(final String root, final boolean isDebug) throws IOException {
         root_ = new File(root);
         if (!root_.isDirectory())
-            throw new Exception(root_ + " is not a directory");
+            throw new IOException(root_ + " is not a directory");
         cfg_ = new Configuration();
         cfg_.setDirectoryForTemplateLoading(root_);
         cfg_.setObjectWrapper(new DefaultObjectWrapper());
