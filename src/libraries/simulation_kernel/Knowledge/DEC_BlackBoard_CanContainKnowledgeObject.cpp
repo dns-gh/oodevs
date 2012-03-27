@@ -159,15 +159,18 @@ boost::shared_ptr< DEC_Knowledge_Object > DEC_BlackBoard_CanContainKnowledgeObje
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeObject::DestroyKnowledgeObject( DEC_Knowledge_Object& knowledge )
 {
-    knowledge.Invalidate();
-    if( knowledge.GetObjectKnown() )
+    if( knowledge.IsValid() )
     {
-        if( objectMap_.erase( knowledge.GetObjectKnown() ) < 1 )
+        knowledge.Invalidate();
+        if( knowledge.GetObjectKnown() )
+        {
+            if( objectMap_.erase( knowledge.GetObjectKnown() ) < 1 )
+                throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
+            knowledge.CleanObjectKnown();
+        }
+        if( knowledgeObjectFromIDMap_.erase( knowledge.GetID() ) < 1 )
             throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
-        knowledge.CleanObjectKnown();
     }
-    if( knowledgeObjectFromIDMap_.erase( knowledge.GetID() ) < 1 )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
 }
 
 // -----------------------------------------------------------------------------
