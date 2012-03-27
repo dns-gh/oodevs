@@ -3,8 +3,13 @@ body{padding-top:60px;padding-bottom:40px;}
 .run{border-color:#000000;position:relative;background-color:#93c47d;}
 .pause{border-color:#000000;position:relative;background-color:#ffd966;}
 .replay{border-color:#000000;position:relative;background-color:#6fa8dc;}
+.tab_replay{padding-left:48px;}
 .stop{border-color:#000000;position:relative;background-color:#e06666;}
-.tools{position:absolute;top:8px;right:8px;}
-.more{position:absolute;right:8px;bottom:8px;}
+.session_row{position:relative;min-height:64px;}
 .session_name{font-size:large;font-weight:bold;}
-.session_exercise{padding-top:12px;padding-left:24px;}
+.session_exercise{padding-left:24px;}
+.session_model{padding-left:24px;}
+.session_top_right{position:absolute;top:6px;right:6px;}
+.session_bottom_right{position:absolute;right:6px;bottom:6px;}
+.session_search{float:right;}
+.session_actions a{min-width:72px;}

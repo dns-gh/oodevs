@@ -20,7 +20,7 @@
                         <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown"> John Doe <span class="caret"></span></a>
                         <ul class="dropdown-menu">
-                            <a><b>John Doe</b><br/>john.doe@masagroup.net</a>
+                            <li><a><b>John Doe</b><br/>john.doe@masagroup.net</a></li>
                             <li class="divider"></li>
                             <li><a href=""><i class="i"></i> Log Out </a></li>
                         </ul>
@@ -46,102 +46,159 @@
                             [@nav_item item="settings" name="Settings" img="categories/preferences-system" /]
                         </ul>
                     </div>
+                    <div class="well sidebar-nav">
+                        <ul class="nav nav-list">
+                            <li class="nav-header">Filters</li>
+                            <div class="controls">
+                                <label class="checkbox"><input type="checkbox" checked="checked"> Paused</input></label>
+                                <label class="checkbox"><input type="checkbox" checked="checked"> Replaying</input></label>
+                                <label class="checkbox"><input type="checkbox" checked="checked"> Running</input></label>
+                                <label class="checkbox"><input type="checkbox" checked="checked"> Stopped</input></label>
+                            </div>
+                            <li class="nav-header">Order</li>
+                            <div class="controls">
+                                <label class="radio"><input type="radio" name="sorts" value="state" checked="checked"> By State </input></label>
+                                <label class="radio"><input type="radio" name="sorts" value="age"> By Age </input></label>
+                                <label class="radio"><input type="radio" name="sorts" value="connections"> By Connections </input></label>
+                            </div>
+                        </ul>
+                    </div>
                 </div>
 
                 <div class="span9">
 
-                    <div class="well run" style="position:relative">
-                        <div class="row-fluid">
-                            <div class="span3">
-                                <div class="session_name">Bob Training</div>
-                                <div class="session_exercise">Egypt</div>
-                            </div>
-                            <div class="span6">
-                                <div>Started 2012-01-12 at 18:52:12</div>
-                                <div>Time running 00:01:36</div>
-                                <div>3 clients connected</div>
-                            </div>
-                            <div class="btn-group tools">
-                                <a href="#" class="btn"><i class="icon-pause" ></i></a>
-                                <a href="#" class="btn"><i class="icon-stop" ></i></a>
-                                <a href="#" class="btn"><i class="icon-file" ></i></a>
-                            </div>
-                            <span class="more">
-                                <a href="#" class="btn"><i class="icon-th-list" ></i> Logs <span class="caret"></span></a>
+                    <div class="row">
+                        <div class="span9">
+                            <span class="session_actions">
+                                <a href="/" class="btn"><i class="icon-plus"></i> Create</a>
+                                <a href="/" class="btn"><i class="icon-share-alt"></i> Restore</a>
                             </span>
+                            <form class="form-search session_search">
+                                <input type="text" class="input-large search-query"/>
+                                <button type="submit" class="btn"><i class="icon-search"></i> Search</button>
+                            </form>
                         </div>
                     </div>
 
-                    <div class="well pause" style="position:relative">
-                        <div class="row-fluid">
-                            <div class="span3">
-                                <div class="session_name">Frank Exercise</div>
-                                <div class="session_exercise">Egypt</div>
+                    [#assign archive  = "icon-lock" /]
+                    [#assign clone    = "icon-plus-sign" /]
+                    [#assign config   = "icon-cog" /]
+                    [#assign download = "icon-download-alt" /]
+                    [#assign pause    = "icon-pause" /]
+                    [#assign play     = "icon-play" /]
+                    [#assign replay   = "icon-repeat" /]
+                    [#assign stop     = "icon-stop" /]
+                    [#assign trash    = "icon-trash" /]
+                    [#assign url      = "icon-tag" /]
+
+                    <div class="row">
+                        <div class="span9">
+                            <div class="well run session_row">
+                                <div class="span3">
+                                    <div class="session_name">Bob Training</div>
+                                    <div class="session_exercise">Egypt</div>
+                                    <div class="session_model">Model: 2010-12-10</div>
+                                </div>
+                                <div class="span4">
+                                    <div>Started 2012-01-12 at 18:52:12</div>
+                                    <div>Time running 00:01:36</div>
+                                    <div>3 clients connected</div>
+                                </div>
+                                <div class="btn-group session_top_right">
+                                    <a href="#" class="btn"><i class="${url}"></i></a>
+                                    <a href="#" class="btn"><i class="${pause}"></i></a>
+                                    <a href="#" class="btn"><i class="${stop}"></i></a>
+                                    <a href="#" class="btn"><i class="${replay}"></i></a>
+                                    <a href="#" class="btn"><i class="${clone}"></i></a>
+                                </div>
+                                <div class="session_bottom_right">
+                                    <a href="#" class="btn"><i class="icon-th-list"></i> More <span class="caret"></span></a>
+                                </div>
                             </div>
-                            <div class="span6">
-                                <div>Started 2012-01-12 at 13:24:05</div>
-                                <div>Time running 05:12:19</div>
-                                <div>2 clients connected</div>
-                            </div>
-                            <div class="btn-group tools">
-                                <a href="#" class="btn"><i class="icon-play" ></i></a>
-                                <a href="#" class="btn"><i class="icon-stop" ></i></a>
-                                <a href="#" class="btn"><i class="icon-file" ></i></a>
-                            </div>
-                            <span class="more">
-                                <a href="#" class="btn"><i class="icon-th-list" ></i> Logs <span class="caret"></span></a>
-                            </span>
                         </div>
                     </div>
 
-                    <div class="well replay" style="position:relative">
-                        <div class="row-fluid">
-                            <div class="span3">
-                                <div class="session_name">Session 12</div>
-                                <div class="session_exercise">Test Scenario</div>
+                    <div class="row">
+                        <div class="span9">
+                            <div class="well pause session_row">
+                                <div class="span3">
+                                    <div class="session_name">Frank Exercise</div>
+                                    <div class="session_exercise">Egypt</div>
+                                </div>
+                                <div class="span4">
+                                    <div>Started 2012-01-12 at 13:24:05</div>
+                                    <div>Time running 05:12:19</div>
+                                    <div>2 clients connected</div>
+                                </div>
+                                <div class="btn-group session_top_right">
+                                    <a href="#" class="btn"><i class="${url}"></i></a>
+                                    <a href="#" class="btn"><i class="${play}"></i></a>
+                                    <a href="#" class="btn"><i class="${stop}"></i></a>
+                                    <a href="#" class="btn"><i class="${replay}"></i></a>
+                                    <a href="#" class="btn"><i class="${clone}"></i></a>
+                                </div>
+                                <div class="session_bottom_right">
+                                    <a href="#" class="btn"><i class="icon-th-list"></i> More <span class="caret"></span></a>
+                                </div>
                             </div>
-                            <div class="span6">
-                                <div>Started 2012-01-12 at 15:36:24</div>
-                                <div>Time running 00:05:10</div>
-                                <div>1 clients connected</div>
-                            </div>
-                            <div class="btn-group tools">
-                                <a href="#" class="btn"><i class="icon-stop" ></i></a>
-                                <a href="#" class="btn"><i class="icon-file" ></i></a>
-                            </div>
-                            <span class="more">
-                                <a href="#" class="btn"><i class="icon-th-list" ></i> Logs <span class="caret"></span></a>
-                            </span>
                         </div>
                     </div>
 
-                    <div class="well stop" style="position:relative">
-                        <div class="row-fluid">
-                            <div class="span3">
-                                <div class="session_name">Albert</div>
-                                <div class="session_exercise">Cabourg</div>
+                    <div class="row">
+                        <div class="span9">
+                            <div class="tab_replay">
+                                <div class="well replay session_row">
+                                    <div class="span3">
+                                        <div class="session_name">Session 12</div>
+                                        <div class="session_exercise">Test Scenario</div>
+                                    </div>
+                                    <div class="span4">
+                                        <div>Started 2012-01-12 at 15:36:24</div>
+                                        <div>Time running 00:05:10</div>
+                                        <div>1 clients connected</div>
+                                    </div>
+                                    <div class="btn-group session_top_right">
+                                        <a href="#" class="btn"><i class="${url}"></i></a>
+                                        <a href="#" class="btn"><i class="${stop}"></i></a>
+                                    </div>
+                                    <div class="session_bottom_right">
+                                        <a href="#" class="btn"><i class="icon-th-list"></i> More <span class="caret"></span></a>
+                                    </div>
+                                </div>
                             </div>
-                            <div class="span3">
-                                <div>Checkpoints available</div>
-                                <div>Replay available</div>
-                                <div>Length: 00:05:10</div>
+                        </div>
+                    </div>
+
+                    <div class="row">
+                        <div class="span9">
+                            <div class="well stop session_row">
+                                <div class="span3">
+                                    <div class="session_name">Albert</div>
+                                    <div class="session_exercise">Cabourg</div>
+                                </div>
+                                <div class="span5">
+                                    <div>Checkpoints available</div>
+                                    <div>Replay available</div>
+                                    <div>Length: 00:05:10</div>
+                                </div>
+                                <div class="btn-group session_top_right">
+                                    <a href="#" class="btn dropdown-toggle" data-toggle="dropdown"><i class="${play}"></i> <span class="caret"></span></a>
+                                    <ul class="dropdown-menu">
+                                        <li><a href="/">Start</a></li>
+                                        <li><a href="/">Checkpoint A</a></li>
+                                        <li><a href="/">Checkpoint B</a></li>
+                                        <li><a href="/">Checkpoint C</a></li>
+                                    </ul>
+                                    <a href="#" class="btn"><i class="${config}"></i> </a>
+                                    <a href="#" class="btn"><i class="${clone}"></i></a>
+                                    <a href="#" class="btn"><i class="${download}"></i></a>
+                                    <a href="#" class="btn"><i class="${archive}"></i></a>
+                                    <a href="#" class="btn"><i class="${trash}"></i></a>
+                                </div>
+                                <div class="session_bottom_right">
+                                    <a href="#" class="btn"><i class="icon-th-list"></i> More <span class="caret"></span></a>
+                                </div>
                             </div>
-                            <div class="btn-group tools">
-                                <a href="#" class="btn dropdown-toggle" data-toggle="dropdown"><i class="icon-play" ></i> <span class="caret"></span></a>
-                                <ul class="dropdown-menu">
-                                    <a href="/">Start</a>
-                                    <a href="/">Checkpoint A</a>
-                                    <a href="/">Checkpoint B</a>
-                                    <a href="/">Checkpoint C</a>
-                                </ul>
-                                <a href="#" class="btn"><i class="icon-repeat" ></i> </a>
-                                <a href="#" class="btn"><i class="icon-cog" ></i></a>
-                                <a href="#" class="btn"><i class="icon-file" ></i></a>
-                                <a href="#" class="btn"><i class="icon-download" ></i></a>
-                            </div>
-                            <span class="more">
-                                <a href="#" class="btn"><i class="icon-th-list" ></i> Logs <span class="caret"></span></a>
-                            </span>
                         </div>
                     </div>
 

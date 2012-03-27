@@ -1,5 +1,6 @@
 /* MASA Group Style */
 
+@black:  #000000;
 @run:    #93C47D;
 @pause:  #FFD966;
 @replay: #6FA8DC;
@@ -11,42 +12,37 @@ body {
 }
 
 .session {
-    border-color:   #000000;
+    border-color:   @black;
     position:       relative;
 }
 
 .run {
     .session;
-    background-color: @run;
+    background-color:   @run;
 }
 
 .pause {
     .session;
-    background-color: @pause;
+    background-color:   @pause;
 }
 
 .replay {
     .session;
-    background-color: @replay;
+    background-color:   @replay;
+}
+
+.tab_replay {
+    padding-left: 48px;
 }
 
 .stop {
     .session;
-    background-color: @stop;
+    background-color:   @stop;
 }
 
-@session_border: 8px;
-
-.tools {
-    position:   absolute;
-    top:        @session_border;
-    right:      @session_border;
-}
-
-.more {
-    position:   absolute;
-    right:      @session_border;
-    bottom:     @session_border;
+.session_row {
+    position:       relative;
+    min-height:     64px;
 }
 
 .session_name {
@@ -55,6 +51,31 @@ body {
 }
 
 .session_exercise {
-    padding-top:    12px;
     padding-left:   24px;
+}
+
+.session_model {
+    padding-left:   24px;
+}
+
+@session_margin: 6px;
+
+.session_top_right {
+    position:   absolute;
+    top:        @session_margin;
+    right:      @session_margin;
+}
+
+.session_bottom_right {
+    position:   absolute;
+    right:      @session_margin;
+    bottom:     @session_margin;
+}
+
+.session_search {
+    float:      right;
+}
+
+.session_actions a {
+    min-width:  72px;
 }
