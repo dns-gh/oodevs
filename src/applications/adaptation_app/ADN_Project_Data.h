@@ -71,6 +71,7 @@ public:
         ADN_Type_String szResourceNetworks_;
         ADN_Type_String szFireClasses_;
         ADN_Type_String szFuneral_;
+        ADN_Type_String szUrbanTemplates_;
         // $$$$ NLD 2007-01-15: files not loaded!
         ADN_Type_String szPathfinder_;
         ADN_Type_String szObjectNames_;
@@ -81,7 +82,6 @@ public:
         ADN_Type_String szScores_;
         ADN_Type_String szSymbols_;
         ADN_Type_String szFilters_;
-        ADN_Type_String szUrbanTemplates_;
     };
 
 //*****************************************************************************
