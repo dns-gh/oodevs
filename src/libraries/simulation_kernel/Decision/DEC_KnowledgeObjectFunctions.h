@@ -76,6 +76,7 @@ public:
     static double EstimatedUndergroundTime( const DEC_Decision_ABC& callerAgent,boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static int HideInUndergroundNetwork( DEC_Decision_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pExit );
     static int GetOutFromUndergroundNetwork( DEC_Decision_ABC& callerAgent );
+    static bool EnterAndExitInSameUndergroundNetwork( boost::shared_ptr< DEC_Knowledge_Object > pEnter,boost::shared_ptr< DEC_Knowledge_Object > pExit );
     //@}
 };
 

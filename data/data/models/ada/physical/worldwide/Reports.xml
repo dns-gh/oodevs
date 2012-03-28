@@ -652,5 +652,6 @@
   </report>
   <report category="operational" id="458" message="Speed limited by population"/>
   <report category="operational" id="459" message="End of speed limited by population"/>
+  <report category="operational" id="460" message="Enter and exit are not in the same underground network"/>
 </reports>
-<!-- signature="3319449339" -->
+<!-- signature="1641415468" -->

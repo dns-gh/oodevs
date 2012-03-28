@@ -376,6 +376,7 @@ void RegisterObjectsFunctions( directia::brain::Brain& brain )
     brain[ "DEC_ConnaissanceObjet_EstUneIssueDeReseauSouterrain" ] = &DEC_KnowledgeObjectFunctions::IsUndergroundNetworkExit;
     brain[ "DEC_ConnaissanceObjet_ActiverIssueDeReseauSouterrain" ] = &DEC_KnowledgeObjectFunctions::ActivateUndergroundNetworkExit;
     brain[ "DEC_ConnaissanceObjet_DesactiverIssueDeReseauSouterrain" ] = &DEC_KnowledgeObjectFunctions::DeactivateUndergroundNetworkExit;
+    brain[ "DEC_ConnaissanceObjet_IssuesDuMemeReseauSouterrain" ] = DEC_KnowledgeObjectFunctions::EnterAndExitInSameUndergroundNetwork;
 }
 
 // -----------------------------------------------------------------------------

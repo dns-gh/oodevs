@@ -3,7 +3,7 @@
 -- ****************************************************************************
 rootnode 
 {
-    connections = { skill.links.moveToward, skill.links.dismount, skill.nodes.HideInUndergroundNetwork },
+    connections = { skill.links.moveToward, skill.links.dismount, skill.nodes.HideInUndergroundNetwork, skill.nodes.CR },
     
    -- -------------------------------------------------------------------------------- 
     -- Feedbacks
@@ -21,6 +21,7 @@ rootnode
     create = function( self )
         myself.alreadySend = false
         self.arrived = false
+        self.IssuesNotInSameNetwork = true
     end,
 
     -- -------------------------------------------------------------------------------- 
@@ -28,6 +29,17 @@ rootnode
     -- --------------------------------------------------------------------------------
     activate = function( self )
         local Activate = Activate
+        --Test si l'entrée et la sortie sont dans le même réseau dans le cas ou l'on veut faire mouvement via un reseau souterrain
+        if self.params.exitUndergroundNetwork ~= NIL then
+            if self.IssuesNotInSameNetwork then
+                if not integration.enterAndExitInSameUndergroundNetwork( self.params.undergroundNetwork, self.params.exitUndergroundNetwork ) then
+                    Activate( skill.nodes.CR, 1, { RC = eRC_NotInSameUndergroundNetwork } )
+                    Feedback( self.feedbacks.failed )
+                end
+                self.IssuesNotInSameNetwork = false    
+            end
+        end
+        
         if self.arrived then
             Activate( skill.links.dismount, 1 )
             if masalife.brain.knowledge.me.body:isDismounted() then
@@ -47,9 +59,19 @@ node "HideInUndergroundNetwork"
     feedbacks = { "inside" },
 
     activate = function( self )
-    -- si le réseau n'est pas activé on arrete la mission. Sinon, on garde le skill activé pour lé débarquement.
+    -- si le réseau n'est pas activé on arrete la mission. Sinon, on garde le skill activé pour le débarquement.
         if self.params.undergroundNetwork:EnterInIt() then
             Feedback( self.feedbacks.inside )
         end
     end
+}
+
+-- **************************************************************************** 
+-- CR 
+-- ****************************************************************************
+node "CR"
+{
+    create = function( self )
+        meKnowledge:RC( self.params.RC )
+    end,
 }

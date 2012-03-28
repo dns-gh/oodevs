@@ -472,4 +472,5 @@ eRC_TrafficablePositionFindingInZone = 456
 eRC_PrisSousTirMunition = 457
 eRC_UrbanCollisionStarted = 458
 eRC_UrbanCollisionStopped = 459
-eNbr = 460
+eRC_NotInSameUndergroundNetwork = 460
+eNbr = 461
