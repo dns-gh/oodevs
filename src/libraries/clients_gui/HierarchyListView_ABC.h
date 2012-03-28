@@ -15,7 +15,6 @@
 #include "clients_kernel/SafePointer.h"
 #include "tools/ElementObserver_ABC.h"
 #include "tools/SelectionObserver_ABC.h"
-#include <boost/function.hpp>
 
 namespace kernel
 {
@@ -89,7 +88,6 @@ protected:
     virtual void DisplayIcon( const kernel::Entity_ABC& entity, ValuedListItem* item );
     virtual void ClearSelection();
     static void SetVisible( Q3ListViewItem* item, bool visible );
-    void ApplyFilter( boost::function< bool ( ValuedListItem* ) > func );
     void UpdateItem( ValuedListItem* item );
     //@}
 
@@ -103,7 +101,6 @@ private:
     virtual void viewportDragEnterEvent( QDragEnterEvent* pEvent );
     virtual bool Drop( const kernel::Entity_ABC& entity, ValuedListItem& target );
     virtual bool Drop( const kernel::Entity_ABC& item, const kernel::Entity_ABC& target );
-    bool HasAnyChildVisible( ValuedListItem* item, boost::function< bool ( ValuedListItem* ) > func );
     //@}
 
 protected:

@@ -605,13 +605,6 @@ Arrêt moteur allumé</translation>
     </message>
 </context>
 <context>
-    <name>ADN_ClearButton</name>
-    <message>
-        <source>Clear</source>
-        <translation>Effacer</translation>
-    </message>
-</context>
-<context>
     <name>ADN_ColorNameSelector</name>
     <message>
         <source>Select color</source>
@@ -3976,13 +3969,6 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
     <message>
         <source>Activity</source>
         <translation>Activité</translation>
-    </message>
-</context>
-<context>
-    <name>ADN_SearchLineEdit</name>
-    <message>
-        <source>Search</source>
-        <translation>Rechercher</translation>
     </message>
 </context>
 <context>

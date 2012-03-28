@@ -41,7 +41,6 @@ ADN_ChangeValueCommand_Int.cpp \
 ADN_ChangeValueCommand_Pointer.cpp \
 ADN_ChangeValueCommand_Pointer.inl \
 ADN_ChangeValueCommand_String.cpp \
-ADN_ClearButton.cpp \
 ADN_ColorSelector.cpp \
 ADN_ColorNameSelector.cpp \
 ADN_Communications_GUI.cpp \
@@ -162,7 +161,6 @@ ADN_ResourceNetworks_GUI.cpp \
 ADN_ResourceNetworks_Wizard.cpp \
 ADN_SaveFile_Exception.cpp \
 ADN_Schedule_Table.cpp \
-ADN_SearchLineEdit.cpp \
 ADN_Sensor_Wizard.cpp \
 ADN_Sensors_Data.cpp \
 ADN_Sensors_DetectionAlgorithmPrevision.cpp \

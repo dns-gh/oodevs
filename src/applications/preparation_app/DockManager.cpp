@@ -26,9 +26,8 @@
 #include "preparation/FormationModel.h"
 #include "preparation/AgentsModel.h"
 #include "clients_gui/AggregateToolbar.h"
-#include "clients_gui/EntitySearchBox.h"
-#include "clients_gui/LogisticList.h"
 #include "clients_gui/GlProxy.h"
+#include "clients_gui/SearchListView.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Tools.h"
@@ -58,51 +57,37 @@ DockManager::DockManager( QMainWindow* parent, kernel::Controllers& controllers,
     , editionModeEnabled_( false )
 {
     // Agent list panel
-    QDockWidget* pListDockWnd = new QDockWidget( "orbat", parent );
-    pListDockWnd->setObjectName( "Orbat" );
-    parent->addDockWidget( Qt::LeftDockWidgetArea, pListDockWnd );
-    dockWidgets_.push_back( pListDockWnd );
-    Q3VBox* box = new Q3VBox( pListDockWnd );
-    new gui::AggregateToolbar( box, controllers.controller_, automats, formation );
+    {
+        QDockWidget* pListDockWnd = new QDockWidget( "orbat", parent );
+        pListDockWnd->setWindowTitle( tools::translate( "DockManager", "ORBAT" ) );
+        pListDockWnd->setObjectName( "Orbat" );
+        parent->addDockWidget( Qt::LeftDockWidgetArea, pListDockWnd );
+        dockWidgets_.push_back( pListDockWnd );
+        Q3VBox* box = new Q3VBox( pListDockWnd );
+        pListDockWnd->setWidget( box );
 
-    QTabWidget* pListsTabWidget = new QTabWidget( box );
-    {
-        QTabWidget* pAgentsTabWidget = new QTabWidget( pListsTabWidget );
-        Q3VBox* listsTabBox = new Q3VBox( pListsTabWidget );
-        new gui::EntitySearchBox< kernel::Agent_ABC >( listsTabBox, controllers );
-        new TacticalListView( listsTabBox, controllers, factory, icons, modelBuilder, model.formations_.levels_, glProxy );
-        pAgentsTabWidget->addTab( listsTabBox, tools::translate( "DockManager","Tactical" ) );
+        new gui::AggregateToolbar( box, controllers.controller_, automats, formation );
+        QTabWidget* pListsTabWidget = new QTabWidget( box );
+        {
+            QTabWidget* pAgentsTabWidget = new QTabWidget( pListsTabWidget );
+            pListsTabWidget->addTab( pAgentsTabWidget, tools::translate( "DockManager", "Units" ) );
+            // Tactical
+            pAgentsTabWidget->addTab( new gui::SearchListView< TacticalListView >( pListsTabWidget, controllers, factory, icons, modelBuilder, model.formations_.levels_, glProxy ), tools::translate( "DockManager","Tactical" ) );
+            // Communication
+            pAgentsTabWidget->addTab( new gui::SearchListView< CommunicationListView >( pListsTabWidget, controllers, factory, icons, modelBuilder ), tools::translate( "DockManager","Communication" ) );
+            // Logistic
+            gui::SearchListView< LogisticListView >* searchListView = new gui::SearchListView< LogisticListView >( pListsTabWidget, controllers, factory, PreparationProfile::GetProfile(), icons, modelBuilder );
+            logisticListView_ = searchListView->GetListView();
+            pAgentsTabWidget->addTab( searchListView, tools::translate( "DockManager", "Logistic" ) );
+        }
+        // Objects
+        pListsTabWidget->addTab( new gui::SearchListView< ObjectListView >( pListsTabWidget, controllers, factory, modelBuilder ), tools::translate( "DockManager","Objects" ) );
+        // Crowds
+        pListsTabWidget->addTab( new gui::SearchListView< PopulationListView >( pListsTabWidget, controllers, factory, modelBuilder ), tools::translate( "DockManager","Crowds" ) );
+        // Populations
+        pListsTabWidget->addTab( new gui::SearchListView< InhabitantListView >( pListsTabWidget, controllers, factory, modelBuilder ), tools::translate( "DockManager","Populations" ) );
+    }
 
-        listsTabBox = new Q3VBox( pListsTabWidget );
-        new gui::EntitySearchBox< kernel::Agent_ABC >( listsTabBox, controllers );
-        new CommunicationListView( listsTabBox, controllers, factory, icons, modelBuilder );
-        pAgentsTabWidget->addTab( listsTabBox, tools::translate( "DockManager", "Communication" ) );
-
-        listsTabBox = new Q3VBox( pListsTabWidget );
-        logisticListView_ = new gui::LogisticList< LogisticListView >( controllers, factory, PreparationProfile::GetProfile(), icons, modelBuilder );
-        pAgentsTabWidget->addTab( logisticListView_, tools::translate( "DockManager", "Logistic" ) );
-        pListsTabWidget->addTab( pAgentsTabWidget, tools::translate( "DockManager", "Units" ) );
-    }
-    {
-        Q3VBox* listsTabBox = new Q3VBox( pListsTabWidget );
-        new gui::EntitySearchBox< kernel::Object_ABC >( listsTabBox, controllers );
-        new ObjectListView( listsTabBox, controllers, factory, modelBuilder );
-        pListsTabWidget->addTab( listsTabBox, tools::translate( "DockManager", "Objects" ) );
-    }
-    {
-        Q3VBox* listsTabBox = new Q3VBox( pListsTabWidget );
-        new gui::EntitySearchBox< kernel::Population_ABC >( listsTabBox, controllers );
-        new PopulationListView( listsTabBox, controllers, factory, modelBuilder );
-        pListsTabWidget->addTab( listsTabBox, tools::translate( "DockManager", "Crowds" ) );
-    }
-    {
-        Q3VBox* listsTabBox = new Q3VBox( pListsTabWidget );
-        new gui::EntitySearchBox< kernel::Inhabitant_ABC >( listsTabBox, controllers );
-        new InhabitantListView( listsTabBox, controllers, factory, modelBuilder );
-        pListsTabWidget->addTab( listsTabBox, tools::translate( "DockManager", "Populations" ) );
-    }
-    pListDockWnd->setWindowTitle( tools::translate( "DockManager", "ORBAT" ) );
-    pListDockWnd->setWidget( box );
     // Properties panel
     {
         QDockWidget* pPropertiesDockWnd = new QDockWidget( "properties", parent );

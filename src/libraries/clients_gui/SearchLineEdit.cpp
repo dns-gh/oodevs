@@ -7,25 +7,29 @@
 //
 // *****************************************************************************
 
-#include "adaptation_app_pch.h"
-#include "ADN_SearchLineEdit.h"
+/* TRANSLATOR gui::SearchLineEdit */
 
-#include "ADN_ClearButton.h"
-#include "ADN_SearchButton.h"
+#include "clients_gui_pch.h"
+#include "SearchLineEdit.h"
+#include "SearchButton.h"
+#include "ClearButton.h"
+#include "Tools.h"
+
+using namespace gui;
 
 // -----------------------------------------------------------------------------
-// Name: ADN_SearchLineEdit constructor
-// Created: ABR 2012-01-19
+// Name: SearchLineEdit constructor
+// Created: ABR 2012-03-27
 // -----------------------------------------------------------------------------
-ADN_SearchLineEdit::ADN_SearchLineEdit( QWidget* parent /*= 0*/ )
-    : ADN_BaseEditLine( parent )
+SearchLineEdit::SearchLineEdit( QWidget* parent /*= 0*/ )
+    : RichLineEdit( parent )
 {
     // search icon on the left
-    AddWidget( new ADN_SearchButton( this ), ADN_BaseEditLine::LeftSide );
+    AddWidget( new SearchButton( this ), RichLineEdit::LeftSide );
 
     // clear button on the right
-    ADN_ClearButton* clearButton = new ADN_ClearButton( this );
-    AddWidget( clearButton, ADN_BaseEditLine::RightSide );
+    ClearButton* clearButton = new ClearButton( this );
+    AddWidget( clearButton, RichLineEdit::RightSide );
     clearButton->hide();
 
     // Connection
@@ -34,14 +38,14 @@ ADN_SearchLineEdit::ADN_SearchLineEdit( QWidget* parent /*= 0*/ )
 
     // Initialization
     UpdateTextMargins();
-    SetInactiveText( tr("Search") );
+    SetInactiveText( tools::translate( "gui::SearchLineEdit", "Search") );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_SearchLineEdit destructor
-// Created: ABR 2012-01-19
+// Name: SearchLineEdit destructor
+// Created: ABR 2012-03-27
 // -----------------------------------------------------------------------------
-ADN_SearchLineEdit::~ADN_SearchLineEdit()
+SearchLineEdit::~SearchLineEdit()
 {
     // NOTHING
 }

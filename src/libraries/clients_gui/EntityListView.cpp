@@ -114,7 +114,11 @@ void EntityListView::NotifySelected( const Entity_ABC* entity )
         ensureItemVisible( selectedItem() );
     }
     else
-        clearSelection();
+    {
+        ValuedListItem* selection = static_cast< ValuedListItem* >( selectedItem() );
+        if( selection && selection->IsA< Entity_ABC >() )
+            clearSelection();
+    }
 }
 
 // -----------------------------------------------------------------------------

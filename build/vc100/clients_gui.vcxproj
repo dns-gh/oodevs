@@ -93,6 +93,7 @@
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\clients_gui\AggregateToolbar.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ChangeSuperiorDialog.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\ClearButton.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\clients_gui_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
@@ -104,6 +105,7 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\DiffusionListEditor.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\HelpSystem.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\LinkInterpreter_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\ListView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\LogisticListView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ModalDialog.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\NatureEditionCategory.cpp" />
@@ -112,6 +114,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\OverFlyingColorModifier.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\resources.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichGroupBox.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichLineEdit.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\SearchButton.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_gui\SearchLineEdit.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\StatusBar.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ExtensionsPanel.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\InfoPanel_ABC.cpp" />
@@ -119,14 +124,9 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\Panels.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\PopulationPanel.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\EntityListView.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\EntitySearchBox_ABC.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\EntitySearchItem.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\HierarchyListView_ABC.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\InhabitantList.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\InhabitantListView.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\ObjectList.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\ObjectListView.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\PopulationList.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\PopulationListView.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\DecimalSpinBoxAndSlider.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\DisplayBuilder.cpp" />
@@ -366,6 +366,20 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\ChangeSuperior_ABC.h" />
+    <CustomBuild Include="..\..\src\libraries\clients_gui\ClearButton.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing "%(FullPath)"</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\HelpSystem.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
@@ -516,7 +530,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\LogisticList.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\LongNameHelper.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ModalDialog.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\OverFlyingColorModifier.h" />
@@ -593,22 +606,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <ClInclude Include="..\..\src\libraries\clients_gui\EntitySearchBox.h" />
-    <CustomBuild Include="..\..\src\libraries\clients_gui\EntitySearchBox_ABC.h">
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp
-</Command>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
-    </CustomBuild>
-    <ClInclude Include="..\..\src\libraries\clients_gui\EntitySearchItem.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\HierarchyListView.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\HierarchyListView_ABC.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
@@ -628,7 +625,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <ClInclude Include="..\..\src\libraries\clients_gui\InhabitantList.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\InhabitantListView.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Performing Custom Build Step</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Performing Custom Build Step</Message>
@@ -647,7 +643,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(Outputs)</Outputs>
     </CustomBuild>
-    <ClInclude Include="..\..\src\libraries\clients_gui\ObjectList.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\ObjectListView.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Performing Custom Build Step</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Performing Custom Build Step</Message>
@@ -666,7 +661,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(Outputs)</Outputs>
     </CustomBuild>
-    <ClInclude Include="..\..\src\libraries\clients_gui\PopulationList.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\PopulationListView.h">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Performing Custom Build Step</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Performing Custom Build Step</Message>
@@ -709,7 +703,20 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\ExclusiveComboTableItem.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\InternalLinks.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ListItemToolTip.h" />
-    <ClInclude Include="..\..\src\libraries\clients_gui\ListView.h" />
+    <CustomBuild Include="..\..\src\libraries\clients_gui\ListView.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(Filename).h</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(Filename).h</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\MiscLayer.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\Painter_ABC.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\RichItemFactory.h">
@@ -762,7 +769,24 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\RichLineEdit.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing "%(FullPath)"</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing "%(FullPath)"</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\RichListItem.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\SearchButton.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\SearchLineEdit.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\SearchListView.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\SimplerRichText.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\SpinTableItem.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\Tools.h" />

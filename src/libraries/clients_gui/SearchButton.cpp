@@ -7,44 +7,35 @@
 //
 // *****************************************************************************
 
-#include "adaptation_app_pch.h"
-#include "ADN_SearchButton.h"
+#include "clients_gui_pch.h"
+#include "SearchButton.h"
+
+using namespace gui;
 
 // -----------------------------------------------------------------------------
-// Name: ADN_SearchButton constructor
-// Created: ABR 2012-01-19
+// Name: SearchButton constructor
+// Created: ABR 2012-03-27
 // -----------------------------------------------------------------------------
-ADN_SearchButton::ADN_SearchButton( QWidget* parent /*= 0*/ )
+SearchButton::SearchButton( QWidget* parent /*= 0*/ )
     : QPushButton( parent )
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_SearchButton destructor
-// Created: ABR 2012-01-19
+// Name: SearchButton destructor
+// Created: ABR 2012-03-27
 // -----------------------------------------------------------------------------
-ADN_SearchButton::~ADN_SearchButton()
+SearchButton::~SearchButton()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_SearchButton::sizeHint
-// Created: ABR 2012-01-19
+// Name: SearchButton::paintEvent
+// Created: ABR 2012-03-27
 // -----------------------------------------------------------------------------
-QSize ADN_SearchButton::sizeHint() const
-{
-    if( !image_.isNull() )
-        return image_.size();
-    return QSize( 12, 16 );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ADN_SearchButton::paintEvent
-// Created: ABR 2012-01-19
-// -----------------------------------------------------------------------------
-void ADN_SearchButton::paintEvent( QPaintEvent *event )
+void SearchButton::paintEvent( QPaintEvent *event )
 {
     Q_UNUSED( event );
     if( image_.isNull() )
@@ -54,10 +45,21 @@ void ADN_SearchButton::paintEvent( QPaintEvent *event )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_SearchButton::GenerateSearchImage
-// Created: ABR 2012-01-19
+// Name: SearchButton::sizeHint
+// Created: ABR 2012-03-27
 // -----------------------------------------------------------------------------
-QImage ADN_SearchButton::GenerateSearchImage()
+QSize SearchButton::sizeHint() const
+{
+    if( !image_.isNull() )
+        return image_.size();
+    return QSize( 12, 16 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SearchButton::GenerateSearchImage
+// Created: ABR 2012-03-27
+// -----------------------------------------------------------------------------
+QImage SearchButton::GenerateSearchImage()
 {
     QImage image( 12, 16, QImage::Format_ARGB32 );
     image.fill( qRgba( 0, 0, 0, 0 ) );
@@ -83,4 +85,3 @@ QImage ADN_SearchButton::GenerateSearchImage()
     painter.end();
     return image;
 }
-

@@ -264,6 +264,13 @@
     </message>
 </context>
 <context>
+    <name>gui::ClearButton</name>
+    <message>
+        <source>Clear</source>
+        <translation>Effacer</translation>
+    </message>
+</context>
+<context>
     <name>gui::ColorButton</name>
     <message>
         <source>Select color</source>
@@ -1382,6 +1389,13 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Resource network</source>
         <translation>Réseau de ressource</translation>
+    </message>
+</context>
+<context>
+    <name>gui::SearchLineEdit</name>
+    <message>
+        <source>Search</source>
+        <translation>Rechercher</translation>
     </message>
 </context>
 <context>

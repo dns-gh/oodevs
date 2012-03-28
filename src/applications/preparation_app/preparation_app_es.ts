@@ -219,10 +219,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Logistic</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Units</source>
         <translation type="unfinished">Unidades</translation>
     </message>
@@ -248,6 +244,10 @@
     </message>
     <message>
         <source>Creation</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Logistic</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

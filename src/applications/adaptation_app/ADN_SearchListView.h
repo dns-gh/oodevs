@@ -11,7 +11,7 @@
 #define __ADN_SearchListView_h_
 
 #include <boost/noncopyable.hpp>
-#include "ADN_SearchLineEdit.h"
+#include "clients_gui/SearchLineEdit.h"
 #include "ADN_UsedByInfos.h"
 
 class ADN_Ref_ABC;
@@ -34,7 +34,6 @@ public:
 public slots:
     virtual void OnApplyFilterList( const ADN_UsedByInfos& /*usedByInfos*/ ) {}
 };
-
 
 // =============================================================================
 /** @class  ADN_SearchListView
@@ -66,9 +65,9 @@ public:
 private:
     //! @name Member data
     //@{
-    ListView*           listView_;
-    ADN_SearchLineEdit* lineEdit_;
-    int                 subTab_;
+    ListView*            listView_;
+    gui::SearchLineEdit* lineEdit_;
+    int                  subTab_;
     //@}
 };
 
@@ -93,7 +92,7 @@ ADN_SearchListView< ListView >::ADN_SearchListView( ADN_Ref_ABC& reference, cons
     listView_->SetItemConnectors( connector );
 
     // Search box
-    lineEdit_ = new ADN_SearchLineEdit( this );
+    lineEdit_ = new gui::SearchLineEdit( this );
     connect( lineEdit_, SIGNAL( textChanged( const QString& ) ), listView_, SLOT( OnFilterChanged( const QString& ) ) );
     layout->addWidget( lineEdit_);
     layout->addWidget( listView_, 1 );
@@ -121,7 +120,7 @@ ADN_SearchListView< ListView >::ADN_SearchListView( FirstParam& first, ADN_Ref_A
     listView_->SetItemConnectors( connector );
 
     // Search box
-    lineEdit_ = new ADN_SearchLineEdit( this );
+    lineEdit_ = new gui::SearchLineEdit( this );
     connect( lineEdit_, SIGNAL( textChanged( const QString& ) ), listView_, SLOT( OnFilterChanged( const QString& ) ) );
     layout->addWidget( lineEdit_ );
     layout->addWidget( listView_, 1 );
@@ -149,7 +148,7 @@ ADN_SearchListView< ListView >::ADN_SearchListView( FirstParam& first, SecondPar
     listView_->SetItemConnectors( connector );
 
     // Search box
-    lineEdit_ = new ADN_SearchLineEdit( this );
+    lineEdit_ = new gui::SearchLineEdit( this );
     connect( lineEdit_, SIGNAL( textChanged( const QString& ) ), listView_, SLOT( OnFilterChanged( const QString& ) ) );
     layout->addWidget( lineEdit_ );
     layout->addWidget( listView_, 1 );

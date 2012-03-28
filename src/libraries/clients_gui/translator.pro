@@ -9,6 +9,7 @@ AutomatsLayer.cpp \
 BaseDisplayer.cpp \
 BypassPrototype_ABC.cpp \
 ChangeSuperiorDialog.cpp \
+ClearButton.cpp \
 ColorButton.cpp \
 ConstructionPrototype_ABC.cpp \
 ComboTableItem.cpp \
@@ -70,6 +71,7 @@ PresetDialog.cpp \
 PropertiesPanel.cpp \
 ResourceLinksDialog_ABC.cpp \
 ResourceNetworkPrototype_ABC.cpp \
+SearchLineEdit.cpp \
 StatusBar.cpp \
 StockPrototype_ABC.cpp \
 SupplyRoutePrototype_ABC.cpp \

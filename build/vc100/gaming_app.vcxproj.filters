@@ -667,13 +667,7 @@
     <ClCompile Include="..\..\src\applications\gaming_app\WeatherWidget.cpp">
       <Filter>Source Files\Creation\Weather</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\AgentList.cpp">
-      <Filter>Source Files\Lists</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\AgentListView.cpp">
-      <Filter>Source Files\Lists</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\gaming_app\TacticalList.cpp">
       <Filter>Source Files\Lists</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\TacticalListView.cpp">
@@ -1049,12 +1043,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\WeatherLayer.h">
       <Filter>Source Files\Creation\Weather</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\gaming_app\AgentList.h">
-      <Filter>Source Files\Lists</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\gaming_app\TacticalList.h">
-      <Filter>Source Files\Lists</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\gaming_app\LinkInterpreter.h">
       <Filter>Source Files\Tools</Filter>
