@@ -228,7 +228,7 @@
                   <attribute dataType="NETN_Float64BE" dimensions="NA" name="Mounted" order="TimeStamp"
                              ownership="NoTransfer"
                              semantics="The percentage of aggregate personnel  traveling on or in their organic transport."
-                             sharing="Publish"
+                             sharing="PublishSubscribe"
                              transportation="HLAbestEffort"
                              updateCondition="On change"
                              updateType="Conditional"/>
@@ -243,7 +243,7 @@
                              order="TimeStamp"
                              ownership="NoTransfer"
                              semantics="A pointer to the aggregate's superior unit or headquarters. The highest level unit or headquarters on each side will publish its own UniqueID as its HigherHeadquarters value."
-                             sharing="Publish"
+                             sharing="PublishSubscribe"
                              transportation="HLAbestEffort"
                              updateCondition="On change"
                              updateType="Conditional"/>
@@ -281,7 +281,7 @@
                   <attribute dataType="HLAunicodeString" dimensions="NA" name="Symbol" order="TimeStamp"
                              ownership="NoTransfer"
                              semantics="The APP6A code for the aggregate."
-                             sharing="Publish"
+                             sharing="PublishSubscribe"
                              transportation="HLAbestEffort"
                              updateCondition="On change"
                              updateType="Conditional"/>
@@ -304,7 +304,7 @@
                   <attribute dataType="EchelonEnum8" dimensions="NA" name="Echelon" order="TimeStamp"
                              ownership="NoTransfer"
                              semantics="The level of command of the aggregate."
-                             sharing="Publish"
+                             sharing="PublishSubscribe"
                              transportation="HLAbestEffort"
                              updateCondition="N/A"
                              updateType="Static"/>
