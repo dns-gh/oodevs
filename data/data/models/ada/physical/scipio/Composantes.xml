@@ -1906,7 +1906,6 @@
     </weapon-systems>
     <human-protections/>
     <objects>
-      <object construction-time-factor="3s" destruction-time-factor="3s" initial-construction-time="90s" initial-destruction-time="90s" type="mined area (scattered)"/>
       <object construction-time-factor="54s" destruction-time-factor="92s" devalorization-time="30m" initial-construction-time="90m" initial-destruction-time="150m" type="abattis" valorization-time="30m"/>
       <object devalorization-time="1h" initial-destruction-time="2h" type="barricade"/>
       <object devalorization-time="1h" initial-destruction-time="2h" type="landslide"/>
@@ -2957,7 +2956,7 @@
       <object initial-construction-time="900s" type="continuous pontoon bridge"/>
       <object initial-destruction-time="900s" type="road destruction"/>
       <object initial-destruction-time="900s" type="anti tank obstacle"/>
-      <object devalorization-time="0s" initial-destruction-time="900s" type="bridge destruction"/>
+      <object initial-destruction-time="900s" type="bridge destruction"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="Panne MOB 1"/>
@@ -30800,7 +30799,7 @@
     <human-protections/>
     <objects>
       <object construction-time-factor="3m" destruction-time-factor="3m" initial-construction-time="90m" initial-destruction-time="90m" type="mines"/>
-      <object initial-construction-time="150m" type="bridge destruction" valorization-time="30m"/>
+      <object devalorization-time="0s" initial-construction-time="150m" type="bridge destruction" valorization-time="30m"/>
       <object devalorization-time="15m" initial-construction-time="6h" initial-destruction-time="6h" type="road destruction" valorization-time="15m"/>
       <object construction-time-factor="14s" destruction-time-factor="180s" initial-construction-time="4h" initial-destruction-time="2h" type="mined area (linear)"/>
     </objects>
@@ -35760,4 +35759,4 @@
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="0061859009" -->
+<!-- signature="2404585218" -->
