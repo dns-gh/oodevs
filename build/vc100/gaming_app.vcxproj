@@ -341,9 +341,7 @@
     <ClCompile Include="..\..\src\applications\gaming_app\WeatherListView.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\WeatherPanel.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\WeatherWidget.cpp" />
-    <ClCompile Include="..\..\src\applications\gaming_app\AgentList.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\AgentListView.cpp" />
-    <ClCompile Include="..\..\src\applications\gaming_app\TacticalList.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\TacticalListView.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\LinkInterpreter.cpp" />
     <ClCompile Include="..\..\src\applications\gaming_app\LocationSerializer.cpp" />
@@ -2152,7 +2150,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(Outputs)</Outputs>
     </CustomBuild>
-    <ClInclude Include="..\..\src\applications\gaming_app\AgentList.h" />
     <CustomBuild Include="..\..\src\applications\gaming_app\AgentListView.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
@@ -2167,7 +2164,6 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
-    <ClInclude Include="..\..\src\applications\gaming_app\TacticalList.h" />
     <CustomBuild Include="..\..\src\applications\gaming_app\TacticalListView.h">
       <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>
       <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">moc "%(FullPath)" -i -o "$(IntDir)moc_"%(Filename)".cpp</Command>

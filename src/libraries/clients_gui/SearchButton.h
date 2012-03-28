@@ -7,40 +7,49 @@
 //
 // *****************************************************************************
 
-#ifndef __ADN_ClearButton_h_
-#define __ADN_ClearButton_h_
+#ifndef __SearchButton_h_
+#define __SearchButton_h_
 
 #include <boost/noncopyable.hpp>
 
-// =============================================================================
-/** @class  ADN_ClearButton
-    @brief  ADN_ClearButton
-*/
-// Created: ABR 2012-01-19
-// =============================================================================
-class ADN_ClearButton : public QAbstractButton
-                      , private boost::noncopyable
+namespace gui
 {
-    Q_OBJECT
 
+// =============================================================================
+/** @class  SearchButton
+    @brief  SearchButton
+*/
+// Created: ABR 2012-03-27
+// =============================================================================
+class SearchButton : public QPushButton
+                   , private boost::noncopyable
+{
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_ClearButton( QWidget *parent = 0 );
-    virtual ~ADN_ClearButton();
+    explicit SearchButton( QWidget* parent = 0 );
+    virtual ~SearchButton();
     //@}
 
-public slots:
-    //! @name Slots
+    //! @name Operations
     //@{
-    void TextChanged( const QString& text );
+    virtual void paintEvent( QPaintEvent *event );
+    virtual QSize sizeHint() const;
     //@}
 
-protected:
+private:
     //! @name Helpers
     //@{
-    void paintEvent( QPaintEvent* event );
+    static QImage GenerateSearchImage();
+    //@}
+
+private:
+    //! @name Member data
+    //@{
+    QImage image_;
     //@}
 };
 
-#endif // __ADN_ClearButton_h_
+} //! namespace gui
+
+#endif // __SearchButton_h_

@@ -166,38 +166,6 @@ void HierarchyListView_ABC::SetVisible( Q3ListViewItem* item, bool visible )
 }
 
 // -----------------------------------------------------------------------------
-// Name: HierarchyListView_ABC::ApplyFilter
-// Created: ABR 2011-05-09
-// -----------------------------------------------------------------------------
-void HierarchyListView_ABC::ApplyFilter( boost::function< bool ( ValuedListItem* ) > func )
-{
-    for( Q3ListViewItemIterator it = firstChild(); it.current(); ++it )
-    {
-        ValuedListItem* item = static_cast< ValuedListItem* >( it.current() );
-        item->setVisible( HasAnyChildVisible( item, func ) );
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: HierarchyListView_ABC::HasAnyChildVisible
-// Created: ABR 2011-05-09
-// -----------------------------------------------------------------------------
-bool HierarchyListView_ABC::HasAnyChildVisible( ValuedListItem* item, boost::function< bool ( ValuedListItem* ) > func )
-{
-    if( item )
-    {
-        bool isVisible = func( item );
-        ValuedListItem* child = static_cast< ValuedListItem* >( item->firstChild() );
-        if( child )
-            for( Q3ListViewItemIterator it = child; it.current(); ++it )
-                if( static_cast< ValuedListItem* >( it.current()->parent() ) == item )
-                    isVisible = isVisible || HasAnyChildVisible( static_cast< ValuedListItem* >( it.current() ), func );
-        return isVisible;
-    }
-    return false;
-}
-
-// -----------------------------------------------------------------------------
 // Name: HierarchyListView_ABC::OnSelectionChange
 // Created: AGE 2006-02-16
 // -----------------------------------------------------------------------------

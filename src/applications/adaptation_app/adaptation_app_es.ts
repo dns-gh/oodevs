@@ -641,13 +641,6 @@ estacionado con motor encendido</translation>
     </message>
 </context>
 <context>
-    <name>ADN_ClearButton</name>
-    <message>
-        <source>Clear</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
     <name>ADN_ColorNameSelector</name>
     <message>
         <source>Select color</source>
@@ -4069,13 +4062,6 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
     </message>
     <message>
         <source>Remove</source>
-        <translation type="unfinished"></translation>
-    </message>
-</context>
-<context>
-    <name>ADN_SearchLineEdit</name>
-    <message>
-        <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -222,10 +222,6 @@
         <translation>Groupes de connaissance</translation>
     </message>
     <message>
-        <source>Logistic</source>
-        <translation>Logistique</translation>
-    </message>
-    <message>
         <source>Units</source>
         <translation>Unités</translation>
     </message>
@@ -252,6 +248,10 @@
     <message>
         <source>Creation</source>
         <translation>Création</translation>
+    </message>
+    <message>
+        <source>Logistic</source>
+        <translation>Logistique</translation>
     </message>
 </context>
 <context>

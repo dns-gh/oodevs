@@ -175,28 +175,13 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\EntityListView.cpp">
       <Filter>Source Files\Lists</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\EntitySearchBox_ABC.cpp">
-      <Filter>Source Files\Lists</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\EntitySearchItem.cpp">
-      <Filter>Source Files\Lists</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\HierarchyListView_ABC.cpp">
-      <Filter>Source Files\Lists</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\InhabitantList.cpp">
       <Filter>Source Files\Lists</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\InhabitantListView.cpp">
       <Filter>Source Files\Lists</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\ObjectList.cpp">
-      <Filter>Source Files\Lists</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\ObjectListView.cpp">
-      <Filter>Source Files\Lists</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\libraries\clients_gui\PopulationList.cpp">
       <Filter>Source Files\Lists</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\libraries\clients_gui\PopulationListView.cpp">
@@ -850,6 +835,21 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\ModalDialog.cpp">
       <Filter>Source Files\Dialogs</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\SearchLineEdit.cpp">
+      <Filter>Source Files\Lists</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\RichLineEdit.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\SearchButton.cpp">
+      <Filter>Source Files\Lists</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ClearButton.cpp">
+      <Filter>Source Files\Lists</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_gui\ListView.cpp">
+      <Filter>Source Files\Tools</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_gui\clients_gui_pch.h">
@@ -873,22 +873,7 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\PopulationPanel.h">
       <Filter>Source Files\Panels</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\EntitySearchBox.h">
-      <Filter>Source Files\Lists</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\EntitySearchItem.h">
-      <Filter>Source Files\Lists</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\HierarchyListView.h">
-      <Filter>Source Files\Lists</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\InhabitantList.h">
-      <Filter>Source Files\Lists</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\ObjectList.h">
-      <Filter>Source Files\Lists</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\PopulationList.h">
       <Filter>Source Files\Lists</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\DisplayBuilder.h">
@@ -907,9 +892,6 @@
       <Filter>Source Files\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\ListItemToolTip.h">
-      <Filter>Source Files\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\ListView.h">
       <Filter>Source Files\Tools</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\MiscLayer.h">
@@ -1356,9 +1338,6 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\TrafficabilityPrototype_ABC.h">
       <Filter>Source Files\Creation\Objects\Attributes</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\libraries\clients_gui\LogisticList.h">
-      <Filter>Source Files\Lists</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\LogisticListView.h">
       <Filter>Source Files\Lists</Filter>
     </ClInclude>
@@ -1382,6 +1361,15 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\ModalDialog.h">
       <Filter>Source Files\Dialogs</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\SearchListView.h">
+      <Filter>Source Files\Lists</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\SearchLineEdit.h">
+      <Filter>Source Files\Lists</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\SearchButton.h">
+      <Filter>Source Files\Lists</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -1427,9 +1415,6 @@
       <Filter>Source Files\Panels</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\EntityListView.h">
-      <Filter>Source Files\Lists</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\libraries\clients_gui\EntitySearchBox_ABC.h">
       <Filter>Source Files\Lists</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\HierarchyListView_ABC.h">
@@ -1725,6 +1710,15 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\libraries\clients_gui\DiffusionListEditor.h">
       <Filter>Source Files\Dialogs\Diffusion List</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\RichLineEdit.h">
+      <Filter>Source Files\Tools</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\ClearButton.h">
+      <Filter>Source Files\Lists</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\libraries\clients_gui\ListView.h">
+      <Filter>Source Files\Tools</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

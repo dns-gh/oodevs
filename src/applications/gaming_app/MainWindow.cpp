@@ -14,7 +14,7 @@
 #include "AfterAction.h"
 #include "AgentsLayer.h"
 #include "AgentKnowledgesLayer.h"
-#include "AgentList.h"
+#include "AgentListView.h"
 #include "AutomatsLayer.h"
 #include "ChatDock.h"
 #include "ClientCommandFacade.h"
@@ -57,7 +57,7 @@
 #include "SIMControlToolbar.h"
 #include "SimulationLighting.h"
 #include "StatusBar.h"
-#include "TacticalList.h"
+#include "TacticalListView.h"
 #include "TeamLayer.h"
 #include "TimelinePanel.h"
 #include "UserProfileDialog.h"
@@ -81,11 +81,12 @@
 #include "clients_gui/GlSelector.h"
 #include "clients_gui/Logger.h"
 #include "clients_gui/MiscLayer.h"
-#include "clients_gui/ObjectList.h"
 #include "clients_gui/ParametersLayer.h"
 #include "clients_gui/Settings.h"
-#include "clients_gui/PopulationList.h"
-#include "clients_gui/InhabitantList.h"
+#include "clients_gui/SearchListView.h"
+#include "clients_gui/ObjectListView.h"
+#include "clients_gui/PopulationListView.h"
+#include "clients_gui/InhabitantListView.h"
 #include "clients_gui/InhabitantLayer.h"
 #include "clients_gui/PreferencesDialog.h"
 #include "clients_gui/RichItemFactory.h"
@@ -121,7 +122,6 @@
 #include "clients_gui/ElevationPainter.h"
 #include "clients_gui/SimpleFilter.h"
 #include "clients_gui/UrbanFilter.h"
-#include "clients_gui/LogisticList.h"
 #include <xeumeuleu/xml.hpp>
 #pragma warning( push )
 #pragma warning( disable: 4127 4512 4511 )
@@ -241,21 +241,22 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
 
     // Agent list panel
     QDockWidget* pListDockWnd_ = new QDockWidget( this );
+    pListDockWnd_->setWindowTitle( tr( "Orbat" ) );
     pListDockWnd_->setObjectName( "agentList" );
     addDockWidget( Qt::LeftDockWidgetArea, pListDockWnd_ );
     Q3VBox* box = new Q3VBox( pListDockWnd_ );
+    pListDockWnd_->setWidget( box );
     new OrbatToolbar( box, controllers, *pProfile_, *automatsLayer, *formationLayer );
     QTabWidget* pListsTabWidget = new QTabWidget( box );
 
-    pListsTabWidget->addTab( new TacticalList( controllers, model_.actions_, staticModel, simulation, *factory, *pProfile_, *icons ), tr( "Tactical" ) );
-    pListsTabWidget->addTab( new AgentList( controllers, model_.actions_, staticModel, simulation, *factory, *pProfile_, *icons ), tr( "Communication" ) );
-    logisticListView_ = new gui::LogisticList< ::LogisticListView >( controllers, *factory, *pProfile_, *icons, model_.actions_, staticModel, simulation );
-    pListsTabWidget->addTab( logisticListView_, tr( "Logistic" ) );
-    pListsTabWidget->addTab( new gui::ObjectList( controllers, *factory, *pProfile_ ), tr( "Objects" ) );
-    pListsTabWidget->addTab( new gui::PopulationList( controllers, *factory, *pProfile_ ), tr( "Crowds" ) );
-    pListsTabWidget->addTab( new gui::InhabitantList( controllers, *factory, *pProfile_ ), tr( "Populations" ) );
-    pListDockWnd_->setWidget( box );
-    pListDockWnd_->setWindowTitle( tr( "Orbat" ) );
+    pListsTabWidget->addTab( new gui::SearchListView< TacticalListView >( pListsTabWidget, controllers, model_.actions_, staticModel, simulation, *factory, *pProfile_, *icons ), tr( "Tactical" ) );
+    pListsTabWidget->addTab( new gui::SearchListView< AgentListView >( pListsTabWidget, controllers, model_.actions_, staticModel, simulation, *factory, *pProfile_, *icons ), tr( "Communication" ) );
+    gui::SearchListView< LogisticListView >* searchListView = new gui::SearchListView< ::LogisticListView >( pListsTabWidget, controllers, *factory, *pProfile_, *icons, model_.actions_, staticModel, simulation );
+    logisticListView_ = searchListView->GetListView();
+    pListsTabWidget->addTab( searchListView, tr( "Logistic" ) );
+    pListsTabWidget->addTab( new gui::SearchListView< gui::ObjectListView >( pListsTabWidget, controllers, *factory, *pProfile_ ), tr( "Objects" ) );
+    pListsTabWidget->addTab( new gui::SearchListView< gui::PopulationListView >( pListsTabWidget, controllers, *factory, *pProfile_ ), tr( "Crowds" ) );
+    pListsTabWidget->addTab( new gui::SearchListView< gui::InhabitantListView >( pListsTabWidget, controllers, *factory, *pProfile_ ), tr( "Populations" ) );
 
     // Mini views
     gui::MiniViews* miniviews = new gui::MiniViews( this, controllers_ );

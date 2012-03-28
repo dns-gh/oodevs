@@ -7,26 +7,30 @@
 //
 // *****************************************************************************
 
-#ifndef __ADN_SearchLineEdit_h_
-#define __ADN_SearchLineEdit_h_
+#ifndef __SearchLineEdit_h_
+#define __SearchLineEdit_h_
 
-#include "ADN_BaseEditLine.h"
+#include "RichLineEdit.h"
 
-// =============================================================================
-/** @class  ADN_SearchLineEdit
-    @brief  ADN_SearchLineEdit
-*/
-// Created: ABR 2012-01-19
-// =============================================================================
-class ADN_SearchLineEdit : public ADN_BaseEditLine
+namespace gui
 {
 
+// =============================================================================
+/** @class  SearchLineEdit
+    @brief  SearchLineEdit
+*/
+// Created: ABR 2012-03-27
+// =============================================================================
+class SearchLineEdit : public RichLineEdit
+{
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_SearchLineEdit( QWidget* parent = 0 );
-    virtual ~ADN_SearchLineEdit();
+             SearchLineEdit( QWidget* parent = 0 );
+    virtual ~SearchLineEdit();
     //@}
 };
 
-#endif // __ADN_SearchLineEdit_h_
+} //! namespace gui
+
+#endif // __SearchLineEdit_h_

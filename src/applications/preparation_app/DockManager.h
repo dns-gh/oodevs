@@ -99,7 +99,7 @@ private:
     //@{
     QMainWindow* parent_;
     kernel::Controllers& controllers_;
-    gui::LogisticList< LogisticListView >* logisticListView_;
+    LogisticListView* logisticListView_;
     QDockWidget* pExtensionsPanel_;
     CreationPanels* pCreationPanel_;
     LivingAreaPanel* pLivingAreaPanel_;

@@ -7,15 +7,17 @@
 //
 // *****************************************************************************
 
-#include "adaptation_app_pch.h"
-#include "ADN_ClearButton.h"
-#include "moc_ADN_ClearButton.cpp"
+#include "clients_gui_pch.h"
+#include "ClearButton.h"
+#include "moc_ClearButton.cpp"
+
+using namespace gui;
 
 // -----------------------------------------------------------------------------
-// Name: ADN_ClearButton constructor
-// Created: ABR 2012-01-19
+// Name: ClearButton constructor
+// Created: ABR 2012-03-27
 // -----------------------------------------------------------------------------
-ADN_ClearButton::ADN_ClearButton( QWidget *parent /* = 0*/ )
+ClearButton::ClearButton( QWidget *parent /*= 0*/ )
     : QAbstractButton(parent)
 {
     setCursor( Qt::ArrowCursor );
@@ -26,28 +28,28 @@ ADN_ClearButton::ADN_ClearButton( QWidget *parent /* = 0*/ )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_ClearButton destructor
-// Created: ABR 2012-01-19
+// Name: ClearButton destructor
+// Created: ABR 2012-03-27
 // -----------------------------------------------------------------------------
-ADN_ClearButton::~ADN_ClearButton()
+ClearButton::~ClearButton()
 {
     // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_ClearButton::TextChanged
-// Created: ABR 2012-01-19
+// Name: ClearButton::TextChanged
+// Created: ABR 2012-03-27
 // -----------------------------------------------------------------------------
-void ADN_ClearButton::TextChanged( const QString& text )
+void ClearButton::TextChanged( const QString& text )
 {
     setVisible( !text.isEmpty() );
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_ClearButton::paintEvent
-// Created: ABR 2012-01-19
+// Name: ClearButton::paintEvent
+// Created: ABR 2012-03-27
 // -----------------------------------------------------------------------------
-void ADN_ClearButton::paintEvent( QPaintEvent* event )
+void ClearButton::paintEvent( QPaintEvent* event )
 {
     Q_UNUSED( event );
     QPainter painter( this );

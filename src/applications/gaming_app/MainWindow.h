@@ -150,7 +150,7 @@ private:
     gui::OptionsPanel* pOptionsPanel_;
     gui::ParametersLayer* parameters_;
     gui::AgentsLayer* agents_;
-    gui::LogisticList< ::LogisticListView >* logisticListView_;
+    ::LogisticListView* logisticListView_;
     StatusBar* pStatus_;
     QByteArray docks_;
     QByteArray toolbars_;

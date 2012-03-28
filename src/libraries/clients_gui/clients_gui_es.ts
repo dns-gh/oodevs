@@ -249,6 +249,13 @@
     </message>
 </context>
 <context>
+    <name>gui::ClearButton</name>
+    <message>
+        <source>Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>gui::ColorButton</name>
     <message>
         <source>Select color</source>
@@ -1379,6 +1386,13 @@ Voulez-vous le supprimer?</translation>
     <name>gui::ResourceNetworkPrototype_ABC</name>
     <message>
         <source>Resource network</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
+    <name>gui::SearchLineEdit</name>
+    <message>
+        <source>Search</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
