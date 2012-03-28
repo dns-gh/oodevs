@@ -39,7 +39,7 @@ MT_FileLogger::MT_FileLogger( const char* strFileName , unsigned int maxFiles, i
     fileNameExtension_ = pathFileName.extension();
     filesCount_ = GetOldestFile();
     std::string startFileName = GetFileName( filesCount_ );
-    OpenNewOfstream( startFileName, bClearPreviousLog );
+    sizeCount_ = static_cast< int >( OpenNewOfstream( startFileName, bClearPreviousLog ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -54,32 +54,17 @@ MT_FileLogger::~MT_FileLogger()
 
 namespace
 {
-    unsigned int ComputeSize( const std::string& fileName )
-    {
-        unsigned int count = 0;
-        boost::filesystem::path p( fileName ); 
-        try
-        {
-            count = static_cast< unsigned int >( boost::filesystem::file_size( p ) );
-        }
-        catch( ... ) { count = 0; }
-        return count;
-    }
-
     unsigned int ComputeLines( const std::string& fileName )
     {
         unsigned int count = 0;
-        try
+        std::ifstream file( fileName.c_str() );
+        if( file && !file.fail() )
         {
-            std::ifstream file( fileName.c_str() );
-            if( file && !file.fail() )
-            {
-                std::string currentLine;
-                while( std::getline( file, currentLine ) )
-                    ++count;
-            }
+            std::string currentLine;
+            while( std::getline( file, currentLine ) )
+                ++count;
         }
-        catch( ... ) { count = 0; }
+        file.close();
         return count;
     }
 }
@@ -88,8 +73,9 @@ namespace
 // Name: MT_FileLogger OpenNewOfstream
 // Created:  MMC 2012-01-31
 //-----------------------------------------------------------------------------
-void MT_FileLogger::OpenNewOfstream( const std::string fileName, bool clearPrevious /* = true */ )
+unsigned int MT_FileLogger::OpenNewOfstream( const std::string fileName, bool clearPrevious /* = true */ )
 {
+    unsigned int size = 0;
     if ( file_.get() )
         file_->close();
 
@@ -98,16 +84,22 @@ void MT_FileLogger::OpenNewOfstream( const std::string fileName, bool clearPrevi
         file_->open( fileName.c_str(), std::ios::out | std::ios::trunc );
     else
     {
-        if( maxSize_ > 0 && bfs::exists( fileName ) )
+        try
         {
-            if( sizeInBytes_ )
-                sizeCount_ = static_cast< int >( ComputeSize( fileName ) );
-            else
-                sizeCount_ = static_cast< int >( ComputeLines( fileName ) );
+            if( maxSize_ > 0 && bfs::exists( fileName ) )
+            {
+                if( sizeInBytes_ )
+                    size = static_cast< unsigned int >( bfs::file_size( bfs::path( fileName ) ) );
+                else
+                    size = ComputeLines( fileName );
+            }
         }
+        catch( ... ) 
+        { size = 0; }
 
         file_->open( fileName.c_str(), std::ios::out | std::ios::app );
     }
+    return size;
 }
 
 //-----------------------------------------------------------------------------
@@ -136,10 +128,9 @@ void MT_FileLogger::LogString( E_LogLevel nLogLevel, const char* strMessage, con
         sizeCount_ += messageSize;
         if( sizeCount_ > maxSize_ )
         {
-            sizeCount_ = messageSize;
             if ( ++filesCount_ > maxFiles_ )
                 filesCount_ = 1;
-            OpenNewOfstream( GetFileName( filesCount_ ) );     
+            sizeCount_ = messageSize + static_cast< int >( OpenNewOfstream( GetFileName( filesCount_ ) ) );
         }
     }
     *file_ << messageStream.str();
