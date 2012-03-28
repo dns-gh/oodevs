@@ -610,5 +610,6 @@
   <report category="operational" id="417" message="Pris sous tir de: %1">
     <parameter type="ResourceType"/>
   </report>
+  <report category="operational" id="418" message="Enter and exit are not in the same underground network"/>
 </reports>
-<!-- signature="4156526213" -->
+<!-- signature="2477482722" -->

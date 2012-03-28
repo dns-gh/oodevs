@@ -429,4 +429,5 @@ eRC_DebutDevalorisation = 414
 eRC_FinDevalorisation = 415
 eRC_TrafficablePositionFindingInZone = 416
 eRC_PrisSousTirMunition = 417
-eNbr = 418
+eRC_NotInSameUndergroundNetwork = 418
+eNbr = 419

@@ -55,3 +55,7 @@ integration.StopPassThroughUndergroundNetwork = function( exitIssue )
     exitIssue[myself].actionPassThrough = DEC__StopAction( exitIssue[myself].actionPassThrough )
     exitIssue[myself].actionPassThroughState = nil
 end
+
+integration.enterAndExitInSameUndergroundNetwork = function( enterIssue, exitIssue )
+    return DEC_ConnaissanceObjet_IssuesDuMemeReseauSouterrain( enterIssue.source, exitIssue.source )
+end

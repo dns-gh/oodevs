@@ -558,3 +558,21 @@ int DEC_KnowledgeObjectFunctions::GetOutFromUndergroundNetwork( DEC_Decision_ABC
     role.GetOutFromUndergroundNetwork();
     return static_cast< int >( eQueryValid );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::EnterAndExitInSameUndergroundNetwork
+// Created: GGE 2012-03-27
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgeObjectFunctions::EnterAndExitInSameUndergroundNetwork( boost::shared_ptr< DEC_Knowledge_Object > pEnter, boost::shared_ptr< DEC_Knowledge_Object > pExit )
+{
+    UndergroundAttribute* pEnterAttribute = IsValidObjectAttribute< UndergroundAttribute >( pEnter );
+    UndergroundAttribute* pExitAttribute = IsValidObjectAttribute< UndergroundAttribute >( pExit );
+    if ( pEnterAttribute && pExitAttribute )
+    {
+        const std::string EnterUnderGroundNetwork = pEnterAttribute->Network();
+        const std::string ExitUnderGroundNetwork = pExitAttribute->Network();
+        if ( EnterUnderGroundNetwork == ExitUnderGroundNetwork )
+            return true;
+    }
+    return false;
+}

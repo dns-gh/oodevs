@@ -610,5 +610,6 @@
   <report category="operational" id="417" message="Pris sous tir de: %1">
     <parameter type="ResourceType"/>
   </report>
+  <report category="operational" id="418" message="L'entrée et la sortie ne sont pas dans le même réseau souterrain"/>
 </reports>
-<!-- signature="3592855634" -->
+<!-- signature="0570478294" -->

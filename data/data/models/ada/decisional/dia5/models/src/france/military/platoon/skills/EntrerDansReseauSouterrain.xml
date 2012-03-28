@@ -7,6 +7,14 @@
                 <class name="sword.military.knowledge.UndergroundNetwork"/>
             </type>
         </parameter>
+        <parameter name="exitUndergroundNetwork" nullable="true">
+            <type>
+                <class name="sword.military.knowledge.UndergroundNetwork"/>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
     </parameters>
     <body-type>
         <class name="sword.military.world.PlatoonAlly"/>
