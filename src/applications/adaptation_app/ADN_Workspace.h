@@ -13,6 +13,7 @@
 #define __ADN_Workspace_h_
 
 #include "ADN_Enums.h"
+#include "ADN_NavigationInfos.h"
 #include "ADN_WorkspaceElement.h"
 #include <boost/noncopyable.hpp>
 
@@ -71,7 +72,6 @@ class ADN_UnitSymbols_Data;
 class ADN_UnitSymbols_GUI;
 class ADN_Urban_Data;
 class ADN_Urban_GUI;
-struct ADN_UsedByInfos;
 class ADN_Weapons_Data;
 class ADN_Weapons_GUI;
 class QtCommand;
@@ -152,7 +152,8 @@ signals:
     void ChangeTab( E_WorkspaceElements targetTab );
 
 public slots:
-    void OnUsersListRequested( const ADN_UsedByInfos& usedByInfo );
+    void OnUsersListRequested( const ADN_NavigationInfos::UsedBy& usedByInfo );
+    void OnGoToRequested( const ADN_NavigationInfos::GoTo& goToInfo );
 
 private:
     void AddPage( ADN_MainWindow& mainWindow, E_WorkspaceElements element );

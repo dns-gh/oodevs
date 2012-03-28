@@ -141,7 +141,7 @@ void ADN_MainWindow::Build()
     pActionSave_ = new QAction( MAKE_PIXMAP(filesave), tr("&Save"), Qt::CTRL + Qt::Key_S, this, "save" );
     connect( pActionSave_, SIGNAL( activated() ) , this, SLOT( SaveProject() ) );
 
-    QAction* pBack = new QAction( qApp->style()->standardIcon( QStyle::SP_ArrowLeft ), tr( "Back  (ctrl + left)" ), Qt::CTRL + Qt::Key_Left, this, "back" );
+    QAction* pBack = new QAction( qApp->style()->standardIcon( QStyle::SP_ArrowLeft ), tr( "Back (ctrl + left)" ), Qt::CTRL + Qt::Key_Left, this, "back" );
     connect( pBack, SIGNAL( activated() ), mainTabWidget_.get(), SLOT( OnBack() ) );
     connect( mainTabWidget_.get(), SIGNAL( BackEnabled( bool ) ), pBack, SLOT( setEnabled( bool ) ) );
     QAction* pForward = new QAction( qApp->style()->standardIcon( QStyle::SP_ArrowRight ), tr( "Forward (ctrl + right)" ), Qt::CTRL + Qt::Key_Right, this, "forward" );
@@ -653,4 +653,24 @@ bool ADN_MainWindow::OfferToSave()
             return true;
     }
     return false; // Cancel whatever action prompted the save proposition.
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_MainWindow::mousePressEvent
+// Created: ABR 2012-03-09
+// -----------------------------------------------------------------------------
+void ADN_MainWindow::mousePressEvent( QMouseEvent * event )
+{
+    if( event && event->button() == Qt::XButton1 )
+    {
+        mainTabWidget_->OnBack();
+        event->accept();
+    }
+    else if( event && event->button() == Qt::XButton2 )
+    {
+        mainTabWidget_->OnForward();
+        event->accept();
+    }
+    else
+        QMainWindow::mousePressEvent( event );
 }

@@ -52,7 +52,6 @@ public:
 
 private:
     ADN_Launchers_Data& data_;
-    ADN_ListView_Launchers* pListView_;
     ADN_Launchers_ModifPhs_GUI* pModifPhs_;
 };
 

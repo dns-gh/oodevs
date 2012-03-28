@@ -15,6 +15,7 @@
 #include "ADN_Composantes_Dotations_GUI.h"
 #include "ADN_ComboBox_ActiveProtection_Dotations.h"
 #include "ADN_ComboBox_Vector.h"
+#include "ADN_GoToButton.h"
 #include "ADN_GroupBox.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_EditLine.h"
@@ -55,13 +56,15 @@ void ADN_ActiveProtections_GUI::Build()
 
     // dotations
     Q3GroupBox* pDotationGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Resource" ) );
-    builder.AddField< ADN_ComboBox_Vector<ADN_Equipement_Data::AmmoCategoryInfo> >( pDotationGroup, tr( "Resource" ), vConnectors[eActiveProtectionDotation] );
+    ADN_GoToButton* goToButton = new ADN_GoToButton( ::eEquipement );
+    goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector<ADN_Equipement_Data::AmmoCategoryInfo> >( pDotationGroup, tr( "Resource" ), vConnectors[eActiveProtectionDotation], 0, eNone, goToButton ) );
     builder.SetEnabled( true );
     builder.AddField<ADN_EditLine_Double>( pDotationGroup, tr( "Usage" ), vConnectors[eActiveProtectionUsage], 0, eGreaterEqualZero );
 
     // Weapons
     Q3GroupBox* pWeaponsGroup_ = new Q3GroupBox( 1, Qt::Horizontal, tr( "Ammunitions" ) );
     ADN_ActiveProtections_WeaponsTable* pWeapons = new ADN_ActiveProtections_WeaponsTable( tr( "Ammunitions" ).ascii(), pWeaponsGroup_ );
+    pWeapons->SetGoToOnDoubleClick( ::eEquipement );
     vConnectors[eActiveProtectionWeapons] = &pWeapons->GetConnector();
 
     // -------------------------------------------------------------------------
@@ -79,6 +82,7 @@ void ADN_ActiveProtections_GUI::Build()
 
     // List view
     ADN_SearchListView< ADN_ActiveProtectionsListView >* pSearchListView = new ADN_SearchListView< ADN_ActiveProtectionsListView >( data_.GetActiveProtectionsInfos(), vConnectors );
+    pListView_ = pSearchListView->GetListView();
 
     // Main widget
     pMainWidget_ = CreateScrollArea( *pContent, pSearchListView );

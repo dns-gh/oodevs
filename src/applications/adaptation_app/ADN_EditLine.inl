@@ -61,3 +61,16 @@ void ADN_EditLine<Connector, Validator>::UpdateEnableState()
     if( bEnabledOnlyInAdminMode_ && IsAutoEnabled() )
         setEnabled( static_cast< Connector* >( pConnector_ )->IsConnected() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_EditLine::mousePressEvent
+// Created: ABR 2012-03-09
+// -----------------------------------------------------------------------------
+template <class Connector, class Validator>
+void ADN_EditLine< Connector, Validator >::mousePressEvent( QMouseEvent * event )
+{
+    if( event && ( event->button() == Qt::XButton1 || event->button() == Qt::XButton2 ) )
+        event->ignore();
+    else
+        ADN_EditLine_ABC::mousePressEvent( event );
+}

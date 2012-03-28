@@ -32,7 +32,7 @@ namespace helpers
 */
 // Created: APE 2004-12-06
 // =============================================================================
-class ADN_Equipement_GUI : public ADN_GUI_ABC // $$$$ ABR 2012-01-20: Misnamed, should be ADN_Equipment_GUI ...
+class ADN_Equipement_GUI : public ADN_Tabbed_GUI_ABC // $$$$ ABR 2012-01-20: Misnamed, should be ADN_Equipment_GUI ...
 {
     Q_OBJECT
 
@@ -114,8 +114,8 @@ public:
 private:
     //! @name Helpers
     //@{
-    void BuildGeneric( E_DotationFamily nType, QTabWidget* pParent );
-    void BuildAmmunition( QTabWidget* pParent );
+    void BuildGeneric( E_DotationFamily nType );
+    void BuildAmmunition();
     //@}
 
 private slots:
@@ -128,18 +128,17 @@ private slots:
 private:
     //! @name Member data
     //@{
-    ADN_Equipement_Data& data_;
-    ADN_Equipement_AmmoListView* pAmmoListView_;
-    ADN_Equipement_AttritionTable* pAttritionTable_;
-    ADN_ComboBox* pIndirectTypeCombo_;
-    ADN_Equipement_AttritionGraph* pAttritionGraph_;
-    ADN_ComboBox_Vector< helpers::ArmorInfos >* pArmorCombo_;
-    ADN_ComboBox_Vector< helpers::ADN_UrbanAttritionInfos >* pMaterialCombo_;
-    QStackedLayout* pIndirectEffectLayout_;
-    Q3GroupBox* pExplosiveParametersGroup_;
-    Q3GroupBox* pFlareParametersGroup_;
-    Q3GroupBox* pEffectParametersGroup_;
-    Q3GroupBox* pMineParametersGroup_;
+    ADN_Equipement_Data&                                        data_;
+    ADN_Equipement_AttritionTable*                              pAttritionTable_;
+    ADN_Equipement_AttritionGraph*                              pAttritionGraph_;
+    ADN_ComboBox_Vector< helpers::ArmorInfos >*                 pArmorCombo_;
+    ADN_ComboBox_Vector< helpers::ADN_UrbanAttritionInfos >*    pMaterialCombo_;
+    ADN_ComboBox*                                               pIndirectTypeCombo_;
+    QStackedLayout*                                             pIndirectEffectLayout_;
+    Q3GroupBox*                                                 pExplosiveParametersGroup_;
+    Q3GroupBox*                                                 pFlareParametersGroup_;
+    Q3GroupBox*                                                 pEffectParametersGroup_;
+    Q3GroupBox*                                                 pMineParametersGroup_;
     //@}
 };
 

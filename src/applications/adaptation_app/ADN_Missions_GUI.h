@@ -20,7 +20,7 @@
 */
 // Created: APE 2004-12-06
 // =============================================================================
-class ADN_Missions_GUI : public ADN_GUI_ABC
+class ADN_Missions_GUI : public ADN_Tabbed_GUI_ABC
 {
 
 public:

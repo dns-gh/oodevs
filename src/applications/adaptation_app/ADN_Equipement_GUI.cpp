@@ -51,8 +51,8 @@ protected slots:
 // Created: APE 2004-12-13
 // -----------------------------------------------------------------------------
 ADN_Equipement_GUI::ADN_Equipement_GUI( ADN_Equipement_Data& data )
-    : ADN_GUI_ABC( "ADN_Equipement_GUI" )
-    , data_      ( data )
+    : ADN_Tabbed_GUI_ABC( "ADN_Equipement_GUI" )
+    , data_           ( data )
     , pAttritionTable_( 0 )
 {
     // NOTHING
@@ -76,31 +76,24 @@ void ADN_Equipement_GUI::Build()
     assert( pMainWidget_ == 0 );
 
     // Tab management
-    QTabWidget* pTabWidget = new QTabWidget();
-    BuildAmmunition( pTabWidget );
-    BuildGeneric( eDotationFamily_Carburant, pTabWidget );
-    BuildGeneric( eDotationFamily_Mine, pTabWidget );
-    BuildGeneric( eDotationFamily_Explosif, pTabWidget );
-    BuildGeneric( eDotationFamily_Barbele, pTabWidget );
-    BuildGeneric( eDotationFamily_Ration, pTabWidget );
-    BuildGeneric( eDotationFamily_AgentExtincteur, pTabWidget );
-    BuildGeneric( eDotationFamily_Piece, pTabWidget );
-    BuildGeneric( eDotationFamily_Energy, pTabWidget );
-    BuildGeneric( eDotationFamily_Funeraire, pTabWidget );
+    pTabWidget_ = new QTabWidget();
+    BuildAmmunition(); // eDotationFamily_Munition
+    for( int i = eDotationFamily_Munition + 1; i < eNbrDotationFamily; ++i ) // Change enum order to change tab order.
+        BuildGeneric( static_cast< E_DotationFamily >( i ) );
 
     // Main widget
     pMainWidget_ = new QWidget();
     QHBoxLayout* pMainLayout = new QHBoxLayout( pMainWidget_ );
     pMainLayout->setSpacing( 10 );
     pMainLayout->setMargin( 10 );
-    pMainLayout->addWidget( pTabWidget );
+    pMainLayout->addWidget( pTabWidget_ );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Equipement_GUI::BuildGeneric
 // Created: APE 2004-12-28
 // -----------------------------------------------------------------------------
-void ADN_Equipement_GUI::BuildGeneric( E_DotationFamily nType, QTabWidget* pParent )
+void ADN_Equipement_GUI::BuildGeneric( E_DotationFamily nType )
 {
     // -------------------------------------------------------------------------
     // Creations
@@ -137,17 +130,19 @@ void ADN_Equipement_GUI::BuildGeneric( E_DotationFamily nType, QTabWidget* pPare
 
     // List view
     ADN_SearchListView< ADN_Equipement_GenericListView >* pSearchListView = new ADN_SearchListView< ADN_Equipement_GenericListView >( nType, data_.GetDotation( nType ).categories_, vConnectors );
+    vListViews_.push_back( pSearchListView->GetListView() );
+    assert( nType == vListViews_.size() - 1 );
 
     // Main page
     QWidget* pPage = CreateScrollArea( *pContent, pSearchListView );
-    pParent->addTab( pPage, ENT_Tr::ConvertFromDotationFamily( nType, ENT_Tr_ABC::eToTr ).c_str() );
+    pTabWidget_->addTab( pPage, ENT_Tr::ConvertFromDotationFamily( nType, ENT_Tr_ABC::eToTr ).c_str() );
 }
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Equipement_GUI::BuildAmmunition
 // Created: APE 2004-12-28
 // -----------------------------------------------------------------------------
-void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
+void ADN_Equipement_GUI::BuildAmmunition()
 {
     // -------------------------------------------------------------------------
     // Creations
@@ -275,12 +270,13 @@ void ADN_Equipement_GUI::BuildAmmunition( QTabWidget* pParent )
 
     // List view
     ADN_SearchListView< ADN_Equipement_AmmoListView >* pSearchListView = new ADN_SearchListView< ADN_Equipement_AmmoListView >( data_.GetDotation( eDotationFamily_Munition ).categories_, vConnectors );
-    connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_UsedByInfos& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_UsedByInfos& ) ) );
-    pAmmoListView_ = pSearchListView->GetListView();
+    connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_NavigationInfos::UsedBy& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_NavigationInfos::UsedBy& ) ) );
+    vListViews_.push_back( pSearchListView->GetListView() );
+    assert( eDotationFamily_Munition == vListViews_.size() - 1 );;
 
     // Main page
     QWidget* pPage = CreateScrollArea( *pContent, pSearchListView );
-    pParent->addTab( pPage, ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Munition, ENT_Tr_ABC::eToTr ).c_str() );
+    pTabWidget_->addTab( pPage, ENT_Tr::ConvertFromDotationFamily( eDotationFamily_Munition, ENT_Tr_ABC::eToTr ).c_str() );
 }
 
 // -----------------------------------------------------------------------------
@@ -444,7 +440,7 @@ void ADN_Equipement_GUI::ExportPKs( ADN_HtmlBuilder& builder, ADN_Equipement_Dat
 {
     if( !infos.bDirect_.GetData() )
         return;
-    pAmmoListView_->SetCurrentItem( &infos );
+    vListViews_[ eDotationFamily_Munition ]->SetCurrentItem( &infos );
     builder.Section( tr( "PKs" ) );
     if( pAttritionTable_ )
         builder.CreateTableFrom( *pAttritionTable_ );

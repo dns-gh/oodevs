@@ -27,15 +27,13 @@ using namespace ExcelFormat;
 // Created: JDY 03-07-07
 //-----------------------------------------------------------------------------
 ADN_Table::ADN_Table( QWidget* pParent, const char* szName )
-    : Q3Table             ( pParent, szName )
+    : Q3Table            ( pParent, szName )
     , ADN_Gfx_ABC        ()
     , bRefreshingEnabled_( true )
     , bPrinting_         ( false )
 {
     connect( this, SIGNAL( valueChanged( int, int) ), this, SLOT( doValueChanged( int, int ) ) );
-
     connect( this, SIGNAL( contextMenuRequested ( int, int, const QPoint &) ), this, SLOT( OnContextMenu( int, int, const QPoint & ) ) );
-
     connect( static_cast< ADN_App* >( qApp )->GetMainWindow(), SIGNAL(OpenModeToggled()), this, SLOT(UpdateEnableState()) );
 }
 
@@ -379,7 +377,7 @@ void ADN_Table::SaveToXls( const QString& path, const QString& sheetName ) const
             // Merge
             if( qItem->rowSpan() != 1  || qItem->colSpan() != 1 )
             {
-                sheet->MergeCells( row, col, qItem->rowSpan(), qItem->colSpan() );
+                sheet->MergeCells( row, col, static_cast< USHORT >( qItem->rowSpan() ), static_cast< USHORT >( qItem->colSpan() ) );
                 format.set_alignment( EXCEL_VALIGN_CENTRED );
                 for( int i = 0; i < qItem->rowSpan(); ++i )
                     for( int j = 0; j < qItem->colSpan(); ++j )
@@ -420,3 +418,121 @@ void ADN_Table::SaveToXls( const QString& path, const QString& sheetName ) const
 
     xls.SaveAs( path.ascii() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::GetToolTips
+// Created: ABR 2012-02-16
+// -----------------------------------------------------------------------------
+QString ADN_Table::GetToolTips( int nRow, int nCol ) const
+{
+    assert( nRow >= 0 && nRow < numRows() && nCol >= 0 && nCol < numCols() );
+
+    Q3TableItem* it = item( nRow, nCol );
+    if( it )
+        return it->text();
+    else
+        return "";
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::event
+// Created: ABR 2012-02-16
+// -----------------------------------------------------------------------------
+bool ADN_Table::event(QEvent *event)
+{
+    if( event->type() == QEvent::ToolTip )
+    {
+        QHelpEvent *helpEvent = static_cast<QHelpEvent *>(event);
+
+        const int yPos = helpEvent->pos().y();
+        const int xPos = helpEvent->pos().x();
+        bool mouseOnHHeader = false;
+        bool mouseOnVHeader = false;
+        int row = 0;
+        int col = 0;
+
+        if( horizontalHeader()->isVisible() )
+        {
+            if( yPos <= horizontalHeader()->height() )
+                mouseOnHHeader = true;
+            else
+                row = rowAt( yPos - horizontalHeader()->height() + verticalScrollBar()->sliderPosition() );
+        }
+        else
+            row = rowAt( yPos + verticalScrollBar()->sliderPosition() );
+
+        if( verticalHeader()->isVisible() )
+        {
+            if( xPos <= verticalHeader()->width() )
+                mouseOnVHeader = true;
+            else
+                col = columnAt( xPos - verticalHeader()->width() + horizontalScrollBar()->sliderPosition() );
+        }
+        else
+            col = columnAt( xPos + horizontalScrollBar()->sliderPosition() );
+
+        // Outside, or on both header.
+        if( row == -1 || col == -1 || ( mouseOnHHeader && mouseOnVHeader ) )
+        {
+            QToolTip::hideText();
+            event->ignore();
+        }
+        else
+        {
+            QString toolTips;
+            if( mouseOnHHeader )
+                toolTips = horizontalHeader()->label( col );
+            else if( mouseOnVHeader )
+                toolTips = verticalHeader()->label( row );
+            else
+                toolTips = GetToolTips( row, col );
+
+            if( !toolTips.isEmpty() )
+                QToolTip::showText( helpEvent->globalPos(), toolTips );
+        }
+        return true;
+    }
+    return Q3Table::event(event);
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::eventFilter
+// Created: ABR 2012-03-09
+// -----------------------------------------------------------------------------
+bool ADN_Table::eventFilter( QObject * watched, QEvent * event )
+{
+    if( QMouseEvent* mouseEvent = dynamic_cast< QMouseEvent* >( event ) )
+        if( mouseEvent && ( mouseEvent->button() == Qt::XButton1 || mouseEvent->button() == Qt::XButton2 ) )
+            return false;
+    return Q3Table::eventFilter( watched, event );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::SetGoToOnDoubleClick
+// Created: ABR 2012-03-09
+// -----------------------------------------------------------------------------
+void ADN_Table::SetGoToOnDoubleClick( E_WorkspaceElements targetTab, int subTargetTab /*= -1*/, int col /*= 0*/ )
+{
+    goToInfo_.targetTab_ = targetTab;
+    goToInfo_.subTargetTab_ = subTargetTab;
+    goToInfo_.sourceColumn_ = col;
+    connect( this, SIGNAL( doubleClicked( int, int, int, const QPoint& ) ), SLOT( GoToOnDoubleClicked( int, int, int, const QPoint& ) ) );
+    connect( this, SIGNAL( GoToRequested( const ADN_NavigationInfos::GoTo& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnGoToRequested( const ADN_NavigationInfos::GoTo& ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Table::GoToOnDoubleClicked
+// Created: ABR 2012-03-09
+// -----------------------------------------------------------------------------
+void ADN_Table::GoToOnDoubleClicked( int row, int col, int button, const QPoint& )
+{
+    if( button != Qt::LeftButton || !( row >= 0 && row < numRows() && col >= 0 && col < numCols() ) || col != goToInfo_.sourceColumn_ )
+        return;
+    Q3TableItem* qItem = item( row, col );
+    if( !qItem )
+        return;
+    goToInfo_.targetName_ = qItem->text();
+    assert( goToInfo_.targetTab_ != eNbrWorkspaceElements );
+    emit( GoToRequested( goToInfo_ ) );
+}
+

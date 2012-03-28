@@ -22,7 +22,7 @@ class ADN_Table;
 */
 // Created: APE 2004-12-07
 // =============================================================================
-class ADN_Sensors_GUI : public ADN_GUI_ABC
+class ADN_Sensors_GUI : public ADN_Tabbed_GUI_ABC
 {
     Q_OBJECT
 

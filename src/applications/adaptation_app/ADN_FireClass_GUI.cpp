@@ -80,6 +80,7 @@ void ADN_FireClass_GUI::Build()
     // Extinguisher
     Q3GroupBox* pExtinguisherAgentsGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Extinguisher agents" ) );
     ADN_ExtinguisherAgentInfos_Table* pExtinguisherAgentInfosTable = new ADN_ExtinguisherAgentInfos_Table( pExtinguisherAgentsGroup );
+    pExtinguisherAgentInfosTable->SetGoToOnDoubleClick( ::eEquipement );
     vInfosConnectors[ eExtinguisherAgents ] = &pExtinguisherAgentInfosTable->GetConnector();
     // Weather fire effects
     Q3GroupBox* pWeatherFireEffectsGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Weather fire effects" ) );
@@ -109,7 +110,7 @@ void ADN_FireClass_GUI::Build()
 
     // List view
     ADN_SearchListView< ADN_FireClass_ListView >* pSearchListView = new ADN_SearchListView< ADN_FireClass_ListView >( data_.GetFireClassesInfos(), vInfosConnectors );
-
+    pListView_ = pSearchListView->GetListView();
     // Sub content
     QWidget* pSubContent = CreateScrollArea( *pFireClassContent, pSearchListView, false, false, true, 0, 0 );
 

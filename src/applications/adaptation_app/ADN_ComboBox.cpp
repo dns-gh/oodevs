@@ -257,3 +257,12 @@ void ADN_ComboBox::HideItem( const QString txt )
 {
     vHiddenItem_.push_back( txt );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ComboBox::wheelEvent
+// Created: ABR 2012-03-09
+// -----------------------------------------------------------------------------
+void ADN_ComboBox::wheelEvent( QWheelEvent* event )
+{
+    event->ignore();
+}

@@ -24,17 +24,17 @@ enum E_LocationType
 
 enum E_DotationFamily
 {
-    eDotationFamily_Munition,
-    eDotationFamily_Carburant,
-    eDotationFamily_Explosif,
-    eDotationFamily_Mine,
-    eDotationFamily_Barbele,
-    eDotationFamily_Piece,
-    eDotationFamily_Ration,
-    eDotationFamily_AgentExtincteur,
-    eDotationFamily_Energy,
-    eDotationFamily_Funeraire,
-    eNbrDotationFamily
+    eDotationFamily_Munition        = 0,
+    eDotationFamily_Carburant       = 1,
+    eDotationFamily_Mine            = 2,
+    eDotationFamily_Explosif        = 3,
+    eDotationFamily_Barbele         = 4,
+    eDotationFamily_Ration          = 5,
+    eDotationFamily_AgentExtincteur = 6,
+    eDotationFamily_Piece           = 7,
+    eDotationFamily_Energy          = 8,
+    eDotationFamily_Funeraire       = 9,
+    eNbrDotationFamily              = 10
 };
 
 enum E_MunitionType

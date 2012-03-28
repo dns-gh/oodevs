@@ -74,7 +74,6 @@
 #include "ADN_UnitSymbols_GUI.h"
 #include "ADN_Urban_Data.h"
 #include "ADN_Urban_GUI.h"
-#include "ADN_UsedByInfos.h"
 #include "ADN_Weapons_Data.h"
 #include "ADN_Weapons_GUI.h"
 #include "ADN_WorkspaceElement.h"
@@ -523,8 +522,23 @@ void ADN_Workspace::ResetProgressIndicator()
 // Name: ADN_Workspace::OnUsersListRequested
 // Created: ABR 2012-01-26
 // -----------------------------------------------------------------------------
-void ADN_Workspace::OnUsersListRequested( const ADN_UsedByInfos& usedByInfo )
+void ADN_Workspace::OnUsersListRequested( const ADN_NavigationInfos::UsedBy& usedByInfo )
 {
     emit ChangeTab( usedByInfo.targetTab_ );
     elements_[ usedByInfo.targetTab_ ]->GetGuiABC().ApplyFilter( usedByInfo );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::OnGoToRequested
+// Created: ABR 2012-03-05
+// -----------------------------------------------------------------------------
+void ADN_Workspace::OnGoToRequested( const ADN_NavigationInfos::GoTo& goToInfo )
+{
+    emit ChangeTab( goToInfo.targetTab_ );
+    assert( elements_[ goToInfo.targetTab_ ] != 0 );
+    if( goToInfo.subTargetTab_ != -1 )
+        elements_[ goToInfo.targetTab_ ]->GetGuiABC().ChangeCurrentSubTab( goToInfo.subTargetTab_ );
+
+    if( !elements_[ goToInfo.targetTab_ ]->GetGuiABC().SelectItem( goToInfo.targetName_ ) )
+        elements_[ goToInfo.targetTab_ ]->GetGuiABC().FindSubTabAndSelectItem( goToInfo.targetName_, goToInfo.sourceColumn_ );
 }

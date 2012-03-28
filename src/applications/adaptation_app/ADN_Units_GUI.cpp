@@ -16,6 +16,7 @@
 #include "ADN_ComboBox_Vector.h"
 #include "ADN_CommonGfx.h"
 #include "ADN_Composantes_Dotations_GUI.h"
+#include "ADN_GoToButton.h"
 #include "ADN_GroupBox.h"
 #include "ADN_GuiBuilder.h"
 #include "ADN_HtmlBuilder.h"
@@ -83,8 +84,10 @@ void ADN_Units_GUI::Build()
     builder.SetToolTip( tr( "The type of unit in the simulation. This type must match the associated decisional model." ) );
     connect( pTypeCombo_, SIGNAL( activated( const QString& ) ), this, SLOT( OnTypeChanged() ) );
     // Model
-    builder.AddField< ADN_ComboBox_Vector<ADN_Models_Data::ModelInfos> >( pInfoHolder, tr( "Doctrine model" ), vInfosConnectors[eModel] );
+    ADN_GoToButton* goToButton = new ADN_GoToButton( ::eModels, ADN_Models_Data::ModelInfos::ePawn );
+    goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector<ADN_Models_Data::ModelInfos> >( pInfoHolder, tr( "Doctrine model" ), vInfosConnectors[eModel], 0, eNone, goToButton ) );
     builder.SetToolTip( tr( "The decisional model associated to the unit." ) );
+
     // Decontamination delay
     ADN_TimeField* pTimeField = builder.AddField<ADN_TimeField>( pInfoHolder, tr( "Decontamination delay" ), vInfosConnectors[eDecontaminationDelay], 0, eGreaterZero );
     pTimeField->SetMinimumValueInSecond( 1 );
@@ -187,6 +190,7 @@ void ADN_Units_GUI::Build()
     // Composantes
     Q3VGroupBox* pComposantesGroup = new Q3VGroupBox( tr( "Equipments" ) );
     ADN_Units_Composantes_GUI * pComposantes = new ADN_Units_Composantes_GUI( pComposantesGroup );
+    pComposantes->SetGoToOnDoubleClick( ::eComposantes );
     vInfosConnectors[eComposantes] = &pComposantes->GetConnector();
     connect( pComposantes, SIGNAL( valueChanged ( int, int ) ), this, SLOT( OnComponentChanged() ) );
     connect( pComposantes, SIGNAL( currentChanged ( int, int ) ), this, SLOT( OnComponentChanged() ) );
@@ -201,6 +205,7 @@ void ADN_Units_GUI::Build()
     ADN_GroupBox* pDotationsGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "Complementary resources" ) );
     vInfosConnectors[eHasTC1] = &pDotationsGroup->GetConnector();
     ADN_Composantes_Dotations_GUI* pDotations = new ADN_Composantes_Dotations_GUI( false, pDotationsGroup );
+    pDotations->SetGoToOnDoubleClick( ::eEquipement );
     vInfosConnectors[eContenancesTC1] = &pDotations->GetConnector();
 
     // Stock
@@ -264,8 +269,8 @@ void ADN_Units_GUI::Build()
 
     // List view
     ADN_SearchListView< ADN_ListView_Units >* pSearchListView = new ADN_SearchListView< ADN_ListView_Units >( data_.GetUnitsInfos(), vInfosConnectors );
-    connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_UsedByInfos& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_UsedByInfos& ) ) );
-    connect( this, SIGNAL( ApplyFilterList( const ADN_UsedByInfos& ) ), pSearchListView, SLOT( OnApplyFilterList( const ADN_UsedByInfos& ) ) );
+    connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_NavigationInfos::UsedBy& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_NavigationInfos::UsedBy& ) ) );
+    connect( this, SIGNAL( ApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ), pSearchListView, SLOT( OnApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ) );
     pListView_ = pSearchListView->GetListView();
     connect( pListView_, SIGNAL( selectionChanged() ), this, SLOT( OnTypeChanged() ) );
 
@@ -430,6 +435,6 @@ void ADN_Units_GUI::PreloadUnitSymbolComboBox( ADN_Units_Data::UnitInfos* pValid
 {
     if ( !pListView_ )
         return;
-
-   pListView_->ConnectNatureSymbol( pValidUnitInfos );
+    if( ADN_ListView_Units* unitListView = dynamic_cast< ADN_ListView_Units* >( pListView_ ) )
+        unitListView->ConnectNatureSymbol( pValidUnitInfos );
 }

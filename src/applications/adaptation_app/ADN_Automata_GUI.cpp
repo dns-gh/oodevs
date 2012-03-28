@@ -36,6 +36,7 @@
 #include "ADN_ListView.h"
 #include "ADN_AutomatLog_ListView.h"
 #include "ADN_AutomatLogCategory_ListView.h"
+#include "ADN_GoToButton.h"
 #include "UnitsFilter.h"
 
 // -----------------------------------------------------------------------------
@@ -80,7 +81,8 @@ void ADN_Automata_GUI::Build()
     // Automaton type
     builder.AddEnumField<E_AgentTypeAutomate>( pInfoHolder, tr( "Type" ), vInfosConnectors[eAgentType], ADN_Tr::ConvertFromAgentTypeAutomate );
     // Model
-    builder.AddField< ADN_ComboBox_Vector<ADN_Models_Data::ModelInfos> >( pInfoHolder, tr( "Doctrine model" ), vInfosConnectors[eModel] );
+    ADN_GoToButton* goToButton = new ADN_GoToButton( ::eModels, ADN_Models_Data::ModelInfos::eAutomat );
+    goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector<ADN_Models_Data::ModelInfos> >( pInfoHolder, tr( "Doctrine model" ), vInfosConnectors[eModel], 0, eNone, goToButton ) );
     // Unit
     pFilter_ = builder.AddField< UnitsFilter >( pInfoHolder, tr( "Command post" ), vInfosConnectors[eUnit] );
     // Feedback time
@@ -90,6 +92,7 @@ void ADN_Automata_GUI::Build()
     QGroupBox* pSubUnitsGroup = new QGroupBox( tr( "Sub-units" ) );
     QVBoxLayout* pSubUnitsLayout = new QVBoxLayout( pSubUnitsGroup );
     ADN_Automata_SubUnitsTable* pSubUnitsTable = new ADN_Automata_SubUnitsTable( pSubUnitsGroup );
+    pSubUnitsTable->SetGoToOnDoubleClick( ::eUnits );
     pSubUnitsLayout->addWidget( pSubUnitsTable, 1 );
     vInfosConnectors[eSubUnit] = &pSubUnitsTable->GetConnector();
     connect( pSubUnitsTable, SIGNAL( AddItem( const std::string& ) ), this, SLOT( OnItemAdded( const std::string& ) ) );
@@ -109,7 +112,7 @@ void ADN_Automata_GUI::Build()
 
     // List view
     ADN_SearchListView< ADN_Automata_ListView >* pSearchListView = new ADN_SearchListView< ADN_Automata_ListView >( data_.GetAutomata(), vInfosConnectors );
-    connect( this, SIGNAL( ApplyFilterList( const ADN_UsedByInfos& ) ), pSearchListView, SLOT( OnApplyFilterList( const ADN_UsedByInfos& ) ) );
+    connect( this, SIGNAL( ApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ), pSearchListView, SLOT( OnApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ) );
     pAutomataList_ = pSearchListView->GetListView();
 
     // Main widget

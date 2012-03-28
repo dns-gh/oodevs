@@ -84,6 +84,7 @@ void ADN_Objects_GUI::Build()
         ADN_GroupBox* buildable = new ADN_GroupBox( 3, Qt::Horizontal, tr( "Buildable" ), constructor );
         vInfosConnectors[ eBuildableCapacityPresent ] = & buildable->GetConnector();
         ADN_Composantes_Dotations_GUI* pDotations = new ADN_Composantes_Dotations_GUI( false, buildable, false, false );
+        pDotations->SetGoToOnDoubleClick( ::eEquipement );
         vInfosConnectors[ eBuildableCapacity_Dotation ] = &pDotations->GetConnector();
 
         // Improvable
@@ -91,6 +92,7 @@ void ADN_Objects_GUI::Build()
         vInfosConnectors[ eImprovableCapacityPresent ] = & improvable->GetConnector();
         {
             ADN_Composantes_Dotations_GUI* pDotations = new ADN_Composantes_Dotations_GUI( false, improvable, false, false );
+            pDotations->SetGoToOnDoubleClick( ::eEquipement );
             vInfosConnectors[ eImprovableCapacity_Dotation ] = &pDotations->GetConnector();
         }
 
@@ -320,6 +322,7 @@ void ADN_Objects_GUI::Build()
 
     // List view
     ADN_SearchListView< ADN_ListView_Objects >* pSearchListView = new ADN_SearchListView< ADN_ListView_Objects >( data_.GetObjectInfos(), vInfosConnectors );
+    pListView_ = pSearchListView->GetListView();
 
     // Main widget
     pMainWidget_ = CreateScrollArea( *pContent_, pSearchListView );

@@ -23,6 +23,7 @@
 #include "ADN_Project_Data.h"
 #include "ADN_Table.h"
 #include "ADN_Gfx_ABC.h"
+#include "ADN_GoToButton.h"
 #include "ADN_Validator.h"
 
 // -----------------------------------------------------------------------------
@@ -117,7 +118,7 @@ void ADN_GuiBuilder::SetToolTip( const char* szToolTip )
         QToolTip::add( pCurrentFieldWidget1_, szToolTip );
     if( pCurrentFieldWidget2_ != 0 )
         QToolTip::add( pCurrentFieldWidget2_, szToolTip );
-    if( pCurrentFieldWidget3_ != 0 )
+    if( pCurrentFieldWidget3_ != 0 && !dynamic_cast< ADN_GoToButton* >( pCurrentFieldWidget3_ ) )
         QToolTip::add( pCurrentFieldWidget3_, szToolTip );
 }
 

@@ -191,7 +191,6 @@ private:
     //@{
     ADN_Composantes_Data& data_;
 
-    ADN_ListView_Composantes* pListView_;
     ADN_ComboBox* pCombo_;
     Q3GroupBox* pBreakdownsGroup_;
     ADN_Composantes_Speeds_GUI* pSpeeds_;

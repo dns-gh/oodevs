@@ -126,8 +126,10 @@ void ADN_Composantes_GUI::Build()
     // Breakdowns
     pBreakdownsGroup_ = new Q3GroupBox( 1, Qt::Horizontal, tr( "Breakdowns" ) );
     ADN_Composantes_BreakdownsTable* pAttritionBreakdowns = new ADN_Composantes_BreakdownsTable( tr( "Attrition breakdowns" ).ascii(), pBreakdownsGroup_ );
+    pAttritionBreakdowns->SetGoToOnDoubleClick( ::eBreakdowns );
     vInfosConnectors[eAttritionBreakdowns] = &pAttritionBreakdowns->GetConnector();
     ADN_Composantes_BreakdownsTable* pRandomBreakdowns = new ADN_Composantes_BreakdownsTable( tr( "Random breakdowns" ).ascii(), pBreakdownsGroup_ );
+    pRandomBreakdowns->SetGoToOnDoubleClick( ::eBreakdowns );
     vInfosConnectors[eRandomBreakdowns] = &pRandomBreakdowns->GetConnector();
 
     // Speeds
@@ -140,22 +142,27 @@ void ADN_Composantes_GUI::Build()
     // Sensors
     Q3HGroupBox* pSensorsGroup = new Q3HGroupBox( tr( "Sensors" ) );
     pSensors_ = new ADN_Composantes_Sensors_GUI( pSensorsGroup );
+    pSensors_->SetGoToOnDoubleClick( ::eSensors, 0 );
     vInfosConnectors[eSensors] = &pSensors_->GetConnector();
     // Special sensors
     Q3HGroupBox* pRadarsGroup = new Q3HGroupBox( tr( "Special sensors" ) );
     pRadars_ = new ADN_Composantes_RadarsListView( pRadarsGroup );
+    pRadars_->SetGoToOnDoubleClick( ::eSensors, 1 );
     vInfosConnectors[eRadars] = &pRadars_->GetConnector();
     // Weapons
     Q3HGroupBox* pWeaponsGroup = new Q3HGroupBox( tr( "Weapon systems" ) );
     pWeapons_ = new ADN_Composantes_WeaponsListView( pWeaponsGroup );
+    pWeapons_->SetGoToOnDoubleClick( ::eWeapons );
     vInfosConnectors[eWeapons] = &pWeapons_->GetConnector();
     // Active Protections
     Q3HGroupBox* pActiveProtectionsGroup = new Q3HGroupBox( tr( "Active Protections" ) );
     pActiveProtections_ = new ADN_Composantes_ActiveProtectionsListView( pActiveProtectionsGroup );
+    pActiveProtections_->SetGoToOnDoubleClick( ::eActiveProtections );
     vInfosConnectors[eActiveProtections] = &pActiveProtections_->GetConnector();
     // Dotations
     Q3HGroupBox* pDotationGroup = new Q3HGroupBox( tr( "Resources" ) );
     pDotations_ = new ADN_Composantes_Dotations_GUI( true, pDotationGroup );
+    pDotations_->SetGoToOnDoubleClick( ::eEquipement ); // $$$$ ABR 2012-03-09: TODO, GOOD TAB
     vInfosConnectors[eDotations] = &pDotations_->GetConnector();
     // Consumptions
     Q3HGroupBox* pConsumptionsGroup = new Q3HGroupBox( tr( "Consumptions" ) );
@@ -164,6 +171,7 @@ void ADN_Composantes_GUI::Build()
     // Objects
     Q3HGroupBox* pObjectsGroup = new Q3HGroupBox( tr( "Objects" ) );
     ADN_ListView_Composantes_Objects* pListObjects = new ADN_ListView_Composantes_Objects( pObjectsGroup );
+    pListObjects->SetGoToOnDoubleClick( ::eObjects );
     vInfosConnectors[eObjects] = &pListObjects->GetConnector();
 
     // Object grid
@@ -215,22 +223,23 @@ void ADN_Composantes_GUI::Build()
     pDataPageLayout->addMultiCellWidget( pIdGroupBox       , 1, 1, 0, 0 );
     pDataPageLayout->addMultiCellWidget( pInfoGroupBox     , 2, 2, 0, 0 );
     pDataPageLayout->addMultiCellWidget( pConsumptionsGroup, 3, 3, 0, 0 );
-    pDataPageLayout->addMultiCellWidget( pBreakdownsGroup_ , 4, 6, 0, 0 );
+    pDataPageLayout->addMultiCellWidget( pBreakdownsGroup_ , 4, 5, 0, 0 );
 
     pDataPageLayout->addMultiCellWidget( pTroopGroupBox         , 0, 3, 1, 1 );
     pDataPageLayout->addMultiCellWidget( pSensorsGroup          , 3, 3, 1, 1 );
     pDataPageLayout->addMultiCellWidget( pRadarsGroup           , 4, 4, 1, 1 );
     pDataPageLayout->addMultiCellWidget( pWeaponsGroup          , 5, 5, 1, 1 );
-    pDataPageLayout->addMultiCellWidget( pActiveProtectionsGroup, 6, 6, 1, 1 );
 
     pDataPageLayout->addMultiCellWidget( pSpeedGroup   , 0, 2, 2, 2 );
     pDataPageLayout->addMultiCellWidget( pDotationGroup, 3, 4, 2, 2 );
-    pDataPageLayout->addMultiCellWidget( pObjectsGroup , 5, 6, 2, 2 );
+    pDataPageLayout->addMultiCellWidget( pActiveProtectionsGroup, 5, 5, 2, 2 );
+
+    pDataPageLayout->addMultiCellWidget( pObjectsGroup , 6, 6, 0, 2 );
 
     // List view
     ADN_SearchListView< ADN_ListView_Composantes >* pSearchListView = new ADN_SearchListView< ADN_ListView_Composantes >( data_.GetComposantes(), vInfosConnectors );
-    connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_UsedByInfos& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_UsedByInfos& ) ) );
-    connect( this, SIGNAL( ApplyFilterList( const ADN_UsedByInfos& ) ), pSearchListView, SLOT( OnApplyFilterList( const ADN_UsedByInfos& ) ) );
+    connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_NavigationInfos::UsedBy& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_NavigationInfos::UsedBy& ) ) );
+    connect( this, SIGNAL( ApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ), pSearchListView, SLOT( OnApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ) );
     pListView_ = pSearchListView->GetListView();
     connect( pListView_, SIGNAL( selectionChanged() ), this, SLOT( OnProtectionTypeChanged() ) );
     pConsumptions_->SetListView( pListView_ );

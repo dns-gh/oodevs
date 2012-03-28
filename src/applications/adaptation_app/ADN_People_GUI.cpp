@@ -10,6 +10,7 @@
 #include "adaptation_app_pch.h"
 #include "ADN_People_GUI.h"
 #include "ADN_GuiBuilder.h"
+#include "ADN_GoToButton.h"
 #include "ADN_People_Data.h"
 #include "ADN_People_ListView.h"
 #include "ADN_ComboBox_Vector.h"
@@ -52,11 +53,13 @@ void ADN_People_GUI::Build()
     T_ConnectorVector vInfosConnectors( eNbrGuiElements, static_cast< ADN_Connector_ABC* >( 0 ) );
 
     // Population parameters
-    Q3GroupBox* pPropertiesGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Details" ) );
-    builder.AddField< ADN_EditLine_String >( pPropertiesGroup, tr( "Name" ), vInfosConnectors[ eName ] );
-    builder.AddField< ADN_ComboBox_Vector< ADN_Population_Data::PopulationInfos > >( pPropertiesGroup, tr( "Associated Crowd" ), vInfosConnectors[ eModel ] );
+    QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
+    builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name" ), vInfosConnectors[ eName ] );
+    ADN_GoToButton* goToButton = new ADN_GoToButton( ::ePopulation );
+    goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector< ADN_Population_Data::PopulationInfos > >( pInfoHolder, tr( "Associated Crowd" ), vInfosConnectors[ eModel ], 0, eNone, goToButton ) );
     // repartition
-    ADN_MultiPercentage* pMultiPercentage = new ADN_MultiPercentage( pPropertiesGroup, builder );
+    Q3GroupBox* pRepartition = new Q3GroupBox( 3, Qt::Horizontal, tr( "Distribution" ) );
+    ADN_MultiPercentage* pMultiPercentage = new ADN_MultiPercentage( pRepartition, builder );
     pMultiPercentage->AddLine( tr( "Males" ), vInfosConnectors[ eMale ] );
     pMultiPercentage->AddLine( tr( "Females" ), vInfosConnectors[ eFemale ] );
     pMultiPercentage->AddLine( tr( "Children" ), vInfosConnectors[ eChildren ] );
@@ -86,19 +89,20 @@ void ADN_People_GUI::Build()
     // -------------------------------------------------------------------------
     // Content layout
     QWidget* pContent = new QWidget();
-    //QVBoxLayout* pContentLayout = new QVBoxLayout( pContent );
-    QGridLayout* pContentLayout = new QGridLayout( pContent, 4, 2 );
+    QGridLayout* pContentLayout = new QGridLayout( pContent, 5, 2 );
     pContentLayout->setMargin( 10 );
     pContentLayout->setSpacing( 10 );
     pContentLayout->setAlignment( Qt::AlignTop );
-    pContentLayout->addWidget( pPropertiesGroup, 0, 0, 1, 2 );
-    pContentLayout->addWidget( pSecurityGroup, 1, 0, 1, 2 );
-    pContentLayout->addWidget( pHealthGroup, 3, 0, 1, 2 );
-    pContentLayout->addWidget( pScheduleGroup, 4, 0 );
-    pContentLayout->addWidget( pConsumptionsGroup, 4, 1 );
+    pContentLayout->addWidget( pInfoHolder, 0, 0, 1, 2 );
+    pContentLayout->addWidget( pRepartition, 1, 0, 1, 2 );
+    pContentLayout->addWidget( pSecurityGroup, 2, 0, 1, 2 );
+    pContentLayout->addWidget( pHealthGroup, 4, 0, 1, 2 );
+    pContentLayout->addWidget( pScheduleGroup, 5, 0 );
+    pContentLayout->addWidget( pConsumptionsGroup, 5, 1 );
 
     // List view
     ADN_SearchListView< ADN_People_ListView >* pSearchListView = new ADN_SearchListView< ADN_People_ListView >( data_.GetPeople(), vInfosConnectors );
+    pListView_ = pSearchListView->GetListView();
     connect( pSearchListView->GetListView(), SIGNAL( ItemSelected( void* ) ), pTable, SLOT( OnPeopleChanged( void* ) ) );
 
     // Main widget

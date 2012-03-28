@@ -12,7 +12,7 @@
 
 #include <boost/noncopyable.hpp>
 #include "clients_gui/SearchLineEdit.h"
-#include "ADN_UsedByInfos.h"
+#include "ADN_NavigationInfos.h"
 
 class ADN_Ref_ABC;
 
@@ -32,7 +32,7 @@ public:
     virtual ~ADN_SearchListView_ABC() {}
 
 public slots:
-    virtual void OnApplyFilterList( const ADN_UsedByInfos& /*usedByInfos*/ ) {}
+    virtual void OnApplyFilterList( const ADN_NavigationInfos::UsedBy& /*usedByInfos*/ ) {}
 };
 
 // =============================================================================
@@ -59,7 +59,7 @@ public:
     //! @name Operations
     //@{
     ListView* GetListView() const;
-    virtual void OnApplyFilterList( const ADN_UsedByInfos& usedByInfos );
+    virtual void OnApplyFilterList( const ADN_NavigationInfos::UsedBy& usedByInfos );
     //@}
 
 private:
@@ -179,7 +179,7 @@ ListView* ADN_SearchListView< ListView >::GetListView() const
 // Created: ABR 2012-01-26
 // -----------------------------------------------------------------------------
 template< typename ListView >
-void ADN_SearchListView< ListView >::OnApplyFilterList( const ADN_UsedByInfos& usedByInfos )
+void ADN_SearchListView< ListView >::OnApplyFilterList( const ADN_NavigationInfos::UsedBy& usedByInfos )
 {
     if( usedByInfos.subTargetTab_ != subTab_ )
         return;

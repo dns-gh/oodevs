@@ -60,7 +60,7 @@ public:
 
     void setEnabled( bool b );
 
-    virtual void wheelEvent( QWheelEvent* ) {}
+    virtual void wheelEvent( QWheelEvent* );
 
 protected:
     void*                       pCurData_;

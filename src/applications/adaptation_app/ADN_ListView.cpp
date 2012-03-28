@@ -109,6 +109,24 @@ ADN_ListViewItem* ADN_ListView::FindItem(void* data)
     return 0;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::FindItem
+// Created: ABR 2012-03-09
+// -----------------------------------------------------------------------------
+ADN_ListViewItem* ADN_ListView::FindItem( const QString& itemName, int col /* = 0 */ )
+{
+    Q3ListViewItemIterator it( this );
+    while( it.current() != 0 )
+    {
+        ADN_ListViewItem* pCurr=(ADN_ListViewItem*)it.current();
+        if( pCurr->text( col ) == itemName )
+            return pCurr;
+        ++it;
+    }
+    return 0;
+}
+
+
 inline void SetAutoClear(T_ConnectorVector& v,bool b)
 {
     for(  T_ConnectorVector::iterator itConnector=v.begin();itConnector!=v.end();++itConnector)
@@ -119,10 +137,10 @@ inline void SetAutoClear(T_ConnectorVector& v,bool b)
 // Name: ADN_ListView::SetCurrentItem
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-void  ADN_ListView::SetCurrentItem( void* pData )
+bool ADN_ListView::SetCurrentItem( void* pData )
 {
     if( pCurData_ == pData )
-        return;
+        return false;
 
     if( pData == 0 )
         SetAutoClear( vItemConnectors_, true );
@@ -142,7 +160,46 @@ void  ADN_ListView::SetCurrentItem( void* pData )
     this->blockSignals( false );
 
     emit ItemSelected( pData );
+
+    ensureItemVisible( pItem );
+
+    return pData != 0;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::SetCurrentItem
+// Created: ABR 2012-03-05
+// -----------------------------------------------------------------------------
+bool ADN_ListView::SetCurrentItem( const QString& itemName )
+{
+    if( itemName.isEmpty() )
+        return false;
+
+    Q3ListViewItem* pItem = FindItem( firstChild(), itemName );
+
+    if( pItem != 0 )
+        return SetCurrentItem( static_cast<ADN_ListViewItem*>( pItem )->GetData() );
+    else
+        return SetCurrentItem( (void*)0 );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::FindItem
+// Created: ABR 2012-03-05
+// -----------------------------------------------------------------------------
+ADN_ListViewItem* ADN_ListView::FindItem( Q3ListViewItem* qItem, const QString& itemName )
+{
+    ADN_ListViewItem* result = 0;
+    for( Q3ListViewItem* item = qItem; item != 0 && result == 0; item = item->nextSibling() )
+    {
+        if( item->text( 0 ) == itemName )
+            result = static_cast< ADN_ListViewItem* >( item );
+        else
+            result = FindItem( item->firstChild(), itemName );
+    }
+    return result;
+}
+
 
 //-----------------------------------------------------------------------------
 // Name: ADN_ListView::OnContextMenu
@@ -268,12 +325,12 @@ void ADN_ListView::ContextMenuDelete()
 // Name: ADN_ListView::SetCurrentItem
 // Created: JDY 03-07-02
 //-----------------------------------------------------------------------------
-void  ADN_ListView::SetCurrentItem( Q3ListViewItem* pItem )
+bool ADN_ListView::SetCurrentItem( Q3ListViewItem* pItem )
 {
     if( pItem != 0 )
-        SetCurrentItem( static_cast<ADN_ListViewItem*>( pItem )->GetData() );
+        return SetCurrentItem( static_cast<ADN_ListViewItem*>( pItem )->GetData() );
     else
-        SetCurrentItem( (void*)0 );
+        return SetCurrentItem( (void*)0 );
 }
 
 //-----------------------------------------------------------------------------
@@ -618,4 +675,42 @@ void ADN_ListView::FillSheetFromItem( Q3ListViewItem* qItem, BasicExcelWorksheet
         cell->SetFormat( format );
     }
     ++row;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::eventFilter
+// Created: ABR 2012-03-09
+// -----------------------------------------------------------------------------
+bool ADN_ListView::eventFilter( QObject * watched, QEvent * event )
+{
+    if( QMouseEvent* mouseEvent = dynamic_cast< QMouseEvent* >( event ) )
+        if( mouseEvent && ( mouseEvent->button() == Qt::XButton1 || mouseEvent->button() == Qt::XButton2 ) )
+            return false;
+    return Q3ListView::eventFilter( watched, event );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::SetGoToOnDoubleClick
+// Created: ABR 2012-03-05
+// -----------------------------------------------------------------------------
+void ADN_ListView::SetGoToOnDoubleClick( E_WorkspaceElements targetTab, int subTargetTab /*= -1*/, int col /*= 0*/ )
+{
+    goToInfo_.targetTab_ = targetTab;
+    goToInfo_.subTargetTab_ = subTargetTab;
+    goToInfo_.sourceColumn_ = col;
+    connect( this, SIGNAL( doubleClicked( Q3ListViewItem* ) ), SLOT( GoToOnDoubleClicked( Q3ListViewItem* ) ) );
+    connect( this, SIGNAL( GoToRequested( const ADN_NavigationInfos::GoTo& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnGoToRequested( const ADN_NavigationInfos::GoTo& ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ListView::GoToOnDoubleClicked
+// Created: ABR 2012-03-05
+// -----------------------------------------------------------------------------
+void ADN_ListView::GoToOnDoubleClicked( Q3ListViewItem* pItem )
+{
+    if( !pItem )
+        return;
+    goToInfo_.targetName_ = pItem->text( goToInfo_.sourceColumn_ );
+    assert( goToInfo_.targetTab_ != eNbrWorkspaceElements );
+    emit( GoToRequested( goToInfo_ ) );
 }

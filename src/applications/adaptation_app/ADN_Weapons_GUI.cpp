@@ -20,6 +20,7 @@
 #include "ADN_EditLine.h"
 #include "ADN_Launchers_Data.h"
 #include "ADN_Equipement_Data.h"
+#include "ADN_GoToButton.h"
 #include "ADN_HumanFactors_Data.h"
 #include "ADN_Weapons_PhSizeListView.h"
 #include "ADN_Weapons_PhTable.h"
@@ -190,10 +191,16 @@ void ADN_Weapons_GUI::Build()
     QWidget* pInfoHolder = builder.AddFieldHolder( 0 );
     builder.AddField<ADN_EditLine_String>( pInfoHolder, tr( "Name" ), vInfosConnectors[eName] );
     builder.SetEnabled( false );
-    builder.AddField< ADN_ComboBox_Vector<ADN_Launchers_Data::LauncherInfos> >( pInfoHolder, tr( "Launcher" ), vInfosConnectors[eLauncher] );
-    builder.SetEnabled( false );
-    builder.AddField< ADN_ComboBox_Vector<ADN_Equipement_Data::AmmoCategoryInfo> >( pInfoHolder, tr( "Ammo" ), vInfosConnectors[eAmmo] );
-    builder.SetEnabled( false );
+    {
+        ADN_GoToButton* goToButton = new ADN_GoToButton( ::eLaunchers );
+        goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector<ADN_Launchers_Data::LauncherInfos> >( pInfoHolder, tr( "Launcher" ), vInfosConnectors[eLauncher], 0, eNone, goToButton ) );
+        builder.SetEnabled( false );
+    }
+    {
+        ADN_GoToButton* goToButton = new ADN_GoToButton( ::eEquipement, 0 );
+        goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector<ADN_Equipement_Data::AmmoCategoryInfo> >( pInfoHolder, tr( "Ammo" ), vInfosConnectors[eAmmo], 0, eNone, goToButton ) );
+        builder.SetEnabled( false );
+    }
     builder.AddField<ADN_EditLine_Int>( pInfoHolder, tr( "Rounds per burst" ), vInfosConnectors[eRoundsPerBurst], 0, eGreaterZero );
     ADN_TimeField* burst = builder.AddField<ADN_TimeField>( pInfoHolder, tr( "Burst duration" ), vInfosConnectors[eBurstDuration], 0, eGreaterZero );
     burst->SetMinimumValueInSecond( 1 );
@@ -291,8 +298,8 @@ void ADN_Weapons_GUI::Build()
 
     // List view
     ADN_SearchListView< ADN_Weapons_ListView >* pSearchListView = new ADN_SearchListView< ADN_Weapons_ListView >( data_.GetWeaponInfos(), vInfosConnectors );
-    connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_UsedByInfos& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_UsedByInfos& ) ) );
-    connect( this, SIGNAL( ApplyFilterList( const ADN_UsedByInfos& ) ), pSearchListView, SLOT( OnApplyFilterList( const ADN_UsedByInfos& ) ) );
+    connect( pSearchListView->GetListView(), SIGNAL( UsersListRequested( const ADN_NavigationInfos::UsedBy& ) ), &ADN_Workspace::GetWorkspace(), SLOT( OnUsersListRequested( const ADN_NavigationInfos::UsedBy& ) ) );
+    connect( this, SIGNAL( ApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ), pSearchListView, SLOT( OnApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ) );
     pListView_ = pSearchListView->GetListView();
 
     // Main widget

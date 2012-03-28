@@ -65,10 +65,10 @@ public:
     QWidget* AddFieldHolder( QWidget* pParent );
 
     template< class T >
-        T* AddField( QWidget* pParent, const char* szName, ADN_Connector_ABC*& pGuiConnector, const char* szUnit = 0, E_Validator nValidator = eNone );
+        T* AddField( QWidget* pParent, const char* szName, ADN_Connector_ABC*& pGuiConnector, const char* szUnit = 0, E_Validator nValidator = eNone, QWidget* sideWidget = 0 );
 
     template< class T >
-        T* AddField( QWidget* pParent, const char* szName, ADN_Connector_ABC& itemConnector, const char* szUnit = 0, E_Validator nValidator = eNone );
+        T* AddField( QWidget* pParent, const char* szName, ADN_Connector_ABC& itemConnector, const char* szUnit = 0, E_Validator nValidator = eNone, QWidget* sideWidget = 0 );
 
     template< class T >
         T* AddOptionnalField( QWidget* pParent, const char* szName, ADN_Connector_ABC*& pGuiOptionConnector, ADN_Connector_ABC*& pGuiConnector, const char* szUnit = 0, E_Validator nValidator = eNone );
@@ -134,22 +134,29 @@ private:
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
 template< class T >
-T* ADN_GuiBuilder::AddField( QWidget* pParent, const char* szName, ADN_Connector_ABC*& pGuiConnector, const char* szUnit, E_Validator nValidator )
+T* ADN_GuiBuilder::AddField( QWidget* pParent, const char* szName, ADN_Connector_ABC*& pGuiConnector, const char* szUnit, E_Validator nValidator, QWidget* sideWidget )
 {
+    assert( szUnit == 0 || sideWidget == 0 );
     // Create the field and labels.
     QLabel* pNameLabel = new QLabel( szName, pParent );
     T* pField = new T( pParent );
-    QLabel* pUnitLabel = 0;
+    QWidget* thirdWidget = 0;
     if( szUnit != 0 )
-        pUnitLabel = new QLabel( szUnit, pParent );
+        thirdWidget = new QLabel( szUnit, pParent );
+    else if( sideWidget != 0 )
+        thirdWidget = sideWidget;
+
+    //QLabel* pUnitLabel = 0;
+    //if( szUnit != 0 )
+    //    pUnitLabel = new QLabel( szUnit, pParent );
 
     pCurrentFieldWidget1_ = pNameLabel;
     pCurrentFieldWidget2_ = pField;
     pCurrentFieldGfx2_ = pField;
-    pCurrentFieldWidget3_ = pUnitLabel;
+    pCurrentFieldWidget3_ = thirdWidget;
 
     // Lay them out if necessary.
-    this->DoFieldLayout( pParent, pNameLabel, pField, pUnitLabel );
+    this->DoFieldLayout( pParent, pNameLabel, pField, thirdWidget );
     this->DoValidator( pField, nValidator );
 
     pGuiConnector = &pField->GetConnector();
@@ -162,22 +169,29 @@ T* ADN_GuiBuilder::AddField( QWidget* pParent, const char* szName, ADN_Connector
 // Created: APE 2005-03-11
 // -----------------------------------------------------------------------------
 template< class T >
-T* ADN_GuiBuilder::AddField( QWidget* pParent, const char* szName, ADN_Connector_ABC& itemConnector, const char* szUnit, E_Validator nValidator )
+T* ADN_GuiBuilder::AddField( QWidget* pParent, const char* szName, ADN_Connector_ABC& itemConnector, const char* szUnit, E_Validator nValidator, QWidget* sideWidget )
 {
+    assert( szUnit == 0 || sideWidget == 0 );
     // Create the field and labels.
     QLabel* pNameLabel = new QLabel( szName, pParent );
     T* pField = new T( pParent );
-    QLabel* pUnitLabel = 0;
+    QWidget* thirdWidget = 0;
     if( szUnit != 0 )
-        pUnitLabel = new QLabel( szUnit, pParent );
+        thirdWidget = new QLabel( szUnit, pParent );
+    else if( sideWidget != 0 )
+        thirdWidget = sideWidget;
+
+    //QLabel* pUnitLabel = 0;
+    //if( szUnit != 0 )
+    //    pUnitLabel = new QLabel( szUnit, pParent );
 
     pCurrentFieldWidget1_ = pNameLabel;
     pCurrentFieldWidget2_ = pField;
     pCurrentFieldGfx2_ = pField;
-    pCurrentFieldWidget3_ = pUnitLabel;
+    pCurrentFieldWidget3_ = thirdWidget;
 
     // Lay them out if necessary.
-    this->DoFieldLayout( pParent, pNameLabel, pField, pUnitLabel );
+    this->DoFieldLayout( pParent, pNameLabel, pField, thirdWidget );
     this->DoValidator( pField, nValidator );
 
     ADN_Connector_ABC* pConnector = &pField->GetConnector();

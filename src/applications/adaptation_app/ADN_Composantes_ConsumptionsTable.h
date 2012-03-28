@@ -42,7 +42,7 @@ public:
     //! @name Operations
     //@{
     virtual void OnContextMenu( int nRow, int nCol, const QPoint& pt );
-    void SetListView( ADN_ListView_Composantes* listView );
+    void SetListView( ADN_ListView* listView );
     //@}
 
 private:
@@ -59,7 +59,7 @@ private:
 
 private:
     T_ParametersVector menuParametersList_;
-    ADN_ListView_Composantes* composanteListView_;
+    ADN_ListView* composanteListView_;
 };
 
 
