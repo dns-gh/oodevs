@@ -167,7 +167,11 @@ namespace
         const std::string sp1 = AbsolutePath( bfs::path( config.GetExerciseFile() ).branch_path().string() );
         const std::string sp2 = bfs::path( filename.ascii() ).string();
         if( boost::istarts_with( sp2, sp1 ) )
-            return bfs::path( sp2.substr( 0, sp1.length() ) ).relative_path().string().c_str();
+        {
+            std::string subPath( sp2.substr( sp1.length() ) );
+            std::string relativePath( bfs::path( subPath ).relative_path().string() );
+            return relativePath.c_str();
+        }
         return sp2.c_str();
     }
 }
