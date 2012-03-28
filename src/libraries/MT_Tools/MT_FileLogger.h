@@ -45,7 +45,7 @@ protected:
     //-------------------------------------------------------------------------
     //@{
     virtual void LogString( E_LogLevel level, const char* strMessage, const char* strContext, int nCode );
-    void OpenNewOfstream( const std::string fileName );
+    unsigned int OpenNewOfstream( const std::string fileName, bool clearPrevious = true );
     unsigned int GetOldestFile();
     std::string GetFileName( unsigned int fileCount );
     //@}
@@ -56,10 +56,9 @@ private:
     std::string fileNameNoExtension_;
     std::string fileNameExtension_;
     boost::mutex mutex_;
-    unsigned int maxFiles_;
+    const unsigned int maxFiles_;
     unsigned int filesCount_;
-    bool bClearPreviousLog_;
-    int maxSize_;
+    const int maxSize_;
     int sizeCount_;
     bool sizeInBytes_;
 };

@@ -94,10 +94,10 @@ bool LoggerPlugin::Initialize()
         {
             if( !pLogger_.get() )
                 pLogger_.reset( new MT_FileLogger( filename_.c_str(), 
-                                                    sessionConfig_.GetLoggerPluginLogFiles(), 
-                                                    sessionConfig_.GetLoggerPluginLogSize(), 
+                                                    sessionConfig_.GetLoggerPluginLogFiles(),
+                                                    sessionConfig_.GetLoggerPluginLogSize(),
                                                     sessionConfig_.GetLoggerPluginLogLevel(),
-                                                    true, MT_Logger_ABC::eLoggerPlugin, sessionConfig_.IsLoggerPluginLogInBytes() ) );
+                                                    !sessionConfig_.HasCheckpoint(), MT_Logger_ABC::eLoggerPlugin, sessionConfig_.IsLoggerPluginLogInBytes() ) );
         }
         else
             enabled_ = false;
