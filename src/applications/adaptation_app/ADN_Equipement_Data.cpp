@@ -62,6 +62,7 @@ ADN_Equipement_Data::CategoryInfo::CategoryInfo( ResourceInfos& parentDotation )
     , rPackageWeight_        ( 1. )
     , bNetworkUsable_        ( false )
 {
+    BindExistenceTo( &ptrResourceNature_ );
     strName_.SetDataName( "le nom d'" );
     strName_.SetParentNode( *this );
 }

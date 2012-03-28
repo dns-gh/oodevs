@@ -23,7 +23,7 @@ ADN_FuneralPackagingResource::ADN_FuneralPackagingResource()
     : processDuration_( "0s" )
     , terminal_( false )
 {
-    // NOTHING
+    BindExistenceTo( &resource_ );
 }
 
 // -----------------------------------------------------------------------------

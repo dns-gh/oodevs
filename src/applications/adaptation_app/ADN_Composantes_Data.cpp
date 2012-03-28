@@ -459,7 +459,7 @@ ADN_Composantes_Data::LogSupplyInfos::LogSupplyInfos()
 , rVolume_            ( 0 )
 , ptrResourceNature_  ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetDotationNaturesInfos(), 0 )
 {
-    // NOTHING
+    ptrResourceNature_.SetParentNode( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -522,7 +522,7 @@ void ADN_Composantes_Data::LogSupplyInfos::ReadArchive( xml::xistream& input )
 void ADN_Composantes_Data::LogSupplyInfos::WriteArchive( xml::xostream& output ) const
 {
     output << xml::start( "supply-functions" );
-    if( bIsCarrier_.GetData() )
+    if( bIsCarrier_.GetData() && ptrResourceNature_.GetData() )
         output << xml::start( "carrying" )
                 << xml::attribute( "mass", rWeight_ )
                 << xml::attribute( "volume", rVolume_ )

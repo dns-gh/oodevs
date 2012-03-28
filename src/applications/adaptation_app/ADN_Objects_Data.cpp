@@ -958,8 +958,8 @@ ADN_Objects_Data::ADN_CapacityInfos_Spawn::ADN_CapacityInfos_Spawn()
     , load_        ( false )
     , nbc_         ( false )
 {
+    object_.SetParentNode( *this );
     rActionRange_.SetParentNode( *this );
-    BindExistenceTo( &object_ );
 }
 
 // -----------------------------------------------------------------------------
