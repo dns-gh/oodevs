@@ -79,6 +79,7 @@
 #include "ADN_WorkspaceElement.h"
 #include "qtundo.h"
 #include <boost/foreach.hpp>
+#include <boost/filesystem.hpp>
 #include <errno.h>
 #include <io.h>
 #include <windows.h>
@@ -87,6 +88,8 @@
 #include <QtGui/qmessagebox.h>
 #include <QtGui/qlayout.h>
 #pragma warning( pop )
+
+namespace bfs = boost::filesystem;
 
 ADN_Workspace* ADN_Workspace::pWorkspace_=0;
 
@@ -327,6 +330,29 @@ bool ADN_Workspace::ShowSymbols() const
     return symbols_;
 }
 
+namespace
+{
+    void CopyUnsavedFiles( const bfs::path& from, const bfs::path& to )
+    {
+        bfs::directory_iterator end;
+        for( bfs::directory_iterator it( from ); it != end; ++it )
+        {
+            if( bfs::is_directory( *it ) )
+            {
+                bfs::path dest( to / it->leaf() );
+                if( !bfs::exists( dest ) )
+                    bfs::create_directories( dest );
+                CopyUnsavedFiles( *it, dest );
+            }
+            else
+            {
+                if( !bfs::exists( to / it->leaf() ) )
+                    bfs::copy_file( *it, to / it->leaf() );
+            }
+        }
+    }
+}
+
 //-----------------------------------------------------------------------------
 // Name: ADN_Workspace::SaveAs
 // Created: JDY 03-07-04
@@ -358,6 +384,22 @@ bool ADN_Workspace::SaveAs( const std::string& filename )
     dlgLog.setMsg( tr( "Error(s) have been encountered during saving of project " ).ascii() + filename );
     dlgLog.setMsgFormat( tr( "<p>- Unable to save %s : file is write protected</p>" ).ascii());
 
+    T_StringList uncopiedFiles;
+    if( szOldWorkDir != dirInfos.GetWorkingDirectory().GetData() )
+    {
+        const ADN_Project_Data::DataInfos& infos = projectData_->GetDataInfos();
+        uncopiedFiles.push_back( infos.szPathfinder_.GetData() );
+        uncopiedFiles.push_back( infos.szObjectNames_.GetData() );
+        uncopiedFiles.push_back( infos.szHumanProtections_.GetData() );
+        uncopiedFiles.push_back( infos.szMedicalTreatment_.GetData() );
+        uncopiedFiles.push_back( infos.szExtensions_.GetData() );
+        uncopiedFiles.push_back( infos.szDrawingTemplates_.GetData() );
+        uncopiedFiles.push_back( infos.szScores_.GetData() );
+        uncopiedFiles.push_back( infos.szSymbols_.GetData() );
+        uncopiedFiles.push_back( infos.szFilters_.GetData() );
+        files.insert( files.end(), uncopiedFiles.begin(), uncopiedFiles.end() );
+    }
+
     for( T_StringList::iterator it = files.begin(); it != files.end(); ++it )
     {
         const std::string file = dirInfos.GetWorkingDirectory().GetData() + *it;
@@ -380,7 +422,7 @@ bool ADN_Workspace::SaveAs( const std::string& filename )
         // saving in temporary files activated
         dirInfos.UseTempDirectory( true );
         pProgressIndicator_->Reset( tr( "Saving project..." ) );
-        pProgressIndicator_->SetNbrOfSteps( eNbrWorkspaceElements );
+        pProgressIndicator_->SetNbrOfSteps( eNbrWorkspaceElements + 1 );
         projectData_->SetFile( filename );
         projectData_->Save();
         for( int n = 0; n < eNbrWorkspaceElements; ++n )
@@ -388,6 +430,10 @@ bool ADN_Workspace::SaveAs( const std::string& filename )
             elements_[n]->GetDataABC().Save();
             pProgressIndicator_->Increment( elements_[n]->GetName().toStdString().c_str() );
         }
+
+        for( T_StringList::iterator it = uncopiedFiles.begin(); it != uncopiedFiles.end(); ++it )
+            ADN_Tools::CopyFileToFile( szOldWorkDir + *it, dirInfos.GetTempDirectory().GetData() + *it );
+
         dirInfos.UseTempDirectory( false );
     }
     catch( ADN_Exception_ABC& )
@@ -406,6 +452,10 @@ bool ADN_Workspace::SaveAs( const std::string& filename )
             ResetProgressIndicator();
             throw ADN_SaveFile_Exception( *it );
         }
+    // Copy remaining files if any
+    if( szOldWorkDir != dirInfos.GetWorkingDirectory().GetData() )
+        CopyUnsavedFiles( bfs::path( szOldWorkDir ), bfs::path( dirInfos.GetWorkingDirectory().GetData() ) );
+    pProgressIndicator_->Increment( "" );
 
     GetUndoStack().clear();
     // Save is ended
