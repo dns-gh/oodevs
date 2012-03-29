@@ -169,8 +169,8 @@ std::string ToJson( const runtime::Process_ABC& process )
 std::string Session::ToJson() const
 {
     const std::string process = process_ ? ::ToJson( *process_ ) : "{}";
-    return (boost::format( "{ \"id\" : \"%1%\", \"process\" : %2%, \"name\" : \"%3%\", \"port\" : %4% }" )
-        % id_ % process % name_ % port_->Get() ).str();
+    return (boost::format( "{ \"id\" : \"%1%\", \"process\" : %2%, \"name\" : \"%3%\", \"port\" : %4%, \"exercise\" : \"%5%\" }" )
+        % id_ % process % name_ % port_->Get() % exercise_ ).str();
 }
 
 // -----------------------------------------------------------------------------
