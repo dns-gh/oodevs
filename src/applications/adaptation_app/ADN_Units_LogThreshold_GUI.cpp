@@ -47,7 +47,7 @@ public:
         tab_.setItem( nRow, 1, pItemLogThreshold );
 
         pItemName->setEnabled(false);
-        pItemName->setText( ENT_Tr::ConvertFromStockCategory( pInfo->eCategory_.GetData(), ENT_Tr::eToApp ).c_str() );
+        pItemName->setText( ENT_Tr::ConvertFromStockCategory( pInfo->eCategory_.GetData(), ENT_Tr::eToTr ).c_str() );
 
         // Connect the item
         pItemLogThreshold->GetConnector().Connect( &pInfo->rLogThreshold_ );

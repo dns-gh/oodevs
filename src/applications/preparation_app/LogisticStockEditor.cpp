@@ -263,6 +263,7 @@ void LogisticStockEditor::SupplyHierarchy( kernel::SafePointer< kernel::Entity_A
     {
         std::set< const kernel::Agent_ABC* > entStocks;
         FindStocks( *entity, *entity, entStocks );
+        CleanStocks( entStocks );
         T_Requirements requirements;
         for( int i = 0; i < eNbrStockCategory; ++i )
             if( dataModel_->item( i )->checkState() == Qt::Checked )
@@ -342,10 +343,7 @@ void LogisticStockEditor::FindStocks( const kernel::Entity_ABC& rootEntity , con
             {
                 Stocks* stocks = const_cast< Stocks* >( pAgent->Retrieve< Stocks >() );
                 if( stocks )
-                {
-                    stocks->Clear();
                     entStocks.insert( pAgent );
-                }
             }
         }
         else
@@ -358,6 +356,30 @@ namespace
     E_StockCategory GetDotationLogisticType( const kernel::DotationType& dotationType )
     {
         return tools::StockCategoryFromDotationFamily( static_cast< E_DotationFamily >( dotationType.GetFamily() ), dotationType.IsDType() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticStockEditor::CleanStocks
+// Created: MMC 2011-08-31
+// -----------------------------------------------------------------------------
+void LogisticStockEditor::CleanStocks( std::set< const kernel::Agent_ABC* >& entStocks )
+{
+    for( std::set< const kernel::Agent_ABC* >::iterator itEnt = entStocks.begin(); itEnt != entStocks.end(); ++itEnt )
+    {
+        Stocks& stocks = const_cast< Stocks& >( (*itEnt)->Get< Stocks >() );
+        std::vector< const kernel::DotationType* > toReset;
+        tools::Iterator< const Dotation& > itDotation = stocks.CreateIterator();
+        while( itDotation.HasMoreElements() )
+        {
+            const Dotation& curDotation = itDotation.NextElement();
+            int index = static_cast< int >( GetDotationLogisticType( curDotation.type_ ) );
+            assert( index >= 0 && index < eNbrStockCategory );
+            if( dataModel_->item( index )->checkState() == Qt::Checked )
+                toReset.push_back( &curDotation.type_ );
+        }
+        for( std::vector< const kernel::DotationType* >::iterator it = toReset.begin(); it!= toReset.end(); ++it )
+            stocks.SetDotation( **it, 0, false );
     }
 }
 
