@@ -568,6 +568,7 @@ public:
         eRC_FinDevalorisation,
         eRC_TrafficablePositionFindingInZone,
         eRC_PrisSousTirMunition,
+        eRC_NotInSameUndergroundNetwork,
         eLast
     };
     //@}
