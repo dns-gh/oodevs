@@ -24,36 +24,44 @@
 // -----------------------------------------------------------------------------
 PerformanceDialog::PerformanceDialog( QWidget* parent, Model& model, const StaticModel& staticModel )
     : QDialog ( parent, "PerformanceDialog" )
-    , model_( model )
-    , staticModel_( staticModel )
-    , progressValue_( new QProgressBar( this ) )
-    , units_( new QLabel( this ) )
-    , urbanBlocs_( new QLabel( this ) )
-    , objects_( new QLabel( this ) )
-    , populations_( new QLabel( this ) )
-    , crowds_( new QLabel( this ) )
-    , terrainLoad_( new QLabel( this ) )
-    , knowledges_( new QLabel( this ) )
-    , loadLevel_( new QLabel( this ) )
-    , limitValue_( new QLabel( this ) )
-    , limitLine_ ( new QLabel( this ) )
-    , terrainSize_ ( new QLabel( this ) )
-    , profiles_ ( new QLabel( this ) )
-    , maxAutomatsKG_ ( new QLabel( this ) )
-    , maxUnitsKG_ ( new QLabel( this ) )
-    , avgAutomatKG_ ( new QLabel( this ) )
-    , avgUnitsKG_ ( new QLabel( this ) )
-    , progressLimit_( 40 )
-    , textEdit_( new QTextEdit( this ) )
+    , model_              ( model )
+    , staticModel_        ( staticModel )
+    , progressValueSingle_( new QProgressBar( this ) )
+    , progressValueMulti_ ( new QProgressBar( this ) )
+    , units_              ( new QLabel( this ) )
+    , urbanBlocs_         ( new QLabel( this ) )
+    , objects_            ( new QLabel( this ) )
+    , populations_        ( new QLabel( this ) )
+    , crowds_             ( new QLabel( this ) )
+    , terrainLoad_        ( new QLabel( this ) )
+    , knowledges_         ( new QLabel( this ) )
+    , loadLevelSingle_    ( new QLabel( this ) )
+    , loadLevelMulti_     ( new QLabel( this ) )
+    , limitValueSingle_   ( new QLabel( this ) )
+    , limitValueMulti_    ( new QLabel( this ) )
+    , limitLineSingle_    ( new QLabel( this ) )
+    , limitLineMulti_     ( new QLabel( this ) )
+    , terrainSize_        ( new QLabel( this ) )
+    , profiles_           ( new QLabel( this ) )
+    , maxAutomatsKG_      ( new QLabel( this ) )
+    , maxUnitsKG_         ( new QLabel( this ) )
+    , avgAutomatKG_       ( new QLabel( this ) )
+    , avgUnitsKG_         ( new QLabel( this ) )
+    , textEdit_           ( new QTextEdit( this ) )
+    , progressLimit_      ( 40 )
 {
     setCaption( tr( "Performance dialog" ) );
     setFixedSize( 600, 700 );
 
-    QGridLayout* layout = new QGridLayout( this, 16, 2 );
+    QGridLayout* layout = new QGridLayout( this, 17, 3 );
+    layout->setSpacing( 10 );
     layout->setMargin( 15 );
-    layout->setColumnMinimumWidth( 0, 520 );
+    layout->setColumnMinimumWidth( 0, 500 );
     layout->setAlignment( Qt::AlignHCenter );
-    layout->addWidget( progressValue_ , 0, 1, 13, 1 );
+    layout->addWidget( new QLabel( tr( "Single station" ), this ), 0, 1 );
+    layout->addWidget( new QLabel( tr( "Multi station" ), this ), 0, 2 );
+    layout->addWidget( progressValueSingle_ , 1, 1, 14, 1, Qt::AlignHCenter );
+    layout->addWidget( progressValueMulti_ , 1, 2, 14, 2, Qt::AlignHCenter );
     layout->addWidget( profiles_, 0, 0 );
     layout->addWidget( units_, 1, 0 );
     layout->addWidget( populations_, 2, 0 );
@@ -67,16 +75,23 @@ PerformanceDialog::PerformanceDialog( QWidget* parent, Model& model, const Stati
     layout->addWidget( maxUnitsKG_, 10, 0 );
     layout->addWidget( avgAutomatKG_, 11, 0 );
     layout->addWidget( avgUnitsKG_, 12, 0 );
-    layout->addWidget( loadLevel_ , 13, 0 );
-    layout->addWidget( new QLabel( "<b>" + tr( "Detail: " ) + "<\b>" ), 14, 0, 1, 2 );
-    layout->addWidget( textEdit_, 15, 0, 1, 2 );
+    layout->addWidget( loadLevelSingle_ , 13, 0 );
+    layout->addWidget( loadLevelMulti_ , 14, 0 );
+    layout->addWidget( new QLabel( "<b>" + tr( "Detail: " ) + "<\b>" ), 15, 0, 1, 2 );
+    layout->addWidget( textEdit_, 16, 0, 1, 3 );
+
     textEdit_->setReadOnly( true );
     textEdit_->setLineWrapMode( QTextEdit::NoWrap );
-    loadLevel_->setMinimumWidth( 280 );
-    loadLevel_->setMinimumHeight( 40 );
-    loadLevel_->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
-    progressValue_->setOrientation( Qt::Vertical );
-    limitLine_->setText( "<b>____<\b>" );
+    loadLevelSingle_->setMinimumWidth( 280 );
+    loadLevelSingle_->setMinimumHeight( 25 );
+    loadLevelSingle_->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
+    loadLevelMulti_->setMinimumWidth( 280 );
+    loadLevelMulti_->setMinimumHeight( 25 );
+    loadLevelMulti_->setAlignment( Qt::AlignVCenter | Qt::AlignLeft );
+    progressValueSingle_->setOrientation( Qt::Vertical );
+    progressValueMulti_->setOrientation( Qt::Vertical );
+    limitLineSingle_->setText( "<b>____<\b>" );
+    limitLineMulti_->setText( "<b>____<\b>" );
 
     QDesktopWidget* pDesktop = QApplication::desktop();
     if( pDesktop )
@@ -156,13 +171,22 @@ void PerformanceDialog::UpdateDisplay()
     maxUnitsKG_     ->setText( tr( "Max units in a knowledge group:" )      + QString::number( values.maxUnitsKG_ ) );
     avgAutomatKG_   ->setText( tr( "Average automats by knowledge group: " )+ QString::number( values.avgAutomatsKG_ ) );
     avgUnitsKG_     ->setText( tr( "Average units by knowledge group: " )   + QString::number( values.avgUnitsKG_ ) );
-    loadLevel_      ->setText( "<b>" + tr( "Load level: " )                 + QString::number( static_cast< unsigned int >( values.performance_ ) ) + " / " + QString::number( values.limit_ ) + "<\b>" );
-    limitValue_     ->setText( "<b>" + QString::number( values.limit_ ) + "<\b>" );
-    limitLine_->move( progressValue_->pos().x() - 3,
-                      progressValue_->pos().y() + progressValue_->size().height() * ( 100 - progressLimit_ ) / 100 - limitLine_->size().height() / 2 - 6 );
-    limitValue_->move( progressValue_->pos().x() + progressValue_->size().width() + 6,
-                       progressValue_->pos().y() + progressValue_->size().height() * ( 100 - progressLimit_ ) / 100 - limitValue_->size().height() / 2 );
-    UpdateBar( values, progressValue_, progressLimit_ );
+    loadLevelSingle_->setText( "<b>" + tr( "Single station load level: " )  + QString::number( static_cast< unsigned int >( values.performance_ ) ) + " / " + QString::number( values.limit_ ) + "<\b>" );
+    loadLevelMulti_ ->setText( "<b>" + tr( "Multi station load level: " )   + QString::number( static_cast< unsigned int >( values.performance_ ) ) + " / " + QString::number( values.limit_ ) + "<\b>" );
+    limitValueSingle_->setText( "<b>" + QString::number( values.limit_ ) + "<\b>" );
+    limitValueMulti_->setText( "<b>" + QString::number( values.limit_ ) + "<\b>" );
+    limitLineSingle_->move( progressValueSingle_->pos().x() - 3,
+                      progressValueSingle_->pos().y() + progressValueSingle_->size().height() * ( 100 - progressLimit_ ) / 100 - limitLineSingle_->size().height() / 2 - 6 );
+    limitValueSingle_->move( progressValueSingle_->pos().x() + progressValueSingle_->size().width() + 6,
+                       progressValueSingle_->pos().y() + progressValueSingle_->size().height() * ( 100 - progressLimit_ ) / 100 - limitValueSingle_->size().height() / 2 );
+
+    limitLineMulti_->move( progressValueMulti_->pos().x() - 3,
+                     progressValueMulti_->pos().y() + progressValueMulti_->size().height() * ( 100 - progressLimit_ ) / 100 - limitLineMulti_->size().height() / 2 - 6 );
+    limitValueMulti_->move( progressValueMulti_->pos().x() + progressValueMulti_->size().width() + 6,
+                      progressValueMulti_->pos().y() + progressValueMulti_->size().height() * ( 100 - progressLimit_ ) / 100 - limitValueMulti_->size().height() / 2 );
+
+    UpdateBar( values, progressValueSingle_, progressLimit_ );
+    UpdateBar( values, progressValueMulti_, progressLimit_ );
 
     QString detail;
     detail +=        tr( "Exercise: " )         + QString::fromStdString( values.exercise_ ) + "\n";
@@ -181,7 +205,8 @@ void PerformanceDialog::UpdateDisplay()
     detail += "\n" + tr( "Max units in a knowledge group:" )         + QString::number( values.maxUnitsKG_ );
     detail += "\n" + tr( "Average automats by knowledge group: " )   + QString::number( values.avgAutomatsKG_ );
     detail += "\n" + tr( "Average units by knowledge group: " )      + QString::number( values.avgUnitsKG_ );
-    detail += "\n" + tr( "Load level: " )                            + QString::number( values.performance_, 'f', 2 ) + " / " + QString::number( values.limit_ );
+    detail += "\n" + tr( "Single station load level: " )             + QString::number( values.performance_, 'f', 2 ) + " / " + QString::number( values.limit_ );
+    detail += "\n" + tr( "Multi station load level: " )              + QString::number( values.performance_, 'f', 2 ) + " / " + QString::number( values.limit_ );
     for( PerformanceIndicator::CIT_TeamsDatas it = values.teamsDatas_.begin(); it != values.teamsDatas_.end(); ++it )
     {
         const PerformanceIndicator::TeamData& teamData = it->second;

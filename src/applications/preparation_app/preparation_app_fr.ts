@@ -1434,10 +1434,6 @@
         <translation>Nombre de groupes de connaissance: </translation>
     </message>
     <message>
-        <source>Load level: </source>
-        <translation>Niveau de charge de l&apos;exercice: </translation>
-    </message>
-    <message>
         <source>Number of profiles: </source>
         <translation>Nombre de profils: </translation>
     </message>
@@ -1524,6 +1520,22 @@
     <message>
         <source>Formations: </source>
         <translation>Formations: </translation>
+    </message>
+    <message>
+        <source>Single station load level: </source>
+        <translation>Niveau de charge de l&apos;exercice en mono poste: </translation>
+    </message>
+    <message>
+        <source>Multi station load level: </source>
+        <translation>Niveau de charge de l&apos;exercice en multi poste: </translation>
+    </message>
+    <message>
+        <source>Single station</source>
+        <translation>Mono poste</translation>
+    </message>
+    <message>
+        <source>Multi station</source>
+        <translation>Multi poste</translation>
     </message>
 </context>
 <context>

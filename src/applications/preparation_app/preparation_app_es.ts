@@ -1434,10 +1434,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Load level: </source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Detail: </source>
         <translation type="unfinished"></translation>
     </message>
@@ -1523,6 +1519,22 @@
     </message>
     <message>
         <source>Formations: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Single station load level: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Multi station load level: </source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Single station</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Multi station</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

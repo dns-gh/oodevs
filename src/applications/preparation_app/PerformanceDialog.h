@@ -49,7 +49,8 @@ private:
 
     Model& model_;
     const StaticModel& staticModel_;
-    QProgressBar* progressValue_;
+    QProgressBar* progressValueSingle_;
+    QProgressBar* progressValueMulti_;
 
     QLabel* units_;
     QLabel* urbanBlocs_;
@@ -57,9 +58,12 @@ private:
     QLabel* populations_;
     QLabel* crowds_;
     QLabel* knowledges_;
-    QLabel* loadLevel_;
-    QLabel* limitValue_;
-    QLabel* limitLine_;
+    QLabel* loadLevelSingle_;
+    QLabel* loadLevelMulti_;
+    QLabel* limitValueSingle_;
+    QLabel* limitValueMulti_;
+    QLabel* limitLineSingle_;
+    QLabel* limitLineMulti_;
     QLabel* terrainLoad_;
     QLabel* terrainSize_;
     QLabel* profiles_;
