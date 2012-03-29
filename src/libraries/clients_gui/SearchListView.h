@@ -17,15 +17,32 @@
 namespace gui
 {
 
+class RichListView;
+
 // =============================================================================
 /** @class  SearchListView
     @brief  SearchListView
 */
 // Created: ABR 2012-03-27
 // =============================================================================
-template< typename ListView >
-class SearchListView : public QWidget
-                     , private boost::noncopyable
+class SearchListView_ABC : public QWidget
+                         , private boost::noncopyable
+{
+public:
+    explicit SearchListView_ABC( QWidget* parent ) : QWidget( parent ) {}
+    virtual ~SearchListView_ABC() {}
+
+    virtual RichListView* GetRichListView() const = 0;
+};
+
+// =============================================================================
+/** @class  SearchListView
+    @brief  SearchListView
+*/
+// Created: ABR 2012-03-27
+// =============================================================================
+template< typename BaseListView >
+class SearchListView : public SearchListView_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -50,7 +67,8 @@ public:
 
     //! @name Operations
     //@{
-    ListView* GetListView() const;
+    BaseListView* GetListView() const;
+    virtual RichListView* GetRichListView() const;
     //@}
 
 private:
@@ -63,7 +81,7 @@ private:
     //! @name Member data
     //@{
     SearchLineEdit* searchLine_;
-    ListView*       listView_;
+    BaseListView*       listView_;
     //@}
 };
 
@@ -71,13 +89,13 @@ private:
 // Name: SearchListView constructor
 // Created: ABR 2012-03-27
 // -----------------------------------------------------------------------------
-template< typename ListView >
-SearchListView< ListView >::SearchListView( QWidget* parent )
-    : QWidget( parent )
+template< typename BaseListView >
+SearchListView< BaseListView >::SearchListView( QWidget* parent )
+    : SearchListView_ABC( parent )
     , searchLine_( 0 )
     , listView_  ( 0 )
 {
-    listView_ = new ListView( this );
+    listView_ = new BaseListView( this );
     CreateGUI();
 }
 
@@ -85,14 +103,14 @@ SearchListView< ListView >::SearchListView( QWidget* parent )
 // Name: SearchListView constructor
 // Created: ABR 2012-03-27
 // -----------------------------------------------------------------------------
-template< typename ListView >
+template< typename BaseListView >
 template< typename _1 >
-SearchListView< ListView >::SearchListView( QWidget* parent, _1& first )
-    : QWidget( parent )
+SearchListView< BaseListView >::SearchListView( QWidget* parent, _1& first )
+    : SearchListView_ABC( parent )
     , searchLine_( 0 )
     , listView_  ( 0 )
 {
-    listView_ = new ListView( this, first );
+    listView_ = new BaseListView( this, first );
     CreateGUI();
 }
 
@@ -100,14 +118,14 @@ SearchListView< ListView >::SearchListView( QWidget* parent, _1& first )
 // Name: SearchListView constructor
 // Created: ABR 2012-03-27
 // -----------------------------------------------------------------------------
-template< typename ListView >
+template< typename BaseListView >
 template< typename _1, typename _2 >
-SearchListView< ListView >::SearchListView( QWidget* parent, _1& first, _2& second )
-    : QWidget( parent )
+SearchListView< BaseListView >::SearchListView( QWidget* parent, _1& first, _2& second )
+    : SearchListView_ABC( parent )
     , searchLine_( 0 )
     , listView_  ( 0 )
 {
-    listView_ = new ListView( this, first, second );
+    listView_ = new BaseListView( this, first, second );
     CreateGUI();
 }
 
@@ -115,14 +133,14 @@ SearchListView< ListView >::SearchListView( QWidget* parent, _1& first, _2& seco
 // Name: SearchListView constructor
 // Created: ABR 2012-03-27
 // -----------------------------------------------------------------------------
-template< typename ListView >
+template< typename BaseListView >
 template< typename _1, typename _2, typename _3 >
-SearchListView< ListView >::SearchListView( QWidget* parent, _1& first, _2& second, _3& third )
-    : QWidget( parent )
+SearchListView< BaseListView >::SearchListView( QWidget* parent, _1& first, _2& second, _3& third )
+    : SearchListView_ABC( parent )
     , searchLine_( 0 )
     , listView_  ( 0 )
 {
-    listView_ = new ListView( this, first, second, third );
+    listView_ = new BaseListView( this, first, second, third );
     CreateGUI();
 }
 
@@ -130,14 +148,14 @@ SearchListView< ListView >::SearchListView( QWidget* parent, _1& first, _2& seco
 // Name: SearchListView constructor
 // Created: ABR 2012-03-27
 // -----------------------------------------------------------------------------
-template< typename ListView >
+template< typename BaseListView >
 template< typename _1, typename _2, typename _3, typename _4 >
-SearchListView< ListView >::SearchListView( QWidget* parent, _1& first, _2& second, _3& third, _4& fourth )
-    : QWidget( parent )
+SearchListView< BaseListView >::SearchListView( QWidget* parent, _1& first, _2& second, _3& third, _4& fourth )
+    : SearchListView_ABC( parent )
     , searchLine_( 0 )
     , listView_  ( 0 )
 {
-    listView_ = new ListView( this, first, second, third, fourth );
+    listView_ = new BaseListView( this, first, second, third, fourth );
     CreateGUI();
 }
 
@@ -145,14 +163,14 @@ SearchListView< ListView >::SearchListView( QWidget* parent, _1& first, _2& seco
 // Name: SearchListView constructor
 // Created: ABR 2012-03-27
 // -----------------------------------------------------------------------------
-template< typename ListView >
+template< typename BaseListView >
 template< typename _1, typename _2, typename _3, typename _4, typename _5 >
-SearchListView< ListView >::SearchListView( QWidget* parent, _1& first, _2& second, _3& third, _4& fourth, _5& fifth )
-    : QWidget( parent )
+SearchListView< BaseListView >::SearchListView( QWidget* parent, _1& first, _2& second, _3& third, _4& fourth, _5& fifth )
+    : SearchListView_ABC( parent )
     , searchLine_( 0 )
     , listView_  ( 0 )
 {
-    listView_ = new ListView( this, first, second, third, fourth, fifth );
+    listView_ = new BaseListView( this, first, second, third, fourth, fifth );
     CreateGUI();
 }
 
@@ -160,14 +178,14 @@ SearchListView< ListView >::SearchListView( QWidget* parent, _1& first, _2& seco
 // Name: SearchListView constructor
 // Created: ABR 2012-03-27
 // -----------------------------------------------------------------------------
-template< typename ListView >
+template< typename BaseListView >
 template< typename _1, typename _2, typename _3, typename _4, typename _5, typename _6 >
-SearchListView< ListView >::SearchListView( QWidget* parent, _1& first, _2& second, _3& third, _4& fourth, _5& fifth, _6& sixth )
-    : QWidget( parent )
+SearchListView< BaseListView >::SearchListView( QWidget* parent, _1& first, _2& second, _3& third, _4& fourth, _5& fifth, _6& sixth )
+    : SearchListView_ABC( parent )
     , searchLine_( 0 )
     , listView_  ( 0 )
 {
-    listView_ = new ListView( this, first, second, third, fourth, fifth, sixth );
+    listView_ = new BaseListView( this, first, second, third, fourth, fifth, sixth );
     CreateGUI();
 }
 
@@ -175,14 +193,14 @@ SearchListView< ListView >::SearchListView( QWidget* parent, _1& first, _2& seco
 // Name: SearchListView constructor
 // Created: ABR 2012-03-28
 // -----------------------------------------------------------------------------
-template< typename ListView >
+template< typename BaseListView >
 template< typename _1, typename _2, typename _3, typename _4, typename _5, typename _6, typename _7 >
-SearchListView< ListView >::SearchListView( QWidget* parent, _1& first, _2& second, _3& third, _4& fourth, _5& fifth, _6& sixth, _7& seventh )
-    : QWidget( parent )
+SearchListView< BaseListView >::SearchListView( QWidget* parent, _1& first, _2& second, _3& third, _4& fourth, _5& fifth, _6& sixth, _7& seventh )
+    : SearchListView_ABC( parent )
     , searchLine_( 0 )
     , listView_  ( 0 )
 {
-    listView_ = new ListView( this, first, second, third, fourth, fifth, sixth, seventh );
+    listView_ = new BaseListView( this, first, second, third, fourth, fifth, sixth, seventh );
     CreateGUI();
 }
 
@@ -190,8 +208,8 @@ SearchListView< ListView >::SearchListView( QWidget* parent, _1& first, _2& seco
 // Name: SearchListView destructor
 // Created: ABR 2012-03-27
 // -----------------------------------------------------------------------------
-template< typename ListView >
-SearchListView< ListView >::~SearchListView()
+template< typename BaseListView >
+SearchListView< BaseListView >::~SearchListView()
 {
     // NOTHING
 }
@@ -200,9 +218,20 @@ SearchListView< ListView >::~SearchListView()
 // Name: SearchListView::GetListView
 // Created: ABR 2012-03-27
 // -----------------------------------------------------------------------------
-template< typename ListView >
+template< typename BaseListView >
 inline
-ListView* SearchListView< ListView >::GetListView() const
+BaseListView* SearchListView< BaseListView >::GetListView() const
+{
+    return listView_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SearchListView::GetRichListView
+// Created: ABR 2012-03-29
+// -----------------------------------------------------------------------------
+template< typename BaseListView >
+inline
+RichListView* SearchListView< BaseListView >::GetRichListView() const
 {
     return listView_;
 }
@@ -211,9 +240,9 @@ ListView* SearchListView< ListView >::GetListView() const
 // Name: SearchListView::CreateGUI
 // Created: ABR 2012-03-27
 // -----------------------------------------------------------------------------
-template< typename ListView >
+template< typename BaseListView >
 inline
-void SearchListView< ListView >::CreateGUI()
+void SearchListView< BaseListView >::CreateGUI()
 {
     assert( listView_ != 0 );
 

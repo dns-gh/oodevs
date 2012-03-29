@@ -27,8 +27,35 @@ class RichListView : public Q3ListView
     Q_OBJECT
 
 public:
-    explicit RichListView( QWidget* parent, const char* name = 0 ) : Q3ListView( parent, name ) {}
+    explicit RichListView( QWidget* parent, const char* name = 0 ) : Q3ListView( parent, name ), creationBlocked_( false ) {}
     virtual ~RichListView() {}
+
+public:
+    void SetCreationBlocked( bool creationBlocked )
+    {
+        creationBlocked_ = creationBlocked;
+    }
+
+    bool IsCreationBlocked() const
+    {
+        return creationBlocked_;
+    }
+
+    void DeleteTail( ValuedListItem* item )
+    {
+        while( item )
+        {
+            ValuedListItem* next = (ValuedListItem*) item->nextSibling();
+            delete item;
+            item = next;
+        }
+    }
+
+    void Purge()
+    {
+        DeleteTail( static_cast< ValuedListItem *>( firstChild() ) );
+        clear();
+    }
 
 public slots:
     void SearchAndSelect( const QString& searchedText )
@@ -139,6 +166,7 @@ private:
 
 private:
     QString searchedText_;
+    bool creationBlocked_;
 };
 
 
@@ -180,8 +208,10 @@ public:
         while( it.HasMoreElements() )
         {
             const Element& element = it.NextElement();
-            if( ! currentItem  )
+            if( !currentItem )
                 currentItem = CreateItem( parent, previousItem );
+            if( !currentItem )
+                return 0;
             currentItem->SetValue( &element );
             previousItem = currentItem;
             currentItem = (ValuedListItem*)( currentItem->nextSibling() );
@@ -197,8 +227,10 @@ public:
         ValuedListItem* previousItem = currentItem;
         while( from != to )
         {
-            if( ! currentItem  )
+            if( !currentItem  )
                 currentItem = CreateItem( parent, previousItem );
+            if( !currentItem )
+                return 0;
             previousItem = currentItem;
             currentItem = (ValuedListItem*)( currentItem->nextSibling() );
             list_.Display( *from, previousItem );
@@ -215,19 +247,11 @@ public:
             toSkip_ = item;
     }
 
-    void DeleteTail( ValuedListItem* item )
-    {
-        while( item )
-        {
-            ValuedListItem* next = (ValuedListItem*) item->nextSibling();
-            delete item;
-            item = next;
-        }
-    };
-
     template< typename Parent >
     ValuedListItem* CreateItem( Parent* parent, ValuedListItem* previousItem )
     {
+        if( IsCreationBlocked() )
+            return 0;
         if( previousItem && previousItem == toSkip_ ) {
             toSkip_ = 0;
             return previousItem;
@@ -238,6 +262,8 @@ public:
     template< typename Parent >
     ValuedListItem* CreateItem( Parent* parent )
     {
+        if( IsCreationBlocked() )
+            return 0;
         return factory_.CreateItem( parent, comparator_ );
     }
 

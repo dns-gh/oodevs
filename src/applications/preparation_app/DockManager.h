@@ -25,8 +25,7 @@ namespace gui
     class FormationLayer;
     class EntitySymbols;
     class ItemFactory_ABC;
-    template< typename T >
-    class LogisticList;
+    class RichListView;
     class SymbolIcons;
     class ColorStrategy_ABC;
     class ParametersLayer;
@@ -75,6 +74,7 @@ public:
     //@{
     void Purge();
     void Load();
+    void BlockCreationOnListViews( bool enable );
     QByteArray SaveGeometry() const;
     QByteArray SaveState() const;
     ObjectCreationPanel& GetObjectCreationPanel() const;
@@ -99,7 +99,7 @@ private:
     //@{
     QMainWindow* parent_;
     kernel::Controllers& controllers_;
-    LogisticListView* logisticListView_;
+    std::vector< gui::RichListView* > listViews_;
     QDockWidget* pExtensionsPanel_;
     CreationPanels* pCreationPanel_;
     LivingAreaPanel* pLivingAreaPanel_;

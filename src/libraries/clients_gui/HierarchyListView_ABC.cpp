@@ -125,6 +125,8 @@ ValuedListItem* HierarchyListView_ABC::FindOrCreate( const Entity_ABC* entity )
 // -----------------------------------------------------------------------------
 void HierarchyListView_ABC::Display( const Entity_ABC& entity, ValuedListItem* item )
 {
+    if( !item )
+        return;
     const bool isVisible = profile_.IsVisible( entity );
     item->SetNamed( entity );
     item->setDropEnabled( true );
@@ -142,6 +144,8 @@ void HierarchyListView_ABC::Display( const Entity_ABC& entity, ValuedListItem* i
 // -----------------------------------------------------------------------------
 void HierarchyListView_ABC::DisplayIcon( const Entity_ABC& entity, ValuedListItem* item )
 {
+    if( !item )
+        return;
     QPixmap pixmap = symbols_.GetSymbol( entity );
     if( pixmap.isNull() )
     {

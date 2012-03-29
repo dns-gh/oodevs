@@ -481,7 +481,9 @@ bool MainWindow::Close()
     if( model_.IsLoaded() && !CheckSaving() )
         return false;
     pDockManager_->Purge();
+    pDockManager_->BlockCreationOnListViews( true );
     model_.Purge();
+    pDockManager_->BlockCreationOnListViews( false );
     staticModel_.Purge();
     selector_->Close();
     filterDialogs_->Purge();

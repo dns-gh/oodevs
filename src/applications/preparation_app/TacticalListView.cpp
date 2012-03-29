@@ -142,6 +142,8 @@ namespace
 // -----------------------------------------------------------------------------
 void TacticalListView::Display( const Entity_ABC& entity, ValuedListItem* item )
 {
+    if( !item )
+        return;
     item->setRenameEnabled( 0, true );
     UpdatePixmap( entity, item );
     QColor color = Qt::transparent;
