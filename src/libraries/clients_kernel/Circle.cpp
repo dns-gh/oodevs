@@ -70,8 +70,8 @@ void Circle::Translate( const geometry::Point2f& from, const geometry::Vector2f&
 {
     if( IsValid() )
     {
-        float dist = center_.SquareDistance( from );
-        if( dist < precision * precision || dist < std::abs( dist - radius_ * radius_ ) < precision * precision )
+        float dist = center_.Distance( from );
+        if( dist < precision || std::abs( dist - radius_ ) < precision )
             center_ += translation;
     }
 }
