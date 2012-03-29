@@ -158,7 +158,6 @@
         item = _ref[_i];
         this.add(item);
       }
-      return this;
     };
 
     SessionListView.prototype.add = function(item) {

@@ -96,7 +96,7 @@ class SessionListView extends Backbone.View
     reset: (list, options) =>
         for item in list.models
             @add item
-        return this
+        return
 
     add: (item) =>
         view = new SessionItemView model: item
