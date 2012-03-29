@@ -101,6 +101,7 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions ( directia::brain::Br
     brain[ "DEC_ConnaissanceObjet_EstContourne" ] = &DEC_KnowledgeObjectFunctions::IsBypassed;
     brain[ "DEC_ConnaissanceObjet_EstValorise" ] = &DEC_KnowledgeObjectFunctions::IsMined;
     brain[ "DEC_ConnaissanceObjet_EstBreche" ] = &DEC_KnowledgeObjectFunctions::IsBreached;
+	brain[ "DEC_ConnaissanceObjet_EstConstuit" ] = &DEC_KnowledgeObjectFunctions::IsConstructed;
     brain[ "DEC_ConnaissanceObjet_NiveauConstruction" ] = &DEC_KnowledgeObjectFunctions::GetConstructionLevel;
     brain[ "DEC_ConnaissanceObjet_NiveauValorisation" ] = &DEC_KnowledgeObjectFunctions::GetValorizationLevel;
     brain[ "DEC_ConnaissanceObjet_Localisation" ] = &DEC_KnowledgeObjectFunctions::GetLocalisation;
