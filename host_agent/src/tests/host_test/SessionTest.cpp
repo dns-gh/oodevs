@@ -66,7 +66,8 @@ namespace
         MOCK_METHOD( IsFile, 1 );
         MOCK_METHOD( IsDirectory, 1 );
         MOCK_METHOD( Exists, 1 );
-        MOCK_METHOD( Copy, 2 );
+        MOCK_METHOD( CopyDirectory, 2 );
+        MOCK_METHOD( CopyFile, 2 );
         MOCK_METHOD( CreateDirectory, 1 );
         MOCK_METHOD( Remove, 1 );
         MOCK_METHOD( WriteFile, 2 );
@@ -152,7 +153,6 @@ namespace
             boost::shared_ptr< MockProcess > reply = boost::make_shared< MockProcess >( processPid, name.empty() ? processName : name );
             MOCK_EXPECT( runtime.Start ).once().returns( reply );
             MOCK_EXPECT( system.WriteFile ).once();
-            MOCK_EXPECT( system.Copy ).once();
             SaveSessionTag( tag );
             session.Start();
             MOCK_EXPECT( reply->Kill ).once().returns( true );
