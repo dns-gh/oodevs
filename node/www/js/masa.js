@@ -42,6 +42,7 @@
 
   on_session_hide = function() {
     $("#session_name").parent().parent().removeClass("error");
+    $("#session_exercise").parent().parent().removeClass("error");
     return $("#session_create .modal-footer .alert").hide();
   };
 
