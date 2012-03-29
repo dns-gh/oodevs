@@ -212,7 +212,6 @@
   </object>
   <object geometry="line point" name="pont flottant continu" symbol="S*GPEVEB--*****" type="continuous pontoon bridge">
     <bridging type="bridge"/>
-    <bypassable bypass-speed="10"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <mobility default-speed="10" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
     <trafficability default="true" max-weight="100"/>
@@ -444,4 +443,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="1136202252" -->
+<!-- signature="0094456199" -->
