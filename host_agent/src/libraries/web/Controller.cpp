@@ -151,6 +151,19 @@ namespace
         const boost::optional< std::string > option = data.GetParameter( name );
         return option == boost::none ? value : boost::lexical_cast< T >( *option );
     }
+
+    bool GetUuid( boost::uuids::uuid& id, const std::string& data )
+    {
+        try
+        {
+            id = boost::uuids::string_generator()( data );
+            return true;
+        }
+        catch( const std::runtime_error& /*err*/ )
+        {
+            return false;
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -182,7 +195,10 @@ std::string Controller::GetSession( const Request_ABC& request )
     const boost::optional< std::string > uuid = request.GetParameter( "id" );
     if( uuid == boost::none )
         return WriteHttpReply( BadRequest, "Missing \"id\" parameter" );
-    return WriteHttpReply( agent_.GetSession( boost::uuids::string_generator()( *uuid ) ) );
+    boost::uuids::uuid id;
+    if( !GetUuid( id, *uuid ) )
+        return WriteHttpReply( BadRequest, "Invalid \"id\" parameter" );
+    return WriteHttpReply( agent_.GetSession( id ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -209,7 +225,10 @@ std::string Controller::DeleteSession( const Request_ABC& request )
     const boost::optional< std::string > uuid = request.GetParameter( "id" );
     if( uuid == boost::none )
         return WriteHttpReply( BadRequest, "Missing \"id\" parameter" );
-    return WriteHttpReply( agent_.DeleteSession( boost::uuids::string_generator()( *uuid ) ) );
+    boost::uuids::uuid id;
+    if( !GetUuid( id, *uuid ) )
+        return WriteHttpReply( BadRequest, "Invalid \"id\" parameter" );
+    return WriteHttpReply( agent_.DeleteSession( id ) );
 }
 
 // -----------------------------------------------------------------------------

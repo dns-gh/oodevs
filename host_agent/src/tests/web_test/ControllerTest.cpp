@@ -141,6 +141,13 @@ BOOST_FIXTURE_TEST_CASE( controller_delete_session, Fixture )
     CheckNotify( 200, expected );
 }
 
+BOOST_FIXTURE_TEST_CASE( controller_reject_invalid_ids, Fixture )
+{
+    SetRequest( "GET", "/delete_session", boost::assign::map_list_of( "id", "1" ) );
+    const std::string expected = "Invalid \"id\" parameter";
+    CheckNotify( 400, expected );
+}
+
 BOOST_FIXTURE_TEST_CASE( controller_list_exercises, Fixture )
 {
     SetRequest( "GET", "/list_exercises", boost::assign::map_list_of
