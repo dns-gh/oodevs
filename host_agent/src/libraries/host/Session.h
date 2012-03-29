@@ -61,11 +61,24 @@ public:
     virtual void Stop();
     //@}
 
+    //! @name Status enumeration
+    //@{
+    enum Status
+    {
+        STATUS_STOPPED,
+        STATUS_PLAYING,
+        STATUS_REPLAYING,
+        STATUS_PAUSED,
+        STATUS_COUNT
+    };
+    //@}
+
 private:
     //! @name Private methods
     //@{
     void CheckPaths() const;
     std::string ToXml() const;
+    boost::filesystem::wpath GetPath() const;
     //@}
 
 private:
@@ -78,8 +91,9 @@ private:
     const boost::filesystem::wpath applications_;
     const std::string exercise_;
     const std::string name_;
-    std::auto_ptr< Port_ABC > port_;
     boost::shared_ptr< runtime::Process_ABC > process_;
+    std::auto_ptr< Port_ABC > port_;
+    Status status_;
     //@}
 };
 

@@ -118,6 +118,7 @@ namespace
             MOCK_EXPECT( system.IsDirectory ).with( apps ).returns( true );
             MOCK_EXPECT( system.Exists ).with( apps / L"/simulation_app.exe" ).returns( true );
             MOCK_EXPECT( system.IsFile ).with( apps / L"/simulation_app.exe" ).returns( true );
+            MOCK_EXPECT( system.Remove );
         }
 
         boost::shared_ptr< Session > MakeSession()
@@ -173,12 +174,26 @@ BOOST_FIXTURE_TEST_CASE( session_reloads, Fixture )
 BOOST_FIXTURE_TEST_CASE( session_converts_to_json, Fixture )
 {
     boost::shared_ptr< Session > ptr = MakeSession();
-    BOOST_CHECK_EQUAL( ptr->ToJson(),
-        "{ \"id\" : \"12345678-90ab-cdef-9876-543210123456\", \"process\" : {}, \"name\" : \"my_name\", \"port\" : 10000, \"exercise\" : \"my_exercise\" }"
+    BOOST_CHECK_EQUAL( ptr->ToJson(), "{ "
+        "\"id\" : \"12345678-90ab-cdef-9876-543210123456\", "
+        "\"process\" : {}, "
+        "\"name\" : \"my_name\", "
+        "\"port\" : 10000, "
+        "\"exercise\" : \"my_exercise\", "
+        "\"status\" : \"stopped\""
+        " }"
     );
     StartSession( *ptr );
-    BOOST_CHECK_EQUAL( ptr->ToJson(),
-        "{ \"id\" : \"12345678-90ab-cdef-9876-543210123456\", \"process\" : { \"pid\" : 1337, \"name\" : \"bidule.exe\" }, \"name\" : \"my_name\", \"port\" : 10000, \"exercise\" : \"my_exercise\" }"
+    BOOST_CHECK_EQUAL( ptr->ToJson(), "{ "
+        "\"id\" : \"12345678-90ab-cdef-9876-543210123456\", "
+        "\"process\" : { "
+            "\"pid\" : 1337, "
+            "\"name\" : \"bidule.exe\" }, "
+        "\"name\" : \"my_name\", "
+        "\"port\" : 10000, "
+        "\"exercise\" : \"my_exercise\", "
+        "\"status\" : \"playing\""
+        " }"
     );
 }
 

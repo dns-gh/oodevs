@@ -65,6 +65,26 @@ namespace
         xis >> xml::start( "session" );
         return xis.attribute< T >( name );
     }
+
+    std::string ConvertStatus( Session::Status status )
+    {
+        switch( status )
+        {
+            default:
+            case Session::STATUS_STOPPED:   return "stopped";
+            case Session::STATUS_PLAYING:   return "playing";
+            case Session::STATUS_REPLAYING: return "replaying";
+            case Session::STATUS_PAUSED:    return "paused";
+        }
+    }
+
+    Session::Status ConvertStatus( const std::string& status )
+    {
+        if( status == "playing" )   return Session::STATUS_PLAYING;
+        if( status == "replaying" ) return Session::STATUS_REPLAYING;
+        if( status == "paused" )    return Session::STATUS_PAUSED;
+        return Session::STATUS_STOPPED;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -84,6 +104,7 @@ Session::Session( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uu
     , exercise_    ( exercise )
     , name_        ( name )
     , port_        ( ports.Create() )
+    , status_      ( STATUS_STOPPED )
 {
     CheckPaths();
 }
@@ -102,13 +123,11 @@ Session::Session( const runtime::Runtime_ABC& runtime, const FileSystem_ABC& sys
     , applications_( applications )
     , exercise_    ( ParseItem< std::string >( xis, "exercise" ) )
     , name_        ( ParseItem< std::string >( xis, "name" ) )
-    , port_        ( ports.Create( ParseItem< int >( xis, "port" ) ) )
+    , process_     ( runtime_.GetProcess( ParseItem< int >( xis, "pid" ) ) )
+    , port_        ( process_ ? ports.Create( ParseItem< int >( xis, "port" ) ) : ports.Create() )
+    , status_      ( process_ ? ConvertStatus( ParseItem< std::string >( xis, "status" ) ) : STATUS_STOPPED )
 {
     CheckPaths();
-    const int pid = ParseItem< int >( xis, "pid" );
-    process_ = runtime_.GetProcess( pid );
-    if( !process_ )
-        throw std::runtime_error( "unable to open process " + boost::lexical_cast< std::string >( pid ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -134,7 +153,7 @@ void Session::CheckPaths() const
 // -----------------------------------------------------------------------------
 Session::~Session()
 {
-    // NOTHING
+    system_.Remove( GetPath() );
 }
 
 // -----------------------------------------------------------------------------
@@ -169,8 +188,18 @@ std::string ToJson( const runtime::Process_ABC& process )
 std::string Session::ToJson() const
 {
     const std::string process = process_ ? ::ToJson( *process_ ) : "{}";
-    return (boost::format( "{ \"id\" : \"%1%\", \"process\" : %2%, \"name\" : \"%3%\", \"port\" : %4%, \"exercise\" : \"%5%\" }" )
-        % id_ % process % name_ % port_->Get() % exercise_ ).str();
+    std::string reply = "{ ";
+    return (boost::format( "{ "
+        "\"id\" : \"%1%\", "
+        "\"process\" : %2%, "
+        "\"name\" : \"%3%\", "
+        "\"port\" : %4%, "
+        "\"exercise\" : \"%5%\", "
+        "\"status\" : \"%6%\""
+        " }" )
+        % id_ % process % name_ % port_->Get() % exercise_
+        % ConvertStatus( status_ )
+        ).str();
 }
 
 // -----------------------------------------------------------------------------
@@ -185,7 +214,8 @@ std::string Session::ToXml() const
             << xml::attribute( "exercise", exercise_ )
             << xml::attribute( "name", name_ )
             << xml::attribute( "port", port_->Get() )
-            << xml::attribute( "pid", process_->GetPid() );
+            << xml::attribute( "pid", process_->GetPid() )
+            << xml::attribute( "status", ConvertStatus( status_ ) );
     return xos.str();
 }
 
@@ -283,15 +313,23 @@ std::string WriteConfiguration( const std::string& name, int base )
 }
 
 // -----------------------------------------------------------------------------
+// Name: Session::GetPath
+// Created: BAX 2012-03-29
+// -----------------------------------------------------------------------------
+boost::filesystem::wpath Session::GetPath() const
+{
+    return data_ / L"exercises" / runtime::Utf8Convert( exercise_ ) / L"sessions" / boost::lexical_cast< std::wstring >( id_ );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Session::Start
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
 void Session::Start()
 {
-    const std::wstring exercise = runtime::Utf8Convert( exercise_ );
-    const boost::filesystem::wpath sessionPath = data_ / L"exercises" / exercise / L"sessions" / boost::lexical_cast< std::wstring >( id_ );
-    system_.CreateDirectory( sessionPath );
-    system_.WriteFile( sessionPath / L"session.xml", WriteConfiguration( name_, port_->Get() ) );
+    const boost::filesystem::wpath path = GetPath();
+    system_.CreateDirectory( path );
+    system_.WriteFile( path / L"session.xml", WriteConfiguration( name_, port_->Get() ) );
     process_ = runtime_.Start( Utf8Convert( applications_ / L"simulation_app.exe" ),
         boost::assign::list_of
             ( "--root-dir="      + Utf8Convert( data_ ) )
@@ -302,8 +340,10 @@ void Session::Start()
             ( "--session="       + boost::lexical_cast< std::string >( id_ ) ),
         Utf8Convert( applications_ )
     );
-    if( process_ )
-        system_.WriteFile( sessionPath / L"session.id", ToXml() );
+    if( !process_ ) return;
+
+    status_ = STATUS_PLAYING;
+    system_.WriteFile( path / L"session.id", ToXml() );
 }
 
 // -----------------------------------------------------------------------------
@@ -314,4 +354,6 @@ void Session::Stop()
 {
     if( process_ )
         process_->Kill( MAX_KILL_TIMEOUT_MS );
+    process_.reset();
+    status_ = STATUS_STOPPED;
 }
