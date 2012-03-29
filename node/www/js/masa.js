@@ -1,5 +1,5 @@
 (function() {
-  var SessionItem, SessionItemView, SessionList, SessionListView, ajax, diff_models, invalidate_session, on_session_click, on_session_hide, on_session_load, session_view,
+  var SessionItem, SessionItemView, SessionList, SessionListView, ajax, diff_models, invalidate_session, on_session_click, on_session_hide, on_session_load, session_template, session_view,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = Object.prototype.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
@@ -72,6 +72,8 @@
 
   })(Backbone.Collection);
 
+  session_template = _.template($("#session_template").html());
+
   SessionItemView = (function(_super) {
 
     __extends(SessionItemView, _super);
@@ -95,7 +97,7 @@
     };
 
     SessionItemView.prototype.render = function() {
-      $(this.el).html("<div id=\"id_" + (this.model.get("id")) + "\" class=\"span9\">\n    <div class=\"well run session_row\">\n        <div class=\"span3\">\n            <div class=\"session_name\">" + (this.model.get("name")) + "</div>\n            <div class=\"session_exercise\">" + (this.model.get("exercise")) + "</div>\n            <div class=\"session_model\">Model: 2010-12-10</div>\n            <span class=\"label\">" + (this.model.get("id")) + "</span>\n        </div>\n        <div class=\"span4\">\n            <div>Started 2012-01-01 at 00:00:00</div>\n            <div>Time running 00:00:00</div>\n            <div>0 clients connected</div>\n        </div>\n        <div class=\"btn-group session_top_right\">\n            <a href=\"#\" class=\"btn\"><i class=\"icon-play\"></i></a>\n            <a href=\"#\" class=\"btn\"><i class=\"icon-pause\"></i></a>\n            <a href=\"#\" class=\"btn\"><i class=\"icon-stop\"></i></a>\n            <a href=\"#\" class=\"btn\"><i class=\"icon-plus-sign\"></i></a>\n            <a href=\"#\" class=\"btn delete\"><i class=\"icon-trash\"></i></a>\n        </div>\n        <div class=\"session_bottom_right\">\n            <a href=\"#\" class=\"btn\"><i class=\"icon-th-list\"></i> More <span class=\"caret\"></span></a>\n        </div>\n    </div>\n</div>");
+      $(this.el).html(session_template(this.model.attributes));
       return this;
     };
 

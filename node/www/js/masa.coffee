@@ -28,6 +28,8 @@ class SessionList extends Backbone.Collection
             return ajax "/list_sessions", null, options.success, options.error
         return Backbone.sync method, model, options
 
+session_template = _.template $("#session_template").html()
+
 class SessionItemView extends Backbone.View
     tagName:   "div"
     className: "row"
@@ -39,33 +41,7 @@ class SessionItemView extends Backbone.View
         "click .delete" : "delete"
 
     render: =>
-        $(@el).html """
-<div id="id_#{@model.get "id"}" class="span9">
-    <div class="well run session_row">
-        <div class="span3">
-            <div class="session_name">#{@model.get "name"}</div>
-            <div class="session_exercise">#{@model.get "exercise"}</div>
-            <div class="session_model">Model: 2010-12-10</div>
-            <span class="label">#{@model.get "id"}</span>
-        </div>
-        <div class="span4">
-            <div>Started 2012-01-01 at 00:00:00</div>
-            <div>Time running 00:00:00</div>
-            <div>0 clients connected</div>
-        </div>
-        <div class="btn-group session_top_right">
-            <a href="#" class="btn"><i class="icon-play"></i></a>
-            <a href="#" class="btn"><i class="icon-pause"></i></a>
-            <a href="#" class="btn"><i class="icon-stop"></i></a>
-            <a href="#" class="btn"><i class="icon-plus-sign"></i></a>
-            <a href="#" class="btn delete"><i class="icon-trash"></i></a>
-        </div>
-        <div class="session_bottom_right">
-            <a href="#" class="btn"><i class="icon-th-list"></i> More <span class="caret"></span></a>
-        </div>
-    </div>
-</div>
-"""
+        $(@el).html session_template @model.attributes
         return this
 
     delete: =>
