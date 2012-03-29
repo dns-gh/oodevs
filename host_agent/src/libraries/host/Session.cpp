@@ -78,7 +78,7 @@ Session::Session( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uu
                   PortFactory_ABC& ports )
     : runtime_     ( runtime )
     , system_      ( system )
-    , tag_         ( uuids.Create() )
+    , id_          ( uuids.Create() )
     , data_        ( data )
     , applications_( applications )
     , exercise_    ( exercise )
@@ -97,7 +97,7 @@ Session::Session( const runtime::Runtime_ABC& runtime, const FileSystem_ABC& sys
                   xml::xistream& xis, PortFactory_ABC& ports )
     : runtime_     ( runtime )
     , system_      ( system )
-    , tag_         ( boost::uuids::string_generator()( ParseItem< std::string >( xis, "tag" ) ) )
+    , id_          ( boost::uuids::string_generator()( ParseItem< std::string >( xis, "id" ) ) )
     , data_        ( data )
     , applications_( applications )
     , exercise_    ( ParseItem< std::string >( xis, "exercise" ) )
@@ -143,7 +143,7 @@ Session::~Session()
 // -----------------------------------------------------------------------------
 boost::uuids::uuid Session::GetTag() const
 {
-    return tag_;
+    return id_;
 }
 
 namespace
@@ -169,8 +169,8 @@ std::string ToJson( const runtime::Process_ABC& process )
 std::string Session::ToJson() const
 {
     const std::string process = process_ ? ::ToJson( *process_ ) : "{}";
-    return (boost::format( "{ \"tag\" : \"%1%\", \"process\" : %2%, \"name\" : \"%3%\", \"port\" : %4% }" )
-        % tag_ % process % name_ % port_->Get() ).str();
+    return (boost::format( "{ \"id\" : \"%1%\", \"process\" : %2%, \"name\" : \"%3%\", \"port\" : %4% }" )
+        % id_ % process % name_ % port_->Get() ).str();
 }
 
 // -----------------------------------------------------------------------------
@@ -181,7 +181,7 @@ std::string Session::ToXml() const
 {
     xml::xostringstream xos;
     xos << xml::start( "session" )
-            << xml::attribute( "tag", boost::lexical_cast< std::string >( tag_ ) )
+            << xml::attribute( "id", boost::lexical_cast< std::string >( id_ ) )
             << xml::attribute( "exercise", exercise_ )
             << xml::attribute( "name", name_ )
             << xml::attribute( "port", port_->Get() )
@@ -289,7 +289,7 @@ std::string WriteConfiguration( const std::string& name, int base )
 void Session::Start()
 {
     const std::wstring exercise = runtime::Utf8Convert( exercise_ );
-    const boost::filesystem::wpath sessionPath = data_ / L"exercises" / exercise / L"sessions" / boost::lexical_cast< std::wstring >( tag_ );
+    const boost::filesystem::wpath sessionPath = data_ / L"exercises" / exercise / L"sessions" / boost::lexical_cast< std::wstring >( id_ );
     system_.CreateDirectory( sessionPath );
     system_.WriteFile( sessionPath / L"session.xml", WriteConfiguration( name_, port_->Get() ) );
     process_ = runtime_.Start( Utf8Convert( applications_ / L"simulation_app.exe" ),
@@ -299,11 +299,11 @@ void Session::Start()
             ( "--terrains-dir="  + Utf8Convert( data_ / L"data/terrains" ) )
             ( "--models-dir="    + Utf8Convert( data_ / L"data/models" ) )
             ( "--exercise="      + exercise_ )
-            ( "--session="       + boost::lexical_cast< std::string >( tag_ ) ),
+            ( "--session="       + boost::lexical_cast< std::string >( id_ ) ),
         Utf8Convert( applications_ )
     );
     if( process_ )
-        system_.WriteFile( sessionPath / L"session.tag", ToXml() );
+        system_.WriteFile( sessionPath / L"session.id", ToXml() );
 }
 
 // -----------------------------------------------------------------------------

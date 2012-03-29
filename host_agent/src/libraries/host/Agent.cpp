@@ -104,12 +104,12 @@ Reply Agent::CountSessions() const
 // Name: Agent::GetSession
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-Reply Agent::GetSession( const boost::uuids::uuid& tag ) const
+Reply Agent::GetSession( const boost::uuids::uuid& id ) const
 {
     boost::shared_lock< boost::shared_mutex > lock( *access_ );
-    T_Sessions::const_iterator it = sessions_.find( tag );
+    T_Sessions::const_iterator it = sessions_.find( id );
     if( it == sessions_.end() )
-        return Reply( ( boost::format( "unable to find session %1%" ) % tag ).str(), false );
+        return Reply( ( boost::format( "unable to find session %1%" ) % id ).str(), false );
     return Reply( it->second->ToJson() );
 }
 
@@ -132,10 +132,10 @@ void AddSession( T& mutex, U& sessions, boost::shared_ptr< Session_ABC > ptr )
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
 template< typename T, typename U >
-boost::shared_ptr< Session_ABC > ExtractSession( T& mutex, U& sessions, const boost::uuids::uuid& tag )
+boost::shared_ptr< Session_ABC > ExtractSession( T& mutex, U& sessions, const boost::uuids::uuid& id )
 {
     boost::lock_guard< T > lock( mutex );
-    typename U::iterator it = sessions.find( tag );
+    typename U::iterator it = sessions.find( id );
     if( it == sessions.end() )
         return boost::shared_ptr< Session_ABC >();
 
@@ -164,11 +164,11 @@ Reply Agent::CreateSession( const std::string& exercise, const std::string& name
 // Name: Agent::DeleteSession
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-Reply Agent::DeleteSession( const boost::uuids::uuid& tag )
+Reply Agent::DeleteSession( const boost::uuids::uuid& id )
 {
-    boost::shared_ptr< Session_ABC > ptr = ExtractSession( *access_, sessions_, tag );
+    boost::shared_ptr< Session_ABC > ptr = ExtractSession( *access_, sessions_, id );
     if( !ptr )
-        return Reply( ( boost::format( "unable to find session %1%" ) % tag ).str(), false );
+        return Reply( ( boost::format( "unable to find session %1%" ) % id ).str(), false );
 
     ptr->Stop();
     return Reply( ptr->ToJson() );

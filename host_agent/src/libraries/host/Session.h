@@ -73,7 +73,7 @@ private:
     //@{
     const runtime::Runtime_ABC& runtime_;
     const FileSystem_ABC& system_;
-    const boost::uuids::uuid tag_;
+    const boost::uuids::uuid id_;
     const boost::filesystem::wpath data_;
     const boost::filesystem::wpath applications_;
     const std::string exercise_;

@@ -66,7 +66,7 @@ boost::shared_ptr< Session_ABC > SessionFactory::Create( const std::string& exer
 SessionFactory_ABC::T_Sessions SessionFactory::Reload() const
 {
     SessionFactory_ABC::T_Sessions sessions;
-    BOOST_FOREACH( const boost::filesystem::wpath& path, system_.Glob( data_ / L"exercises", L"session.tag" ) )
+    BOOST_FOREACH( const boost::filesystem::wpath& path, system_.Glob( data_ / L"exercises", L"session.id" ) )
         try
         {
             xml::xistringstream xis( system_.ReadFile( path ) );

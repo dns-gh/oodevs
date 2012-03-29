@@ -30,7 +30,7 @@ using namespace host;
 
 namespace
 {
-    const std::string default_tag_string = "12345678-90AB-CDEF-9876-543210123456";
+    const std::string default_id_string = "12345678-90AB-CDEF-9876-543210123456";
 
     MOCK_BASE_CLASS( MockRuntime, runtime::Runtime_ABC )
     {
@@ -95,7 +95,7 @@ namespace
         MockUuidFactory uuids;
         MockFileSystem  system;
         MockPortFactory ports;
-        const boost::uuids::uuid tag;
+        const boost::uuids::uuid id;
         const int port;
         const boost::filesystem::wpath data;
         const boost::filesystem::wpath apps;
@@ -104,7 +104,7 @@ namespace
         const int processPid;
         const std::string processName;
         Fixture()
-            : tag        ( boost::uuids::string_generator()( default_tag_string ) )
+            : id         ( boost::uuids::string_generator()( default_id_string ) )
             , port       ( 10000 )
             , data       ( L"data" )
             , apps       ( L"apps" )
@@ -122,7 +122,7 @@ namespace
 
         boost::shared_ptr< Session > MakeSession()
         {
-            MOCK_EXPECT( uuids.Create ).once().returns( tag );
+            MOCK_EXPECT( uuids.Create ).once().returns( id );
             MOCK_EXPECT( ports.Create0 ).once().returns( std::auto_ptr< Port_ABC >( new MockPort( port ) ) );
             return boost::shared_ptr< Session >( new Session( runtime, uuids, system, data, apps, exercise, name, ports ) );
         }
@@ -174,11 +174,11 @@ BOOST_FIXTURE_TEST_CASE( session_converts_to_json, Fixture )
 {
     boost::shared_ptr< Session > ptr = MakeSession();
     BOOST_CHECK_EQUAL( ptr->ToJson(),
-        "{ \"tag\" : \"12345678-90ab-cdef-9876-543210123456\", \"process\" : {}, \"name\" : \"my_name\", \"port\" : 10000 }"
+        "{ \"id\" : \"12345678-90ab-cdef-9876-543210123456\", \"process\" : {}, \"name\" : \"my_name\", \"port\" : 10000 }"
     );
     StartSession( *ptr );
     BOOST_CHECK_EQUAL( ptr->ToJson(),
-        "{ \"tag\" : \"12345678-90ab-cdef-9876-543210123456\", \"process\" : { \"pid\" : 1337, \"name\" : \"bidule.exe\" }, \"name\" : \"my_name\", \"port\" : 10000 }"
+        "{ \"id\" : \"12345678-90ab-cdef-9876-543210123456\", \"process\" : { \"pid\" : 1337, \"name\" : \"bidule.exe\" }, \"name\" : \"my_name\", \"port\" : 10000 }"
     );
 }
 

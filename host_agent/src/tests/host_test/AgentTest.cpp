@@ -50,11 +50,11 @@ namespace
         MOCK_METHOD( Stop, 0 );
     };
 
-    static boost::shared_ptr< MockSession > CreateMockSession( const std::string& tag, const std::string& exercise, const std::string& name )
+    static boost::shared_ptr< MockSession > CreateMockSession( const std::string& id, const std::string& exercise, const std::string& name )
     {
         boost::shared_ptr< MockSession > ptr = boost::make_shared< MockSession >();
-        MOCK_EXPECT( ptr->GetTag ).returns( boost::uuids::string_generator()( tag ) );
-        MOCK_EXPECT( ptr->ToJson ).returns( tag + exercise + name );
+        MOCK_EXPECT( ptr->GetTag ).returns( boost::uuids::string_generator()( id ) );
+        MOCK_EXPECT( ptr->ToJson ).returns( id + exercise + name );
         return ptr;
     }
 

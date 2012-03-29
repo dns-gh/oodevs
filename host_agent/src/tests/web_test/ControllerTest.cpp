@@ -30,8 +30,8 @@ using namespace web;
 
 namespace
 {
-    const std::string default_tag_string = "0123456789abcdef0123456789abcdef";
-    const boost::uuids::uuid default_tag = boost::uuids::string_generator()( default_tag_string );
+    const std::string default_id_string = "0123456789abcdef0123456789abcdef";
+    const boost::uuids::uuid default_id = boost::uuids::string_generator()( default_id_string );
 
     MOCK_BASE_CLASS( MockAgent, host::Agent_ABC )
     {
@@ -114,9 +114,9 @@ BOOST_FIXTURE_TEST_CASE( controller_count_sessions, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( controller_get_session, Fixture )
 {
-    SetRequest( "GET", "/get_session", boost::assign::map_list_of( "tag", default_tag_string ) );
+    SetRequest( "GET", "/get_session", boost::assign::map_list_of( "id", default_id_string ) );
     const std::string expected = "a json session";
-    MOCK_EXPECT( agent.GetSession ).once().with( default_tag ).returns( expected );
+    MOCK_EXPECT( agent.GetSession ).once().with( default_id ).returns( expected );
     CheckNotify( 200, expected );
 }
 
@@ -135,9 +135,9 @@ BOOST_FIXTURE_TEST_CASE( controller_create_session, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( controller_delete_session, Fixture )
 {
-    SetRequest( "GET", "/delete_session", boost::assign::map_list_of( "tag", default_tag_string ) );
+    SetRequest( "GET", "/delete_session", boost::assign::map_list_of( "id", default_id_string ) );
     const std::string expected = "a json session";
-    MOCK_EXPECT( agent.DeleteSession ).once().with( default_tag ).returns( expected );
+    MOCK_EXPECT( agent.DeleteSession ).once().with( default_id ).returns( expected );
     CheckNotify( 200, expected );
 }
 
