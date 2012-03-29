@@ -1,28 +1,48 @@
 package web;
 
+import java.util.EnumSet;
+
+import javax.servlet.DispatcherType;
+
 import org.apache.log4j.Logger;
-import org.eclipse.jetty.client.HttpClient;
 import org.eclipse.jetty.server.Server;
-import org.eclipse.jetty.util.thread.QueuedThreadPool;
+import org.eclipse.jetty.servlet.DefaultServlet;
+import org.eclipse.jetty.servlet.FilterHolder;
+import org.eclipse.jetty.servlet.ServletContextHandler;
+import org.eclipse.jetty.servlet.ServletHolder;
+import org.eclipse.jetty.servlets.GzipFilter;
+import org.eclipse.jetty.servlets.ProxyServlet;
 
 public class Agent {
 
     private static final Logger log_ = Logger.getLogger(Agent.class);
-
     private final Server server_;
-    private final HttpClient host_;
-    private final Handler handler_;
 
     public Agent(final String root, final int webPort, final int hostPort, final boolean isDebug) throws Exception {
+
+        final ServletContextHandler ctx = new ServletContextHandler(ServletContextHandler.NO_SECURITY | ServletContextHandler.NO_SESSIONS);
+        ctx.setResourceBase(root);
+
+        final ServletHolder files = new ServletHolder(new DefaultServlet());
+        files.setInitParameter("dirAllowed", "false");
+        ctx.addServlet(files, "/css/*");
+        ctx.addServlet(files, "/img/*");
+        ctx.addServlet(files, "/js/*");
+        ctx.addServlet(files, "/*.html");
+
+        final ProxyServlet proxy = new ProxyServlet.Transparent("/api", "localhost", hostPort);
+        ctx.addServlet(new ServletHolder(proxy), "/api/*");
+
+        final Handler handler = new Handler(root, isDebug);
+        ctx.addServlet(new ServletHolder(handler), "/");
+
+        final EnumSet<DispatcherType> all = EnumSet.of(DispatcherType.ASYNC, DispatcherType.ERROR, DispatcherType.FORWARD, DispatcherType.INCLUDE,
+                DispatcherType.REQUEST);
+        final FilterHolder zipper = new FilterHolder(new GzipFilter());
+        ctx.addFilter(zipper, "/", all);
+
         server_ = new Server(webPort);
-        host_ = new HttpClient();
-        host_.setConnectorType(HttpClient.CONNECTOR_SELECT_CHANNEL);
-        host_.setMaxConnectionsPerAddress(200);
-        host_.setThreadPool(new QueuedThreadPool(250));
-        host_.setTimeout(30000);
-        host_.start();
-        handler_ = new Handler(host_, hostPort, root, isDebug);
-        server_.setHandler(handler_);
+        server_.setHandler(ctx);
     }
 
     public void exec() {

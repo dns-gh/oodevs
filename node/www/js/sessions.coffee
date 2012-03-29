@@ -13,11 +13,11 @@ class SessionItem extends Backbone.Model
             params =
                 name:     model.get "name"
                 exercise: model.get "exercise"
-            return ajax "/create_session", params, options.success, options.error
+            return ajax "/api/create_session", params, options.success, options.error
         if method == "read"
-            return ajax "/get_session", {id: model.get "id"}, options.success, options.error
+            return ajax "/api/get_session", {id: model.get "id"}, options.success, options.error
         if method == "delete"
-            return ajax "/delete_session", {id: model.get "id"}, options.success, options.error
+            return ajax "/api/delete_session", {id: model.get "id"}, options.success, options.error
         return Backbone.sync method, model, options
 
 class SessionList extends Backbone.Collection
@@ -25,7 +25,7 @@ class SessionList extends Backbone.Collection
 
     sync: (method, model, options) =>
         if method == "read"
-            return ajax "/list_sessions", null, options.success, options.error
+            return ajax "/api/list_sessions", null, options.success, options.error
         return Backbone.sync method, model, options
 
 session_template = _.template $("#session_template").html()
