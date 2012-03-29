@@ -243,7 +243,6 @@
       <geometry symbol="S*GPEVEB--*****" type="line"/>
     </geometries>
     <bridging type="bridge"/>
-    <bypassable bypass-speed="10"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <mobility default-speed="10" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
     <trafficability default="true" max-weight="100"/>
@@ -602,4 +601,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="1091873286" -->
+<!-- signature="3283172730" -->
