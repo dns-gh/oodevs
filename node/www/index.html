@@ -10,6 +10,7 @@
         <link rel="stylesheet" href="css/bootstrap-2.0.2.min.css" />
         <link rel="stylesheet" type="text/css" href="css/style.css" />
     </head>
+
     <body>
 
         <div class="navbar navbar-fixed-top">
@@ -32,7 +33,6 @@
 
         <div class="container">
             <div class="row">
-
                 <div class="span3">
                     <div class="well sidebar-nav">
                         <ul class="nav nav-list">
@@ -46,6 +46,7 @@
                             [@nav_item item="settings" name="Settings" img="categories/preferences-system" /]
                         </ul>
                     </div>
+                    [#if pg == "sessions"]
                     <div class="well sidebar-nav">
                         <ul class="nav nav-list">
                             <li class="nav-header">Filters</li>
@@ -63,10 +64,12 @@
                             </div>
                         </ul>
                     </div>
+                    [/#if]
                 </div>
 
                 <div class="span9">
 
+                    [#if pg == "sessions"]
                     <div id="session_create" class="modal fade hide" style="display:none">
                         <div class="modal-header">
                             <a class="close" data-dismiss="modal">×</a>
@@ -95,7 +98,6 @@
                             <a class="btn btn-primary" data-dismiss="modal"> Cancel</a>
                         </div>
                     </div>
-
                     <div class="row">
                         <div class="span9">
                             <span class="session_actions">
@@ -108,137 +110,28 @@
                             </form>
                         </div>
                     </div>
-
-                    [#assign archive  = "icon-lock" /]
-                    [#assign clone    = "icon-plus-sign" /]
-                    [#assign config   = "icon-cog" /]
-                    [#assign download = "icon-download-alt" /]
-                    [#assign pause    = "icon-pause" /]
-                    [#assign play     = "icon-play" /]
-                    [#assign replay   = "icon-repeat" /]
-                    [#assign stop     = "icon-stop" /]
-                    [#assign trash    = "icon-trash" /]
-                    [#assign url      = "icon-tag" /]
-
-                    <div class="row">
-                        <div class="span9">
-                            <div class="well run session_row">
-                                <div class="span3">
-                                    <div class="session_name">Bob Training</div>
-                                    <div class="session_exercise">Egypt</div>
-                                    <div class="session_model">Model: 2010-12-10</div>
-                                </div>
-                                <div class="span4">
-                                    <div>Started 2012-01-12 at 18:52:12</div>
-                                    <div>Time running 00:01:36</div>
-                                    <div>3 clients connected</div>
-                                </div>
-                                <div class="btn-group session_top_right">
-                                    <a href="#" class="btn"><i class="${url}"></i></a>
-                                    <a href="#" class="btn"><i class="${pause}"></i></a>
-                                    <a href="#" class="btn"><i class="${stop}"></i></a>
-                                    <a href="#" class="btn"><i class="${replay}"></i></a>
-                                    <a href="#" class="btn"><i class="${clone}"></i></a>
-                                </div>
-                                <div class="session_bottom_right">
-                                    <a href="#" class="btn"><i class="icon-th-list"></i> More <span class="caret"></span></a>
-                                </div>
-                            </div>
-                        </div>
+                    <div id="sessions">
+                        [#-- backbone auto-generated content --]
                     </div>
-
-                    <div class="row">
-                        <div class="span9">
-                            <div class="well pause session_row">
-                                <div class="span3">
-                                    <div class="session_name">Frank Exercise</div>
-                                    <div class="session_exercise">Egypt</div>
-                                </div>
-                                <div class="span4">
-                                    <div>Started 2012-01-12 at 13:24:05</div>
-                                    <div>Time running 05:12:19</div>
-                                    <div>2 clients connected</div>
-                                </div>
-                                <div class="btn-group session_top_right">
-                                    <a href="#" class="btn"><i class="${url}"></i></a>
-                                    <a href="#" class="btn"><i class="${play}"></i></a>
-                                    <a href="#" class="btn"><i class="${stop}"></i></a>
-                                    <a href="#" class="btn"><i class="${replay}"></i></a>
-                                    <a href="#" class="btn"><i class="${clone}"></i></a>
-                                </div>
-                                <div class="session_bottom_right">
-                                    <a href="#" class="btn"><i class="icon-th-list"></i> More <span class="caret"></span></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="span9">
-                            <div class="well replay session_row">
-                                <div class="span3">
-                                    <div class="session_name">Session 12</div>
-                                    <div class="session_exercise">Test Scenario</div>
-                                </div>
-                                <div class="span4">
-                                    <div>Started 2012-01-12 at 15:36:24</div>
-                                    <div>Time running 00:05:10</div>
-                                    <div>1 clients connected</div>
-                                </div>
-                                <div class="btn-group session_top_right">
-                                    <a href="#" class="btn"><i class="${url}"></i></a>
-                                    <a href="#" class="btn"><i class="${stop}"></i></a>
-                                </div>
-                                <div class="session_bottom_right">
-                                    <a href="#" class="btn"><i class="icon-th-list"></i> More <span class="caret"></span></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="row">
-                        <div class="span9">
-                            <div class="well stop session_row">
-                                <div class="span3">
-                                    <div class="session_name">Albert</div>
-                                    <div class="session_exercise">Cabourg</div>
-                                </div>
-                                <div class="span5">
-                                    <div>Checkpoints available</div>
-                                    <div>Replay available</div>
-                                    <div>Length: 00:05:10</div>
-                                </div>
-                                <div class="btn-group session_top_right">
-                                    <a href="#" class="btn dropdown-toggle" data-toggle="dropdown"><i class="${play}"></i> <span class="caret"></span></a>
-                                    <ul class="dropdown-menu">
-                                        <li><a href="/">Start</a></li>
-                                        <li><a href="/">Checkpoint A</a></li>
-                                        <li><a href="/">Checkpoint B</a></li>
-                                        <li><a href="/">Checkpoint C</a></li>
-                                    </ul>
-                                    <a href="#" class="btn"><i class="${config}"></i> </a>
-                                    <a href="#" class="btn"><i class="${clone}"></i></a>
-                                    <a href="#" class="btn"><i class="${download}"></i></a>
-                                    <a href="#" class="btn"><i class="${archive}"></i></a>
-                                    <a href="#" class="btn"><i class="${trash}"></i></a>
-                                </div>
-                                <div class="session_bottom_right">
-                                    <a href="#" class="btn"><i class="icon-th-list"></i> More <span class="caret"></span></a>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
                 </div>
-
+                [/#if]
             </div>
-            <hr />
-            <p>&copy; MASA Group 2012</p>
+        </div>
+
+        <div class="container">
+            <div class="row">
+                <div class="span9">
+                    <hr />
+                    <p>&copy; MASA Group 2012</p>
+                </div>
+            </div>
         </div>
 
     </body>
     [#-- script include order is required --]
     <script src="js/jquery-1.7.2.min.js"></script>
     <script src="js/bootstrap-2.0.2.min.js"></script>
+    <script src="js/underscore-min.js"></script>
+    <script src="js/backbone-min.js"></script>
     <script src="js/masa.js"></script>
 </html>
