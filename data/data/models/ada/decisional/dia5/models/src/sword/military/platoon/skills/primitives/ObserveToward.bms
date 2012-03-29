@@ -5,9 +5,21 @@
 -- ****************************************************************************
 rootnode
 {
-    connections = { skill.nodes.ObserveTowardElement },
+    connections = { skill.nodes.ObserveTowardElement, skill.links.indirectFire, skill.links.dismount, skill.nodes.CR_ReceiveFireOrder },
 
-    done = function( self ) end,
+    done = function( self, params, additionnalParams )
+        if additionnalParams.state == "hasFire" then
+            self.hasFire = true
+            self.order = nil
+        elseif additionnalParams.state == "no ammo" or
+               additionnalParams.state == "forbidden ammo" or
+               additionnalParams.state == "out of range" or
+               additionnalParams.state == "impossible to fire" or
+               additionnalParams.state == "no Launcher" or
+               additionnalParams.state == "target not illuminated" then
+            self.order = nil
+        end
+    end,
 
     -- --------------------------------------------------------------------------------
     -- For each objective of the skill, try to observe it.
@@ -16,6 +28,21 @@ rootnode
         for _, entity in pairs( self.params.entities ) do
             Activate( skill.nodes.ObserveTowardElement, entity:observationPriority(),
                 { entity = entity, positions = self.params.positions } )
+        end
+        
+        if not self.order then -- sert pour appliquer les feux
+            self.order = integration.query.getFirstFireOrder()
+        end
+        if self.order then
+            if not meKnowledge:isDismounted() and meKnowledge:canDismount() then
+                Activate( skill.links.dismount, 1 )
+            end
+            
+            if meKnowledge:isDismounted() then
+                integration.sendfireAvailable(true)
+                Activate( skill.nodes.CR_ReceiveFireOrder, 1 )
+                Activate( skill.links.indirectFire, 1, self.order )
+            end
         end
     end
 }
@@ -38,5 +65,12 @@ node "ObserveTowardElement"
             Activate( skill.links.moveAndTakePosition,
                 position:observationEfficiency( self.params.entity ), { entity = position } )
         end
+    end
+}
+
+node "CR_ReceiveFireOrder"
+{ 
+    create = function( self )
+        meKnowledge:RC( eRC_ReceptionOrdreDeFeu )
     end
 }

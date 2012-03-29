@@ -49,7 +49,6 @@ rootnode
                 Activate( skill.links.indirectFire, 1, self.order )
             end
         end
-
     end,
 
     -- -------------------------------------------------------------------------------- 
