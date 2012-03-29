@@ -600,7 +600,7 @@ public:
         eRC_StartingToCreateResourceLink,
         eRC_ResouceLinkCreated,
         eRC_CannotDismount,
-        eRC_DecrochageFaceAIncendie,
+        eRC_DecrochageFaceAIncendie,//450
         eRC_Capture,
         eRC_TakeHostage,
         eRC_AttenteOrdrePoursuivreConvoi,
@@ -610,6 +610,7 @@ public:
         eRC_PrisSousTirMunition,
         eRC_UrbanCollisionStarted,
         eRC_UrbanCollisionStopped,
+        eRC_NotInSameUndergroundNetwork,//460
         eLast
     };
     //@}
