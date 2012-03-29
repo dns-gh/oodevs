@@ -120,8 +120,12 @@ public class Handler extends AbstractHandler {
             state = exchange.waitForDone();
         } catch (final InterruptedException err) {
         }
-        if (state != HttpExchange.STATUS_COMPLETED)
-            throw new IOException("unable to forward query " + dst + " (" + state + ")");
+        if (state != HttpExchange.STATUS_COMPLETED) {
+            final String reply = "unable to forward query " + dst + " (" + state + ")";
+            log_.warn(reply);
+            response.sendError(HttpServletResponse.SC_INTERNAL_SERVER_ERROR, reply);
+            return;
+        }
 
         response.setContentType("text/plain");
         response.setStatus(exchange.getResponseStatus());
