@@ -156,7 +156,6 @@ Reply Agent::CreateSession( const std::string& exercise, const std::string& name
     if( !ptr )
         return Reply( "unable to create new session", false ); // TODO add better error message
     AddSession( *access_, sessions_, ptr );
-    ptr->Start();
     return Reply( ptr->ToJson() );
 }
 
@@ -169,8 +168,6 @@ Reply Agent::DeleteSession( const boost::uuids::uuid& id )
     boost::shared_ptr< Session_ABC > ptr = ExtractSession( *access_, sessions_, id );
     if( !ptr )
         return Reply( ( boost::format( "unable to find session %1%" ) % id ).str(), false );
-
-    ptr->Stop();
     return Reply( ptr->ToJson() );
 }
 
