@@ -79,6 +79,7 @@ namespace
             uuid += suffix;
             boost::shared_ptr< MockSession > session = CreateMockSession( uuid, exercise, name );
             MOCK_EXPECT( factory.Create ).once().with( exercise, name ).returns( session );
+            MOCK_EXPECT( session->Start ).once();
             CheckReply( agent.CreateSession( exercise, name ), session->ToJson() );
             return session;
         }

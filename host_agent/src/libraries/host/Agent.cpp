@@ -156,6 +156,7 @@ Reply Agent::CreateSession( const std::string& exercise, const std::string& name
     if( !ptr )
         return Reply( "unable to create new session", false ); // TODO add better error message
     AddSession( *access_, sessions_, ptr );
+    ptr->Start();
     return Reply( ptr->ToJson() );
 }
 
