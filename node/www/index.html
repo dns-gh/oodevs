@@ -158,7 +158,9 @@
     [#-- script include order is required --]
     <script src="js/jquery-1.7.2.min.js"></script>
     <script src="js/bootstrap-2.0.2.min.js"></script>
+    [#if pg == "sessions"]
     <script src="js/underscore-min.js"></script>
     <script src="js/backbone-min.js"></script>
-    <script src="js/masa.js"></script>
+    <script src="js/sessions.js"></script>
+    [/#if]
 </html>
