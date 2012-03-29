@@ -10784,7 +10784,7 @@
       <crew-rank count="5" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -10811,7 +10811,7 @@
       <crew-rank count="6" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -10869,7 +10869,7 @@
       <crew-rank count="5" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -10896,7 +10896,7 @@
       <crew-rank count="6" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -11026,7 +11026,7 @@
       <crew-rank count="5" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -11053,7 +11053,7 @@
       <crew-rank count="6" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -11106,7 +11106,7 @@
       <crew-rank count="6" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -11133,7 +11133,7 @@
       <crew-rank count="5" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock logistic-supply-class="Unite tranche D" threshold="10"/>
+      <stock logistic-supply-class="Unite non tranche D" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -19046,4 +19046,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="1677639832" -->
+<!-- signature="1651780857" -->

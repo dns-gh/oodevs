@@ -264,6 +264,7 @@ void LogisticStockEditor::SupplyHierarchy( kernel::SafePointer< kernel::Entity_A
     {
         std::set< const kernel::Agent_ABC* > entStocks;
         FindStocks( *entity, *entity, entStocks );
+        CleanStocks( entStocks );
         T_Requirements requirements;
         tools::Iterator< const kernel::LogisticSupplyClass& > itLogClass = staticModel_.objectTypes_.tools::StringResolver< kernel::LogisticSupplyClass >::CreateIterator();
         for( int row = 0; itLogClass.HasMoreElements(); ++row )
@@ -347,14 +348,41 @@ void LogisticStockEditor::FindStocks( const kernel::Entity_ABC& rootEntity , con
             {
                 Stocks* stocks = const_cast< Stocks* >( pAgent->Retrieve< Stocks >() );
                 if( stocks )
-                {
-                    stocks->Clear();
                     entStocks.insert( pAgent );
-                }
             }
         }
         else
             FindStocks( rootEntity, childrenEntity, entStocks );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticStockEditor::CleanStocks
+// Created: MMC 2011-08-31
+// -----------------------------------------------------------------------------
+void LogisticStockEditor::CleanStocks( std::set< const kernel::Agent_ABC* >& entStocks )
+{
+    for( std::set< const kernel::Agent_ABC* >::iterator itEnt = entStocks.begin(); itEnt != entStocks.end(); ++itEnt )
+    {
+        Stocks& stocks = const_cast< Stocks& >( (*itEnt)->Get< Stocks >() );
+        std::vector< const kernel::DotationType* > toReset;
+        tools::Iterator< const Dotation& > itDotation = stocks.CreateIterator();
+        while( itDotation.HasMoreElements() )
+        {
+            const Dotation& curDotation = itDotation.NextElement();
+            tools::Iterator< const kernel::LogisticSupplyClass& > itLogClass = staticModel_.objectTypes_.tools::StringResolver< kernel::LogisticSupplyClass >::CreateIterator();
+            int row = 0;
+            for( ; itLogClass.HasMoreElements(); ++row )
+            {
+                const kernel::LogisticSupplyClass& supplyClass = itLogClass.NextElement();
+                if( supplyClass.GetId() == curDotation.type_.GetLogisticSupplyClass().GetId() )
+                    break;
+            }
+            if( dataModel_->item( row )->checkState() == Qt::Checked )
+                toReset.push_back( &curDotation.type_ );
+        }
+        for( std::vector< const kernel::DotationType* >::iterator it = toReset.begin(); it!= toReset.end(); ++it )
+            stocks.SetDotation( **it, 0, false );
     }
 }
 

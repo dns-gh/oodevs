@@ -85,6 +85,7 @@ private:
     void SupplyHierarchy( kernel::SafePointer< kernel::Entity_ABC > entity );
     void SupplyLogisticBaseStocks( const kernel::Entity_ABC& logBase, const kernel::LogisticSupplyClass& logType, T_Requirements& requirements );
     void FindStocks( const kernel::Entity_ABC& rootEntity , const kernel::Entity_ABC& entity, std::set< const kernel::Agent_ABC* >& entStocks );
+    void CleanStocks( std::set< const kernel::Agent_ABC* >& entStocks );
     void ComputeRequirements( const kernel::Agent_ABC& agent, const kernel::LogisticSupplyClass& logType, T_Requirements& requirements );
     void SupplyStocks( std::set< const kernel::Agent_ABC* >& entStocks, const T_Requirements& requirements );
     bool IsStockValid(  const kernel::Agent_ABC& stockUnit, const kernel::DotationType& dotation );
