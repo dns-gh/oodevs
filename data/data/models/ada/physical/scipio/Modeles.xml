@@ -97,7 +97,9 @@
         <mission name="PION COMMUNES Se Faire Transporter"/>
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
-        <mission name="PION MELEE Appuyer"/>
+        <mission name="PION MELEE Appuyer">
+          <fragorder name="Pion Appliquer Feux"/>
+        </mission>
         <mission name="PION MELEE Appuyer Sur Position"/>
         <mission name="PION MELEE Interdire foule"/>
         <mission name="PION MELEE Renseigner sur foule"/>
@@ -7338,4 +7340,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1932197888" -->
+<!-- signature="0891078438" -->
