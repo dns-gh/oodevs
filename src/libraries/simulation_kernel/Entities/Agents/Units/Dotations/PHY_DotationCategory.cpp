@@ -463,14 +463,16 @@ double PHY_DotationCategory::FindUrbanAttritionScore( const PHY_MaterialComposit
 // Name: PHY_DotationCategory::IsSignificantChange
 // Created: LDC 2012-02-08
 // -----------------------------------------------------------------------------
-bool PHY_DotationCategory::IsSignificantChange( double oldValue, double newValue, double capacity ) const
+bool PHY_DotationCategory::IsSignificantChange( double newValue, double oldValue, double capacity ) const
 {
     if( &type_ == PHY_DotationType::munition_ || 
         &type_ == PHY_DotationType::mine_ ||
         &type_ == PHY_DotationType::explosif_ ||
         &type_ == PHY_DotationType::agentExtincteur_ ||
         0. == capacity )
-        return ( (unsigned int)oldValue != (unsigned int)newValue );
+        return ( static_cast< unsigned int >( oldValue ) != static_cast< unsigned int >( newValue ) );
+    if( newValue == 0 )
+        return true;
     double delta = std::abs( oldValue - newValue );
     return ( delta/capacity ) >= 0.1;
 }
