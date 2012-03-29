@@ -121,37 +121,47 @@ namespace
             MOCK_EXPECT( system.Remove );
         }
 
-        boost::shared_ptr< Session > MakeSession()
+        void SaveSessionTag( std::string* tag )
+        {
+            if( tag )
+                MOCK_EXPECT( system.WriteFile ).once().with( mock::any, mock::retrieve( *tag ) );
+            else
+                MOCK_EXPECT( system.WriteFile ).once();
+        }
+
+        boost::shared_ptr< Session > MakeSession( std::string* tag = 0 )
         {
             MOCK_EXPECT( uuids.Create ).once().returns( id );
             MOCK_EXPECT( ports.Create0 ).once().returns( std::auto_ptr< Port_ABC >( new MockPort( port ) ) );
+            SaveSessionTag( tag );
             return boost::shared_ptr< Session >( new Session( runtime, uuids, system, data, apps, exercise, name, ports ) );
         }
 
-        boost::shared_ptr< Session > MakeSession( const std::string& sessionTag, boost::shared_ptr< MockProcess > process )
+        boost::shared_ptr< Session > MakeSession( const std::string& tag, boost::shared_ptr< MockProcess > process )
         {
-            MOCK_EXPECT( runtime.GetProcess ).once().with( processPid ).returns( process );
+            if( process )
+                MOCK_EXPECT( runtime.GetProcess ).once().with( processPid ).returns( process );
             MOCK_EXPECT( ports.Create1 ).once().returns( new MockPort( port ) );
-            xml::xistringstream xis( sessionTag );
+            xml::xistringstream xis( tag );
+            SaveSessionTag( 0 );
             return boost::shared_ptr< Session >( new Session( runtime, system, data, apps, xis, ports ) );
         }
 
-        boost::shared_ptr< MockProcess > StartSession( Session& session, std::string* sessionTag = 0, const std::string& name = std::string() )
+        boost::shared_ptr< MockProcess > StartSession( Session& session, std::string* tag = 0, const std::string& name = std::string() )
         {
             boost::shared_ptr< MockProcess > reply = boost::make_shared< MockProcess >( processPid, name.empty() ? processName : name );
             MOCK_EXPECT( runtime.Start ).once().returns( reply );
             MOCK_EXPECT( system.WriteFile ).once();
-            if( sessionTag  )
-                MOCK_EXPECT( system.WriteFile ).once().with( mock::any, mock::retrieve( *sessionTag ) );
-            else
-                MOCK_EXPECT( system.WriteFile ).once();
+            MOCK_EXPECT( system.Copy ).once();
+            SaveSessionTag( tag );
             session.Start();
+            MOCK_EXPECT( reply->Kill ).once().returns( true );
             return reply;
         }
 
-        void StopSession( Session& session, MockProcess& process )
+        void StopSession( Session& session )
         {
-            MOCK_EXPECT( process.Kill ).once().returns( true );
+            SaveSessionTag( 0 );
             session.Stop();
         }
     };
@@ -160,15 +170,30 @@ namespace
 BOOST_FIXTURE_TEST_CASE( session_starts_and_stops, Fixture )
 {
     boost::shared_ptr< Session > session = MakeSession();
-    boost::shared_ptr< MockProcess > process = StartSession( *session );
-    StopSession( *session, *process );
+    StartSession( *session );
+    StopSession( *session );
 }
 
 BOOST_FIXTURE_TEST_CASE( session_reloads, Fixture )
 {
-    std::string sessionTag;
-    boost::shared_ptr< MockProcess > process = StartSession( *MakeSession(), &sessionTag );
-    StopSession( *MakeSession( sessionTag, process ), *process );
+    std::string tag;
+    MakeSession( &tag );
+    MakeSession( tag, boost::shared_ptr< MockProcess >() );
+}
+
+BOOST_FIXTURE_TEST_CASE( session_starts_and_reloads, Fixture )
+{
+    std::string tag;
+    boost::shared_ptr< MockProcess > process = StartSession( *MakeSession( &tag ), &tag );
+    MOCK_EXPECT( process->Kill ).once().returns( true );
+    StopSession( *MakeSession( tag, process ) );
+}
+
+BOOST_FIXTURE_TEST_CASE( session_rejects_bind_to_another_process, Fixture )
+{
+    std::string tag;
+    StartSession( *MakeSession( &tag ), &tag );
+    MakeSession( tag, boost::make_shared< MockProcess >( processPid, "a" + processName ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( session_converts_to_json, Fixture )

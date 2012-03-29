@@ -85,6 +85,18 @@ namespace
         if( status == "paused" )    return Session::STATUS_PAUSED;
         return Session::STATUS_STOPPED;
     }
+
+    boost::shared_ptr< runtime::Process_ABC > GetProcess( const runtime::Runtime_ABC& runtime, xml::xisubstream xis )
+    {
+        boost::shared_ptr< runtime::Process_ABC > nil;
+        xis >> xml::start( "session" );
+        if( !xis.has_attribute( "process_pid" ) || !xis.has_attribute( "process_name" ) )
+            return nil;
+        boost::shared_ptr< runtime::Process_ABC > ptr = runtime.GetProcess( xis.attribute< int >( "process_pid" ) );
+        if( !ptr || ptr->GetName() != xis.attribute< std::string >( "process_name" ) )
+            return nil;
+        return ptr;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -107,6 +119,7 @@ Session::Session( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uu
     , status_      ( STATUS_STOPPED )
 {
     CheckPaths();
+    Save();
 }
 
 // -----------------------------------------------------------------------------
@@ -123,11 +136,12 @@ Session::Session( const runtime::Runtime_ABC& runtime, const FileSystem_ABC& sys
     , applications_( applications )
     , exercise_    ( ParseItem< std::string >( xis, "exercise" ) )
     , name_        ( ParseItem< std::string >( xis, "name" ) )
-    , process_     ( runtime_.GetProcess( ParseItem< int >( xis, "pid" ) ) )
-    , port_        ( process_ ? ports.Create( ParseItem< int >( xis, "port" ) ) : ports.Create() )
+    , process_     ( GetProcess( runtime_, xis ) )
+    , port_        ( ports.Create( ParseItem< int >( xis, "port" ) ) )
     , status_      ( process_ ? ConvertStatus( ParseItem< std::string >( xis, "status" ) ) : STATUS_STOPPED )
 {
     CheckPaths();
+    Save();
 }
 
 // -----------------------------------------------------------------------------
@@ -153,6 +167,8 @@ void Session::CheckPaths() const
 // -----------------------------------------------------------------------------
 Session::~Session()
 {
+    if( process_ )
+        process_->Kill( MAX_KILL_TIMEOUT_MS );
     system_.Remove( GetPath() );
 }
 
@@ -163,6 +179,17 @@ Session::~Session()
 boost::uuids::uuid Session::GetTag() const
 {
     return id_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Session::Save
+// Created: BAX 2012-03-29
+// -----------------------------------------------------------------------------
+void Session::Save() const
+{
+    const boost::filesystem::wpath path = GetPath();
+    system_.CreateDirectory( path );
+    system_.WriteFile( path / L"session.id", ToXml() );
 }
 
 namespace
@@ -213,9 +240,11 @@ std::string Session::ToXml() const
             << xml::attribute( "id", boost::lexical_cast< std::string >( id_ ) )
             << xml::attribute( "exercise", exercise_ )
             << xml::attribute( "name", name_ )
-            << xml::attribute( "port", port_->Get() )
-            << xml::attribute( "pid", process_->GetPid() )
-            << xml::attribute( "status", ConvertStatus( status_ ) );
+            << xml::attribute( "port", port_->Get() );
+    if( process_ )
+        xos << xml::attribute( "process_pid", process_->GetPid() )
+            << xml::attribute( "process_name", process_->GetName() );
+    xos << xml::attribute( "status", ConvertStatus( status_ ) );
     return xos.str();
 }
 
@@ -328,10 +357,10 @@ boost::filesystem::wpath Session::GetPath() const
 void Session::Start()
 {
     const boost::filesystem::wpath path = GetPath();
-    system_.CreateDirectory( path );
     system_.WriteFile( path / L"session.xml", WriteConfiguration( name_, port_->Get() ) );
-    process_ = runtime_.Start( Utf8Convert( applications_ / L"simulation_app.exe" ),
-        boost::assign::list_of
+    const boost::filesystem::wpath exe = path / ( boost::lexical_cast< std::wstring >( id_ ) + L".exe" );
+    system_.Copy( applications_ / L"simulation_app.exe", exe );
+    process_ = runtime_.Start( Utf8Convert( exe ), boost::assign::list_of
             ( "--root-dir="      + Utf8Convert( data_ ) )
             ( "--exercises-dir=" + Utf8Convert( data_ / L"exercises" ) )
             ( "--terrains-dir="  + Utf8Convert( data_ / L"data/terrains" ) )
@@ -343,7 +372,7 @@ void Session::Start()
     if( !process_ ) return;
 
     status_ = STATUS_PLAYING;
-    system_.WriteFile( path / L"session.id", ToXml() );
+    Save();
 }
 
 // -----------------------------------------------------------------------------
@@ -356,4 +385,5 @@ void Session::Stop()
         process_->Kill( MAX_KILL_TIMEOUT_MS );
     process_.reset();
     status_ = STATUS_STOPPED;
+    Save();
 }

@@ -110,6 +110,7 @@ BOOST_FIXTURE_TEST_CASE( agent_clips_list_parameters, Fixture )
 BOOST_FIXTURE_TEST_CASE( agent_deletes_session, Fixture )
 {
     boost::shared_ptr< MockSession > session = AddSession( "exercise_name", "session_name", 10000 );
+    MOCK_EXPECT( session->Stop ).once();
     CheckReply( agent.DeleteSession( session->GetTag() ), session->ToJson() );
     CheckReply( agent.CountSessions(), "{ \"count\" : 0 }" );
     CheckReply( agent.ListSessions( 0, 10 ), "[]" );

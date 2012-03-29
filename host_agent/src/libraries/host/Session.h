@@ -57,6 +57,7 @@ public:
     //@{
     virtual boost::uuids::uuid GetTag() const;
     virtual std::string ToJson() const;
+    virtual void Save() const;
     virtual void Start();
     virtual void Stop();
     //@}

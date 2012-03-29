@@ -168,6 +168,7 @@ Reply Agent::DeleteSession( const boost::uuids::uuid& id )
     boost::shared_ptr< Session_ABC > ptr = ExtractSession( *access_, sessions_, id );
     if( !ptr )
         return Reply( ( boost::format( "unable to find session %1%" ) % id ).str(), false );
+    ptr->Stop();
     return Reply( ptr->ToJson() );
 }
 
