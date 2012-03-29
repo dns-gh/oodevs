@@ -61,10 +61,10 @@ bool FileSystem::Exists( const boost::filesystem::wpath& path ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: FileSystem::Copy
+// Name: FileSystem::CopyDirectory
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
-void FileSystem::Copy( const boost::filesystem::wpath& src, const boost::filesystem::wpath& dst ) const
+void FileSystem::CopyDirectory( const boost::filesystem::wpath& src, const boost::filesystem::wpath& dst ) const
 {
     // TODO Use wrecursive_directory_iterator
     if( IsFile( src ) )
@@ -75,7 +75,16 @@ void FileSystem::Copy( const boost::filesystem::wpath& src, const boost::filesys
     if( !boost::filesystem::create_directory( sub ) )
         throw std::runtime_error( "unable to create " + runtime::Utf8Convert( sub.string() ) );
     for( boost::filesystem::wdirectory_iterator it( src ); it != boost::filesystem::wdirectory_iterator(); ++it )
-        Copy( *it, sub );
+        CopyDirectory( *it, sub );
+}
+
+// -----------------------------------------------------------------------------
+// Name: FileSystem::CopyFile
+// Created: BAX 2012-03-29
+// -----------------------------------------------------------------------------
+void FileSystem::CopyFile( const boost::filesystem::wpath& src, const boost::filesystem::wpath& dst ) const
+{
+    boost::filesystem::copy_file( src, dst / src.filename() );
 }
 
 // -----------------------------------------------------------------------------
