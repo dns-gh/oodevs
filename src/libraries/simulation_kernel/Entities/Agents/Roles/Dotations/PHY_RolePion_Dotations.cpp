@@ -262,7 +262,8 @@ bool PHY_RolePion_Dotations::SetConsumptionMode( const PHY_ConsumptionType& cons
     }
 
     // Rollback
-    pDotations_->CancelConsumptionReservations();
+    if( pCurrentConsumptionMode_ || &GetConsumptionMode() != &PHY_ConsumptionType::engineStopped_ )
+        pDotations_->CancelConsumptionReservations();
     if( pCurrentConsumptionMode_ )
     {
         sConsumptionReservation funcRollback( *pCurrentConsumptionMode_, *pDotations_ );
