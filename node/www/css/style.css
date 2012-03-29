@@ -1,9 +1,9 @@
 body{padding-top:60px;padding-bottom:40px;}
 .session{border-color:#000000;position:relative;}
-.run{border-color:#000000;position:relative;background-color:#93c47d;}
-.pause{border-color:#000000;position:relative;background-color:#ffd966;}
-.replay{border-color:#000000;position:relative;background-color:#6fa8dc;}
-.stop{border-color:#000000;position:relative;background-color:#e06666;}
+.playing{border-color:#000000;position:relative;background-color:#93c47d;}
+.paused{border-color:#000000;position:relative;background-color:#ffd966;}
+.replaying{border-color:#000000;position:relative;background-color:#6fa8dc;}
+.stopped{border-color:#000000;position:relative;background-color:#e06666;}
 .session_row{position:relative;min-height:64px;}
 .session_name{font-size:large;font-weight:bold;}
 .session_exercise{padding-left:24px;}
