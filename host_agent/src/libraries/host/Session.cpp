@@ -192,39 +192,21 @@ void Session::Save() const
     system_.WriteFile( path / L"session.id", ToXml() );
 }
 
-namespace
-{
-
-// -----------------------------------------------------------------------------
-// Name: ToJson
-// Created: BAX 2012-03-20
-// -----------------------------------------------------------------------------
-std::string ToJson( const runtime::Process_ABC& process )
-{
-    std::string name = process.GetName();
-    std::replace( name.begin(), name.end(), '\\', '/' );
-    return (boost::format( "{ \"pid\" : %1%, \"name\" : \"%2%\" }" ) % process.GetPid() % name ).str();
-}
-
-}
-
 // -----------------------------------------------------------------------------
 // Name: Session::ToJson
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
 std::string Session::ToJson() const
 {
-    const std::string process = process_ ? ::ToJson( *process_ ) : "{}";
     std::string reply = "{ ";
     return (boost::format( "{ "
         "\"id\" : \"%1%\", "
-        "\"process\" : %2%, "
-        "\"name\" : \"%3%\", "
-        "\"port\" : %4%, "
-        "\"exercise\" : \"%5%\", "
-        "\"status\" : \"%6%\""
+        "\"name\" : \"%2%\", "
+        "\"port\" : %3%, "
+        "\"exercise\" : \"%4%\", "
+        "\"status\" : \"%5%\""
         " }" )
-        % id_ % process % name_ % port_->Get() % exercise_
+        % id_ % name_ % port_->Get() % exercise_
         % ConvertStatus( status_ )
         ).str();
 }

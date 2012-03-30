@@ -202,7 +202,6 @@ BOOST_FIXTURE_TEST_CASE( session_converts_to_json, Fixture )
     boost::shared_ptr< Session > ptr = MakeSession();
     BOOST_CHECK_EQUAL( ptr->ToJson(), "{ "
         "\"id\" : \"12345678-90ab-cdef-9876-543210123456\", "
-        "\"process\" : {}, "
         "\"name\" : \"my_name\", "
         "\"port\" : 10000, "
         "\"exercise\" : \"my_exercise\", "
@@ -212,22 +211,12 @@ BOOST_FIXTURE_TEST_CASE( session_converts_to_json, Fixture )
     StartSession( *ptr );
     BOOST_CHECK_EQUAL( ptr->ToJson(), "{ "
         "\"id\" : \"12345678-90ab-cdef-9876-543210123456\", "
-        "\"process\" : { "
-            "\"pid\" : 1337, "
-            "\"name\" : \"bidule.exe\" }, "
         "\"name\" : \"my_name\", "
         "\"port\" : 10000, "
         "\"exercise\" : \"my_exercise\", "
         "\"status\" : \"playing\""
         " }"
     );
-}
-
-BOOST_FIXTURE_TEST_CASE( session_process_name_does_not_contain_backslashes, Fixture )
-{
-    boost::shared_ptr< Session > ptr = MakeSession();
-    StartSession( *ptr, 0, "\\Device\\With\\Backslashes" );
-    BOOST_CHECK_EQUAL( ptr->ToJson().find( '\\' ), std::string::npos );
 }
 
 namespace
