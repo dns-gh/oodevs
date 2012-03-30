@@ -593,7 +593,7 @@ void DEC_Agent_Path::Execute( TerrainPathfinder& pathfind )
     }
 #endif
 
-    if( MIL_AgentServer::GetWorkspace().GetConfig().UsePathDebug() )
+    if( MIL_AgentServer::IsInitialized() && MIL_AgentServer::GetWorkspace().GetConfig().UsePathDebug() )
     {
         double rComputationTime = profiler_.Stop();
 
