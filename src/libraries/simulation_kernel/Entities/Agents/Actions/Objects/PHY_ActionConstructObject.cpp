@@ -19,19 +19,20 @@
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Decision/DEC_Tools.h"
+#include "Decision/DEC_Gen_Object.h"
 #include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionConstructObject constructor
-// Constructd: NLD 2004-08-18
+// Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
-PHY_ActionConstructObject::PHY_ActionConstructObject( MIL_AgentPion& pion, const std::string& strType, const TER_Localisation* pLocalisation,
-                                                      unsigned int externalIdentifier, const std::string& name )
+PHY_ActionConstructObject::PHY_ActionConstructObject( MIL_AgentPion& pion, boost::shared_ptr< DEC_Gen_Object > pGenObject )
     : PHY_DecisionCallbackAction_ABC( pion )
     , role_( pion.GetRole< PHY_RoleAction_Objects >() )
-    , pObject_( MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( &pion.GetArmy(), strType, pLocalisation, sword::ObstacleType_DemolitionTargetType_preliminary, externalIdentifier, name ) )
+    , pObject_( MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( &pion.GetArmy(), pGenObject->GetTypeName(), &pGenObject->GetLocalisation(), pGenObject->GetObstacleType(), pGenObject->GetExternalIdentifier(), pGenObject->GetName() ) )
 {
     role_.SetCreator( *pObject_ );
+    pObject_->Initialize( *pGenObject.get() );
     ConstructionAttribute* attribute = pObject_->RetrieveAttribute< ConstructionAttribute >();
     if( attribute )
     {
@@ -48,7 +49,7 @@ PHY_ActionConstructObject::PHY_ActionConstructObject( MIL_AgentPion& pion, const
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionConstructObject destructor
-// Constructd: NLD 2004-08-18
+// Created: NLD 2004-08-18
 // -----------------------------------------------------------------------------
 PHY_ActionConstructObject::~PHY_ActionConstructObject()
 {

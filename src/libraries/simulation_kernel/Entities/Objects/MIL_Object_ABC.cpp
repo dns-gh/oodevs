@@ -13,8 +13,10 @@
 #include "MIL_ObjectFactory.h"
 #include "MIL_ObjectType_ABC.h"
 #include "FloodAttribute.h"
+#include "ObstacleAttribute.h"
 #include "ResourceNetworkCapacity.h"
 #include "SpawnCapacity.h"
+#include "Decision/DEC_Gen_Object.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
@@ -109,6 +111,20 @@ void MIL_Object_ABC::Initialize( const TER_Localisation& localisation )
     TER_World::GetWorld().GetPopulationManager().GetFlowManager().GetListWithinLocalisation( GetLocalisation(), populationsFlowInsideObject );
     for( TER_PopulationFlow_ABC::CIT_PopulationFlowVector itPopulation = populationsFlowInsideObject.begin(); itPopulation != populationsFlowInsideObject.end(); ++itPopulation )
         NotifyPopulationMovingInside( static_cast< MIL_PopulationFlow& >( **itPopulation ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Object_ABC::Initialize
+// Created: ABR 2012-03-23
+// -----------------------------------------------------------------------------
+void MIL_Object_ABC::Initialize( const DEC_Gen_Object& genObject )
+{
+    ObstacleAttribute& attribute = GetAttribute< ObstacleAttribute >();
+    attribute.SetActivationTime( genObject.GetActivationTime() );
+    attribute.SetActivityTime( genObject.GetMinesActivityTime() );
+    // $$$$ ABR 2012-03-23: TODO ?
+    //genObject.GetDensity
+    //genObject.GetTC2()
 }
 
 // -----------------------------------------------------------------------------

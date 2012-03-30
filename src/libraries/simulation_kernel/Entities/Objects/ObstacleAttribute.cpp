@@ -165,6 +165,16 @@ void ObstacleAttribute::SetActivityTime( unsigned int activityTime )
 }
 
 // -----------------------------------------------------------------------------
+// Name: ObstacleAttribute::SetActivationTime
+// Created: ABR 2012-03-23
+// -----------------------------------------------------------------------------
+void ObstacleAttribute::SetActivationTime( unsigned int activationTime )
+{
+    activationTime_ = activationTime;
+    endActivity_ = activationTime_ + activityTime_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ObstacleAttribute::GetActivationTime
 // Created: JSR 2010-07-08
 // -----------------------------------------------------------------------------
