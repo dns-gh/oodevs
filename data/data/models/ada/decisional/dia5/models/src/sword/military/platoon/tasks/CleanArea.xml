@@ -1,54 +1,54 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.tasks.CleanArea" source-version="1.0.0" knowledge-class="sword.military.platoon.tasks.knowledges.MoveToward">
-	<parameters>
-		<parameter name="area">
-			<type>
-				<class name="sword.military.world.Area"/>
-			</type>
-		</parameter>
-	</parameters>
-	<stages>
-		<stage label="Reconnaitre la zone">
-			<skills>
-				<skill name="sword.military.platoon.coercition.skills.ReconnoiterRoute" main="true" priority="1.0">
-					<parameter name="entities">
-						<value>
-							<list>
-								<parameter>area</parameter>
-							</list>
-						</value>
-					</parameter>
-					<parameter name="positions">
-						<value>
-							<list>
-								<parameter>area</parameter>
-							</list>
-						</value>
-					</parameter>
-				</skill>
-			</skills>
-		</stage>
-		<stage label="Depolluer zone" disable-when-done="true">
-			<let name="obstacles">
-				<value>
-					<call method="sword.military.queries.objects.getObstaclesInArea">
-						<parameter name="area">
-							<value>
-								<parameter>area</parameter>
-							</value>
-						</parameter>
-					</call>
-				</value>
-			</let>
-			<skills>
-				<skill name="sword.military.platoon.skills.RemoveWithReinforcement" main="true" priority="1.0">
-					<parameter name="obstacles">
-						<value>
-							<parameter>obstacles</parameter>
-						</value>
-					</parameter>
-				</skill>
-			</skills>
-		</stage>
-	</stages>
+    <parameters>
+        <parameter name="area">
+            <type>
+                <class name="sword.military.world.Area"/>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Reconnaitre la zone">
+            <skills>
+                <skill name="sword.military.platoon.coercition.skills.ReconnoiterRoute" main="true" priority="1.0">
+                    <parameter name="entities">
+                        <value>
+                            <list>
+                                <parameter>area</parameter>
+                            </list>
+                        </value>
+                    </parameter>
+                    <parameter name="positions">
+                        <value>
+                            <list>
+                                <parameter>area</parameter>
+                            </list>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+        <stage label="Depolluer zone" disable-when-done="true">
+            <let name="obstacles">
+                <value>
+                    <call method="sword.military.queries.objects.getObstaclesInArea">
+                        <parameter name="area">
+                            <value>
+                                <parameter>area</parameter>
+                            </value>
+                        </parameter>
+                    </call>
+                </value>
+            </let>
+            <skills>
+                <skill name="sword.military.platoon.skills.RemoveWithReinforcement" main="true" priority="1.0">
+                    <parameter name="entities">
+                        <value>
+                            <parameter>obstacles</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
 </task>

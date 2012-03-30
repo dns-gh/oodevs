@@ -12,7 +12,6 @@ rootnode
     done = function( self, params, additionalParams )
         self.nextTargetIndex = self.nextTargetIndex + 1
         if self.nextTargetIndex > #self.obstacles then
-            self.bypassedElement = additionalParams.element
             self.obstacles = {}
             self.nextTargetIndex = 1
             Feedback( self.feedbacks.done )
@@ -42,7 +41,6 @@ rootnode
         self.nextTargetIndex = 1
         self.report = nil
         self.elementToRemove = nil
-        self.bypassedElement = nil
         self.obstacles = {}
     end,
 
@@ -53,17 +51,23 @@ rootnode
     activate = function( self )
         local Activate = Activate
         if self.params.entities == NIL then
-            if #self.obstacles < 1 then
-               self.obstacles = sword.military.queries.objects.getObstaclesOnPath[ "execute" ]()
-               removeFromList(self.bypassedElement, self.obstacles)
-           end
+            local obstacles = sword.military.queries.objects.getObstaclesOnPath[ "execute" ]()
+            if #obstacles > 0 then
+                self.obstacles = obstacles
+            end
         else 
             self.obstacles = self.params.entities
         end    
-        self.positions = sword.military.queries.tactical.getPositionsToBypass[ "execute" ]({elementsToBypass = self.obstacles})
+
         if #self.obstacles < 1 then
             Feedback( self.feedbacks.done ) -- no obstacles to remove
             return
+        end
+
+        if self.params.entities == NIL then
+            self.positions = sword.military.queries.tactical.getAvoidingArea[ "execute" ]( { objects = self.obstacles } )
+        else
+            self.positions = sword.military.queries.tactical.getPositionsToBypass[ "execute" ]( { elementsToBypass = self.obstacles } )
         end
 
         -- CR on physical capability --> need reinforcement or recompletion
@@ -76,7 +80,7 @@ rootnode
                                           positions = self.positions } )
         else
             Activate( skill.links.bypass, 1, { entities  = { self.obstacles[ self.nextTargetIndex ] }, 
-                                          positions = self.positions } )
+                                          positions = self.positions, avoidObstacles = self.params.avoidObstacles } )
         end
         self.report = nil
     end

@@ -18,6 +18,14 @@
                 </list>
             </type>
         </parameter>
+        <parameter name="avoidObstacles">
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>true</boolean>
+            </default>
+        </parameter>
     </parameters>
     <goal>
         <description>Dégager les éléments.</description>

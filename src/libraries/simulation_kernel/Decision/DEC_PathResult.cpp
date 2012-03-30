@@ -306,8 +306,13 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos,
                 pPrevPathHullPos = &(*itPathHullPoint);
             }
             if( !hullIntersected )
-                continue;
+            {
+                TER_Localisation localisationHull( pathHull );
+                if( !objectLocation.Contains( localisationHull, epsilon ) && !localisationHull.Contains( objectLocation, epsilon ) )
+                    continue;
+            }
         }
+        double rDistanceSum = 0.;
         const MT_Vector2D* pPrevPos = &(*itCurrentPathPoint)->GetPos();
         for( CIT_PathPointList itPathPoint = itNextPathPoint; itPathPoint != resultList_.end(); ++itPathPoint )
         {
@@ -318,18 +323,19 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos,
             {
                 if( collisions.empty() ) // should never happen
                     continue;
-                //$$$ Distance fausse (distance en ligne droite)
-                const double rColDist = vStartPos.Distance( *collisions.begin() );
-                if( !pObject )
+                rDistanceSum += pPrevPos->Distance( *collisions.begin() );
+                if( !pObject || rDistanceSum < rDistanceBefore )
                 {
-                    rDistanceBefore = rColDist;
+                    rDistanceBefore = rDistanceSum;
                     pObject = pKnowledge;
                     if( collisions.size() > 1 )
-                        rDistanceAfter = rColDist;
+                        rDistanceAfter = rDistanceSum;
                 }
                 else
-                    rDistanceAfter = rColDist;
+                    rDistanceAfter = rDistanceSum;
             }
+            else
+                rDistanceSum += pPrevPos->Distance( (*itPathPoint)->GetPos() );
             pPrevPos = &(*itPathPoint)->GetPos();
         }
     }

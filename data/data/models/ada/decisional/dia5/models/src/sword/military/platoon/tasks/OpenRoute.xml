@@ -35,7 +35,13 @@
                         </value>
                     </parameter>
                 </skill>
-                <skill name="sword.military.platoon.skills.Bypass" priority="0.9"/>
+                <skill name="sword.military.platoon.skills.Bypass" priority="0.9">
+                    <parameter name="avoidObstacles">
+                        <value>
+                            <boolean>false</boolean>
+                        </value>
+                    </parameter>
+                </skill>
             </skills>
         </stage>
     </stages>
