@@ -5,7 +5,7 @@
       <geometry symbol="G*MPOMC---****X" type="point"/>
     </geometries>
     <activable/>
-    <attrition attrition-surface="0" category="mine classique" ph="0"/>
+    <attrition attrition-surface="3" category="mine classique" ph="0.5"/>
     <avoidable distance="250"/>
     <bypassable bypass-speed="10"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
@@ -33,7 +33,7 @@
       <geometry symbol="G*MPOFA---****X" type="polygon"/>
     </geometries>
     <activable/>
-    <attrition attrition-surface="0" category="mine classique" ph="0"/>
+    <attrition attrition-surface="3" category="mine classique" ph="0.5"/>
     <avoidable distance="500"/>
     <bypassable bypass-speed="10"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
@@ -54,7 +54,7 @@
       <geometry symbol="G*MPOFA---****X" type="polygon"/>
     </geometries>
     <activable/>
-    <attrition attrition-surface="0" category="mine classique" ph="0"/>
+    <attrition attrition-surface="3" category="mine classique" ph="0.5"/>
     <avoidable distance="500"/>
     <bypassable bypass-speed="10"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="density">
@@ -74,7 +74,6 @@
     <geometries>
       <geometry symbol="G*MPOADC--****X" type="line"/>
     </geometries>
-    <attrition attrition-surface="0" category="mine classique" ph="0"/>
     <avoidable distance="500"/>
     <bypassable bypass-speed="10"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
@@ -603,4 +602,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="2051326585" -->
+<!-- signature="2503797264" -->
