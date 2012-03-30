@@ -33,7 +33,7 @@ public:
         : ADN_Connector_Table_ABC( tab, false )
         , bIncludeNormalizedConsumption_( tab.bIncludeNormalizedConsumption_ )
         , bIncludeThreshold_( tab.bIncludeThreshold_ )
-		, bQtyDecimal_( bQtyDecimal )
+        , bQtyDecimal_( bQtyDecimal )
     {}
 
     void AddSubItems( int n, void* pObj )
@@ -47,7 +47,7 @@ public:
         ADN_TableItem_Double*    pItemLogThreshold  = new ADN_TableItem_Double( &tab_, pObj );
         ADN_TableItem_Double*    pItemNormalizedConsumption  = new ADN_TableItem_Double( &tab_, pObj );
 
-		pItemQty->GetValidator().setRange(  bQtyDecimal_? 0.001 : 1 , INT_MAX, bQtyDecimal_? 3 : 0 );			
+        pItemQty->GetValidator().setRange(  bQtyDecimal_? 0 : 0 , INT_MAX, bQtyDecimal_? 3 : 0 );
         pItemLogThreshold->GetValidator().setRange( 0, 100, 2 );
         pItemNormalizedConsumption->GetValidator().setRange( 0.001, INT_MAX, 3 );
 
@@ -68,7 +68,7 @@ public:
 private:
     bool bIncludeNormalizedConsumption_;
     bool bIncludeThreshold_;
-	bool bQtyDecimal_;
+    bool bQtyDecimal_;
 };
 
 //-----------------------------------------------------------------------------
