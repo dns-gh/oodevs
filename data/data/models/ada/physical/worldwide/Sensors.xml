@@ -449,6 +449,18 @@
             <distance-modifier type="PostePrepareGenie" value="1"/>
           </source-posture-modifiers>
         </object>
+        <object detection-distance="1000" type="installation">
+          <population-modifier density="2" modifier="0.5"/>
+          <source-posture-modifiers>
+            <distance-modifier type="Mouvement" value="1"/>
+            <distance-modifier type="MouvementDiscret" value="1"/>
+            <distance-modifier type="Arret" value="1"/>
+            <distance-modifier type="PosteReflexe" value="1"/>
+            <distance-modifier type="Poste" value="1"/>
+            <distance-modifier type="PosteAmenage" value="1"/>
+            <distance-modifier type="PostePrepareGenie" value="1"/>
+          </source-posture-modifiers>
+        </object>
       </object-detection>
     </sensor>
     <sensor detection-delay="0h" name="Helicopter Pilot Eyes To Ground">
@@ -4095,4 +4107,4 @@
     </sensor>
   </sensors>
 </sensors>
-<!-- signature="1753961208" -->
+<!-- signature="3480694560" -->
