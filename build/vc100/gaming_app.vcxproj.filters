@@ -777,6 +777,7 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\OrbatPanel.cpp">
       <Filter>Source Files\Panels\Preferences</Filter>
+    </ClCompile>
     <ClCompile Include="..\..\src\applications\gaming_app\ProfilesPanel.cpp">
       <Filter>Source Files\Panels\Profiles</Filter>
     </ClCompile>
