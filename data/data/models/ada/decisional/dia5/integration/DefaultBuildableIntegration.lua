@@ -38,9 +38,6 @@ end
 
 integration.startBuildIt = function( object )
     object[myself] = object[myself] or {}
-    local typeObject = DEC_GenObject_Type( object.source )
-    local externalIdentifier = DEC_GenObject_ExternalIdentifier( object.source )
-    local name = object.source:DEC_GenObject_Name()
     if DEC_GenObject_TypeObstacleManoeuvre( object.source ) then
         object[myself].actionBuild = DEC_StartPrepareObject( object.source )
     else
