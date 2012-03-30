@@ -22,6 +22,8 @@ masalife.brain.communication.setMessageTreatment( "constructedObject",
     function( content, sender )
       meKnowledge.constructedObjects = meKnowledge.constructedObjects or {}
       meKnowledge.constructedObjects[#meKnowledge.constructedObjects + 1] = content.object
+      meKnowledge.constructedObjects[#meKnowledge.constructedObjects].alreadyGiven = false
+      myself.numberOfConstructedObject = myself.numberOfConstructedObject + 1
     end )
     
 masalife.brain.communication.setMessageTreatment( "initializeConstructedObject",
