@@ -84,6 +84,8 @@
     __extends(SessionItemView, _super);
 
     function SessionItemView() {
+      this.play = __bind(this.play, this);
+      this.stop = __bind(this.stop, this);
       this["delete"] = __bind(this["delete"], this);
       this.render = __bind(this.render, this);
       SessionItemView.__super__.constructor.apply(this, arguments);
@@ -98,7 +100,9 @@
     };
 
     SessionItemView.prototype.events = {
-      "click .delete": "delete"
+      "click .delete": "delete",
+      "click .stop": "stop",
+      "click .play": "play"
     };
 
     SessionItemView.prototype.render = function() {
@@ -109,6 +113,24 @@
     SessionItemView.prototype["delete"] = function() {
       return this.model.destroy({
         wait: true
+      });
+    };
+
+    SessionItemView.prototype.stop = function() {
+      var _this = this;
+      return ajax("/api/stop_session", {
+        id: this.model.id
+      }, function(item) {
+        return _this.model.set(item);
+      });
+    };
+
+    SessionItemView.prototype.play = function() {
+      var _this = this;
+      return ajax("/api/start_session", {
+        id: this.model.id
+      }, function(item) {
+        return _this.model.set(item);
       });
     };
 

@@ -44,6 +44,8 @@ class SessionItemView extends Backbone.View
 
     events:
         "click .delete" : "delete"
+        "click .stop" : "stop"
+        "click .play" : "play"
 
     render: =>
         $(@el).html session_template @model.attributes
@@ -51,6 +53,14 @@ class SessionItemView extends Backbone.View
 
     delete: =>
         @model.destroy wait: true
+
+    stop: =>
+        ajax "/api/stop_session", id: @model.id,
+            (item) => @model.set item
+
+    play: =>
+        ajax "/api/start_session", id: @model.id,
+            (item) => @model.set item
 
 diff_models = (prev, next) ->
     not_found = []
