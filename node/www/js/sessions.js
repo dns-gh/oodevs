@@ -255,7 +255,7 @@
       box.html(data + " [" + text + "]");
       return box.show();
     };
-    return ajax("list_exercises", {
+    return ajax("api/list_exercises", {
       limit: 40
     }, done, error);
   };

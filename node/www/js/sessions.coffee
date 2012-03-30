@@ -130,7 +130,7 @@ on_session_load = ->
         box = $("#session_create .modal-footer .alert")
         box.html data + " [" + text + "]"
         box.show()
-    ajax "list_exercises", limit: 40, done, error
+    ajax "api/list_exercises", limit: 40, done, error
 
 $("#session_create .modal-footer .btn_click").click on_session_click
 $("#session_create").on "hidden", on_session_hide
