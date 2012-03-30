@@ -89,7 +89,7 @@
 
     SessionList.prototype.model = SessionItem;
 
-    SessionList.prototype.order = "status";
+    SessionList.prototype.order = "name";
 
     SessionList.prototype.sync = function(method, model, options) {
       if (method === "read") {
@@ -369,5 +369,13 @@
   $("#session_create").on("hidden", on_session_hide);
 
   $("#session_create").on("show", on_session_load);
+
+  $("#session_sort_name").click(function() {
+    return session_view.model.set_order("name");
+  });
+
+  $("#session_sort_status").click(function() {
+    return session_view.model.set_order("status");
+  });
 
 }).call(this);

@@ -43,7 +43,7 @@ status_order =
 
 class SessionList extends Backbone.Collection
     model: SessionItem
-    order: "status"
+    order: "name"
 
     sync: (method, model, options) =>
         if method == "read"
@@ -200,3 +200,5 @@ on_session_load = ->
 $("#session_create .modal-footer .btn_click").click on_session_click
 $("#session_create").on "hidden", on_session_hide
 $("#session_create").on "show", on_session_load
+$("#session_sort_name").click -> session_view.model.set_order "name"
+$("#session_sort_status").click -> session_view.model.set_order "status"
