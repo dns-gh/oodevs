@@ -224,7 +224,7 @@
   <object geometry="polygon" name="zone protegee" symbol="G*MPSF----****X" type="safe zone">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <interact-with-enemy/>
-    <mobility default-speed="5" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
+    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <protection geniePrepared="true" max-size="3"/>
   </object>
   <object geometry="point" name="zone implantation canon" point-size="10" symbol="G*FPAP----****X" type="gun artillery deployment area">
@@ -332,8 +332,8 @@
       <terrain type="bridge" value="8"/>
       <terrain type="railroad" value="5"/>
     </heuristic>
-    <mobility default-speed="1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
-    <population-filter density="0.5"/>
+    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
+    <population-filter density="0.1"/>
     <workable max-animator="3"/>
   </object>
   <object geometry="polygon" name="terrain largage" symbol="G*GPGAD---****X" type="dropping area">
@@ -343,6 +343,7 @@
   <object geometry="polygon" name="zone interdite mouvement" symbol="G*MPOGZ---****X" type="movement forbidden area">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
     <interaction-height height="6000"/>
+    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
   </object>
   <object geometry="polygon" name="zone interdite tir" symbol="G*FPAN----****X" type="firing forbidden area">
@@ -352,6 +353,7 @@
   </object>
   <object geometry="point" name="zone implantation mortier" point-size="10" symbol="G*FPAP----****X" type="mortar deployment area">
     <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <protection geniePrepared="false" max-size="1"/>
     <workable max-animator="1"/>
   </object>
@@ -443,4 +445,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="0094456199" -->
+<!-- signature="4235376193" -->
