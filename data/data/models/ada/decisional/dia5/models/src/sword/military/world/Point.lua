@@ -55,6 +55,12 @@ return
         return ( self:proximityLevel() / 100 + meKnowledge:
                    computePerceptionCapability( objective, self ) ) / 100
     end,
+    bypassingEfficiency = function( self, objective )
+        return ( self:proximityLevel() / 100 + self:getProximity( objective ) ) / 100
+    end,
+    removalEfficiency = function( self, objective )
+        return ( self:proximityLevel() / 100 + self:getProximity( objective ) ) / 100
+    end,
     elementIsReconnoitered = function( self )
         integration.AddReconnoiteredPointBy( self )
     end,
@@ -69,6 +75,20 @@ return
     -- -------------------------------------------------------------------------------- 
     -- Predicates
     -- --------------------------------------------------------------------------------
+    predicate "isBypassingFor"
+    {
+        dependencies = "none",
+        method = function( self, objective )
+            return true
+        end
+    },
+    predicate "isRemovingFor"
+    {
+        dependencies = "none",
+        method = function( self, objective )
+           return true
+        end
+    },
     predicate "isReachingFor"
     {
         dependencies = "none",

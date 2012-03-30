@@ -21,9 +21,7 @@ queryImplementation "getObstaclesOnPath"
                 local objectToAdd = CheckEqualObjects( object.second.first, result )
                 if not objectToAdd then
                     local kn = CreateKnowledge( integration.ontology.types.object, object.second.first ) 
-                    if not kn:isFriend() then
-                        currentObstacle = { kn }
-                    end
+                    currentObstacle = { kn }
                 else
                     currentObstacle = { objectToAdd }
                 end

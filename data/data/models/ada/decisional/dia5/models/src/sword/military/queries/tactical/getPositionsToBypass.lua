@@ -1,10 +1,17 @@
 queryImplementation "getPositionsToBypass" 
 { 
     ["execute"] = function ( params )
-        local allRes = {}
-        for _, objective in pairs( params.elementsToBypass ) do
-            allRes[ #allRes + 1 ] = CreateProxyKnowledge( 
-                sword.military.world.AvoidingArea, objective )
+        local allRes = knowledgeManager.getQueryResult( "getPositionsToBypass" )
+        if not next( allRes ) then
+            allRes = {}
+            local point, objectPosition, scaledObject
+            for _, element in pairs ( params.elementsToBypass ) do     
+                scaledObject = DEC_Geometrie_AgrandirLocalisation(  element:getLocalisation() , 50 )
+                objectPosition = DEC_Geometrie_ComputeNearestBorder( meKnowledge:getPosition(), scaledObject )
+                point = CreateKnowledge( sword.military.world.Point, objectPosition )
+                allRes[ #allRes + 1 ] = point
+            end
+            knowledgeManager.setQueryResult( "getPositionsToBypass", allRes )
         end
         return allRes
     end

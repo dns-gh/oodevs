@@ -1,20 +1,28 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.platoon.skills.Bypass" source-version="1.0.0">
-	<description></description>
-	<parameters>
-		<parameter name="entities" nullable="true">
-			<type>
-				<list>
-					<class name="sword.military.knowledge.decisional.Bypassable"/>
-				</list>
-			</type>
-			<default>
-				<nil/>
-			</default>
-		</parameter>
-	</parameters>
-	<links>
-		<link name="bypass" skill="sword.military.platoon.skills.primitives.Bypass"/>
-		<link name="remove" skill="sword.military.platoon.skills.primitives.Remove"/>
-	</links>
+    <description></description>
+    <parameters>
+        <parameter name="entities" nullable="true">
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Bypassable"/>
+                </list>
+            </type>
+            <default>
+                <nil/>
+            </default>
+        </parameter>
+        <parameter name="avoidObstacles">
+            <type>
+                <simple name="boolean"/>
+            </type>
+            <default>
+                <boolean>true</boolean>
+            </default>
+        </parameter>
+    </parameters>
+    <links>
+        <link name="bypass" skill="sword.military.platoon.skills.primitives.Bypass"/>
+        <link name="remove" skill="sword.military.platoon.skills.primitives.Remove"/>
+    </links>
 </skill>

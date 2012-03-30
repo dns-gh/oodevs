@@ -24,7 +24,7 @@ rootnode
                self.notArrived = true
                Feedback( self.feedbacks.failed ) --Fin de mission au dernier point même si je ne l'atteinds pas
            else
-               Feedback( self.feedbacks.done )
+               Feedback( self.feedbacks.done, { sender = "moveAlong" } )
            end
         else
             self.nextTargetIndex = self.nextTargetIndex + 1

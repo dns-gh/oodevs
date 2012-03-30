@@ -47,7 +47,7 @@ rootnode
     activate = function( self )
         for entity in pairs( self.targets ) do
             Activate( skill.nodes.bypassElement, entity:bypassPriority(), 
-                { entity = entity, positions = self.params.positions } )
+                { entity = entity, positions = self.params.positions, avoidObstacles = self.params.avoidObstacles } )
         end
     end
 }
@@ -71,6 +71,10 @@ node "bypassElement"
     end,
 
     create = function( self )
+        self.eTypeIti = eTypeItiDeminage
+        if self.params.avoidObstacles then
+            self.eTypeIti = eTypeItiMouvement
+        end
         self.arrived = false
     end,
 
@@ -109,7 +113,7 @@ node "bypassElement"
         for _, position in pairs( self.params.positions )  do
             Activate( skill.links.moveAndTakePosition, 
                 position:removalEfficiency( self.params.entity ),
-                                { entity = position, pathType = eTypeItiDeminage } )
+                                { entity = position, pathType = self.eTypeIti } )
         end
         self.arrived = false
     end
@@ -125,7 +129,7 @@ node "bypass"
 
     select = function( self )
         if not self.params.entity:bypassIt() then
-            Feedback( self.feedbacks.failed,{ element = self.params.entity } )
+            Feedback( self.feedbacks.failed, { element = self.params.entity } )
         end
     end
 }
