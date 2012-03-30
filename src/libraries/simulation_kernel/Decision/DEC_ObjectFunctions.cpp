@@ -151,10 +151,19 @@ void DEC_ObjectFunctions::MagicDestroyObject( boost::shared_ptr< DEC_Knowledge_O
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_ObjectFunctions::CreateDynamicGenObject
+// Name: DEC_ObjectFunctions::CreateDynamicGenObjectFromSharedLocalisation
 // Created: MGD 2010-06-16
 // -----------------------------------------------------------------------------
-boost::shared_ptr< DEC_Gen_Object > DEC_ObjectFunctions::CreateDynamicGenObject( std::string type, boost::shared_ptr< TER_Localisation > location, bool preliminary )
+boost::shared_ptr< DEC_Gen_Object > DEC_ObjectFunctions::CreateDynamicGenObjectFromSharedLocalisation( std::string type, boost::shared_ptr< TER_Localisation > location, bool preliminary )
+{
+    return boost::shared_ptr< DEC_Gen_Object >( new DEC_Gen_Object( type, location.get(), preliminary ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ObjectFunctions::CreateDynamicGenObject
+// Created: ABR 2012-03-30
+// -----------------------------------------------------------------------------
+boost::shared_ptr< DEC_Gen_Object > DEC_ObjectFunctions::CreateDynamicGenObject( std::string type, TER_Localisation* location, bool preliminary )
 {
     return boost::shared_ptr< DEC_Gen_Object >( new DEC_Gen_Object( type, location, preliminary ) );
 }
