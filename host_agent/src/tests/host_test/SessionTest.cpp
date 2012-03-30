@@ -263,3 +263,10 @@ BOOST_FIXTURE_TEST_CASE( session_start_with_quoted_arguments, Fixture )
     SaveSessionTag( 0 );
     session->Start();
 }
+
+BOOST_FIXTURE_TEST_CASE( session_can_start_twice, Fixture )
+{
+    boost::shared_ptr< Session > session = MakeSession();
+    StartSession( *session );
+    session->Start();
+}

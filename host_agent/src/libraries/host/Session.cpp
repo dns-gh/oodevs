@@ -356,6 +356,7 @@ boost::filesystem::wpath Session::GetPath() const
 // -----------------------------------------------------------------------------
 void Session::Start()
 {
+    if( process_ ) return;
     const boost::filesystem::wpath path = GetPath();
     system_.WriteFile( path / L"session.xml", WriteConfiguration( name_, port_->Get() ) );
     process_ = runtime_.Start( "\"" + Utf8Convert( applications_ / L"simulation_app.exe" ) + "\"", boost::assign::list_of
