@@ -19,6 +19,7 @@
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
+#include "Entities/Objects/MineAttribute.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Tools/MIL_Geometry.h"
@@ -332,7 +333,13 @@ void StructuralCapacity::CreateCrumbling( MIL_Object_ABC& object, const TER_Loca
         {
             MIL_Random::random_shuffle( lines );
             TER_Localisation localisation( TER_Localisation::ePolygon, CreatePolygon( lines.front() ) );
-            MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( "landslide", &army, localisation );
+            MIL_Object_ABC* pObject = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( "landslide", &army, localisation );
+			if( pObject )
+			{
+			    MineAttribute* mineAttribute = pObject->RetrieveAttribute< MineAttribute >();
+                if( mineAttribute )
+                    mineAttribute->Set(0.);//default valorization is set to 100%
+			}
         }
     }
 }
