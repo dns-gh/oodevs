@@ -79,6 +79,7 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions ( directia::brain::Br
     brain[ "DEC_ActiverObjet" ] = &DEC_ObjectFunctions::ActivateObject;
     brain[ "DEC_DetruireObjetSansDelais" ] = &DEC_ObjectFunctions::MagicDestroyObject;
     brain[ "DEC_CreateDynamicGenObject" ] = &DEC_ObjectFunctions::CreateDynamicGenObject;
+    brain[ "DEC_CreateDynamicGenObjectFromSharedLocalisation" ] = &DEC_ObjectFunctions::CreateDynamicGenObjectFromSharedLocalisation;
 
     // Tests / Debug
     brain[ "DEC_DebugPointXY" ] = &DEC_MiscFunctions::GetPointXY;

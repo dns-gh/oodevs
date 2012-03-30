@@ -97,7 +97,7 @@ DEC_Gen_Object::DEC_Gen_Object( const sword::PlannedWork& msg, const MIL_EntityM
 // Name: DEC_Gen_Object constructor
 // Created: MGD 2010-06-16
 // -----------------------------------------------------------------------------
-DEC_Gen_Object::DEC_Gen_Object( std::string type, boost::shared_ptr< TER_Localisation > location, bool preliminary )
+DEC_Gen_Object::DEC_Gen_Object( std::string type, TER_Localisation* location, bool preliminary )
     : type_              ( type )
     , identifier_        ( 0u )
     , localisation_      ( *location )

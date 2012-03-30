@@ -34,7 +34,8 @@ public:
     static bool ActivateObject( boost::shared_ptr< DEC_Knowledge_Object > knowledgeId );
     static const TER_Localisation& GetGenObjectLocalisation( boost::shared_ptr< DEC_Gen_Object > knowledgeId );
     static const TER_Localisation& GetObjectKnowledgeLocalisation( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
-    static boost::shared_ptr< DEC_Gen_Object > CreateDynamicGenObject( std::string type, boost::shared_ptr< TER_Localisation > location, bool preliminary );
+    static boost::shared_ptr< DEC_Gen_Object > CreateDynamicGenObjectFromSharedLocalisation( std::string type, boost::shared_ptr< TER_Localisation > location, bool preliminary );
+    static boost::shared_ptr< DEC_Gen_Object > CreateDynamicGenObject( std::string type, TER_Localisation* location, bool preliminary );
 
     // Gen object
     static std::string GetGenObjectType( const DEC_Gen_Object* object );
