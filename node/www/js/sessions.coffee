@@ -28,7 +28,7 @@ class SessionList extends Backbone.Collection
             return ajax "/api/list_sessions", null, options.success, options.error
         return Backbone.sync method, model, options
 
-Handlebars.registerHelper "is_present", (value, options) ->
+Handlebars.registerHelper "is_option", (value, options) ->
     if value of options.hash
         return options.fn this
     return options.inverse this

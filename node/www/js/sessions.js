@@ -72,7 +72,7 @@
 
   })(Backbone.Collection);
 
-  Handlebars.registerHelper("is_present", function(value, options) {
+  Handlebars.registerHelper("is_option", function(value, options) {
     if (value in options.hash) return options.fn(this);
     return options.inverse(this);
   });
