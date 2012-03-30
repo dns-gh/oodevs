@@ -355,14 +355,14 @@ void Session::Start()
     if( process_ ) return;
     const boost::filesystem::wpath path = GetPath();
     system_.WriteFile( path / L"session.xml", WriteConfiguration( name_, port_->Get() ) );
-    process_ = runtime_.Start( "\"" + Utf8Convert( applications_ / L"simulation_app.exe" ) + "\"", boost::assign::list_of
+    process_ = runtime_.Start( Utf8Convert( applications_ / L"simulation_app.exe" ), boost::assign::list_of
             ( "--root-dir=\""      + Utf8Convert( data_ ) + "\"" )
             ( "--exercises-dir=\"" + Utf8Convert( data_ / L"exercises" ) + "\"" )
             ( "--terrains-dir=\""  + Utf8Convert( data_ / L"data/terrains" ) + "\"" )
             ( "--models-dir=\""    + Utf8Convert( data_ / L"data/models" ) + "\"" )
             ( "--exercise=\""      + exercise_ + "\"" )
             ( "--session=\""       + boost::lexical_cast< std::string >( id_ ) + "\"" ),
-        "\"" + Utf8Convert( applications_ ) + "\""
+        Utf8Convert( applications_ )
     );
     if( !process_ ) return;
 

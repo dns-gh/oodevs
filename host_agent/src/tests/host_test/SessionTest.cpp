@@ -228,7 +228,6 @@ namespace
 
     boost::shared_ptr< runtime::Process_ABC > CheckRuntimeStart( const std::string& cmd, const std::vector< std::string >& args, const std::string& run )
     {
-        BOOST_CHECK( IsQuoted( cmd ) );
         BOOST_FOREACH( const std::string& arg, args )
         {
             size_t separator = arg.find_first_of( '=' );
@@ -237,7 +236,6 @@ namespace
             else
                 BOOST_CHECK( IsQuoted( arg.substr( separator + 1, std::string::npos ) ) );
         }
-        BOOST_CHECK( IsQuoted( run ) );
         boost::shared_ptr< MockProcess > ptr = boost::make_shared< MockProcess >( 1337, "noname" );
         MOCK_EXPECT( ptr->Kill ).once().returns( true );
         return ptr;
