@@ -13,6 +13,11 @@
 #include "Session_ABC.h"
 #include "SessionFactory_ABC.h"
 
+namespace boost
+{
+    class shared_mutex;
+}
+
 namespace runtime
 {
     class Runtime_ABC;
@@ -92,6 +97,7 @@ private:
     const boost::filesystem::wpath applications_;
     const std::string exercise_;
     const std::string name_;
+    std::auto_ptr< boost::shared_mutex > access_;
     boost::shared_ptr< runtime::Process_ABC > process_;
     std::auto_ptr< Port_ABC > port_;
     Status status_;

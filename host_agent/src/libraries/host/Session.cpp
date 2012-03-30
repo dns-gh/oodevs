@@ -30,6 +30,16 @@
 #include <boost/uuid/uuid_io.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 
+#ifdef _MSC_VER
+#   pragma warning( push )
+#   pragma warning( disable : 4244 )
+#endif
+#include <boost/thread/locks.hpp>
+#include <boost/thread/shared_mutex.hpp>
+#ifdef _MSC_VER
+#   pragma warning( pop )
+#endif
+
 using namespace host;
 
 namespace
@@ -115,6 +125,7 @@ Session::Session( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uu
     , applications_( applications )
     , exercise_    ( exercise )
     , name_        ( name )
+    , access_      ( new boost::shared_mutex() )
     , port_        ( ports.Create() )
     , status_      ( STATUS_STOPPED )
 {
@@ -136,6 +147,7 @@ Session::Session( const runtime::Runtime_ABC& runtime, const FileSystem_ABC& sys
     , applications_( applications )
     , exercise_    ( ParseItem< std::string >( xis, "exercise" ) )
     , name_        ( ParseItem< std::string >( xis, "name" ) )
+    , access_      ( new boost::shared_mutex() )
     , process_     ( GetProcess( runtime_, xis ) )
     , port_        ( ports.Create( ParseItem< int >( xis, "port" ) ) )
     , status_      ( process_ ? ConvertStatus( ParseItem< std::string >( xis, "status" ) ) : STATUS_STOPPED )
@@ -198,6 +210,7 @@ void Session::Save() const
 // -----------------------------------------------------------------------------
 std::string Session::ToJson() const
 {
+    boost::shared_lock< boost::shared_mutex > lock( *access_ );
     std::string reply = "{ ";
     return (boost::format( "{ "
         "\"id\" : \"%1%\", "
@@ -338,6 +351,7 @@ boost::filesystem::wpath Session::GetPath() const
 // -----------------------------------------------------------------------------
 void Session::Start()
 {
+    boost::lock_guard< boost::shared_mutex > lock( *access_ );
     if( process_ ) return;
     const boost::filesystem::wpath path = GetPath();
     system_.WriteFile( path / L"session.xml", WriteConfiguration( name_, port_->Get() ) );
@@ -362,6 +376,7 @@ void Session::Start()
 // -----------------------------------------------------------------------------
 void Session::Stop()
 {
+    boost::lock_guard< boost::shared_mutex > lock( *access_ );
     if( process_ )
         process_->Kill( MAX_KILL_TIMEOUT_MS );
     process_.reset();
