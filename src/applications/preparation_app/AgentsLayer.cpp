@@ -125,13 +125,17 @@ bool AgentsLayer::CanDrop( QDragMoveEvent* event, const geometry::Point2f& ) con
 // -----------------------------------------------------------------------------
 bool AgentsLayer::IsValidTemplate( QDragMoveEvent* event ) const
 {
-    if( !selectedFormation_ && !selectedTeam_ )
+    if( !selectedFormation_ && !selectedTeam_ && !selectedAutomat_ )
         return false;
     const HierarchyTemplate* droppedItem = gui::ValuedDragObject::GetValue< const HierarchyTemplate >( event );
     if( ! droppedItem )
         return false;
-    return selectedTeam_ ? droppedItem->IsCompatible( *selectedTeam_ )
-                         : droppedItem->IsCompatible( *selectedFormation_ );
+    if( selectedTeam_ )
+        return droppedItem->IsCompatible( *selectedTeam_ );
+    else if( selectedFormation_ )
+        return droppedItem->IsCompatible( *selectedFormation_ );
+    else
+        return droppedItem->IsCompatible( *selectedAutomat_ );
 }
 
 namespace
@@ -201,10 +205,14 @@ bool AgentsLayer::HandleDropEvent( QDropEvent* event, const geometry::Point2f& p
     }
     if( const HierarchyTemplate* droppedItem = gui::ValuedDragObject::GetValue< const HierarchyTemplate >( event ) )
     {
-        if( !selectedFormation_ && !selectedTeam_ )
+        if( !selectedFormation_ && !selectedTeam_ && !selectedAutomat_ )
             return false;
-        Entity_ABC* superior = selectedFormation_ ? selectedFormation_.ConstCast() : (Entity_ABC*)selectedTeam_.ConstCast();
-        droppedItem->Instanciate( *superior, point );
+        if( selectedTeam_ )
+            droppedItem->Instanciate( *selectedTeam_.ConstCast(), point );
+        else if( selectedFormation_ )
+            droppedItem->Instanciate( *selectedFormation_.ConstCast(), point );
+        else
+            droppedItem->Instanciate( *selectedAutomat_.ConstCast(), point );
         return true;
     }
     if( const Entity_ABC* droppedItem = gui::ValuedDragObject::GetValue< const Entity_ABC >( event ) )
