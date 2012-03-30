@@ -186,13 +186,14 @@ void ScriptPlugin::Update()
 void ScriptPlugin::LoadScripts()
 {
     const bfs::path dir( config_.BuildExerciseChildFile( "scripts" ), bfs::native );
-    if( ! bfs::exists( dir ) )
-        return;
-    for( bfs::directory_iterator it( dir ); it !=  bfs::directory_iterator(); ++it )
+    if( bfs::exists( dir ) )
     {
-        const bfs::path& file = *it;
-        if( !bfs::is_directory( file ) && bfs::extension( file ) == ".lua" )
-            LoadScript( file.native_file_string() );
+        for( bfs::directory_iterator it( dir ); it !=  bfs::directory_iterator(); ++it )
+        {
+            const bfs::path& file = *it;
+            if( !bfs::is_directory( file ) && bfs::extension( file ) == ".lua" )
+                LoadScript( file.native_file_string() );
+        }
     }
     const std::vector< std::string >& orderFiles = config_.GetStartupOrderFiles();
     if( !orderFiles.empty() )
@@ -291,6 +292,8 @@ std::string ScriptPlugin::GenerateOrdersScript( const std::vector< std::string >
     std::string templateFile = config_.BuildResourceChildFile( "StartupOrdersTemplate.lua" );
     std::ifstream file( templateFile.c_str() );
     const bfs::path dest( config_.BuildExerciseChildFile( "scripts/StartupOrders.lua" ), bfs::native );
+    if( !bfs::exists( dest.parent_path() ) )
+        bfs::create_directories( dest.parent_path() );
     std::ofstream destFile( dest.native_file_string().c_str() );
     char buffer[ 512 ];
     while( destFile.good() && file.good() )
