@@ -12,6 +12,7 @@
 #include "moc_ReplayerToolbar.cpp"
 #include "TimeTableRequestDialog.h"
 #include "icons.h"
+#include "clients_gui/Tools.h"
 #include "clients_kernel/Controllers.h"
 #include "protocol/ReplaySenders.h"
 #include "protocol/ServerPublisher_ABC.h"
@@ -101,7 +102,7 @@ namespace
         TimeTableDialog( QWidget* parent, const sword::TimeTable& timeTable )
             : QDialog( parent, 0, true )
         {
-            setCaption( tr( "Time Table" ) );
+            setCaption( tools::translate( "TimeTableDialog", "Time Table" ) );
 
             QLayout* layout = new QVBoxLayout( this );
             layout->setMargin( 5 );
@@ -112,9 +113,9 @@ namespace
             Q3Table* table = new Q3Table( timeTable.time_table_item_size(), 3, box );
             table->verticalHeader()->hide();
             table->setLeftMargin( 0 );
-            table->horizontalHeader()->setLabel( 0, tr( "Tick" ) );
-            table->horizontalHeader()->setLabel( 1, tr( "Sim time" ) );
-            table->horizontalHeader()->setLabel( 2, tr( "Real time" ) );
+            table->horizontalHeader()->setLabel( 0, tools::translate( "TimeTableDialog", "Tick" ) );
+            table->horizontalHeader()->setLabel( 1, tools::translate( "TimeTableDialog", "Sim time" ) );
+            table->horizontalHeader()->setLabel( 2, tools::translate( "TimeTableDialog", "Real time" ) );
             for( int i = 0; i < timeTable.time_table_item_size(); ++i )
             {
                 const sword::TimeTable_TimeMapping& map = timeTable.time_table_item( i );
@@ -122,7 +123,7 @@ namespace
                 table->setItem( i, 1, new Q3TableItem( table, Q3TableItem::Never, map.simulation_time().data().c_str() ) );
                 table->setItem( i, 2, new Q3TableItem( table, Q3TableItem::Never, map.real_time().data().c_str() ) );
             }
-            connect( new QPushButton( tr( "Ok" ), box ), SIGNAL( clicked() ), SLOT( accept() ) );
+            connect( new QPushButton(  tools::translate( "TimeTableDialog", "Ok" ), box ), SIGNAL( clicked() ), SLOT( accept() ) );
         }
     };
 }

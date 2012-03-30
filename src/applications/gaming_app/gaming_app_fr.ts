@@ -3029,7 +3029,7 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
     </message>
     <message>
         <source>Sim time</source>
-        <translation>Temps Sim</translation>
+        <translation>Temps Simulé</translation>
     </message>
     <message>
         <source>Real time</source>
