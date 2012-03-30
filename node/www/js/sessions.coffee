@@ -28,7 +28,12 @@ class SessionList extends Backbone.Collection
             return ajax "/api/list_sessions", null, options.success, options.error
         return Backbone.sync method, model, options
 
-session_template = _.template $("#session_template").html()
+Handlebars.registerHelper "is_present", (value, options) ->
+    if value of options.hash
+        return options.fn this
+    return options.inverse this
+
+session_template = Handlebars.compile $("#session_template").html()
 
 class SessionItemView extends Backbone.View
     tagName:   "div"

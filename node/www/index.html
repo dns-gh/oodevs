@@ -113,24 +113,54 @@
                     <div id="sessions">
                         [#-- auto-generated templates --]
                         <script type="text/template" id="session_template">
-                            <div id="id_<%= id %>" class="span9">
-                                <div class="well <%= status %> session_row">
-                                    <div class="span3">
-                                        <div class="session_name"><%- name %></div>
-                                        <div class="session_exercise"><%- exercise %></div>
+                            <div id="id_{{{id}}}" class="span9">
+                                <div class="well {{{status}}} session_row">
+                                    <div class="span2">
+                                        <div class="session_name">{{name}}</div>
+                                        <div class="session_exercise">{{exercise}}</div>
                                         <div class="session_model">Model: 2010-12-10</div>
                                     </div>
-                                    <div class="span4">
+                                    <div class="span6">
                                         <div>Started 2012-01-01 at 00:00:00</div>
                                         <div>Time running 00:00:00</div>
                                         <div>0 clients connected</div>
                                     </div>
                                     <div class="btn-group session_top_right">
+                                        {{#is_in_options status playing="" paused="" replaying=""}}
+                                        <a title="URL" class="btn link"><i class="icon-tag"></i></a>
+                                        {{/is_in_options}}
+                                        {{#is_in_options status paused="" stopped=""}}
+                                        <a title="Play" class="btn play"><i class="icon-play"></i></a>
+                                        {{/is_in_options}}
+                                        {{#is_in_options status playing=""}}
+                                        <a title="Pause" class="btn pause"><i class="icon-pause"></i></a>
+                                        {{/is_in_options}}
+                                        {{#is_in_options status playing="" paused="" replaying=""}}
+                                        <a title="Stop" class="btn stop"><i class="icon-stop"></i></a>
+                                        {{/is_in_options}}
+                                        {{#is_in_options status playing="" paused="" stopped=""}}
+                                        <a title="Replay" class="btn replay"><i class="icon-repeat"></i></a>
+                                        {{/is_in_options}}
+                                        {{#is_in_options status stopped=""}}
+                                        <a title="Settings" class="btn config"><i class="icon-cog"></i> </a>
+                                        {{/is_in_options}}
+                                        {{#is_in_options status playing="" paused="" stopped=""}}
+                                        <a title="Clone" class="btn clone"><i class="icon-plus-sign"></i></a>
+                                        {{/is_in_options}}
+                                        {{#is_in_options status stopped=""}}
+                                        <a title="Download" class="btn download"><i class="icon-download-alt"></i></a>
+                                        {{/is_in_options}}
+                                        {{#is_in_options status stopped=""}}
+                                        <a title="Archive" class="btn archive"><i class="icon-lock"></i></a>
+                                        {{/is_in_options}}
+                                        {{#is_in_options status stopped=""}}
+                                        <a title="Delete" class="btn delete"><i class="icon-trash"></i></a>
+                                        {{/is_in_options}}
                                     </div>
                                     <div class="session_bottom_right">
                                         <a href="#" class="btn"><i class="icon-th-list"></i> More <span class="caret"></span></a>
                                     </div>
-                                    <div class="label label-inverse" style="position:absolute;bottom:0;left:0"><%= id %></div>
+                                    <div class="label label-inverse" style="position:absolute;bottom:0;left:0">{{{id}}}</div>
                                 </div>
                             </div>                            
                         </script>
@@ -153,9 +183,10 @@
     [#-- script include order is required --]
     <script src="js/jquery-1.7.2.min.js"></script>
     <script src="js/bootstrap-2.0.2.min.js"></script>
-    [#if pg == "sessions"]
     <script src="js/underscore-min.js"></script>
     <script src="js/backbone-min.js"></script>
+    <script src="js/handlebars-1.0.0.beta.6-min.js"></script>
+    [#if pg == "sessions"]
     <script src="js/sessions.js"></script>
     [/#if]
 </html>

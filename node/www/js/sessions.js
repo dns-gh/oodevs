@@ -72,7 +72,12 @@
 
   })(Backbone.Collection);
 
-  session_template = _.template($("#session_template").html());
+  Handlebars.registerHelper("is_present", function(value, options) {
+    if (value in options.hash) return options.fn(this);
+    return options.inverse(this);
+  });
+
+  session_template = Handlebars.compile($("#session_template").html());
 
   SessionItemView = (function(_super) {
 
