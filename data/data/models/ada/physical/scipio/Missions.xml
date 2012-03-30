@@ -1056,7 +1056,7 @@
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
-      <parameter dia-name="valoriserObstacles_" name="Valoriser obstacles" optional="true" type="Boolean"/>
+      <parameter dia-name="withImprovement" name="Valoriser obstacles" optional="true" type="Boolean"/>
       <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="france.military.platoon.tasks.Produire" dia-type="france.military.platoon.tasks.Produire" id="2145" name="PION Produire et alimenter" package="none">
@@ -3060,4 +3060,4 @@
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PoursuivreConvoi" id="406" name="Poursuivre convoi"/>
   </fragorders>
 </missions>
-<!-- signature="2291244117" -->
+<!-- signature="3312389795" -->
