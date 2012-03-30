@@ -176,3 +176,11 @@ BOOST_FIXTURE_TEST_CASE( controller_list_exercises, Fixture )
     MOCK_EXPECT( agent.ListExercises ).once().with( 5, 3 ).returns( expected );
     CheckNotify( 200, expected );
 }
+
+BOOST_FIXTURE_TEST_CASE( controller_count_exercises, Fixture )
+{
+    SetRequest( "GET", "/count_exercises" );
+    const std::string expected = "a json number";
+    MOCK_EXPECT( agent.CountExercises ).once().returns( expected );
+    CheckNotify( 200, expected );
+}
