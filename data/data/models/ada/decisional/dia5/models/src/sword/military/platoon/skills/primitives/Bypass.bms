@@ -19,7 +19,7 @@ rootnode
     end,
 
     failed = function( self, params, additionalParams )
-        Feedback( self.feedbacks.elementFailed, { element = additionalParams.element, needReinforcement = "bypass" } )
+        Feedback( self.feedbacks.elementFailed, { element = additionalParams.element, needReinforcement = "destroy" } )
     end,
 
     notBypassable = function( self, params, additionalParams )
