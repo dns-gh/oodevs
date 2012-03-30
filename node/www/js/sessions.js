@@ -189,20 +189,20 @@
     };
 
     SessionListView.prototype.delta = function() {
-      var next, prev;
-      prev = this.model;
+      var next,
+        _this = this;
       next = new SessionList;
       return next.fetch({
         success: function() {
           var item, rpy, _i, _len, _ref;
-          rpy = diff_models(next.models, prev.models);
-          prev.remove(rpy[0]);
-          rpy = diff_models(prev.models, next.models);
-          prev.add(rpy[0]);
+          rpy = diff_models(next.models, _this.model.models);
+          _this.model.remove(rpy[0]);
+          rpy = diff_models(_this.model.models, next.models);
+          _this.model.add(rpy[0]);
           _ref = rpy[1];
           for (_i = 0, _len = _ref.length; _i < _len; _i++) {
             item = _ref[_i];
-            prev.get(item.id).set(item.attributes);
+            _this.model.get(item.id).set(item.attributes);
           }
         }
       });

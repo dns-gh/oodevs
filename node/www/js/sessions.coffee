@@ -15,9 +15,9 @@ class SessionItem extends Backbone.Model
                 exercise: model.get "exercise"
             return ajax "/api/create_session", params, options.success, options.error
         if method == "read"
-            return ajax "/api/get_session", {id: model.get "id"}, options.success, options.error
+            return ajax "/api/get_session", id: model.id, options.success, options.error
         if method == "delete"
-            return ajax "/api/delete_session", {id: model.get "id"}, options.success, options.error
+            return ajax "/api/delete_session", id: model.id, options.success, options.error
         return Backbone.sync method, model, options
 
 class SessionList extends Backbone.Collection
@@ -92,15 +92,14 @@ class SessionListView extends Backbone.View
         @model.create item, wait: true
 
     delta: =>
-        prev = @model
         next = new SessionList
-        next.fetch success: () ->
-            rpy = diff_models next.models, prev.models
-            prev.remove rpy[0]
-            rpy = diff_models prev.models, next.models
-            prev.add rpy[0]
+        next.fetch success: () =>
+            rpy = diff_models next.models, @model.models
+            @model.remove rpy[0]
+            rpy = diff_models @model.models, next.models
+            @model.add rpy[0]
             for item in rpy[1]
-                prev.get(item.id).set item.attributes
+                @model.get(item.id).set item.attributes
             return
 
 session_view = new SessionListView
