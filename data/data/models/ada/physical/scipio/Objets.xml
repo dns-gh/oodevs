@@ -2,7 +2,7 @@
 <objects model-version="4.8.3" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/4.3.3/physical/Objects.xsd">
   <object geometry="point" name="bouchon mines" point-size="50" symbol="G*MPOMC---****X" type="mines">
     <activable/>
-    <attrition attrition-surface="0" category="mine classique" ph="0"/>
+    <attrition attrition-surface="3" category="mine classique" ph="0.5"/>
     <avoidable distance="250"/>
     <bypassable bypass-speed="10"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
@@ -27,7 +27,7 @@
   </object>
   <object geometry="polygon" name="zone minee lineaire" symbol="G*MPOFA---****X" type="mined area (linear)">
     <activable/>
-    <attrition attrition-surface="0" category="mine classique" ph="0"/>
+    <attrition attrition-surface="3" category="mine classique" ph="0.5"/>
     <avoidable distance="500"/>
     <bypassable bypass-speed="10"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
@@ -45,7 +45,7 @@
   </object>
   <object geometry="polygon" name="zone minee par dispersion" symbol="G*MPOFA---****X" type="mined area (scattered)">
     <activable/>
-    <attrition attrition-surface="0" category="mine classique" ph="0"/>
+    <attrition attrition-surface="3" category="mine classique" ph="0.5"/>
     <avoidable distance="500"/>
     <bypassable bypass-speed="10"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="density">
@@ -62,7 +62,6 @@
     <time-limited/>
   </object>
   <object geometry="line" name="fosse anti char" symbol="G*MPOADC--****X" type="anti tank obstacle">
-    <attrition attrition-surface="0" category="mine classique" ph="0"/>
     <avoidable distance="500"/>
     <bypassable bypass-speed="10"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
@@ -445,4 +444,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="4235376193" -->
+<!-- signature="3941480815" -->
