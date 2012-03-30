@@ -135,7 +135,9 @@ BOOST_FIXTURE_TEST_CASE( agent_list_exercises, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( agent_list_empty_exercises, Fixture )
 {
-    const std::vector< std::string > list;
+    const std::vector< std::string > list = boost::assign::list_of( "a" )( "b" )( "c" );
     MOCK_EXPECT( factory.GetExercises ).once().returns( list );
-    CheckReply( agent.ListExercises( 0, INT_MAX ), "[]" );
+    CheckReply( agent.ListExercises( 0, INT_MAX ), "[\"a\", \"b\", \"c\"]" );
+    MOCK_EXPECT( factory.GetExercises ).once().returns( list );
+    CheckReply( agent.CountExercises(), "{ \"count\" : 3 }" );
 }
