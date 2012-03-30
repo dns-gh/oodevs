@@ -1,5 +1,5 @@
 (function() {
-  var SessionItem, SessionItemView, SessionList, SessionListView, ajax, diff_models, invalidate_session, on_session_click, on_session_hide, on_session_load, session_template, session_view,
+  var SessionItem, SessionItemView, SessionList, SessionListView, ajax, diff_models, invalidate_session, on_session_click, on_session_hide, on_session_load, print_error, session_error_template, session_template, session_view,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = Object.prototype.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
@@ -13,6 +13,21 @@
       success: success,
       url: url
     });
+  };
+
+  Handlebars.registerHelper("is_option", function(value, options) {
+    if (value in options.hash) return options.fn(this);
+    return options.inverse(this);
+  });
+
+  session_template = Handlebars.compile($("#session_template").html());
+
+  session_error_template = Handlebars.compile($("#session_error_template").html());
+
+  print_error = function(text) {
+    return $("#session_error").html(session_error_template({
+      content: text
+    }));
   };
 
   SessionItem = (function(_super) {
@@ -35,12 +50,12 @@
       }
       if (method === "read") {
         return ajax("/api/get_session", {
-          id: model.get("id")
+          id: model.id
         }, options.success, options.error);
       }
       if (method === "delete") {
         return ajax("/api/delete_session", {
-          id: model.get("id")
+          id: model.id
         }, options.success, options.error);
       }
       return Backbone.sync(method, model, options);
@@ -71,13 +86,6 @@
     return SessionList;
 
   })(Backbone.Collection);
-
-  Handlebars.registerHelper("is_option", function(value, options) {
-    if (value in options.hash) return options.fn(this);
-    return options.inverse(this);
-  });
-
-  session_template = Handlebars.compile($("#session_template").html());
 
   SessionItemView = (function(_super) {
 
@@ -111,8 +119,12 @@
     };
 
     SessionItemView.prototype["delete"] = function() {
+      var _this = this;
       return this.model.destroy({
-        wait: true
+        wait: true,
+        error: function() {
+          return print_error("Unable to delete session " + _this.model.get("name"));
+        }
       });
     };
 
@@ -122,6 +134,8 @@
         id: this.model.id
       }, function(item) {
         return _this.model.set(item);
+      }, function() {
+        return print_error("Unable to stop session " + _this.model.get("name"));
       });
     };
 
@@ -131,6 +145,8 @@
         id: this.model.id
       }, function(item) {
         return _this.model.set(item);
+      }, function() {
+        return print_error("Unable to start session " + _this.model.get("name"));
       });
     };
 
@@ -176,7 +192,11 @@
       this.model.bind("add", this.add);
       this.model.bind("remove", this.remove);
       this.model.bind("reset", this.reset);
-      this.model.fetch();
+      this.model.fetch({
+        error: function() {
+          return print_error("Unable to fetch sessions");
+        }
+      });
       return setInterval(this.delta, 5 * 1000);
     };
 
@@ -202,11 +222,15 @@
     };
 
     SessionListView.prototype.create = function(data) {
-      var item;
+      var item,
+        _this = this;
       item = new SessionItem;
       item.set(data);
       return this.model.create(item, {
-        wait: true
+        wait: true,
+        error: function() {
+          return print_error("Unable to create session " + item.get("name"));
+        }
       });
     };
 
@@ -226,6 +250,11 @@
             item = _ref[_i];
             _this.model.get(item.id).set(item.attributes);
           }
+        },
+        error: function() {
+          return $("#session_error").html(session_error_template({
+            content: "Unable to fetch sessions"
+          }));
         }
       });
     };
@@ -279,7 +308,7 @@
     error = function(obj, text, data) {
       var box;
       box = $("#session_create .modal-footer .alert");
-      box.html(data + " [" + text + "]");
+      box.html("Unable to fetch exercises");
       return box.show();
     };
     return ajax("api/list_exercises", {

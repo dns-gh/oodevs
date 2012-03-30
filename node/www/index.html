@@ -72,7 +72,7 @@
                     [#if pg == "sessions"]
                     <div id="session_create" class="modal fade hide" style="display:none">
                         <div class="modal-header">
-                            <a class="close" data-dismiss="modal">×</a>
+                            <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
                             <h3>Create New Session</h3>
                         </div>
                         <div class="modal-body">
@@ -100,6 +100,7 @@
                     </div>
                     <div class="row">
                         <div class="span9">
+                            <div id="session_error"></div>
                             <span class="session_actions">
                                 <a data-toggle="modal" href="#session_create" class="btn"><i class="icon-plus"></i> Create...</a>
                                 <a href="/" class="btn"><i class="icon-share-alt"></i> Restore</a>
@@ -112,6 +113,12 @@
                     </div>
                     <div id="sessions">
                         [#-- auto-generated templates --]
+                        <script type="text/template" id="session_error_template">
+                            <div class="alert alert-error">
+                                <a class="close" data-dismiss="alert"><i class="icon-remove"></i></a>
+                                <b>Error</b> {{content}}
+                            </div>
+                        </script>
                         <script type="text/template" id="session_template">
                             <div id="id_{{{id}}}" class="span9">
                                 <div class="well {{{status}}} session_row">

@@ -7,6 +7,17 @@ ajax = (url, data, success, error) ->
         success:  success,
         url:      url,
 
+Handlebars.registerHelper "is_option", (value, options) ->
+    if value of options.hash
+        return options.fn this
+    return options.inverse this
+
+session_template = Handlebars.compile $("#session_template").html()
+session_error_template = Handlebars.compile $("#session_error_template").html()
+
+print_error = (text) ->
+    $("#session_error").html session_error_template content: text
+
 class SessionItem extends Backbone.Model
     sync: (method, model, options) =>
         if method == "create"
@@ -15,9 +26,11 @@ class SessionItem extends Backbone.Model
                 exercise: model.get "exercise"
             return ajax "/api/create_session", params, options.success, options.error
         if method == "read"
-            return ajax "/api/get_session", id: model.id, options.success, options.error
+            return ajax "/api/get_session", id: model.id,
+                options.success, options.error
         if method == "delete"
-            return ajax "/api/delete_session", id: model.id, options.success, options.error
+            return ajax "/api/delete_session", id: model.id,
+                options.success, options.error
         return Backbone.sync method, model, options
 
 class SessionList extends Backbone.Collection
@@ -27,13 +40,6 @@ class SessionList extends Backbone.Collection
         if method == "read"
             return ajax "/api/list_sessions", null, options.success, options.error
         return Backbone.sync method, model, options
-
-Handlebars.registerHelper "is_option", (value, options) ->
-    if value of options.hash
-        return options.fn this
-    return options.inverse this
-
-session_template = Handlebars.compile $("#session_template").html()
 
 class SessionItemView extends Backbone.View
     tagName:   "div"
@@ -52,15 +58,17 @@ class SessionItemView extends Backbone.View
         return this
 
     delete: =>
-        @model.destroy wait: true
+        @model.destroy wait: true, error: => print_error "Unable to delete session " + @model.get "name"
 
     stop: =>
         ajax "/api/stop_session", id: @model.id,
-            (item) => @model.set item
+            (item) => @model.set item,
+            => print_error "Unable to stop session " + @model.get "name"
 
     play: =>
         ajax "/api/start_session", id: @model.id,
-            (item) => @model.set item
+            (item) => @model.set item,
+            => print_error "Unable to start session " + @model.get "name"
 
 diff_models = (prev, next) ->
     not_found = []
@@ -81,7 +89,7 @@ class SessionListView extends Backbone.View
         @model.bind "add",    @add
         @model.bind "remove", @remove
         @model.bind "reset",  @reset
-        @model.fetch()
+        @model.fetch error: -> print_error "Unable to fetch sessions"
         setInterval @delta, 5*1000
 
     reset: (list, options) =>
@@ -99,18 +107,21 @@ class SessionListView extends Backbone.View
     create: (data) =>
         item = new SessionItem
         item.set data
-        @model.create item, wait: true
+        @model.create item, wait: true, error: => print_error "Unable to create session " + item.get "name"
 
     delta: =>
         next = new SessionList
-        next.fetch success: () =>
-            rpy = diff_models next.models, @model.models
-            @model.remove rpy[0]
-            rpy = diff_models @model.models, next.models
-            @model.add rpy[0]
-            for item in rpy[1]
-                @model.get(item.id).set item.attributes
-            return
+        next.fetch
+            success: =>
+                rpy = diff_models next.models, @model.models
+                @model.remove rpy[0]
+                rpy = diff_models @model.models, next.models
+                @model.add rpy[0]
+                for item in rpy[1]
+                    @model.get(item.id).set item.attributes
+                return
+            error: =>
+                $("#session_error").html session_error_template content: "Unable to fetch sessions"
 
 session_view = new SessionListView
 
@@ -142,7 +153,7 @@ on_session_load = ->
             select.append "<option>" + item + "</option>"
     error = (obj, text, data) ->
         box = $("#session_create .modal-footer .alert")
-        box.html data + " [" + text + "]"
+        box.html "Unable to fetch exercises"
         box.show()
     ajax "api/list_exercises", limit: 40, done, error
 
