@@ -120,8 +120,7 @@ class SessionListView extends Backbone.View
                 for item in rpy[1]
                     @model.get(item.id).set item.attributes
                 return
-            error: =>
-                $("#session_error").html session_error_template content: "Unable to fetch sessions"
+            error: => print_error "Unable to fetch sessions"
 
 session_view = new SessionListView
 

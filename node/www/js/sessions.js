@@ -252,9 +252,7 @@
           }
         },
         error: function() {
-          return $("#session_error").html(session_error_template({
-            content: "Unable to fetch sessions"
-          }));
+          return print_error("Unable to fetch sessions");
         }
       });
     };
