@@ -28,18 +28,17 @@ public class Agent {
         ctx.addServlet(files, "/css/*");
         ctx.addServlet(files, "/img/*");
         ctx.addServlet(files, "/js/*");
-        ctx.addServlet(files, "/*.html");
 
-        final ProxyServlet proxy = new ProxyServlet.Transparent("/api", "localhost", hostPort);
-        ctx.addServlet(new ServletHolder(proxy), "/api/*");
+        final ServletHolder proxy = new ServletHolder(new ProxyServlet.Transparent("/api", "localhost", hostPort));
+        ctx.addServlet(proxy, "/api/*");
 
-        final Handler handler = new Handler(root, isDebug);
-        ctx.addServlet(new ServletHolder(handler), "/");
+        final ServletHolder handler = new ServletHolder(new Handler(root, isDebug));
+        ctx.addServlet(handler, "/");
 
         final EnumSet<DispatcherType> all = EnumSet.of(DispatcherType.ASYNC, DispatcherType.ERROR, DispatcherType.FORWARD, DispatcherType.INCLUDE,
                 DispatcherType.REQUEST);
         final FilterHolder zipper = new FilterHolder(new GzipFilter());
-        ctx.addFilter(zipper, "/", all);
+        ctx.addFilter(zipper, "*", all);
 
         server_ = new Server(webPort);
         server_.setHandler(ctx);
