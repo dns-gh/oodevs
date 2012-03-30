@@ -329,18 +329,7 @@
     </weapon-systems>
     <human-protections/>
     <objects>
-      <object bypass-gain-factor="1" bypassed-speed="1" construction-time-factor="600s" destruction-time-factor="0s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="abattis"/>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="180s" devalorization-time="45s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="mines" valorization-time="45s"/>
-      <object bypass-gain-factor="0.6" bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="0s" devalorization-time="5400s" initial-construction-time="10000s" initial-destruction-time="0s" non-bypassed-speed="5" type="road destruction" valorization-time="0s"/>
-      <object bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="0s" devalorization-time="0s" initial-construction-time="10000s" initial-destruction-time="0s" non-bypassed-speed="2" type="bridge destruction" valorization-time="0s"/>
-      <object bypassed-speed="5" destruction-time-factor="600s" devalorization-time="0s" initial-destruction-time="10000s" non-bypassed-speed="2" type="decontamination site" valorization-time="0s"/>
-      <object bypassed-speed="5" destruction-time-factor="600s" devalorization-time="0s" initial-destruction-time="10000s" non-bypassed-speed="2" type="logistic support area" valorization-time="0s"/>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="0s" destruction-time-factor="600s" initial-destruction-time="10000s" non-bypassed-speed="5" type="firing post"/>
       <object initial-construction-time="36000s" type="checkpoint"/>
-      <object initial-destruction-time="1800s" type="mrls deployment area"/>
-      <object initial-destruction-time="1800s" type="gun artillery deployment area"/>
-      <object initial-destruction-time="1800s" type="mortar deployment area"/>
-      <object initial-destruction-time="1800s" type="cobra deployment area"/>
     </objects>
     <equipment-category>Hommes</equipment-category>
   </equipment>
@@ -2714,11 +2703,7 @@
     <human-protections/>
     <objects>
       <object construction-time-factor="6s" destruction-time-factor="6s" initial-construction-time="1h" initial-destruction-time="30m" type="anti tank obstacle"/>
-      <object devalorization-time="1h" initial-construction-time="2h" initial-destruction-time="2h" type="barricade" valorization-time="30m"/>
-      <object devalorization-time="1h" initial-construction-time="90m" initial-destruction-time="2h" type="landslide" valorization-time="30m"/>
-      <object construction-time-factor="54s" destruction-time-factor="90s" devalorization-time="30m" initial-construction-time="90m" initial-destruction-time="150m" type="abattis" valorization-time="30m"/>
       <object initial-construction-time="30m" type="firing post"/>
-      <object devalorization-time="30m" initial-destruction-time="90m" type="road destruction"/>
       <object initial-construction-time="2h" type="checkpoint"/>
       <object initial-construction-time="6h" type="safe zone"/>
       <object construction-time-factor="1s" initial-construction-time="5m" type="urban block"/>
@@ -4429,9 +4414,7 @@
       <weapon-system launcher="Fusil Assaut FAMAS" munition="CART 5.56 F1A F1"/>
     </weapon-systems>
     <human-protections/>
-    <objects>
-      <object initial-construction-time="1200s" type="mrls deployment area"/>
-    </objects>
+    <objects/>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="Panne MOB 1"/>
       <breakdown origin="random" percentage="11" type="Panne MOB 2"/>
@@ -5696,9 +5679,7 @@
       <weapon-system launcher="Mitrailleuse Tourelleau" munition="CART 12.7 SBP"/>
     </weapon-systems>
     <human-protections/>
-    <objects>
-      <object bypass-gain-factor="-1" bypassed-speed="-1" construction-time-factor="0s" destruction-time-factor="0s" devalorization-time="0s" initial-construction-time="0s" initial-destruction-time="0s" non-bypassed-speed="-1" type="decontamination site" valorization-time="0s"/>
-    </objects>
+    <objects/>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="Panne MOB 1 EB"/>
       <breakdown origin="random" percentage="11" type="Panne MOB 2 EB"/>
@@ -5806,7 +5787,7 @@
     </weapon-systems>
     <human-protections/>
     <objects>
-      <object bypass-gain-factor="-1" bypassed-speed="-1" construction-time-factor="0s" destruction-time-factor="0s" devalorization-time="0s" initial-construction-time="0s" initial-destruction-time="0s" non-bypassed-speed="-1" type="decontamination site" valorization-time="0s"/>
+      <object initial-construction-time="30m" type="decontamination site"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="Panne MOB 1"/>
@@ -6780,9 +6761,7 @@
       <weapon-system launcher="Mitrailleuse Coaxiale" munition="CART 7.62 N BD PAN"/>
     </weapon-systems>
     <human-protections/>
-    <objects>
-      <object type="checkpoint"/>
-    </objects>
+    <objects/>
     <breakdowns>
       <breakdown origin="random" percentage="8" type="Panne MOB 1 EB"/>
       <breakdown origin="random" percentage="7" type="Panne MOB 2 EB"/>
@@ -7337,7 +7316,7 @@
     </weapon-systems>
     <human-protections/>
     <objects>
-      <object bypass-gain-factor="-1" bypassed-speed="-1" construction-time-factor="0s" destruction-time-factor="0s" devalorization-time="0s" initial-construction-time="3m" initial-destruction-time="0s" non-bypassed-speed="-1" type="jamming area" valorization-time="0s"/>
+      <object initial-construction-time="3m" type="jamming area"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="Panne MOB 1 EB"/>
@@ -10534,7 +10513,7 @@
     </weapon-systems>
     <human-protections/>
     <objects>
-      <object bypass-gain-factor="-1" construction-time-factor="1s" destruction-time-factor="1s" devalorization-time="1s" initial-construction-time="3m" initial-destruction-time="1s" non-bypassed-speed="-1" type="jamming area" valorization-time="1s"/>
+      <object initial-construction-time="3m" type="jamming area"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="4" type="Panne MOB 1"/>
@@ -10989,12 +10968,6 @@
       <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="60s" destruction-time-factor="180s" devalorization-time="45s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="mines" valorization-time="45s"/>
       <object bypass-gain-factor="0.6" bypassed-speed="5" construction-time-factor="60s" destruction-time-factor="0s" devalorization-time="5400s" initial-construction-time="1000s" initial-destruction-time="0s" non-bypassed-speed="5" type="road destruction" valorization-time="0s"/>
       <object bypassed-speed="5" construction-time-factor="60s" destruction-time-factor="0s" devalorization-time="0s" initial-construction-time="1000s" initial-destruction-time="0s" non-bypassed-speed="2" type="bridge destruction" valorization-time="0s"/>
-      <object bypassed-speed="5" destruction-time-factor="60s" devalorization-time="0s" initial-destruction-time="1000s" non-bypassed-speed="2" type="decontamination site" valorization-time="0s"/>
-      <object bypassed-speed="5" destruction-time-factor="60s" devalorization-time="0s" initial-destruction-time="1000s" non-bypassed-speed="2" type="logistic support area" valorization-time="0s"/>
-      <object initial-destruction-time="1800s" type="mrls deployment area"/>
-      <object initial-destruction-time="1800s" type="gun artillery deployment area"/>
-      <object initial-destruction-time="1800s" type="mortar deployment area"/>
-      <object initial-destruction-time="1800s" type="cobra deployment area"/>
     </objects>
     <equipment-category>Hommes</equipment-category>
   </equipment>
@@ -11514,18 +11487,10 @@
     </weapon-systems>
     <human-protections/>
     <objects>
-      <object bypass-gain-factor="1" bypassed-speed="1" construction-time-factor="600s" destruction-time-factor="0s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="abattis"/>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="180s" devalorization-time="45s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="mines" valorization-time="45s"/>
-      <object bypass-gain-factor="0.6" bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="0s" devalorization-time="5400s" initial-construction-time="10000s" initial-destruction-time="0s" non-bypassed-speed="5" type="road destruction" valorization-time="0s"/>
-      <object bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="0s" devalorization-time="0s" initial-construction-time="10000s" initial-destruction-time="0s" non-bypassed-speed="2" type="bridge destruction" valorization-time="0s"/>
-      <object bypassed-speed="5" destruction-time-factor="600s" devalorization-time="0s" initial-destruction-time="10000s" non-bypassed-speed="2" type="decontamination site" valorization-time="0s"/>
-      <object bypassed-speed="5" destruction-time-factor="600s" devalorization-time="0s" initial-destruction-time="10000s" non-bypassed-speed="2" type="logistic support area" valorization-time="0s"/>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="0s" destruction-time-factor="600s" initial-destruction-time="10000s" non-bypassed-speed="5" type="firing post"/>
-      <object initial-construction-time="36000s" type="checkpoint"/>
-      <object initial-destruction-time="1800s" type="mrls deployment area"/>
-      <object initial-destruction-time="1800s" type="gun artillery deployment area"/>
-      <object initial-destruction-time="1800s" type="mortar deployment area"/>
-      <object initial-destruction-time="1800s" type="cobra deployment area"/>
+      <object initial-construction-time="1200s" initial-destruction-time="1800s" type="mrls deployment area"/>
+      <object initial-construction-time="1800s" initial-destruction-time="1800s" type="gun artillery deployment area"/>
+      <object initial-construction-time="1800s" initial-destruction-time="1800s" type="mortar deployment area"/>
+      <object initial-construction-time="1200s" initial-destruction-time="1800s" type="cobra deployment area"/>
     </objects>
     <equipment-category>Hommes</equipment-category>
   </equipment>
@@ -13106,18 +13071,7 @@
     </weapon-systems>
     <human-protections/>
     <objects>
-      <object bypass-gain-factor="1" bypassed-speed="1" construction-time-factor="600s" destruction-time-factor="0s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="abattis"/>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="180s" devalorization-time="45s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="mines" valorization-time="45s"/>
-      <object bypass-gain-factor="0.6" bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="0s" devalorization-time="5400s" initial-construction-time="10000s" initial-destruction-time="0s" non-bypassed-speed="5" type="road destruction" valorization-time="0s"/>
-      <object bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="0s" devalorization-time="0s" initial-construction-time="10000s" initial-destruction-time="0s" non-bypassed-speed="2" type="bridge destruction" valorization-time="0s"/>
-      <object bypassed-speed="5" destruction-time-factor="600s" devalorization-time="0s" initial-destruction-time="10000s" non-bypassed-speed="2" type="decontamination site" valorization-time="0s"/>
-      <object bypassed-speed="5" destruction-time-factor="600s" devalorization-time="0s" initial-destruction-time="10000s" non-bypassed-speed="2" type="logistic support area" valorization-time="0s"/>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="0s" destruction-time-factor="600s" initial-destruction-time="10000s" non-bypassed-speed="5" type="firing post"/>
       <object initial-construction-time="36000s" type="checkpoint"/>
-      <object initial-destruction-time="1800s" type="mrls deployment area"/>
-      <object initial-destruction-time="1800s" type="gun artillery deployment area"/>
-      <object initial-destruction-time="1800s" type="mortar deployment area"/>
-      <object initial-destruction-time="1800s" type="cobra deployment area"/>
     </objects>
     <equipment-category>Hommes</equipment-category>
   </equipment>
@@ -14302,9 +14256,7 @@
       <weapon-system launcher="Fusil Assaut FAMAS" munition="CART 5.56 F1A F1"/>
     </weapon-systems>
     <human-protections/>
-    <objects>
-      <object type="checkpoint"/>
-    </objects>
+    <objects/>
     <breakdowns>
       <breakdown origin="random" percentage="8" type="Panne MOB 1 EB"/>
       <breakdown origin="random" percentage="7" type="Panne MOB 2 EB"/>
@@ -14421,18 +14373,7 @@
     </weapon-systems>
     <human-protections/>
     <objects>
-      <object bypass-gain-factor="1" bypassed-speed="1" construction-time-factor="600s" initial-construction-time="1800s" non-bypassed-speed="5" type="abattis"/>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="180s" devalorization-time="45s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="mines" valorization-time="45s"/>
-      <object bypass-gain-factor="0.6" bypassed-speed="5" construction-time-factor="600s" devalorization-time="5400s" initial-construction-time="10000s" non-bypassed-speed="5" type="road destruction"/>
-      <object bypassed-speed="5" construction-time-factor="600s" initial-construction-time="10000s" non-bypassed-speed="2" type="bridge destruction"/>
-      <object bypassed-speed="5" destruction-time-factor="600s" initial-destruction-time="10000s" non-bypassed-speed="2" type="decontamination site"/>
-      <object bypassed-speed="5" destruction-time-factor="600s" devalorization-time="0s" initial-destruction-time="10000s" non-bypassed-speed="2" type="logistic support area" valorization-time="0s"/>
-      <object bypass-gain-factor="1" bypassed-speed="5" destruction-time-factor="600s" initial-destruction-time="10000s" non-bypassed-speed="5" type="firing post"/>
       <object initial-construction-time="36000s" type="checkpoint"/>
-      <object initial-destruction-time="1800s" type="mrls deployment area"/>
-      <object initial-destruction-time="1800s" type="gun artillery deployment area"/>
-      <object initial-destruction-time="1800s" type="mortar deployment area"/>
-      <object initial-destruction-time="1800s" type="cobra deployment area"/>
     </objects>
     <equipment-category>Hommes</equipment-category>
   </equipment>
@@ -14508,7 +14449,7 @@
     </weapon-systems>
     <human-protections/>
     <objects>
-      <object type="checkpoint"/>
+      <object initial-construction-time="10m" type="checkpoint"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="Panne MOB 1 EB"/>
@@ -17163,20 +17104,7 @@
       <weapon-system launcher="Fusil Assaut AK 47" munition="CART 5.56 BAL ORD F1"/>
     </weapon-systems>
     <human-protections/>
-    <objects>
-      <object bypass-gain-factor="1" bypassed-speed="1" construction-time-factor="600s" destruction-time-factor="0s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="abattis"/>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="180s" devalorization-time="45s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="mines" valorization-time="45s"/>
-      <object bypass-gain-factor="0.6" bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="0s" devalorization-time="5400s" initial-construction-time="10000s" initial-destruction-time="0s" non-bypassed-speed="5" type="road destruction" valorization-time="0s"/>
-      <object bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="0s" devalorization-time="0s" initial-construction-time="10000s" initial-destruction-time="0s" non-bypassed-speed="2" type="bridge destruction" valorization-time="0s"/>
-      <object bypassed-speed="5" destruction-time-factor="600s" devalorization-time="0s" initial-destruction-time="10000s" non-bypassed-speed="2" type="decontamination site" valorization-time="0s"/>
-      <object bypassed-speed="5" destruction-time-factor="600s" devalorization-time="0s" initial-destruction-time="10000s" non-bypassed-speed="2" type="logistic support area" valorization-time="0s"/>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="0s" destruction-time-factor="600s" initial-destruction-time="10000s" non-bypassed-speed="5" type="firing post"/>
-      <object initial-construction-time="36000s" type="checkpoint"/>
-      <object initial-destruction-time="1800s" type="mrls deployment area"/>
-      <object initial-destruction-time="1800s" type="gun artillery deployment area"/>
-      <object initial-destruction-time="1800s" type="mortar deployment area"/>
-      <object initial-destruction-time="1800s" type="cobra deployment area"/>
-    </objects>
+    <objects/>
     <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="245215" codeEMAT8="24521501" codeLFRIL="" codeNNO="2320142353520" comment="" id="162" max-slope="0.6" name="GBC 8 KT" protection="VehiculeNonProtege" size="Moyen" weight="10">
@@ -17684,9 +17612,7 @@
     </consumptions>
     <weapon-systems/>
     <human-protections/>
-    <objects>
-      <object type="checkpoint"/>
-    </objects>
+    <objects/>
     <logistic-functions>
       <health-functions>
         <collecting capacity="4" man-loading-time="5m" man-unloading-time="5m" nbc-transport="true" reac-mental-transport="true" wounded-transport="UE, U1, U2, U3"/>
@@ -19618,9 +19544,7 @@
       <weapon-system launcher="Fusil Assaut FAMAS" munition="CART 5.56 F1A F1"/>
     </weapon-systems>
     <human-protections/>
-    <objects>
-      <object type="checkpoint"/>
-    </objects>
+    <objects/>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="Panne MOB 1"/>
       <breakdown origin="random" percentage="11" type="Panne MOB 2"/>
@@ -21157,20 +21081,7 @@
       <weapon-system launcher="Lance Roquette" munition="RO 80 EXPL AC"/>
     </weapon-systems>
     <human-protections/>
-    <objects>
-      <object bypass-gain-factor="1" bypassed-speed="1" construction-time-factor="600s" destruction-time-factor="0s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="abattis"/>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="180s" devalorization-time="45s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="mines" valorization-time="45s"/>
-      <object bypass-gain-factor="0.6" bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="0s" devalorization-time="5400s" initial-construction-time="10000s" initial-destruction-time="0s" non-bypassed-speed="5" type="road destruction" valorization-time="0s"/>
-      <object bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="0s" devalorization-time="0s" initial-construction-time="10000s" initial-destruction-time="0s" non-bypassed-speed="2" type="bridge destruction" valorization-time="0s"/>
-      <object bypassed-speed="5" destruction-time-factor="600s" devalorization-time="0s" initial-destruction-time="10000s" non-bypassed-speed="2" type="decontamination site" valorization-time="0s"/>
-      <object bypassed-speed="5" destruction-time-factor="600s" devalorization-time="0s" initial-destruction-time="10000s" non-bypassed-speed="2" type="logistic support area" valorization-time="0s"/>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="0s" destruction-time-factor="600s" initial-destruction-time="10000s" non-bypassed-speed="5" type="firing post"/>
-      <object initial-construction-time="36000s" type="checkpoint"/>
-      <object initial-destruction-time="1800s" type="mrls deployment area"/>
-      <object initial-destruction-time="1800s" type="gun artillery deployment area"/>
-      <object initial-destruction-time="1800s" type="mortar deployment area"/>
-      <object initial-destruction-time="1800s" type="cobra deployment area"/>
-    </objects>
+    <objects/>
     <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="A426H1" codeEMAT8="A426H101" codeLFRIL="" codeNNO="2350145357309" comment="Artillerie Animation Haute" id="207" max-slope="0.6" name="Char AUF1 Animation" protection="CharLourd" size="Gros" weight="44">
@@ -24427,7 +24338,9 @@
       <weapon-system launcher="Fusil Assaut FAMAS" munition="CART 5.56 F1A F1"/>
     </weapon-systems>
     <human-protections/>
-    <objects/>
+    <objects>
+      <object initial-construction-time="30m" initial-destruction-time="30m" type="installation"/>
+    </objects>
     <breakdowns>
       <breakdown origin="random" percentage="100" type="Panne MOB 1"/>
       <breakdown origin="attrition" percentage="100" type="Panne MOB 1"/>
@@ -30229,12 +30142,6 @@
       <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="60s" destruction-time-factor="180s" devalorization-time="45s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="mines" valorization-time="45s"/>
       <object bypass-gain-factor="0.6" bypassed-speed="5" construction-time-factor="60s" destruction-time-factor="0s" devalorization-time="5400s" initial-construction-time="1000s" initial-destruction-time="0s" non-bypassed-speed="5" type="road destruction" valorization-time="0s"/>
       <object bypassed-speed="5" construction-time-factor="60s" destruction-time-factor="0s" devalorization-time="0s" initial-construction-time="1000s" initial-destruction-time="0s" non-bypassed-speed="2" type="bridge destruction" valorization-time="0s"/>
-      <object bypassed-speed="5" destruction-time-factor="60s" devalorization-time="0s" initial-destruction-time="1000s" non-bypassed-speed="2" type="decontamination site" valorization-time="0s"/>
-      <object bypassed-speed="5" destruction-time-factor="60s" devalorization-time="0s" initial-destruction-time="1000s" non-bypassed-speed="2" type="logistic support area" valorization-time="0s"/>
-      <object initial-destruction-time="1800s" type="mrls deployment area"/>
-      <object initial-destruction-time="1800s" type="gun artillery deployment area"/>
-      <object initial-destruction-time="1800s" type="mortar deployment area"/>
-      <object initial-destruction-time="1800s" type="cobra deployment area"/>
     </objects>
     <equipment-category>Hommes</equipment-category>
   </equipment>
@@ -30801,7 +30708,6 @@
       <object construction-time-factor="3m" destruction-time-factor="3m" initial-construction-time="90m" initial-destruction-time="90m" type="mines"/>
       <object devalorization-time="0s" initial-construction-time="150m" type="bridge destruction" valorization-time="30m"/>
       <object devalorization-time="15m" initial-construction-time="6h" initial-destruction-time="6h" type="road destruction" valorization-time="15m"/>
-      <object construction-time-factor="14s" destruction-time-factor="180s" initial-construction-time="4h" initial-destruction-time="2h" type="mined area (linear)"/>
     </objects>
     <equipment-category>Hommes</equipment-category>
   </equipment>
@@ -31101,20 +31007,7 @@
       <weapon-system launcher="Fusil Assaut FAMAS" munition="CART 5.56 F1A F1"/>
     </weapon-systems>
     <human-protections/>
-    <objects>
-      <object bypass-gain-factor="1" bypassed-speed="1" construction-time-factor="600s" destruction-time-factor="0s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="abattis"/>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="180s" devalorization-time="45s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="mines" valorization-time="45s"/>
-      <object bypass-gain-factor="0.6" bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="0s" devalorization-time="5400s" initial-construction-time="10000s" initial-destruction-time="0s" non-bypassed-speed="5" type="road destruction" valorization-time="0s"/>
-      <object bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="0s" devalorization-time="0s" initial-construction-time="10000s" initial-destruction-time="0s" non-bypassed-speed="2" type="bridge destruction" valorization-time="0s"/>
-      <object bypassed-speed="5" destruction-time-factor="600s" devalorization-time="0s" initial-destruction-time="10000s" non-bypassed-speed="2" type="decontamination site" valorization-time="0s"/>
-      <object bypassed-speed="5" destruction-time-factor="600s" devalorization-time="0s" initial-destruction-time="10000s" non-bypassed-speed="2" type="logistic support area" valorization-time="0s"/>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="0s" destruction-time-factor="600s" initial-destruction-time="10000s" non-bypassed-speed="5" type="firing post"/>
-      <object initial-construction-time="36000s" type="checkpoint"/>
-      <object initial-destruction-time="1800s" type="mrls deployment area"/>
-      <object initial-destruction-time="1800s" type="gun artillery deployment area"/>
-      <object initial-destruction-time="1800s" type="mortar deployment area"/>
-      <object initial-destruction-time="1800s" type="cobra deployment area"/>
-    </objects>
+    <objects/>
     <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="2320144902693" comment="" id="323" name="VBL 7,62 ROEM" protection="BlindeLeger" size="Petit" weight="4">
@@ -31188,9 +31081,7 @@
       <weapon-system launcher="Fusil Assaut FAMAS" munition="CART 5.56 F1A F1"/>
     </weapon-systems>
     <human-protections/>
-    <objects>
-      <object type="checkpoint"/>
-    </objects>
+    <objects/>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="Panne MOB 1 EB"/>
       <breakdown origin="random" percentage="11" type="Panne MOB 2 EB"/>
@@ -31465,9 +31356,7 @@
       <weapon-system launcher="Mitrailleuse Tourelleau" munition="CART 7.62 N BD PAN"/>
     </weapon-systems>
     <human-protections/>
-    <objects>
-      <object type="checkpoint"/>
-    </objects>
+    <objects/>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="Panne MOB 1 EB"/>
       <breakdown origin="random" percentage="11" type="Panne MOB 2 EB"/>
@@ -31974,9 +31863,7 @@
       <weapon-system launcher="Fusil Assaut AK 47" munition="Charg 7,62"/>
     </weapon-systems>
     <human-protections/>
-    <objects>
-      <object initial-construction-time="1200s" type="mrls deployment area"/>
-    </objects>
+    <objects/>
     <breakdowns>
       <breakdown origin="random" percentage="11" type="Panne MOB 1"/>
       <breakdown origin="random" percentage="11" type="Panne MOB 2"/>
@@ -34694,18 +34581,7 @@
     </weapon-systems>
     <human-protections/>
     <objects>
-      <object bypass-gain-factor="1" bypassed-speed="1" construction-time-factor="600s" destruction-time-factor="0s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="abattis"/>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="180s" devalorization-time="45s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="mines" valorization-time="45s"/>
-      <object bypass-gain-factor="0.6" bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="0s" devalorization-time="5400s" initial-construction-time="10000s" initial-destruction-time="0s" non-bypassed-speed="5" type="road destruction" valorization-time="0s"/>
-      <object bypassed-speed="5" construction-time-factor="600s" destruction-time-factor="0s" devalorization-time="0s" initial-construction-time="10000s" initial-destruction-time="0s" non-bypassed-speed="2" type="bridge destruction" valorization-time="0s"/>
-      <object bypassed-speed="5" destruction-time-factor="600s" devalorization-time="0s" initial-destruction-time="10000s" non-bypassed-speed="2" type="decontamination site" valorization-time="0s"/>
-      <object bypassed-speed="5" destruction-time-factor="600s" devalorization-time="0s" initial-destruction-time="10000s" non-bypassed-speed="2" type="logistic support area" valorization-time="0s"/>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="0s" destruction-time-factor="600s" initial-destruction-time="10000s" non-bypassed-speed="5" type="firing post"/>
       <object initial-construction-time="36000s" type="checkpoint"/>
-      <object initial-destruction-time="1800s" type="mrls deployment area"/>
-      <object initial-destruction-time="1800s" type="gun artillery deployment area"/>
-      <object initial-destruction-time="1800s" type="mortar deployment area"/>
-      <object initial-destruction-time="1800s" type="cobra deployment area"/>
     </objects>
     <equipment-category>Hommes</equipment-category>
   </equipment>
@@ -34907,10 +34783,8 @@
     <human-protections/>
     <objects>
       <object bypass-gain-factor="1" bypassed-speed="1" construction-time-factor="60s" destruction-time-factor="0s" initial-construction-time="5m" initial-destruction-time="0s" non-bypassed-speed="5" type="abattis" valorization-time="2m"/>
-      <object bypass-gain-factor="1" bypassed-speed="5" construction-time-factor="60s" destruction-time-factor="180s" devalorization-time="45s" initial-construction-time="1800s" initial-destruction-time="0s" non-bypassed-speed="5" type="mines" valorization-time="45s"/>
       <object initial-construction-time="15m" initial-destruction-time="1800s" type="road destruction" valorization-time="5m"/>
       <object initial-construction-time="15m" initial-destruction-time="1200s" type="bridge destruction" valorization-time="5m"/>
-      <object construction-time-factor="60s" initial-construction-time="800s" type="barricade"/>
     </objects>
     <breakdowns>
       <breakdown origin="random" percentage="100" type="Panne MOB 1"/>
@@ -35759,4 +35633,4 @@
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="2375941418" -->
+<!-- signature="1829342405" -->
