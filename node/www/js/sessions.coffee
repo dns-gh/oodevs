@@ -19,6 +19,8 @@ print_error = (text) ->
     $("#session_error").html session_error_template content: text
 
 class SessionItem extends Backbone.Model
+    view: SessionItemView
+
     sync: (method, model, options) =>
         if method == "create"
             params =
@@ -33,13 +35,45 @@ class SessionItem extends Backbone.Model
                 options.success, options.error
         return Backbone.sync method, model, options
 
+status_order =
+    playing:   0
+    paused:    1
+    replaying: 2
+    stopped:   3
+
 class SessionList extends Backbone.Collection
     model: SessionItem
+    order: "status"
 
     sync: (method, model, options) =>
         if method == "read"
             return ajax "/api/list_sessions", null, options.success, options.error
         return Backbone.sync method, model, options
+
+    comparator: (lhs, rhs) =>
+        if @order == "status"
+            return @status_compare lhs, rhs
+        return @name_compare lhs, rhs
+
+    name_compare: (lhs, rhs) =>
+        a = lhs.get("name").toLowerCase()
+        b = rhs.get("name").toLowerCase()
+        if a > b
+            return +1
+        if a < b
+            return -1
+        return 0
+
+    status_compare: (lhs, rhs) =>
+        a = lhs.get "status"
+        b = rhs.get "status"
+        if a == b
+            return @name_compare lhs, rhs
+        return status_order[a] - status_order[b]
+
+    set_order: (order) =>
+        @order = order
+        @sort()
 
 class SessionItemView extends Backbone.View
     tagName:   "div"
@@ -47,6 +81,7 @@ class SessionItemView extends Backbone.View
 
     initialize: ->
         @model.bind 'change', @render
+        @render()
 
     events:
         "click .delete" : "delete"
@@ -55,7 +90,6 @@ class SessionItemView extends Backbone.View
 
     render: =>
         $(@el).html session_template @model.attributes
-        return this
 
     delete: =>
         @model.destroy wait: true, error: => print_error "Unable to delete session " + @model.get "name"
@@ -89,17 +123,24 @@ class SessionListView extends Backbone.View
         @model.bind "add",    @add
         @model.bind "remove", @remove
         @model.bind "reset",  @reset
+        @model.bind "change:status", @model.sort
         @model.fetch error: -> print_error "Unable to fetch sessions"
         setInterval @delta, 5*1000
 
     reset: (list, options) =>
+        $(@el).empty()
         for item in list.models
             @add item
         return
 
     add: (item) =>
         view = new SessionItemView model: item
-        $(@el).append view.render().el
+        item.view = view
+        previous = @model.at(@model.indexOf(item) - 1)?.view
+        if previous
+            $(previous.el).after view.el
+        else
+            $(@el).append view.el
 
     remove: (item, list, index) =>
         $("#id_" + item.get "id").parent().remove()

@@ -1,5 +1,5 @@
 (function() {
-  var SessionItem, SessionItemView, SessionList, SessionListView, ajax, diff_models, invalidate_session, on_session_click, on_session_hide, on_session_load, print_error, session_error_template, session_template, session_view,
+  var SessionItem, SessionItemView, SessionList, SessionListView, ajax, diff_models, invalidate_session, on_session_click, on_session_hide, on_session_load, print_error, session_error_template, session_template, session_view, status_order,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = Object.prototype.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
@@ -39,6 +39,8 @@
       SessionItem.__super__.constructor.apply(this, arguments);
     }
 
+    SessionItem.prototype.view = SessionItemView;
+
     SessionItem.prototype.sync = function(method, model, options) {
       var params;
       if (method === "create") {
@@ -65,22 +67,62 @@
 
   })(Backbone.Model);
 
+  status_order = {
+    playing: 0,
+    paused: 1,
+    replaying: 2,
+    stopped: 3
+  };
+
   SessionList = (function(_super) {
 
     __extends(SessionList, _super);
 
     function SessionList() {
+      this.set_order = __bind(this.set_order, this);
+      this.status_compare = __bind(this.status_compare, this);
+      this.name_compare = __bind(this.name_compare, this);
+      this.comparator = __bind(this.comparator, this);
       this.sync = __bind(this.sync, this);
       SessionList.__super__.constructor.apply(this, arguments);
     }
 
     SessionList.prototype.model = SessionItem;
 
+    SessionList.prototype.order = "status";
+
     SessionList.prototype.sync = function(method, model, options) {
       if (method === "read") {
         return ajax("/api/list_sessions", null, options.success, options.error);
       }
       return Backbone.sync(method, model, options);
+    };
+
+    SessionList.prototype.comparator = function(lhs, rhs) {
+      if (this.order === "status") return this.status_compare(lhs, rhs);
+      return this.name_compare(lhs, rhs);
+    };
+
+    SessionList.prototype.name_compare = function(lhs, rhs) {
+      var a, b;
+      a = lhs.get("name").toLowerCase();
+      b = rhs.get("name").toLowerCase();
+      if (a > b) return +1;
+      if (a < b) return -1;
+      return 0;
+    };
+
+    SessionList.prototype.status_compare = function(lhs, rhs) {
+      var a, b;
+      a = lhs.get("status");
+      b = rhs.get("status");
+      if (a === b) return this.name_compare(lhs, rhs);
+      return status_order[a] - status_order[b];
+    };
+
+    SessionList.prototype.set_order = function(order) {
+      this.order = order;
+      return this.sort();
     };
 
     return SessionList;
@@ -104,7 +146,8 @@
     SessionItemView.prototype.className = "row";
 
     SessionItemView.prototype.initialize = function() {
-      return this.model.bind('change', this.render);
+      this.model.bind('change', this.render);
+      return this.render();
     };
 
     SessionItemView.prototype.events = {
@@ -114,8 +157,7 @@
     };
 
     SessionItemView.prototype.render = function() {
-      $(this.el).html(session_template(this.model.attributes));
-      return this;
+      return $(this.el).html(session_template(this.model.attributes));
     };
 
     SessionItemView.prototype["delete"] = function() {
@@ -192,6 +234,7 @@
       this.model.bind("add", this.add);
       this.model.bind("remove", this.remove);
       this.model.bind("reset", this.reset);
+      this.model.bind("change:status", this.model.sort);
       this.model.fetch({
         error: function() {
           return print_error("Unable to fetch sessions");
@@ -202,6 +245,7 @@
 
     SessionListView.prototype.reset = function(list, options) {
       var item, _i, _len, _ref;
+      $(this.el).empty();
       _ref = list.models;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         item = _ref[_i];
@@ -210,11 +254,17 @@
     };
 
     SessionListView.prototype.add = function(item) {
-      var view;
+      var previous, view, _ref;
       view = new SessionItemView({
         model: item
       });
-      return $(this.el).append(view.render().el);
+      item.view = view;
+      previous = (_ref = this.model.at(this.model.indexOf(item) - 1)) != null ? _ref.view : void 0;
+      if (previous) {
+        return $(previous.el).after(view.el);
+      } else {
+        return $(this.el).append(view.el);
+      }
     };
 
     SessionListView.prototype.remove = function(item, list, index) {
