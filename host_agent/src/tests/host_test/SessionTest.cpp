@@ -23,6 +23,7 @@
 
 #include <xeumeuleu/xml.hpp>
 
+#include <boost/foreach.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/uuid/uuid_generators.hpp>
 
@@ -227,4 +228,38 @@ BOOST_FIXTURE_TEST_CASE( session_process_name_does_not_contain_backslashes, Fixt
     boost::shared_ptr< Session > ptr = MakeSession();
     StartSession( *ptr, 0, "\\Device\\With\\Backslashes" );
     BOOST_CHECK_EQUAL( ptr->ToJson().find( '\\' ), std::string::npos );
+}
+
+namespace
+{
+    bool IsQuoted( const std::string& arg )
+    {
+        return arg.empty() || ( arg.front() == '"' && arg.back() == '"' );
+    }
+
+    boost::shared_ptr< runtime::Process_ABC > CheckRuntimeStart( const std::string& cmd, const std::vector< std::string >& args, const std::string& run )
+    {
+        BOOST_CHECK( IsQuoted( cmd ) );
+        BOOST_FOREACH( const std::string& arg, args )
+        {
+            size_t separator = arg.find_first_of( '=' );
+            if( separator == std::string::npos )
+                BOOST_CHECK( IsQuoted( arg ) );
+            else
+                BOOST_CHECK( IsQuoted( arg.substr( separator + 1, std::string::npos ) ) );
+        }
+        BOOST_CHECK( IsQuoted( run ) );
+        boost::shared_ptr< MockProcess > ptr = boost::make_shared< MockProcess >( 1337, "noname" );
+        MOCK_EXPECT( ptr->Kill ).once().returns( true );
+        return ptr;
+    }
+}
+
+BOOST_FIXTURE_TEST_CASE( session_start_with_quoted_arguments, Fixture )
+{
+    boost::shared_ptr< Session > session = MakeSession();
+    MOCK_EXPECT( runtime.Start ).once().calls( &CheckRuntimeStart );
+    MOCK_EXPECT( system.WriteFile ).once();
+    SaveSessionTag( 0 );
+    session->Start();
 }
