@@ -677,6 +677,7 @@ E_StockCategory tools::StockCategoryFromDotationFamily( E_DotationFamily eDotati
     case eDotationFamily_Ration :
     case eDotationFamily_AgentExtincteur :
     case eDotationFamily_Energy :
+    case eDotationFamily_Funeraire :
     default :
         return eStockCategory_UniteSupply;
     }
