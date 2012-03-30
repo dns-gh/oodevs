@@ -50,6 +50,8 @@ private:
     std::string GetSession    ( const Request_ABC& request );
     std::string CreateSession ( const Request_ABC& request );
     std::string DeleteSession ( const Request_ABC& request );
+    std::string StartSession  ( const Request_ABC& request );
+    std::string StopSession   ( const Request_ABC& request );
     std::string ListExercises ( const Request_ABC& request );
     std::string CountExercises( const Request_ABC& request );
     //@}

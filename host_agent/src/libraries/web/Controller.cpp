@@ -131,6 +131,10 @@ std::string Controller::Notify( const Request_ABC& request )
         return CreateSession( request );
     if( uri == "/delete_session" )
         return DeleteSession( request );
+    if( uri == "/start_session" )
+        return StartSession( request );
+    if( uri == "/stop_session" )
+        return StopSession( request );
     if( uri == "/list_exercises")
         return ListExercises( request );
     if( uri == "/count_exercises" )
@@ -150,19 +154,6 @@ namespace
     {
         const boost::optional< std::string > option = data.GetParameter( name );
         return option == boost::none ? value : boost::lexical_cast< T >( *option );
-    }
-
-    bool GetUuid( boost::uuids::uuid& id, const std::string& data )
-    {
-        try
-        {
-            id = boost::uuids::string_generator()( data );
-            return true;
-        }
-        catch( const std::runtime_error& /*err*/ )
-        {
-            return false;
-        }
     }
 }
 
@@ -186,19 +177,34 @@ std::string Controller::CountSessions( const Request_ABC& /*request*/ )
     return WriteHttpReply( agent_.CountSessions() );
 }
 
+namespace
+{
+    #define CALL_MEMBER( obj, ptr ) ( ( obj ).*( ptr ) )
+
+    template< typename T >
+    std::string UuidDispatch( const Request_ABC& request, Agent_ABC& agent, T member )
+    {
+        const boost::optional< std::string > uuid = request.GetParameter( "id" );
+        if( uuid == boost::none )
+            return WriteHttpReply( BadRequest, "Missing \"id\" parameter" );
+        try
+        {
+            return WriteHttpReply( CALL_MEMBER( agent, member )( boost::uuids::string_generator()( *uuid ) ) );
+        }
+        catch( const std::runtime_error& /*err*/ )
+        {
+            return WriteHttpReply( BadRequest, "Invalid \"id\" parameter" );
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: Controller::GetSession
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
 std::string Controller::GetSession( const Request_ABC& request )
 {
-    const boost::optional< std::string > uuid = request.GetParameter( "id" );
-    if( uuid == boost::none )
-        return WriteHttpReply( BadRequest, "Missing \"id\" parameter" );
-    boost::uuids::uuid id;
-    if( !GetUuid( id, *uuid ) )
-        return WriteHttpReply( BadRequest, "Invalid \"id\" parameter" );
-    return WriteHttpReply( agent_.GetSession( id ) );
+    return UuidDispatch( request, agent_, &Agent_ABC::GetSession );
 }
 
 // -----------------------------------------------------------------------------
@@ -222,13 +228,25 @@ std::string Controller::CreateSession( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::DeleteSession( const Request_ABC& request )
 {
-    const boost::optional< std::string > uuid = request.GetParameter( "id" );
-    if( uuid == boost::none )
-        return WriteHttpReply( BadRequest, "Missing \"id\" parameter" );
-    boost::uuids::uuid id;
-    if( !GetUuid( id, *uuid ) )
-        return WriteHttpReply( BadRequest, "Invalid \"id\" parameter" );
-    return WriteHttpReply( agent_.DeleteSession( id ) );
+    return UuidDispatch( request, agent_, &Agent_ABC::DeleteSession );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::StartSession
+// Created: BAX 2012-03-30
+// -----------------------------------------------------------------------------
+std::string Controller::StartSession( const Request_ABC& request )
+{
+    return UuidDispatch( request, agent_, &Agent_ABC::StartSession );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::StopSession
+// Created: BAX 2012-03-30
+// -----------------------------------------------------------------------------
+std::string Controller::StopSession( const Request_ABC& request )
+{
+    return UuidDispatch( request, agent_, &Agent_ABC::StopSession );
 }
 
 // -----------------------------------------------------------------------------

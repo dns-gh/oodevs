@@ -40,6 +40,8 @@ namespace
         MOCK_METHOD( GetSession, 1 );
         MOCK_METHOD( CreateSession, 2 );
         MOCK_METHOD( DeleteSession, 1 );
+        MOCK_METHOD( StartSession, 1 );
+        MOCK_METHOD( StopSession, 1 );
         MOCK_METHOD( ListExercises, 2 );
         MOCK_METHOD( CountExercises, 0 );
     };
@@ -146,6 +148,22 @@ BOOST_FIXTURE_TEST_CASE( controller_reject_invalid_ids, Fixture )
     SetRequest( "GET", "/delete_session", boost::assign::map_list_of( "id", "1" ) );
     const std::string expected = "Invalid \"id\" parameter";
     CheckNotify( 400, expected );
+}
+
+BOOST_FIXTURE_TEST_CASE( controller_start_session, Fixture )
+{
+    SetRequest( "GET", "/start_session", boost::assign::map_list_of( "id", default_id_string ) );
+    const std::string expected = "a json session";
+    MOCK_EXPECT( agent.StartSession ).once().with( default_id ).returns( expected );
+    CheckNotify( 200, expected );
+}
+
+BOOST_FIXTURE_TEST_CASE( controller_stop_session, Fixture )
+{
+    SetRequest( "GET", "/stop_session", boost::assign::map_list_of( "id", default_id_string ) );
+    const std::string expected = "a json session";
+    MOCK_EXPECT( agent.StopSession ).once().with( default_id ).returns( expected );
+    CheckNotify( 200, expected );
 }
 
 BOOST_FIXTURE_TEST_CASE( controller_list_exercises, Fixture )
