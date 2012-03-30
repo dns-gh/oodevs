@@ -57,6 +57,8 @@ public:
     virtual Reply GetSession   ( const boost::uuids::uuid& id ) const = 0;
     virtual Reply CreateSession( const std::string& exercise, const std::string& name ) = 0;
     virtual Reply DeleteSession( const boost::uuids::uuid& id ) = 0;
+    virtual Reply StartSession ( const boost::uuids::uuid& id ) const = 0;
+    virtual Reply StopSession  ( const boost::uuids::uuid& id ) const = 0;
     //@}
 
     //! @name Other Methods

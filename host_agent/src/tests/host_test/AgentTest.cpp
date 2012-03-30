@@ -117,6 +117,15 @@ BOOST_FIXTURE_TEST_CASE( agent_deletes_session, Fixture )
     CheckReply( agent.ListSessions( 0, 10 ), "[]" );
 }
 
+BOOST_FIXTURE_TEST_CASE( agent_stop_start_sessions, Fixture )
+{
+    boost::shared_ptr< MockSession > session = AddSession( "exercise_name", "session_name", 10000 );
+    MOCK_EXPECT( session->Stop ).once();
+    CheckReply( agent.StopSession( session->GetTag() ), session->ToJson() );
+    MOCK_EXPECT( session->Start ).once();
+    CheckReply( agent.StartSession( session->GetTag() ), session->ToJson() );
+}
+
 BOOST_FIXTURE_TEST_CASE( agent_list_exercises, Fixture )
 {
     const std::vector< std::string > list = boost::assign::list_of( "a" )( "b" )( "c" );

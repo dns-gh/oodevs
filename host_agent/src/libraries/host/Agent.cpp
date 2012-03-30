@@ -144,6 +144,23 @@ boost::shared_ptr< Session_ABC > ExtractSession( T& mutex, U& sessions, const bo
     return ptr;
 }
 
+#define CALL_MEMBER( obj, ptr ) ( ( obj ).*( ptr ) )
+
+// -----------------------------------------------------------------------------
+// Name: UuidDispatch
+// Created: BAX 2012-03-30
+// -----------------------------------------------------------------------------
+template< typename T, typename U >
+Reply UuidDispatch( boost::shared_mutex& mutex, T& data, const boost::uuids::uuid& id, const std::string& name, U member )
+{
+    boost::shared_lock< boost::shared_mutex > lock( mutex );
+    typename T::const_iterator it = data.find( id );
+    if( it == data.end() )
+        return Reply( ( boost::format( "unable to find %1% %2%" ) % name % id ).str(), false );
+    CALL_MEMBER( *it->second, member )();
+    return Reply( it->second->ToJson() );
+}
+
 }
 
 // -----------------------------------------------------------------------------
@@ -171,6 +188,24 @@ Reply Agent::DeleteSession( const boost::uuids::uuid& id )
         return Reply( ( boost::format( "unable to find session %1%" ) % id ).str(), false );
     ptr->Stop();
     return Reply( ptr->ToJson() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::StartSession
+// Created: BAX 2012-03-30
+// -----------------------------------------------------------------------------
+Reply Agent::StartSession( const boost::uuids::uuid& id ) const
+{
+    return UuidDispatch( *access_, sessions_, id, "session", &Session_ABC::Start );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::StartSession
+// Created: BAX 2012-03-30
+// -----------------------------------------------------------------------------
+Reply Agent::StopSession( const boost::uuids::uuid& id ) const
+{
+    return UuidDispatch( *access_, sessions_, id, "session", &Session_ABC::Stop );
 }
 
 // -----------------------------------------------------------------------------
