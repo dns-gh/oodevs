@@ -291,19 +291,13 @@ std::string ScriptPlugin::GenerateOrdersScript( const std::vector< std::string >
 {
     std::string templateFile = config_.BuildResourceChildFile( "StartupOrdersTemplate.lua" );
     std::ifstream file( templateFile.c_str() );
-    const bfs::path dest( config_.BuildExerciseChildFile( "scripts/StartupOrders.lua" ), bfs::native );
-    if( !bfs::exists( dest.parent_path() ) )
-        bfs::create_directories( dest.parent_path() );
-    std::ofstream destFile( dest.native_file_string().c_str() );
-    char buffer[ 512 ];
-    while( destFile.good() && file.good() )
+    const bfs::path dest( config_.BuildExerciseChildFile( "StartupOrders.lua" ), bfs::native );
+    std::ofstream destFile( dest.file_string().c_str() );
+    std::string line;
+    while( destFile.good() && std::getline( file, line ) )
     {
-        file.getline( buffer, 512 );
-        if( strcmp( buffer, "$$$$" ) )
-        {
-            destFile.write( buffer, strlen( buffer) );
-            destFile.put( '\n' );
-        }
+        if( line != "$$$$" )
+            destFile << line << '\n';
         else
         {
             for( std::vector< std::string >::const_iterator it = files.begin(); it != files.end(); ++it )
@@ -312,14 +306,11 @@ std::string ScriptPlugin::GenerateOrdersScript( const std::vector< std::string >
                 std::size_t pos = orderFile.rfind( ".ord" );
                 if( pos != std::string::npos )
                     orderFile.erase( pos );
-                sprintf_s( buffer, 256, "actions:StartScheduler( \"../../%s\" )", orderFile.c_str() );
-                destFile.write( buffer, strlen( buffer) );
-                destFile.put( '\n' );
+                destFile << "actions:StartScheduler( \"../../" << orderFile << "\" )\n";
             }
         }
     }
-    file.close();
-    return dest.native_file_string();
+    return dest.file_string();
 }
 
 // -----------------------------------------------------------------------------
