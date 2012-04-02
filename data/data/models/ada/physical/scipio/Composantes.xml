@@ -35166,7 +35166,7 @@
     <equipment-category>Hommes</equipment-category>
   </equipment>
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="371" name="Stock" protection="CombattantProtege" size="Drone" weight="0.08">
-    <speeds max="0.001">
+    <speeds max="1">
       <speed terrain="unknown" value="0"/>
       <speed terrain="forest" value="0"/>
       <speed terrain="orchard" value="0"/>
@@ -35633,4 +35633,4 @@
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="1829342405" -->
+<!-- signature="3584178741" -->

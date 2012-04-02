@@ -773,7 +773,7 @@
     </message>
     <message>
         <source>transporting packaged</source>
-        <translation>en ours de transport, conditionné</translation>
+        <translation>en cours de transport, conditionné</translation>
     </message>
     <message>
         <source>Agent</source>
