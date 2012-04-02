@@ -75,10 +75,25 @@ class SessionList extends Backbone.Collection
         @order = order
         @sort()
 
+spin_opts =
+  lines:     12
+  length:    4
+  width:     2
+  radius:    4
+  rotate:    0
+  color:     '#000'
+  speed:     1
+  trail:     60
+  shadow:    false
+  hwaccel:   true
+  className: 'spinner'
+  zIndex:    2e9
+
 class SessionItemView extends Backbone.View
     tagName:   "div"
     className: "row"
-    filters: []
+    filters:   []
+    loading:   false
 
     initialize: (obj) ->
         @model.bind 'change', @render
@@ -95,23 +110,45 @@ class SessionItemView extends Backbone.View
         for filter in @filters
             if filter == @model.get "status"
                 return
-        $(@el).html session_template @model.attributes
+        context = loading: @loading
+        $(@el).html session_template _.extend context, @model.attributes
+        btn = $(@el).find(".session_top_right .load")
+        return if !btn
+        btn.css width: 14, height: 18
+        spinner = new Spinner(spin_opts).spin()
+        $(spinner.el).css position: "absolute", top: "13px", left: "17px"
+        btn.html spinner.el
 
     delete: =>
+        @set_load true
         @model.destroy wait: true, error: => print_error "Unable to delete session " + @model.get "name"
 
     stop: =>
+        @set_load true
         ajax "/api/stop_session", id: @model.id,
-            (item) => @model.set item,
-            => print_error "Unable to stop session " + @model.get "name"
+            (item) =>
+                @model.set item, silent: true
+                @set_load false
+            () =>
+                print_error "Unable to stop session " + @model.get "name"
+                @set_load false
 
     play: =>
+        @set_load true
         ajax "/api/start_session", id: @model.id,
-            (item) => @model.set item,
-            => print_error "Unable to start session " + @model.get "name"
+            (item) =>
+                @model.set item, silent: true
+                @set_load false
+            () =>
+                print_error "Unable to start session " + @model.get "name"
+                @set_load false
 
-    filter: (list) =>
+    set_filter: (list) =>
         @filters = list
+        @render()
+
+    set_load: (value) =>
+        @loading = value
         @render()
 
 diff_models = (prev, next) ->
@@ -176,10 +213,10 @@ class SessionListView extends Backbone.View
                 return
             error: => print_error "Unable to fetch sessions"
 
-    filter: =>
+    set_filter: =>
         list = get_filters()
         for it in @model.models
-            it.view.filter list
+            it.view.set_filter list
         return
 
 session_view = new SessionListView
@@ -229,4 +266,4 @@ $("#session_create").on "show", on_session_load
 $("#session_sort_name").click -> session_view.model.set_order "name"
 $("#session_sort_status").click -> session_view.model.set_order "status"
 for item in $("#session_filters input")
-    $(item).click -> session_view.filter()
+    $(item).click -> session_view.set_filter()

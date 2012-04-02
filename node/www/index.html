@@ -134,6 +134,10 @@
                                         <div>0 clients connected</div>
                                     </div>
                                     <div class="btn-group session_top_right">
+                                        {{#if loading }}
+                                        <a title="Loading..." class="btn load disabled"></a>
+                                        {{/if}}
+                                        {{#unless loading}}
                                         {{#is_option status playing="" paused="" replaying=""}}
                                         <a title="URL" class="btn link"><i class="icon-tag"></i></a>
                                         {{/is_option}}
@@ -164,6 +168,7 @@
                                         {{#is_option status stopped=""}}
                                         <a title="Delete" class="btn delete"><i class="icon-trash"></i></a>
                                         {{/is_option}}
+                                        {{/unless}}
                                     </div>
                                     <div class="session_bottom_right">
                                         <a href="#" class="btn"><i class="icon-th-list"></i> More <span class="caret"></span></a>
@@ -193,6 +198,7 @@
     <script src="js/underscore-min.js"></script>
     <script src="js/backbone-min.js"></script>
     <script src="js/handlebars-1.0.0.beta.6-min.js"></script>
+    <script src="js/spin.min.js"></script>
     [#if pg == "sessions"]
     <script src="js/sessions.js"></script>
     [/#if]
