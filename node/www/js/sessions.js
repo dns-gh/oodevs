@@ -1,5 +1,5 @@
 (function() {
-  var SessionItem, SessionItemView, SessionList, SessionListView, ajax, diff_models, on_session_click, on_session_hide, on_session_load, print_error, reset_input_session, session_error_template, session_template, session_view, status_order, validate_input_session,
+  var SessionItem, SessionItemView, SessionList, SessionListView, ajax, diff_models, get_filters, item, on_session_click, on_session_hide, on_session_load, print_error, reset_input_session, session_error_template, session_template, session_view, status_order, validate_input_session, _i, _len, _ref,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = Object.prototype.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
@@ -134,6 +134,7 @@
     __extends(SessionItemView, _super);
 
     function SessionItemView() {
+      this.filter = __bind(this.filter, this);
       this.play = __bind(this.play, this);
       this.stop = __bind(this.stop, this);
       this["delete"] = __bind(this["delete"], this);
@@ -145,8 +146,11 @@
 
     SessionItemView.prototype.className = "row";
 
-    SessionItemView.prototype.initialize = function() {
+    SessionItemView.prototype.filters = [];
+
+    SessionItemView.prototype.initialize = function(obj) {
       this.model.bind('change', this.render);
+      this.filters = obj.filters;
       return this.render();
     };
 
@@ -157,6 +161,13 @@
     };
 
     SessionItemView.prototype.render = function() {
+      var filter, _i, _len, _ref;
+      $(this.el).empty();
+      _ref = this.filters;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        filter = _ref[_i];
+        if (filter === this.model.get("status")) return;
+      }
       return $(this.el).html(session_template(this.model.attributes));
     };
 
@@ -192,6 +203,11 @@
       });
     };
 
+    SessionItemView.prototype.filter = function(list) {
+      this.filters = list;
+      return this.render();
+    };
+
     return SessionItemView;
 
   })(Backbone.View);
@@ -214,11 +230,16 @@
     return [not_found, found];
   };
 
+  get_filters = function() {
+    return _.pluck($("#session_filters input:not(:checked)"), "name");
+  };
+
   SessionListView = (function(_super) {
 
     __extends(SessionListView, _super);
 
     function SessionListView() {
+      this.filter = __bind(this.filter, this);
       this.delta = __bind(this.delta, this);
       this.create = __bind(this.create, this);
       this.remove = __bind(this.remove, this);
@@ -256,7 +277,8 @@
     SessionListView.prototype.add = function(item) {
       var previous, view, _ref;
       view = new SessionItemView({
-        model: item
+        model: item,
+        filters: get_filters()
       });
       item.view = view;
       previous = (_ref = this.model.at(this.model.indexOf(item) - 1)) != null ? _ref.view : void 0;
@@ -305,6 +327,16 @@
           return print_error("Unable to fetch sessions");
         }
       });
+    };
+
+    SessionListView.prototype.filter = function() {
+      var it, list, _i, _len, _ref;
+      list = get_filters();
+      _ref = this.model.models;
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        it = _ref[_i];
+        it.view.filter(list);
+      }
     };
 
     return SessionListView;
@@ -384,5 +416,13 @@
   $("#session_sort_status").click(function() {
     return session_view.model.set_order("status");
   });
+
+  _ref = $("#session_filters input");
+  for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+    item = _ref[_i];
+    $(item).click(function() {
+      return session_view.filter();
+    });
+  }
 
 }).call(this);

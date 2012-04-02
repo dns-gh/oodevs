@@ -78,9 +78,11 @@ class SessionList extends Backbone.Collection
 class SessionItemView extends Backbone.View
     tagName:   "div"
     className: "row"
+    filters: []
 
-    initialize: ->
+    initialize: (obj) ->
         @model.bind 'change', @render
+        @filters = obj.filters
         @render()
 
     events:
@@ -89,6 +91,10 @@ class SessionItemView extends Backbone.View
         "click .play" : "play"
 
     render: =>
+        $(@el).empty()
+        for filter in @filters
+            if filter == @model.get "status"
+                return
         $(@el).html session_template @model.attributes
 
     delete: =>
@@ -104,6 +110,10 @@ class SessionItemView extends Backbone.View
             (item) => @model.set item,
             => print_error "Unable to start session " + @model.get "name"
 
+    filter: (list) =>
+        @filters = list
+        @render()
+
 diff_models = (prev, next) ->
     not_found = []
     found = []
@@ -114,6 +124,9 @@ diff_models = (prev, next) ->
         else
             found.push item
     return [not_found, found]
+
+get_filters = ->
+    _.pluck $("#session_filters input:not(:checked)"), "name"
 
 class SessionListView extends Backbone.View
     el: $( "#sessions" )
@@ -134,7 +147,7 @@ class SessionListView extends Backbone.View
         return
 
     add: (item) =>
-        view = new SessionItemView model: item
+        view = new SessionItemView model: item, filters: get_filters()
         item.view = view
         previous = @model.at(@model.indexOf(item) - 1)?.view
         if previous
@@ -162,6 +175,12 @@ class SessionListView extends Backbone.View
                     @model.get(item.id).set item.attributes
                 return
             error: => print_error "Unable to fetch sessions"
+
+    filter: =>
+        list = get_filters()
+        for it in @model.models
+            it.view.filter list
+        return
 
 session_view = new SessionListView
 
@@ -209,3 +228,5 @@ $("#session_create").on "hidden", on_session_hide
 $("#session_create").on "show", on_session_load
 $("#session_sort_name").click -> session_view.model.set_order "name"
 $("#session_sort_status").click -> session_view.model.set_order "status"
+for item in $("#session_filters input")
+    $(item).click -> session_view.filter()
