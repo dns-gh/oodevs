@@ -41,6 +41,8 @@ Drawing::Drawing( unsigned int id, const sword::ShapeCreationRequest& msg, const
         font_ = msg.shape().font();
     if( msg.shape().has_font_size() )
         fontSize_ = msg.shape().font_size();
+    if( msg.shape().has_geometry() )
+        geometry_ = msg.shape().geometry();
 }
 
 // -----------------------------------------------------------------------------
@@ -182,6 +184,8 @@ void Drawing::SendCreation( dispatcher::ClientPublisher_ABC& publisher ) const
         message().mutable_shape()->set_font( *font_ );
     if( fontSize_ )
         message().mutable_shape()->set_font_size( *fontSize_ );
+    if( geometry_ )
+        message().mutable_shape()->set_geometry( *geometry_ );
     sword::CoordLatLongList* points = message().mutable_shape()->mutable_points(); // required even if empty
     for( CIT_Points iter = points_.begin(); iter != points_.end(); ++iter )
         *points->add_elem() = *iter;        //const_cast< CoordLatLong* >( &points_.front() );

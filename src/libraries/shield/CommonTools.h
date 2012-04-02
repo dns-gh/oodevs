@@ -121,15 +121,25 @@ namespace shield
     void ConvertPointsToLocation( const From& from, To* to )
     {
         int fromSize = from.elem().size();
-        to->set_type( fromSize == 1 ? Common::MsgLocation::point : Common::MsgLocation::polygon );
+        //to->set_type( Common::MsgLocation::polygon );
         for( int i = 0; i < fromSize; ++i )
             ConvertCoordLatLong( from.elem( i ), to->mutable_coordinates()->add_elem() );
+    }
+    template< typename From, typename To >
+    void ConvertGeometryToLocation( const From& from, To* to )
+    {
+        to->set_type( from );
     }
     template< typename From, typename To >
     void ConvertLocationToPoints( const From& from, To* to )
     {
         for( int i = 0; i < from.coordinates().elem().size(); ++i )
             ConvertCoordLatLong( from.coordinates().elem( i ), to->add_elem() );
+    }
+    template< typename From, typename To >
+    void ConvertLocationToGeometry( const From& from, To* to )
+    {
+        to->set_geometry( from );
     }
     template< typename From, typename To >
     void ConvertColor( const From& from, To* to )
@@ -145,9 +155,28 @@ namespace shield
 #ifdef SHIELD_SIMULATION
         CONVERT_TO( pattern, external_identifier );
         CONVERT_CB_TO( points, location, ConvertPointsToLocation );
+        if( from.has_geometry() )
+            to->mutable_location()->set_type( ConvertEnum( from.geometry(), boost::assign::map_list_of( sword::Location::circle, Common::MsgLocation::circle )
+                            ( sword::Location::ellipse, Common::MsgLocation::ellipse )
+                            ( sword::Location::line, Common::MsgLocation::line )
+                            ( sword::Location::rectangle, Common::MsgLocation::rectangle )
+                            ( sword::Location::polygon, Common::MsgLocation::polygon )
+                            ( sword::Location::point, Common::MsgLocation::point )
+                            ( sword::Location::sector, Common::MsgLocation::sector )
+                            ( sword::Location::none, Common::MsgLocation::none ) ) );
+
 #elif defined SHIELD_CLIENT
         CONVERT_TO( external_identifier, pattern );
         CONVERT_CB_TO( location, points, ConvertLocationToPoints );
+        if( from.has_location() )
+            to->set_geometry( ConvertEnum( from.location().type(), boost::assign::map_list_of( sword::Location::circle, Common::MsgLocation::circle )
+                            ( sword::Location::ellipse, Common::MsgLocation::ellipse )
+                            ( sword::Location::line, Common::MsgLocation::line )
+                            ( sword::Location::rectangle, Common::MsgLocation::rectangle )
+                            ( sword::Location::polygon, Common::MsgLocation::polygon )
+                            ( sword::Location::point, Common::MsgLocation::point )
+                            ( sword::Location::sector, Common::MsgLocation::sector )
+                            ( sword::Location::none, Common::MsgLocation::none ) ) );
         to->set_category( "" );
 #endif
         CONVERT_CB( diffusion, ConvertDiffusion);
