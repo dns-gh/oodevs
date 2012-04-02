@@ -120,8 +120,9 @@ namespace shield
     template< typename From, typename To >
     void ConvertPointsToLocation( const From& from, To* to )
     {
-        to->set_type( Common::MsgLocation::polygon );
-        for( int i = 0; i < from.elem().size(); ++i )
+        int fromSize = from.elem().size();
+        to->set_type( fromSize == 1 ? Common::MsgLocation::point : Common::MsgLocation::polygon );
+        for( int i = 0; i < fromSize; ++i )
             ConvertCoordLatLong( from.elem( i ), to->mutable_coordinates()->add_elem() );
     }
     template< typename From, typename To >
