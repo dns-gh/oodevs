@@ -211,7 +211,6 @@ void Session::Save() const
 std::string Session::ToJson() const
 {
     boost::shared_lock< boost::shared_mutex > lock( *access_ );
-    std::string reply = "{ ";
     return (boost::format( "{ "
         "\"id\" : \"%1%\", "
         "\"name\" : \"%2%\", "
