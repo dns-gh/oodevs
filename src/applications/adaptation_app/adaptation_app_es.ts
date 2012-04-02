@@ -3833,10 +3833,12 @@ Asegúrese que el archivo existe.</translation>
         <translation>Duracion de CP</translation>
     </message>
     <message>
-        <source>When &apos;Durations&apos; is unchecked, units are recognized instantly.
-When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the same as the others.</source>
-        <translation>Cuando  &apos;Duraciones&apos; no está seleccionado, las unidades se reconocen instantáneamente.
-Cuando &apos;Duraciones HQ&apos; no está seleccionado, los tiempos de detección para HQs son los mismos que los otros.</translation>
+        <source>When &apos;Durations&apos; is unchecked, units are recognized instantly.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>When &apos;HQ Durations&apos; is unchecked, the detection times for HQs are the same as the others.</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

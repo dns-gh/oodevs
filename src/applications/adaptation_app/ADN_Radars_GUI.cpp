@@ -74,17 +74,21 @@ void ADN_Radars_GUI::Build()
     builder.AddOptionnalField<ADN_TimeField>( pHolder, tr( "Detection duration" ), vConnectors[eHasDetectionTime], vConnectors[eDetectionTime] );
     builder.AddOptionnalField<ADN_TimeField>( pHolder, tr( "Recognition duration" ), vConnectors[eHasRecoTime], vConnectors[eRecoTime] );
     builder.AddOptionnalField<ADN_TimeField>( pHolder, tr( "Identification duration" ), vConnectors[eHasIdentificationTime], vConnectors[eIdentificationTime] );
+    {
+        QLabel* pLabel = new QLabel( pDetectTimesGroup );
+        pLabel->setText( tr( "When 'Durations' is unchecked, units are recognized instantly." ) );
+    }
 
-    ADN_GroupBox* pHQDetectTimesGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "CP durations" ), pDetectTimesGroup );
+    ADN_GroupBox* pHQDetectTimesGroup = new ADN_GroupBox( 1, Qt::Horizontal, tr( "CP durations" ) );
     vConnectors[eHasHQDetectionTimes] = &pHQDetectTimesGroup->GetConnector();
     pHolder = builder.AddFieldHolder( pHQDetectTimesGroup );
     builder.AddOptionnalField<ADN_TimeField>( pHolder, tr( "Detection duration" ), vConnectors[eHasHQDetectionTime], vConnectors[eHQDetectionTime] );
     builder.AddOptionnalField<ADN_TimeField>( pHolder, tr( "Recognition duration" ), vConnectors[eHasHQRecoTime], vConnectors[eHQRecoTime] );
     builder.AddOptionnalField<ADN_TimeField>( pHolder, tr( "Identification duration" ), vConnectors[eHasHQIdentificationTime], vConnectors[eHQIdentificationTime] );
-
-    QLabel* pLabel = new QLabel( pDetectTimesGroup );
-    pLabel->setText( tr( "When 'Durations' is unchecked, units are recognized instantly.\n"
-                         "When 'HQ Durations' is unchecked, the detection times for HQs are the same as the others." ) );
+    {
+        QLabel* pLabel = new QLabel( pHQDetectTimesGroup );
+        pLabel->setText( tr( "When 'HQ Durations' is unchecked, the detection times for HQs are the same as the others." ) );
+    }
 
     // -------------------------------------------------------------------------
     // Layouts
@@ -98,6 +102,7 @@ void ADN_Radars_GUI::Build()
     pContentLayout->addWidget( pInfoHolder );
     pContentLayout->addWidget( pDetectableActivitiesGroup );
     pContentLayout->addWidget( pDetectTimesGroup );
+    pContentLayout->addWidget( pHQDetectTimesGroup );
 
     // List view
     ADN_SearchListView< ADN_Radars_ListView >* pSearchListView = new ADN_SearchListView< ADN_Radars_ListView >( data_.vRadars_, vConnectors );
