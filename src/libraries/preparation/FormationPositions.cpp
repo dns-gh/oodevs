@@ -137,7 +137,7 @@ void FormationPositions::Accept( kernel::LocationVisitor_ABC& visitor ) const
 // -----------------------------------------------------------------------------
 void FormationPositions::Move( const geometry::Point2f& point )
 {
-    const geometry::Vector2f vect( GetPosition( true ), point );
+    const geometry::Vector2f vect( GetPosition( false ), point );
     tools::Iterator< const kernel::Entity_ABC& > children = formation_.Get< kernel::TacticalHierarchies >().CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
