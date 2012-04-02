@@ -226,7 +226,7 @@ namespace
         return arg.empty() || ( arg.front() == '"' && arg.back() == '"' );
     }
 
-    boost::shared_ptr< runtime::Process_ABC > CheckRuntimeStart( const std::string& cmd, const std::vector< std::string >& args, const std::string& run )
+    boost::shared_ptr< runtime::Process_ABC > CheckRuntimeStart( const std::string& /*cmd*/, const std::vector< std::string >& args, const std::string& /*run*/ )
     {
         BOOST_FOREACH( const std::string& arg, args )
         {
