@@ -140,7 +140,7 @@ class SessionListView extends Backbone.View
         if previous
             $(previous.el).after view.el
         else
-            $(@el).append view.el
+            $(@el).prepend view.el
 
     remove: (item, list, index) =>
         $("#id_" + item.get "id").parent().remove()

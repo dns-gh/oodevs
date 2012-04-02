@@ -263,7 +263,7 @@
       if (previous) {
         return $(previous.el).after(view.el);
       } else {
-        return $(this.el).append(view.el);
+        return $(this.el).prepend(view.el);
       }
     };
 
