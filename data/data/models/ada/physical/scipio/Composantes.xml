@@ -4390,6 +4390,9 @@
         <resource capacity="6" logistic-threshold="30" name="RATION DE COMBAT 1" normalized-consumption="2"/>
         <resource capacity="36" logistic-threshold="30" name="EAU MINERALE 1L T 1" normalized-consumption="12"/>
       </category>
+      <category name="funeraire">
+        <resource capacity="50" logistic-threshold="10" name="Conteneur de transport post mortem" normalized-consumption="1"/>
+      </category>
     </composition>
     <sensors>
       <sensor height="2" type="Oeil"/>
@@ -17590,6 +17593,9 @@
         <resource capacity="6" logistic-threshold="30" name="RATION DE COMBAT 1" normalized-consumption="2"/>
         <resource capacity="36" logistic-threshold="30" name="EAU MINERALE 1L T 1" normalized-consumption="12"/>
       </category>
+      <category name="funeraire">
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortuaire" normalized-consumption="1"/>
+      </category>
     </composition>
     <sensors>
       <sensor height="2" type="Oeil"/>
@@ -17908,6 +17914,9 @@
       <category name="ration">
         <resource capacity="6" logistic-threshold="30" name="RATION DE COMBAT 1" normalized-consumption="2"/>
         <resource capacity="36" logistic-threshold="30" name="EAU MINERALE 1L T 1" normalized-consumption="12"/>
+      </category>
+      <category name="funeraire">
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortuaire" normalized-consumption="1"/>
       </category>
     </composition>
     <sensors>
@@ -19911,6 +19920,9 @@
       <category name="ration">
         <resource capacity="3" logistic-threshold="30" name="RATION DE COMBAT 1" normalized-consumption="1"/>
         <resource capacity="18" logistic-threshold="30" name="EAU MINERALE 1L T 1" normalized-consumption="6"/>
+      </category>
+      <category name="funeraire">
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortuaire" normalized-consumption="1"/>
       </category>
     </composition>
     <sensors>
@@ -25635,6 +25647,9 @@
       <category name="ration">
         <resource capacity="21" logistic-threshold="30" name="RATION DE COMBAT 1" normalized-consumption="7"/>
         <resource capacity="126" logistic-threshold="30" name="EAU MINERALE 1L T 1" normalized-consumption="42"/>
+      </category>
+      <category name="funeraire">
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortuaire" normalized-consumption="1"/>
       </category>
     </composition>
     <sensors>
@@ -35633,4 +35648,4 @@
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="3584178741" -->
+<!-- signature="2631064650" -->
