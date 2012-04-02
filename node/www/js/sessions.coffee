@@ -94,10 +94,12 @@ class SessionItemView extends Backbone.View
     className: "row"
     filters:   []
     spinner:   null
+    search:    null
 
     initialize: (obj) ->
         @model.bind 'change', @render
         @filters = obj.filters
+        @search  = obj.search
         @spinner = new Spinner(spin_opts).spin()
         @render()
 
@@ -106,11 +108,20 @@ class SessionItemView extends Backbone.View
         "click .stop" : "stop"
         "click .play" : "play"
 
+    is_search: =>
+        targets = ["name", "exercise"]
+        for it in targets
+            if @model.get(it).toLowerCase().indexOf(@search) >= 0
+                return true
+        return false
+
     render: =>
         $(@el).empty()
         for filter in @filters
             if filter == @model.get "status"
                 return
+        if @search and !@is_search()
+            return
         $(@el).html session_template @model.attributes
         $(@el).find(".session_top_right .spin_btn").html @spinner.el
 
@@ -146,6 +157,10 @@ class SessionItemView extends Backbone.View
         for it in $(@el).find(".session_top_right .btn")
             $(it).toggle()
 
+    set_search: (item) =>
+        @search = item
+        @render()
+
 diff_models = (prev, next) ->
     not_found = []
     found = []
@@ -159,6 +174,9 @@ diff_models = (prev, next) ->
 
 get_filters = ->
     _.pluck $("#session_filters input:not(:checked)"), "name"
+
+get_search = ->
+    $(".session_search .search-query").val()
 
 class SessionListView extends Backbone.View
     el: $( "#sessions" )
@@ -179,7 +197,7 @@ class SessionListView extends Backbone.View
         return
 
     add: (item) =>
-        view = new SessionItemView model: item, filters: get_filters()
+        view = new SessionItemView model: item, search: get_search(), filters: get_filters()
         item.view = view
         previous = @model.at(@model.indexOf(item) - 1)?.view
         if previous
@@ -213,6 +231,11 @@ class SessionListView extends Backbone.View
         for it in @model.models
             it.view.set_filter list
         return
+
+    set_search: (value) =>
+        value = value.toLowerCase()
+        for it in @model.models
+            it.view.set_search value
 
 session_view = new SessionListView
 
@@ -262,3 +285,5 @@ $("#session_sort_name").click -> session_view.model.set_order "name"
 $("#session_sort_status").click -> session_view.model.set_order "status"
 for item in $("#session_filters input")
     $(item).click -> session_view.set_filter()
+$(".session_search .btn").click -> session_view.set_search get_search()
+$(".session_search input").change -> session_view.set_search get_search()

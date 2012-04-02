@@ -1,5 +1,5 @@
 (function() {
-  var SessionItem, SessionItemView, SessionList, SessionListView, ajax, diff_models, get_filters, item, on_session_click, on_session_hide, on_session_load, print_error, reset_input_session, session_error_template, session_template, session_view, spin_opts, status_order, validate_input_session, _i, _len, _ref,
+  var SessionItem, SessionItemView, SessionList, SessionListView, ajax, diff_models, get_filters, get_search, item, on_session_click, on_session_hide, on_session_load, print_error, reset_input_session, session_error_template, session_template, session_view, spin_opts, status_order, validate_input_session, _i, _len, _ref,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = Object.prototype.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
@@ -149,12 +149,14 @@
     __extends(SessionItemView, _super);
 
     function SessionItemView() {
+      this.set_search = __bind(this.set_search, this);
       this.toggle_load = __bind(this.toggle_load, this);
       this.set_filter = __bind(this.set_filter, this);
       this.play = __bind(this.play, this);
       this.stop = __bind(this.stop, this);
       this["delete"] = __bind(this["delete"], this);
       this.render = __bind(this.render, this);
+      this.is_search = __bind(this.is_search, this);
       SessionItemView.__super__.constructor.apply(this, arguments);
     }
 
@@ -166,9 +168,12 @@
 
     SessionItemView.prototype.spinner = null;
 
+    SessionItemView.prototype.search = null;
+
     SessionItemView.prototype.initialize = function(obj) {
       this.model.bind('change', this.render);
       this.filters = obj.filters;
+      this.search = obj.search;
       this.spinner = new Spinner(spin_opts).spin();
       return this.render();
     };
@@ -179,6 +184,18 @@
       "click .play": "play"
     };
 
+    SessionItemView.prototype.is_search = function() {
+      var it, targets, _i, _len;
+      targets = ["name", "exercise"];
+      for (_i = 0, _len = targets.length; _i < _len; _i++) {
+        it = targets[_i];
+        if (this.model.get(it).toLowerCase().indexOf(this.search) >= 0) {
+          return true;
+        }
+      }
+      return false;
+    };
+
     SessionItemView.prototype.render = function() {
       var filter, _i, _len, _ref;
       $(this.el).empty();
@@ -187,6 +204,7 @@
         filter = _ref[_i];
         if (filter === this.model.get("status")) return;
       }
+      if (this.search && !this.is_search()) return;
       $(this.el).html(session_template(this.model.attributes));
       return $(this.el).find(".session_top_right .spin_btn").html(this.spinner.el);
     };
@@ -246,6 +264,11 @@
       return _results;
     };
 
+    SessionItemView.prototype.set_search = function(item) {
+      this.search = item;
+      return this.render();
+    };
+
     return SessionItemView;
 
   })(Backbone.View);
@@ -272,11 +295,16 @@
     return _.pluck($("#session_filters input:not(:checked)"), "name");
   };
 
+  get_search = function() {
+    return $(".session_search .search-query").val();
+  };
+
   SessionListView = (function(_super) {
 
     __extends(SessionListView, _super);
 
     function SessionListView() {
+      this.set_search = __bind(this.set_search, this);
       this.set_filter = __bind(this.set_filter, this);
       this.delta = __bind(this.delta, this);
       this.create = __bind(this.create, this);
@@ -316,6 +344,7 @@
       var previous, view, _ref;
       view = new SessionItemView({
         model: item,
+        search: get_search(),
         filters: get_filters()
       });
       item.view = view;
@@ -375,6 +404,18 @@
         it = _ref[_i];
         it.view.set_filter(list);
       }
+    };
+
+    SessionListView.prototype.set_search = function(value) {
+      var it, _i, _len, _ref, _results;
+      value = value.toLowerCase();
+      _ref = this.model.models;
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        it = _ref[_i];
+        _results.push(it.view.set_search(value));
+      }
+      return _results;
     };
 
     return SessionListView;
@@ -462,5 +503,13 @@
       return session_view.set_filter();
     });
   }
+
+  $(".session_search .btn").click(function() {
+    return session_view.set_search(get_search());
+  });
+
+  $(".session_search input").change(function() {
+    return session_view.set_search(get_search());
+  });
 
 }).call(this);

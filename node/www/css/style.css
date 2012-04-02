@@ -10,7 +10,7 @@ body{padding-top:60px;padding-bottom:40px;}
 .session_model{padding-left:24px;}
 .session_top_right{position:absolute;top:6px;right:6px;}
 .session_bottom_right{position:absolute;right:6px;bottom:6px;}
-.session_search{float:right;}
+.session_search{float:right;margin-bottom:20px;}
 .session_actions a{min-width:72px;}
 .spin_btn{width:14px;height:18px;}
 .spin_btn .spinner{position:relative;top:9px;left:8px;}
