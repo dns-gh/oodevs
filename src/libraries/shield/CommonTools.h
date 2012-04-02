@@ -121,7 +121,7 @@ namespace shield
     void ConvertPointsToLocation( const From& from, To* to )
     {
         int fromSize = from.elem().size();
-        //to->set_type( Common::MsgLocation::polygon );
+        to->set_type( Common::MsgLocation::polygon );
         for( int i = 0; i < fromSize; ++i )
             ConvertCoordLatLong( from.elem( i ), to->mutable_coordinates()->add_elem() );
     }
