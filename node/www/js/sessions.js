@@ -170,11 +170,6 @@
       this.model.bind('change', this.render);
       this.filters = obj.filters;
       this.spinner = new Spinner(spin_opts).spin();
-      $(this.spinner.el).css({
-        position: "absolute",
-        top: "13px",
-        left: "17px"
-      });
       return this.render();
     };
 

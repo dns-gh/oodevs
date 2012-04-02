@@ -99,7 +99,6 @@ class SessionItemView extends Backbone.View
         @model.bind 'change', @render
         @filters = obj.filters
         @spinner = new Spinner(spin_opts).spin()
-        $(@spinner.el).css position: "absolute", top: "13px", left: "17px"
         @render()
 
     events:
