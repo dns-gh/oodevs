@@ -66,7 +66,7 @@ void ADN_Objects_GUI::Build()
     builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Name"), vInfosConnectors[ eName ] );
     ADN_EditLine_String* geometry = builder.AddField< ADN_EditLine_String >( pInfoHolder, tr( "Geometry"), vInfosConnectors[ eGeometry ] );
     builder.SetEnabled( false );
-    pPointDistance_ = builder.AddField< ADN_EditLine_Double >( pInfoHolder, tr( "Point effect distance"), vInfosConnectors[ ePointSize ], 0, eGreaterEqualZero );
+    pPointDistance_ = builder.AddField< ADN_EditLine_Double >( pInfoHolder, tr( "Point effect distance"), vInfosConnectors[ ePointSize ], tr( "m" ), eGreaterEqualZero );
     connect( geometry, SIGNAL( textChanged( const QString& ) ), this, SLOT( OnGeometryChanged ( const QString& ) ) );
     pPointDistance_->SetAutoEnabled( false );
     QComboBox* combo = builder.AddField< ADN_ComboBox_Drawings< ADN_Drawings_Data::DrawingInfo > >( pInfoHolder, tr( "Symbol"), vInfosConnectors[ eSymbol ] );
