@@ -78,7 +78,8 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsWithoutPC( const
         {
             if( !( *it ) )
                 throw std::runtime_error( "Invalid pion in GetPionsWithoutPC" );
-            if( callerAutomate.GetPionPC() != (**it) )
+            MIL_AgentPion* pion = callerAutomate.GetPionPC();
+            if( pion && *pion != (**it) )
             {
                 const PHY_RolePion_Communications& role = (*it)->GetRole< PHY_RolePion_Communications >();
                 if( role.CanReceive() )
@@ -137,7 +138,8 @@ std::vector< DEC_Decision_ABC* > DEC_AutomateFunctions::GetPionsWithPC( const MI
 // -----------------------------------------------------------------------------
 DEC_Decision_ABC* DEC_AutomateFunctions::GetPionPC( const MIL_Automate& callerAutomate )
 {
-    return &callerAutomate.GetPionPC().GetDecision();
+    MIL_AgentPion* pion = callerAutomate.GetPionPC();
+    return pion ? &pion->GetDecision() : 0;
 }
 
 // -----------------------------------------------------------------------------

@@ -39,7 +39,7 @@ const MT_Vector2D& DEC_GeometryFunctions::GetPosition( const MIL_AgentPion& pion
 inline
 const MT_Vector2D& DEC_GeometryFunctions::GetPosition( const MIL_Automate& automate )
 {
-    return GetPosition( automate.GetPionPC() );
+    return automate.GetPosition();
 }
 
 // -----------------------------------------------------------------------------

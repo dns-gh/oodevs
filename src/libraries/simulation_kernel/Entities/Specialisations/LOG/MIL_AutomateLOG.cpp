@@ -423,7 +423,8 @@ MIL_AgentPion* MIL_AutomateLOG::SupplyCreateConvoyPion( const MIL_AgentTypePion&
     }
     if( !pConvoyAutomate )
         return 0;
-    const MT_Vector2D& location = pConvoyAutomate->GetPionPC().GetRole<PHY_RoleInterface_Location>().GetPosition();
+
+    const MT_Vector2D& location = pConvoyAutomate->GetPosition();
     MIL_AgentPion* convoyPion = &pConvoyAutomate->CreatePion( type, location );
     PHY_RoleInterface_Supply* itf = convoyPion->RetrieveRole< PHY_RoleInterface_Supply >();
     if( itf )

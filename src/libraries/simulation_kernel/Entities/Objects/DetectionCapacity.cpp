@@ -185,9 +185,12 @@ namespace
             std::vector<MIL_Automate* > automates = knowledgeGroup.GetAutomates();
             if( !automates.empty() )
             {
-                MIL_Agent_ABC& pion = automates.front()->GetPionPC();
-                PHY_RoleInterface_Perceiver& role = const_cast< MIL_Agent_ABC& >( pion ).GetRole< PHY_RoleInterface_Perceiver >();
-                role.NotifyExternalPerception( agent_, perceptionLevel_ );
+                MIL_Agent_ABC* pion = automates.front()->GetPionPC();
+                if( pion )
+                {
+                    PHY_RoleInterface_Perceiver& role = const_cast< MIL_Agent_ABC& >( *pion ).GetRole< PHY_RoleInterface_Perceiver >();
+                    role.NotifyExternalPerception( agent_, perceptionLevel_ );
+                }
             }
         }
     private:

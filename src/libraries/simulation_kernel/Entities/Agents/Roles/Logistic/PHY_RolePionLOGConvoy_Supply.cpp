@@ -56,7 +56,8 @@ void PHY_RolePionLOGConvoy_Supply::serialize( Archive& file, const unsigned int 
 void PHY_RolePionLOGConvoy_Supply::Update( bool bIsDead )
 {
     if( bIsDead )
-        owner_.Apply( &location::LocationActionNotificationHandler_ABC::Follow, owner_.GetAutomate().GetPionPC() );
+        if( MIL_AgentPion* pionPc = owner_.GetAutomate().GetPionPC() )
+            owner_.Apply( &location::LocationActionNotificationHandler_ABC::Follow, *pionPc );
 }
 
 // -----------------------------------------------------------------------------
