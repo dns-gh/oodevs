@@ -24,9 +24,9 @@
 #include <QtGui/qapplication.h>
 
 int main( int argc, char* argv[] )
-{   
+{
     try
-    {        
+    {
         launcher_test_app::App app( argc, argv );
         app.Connect();
         app.ProcessMessages();
@@ -44,6 +44,4 @@ int main( int argc, char* argv[] )
     }
     return EXIT_FAILURE;
 }
-
-
 

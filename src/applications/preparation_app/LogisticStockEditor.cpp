@@ -495,7 +495,7 @@ void LogisticStockEditor::SupplyStocks( std::set< const kernel::Agent_ABC* >& en
     for( CIT_Requirements itRequired = requirements.begin(); itRequired != requirements.end(); ++itRequired )
     {
         const kernel::DotationType& dotationType = *itRequired->first;
-        
+
         tools::Iterator< const kernel::LogisticSupplyClass& > itLogClass = staticModel_.objectTypes_.tools::StringResolver< kernel::LogisticSupplyClass >::CreateIterator();
         int row = 0;
         for( ; itLogClass.HasMoreElements(); ++row )
@@ -509,7 +509,7 @@ void LogisticStockEditor::SupplyStocks( std::set< const kernel::Agent_ABC* >& en
         {
             int days = dataModel_->item( row, 1 )->data( Qt::EditRole ).asInt();
             unsigned int quantity = static_cast< unsigned int >( days * itRequired->second + 0.5 );
- 
+
             std::set< const kernel::Agent_ABC* > entDotationStocks;
             for( std::set< const kernel::Agent_ABC* >::const_iterator it = entStocks.begin(); it != entStocks.end(); ++it )
                 if( IsStockValid( **it, dotationType ) )

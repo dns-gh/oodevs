@@ -260,12 +260,11 @@ ADN_Equipement_Data::IndirectAmmoInfos::IndirectAmmoInfos()
     bExplosive_.SetParentNode( *this );
     bSmoke_.SetParentNode( *this );
     bFlare_.SetParentNode( *this );
-    bMine_.SetParentNode( *this ); 
+    bMine_.SetParentNode( *this );
     bEffect_.SetParentNode( *this );
 
     smokeDeployTime_.SetParentNode( *this );
     smokeLifeTime_.SetParentNode( *this );
-
 
     for( int i = 0; i < eNbrUnitPosture; ++i )
     {

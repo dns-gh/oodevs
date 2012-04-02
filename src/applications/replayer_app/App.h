@@ -82,8 +82,6 @@ private:
     static bool                    bUserInterrupt_;
     //@}
 
-
-
 };
 
 #endif // __App_h_

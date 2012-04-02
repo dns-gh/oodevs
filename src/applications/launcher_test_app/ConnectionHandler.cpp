@@ -7,7 +7,6 @@
 //
 // *****************************************************************************
 
-
 #include "launcher_test_app_pch.h"
 #include "ConnectionHandler.h"
 #include <boost/thread.hpp>

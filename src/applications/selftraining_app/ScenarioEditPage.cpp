@@ -236,7 +236,6 @@ void ScenarioEditPage::UpdateEditButton()
     EnableButton( eButtonEdit, enable );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ScenarioEditPage::UpdateEditButton
 // Created: JSR 2010-07-13

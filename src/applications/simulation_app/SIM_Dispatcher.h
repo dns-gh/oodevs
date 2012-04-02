@@ -48,5 +48,4 @@ private:
     //@}
 };
 
-
 #endif // __SIM_Dispatcher_h_

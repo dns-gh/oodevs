@@ -28,7 +28,6 @@ namespace
 {
     static int clearEvent = 4242;
 
-
     class MyListViewItem : public gui::ValuedListItem
     {
     public:

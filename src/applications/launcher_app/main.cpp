@@ -68,7 +68,7 @@ namespace
 
         LauncherService::Terminate();
         CloseHandle( launcherJob );
-        
+
         MT_LOG_UNREGISTER_LOGGER( fileLogger );
         return EXIT_SUCCESS;
     }

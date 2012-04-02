@@ -7,7 +7,6 @@
 //
 // *****************************************************************************
 
-
 #ifndef __LAUNCHER_TEST_APP_PBTOOLS_H__
 #define __LAUNCHER_TEST_APP_PBTOOLS_H__
 

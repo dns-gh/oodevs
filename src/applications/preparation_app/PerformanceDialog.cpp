@@ -114,18 +114,18 @@ void PerformanceDialog::showEvent( QShowEvent* /* pEvent */ )
 
     UpdateDisplay();
 }
- 
+
 namespace
 {
     void UpdateBar( const PerformanceIndicator::Values& values, QProgressBar* progressBar, int limit )
     {
         QColor barColor;
         assert( values.limit_ > 0 );
-        float factor = values.performance_ / static_cast< float >( values.limit_ ); 
+        float factor = values.performance_ / static_cast< float >( values.limit_ );
         bool aboveLimit = factor > 1.f;
         float limitFactor = aboveLimit ? 1.f - 1.f / factor  : 0.f;
         float fProgressLimit = static_cast< float >( limit );
-        float progressValue = aboveLimit ? fProgressLimit + ( 100.f - fProgressLimit ) * limitFactor : fProgressLimit * factor; 
+        float progressValue = aboveLimit ? fProgressLimit + ( 100.f - fProgressLimit ) * limitFactor : fProgressLimit * factor;
         barColor.setRed( aboveLimit ? 155 + static_cast< int >( 100.f * limitFactor ) : 0 );
         barColor.setGreen( !aboveLimit ? 200 : 0 );
         QPalette pal = progressBar->palette();

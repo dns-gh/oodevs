@@ -93,7 +93,7 @@ namespace
         {
             std::cout << "received from " << link << " : " << message.ShortDebugString() << std::endl;
         }
-    private: 
+    private:
         virtual void ConnectionSucceeded( const std::string& host )
         {
             host_ = host;

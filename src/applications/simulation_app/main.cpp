@@ -1,4 +1,3 @@
-
 #include "simulation_app_pch.h"
 #include "SIM_App.h"
 #include "SIM_NetworkLogger.h"
@@ -40,7 +39,6 @@ int __cdecl SilentNoMoreMemoryHandler( std::size_t /*nSize*/ )
 {
     throw std::bad_alloc();
 }
-
 
 //-----------------------------------------------------------------------------
 // Name: SetLowFragmentationHeapAlgorithm

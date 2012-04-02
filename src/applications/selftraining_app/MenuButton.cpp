@@ -74,7 +74,7 @@ void MenuButton::drawButton( QPainter* )
 void MenuButton::paintEvent( QPaintEvent* )
 {
     QPainter painter;
-    if ( painter.begin( this ) )
+    if( painter.begin( this ) )
     {
         const QFont& font = isEnabled() ? ( hasMouse_ ? selectedFont_ : baseFont_ ) : disabledFont_  ;
         const QColorGroup::ColorRole& colorRole = isEnabled() ? ( hasMouse_ ? QColorGroup::BrightText : QColorGroup::ButtonText ) : QColorGroup::Light ;

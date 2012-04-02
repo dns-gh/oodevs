@@ -87,7 +87,7 @@ ExportWidget::ExportWidget( ScenarioEditPage& page, QWidget* parent, const tools
     }
     // eTabs_Models
     {
-        Q3GroupBox* box = AddTab( this, tabs_ ); 
+        Q3GroupBox* box = AddTab( this, tabs_ );
         {
             modelsDescriptionLabel_ = new QLabel( box );
             modelDescription_ = new QTextEdit( box );
@@ -318,7 +318,7 @@ namespace
 
     void BrowseChildren( const std::string& base, Q3ListViewItem* item, zip::ozipfile& zos, boost::function0<void> callback, bool recursive )
     {
-        while ( item != 0 && ! dynamic_cast< frontend::CheckListItem* >( item ) )
+        while( item != 0 && ! dynamic_cast< frontend::CheckListItem* >( item ) )
         {
             std::string file( item->text( 0 ).ascii() );
             Serialize( base, file, zos, recursive );
@@ -329,7 +329,7 @@ namespace
 
     void BrowseFiles( const std::string& base, Q3ListViewItemIterator iterator, zip::ozipfile& zos, boost::function0<void> callback )
     {
-        while ( iterator.current() )
+        while( iterator.current() )
         {
             frontend::CheckListItem* item = dynamic_cast< frontend::CheckListItem* >( iterator.current() );
             if( item && item->isOn() )
@@ -347,7 +347,7 @@ namespace
     int ListViewSize( Q3ListViewItemIterator iterator )
     {
         int i = 0;
-        for ( ; iterator.current(); ++iterator, ++i )
+        for( ; iterator.current(); ++iterator, ++i )
             ;
         return i;
     }

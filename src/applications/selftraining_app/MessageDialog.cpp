@@ -32,7 +32,7 @@ namespace
         virtual void paintEvent( QPaintEvent* /*e*/ )
         {
             QPainter painter;
-            if ( painter.begin( this ) )
+            if( painter.begin( this ) )
             {
                 painter.drawImage( frameRect(), mask_ );
                 Q3HBox::drawContents( &painter );

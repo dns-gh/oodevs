@@ -7,7 +7,6 @@
 //
 // *****************************************************************************
 
-
 #ifndef __LAUNCHER_TEST_APP_RESPONSEHANDLER_H__
 #define __LAUNCHER_TEST_APP_RESPONSEHANDLER_H__
 

@@ -7,7 +7,6 @@
 //
 // *****************************************************************************
 
-
 #include "gaming_app_pch.h"
 #include "OrbatPanel.h"
 #include "moc_OrbatPanel.cpp"

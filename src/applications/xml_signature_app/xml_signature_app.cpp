@@ -18,8 +18,8 @@ void SignDirectory( const bfs::path& root/*, const std::string& name, zip::ozipf
 {
     if( ! bfs::exists( root ) )
     {
-    	  std::cout << root << " doesn't exist" << std::endl;
-    	  return;
+        std::cout << root << " doesn't exist" << std::endl;
+        return;
     }
     for( bfs::directory_iterator it( root ); it != bfs::directory_iterator(); ++it )
     {

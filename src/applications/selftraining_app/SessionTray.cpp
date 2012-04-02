@@ -46,4 +46,3 @@ void SessionTray::OnLanguageChanged()
     trayIcon_.setToolTip( tools::translate( "SessionTray", "Show window" ) );
 }
 
-
