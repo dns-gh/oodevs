@@ -165,24 +165,31 @@ class SessionListView extends Backbone.View
 
 session_view = new SessionListView
 
-invalidate_session = (control, box, name) ->
-    control.parent().parent().addClass "error"
-    box.html "Missing " + name
-    box.show()
+reset_input_session = (control) ->
+    control.parent().parent().removeClass "error"
+    control.parent().find(".help-inline").hide()
+
+validate_input_session = (control, result) ->
+    if !result
+        control.parent().parent().addClass "error"
+        control.parent().find(".help-inline").show()
+        return false
+    reset_input_session control
+    return true
 
 on_session_click = ->
     name = $("#session_name")
+    if !validate_input_session name, name.val().length
+        return
     exercise = $("#session_exercise")
-    if !name.val().length
-        return invalidate_session name, box, "name"
-    if !exercise.val()?
-        return invalidate_session exercise, box, "exercise"
+    if !validate_input_session exercise, exercise.val()?
+        return
     $("#session_create").modal "hide"
     session_view.create name: name.val(), exercise: exercise.val()
 
 on_session_hide = ->
-    $("#session_name").parent().parent().removeClass "error"
-    $("#session_exercise").parent().parent().removeClass "error"
+    reset_input_session $("#session_name")
+    reset_input_session $("#session_exercise")
     $("#session_create .modal-footer .alert").hide()
 
 on_session_load = ->

@@ -1,5 +1,5 @@
 (function() {
-  var SessionItem, SessionItemView, SessionList, SessionListView, ajax, diff_models, invalidate_session, on_session_click, on_session_hide, on_session_load, print_error, session_error_template, session_template, session_view, status_order,
+  var SessionItem, SessionItemView, SessionList, SessionListView, ajax, diff_models, on_session_click, on_session_hide, on_session_load, print_error, reset_input_session, session_error_template, session_template, session_view, status_order, validate_input_session,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = Object.prototype.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
@@ -313,20 +313,27 @@
 
   session_view = new SessionListView;
 
-  invalidate_session = function(control, box, name) {
-    control.parent().parent().addClass("error");
-    box.html("Missing " + name);
-    return box.show();
+  reset_input_session = function(control) {
+    control.parent().parent().removeClass("error");
+    return control.parent().find(".help-inline").hide();
+  };
+
+  validate_input_session = function(control, result) {
+    if (!result) {
+      control.parent().parent().addClass("error");
+      control.parent().find(".help-inline").show();
+      return false;
+    }
+    reset_input_session(control);
+    return true;
   };
 
   on_session_click = function() {
     var exercise, name;
     name = $("#session_name");
+    if (!validate_input_session(name, name.val().length)) return;
     exercise = $("#session_exercise");
-    if (!name.val().length) return invalidate_session(name, box, "name");
-    if (!(exercise.val() != null)) {
-      return invalidate_session(exercise, box, "exercise");
-    }
+    if (!validate_input_session(exercise, exercise.val() != null)) return;
     $("#session_create").modal("hide");
     return session_view.create({
       name: name.val(),
@@ -335,8 +342,8 @@
   };
 
   on_session_hide = function() {
-    $("#session_name").parent().parent().removeClass("error");
-    $("#session_exercise").parent().parent().removeClass("error");
+    reset_input_session($("#session_name"));
+    reset_input_session($("#session_exercise"));
     return $("#session_create .modal-footer .alert").hide();
   };
 
