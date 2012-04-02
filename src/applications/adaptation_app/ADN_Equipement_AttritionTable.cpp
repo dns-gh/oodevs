@@ -26,7 +26,7 @@ class ADN_Equipement_AttritionTable_Connector : public ADN_Connector_Table_ABC
 
 public:
     explicit ADN_Equipement_AttritionTable_Connector( ADN_Equipement_AttritionTable& tab )
-        : ADN_Connector_Table_ABC( tab, false )
+        : ADN_Connector_Table_ABC( tab, true )
     {}
 
     void  AddSubItems( int i, void* pObj )
@@ -57,6 +57,13 @@ public:
         static_cast< ADN_DoublePercentageValidator* >( &pItem2->GetValidator() )->AddLinkedValue( pAttrition->rRepairNoEvac_ );
         static_cast< ADN_DoublePercentageValidator* >( &pItem2->GetValidator() )->AddLinkedValue( pAttrition->rRepairWithEvac_ );
         pItem2->GetConnector().Connect( & pAttrition->rDestroy_ );
+    }
+
+    bool LessComparison( void* pL, void* pR ) const
+    {
+        AttritionInfos* pAttritionLeft = static_cast< AttritionInfos* >( pL );
+        AttritionInfos* pAttritionRight = static_cast< AttritionInfos* >( pR );
+        return pAttritionLeft->ptrArmor_.GetData()->strName_.GetData() < pAttritionRight->ptrArmor_.GetData()->strName_.GetData();
     }
 };
 
