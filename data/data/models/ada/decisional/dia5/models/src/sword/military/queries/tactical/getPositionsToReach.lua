@@ -10,8 +10,15 @@ queryImplementation "getPositionsToReach"
         -- -------------------------------------------------------------------------------- 
         --  Simple position
         -- --------------------------------------------------------------------------------
+        local position, scaledObject, objectPosition
         for _, element in pairs ( params.elementsToReach ) do
-            local position = element:getMyPosition() -- reaching element
+            if masalife.brain.core.class.isOfType( element, sword.military.world.Object) then
+                scaledObject = DEC_Geometrie_AgrandirLocalisation(  element:getLocalisation() , 50 )
+                objectPosition = DEC_Geometrie_ComputeNearestBorder( meKnowledge:getPosition(), scaledObject )
+                position = CreateKnowledge( sword.military.world.Point, objectPosition )
+            else
+                position = element:getMyPosition() -- reaching element
+            end
             if position:isReachingFor( element ) then
                 newResult[ #newResult + 1 ] = position
             end -- cas des BU non traficable par exemple

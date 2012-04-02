@@ -64,6 +64,15 @@ integration.stopAttackIt = function( target, suicide, dotation )
     return true
 end
 
+
+--Terrorist attack on object integration
+integration.attackObject = function( target, suicide, dotation )
+    meKnowledge:RC( eRC_ExecutionAttentat )
+    DEC_ConnaissanceObjet_Degrader( target.source, 0.5, dotation )
+    if suicide then DEC_Suicide() end
+    return true
+end
+
 --Terrorist Officer assassination integration
 integration.killOfficers = function( unit )
     DEC_ConnaissanceAgent_TuerOfficiers( unit.source )
