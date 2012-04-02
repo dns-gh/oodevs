@@ -407,6 +407,7 @@ void Population::CreateDictionary( kernel::Controller& controller )
     const Entity_ABC& selfEntity = static_cast< const Entity_ABC& >( *this );
     dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Identifier" ), self.id_ );
     dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Name" ), self.name_ );
+    dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Type" ), self.type_ );
     dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Critical intelligence" ), self.criticalIntelligence_ );
     dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Domination" ), self.nDomination_ );
     dictionary.Register( selfEntity, tools::translate( "Crowd", "Info/Armed individuals" ), self.armedIndividuals_ );

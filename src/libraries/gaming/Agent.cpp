@@ -103,4 +103,5 @@ void Agent::CreateDictionary( kernel::Controller& controller )
     const Agent& self = *this;
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Identifier" ), self.id_ );
     dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Name" ), self.name_ );
+    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Agent", "Info/Type" ), self.type_ );
 }

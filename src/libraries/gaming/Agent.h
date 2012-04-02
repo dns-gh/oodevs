@@ -71,7 +71,7 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::AgentType& type_;
+    const kernel::AgentType& type_;
     mutable std::string symbol_;
     //@}
 };

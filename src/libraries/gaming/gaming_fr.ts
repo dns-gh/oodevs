@@ -18,6 +18,10 @@
         <source>Info/Name</source>
         <translation>Info/Nom</translation>
     </message>
+    <message>
+        <source>Info/Type</source>
+        <translation>Info/Type</translation>
+    </message>
 </context>
 <context>
     <name>AgentKnowledge</name>
@@ -361,6 +365,10 @@
         <source>Info/LogisticLevel</source>
         <translation>Info/NiveauLogistique</translation>
     </message>
+    <message>
+        <source>Info/Type</source>
+        <translation>Info/Type</translation>
+    </message>
 </context>
 <context>
     <name>AutomatHierarchies</name>
@@ -390,6 +398,10 @@
     <message>
         <source>Infrastructure</source>
         <translation>Infrastructure</translation>
+    </message>
+    <message>
+        <source>Info</source>
+        <translation>Info</translation>
     </message>
 </context>
 <context>
@@ -529,6 +541,10 @@
     <message>
         <source>M\F\C Repartition/Children</source>
         <translation>Répartition H\F\E/Enfants</translation>
+    </message>
+    <message>
+        <source>Info/Type</source>
+        <translation>Info/Type</translation>
     </message>
 </context>
 <context>
@@ -731,6 +747,10 @@
     <message>
         <source>Living Area/Urban blocks number</source>
         <translation>Zone de vie/Nombre de blocs urbains</translation>
+    </message>
+    <message>
+        <source>Info/Type</source>
+        <translation>Info/Type</translation>
     </message>
 </context>
 <context>

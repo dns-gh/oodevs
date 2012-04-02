@@ -98,6 +98,7 @@ void Inhabitant::CreateDictionary()
     const Entity_ABC& selfEntity = static_cast< const Entity_ABC& >( *this );
     dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Info/Identifier" ), self.id_ );
     dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Info/Name" ), self.name_ );
+    dictionary.Register( selfEntity, tools::translate( "Inhabitant", "Info/Type" ), self.type_ );
     dictionary.Register( selfEntity, tools::translate( "Inhabitant", "M\\F\\C Repartition/Male" ), self.male_ );
     dictionary.Register( selfEntity, tools::translate( "Inhabitant", "M\\F\\C Repartition/Female" ), self.female_ );
     dictionary.Register( selfEntity, tools::translate( "Inhabitant", "M\\F\\C Repartition/Children" ), self.children_ );
