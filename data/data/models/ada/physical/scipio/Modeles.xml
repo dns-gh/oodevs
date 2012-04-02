@@ -5937,6 +5937,8 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
       </fragorders>
@@ -5967,6 +5969,8 @@
         <fragorder name="Poursuivre"/>
         <fragorder name="Interrompre"/>
         <fragorder name="Changer Ambiance"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
         <fragorder name="Debarquer"/>
         <fragorder name="Embarquer"/>
       </fragorders>
@@ -7342,4 +7346,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1350189152" -->
+<!-- signature="1207158637" -->
