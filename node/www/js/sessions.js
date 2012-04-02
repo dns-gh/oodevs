@@ -149,7 +149,7 @@
     __extends(SessionItemView, _super);
 
     function SessionItemView() {
-      this.set_load = __bind(this.set_load, this);
+      this.toggle_load = __bind(this.toggle_load, this);
       this.set_filter = __bind(this.set_filter, this);
       this.play = __bind(this.play, this);
       this.stop = __bind(this.stop, this);
@@ -164,11 +164,17 @@
 
     SessionItemView.prototype.filters = [];
 
-    SessionItemView.prototype.loading = false;
+    SessionItemView.prototype.spinner = null;
 
     SessionItemView.prototype.initialize = function(obj) {
       this.model.bind('change', this.render);
       this.filters = obj.filters;
+      this.spinner = new Spinner(spin_opts).spin();
+      $(this.spinner.el).css({
+        position: "absolute",
+        top: "13px",
+        left: "17px"
+      });
       return this.render();
     };
 
@@ -179,35 +185,20 @@
     };
 
     SessionItemView.prototype.render = function() {
-      var btn, context, filter, spinner, _i, _len, _ref;
+      var filter, _i, _len, _ref;
       $(this.el).empty();
       _ref = this.filters;
       for (_i = 0, _len = _ref.length; _i < _len; _i++) {
         filter = _ref[_i];
         if (filter === this.model.get("status")) return;
       }
-      context = {
-        loading: this.loading
-      };
-      $(this.el).html(session_template(_.extend(context, this.model.attributes)));
-      btn = $(this.el).find(".session_top_right .load");
-      if (!btn) return;
-      btn.css({
-        width: 14,
-        height: 18
-      });
-      spinner = new Spinner(spin_opts).spin();
-      $(spinner.el).css({
-        position: "absolute",
-        top: "13px",
-        left: "17px"
-      });
-      return btn.html(spinner.el);
+      $(this.el).html(session_template(this.model.attributes));
+      return $(this.el).find(".session_top_right .spin_btn").html(this.spinner.el);
     };
 
     SessionItemView.prototype["delete"] = function() {
       var _this = this;
-      this.set_load(true);
+      this.toggle_load();
       return this.model.destroy({
         wait: true,
         error: function() {
@@ -218,33 +209,29 @@
 
     SessionItemView.prototype.stop = function() {
       var _this = this;
-      this.set_load(true);
+      this.toggle_load();
       return ajax("/api/stop_session", {
         id: this.model.id
       }, function(item) {
-        _this.model.set(item, {
-          silent: true
-        });
-        return _this.set_load(false);
+        _this.toggle_load();
+        return _this.model.set(item);
       }, function() {
         print_error("Unable to stop session " + _this.model.get("name"));
-        return _this.set_load(false);
+        return _this.toggle_load();
       });
     };
 
     SessionItemView.prototype.play = function() {
       var _this = this;
-      this.set_load(true);
+      this.toggle_load();
       return ajax("/api/start_session", {
         id: this.model.id
       }, function(item) {
-        _this.model.set(item, {
-          silent: true
-        });
-        return _this.set_load(false);
+        _this.toggle_load();
+        return _this.model.set(item);
       }, function() {
         print_error("Unable to start session " + _this.model.get("name"));
-        return _this.set_load(false);
+        return _this.toggle_load();
       });
     };
 
@@ -253,9 +240,15 @@
       return this.render();
     };
 
-    SessionItemView.prototype.set_load = function(value) {
-      this.loading = value;
-      return this.render();
+    SessionItemView.prototype.toggle_load = function() {
+      var it, _i, _len, _ref, _results;
+      _ref = $(this.el).find(".session_top_right .btn");
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        it = _ref[_i];
+        _results.push($(it).toggle());
+      }
+      return _results;
     };
 
     return SessionItemView;
@@ -305,7 +298,7 @@
       this.model.bind("add", this.add);
       this.model.bind("remove", this.remove);
       this.model.bind("reset", this.reset);
-      this.model.bind("change:status", this.model.sort);
+      this.model.bind("change", this.model.sort);
       this.model.fetch({
         error: function() {
           return print_error("Unable to fetch sessions");
