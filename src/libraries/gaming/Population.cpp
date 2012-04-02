@@ -233,12 +233,10 @@ void Population::DoUpdate( const sword::CrowdUpdate& message )
 
     if( message.has_armed_individuals() )
     {
-        unsigned int armedIndividuals = static_cast< unsigned int >( 100 * message.armed_individuals() + 0.5f );
+        unsigned int armedIndividuals = armedIndividuals_;
+        armedIndividuals_ = static_cast< unsigned int >( 100 * message.armed_individuals() + 0.5f );
         if( armedIndividuals_ != armedIndividuals )
-        {
-            armedIndividuals_ = armedIndividuals;
             updated.insert( "Info" );
-        }
     }
 
     BOOST_FOREACH( const std::string& content, updated )

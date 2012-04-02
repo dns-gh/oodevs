@@ -49,7 +49,7 @@ void Logistics::DoUpdate( const sword::LogMaintenanceState& message )
 {
     if( ! holder_.Retrieve< MaintenanceStates >() )
     {
-        MaintenanceStates* ext = new MaintenanceStates( controller_, static_.objectTypes_, model_.GetAutomatResolver(), dico_ );
+        MaintenanceStates* ext = new MaintenanceStates( holder_, controller_, static_.objectTypes_, model_.GetAutomatResolver(), dico_ );
         holder_.Attach( *ext );
         ext->DoUpdate( message );
     }

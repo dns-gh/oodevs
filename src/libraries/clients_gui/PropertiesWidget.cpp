@@ -178,6 +178,7 @@ kernel::Displayer_ABC& PropertiesWidget::SubItem( const QString& subItem, const 
         subWidget = subWidgets_[ it->second ];
     else
         subWidget = CreateWidget( subItem );
+    subWidget->NotifySelected( selected_ );
     return subWidget->SubItem( path );
 }
 

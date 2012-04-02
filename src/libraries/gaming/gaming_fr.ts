@@ -388,8 +388,8 @@
         <translation>Infrastructure/Rôle</translation>
     </message>
     <message>
-        <source>Info</source>
-        <translation>Info</translation>
+        <source>Infrastructure</source>
+        <translation>Infrastructure</translation>
     </message>
 </context>
 <context>
@@ -914,6 +914,10 @@
     <message>
         <source>Tactical priorities</source>
         <translation>Priorités tactiques</translation>
+    </message>
+    <message>
+        <source>Maintenance system</source>
+        <translation>Chaîne maintenance</translation>
     </message>
 </context>
 <context>

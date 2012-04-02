@@ -388,8 +388,8 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Info</source>
-        <translation type="unfinished">Info</translation>
+        <source>Infrastructure</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -914,6 +914,10 @@
     <message>
         <source>Tactical priorities</source>
         <translation>Prioridades tácticas</translation>
+    </message>
+    <message>
+        <source>Maintenance system</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

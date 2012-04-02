@@ -17,7 +17,9 @@
 #include "clients_kernel/UrbanPositions_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_gui/TerrainObjectProxy.h"
+#include "clients_kernel/DictionaryUpdated.h"
 #include "clients_gui/Tools.h"
+#include "Tools.h"
 #include "protocol/Protocol.h"
 
 using namespace kernel;
@@ -53,9 +55,9 @@ InfrastructureAttribute::~InfrastructureAttribute()
 // -----------------------------------------------------------------------------
 void InfrastructureAttribute::CreateDictionary( PropertiesDictionary& dico ) const
 {
-    dico.Register( *this, tools::translate( "Block", "Infrastructure/Enable" ), enabled_ );
-    dico.Register( *this, tools::translate( "Block", "Infrastructure/Threshold" ), threshold_ );
-    dico.Register( *this, tools::translate( "Block", "Infrastructure/Role" ), role_ );
+    dico.Register( object_, tools::translate( "Block", "Infrastructure/Enable" ), enabled_ );
+    dico.Register( object_, tools::translate( "Block", "Infrastructure/Threshold" ), threshold_ );
+    dico.Register( object_, tools::translate( "Block", "Infrastructure/Role" ), role_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,10 +87,18 @@ void InfrastructureAttribute::UpdateData( const T& message )
 {
     if( message.has_infrastructures() && message.infrastructures().has_infrastructure() )
     {
-        enabled_ = message.infrastructures().infrastructure().active();
+        const sword::UrbanAttributes_Infrastructures_Infrastructure& attributes = message.infrastructures().infrastructure();
+        std::set< std::string > updated;
+        UPDATE_PROPERTY( attributes, enabled_, active, "Infrastructure", updated );
+        UPDATE_PROPERTY( attributes, role_, type, "Infrastructure", updated );
+        unsigned int threshold = threshold_;
         threshold_ = static_cast< unsigned int >( message.infrastructures().infrastructure().threshold() * 100 + 0.5 );
-        role_ = message.infrastructures().infrastructure().type();
+        if( threshold_ != threshold )
+            updated.insert( "Infrastructure" );
         type_ = resolver_.Find( role_ );
+        if( !updated.empty() )
+            controllers_.controller_.Update( kernel::DictionaryUpdated( object_, tools::translate( "Block", "Infrastructure" ) ) );
+
         controllers_.controller_.Update( object_ );
     }
 }

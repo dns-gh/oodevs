@@ -9,10 +9,13 @@
 
 #include "gaming_pch.h"
 #include "MaintenanceStates.h"
+#include "Tools.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
+#include "clients_kernel/DictionaryUpdated.h"
+#include <boost/foreach.hpp>
 
 using namespace kernel;
 
@@ -20,12 +23,14 @@ using namespace kernel;
 // Name: MaintenanceStates constructor
 // Created: AGE 2006-02-14
 // -----------------------------------------------------------------------------
-MaintenanceStates::MaintenanceStates( Controller& controller, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const tools::Resolver_ABC< Automat_ABC >& automatResolver, PropertiesDictionary& dico )
-    : controller_( controller )
-    , resolver_( resolver )
+MaintenanceStates::MaintenanceStates( kernel::Entity_ABC& entity, Controller& controller,const tools::Resolver_ABC< kernel::EquipmentType >& resolver,
+                                      const tools::Resolver_ABC< Automat_ABC >& automatResolver, PropertiesDictionary& dico )
+    : entity_         ( entity )
+    , controller_     ( controller )
+    , resolver_       ( resolver )
     , automatResolver_( automatResolver )
-    , bChainEnabled_( false )
-    , nWorkRate_( 0 )
+    , bChainEnabled_  ( false )
+    , nWorkRate_      ( 0 )
 {
     CreateDictionary( dico );
 }
@@ -45,10 +50,10 @@ MaintenanceStates::~MaintenanceStates()
 // -----------------------------------------------------------------------------
 void MaintenanceStates::CreateDictionary( kernel::PropertiesDictionary& dico ) const
 {
-    dico.Register( *this, tools::translate( "MaintenanceStates", "Maintenance system/System enabled" ), bChainEnabled_ );
-    dico.Register( *this, tools::translate( "MaintenanceStates", "Maintenance system/Priorities" ), priorities_ );
-    dico.Register( *this, tools::translate( "MaintenanceStates", "Maintenance system/Tactical priorities" ), tacticalPriorities_ );
-    dico.Register( *this, tools::translate( "MaintenanceStates", "Maintenance system/Working scheme" ), nWorkRate_ );
+    dico.Register( entity_, tools::translate( "MaintenanceStates", "Maintenance system/System enabled" ), bChainEnabled_ );
+    dico.Register( entity_, tools::translate( "MaintenanceStates", "Maintenance system/Priorities" ), priorities_ );
+    dico.Register( entity_, tools::translate( "MaintenanceStates", "Maintenance system/Tactical priorities" ), tacticalPriorities_ );
+    dico.Register( entity_, tools::translate( "MaintenanceStates", "Maintenance system/Working scheme" ), nWorkRate_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -57,10 +62,12 @@ void MaintenanceStates::CreateDictionary( kernel::PropertiesDictionary& dico ) c
 // -----------------------------------------------------------------------------
 void MaintenanceStates::DoUpdate( const sword::LogMaintenanceState& message )
 {
-    if( message.has_chain()  )
-        bChainEnabled_ = message.chain() != 0;
+    std::set< std::string > updated;
+    UPDATE_PROPERTY( message, bChainEnabled_, chain, "Maintenance system", updated );
+
     if( message.has_work_rate()  )
         nWorkRate_ = message.work_rate() + 1; // $$$$ AGE 2006-06-27:
+
     if( message.has_priorities() )
     {
         priorities_.resize( message.priorities().elem_size() );
@@ -85,6 +92,9 @@ void MaintenanceStates::DoUpdate( const sword::LogMaintenanceState& message )
         for( int i = 0; i < message.repairers().elem_size(); ++i )
             dispoRepairers_[i] = Availability( resolver_, message.repairers().elem( i ) );
     }
+
+    if( !updated.empty() )
+        controller_.Update( kernel::DictionaryUpdated( entity_, tools::translate( "MaintenanceStates", "Maintenance system" ) ) );
     controller_.Update( *this );
 }
 

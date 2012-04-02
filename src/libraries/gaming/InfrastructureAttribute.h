@@ -13,6 +13,7 @@
 #include "clients_kernel/Infrastructure_ABC.h"
 #include "tools/Resolver.h"
 #include <boost/noncopyable.hpp>
+#include "clients_kernel/OptionalValue.h"
 
 namespace kernel
 {
@@ -75,7 +76,7 @@ private:
     const geometry::Point2f position_;
     bool enabled_;
     unsigned int threshold_;
-    std::string role_;
+    kernel::OptionalValue< std::string > role_;
     const kernel::InfrastructureType* type_;
     //@}
 };

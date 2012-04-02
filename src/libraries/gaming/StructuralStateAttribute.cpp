@@ -84,9 +84,7 @@ template< typename T >
 void StructuralStateAttribute::UpdateData( const T& message )
 {
     std::set< std::string > updated;
-
     UPDATE_SUBPROPERTY( message, structuralState_, structure, state, "Info", updated );
-
     if( !updated.empty() )
         controller_.Update( kernel::DictionaryUpdated( entity_, tools::translate( "Block", "Info" ) ) );
 }
