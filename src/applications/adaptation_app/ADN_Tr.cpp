@@ -298,6 +298,56 @@ ADN_Tr::T_ConverterPropagationModel ADN_Tr::propagationModelConverter_[] =
     T_ConverterPropagationModel( "", "", (E_PropagationModel)-1 )
 };
 
+ADN_Tr::T_ConverterEquipmentCategory ADN_Tr::equipmentCategoryConverter_[] =
+{
+    T_ConverterEquipmentCategory( "VUT",                        QT_TRANSLATE_NOOP("ADN_Tr", "VUT" ),                eVUT ),
+    T_ConverterEquipmentCategory( "VTT",                        QT_TRANSLATE_NOOP("ADN_Tr", "VTT" ),                eVTT ),
+    T_ConverterEquipmentCategory( "VNBLIN",                     QT_TRANSLATE_NOOP("ADN_Tr", "VNBLIN" ),             eVNBLIN ),
+    T_ConverterEquipmentCategory( "VCIMEC",                     QT_TRANSLATE_NOOP("ADN_Tr", "VCIMEC" ),             eVCIMEC ),
+    T_ConverterEquipmentCategory( "VCD",                        QT_TRANSLATE_NOOP("ADN_Tr", "VCD" ),                eVCD ),
+    T_ConverterEquipmentCategory( "VATM",                       QT_TRANSLATE_NOOP("ADN_Tr", "VATM" ),               eVATM ),
+    T_ConverterEquipmentCategory( "RSM",                        QT_TRANSLATE_NOOP("ADN_Tr", "RSM" ),                eRSM ),
+    T_ConverterEquipmentCategory( "MORT",                       QT_TRANSLATE_NOOP("ADN_Tr", "MORT" ),               eMORT ),
+    T_ConverterEquipmentCategory( "MISSS",                      QT_TRANSLATE_NOOP("ADN_Tr", "MISSS" ),              eMISSS ),
+    T_ConverterEquipmentCategory( "MISSA",                      QT_TRANSLATE_NOOP("ADN_Tr", "MISSA" ),              eMISSA ),
+    T_ConverterEquipmentCategory( "MISGAC",                     QT_TRANSLATE_NOOP("ADN_Tr", "MISGAC" ),             eMISGAC ),
+    T_ConverterEquipmentCategory( "MISAS",                      QT_TRANSLATE_NOOP("ADN_Tr", "MISAS" ),              eMISAS ),
+    T_ConverterEquipmentCategory( "MECA",                       QT_TRANSLATE_NOOP("ADN_Tr", "MECA" ),               eMECA ),
+    T_ConverterEquipmentCategory( "HTTU",                       QT_TRANSLATE_NOOP("ADN_Tr", "HTTU" ),               eHTTU ),
+    T_ConverterEquipmentCategory( "HT",                         QT_TRANSLATE_NOOP("ADN_Tr", "HT" ),                 eHT ),
+    T_ConverterEquipmentCategory( "HMT",                        QT_TRANSLATE_NOOP("ADN_Tr", "HMT" ),                eHMT ),
+    T_ConverterEquipmentCategory( "HLT",                        QT_TRANSLATE_NOOP("ADN_Tr", "HLT" ),                eHLT ),
+    T_ConverterEquipmentCategory( "HLO",                        QT_TRANSLATE_NOOP("ADN_Tr", "HLO" ),                eHLO ),
+    T_ConverterEquipmentCategory( "HARM",                       QT_TRANSLATE_NOOP("ADN_Tr", "HARM" ),               eHARM ),
+    T_ConverterEquipmentCategory( "EQFCHT",                     QT_TRANSLATE_NOOP("ADN_Tr", "EQFCHT" ),             eEQFCHT ),
+    T_ConverterEquipmentCategory( "EQCHIM",                     QT_TRANSLATE_NOOP("ADN_Tr", "EQCHIM" ),             eEQCHIM ),
+    T_ConverterEquipmentCategory( "CHALEG",                     QT_TRANSLATE_NOOP("ADN_Tr", "CHALEG" ),             eCHALEG ),
+    T_ConverterEquipmentCategory( "CHABAT",                     QT_TRANSLATE_NOOP("ADN_Tr", "CHABAT" ),             eCHABAT ),
+    T_ConverterEquipmentCategory( "CANAC",                      QT_TRANSLATE_NOOP("ADN_Tr", "CANAC" ),              eCANAC ),
+    T_ConverterEquipmentCategory( "CAN",                        QT_TRANSLATE_NOOP("ADN_Tr", "CAN" ),                eCAN ),
+    T_ConverterEquipmentCategory( "BLIND",                      QT_TRANSLATE_NOOP("ADN_Tr", "BLIND" ),              eBLIND ),
+    T_ConverterEquipmentCategory( "AVVF",                       QT_TRANSLATE_NOOP("ADN_Tr", "AVVF" ),               eAVVF ),
+    T_ConverterEquipmentCategory( "ASA",                        QT_TRANSLATE_NOOP("ADN_Tr", "ASA" ),                eASA ),
+    T_ConverterEquipmentCategory( "ANT",                        QT_TRANSLATE_NOOP("ADN_Tr", "ANT" ),                eANT ),
+    T_ConverterEquipmentCategory( "ALT",                        QT_TRANSLATE_NOOP("ADN_Tr", "ALT" ),                eALT ),
+    T_ConverterEquipmentCategory( "ACQOBJ",                     QT_TRANSLATE_NOOP("ADN_Tr", "ACQOBJ" ),             eACQOBJ ),
+    T_ConverterEquipmentCategory( "HM",                         QT_TRANSLATE_NOOP("ADN_Tr", "HM" ),                 eHM ),
+    T_ConverterEquipmentCategory( "AVION",                      QT_TRANSLATE_NOOP("ADN_Tr", "AVION" ),              eAVION ),
+    T_ConverterEquipmentCategory( "HAC",                        QT_TRANSLATE_NOOP("ADN_Tr", "HAC" ),                eHAC ),
+    T_ConverterEquipmentCategory( "HR",                         QT_TRANSLATE_NOOP("ADN_Tr", "HR" ),                 eHR ),
+    T_ConverterEquipmentCategory( "HAM",                        QT_TRANSLATE_NOOP("ADN_Tr", "HAM" ),                eHAM ),
+    T_ConverterEquipmentCategory( "HAH",                        QT_TRANSLATE_NOOP("ADN_Tr", "HAH" ),                eHAH ),
+    T_ConverterEquipmentCategory( "VCI",                        QT_TRANSLATE_NOOP("ADN_Tr", "VCI" ),                eVCI ),
+    T_ConverterEquipmentCategory( "Char",                       QT_TRANSLATE_NOOP("ADN_Tr", "Char" ),               eChar ),
+    T_ConverterEquipmentCategory( "Mortier",                    QT_TRANSLATE_NOOP("ADN_Tr", "Mortar" ),             eMortier ),
+    T_ConverterEquipmentCategory( "Artillerie",                 QT_TRANSLATE_NOOP("ADN_Tr", "Artillery" ),          eArtillerie ),
+    T_ConverterEquipmentCategory( "Hommes",                     QT_TRANSLATE_NOOP("ADN_Tr", "Men" ),                eHommes ),
+    T_ConverterEquipmentCategory( "Armes Légères",              QT_TRANSLATE_NOOP("ADN_Tr", "Light weapons" ),      eArmesLegeres ),
+    T_ConverterEquipmentCategory( "Matériel Franchissement",    QT_TRANSLATE_NOOP("ADN_Tr", "Crossing equipment" ), eMaterielFranchissement ),
+    T_ConverterEquipmentCategory( "Autres",                     QT_TRANSLATE_NOOP("ADN_Tr", "Others" ),             eAutres ),
+    T_ConverterEquipmentCategory( "", "", (E_EquipmentCategory)-1 )
+};
+
 // -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertFromLocation
 // Created: APE 2005-02-18
@@ -507,6 +557,15 @@ const std::string& ADN_Tr::ConvertFromPropagationModel( E_PropagationModel nValu
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Tr::ConvertFromEquipmentCategory
+// Created: ABR 2012-03-30
+// -----------------------------------------------------------------------------
+const std::string& ADN_Tr::ConvertFromEquipmentCategory( E_EquipmentCategory nValue, E_Conversion nConverterType )
+{
+    return ADN_Tr::InverseFindInConverter( equipmentCategoryConverter_, nValue, nConverterType );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Tr::ConvertToLocation
 // Created: APE 2005-02-18
 // -----------------------------------------------------------------------------
@@ -711,6 +770,15 @@ E_PropagationModel ADN_Tr::ConvertToPropagationModel( const std::string& strName
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Tr::ConvertToEquipmentCategory
+// Created: ABR 2012-03-30
+// -----------------------------------------------------------------------------
+E_EquipmentCategory ADN_Tr::ConvertToEquipmentCategory( const std::string& strName )
+{
+    return ADN_Tr::FindInConverter( equipmentCategoryConverter_, strName );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ADN_Tr::InitTranslations
 // Created: APE 2005-02-18
 // -----------------------------------------------------------------------------
@@ -737,4 +805,5 @@ void ADN_Tr::InitTranslations()
     InitTr( anchorTypeConverter_, "ADN_Tr" );
     InitTr( constructorTypeConverter_, "ADN_Tr" );
     InitTr( propagationModelConverter_, "ADN_Tr" );
+    InitTr( equipmentCategoryConverter_, "ADN_Tr" );
 }

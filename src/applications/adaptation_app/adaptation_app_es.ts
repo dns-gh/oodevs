@@ -702,6 +702,17 @@ estacionado con motor encendido</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Composantes_Data::ComposanteInfos</name>
+    <message>
+        <source>Invalid data</source>
+        <translation type="unfinished">Datos inválidos</translation>
+    </message>
+    <message>
+        <source>Composantes - Invalid equipment category &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_Composantes_Dotations_GUI</name>
     <message>
         <source>Category</source>
@@ -5195,6 +5206,182 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
     </message>
     <message>
         <source>crowd</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VUT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VTT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VNBLIN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VCIMEC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VCD</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VATM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RSM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MORT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MISSS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MISSA</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MISGAC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MISAS</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>MECA</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HTTU</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HMT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HLT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HLO</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HARM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>EQFCHT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>EQCHIM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CHALEG</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CHABAT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CANAC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>CAN</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>BLIND</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AVVF</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ASA</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ANT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ALT</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ACQOBJ</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>AVION</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HAC</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HR</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HAM</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>HAH</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>VCI</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Char</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Artillery</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Men</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Light weapons</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Crossing equipment</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Others</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

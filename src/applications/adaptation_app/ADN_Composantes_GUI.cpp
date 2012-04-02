@@ -121,7 +121,7 @@ void ADN_Composantes_GUI::Build()
     builder.AddField< ADN_EditLine_String >( pInfoGroupBox, tr( "Starting country:" )  , vInfosConnectors[eStartingCountry] );
     builder.AddField< ADN_DateEdit >       ( pInfoGroupBox, tr( "Starting date:" )     , vInfosConnectors[eStartingDate] );
     builder.AddField< ADN_EditLine_String >( pInfoGroupBox, tr( "Information origin:" ), vInfosConnectors[eInformationOrigin] );
-    builder.AddField< ADN_EditLine_String >( pInfoGroupBox, tr( "Equipment category:" ), vInfosConnectors[eEquipmentCategory] );
+    builder.AddEnumField< E_EquipmentCategory >( pInfoGroupBox, tr( "Equipment category:" ), vInfosConnectors[eEquipmentCategory], &ADN_Tr::ConvertFromEquipmentCategory );
 
     // Breakdowns
     pBreakdownsGroup_ = new Q3GroupBox( 1, Qt::Horizontal, tr( "Breakdowns" ) );

@@ -48,6 +48,7 @@ public:
     static const std::string& ConvertFromAnchorType( E_AnchorType, E_Conversion = eToSim );
     static const std::string& ConvertFromConstructorType( E_ConstructorType, E_Conversion = eToSim );
     static const std::string& ConvertFromPropagationModel( E_PropagationModel, E_Conversion = eToSim );
+    static const std::string& ConvertFromEquipmentCategory( E_EquipmentCategory, E_Conversion = eToSim );
     //@}
 
     //! @name Convert To functions
@@ -74,6 +75,7 @@ public:
     static E_AnchorType              ConvertToAnchorType( const std::string& );
     static E_ConstructorType         ConvertToConstructorType( const std::string& );
     static E_PropagationModel        ConvertToPropagationModel( const std::string& );
+    static E_EquipmentCategory       ConvertToEquipmentCategory( const std::string& );
     //@}
 
     static void InitTranslations();
@@ -103,6 +105,7 @@ public:
     typedef converter< E_AnchorType >              T_ConverterAnchorType;
     typedef converter< E_ConstructorType >         T_ConverterConstructorType;
     typedef converter< E_PropagationModel >        T_ConverterPropagationModel;
+    typedef converter< E_EquipmentCategory>        T_ConverterEquipmentCategory;
     //@}
 
     //! @name Convertors
@@ -128,6 +131,7 @@ public:
     static T_ConverterAnchorType              anchorTypeConverter_[];
     static T_ConverterConstructorType         constructorTypeConverter_[];
     static T_ConverterPropagationModel        propagationModelConverter_[];
+    static T_ConverterEquipmentCategory       equipmentCategoryConverter_[];
     //@}
 };
 

@@ -702,6 +702,17 @@ Arrêt moteur allumé</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Composantes_Data::ComposanteInfos</name>
+    <message>
+        <source>Invalid data</source>
+        <translation>Donnée invalide</translation>
+    </message>
+    <message>
+        <source>Composantes - Invalid equipment category &apos;%1&apos;</source>
+        <translation>Equipement - Catégorie d&apos;équipement invalide &apos;%1&apos;</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Composantes_Dotations_GUI</name>
     <message>
         <source>Category</source>
@@ -5198,6 +5209,182 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <message>
         <source>crowd</source>
         <translation>foule</translation>
+    </message>
+    <message>
+        <source>VUT</source>
+        <translation>VUT</translation>
+    </message>
+    <message>
+        <source>VTT</source>
+        <translation>VTT</translation>
+    </message>
+    <message>
+        <source>VNBLIN</source>
+        <translation>VNBLIN</translation>
+    </message>
+    <message>
+        <source>VCIMEC</source>
+        <translation>VCIMEC</translation>
+    </message>
+    <message>
+        <source>VCD</source>
+        <translation>VCD</translation>
+    </message>
+    <message>
+        <source>VATM</source>
+        <translation>VATM</translation>
+    </message>
+    <message>
+        <source>RSM</source>
+        <translation>RSM</translation>
+    </message>
+    <message>
+        <source>MORT</source>
+        <translation>MORT</translation>
+    </message>
+    <message>
+        <source>MISSS</source>
+        <translation>MISSS</translation>
+    </message>
+    <message>
+        <source>MISSA</source>
+        <translation>MISSA</translation>
+    </message>
+    <message>
+        <source>MISGAC</source>
+        <translation>MISGAC</translation>
+    </message>
+    <message>
+        <source>MISAS</source>
+        <translation>MISAS</translation>
+    </message>
+    <message>
+        <source>MECA</source>
+        <translation>MECA</translation>
+    </message>
+    <message>
+        <source>HTTU</source>
+        <translation>HTTU</translation>
+    </message>
+    <message>
+        <source>HT</source>
+        <translation>HT</translation>
+    </message>
+    <message>
+        <source>HMT</source>
+        <translation>HMT</translation>
+    </message>
+    <message>
+        <source>HLT</source>
+        <translation>HLT</translation>
+    </message>
+    <message>
+        <source>HLO</source>
+        <translation>HLO</translation>
+    </message>
+    <message>
+        <source>HARM</source>
+        <translation>HARM</translation>
+    </message>
+    <message>
+        <source>EQFCHT</source>
+        <translation>EQFCHT</translation>
+    </message>
+    <message>
+        <source>EQCHIM</source>
+        <translation>EQCHIM</translation>
+    </message>
+    <message>
+        <source>CHALEG</source>
+        <translation>CHALEG</translation>
+    </message>
+    <message>
+        <source>CHABAT</source>
+        <translation>CHABAT</translation>
+    </message>
+    <message>
+        <source>CANAC</source>
+        <translation>CANAC</translation>
+    </message>
+    <message>
+        <source>CAN</source>
+        <translation>CAN</translation>
+    </message>
+    <message>
+        <source>BLIND</source>
+        <translation>BLIND</translation>
+    </message>
+    <message>
+        <source>AVVF</source>
+        <translation>AVVF</translation>
+    </message>
+    <message>
+        <source>ASA</source>
+        <translation>ASA</translation>
+    </message>
+    <message>
+        <source>ANT</source>
+        <translation>ANT</translation>
+    </message>
+    <message>
+        <source>ALT</source>
+        <translation>ALT</translation>
+    </message>
+    <message>
+        <source>ACQOBJ</source>
+        <translation>ACQOBJ</translation>
+    </message>
+    <message>
+        <source>HM</source>
+        <translation>HM</translation>
+    </message>
+    <message>
+        <source>AVION</source>
+        <translation>AVION</translation>
+    </message>
+    <message>
+        <source>HAC</source>
+        <translation>HAC</translation>
+    </message>
+    <message>
+        <source>HR</source>
+        <translation>HR</translation>
+    </message>
+    <message>
+        <source>HAM</source>
+        <translation>HAM</translation>
+    </message>
+    <message>
+        <source>HAH</source>
+        <translation>HAH</translation>
+    </message>
+    <message>
+        <source>VCI</source>
+        <translation>VCI</translation>
+    </message>
+    <message>
+        <source>Char</source>
+        <translation>Char</translation>
+    </message>
+    <message>
+        <source>Artillery</source>
+        <translation>Artillerie</translation>
+    </message>
+    <message>
+        <source>Men</source>
+        <translation>Hommes</translation>
+    </message>
+    <message>
+        <source>Light weapons</source>
+        <translation>Armes légères</translation>
+    </message>
+    <message>
+        <source>Crossing equipment</source>
+        <translation>Matériel Franchissement</translation>
+    </message>
+    <message>
+        <source>Others</source>
+        <translation>Autres</translation>
     </message>
 </context>
 <context>

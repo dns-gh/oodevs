@@ -647,7 +647,7 @@ public:
         ADN_Type_String strStartingCountry_;
         ADN_Type_String strStartingDate_;
         ADN_Type_String strInformationOrigin_;
-        ADN_Type_String equipmentCategory_;
+        ADN_Type_Enum< E_EquipmentCategory, eNbrEquipmentCategory > equipmentCategory_;
         ADN_TypePtr_InVector_ABC<helpers::ArmorInfos> ptrArmor_;
         ADN_TypePtr_InVector_ABC<ADN_Categories_Data::SizeInfos> ptrSize_;
         ADN_Type_Double rWeight_;

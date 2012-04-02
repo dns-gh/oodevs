@@ -1730,7 +1730,7 @@ void ADN_Composantes_Data::ConsumptionsInfos::WriteArchive( xml::xostream& outpu
 ADN_Composantes_Data::ComposanteInfos::ComposanteInfos()
     : ADN_Ref_ABC()
     , nMosId_                        ( ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetNextId() )
-    , equipmentCategory_             ( "Autres" )
+    , equipmentCategory_             ( eAutres )
     , ptrArmor_                      ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetArmorsInfos(), 0 )
     , ptrSize_                       ( ADN_Workspace::GetWorkspace().GetCategories().GetData().GetSizesInfos(), 0 )
     , rWeight_                       ( 100 )
@@ -1835,6 +1835,7 @@ ADN_Composantes_Data::ComposanteInfos* ADN_Composantes_Data::ComposanteInfos::Cr
     pCopy->ptrSize_ = ptrSize_.GetData();
     pCopy->rWeight_ = rWeight_.GetData();
     pCopy->rMaxSpeed_ = rMaxSpeed_.GetData();
+    pCopy->equipmentCategory_ = equipmentCategory_.GetData();
 
     for( int iTerrain = 0; iTerrain < eNbrLocation; ++iTerrain )
     {
@@ -1996,11 +1997,17 @@ void ADN_Composantes_Data::ComposanteInfos::ReadArchive( xml::xistream& input )
           >> xml::optional >> xml::attribute( "codeLFRIL", strCodeLFRIL_ )
           >> xml::optional >> xml::attribute( "codeNNO",   strCodeNNO_   );
 
-    std::string strArmor, strSize;
+    std::string strArmor, strSize, equipmentCategory;
     input >> xml::attribute( "protection", strArmor )
           >> xml::attribute( "size", strSize )
           >> xml::attribute( "weight", rWeight_ );
-    input >> xml::optional >> xml::content( "equipment-category", equipmentCategory_ );
+    input >> xml::optional >> xml::content( "equipment-category", equipmentCategory );
+    if( !equipmentCategory.empty() )
+    {
+        equipmentCategory_ = ADN_Tr::ConvertToEquipmentCategory( equipmentCategory );
+        if( equipmentCategory_ == E_EquipmentCategory( -1 ) )
+            throw ADN_DataException( tr( "Invalid data" ).ascii(), tr( "Composantes - Invalid equipment category '%1'" ).arg( equipmentCategory.c_str() ).ascii() );
+    }
 
     ptrArmor_ = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindArmor( strArmor );
     ptrSize_ = ADN_Workspace::GetWorkspace().GetCategories().GetData().FindSize( strSize );
@@ -2237,8 +2244,7 @@ void ADN_Composantes_Data::ComposanteInfos::WriteArchive( xml::xostream& output 
     if( bMaxSlope_.GetData() )
         output << xml::attribute( "max-slope", rMaxSlope_.GetData() / 100.0 );
 
-    if( !equipmentCategory_.GetData().empty() )
-        output << xml::content( "equipment-category", equipmentCategory_ );
+    output << xml::content( "equipment-category", ADN_Tr::ConvertFromEquipmentCategory( equipmentCategory_.GetData() ) );
 
     if( !( strNativeCountry_.GetData().empty() && strStartingCountry_.GetData().empty() && strStartingDate_.GetData().empty() && strInformationOrigin_.GetData().empty() ) )
     {
