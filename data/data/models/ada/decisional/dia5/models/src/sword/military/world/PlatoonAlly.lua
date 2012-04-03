@@ -357,9 +357,7 @@ return
     sendRC = function( self, receiver, value )
         integration.SendMessage( "displayRC", receiver, {value = value}, { type = "dynamic" } )
     end,
-    sendNeedRC = function( self, receiver, value )
-        integration.SendMessage( "needCR", receiver, {value = value}, { type = "dynamic" } )
-    end,
+
     getObstaclesOnAllyPath = function( self )
         return myself.engineerObjectsOnPath
     end,

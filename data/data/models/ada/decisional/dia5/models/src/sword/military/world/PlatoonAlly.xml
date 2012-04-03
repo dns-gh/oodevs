@@ -1248,14 +1248,6 @@ que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe
                 </type>
             </argument>
         </method>
-        <method name="sendNeedRC">
-            <description>The unit sends message report to display.</description>
-            <argument name="receiver">
-                <type>
-                    <class name="sword.military.world.PlatoonAlly"/>
-                </type>
-            </argument>
-        </method>
         <method name="isCaught">
             <description>Retourne vrai si capturé (pour un terroriste), retourne faux sinon</description>
             <return>
