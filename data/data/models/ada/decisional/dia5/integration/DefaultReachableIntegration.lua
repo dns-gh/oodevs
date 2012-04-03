@@ -67,7 +67,7 @@ end
 integration.getAreaPosition = function( area )
     area.getAreaPositionResult = integration.getCentralAreaPosition( area )
     if integration.isPointInUrbanBlockTrafficable(CreateKnowledge( sword.military.world.Point, area.getAreaPositionResult), true ) == 0 then
-        return integration.getAreaPositions( area )[0]
+        return integration.getAreaPositions( area )[1]
     end
     return area.getAreaPositionResult
 end
@@ -86,14 +86,14 @@ end
 integration.getAreaPositions = function( area )
     area.getAreaPositionsResult = area.getAreaPositionsResult or DEC_Geometrie_CalculerTrafficablePointPourPoint( integration.getCentralAreaPosition( area ) )
     area.getTrafficableAreaPositionsResult = area.getTrafficableAreaPositionsResult or {}
-    if not next(area.getTrafficableAreaPositionsResult ) then
+    if #area.getTrafficableAreaPositionsResult == 0 then
         for i = 1, #area.getAreaPositionsResult do -- On ne veut que les positions qui sont dans la zone
             if integration.isPointInLocalisation(CreateKnowledge( sword.military.world.Point, area.getAreaPositionsResult[i] ), area) then
                area.getTrafficableAreaPositionsResult[#area.getTrafficableAreaPositionsResult] = area.getAreaPositionsResult[i]
             end
         end
     end
-    if next(area.getTrafficableAreaPositionsResult) then
+    if #area.getTrafficableAreaPositionsResult > 0 then
         return area.getTrafficableAreaPositionsResult
     else
         return area.getAreaPositionsResult
@@ -602,9 +602,20 @@ end
 
 integration.isPointInUrbanBlockTrafficable = function( self, loaded )
     if not loaded then return 100 end
+    local isTrafficable = false
     if not self.isPointInUrbanBlockTrafficableCache then
         local pos = self:getPosition()
-        self.isPointInUrbanBlockTrafficableCache = ( pos and DEC_IsPointInUrbanBlockTrafficable( pos ) and 100 ) or 0
+        if masalife.brain.core.class.isOfType( meKnowledge, sword.military.world.Company  ) then 
+            local platoons = DEC_Automate_PionsAvecPC()
+            for i = 1, #platoons do -- Est ce que ce point est trafficable pour tous les pions de l'automate
+                if integration.isPointInUrbanBlockTrafficableForPlatoon( platoons[i], self.source ) then
+                    isTrafficable = true
+                end
+            end
+            self.isPointInUrbanBlockTrafficableCache = ( pos and isTrafficable and 100 ) or 0   
+        else
+          self.isPointInUrbanBlockTrafficableCache = ( pos and DEC_IsPointInUrbanBlockTrafficable( pos ) and 100 ) or 0
+        end
     end
     return self.isPointInUrbanBlockTrafficableCache
 end
