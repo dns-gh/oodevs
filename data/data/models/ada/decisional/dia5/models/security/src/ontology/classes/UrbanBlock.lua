@@ -88,7 +88,10 @@ method "canBeCreated" (
     end )
 
 method "canBeDeconstructed" ( 
-    function( self )
+    function( self, instantaneously )
+        if instantaneously then -- impossible to remove magically a urban block
+            return false 
+        end
         return false -- $$$ MIA TODO
     end )
 
@@ -99,7 +102,12 @@ method "deconstructIt" (
 
 method "removeIt" (
     function( self )
-        return false -- A urban block cannot be removed  instantaneously
+        return false -- A urban block cannot be removed
+    end )
+
+method "isDeconstructed" (
+    function( self )
+        return integration.buildLevelUrbanBlock( self ) == 0
     end )
 
 -- --------------------------------------------------------------------------------

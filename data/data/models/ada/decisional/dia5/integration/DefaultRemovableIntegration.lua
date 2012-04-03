@@ -55,7 +55,8 @@ end
 -- @author PSN
 -- @release 2010-03-30
 integration.canRemoveIt = function( object )
-  return DEC_Agent_PeutDetruireObjet( object.source )
+    -- $$$ MIA return false if object is not valide.
+    return DEC_Agent_PeutDetruireObjet( object.source )
 end
 
 --- Return current advancement of object removal
@@ -70,7 +71,7 @@ integration.startRemoveIt = function( object )
     object[myself] = object[myself] or {} 
     object[myself].actionRemove = DEC_StartDetruireObjet( object.source )
     actionCallbacks[ object[myself].actionRemove ] = function( arg ) object[myself].actionRemoveState = arg end
-    
+
     meKnowledge:RC( eRC_DebutDegagement, object.source )
 end
 
@@ -107,4 +108,37 @@ end
 
 integration.isInEffectArea = function( object )
     return DEC_ConnaissanceObjet_PointEstProcheZoneEffet( meKnowledge:getPosition(), object.source, 100 )
+end
+
+-- ============================================================================
+-- Object deconstruction SECU
+-- comments: -- $$$ MIA TEMP SECURITY à merger avec military
+-- Différence avec military: le contrat n'est pasle même. Ici on renvoie vrai 
+-- quand l'action est terminée, que l'on est contruit ou pas l'objet. On renvoie faux
+-- quand la construction est en cours. 
+-- ============================================================================
+integration.updateRemoveItSecu = function( object )
+    if object[myself].actionRemoveState == eActionObjetImpossible then
+        DEC_Trace( "impossible works" )
+        return true 
+    elseif object[ myself ].actionRemoveState == eActionObjetManqueDotation then
+        DEC_Trace( "not enough dotation" )
+        return true 
+    elseif object[ myself ].actionRemoveState == eActionObjetPasDeCapacite then
+        DEC_Trace( "no capacity" )
+        return true 
+    elseif object[ myself ].actionRemoveState == eActionObjetTerminee then
+        meKnowledge:RC( eRC_FinDegagement )
+        return true
+    end
+    return false
+end
+
+integration.stopRemoveItSecu = function( object )
+    object[ myself ] = object[ myself ] or {} 
+    if object[ myself ].actionRemoveState ~= eActionObjetTerminee then
+        DEC_Trace( "Work interrupted" )
+    end
+    object[ myself ].actionRemove = DEC__StopAction( object[myself].actionRemove )
+    return true
 end

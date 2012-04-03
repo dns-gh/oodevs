@@ -77,10 +77,15 @@
         <skill name="behaviors.skills.primitives.Reinforce"/>
         <skill name="agent.behaviors.skills.actions.Dismount"/>
         <skill name="behaviors.skills.Dismount"/>
+        <skill name="behaviors.skills.ExtractVictimsFromCrowdsWithinArea"/>
     </skills>
     <resources>
         <resource name="agent.behaviors.resources.Motion"/>
         <resource name="agent.behaviors.resources.Launcher"/>
-        <resource name="agent.behaviors.resources.Extinguisher"/>
+        <resource name="agent.behaviors.resources.Extinguisher">
+            <requirements>
+                <resource name="agent.behaviors.resources.Motion"/>
+            </requirements>
+        </resource>
     </resources>
 </role>

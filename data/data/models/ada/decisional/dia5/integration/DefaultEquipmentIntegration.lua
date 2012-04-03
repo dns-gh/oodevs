@@ -597,3 +597,11 @@ integration.selfDecontaminate = function( self )
     DEC_Agent_SeDecontaminer()
     return true
 end
+
+integration.changeHeight = function( height )
+    DEC_Agent_HauteurDeVol( height )
+end
+
+integration.isFlying = function( self )
+    return DEC_Agent_EstEnVol()
+end

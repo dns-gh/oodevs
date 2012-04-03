@@ -26,7 +26,8 @@ rootnode
     activate = function( self )
         local Activate = Activate
         if not self.firstMoveIsDone then
-            Activate( skill.links.moveAlong,1, { entities = self.params.entities } )
+            Activate( skill.links.moveAlong,1, { entities = self.params.entities, 
+              goToNextTargetAfterInstallation = self.params.goToNextTargetAfterInstallation } )
         else
             self:create() -- start the behavior one more time and so on...
         end

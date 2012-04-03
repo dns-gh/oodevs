@@ -6,6 +6,7 @@
 rootnode
 {
     feedbacks = { "extinguishActionCompleted" },
+    acquire   = { [ skill.resources.extinguisher ] = 1 },
 
     select = function( self )
         if meKnowledge:extinguish( self.params.fire ) then

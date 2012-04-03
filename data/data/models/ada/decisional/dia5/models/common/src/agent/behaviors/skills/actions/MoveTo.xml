@@ -36,6 +36,8 @@
         </resource>
     </resources>
     <feedbacks>
-        <feedback name="done"/>
+        <feedback name="done">
+            <description>Sent upon simulation action completion, even if the target destination could not be reached (movement is impossible or partial).</description>
+        </feedback>
     </feedbacks>
 </skill>

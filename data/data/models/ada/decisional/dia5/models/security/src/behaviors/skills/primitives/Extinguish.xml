@@ -48,7 +48,7 @@ A visited fire won't be extinguished if it is already extinguished or if it does
             <description>Sent when all &quot;Fires&quot; have been visited.</description>
         </feedback>
         <feedback name="failed">
-            <description>Sent if the set of 'fies' is empty (no element to act on).</description>
+            <description>Sent if the set of 'fires' is empty (no element to act on).</description>
         </feedback>
     </feedbacks>
 </skill>

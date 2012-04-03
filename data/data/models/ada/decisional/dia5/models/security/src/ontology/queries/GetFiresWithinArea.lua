@@ -6,7 +6,7 @@ queryImplementation "GetFiresWithinArea"
 { 
     [ "execute" ] = function ( params )
         local allRes = {}
-        local simFires = DEC_ObjectKnowledgesInZone( params.area.source, { "fire" } ) -- $$$ MIA TEMP
+        local simFires = DEC_ObjectKnowledgesInZone( params.area.source, { "fire", "Arson" } ) -- $$$ MIA TEMP
         for i = 1, #simFires do
             allRes[ i ] = CreateKnowledge( ontology.classes.Object, simFires[ i ] )
         end

@@ -26,7 +26,7 @@
         </parameter>
     </parameters>
     <stages>
-        <stage label="" disable-when-done="true">
+        <stage label="deconstruction skill test" disable-when-done="true">
             <skills>
                 <skill name="behaviors.skills.primitives.Deconstruct" main="true">
                     <parameter name="works">

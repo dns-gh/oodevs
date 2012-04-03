@@ -4,26 +4,37 @@
 -- @returns: "done" when all objects are deconstructed
 --
 -- /!\ order is determined by elements' insertion in the table
+-- /!\ a deconstructed work disapears
 -- ****************************************************************************
 rootnode 
 {
     connections = { skill.links.reach, skill.links.deconstruct },
-    feedbacks   = { "deconstructed" },
+    feedbacks   = { "deconstructed", "deconstructionRunning", "notDeconstructed" },
 
     -- --------------------------------------------------------------------------------
-    -- Feedbacks
+    -- Feedbacks and slots
     -- --------------------------------------------------------------------------------
     done = function( self, params ) -- from reach skill
         self.arrived = true
     end,
 
-    creationActionCompleted = function( self, params, additionalParams ) -- from decontaminate skill
+    deconstructionActionRunning = function( self, params, additionalParams ) -- from deconstruct action skill
+        Feedback( self.feedbacks.deconstructionRunning, { work = params.work } ) -- return the object that is currently being deconstructed
+    end,
+
+    deconstructActionCompleted = function( self, params, additionalParams ) -- from deconstruct action skill
+        DEC_Trace( "---- Decontructed ----" )
+        Feedback( self.feedbacks.deconstructed, { work = params.work } )
         self.nextTargetIndex = self.nextTargetIndex + 1
         self.arrived = false
     end,
 
     impossibleToDeconstruct = function( self, params ) -- called within this skill
-        Feedback( self.feedbacks.notDeconstructed, { work = params.work } )
+        DEC_Trace( "---- Not decontructed ----" )
+        if not params.work:isDeconstructed() then
+            meKnowledge:sendReport( eRC_ObjetNonSupprimable )
+            Feedback( self.feedbacks.notDeconstructed, { work = params.work } )
+        end
         self.arrived = false
         self.nextTargetIndex = self.nextTargetIndex + 1
     end,
@@ -34,10 +45,11 @@ rootnode
     create = function( self )
         self.arrived = false
         self.nextTargetIndex = 1
+        self.position = {}
     end,
 
     -- --------------------------------------------------------------------------------
-    -- Feedbacks
+    -- Movemenent toward a position and try to deconstruct each of the given works
     -- --------------------------------------------------------------------------------
     activate = function( self )
         local Activate = Activate
@@ -47,7 +59,7 @@ rootnode
             if self.nextTargetIndex <= paramsSize then
                 self.work = self.params.works[ self.nextTargetIndex ]
                 if self.arrived then
-                    if self.work:canBeDeconstructed() then
+                    if self.work:canBeDeconstructed( self.params.instantaneously ) then
                         Activate( skill.links.deconstruct, 1, { work = self.work, instantaneously = self.params.instantaneously } )
                     elseif not self.params.waitForReinforcement then
                         self:impossibleToDeconstruct( { work = self.work } )
@@ -55,8 +67,8 @@ rootnode
                         meKnowledge:sendReport( eRC_AttenteRenforcement )
                     end
                 else
-                    -- MIA $$$ TODO: add a position outside work.
-                    Activate( skill.links.reach, 1, { destination = self.work, urgency = false, pathType = eTypeItiDeminage } )
+                    self.position = ontology.queries.GetPositionsOutsideObject[ "execute" ]( { object = self.work } )
+                    Activate( skill.links.reach, 1, { destination = self.position[ 1 ], urgency = false } )
                 end
             else
                 Feedback( self.feedbacks.done )

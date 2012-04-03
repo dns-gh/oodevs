@@ -27,7 +27,13 @@
             </return>
         </method>
         <method name="canBeDeconstructed">
-            <description>Returns 'True' if agent has the physical capability to deconstruct this element.</description>
+            <description>Returns 'true' if agent is able to deconstruct this element.</description>
+            <argument name="instantaneously">
+                <description>Define if this element has to be deconstructed instantaneously (&quot;magic&quot; action) or not. </description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </argument>
             <return>
                 <type>
                     <simple name="boolean"/>
@@ -45,6 +51,14 @@ Returns 'true' when element is deconstructed.</description>
         </method>
         <method name="removeIt">
             <description>To remove instantaneously an existing work without any physical capability considerations.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="isDeconstructed">
+            <description>Returns 'true' if this element has been deconstructed (by deconstruction action or a &quot;magic&quot; destruction action), 'false' otherwise.</description>
             <return>
                 <type>
                     <simple name="boolean"/>

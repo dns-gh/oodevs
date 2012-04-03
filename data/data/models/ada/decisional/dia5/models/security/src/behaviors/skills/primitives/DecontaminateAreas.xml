@@ -26,7 +26,7 @@ Areas are visited in the order of the list. </description>
                 <simple name="boolean"/>
             </type>
             <default>
-                <boolean>false</boolean>
+                <boolean>true</boolean>
             </default>
         </parameter>
     </parameters>

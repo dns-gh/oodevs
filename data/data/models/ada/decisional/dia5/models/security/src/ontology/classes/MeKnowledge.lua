@@ -350,6 +350,66 @@ method "canDismount" (
         return integration.canDismount( self )
     end )
 
+method "isInstalled" ( masalife.brain.integration.startStopAction( 
+{
+    start = function( self )
+       integration.pionRC( eRC_DebutInstallation )
+    end,
+    started = function( self )
+        return integration.isPosted()
+    end,
+    stop  = function( self ) 
+        integration.pionRC( eRC_FinInstallation )
+    end
+} ) )
+
+-- --------------------------------------------------------------------------------
+-- Fly capability
+-- --------------------------------------------------------------------------------
+method "takeOff" ( masalife.brain.integration.startStopAction( 
+{
+    start = function( self, height )
+        return integration.changeHeight( height )
+    end,
+    started = function( self )
+        return true
+    end,
+} ) )
+
+method "land" ( masalife.brain.integration.startStopAction( 
+{
+    start = function( self )
+        return integration.changeHeight( 0 ) -- 0 meters to reach the ground
+    end,
+    started = function( self )
+        return true
+    end,
+} ) )
+
+method "isFlying" ( 
+    function( self )
+        return integration.isFlying()
+    end )
+
+-- --------------------------------------------------------------------------------
+-- NBC alert
+-- --------------------------------------------------------------------------------
+method "alertNBC" ( masalife.brain.integration.startStopAction( 
+{
+    start = function( self )
+        return integration.goOnNBCAlert( self )
+    end,
+} ) )
+method "isContaminated" ( 
+    function( self )
+        return integration.isContaminated( self )
+    end )
+
+method "isPoisoned" ( 
+    function( self )
+        return integration.isPoisoned( self )
+    end )
+
 -- --------------------------------------------------------------------------------
 -- Reports / Messages
 -- --------------------------------------------------------------------------------

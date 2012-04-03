@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <query xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.queries.GetHeadPositionForCrowd" source-version="1.0.0">
-    <description/>
+    <description></description>
     <parameters>
         <parameter name="crowd">
-            <description/>
+            <description>The 'Crowd' to get the head position.</description>
             <type>
                 <class name="ontology.classes.Crowd"/>
             </type>

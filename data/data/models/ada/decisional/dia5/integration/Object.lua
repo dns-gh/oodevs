@@ -11,3 +11,7 @@ integration.isConstructed = function( object )
     end
     return false
 end
+
+integration.isObjectRemoved = function( object )
+    return not DEC_IsValidKnowledgeObject( object.source )
+end

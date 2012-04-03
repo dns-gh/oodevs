@@ -8,8 +8,12 @@ rootnode
     -- -------------------------------------------------------------------------------- 
     -- Once first element is reached, get the next one by incrementing iterator.
     -- --------------------------------------------------------------------------------
-    done = function( self )
-        self.nextTargetIndex = self.nextTargetIndex + 1
+    done = function( self ) -- call by move to action once movement toward current entity is over.
+        if not self.params.goToNextTargetAfterInstallation then
+            self.nextTargetIndex = self.nextTargetIndex + 1
+        elseif meKnowledge:isInstalled() then
+            self.nextTargetIndex = self.nextTargetIndex + 1
+        end
     end,
 
     -- -------------------------------------------------------------------------------- 

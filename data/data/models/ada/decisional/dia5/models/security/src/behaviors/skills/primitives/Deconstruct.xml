@@ -60,5 +60,22 @@ Contrariwise (&quot;instantaneously&quot; parameter is set to 'false'), visited 
         <feedback name="failed">
             <description>Sent if the set of &quot;works&quot; is empty (no element to act on).</description>
         </feedback>
+        <feedback name="deconstructionRunning">
+            <description>Sent while a work is being deconstructed by agent.</description>
+            <argument name="work">
+                <type>
+                    <class name="agent.world.Work"/>
+                </type>
+            </argument>
+        </feedback>
+        <feedback name="deconstructed">
+            <description>Sent when the current &quot;Work&quot; has just been deconstructed.</description>
+            <argument name="work">
+                <description>The 'Work' that has been deconstructed.</description>
+                <type>
+                    <class name="agent.world.Work"/>
+                </type>
+            </argument>
+        </feedback>
     </feedbacks>
 </skill>

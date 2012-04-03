@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.queries.GetPositionsAround" source-version="1.0.0">
+    <parameters>
+        <parameter name="terrainElements">
+            <type>
+                <list>
+                    <class name="ontology.classes.LocalizedElement"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <target name="positions">
+        <type>
+            <class name="ontology.classes.Position"/>
+        </type>
+    </target>
+</query>

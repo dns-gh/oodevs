@@ -148,14 +148,6 @@ This implementation returns false. A urban block cannot be removed instantaneous
                 </type>
             </return>
         </method>
-        <method name="canBeDeconstructed" abstract="false">
-            <description>Returns 'True' if agent has the physical capability to deconstruct this element.</description>
-            <return>
-                <type>
-                    <simple name="boolean"/>
-                </type>
-            </return>
-        </method>
         <method name="deconstructIt" abstract="false">
             <description>To deconstruct (and then remove) this element.&#xD;
 Returns 'true' when element is deconstructed.</description>
@@ -173,6 +165,32 @@ Returns 'true' when element is deconstructed.</description>
                     <class name="agent.world.ResourceNode"/>
                 </type>
             </argument>
+        </method>
+        <method name="isDeconstructed" abstract="false">
+            <description>Returns 'true' if this element has been deconstructed (by deconstruction action or a &quot;magic&quot; destruction action),'false' otherwise.&#xD;
+&#xD;
+This implementation returns 'true' if the urban block has a construction level equal to 0; 'false' otherwise. This specific object does not disapears when it is being deconstructed.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canBeDeconstructed" abstract="false">
+            <description>Returns 'true' if agent is able to deconstruct this element.&#xD;
+&#xD;
+This implementation returns 'false' (temporary implementation).</description>
+            <argument name="instantaneously">
+                <description>Define if this element has to be deconstructed instantaneously (&quot;magic&quot; action) or not. </description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
         </method>
     </methods>
 </class>

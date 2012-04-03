@@ -230,7 +230,9 @@ integration.startedUnloadCrowd = function( crowd )
 end
 
 integration.stopUnloadCrowd = function( crowd )
-    myself.actionUnloadCrowd = DEC__StopAction( myself.actionUnloadCrowd )
+    if myself.actionUnloadCrowd ~= nil then
+        myself.actionUnloadCrowd = DEC__StopAction( myself.actionUnloadCrowd )
+    end
     myself.eEtatTransportUnloadCrowd = nil
 end
 

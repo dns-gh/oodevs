@@ -658,12 +658,73 @@ The message sent to the given follower contents the name of the task to activate
             </return>
         </method>
         <method name="sendMessage" abstract="false">
-            <description>To send and display a string message.</description>
+            <description>To send a simple message.</description>
             <argument name="message">
                 <type>
                     <simple name="string"/>
                 </type>
             </argument>
+        </method>
+        <method name="isInstalled" abstract="false">
+            <description>Returns 'true' once this element is installed on its current position. An installed unit is more efficient (perception, protection...)  that a moving unit. &#xD;
+&#xD;
+This implementation returns 'true' once agent's stance &quot;parked&quot; is activated. See defined delays in  &quot;Stances&quot; in authoring tool.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="land" abstract="false">
+            <description>To land on the ground for flying agent.&#xD;
+This implementation returns 'true', once agent height has been set to 0 meters. It models a vertical landing for helicopters for instance.</description>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="takeOff" abstract="false">
+            <description>For the agent, to take off at the given height. Returns 'true' once the issued height is reached.&#xD;
+&#xD;
+This implementation returns 'true', once agent height has been set to the given height (in meters). It models a vertical take off for helicopters for instance.</description>
+            <argument>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="isFlying" abstract="false">
+            <description>Returns 'true' if agent is currently flying.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="alertNBC">
+            <description>For this agent, to take all necessary steps in case of NBC alert.&#xD;
+&#xD;
+This implemention</description>
+        </method>
+        <method name="isPoisoned">
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="isContaminated">
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
         </method>
     </methods>
 </class>

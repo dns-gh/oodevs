@@ -94,14 +94,6 @@ Returns 'true' when element is deconstructed.</description>
                 </type>
             </return>
         </method>
-        <method name="canBeDeconstructed" abstract="false">
-            <description>Returns 'True' if agent has the physical capability to deconstruct this element.</description>
-            <return>
-                <type>
-                    <simple name="boolean"/>
-                </type>
-            </return>
-        </method>
         <method name="removeIt" abstract="false">
             <description>To remove instantaneously an existing work without any physical capability considerations.</description>
             <return>
@@ -163,6 +155,32 @@ This implementation returns true once the crowds filtration property is running.
             <description>To decontaminate me through this element.&#xD;
 &#xD;
 Returns 'true' once decontamination is complete, 'false' otherwise.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="isDeconstructed" abstract="false">
+            <description>Returns 'true' if this element has been deconstructed (by deconstruction action or a &quot;magic&quot; destruction action),'false' otherwise.&#xD;
+&#xD;
+This implementation returns 'true' if this object is valid, means that the real object doesn't exist anymore, 'false' otherwise.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canBeDeconstructed" abstract="false">
+            <description>Returns 'true' if agent is able to deconstruct this element.&#xD;
+&#xD;
+This implementation returns 'true' if agent has physical capabilities or if deconstrcution is 'instanteneous' ('instantaneously' parameter is set to 'true'); 'false' otherwise.</description>
+            <argument name="instantaneously">
+                <description>Define if this element has to be deconstructed instantaneously (&quot;magic&quot; action) or not. </description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </argument>
             <return>
                 <type>
                     <simple name="boolean"/>

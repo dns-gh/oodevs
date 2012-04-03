@@ -13,7 +13,7 @@
                 <simple name="numeric"/>
             </type>
             <default>
-                <number>0.5</number>
+                <number>100.0</number>
             </default>
         </parameter>
     </parameters>

@@ -46,14 +46,6 @@ This implementation returns true if agent has the physical capability and has th
                 </type>
             </return>
         </method>
-        <method name="canBeDeconstructed" abstract="false">
-            <description>Returns 'True' if agent has the physical capability to deconstruct this element.</description>
-            <return>
-                <type>
-                    <simple name="boolean"/>
-                </type>
-            </return>
-        </method>
         <method name="deconstructIt" abstract="false">
             <description>To deconstruct (and then remove) this element.&#xD;
 Returns 'true' when element is deconstructed.</description>
@@ -65,6 +57,22 @@ Returns 'true' when element is deconstructed.</description>
         </method>
         <method name="removeIt" abstract="false">
             <description>To remove instantaneously an existing work without any physical capability considerations.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canBeDeconstructed" abstract="false">
+            <description>Returns 'true' if agent is able to deconstruct this element.&#xD;
+&#xD;
+This implementation returns 'false', a planned object is not constructed and it cannot be deconstructed.</description>
+            <argument name="instantaneously">
+                <description>Define if this element has to be deconstructed instantaneously (&quot;magic&quot; action) or not. </description>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </argument>
             <return>
                 <type>
                     <simple name="boolean"/>

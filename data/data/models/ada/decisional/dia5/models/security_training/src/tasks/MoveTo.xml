@@ -1,11 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="tasks.MoveTo" source-version="1.0.0">
     <parameters>
-        <parameter name="destination">
-            <type>
-                <class name="agent.world.Destination"/>
-            </type>
-        </parameter>
         <parameter name="urgency">
             <type>
                 <simple name="boolean"/>
@@ -14,19 +9,21 @@
                 <boolean>false</boolean>
             </default>
         </parameter>
+        <parameter name="wayPoints">
+            <type>
+                <list>
+                    <class name="agent.world.Destination"/>
+                </list>
+            </type>
+        </parameter>
     </parameters>
     <stages>
-        <stage label="Starting to reach the destination" disable-when-done="true">
+        <stage label="Moving along waypoints toward destination" disable-when-done="true">
             <skills>
-                <skill name="agent.behaviors.skills.actions.MoveTo" main="true">
-                    <parameter name="destination">
+                <skill name="behaviors.skills.MoveAlong" main="true">
+                    <parameter name="entities">
                         <value>
-                            <parameter>destination</parameter>
-                        </value>
-                    </parameter>
-                    <parameter name="urgency">
-                        <value>
-                            <parameter>urgency</parameter>
+                            <parameter>wayPoints</parameter>
                         </value>
                     </parameter>
                 </skill>

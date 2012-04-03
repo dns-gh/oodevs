@@ -5,13 +5,13 @@
 When several links should be created, the agent acts on each target by following the order of the elements into the 'resourceReceivers' list. </description>
     <parameters>
         <parameter name="resourceNode">
-            <description>The resource node to create the link with.</description>
+            <description>The source resource node.</description>
             <type>
                 <class name="agent.world.ResourceNode"/>
             </type>
         </parameter>
         <parameter name="resourceReceivers">
-            <description>The resource node to create the link with.</description>
+            <description>The target ressource nodes.</description>
             <type>
                 <list>
                     <class name="agent.world.ResourceReceiver"/>

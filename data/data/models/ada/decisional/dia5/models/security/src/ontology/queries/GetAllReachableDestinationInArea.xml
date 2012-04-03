@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query xmlns="http://www.masagroup.net/directia/schemas/bm" name="ontology.queries.GetAllReachableDestinationInArea" source-version="1.0.0">
+    <description>Return key points in aera. In urban terrain, key points are urban blocks ans crossroads.</description>
+    <parameters>
+        <parameter name="area">
+            <type>
+                <class name="ontology.classes.Area"/>
+            </type>
+        </parameter>
+    </parameters>
+    <target name="keyTerrain">
+        <type>
+            <class name="agent.world.Destination"/>
+        </type>
+    </target>
+</query>

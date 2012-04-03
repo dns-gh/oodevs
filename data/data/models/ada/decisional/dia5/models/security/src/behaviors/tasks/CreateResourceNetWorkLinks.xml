@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.tasks.CreateResourceNetWorkLinks" source-version="1.0.0">
+    <description>For an gent to know how to create new resource links between a node and a list of objects that need this resource ('resourceReceivers' list). &#xD;
+&#xD;
+When several links should be created, the agent acts on each target by following the order of the elements into the 'resourceReceivers' list. </description>
+    <parameters>
+        <parameter name="resourceNode">
+            <description>The source resource node.</description>
+            <type>
+                <class name="agent.world.ResourceNode"/>
+            </type>
+        </parameter>
+        <parameter name="resourceReceivers">
+            <description>The target node.</description>
+            <type>
+                <list>
+                    <class name="agent.world.ResourceReceiver"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Link creation between nodes" disable-when-done="true">
+            <skills>
+                <skill name="behaviors.skills.primitives.CreateResourceNetWorkLinks" main="true">
+                    <parameter name="resourceNode">
+                        <value>
+                            <parameter>resourceNode</parameter>
+                        </value>
+                    </parameter>
+                    <parameter name="resourceReceivers">
+                        <value>
+                            <parameter>resourceReceivers</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>

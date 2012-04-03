@@ -34,6 +34,7 @@ integration.updateExtinguish = function( fire )
         meKnowledge:RC( eRC_ObjectExtinguished )
         return true
     end
+    DEC_Trace( "Extinguishing the fire" )
     return false
 end
 

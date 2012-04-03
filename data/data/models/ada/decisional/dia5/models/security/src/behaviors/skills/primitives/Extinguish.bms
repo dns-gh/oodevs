@@ -40,7 +40,6 @@ rootnode
 
     -- --------------------------------------------------------------------------------
     -- Move to position to extinguish cuurent fire
-    -- $$$ MIA: TODO A fire won't move...maybe call the query one time per Fire to extinguish. 
     -- --------------------------------------------------------------------------------
     activate = function( self )
         local Activate = Activate
@@ -53,7 +52,7 @@ rootnode
                 if self.position[ 1 ]:isReached() or self.arrived then
                     if self.fire:canBeExtinguished() then
                         Activate( skill.links.extinguish, 1, { fire = self.fire } )
-                    elseif not self.fire:isExtinguished() then -- agent cannot and fire burns...
+                    elseif not self.fire:isExtinguished() then -- agent cannot extinguish and fire burns...
                         self:impossibleToExtinguish( { fire = self.fire } )
                     end
                 else

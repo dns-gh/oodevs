@@ -70,7 +70,7 @@ rootnode
             -- Try to load all issued entities
             Activate( skill.links.reach,1, { destination = self.currentDestination } )
         else -- max entities are loaded, unload them on the destination.
-            if self.loadConcentration then
+            if self.loadConcentration then -- once arrived on loading position, 
                 Activate( skill.nodes.LoadCrowdConcentration, 1, { 
                           crowd = self.params.crowd, position = self.params.loadingPosition } )
             else
@@ -87,6 +87,17 @@ rootnode
 node "LoadCrowdConcentration"
 {
     feedbacks = { "loaded" },
+
+    -- -------------------------------------------------------------------------------- 
+    -- Init verify there is still a concentration on position
+    -- --------------------------------------------------------------------------------
+    create = function( self )
+        if not self.params.crowd:hasConcentration( self.params.position ) then
+            Feedback( self.feedbacks.failed ) -- agent has not the capability to transport the crowd
+            meKnowledge:sendMessage( "no crowd's concentration on loading position)" ) -- $$$ MIA TEMP
+            return -- no need to evaluate the end of the skill
+        end
+    end,
 
     -- -------------------------------------------------------------------------------- 
     -- Load entities and the unload them on the destination

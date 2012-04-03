@@ -25,5 +25,8 @@
         <feedback name="deconstructActionCompleted">
             <description>Sent once the work is deconstructed</description>
         </feedback>
+        <feedback name="deconstructionActionRunning">
+            <description>Sent once the work is being deconstructed.</description>
+        </feedback>
     </feedbacks>
 </skill>

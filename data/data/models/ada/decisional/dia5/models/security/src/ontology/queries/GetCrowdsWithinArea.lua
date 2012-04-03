@@ -8,10 +8,12 @@ queryImplementation "GetCrowdsWithinArea"
         local allRes = {}
 
         local simCrowds = integration.getCrowds() -- returns all known crowds around
+        
         for _, simCrowd in pairs( simCrowds ) do
-            local simCrowdPosition = integration.getHeadPosition( simCrowd )
+            local crowd = CreateKnowledge( ontology.classes.Crowd, simCrowd )
+            local simCrowdPosition = integration.getHeadPosition( crowd )
             if DEC_Geometrie_EstPointDansLocalisation( simCrowdPosition , params.area.source ) then
-                allRes[ #allRes + 1 ] = CreateKnowledge( ontology.classes.Crowd, simCrowd )
+                allRes[ #allRes + 1 ] = crowd
             end
         end
         -- affichePositions( allRes ) -- $$$ MIA: to debug. Remove for release

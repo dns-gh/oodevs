@@ -33,20 +33,26 @@ method "canBeCreated" (
     end )
 
 method "canBeDeconstructed" (
-    function( self )
-        return integration.canRemoveIt( self )
+    function( self, instantaneously )
+        return integration.canRemoveIt( self ) or instantaneously
     end )
 
 method "deconstructIt" ( masalife.brain.integration.startStopAction( 
 { 
-    start = integration.startRemoveIt, 
-    started = integration.updateRemoveIt, 
-    stop = integration.stopRemoveIt
+    start   = integration.startRemoveIt, 
+    started = integration.updateRemoveItSecu, 
+    stop    = integration.stopRemoveItSecu
 } ) )
 
 method "removeIt" (
     function( self )
+        meKnowledge:sendReport( eRC_FinDegagement )
         return integration.removeObjectInstantaneously( self )
+    end )
+    
+method "isDeconstructed" (
+    function( self )
+        return integration.isObjectRemoved( self ) or integration.buildLevel( self ) == 0
     end )
 
 -- --------------------------------------------------------------------------------

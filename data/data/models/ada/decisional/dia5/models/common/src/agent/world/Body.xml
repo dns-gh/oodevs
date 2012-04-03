@@ -586,12 +586,50 @@ Returns 'true' when checkPoint is filtering.</description>
             </return>
         </method>
         <method name="sendMessage">
-            <description>To send and display a string message.</description>
+            <description>To send a simple message.</description>
             <argument name="message">
                 <type>
                     <simple name="string"/>
                 </type>
             </argument>
+		</method>
+        
+        <method name="isInstalled">
+            <description>Returns 'true' once this element is installed on its current position. An installed unit is more efficient (perception, protection...)  that a moving unit. </description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="takeOff">
+            <description>For this element, to take off at the given height. Returns 'true' once the issued height is reached.</description>
+            <argument>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </argument>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="land">
+            <description>To land on the ground for flying agent.</description>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
+        <method name="isFlying">
+            <description>Returns 'true' if agent is currently flying.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
         </method>
     </methods>
 </interface>
