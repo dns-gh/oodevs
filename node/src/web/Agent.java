@@ -28,6 +28,7 @@ public class Agent {
         ctx.addServlet(files, "/css/*");
         ctx.addServlet(files, "/img/*");
         ctx.addServlet(files, "/js/*");
+        ctx.addServlet(files, "/favicon.ico");
 
         final ServletHolder proxy = new ServletHolder(new ProxyServlet.Transparent("/api", "localhost", hostPort));
         ctx.addServlet(proxy, "/api/*");
