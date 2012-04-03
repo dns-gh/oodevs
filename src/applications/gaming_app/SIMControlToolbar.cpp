@@ -129,6 +129,7 @@ SIMControlToolbar::SIMControlToolbar( QMainWindow* pParent, Controllers& control
     pStepButton_->setIconSet( MAKE_ICON( step ) );
     pStepButton_->setTextLabel( tr( "Step (S)" ) );
     pStepButton_->setEnabled( false );
+    pStepButton_->setShortcut( QKeySequence( Qt::Key_S ) );
 
     pSpeedSpinBox_ = new SpinBox( 1, 100000, 1, this, *this );
     pSpeedSpinBox_->setButtonSymbols( QSpinBox::PlusMinus );
@@ -366,6 +367,7 @@ void SIMControlToolbar::NotifyUpdated( const Simulation& simulation )
             pPlayButton_->setIconSet( stopPix_ );
             pPlayButton_->setTextLabel( tr( "Pause (P)" ) );
         }
+        pPlayButton_->setShortcut( QKeySequence( Qt::Key_P ) );
     }
 
     if( speed_ != simulation.GetSpeed() )
