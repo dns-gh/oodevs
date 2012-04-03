@@ -23,7 +23,6 @@ import freemarker.template.TemplateException;
 public class Handler extends HttpServlet {
 
     private static final long serialVersionUID = 1564095421395727712L;
-    @SuppressWarnings("unused")
     private static final Logger log_ = Logger.getLogger(Handler.class);
     private final Configuration cfg_;
     private final File root_;
@@ -69,7 +68,8 @@ public class Handler extends HttpServlet {
         try {
             ctx.process(root, reply.getWriter());
         } catch (final TemplateException e) {
-            throw new IOException("Unable to process template " + target + ": " + e);
+            log_.error(e.toString());
+            throw new IOException("Unable to process template " + target);
         }
     }
 

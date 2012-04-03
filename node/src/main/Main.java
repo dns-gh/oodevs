@@ -78,7 +78,7 @@ class Main {
             agent.exec();
         } catch (final Exception err) {
             log_.error(err.toString());
-            log_.error("Internal server error");
+            log_.error("Internal agent error");
         }
     }
 }

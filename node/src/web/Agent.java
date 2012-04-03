@@ -49,7 +49,8 @@ public class Agent {
             server_.start();
             server_.join();
         } catch (final Exception err) {
-            log_.error("unable to start server: " + err.toString());
+            log_.error(err.toString());
+            log_.error("Internal server error");
         }
     }
 }
