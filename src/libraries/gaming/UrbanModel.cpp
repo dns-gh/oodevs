@@ -25,6 +25,7 @@
 #include "clients_gui/Architecture.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "MT_Tools/MT_Logger.h"
+#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: UrbanModel constructor

@@ -11,7 +11,6 @@
 #define __DirectFire_h_
 
 #include "Fire_ABC.h"
-#include "protocol/Protocol.h"
 #include "tools/Resolver_ABC.h"
 
 namespace kernel
@@ -20,6 +19,11 @@ namespace kernel
     class Population_ABC;
     class Agent_ABC;
     class Positions;
+}
+
+namespace sword
+{
+    class StartUnitFire;
 }
 
 // =============================================================================

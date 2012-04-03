@@ -10,7 +10,6 @@
 #include "gaming_app_pch.h"
 #include "FirePropagationModifierPrototype.h"
 #include "clients_kernel/Units.h"
-#include "protocol/Protocol.h"
 #include "actions/ParameterList.h"
 
 using namespace sword;

@@ -9,6 +9,8 @@
 
 #include "gaming_pch.h"
 #include "ObjectKnowledge.h"
+#include "Tools.h"
+#include "statusicons.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
@@ -22,8 +24,7 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Units.h"
 #include "clients_kernel/Viewport_ABC.h"
-#include "Tools.h"
-#include "statusicons.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 

@@ -10,7 +10,6 @@
 #include "actions_pch.h"
 #include "Crowd.h"
 #include "clients_kernel/EntityResolver_ABC.h"
-#include "protocol/Protocol.h"
 
 using namespace kernel;
 using namespace actions;

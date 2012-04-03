@@ -14,9 +14,10 @@
 #include "ActionPublisher.h"
 #include "ActionLoader.h"
 #include "Publisher.h"
-#include "tools/ExerciseConfig.h"
 #include "clients_kernel/Controller.h"
 #include "dispatcher/Logger_ABC.h"
+#include "protocol/Protocol.h"
+#include "tools/ExerciseConfig.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace plugins::timeline;

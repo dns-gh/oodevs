@@ -146,6 +146,9 @@
     <ProjectReference Include="clients_kernel.vcxproj">
       <Project>{87eda2f3-cd3b-4878-951c-f221acb635ab}</Project>
     </ProjectReference>
+    <ProjectReference Include="dispatcher.vcxproj">
+      <Project>{e761ba44-a370-4f9d-97b5-a047e068ba5b}</Project>
+    </ProjectReference>
     <ProjectReference Include="ENT.vcxproj">
       <Project>{f03cbc87-1ed6-45ad-8ed7-9a94c248b556}</Project>
     </ProjectReference>

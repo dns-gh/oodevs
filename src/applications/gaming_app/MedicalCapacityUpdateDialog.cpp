@@ -22,6 +22,7 @@
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/MedicalTreatmentType.h"
 #include "gaming/MedicalTreatmentAttribute.h"
+#include "protocol/Protocol.h"
 #include <boost/bind.hpp>
 #include <boost/lexical_cast.hpp>
 

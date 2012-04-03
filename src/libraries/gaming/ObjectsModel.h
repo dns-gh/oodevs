@@ -10,7 +10,6 @@
 #ifndef __ObjectsModel_h_
 #define __ObjectsModel_h_
 
-#include "protocol/Protocol.h"
 #include "tools/Resolver.h"
 
 namespace sword

@@ -11,6 +11,7 @@
 #include "ObjectsModel.h"
 #include "ObjectFactory_ABC.h"
 #include "clients_kernel/Object_ABC.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 

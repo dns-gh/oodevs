@@ -12,6 +12,7 @@
 
 #include "PopulationConcentrationKnowledge.h"
 #include "PopulationFlowKnowledge.h"
+#include "Tools.h"
 #include "clients_kernel/ActionController.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
@@ -21,7 +22,7 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Viewport_ABC.h"
-#include "Tools.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 

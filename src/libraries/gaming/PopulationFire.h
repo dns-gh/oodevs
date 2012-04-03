@@ -18,6 +18,11 @@ namespace kernel
     class Population_ABC;
 }
 
+namespace sword
+{
+    class StartCrowdFire;
+}
+
 // =============================================================================
 /** @class  PopulationFire
     @brief  PopulationFire

@@ -12,6 +12,7 @@
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Controller.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 

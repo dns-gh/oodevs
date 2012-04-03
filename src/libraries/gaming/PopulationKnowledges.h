@@ -13,7 +13,6 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Creatable.h"
-#include "protocol/Protocol.h"
 #include "tools/Resolver.h"
 
 namespace kernel
@@ -21,6 +20,19 @@ namespace kernel
     class Controller;
     class KnowledgeGroup_ABC;
     class PopulationKnowledge_ABC;
+}
+
+namespace sword
+{
+    class CrowdKnowledgeCreation;
+    class CrowdKnowledgeUpdate;
+    class CrowdKnowledgeDestruction;
+    class CrowdConcentrationKnowledgeCreation;
+    class CrowdConcentrationKnowledgeUpdate;
+    class CrowdConcentrationKnowledgeDestruction;
+    class CrowdFlowKnowledgeCreation;
+    class CrowdFlowKnowledgeUpdate;
+    class CrowdFlowKnowledgeDestruction;
 }
 
 class PopulationKnowledgeFactory_ABC;

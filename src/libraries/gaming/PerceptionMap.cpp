@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "PerceptionMap.h"
 #include "clients_kernel/Controller.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 

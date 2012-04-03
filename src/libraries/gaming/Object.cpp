@@ -19,6 +19,7 @@
 #include "clients_kernel/Styles.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Units.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 

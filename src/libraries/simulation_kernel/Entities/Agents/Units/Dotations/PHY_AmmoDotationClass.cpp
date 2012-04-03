@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_AmmoDotationClass.h"
-#include "protocol/Protocol.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_String.h"
 

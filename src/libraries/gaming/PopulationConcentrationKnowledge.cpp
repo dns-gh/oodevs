@@ -11,7 +11,7 @@
 
 #include "gaming_pch.h"
 #include "PopulationConcentrationKnowledge.h"
-
+#include "Tools.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/PopulationConcentration_ABC.h"
 #include "clients_kernel/Controller.h"
@@ -20,7 +20,7 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/PopulationKnowledge_ABC.h"
-#include "Tools.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 

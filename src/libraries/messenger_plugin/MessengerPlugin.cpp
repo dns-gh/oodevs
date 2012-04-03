@@ -19,6 +19,7 @@
 #include "dispatcher/LinkResolver_ABC.h"
 #include "dispatcher/Services.h"
 #include "protocol/MessengerSenders.h"
+#include "protocol/Protocol.h"
 #include "tools/MessageDispatcher_ABC.h"
 
 using namespace plugins::messenger;

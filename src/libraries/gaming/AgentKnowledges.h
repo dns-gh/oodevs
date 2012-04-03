@@ -13,8 +13,14 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Creatable.h"
-#include "protocol/Protocol.h"
 #include "tools/Resolver.h"
+
+namespace sword
+{
+    class UnitKnowledgeCreation;
+    class UnitKnowledgeDestruction;
+    class UnitKnowledgeUpdate;
+}
 
 namespace kernel
 {

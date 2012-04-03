@@ -12,7 +12,6 @@
 
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "protocol/Protocol.h"
 
 namespace kernel
 {
@@ -22,6 +21,13 @@ namespace kernel
 namespace dispatcher
 {
     class Agent;
+}
+
+namespace sword
+{
+    class UnitAttributes;
+    class UnitCreation;
+    class UnitOrder;
 }
 
 namespace plugins

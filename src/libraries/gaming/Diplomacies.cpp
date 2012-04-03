@@ -13,6 +13,7 @@
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CommunicationHierarchies.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 

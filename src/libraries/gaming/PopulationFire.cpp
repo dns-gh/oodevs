@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "PopulationFire.h"
 #include "clients_kernel/Population_ABC.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 

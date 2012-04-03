@@ -40,7 +40,6 @@
 #include "Entities/Orders/MIL_OrderTypeParameter.h"
 #include "Knowledge/DEC_Knowledge_Population.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
-#include "protocol/Protocol.h"
 #include <geometry/Point2.h>
 #include <boost/bind.hpp>
 #include <directia/tools/binders/ScriptRef.h>

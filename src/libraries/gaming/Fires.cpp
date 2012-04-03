@@ -9,12 +9,13 @@
 
 #include "gaming_pch.h"
 #include "Fires.h"
-#include "clients_kernel/Controller.h"
 #include "IndirectFire.h"
 #include "DirectFire.h"
 #include "FireFactory.h"
 #include "Fire_ABC.h"
+#include "clients_kernel/Controller.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 

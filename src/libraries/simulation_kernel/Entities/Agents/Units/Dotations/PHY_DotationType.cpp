@@ -15,7 +15,6 @@
 #include "PHY_DotationType.h"
 #include "PHY_DotationCategory.h"
 #include "PHY_DotationLogisticType.h"
-#include "protocol/Protocol.h"
 #include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 

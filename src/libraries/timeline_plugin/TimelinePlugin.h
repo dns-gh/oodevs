@@ -36,6 +36,11 @@ namespace dispatcher
     class SimulationPublisher_ABC;
 }
 
+namespace sword
+{
+    class SimToclient;
+}
+
 namespace plugins
 {
 namespace timeline

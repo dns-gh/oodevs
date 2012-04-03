@@ -14,11 +14,6 @@
 #include "protocol/Protocol.h"
 #include <boost/optional.hpp>
 
-namespace sword
-{
-    class AutomatOrder;
-}
-
 class MIL_Automate;
 
 // =============================================================================

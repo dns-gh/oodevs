@@ -12,13 +12,17 @@
 
 #include "Casualties.h"
 #include "clients_kernel/Types.h"
-#include "protocol/Protocol.h"
 #include "tools/Resolver.h"
 
 namespace kernel
 {
     class Agent_ABC;
     class EquipmentType;
+}
+
+namespace sword
+{
+    class UnitFireDamages;
 }
 
 class Equipment;

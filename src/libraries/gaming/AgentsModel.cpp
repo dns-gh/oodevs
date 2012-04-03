@@ -14,6 +14,7 @@
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Inhabitant_ABC.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 

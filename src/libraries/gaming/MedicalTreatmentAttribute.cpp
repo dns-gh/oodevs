@@ -9,11 +9,12 @@
 
 #include "gaming_pch.h"
 #include "MedicalTreatmentAttribute.h"
+#include "Tools.h"
 #include "clients_gui/GroupDisplayer.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/MedicalTreatmentType.h"
-#include "Tools.h"
+#include "protocol/Protocol.h"
 #include <boost/lexical_cast.hpp>
 
 using namespace kernel;

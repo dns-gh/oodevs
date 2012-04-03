@@ -13,6 +13,7 @@
 #include "dispatcher/Profile_ABC.h"
 #include "protocol/ClientPublisher_ABC.h"
 #include "protocol/MessengerSenders.h"
+#include "protocol/Protocol.h"
 
 using namespace plugins::messenger;
 using namespace dispatcher;

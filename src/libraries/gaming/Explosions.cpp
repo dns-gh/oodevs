@@ -9,10 +9,11 @@
 
 #include "gaming_pch.h"
 #include "Explosions.h"
-#include "clients_kernel/Controller.h"
 #include "AgentFireResult.h"
 #include "FireResultFactory.h"
 #include "PopulationFireResult.h"
+#include "clients_kernel/Controller.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 

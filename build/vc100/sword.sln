@@ -181,6 +181,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "order_plugin", "order_plugi
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "bml_plugin_dll", "bml_plugin_dll.vcxproj", "{5E396036-6D00-4DF2-B4CB-15565E19E2D1}"
 	ProjectSection(ProjectDependencies) = postProject
+		{22BF4C12-A16A-4FDB-BC1D-EB14C1F0D2FF} = {22BF4C12-A16A-4FDB-BC1D-EB14C1F0D2FF}
 		{E761BA44-A370-4F9D-97B5-A047E068BA5B} = {E761BA44-A370-4F9D-97B5-A047E068BA5B}
 	EndProjectSection
 EndProject

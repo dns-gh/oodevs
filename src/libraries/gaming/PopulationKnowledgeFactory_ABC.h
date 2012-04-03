@@ -10,7 +10,10 @@
 #ifndef __PopulationKnowledgeFactory_ABC_h_
 #define __PopulationKnowledgeFactory_ABC_h_
 
-#include "protocol/Protocol.h"
+namespace sword
+{
+    class CrowdKnowledgeCreation;
+}
 
 namespace kernel
 {

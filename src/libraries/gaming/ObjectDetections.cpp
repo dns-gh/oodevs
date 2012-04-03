@@ -9,11 +9,12 @@
 
 #include "gaming_pch.h"
 #include "ObjectDetections.h"
-#include "clients_kernel/Controller.h"
 #include "Attr_Def.h"
+#include "clients_kernel/Controller.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/Positions.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 

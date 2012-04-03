@@ -20,7 +20,6 @@
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Decision/DEC_Tools.h"
 #include "Decision/DEC_Gen_Object.h"
-#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: PHY_ActionConstructObject constructor

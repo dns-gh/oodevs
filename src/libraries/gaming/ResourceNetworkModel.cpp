@@ -12,7 +12,6 @@
 #include "ResourceNetwork.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/ResourceNetworkSelectionObserver.h"
-#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: ResourceNetworkModel constructor

@@ -9,7 +9,6 @@
 
 #include "gaming_app_pch.h"
 #include "MinePrototype.h"
-#include "protocol/Protocol.h"
 #include "clients_gui/LoadableSpinBox.h"
 #include "actions/ParameterList.h"
 

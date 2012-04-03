@@ -11,7 +11,6 @@
 #include "LocationSerializer.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Location_ABC.h"
-#include "protocol/Protocol.h"
 
 using namespace sword;
 using namespace kernel;

@@ -18,6 +18,7 @@
 #include "clients_kernel/Polygon.h"
 #include "clients_kernel/Rectangle.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 

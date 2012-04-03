@@ -47,6 +47,7 @@
 #include "clients_kernel/Inhabitant_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "protocol/MsgsSimToClientListener.h"
+#include "protocol/Protocol.h"
 #include "protocol/ReplaySenders.h"
 #include "tools/MessageDispatcher_ABC.h"
 #include "tools/MessageSender_ABC.h"

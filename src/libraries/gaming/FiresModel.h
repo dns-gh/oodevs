@@ -10,8 +10,13 @@
 #ifndef __FiresModel_h_
 #define __FiresModel_h_
 
-#include "protocol/Protocol.h"
 #include "tools/Resolver.h"
+
+namespace sword
+{
+    class StartUnitFire;
+    class StartCrowdFire;
+}
 
 namespace kernel
 {

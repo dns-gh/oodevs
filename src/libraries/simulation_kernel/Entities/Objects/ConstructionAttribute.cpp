@@ -13,7 +13,7 @@
 #include "Entities\Agents\Units\Dotations\PHY_DotationType.h"
 #include "Entities\Agents\Units\Dotations\PHY_DotationCategory.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
-#include "protocol/Protocol.h"
+#include "protocol/Authentication.h"
 #include <xeumeuleu/xml.hpp>
 #include "MIL_AgentServer.h"
 #include "Entities/MIL_EntityManager.h"
