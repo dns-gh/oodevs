@@ -18,7 +18,9 @@
 #include "SpawnCapacity.h"
 #include "Decision/DEC_Gen_Object.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
+#include "Entities/Automates/MIL_Automate.h"
 #include "Entities/MIL_Army.h"
+#include "Entities/Objects/LogisticAttribute.h"
 #include "Entities/Populations/MIL_PopulationElement_ABC.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
@@ -122,9 +124,15 @@ void MIL_Object_ABC::Initialize( const DEC_Gen_Object& genObject )
     ObstacleAttribute& attribute = GetAttribute< ObstacleAttribute >();
     attribute.SetActivationTime( genObject.GetActivationTime() );
     attribute.SetActivityTime( genObject.GetMinesActivityTime() );
+    const MIL_Automate* tc2 = genObject.GetTC2();
+    if( tc2 )
+    {
+        MIL_AutomateLOG* logSuperior = tc2->GetBrainLogistic();
+        if( logSuperior )
+            GetAttribute< LogisticAttribute, LogisticAttribute >() = LogisticAttribute( *logSuperior );
+    }
     // $$$$ ABR 2012-03-23: TODO ?
     //genObject.GetDensity
-    //genObject.GetTC2()
 }
 
 // -----------------------------------------------------------------------------
