@@ -129,8 +129,8 @@ private:
             return false;
 
         QString text = item->text( 0 );
-        ValuedListItem* valuedItem = static_cast< ValuedListItem* >( item );
-        if( valuedItem->IsA< kernel::Entity_ABC >() )
+        ValuedListItem* valuedItem = dynamic_cast< ValuedListItem* >( item );
+        if( valuedItem && valuedItem->IsA< kernel::Entity_ABC >() )
             if( kernel::Entity_ABC* entity = dynamic_cast< kernel::Entity_ABC* >( valuedItem->GetValue< kernel::Entity_ABC >() ) )
             {
                 text += " " + QString::number( entity->GetId() );

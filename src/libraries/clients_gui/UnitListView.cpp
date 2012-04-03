@@ -11,13 +11,16 @@
 
 #include "clients_gui_pch.h"
 #include "UnitListView.h"
+#include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentComposition.h"
 #include "clients_kernel/AgentNature.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/AgentTypes.h"
+#include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatComposition.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/ComponentType.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "ValuedDragObject.h"
 #include "resources.h"
 #include "Tools.h"
@@ -33,8 +36,10 @@ using namespace gui;
 // -----------------------------------------------------------------------------
 UnitListView::UnitListView( QWidget* parent, Controllers& controllers, const AgentTypes& list, ItemFactory_ABC& factory )
     : ListView< UnitListView >( parent, *this, factory )
-    , controllers_( controllers )
-    , types_      ( list )
+    , controllers_    ( controllers )
+    , types_          ( list )
+    , selectedAgent_  ( controllers )
+    , selectedAutomat_( controllers )
 {
     setMinimumSize( 1, 1 );
     addColumn( tools::translate( "gui::UnitListView", "Unit type" ) );
@@ -314,4 +319,51 @@ Q3DragObject* UnitListView::dragObject()
     else if( pItem->IsA< const AutomatType >() )
         return new ValuedDragObject( pItem->GetValue< const AutomatType >(), this );
     return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitListView::BeforeSelection
+// Created: ABR 2012-04-03
+// -----------------------------------------------------------------------------
+void UnitListView::BeforeSelection()
+{
+    selectedAgent_ = 0;
+    selectedAutomat_ = 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitListView::Select
+// Created: ABR 2012-04-03
+// -----------------------------------------------------------------------------
+void UnitListView::Select( const kernel::Agent_ABC& agent )
+{
+    selectedAgent_ = &agent;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitListView::Select
+// Created: ABR 2012-04-03
+// -----------------------------------------------------------------------------
+void UnitListView::Select( const kernel::Automat_ABC& automat )
+{
+    selectedAutomat_ = &automat;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UnitListView::AfterSelection
+// Created: ABR 2012-04-03
+// -----------------------------------------------------------------------------
+void UnitListView::AfterSelection()
+{
+    if( selectedAgent_ && !sorting_.empty() )
+        SearchAndSelect( selectedAgent_->GetType().GetName().c_str() );
+    else if( selectedAutomat_ && sorting_.empty() )
+        SearchAndSelect( selectedAutomat_->GetType().GetName().c_str() );
+    else if( selectedAgent_ && sorting_.empty() )
+    {
+        const kernel::TacticalHierarchies* hierarchy = selectedAgent_->Retrieve< kernel::TacticalHierarchies >();
+        const kernel::Automat_ABC* automat = static_cast< const kernel::Automat_ABC* >( hierarchy->GetSuperior() );
+        if( automat )
+            SearchAndSelect( automat->GetType().GetName().c_str() );
+    }
 }

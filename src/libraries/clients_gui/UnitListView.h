@@ -15,9 +15,11 @@
 
 namespace kernel
 {
+    class Agent_ABC;
     class AgentComposition;
     class AgentTypes;
     class AgentNature;
+    class Automat_ABC;
     class AutomatComposition;
     class AutomatType;
     class Controllers;
@@ -39,6 +41,9 @@ class UnitListView : public ListView< UnitListView >
                    , public tools::Observer_ABC
                    , public tools::ElementObserver_ABC< kernel::ModelLoaded >
                    , public tools::ElementObserver_ABC< kernel::ModelUnLoaded >
+                   , public tools::SelectionObserver_ABC
+                   , public tools::SelectionObserver_Base< kernel::Agent_ABC >
+                   , public tools::SelectionObserver_Base< kernel::Automat_ABC >
 {
 public:
     //! @name Constructors/Destructor
@@ -60,6 +65,11 @@ public:
 private:
     //! @name Helpers
     //@{
+    virtual void BeforeSelection();
+    virtual void AfterSelection();
+    virtual void Select( const kernel::Agent_ABC& agent );
+    virtual void Select( const kernel::Automat_ABC& automat );
+
     virtual void NotifyUpdated( const kernel::ModelLoaded& );
     virtual void NotifyUpdated( const kernel::ModelUnLoaded& );
     void DisplayList();
@@ -75,9 +85,11 @@ private:
 private:
     //! @name Member data
     //@{
-    kernel::Controllers& controllers_;
-    const kernel::AgentTypes& types_;
-    std::string sorting_;
+    kernel::Controllers&                        controllers_;
+    const kernel::AgentTypes&                   types_;
+    std::string                                 sorting_;
+    kernel::SafePointer< kernel::Agent_ABC >    selectedAgent_;
+    kernel::SafePointer< kernel::Automat_ABC >  selectedAutomat_;
     //@}
 };
 
