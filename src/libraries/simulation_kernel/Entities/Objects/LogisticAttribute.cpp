@@ -63,6 +63,16 @@ LogisticAttribute::LogisticAttribute()
 }
 
 // -----------------------------------------------------------------------------
+// Name: LogisticAttribute constructor
+// Created: LDC 2012-04-03
+// -----------------------------------------------------------------------------
+LogisticAttribute::LogisticAttribute( MIL_AutomateLOG& superior )
+    : idFromXML_( 0 )
+{
+    pLogisticHierarchy_.reset( new logistic::ObjectLogisticHierarchy( superior ) );
+}
+
+// -----------------------------------------------------------------------------
 // Name: LogisticAttribute destructor
 // Created: JCR 2008-05-22
 // -----------------------------------------------------------------------------

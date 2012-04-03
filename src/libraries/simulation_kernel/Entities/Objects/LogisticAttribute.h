@@ -46,6 +46,7 @@ public:
              LogisticAttribute();
     explicit LogisticAttribute( xml::xistream& xis );
     explicit LogisticAttribute( const sword::MissionParameter_Value& attributes );
+    explicit LogisticAttribute( MIL_AutomateLOG& superior );
     virtual ~LogisticAttribute();
     //@}
 
