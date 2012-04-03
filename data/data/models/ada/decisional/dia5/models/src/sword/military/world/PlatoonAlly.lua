@@ -663,7 +663,7 @@ return
         return F_Pion_GeteEtatEchelon( meKnowledge.source )
     end,
     loadIt = function( self )
-        return integration.loadFriend( self, false ) -- refugee
+        return integration.loadFriend( self ) -- refugee
     end,
     unloadIt = function( self )
         return integration.unloadFriend( self )

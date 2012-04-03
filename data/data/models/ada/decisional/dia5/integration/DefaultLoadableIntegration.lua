@@ -3,7 +3,7 @@
 -- --------------------------------------------------------------------------------
 
 integration.dischargeAgent = function( unit, camp )
-    if DEC_Agent_EstRefugie( meKnowledge.source, unit.source ) then
+    if DEC_Agent_EstRefugie( unit.source ) then
         if DEC_Agent_RefugieEstEmbarque( meKnowledge.source, unit.source ) then
             DEC_Agent_DebarquerRefugiesDansCamp( meKnowledge.source, unit.source, camp.source )
             return true
@@ -80,11 +80,11 @@ end
 integration.canLoadFriend = function( unit, onlyLoadable )
     return true -- DEC_Agent_PeutTransporterPion( unit.source , onlyLoadable )
 end
-integration.loadFriend = function( unit, onlyLoadable )
-    if DEC_Agent_EstRefugie( meKnowledge.source, unit.source ) then
+integration.loadFriend = function( unit )
+    if DEC_Agent_EstRefugie( unit.source ) then
         DEC_Agent_OrienterEtEmbarquer( meKnowledge.source, unit.source )
     else
-        DEC_Transport_EmbarquerPionSansDelais( unit.source, onlyLoadable )
+        DEC_Transport_EmbarquerPionSansDelais( unit.source, false )
     end
     return true
 end
