@@ -216,9 +216,9 @@ void ADN_Equipement_Data::ModificatorPostureInfos::WriteArchive( xml::xostream& 
 // -----------------------------------------------------------------------------
 ADN_Equipement_Data::IndirectAmmoInfos::IndirectAmmoInfos()
     : nIndirectType_       ( (E_TypeMunitionTirIndirect)0 )
-    , nIntervention_       ( 0 )
-    , rDispersionX_        ( 0.0 )
-    , rDispersionY_        ( 0.0 )
+    , nIntervention_       ( 1 )
+    , rDispersionX_        ( 1.0 )
+    , rDispersionY_        ( 1.0 )
     , rNeutralizationRatio_( 1 )
     , vModifStance_        ()
     , deployTime_          ( "0s" )
