@@ -8,9 +8,10 @@
 // *****************************************************************************
 
 #include "gaming_pch.h"
+#include "Reports.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/GlTools_ABC.h"
-#include "Reports.h"
+#include "protocol/Protocol.h"
 #include "reports/ReportFactory.h"
 #include "reports/Report.h"
 #include "reports/RcEntityResolver_ABC.h"

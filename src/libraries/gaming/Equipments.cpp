@@ -15,6 +15,7 @@
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Tools.h"
 #include "ENT/ENT_Enums_Gen.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 

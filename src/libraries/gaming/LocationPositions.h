@@ -12,7 +12,11 @@
 
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Drawable_ABC.h"
-#include "protocol/Protocol.h"
+
+namespace sword
+{
+    class Location;
+}
 
 namespace kernel
 {

@@ -12,7 +12,6 @@
 #include "Exercise.h"
 #include "Filter_ABC.h"
 #include "clients_kernel/AgentType.h"
-#include "protocol/Protocol.h"
 #include "clients_kernel/FragOrder.h"
 #include "clients_kernel/Mission.h"
 #include "clients_kernel/DecisionalModel.h"

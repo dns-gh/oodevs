@@ -10,7 +10,10 @@
 #ifndef __Equipment_h_
 #define __Equipment_h_
 
-#include "protocol/Protocol.h"
+namespace sword
+{
+    class EquipmentDotations_EquipmentDotation;
+}
 
 namespace kernel
 {

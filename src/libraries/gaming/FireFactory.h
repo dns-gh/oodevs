@@ -10,7 +10,11 @@
 #ifndef __FireFactory_h_
 #define __FireFactory_h_
 
-#include "protocol/Protocol.h"
+namespace sword
+{
+    class StartUnitFire;
+    class StartCrowdFire;
+}
 
 class Fire_ABC;
 class Model;

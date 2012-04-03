@@ -13,7 +13,6 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
-#include "protocol/Protocol.h"
 #include "tools/Resolver.h"
 
 namespace kernel
@@ -21,6 +20,13 @@ namespace kernel
     class Controller;
     class Entity_ABC;
     class Displayer_ABC;
+}
+
+namespace sword
+{
+    class Report;
+    class InvalidateReport;
+    class Trace;
 }
 
 class Report;

@@ -10,11 +10,11 @@
 #include "gaming_pch.h"
 #include "FireResultFactory.h"
 #include "AgentFireResult.h"
-#include "PopulationFireResult.h"
-#include "Model.h"
-#include "StaticModel.h"
 #include "AgentsModel.h"
+#include "Model.h"
+#include "PopulationFireResult.h"
 #include "Simulation.h"
+#include "StaticModel.h"
 #include "clients_kernel/ObjectTypes.h"
 
 // -----------------------------------------------------------------------------

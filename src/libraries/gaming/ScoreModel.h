@@ -12,7 +12,6 @@
 
 #include "tools/ElementObserver_ABC.h"
 #include "tools/Resolver.h"
-#include "protocol/Protocol.h"
 #include "protocol/AarSenders.h"
 
 namespace kernel

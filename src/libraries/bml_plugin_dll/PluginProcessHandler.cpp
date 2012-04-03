@@ -8,9 +8,9 @@
 // *****************************************************************************
 
 #include "PluginProcessHandler.h"
+#include "dispatcher/Config.h"
 #include "dispatcher/Logger_ABC.h"
 #include "dispatcher/StaticModel.h"
-#include "dispatcher/Config.h"
 #include "protocol/Simulation.h"
 #include <windows.h>
 #include <winbase.h>

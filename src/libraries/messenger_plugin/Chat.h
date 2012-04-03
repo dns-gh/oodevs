@@ -10,12 +10,15 @@
 #ifndef __Chat_h_
 #define __Chat_h_
 
-#include "protocol/Protocol.h"
-
 namespace dispatcher
 {
     class Profile_ABC;
     class ClientPublisher_ABC;
+}
+
+namespace sword
+{
+    class TextMessage;
 }
 
 namespace tools

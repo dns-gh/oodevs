@@ -14,7 +14,6 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "protocol/Protocol.h"
 
 namespace kernel
 {
@@ -22,6 +21,12 @@ namespace kernel
     class Controller;
     class Displayer_ABC;
     class DecisionalModel;
+}
+
+namespace sword
+{
+    class AutomatAttributes;
+    class AutomatOrder;
 }
 
 class Publisher_ABC;

@@ -13,8 +13,14 @@
 #include "clients_kernel/SimpleHierarchies.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "protocol/Protocol.h"
 #include "tools/Resolver_ABC.h"
+
+namespace sword
+{
+    class Diffusion;
+    class LimitUpdate;
+    class PhaseLineUpdate;
+}
 
 namespace kernel
 {

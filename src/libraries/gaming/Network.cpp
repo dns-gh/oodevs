@@ -17,7 +17,6 @@
 #include "clients_kernel/Types.h"
 #include "clients_kernel/Logger_ABC.h"
 #include "clients_kernel/Tools.h"
-#include "protocol/Protocol.h"
 #pragma warning( disable : 4127 4355 4511 4512 )
 #pragma warning( push )
 #pragma warning( disable : 4702 )

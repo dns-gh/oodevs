@@ -11,7 +11,6 @@
 #define __MeteoModel_h_
 
 #include "meteo/MeteoModel_ABC.h"
-#include "protocol/Protocol.h"
 #include <list>
 
 namespace kernel

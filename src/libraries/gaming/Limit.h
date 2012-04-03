@@ -12,6 +12,12 @@
 
 #include "TacticalLine_ABC.h"
 
+namespace sword
+{
+    class LimitCreation;
+    class PhaseLineCreation;
+}
+
 namespace kernel
 {
     class Controller;

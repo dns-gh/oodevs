@@ -13,7 +13,6 @@
 #include "PHY_ComposanteType_ABC.h"
 #include "Entities/Agents/Units/Categories/PHY_Volume.h"
 #include "Entities/Agents/Units/Categories/PHY_Protection.h"
-#include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------

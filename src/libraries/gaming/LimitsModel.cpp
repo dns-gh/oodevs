@@ -11,6 +11,7 @@
 #include "LimitsModel.h"
 #include "TacticalLine_ABC.h"
 #include "TacticalLineFactory.h"
+#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: LimitsModel constructor

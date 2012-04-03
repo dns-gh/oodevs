@@ -10,7 +10,11 @@
 #ifndef __ObjectFactory_ABC_h_
 #define __ObjectFactory_ABC_h_
 
-#include "protocol/Protocol.h"
+namespace sword
+{
+    class ObjectCreation;
+    class ObjectAttributes;
+}
 
 namespace kernel
 {

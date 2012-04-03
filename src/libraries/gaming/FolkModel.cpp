@@ -9,8 +9,9 @@
 
 #include "gaming_pch.h"
 #include "FolkModel.h"
-#include "protocol/SimulationSenders.h"
 #include "clients_kernel/Controller.h"
+#include "protocol/Protocol.h"
+#include "protocol/SimulationSenders.h"
 #include <boost/bind.hpp>
 #include <algorithm>
 

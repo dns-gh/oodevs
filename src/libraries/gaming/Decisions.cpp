@@ -9,6 +9,8 @@
 
 #include "gaming_pch.h"
 #include "Decisions.h"
+#include "AutomatDecisions.h"
+#include "statusicons.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/DecisionalModel.h"
@@ -18,8 +20,7 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/Tools.h"
-#include "AutomatDecisions.h"
-#include "statusicons.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 

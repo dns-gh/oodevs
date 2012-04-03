@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "AgentFireResult.h"
 #include "Equipment.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 

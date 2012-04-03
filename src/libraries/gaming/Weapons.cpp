@@ -15,6 +15,7 @@
 #include "clients_kernel/Options.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/WeaponSystemType.h"
+#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: Weapons constructor

@@ -12,7 +12,6 @@
 
 #include "Agent_ABC.h"
 #include "dispatcher/Observer.h"
-#include "protocol/Protocol.h"
 #include <vector>
 
 namespace dispatcher
@@ -23,6 +22,12 @@ namespace dispatcher
 namespace rpr
 {
     class EntityTypeResolver_ABC;
+}
+
+namespace sword
+{
+    class UnitAttributes;
+    class UnitEnvironmentType;
 }
 
 namespace plugins

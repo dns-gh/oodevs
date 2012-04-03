@@ -10,7 +10,10 @@
 #ifndef __MSEllipse_h_
 #define __MSEllipse_h_
 
-#include "protocol/Protocol.h"
+namespace sword
+{
+    class Location;
+}
 
 namespace kernel
 {

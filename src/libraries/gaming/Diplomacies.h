@@ -13,7 +13,6 @@
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Karma.h"
-#include "protocol/Protocol.h"
 #include "tools/Resolver_ABC.h"
 
 namespace sword

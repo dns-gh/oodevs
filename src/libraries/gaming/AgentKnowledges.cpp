@@ -9,9 +9,10 @@
 
 #include "gaming_pch.h"
 #include "AgentKnowledges.h"
-#include "clients_kernel/AgentKnowledge_ABC.h"
 #include "AgentKnowledgeFactory_ABC.h"
+#include "clients_kernel/AgentKnowledge_ABC.h"
 #include "clients_kernel/Controller.h"
+#include "protocol/Protocol.h"
 
 #pragma warning( disable : 4355 )
 

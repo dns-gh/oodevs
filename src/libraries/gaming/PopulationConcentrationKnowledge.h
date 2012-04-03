@@ -17,7 +17,6 @@
 #include "clients_kernel/OptionalValue.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "protocol/Protocol.h"
 
 namespace kernel
 {
@@ -26,6 +25,12 @@ namespace kernel
     class Controller;
     class Displayer_ABC;
     class PopulationConcentration_ABC;
+}
+
+namespace sword
+{
+    class CrowdConcentrationKnowledgeCreation;
+    class CrowdConcentrationKnowledgeUpdate;
 }
 
 // =============================================================================

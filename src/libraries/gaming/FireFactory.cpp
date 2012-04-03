@@ -8,14 +8,15 @@
 // *****************************************************************************
 
 #include "gaming_pch.h"
-#include "FireFactory.h"
+#include "AgentsModel.h"
 #include "DirectFire.h"
+#include "FireFactory.h"
 #include "IndirectFire.h"
 #include "Model.h"
-#include "StaticModel.h"
-#include "AgentsModel.h"
 #include "PopulationFire.h"
+#include "StaticModel.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
+#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: FireFactory constructor

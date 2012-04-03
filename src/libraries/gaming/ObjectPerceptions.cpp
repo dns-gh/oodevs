@@ -9,6 +9,7 @@
 
 #include "gaming_pch.h"
 #include "ObjectPerceptions.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 

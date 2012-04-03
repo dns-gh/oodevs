@@ -10,7 +10,10 @@
 #ifndef __UserProfileFactory_ABC_h_
 #define __UserProfileFactory_ABC_h_
 
-#include "protocol/Protocol.h"
+namespace sword
+{
+    class ProfileCreation;
+}
 
 class UserProfile;
 

@@ -13,7 +13,7 @@
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Network/NET_ASN_Tools.h"
-#include "protocol/Protocol.h"
+#include "protocol/Authentication.h"
 #include "simulation_terrain/TER_World.h"
 
 // -----------------------------------------------------------------------------

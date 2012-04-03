@@ -10,8 +10,13 @@
 #ifndef __LimitsModel_h_
 #define __LimitsModel_h_
 
-#include "protocol/Protocol.h"
 #include "tools/Resolver.h"
+
+namespace sword
+{
+    class LimitCreation;
+    class PhaseLineCreation;
+}
 
 class TacticalLine_ABC;
 class TacticalLineFactory;

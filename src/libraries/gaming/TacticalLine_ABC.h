@@ -12,7 +12,14 @@
 
 #include "clients_kernel/TacticalLine_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "protocol/Protocol.h"
+
+namespace sword
+{
+    class Diffusion;
+    class LimitUpdate;
+    class Location;
+    class PhaseLineUpdate;
+}
 
 namespace kernel
 {

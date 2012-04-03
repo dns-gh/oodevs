@@ -10,13 +10,15 @@
 #ifndef __AgentsModel_h_
 #define __AgentsModel_h_
 
-#include "protocol/Protocol.h"
 #include "tools/Resolver.h"
 
 namespace sword
 {
-    class CrowdCreation;
     class AutomatCreation;
+    class AutomatDestruction;
+    class CrowdCreation;
+    class CrowdDestruction;
+    class PopulationCreation;
     class UnitCreation;
     class UnitDestruction;
 }

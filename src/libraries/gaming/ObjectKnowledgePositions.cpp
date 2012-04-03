@@ -11,6 +11,7 @@
 #include "ObjectKnowledgePositions.h"
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/ObjectKnowledge_ABC.h"
+#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectKnowledgePositions constructor

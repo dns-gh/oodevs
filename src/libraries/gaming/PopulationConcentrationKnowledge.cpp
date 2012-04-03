@@ -19,6 +19,7 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include "clients_kernel/Tools.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 

@@ -11,7 +11,6 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RoePopulation.h"
-#include "protocol/Protocol.h"
 
 PHY_RoePopulation::T_RoePopulationMap PHY_RoePopulation::roePopulations_;
 const PHY_RoePopulation               PHY_RoePopulation::none_( "None", PHY_RoePopulation::eNone, sword::UnitAttributes::no_rule );

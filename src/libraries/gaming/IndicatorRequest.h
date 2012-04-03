@@ -10,7 +10,6 @@
 #ifndef __IndicatorRequest_h_
 #define __IndicatorRequest_h_
 
-#include "protocol/Protocol.h"
 #include "protocol/AarSenders.h"
 #include "protocol/ServerPublisher_ABC.h"
 

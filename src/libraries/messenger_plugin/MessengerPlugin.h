@@ -11,7 +11,6 @@
 #define __MessengerPlugin_h_
 
 #include "dispatcher/Plugin_ABC.h"
-#include "protocol/Protocol.h"
 
 namespace sword
 {
@@ -24,6 +23,12 @@ namespace dispatcher
     class ClientPublisher_ABC;
     class LinkResolver_ABC;
     class CompositeRegistrable;
+}
+
+namespace sword
+{
+    class SimToClient;
+    class ClientToMessenger;
 }
 
 namespace tools

@@ -12,10 +12,11 @@
 #include "EventListener_ABC.h"
 #include "ComponentTypes_ABC.h"
 #include "ComponentTypeVisitor_ABC.h"
-#include "rpr/EntityTypeResolver_ABC.h"
+#include "clients_kernel/AgentType.h"
 #include "dispatcher/Agent_ABC.h"
 #include "dispatcher/Equipment.h"
-#include "clients_kernel/AgentType.h"
+#include "protocol/Protocol.h"
+#include "rpr/EntityTypeResolver_ABC.h"
 #include <spatialcontainer/TerrainData.h> // $$$$ _RC_ SLI 2011-02-07: dependency on pathfind!!!
 #include <algorithm>
 #include <boost/foreach.hpp>

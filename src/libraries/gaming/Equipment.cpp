@@ -10,6 +10,7 @@
 #include "gaming_pch.h"
 #include "Equipment.h"
 #include "clients_kernel/EquipmentType.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 

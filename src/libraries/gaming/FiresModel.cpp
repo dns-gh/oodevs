@@ -11,6 +11,7 @@
 #include "FiresModel.h"
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/Population_ABC.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 

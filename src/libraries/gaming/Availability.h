@@ -10,7 +10,6 @@
 #ifndef __Availability_h_
 #define __Availability_h_
 
-#include "protocol/Protocol.h"
 #include "tools/Resolver_ABC.h"
 
 namespace kernel

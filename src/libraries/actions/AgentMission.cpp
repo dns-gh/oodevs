@@ -12,7 +12,6 @@
 #include "clients_kernel/OrderType.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
-#include "protocol/Protocol.h"
 #include "protocol/ServerPublisher_ABC.h"
 #include "protocol/SimulationSenders.h"
 

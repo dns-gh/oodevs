@@ -10,8 +10,6 @@
 #ifndef __TacticalLineFactory_h_
 #define __TacticalLineFactory_h_
 
-#include "protocol/Protocol.h"
-
 namespace kernel
 {
     class Controllers;

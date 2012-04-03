@@ -16,8 +16,13 @@
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Displayable_ABC.h"
 #include "clients_kernel/EntityImplementation.h"
-#include "protocol/Protocol.h"
 #include "tools/Resolver.h"
+
+namespace sword
+{
+    class ObjectKnowledgeCreation;
+    class ObjectKnowledgeUpdate;
+}
 
 namespace kernel
 {

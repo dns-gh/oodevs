@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "Position.h"
-#include "protocol/Protocol.h"
 #include <geocoord/PlanarCartesian.h>
 #include <geocoord/MGRS.h>
 #include <geocoord/Geodetic.h>

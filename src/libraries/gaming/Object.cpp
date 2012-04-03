@@ -16,6 +16,7 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Styles.h"
 #include "clients_kernel/Tools.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 

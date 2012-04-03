@@ -16,13 +16,24 @@
 #include "clients_kernel/EntityImplementation.h"
 #include "clients_kernel/Displayable_ABC.h"
 #include "clients_kernel/PopulationKnowledge_ABC.h"
-#include "protocol/Protocol.h"
 
 namespace kernel
 {
     class CoordinateConverter_ABC;
     class Displayer_ABC;
     class PopulationKnowledge_ABC;
+}
+
+namespace sword
+{
+    class CrowdKnowledgeCreation;
+    class CrowdKnowledgeUpdate;
+    class CrowdConcentrationKnowledgeCreation;
+    class CrowdConcentrationKnowledgeUpdate;
+    class CrowdConcentrationKnowledgeDestruction;
+    class CrowdFlowKnowledgeCreation;
+    class CrowdFlowKnowledgeUpdate;
+    class CrowdFlowKnowledgeDestruction;
 }
 
 class PopulationPartKnowledge_ABC;

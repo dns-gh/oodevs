@@ -15,7 +15,6 @@
 #include "Humans.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "protocol/Protocol.h"
-#include "protocol/Protocol.h"
 
 namespace kernel
 {

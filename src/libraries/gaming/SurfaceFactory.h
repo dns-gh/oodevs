@@ -10,7 +10,6 @@
 #ifndef __SurfaceFactory_h_
 #define __SurfaceFactory_h_
 
-#include "protocol/Protocol.h"
 #include "tools/Resolver_ABC.h"
 
 namespace kernel
@@ -19,6 +18,11 @@ namespace kernel
     class SensorType;
     class Agent_ABC;
     class CoordinateConverter_ABC;
+}
+
+namespace sword
+{
+    class VisionCone;
 }
 
 class Surface;

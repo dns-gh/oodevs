@@ -10,7 +10,11 @@
 #ifndef __FireResultFactory_h_
 #define __FireResultFactory_h_
 
-#include "protocol/Protocol.h"
+namespace sword
+{
+    class UnitFireDamages;
+    class CrowdFireDamages;
+}
 
 class AgentFireResult;
 class PopulationFireResult;

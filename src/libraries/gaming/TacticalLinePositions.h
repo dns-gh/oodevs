@@ -13,7 +13,14 @@
 #include "clients_kernel/Positions.h"
 #include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
-#include "protocol/Protocol.h"
+
+namespace sword
+{
+    class LimitUpdate;
+    class Location;
+    class PhaseLineUpdate;
+    class TacticalLine;
+}
 
 namespace kernel
 {

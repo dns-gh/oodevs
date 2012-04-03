@@ -13,6 +13,7 @@
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "protocol/Protocol.h"
 
 // -----------------------------------------------------------------------------
 // Name: ObjectPositions constructor

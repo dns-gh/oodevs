@@ -18,6 +18,11 @@ namespace kernel
     class ObjectKnowledge_ABC;
 }
 
+namespace sword
+{
+    class ObjectKnowledgeUpdate;
+}
+
 // =============================================================================
 /** @class  ObjectKnowledgePositions
     @brief  ObjectKnowledgePositions

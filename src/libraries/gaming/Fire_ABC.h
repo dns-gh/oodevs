@@ -12,11 +12,16 @@
 
 #include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Drawable_ABC.h"
-#include "protocol/Protocol.h"
 
 namespace kernel
 {
     class Entity_ABC;
+}
+
+namespace sword
+{
+    class StopCrowdFire;
+    class StopUnitFire;
 }
 
 // =============================================================================

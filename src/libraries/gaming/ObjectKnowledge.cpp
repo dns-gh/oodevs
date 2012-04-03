@@ -22,6 +22,7 @@
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/Tools.h"
 #include "statusicons.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 

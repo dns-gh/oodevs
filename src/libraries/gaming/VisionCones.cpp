@@ -10,11 +10,12 @@
 #include "gaming_pch.h"
 #include "VisionCones.h"
 #include "Surface.h"
-#include "clients_kernel/GlTools_ABC.h"
 #include "SurfaceFactory.h"
 #include "VisionMap.h"
+#include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/Workers.h"
 #include "clients_kernel/WorkerTask_ABC.h"
+#include "protocol/Protocol.h"
 
 using namespace kernel;
 

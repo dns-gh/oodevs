@@ -19,6 +19,12 @@ namespace kernel
     class Location_ABC;
 }
 
+namespace sword
+{
+    class ObjectCreation;
+    class ObjectUpdate;
+}
+
 // =============================================================================
 /** @class  ObjectPositions
     @brief  ObjectPositions
