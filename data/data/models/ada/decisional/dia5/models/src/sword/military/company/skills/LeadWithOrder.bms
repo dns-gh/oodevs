@@ -107,7 +107,7 @@ create = function( self )
         myself.feedback = false
         self.companyTask = integration.RetrieveAutomateTask( meKnowledge, self.params.companyTask )
         self.companyTask:init( self.params, self.parameters )
-        myself.needCR = false
+        myself.numberOfConstructedObject = 0
 
         if self.params.allInFront and self.params.allInFront ~= NIL then
             self.nbrFront = #self.parameters.commandingEntities -- All platoons in front
@@ -153,11 +153,9 @@ activate = function( self )
 
     manageAddedAndDeletedUnits( self )
 
-    if myself.needCR then -- On affiche un CR demandant l'ordre de conduite poursuivre
-        if myself.leadData.NombreTotalSitesAConstruire ==  myself.numberOfConstructedObject then -- On affiche le CR une fois tous les sites construits
-            Activate( skill.nodes.RC, 1, { RC = eRC_AttenteOrdrePoursuivre } )
-        end    
-    end
+    if myself.leadData.NombreTotalSitesAConstruire ==  myself.numberOfConstructedObject then -- On affiche le CR une fois tous les sites construits
+        Activate( skill.nodes.RC, 1, { RC = eRC_AttenteOrdrePoursuivre } )
+    end    
 
     local echelons = integration.getPionsInEchelons( self.parameters.commandingEntities )
     local pionsPE =  echelons[1]
