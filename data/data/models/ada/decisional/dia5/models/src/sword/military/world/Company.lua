@@ -23,7 +23,8 @@ masalife.brain.communication.setMessageTreatment( "constructedObject",
       meKnowledge.constructedObjects = meKnowledge.constructedObjects or {}
       meKnowledge.constructedObjects[#meKnowledge.constructedObjects + 1] = content.object
       meKnowledge.constructedObjects[#meKnowledge.constructedObjects].alreadyGiven = false
-      myself.numberOfConstructedObject = myself.numberOfConstructedObject + 1
+      myself.numberOfConstructedObject = myself.numberOfConstructedObject or 0
+      myself.numberOfConstructedObject = myself.numberOfConstructedObject + 1 
     end )
     
 masalife.brain.communication.setMessageTreatment( "initializeConstructedObject",

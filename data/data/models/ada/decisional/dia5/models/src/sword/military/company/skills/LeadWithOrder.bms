@@ -108,7 +108,6 @@ create = function( self )
         self.companyTask = integration.RetrieveAutomateTask( meKnowledge, self.params.companyTask )
         self.companyTask:init( self.params, self.parameters )
         myself.needCR = false
-        myself.numberOfConstructedObject = 0
 
         if self.params.allInFront and self.params.allInFront ~= NIL then
             self.nbrFront = #self.parameters.commandingEntities -- All platoons in front
