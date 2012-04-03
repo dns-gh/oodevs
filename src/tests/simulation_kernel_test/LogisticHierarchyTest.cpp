@@ -76,7 +76,6 @@ namespace {
         BOOST_CHECK_EQUAL_COLLECTIONS( wantedOutput.begin(), wantedOutput.end(), output.begin(), output.end() );
     }
 
-
 }
 
 BOOST_FIXTURE_TEST_SUITE( LogisticHierarchyTestSuite, DotationsFixture )

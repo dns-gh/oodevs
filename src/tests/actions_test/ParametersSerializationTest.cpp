@@ -58,7 +58,7 @@ namespace
         xis >> xml::start( "parameter" );
         std::auto_ptr< actions::Parameter_ABC > parameter( creator( definition, xis ) );
         std::auto_ptr< sword::MissionParameter > message( new sword::MissionParameter() );
-        parameter->CommitTo( *message );        
+        parameter->CommitTo( *message );
         xml::xostringstream xos;
         xos << xml::start( "document" );
         ((actions::Parameter_ABC*)parameter.get())->Serialize( xos );

@@ -1177,7 +1177,7 @@ BOOST_FIXTURE_TEST_CASE( log_supply_handling_creation_to_client_is_converted, Co
     content.mutable_log_supply_handling_creation()->mutable_request()->set_id( 7 );
     content.mutable_log_supply_handling_creation()->set_tick( 9 );
     content.mutable_log_supply_handling_creation()->mutable_supplier()->mutable_automat()->set_id( 7 );
-    content.mutable_log_supply_handling_creation()->mutable_transporters_provider()->mutable_formation()->set_id( 8 );    
+    content.mutable_log_supply_handling_creation()->mutable_transporters_provider()->mutable_formation()->set_id( 8 );
     MOCK_EXPECT( client, SendSimToClient ).once().with( constraint( msg, "context: 42 message { log_supply_handling_creation { request { id: 7 } supplier { automat { id: 7 } } tick_creation: 9 transporters_provider { formation { id: 8 } } } }" ) );
     converter.ReceiveSimToClient( msg );
 }

@@ -79,7 +79,6 @@ BOOST_AUTO_TEST_CASE( TestComputePolygonScale )
     BOOST_CHECK_EQUAL( true, output.GetBorderPoints() == result );
 }
 
-
 BOOST_AUTO_TEST_CASE( AdvanceAlongFuseau )
 {
     WorldInitialize( "worldwide/Paris" );
@@ -103,7 +102,7 @@ BOOST_AUTO_TEST_CASE( AdvanceAlongFuseau )
         result = fuseau.GetPositionAtAdvance( 70 );
         BOOST_CHECK_EQUAL( result.rX_, 20 );
         BOOST_CHECK_EQUAL( result.rY_, 20 );
-    }    
+    }
     {
         MT_Vector2D result;
         MT_Vector2D orientation( 1, 1 );
@@ -140,5 +139,5 @@ BOOST_AUTO_TEST_CASE( AdvanceAlongFuseau )
         BOOST_CHECK_EQUAL( result.rY_, 20 );
     }
 
-    TER_World::DestroyWorld(); 
+    TER_World::DestroyWorld();
 }

@@ -154,7 +154,7 @@ BOOST_AUTO_TEST_CASE( Utf8conversionTest_performance_test )
     message.mutable_sub_chouette()->add_sub_machins()->set_stuff( "colimaçon" );
     message.mutable_sub_chouette()->set_bidule( "près" );
     //long before = GetTickCount();
-    for ( int i = 0; i < 10000; ++i )
+    for( int i = 0; i < 10000; ++i )
     {
         Utf8Converter::ConvertCP1252StringsToUtf8( message );
         Utf8Converter::ConvertUtf8StringsToCP1252( message );

@@ -445,7 +445,6 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestIndirectFireFromZone, Fixture )
         "    <result function='plot' input='count' type='unsigned'/>"
         "</indicator>" );
 
-
     boost::shared_ptr< Task > task( facade.CreateTask( xis >> xml::start( "indicator" ) ) );
     task->Receive( TestTools::BeginTick() );
     task->Receive( TestTools::MakePosition( "31TBN7728449218", 13 ) ); // in zone
@@ -1628,7 +1627,6 @@ BOOST_FIXTURE_TEST_CASE( Facade_TestEfficaciteTirsIndirects2, Fixture )
     MakeExpectation( expectedResult );
     task->Commit();
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: Facade_TestLogEvacuation
