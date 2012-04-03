@@ -49,9 +49,9 @@ class ResourceNetwork : public kernel::ResourceNetwork_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             ResourceNetwork( kernel::Controllers& controllers, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver, kernel::PropertiesDictionary* dico );
-             ResourceNetwork( kernel::Controllers& controllers, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver, const sword::UrbanAttributes_Infrastructures& msg, kernel::PropertiesDictionary* dico );
-             ResourceNetwork( kernel::Controllers& controllers, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver, const sword::ObjectAttributeResourceNetwork& msg, kernel::PropertiesDictionary* dico );
+             ResourceNetwork( kernel::Controllers& controllers, kernel::Entity_ABC& entity, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver, kernel::PropertiesDictionary* dico );
+             ResourceNetwork( kernel::Controllers& controllers, kernel::Entity_ABC& entity, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver, const sword::UrbanAttributes_Infrastructures& msg, kernel::PropertiesDictionary* dico );
+             ResourceNetwork( kernel::Controllers& controllers, kernel::Entity_ABC& entity, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver, const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver, const sword::ObjectAttributeResourceNetwork& msg, kernel::PropertiesDictionary* dico );
     virtual ~ResourceNetwork();
     //@}
 
@@ -78,7 +78,7 @@ private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    unsigned int id_;
+    kernel::Entity_ABC& entity_;
     const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver_;
     const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver_;
     const tools::StringResolver< kernel::ResourceNetworkType >& resourceNetworkResolver_;

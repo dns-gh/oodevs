@@ -43,6 +43,6 @@ ResourceNetworkModel::~ResourceNetworkModel()
 void ResourceNetworkModel::Create( kernel::Entity_ABC& entity )
 {
     kernel::PropertiesDictionary* dico = entity.Retrieve< kernel::PropertiesDictionary >();
-    ResourceNetwork* element = new ResourceNetwork( controllers_, entity.GetId(), model_.urbanObjects_, model_.objects_, staticModel_.objectTypes_, dico );
+    ResourceNetwork* element = new ResourceNetwork( controllers_, entity, model_.urbanObjects_, model_.objects_, staticModel_.objectTypes_, dico );
     entity.Attach< kernel::ResourceNetwork_ABC >( *element );
 }

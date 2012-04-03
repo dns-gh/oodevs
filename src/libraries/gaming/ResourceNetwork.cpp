@@ -35,9 +35,9 @@ double ResourceNetwork::stippleFactor_ = 1;
 // Name: ResourceNetwork constructor
 // Created: JSR 2011-03-04
 // -----------------------------------------------------------------------------
-ResourceNetwork::ResourceNetwork( Controllers& controllers, unsigned int id, const tools::Resolver_ABC< TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::StringResolver< ResourceNetworkType >& resourceNetworkResolver, PropertiesDictionary* dico )
+ResourceNetwork::ResourceNetwork( Controllers& controllers, kernel::Entity_ABC& entity, const tools::Resolver_ABC< TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::StringResolver< ResourceNetworkType >& resourceNetworkResolver, PropertiesDictionary* dico )
     : controllers_            ( controllers )
-    , id_                     ( id )
+    , entity_                 ( entity )
     , urbanResolver_          ( urbanResolver )
     , objectResolver_         ( objectResolver )
     , resourceNetworkResolver_( resourceNetworkResolver )
@@ -50,9 +50,9 @@ ResourceNetwork::ResourceNetwork( Controllers& controllers, unsigned int id, con
 // Name: ResourceNetwork constructor
 // Created: JSR 2010-08-19
 // -----------------------------------------------------------------------------
-ResourceNetwork::ResourceNetwork( Controllers& controllers, unsigned int id, const tools::Resolver_ABC< TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::StringResolver< ResourceNetworkType >& resourceNetworkResolver, const sword::UrbanAttributes_Infrastructures& msg, PropertiesDictionary* dico )
+ResourceNetwork::ResourceNetwork( Controllers& controllers, kernel::Entity_ABC& entity, const tools::Resolver_ABC< TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::StringResolver< ResourceNetworkType >& resourceNetworkResolver, const sword::UrbanAttributes_Infrastructures& msg, PropertiesDictionary* dico )
     : controllers_            ( controllers )
-    , id_                     ( id )
+    , entity_                 ( entity )
     , urbanResolver_          ( urbanResolver )
     , objectResolver_         ( objectResolver )
     , resourceNetworkResolver_( resourceNetworkResolver )
@@ -67,9 +67,9 @@ ResourceNetwork::ResourceNetwork( Controllers& controllers, unsigned int id, con
 // Name: ResourceNetwork constructor
 // Created: JSR 2010-08-31
 // -----------------------------------------------------------------------------
-ResourceNetwork::ResourceNetwork( Controllers& controllers, unsigned int id, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::StringResolver< ResourceNetworkType >& resourceNetworkResolver, const sword::ObjectAttributeResourceNetwork& msg, PropertiesDictionary* dico )
+ResourceNetwork::ResourceNetwork( Controllers& controllers, kernel::Entity_ABC& entity, const tools::Resolver_ABC< gui::TerrainObjectProxy >& urbanResolver, const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::StringResolver< ResourceNetworkType >& resourceNetworkResolver, const sword::ObjectAttributeResourceNetwork& msg, PropertiesDictionary* dico )
     : controllers_            ( controllers )
-    , id_                     ( id )
+    , entity_                 ( entity )
     , urbanResolver_          ( urbanResolver )
     , objectResolver_         ( objectResolver )
     , resourceNetworkResolver_( resourceNetworkResolver )
@@ -112,10 +112,7 @@ void ResourceNetwork::Draw( const Viewport_ABC& viewport, const GlTools_ABC& too
         return;
     if( filter == 3 && !IsSelected() ) // selected outgoing
         return;
-    const Entity_ABC* object = FindEntity( id_ );
-    if( !object )
-        return;
-    Point2f from = GetPosition( *object );
+    Point2f from = GetPosition( entity_ );
     glPushAttrib( GL_LINE_BIT );
     glLineWidth( 1.f );
     for( CIT_ResourceNodes node = resourceNodes_.begin(); node != resourceNodes_.end(); ++node )
@@ -176,9 +173,8 @@ void ResourceNetwork::DoUpdate( const sword::ObjectUpdate& message )
 {
     if( message.attributes().has_resource_networks() )
     {
-        Entity_ABC* entity = objectResolver_.Find( id_ );
         for( int i = 0; i < message.attributes().resource_networks().network_size(); ++i )
-            UpdateNetwork( entity, message.attributes().resource_networks().network( i ) );
+            UpdateNetwork( &entity_, message.attributes().resource_networks().network( i ) );
     }
 }
 
@@ -190,9 +186,8 @@ void ResourceNetwork::DoUpdate( const sword::UrbanUpdate& message )
 {
     if( message.attributes().has_infrastructures() )
     {
-        Entity_ABC* entity = urbanResolver_.Find( id_ );
         for( int i = 0; i < message.attributes().infrastructures().resource_network_size(); ++i )
-            UpdateNetwork( entity, message.attributes().infrastructures().resource_network( i ) );
+            UpdateNetwork( &entity_, message.attributes().infrastructures().resource_network( i ) );
     }
 }
 
@@ -236,23 +231,10 @@ void ResourceNetwork::UpdateNetwork( Entity_ABC* entity, const sword::ResourceNe
     }
     if( entity )
     {
-        const QString baseName = tools::translate( "ResourceNetwork", "Resources Networks" ) + "/" + resource.c_str() + "/";
-        if( node.totalFlow_ != oldFlow && node.links_.size() )
-            controllers_.controller_.Update( DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Total flow" ) ) );
-        if( node.stock_ != oldStock )
-            controllers_.controller_.Update( DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Stock" ) ) );
-        if( node.maxStock_ != oldMaxStock )
-            controllers_.controller_.Update( DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Maximal stock" ) ) );
-        if( node.production_ != oldProduction )
-            controllers_.controller_.Update( DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Production" ) ) );
-        if( node.consumption_ != oldConsumption )
-            controllers_.controller_.Update( DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Consumption" ) ) );
-        if( node.critical_ != oldCritical )
-            controllers_.controller_.Update( DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Vital consumption" ) ) );
-        if( node.needs_ != oldNeeds )
-            controllers_.controller_.Update( DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Needs" ) ) );
-        if( node.satisfaction_ != oldSatisfaction )
-            controllers_.controller_.Update( DictionaryUpdated( *entity, baseName + tools::translate( "ResourceNetwork", "Satisfaction" ) ) );
+        if( ( node.totalFlow_ != oldFlow && node.links_.size() ) ||  node.stock_ != oldStock || node.maxStock_ != oldMaxStock ||
+            node.production_ != oldProduction || node.consumption_ != oldConsumption || node.critical_ != oldCritical ||
+            node.needs_ != oldNeeds || node.satisfaction_ != oldSatisfaction )
+                controllers_.controller_.Update( DictionaryUpdated( *entity, tools::translate( "ResourceNetwork", "Resources Networks" ) + "/" + resource.c_str() ) );
     }
 }
 
@@ -294,15 +276,15 @@ void ResourceNetwork::CreateDictionary( PropertiesDictionary& dico ) const
     for( CIT_ResourceNodes node = resourceNodes_.begin(); node != resourceNodes_.end(); ++node )
     {
         const QString baseName = tools::translate( "ResourceNetwork", "Resources Networks" ) + "/" + node->second.resource_.c_str() + "/";
-        dico.Register( *this, baseName + tools::translate( "ResourceNetwork", "Enabled" ), node->second.isEnabled_ );
-        dico.Register( *this, baseName + tools::translate( "ResourceNetwork", "Total flow" ), node->second.totalFlow_ );
-        dico.Register( *this, baseName + tools::translate( "ResourceNetwork", "Maximal stock" ), node->second.maxStock_ );
-        dico.Register( *this, baseName + tools::translate( "ResourceNetwork", "Stock" ), node->second.stock_ );
-        dico.Register( *this, baseName + tools::translate( "ResourceNetwork", "Production" ), node->second.production_ );
-        dico.Register( *this, baseName + tools::translate( "ResourceNetwork", "Consumption" ), node->second.consumption_ );
-        dico.Register( *this, baseName + tools::translate( "ResourceNetwork", "Vital consumption" ), node->second.critical_ );
-        dico.Register( *this, baseName + tools::translate( "ResourceNetwork", "Needs" ), node->second.needs_ );
-        dico.Register( *this, baseName + tools::translate( "ResourceNetwork", "Satisfaction" ), node->second.satisfaction_ );
+        dico.Register( entity_, baseName + tools::translate( "ResourceNetwork", "Enabled" ), node->second.isEnabled_ );
+        dico.Register( entity_, baseName + tools::translate( "ResourceNetwork", "Total flow" ), node->second.totalFlow_ );
+        dico.Register( entity_, baseName + tools::translate( "ResourceNetwork", "Maximal stock" ), node->second.maxStock_ );
+        dico.Register( entity_, baseName + tools::translate( "ResourceNetwork", "Stock" ), node->second.stock_ );
+        dico.Register( entity_, baseName + tools::translate( "ResourceNetwork", "Production" ), node->second.production_ );
+        dico.Register( entity_, baseName + tools::translate( "ResourceNetwork", "Consumption" ), node->second.consumption_ );
+        dico.Register( entity_, baseName + tools::translate( "ResourceNetwork", "Vital consumption" ), node->second.critical_ );
+        dico.Register( entity_, baseName + tools::translate( "ResourceNetwork", "Needs" ), node->second.needs_ );
+        dico.Register( entity_, baseName + tools::translate( "ResourceNetwork", "Satisfaction" ), node->second.satisfaction_ );
     }
 }
 
