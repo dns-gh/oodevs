@@ -174,12 +174,12 @@ kernel::Agent_ABC* AgentFactory::Create( const sword::UnitCreation& message )
     result->Attach< kernel::TacticalHierarchies >     ( *new AgentHierarchies< kernel::TacticalHierarchies >     ( controllers_.controller_, *result, model_.agents_ ) );
 
     result->Attach< kernel::HumanFactors_ABC >( *new HumanFactors( *result, controllers_.controller_, dico ) );
-    result->Attach( *new Reinforcements( controllers_.controller_, model_.agents_, dico ) );
+    result->Attach( *new Reinforcements( *result, controllers_.controller_, model_.agents_, dico ) );
     result->Attach<kernel::Dotations_ABC>( *new Dotations( controllers_.controller_, static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Equipments( controllers_.controller_, static_.objectTypes_, dico, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Lendings( controllers_.controller_, model_.agents_, static_.objectTypes_ ) );
     result->Attach( *new Borrowings( controllers_.controller_, model_.agents_, static_.objectTypes_ ) );
-    result->Attach( *new Transports( controllers_.controller_, model_.agents_, dico ) );
+    result->Attach( *new Transports( *result, controllers_.controller_, model_.agents_, dico ) );
     result->Attach( *new Troops( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new TroopsCompatibilityVersion( controllers_.controller_, model_.agents_, model_.teams_, model_.teams_ ) );
     result->Attach( *new Contaminations( controllers_.controller_, *result, static_.objectTypes_, dico ) );

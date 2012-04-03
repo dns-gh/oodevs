@@ -1477,6 +1477,10 @@
         <source>Towed units</source>
         <translation>Unités remorquées</translation>
     </message>
+    <message>
+        <source>Transports</source>
+        <translation>Transport</translation>
+    </message>
 </context>
 <context>
     <name>Urban</name>

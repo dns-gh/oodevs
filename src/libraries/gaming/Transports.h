@@ -39,7 +39,7 @@ class Transports : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Transports( kernel::Controller& controller, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, kernel::PropertiesDictionary& dico );
+             Transports( kernel::Entity_ABC& entity, kernel::Controller& controller, const tools::Resolver_ABC< kernel::Agent_ABC >& resolver, kernel::PropertiesDictionary& dico );
     virtual ~Transports();
     //@}
 
@@ -69,6 +69,7 @@ private:
 public:
     //! @name Member data
     //@{
+    kernel::Entity_ABC& entity_;
     kernel::Controller& controller_;
     const tools::Resolver_ABC< kernel::Agent_ABC >& resolver_;
     const kernel::Agent_ABC* transporter_;
