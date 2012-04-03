@@ -155,7 +155,7 @@ bool DEC_ActionFunctions::IsAgentLoaded( DEC_Decision_ABC& callerAgent, DEC_Deci
 // Name: DEC_ActionFunctions::IsRefugee
 // Created: DDA 2011-03-05
 // -----------------------------------------------------------------------------
-bool DEC_ActionFunctions::IsRefugee( DEC_Decision_ABC& callerAgent, DEC_Decision_ABC* pPion )
+bool DEC_ActionFunctions::IsRefugee( DEC_Decision_ABC* pPion )
 {
     if( !pPion )
         return false;

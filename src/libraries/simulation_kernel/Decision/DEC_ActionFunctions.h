@@ -76,7 +76,7 @@ public:
     static void LoadAgentInCamp          ( DEC_Decision_ABC& callerAgent, DEC_Decision_ABC* pPion );
     static void UnLoadAgentInCamp        ( DEC_Decision_ABC& callerAgent, DEC_Decision_ABC* pPion, boost::shared_ptr< DEC_Knowledge_Object > pCampKnowledge );
     static bool IsAgentLoaded            ( DEC_Decision_ABC& callerAgent, DEC_Decision_ABC* pPion );
-    static bool IsRefugee                ( DEC_Decision_ABC& callerAgent, DEC_Decision_ABC* pPion );
+    static bool IsRefugee                ( DEC_Decision_ABC* pPion );
 
     static bool Stock_IsExtractPossible( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, const std::vector< const PHY_DotationCategory* >& dotationTypes );
     static bool Stock_IsSupplyPossible( MIL_AgentPion& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, const std::vector< const PHY_DotationCategory* >& dotationTypes );
