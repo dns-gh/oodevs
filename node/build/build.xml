@@ -30,7 +30,10 @@
 		<jar destfile="${jar.dir}/${ant.project.name}.jar">
 			<fileset dir="${out.dir}/classes" />
 			<restrict>
-				<name name="**/*.class" />
+				<or>
+					<name name="**/*.class" />
+					<name name="**/*.properties" />
+				</or>
 				<archives>
 					<zips>
 						<path refid="external.jars" />
