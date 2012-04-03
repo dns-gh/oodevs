@@ -63,7 +63,7 @@ void Logistics::DoUpdate( const sword::LogMedicalState& message )
 {
     if( ! holder_.Retrieve< MedicalStates >() )
     {
-        MedicalStates* ext = new MedicalStates( controller_, static_.objectTypes_, model_.GetAutomatResolver(), dico_);
+        MedicalStates* ext = new MedicalStates( holder_, controller_, static_.objectTypes_, model_.GetAutomatResolver(), dico_);
         holder_.Attach( *ext );
         ext->DoUpdate( message );
     }

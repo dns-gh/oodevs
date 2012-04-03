@@ -42,7 +42,7 @@ class MedicalStates : public kernel::Extension_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             MedicalStates( kernel::Controller& controller, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver, kernel::PropertiesDictionary& dico );
+             MedicalStates( kernel::Entity_ABC& entity, kernel::Controller& controller, const tools::Resolver_ABC< kernel::EquipmentType >& resolver, const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver, kernel::PropertiesDictionary& dico );
     virtual ~MedicalStates();
     //@}
 
@@ -74,6 +74,7 @@ private:
 public:
     //! @name Member data
     //@{
+    kernel::Entity_ABC& entity_;
     kernel::Controller& controller_;
     const tools::Resolver_ABC< kernel::EquipmentType >& resolver_;
     const tools::Resolver_ABC< kernel::Automat_ABC >& automatResolver_;

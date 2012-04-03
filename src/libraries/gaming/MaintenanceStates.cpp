@@ -62,8 +62,8 @@ void MaintenanceStates::CreateDictionary( kernel::PropertiesDictionary& dico ) c
 // -----------------------------------------------------------------------------
 void MaintenanceStates::DoUpdate( const sword::LogMaintenanceState& message )
 {
-    std::set< std::string > updated;
-    UPDATE_PROPERTY( message, bChainEnabled_, chain, "Maintenance system", updated );
+    if( message.has_chain()  )
+        bChainEnabled_ = message.chain() != 0;
 
     if( message.has_work_rate()  )
         nWorkRate_ = message.work_rate() + 1; // $$$$ AGE 2006-06-27:
@@ -93,7 +93,7 @@ void MaintenanceStates::DoUpdate( const sword::LogMaintenanceState& message )
             dispoRepairers_[i] = Availability( resolver_, message.repairers().elem( i ) );
     }
 
-    if( !updated.empty() )
+    if( message.has_priorities() || message.has_work_rate() || message.has_tactical_priorities() || message.has_chain() )
         controller_.Update( kernel::DictionaryUpdated( entity_, tools::translate( "MaintenanceStates", "Maintenance system" ) ) );
     controller_.Update( *this );
 }
