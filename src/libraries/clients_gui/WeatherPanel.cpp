@@ -91,7 +91,7 @@ WeatherPanel::~WeatherPanel()
 void WeatherPanel::CreateLocalParameters()
 {
     parametersGroup_ = new Q3GroupBox( 2, Qt::Horizontal, tr( "Time and position parameters" ), localLayout_ );
-    localLayout_->setMinimumHeight( 150 );
+    localLayout_->setMinimumHeight( 400 );
     new QLabel( tr( "Start time:" ), parametersGroup_ );
     startTime_ = new QDateTimeEdit( parametersGroup_ );
     new QLabel( tr( "End time:" ), parametersGroup_ );

@@ -1863,10 +1863,6 @@ Voulez-vous le supprimer?</translation>
 <context>
     <name>gui::WeatherWidget</name>
     <message>
-        <source>Wind speed/direction:</source>
-        <translation>Vitesse/direction du vent:</translation>
-    </message>
-    <message>
         <source>Clouds floor/ceiling/density:</source>
         <translation>Plancher/plafond/densité nuages:</translation>
     </message>
@@ -1877,6 +1873,14 @@ Voulez-vous le supprimer?</translation>
     <message>
         <source>Temperature:</source>
         <translation>Temperature:</translation>
+    </message>
+    <message>
+        <source>Wind speed:</source>
+        <translation>Vitesse du vent:</translation>
+    </message>
+    <message>
+        <source>Wind direction:</source>
+        <translation>Direction du vent:</translation>
     </message>
 </context>
 </TS>

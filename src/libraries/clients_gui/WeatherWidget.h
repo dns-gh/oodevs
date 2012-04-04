@@ -49,7 +49,7 @@ public:
 protected:
     //! @name Member data
     //@{
-    QSpinBox* windDirection_;
+    QDial* windDirection_;
     QSpinBox* windSpeed_;
     QSpinBox* temperature_;
     QSpinBox* cloudFloor_;

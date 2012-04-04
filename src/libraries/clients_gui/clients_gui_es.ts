@@ -1101,19 +1101,19 @@ Voulez-vous le supprimer?</translation>
         <translation>Attributs</translation>
     </message>
     <message>
-        <source>Choose a file</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cannot load %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Load from file</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Description</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Choose a file</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cannot load %1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1128,16 +1128,16 @@ Voulez-vous le supprimer?</translation>
         <translation>Type d&apos;obstacle:</translation>
     </message>
     <message>
-        <source>Reserved obstacle activated:</source>
-        <translation>Obstacle de manoeuvre activé:</translation>
-    </message>
-    <message>
         <source>Activation time:</source>
         <translation>Délai avant activation:</translation>
     </message>
     <message>
         <source>Activity time:</source>
         <translation type="unfinished">duración de actividad:</translation>
+    </message>
+    <message>
+        <source>Reserved obstacle activated:</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -1864,19 +1864,23 @@ Voulez-vous le supprimer?</translation>
 <context>
     <name>gui::WeatherWidget</name>
     <message>
-        <source>Wind speed/direction:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Clouds floor/ceiling/density:</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Weather type:</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Temperature:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wind speed:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Wind direction:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clouds floor/ceiling/density:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
