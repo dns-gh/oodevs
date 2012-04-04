@@ -19,5 +19,12 @@
 				</type>
 			</return>
 		</method>
+		<method name="getDefendingPoint">
+			<return>
+				<type>
+					<class name="directia.core.Object"/>
+				</type>
+			</return>
+		</method>
 	</methods>
 </class>

@@ -32,6 +32,14 @@
 				<nil/>
 			</default>
 		</parameter>
+		<parameter name="meetingPoint" nullable="true">
+			<type>
+				<class name="sword.military.knowledge.decisional.Reachable"/>
+			</type>
+			<default>
+				<nil/>
+			</default>
+		</parameter>
 	</parameters>
 	<stages>
 		<stage label="Défendre">

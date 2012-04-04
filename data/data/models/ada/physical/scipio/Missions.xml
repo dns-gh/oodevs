@@ -2651,6 +2651,7 @@
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="objective" name="Zone à défendre" optional="false" type="Polygon"/>
       <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions" optional="true" type="Point"/>
+      <parameter dia-name="meetingPoint" name="Point de regroupement" optional="true" type="Point"/>
       <parameter dia-name="modeDeploiement" name="Mode deploiement" optional="true" type="Enumeration">
         <value id="0" name="en_carre"/>
         <value id="1" name="en_triangle"/>
@@ -3060,4 +3061,4 @@
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PoursuivreConvoi" id="406" name="Poursuivre convoi"/>
   </fragorders>
 </missions>
-<!-- signature="0815997421" -->
+<!-- signature="1130180631" -->

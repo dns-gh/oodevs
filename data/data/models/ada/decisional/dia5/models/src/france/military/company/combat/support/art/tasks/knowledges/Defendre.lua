@@ -4,7 +4,16 @@ return
         myself.leadData.firePositionIndex = 0
     end,
 
+    -- point du stationnement
     getReachable = function( self, params )
+        if params.meetingPoint and params.meetingPoint ~= NIL then
+           return params.meetingPoint
+        end
+        return params.objective
+    end,
+    
+    -- point à défendre
+    getDefendingPoint = function( self, params )
         return params.objective
     end,
     
