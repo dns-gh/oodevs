@@ -569,6 +569,7 @@ public:
         eRC_TrafficablePositionFindingInZone,
         eRC_PrisSousTirMunition,
         eRC_NotInSameUndergroundNetwork,
+        eRC_TerroristDropped,
         eLast
     };
     //@}

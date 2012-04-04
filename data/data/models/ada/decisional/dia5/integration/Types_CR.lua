@@ -430,4 +430,5 @@ eRC_FinDevalorisation = 415
 eRC_TrafficablePositionFindingInZone = 416
 eRC_PrisSousTirMunition = 417
 eRC_NotInSameUndergroundNetwork = 418
-eNbr = 419
+eRC_TerroristDropped = 419
+eNbr = 420

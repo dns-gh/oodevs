@@ -433,7 +433,9 @@ eRC_DebutDevalorisation = 414
 eRC_FinDevalorisation = 415
 eRC_TrafficablePositionFindingInZone = 416
 eRC_PrisSousTirMunition = 417
-eNbr = 418
+eRC_NotInSameUndergroundNetwork = 418
+eRC_TerroristDropped = 419
+eNbr = 420
 --[[// Parametre : T_ConnaissanceObjet
 ]]--[[// Parametre : delai (float),
 ]]--[[// Parametre : T_Pion

@@ -611,5 +611,8 @@
     <parameter type="ResourceType"/>
   </report>
   <report category="operational" id="418" message="Enter and exit are not in the same underground network"/>
+  <report category="operational" id="419" message="Terrorist %1 dropped">
+    <parameter type="AgentKnowledge"/>
+  </report>
 </reports>
-<!-- signature="2477482722" -->
+<!-- signature="0818543071" -->
