@@ -229,7 +229,7 @@ namespace
     {
         BOOST_FOREACH( const std::string& arg, args )
         {
-            size_t separator = arg.find_first_of( ' ' );
+            size_t separator = arg.find_last_of( ' ' );
             if( separator == std::string::npos )
                 BOOST_CHECK( IsQuoted( arg ) );
             else
