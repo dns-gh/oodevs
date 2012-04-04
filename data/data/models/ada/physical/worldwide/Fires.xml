@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
 <fires model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.0.0/physical/Fires.xsd">
-  <cell-size value="100"/>
+  <cell-size value="50"/>
   <fire decrease-rate="1" increase-rate="20" initial-heat="100" max-heat="1000" name="Wild Fire Class A">
     <extinguisher-agents>
       <extinguisher-agent agent="Extinguisher Agent - Foam" heat-decrease-rate="5"/>
@@ -232,4 +232,4 @@
     </urban-modifiers>
   </fire>
 </fires>
-<!-- signature="0762279590" -->
+<!-- signature="2679710951" -->

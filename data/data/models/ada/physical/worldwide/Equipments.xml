@@ -10755,14 +10755,14 @@
     <weapon-systems/>
     <human-protections/>
     <objects>
-      <object construction-time-factor="0s" destruction-time-factor="0s" initial-construction-time="180s" initial-destruction-time="0s" type="checkpoint"/>
+      <object construction-time-factor="0s" destruction-time-factor="0s" initial-construction-time="180s" initial-destruction-time="10s" type="checkpoint"/>
       <object initial-construction-time="10m" type="secured area"/>
-      <object initial-construction-time="10m" initial-destruction-time="0s" type="road destruction"/>
-      <object construction-time-factor="0s" initial-construction-time="120s" type="dyke"/>
-      <object initial-construction-time="120s" type="barricade"/>
+      <object initial-construction-time="10m" initial-destruction-time="120s" type="road destruction"/>
+      <object construction-time-factor="0s" initial-construction-time="120s" initial-destruction-time="120s" type="dyke"/>
+      <object initial-construction-time="120s" initial-destruction-time="10s" type="barricade"/>
       <object construction-time-factor="1s" initial-construction-time="120s" type="urban block"/>
       <object initial-construction-time="120s" type="ressource node"/>
-      <object construction-time-factor="0s" initial-construction-time="120s" type="decontamination site"/>
+      <object construction-time-factor="0s" initial-construction-time="120s" initial-destruction-time="120s" type="decontamination site"/>
       <object initial-construction-time="4m" type="Arson"/>
     </objects>
     <breakdowns>
@@ -10865,4 +10865,4 @@
     <equipment-category>Autres</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="1896867868" -->
+<!-- signature="3842312994" -->
