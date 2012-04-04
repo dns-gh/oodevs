@@ -112,7 +112,7 @@ namespace
         PROCESS_INFORMATION info = {};
 
         bool done = api.CreateProcess( app.c_str(), &args[0], 0, 0, false,
-                        NORMAL_PRIORITY_CLASS, 0, run.empty() ? 0 : run.c_str(),
+                        NORMAL_PRIORITY_CLASS | DETACHED_PROCESS, 0, run.empty() ? 0 : run.c_str(),
                         &startup, &info );
         if( info.hThread )
             api.CloseHandle( info.hThread );
