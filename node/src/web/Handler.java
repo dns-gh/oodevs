@@ -25,10 +25,12 @@ public class Handler extends HttpServlet {
     private static final long serialVersionUID = 1564095421395727712L;
     private static final Logger log_ = Logger.getLogger(Handler.class);
     private final Configuration cfg_;
+    private final String uuid_;
     private final File root_;
     private final MimeUtil2 mimes_;
 
-    public Handler(final String root, final boolean isDebug) throws Exception {
+    public Handler(final String uuid, final String root, final boolean isDebug) throws Exception {
+        uuid_ = uuid;
         root_ = new File(root);
         if (!root_.isDirectory())
             throw new IOException(root_ + " is not a directory");
@@ -65,6 +67,7 @@ public class Handler extends HttpServlet {
         final Map<String, String> root = new HashMap<String, String>();
         for (final Map.Entry<String, String[]> it : request.getParameterMap().entrySet())
             root.put(it.getKey(), it.getValue()[0]);
+        root.put("uuid", uuid_);
         try {
             ctx.process(root, reply.getWriter());
         } catch (final TemplateException e) {

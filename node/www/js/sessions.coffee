@@ -24,6 +24,7 @@ class SessionItem extends Backbone.Model
     sync: (method, model, options) =>
         if method == "create"
             params =
+                node:     uuid
                 name:     model.get "name"
                 exercise: model.get "exercise"
             return ajax "/api/create_session", params, options.success, options.error
@@ -47,7 +48,8 @@ class SessionList extends Backbone.Collection
 
     sync: (method, model, options) =>
         if method == "read"
-            return ajax "/api/list_sessions", null, options.success, options.error
+            return ajax "/api/list_sessions", node: uuid,
+                options.success, options.error
         return Backbone.sync method, model, options
 
     comparator: (lhs, rhs) =>

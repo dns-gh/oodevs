@@ -225,7 +225,8 @@ void Node::Start()
             ( " -jar \""  + Utf8Convert( jar_.filename() ) + "\"" )
             ( "--root \""  + Utf8Convert( web_ ) + "\"" )
             ( "--port \"" + boost::lexical_cast< std::string >( port_->Get() ) + "\"" )
-            ( "--host \"" + boost::lexical_cast< std::string >( host_ ) + "\"" ),
+            ( "--host \"" + boost::lexical_cast< std::string >( host_ ) + "\"" )
+            ( "--uuid \"" + boost::lexical_cast< std::string >( id_ ) + "\"" ),
             Utf8Convert( jar_path.remove_filename() ) );
     if( !process_ ) return;
 

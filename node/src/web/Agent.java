@@ -18,10 +18,18 @@ public class Agent {
     private static final Logger log_ = Logger.getLogger(Agent.class);
     private final Server server_;
 
-    public Agent(final String root, final int webPort, final int hostPort, final boolean isDebug) throws Exception {
+    public static class Configuration {
+        public String uuid;
+        public String root;
+        public int port;
+        public int host;
+        public boolean isDebug;
+    };
+
+    public Agent(final Configuration config) throws Exception {
 
         final ServletContextHandler ctx = new ServletContextHandler(ServletContextHandler.NO_SECURITY | ServletContextHandler.NO_SESSIONS);
-        ctx.setResourceBase(root);
+        ctx.setResourceBase(config.root);
 
         final ServletHolder files = new ServletHolder(new DefaultServlet());
         files.setInitParameter("dirAllowed", "false");
@@ -30,10 +38,10 @@ public class Agent {
         ctx.addServlet(files, "/js/*");
         ctx.addServlet(files, "/favicon.ico");
 
-        final ServletHolder proxy = new ServletHolder(new ProxyServlet.Transparent("/api", "localhost", hostPort));
+        final ServletHolder proxy = new ServletHolder(new ProxyServlet.Transparent("/api", "localhost", config.host));
         ctx.addServlet(proxy, "/api/*");
 
-        final ServletHolder handler = new ServletHolder(new Handler(root, isDebug));
+        final ServletHolder handler = new ServletHolder(new Handler(config.uuid, config.root, config.isDebug));
         ctx.addServlet(handler, "/");
 
         final EnumSet<DispatcherType> all = EnumSet.of(DispatcherType.ASYNC, DispatcherType.ERROR, DispatcherType.FORWARD, DispatcherType.INCLUDE,
@@ -41,7 +49,7 @@ public class Agent {
         final FilterHolder zipper = new FilterHolder(new GzipFilter());
         ctx.addFilter(zipper, "*", all);
 
-        server_ = new Server(webPort);
+        server_ = new Server(config.port);
         server_.setHandler(ctx);
     }
 

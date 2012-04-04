@@ -7,51 +7,49 @@ import org.apache.log4j.PropertyConfigurator;
 
 import web.Agent;
 
-class MainConfig {
-    public String root;
-    public int port;
-    public int host;
-    public boolean isDebug;
-};
-
 class Main {
 
     private static final Logger log_ = Logger.getLogger(Main.class);
 
-    private static MainConfig parseParameters(final String[] args) throws Exception {
-        final MainConfig reply = new MainConfig();
-        reply.root = "www";
-        reply.port = 8080;
-        reply.host = 15000;
-        reply.isDebug = false;
+    private static void parseParameters(final Agent.Configuration config, final String[] args) throws Exception {
+        config.root = "www";
+        config.port = 8080;
+        config.host = 15000;
+        config.isDebug = false;
         for (int i = 0; i < args.length; ++i) {
             final String it = args[i];
             if (it.equals("--root") || it.equals("-r")) {
                 if (i + 1 == args.length)
                     throw new Exception("Missing --www parameter");
-                reply.root = args[++i];
+                config.root = args[++i];
             } else if (it.equals("--port") || it.equals("-p")) {
                 if (i + 1 == args.length)
                     throw new Exception("Missing --port parameter");
-                reply.port = Integer.parseInt(args[++i]);
+                config.port = Integer.parseInt(args[++i]);
             } else if (it.equals("--host") || it.equals("-h")) {
                 if (i + 1 == args.length)
                     throw new Exception("Missing --host parameter");
-                reply.host = Integer.parseInt(args[++i]);
+                config.host = Integer.parseInt(args[++i]);
+            } else if (it.equals("--uuid") || it.equals("-u")) {
+                if (i + 1 == args.length)
+                    throw new Exception("Missing --uuid parameter");
+                config.uuid = args[++i];
             } else if (it.equals("--debug") || it.equals("-d")) {
-                reply.isDebug = true;
+                config.isDebug = true;
             } else {
                 throw new Exception("Unrecognized parameter " + it);
             }
         }
-        final File dir = new File(reply.root);
+        final File dir = new File(config.root);
         if (!dir.isDirectory())
             throw new Exception(dir.getAbsolutePath() + " is not a directory");
-        reply.root = dir.getAbsolutePath();
-        return reply;
+        config.root = dir.getAbsolutePath();
+        if (config.uuid.isEmpty())
+            throw new Exception("Missing --uuid parameter");
     }
 
-    private static void printParameters(final MainConfig config) {
+    private static void printParameters(final Agent.Configuration config) {
+        log_.info("uuid:  " + config.uuid);
         log_.info("root:  " + config.root);
         log_.info("port:  " + config.port);
         log_.info("host:  " + config.host);
@@ -63,9 +61,9 @@ class Main {
         PropertyConfigurator.configure("log4j.properties");
         log_.info("Sword Node - copyright Masa Group 2012");
 
-        MainConfig config = null;
+        final Agent.Configuration config = new Agent.Configuration();
         try {
-            config = parseParameters(args);
+            parseParameters(config, args);
         } catch (final Exception err) {
             log_.error(err.toString());
             log_.error("Unable to parse command-line parameters");
@@ -74,7 +72,7 @@ class Main {
         printParameters(config);
 
         try {
-            final Agent agent = new Agent(config.root, config.port, config.host, config.isDebug);
+            final Agent agent = new Agent(config);
             agent.exec();
         } catch (final Exception err) {
             log_.error(err.toString());

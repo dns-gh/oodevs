@@ -45,6 +45,7 @@
       var params;
       if (method === "create") {
         params = {
+          node: uuid,
           name: model.get("name"),
           exercise: model.get("exercise")
         };
@@ -93,7 +94,9 @@
 
     SessionList.prototype.sync = function(method, model, options) {
       if (method === "read") {
-        return ajax("/api/list_sessions", null, options.success, options.error);
+        return ajax("/api/list_sessions", {
+          node: uuid
+        }, options.success, options.error);
       }
       return Backbone.sync(method, model, options);
     };
