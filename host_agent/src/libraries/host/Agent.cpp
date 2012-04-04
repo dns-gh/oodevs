@@ -229,8 +229,8 @@ void Move( T& dst, T& src, typename T::iterator it )
 // Name: ExtractSessionsIf
 // Created: BAX 2012-04-04
 // -----------------------------------------------------------------------------
-template< typename T, typename U >
-Agent::T_Sessions ExtractSessionsIf( T& mutex, U& sessions, boost::function< bool( const Session_ABC& ) > predicate )
+template< typename T, typename U, typename V >
+Agent::T_Sessions ExtractSessionsIf( T& mutex, U& sessions, V predicate )
 {
     U reply;
     boost::lock_guard< T > lock( mutex );
