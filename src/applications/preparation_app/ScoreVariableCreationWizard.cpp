@@ -112,21 +112,23 @@ namespace
 {
     struct Serializer : public actions::ParameterContainer_ABC
     {
-        explicit Serializer( const QString& name )
+            Serializer( const QString& name, const std::string& type )
             : name_( name )
+            , type_( type )
         {}
         virtual void AddParameter( actions::Parameter_ABC& parameter )
         {
             indicators::DataTypeFactory types;
             std::string value;
             parameter.CommitTo( value );
-            std::string typeName = parameter.GetType();
-            if( typeName == "circle" || typeName == "polygon" )
-                typeName = "zone";
-            pVariable_.reset( new indicators::Variable( name_.ascii(), types.Instanciate( typeName ), value ) );
+            if( type_ == "circle" || type_ == "polygon" )
+                type_ = "zone";
+
+            pVariable_.reset( new indicators::Variable( name_.ascii(), types.Instanciate( type_ ), value ) );
             delete &parameter;
         }
         const QString name_;
+        std::string type_;
         std::auto_ptr< indicators::Variable > pVariable_;
     };
 }
@@ -141,9 +143,10 @@ void ScoreVariableCreationWizard::OnAccept()
         return;
     if( parameter_.get() )
         parameter_->RemoveFromController();
-    Serializer serializer( name_->text() );
+    Serializer serializer( name_->text(), scoreType_ );
     parameter_->CommitTo( serializer );
     parameter_.reset();
+    scoreType_ = "";
     emit VariableCreated( *serializer.pVariable_ );
     accept();
 }
@@ -192,6 +195,7 @@ void ScoreVariableCreationWizard::OnChangeType()
     if( parameter_ )
         parameter_->RemoveFromController();
     parameter_.reset();
+    scoreType_ = "";
 
     if( paramBox_ )
     {
@@ -310,6 +314,7 @@ namespace
 // -----------------------------------------------------------------------------
 boost::shared_ptr< actions::gui::Param_ABC > ScoreVariableCreationWizard::CreateParameter( const std::string& type, const QString& name )
 {
+    scoreType_ = type;
     std::string compatibleType = "";
     unsigned int nbOccur = std::numeric_limits< unsigned int >::max();
 
