@@ -9,6 +9,7 @@
 #ifndef API_ABC_H__
 #define API_ABC_H__
 #include <boost/noncopyable.hpp>
+#include <string>
 #define  NOMINMAX
 #include <windows.h>
 
@@ -32,6 +33,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual std::string            GetLastError         () const = 0;
     virtual bool                   EnumProcesses        ( DWORD* ids, int cb, DWORD* pBytesReturned ) const = 0;
     virtual bool                   CreateProcess        ( const wchar_t* app, wchar_t* args, SECURITY_ATTRIBUTES* lpProcessAttributes, SECURITY_ATTRIBUTES* lpThreadAttributes, bool bInheritHandles, int dwCreationFlags, void* lpEnvironment, const wchar_t* lpCurrentDirectory, STARTUPINFOW* lpStartupInfo, PROCESS_INFORMATION* lpProcessInformation ) const = 0;
     virtual bool                   CloseHandle          ( HANDLE hObject ) const = 0;

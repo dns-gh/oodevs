@@ -30,6 +30,7 @@ public:
 
     //! @name Operations
     //@{
+    virtual std::string            GetLastError         () const;
     virtual bool                   EnumProcesses        ( DWORD* ids, int cb, DWORD* pBytesReturned ) const;
     virtual bool                   CreateProcess        ( const wchar_t* app, wchar_t* args, SECURITY_ATTRIBUTES* lpProcessAttributes, SECURITY_ATTRIBUTES* lpThreadAttributes, bool bInheritHandles, int dwCreationFlags, void* lpEnvironment, const wchar_t* lpCurrentDirectory, STARTUPINFOW* lpStartupInfo, PROCESS_INFORMATION* lpProcessInformation ) const;
     virtual bool                   CloseHandle          ( HANDLE hObject ) const;

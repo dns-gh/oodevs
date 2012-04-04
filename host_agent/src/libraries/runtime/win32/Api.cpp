@@ -7,6 +7,7 @@
 //
 // *****************************************************************************
 #include "Api.h"
+#include "runtime/Utf8.h"
 #include <stdexcept>
 #include <psapi.h>
 #if ( PSAPI_VERSION == 1 )
@@ -39,6 +40,23 @@ Api::Api()
 Api::~Api()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Api::GetLastError
+// Created: BAX 2012-04-04
+// -----------------------------------------------------------------------------
+std::string Api::GetLastError() const
+{
+    LPWSTR buffer;
+    FormatMessageW(FORMAT_MESSAGE_ALLOCATE_BUFFER
+                 | FORMAT_MESSAGE_FROM_SYSTEM
+                 | FORMAT_MESSAGE_IGNORE_INSERTS, NULL,
+                   ::GetLastError(), MAKELANGID(LANG_NEUTRAL, SUBLANG_DEFAULT),
+                   reinterpret_cast< LPWSTR >( &buffer ), 0, NULL );
+    const std::wstring error( buffer );
+    LocalFree( buffer );
+    return Utf8Convert( error );
 }
 
 // -----------------------------------------------------------------------------
