@@ -93,9 +93,9 @@ private:
     //@{
     const runtime::Runtime_ABC& runtime_;
     const FileSystem_ABC& system_;
-    const boost::uuids::uuid id_;
     const boost::filesystem::wpath data_;
     const boost::filesystem::wpath applications_;
+    const boost::uuids::uuid id_;
     const boost::uuids::uuid node_;
     const std::string exercise_;
     const std::string name_;
