@@ -7081,7 +7081,7 @@
         <resource capacity="240" logistic-threshold="30" name="CART 5.56 F1A F1" normalized-consumption="90"/>
       </category>
       <category name="carburant">
-        <resource capacity="30" logistic-threshold="10" name="F-57 1" normalized-consumption="6"/>
+        <resource capacity="30" logistic-threshold="10" name="F-63 1" normalized-consumption="6"/>
       </category>
       <category name="ration">
         <resource capacity="3" logistic-threshold="30" name="RATION DE COMBAT 1" normalized-consumption="1"/>
@@ -7101,10 +7101,10 @@
         <resource category="ration" name="RATION DE COMBAT 1" value="0.04"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <resource category="carburant" name="F-57 1" value="1.5"/>
+        <resource category="carburant" name="F-63 1" value="1.5"/>
       </consumption>
       <consumption status="Deplacement">
-        <resource category="carburant" name="F-57 1" value="6"/>
+        <resource category="carburant" name="F-63 1" value="6"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -24002,7 +24002,7 @@
         <resource capacity="3" logistic-threshold="10" name="RO 80 EXPL AC" normalized-consumption="2"/>
       </category>
       <category name="carburant">
-        <resource capacity="30" logistic-threshold="10" name="F-57 1" normalized-consumption="6"/>
+        <resource capacity="30" logistic-threshold="6" name="F-63 1" normalized-consumption="10"/>
       </category>
       <category name="ration">
         <resource capacity="3" logistic-threshold="30" name="RATION DE COMBAT 1" normalized-consumption="1"/>
@@ -24022,10 +24022,10 @@
         <resource category="ration" name="RATION DE COMBAT 1" value="0.04"/>
       </consumption>
       <consumption status="ArretMoteurAllume">
-        <resource category="carburant" name="F-57 1" value="1.5"/>
+        <resource category="carburant" name="F-63 1" value="1.5"/>
       </consumption>
       <consumption status="Deplacement">
-        <resource category="carburant" name="F-57 1" value="6"/>
+        <resource category="carburant" name="F-63 1" value="6"/>
       </consumption>
     </consumptions>
     <weapon-systems>
@@ -35648,4 +35648,4 @@
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="1895530630" -->
+<!-- signature="0755470967" -->
