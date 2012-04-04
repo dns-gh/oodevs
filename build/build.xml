@@ -1582,8 +1582,8 @@
     <target name="configure" description="initialize local project structure with libraries">
         <update name="geometry" version="1.0.1"/>
         <update name="geocoord" version="1.0"/>
-        <update name="terrain" version="5.0" modules="terrain,graphics,spatialcontainer,pathfind,analysis,vmap,geodata,gdal_ogr,urban"/>
-        <update name="terrain" version="5.0" package="terraintools_${platform}.zip"/>
+        <update name="terrain" version="5.1" modules="terrain,graphics,spatialcontainer,pathfind,analysis,vmap,geodata,gdal_ogr,urban"/>
+        <update name="terrain" version="5.1" package="terraintools_${platform}.zip"/>
         <update name="qt" version="4.7.0"/>
         <update name="boost" version="1.42"/>
         <update name="boost" version="1.42" package="geometry" todir="${include.dir}"/>
