@@ -2136,7 +2136,7 @@ A visited object won't be created and build if agent doesn't have the physical c
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="work" name="check point" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="checkpoint" name="check point" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="intensity" name="intensity (%)" optional="true" type="Integer"/>
     </mission>
     <mission dia-behavior="tasks.Operate" dia-type="tasks.Operate" id="4482" name="MLSECURITY - Operate a system">
@@ -2253,6 +2253,19 @@ A unit won't follow if it cannot perform the mission (mission is not set for thi
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="units" max-occurs="unbounded" min-occurs="1" name="units to be ordered to follow" optional="false" type="Agent"/>
+    </mission>
+    <mission dia-behavior="tasks.Deconstruct" dia-type="tasks.Deconstruct" id="4493" name="MLSECURITY - Deconstruct (and remove) works">
+      <description>
+        <doctrine><![CDATA[To deconstruct (and remove) a given set of works.]]></doctrine>
+        <usage><![CDATA[For an gent to know how to deconstruct a set of given works (objects or urban blocks). When several elements  should be visited, the agent acts on each element by following the order of the elements into the list. ]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="works" max-occurs="unbounded" min-occurs="1" name="objects to deconstruct (and) remove" optional="false" type="ObjectKnowledge"/>
+      <parameter dia-name="waitForReinforcement" name="wait for reinforcement" optional="true" type="Boolean"/>
+      <parameter dia-name="instantaneously" name="instantaneously" optional="true" type="Boolean"/>
     </mission>
   </units>
   <automats>
@@ -3438,6 +3451,22 @@ A unit won't follow if it cannot perform the mission (mission is not set for thi
     <mission dia-behavior="MIS_Population_CommettreExactions" dia-type="T_Mission_Population_CommettreExactions" id="344" name="Crowd - attack">
       <parameter dia-name="zone_" name="Area" optional="false" type="Polygon"/>
     </mission>
+    <mission dia-behavior="sword.military.crowd.tasks.MoveTo" dia-type="sword.military.crowd.tasks.MoveTo" id="4490" name="MLCrowd - MoveTo">
+      <parameter dia-name="objective" name="objective" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Point"/>
+          <parameter type="UrbanKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
+    <mission dia-behavior="sword.military.crowd.tasks.Follow" dia-type="sword.military.crowd.tasks.Follow" id="4492" name="MLCrowd - Follow">
+      <parameter dia-name="objective" name="objective" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="Agent"/>
+          <parameter type="AgentKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
   </populations>
   <fragorders>
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_MettreTenueNBC" id="345" name="NBC suit on"/>
@@ -3609,4 +3638,4 @@ A unit won't follow if it cannot perform the mission (mission is not set for thi
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="2119972909" -->
+<!-- signature="3978442220" -->

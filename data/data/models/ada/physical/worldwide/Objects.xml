@@ -77,7 +77,7 @@
     <geometries>
       <geometry symbol="G*MPNR----****X" type="polygon"/>
     </geometries>
-    <avoidable distance="100"/>
+    <avoidable distance="50"/>
     <contamination max-toxic="3"/>
     <mobility default-speed="-1" max-unit-percentage-speed="0" unit-speed-impact-mode="VitesseMaxObjet"/>
   </object>
@@ -798,4 +798,4 @@
     </urban-destruction>
   </object>
 </objects>
-<!-- signature="3315923416" -->
+<!-- signature="2094870965" -->

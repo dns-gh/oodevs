@@ -2610,6 +2610,7 @@
         <mission name="MLSECURITY - Stay in crowd"/>
         <mission name="MLSECURITY - Make follow"/>
         <mission name="MLSECURITY - Reinforce"/>
+        <mission name="MLSECURITY - Deconstruct (and remove) works"/>
       </missions>
       <fragorders/>
     </unit>
@@ -2631,6 +2632,7 @@
         <mission name="MLSECURITY - Stay in crowd"/>
         <mission name="MLSECURITY - Make follow"/>
         <mission name="MLSECURITY - Reinforce"/>
+        <mission name="MLSECURITY - Deconstruct (and remove) works"/>
       </missions>
       <fragorders/>
     </unit>
@@ -3865,6 +3867,13 @@
         <fragorder name="Population - Change attitude"/>
       </fragorders>
     </crowd>
+    <crowd dia-type="sword.military.crowd.roles.Crowd" file="BMCrowd.bms" masalife="true" name="Crowd ML">
+      <missions>
+        <mission name="MLCrowd - MoveTo"/>
+        <mission name="MLCrowd - Follow"/>
+      </missions>
+      <fragorders/>
+    </crowd>
   </crowd>
 </models>
-<!-- signature="0654380650" -->
+<!-- signature="0123862846" -->

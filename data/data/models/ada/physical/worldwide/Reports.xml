@@ -376,10 +376,10 @@
     <parameter type="ObjectKnowledge"/>
   </report>
   <report category="operational" id="265" message="target illumination"/>
-  <report category="operational" id="266" message="bypass started for %1">
+  <report category="operational" id="266" message="destruction work started for %1">
     <parameter type="ObjectKnowledge"/>
   </report>
-  <report category="operational" id="267" message="bypass completed"/>
+  <report category="operational" id="267" message="work destruction completed"/>
   <report category="operational" id="268" message="impossible direct fire"/>
   <report category="operational" id="269" message="indirect fire on target : %1">
     <parameter type="AgentKnowledge"/>
@@ -415,7 +415,7 @@
     <parameter type="AgentKnowledge"/>
   </report>
   <report category="operational" id="286" message="Vision locked"/>
-  <report category="operational" id="287" message="Work started"/>
+  <report category="operational" id="287" message="Work construction started"/>
   <report category="operational" id="288" message="Object %1 already occupied">
     <parameter type="ObjectKnowledge"/>
   </report>
@@ -650,8 +650,9 @@
   <report category="operational" id="457" message="Under fire: %1">
     <parameter type="ResourceType"/>
   </report>
-  <report category="operational" id="458" message="Speed limited by population"/>
-  <report category="operational" id="459" message="End of speed limited by population"/>
+  <report category="operational" id="458" message="Speed limited due to population"/>
+  <report category="operational" id="459" message="End of speed limitation"/>
   <report category="operational" id="460" message="Enter and exit are not in the same underground network"/>
+  <report category="operational" id="461" message="Fire is being extinguished"/>
 </reports>
-<!-- signature="1641415468" -->
+<!-- signature="3241384179" -->

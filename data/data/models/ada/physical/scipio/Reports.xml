@@ -653,5 +653,6 @@
   <report category="operational" id="458" message="Vitesse limitée par population"/>
   <report category="operational" id="459" message="Fin de vitesse limitée par population"/>
   <report category="operational" id="460" message="L'entrée et la sortie ne sont pas dans le même réseau souterrain"/>
+  <report category="operational" id="461" message="Debut de l'extinction du feu"/>
 </reports>
-<!-- signature="2087049441" -->
+<!-- signature="1279761497" -->

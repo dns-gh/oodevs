@@ -611,6 +611,7 @@ public:
         eRC_UrbanCollisionStarted,
         eRC_UrbanCollisionStopped,
         eRC_NotInSameUndergroundNetwork,//460
+        eRC_FireIsBeingExtinguished,
         eLast
     };
     //@}

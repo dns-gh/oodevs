@@ -473,4 +473,5 @@ eRC_PrisSousTirMunition = 457
 eRC_UrbanCollisionStarted = 458
 eRC_UrbanCollisionStopped = 459
 eRC_NotInSameUndergroundNetwork = 460
-eNbr = 461
+eRC_FireIsBeingExtinguished = 461
+eNbr = 462
