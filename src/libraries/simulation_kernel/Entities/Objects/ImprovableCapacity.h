@@ -50,7 +50,7 @@ public:
     //! @name Operations
     //@{
     virtual void Register( MIL_Object_ABC& object );
-    virtual void Finalize( MIL_Object_ABC& object ); 
+    virtual void Finalize( MIL_Object_ABC& object );
     unsigned int GetDotationNumber( const TER_Localisation& location ) const;
     virtual void Instanciate( MIL_Object_ABC& object ) const;
     void Mine( MIL_Object_ABC& object );

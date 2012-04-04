@@ -419,7 +419,7 @@ void MIL_Population::UpdateDecision( float duration )
         GetRole< DEC_Decision_ABC >().UpdateDecision( duration );
     }
     catch( std::exception& e )
-    {        
+    {
         DEC_Decision_ABC* role = RetrieveRole< DEC_Decision_ABC >();
         if( role )
             role->LogError( &e );
@@ -1441,7 +1441,6 @@ void MIL_Population::Apply( MIL_EntitiesVisitor_ABC& ) const
 {
     // Nothing
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: MIL_Population::GetKnowledge

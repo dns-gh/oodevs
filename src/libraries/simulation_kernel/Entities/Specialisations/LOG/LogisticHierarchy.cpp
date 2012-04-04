@@ -225,7 +225,6 @@ MIL_AutomateLOG* LogisticHierarchy::GetPrimarySuperior() const
     return &superiorLinks_.back()->GetSuperior();
 }
 
-
 // =============================================================================
 // OPERATIONS
 // =============================================================================

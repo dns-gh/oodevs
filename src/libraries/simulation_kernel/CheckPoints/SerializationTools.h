@@ -10,11 +10,9 @@
 #ifndef __SerializationTools_h_
 #define __SerializationTools_h_
 
-
 // =============================================================================
 // BOOST AUTO_PTR serialization
 // =============================================================================
-
 
 namespace boost {
     namespace serialization {

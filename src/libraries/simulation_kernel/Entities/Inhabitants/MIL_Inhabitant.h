@@ -100,7 +100,6 @@ public:
     void ReStartMotivation();
     //@}
 
-
 protected:
     //! @name Constructor
     //@{

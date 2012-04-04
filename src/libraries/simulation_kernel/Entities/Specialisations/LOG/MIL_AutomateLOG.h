@@ -106,7 +106,7 @@ public:
     PHY_MaintenanceComposanteState* MaintenanceHandleComposanteForTransport   ( MIL_Agent_ABC& pion, PHY_ComposantePion& composante );
     bool                            MaintenanceHandleComposanteForTransport   ( PHY_MaintenanceComposanteState& composanteState );
     bool                            MaintenanceHandleComposanteForRepair      ( PHY_MaintenanceComposanteState& composanteState );
-    
+
     //$$$ A FACTORISER AVEC LES FONCTION CI DESSUS
     PHY_RoleInterface_Maintenance*  MaintenanceFindAlternativeRepairHandler   ( PHY_MaintenanceComposanteState& composanteState );
     PHY_RoleInterface_Maintenance*  MaintenanceFindAlternativeTransportHandler( PHY_MaintenanceComposanteState& composanteState );
@@ -137,14 +137,14 @@ public:
     virtual double         SupplyGetStock                     ( const PHY_DotationCategory& dotationCategory, double quantity ) const;
     virtual bool           SupplyReturnStock                  ( const PHY_DotationCategory& dotationCategory, double quantity ) const;
     virtual MIL_AgentPion* SupplyCreateConvoyPion             ( const MIL_AgentTypePion& type, boost::shared_ptr< logistic::SupplyConvoyReal_ABC > convoy );
-    virtual void           SupplyDestroyConvoyPion            ( MIL_AgentPion& convoyPion );    
+    virtual void           SupplyDestroyConvoyPion            ( MIL_AgentPion& convoyPion );
 
     virtual void           OnSupplyConvoyArriving( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign );
     virtual void           OnSupplyConvoyLeaving ( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign );
-    
+
     virtual const MT_Vector2D& GetPosition() const;
     virtual       bool         BelongsToLogisticBase( const MIL_AutomateLOG& logisticBase ) const;
-    
+
     void           OnReceiveLogSupplyPushFlow         ( const sword::PushFlowParameters& parameters, const tools::Resolver_ABC< MIL_Automate >& automateResolver );
     //@}
 

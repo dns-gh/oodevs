@@ -147,7 +147,6 @@ void ImprovableCapacity::Finalize( MIL_Object_ABC& object )
     finalised_ = true; // $$$$ LDC FIXME the nFullNbrDotation_ should be in the object or attribute not the capacity
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ImprovableCapacity::GetDotationNumber
 // Created: LMT 2012-01-25

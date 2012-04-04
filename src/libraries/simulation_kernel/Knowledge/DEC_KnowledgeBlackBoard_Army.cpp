@@ -159,7 +159,7 @@ namespace
         {
             if( knowledge->IsValid()
             && ( !knowledge->IsReservedObstacle() || knowledge->IsReservedObstacleActivated() )
-            && filter_.Test( knowledge->GetType() ) 
+            && filter_.Test( knowledge->GetType() )
             && knowledge->GetLocalisation().ComputeBarycenter().Distance( *pCenter_ ) <= rRadius_ )
                 pContainer_->push_back( knowledge );
         }

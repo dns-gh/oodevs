@@ -35,7 +35,6 @@ public:
     virtual ~MIL_PopulationMission();
     //@}
 
-
     //! @name Accessors
     //@{
     virtual unsigned int GetOwnerId() const;

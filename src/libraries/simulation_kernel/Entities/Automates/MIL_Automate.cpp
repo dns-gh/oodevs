@@ -187,7 +187,7 @@ MIL_Automate::MIL_Automate( const MIL_AutomateType& type, unsigned int nID, MIL_
 
     RegisterRole( *new DEC_AutomateDecision( *this, gcPause, gcMult ) ) ;
     RegisterRole( *new DEC_Representations() );
-    
+
     if( pParentFormation_ )
     {
         pColor_.reset( new MIL_Color( pParentFormation_->GetColor() ) );

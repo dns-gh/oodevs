@@ -64,7 +64,6 @@ void MIL_AgentTypePionLOGMedical::RegisterRoles( MIL_AgentPion& pion, unsigned i
     pion.RegisterRole( *new PHY_RolePionLOG_Medical( static_cast< MIL_AgentPionLOG_ABC& >( pion ) ) );//@TODO remove cast when AgentPionLOG will be deleted
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentTypePionINF::Create
 // Created: NLD 2004-09-14

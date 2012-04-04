@@ -96,7 +96,6 @@ ObjectLogisticHierarchy::~ObjectLogisticHierarchy()
     // NOTHING
 }
 
-
 // =============================================================================
 // ACCESSORS
 // =============================================================================
@@ -152,7 +151,6 @@ MIL_AutomateLOG* ObjectLogisticHierarchy::GetPrimarySuperior() const
         return &superiorLink_->GetSuperior();
     return 0;
 }
-
 
 // =============================================================================
 // OPERATIONS

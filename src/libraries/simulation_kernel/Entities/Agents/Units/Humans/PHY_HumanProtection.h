@@ -39,7 +39,6 @@ private:
     typedef T_InjuryTypes::iterator        IT_InjuryTypes;
     typedef T_InjuryTypes::const_iterator CIT_InjuryTypes;
 
-
     typedef std::list< std::pair< float, float > > T_InjuryEffects;
     typedef T_InjuryEffects::iterator             IT_InjuryEffects;
     typedef T_InjuryEffects::const_iterator      CIT_InjuryEffects;

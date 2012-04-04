@@ -334,12 +334,12 @@ void StructuralCapacity::CreateCrumbling( MIL_Object_ABC& object, const TER_Loca
             MIL_Random::random_shuffle( lines );
             TER_Localisation localisation( TER_Localisation::ePolygon, CreatePolygon( lines.front() ) );
             MIL_Object_ABC* pObject = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( "landslide", &army, localisation );
-			if( pObject )
-			{
-			    MineAttribute* mineAttribute = pObject->RetrieveAttribute< MineAttribute >();
+            if( pObject )
+            {
+                MineAttribute* mineAttribute = pObject->RetrieveAttribute< MineAttribute >();
                 if( mineAttribute )
                     mineAttribute->Set(0.);//default valorization is set to 100%
-			}
+            }
         }
     }
 }

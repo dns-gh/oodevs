@@ -560,8 +560,8 @@ public:
         eRC_ObjectiveAlerted,
         eRC_ObjectiveIsNoLongerAlerted,
         eRC_ObjectiveConfined,
-        eRC_ObjectiveIsNoLongerConfined, // 410 
-        eRC_ObjectiveEvacuated, 
+        eRC_ObjectiveIsNoLongerConfined, // 410
+        eRC_ObjectiveEvacuated,
         eRC_ObjectiveIsNoLongerEvacuated,
         eRC_StartingToProduceResource,
         eRC_ResourceProductionStopped,

@@ -564,7 +564,7 @@ const logistic::FuneralPackagingResource* MIL_AutomateLOG::FuneralGetNextPackagi
         visitor.pSelected_->Apply( &dotation::ConsumeDotationNotificationHandler_ABC::NotifyConsumeDotation, visitor.nextPackagingResource_->GetDotationCategory(), quantity );
         return visitor.nextPackagingResource_;
     }
-    else 
+    else
         return 0;
 }
 
@@ -604,7 +604,6 @@ void MIL_AutomateLOG::Clean()
     BOOST_FOREACH( T_SupplyRequests::value_type& data, supplyRequests_ )
         data->Clean();
 }
-
 
 // =============================================================================
 // NETWORK

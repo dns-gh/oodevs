@@ -149,7 +149,6 @@ void PHY_Human::NotifyHumanChanged( const Human_ABC& oldHumanState )
         pMedicalState_->NotifyHumanChanged();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PHY_Human::CancelLogisticRequests
 // Created: NLD 2005-01-10
@@ -482,7 +481,7 @@ void PHY_Human::Update()
     // Logistic requests - $$$ A refactorer...
     if( NeedMedical() && !pMedicalState_ )
         const_cast< MIL_Agent_ABC& >( GetPion() ).Apply( &human::HumansActionsNotificationHandler_ABC::NotifyHumanWaitingForMedical, *this );
-    
+
     // Funeral
     if( IsDead() && !funeralConsign_ )
     {
@@ -630,7 +629,6 @@ void PHY_Human::SetMedicalState( PHY_MedicalHumanState* pMedicalState )
 {
     pMedicalState_ = pMedicalState;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_Human::GetPion

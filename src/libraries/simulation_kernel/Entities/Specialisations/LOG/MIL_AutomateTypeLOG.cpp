@@ -65,7 +65,6 @@ MIL_Automate& MIL_AutomateTypeLOG::InstanciateAutomate( unsigned int nID, MIL_En
     return *new MIL_Automate( *this, nID, parent, knowledgeGroup, name, gcPause, gcMult, context );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MIL_AutomateTypeLOG::Create
 // Created: NLD 2004-12-27

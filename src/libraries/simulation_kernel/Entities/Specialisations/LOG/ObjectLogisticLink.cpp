@@ -62,7 +62,6 @@ double ObjectLogisticLink::ConsumeQuota( const PHY_DotationCategory&, double qua
     return quantity;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ObjectLogisticLink::ReturnQuota
 // Created: NLD 2011-01-11

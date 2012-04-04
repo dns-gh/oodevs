@@ -68,7 +68,6 @@ private:
     const MIL_AutomateLOG* initialLogisticBase_;
 };
 
-
 // =============================================================================
 // MAINTENANCE
 // =============================================================================
@@ -528,6 +527,5 @@ class FuneralPackagingResourceVisitor : public MIL_LogisticEntitiesVisitor
         const logistic::FuneralPackagingResource* nextPackagingResource_;
         std::vector< const logistic::FuneralPackagingResource* > packagingResourcesToSearchFor_;
 };
-
 
 #endif // __MIL_LogisticVisitor_h_
