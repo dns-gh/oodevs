@@ -874,4 +874,10 @@ return
             integration.StartGetVSRAM( pionRenforce, nbrAmbulances )
         end,
     } ),
+    immuniserNbc = function( self )
+        integration.immuniserNbc( self )
+    end,
+    stopImmuniserNbc = function( self )
+        integration.stopImmuniserNbc( self )
+    end,
 }

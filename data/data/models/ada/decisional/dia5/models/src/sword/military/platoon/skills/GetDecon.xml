@@ -13,4 +13,18 @@
     <links>
         <link name="moveToward" skill="sword.military.platoon.skills.MoveToward"/>
     </links>
+    <feedbacks>
+        <feedback name="isDecontaminated">
+            <argument name="element">
+                <type>
+                    <class name="sword.military.world.Object"/>
+                </type>
+            </argument>
+            <argument name="reason">
+                <type>
+                    <simple name="string"/>
+                </type>
+            </argument>
+        </feedback>
+    </feedbacks>
 </skill>

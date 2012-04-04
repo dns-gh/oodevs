@@ -1351,6 +1351,12 @@ que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe
                 </type>
             </return>
         </method>
+        <method name="immuniserNbc">
+            <description>Action d'immuniser un agent vis à vis d'un danger NRBC.</description>
+        </method>
+        <method name="stopImmuniserNbc">
+            <description>Action d'arrêter l'immunisation d'un agent vis à vis d'un danger NRBC.</description>
+        </method>
     </methods>
     <predicates>
         <predicate name="isCommandingFor">

@@ -88,6 +88,7 @@
         <skill name="sword.military.platoon.skills.MobilitySupport"/>
         <skill name="sword.military.platoon.skills.ReactToNBC"/>
         <skill name="sword.military.platoon.skills.ReactToFireArea"/>
+        <skill name="sword.military.platoon.skills.Decontaminate"/>
     </skills>
     <resources>
         <resource name="sword.military.platoon.resources.EngageCapacity"/>

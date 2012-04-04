@@ -605,3 +605,11 @@ end
 integration.isFlying = function( self )
     return DEC_Agent_EstEnVol()
 end
+
+integration.immuniserNbc = function ( self )
+    DEC_Agent_ImmuniserNbc( )
+end
+
+integration.stopImmuniserNbc = function ( self )
+    DEC_Agent_StopImmuniserNbc( )
+end
