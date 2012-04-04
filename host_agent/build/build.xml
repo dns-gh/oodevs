@@ -14,6 +14,9 @@
     <!-- Libraries -->
     <target name="libraries" depends="runtime,host,web" description="build all libraries"/>
 
+    <defineset define="_CRT_SECURE_NO_WARNINGS"/>
+    <defineset define="_SCL_SECURE_NO_WARNINGS"/>
+
     <target name="runtime" description="build runtime library">
         <build-lib name="runtime"/>
     </target>

@@ -7,10 +7,6 @@
 //
 // *****************************************************************************
 
-#ifdef _MSC_VER
-#   define _SCL_SECURE_NO_WARNINGS
-#endif
-
 #include "web_test.h"
 
 #include <host/Agent_ABC.h>

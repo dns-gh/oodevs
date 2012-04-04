@@ -7,10 +7,6 @@
 //
 // *****************************************************************************
 
-#ifdef _MSC_VER
-#   define _SCL_SECURE_NO_WARNINGS
-#endif
-
 #include "Agent.h"
 #include "Session_ABC.h"
 #include "SessionFactory_ABC.h"

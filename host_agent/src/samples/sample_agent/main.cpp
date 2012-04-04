@@ -7,10 +7,6 @@
 //
 // *****************************************************************************
 
-#ifdef _MSC_VER
-#   define _SCL_SECURE_NO_WARNINGS
-#endif
-
 #include <runtime/Factory.h>
 #include <host/Agent.h>
 #include <host/UuidFactory.h>

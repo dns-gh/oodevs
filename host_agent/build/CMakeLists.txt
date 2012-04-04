@@ -11,6 +11,8 @@ set( run_dir  ${root_dir}/run/${platform} )
 include_directories( ${dev_dir}/include )
 link_directories( ${dev_dir}/lib/${platform} )
 include_directories( ${root_dir}/src/libraries )
+add_definitions( -D_CRT_SECURE_NO_WARNINGS )
+add_definitions( -D_SCL_SECURE_NO_WARNINGS )
 
 ################################################################################
 # runtime

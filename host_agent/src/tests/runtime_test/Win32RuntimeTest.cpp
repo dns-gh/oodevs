@@ -7,10 +7,6 @@
 //
 // *****************************************************************************
 
-#ifdef _MSC_VER
-#   define _SCL_SECURE_NO_WARNINGS
-#endif
-
 #include "runtime_test.h"
 #include "MockApi.h"
 #include <runtime/Utf8.h>

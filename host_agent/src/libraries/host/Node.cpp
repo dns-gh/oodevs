@@ -7,10 +7,6 @@
 //
 // *****************************************************************************
 
-#ifdef  _MSC_VER
-#   define _SCL_SECURE_NO_WARNINGS
-#endif
-
 #include "Node.h"
 #include "FileSystem_ABC.h"
 #include "PortFactory_ABC.h"
