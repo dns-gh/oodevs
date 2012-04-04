@@ -109,6 +109,7 @@ private:
     gui::ValuedComboBox< std::string >* type_;
     Q3VBox* paramBox_;
     boost::shared_ptr< actions::gui::Param_ABC > parameter_;
+    std::string scoreType_;
     //@}
 };
 
