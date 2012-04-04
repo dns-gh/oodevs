@@ -58,14 +58,14 @@ namespace
     template< typename T >
     T ParseItem( xml::xisubstream xis, const std::string& name )
     {
-        xis >> xml::start( "session" );
+        xis >> xml::start( "node" );
         return xis.attribute< T >( name );
     }
 
     boost::shared_ptr< runtime::Process_ABC > GetProcess( const runtime::Runtime_ABC& runtime, xml::xisubstream xis )
     {
         boost::shared_ptr< runtime::Process_ABC > nil;
-        xis >> xml::start( "session" );
+        xis >> xml::start( "node" );
         if( !xis.has_attribute( "process_pid" ) || !xis.has_attribute( "process_name" ) )
             return nil;
         boost::shared_ptr< runtime::Process_ABC > ptr = runtime.GetProcess( xis.attribute< int >( "process_pid" ) );
@@ -176,8 +176,9 @@ std::string Node::ToJson() const
         "\"name\" : \"%2%\", "
         "\"port\" : %3%, "
         "\"host\" : %4%, "
+        "\"status\" : \"%5%\""
         " }" )
-        % id_ % name_ % port_->Get() % host_
+        % id_ % name_ % port_->Get() % host_ % (process_ ? "running" : "stopped")
         ).str();
 }
 
