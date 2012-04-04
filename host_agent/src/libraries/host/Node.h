@@ -48,12 +48,12 @@ public:
     //! @name Constructors/Destructor
     //@{
              Node( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
-                      const FileSystem_ABC& system, const boost::filesystem::wpath& jar,
-                      const boost::filesystem::wpath& web, int host,
-                      const std::string& name, PortFactory_ABC& ports );
+                   const FileSystem_ABC& system, const boost::filesystem::wpath& java,
+                   const boost::filesystem::wpath& jar, const boost::filesystem::wpath& web, int host,
+                   const std::string& name, PortFactory_ABC& ports );
              Node( const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system,
-                      const boost::filesystem::wpath& jar, const boost::filesystem::wpath& web,
-                      xml::xistream& xis, PortFactory_ABC& ports );
+                   const boost::filesystem::wpath& java, const boost::filesystem::wpath& jar,
+                   const boost::filesystem::wpath& web, xml::xistream& xis, PortFactory_ABC& ports );
     virtual ~Node();
     //@}
 
@@ -79,9 +79,10 @@ private:
     //@{
     const runtime::Runtime_ABC& runtime_;
     const FileSystem_ABC& system_;
-    const boost::uuids::uuid id_;
+    const boost::filesystem::wpath java_;
     const boost::filesystem::wpath jar_;
     const boost::filesystem::wpath web_;
+    const boost::uuids::uuid id_;
     const int host_;
     const std::string name_;
     std::auto_ptr< boost::shared_mutex > access_;

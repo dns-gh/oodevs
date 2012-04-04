@@ -29,10 +29,11 @@ using namespace host;
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
 NodeFactory::NodeFactory( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids, const FileSystem_ABC& system, PortFactory_ABC& ports,
-                          const boost::filesystem::wpath& jar, const boost::filesystem::wpath& web, int host )
+                          const boost::filesystem::wpath& java, const boost::filesystem::wpath& jar, const boost::filesystem::wpath& web, int host )
     : runtime_( runtime )
     , uuids_  ( uuids )
     , system_ ( system )
+    , java_   ( java )
     , jar_    ( jar )
     , web_    ( web )
     , host_   ( host )
@@ -56,7 +57,7 @@ NodeFactory::~NodeFactory()
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Node_ABC > NodeFactory::Create( const std::string& name ) const
 {
-    return boost::make_shared< Node>( runtime_, uuids_, system_, jar_, web_, host_, name, boost::ref( ports_ ) );
+    return boost::make_shared< Node>( runtime_, uuids_, system_, java_, jar_, web_, host_, name, boost::ref( ports_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -66,11 +67,12 @@ boost::shared_ptr< Node_ABC > NodeFactory::Create( const std::string& name ) con
 NodeFactory_ABC::T_Nodes NodeFactory::Reload() const
 {
     NodeFactory_ABC::T_Nodes reply;
-    BOOST_FOREACH( const boost::filesystem::wpath& path, system_.Glob( jar_ , L"node.id" ) )
+    boost::filesystem::wpath dir = jar_;
+    BOOST_FOREACH( const boost::filesystem::wpath& path, system_.Glob( dir.remove_filename() , L"node.id" ) )
         try
         {
             xml::xistringstream xis( system_.ReadFile( path ) );
-            boost::shared_ptr< Node_ABC > ptr = boost::make_shared< Node >( runtime_, system_, jar_, web_, boost::ref( xis ), boost::ref( ports_ ) );
+            boost::shared_ptr< Node_ABC > ptr = boost::make_shared< Node >( runtime_, system_, java_, jar_, web_, boost::ref( xis ), boost::ref( ports_ ) );
             reply.insert( std::make_pair( ptr->GetTag(), ptr ) );
         }
         catch( const std::exception& )

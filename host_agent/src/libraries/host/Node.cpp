@@ -79,15 +79,15 @@ namespace
 // Name: Node::Node
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-Node::Node( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
-                  const FileSystem_ABC& system, const boost::filesystem::wpath& jar,
-                  const boost::filesystem::wpath& web, int host,
-                  const std::string& name, PortFactory_ABC& ports )
+Node::Node( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids, const FileSystem_ABC& system,
+            const boost::filesystem::wpath& java, const boost::filesystem::wpath& jar,
+            const boost::filesystem::wpath& web, int host, const std::string& name, PortFactory_ABC& ports )
     : runtime_( runtime )
     , system_ ( system )
-    , id_     ( uuids.Create() )
+    , java_   ( java )
     , jar_    ( jar )
     , web_    ( web )
+    , id_     ( uuids.Create() )
     , host_   ( host )
     , name_   ( name )
     , access_ ( new boost::shared_mutex() )
@@ -102,13 +102,14 @@ Node::Node( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
 Node::Node( const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system,
-                  const boost::filesystem::wpath& jar, const boost::filesystem::wpath& web,
-                  xml::xistream& xis, PortFactory_ABC& ports )
+            const boost::filesystem::wpath& java, const boost::filesystem::wpath& jar,
+            const boost::filesystem::wpath& web, xml::xistream& xis, PortFactory_ABC& ports )
     : runtime_     ( runtime )
     , system_      ( system )
-    , id_          ( boost::uuids::string_generator()( ParseItem< std::string >( xis, "id" ) ) )
+    , java_        ( java )
     , jar_         ( jar )
     , web_         ( web )
+    , id_          ( boost::uuids::string_generator()( ParseItem< std::string >( xis, "id" ) ) )
     , host_        ( ParseItem< int >( xis, "host" ) )
     , name_        ( ParseItem< std::string >( xis, "name" ) )
     , access_      ( new boost::shared_mutex() )
@@ -206,7 +207,8 @@ std::string Node::ToXml() const
 // -----------------------------------------------------------------------------
 boost::filesystem::wpath Node::GetPath() const
 {
-    return jar_ / boost::lexical_cast< std::wstring >( id_ );
+    boost::filesystem::wpath path = jar_;
+    return path.remove_filename() / boost::lexical_cast< std::wstring >( id_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -218,11 +220,13 @@ void Node::Start()
     boost::lock_guard< boost::shared_mutex > lock( *access_ );
     if( process_ ) return;
     const boost::filesystem::wpath path = GetPath();
-    process_ = runtime_.Start( Utf8Convert( jar_ ), boost::assign::list_of
-            ( "--web \""  + Utf8Convert( web_ ) + "\"" )
+    boost::filesystem::wpath jar_path = jar_;
+    process_ = runtime_.Start( Utf8Convert( java_ ), boost::assign::list_of
+            ( " -jar \""  + Utf8Convert( jar_.filename() ) + "\"" )
+            ( "--root \""  + Utf8Convert( web_ ) + "\"" )
             ( "--port \"" + boost::lexical_cast< std::string >( port_->Get() ) + "\"" )
             ( "--host \"" + boost::lexical_cast< std::string >( host_ ) + "\"" ),
-            std::string() );
+            Utf8Convert( jar_path.remove_filename() ) );
     if( !process_ ) return;
 
     Save();

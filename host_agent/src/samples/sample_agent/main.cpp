@@ -28,7 +28,8 @@ int main( int /*argc*/, const char* /*argv*/[] )
     host::FileSystem system;
     host::PortFactory ports( 40, 50000, 60000 );
     int host = 15000;
-    host::NodeFactory nodes( runtime.GetRuntime(), uuids, system, ports, L"e:/cloud_hg/node/out/jar/node.jar", L"e:/cloud_hg/node/www", host );
+    host::NodeFactory nodes( runtime.GetRuntime(), uuids, system, ports,
+        L"C:/Program Files/Java/jdk1.6.0_31/bin/java.exe", L"e:/cloud_hg/node/out/jar/node.jar", L"e:/cloud_hg/node/www", host );
     host::SessionFactory sessions( runtime.GetRuntime(), uuids, system, ports, L"d:/apps/sword_434_data", L"d:/apps/sword_434/applications" );
     host::Agent agent( nodes, sessions );
     web::Controller controller( agent );

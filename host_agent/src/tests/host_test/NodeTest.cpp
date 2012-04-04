@@ -100,6 +100,7 @@ namespace
         MockPortFactory ports;
         const int port;
         const int host;
+        const boost::filesystem::wpath java;
         const boost::filesystem::wpath jar;
         const boost::filesystem::wpath web;
         const std::string name;
@@ -108,6 +109,7 @@ namespace
         Fixture()
             : port       ( 10000 )
             , host       ( 15000 )
+            , java       ( L"java" )
             , jar        ( L"jar" )
             , web        ( L"web" )
             , name       ( "my_name" )
@@ -134,7 +136,7 @@ namespace
             MOCK_EXPECT( uuids.Create ).once().returns( default_id );
             MOCK_EXPECT( ports.Create0 ).once().returns( std::auto_ptr< Port_ABC >( new MockPort( port ) ) );
             SaveNodeTag( tag );
-            return boost::shared_ptr< Node >( new Node( runtime, uuids, system, jar, web, host, name, ports ) );
+            return boost::shared_ptr< Node >( new Node( runtime, uuids, system, java, jar, web, host, name, ports ) );
         }
 
         boost::shared_ptr< Node > MakeNode( const std::string& tag, boost::shared_ptr< MockProcess > process )
@@ -144,7 +146,7 @@ namespace
             MOCK_EXPECT( ports.Create1 ).once().returns( new MockPort( port ) );
             xml::xistringstream xis( tag );
             SaveNodeTag( 0 );
-            return boost::shared_ptr< Node >( new Node( runtime, system, jar, web, xis, ports ) );
+            return boost::shared_ptr< Node >( new Node( runtime, system, java, jar, web, xis, ports ) );
         }
 
         boost::shared_ptr< MockProcess > StartNode( Node& node, std::string* tag = 0, const std::string& name = std::string() )
