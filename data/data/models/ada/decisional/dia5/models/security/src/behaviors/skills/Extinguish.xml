@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.skills.Extinguish" source-version="1.0.0">
+    <description/>
+    <parameters>
+        <parameter name="fires">
+            <description/>
+            <type>
+                <list>
+                    <class name="agent.world.Fire"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <body-type>
+        <class name="agent.world.Body"/>
+    </body-type>
+    <links>
+        <link name="extinguish" skill="behaviors.skills.primitives.Extinguish">
+            <description/>
+        </link>
+    </links>
+</skill>

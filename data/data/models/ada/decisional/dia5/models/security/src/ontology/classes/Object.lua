@@ -86,6 +86,12 @@ method "canBeExtinguished" (
         return true -- $$$ MIA TODO check physical capability
     end )
 
+method "getPositionToExtinguish" ( 
+    function( self )
+        local simPosition = integration.getObjectNearestBorderPosition( self )
+        return CreateKnowledge( ontology.classes.Position, simPosition )
+    end )
+
 -- --------------------------------------------------------------------------------
 -- ResourceReceiver
 -- --------------------------------------------------------------------------------

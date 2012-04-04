@@ -29,5 +29,13 @@ A 'Fire' object has a life time cycle (increase and decrease rate depending on a
                 </type>
             </return>
         </method>
+        <method name="getPositionToExtinguish">
+            <description>Returns an adapted reachable position allowing the agent to extinguish this element.</description>
+            <return>
+                <type>
+                    <class name="agent.world.Destination"/>
+                </type>
+            </return>
+        </method>
     </methods>
 </interface>

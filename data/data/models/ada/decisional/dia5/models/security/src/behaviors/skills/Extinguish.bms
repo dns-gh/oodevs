@@ -1,0 +1,27 @@
+-- ****************************************************************************
+-- Extinguish fires
+-- ****************************************************************************
+rootnode
+{
+    connections = { skill.links.extinguish },
+
+    -- --------------------------------------------------------------------------------
+    -- Slots and feebacks
+    -- --------------------------------------------------------------------------------
+    failed = function( self, params, additionalParams )
+        -- NOTHING
+    end,
+
+    -- --------------------------------------------------------------------------------
+    -- For each fire of the skill, verfiy if it can be extinguished.
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        self.firesToExtinguish = {}
+        for _, fire in pairs( self.params.fires ) do
+            if fire:canBeExtinguished() then
+                self.firesToExtinguish[ #self.firesToExtinguish + 1 ] = fire
+            end
+        end
+        Activate( skill.links.extinguish, 1, { fires = self.firesToExtinguish } )
+    end
+}

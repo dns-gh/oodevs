@@ -197,5 +197,15 @@ This implementation returns the position outside the effect area of the object.<
                 </type>
             </return>
         </method>
+        <method name="getPositionToExtinguish" abstract="false">
+            <description>Returns an adapted reachable position allowing the agent to extinguish this element.&#xD;
+&#xD;
+This implementation returns a position outside the effect area of this element.</description>
+            <return>
+                <type>
+                    <class name="agent.world.Destination"/>
+                </type>
+            </return>
+        </method>
     </methods>
 </class>
