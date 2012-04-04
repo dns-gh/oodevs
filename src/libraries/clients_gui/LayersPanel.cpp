@@ -132,7 +132,16 @@ void LayersPanel::Commit()
 void LayersPanel::Reset()
 {
     fogOfWar_->Revert();
-    //infra_->Revert();
+    infra_->Revert();
+    ResetLayers();
+}
+
+// -----------------------------------------------------------------------------
+// Name: LayersPanel::ResetLayers
+// Created: LGY 2012-04-04
+// -----------------------------------------------------------------------------
+void LayersPanel::ResetLayers()
+{
     new_       = current_;
     newLayers_ = currentLayers_;
     for( unsigned i = 0; i < layers_.size(); ++i )
@@ -155,7 +164,7 @@ void LayersPanel::Reset()
 }
 
 // -----------------------------------------------------------------------------
-// Name: LayersPanel::Reset
+// Name: LayersPanel::UpdateLeastAndMostVisible
 // Created: RPD 2008-08-13
 // -----------------------------------------------------------------------------
 void LayersPanel::UpdateLeastAndMostVisible()
@@ -297,7 +306,7 @@ void LayersPanel::OptionChanged( const std::string& name, const kernel::OptionVa
             {
                 T_Layers::iterator newPosition = currentLayers_.begin() + newIndex;
                 std::swap( *oldPosition, *newPosition );
-                Reset();
+                ResetLayers();
                 return;
             }
         }

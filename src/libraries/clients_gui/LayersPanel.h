@@ -73,6 +73,7 @@ private:
     //! @name Helpers
     //@{
     virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
+    void ResetLayers();
     //@}
 
     //! @name Types
