@@ -133,6 +133,7 @@ end
 
 integration.dropUnit = function( unit )
     DEC_Prisonniers_Debarquer(unit.source)
+    meKnowledge:RC( eRC_TerroristDropped, unit.source )
     return true
 end
 

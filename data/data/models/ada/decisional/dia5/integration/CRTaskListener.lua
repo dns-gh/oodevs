@@ -56,6 +56,7 @@ tableRC[ eRC_TakeHostage ] = function( typeMessage, id, list ) return DEC_RC_Age
 tableRC[ eRC_TimeInUndergroundNetwork ] = function( typeMessage, id, list ) return DEC_RC_String( myself, typeMessage, id, list[1] ) end
 tableRC[ eRC_PreparationMission ] = function( typeMessage, id, list ) return DEC_RC_Float( myself, typeMessage, id, list[1] ) end
 tableRC[ eRC_LimaParameterNotPresent ] = function( typeMessage, id, list ) return DEC_RC_Id( myself, typeMessage, id, list[1] ) end
+tableRC[ eRC_TerroristDropped ] = function( typeMessage, id, list ) return DEC_RC_AgentKnowledge( myself, typeMessage, id, list[1] ) end
 
 RC_WithParams = function( RC_Function, type_rc, id, list )
     if list[1] then
