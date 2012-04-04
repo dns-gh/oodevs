@@ -17,8 +17,14 @@
 #include <web/Controller.h>
 #include <web/MongooseServer.h>
 
+#define  CPPLOG_THREADING
+#include <cpplog/cpplog.hpp>
+
 int main( int /*argc*/, const char* /*argv*/[] )
 {
+    cpplog::StdErrLogger logerr;
+    cpplog::BackgroundLogger lg( &logerr );
+    LOG_INFO(lg) << "Host Agent - (c) copyright MASA Group 2012";
     runtime::Factory runtime;
     host::UuidFactory uuids;
     host::FileSystem system;
