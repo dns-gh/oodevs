@@ -12,10 +12,10 @@
         <description>Rester en mesure d'appuyer (tir/observation) les objectifs.</description>
     </goal>
     <stages>
-        <stage label="Mouvement vers la position de transport" permanent="true" disable-when-done="false">
+        <stage label="Se faire transporter" permanent="false" disable-when-done="true">
             <description>Deplacement vers le point d'embarquement et attente du transport</description>
             <skills>
-                <skill name="france.military.platoon.skills.SeFaireTransporter">
+                <skill name="france.military.platoon.skills.SeFaireTransporter" main="true">
                     <parameter name="position">
                         <value>
                             <parameter>position</parameter>

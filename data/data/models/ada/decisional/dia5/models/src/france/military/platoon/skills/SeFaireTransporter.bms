@@ -6,27 +6,30 @@ rootnode
         self.arrived = true
     end,
     
-    transported = function( self )
-        if self.delay then -- il faut retarder le feedback.done d'un tick pour que la mission transporter fonctionne
-            Feedback( self.feedbacks.done )
-        else
-            self.delay = true
+    unloaded = function( self ) 
+        if self.hasBeenLoaded then
+          Feedback( self.feedbacks.done )
         end
     end,
     
+    loaded = function( self ) 
+        self.hasBeenLoaded = true
+    end,
+           
     create = function( self )
         self.arrived = false
+        self.hasBeenLoaded = false
     end,
     
     activate = function( self )
         local Activate = Activate
         local emptyTable = emptyTable
+        
         if self.arrived then
             Activate( skill.nodes.Report, 1, { RC = eRC_EnAttenteTransporteurs } )
+            Activate( skill.nodes.WaitTransport, 1, emptyTable )
         end
-        Activate( skill.nodes.WaitTransport, 1, emptyTable )
         Activate( skill.links.moveToward, 1, { entities = { self.params.position } } )
-        self.arrived = false
     end,
 }
 
@@ -39,11 +42,13 @@ node "Report"
 
 node "WaitTransport"
 {
-    feedbacks = { "transported" },
+    feedbacks = { "loaded", "unloaded" },
     
     activate = function( self )
         if meKnowledge:isLoaded() then
-            Feedback( self.feedbacks.transported )
+            Feedback( self.feedbacks.loaded )
+        else
+            Feedback( self.feedbacks.unloaded )
         end
     end,
 }
