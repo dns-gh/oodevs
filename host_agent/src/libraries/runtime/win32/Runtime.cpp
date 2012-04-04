@@ -118,7 +118,7 @@ namespace
             api.CloseHandle( info.hThread );
         std::auto_ptr< Handle > handle( new Handle( api, info.hProcess ) );
         if( !done )
-            return boost::shared_ptr< Process_ABC >();
+            throw std::runtime_error( api.GetLastError() );
 
         return boost::make_shared< Process >( api, info.dwProcessId, boost::ref( handle ) );
     }
@@ -141,10 +141,11 @@ boost::shared_ptr< Process_ABC > Runtime::Start( const std::string& cmd,
         std::copy( join.begin(), join.end(), std::back_inserter( wcmd ) );
         wcmd.push_back( 0 );
         wrun = Utf8Convert( run );
+        return CreateProcess( api_, wapp, wcmd, wrun );
     }
-    catch( const std::runtime_error& )
+    catch( const std::runtime_error& /*err*/ )
     {
         return boost::shared_ptr< Process_ABC >();
     }
-    return CreateProcess( api_, wapp, wcmd, wrun );
+
 }
