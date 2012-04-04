@@ -187,5 +187,15 @@ This implementation returns 'true' if agent has physical capabilities or if deco
                 </type>
             </return>
         </method>
+        <method name="getDestinationForWork" abstract="false">
+            <description>Returns the nearest reachable destination for this element.&#xD;
+&#xD;
+This implementation returns the position outside the effect area of the object.</description>
+            <return>
+                <type>
+                    <class name="agent.world.Destination"/>
+                </type>
+            </return>
+        </method>
     </methods>
 </class>

@@ -65,5 +65,13 @@ Returns 'true' when element is deconstructed.</description>
                 </type>
             </return>
         </method>
+        <method name="getDestinationForWork">
+            <description>Returns a reachable destination for this element, ensuring the agent to act on it.</description>
+            <return>
+                <type>
+                    <class name="agent.world.Destination"/>
+                </type>
+            </return>
+        </method>
     </methods>
 </interface>

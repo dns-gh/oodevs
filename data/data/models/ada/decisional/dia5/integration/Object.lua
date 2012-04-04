@@ -15,3 +15,21 @@ end
 integration.isObjectRemoved = function( object )
     return not DEC_IsValidKnowledgeObject( object.source )
 end
+
+integration.getObjectNearestBorderPosition = function( object )
+    object.getObjectNearestBorderPosition = object.getObjectNearestBorderPosition or nil
+    if object.getObjectNearestBorderPosition == nil then
+        local localisation = DEC_Geometrie_AgrandirLocalisation( DEC_ConnaissanceObjet_Localisation( object.source ) , 10 )
+        object.getObjectNearestBorderPosition = DEC_Geometrie_ComputeNearestBorder( meKnowledge:getPosition(), localisation )
+    end
+    return object.getObjectNearestBorderPosition
+end
+
+integration.getPlannedObjectNearestBorderPosition = function( object )
+    object.getPlannedObjectNearestBorderPosition = object.getPlannedObjectNearestBorderPosition or nil
+    if object.getPlannedObjectNearestBorderPosition == nil then
+        local localisation = DEC_Geometrie_AgrandirLocalisation( DEC_GenObject_Localisation( object.source ) , 10 )
+        object.getPlannedObjectNearestBorderPosition = DEC_Geometrie_ComputeNearestBorder( meKnowledge:getPosition(), localisation )
+    end
+    return object.getPlannedObjectNearestBorderPosition
+end

@@ -110,6 +110,12 @@ method "isDeconstructed" (
         return integration.buildLevelUrbanBlock( self ) == 0
     end )
 
+method "getDestinationForWork" ( 
+    function( self ) 
+        local simPosition = self:getPosition()
+        return CreateKnowledge( ontology.classes.Position, simPosition )
+    end )
+
 -- --------------------------------------------------------------------------------
 -- Contamination area
 -- --------------------------------------------------------------------------------

@@ -4,7 +4,9 @@
 &#xD;
 When several works should be created, the agent acts on each work by following the order of the elements into the 'works' list. &#xD;
 &#xD;
-A visited work won't be created and build if agent doesn't have the physical capability or if it hasn't enough resources. In that specific case, agent will decide to visit the next one.</description>
+A visited work won't be created and build if agent doesn't have the physical capability or if it hasn't enough resources. In that specific case, agent will decide to visit the next one.&#xD;
+&#xD;
+If the 'waitForReinforcement' parameter is set to 'true' (default value is 'false'), agent will wait for reinforcement each time it cannot create a work (no physical capabilities). </description>
     <parameters>
         <parameter name="works">
             <description>The set of construction to build. </description>

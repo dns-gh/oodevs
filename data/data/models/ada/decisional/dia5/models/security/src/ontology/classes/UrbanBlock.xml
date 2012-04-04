@@ -192,5 +192,15 @@ This implementation returns 'false' (temporary implementation).</description>
                 </type>
             </return>
         </method>
+        <method name="getDestinationForWork" abstract="false">
+            <description>Returns the nearest reachable destination for this element.&#xD;
+&#xD;
+This implementation returns the nearest positions outside the urban block.</description>
+            <return>
+                <type>
+                    <class name="agent.world.Destination"/>
+                </type>
+            </return>
+        </method>
     </methods>
 </class>

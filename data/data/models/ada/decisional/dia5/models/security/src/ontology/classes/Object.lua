@@ -34,7 +34,7 @@ method "canBeCreated" (
 
 method "canBeDeconstructed" (
     function( self, instantaneously )
-        return integration.canRemoveIt( self ) or instantaneously
+        return integration.canRemoveItSecu( self ) or instantaneously
     end )
 
 method "deconstructIt" ( masalife.brain.integration.startStopAction( 
@@ -46,13 +46,18 @@ method "deconstructIt" ( masalife.brain.integration.startStopAction(
 
 method "removeIt" (
     function( self )
-        meKnowledge:sendReport( eRC_FinDegagement )
         return integration.removeObjectInstantaneously( self )
     end )
     
 method "isDeconstructed" (
     function( self )
         return integration.isObjectRemoved( self ) or integration.buildLevel( self ) == 0
+    end )
+
+method "getDestinationForWork" ( 
+    function( self ) 
+        local simPosition = integration.getObjectNearestBorderPosition( self )
+        return CreateKnowledge( ontology.classes.Position, simPosition )
     end )
 
 -- --------------------------------------------------------------------------------

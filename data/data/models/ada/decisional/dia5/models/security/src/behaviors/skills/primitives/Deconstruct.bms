@@ -18,23 +18,19 @@ rootnode
         self.arrived = true
     end,
 
-    deconstructionActionRunning = function( self, params, additionalParams ) -- from deconstruct action skill
+    deconstructionActionRunning = function( self, params ) -- from deconstruct action skill
         Feedback( self.feedbacks.deconstructionRunning, { work = params.work } ) -- return the object that is currently being deconstructed
     end,
 
-    deconstructActionCompleted = function( self, params, additionalParams ) -- from deconstruct action skill
-        DEC_Trace( "---- Decontructed ----" )
+    deconstructActionCompleted = function( self, params ) -- from deconstruct action skill
         Feedback( self.feedbacks.deconstructed, { work = params.work } )
         self.nextTargetIndex = self.nextTargetIndex + 1
         self.arrived = false
     end,
 
     impossibleToDeconstruct = function( self, params ) -- called within this skill
-        DEC_Trace( "---- Not decontructed ----" )
-        if not params.work:isDeconstructed() then
-            meKnowledge:sendReport( eRC_ObjetNonSupprimable )
-            Feedback( self.feedbacks.notDeconstructed, { work = params.work } )
-        end
+        meKnowledge:sendReport( eRC_ObjetNonSupprimable )
+        Feedback( self.feedbacks.notDeconstructed, { work = params.work } )
         self.arrived = false
         self.nextTargetIndex = self.nextTargetIndex + 1
     end,
@@ -53,7 +49,6 @@ rootnode
     -- --------------------------------------------------------------------------------
     activate = function( self )
         local Activate = Activate
-
         local paramsSize = #self.params.works
         if paramsSize > 0 then 
             if self.nextTargetIndex <= paramsSize then
@@ -67,7 +62,7 @@ rootnode
                         meKnowledge:sendReport( eRC_AttenteRenforcement )
                     end
                 else
-                    self.position = ontology.queries.GetPositionsOutsideObject[ "execute" ]( { object = self.work } )
+                    self.position = ontology.queries.GetPositionsForWork[ "execute" ]( { work = self.work } )
                     Activate( skill.links.reach, 1, { destination = self.position[ 1 ], urgency = false } )
                 end
             else

@@ -79,5 +79,23 @@ This implementation returns 'false', a planned object is not constructed and it 
                 </type>
             </return>
         </method>
+        <method name="isDeconstructed" abstract="false">
+            <description>Returns 'true' if this element has been deconstructed (by deconstruction action or a &quot;magic&quot; destruction action), 'false' otherwise.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="getDestinationForWork" abstract="false">
+            <description>Returns the nearest reachable destination for this element.&#xD;
+&#xD;
+This implementation returns an empty table (TEMPORARY).</description>
+            <return>
+                <type>
+                    <class name="agent.world.Destination"/>
+                </type>
+            </return>
+        </method>
     </methods>
 </class>

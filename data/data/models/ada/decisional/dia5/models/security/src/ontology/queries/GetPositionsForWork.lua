@@ -1,13 +1,12 @@
 -- ****************************************************************************
--- GetPositionsOutsideObject
--- Get a position outside the given object
+-- GetPositionsForWork
+-- Get a position outside the given work (object, plannedObject and urbanBlocks)
 -- ****************************************************************************
-queryImplementation "GetPositionsOutsideObject" 
+queryImplementation "GetPositionsForWork" 
 { 
     [ "execute" ] = function ( params )
         local result = {}
-        local simPos = integration.getObjectNearestBorderPosition( params.object )
-        result[ #result + 1 ] = CreateKnowledge( ontology.classes.Position, simPos )
+        result[ #result + 1 ] = params.work:getDestinationForWork()
         if not next( result ) then
             meKnowledge:sendReport( eRC_NoKeyPositionsFoundInArea )
         end

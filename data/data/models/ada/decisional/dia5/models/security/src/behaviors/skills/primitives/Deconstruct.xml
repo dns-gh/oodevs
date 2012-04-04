@@ -2,9 +2,9 @@
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.skills.primitives.Deconstruct" source-version="1.0.0">
     <description>For an gent to know how to deconstruct a set of given 'Works'. &#xD;
 &#xD;
-When several works should be decontructed, the agent acts on each work by following the order of the elements into the 'works' list. &#xD;
+When several works should be deconstructed, the agent acts on each work by following the order of the elements into the 'works' list. &#xD;
 &#xD;
-If &quot;instantaneously&quot; parameter is set to 'True', each vivisted work are magically deconstructed without any physical capability considerations. &#xD;
+If &quot;instantaneously&quot; parameter is set to 'true', each vivisted work are magically deconstructed without any physical capability considerations. &#xD;
 Contrariwise (&quot;instantaneously&quot; parameter is set to 'false'), visited work won't be deconstructed if agent doesn't have the physical capability or if it hasn't enough resources. In that specific case, agent will decide to visit the next one.</description>
     <parameters>
         <parameter name="works">

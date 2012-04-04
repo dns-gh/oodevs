@@ -35,11 +35,18 @@ method "canBeCreated" (
         end
         return result
     end )
+    
+method "getDestinationForWork" ( 
+    function( self ) 
+        local simPosition = integration.getPlannedObjectNearestBorderPosition( self )
+        return CreateKnowledge( ontology.classes.Position, simPosition )
+    end )
 
 -- Decontruction method: cannot deconstruct an object that is not existing
 method "canBeDeconstructed" ( function( self, instantaneously ) return false end )
 method "deconstructIt" ( function( self ) return false end )
 method "removeIt" ( function( self ) return false end )
+method "isDeconstructed" ( function( self ) return false end )
 
 -- --------------------------------------------------------------------------------
 -- Specific methods

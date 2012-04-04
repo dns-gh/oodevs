@@ -1,14 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="tasks.Deconstruct" source-version="1.0.0">
     <parameters>
-        <parameter name="objects">
+        <parameter name="works">
             <type>
                 <list>
-                    <class name="ontology.classes.Object"/>
+                    <class name="agent.world.Work"/>
                 </list>
             </type>
         </parameter>
-        <parameter name="instantaneously">
+        <parameter name="waitForReinforcement">
             <type>
                 <simple name="boolean"/>
             </type>
@@ -16,7 +16,7 @@
                 <boolean>false</boolean>
             </default>
         </parameter>
-        <parameter name="waitForReinforcement">
+        <parameter name="instantaneously">
             <type>
                 <simple name="boolean"/>
             </type>
@@ -31,7 +31,7 @@
                 <skill name="behaviors.skills.primitives.Deconstruct" main="true">
                     <parameter name="works">
                         <value>
-                            <parameter>objects</parameter>
+                            <parameter>works</parameter>
                         </value>
                     </parameter>
                     <parameter name="waitForReinforcement">

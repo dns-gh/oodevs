@@ -45,6 +45,7 @@ rootnode
         self.arrived = false
         self.dismounted = false
         self.nextTargetIndex = 1
+        self.position = {}
     end,
 
     -- --------------------------------------------------------------------------------
@@ -70,8 +71,8 @@ rootnode
                         meKnowledge:sendReport( eRC_AttenteRenforcement )
                     end
                 else
-                    -- MIA $$$ TODO: add a position outside work.
-                    Activate( skill.links.reach, 1, { destination = self.work, urgency = false, pathType = eTypeItiDeminage } )
+                    self.position = ontology.queries.GetPositionsForWork[ "execute" ]( { work = self.work } )
+                    Activate( skill.links.reach, 1, { destination = self.work, urgency = false } )
                 end
             else
                 Feedback( self.feedbacks.done )

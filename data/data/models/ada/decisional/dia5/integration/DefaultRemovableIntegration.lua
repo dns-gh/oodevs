@@ -55,8 +55,14 @@ end
 -- @author PSN
 -- @release 2010-03-30
 integration.canRemoveIt = function( object )
-    -- $$$ MIA return false if object is not valide.
+    -- $$$ MIA return false if object is not valid.
     return DEC_Agent_PeutDetruireObjet( object.source )
+end
+
+-- $$$ MIA merge with military: return true if agent can remove the objet depending on its physical capabilities
+integration.canRemoveItSecu = function( object )
+    object.canRemoveit = object.canRemoveit or DEC_Agent_PeutDetruireObjet( object.source )
+    return object.canRemoveit
 end
 
 --- Return current advancement of object removal
@@ -71,8 +77,7 @@ integration.startRemoveIt = function( object )
     object[myself] = object[myself] or {} 
     object[myself].actionRemove = DEC_StartDetruireObjet( object.source )
     actionCallbacks[ object[myself].actionRemove ] = function( arg ) object[myself].actionRemoveState = arg end
-
-    meKnowledge:RC( eRC_DebutDegagement, object.source )
+    meKnowledge:RC( eRC_DebutTravauxObjet, object.source )
 end
 
 integration.updateRemoveIt = function( object )
@@ -92,12 +97,12 @@ end
 integration.stopRemoveIt = function( object )
     object[myself] = object[myself] or {} 
     if object[myself].actionRemoveState == eActionObjetTerminee then
-        meKnowledge:RC( eRC_FinDegagement )
         return true
     else
         DEC_Trace( "pause work remove" )
         return false
     end
+    meKnowledge:RC( eRC_FinDegagement )
     object[myself].actionRemove = DEC__StopAction( object[myself].actionRemove )
     return true
 end
@@ -135,10 +140,10 @@ integration.updateRemoveItSecu = function( object )
 end
 
 integration.stopRemoveItSecu = function( object )
-    object[ myself ] = object[ myself ] or {} 
-    if object[ myself ].actionRemoveState ~= eActionObjetTerminee then
-        DEC_Trace( "Work interrupted" )
+    if not object[ myself ].actionRemoveState == eActionObjetTerminee then
+        meKnowledge:RC( eRC_FinDegagement )
     end
+    object[ myself ] = object[ myself ] or {} 
     object[ myself ].actionRemove = DEC__StopAction( object[myself].actionRemove )
     return true
 end
