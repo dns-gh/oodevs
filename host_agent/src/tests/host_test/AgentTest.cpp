@@ -123,10 +123,9 @@ namespace
             return session;
         }
 
-        boost::shared_ptr< MockNode > AddNode( const std::string& name, int idx )
+        boost::shared_ptr< MockNode > AddNode( const std::string& id, const std::string& name )
         {
-            const std::string uuid = CreatePrefixedUuid( idx );
-            boost::shared_ptr< MockNode > node = CreateMockNode( uuid, name );
+            boost::shared_ptr< MockNode > node = CreateMockNode( id, name );
             MOCK_EXPECT( nodes.Create ).once().with( name ).returns( node );
             MOCK_EXPECT( node->Start ).once();
             CheckReply( agent.CreateNode( name ), node->ToJson() );
@@ -141,7 +140,7 @@ namespace
 
 BOOST_FIXTURE_TEST_CASE( agent_creates_node, Fixture )
 {
-    boost::shared_ptr< MockNode > node = AddNode( "node_name", 0 );
+    boost::shared_ptr< MockNode > node = AddNode( default_node_string, "node_name" );
     CheckReply( agent.ListNodes( 0, 2 ), "[" + node->ToJson() + "]" );
     CheckReply( agent.CountNodes(), "{ \"count\" : 1 }" );
     CheckReply( agent.GetNode( node->GetTag() ), node->ToJson() );
@@ -149,7 +148,7 @@ BOOST_FIXTURE_TEST_CASE( agent_creates_node, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( agent_deletes_node, Fixture )
 {
-    boost::shared_ptr< MockNode > node = AddNode( "node_name", 0 );
+    boost::shared_ptr< MockNode > node = AddNode( default_node_string, "node_name" );
     MOCK_EXPECT( node->Stop ).once();
     CheckReply( agent.DeleteNode( node->GetTag() ), node->ToJson() );
     CheckReply( agent.CountNodes(), "{ \"count\" : 0 }" );
@@ -158,15 +157,21 @@ BOOST_FIXTURE_TEST_CASE( agent_deletes_node, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( agent_stop_start_nodes, Fixture )
 {
-    boost::shared_ptr< MockNode > node = AddNode( "node_name", 0 );
+    boost::shared_ptr< MockNode > node = AddNode( default_node_string, "node_name" );
     MOCK_EXPECT( node->Stop ).once();
     CheckReply( agent.StopNode( node->GetTag() ), node->ToJson() );
     MOCK_EXPECT( node->Start ).once();
     CheckReply( agent.StartNode( node->GetTag() ), node->ToJson() );
 }
 
+BOOST_FIXTURE_TEST_CASE( agent_cannot_create_orphan_session, Fixture )
+{
+    CheckReply( agent.CreateSession( default_node, "exercise", "name" ), "invalid node", false );
+}
+
 BOOST_FIXTURE_TEST_CASE( agent_creates_session, Fixture )
 {
+    AddNode( default_node_string, "node_name" );
     boost::shared_ptr< MockSession > session = AddSession( default_node, "exercise_name", "session_name", 10000 );
     CheckReply( agent.ListSessions( default_node, 0, 2 ), "[" + session->ToJson() + "]" );
     CheckReply( agent.CountSessions( default_node ), "{ \"count\" : 1 }" );
@@ -175,6 +180,7 @@ BOOST_FIXTURE_TEST_CASE( agent_creates_session, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( agent_clips_list_parameters, Fixture )
 {
+    AddNode( default_node_string, "node_name" );
     std::vector< boost::shared_ptr< MockSession > > list;
     for( int i = 0; i < 8; ++i )
         list.push_back( AddSession( default_node, "exercise_name", "session_name", i ) );
@@ -187,6 +193,7 @@ BOOST_FIXTURE_TEST_CASE( agent_clips_list_parameters, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( agent_deletes_session, Fixture )
 {
+    AddNode( default_node_string, "node_name" );
     boost::shared_ptr< MockSession > session = AddSession( default_node, "exercise_name", "session_name", 10000 );
     MOCK_EXPECT( session->Stop ).once();
     CheckReply( agent.DeleteSession( session->GetTag() ), session->ToJson() );
@@ -196,6 +203,7 @@ BOOST_FIXTURE_TEST_CASE( agent_deletes_session, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( agent_stop_start_sessions, Fixture )
 {
+    AddNode( default_node_string, "node_name" );
     boost::shared_ptr< MockSession > session = AddSession( default_node, "exercise_name", "session_name", 10000 );
     MOCK_EXPECT( session->Stop ).once();
     CheckReply( agent.StopSession( session->GetTag() ), session->ToJson() );
@@ -205,16 +213,25 @@ BOOST_FIXTURE_TEST_CASE( agent_stop_start_sessions, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( agent_manages_sessions_per_node, Fixture )
 {
+    boost::shared_ptr< MockNode > node = AddNode( default_node_string, "node_name" );
+    const boost::uuids::uuid another_node = AddNode( "12345678-90AB-CDEF-9876-543210123456", "another_node" )->GetTag();
+
     std::vector< boost::shared_ptr< MockSession > > list;
     list.push_back( AddSession( default_node, "exercise_name", "session_name", 0 ) );
-    boost::uuids::uuid another_node = boost::uuids::string_generator()( "12345678-90AB-CDEF-9876-543210123456" );
     list.push_back( AddSession( another_node, "another_exercise", "another_name", 1 ) );
+
     CheckReply( agent.CountSessions( boost::uuids::nil_uuid() ), "{ \"count\" : 2 }" );
     CheckReply( agent.CountSessions( default_node ), "{ \"count\" : 1 }" );
     CheckReply( agent.CountSessions( another_node ), "{ \"count\" : 1 }" );
     CheckReply( agent.ListSessions( boost::uuids::nil_uuid(), 0,  10 ), "[" + list.front()->ToJson() + ", " + list.back()->ToJson() + "]" );
     CheckReply( agent.ListSessions( default_node, 0,  10 ), "[" + list.front()->ToJson() + "]" );
     CheckReply( agent.ListSessions( another_node, 0,  10 ), "[" + list.back()->ToJson() + "]" );
+
+    MOCK_EXPECT( node->Stop ).once();
+    CheckReply( agent.DeleteNode( default_node ), node->ToJson() );
+    CheckReply( agent.CountSessions( boost::uuids::nil_uuid() ), "{ \"count\" : 1 }" );
+    CheckReply( agent.CountSessions( default_node ), "{ \"count\" : 0 }" );
+    CheckReply( agent.CountSessions( another_node ), "{ \"count\" : 1 }" );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_list_exercises, Fixture )
