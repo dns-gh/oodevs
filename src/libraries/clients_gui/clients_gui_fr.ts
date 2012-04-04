@@ -1866,16 +1866,20 @@ Voulez-vous le supprimer?</translation>
 <context>
     <name>gui::WeatherWidget</name>
     <message>
-        <source>Wind speed/direction:</source>
-        <translation>Vitesse/direction du vent:</translation>
-    </message>
-    <message>
         <source>Weather type:</source>
         <translation>Type de temps:</translation>
     </message>
     <message>
         <source>Temperature:</source>
         <translation>Temperature:</translation>
+    </message>
+    <message>
+        <source>Wind speed:</source>
+        <translation>Vitesse du vent:</translation>
+    </message>
+    <message>
+        <source>Wind direction:</source>
+        <translation>Direction du vent:</translation>
     </message>
 </context>
 </TS>

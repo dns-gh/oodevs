@@ -19,6 +19,66 @@
 using namespace gui;
 using namespace kernel;
 
+namespace
+{
+    class RichDial : public QDial
+    {
+    public:
+        RichDial( QWidget* parent, const QString& imagePath, float sizeRatio )
+            : QDial( parent )
+            , image_    ( imagePath )
+            , sizeRatio_( sizeRatio )
+        { 
+            image_.setAlphaBuffer( true );
+            imageRatio_ = ( image_.width() > image_.height() )
+                ? (float) image_.height() / (float) image_.width()
+                : (float) image_.width() / (float) image_.height();
+        }
+
+        virtual void paintEvent( QPaintEvent* event )
+        {
+            Q_UNUSED( event );
+
+            // Painter
+            QPalette p = palette();
+            QStylePainter painter(this);
+            painter.setRenderHint(QPainter::Antialiasing);
+            painter.setBrush( p.color( QPalette::Dark ) );
+
+            // Dial button
+            QStyleOptionSlider option;
+            initStyleOption(&option);
+            painter.drawComplexControl(QStyle::CC_Dial, option);
+
+            // Windsock
+            painter.translate( QPoint( width() / 2, height() / 2 ) );
+            //painter.rotate( value() - 90 );
+            //painter.drawImage( QPoint( -image_.width() / 2, -image_.height() / 2 ), image_ );
+
+            QRect surface;
+            float surfaceHalfSize = ( width() > height() ) ? (float) height() * sizeRatio_ / 2.f : (float) width() * sizeRatio_ / 2.f;
+            if( image_.width() > image_.height() )
+            {
+                painter.rotate( value() - 90 );
+                surface = QRect( QPoint( -surfaceHalfSize, -surfaceHalfSize * imageRatio_ ),
+                                 QPoint(  surfaceHalfSize,  surfaceHalfSize * imageRatio_ ) );
+            }
+            else
+            {
+                painter.rotate( value() );
+                surface = QRect( QPoint( -surfaceHalfSize * imageRatio_, -surfaceHalfSize ),
+                                 QPoint(  surfaceHalfSize * imageRatio_,  surfaceHalfSize ) );
+            }
+            painter.drawImage( surface, image_ );
+        }
+
+    private:
+        QImage image_;
+        float sizeRatio_;
+        float imageRatio_;
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: WeatherWidget constructor
 // Created: ABR 2011-05-30
@@ -26,18 +86,24 @@ using namespace kernel;
 WeatherWidget::WeatherWidget( QWidget* parent, const QString& title )
     : Q3GroupBox( 2, Qt::Horizontal, title, parent, "WeatherWidget" )
 {
-    new QLabel( tools::translate( "gui::WeatherWidget", "Wind speed/direction:" ), this );
-    Q3HBox* box = new Q3HBox( this );
-    box->layout()->setSpacing( 5 );
-    windSpeed_ = new QSpinBox( 0, 300, 5, box );
+    // Speed
+    new QLabel( tools::translate( "gui::WeatherWidget", "Wind speed:" ), this );
+    windSpeed_ = new QSpinBox( 0, 300, 5, this );
     windSpeed_->setSuffix( Units::kilometersPerHour.AsString() );
-    windDirection_ = new QSpinBox( 0, 359, 1, box );
-    windDirection_->setSuffix( Units::degrees.AsString() );
 
+    // Direction
+    new QLabel( tools::translate( "gui::WeatherWidget", "Wind direction:" ), this );
+    windDirection_ = new RichDial( this, "resources/images/gui/windsock.png", 0.8f );
+    windDirection_->setWrapping( true );
+    windDirection_->setRange( 0, 359 );
+    windDirection_->setMinimumSize( 50, 50 );
+
+    // Temperature
     new QLabel( tools::translate( "gui::WeatherWidget", "Temperature:" ), this );
     temperature_ = new QSpinBox( -20, 40, 1, this );
     temperature_->setSuffix( "°C" );
 
+    // Type
     new QLabel( tools::translate( "gui::WeatherWidget", "Weather type:" ), this );
     type_ = new gui::ValuedComboBox< E_WeatherType >( this );
     assert( eNbrWeatherType > 0 );
