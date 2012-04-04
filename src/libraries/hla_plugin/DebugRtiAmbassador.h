@@ -53,7 +53,7 @@ public:
     virtual bool Create( const std::string& federation, const T_FomFiles& fomFiles );
     virtual bool Destroy( const std::string& federation );
 
-    virtual T_JointInfo Join  ( const std::string& federate, const std::string& federation, ::hla::FederateAmbassador_ABC& ambassador );
+    virtual bool Join  ( const std::string& federate, const std::string& federation );
     virtual void Resign();
     //@}
 
@@ -68,7 +68,7 @@ public:
 
     //! @name Object Management
     //@{
-    virtual void                  ReserveObjectInstance( const std::string& name, ::hla::FederateAmbassador_ABC& ambassador );
+    virtual void                  ReserveObjectInstance( const std::string& name );
     virtual ::hla::ObjectIdentifier RegisterObjectInstance( const ::hla::ClassIdentifier& classID, const std::string& name );
     virtual void                  DeleteObjectInstance  ( const ::hla::ObjectIdentifier& objectID );
 

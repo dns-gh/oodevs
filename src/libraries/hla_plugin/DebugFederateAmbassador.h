@@ -68,6 +68,7 @@ public:
     //@{
     virtual void AnnounceSynchronizationPoint( const std::string& label );
     virtual void FederationSynchronized( const std::string& label );
+    virtual void SetFederateIdentifier( const ::hla::FederateIdentifier& id );
     //@}
 
     //! @name  Ownership Management

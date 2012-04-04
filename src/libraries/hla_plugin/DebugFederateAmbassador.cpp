@@ -261,3 +261,12 @@ void DebugFederateAmbassador::AttributeIsOwnedByRTI( const ::hla::ObjectIdentifi
     logger_.LogInfo( "<- AttributeIsOwnedByRTI object " + objectID.ToString() );
 }
 
+
+// -----------------------------------------------------------------------------
+// Name: DebugFederateAmbassador::SetFederateIdentifier
+// Created:AHC 2012-04-04
+// -----------------------------------------------------------------------------
+void DebugFederateAmbassador::SetFederateIdentifier( const ::hla::FederateIdentifier& id )
+{
+    logger_.LogInfo( "<- SetFederateIdentifier object " + id.ToString() );
+}

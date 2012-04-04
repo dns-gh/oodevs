@@ -127,11 +127,11 @@ bool DebugRtiAmbassador::Destroy( const std::string& federation )
 // Name: DebugRtiAmbassador::Join
 // Created: MCO 2009-01-26
 // -----------------------------------------------------------------------------
-::hla::RtiAmbassador_ABC::T_JointInfo DebugRtiAmbassador::Join( const std::string& federate, const std::string& federation, FederateAmbassador_ABC& ambassador )
+bool DebugRtiAmbassador::Join( const std::string& federate, const std::string& federation )
 {
     Flush();
     logger_.LogInfo( "-> Join federate " + federate + " federation " + federation );
-    return ambassador_->Join( federate, federation, ambassador );
+    return ambassador_->Join( federate, federation );
 }
 
 // -----------------------------------------------------------------------------
@@ -212,11 +212,11 @@ void DebugRtiAmbassador::Publish( const InteractionIdentifier& interactionID )
 // Name: DebugRtiAmbassador::ReserveObjectInstance
 // Created: LGY 2010-03-05
 // -----------------------------------------------------------------------------
-void DebugRtiAmbassador::ReserveObjectInstance( const std::string& name, hla::FederateAmbassador_ABC& ambassador )
+void DebugRtiAmbassador::ReserveObjectInstance( const std::string& name )
 {
     Flush();
     logger_.LogInfo( "-> ReserveObjectInstance name " + name );
-    ambassador_->ReserveObjectInstance( name, ambassador );
+    ambassador_->ReserveObjectInstance( name );
 }
 
 // -----------------------------------------------------------------------------
