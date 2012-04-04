@@ -82,6 +82,7 @@ void OrbatPanel::Commit()
 void OrbatPanel::Reset()
 {
     pGhostColor_->Revert();
+    pLinkColor_->Revert();
 }
 
 // -----------------------------------------------------------------------------
