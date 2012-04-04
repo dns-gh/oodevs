@@ -29,16 +29,16 @@ rootnode
     activate = function( self )
         local Activate = Activate
 
-        -- main effect is done: beeing decontaminated.
-        if not meKnowledge:isContaminated() then
-            Feedback( self.feedbacks.done )
-            return
-        end
-
         -- Find nearest decontamination plot
         local nearestPlot = next( self.plots )
         for plot in pairs( self.plots ) do  -- select the nearest element
             nearestPlot = plot:proximityLevel() > nearestPlot:proximityLevel() and plot or nearestPlot
+        end
+        
+        -- main effect is done: beeing decontaminated.
+        if not meKnowledge:isContaminated() then
+            Feedback( self.feedbacks.isDecontaminated, { reason = "decontaminated", element = nearestPlot } )
+            return
         end
 
         -- Movetoward nearest plot, and ask for decontamination if arrived.
@@ -46,6 +46,7 @@ rootnode
             Activate( skill.nodes.RequestDecontamination, 1, { entity = nearestPlot } )
         end
         Activate( skill.links.moveToward, 1, { entities = { nearestPlot } } )
+        
         self.arrived = false
     end
 }

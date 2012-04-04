@@ -552,3 +552,11 @@ end
 integration.deactivateSensors = function( self )
     DEC_Perception_DesactiverSenseurs()
 end
+
+integration.immuniserNbc = function ( self )
+    DEC_Agent_ImmuniserNbc( )
+end
+
+integration.stopImmuniserNbc = function ( self )
+    DEC_Agent_StopImmuniserNbc( )
+end

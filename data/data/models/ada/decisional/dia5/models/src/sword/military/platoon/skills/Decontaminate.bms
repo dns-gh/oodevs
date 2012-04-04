@@ -1,0 +1,48 @@
+-- **************************************************************************** 
+-- Decontaminate
+-- Usue motoward and GetDecon
+-- ****************************************************************************
+rootnode
+{
+    connections = { skill.links.moveToward, skill.links.getDecon },
+
+    -- -------------------------------------------------------------------------------- 
+    -- feedback from moveToward
+    -- --------------------------------------------------------------------------------
+    done = function( self, params, additionnalParams )
+        self.arrived = true
+    end,
+    
+    -- -------------------------------------------------------------------------------- 
+    -- feedback from GetDecon
+    -- --------------------------------------------------------------------------------
+    isDecontaminated = function( self, params, additionalParams )
+        self.decontaminated = true
+    end,
+
+    -- -------------------------------------------------------------------------------- 
+    -- Init 
+    -- --------------------------------------------------------------------------------
+    create = function( self )
+        self.arrived = false
+        self.decontaminated = false
+        meKnowledge:immuniserNbc() -- On immunise l'agent pour toute la durée de la mission
+    end,
+    -- -------------------------------------------------------------------------------- 
+    -- Select nearest plot and move toward it, asking for decontamination
+    -- --------------------------------------------------------------------------------
+    activate = function( self )
+        local Activate = Activate
+        
+        if self.decontaminated == false then
+            Activate( skill.links.getDecon, 0.9, { objectives = self.params.objectives } )
+        end
+        Activate( skill.links.moveToward, 0.1, { entities = { self.params.meetongPoint } } )
+        
+        self.arrived = false
+    end,
+    
+    destroy = function( self )
+         meKnowledge:stopImmuniserNbc() -- on arrête l'immunisation à la contamination NRBC à la fin de la mission
+    end
+}
