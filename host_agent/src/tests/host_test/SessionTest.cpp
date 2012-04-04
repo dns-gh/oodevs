@@ -32,6 +32,10 @@ using namespace host;
 namespace
 {
     const std::string default_id_string = "12345678-90AB-CDEF-9876-543210123456";
+    const boost::uuids::uuid default_id = boost::uuids::string_generator()( default_id_string );
+    const std::string default_node_string = "0123456789abcdef0123456789abcdef";
+    const boost::uuids::uuid default_node = boost::uuids::string_generator()( default_node_string );
+
 
     MOCK_BASE_CLASS( MockRuntime, runtime::Runtime_ABC )
     {
@@ -97,7 +101,6 @@ namespace
         MockUuidFactory uuids;
         MockFileSystem  system;
         MockPortFactory ports;
-        const boost::uuids::uuid id;
         const int port;
         const boost::filesystem::wpath data;
         const boost::filesystem::wpath apps;
@@ -106,8 +109,7 @@ namespace
         const int processPid;
         const std::string processName;
         Fixture()
-            : id         ( boost::uuids::string_generator()( default_id_string ) )
-            , port       ( 10000 )
+            : port       ( 10000 )
             , data       ( L"data" )
             , apps       ( L"apps" )
             , exercise   ( "my_exercise" )
@@ -133,10 +135,10 @@ namespace
 
         boost::shared_ptr< Session > MakeSession( std::string* tag = 0 )
         {
-            MOCK_EXPECT( uuids.Create ).once().returns( id );
+            MOCK_EXPECT( uuids.Create ).once().returns( default_id );
             MOCK_EXPECT( ports.Create0 ).once().returns( std::auto_ptr< Port_ABC >( new MockPort( port ) ) );
             SaveSessionTag( tag );
-            return boost::shared_ptr< Session >( new Session( runtime, uuids, system, data, apps, exercise, name, ports ) );
+            return boost::shared_ptr< Session >( new Session( runtime, uuids, system, data, apps, default_node, exercise, name, ports ) );
         }
 
         boost::shared_ptr< Session > MakeSession( const std::string& tag, boost::shared_ptr< MockProcess > process )
@@ -202,6 +204,7 @@ BOOST_FIXTURE_TEST_CASE( session_converts_to_json, Fixture )
     boost::shared_ptr< Session > ptr = MakeSession();
     BOOST_CHECK_EQUAL( ptr->ToJson(), "{ "
         "\"id\" : \"12345678-90ab-cdef-9876-543210123456\", "
+        "\"node\" : \"01234567-89ab-cdef-0123-456789abcdef\", "
         "\"name\" : \"my_name\", "
         "\"port\" : 10000, "
         "\"exercise\" : \"my_exercise\", "
@@ -211,6 +214,7 @@ BOOST_FIXTURE_TEST_CASE( session_converts_to_json, Fixture )
     StartSession( *ptr );
     BOOST_CHECK_EQUAL( ptr->ToJson(), "{ "
         "\"id\" : \"12345678-90ab-cdef-9876-543210123456\", "
+        "\"node\" : \"01234567-89ab-cdef-0123-456789abcdef\", "
         "\"name\" : \"my_name\", "
         "\"port\" : 10000, "
         "\"exercise\" : \"my_exercise\", "

@@ -43,15 +43,30 @@ public:
     //@}
 
 private:
+    //! @name Node Methods
+    //@{
+    std::string ListNodes ( const Request_ABC& request );
+    std::string CountNodes( const Request_ABC& request );
+    std::string GetNode   ( const Request_ABC& request );
+    std::string CreateNode( const Request_ABC& request );
+    std::string DeleteNode( const Request_ABC& request );
+    std::string StartNode ( const Request_ABC& request );
+    std::string StopNode  ( const Request_ABC& request );
+    //@}
+
     //! @name Session Methods
     //@{
-    std::string ListSessions  ( const Request_ABC& request );
-    std::string CountSessions ( const Request_ABC& request );
-    std::string GetSession    ( const Request_ABC& request );
-    std::string CreateSession ( const Request_ABC& request );
-    std::string DeleteSession ( const Request_ABC& request );
-    std::string StartSession  ( const Request_ABC& request );
-    std::string StopSession   ( const Request_ABC& request );
+    std::string ListSessions ( const Request_ABC& request );
+    std::string CountSessions( const Request_ABC& request );
+    std::string GetSession   ( const Request_ABC& request );
+    std::string CreateSession( const Request_ABC& request );
+    std::string DeleteSession( const Request_ABC& request );
+    std::string StartSession ( const Request_ABC& request );
+    std::string StopSession  ( const Request_ABC& request );
+    //@}
+
+    //! @name Exercise Methods
+    //@{
     std::string ListExercises ( const Request_ABC& request );
     std::string CountExercises( const Request_ABC& request );
     //@}

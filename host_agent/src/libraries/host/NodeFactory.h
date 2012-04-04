@@ -7,10 +7,10 @@
 //
 // *****************************************************************************
 
-#ifndef SESSION_FACTORY_H
-#define SESSION_FACTORY_H
+#ifndef NODE_FACTORY_H
+#define NODE_FACTORY_H
 
-#include "SessionFactory_ABC.h"
+#include "NodeFactory_ABC.h"
 
 namespace runtime
 {
@@ -24,26 +24,25 @@ namespace host
     class UuidFactory_ABC;
 
 // =============================================================================
-/** @class  SessionFactory
-    @brief  SessionFactory interface
+/** @class  NodeFactory
+    @brief  NodeFactory interface
 */
-// Created: BAX 2012-03-19
+// Created: BAX 2012-04-03
 // =============================================================================
-class SessionFactory : public SessionFactory_ABC
+class NodeFactory : public NodeFactory_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             SessionFactory( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids, const FileSystem_ABC& system, PortFactory_ABC& ports,
-                             const boost::filesystem::wpath& data, const boost::filesystem::wpath& applications );
-    virtual ~SessionFactory();
+             NodeFactory( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids, const FileSystem_ABC& system, PortFactory_ABC& ports,
+                          const boost::filesystem::wpath& jar, const boost::filesystem::wpath& web, int host );
+    virtual ~NodeFactory();
     //@}
 
     //! @name Methods
     //@{
-    virtual boost::shared_ptr< Session_ABC > Create( const boost::uuids::uuid& node, const std::string& exercise, const std::string& name ) const;
-    virtual T_Sessions Reload() const;
-    virtual std::vector< std::string > GetExercises() const;
+    virtual boost::shared_ptr< Node_ABC > Create( const std::string& name ) const;
+    virtual T_Nodes Reload() const;
     //@}
 
 private:
@@ -52,13 +51,13 @@ private:
     const runtime::Runtime_ABC& runtime_;
     const UuidFactory_ABC& uuids_;
     const FileSystem_ABC& system_;
-    const boost::filesystem::wpath data_;
-    const boost::filesystem::wpath applications_;
-    const boost::filesystem::wpath output_;
+    const boost::filesystem::wpath jar_;
+    const boost::filesystem::wpath web_;
+    const int host_;
     PortFactory_ABC& ports_;
     //@}
 };
 
 }
 
-#endif // SESSION_FACTORY_H
+#endif // NODE_FACTORY_H

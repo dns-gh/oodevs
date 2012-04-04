@@ -16,6 +16,7 @@
 #include <host/UuidFactory.h>
 #include <host/FileSystem.h>
 #include <host/PortFactory.h>
+#include <host/NodeFactory.h>
 #include <host/SessionFactory.h>
 #include <web/Controller.h>
 #include <web/MongooseServer.h>
@@ -26,9 +27,11 @@ int main( int /*argc*/, const char* /*argv*/[] )
     host::UuidFactory uuids;
     host::FileSystem system;
     host::PortFactory ports( 40, 50000, 60000 );
+    int host = 15000;
+    host::NodeFactory nodes( runtime.GetRuntime(), uuids, system, ports, L"e:/cloud_hg/node/out/jar/node.jar", L"e:/cloud_hg/node/www", host );
     host::SessionFactory sessions( runtime.GetRuntime(), uuids, system, ports, L"d:/apps/sword_434_data", L"d:/apps/sword_434/applications" );
-    host::Agent agent( sessions );
+    host::Agent agent( nodes, sessions );
     web::Controller controller( agent );
-    web::MongooseServer server( controller, 15000 );
+    web::MongooseServer server( controller, host );
     getc( stdin );
 }

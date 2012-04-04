@@ -116,13 +116,14 @@ namespace
 Session::Session( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
                   const FileSystem_ABC& system, const boost::filesystem::wpath& data,
                   const boost::filesystem::wpath& applications,
-                  const std::string& exercise, const std::string& name,
-                  PortFactory_ABC& ports )
+                  const boost::uuids::uuid& node, const std::string& exercise,
+                  const std::string& name, PortFactory_ABC& ports )
     : runtime_     ( runtime )
     , system_      ( system )
     , id_          ( uuids.Create() )
     , data_        ( data )
     , applications_( applications )
+    , node_        ( node )
     , exercise_    ( exercise )
     , name_        ( name )
     , access_      ( new boost::shared_mutex() )
@@ -145,6 +146,7 @@ Session::Session( const runtime::Runtime_ABC& runtime, const FileSystem_ABC& sys
     , id_          ( boost::uuids::string_generator()( ParseItem< std::string >( xis, "id" ) ) )
     , data_        ( data )
     , applications_( applications )
+    , node_        ( boost::uuids::string_generator()( ParseItem< std::string >( xis, "node" ) ) )
     , exercise_    ( ParseItem< std::string >( xis, "exercise" ) )
     , name_        ( ParseItem< std::string >( xis, "name" ) )
     , access_      ( new boost::shared_mutex() )
@@ -194,6 +196,15 @@ boost::uuids::uuid Session::GetTag() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Session::GetNode
+// Created: BAX 2012-04-03
+// -----------------------------------------------------------------------------
+boost::uuids::uuid Session::GetNode() const
+{
+    return node_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Session::Save
 // Created: BAX 2012-03-29
 // -----------------------------------------------------------------------------
@@ -213,12 +224,13 @@ std::string Session::ToJson() const
     boost::shared_lock< boost::shared_mutex > lock( *access_ );
     return (boost::format( "{ "
         "\"id\" : \"%1%\", "
-        "\"name\" : \"%2%\", "
-        "\"port\" : %3%, "
-        "\"exercise\" : \"%4%\", "
-        "\"status\" : \"%5%\""
+        "\"node\" : \"%2%\", "
+        "\"name\" : \"%3%\", "
+        "\"port\" : %4%, "
+        "\"exercise\" : \"%5%\", "
+        "\"status\" : \"%6%\""
         " }" )
-        % id_ % name_ % port_->Get() % exercise_
+        % id_ % node_ % name_ % port_->Get() % exercise_
         % ConvertStatus( status_ )
         ).str();
 }
@@ -232,6 +244,7 @@ std::string Session::ToXml() const
     xml::xostringstream xos;
     xos << xml::start( "session" )
             << xml::attribute( "id", boost::lexical_cast< std::string >( id_ ) )
+            << xml::attribute( "node", boost::lexical_cast< std::string >( node_ ) )
             << xml::attribute( "exercise", exercise_ )
             << xml::attribute( "name", name_ )
             << xml::attribute( "port", port_->Get() );

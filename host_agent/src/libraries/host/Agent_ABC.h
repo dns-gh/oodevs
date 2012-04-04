@@ -50,12 +50,23 @@ public:
     virtual ~Agent_ABC() {}
     //@}
 
+    //! @name Node Methods
+    //@{
+    virtual Reply ListNodes( int offset, int limit ) const = 0;
+    virtual Reply CountNodes() const = 0;
+    virtual Reply GetNode( const boost::uuids::uuid& id ) const = 0;
+    virtual Reply CreateNode( const std::string& name ) = 0;
+    virtual Reply DeleteNode( const boost::uuids::uuid& id ) = 0;
+    virtual Reply StartNode( const boost::uuids::uuid& id ) const = 0;
+    virtual Reply StopNode( const boost::uuids::uuid& id ) const = 0;
+    //@}
+
     //! @name Session Methods
     //@{
-    virtual Reply ListSessions ( int offset, int limit ) const = 0;
-    virtual Reply CountSessions() const = 0;
+    virtual Reply ListSessions ( const boost::uuids::uuid& node, int offset, int limit ) const = 0;
+    virtual Reply CountSessions( const boost::uuids::uuid& node ) const = 0;
     virtual Reply GetSession   ( const boost::uuids::uuid& id ) const = 0;
-    virtual Reply CreateSession( const std::string& exercise, const std::string& name ) = 0;
+    virtual Reply CreateSession( const boost::uuids::uuid& node, const std::string& exercise, const std::string& name ) = 0;
     virtual Reply DeleteSession( const boost::uuids::uuid& id ) = 0;
     virtual Reply StartSession ( const boost::uuids::uuid& id ) const = 0;
     virtual Reply StopSession  ( const boost::uuids::uuid& id ) const = 0;

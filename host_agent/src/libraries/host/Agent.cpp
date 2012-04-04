@@ -12,9 +12,10 @@
 #endif
 
 #include "Agent.h"
-#include "Session.h"
 #include "Session_ABC.h"
 #include "SessionFactory_ABC.h"
+#include "Node_ABC.h"
+#include "NodeFactory_ABC.h"
 
 #include <boost/algorithm/string/join.hpp>
 #include <boost/foreach.hpp>
@@ -33,15 +34,16 @@
 #endif
 
 using namespace host;
-using namespace runtime;
 
 // -----------------------------------------------------------------------------
 // Name: Agent::Agent
 // Created: BAX 2012-03-07
 // -----------------------------------------------------------------------------
-Agent::Agent( const SessionFactory_ABC& sessionFactory )
-    : sessionFactory_( sessionFactory )
+Agent::Agent( const NodeFactory_ABC& nodeFactory, const SessionFactory_ABC& sessionFactory )
+    : nodeFactory_   ( nodeFactory )
+    , sessionFactory_( sessionFactory )
     , access_        ( new boost::shared_mutex() )
+    , nodes_         ( nodeFactory_.Reload() )
     , sessions_      ( sessionFactory_.Reload() )
 {
     // NOTHING
@@ -58,30 +60,32 @@ Agent::~Agent()
 
 namespace
 {
-    // -----------------------------------------------------------------------------
-    // Name: Clip
-    // Created: BAX 2012-03-07
-    // -----------------------------------------------------------------------------
-    template< typename T >
-    T Clip( T value, T min, T max )
-    {
-        assert( min <= max );
-        return std::min( std::max( value, min ), max );
-    }
+#define CALL_MEMBER( obj, ptr ) ( ( obj ).*( ptr ) )
+
+// -----------------------------------------------------------------------------
+// Name: Agent::Clip
+// Created: BAX 2012-04-03
+// -----------------------------------------------------------------------------
+template< typename T >
+T Clip( T value, T min, T max )
+{
+    assert( min <= max );
+    return std::min( std::max( value, min ), max );
 }
 
 // -----------------------------------------------------------------------------
-// Name: Agent::ListSessions
-// Created: BAX 2012-03-16
+// Name: Agent::ListObjects
+// Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-Reply Agent::ListSessions( int offset, int limit ) const
+template< typename T, typename U >
+Reply ListObjects( T& mutex, const U& objects, int offset, int limit )
 {
     std::string data;
 
-    boost::shared_lock< boost::shared_mutex > lock( *access_ );
-    T_Sessions::const_iterator it = sessions_.begin();
-    offset = Clip< int >( offset, 0, static_cast< int >( sessions_.size() ) );
-    limit  = Clip< int >( limit,  0, static_cast< int >( sessions_.size() ) - offset );
+    boost::shared_lock< T > lock( mutex );
+    typename U::const_iterator it = objects.begin();
+    offset = Clip< int >( offset, 0, static_cast< int >( objects.size() ) );
+    limit  = Clip< int >( limit,  0, static_cast< int >( objects.size() ) - offset );
     std::advance( it , offset );
     for( int idx = 0; idx < limit; ++idx, ++it )
         data += ( idx ? ", " : "" ) + it->second->ToJson();
@@ -91,13 +95,202 @@ Reply Agent::ListSessions( int offset, int limit ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Agent::CountObjects
+// Created: BAX 2012-04-03
+// -----------------------------------------------------------------------------
+template< typename T, typename U >
+Reply CountObjects( T& mutex, const U& objects )
+{
+    boost::shared_lock< T > lock( mutex );
+    return Reply( ( boost::format( "{ \"count\" : %1% }" ) % objects.size() ).str() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::GetObject
+// Created: BAX 2012-04-03
+// -----------------------------------------------------------------------------
+template< typename T >
+Reply GetObject( boost::shared_mutex& mutex, const T& objects, const std::string& name, const boost::uuids::uuid& id )
+{
+    boost::shared_lock< boost::shared_mutex > lock( mutex );
+    typename T::const_iterator it = objects.find( id );
+    if( it == objects.end() )
+        return Reply( ( boost::format( "unable to find %1% %2%" ) % name % id ).str(), false );
+    return Reply( it->second->ToJson() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::AddObject
+// Created: BAX 2012-04-03
+// -----------------------------------------------------------------------------
+template< typename T, typename U >
+void AddObject( boost::shared_mutex& mutex, T& objects, U ptr )
+{
+    boost::lock_guard< boost::shared_mutex > lock( mutex );
+    objects.insert( std::make_pair( ptr->GetTag(), ptr ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::ExtractObject
+// Created: BAX 2012-04-03
+// -----------------------------------------------------------------------------
+template< typename T >
+T ExtractObject( boost::shared_mutex& mutex, std::map< boost::uuids::uuid, T >& objects, const boost::uuids::uuid& id )
+{
+    boost::lock_guard< boost::shared_mutex > lock( mutex );
+    typename std::map< boost::uuids::uuid, T >::iterator it = objects.find( id );
+    if( it == objects.end() )
+        return T();
+
+    T ptr = it->second;
+    objects.erase( it );
+    return ptr;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::UuidDispatch
+// Created: BAX 2012-04-03
+// -----------------------------------------------------------------------------
+template< typename T, typename U >
+Reply UuidDispatch( boost::shared_mutex& mutex, T& objects, const boost::uuids::uuid& id, const std::string& name, U member )
+{
+    boost::shared_lock< boost::shared_mutex > lock( mutex );
+    typename T::const_iterator it = objects.find( id );
+    if( it == objects.end() )
+        return Reply( ( boost::format( "unable to find %1% %2%" ) % name % id ).str(), false );
+    CALL_MEMBER( *it->second, member )();
+    return Reply( it->second->ToJson() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::DeleteObject
+// Created: BAX 2012-04-03
+// -----------------------------------------------------------------------------
+template< typename T >
+Reply DeleteObject( boost::shared_mutex& mutex, std::map< boost::uuids::uuid, T >& objects, const boost::uuids::uuid& id )
+{
+    T ptr = ExtractObject( mutex, objects, id );
+    if( !ptr )
+        return Reply( ( boost::format( "unable to find session %1%" ) % id ).str(), false );
+    ptr->Stop();
+    return Reply( ptr->ToJson() );
+}
+
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::ListNodes
+// Created: BAX 2012-04-03
+// -----------------------------------------------------------------------------
+Reply Agent::ListNodes( int offset, int limit ) const
+{
+    return ListObjects( *access_, nodes_, offset, limit );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::CountNodes
+// Created: BAX 2012-04-03
+// -----------------------------------------------------------------------------
+Reply Agent::CountNodes() const
+{
+    return CountObjects( *access_, nodes_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::GetNode
+// Created: BAX 2012-04-03
+// -----------------------------------------------------------------------------
+Reply Agent::GetNode( const boost::uuids::uuid& id ) const
+{
+    return GetObject( *access_, nodes_, "node", id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::CreateNode
+// Created: BAX 2012-04-03
+// -----------------------------------------------------------------------------
+Reply Agent::CreateNode( const std::string& name )
+{
+    boost::shared_ptr< Node_ABC > ptr = nodeFactory_.Create( name );
+    if( !ptr )
+        return Reply( "unable to create new node", false ); // TODO add better error message
+    AddObject( *access_, nodes_, ptr );
+    ptr->Start();
+    return Reply( ptr->ToJson() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::DeleteNode
+// Created: BAX 2012-04-03
+// -----------------------------------------------------------------------------
+Reply Agent::DeleteNode( const boost::uuids::uuid& id )
+{
+    return DeleteObject( *access_, nodes_, id );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::StartNode
+// Created: BAX 2012-04-03
+// -----------------------------------------------------------------------------
+Reply Agent::StartNode( const boost::uuids::uuid& id ) const
+{
+    return UuidDispatch( *access_, nodes_, id, "node", &Node_ABC::Start );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::StopNode
+// Created: BAX 2012-04-03
+// -----------------------------------------------------------------------------
+Reply Agent::StopNode( const boost::uuids::uuid& id ) const
+{
+    return UuidDispatch( *access_, nodes_, id, "node", &Node_ABC::Stop );
+}
+
+namespace
+{
+    struct DummyLock
+    {
+         DummyLock() {}
+        ~DummyLock() {}
+        void lock_shared() {}
+        void unlock_shared() {}
+    };
+
+    template< typename T >
+    T GetFiltered( boost::shared_mutex& mutex, const T& data, const boost::uuids::uuid& node )
+    {
+        T filtered;
+        boost::shared_lock< boost::shared_mutex > lock( mutex );
+        BOOST_FOREACH( typename const T::value_type& value, data )
+            if( value.second->GetNode() == node )
+                filtered.insert( value );
+        return filtered;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::ListSessions
+// Created: BAX 2012-03-16
+// -----------------------------------------------------------------------------
+Reply Agent::ListSessions( const boost::uuids::uuid& node, int offset, int limit ) const
+{
+    if( node.is_nil() )
+        return ListObjects( *access_, sessions_, offset, limit );
+
+    DummyLock dummy;
+    return ListObjects( dummy, GetFiltered( *access_, sessions_, node ), offset, limit );
+}
+
+// -----------------------------------------------------------------------------
 // Name: Agent::CountSessions
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-Reply Agent::CountSessions() const
+Reply Agent::CountSessions( const boost::uuids::uuid& node ) const
 {
-    boost::shared_lock< boost::shared_mutex > lock( *access_ );
-    return Reply( ( boost::format( "{ \"count\" : %1% }" ) % sessions_.size() ).str() );
+    if( node.is_nil() )
+        return CountObjects( *access_, sessions_ );
+    DummyLock dummy;
+    return CountObjects( dummy, GetFiltered( *access_, sessions_, node ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -106,73 +299,19 @@ Reply Agent::CountSessions() const
 // -----------------------------------------------------------------------------
 Reply Agent::GetSession( const boost::uuids::uuid& id ) const
 {
-    boost::shared_lock< boost::shared_mutex > lock( *access_ );
-    T_Sessions::const_iterator it = sessions_.find( id );
-    if( it == sessions_.end() )
-        return Reply( ( boost::format( "unable to find session %1%" ) % id ).str(), false );
-    return Reply( it->second->ToJson() );
-}
-
-namespace
-{
-
-// -----------------------------------------------------------------------------
-// Name: AddSession
-// Created: BAX 2012-03-16
-// -----------------------------------------------------------------------------
-template< typename T, typename U >
-void AddSession( T& mutex, U& sessions, boost::shared_ptr< Session_ABC > ptr )
-{
-    boost::lock_guard< T > lock( mutex );
-    sessions.insert( std::make_pair( ptr->GetTag(), ptr ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: ExtractSession
-// Created: BAX 2012-03-16
-// -----------------------------------------------------------------------------
-template< typename T, typename U >
-boost::shared_ptr< Session_ABC > ExtractSession( T& mutex, U& sessions, const boost::uuids::uuid& id )
-{
-    boost::lock_guard< T > lock( mutex );
-    typename U::iterator it = sessions.find( id );
-    if( it == sessions.end() )
-        return boost::shared_ptr< Session_ABC >();
-
-    boost::shared_ptr< Session_ABC > ptr = it->second;
-    sessions.erase( it );
-    return ptr;
-}
-
-#define CALL_MEMBER( obj, ptr ) ( ( obj ).*( ptr ) )
-
-// -----------------------------------------------------------------------------
-// Name: UuidDispatch
-// Created: BAX 2012-03-30
-// -----------------------------------------------------------------------------
-template< typename T, typename U >
-Reply UuidDispatch( boost::shared_mutex& mutex, T& data, const boost::uuids::uuid& id, const std::string& name, U member )
-{
-    boost::shared_lock< boost::shared_mutex > lock( mutex );
-    typename T::const_iterator it = data.find( id );
-    if( it == data.end() )
-        return Reply( ( boost::format( "unable to find %1% %2%" ) % name % id ).str(), false );
-    CALL_MEMBER( *it->second, member )();
-    return Reply( it->second->ToJson() );
-}
-
+    return GetObject( *access_, sessions_, "session", id );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::CreateSession
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-Reply Agent::CreateSession( const std::string& exercise, const std::string& name )
+Reply Agent::CreateSession( const boost::uuids::uuid& node, const std::string& exercise, const std::string& name )
 {
-    boost::shared_ptr< Session_ABC > ptr = sessionFactory_.Create( exercise, name );
+    boost::shared_ptr< Session_ABC > ptr = sessionFactory_.Create( node, exercise, name );
     if( !ptr )
         return Reply( "unable to create new session", false ); // TODO add better error message
-    AddSession( *access_, sessions_, ptr );
+    AddObject( *access_, sessions_, ptr );
     ptr->Start();
     return Reply( ptr->ToJson() );
 }
@@ -183,11 +322,7 @@ Reply Agent::CreateSession( const std::string& exercise, const std::string& name
 // -----------------------------------------------------------------------------
 Reply Agent::DeleteSession( const boost::uuids::uuid& id )
 {
-    boost::shared_ptr< Session_ABC > ptr = ExtractSession( *access_, sessions_, id );
-    if( !ptr )
-        return Reply( ( boost::format( "unable to find session %1%" ) % id ).str(), false );
-    ptr->Stop();
-    return Reply( ptr->ToJson() );
+    return DeleteObject( *access_, sessions_, id );
 }
 
 // -----------------------------------------------------------------------------
@@ -200,7 +335,7 @@ Reply Agent::StartSession( const boost::uuids::uuid& id ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: Agent::StartSession
+// Name: Agent::StopSession
 // Created: BAX 2012-03-30
 // -----------------------------------------------------------------------------
 Reply Agent::StopSession( const boost::uuids::uuid& id ) const
@@ -232,5 +367,5 @@ Reply Agent::ListExercises( int offset, int limit ) const
 Reply Agent::CountExercises() const
 {
     std::vector< std::string > exercises = sessionFactory_.GetExercises();
-    return Reply( ( boost::format("{ \"count\" : %1% }") % exercises.size() ).str() );
+    return CountObjects( *access_, exercises );
 }

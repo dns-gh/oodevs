@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef SESSION_ABC_H
-#define SESSION_ABC_H
+#ifndef NODE_ABC_H
+#define NODE_ABC_H
 
 #include <boost/noncopyable.hpp>
 #include <boost/uuid/uuid.hpp>
@@ -18,24 +18,23 @@ namespace host
 {
 
 // =============================================================================
-/** @class  Session_ABC
-    @brief  Session_ABC interface
+/** @class  Node_ABC
+    @brief  Node_ABC interface
 */
-// Created: BAX 2012-03-16
+// Created: BAX 2012-04-03
 // =============================================================================
-class Session_ABC : public boost::noncopyable
+class Node_ABC : public boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Session_ABC() {}
-    virtual ~Session_ABC() {}
+             Node_ABC() {}
+    virtual ~Node_ABC() {}
     //@}
 
     //! @name Methods
     //@{
     virtual boost::uuids::uuid GetTag() const = 0;
-    virtual boost::uuids::uuid GetNode() const = 0;
     virtual std::string ToJson() const = 0;
     virtual void Start() = 0;
     virtual void Stop() = 0;
@@ -44,4 +43,4 @@ public:
 
 }
 
-#endif // SESSION_ABC_H
+#endif // NODE_ABC_H

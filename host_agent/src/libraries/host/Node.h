@@ -7,11 +7,11 @@
 //
 // *****************************************************************************
 
-#ifndef SESSION_H
-#define SESSION_H
+#ifndef NODE_H
+#define NODE_H
 
-#include "Session_ABC.h"
-#include "SessionFactory_ABC.h"
+#include "Node_ABC.h"
+#include "NodeFactory_ABC.h"
 
 namespace boost
 {
@@ -37,47 +37,33 @@ namespace host
     class UuidFactory_ABC;
 
 // =============================================================================
-/** @class  Session
-    @brief  Session class definition
+/** @class  Node
+    @brief  Node class definition
 */
-// Created: BAX 2012-03-16
+// Created: BAX 2012-04-03
 // =============================================================================
-class Session : public Session_ABC
+class Node : public Node_ABC
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Session( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
-                      const FileSystem_ABC& system, const boost::filesystem::wpath& data,
-                      const boost::filesystem::wpath& applications,
-                      const boost::uuids::uuid& node, const std::string& exercise,
+             Node( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
+                      const FileSystem_ABC& system, const boost::filesystem::wpath& jar,
+                      const boost::filesystem::wpath& web, int host,
                       const std::string& name, PortFactory_ABC& ports );
-             Session( const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system,
-                      const boost::filesystem::wpath& data, const boost::filesystem::wpath& applications,
+             Node( const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system,
+                      const boost::filesystem::wpath& jar, const boost::filesystem::wpath& web,
                       xml::xistream& xis, PortFactory_ABC& ports );
-    virtual ~Session();
+    virtual ~Node();
     //@}
 
     //! @name Overrided methods
     //@{
     virtual boost::uuids::uuid GetTag() const;
-    virtual boost::uuids::uuid GetNode() const;
     virtual std::string ToJson() const;
     virtual void Save() const;
     virtual void Start();
     virtual void Stop();
-    //@}
-
-    //! @name Status enumeration
-    //@{
-    enum Status
-    {
-        STATUS_STOPPED,
-        STATUS_PLAYING,
-        STATUS_REPLAYING,
-        STATUS_PAUSED,
-        STATUS_COUNT
-    };
     //@}
 
 private:
@@ -94,18 +80,16 @@ private:
     const runtime::Runtime_ABC& runtime_;
     const FileSystem_ABC& system_;
     const boost::uuids::uuid id_;
-    const boost::filesystem::wpath data_;
-    const boost::filesystem::wpath applications_;
-    const boost::uuids::uuid node_;
-    const std::string exercise_;
+    const boost::filesystem::wpath jar_;
+    const boost::filesystem::wpath web_;
+    const int host_;
     const std::string name_;
     std::auto_ptr< boost::shared_mutex > access_;
     boost::shared_ptr< runtime::Process_ABC > process_;
     std::auto_ptr< Port_ABC > port_;
-    Status status_;
     //@}
 };
 
 }
 
-#endif // SESSION_H
+#endif // NODE_H

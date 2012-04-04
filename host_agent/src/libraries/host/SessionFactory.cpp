@@ -34,9 +34,9 @@ SessionFactory::SessionFactory( const runtime::Runtime_ABC& runtime, const UuidF
     : runtime_     ( runtime )
     , uuids_       ( uuids )
     , system_      ( system )
-    , ports_       ( ports )
     , data_        ( data )
     , applications_( applications )
+    , ports_       ( ports )
 {
     // NOTHING
 }
@@ -54,9 +54,9 @@ SessionFactory::~SessionFactory()
 // Name: SessionFactory::Create
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
-boost::shared_ptr< Session_ABC > SessionFactory::Create( const std::string& exercise, const std::string& name ) const
+boost::shared_ptr< Session_ABC > SessionFactory::Create( const boost::uuids::uuid& node, const std::string& exercise, const std::string& name ) const
 {
-    return boost::make_shared< Session>( runtime_, uuids_, system_, data_, applications_, exercise, name, boost::ref( ports_ ) );
+    return boost::make_shared< Session>( runtime_, uuids_, system_, data_, applications_, node, exercise, name, boost::ref( ports_ ) );
 }
 
 // -----------------------------------------------------------------------------
