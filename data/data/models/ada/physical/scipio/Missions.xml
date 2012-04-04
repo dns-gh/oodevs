@@ -182,7 +182,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="pointArrivee_" name="Point arrivee" optional="false" type="Point"/>
+      <parameter dia-name="pointArrivee_" name="Point de regroupement" optional="false" type="Point"/>
       <parameter dia-name="siteDecontamination_" name="Site decontamination" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission dia-behavior="MIS_Pion_Decrocher" dia-type="T_Mission_Pion_Decrocher" id="138" name="PION Decrocher" package="defence">
@@ -291,7 +291,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="objective" name="Site de decontamination" optional="false" type="ObjectKnowledge"/>
-      <parameter dia-name="destination" name="Destination" optional="false" type="Point"/>
+      <parameter dia-name="destination" name="Point de regroupement" optional="false" type="Point"/>
     </mission>
     <mission dia-behavior="france.military.platoon.tasks.SeFaireTransporter" dia-type="france.military.platoon.tasks.SeFaireTransporter" id="2057" name="PION COMMUNES Se Faire Transporter" package="move">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -1705,7 +1705,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="zoneArrivee_" name="Zone arrivee" optional="false" type="Polygon"/>
+      <parameter dia-name="zoneArrivee_" name="Point de regroupement" optional="false" type="Polygon"/>
       <parameter dia-name="siteDecontamination_" name="Site decontamination" optional="false" type="ObjectKnowledge"/>
     </mission>
     <mission cdt-dia-behavior="MIS_Automate_CDT_Stationner" dia-type="T_Mission_Automate_Stationner" id="304" mrt-dia-behavior="MIS_Automate_MRT_Stationner" name="AUTOMATE Stationner" package="move">
@@ -1827,7 +1827,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="objective" name="Site de decontamination" optional="false" type="ObjectKnowledge"/>
-      <parameter dia-name="destination" name="Zone d'arrivee" optional="false" type="Polygon"/>
+      <parameter dia-name="destination" name="Point de regroupement" optional="false" type="Polygon"/>
     </mission>
     <mission cdt-dia-behavior="france.military.company.tasks.Interdire" dia-type="france.military.company.tasks.Interdire" id="1017" mrt-dia-behavior="france.military.company.tasks.Interdire" name="AUTOMATE MELEE Interdire" package="defence" symbol="IdInterdire_Point">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -2865,7 +2865,7 @@
     </mission>
     <mission dia-behavior="france.military.crowd.tasks.SeFaireDecontaminer" dia-type="france.military.crowd.tasks.SeFaireDecontaminer" id="3009" name="FOULES COMMUNES Se Faire Decontaminer" package="none">
       <parameter dia-name="objective" name="Site de decontamination" optional="false" type="ObjectKnowledge"/>
-      <parameter dia-name="destination" name="Point de destination" optional="false" type="Point"/>
+      <parameter dia-name="destination" name="Point de regroupement" optional="false" type="Point"/>
     </mission>
   </populations>
   <fragorders>
@@ -3060,4 +3060,4 @@
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PoursuivreConvoi" id="406" name="Poursuivre convoi"/>
   </fragorders>
 </missions>
-<!-- signature="3312389795" -->
+<!-- signature="0815997421" -->
