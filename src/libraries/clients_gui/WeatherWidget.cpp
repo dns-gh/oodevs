@@ -52,22 +52,20 @@ namespace
 
             // Windsock
             painter.translate( QPoint( width() / 2, height() / 2 ) );
-            //painter.rotate( value() - 90 );
-            //painter.drawImage( QPoint( -image_.width() / 2, -image_.height() / 2 ), image_ );
 
             QRect surface;
-            float surfaceHalfSize = ( width() > height() ) ? (float) height() * sizeRatio_ / 2.f : (float) width() * sizeRatio_ / 2.f;
+            float surfaceHalfSize = ( width() > height() ) ? static_cast< float >( height() ) * sizeRatio_ / 2.f : static_cast< float >( width() ) * sizeRatio_ / 2.f;
             if( image_.width() > image_.height() )
             {
                 painter.rotate( value() - 90 );
-                surface = QRect( QPoint( -surfaceHalfSize, -surfaceHalfSize * imageRatio_ ),
-                                 QPoint(  surfaceHalfSize,  surfaceHalfSize * imageRatio_ ) );
+                surface = QRect( QPoint( static_cast< int >( -surfaceHalfSize ), static_cast< int >( -surfaceHalfSize * imageRatio_ ) ),
+                                 QPoint( static_cast< int >(  surfaceHalfSize ), static_cast< int >(  surfaceHalfSize * imageRatio_ ) ) );
             }
             else
             {
                 painter.rotate( value() );
-                surface = QRect( QPoint( -surfaceHalfSize * imageRatio_, -surfaceHalfSize ),
-                                 QPoint(  surfaceHalfSize * imageRatio_,  surfaceHalfSize ) );
+                surface = QRect( QPoint( static_cast< int >( -surfaceHalfSize * imageRatio_ ), static_cast< int >( -surfaceHalfSize ) ),
+                                 QPoint( static_cast< int >(  surfaceHalfSize * imageRatio_ ), static_cast< int >(  surfaceHalfSize ) ) );
             }
             painter.drawImage( surface, image_ );
         }
