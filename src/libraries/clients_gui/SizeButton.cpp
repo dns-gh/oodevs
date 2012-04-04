@@ -104,6 +104,7 @@ void SizeButton::Revert()
 {
     changed_ = false;
     size_ = previous_;
+    SetSize( size_ );
     if( valueLabel_ )
     {
         if( size_ == 10 )
