@@ -141,6 +141,7 @@ void PHY_RolePion_Transported::UnloadFromTransport( const MIL_Agent_ABC& transpo
     if( !bTransportOnlyLoadable )
         vHumanTransporterPosition_.Reset();
     owner_.Apply( &transport::TransportChangeNotificationHandler_ABC::NotifyIsUnLoadedForTransport );
+    owner_.Apply( &network::NetworkNotificationHandler_ABC::NotifyDataHasChanged );
     return ;//true;
 }
 
