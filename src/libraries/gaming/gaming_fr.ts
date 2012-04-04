@@ -818,11 +818,11 @@
     </message>
     <message>
         <source>Logistic links</source>
-        <translation type="unfinished"></translation>
+        <translation>Liens logistiques</translation>
     </message>
     <message>
         <source>Logistic links/Superiors</source>
-        <translation type="unfinished"></translation>
+        <translation>Liens logistiques/Supérieurs</translation>
     </message>
     <message>
         <source>Transporters provider:</source>
@@ -846,19 +846,19 @@
     </message>
     <message>
         <source>Convoy:</source>
-        <translation type="unfinished"></translation>
+        <translation>Convoi</translation>
     </message>
     <message>
         <source>Rank:</source>
-        <translation type="unfinished"></translation>
+        <translation>Rang:</translation>
     </message>
     <message>
         <source>Current packaging:</source>
-        <translation type="unfinished"></translation>
+        <translation>Conditionnement courant:</translation>
     </message>
     <message>
         <source>Current state end:</source>
-        <translation type="unfinished"></translation>
+        <translation>Fin de l&apos;état courant:</translation>
     </message>
 </context>
 <context>
