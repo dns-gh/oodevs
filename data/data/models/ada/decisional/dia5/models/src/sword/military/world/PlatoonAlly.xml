@@ -1358,6 +1358,7 @@ que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe
             <description>Action d'arrêter l'immunisation d'un agent vis à vis d'un danger NRBC.</description>
         </method>
         <method name="getUnitPC">
+           <description>Retourne le PC du pion.</description>
             <return>
                 <type>
                     <class name="sword.military.world.PlatoonAlly"/>
