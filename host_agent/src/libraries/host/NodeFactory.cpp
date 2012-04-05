@@ -58,7 +58,7 @@ NodeFactory::~NodeFactory()
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Node_ABC > NodeFactory::Create( const std::string& name ) const
 {
-    return boost::shared_ptr< Node>( new Node( log_, runtime_, uuids_, system_, java_, jar_, web_, host_, name, ports_ ) );
+    return boost::shared_ptr< Node >( new Node( log_, runtime_, uuids_, system_, java_, jar_, web_, host_, name, ports_ ) );
 }
 
 // -----------------------------------------------------------------------------
