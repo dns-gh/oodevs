@@ -122,11 +122,10 @@ void ProcessService::SendExerciseList( sword::ExerciseListResponse& message )
 // -----------------------------------------------------------------------------
 void ProcessService::SendSessionList( sword::SessionListResponse& message )
 {
-    for( ProcessContainer::iterator it = processes_.begin(); it != processes_.end(); ++it )
+    const QStringList sessions = frontend::commands::ListSessions( config_, message.exercise() );
+    for( QStringList::const_iterator it = sessions.begin(); it != sessions.end(); ++it )
     {
-        const std::pair< std::string, std::string >& key = it->first;
-        if( key.first == message.exercise() )
-            message.add_session( key.second );
+        message.add_session( ( *it ).ascii() );
     }
 }
 

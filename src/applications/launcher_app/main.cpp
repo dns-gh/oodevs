@@ -29,6 +29,7 @@ namespace
             ( "install,i"   , "Install service" )
             ( "start,s"     , "Start service" )
             ( "kill,k"      , "Kill service" )
+            ( "run,r"       , "Run as an executable instead of a service" )
             ( "uninstall,u" , "Uninstall service" );
         bpo::variables_map vm;
         bpo::store( bpo::command_line_parser( argc, argv ).options( desc ).run(), vm );
@@ -57,6 +58,8 @@ namespace
             service.KillService();
         else if( vm.count( "uninstall" ) )
             service.UnInstall();
+        else if( vm.count( "run" ) )
+            service.RunAsExe( argc, argv );
         else
             service.ExecuteSubProcess();
 

@@ -125,9 +125,17 @@ namespace frontend
             return false;
         }
 
+        bool IsValidSession( const bfs::path& session )
+        {
+            bfs::path sessionFile = session / "session.xml";
+            if( !bfs::is_directory( session ) || !bfs::exists( sessionFile ) )
+                return false;
+            return true;
+        }
+
         QStringList ListSessions( const tools::GeneralConfig& config, const std::string& exercise )
         {
-            return ListDirectories( config.GetSessionsDir( exercise ), &IsValidReplay );
+            return ListDirectories( config.GetSessionsDir( exercise ), &IsValidSession );
         }
 
         bool HasCheckpoints( const bfs::path& session )

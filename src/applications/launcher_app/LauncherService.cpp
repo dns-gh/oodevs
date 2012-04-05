@@ -291,6 +291,21 @@ void LauncherService::ServiceMain( DWORD, LPTSTR* )
 }
 
 // -----------------------------------------------------------------------------
+// Name: LauncherService::RunAsExe
+// Created: JSR 2012-04-05
+// -----------------------------------------------------------------------------
+void LauncherService::RunAsExe( int argc, char* argv[] )
+{
+    LauncherFacade* facade = new LauncherFacade();
+    facade->Initialize( argc, argv );
+    while( true )
+    {
+        facade->Update();
+        boost::this_thread::sleep( boost::posix_time::milliseconds( 25 ) );
+    }
+}
+
+// -----------------------------------------------------------------------------
 // Name: LauncherService::ServiceHandler
 // Created: JSR 2011-05-11
 // -----------------------------------------------------------------------------

@@ -44,6 +44,7 @@ public:
     void KillService();
     void UnInstall();
     void ExecuteSubProcess();
+    void RunAsExe( int argc, char* argv[] );
     //@}
 
 private:
