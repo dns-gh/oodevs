@@ -10,6 +10,7 @@
 #include "Controller.h"
 #include "Request_ABC.h"
 
+#include <cpplog/cpplog.hpp>
 #include <host/Agent_ABC.h>
 
 #include <boost/format.hpp>
@@ -24,8 +25,9 @@ using namespace host;
 // Name: Controller::Controller
 // Created: BAX 2012-03-07
 // -----------------------------------------------------------------------------
-Controller::Controller( Agent_ABC& agent )
-    : agent_( agent )
+Controller::Controller( cpplog::BaseLogger& log, Agent_ABC& agent )
+    : log_  ( log )
+    , agent_( agent )
 {
     // NOTHING
 }
@@ -183,6 +185,18 @@ std::string UuidDispatch( const Request_ABC& request, const std::string& name, A
     const std::string id = RequireParameter< std::string >( name, request );
     return WriteHttpReply( CALL_MEMBER( agent, member )( Convert( id ) ) );
 }
+
+// -----------------------------------------------------------------------------
+// Name: UuidDispatch
+// Created: BAX 2012-04-03
+// -----------------------------------------------------------------------------
+template< typename T >
+std::string UuidDispatch( const Request_ABC& request, const std::string& name, Agent_ABC& agent, T member, cpplog::BaseLogger& log, const std::string& function )
+{
+    const std::string id = RequireParameter< std::string >( name, request );
+    LOG_INFO( log ) << "[web] " << function << " id:" << id;
+    return WriteHttpReply( CALL_MEMBER( agent, member )( Convert( id ) ) );
+}
 }
 
 // -----------------------------------------------------------------------------
@@ -261,6 +275,7 @@ std::string Controller::GetNode( const Request_ABC& request )
 std::string Controller::CreateNode( const Request_ABC& request )
 {
     const std::string name = RequireParameter< std::string >( "name", request );
+    LOG_INFO( log_ ) << "[web] /create_node name:" << name;
     return WriteHttpReply( agent_.CreateNode( name ) );
 }
 
@@ -270,7 +285,7 @@ std::string Controller::CreateNode( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::DeleteNode( const Request_ABC& request )
 {
-    return UuidDispatch( request, "id", agent_, &Agent_ABC::DeleteNode );
+    return UuidDispatch( request, "id", agent_, &Agent_ABC::DeleteNode, log_, "/delete_node" );
 }
 
 // -----------------------------------------------------------------------------
@@ -331,6 +346,7 @@ std::string Controller::CreateSession( const Request_ABC& request )
     const std::string node = RequireParameter< std::string >( "node", request );
     const std::string exercise = RequireParameter< std::string >( "exercise", request );
     const std::string name = RequireParameter< std::string >( "name", request );
+    LOG_INFO( log_ ) << "[web] /create_session node: " << node << " name: " << name << " exercise: " << exercise;
     return WriteHttpReply( agent_.CreateSession( Convert( node ), exercise, name ) );
 }
 
@@ -340,7 +356,7 @@ std::string Controller::CreateSession( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::DeleteSession( const Request_ABC& request )
 {
-    return UuidDispatch( request, "id", agent_, &Agent_ABC::DeleteSession );
+    return UuidDispatch( request, "id", agent_, &Agent_ABC::DeleteSession, log_, "/delete_session" );
 }
 
 // -----------------------------------------------------------------------------

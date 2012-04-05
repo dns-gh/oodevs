@@ -12,6 +12,7 @@
 #include <cstring>
 #include <ctime>
 #include <vector>
+#include <boost/date_time/local_time/local_time.hpp>
 
 // The following #define's will change the behaviour of this library.
 //		#define CPPLOG_FILTER_LEVEL		<level>
@@ -21,7 +22,7 @@
 //			Enables capturing of the Process and Thread ID.
 //
 //		#define CPPLOG_THREADING
-//			Enables threading (BackgroundLogger).  Note that defining this or 
+//			Enables threading (BackgroundLogger).  Note that defining this or
 //			CPPLOG_SYSTEM_IDS introduces a dependency on Boost;
 //			this means that the library is no longer truly header-only.
 //
@@ -75,7 +76,7 @@
 #include "concurrent_queue.hpp"
 #endif
 
-#ifdef _WIN32
+#ifdef CPPLOG_WIN32
 #include "outputdebugstream.hpp"
 #endif
 
@@ -86,7 +87,7 @@
 // If we don't have a level defined, set it to CPPLOG_LEVEL_DEBUG (log all except trace statements)
 #ifndef CPPLOG_FILTER_LEVEL
 #define CPPLOG_FILTER_LEVEL LL_DEBUG
-#endif 
+#endif
 
 
 // The general concept for how logging works:
@@ -97,13 +98,13 @@
 //		  client code can write debug information into.
 //		- When the sendToLogger() method of a LogMessage is called, all the buffered data in the
 //		  messages' stream is sent to the specified logger.
-//		- When a LogMessage's destructor is called, it calls sendToLogger() to send all 
+//		- When a LogMessage's destructor is called, it calls sendToLogger() to send all
 //		  remaining data.
 
 
 namespace cpplog
 {
-	// Our log level type. 
+	// Our log level type.
 	// NOTE: When C++11 becomes widely supported, convert this to "enum class LogLevel".
 	typedef unsigned int loglevel_t;
 
@@ -177,7 +178,7 @@ namespace cpplog
 
 		// Our stream to log data to.
 		std::ostrstream	stream;
-		
+
 		// Captured data.
 		unsigned int level;
 		unsigned long line;
@@ -239,7 +240,7 @@ namespace cpplog
 
 			if( !get )
 				m_fatalFlag = val;
-			
+
 			return m_fatalFlag;
 		}
 
@@ -293,24 +294,20 @@ namespace cpplog
 			m_logData->processId	= boost::interprocess::detail::get_current_process_id();
 			m_logData->threadId		= (unsigned long)boost::interprocess::detail::get_current_thread_id();
 #endif
-			
+
 			InitLogMessage();
 		}
-		
+
 		void InitLogMessage()
 		{
-			// Log process ID and thread ID.
-#ifdef CPPLOG_SYSTEM_IDS
-			m_logData->stream << "[" 
-						<< std::right << std::setfill('0') << std::setw(8) << std::hex 
-						<< m_logData->processId << "."
-						<< std::setfill('0') << std::setw(8) << std::hex 
-						<< m_logData->threadId << "] ";
-#endif
-
-			m_logData->stream << std::setfill(' ') << std::setw(5) << std::left << std::dec 
-						<< LogMessage::getLevelName(m_logData->level) << " - " 
-						<< m_logData->fileName << "(" << m_logData->line << "): ";
+			const boost::posix_time::ptime localTime = boost::posix_time::second_clock::local_time();
+			const boost::posix_time::time_facet fmt("%Y-%m-%d %H:%M:%S");
+			m_logData->stream.imbue( std::locale( m_logData->stream.getloc(), &fmt ) );
+			m_logData->stream
+				<< localTime
+				<< " "
+				<< std::setfill(' ') << std::setw(5) << std::left << std::dec << LogMessage::getLevelName(m_logData->level)
+				<< ": ";
 		}
 
 		void Flush()
@@ -332,7 +329,7 @@ namespace cpplog
 				m_deleteMessage = m_logger->sendLogMessage(m_logData);
 				m_flushed = true;
 
-				// Note: We cannot touch m_logData after the above call.  By the 
+				// Note: We cannot touch m_logData after the above call.  By the
 				// time it returns, we have to assume it has already been freed.
 
 				// If this is a fatal message...
@@ -383,6 +380,7 @@ namespace cpplog
 	{
 	private:
 		std::ostream&	m_logStream;
+		OstreamLogger& operator=( const OstreamLogger& ) {}
 
 	public:
 		OstreamLogger(std::ostream& outStream)
@@ -399,7 +397,7 @@ namespace cpplog
 
 		virtual ~OstreamLogger() { }
 	};
-	
+
 	// Simple implementation - logs to stderr.
 	class StdErrLogger : public OstreamLogger
 	{
@@ -431,7 +429,7 @@ namespace cpplog
 		}
 	};
 
-#ifdef _WIN32
+#ifdef CPPLOG_WIN32
 	class OutputDebugStringLogger : public OstreamLogger
 	{
 	private:
@@ -479,7 +477,7 @@ namespace cpplog
 	public:
 		SizeRotateFileLogger(pfBuildFileName nameFunc, size_t maxSize)
 			: OstreamLogger(m_outStream), m_maxSize(maxSize), m_logNumber(0),
-			  m_buildFunc(nameFunc), m_context(NULL), 
+			  m_buildFunc(nameFunc), m_context(NULL),
 			  m_outStream()
 		{
 			// "Rotate" to open our initial log.
@@ -488,7 +486,7 @@ namespace cpplog
 
 		SizeRotateFileLogger(pfBuildFileName nameFunc, void* context, size_t maxSize)
 			: OstreamLogger(m_outStream), m_maxSize(maxSize), m_logNumber(0),
-			  m_buildFunc(nameFunc), m_context(context), 
+			  m_buildFunc(nameFunc), m_context(context),
 			  m_outStream()
 		{
 			// "Rotate" to open our initial log.
@@ -534,7 +532,7 @@ namespace cpplog
 	class TimeRotateFileLogger : public OstreamLogger
 	{
 	public:
-		typedef void (*pfBuildFileName)(::tm* time, unsigned long logNumber, 
+		typedef void (*pfBuildFileName)(::tm* time, unsigned long logNumber,
 										std::string& newFileName, void* context);
 
 	private:
@@ -653,7 +651,7 @@ namespace cpplog
 			: m_logger1(&one), m_logger2(&two),
 			  m_logger1Owned(ownOne), m_logger2Owned(ownTwo)
 		{ }
-		
+
 		~TeeLogger()
 		{
 			if( m_logger1Owned )
@@ -739,7 +737,7 @@ namespace cpplog
 					delete (*It).logger;
 			}
 		}
-		
+
 		void addLogger(BaseLogger* logger)		{ m_loggers.push_back(LoggerInfo(logger, false)); }
 		void addLogger(BaseLogger& logger)		{ m_loggers.push_back(LoggerInfo(&logger, false)); }
 
@@ -801,7 +799,7 @@ namespace cpplog
 		}
 	};
 
-	// Logger that moves all processing of log messages to a background thread. 
+	// Logger that moves all processing of log messages to a background thread.
 	// Only include if we have support for threading.
 #ifdef CPPLOG_THREADING
 	class BackgroundLogger : public BaseLogger
@@ -841,13 +839,13 @@ namespace cpplog
 
 	public:
 		BackgroundLogger(BaseLogger* forwardTo)
-			: m_forwardTo(forwardTo) 
-		{ 
+			: m_forwardTo(forwardTo)
+		{
 			Init();
 		}
 
 		BackgroundLogger(BaseLogger& forwardTo)
-			: m_forwardTo(&forwardTo) 
+			: m_forwardTo(&forwardTo)
 		{
 			Init();
 		}
@@ -916,13 +914,13 @@ namespace cpplog
 #define LOG_TRACE(logger)	LOG_LEVEL(LL_TRACE, logger)
 #else
 #define LOG_TRACE(logger)	LOG_NOTHING(LL_TRACE, logger)
-#endif 
+#endif
 
 #if CPPLOG_FILTER_LEVEL <= LL_DEBUG
 #define LOG_DEBUG(logger)	LOG_LEVEL(LL_DEBUG, logger)
 #else
 #define LOG_DEBUG(logger)	LOG_NOTHING(LL_DEBUG, logger)
-#endif 
+#endif
 
 #if CPPLOG_FILTER_LEVEL <= LL_INFO
 #define LOG_INFO(logger)	LOG_LEVEL(LL_INFO, logger)
@@ -1042,30 +1040,30 @@ namespace cpplog
 // Debug versions of above.
 #ifdef _DEBUG
 #define DCHECK(logger, condition)			CHECK(logger, condition)
-#define DCHECK_EQUAL(logger, ex1, ex2)		CHECK_EQUAL(logger, ex1, ex2)		
-#define DCHECK_LT(logger, ex1, ex2)			CHECK_LT(logger, ex1, ex2)			
-#define DCHECK_GT(logger, ex1, ex2)			CHECK_GT(logger, ex1, ex2)			
-#define DCHECK_LE(logger, ex1, ex2)			CHECK_LE(logger, ex1, ex2)			
-#define DCHECK_GE(logger, ex1, ex2)			CHECK_GE(logger, ex1, ex2)			
-#define DCHECK_NE(logger, ex1, ex2)			CHECK_NE(logger, ex1, ex2)			
-#define DCHECK_NOT_EQUAL(logger, ex1, ex2)	CHECK_NOT_EQUAL(logger, ex1, ex2)	
-#define DCHECK_STREQ(logger, s1, s2)		CHECK_STREQ(logger, s1, s2)		
-#define DCHECK_STRNE(logger, s1, s2)		CHECK_STRNE(logger, s1, s2)		
-#define DCHECK_NULL(logger, exp)			CHECK_NULL(logger, exp)			
-#define DCHECK_NOT_NULL(logger, exp)		CHECK_NOT_NULL(logger, exp)		
+#define DCHECK_EQUAL(logger, ex1, ex2)		CHECK_EQUAL(logger, ex1, ex2)
+#define DCHECK_LT(logger, ex1, ex2)			CHECK_LT(logger, ex1, ex2)
+#define DCHECK_GT(logger, ex1, ex2)			CHECK_GT(logger, ex1, ex2)
+#define DCHECK_LE(logger, ex1, ex2)			CHECK_LE(logger, ex1, ex2)
+#define DCHECK_GE(logger, ex1, ex2)			CHECK_GE(logger, ex1, ex2)
+#define DCHECK_NE(logger, ex1, ex2)			CHECK_NE(logger, ex1, ex2)
+#define DCHECK_NOT_EQUAL(logger, ex1, ex2)	CHECK_NOT_EQUAL(logger, ex1, ex2)
+#define DCHECK_STREQ(logger, s1, s2)		CHECK_STREQ(logger, s1, s2)
+#define DCHECK_STRNE(logger, s1, s2)		CHECK_STRNE(logger, s1, s2)
+#define DCHECK_NULL(logger, exp)			CHECK_NULL(logger, exp)
+#define DCHECK_NOT_NULL(logger, exp)		CHECK_NOT_NULL(logger, exp)
 #else
 #define DCHECK(logger, condition)			while(false) CHECK(logger, condition)
-#define DCHECK_EQUAL(logger, ex1, ex2)		while(false) CHECK_EQUAL(logger, ex1, ex2)		
-#define DCHECK_LT(logger, ex1, ex2)			while(false) CHECK_LT(logger, ex1, ex2)			
-#define DCHECK_GT(logger, ex1, ex2)			while(false) CHECK_GT(logger, ex1, ex2)			
-#define DCHECK_LE(logger, ex1, ex2)			while(false) CHECK_LE(logger, ex1, ex2)			
-#define DCHECK_GE(logger, ex1, ex2)			while(false) CHECK_GE(logger, ex1, ex2)			
-#define DCHECK_NE(logger, ex1, ex2)			while(false) CHECK_NE(logger, ex1, ex2)			
-#define DCHECK_NOT_EQUAL(logger, ex1, ex2)	while(false) CHECK_NOT_EQUAL(logger, ex1, ex2)	
-#define DCHECK_STREQ(logger, s1, s2)		while(false) CHECK_STREQ(logger, s1, s2)		
-#define DCHECK_STRNE(logger, s1, s2)		while(false) CHECK_STRNE(logger, s1, s2)		
-#define DCHECK_NULL(logger, exp)			while(false) CHECK_NULL(logger, exp)			
-#define DCHECK_NOT_NULL(logger, exp)		while(false) CHECK_NOT_NULL(logger, exp)		
+#define DCHECK_EQUAL(logger, ex1, ex2)		while(false) CHECK_EQUAL(logger, ex1, ex2)
+#define DCHECK_LT(logger, ex1, ex2)			while(false) CHECK_LT(logger, ex1, ex2)
+#define DCHECK_GT(logger, ex1, ex2)			while(false) CHECK_GT(logger, ex1, ex2)
+#define DCHECK_LE(logger, ex1, ex2)			while(false) CHECK_LE(logger, ex1, ex2)
+#define DCHECK_GE(logger, ex1, ex2)			while(false) CHECK_GE(logger, ex1, ex2)
+#define DCHECK_NE(logger, ex1, ex2)			while(false) CHECK_NE(logger, ex1, ex2)
+#define DCHECK_NOT_EQUAL(logger, ex1, ex2)	while(false) CHECK_NOT_EQUAL(logger, ex1, ex2)
+#define DCHECK_STREQ(logger, s1, s2)		while(false) CHECK_STREQ(logger, s1, s2)
+#define DCHECK_STRNE(logger, s1, s2)		while(false) CHECK_STRNE(logger, s1, s2)
+#define DCHECK_NULL(logger, exp)			while(false) CHECK_NULL(logger, exp)
+#define DCHECK_NOT_NULL(logger, exp)		while(false) CHECK_NOT_NULL(logger, exp)
 #endif
 
 

@@ -12,6 +12,7 @@
 #include "SessionFactory_ABC.h"
 #include "Node_ABC.h"
 #include "NodeFactory_ABC.h"
+#include "cpplog/cpplog.hpp"
 
 #include <boost/algorithm/string/join.hpp>
 #include <boost/bind.hpp>
@@ -244,8 +245,9 @@ Agent::T_Sessions ExtractSessionsIf( T& mutex, U& sessions, V predicate )
 // Name: Agent::Agent
 // Created: BAX 2012-03-07
 // -----------------------------------------------------------------------------
-Agent::Agent( const NodeFactory_ABC& nodeFactory, const SessionFactory_ABC& sessionFactory )
-    : nodeFactory_   ( nodeFactory )
+Agent::Agent( cpplog::BaseLogger& log, const NodeFactory_ABC& nodeFactory, const SessionFactory_ABC& sessionFactory )
+    : log_           ( log )
+    , nodeFactory_   ( nodeFactory )
     , sessionFactory_( sessionFactory )
     , access_        ( new boost::shared_mutex() )
     , nodes_         ( nodeFactory_.Reload() )

@@ -10,6 +10,11 @@
 #define RUNTIME_H
 #include <runtime/Runtime_ABC.h>
 
+namespace cpplog
+{
+    class BaseLogger;
+};
+
 namespace runtime
 {
 
@@ -26,7 +31,7 @@ class Runtime : public Runtime_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-    explicit Runtime( const Api_ABC& api );
+    explicit Runtime( cpplog::BaseLogger& log, const Api_ABC& api );
     virtual ~Runtime();
     //@}
 
@@ -40,6 +45,7 @@ public:
     //@}
 
 private:
+    mutable cpplog::BaseLogger& log_;
     const Api_ABC& api_;
 };
 

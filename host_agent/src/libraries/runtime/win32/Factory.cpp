@@ -21,9 +21,9 @@ namespace runtime
 // =============================================================================
 struct Factory::Private
 {
-    Private()
-        : api    ()
-        , runtime( api )
+    Private( cpplog::BaseLogger& log )
+        : api    ( log )
+        , runtime( log, api )
     {
         // NOTHING
     }
@@ -35,8 +35,8 @@ struct Factory::Private
 // Name: Factory::Factory
 // Created: BAX 2012-03-08
 // -----------------------------------------------------------------------------
-Factory::Factory()
-    : private_( new Private() )
+Factory::Factory( cpplog::BaseLogger& log )
+    : private_( new Private( log ) )
 {
     // NOTHING
 }

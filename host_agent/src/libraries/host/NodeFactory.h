@@ -12,6 +12,11 @@
 
 #include "NodeFactory_ABC.h"
 
+namespace cpplog
+{
+    class BaseLogger;
+}
+
 namespace runtime
 {
     class Runtime_ABC;
@@ -34,8 +39,9 @@ class NodeFactory : public NodeFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             NodeFactory( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids, const FileSystem_ABC& system, PortFactory_ABC& ports,
-                          const boost::filesystem::wpath& java, const boost::filesystem::wpath& jar, const boost::filesystem::wpath& web, int host );
+             NodeFactory( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
+                          const FileSystem_ABC& system, PortFactory_ABC& ports, const boost::filesystem::wpath& java,
+                          const boost::filesystem::wpath& jar, const boost::filesystem::wpath& web, int host );
     virtual ~NodeFactory();
     //@}
 
@@ -48,6 +54,7 @@ public:
 private:
     //! @name Private members
     //@{
+    mutable cpplog::BaseLogger& log_;
     const runtime::Runtime_ABC& runtime_;
     const UuidFactory_ABC& uuids_;
     const FileSystem_ABC& system_;

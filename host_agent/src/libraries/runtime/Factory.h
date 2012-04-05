@@ -12,6 +12,11 @@
 #include <memory>
 #include <boost/noncopyable.hpp>
 
+namespace cpplog
+{
+    class BaseLogger;
+}
+
 namespace runtime
 {
     class Runtime_ABC;
@@ -27,7 +32,7 @@ class Factory : public boost::noncopyable
 public:
     //! @name Constructor/Destructor
     //@{
-     Factory();
+     Factory( cpplog::BaseLogger& log );
     ~Factory();
     //@}
 

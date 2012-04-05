@@ -18,6 +18,11 @@ namespace boost
     class shared_mutex;
 }
 
+namespace cpplog
+{
+    class BaseLogger;
+}
+
 namespace runtime
 {
     class Runtime_ABC;
@@ -47,12 +52,14 @@ class Session : public Session_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Session( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
+             Session( cpplog::BaseLogger& log,
+                      const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
                       const FileSystem_ABC& system, const boost::filesystem::wpath& data,
                       const boost::filesystem::wpath& applications,
                       const boost::uuids::uuid& node, const std::string& exercise,
                       const std::string& name, PortFactory_ABC& ports );
-             Session( const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system,
+             Session( cpplog::BaseLogger& log,
+                      const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system,
                       const boost::filesystem::wpath& data, const boost::filesystem::wpath& applications,
                       xml::xistream& xis, PortFactory_ABC& ports );
     virtual ~Session();
@@ -91,6 +98,7 @@ private:
 private:
     //! @name Member data
     //@{
+    mutable cpplog::BaseLogger& log_;
     const runtime::Runtime_ABC& runtime_;
     const FileSystem_ABC& system_;
     const boost::filesystem::wpath data_;

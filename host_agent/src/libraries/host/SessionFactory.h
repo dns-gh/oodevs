@@ -12,6 +12,11 @@
 
 #include "SessionFactory_ABC.h"
 
+namespace cpplog
+{
+    class BaseLogger;
+}
+
 namespace runtime
 {
     class Runtime_ABC;
@@ -34,8 +39,9 @@ class SessionFactory : public SessionFactory_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             SessionFactory( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids, const FileSystem_ABC& system, PortFactory_ABC& ports,
-                             const boost::filesystem::wpath& data, const boost::filesystem::wpath& applications );
+             SessionFactory( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
+                             const FileSystem_ABC& system, PortFactory_ABC& ports, const boost::filesystem::wpath& data,
+                             const boost::filesystem::wpath& applications );
     virtual ~SessionFactory();
     //@}
 
@@ -49,6 +55,7 @@ public:
 private:
     //! @name Private members
     //@{
+    mutable cpplog::BaseLogger& log_;
     const runtime::Runtime_ABC& runtime_;
     const UuidFactory_ABC& uuids_;
     const FileSystem_ABC& system_;

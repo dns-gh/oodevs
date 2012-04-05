@@ -10,6 +10,11 @@
 #define API_H__
 #include "Api_ABC.h"
 
+namespace cpplog
+{
+    class BaseLogger;
+};
+
 namespace runtime
 {
 
@@ -24,7 +29,7 @@ class Api : public Api_ABC
 public:
     //! @name Constructor/Destructor
     //@{
-             Api();
+             Api( cpplog::BaseLogger& log );
     virtual ~Api();
     //@}
 
@@ -44,6 +49,7 @@ public:
     //@}
 
 private:
+    mutable cpplog::BaseLogger& log_;
     LPTHREAD_START_ROUTINE exit_;
 };
 

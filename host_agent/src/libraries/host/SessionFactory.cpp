@@ -11,6 +11,8 @@
 #include "PortFactory_ABC.h"
 #include "FileSystem_ABC.h"
 #include "Session.h"
+
+#include "cpplog/cpplog.hpp"
 #include "runtime/Utf8.h"
 
 #include <xeumeuleu/xml.hpp>
@@ -25,9 +27,11 @@ using namespace host;
 // Name: SessionFactory::SessionFactory
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
-SessionFactory::SessionFactory( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids, const FileSystem_ABC& system, PortFactory_ABC& ports,
-                                const boost::filesystem::wpath& data, const boost::filesystem::wpath& applications )
-    : runtime_     ( runtime )
+SessionFactory::SessionFactory( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
+                                const FileSystem_ABC& system, PortFactory_ABC& ports, const boost::filesystem::wpath& data,
+                                const boost::filesystem::wpath& applications )
+    : log_         ( log )
+    , runtime_     ( runtime )
     , uuids_       ( uuids )
     , system_      ( system )
     , data_        ( data )
@@ -52,7 +56,7 @@ SessionFactory::~SessionFactory()
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Session_ABC > SessionFactory::Create( const boost::uuids::uuid& node, const std::string& exercise, const std::string& name ) const
 {
-    return boost::make_shared< Session>( runtime_, uuids_, system_, data_, applications_, node, exercise, name, boost::ref( ports_ ) );
+    return boost::shared_ptr< Session_ABC >( new Session( log_, runtime_, uuids_, system_, data_, applications_, node, exercise, name, ports_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -66,11 +70,12 @@ SessionFactory_ABC::T_Sessions SessionFactory::Reload() const
         try
         {
             xml::xistringstream xis( system_.ReadFile( path ) );
-            boost::shared_ptr< Session_ABC > ptr = boost::make_shared< Session >( runtime_, system_, data_, applications_, boost::ref( xis ), boost::ref( ports_ ) );
+            boost::shared_ptr< Session_ABC > ptr = boost::make_shared< Session >( boost::ref( log_ ), runtime_, system_, data_, applications_, boost::ref( xis ), boost::ref( ports_ ) );
             sessions.insert( std::make_pair( ptr->GetTag(), ptr ) );
         }
-        catch( const std::exception& )
+        catch( const std::exception& err )
         {
+            LOG_WARN( log_ ) << "[session] Unable to reload session from " << runtime::Utf8Convert( path.string() ) << " - " << err.what();
             continue; // skip invalid session
         }
     return sessions;

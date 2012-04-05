@@ -12,9 +12,10 @@
 #include "PortFactory_ABC.h"
 #include "UuidFactory_ABC.h"
 
-#include <runtime/Process_ABC.h>
-#include <runtime/Runtime_ABC.h>
-#include <runtime/Utf8.h>
+#include "cpplog/cpplog.hpp"
+#include "runtime/Process_ABC.h"
+#include "runtime/Runtime_ABC.h"
+#include "runtime/Utf8.h"
 
 #include <xeumeuleu/xml.hpp>
 
@@ -75,10 +76,12 @@ namespace
 // Name: Node::Node
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-Node::Node( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids, const FileSystem_ABC& system,
+Node::Node( cpplog::BaseLogger& log,
+            const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids, const FileSystem_ABC& system,
             const boost::filesystem::wpath& java, const boost::filesystem::wpath& jar,
             const boost::filesystem::wpath& web, int host, const std::string& name, PortFactory_ABC& ports )
-    : runtime_( runtime )
+    : log_    ( log )
+    , runtime_( runtime )
     , system_ ( system )
     , java_   ( java )
     , jar_    ( jar )
@@ -90,6 +93,7 @@ Node::Node( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids, c
     , port_   ( ports.Create() )
 {
     CheckPaths();
+    LOG_INFO( log_ ) << "[node] + " << id_ << " " << name_;
     Save();
 }
 
@@ -97,22 +101,25 @@ Node::Node( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids, c
 // Name: Node::Node
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-Node::Node( const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system,
+Node::Node( cpplog::BaseLogger& log,
+            const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system,
             const boost::filesystem::wpath& java, const boost::filesystem::wpath& jar,
             const boost::filesystem::wpath& web, xml::xistream& xis, PortFactory_ABC& ports )
-    : runtime_     ( runtime )
-    , system_      ( system )
-    , java_        ( java )
-    , jar_         ( jar )
-    , web_         ( web )
-    , id_          ( boost::uuids::string_generator()( ParseItem< std::string >( xis, "id" ) ) )
-    , host_        ( ParseItem< int >( xis, "host" ) )
-    , name_        ( ParseItem< std::string >( xis, "name" ) )
-    , access_      ( new boost::shared_mutex() )
-    , process_     ( GetProcess( runtime_, xis ) )
-    , port_        ( ports.Create( ParseItem< int >( xis, "port" ) ) )
+    : log_    ( log )
+    , runtime_( runtime )
+    , system_ ( system )
+    , java_   ( java )
+    , jar_    ( jar )
+    , web_    ( web )
+    , id_     ( boost::uuids::string_generator()( ParseItem< std::string >( xis, "id" ) ) )
+    , host_   ( ParseItem< int >( xis, "host" ) )
+    , name_   ( ParseItem< std::string >( xis, "name" ) )
+    , access_ ( new boost::shared_mutex() )
+    , process_( GetProcess( runtime_, xis ) )
+    , port_   ( ports.Create( ParseItem< int >( xis, "port" ) ) )
 {
     CheckPaths();
+    LOG_INFO( log_ ) << "[node] + " << id_ << " " << name_;
     Save();
 }
 
@@ -139,6 +146,7 @@ Node::~Node()
     if( process_ )
         process_->Kill( MAX_KILL_TIMEOUT_MS );
     system_.Remove( GetPath() );
+    LOG_INFO( log_ ) << "[node] - " << id_ << " " << name_;
 }
 
 // -----------------------------------------------------------------------------

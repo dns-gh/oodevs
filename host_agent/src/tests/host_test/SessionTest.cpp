@@ -9,6 +9,8 @@
 
 #include "host_test.h"
 
+#include <cpplog/cpplog.hpp>
+
 #include <runtime/Process_ABC.h>
 #include <runtime/Runtime_ABC.h>
 
@@ -32,6 +34,14 @@ namespace
     const std::string default_node_string = "0123456789abcdef0123456789abcdef";
     const boost::uuids::uuid default_node = boost::uuids::string_generator()( default_node_string );
 
+    MOCK_BASE_CLASS( MockLog, cpplog::BaseLogger )
+    {
+        MOCK_METHOD( sendLogMessage, 1 );
+        MockLog()
+        {
+            MOCK_EXPECT( this->sendLogMessage ).returns( true );
+        }
+    };
 
     MOCK_BASE_CLASS( MockRuntime, runtime::Runtime_ABC )
     {
@@ -93,6 +103,7 @@ namespace
 
     struct Fixture
     {
+        MockLog         log;
         MockRuntime     runtime;
         MockUuidFactory uuids;
         MockFileSystem  system;
@@ -134,7 +145,7 @@ namespace
             MOCK_EXPECT( uuids.Create ).once().returns( default_id );
             MOCK_EXPECT( ports.Create0 ).once().returns( std::auto_ptr< Port_ABC >( new MockPort( port ) ) );
             SaveSessionTag( tag );
-            return boost::shared_ptr< Session >( new Session( runtime, uuids, system, data, apps, default_node, exercise, name, ports ) );
+            return boost::shared_ptr< Session >( new Session( log, runtime, uuids, system, data, apps, default_node, exercise, name, ports ) );
         }
 
         boost::shared_ptr< Session > MakeSession( const std::string& tag, boost::shared_ptr< MockProcess > process )
@@ -144,7 +155,7 @@ namespace
             MOCK_EXPECT( ports.Create1 ).once().returns( new MockPort( port ) );
             xml::xistringstream xis( tag );
             SaveSessionTag( 0 );
-            return boost::shared_ptr< Session >( new Session( runtime, system, data, apps, xis, ports ) );
+            return boost::shared_ptr< Session >( new Session( log, runtime, system, data, apps, xis, ports ) );
         }
 
         boost::shared_ptr< MockProcess > StartSession( Session& session, std::string* tag = 0, const std::string& name = std::string() )

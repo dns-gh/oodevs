@@ -19,6 +19,11 @@ namespace boost
     class shared_mutex;
 }
 
+namespace cpplog
+{
+    class BaseLogger;
+}
+
 namespace host
 {
     class Session_ABC;
@@ -37,7 +42,7 @@ class Agent : public Agent_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Agent( const NodeFactory_ABC& nodeFactory, const SessionFactory_ABC& sessionFactory );
+             Agent( cpplog::BaseLogger& log, const NodeFactory_ABC& nodeFactory, const SessionFactory_ABC& sessionFactory );
     virtual ~Agent();
     //@}
 
@@ -78,6 +83,7 @@ public:
 private:
     //! @name Member data
     //@{
+    mutable cpplog::BaseLogger& log_;
     const NodeFactory_ABC& nodeFactory_;
     const SessionFactory_ABC& sessionFactory_;
     std::auto_ptr< boost::shared_mutex > access_;

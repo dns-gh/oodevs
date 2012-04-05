@@ -11,6 +11,7 @@
 #include "Handle.h"
 #include "Api_ABC.h"
 #include <runtime/Utf8.h>
+#include <cpplog/cpplog.hpp>
 #include <boost/foreach.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/ref.hpp>
@@ -25,7 +26,7 @@ namespace
     // Created: BAX 2012-03-07
     // -----------------------------------------------------------------------------
     template< typename T >
-    bool Enumerate( const Api_ABC& api, Runtime::T_Processes& list, std::vector< T >& pids )
+    bool Enumerate( cpplog::BaseLogger& log, const Api_ABC& api, Runtime::T_Processes& list, std::vector< T >& pids )
     {
         DWORD size = 0;
         bool done = api.EnumProcesses( &pids[0], static_cast< DWORD >( pids.size() * sizeof T ), &size );
@@ -39,9 +40,9 @@ namespace
             {
                 list.push_back( boost::make_shared< Process >( api, id ) );
             }
-            catch( const std::exception& /*err*/ )
+            catch( const std::exception& err )
             {
-                // LOG_ERROR
+                LOG_WARN( log ) << "[runtime] Unable to load process " << id << ", " << err.what();
                 continue;
             }
         return true;
@@ -52,8 +53,9 @@ namespace
 // Name: Runtime::Runtime
 // Created: BAX 2012-03-08
 // -----------------------------------------------------------------------------
-Runtime::Runtime( const Api_ABC& api )
-    : api_( api )
+Runtime::Runtime( cpplog::BaseLogger& log, const Api_ABC& api )
+    : log_( log )
+    , api_( api )
 {
     // NOTHING
 }
@@ -75,7 +77,7 @@ Runtime::T_Processes Runtime::GetProcesses() const
 {
     T_Processes list;
     std::vector< DWORD > pids( 128, 0 );
-    while( !Enumerate( api_, list, pids ) )
+    while( !Enumerate( log_, api_, list, pids ) )
         pids.resize( pids.size() * 2 );
     return list;
 }
@@ -90,9 +92,9 @@ boost::shared_ptr< Process_ABC > Runtime::GetProcess( int pid ) const
     {
         return boost::make_shared< Process >( api_, pid );
     }
-    catch( const std::exception& /*err*/ )
+    catch( const std::exception& err )
     {
-        // LOG_ERROR
+        LOG_WARN( log_ ) << "[runtime] Unable to load process " << pid << ", " << err.what();
         return boost::shared_ptr< Process_ABC >();
     }
 }
@@ -118,7 +120,7 @@ namespace
             api.CloseHandle( info.hThread );
         std::auto_ptr< Handle > handle( new Handle( api, info.hProcess ) );
         if( !done )
-            throw std::runtime_error( api.GetLastError() );
+            throw std::runtime_error( "unable to create process" );
 
         return boost::make_shared< Process >( api, info.dwProcessId, boost::ref( handle ) );
     }
@@ -143,8 +145,9 @@ boost::shared_ptr< Process_ABC > Runtime::Start( const std::string& cmd,
         wrun = Utf8Convert( run );
         return CreateProcess( api_, wapp, wcmd, wrun );
     }
-    catch( const std::runtime_error& /*err*/ )
+    catch( const std::runtime_error& err )
     {
+        LOG_WARN( log_ ) << "[runtime] Unable to start process " << cmd << " " << boost::algorithm::join( args, " " ) << ", " << err.what();
         return boost::shared_ptr< Process_ABC >();
     }
 

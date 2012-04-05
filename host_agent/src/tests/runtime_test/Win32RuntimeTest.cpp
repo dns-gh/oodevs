@@ -14,6 +14,7 @@
 #include <runtime/win32/Process.h>
 #include <runtime/win32/Handle.h>
 #include <runtime/win32/Runtime.h>
+#include <cpplog/cpplog.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/assign/list_of.hpp>
 #include <boost/spirit/home/phoenix/core/argument.hpp>
@@ -28,6 +29,15 @@ namespace
     const HANDLE dummy = reinterpret_cast< HANDLE >( 0xCAFEBABE );
     const HANDLE thread = reinterpret_cast< HANDLE >( 0xBAADF00D );
     const std::wstring wname = L"Zebulon";
+
+    MOCK_BASE_CLASS( MockLog, cpplog::BaseLogger )
+    {
+        MOCK_METHOD( sendLogMessage, 1 );
+        MockLog()
+        {
+            MOCK_EXPECT( this->sendLogMessage ).returns( true );
+        }
+    };
 
     bool FakeEnumProcesses( DWORD* ids, int cb, DWORD* pBytesReturned, int size )
     {
@@ -81,8 +91,9 @@ namespace
 
 BOOST_AUTO_TEST_CASE( runtime_process_lists )
 {
+    MockLog log;
     MockApi api;
-    Runtime runtime( api );
+    Runtime runtime( log, api );
     int size = 64;
     MOCK_EXPECT( api.EnumProcesses ).once().calls( boost::phoenix::bind( &FakeEnumProcesses, _1, _2, _3, size ) );
     for( int i = 0; i < size; ++i )
@@ -95,8 +106,9 @@ BOOST_AUTO_TEST_CASE( runtime_process_lists )
 
 BOOST_AUTO_TEST_CASE( runtime_process_gets )
 {
+    MockLog log;
     MockApi api;
-    Runtime runtime( api );
+    Runtime runtime( log, api );
     const int pid = 1337;
     ExpectOpenProcess( api, dummy, pid );
     boost::shared_ptr< Process_ABC > ptr = runtime.GetProcess( pid );
@@ -105,8 +117,9 @@ BOOST_AUTO_TEST_CASE( runtime_process_gets )
 
 BOOST_AUTO_TEST_CASE( runtime_process_starts )
 {
+    MockLog log;
     MockApi api;
-    Runtime runtime( api );
+    Runtime runtime( log, api );
     const std::string app = "e:/my_app.exe";
     const std::vector< std::string > args = boost::assign::list_of( "--root_dir=../../data" )
                                                                   ( "--exercise=worldwide/Egypt" )

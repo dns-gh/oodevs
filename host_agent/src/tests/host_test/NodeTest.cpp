@@ -9,6 +9,8 @@
 
 #include "host_test.h"
 
+#include <cpplog/cpplog.hpp>
+
 #include <runtime/Process_ABC.h>
 #include <runtime/Runtime_ABC.h>
 
@@ -29,6 +31,15 @@ namespace
 {
     const std::string default_id_string = "12345678-90AB-CDEF-9876-543210123456";
     const boost::uuids::uuid default_id = boost::uuids::string_generator()( default_id_string );
+
+    MOCK_BASE_CLASS( MockLog, cpplog::BaseLogger )
+    {
+        MOCK_METHOD( sendLogMessage, 1 );
+        MockLog()
+        {
+            MOCK_EXPECT( this->sendLogMessage ).returns( true );
+        }
+    };
 
     MOCK_BASE_CLASS( MockRuntime, runtime::Runtime_ABC )
     {
@@ -90,6 +101,7 @@ namespace
 
     struct Fixture
     {
+        MockLog         log;
         MockRuntime     runtime;
         MockUuidFactory uuids;
         MockFileSystem  system;
@@ -132,7 +144,7 @@ namespace
             MOCK_EXPECT( uuids.Create ).once().returns( default_id );
             MOCK_EXPECT( ports.Create0 ).once().returns( std::auto_ptr< Port_ABC >( new MockPort( port ) ) );
             SaveNodeTag( tag );
-            return boost::shared_ptr< Node >( new Node( runtime, uuids, system, java, jar, web, host, name, ports ) );
+            return boost::shared_ptr< Node >( new Node( log, runtime, uuids, system, java, jar, web, host, name, ports ) );
         }
 
         boost::shared_ptr< Node > MakeNode( const std::string& tag, boost::shared_ptr< MockProcess > process )
@@ -142,7 +154,7 @@ namespace
             MOCK_EXPECT( ports.Create1 ).once().returns( new MockPort( port ) );
             xml::xistringstream xis( tag );
             SaveNodeTag( 0 );
-            return boost::shared_ptr< Node >( new Node( runtime, system, java, jar, web, xis, ports ) );
+            return boost::shared_ptr< Node >( new Node( log, runtime, system, java, jar, web, xis, ports ) );
         }
 
         boost::shared_ptr< MockProcess > StartNode( Node& node, std::string* tag = 0, const std::string& name = std::string() )

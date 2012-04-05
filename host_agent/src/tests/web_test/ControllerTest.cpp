@@ -9,6 +9,8 @@
 
 #include "web_test.h"
 
+#include <cpplog/cpplog.hpp>
+
 #include <host/Agent_ABC.h>
 
 #include <web/Controller.h>
@@ -28,6 +30,15 @@ namespace
 {
     const std::string default_id_string = "0123456789abcdef0123456789abcdef";
     const boost::uuids::uuid default_id = boost::uuids::string_generator()( default_id_string );
+
+    MOCK_BASE_CLASS( MockLog, cpplog::BaseLogger )
+    {
+        MOCK_METHOD( sendLogMessage, 1 );
+        MockLog()
+        {
+            MOCK_EXPECT( this->sendLogMessage ).returns( true );
+        }
+    };
 
     MOCK_BASE_CLASS( MockAgent, host::Agent_ABC )
     {
@@ -77,7 +88,7 @@ namespace
     struct Fixture
     {
         Fixture()
-            : controller( agent )
+            : controller( log, agent )
         {
             // NOTHING
         }
@@ -95,6 +106,7 @@ namespace
             BOOST_CHECK( CheckHttpCode( code, reply ) );
             BOOST_CHECK_EQUAL( expected, EraseHttpHeader( reply ));
         }
+        MockLog log;
         MockRequest request;
         MockAgent agent;
         Controller controller;

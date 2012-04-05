@@ -12,9 +12,10 @@
 #include "PortFactory_ABC.h"
 #include "UuidFactory_ABC.h"
 
-#include <runtime/Process_ABC.h>
-#include <runtime/Runtime_ABC.h>
-#include <runtime/Utf8.h>
+#include "cpplog/cpplog.hpp"
+#include "runtime/Process_ABC.h"
+#include "runtime/Runtime_ABC.h"
+#include "runtime/Utf8.h"
 
 #include <xeumeuleu/xml.hpp>
 
@@ -109,12 +110,14 @@ namespace
 // Name: Session::Session
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-Session::Session( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
+Session::Session( cpplog::BaseLogger& log,
+                  const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
                   const FileSystem_ABC& system, const boost::filesystem::wpath& data,
                   const boost::filesystem::wpath& applications,
                   const boost::uuids::uuid& node, const std::string& exercise,
                   const std::string& name, PortFactory_ABC& ports )
-    : runtime_     ( runtime )
+    : log_         ( log )
+    , runtime_     ( runtime )
     , system_      ( system )
     , data_        ( data )
     , applications_( applications )
@@ -127,6 +130,7 @@ Session::Session( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uu
     , status_      ( STATUS_STOPPED )
 {
     CheckPaths();
+    LOG_INFO( log_ ) << "[session] + " << id_ << " " << name_;
     Save();
 }
 
@@ -134,10 +138,12 @@ Session::Session( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uu
 // Name: Session::Session
 // Created: BAX 2012-03-21
 // -----------------------------------------------------------------------------
-Session::Session( const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system,
+Session::Session( cpplog::BaseLogger& log,
+                  const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system,
                   const boost::filesystem::wpath& data, const boost::filesystem::wpath& applications,
                   xml::xistream& xis, PortFactory_ABC& ports )
-    : runtime_     ( runtime )
+    : log_         ( log )
+    , runtime_     ( runtime )
     , system_      ( system )
     , data_        ( data )
     , applications_( applications )
@@ -151,6 +157,7 @@ Session::Session( const runtime::Runtime_ABC& runtime, const FileSystem_ABC& sys
     , status_      ( process_ ? ConvertStatus( ParseItem< std::string >( xis, "status" ) ) : STATUS_STOPPED )
 {
     CheckPaths();
+    LOG_INFO( log_ ) << "[session] + " << id_ << " " << name_;
     Save();
 }
 
@@ -180,6 +187,7 @@ Session::~Session()
     if( process_ )
         process_->Kill( MAX_KILL_TIMEOUT_MS );
     system_.Remove( GetPath() );
+    LOG_INFO( log_ ) << "[session] - " << id_ << " " << name_;
 }
 
 // -----------------------------------------------------------------------------

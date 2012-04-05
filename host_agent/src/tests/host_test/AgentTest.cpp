@@ -9,6 +9,8 @@
 
 #include "host_test.h"
 
+#include <cpplog/cpplog.hpp>
+
 #include <runtime/Process_ABC.h>
 #include <runtime/Runtime_ABC.h>
 
@@ -31,6 +33,15 @@ namespace
 {
     const std::string default_node_string = "0123456789abcdef0123456789abcdef";
     const boost::uuids::uuid default_node = boost::uuids::string_generator()( default_node_string );
+
+    MOCK_BASE_CLASS( MockLog, cpplog::BaseLogger )
+    {
+        MOCK_METHOD( sendLogMessage, 1 );
+        MockLog()
+        {
+            MOCK_EXPECT( this->sendLogMessage ).returns( true );
+        }
+    };
 
     MOCK_BASE_CLASS( MockNodeFactory, NodeFactory_ABC )
     {
@@ -104,7 +115,7 @@ namespace
     struct Fixture
     {
         Fixture()
-            : agent( nodes, sessions )
+            : agent( log, nodes, sessions )
         {
             // NOTHING
         }
@@ -128,6 +139,7 @@ namespace
             return node;
         }
 
+        MockLog log;
         MockSessionFactory sessions;
         MockNodeFactory nodes;
         Agent agent;

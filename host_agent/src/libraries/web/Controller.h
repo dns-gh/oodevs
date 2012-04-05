@@ -13,6 +13,11 @@
 #include "Observer_ABC.h"
 #include <string>
 
+namespace cpplog
+{
+    class BaseLogger;
+};
+
 namespace host
 {
     class Agent_ABC;
@@ -33,7 +38,7 @@ class Controller : public Observer_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Controller( host::Agent_ABC& host );
+             Controller( cpplog::BaseLogger& log, host::Agent_ABC& host );
     virtual ~Controller();
     //@}
 
@@ -74,6 +79,7 @@ private:
 private:
     //! @name Member data
     //@{
+    mutable cpplog::BaseLogger& log_;
     host::Agent_ABC& agent_;
     //@}
 };

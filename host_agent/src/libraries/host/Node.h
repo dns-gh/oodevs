@@ -18,6 +18,11 @@ namespace boost
     class shared_mutex;
 }
 
+namespace cpplog
+{
+    class BaseLogger;
+}
+
 namespace runtime
 {
     class Runtime_ABC;
@@ -47,11 +52,13 @@ class Node : public Node_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Node( const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
+             Node( cpplog::BaseLogger& log,
+                   const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
                    const FileSystem_ABC& system, const boost::filesystem::wpath& java,
                    const boost::filesystem::wpath& jar, const boost::filesystem::wpath& web, int host,
                    const std::string& name, PortFactory_ABC& ports );
-             Node( const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system,
+             Node( cpplog::BaseLogger& log,
+                   const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system,
                    const boost::filesystem::wpath& java, const boost::filesystem::wpath& jar,
                    const boost::filesystem::wpath& web, xml::xistream& xis, PortFactory_ABC& ports );
     virtual ~Node();
@@ -77,6 +84,7 @@ private:
 private:
     //! @name Member data
     //@{
+    mutable cpplog::BaseLogger& log_;
     const runtime::Runtime_ABC& runtime_;
     const FileSystem_ABC& system_;
     const boost::filesystem::wpath java_;
