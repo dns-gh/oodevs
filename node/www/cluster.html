@@ -78,8 +78,8 @@
                                 <a data-toggle="modal" href="#node_create" class="btn"><i class="icon-plus"></i> Create...</a>
                             </span>
                         </div>
-                    </div>                    
-                    <div id="nodes">
+                    </div>
+                    <div id="nodes" class="span9 accordion">
                         [#-- auto-generated templates --]
                         <script type="text/template" id="node_error_template">
                             <div class="alert alert-error">
@@ -88,9 +88,29 @@
                             </div>
                         </script>
                         <script type="text/template" id="node_template">
-                            <div id="id_{{{id}}}" class="span9">
-                                <div class="well node_row">
-                                    <div class="node_name">{{name}}</div>
+                            <div id="id_{{{id}}}" class="accordion-group">
+                                <div class="accordion-heading">
+                                    <a class="accordion-toggle" data-toggle="collapse" data-parent="#nodes" href="#collapse_{{{id}}}"><img width="32" height="32" src="img/tango/32x32/places/network-server.png"/> {{{name}}} </a>
+                                </div>
+                                <div id="collapse_{{{id}}}" class="accordion-body in">
+                                    <div class="accordion-inner">
+                                        <form class="form-horizontal">
+                                            <div class="control-group">
+                                                <label class="control-label" for="node_name">Name</label>
+                                                <div class="controls">
+                                                    <input type="text" class="input-large" id="node_name"/>
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <label class="control-label" for="parallel_sessions">
+                                                    <input type="checkbox">Max Parallel Sessions</input>
+                                                </label>
+                                                <div class="controls">
+                                                    <input type="text" class="input-large" id="parallel_sessions"/>
+                                                </div>
+                                            </div>
+                                        </form>
+                                    </div>
                                 </div>
                             </div>
                         </script>

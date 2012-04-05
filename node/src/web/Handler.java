@@ -29,17 +29,19 @@ public class Handler extends HttpServlet {
     private final File root_;
     private final MimeUtil2 mimes_;
     private final String index_;
+    private final String name_;
 
-    public Handler(final String uuid, final String root, final String index, final boolean isDebug) throws Exception {
-        uuid_ = uuid;
-        root_ = new File(root);
-        index_ = index;
+    public Handler(final Agent.Configuration config) throws Exception {
+        uuid_ = config.uuid;
+        root_ = new File(config.root);
+        index_ = config.index;
+        name_ = config.name;
         if (!root_.isDirectory())
             throw new IOException(root_ + " is not a directory");
         cfg_ = new Configuration();
         cfg_.setDirectoryForTemplateLoading(root_);
         cfg_.setObjectWrapper(new DefaultObjectWrapper());
-        if (isDebug)
+        if (config.isDebug)
             cfg_.setTemplateUpdateDelay(0);
         cfg_.setOutputEncoding("UTF-8");
         mimes_ = new MimeUtil2();
@@ -70,6 +72,7 @@ public class Handler extends HttpServlet {
         for (final Map.Entry<String, String[]> it : request.getParameterMap().entrySet())
             root.put(it.getKey(), it.getValue()[0]);
         root.put("uuid", uuid_);
+        root.put("name", name_);
         try {
             ctx.process(root, reply.getWriter());
         } catch (final TemplateException e) {

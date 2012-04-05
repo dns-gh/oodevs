@@ -143,11 +143,11 @@ Reply UuidDispatch( boost::shared_mutex& mutex, T& objects, const boost::uuids::
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
 template< typename T >
-Reply DeleteObject( boost::shared_mutex& mutex, std::map< boost::uuids::uuid, T >& objects, const boost::uuids::uuid& id )
+Reply DeleteObject( boost::shared_mutex& mutex, std::map< boost::uuids::uuid, T >& objects, const std::string& name, const boost::uuids::uuid& id )
 {
     T ptr = ExtractObject( mutex, objects, id );
     if( !ptr )
-        return Reply( ( boost::format( "unable to find session %1%" ) % id ).str(), false );
+        return Reply( ( boost::format( "unable to find %1% %2%" ) % name % id ).str(), false );
     ptr->Stop();
     return Reply( ptr->ToJson() );
 }
@@ -320,7 +320,7 @@ Reply Agent::DeleteNode( const boost::uuids::uuid& id )
         boost::lock_guard< boost::shared_mutex > lock( *access_ );
         ptr = ExtractObject( dummy, nodes_, id );
         if( !ptr )
-            return Reply( ( boost::format( "unable to find session %1%" ) % id ).str(), false );
+            return Reply( ( boost::format( "unable to find node %1%" ) % id ).str(), false );
         invalid = ExtractSessionsIf( dummy, sessions_, boost::bind( &IsNode, _1, id ) );
     }
     // destroy objects outside the lock
@@ -404,7 +404,7 @@ Reply Agent::CreateSession( const boost::uuids::uuid& node, const std::string& e
 // -----------------------------------------------------------------------------
 Reply Agent::DeleteSession( const boost::uuids::uuid& id )
 {
-    return DeleteObject( *access_, sessions_, id );
+    return DeleteObject( *access_, sessions_, "session", id );
 }
 
 // -----------------------------------------------------------------------------

@@ -31,6 +31,10 @@ class Main {
                 if (i + 1 == args.length)
                     throw new Exception("Missing --host parameter");
                 config.host = Integer.parseInt(args[++i]);
+            } else if (it.equals("--name")) {
+                if (i + 1 == args.length)
+                    throw new Exception("Missing --name parameter");
+                config.name = args[++i];
             } else if (it.equals("--uuid") || it.equals("-u")) {
                 if (i + 1 == args.length)
                     throw new Exception("Missing --uuid parameter");

@@ -226,11 +226,13 @@ void Node::Start()
     const boost::filesystem::wpath path = GetPath();
     boost::filesystem::wpath jar_path = jar_;
     process_ = runtime_.Start( Utf8Convert( java_ ), boost::assign::list_of
-            ( " -jar \""  + Utf8Convert( jar_.filename() ) + "\"" )
+            ( " " "-jar \""  + Utf8Convert( jar_.filename() ) + "\"" )
             ( "--root \""  + Utf8Convert( web_ ) + "\"" )
             ( "--port \"" + boost::lexical_cast< std::string >( port_->Get() ) + "\"" )
             ( "--host \"" + boost::lexical_cast< std::string >( host_ ) + "\"" )
-            ( "--uuid \"" + boost::lexical_cast< std::string >( id_ ) + "\"" ),
+            ( "--uuid \"" + boost::lexical_cast< std::string >( id_ ) + "\"" )
+            ( "--name \"" + name_ + "\"" )
+            ( "--node" ),
             Utf8Convert( jar_path.remove_filename() ) );
     if( !process_ ) return;
 

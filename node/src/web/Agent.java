@@ -22,6 +22,7 @@ public class Agent {
         public String uuid;
         public String root;
         public String index;
+        public String name;
         public int port;
         public int host;
         public boolean isDebug;
@@ -42,7 +43,7 @@ public class Agent {
         final ServletHolder proxy = new ServletHolder(new ProxyServlet.Transparent("/api", "localhost", config.host));
         ctx.addServlet(proxy, "/api/*");
 
-        final ServletHolder handler = new ServletHolder(new Handler(config.uuid, config.root, config.index, config.isDebug));
+        final ServletHolder handler = new ServletHolder(new Handler(config));
         ctx.addServlet(handler, "/");
 
         final EnumSet<DispatcherType> all = EnumSet.of(DispatcherType.ASYNC, DispatcherType.ERROR, DispatcherType.FORWARD, DispatcherType.INCLUDE,
