@@ -13,6 +13,7 @@ class Main {
 
     private static void parseParameters(final Agent.Configuration config, final String[] args) throws Exception {
         config.root = "www";
+        config.index = "admin";
         config.port = 8080;
         config.host = 15000;
         config.isDebug = false;
@@ -36,6 +37,8 @@ class Main {
                 config.uuid = args[++i];
             } else if (it.equals("--debug") || it.equals("-d")) {
                 config.isDebug = true;
+            } else if (it.equals("--node") || it.equals("-n")) {
+                config.index = "node";
             } else {
                 throw new Exception("Unrecognized parameter " + it);
             }

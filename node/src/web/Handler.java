@@ -28,10 +28,12 @@ public class Handler extends HttpServlet {
     private final String uuid_;
     private final File root_;
     private final MimeUtil2 mimes_;
+    private final String index_;
 
-    public Handler(final String uuid, final String root, final boolean isDebug) throws Exception {
+    public Handler(final String uuid, final String root, final String index, final boolean isDebug) throws Exception {
         uuid_ = uuid;
         root_ = new File(root);
+        index_ = index;
         if (!root_.isDirectory())
             throw new IOException(root_ + " is not a directory");
         cfg_ = new Configuration();
@@ -82,7 +84,7 @@ public class Handler extends HttpServlet {
         if (uri.startsWith("/"))
             uri = uri.substring(1);
         if (uri.isEmpty())
-            uri = "index";
+            uri = index_;
         final String target = identify(uri, reply);
         serveTemplate(reply, request, target);
     }
