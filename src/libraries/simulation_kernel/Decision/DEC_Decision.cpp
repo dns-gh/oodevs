@@ -482,7 +482,8 @@ void RegisterMissionParametersFunctions( directia::brain::Brain& brain, bool isM
     brain[ "DEC_Agent_PeutActiverObjet" ] = &DEC_AgentFunctions::CanActivateObject;
     
     brain[ "DEC_Agent_GetAgentDotation" ] = &DEC_AgentFunctions::GetAgentDotationNumber;
-    brain[ "DEC_GetAgentDotationManquantePourConstruireObjet" ] = &DEC_AgentFunctions::GetAgentMissingDotationForBuilding;
+    brain[ "DEC_GetAgentDotationManquantePourConstruireObjet" ] = &DEC_AgentFunctions::GetAgentMissingDotationForBuildingObject;
+    brain[ "DEC_GetAgentDotationManquantePourConstruireObjetExistant" ] = &DEC_AgentFunctions::GetAgentMissingDotationForBuildingExistingObject;
     brain[ "DEC_GetAgentDotationManquantePourValoriserObjet" ] = &DEC_AgentFunctions::GetAgentMissingDotationForMining;
     brain[ "DEC_GetAgentsPouvantConstruire" ] = &DEC_AgentFunctions::RetrieveUnitsAbleToBuild;
     brain[ "DEC_GetAgentsPouvantConstruireAvecLocalisation" ] = &DEC_AgentFunctions::RetrieveUnitsAbleToBuildWithLocalisation;

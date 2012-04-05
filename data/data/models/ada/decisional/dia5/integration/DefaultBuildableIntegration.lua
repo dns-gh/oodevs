@@ -112,17 +112,21 @@ end
 -- -----------------------------------------------------------------------------
 integration.stopBuildIt = function( object )
     object[ myself ] = object[ myself ] or {}
+
     if object[ myself ].actionBuildState == eActionObjetTerminee then
     if( object.knowledge ~= nil ) then
             meKnowledge:RC( eRC_FinTravauxObjet, object.knowledge.source )
         end
+        object[myself].actionBuild = DEC__StopAction( object[myself].actionBuild )
+        object[myself].actionBuildState = nil
         return true
     else
+        object[myself].actionBuild = DEC__StopAction( object[myself].actionBuild )
+        object[myself].actionBuildState = nil
+        DEC_Trace( "pause work build" )
         return false
     end
-    integration.pionRC( eRC_FinTravauxObjet )
-    object[ myself ].actionBuild = DEC__StopAction( object[ myself ].actionBuild )
-    object[ myself ].actionBuildState = nil
+    object[myself].actionBuildState = nil
 end
 
 -- -----------------------------------------------------------------------------

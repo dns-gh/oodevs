@@ -1343,14 +1343,25 @@ double DEC_AgentFunctions::GetAgentDotationNumber( const DEC_Decision_ABC* agent
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::GetAgentMissingDotationForBuilding
+// Name: DEC_AgentFunctions::GetAgentMissingDotationForBuildingObject
 // Created: LMT 2012-01-25
 // -----------------------------------------------------------------------------
-std::pair< const PHY_DotationCategory*, double > DEC_AgentFunctions::GetAgentMissingDotationForBuilding( const DEC_Decision_ABC* agent, const DEC_Gen_Object* object )
+std::pair< const PHY_DotationCategory*, double > DEC_AgentFunctions::GetAgentMissingDotationForBuildingObject( const DEC_Decision_ABC* agent, const DEC_Gen_Object* object )
 {
     if( !agent )
-        throw std::runtime_error( "Invalid pion in GetAgentMissingDotationForBuilding" );
-    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().GetAgentMissingDotationForBuildingObstacle( object, agent->GetPion() );
+        throw std::runtime_error( "Invalid pion in GetAgentMissingDotationForBuildingObject" );
+    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().GetAgentMissingDotationForBuildingObject( object, agent->GetPion() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::GetAgentMissingDotationForBuildingExistingObject
+// Created: DDA 2012-04-05
+// -----------------------------------------------------------------------------
+std::pair< const PHY_DotationCategory*, double > DEC_AgentFunctions::GetAgentMissingDotationForBuildingExistingObject( const DEC_Decision_ABC* agent, const boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{
+    if( !agent )
+        throw std::runtime_error( "Invalid pion in GetAgentMissingDotationForBuildingExistingObject" );
+    return agent->GetPion().GetRole< PHY_RoleAction_Objects >().GetAgentMissingDotationForBuildingExistingObject( pKnowledge, agent->GetPion() );
 }
 
 // -----------------------------------------------------------------------------

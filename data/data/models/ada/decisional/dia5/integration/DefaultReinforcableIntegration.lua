@@ -63,7 +63,11 @@ integration.setNeedReinforcement = function( unit, action, obstacle, needDotatio
         if needDotation then
             local result = 0
             if action == "build" then
-                result = DEC_GetAgentDotationManquantePourConstruireObjet(unit.source, obstacle.source)
+                if masalife.brain.core.class.isOfType( obstacle, sword.military.world.EngineerObject) then
+                    result = DEC_GetAgentDotationManquantePourConstruireObjet(unit.source, obstacle.source)
+                else
+                    result = DEC_GetAgentDotationManquantePourConstruireObjetExistant(unit.source, obstacle.source)
+                end
             elseif action == "mine" then
                 result = DEC_GetAgentDotationManquantePourValoriserObjet(unit.source, obstacle.source)
             end
