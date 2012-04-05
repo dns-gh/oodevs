@@ -94,7 +94,8 @@ public:
 
     // Getter
     static double GetAgentDotationNumber( const DEC_Decision_ABC* agent, const PHY_DotationCategory* pDotationCategory );
-    static std::pair< const PHY_DotationCategory*, double > GetAgentMissingDotationForBuilding( const DEC_Decision_ABC* agent, const DEC_Gen_Object* object );
+    static std::pair< const PHY_DotationCategory*, double > GetAgentMissingDotationForBuildingObject( const DEC_Decision_ABC* agent, const DEC_Gen_Object* object );
+    static std::pair< const PHY_DotationCategory*, double > GetAgentMissingDotationForBuildingExistingObject( const DEC_Decision_ABC* agent, const boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static std::pair< const PHY_DotationCategory*, double > GetAgentMissingDotationForMining( const DEC_Decision_ABC* agent, const boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
 
     // Embarquement / débarquement

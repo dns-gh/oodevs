@@ -102,7 +102,8 @@ public:
 
     //Getter
     double GetAgentDotationNumber( MIL_Agent_ABC& pion, const PHY_DotationCategory* pDotationCategory ) const; 
-    std::pair< const PHY_DotationCategory*, double > GetAgentMissingDotationForBuildingObstacle( const DEC_Gen_Object* object, MIL_Agent_ABC& pion ) const;
+    std::pair< const PHY_DotationCategory*, double > GetAgentMissingDotationForBuildingObject( const DEC_Gen_Object* object, MIL_Agent_ABC& pion ) const;
+    std::pair< const PHY_DotationCategory*, double > GetAgentMissingDotationForBuildingExistingObject( const boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, MIL_Agent_ABC& pion ) const;
     std::pair< const PHY_DotationCategory*, double > GetAgentMissingDotationForMiningObstacle( const boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, MIL_Agent_ABC& pion ) const;
     //@}
 
