@@ -71,8 +71,8 @@ rootnode
                         meKnowledge:sendReport( eRC_AttenteRenforcement )
                     end
                 else
-                    self.position = ontology.queries.GetPositionsForWork[ "execute" ]( { work = self.work } )
-                    Activate( skill.links.reach, 1, { destination = self.work, urgency = false } )
+                    self.position = ontology.queries.GetPositionsForWork[ "execute" ]( { work = self.work } ) -- returns a table with only one position
+                    Activate( skill.links.reach, 1, { destination =  self.position[ 1 ], urgency = false } )
                 end
             else
                 Feedback( self.feedbacks.done )

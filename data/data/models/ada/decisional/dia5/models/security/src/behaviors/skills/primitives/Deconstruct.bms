@@ -63,7 +63,7 @@ rootnode
                     end
                 else
                     self.position = ontology.queries.GetPositionsForWork[ "execute" ]( { work = self.work } )
-                    Activate( skill.links.reach, 1, { destination = self.position[ 1 ], urgency = false } )
+                    Activate( skill.links.reach, 1, { destination = self.position[ 1 ], urgency = false } ) -- returns a table with only one position
                 end
             else
                 Feedback( self.feedbacks.done )
