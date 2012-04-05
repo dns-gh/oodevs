@@ -1357,6 +1357,13 @@ que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe
         <method name="stopImmuniserNbc">
             <description>Action d'arrêter l'immunisation d'un agent vis à vis d'un danger NRBC.</description>
         </method>
+        <method name="getUnitPC">
+            <return>
+                <type>
+                    <class name="sword.military.world.PlatoonAlly"/>
+                </type>
+            </return>
+        </method>
     </methods>
     <predicates>
         <predicate name="isCommandingFor">

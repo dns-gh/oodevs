@@ -553,10 +553,14 @@ integration.deactivateSensors = function( self )
     DEC_Perception_DesactiverSenseurs()
 end
 
-integration.immuniserNbc = function ( self )
+integration.immuniserNbc = function( self )
     DEC_Agent_ImmuniserNbc( )
 end
 
-integration.stopImmuniserNbc = function ( self )
+integration.stopImmuniserNbc = function( self )
     DEC_Agent_StopImmuniserNbc( )
+end
+
+integration.getUnitPC = function( self ) 
+    return CreateKnowledge( sword.military.world.PlatoonAlly, DEC_Pion_PionPC() )
 end
