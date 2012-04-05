@@ -16,6 +16,7 @@
 	<target name="init">
 		<mkdir dir="${out.dir}/classes" />
 		<mkdir dir="${jar.dir}" />
+		<copy file="log4j.properties" todir="${jar.dir}" />
 	</target>
 
 	<target name="clean">
