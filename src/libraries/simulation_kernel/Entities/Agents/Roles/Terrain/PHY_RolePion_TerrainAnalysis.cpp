@@ -208,7 +208,7 @@ bool PHY_RolePion_TerrainAnalysis::CanMoveOnTerrain( const std::vector< MT_Vecto
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_TerrainAnalysis::CanMoveOnUrbanBlock( const std::vector< MT_Vector2D >& points ) const
 {
-    if( !pion_.GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() )
+    if( !pion_.GetType().GetUnitType().CanFly() )
     {
         double weight = pion_.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight();
         for( std::vector< MT_Vector2D >::const_iterator it = points.begin(); it != points.end(); ++it )

@@ -15,6 +15,7 @@
 #include "Entities/Agents/MIL_Agent_ABC.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Urban/PHY_RoleInterface_UrbanLocation.h"
+#include "Entities/Agents/Actions/Flying/PHY_RoleAction_InterfaceFlying.h"
 #include "Entities/Orders/MIL_Report.h"
 #include "Tools/MIL_Tools.h"
 #include <xeumeuleu/xml.hpp>
@@ -160,8 +161,11 @@ void CrowdCapacity::ProcessAgentEntering( MIL_Object_ABC& /*object*/, MIL_Agent_
     PHY_RoleInterface_UrbanLocation* role = agent.RetrieveRole< PHY_RoleInterface_UrbanLocation >();
     if( role && !role->HasInhabitantCollision() )
     {
-        MIL_Report::PostEvent( agent, MIL_Report::eReport_UrbanCollisionStarted );
-        role->ToggleInhabitantCollision( true );
+        if( !agent.GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() )
+        {
+            MIL_Report::PostEvent( agent, MIL_Report::eReport_UrbanCollisionStarted );
+            role->ToggleInhabitantCollision( true );
+        }
     }
 }
 
