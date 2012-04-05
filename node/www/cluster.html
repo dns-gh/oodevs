@@ -72,7 +72,7 @@
                         </div>
                     </div>
                     <div class="row">
-                        <div class="span9">
+                        <div class="span9 node_bar">
                             <div id="node_error"></div>
                             <span class="node_actions">
                                 <a data-toggle="modal" href="#node_create" class="btn"><i class="icon-plus"></i> Create...</a>
@@ -87,10 +87,9 @@
                                 <b>Error</b> {{content}}
                             </div>
                         </script>
-                        <script type="text/template" id="noden_template">
+                        <script type="text/template" id="node_template">
                             <div id="id_{{{id}}}" class="span9">
                                 <div class="well node_row">
-                                    <span class="well {{{status}}}"></span>
                                     <div class="node_name">{{name}}</div>
                                 </div>
                             </div>

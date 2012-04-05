@@ -95,7 +95,7 @@ class NodeListView extends Backbone.View
         return
 
     add: (item) =>
-        view = new NodeItemView model: item, search: get_search(), filters: get_filters()
+        view = new NodeItemView model: item
         item.view = view
         previous = @model.at(@model.indexOf(item) - 1)?.view
         if previous

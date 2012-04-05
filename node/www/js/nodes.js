@@ -196,9 +196,7 @@
     NodeListView.prototype.add = function(item) {
       var previous, view, _ref;
       view = new NodeItemView({
-        model: item,
-        search: get_search(),
-        filters: get_filters()
+        model: item
       });
       item.view = view;
       previous = (_ref = this.model.at(this.model.indexOf(item) - 1)) != null ? _ref.view : void 0;
