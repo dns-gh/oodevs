@@ -12,7 +12,6 @@
 #include <cstring>
 #include <ctime>
 #include <vector>
-#include <boost/date_time/local_time/local_time.hpp>
 
 // The following #define's will change the behaviour of this library.
 //		#define CPPLOG_FILTER_LEVEL		<level>
@@ -286,7 +285,7 @@ namespace cpplog
 			m_logData->messageTime	= ::time(NULL);
 
 			// Get current time.
-			::tm* gmt = ::gmtime(&m_logData->messageTime);
+			::tm* gmt = ::localtime(&m_logData->messageTime);
 			memcpy(&m_logData->utcTime, gmt, sizeof(tm));
 
 #ifdef CPPLOG_SYSTEM_IDS
@@ -300,11 +299,11 @@ namespace cpplog
 
 		void InitLogMessage()
 		{
-			const boost::posix_time::ptime localTime = boost::posix_time::second_clock::local_time();
-			const boost::posix_time::time_facet fmt("%Y-%m-%d %H:%M:%S");
-			m_logData->stream.imbue( std::locale( m_logData->stream.getloc(), &fmt ) );
+			char timestamp[32];
+			size_t size = strftime( timestamp, sizeof timestamp, "%Y-%m-%d %H:%M:%S", &m_logData->utcTime );
+			timestamp[size] = 0;
 			m_logData->stream
-				<< localTime
+				<< timestamp
 				<< " "
 				<< std::setfill(' ') << std::setw(5) << std::left << std::dec << LogMessage::getLevelName(m_logData->level)
 				<< ": ";

@@ -42,9 +42,8 @@ namespace
 int main( int /*argc*/, const char* /*argv*/[] )
 {
     cpplog::StdErrLogger base;
-    std::auto_ptr< cpplog::BackgroundLogger > log( new cpplog::BackgroundLogger( &base ) );
-    LOG_INFO( *log ) << "Host Agent - (c) copyright MASA Group 2012";
-    Start( *log );
-    LOG_INFO( *log ) << "Host Agent - Exit";
-    log.release(); // log must be explicitely released to join its thread
+    cpplog::BackgroundLogger log( base );
+    LOG_INFO( log ) << "Host Agent - (c) copyright MASA Group 2012";
+    Start( log );
+    LOG_INFO( log ) << "Host Agent - Exit";
 }
