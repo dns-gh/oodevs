@@ -1,5 +1,5 @@
 [#ftl]
-[#if !pg??][#assign pg="home"/][/#if]
+[#if !pg??][#assign pg="nodes"/][/#if]
 <!DOCTYPE html>
 <html lang="en">
     <head>
@@ -39,16 +39,65 @@
                             [#macro nav_item item name img]
                             <li[#if item == pg] class="active"[/#if]><a href="?pg=${item}"><img width="32" height="32" src="img/tango/32x32/${img}.png" /> ${name} </a></li>
                             [/#macro]
-                            [@nav_item item="home"     name="Home"     img="places/user-home" /]
-                            [@nav_item item="sessions" name="Sessions" img="actions/document-new" /]
-                            [@nav_item item="data"     name="Data"     img="mimetypes/package-x-generic" /]
-                            [@nav_item item="users"    name="Users"    img="apps/system-users" /]
+                            [@nav_item item="nodes"    name="Nodes"    img="actions/document-new" /]
+                            [@nav_item item="users"    name="Admins"   img="apps/system-users" /]
                             [@nav_item item="settings" name="Settings" img="categories/preferences-system" /]
                         </ul>
                     </div>
                 </div>
 
                 <div class="span9">
+
+                    [#if pg == "nodes"]
+                    <div id="node_create" class="modal fade hide">
+                        <div class="modal-header">
+                            <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
+                            <h3>Create New Node</h3>
+                        </div>
+                        <div class="modal-body">
+                            <form class="form-horizontal">
+                                <div class="control-group">
+                                    <label class="control-label" for="node_name">Name</label>
+                                    <div class="controls">
+                                        <input type="text" class="input-large" id="node_name"/>
+                                        <span class="hide help-inline">Missing name</span>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                        <div class="modal-footer">
+                            <span class="alert hide alert-error"></span>
+                            <a class="btn btn_click"> Create</a>
+                            <a class="btn btn-primary" data-dismiss="modal"> Cancel</a>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="span9">
+                            <div id="node_error"></div>
+                            <span class="node_actions">
+                                <a data-toggle="modal" href="#node_create" class="btn"><i class="icon-plus"></i> Create...</a>
+                            </span>
+                        </div>
+                    </div>                    
+                    <div id="nodes">
+                        [#-- auto-generated templates --]
+                        <script type="text/template" id="node_error_template">
+                            <div class="alert alert-error">
+                                <a class="close" data-dismiss="alert"><i class="icon-remove"></i></a>
+                                <b>Error</b> {{content}}
+                            </div>
+                        </script>
+                        <script type="text/template" id="noden_template">
+                            <div id="id_{{{id}}}" class="span9">
+                                <div class="well node_row">
+                                    <span class="well {{{status}}}"></span>
+                                    <div class="node_name">{{name}}</div>
+                                </div>
+                            </div>
+                        </script>
+                    </div>
+                    [/#if]
+
                 </div>
             </div>
         </div>
@@ -71,4 +120,7 @@
     <script src="js/backbone-min.js"></script>
     <script src="js/handlebars-1.0.0.beta.6-min.js"></script>
     <script src="js/spin.min.js"></script>
+    [#if pg == "nodes"]
+    <script src="js/nodes.js"></script>
+    [/#if]
 </html>
