@@ -130,6 +130,9 @@
         <build-lib name="frontend" depends="qt4" pattern="lib${ant.project.name}_frontend-${platform}-mt@{suffix}" suffix="-gd">
             <defineset define="_WIN32_WINNT=0x0501"/>
             <defineset define="QT3_SUPPORT"/>
+            <defineset>
+                <define name="PLATFORM" value="${platform}"/>
+            </defineset>
         </build-lib>
     </target>
 
