@@ -238,9 +238,7 @@ namespace
         BOOST_FOREACH( const std::string& arg, args )
         {
             size_t separator = arg.find_last_of( ' ' );
-            if( separator == std::string::npos )
-                BOOST_CHECK( IsQuoted( arg ) );
-            else
+            if( separator != std::string::npos )
                 BOOST_CHECK( IsQuoted( arg.substr( separator + 1, std::string::npos ) ) );
         }
         boost::shared_ptr< MockProcess > ptr = boost::make_shared< MockProcess >( 1337, "noname" );
