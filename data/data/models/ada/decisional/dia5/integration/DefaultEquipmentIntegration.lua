@@ -613,3 +613,7 @@ end
 integration.stopImmuniserNbc = function ( self )
     DEC_Agent_StopImmuniserNbc( )
 end
+
+integration.getUnitPC = function( self ) 
+    return CreateKnowledge( sword.military.world.PlatoonAlly, DEC_Pion_PionPC() )
+end

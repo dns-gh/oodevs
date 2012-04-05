@@ -880,4 +880,7 @@ return
     stopImmuniserNbc = function( self )
         integration.stopImmuniserNbc( self )
     end,
+    getUnitPC = function( self )
+        return integration.getUnitPC( self ) 
+    end
 }

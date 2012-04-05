@@ -3868,7 +3868,9 @@
     </unit>
     <unit dia-type="france.military.platoon.combat.support.air.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.RENS.Drone DRAC">
       <missions>
-        <mission name="PION RENS ROIM Renseigner Sur"/>
+        <mission name="PION RENS ROIM Renseigner Sur">
+          <fragorder name="Rejoindre point de lancement"/>
+        </mission>
         <mission name="PION AIR Faire Mouvement"/>
       </missions>
       <fragorders>
@@ -7346,4 +7348,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="4125041201" -->
+<!-- signature="0375566912" -->
