@@ -20,3 +20,5 @@ body{padding-top:60px;padding-bottom:40px;}
 .node_header{position:relative;}
 .node_header a{margin-left:24px;}
 .read_only{cursor:text;}
+.footer{text-align:center;}
+.brand_name{margin-right:-20px;}
