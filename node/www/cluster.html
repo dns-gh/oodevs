@@ -71,9 +71,8 @@
                             <a class="btn btn-primary" data-dismiss="modal"> Cancel</a>
                         </div>
                     </div>
-                    <div class="row">
-                        <div class="span9 node_bar">
-                            <div id="node_error"></div>
+                    <div class="row node_top_bar">
+                        <div class="span9">
                             <span class="node_actions">
                                 <a data-toggle="modal" href="#node_create" class="btn"><i class="icon-plus"></i> Create...</a>
                             </span>
@@ -88,25 +87,48 @@
                             </div>
                         </script>
                         <script type="text/template" id="node_template">
-                            <div id="id_{{{id}}}" class="accordion-group">
+                            <div id="id_{{{id}}}" class="node_row accordion-group">
+                                <div class="btn-group node_buttons">
+                                    <a class="btn"><i class="icon-share"></i></a>
+                                    <a class="btn"><i class="icon-cog"></i></a>
+                                    <a class="btn"><i class="icon-trash"></i></a>
+                                </div>
                                 <div class="accordion-heading">
                                     <a class="accordion-toggle" data-toggle="collapse" data-parent="#nodes" href="#collapse_{{{id}}}"><img width="32" height="32" src="img/tango/32x32/places/network-server.png"/> {{{name}}} </a>
                                 </div>
-                                <div id="collapse_{{{id}}}" class="accordion-body in">
+                                <div id="collapse_{{{id}}}" class="accordion-body collapse">
                                     <div class="accordion-inner">
                                         <form class="form-horizontal">
                                             <div class="control-group">
-                                                <label class="control-label" for="node_name">Name</label>
+                                                <label class="control-label" for="url">URL</label>
                                                 <div class="controls">
-                                                    <input type="text" class="input-large" id="node_name"/>
+                                                    <span class="uneditable-input read_only">http://sword.server.com/{{{name}}}</span>
                                                 </div>
                                             </div>
                                             <div class="control-group">
-                                                <label class="control-label" for="parallel_sessions">
-                                                    <input type="checkbox">Max Parallel Sessions</input>
-                                                </label>
+                                                <label class="control-label">Sessions</label>
                                                 <div class="controls">
-                                                    <input type="text" class="input-large" id="parallel_sessions"/>
+                                                    <span class="uneditable-input read_only">0 total</span>
+                                                    <span class="uneditable-input read_only">0 played</span>
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <label class="control-label"></label>
+                                                <div class="controls">
+                                                    <span class="uneditable-input read_only">0 parallel</span>
+                                                    <span class="uneditable-input read_only">0 running</span>
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <label class="control-label">Exercises</label>
+                                                <div class="controls">
+                                                    <span class="uneditable-input read_only">0 available</span>
+                                                </div>
+                                            </div>
+                                            <div class="control-group">
+                                                <label class="control-label">Data</label>
+                                                <div class="controls">
+                                                    <span class="uneditable-input read_only">0 MB used</span>
                                                 </div>
                                             </div>
                                         </form>
