@@ -77,8 +77,10 @@ protected:
 private:
     //! @name Member Data
     //@{
-    boost::shared_ptr< MIL_Mission_ABC > pMission_;
+    boost::shared_ptr< MIL_Mission_ABC > pCurrentMission_;
+    boost::shared_ptr< MIL_Mission_ABC > pNewMission_;
     boost::shared_ptr< MIL_Mission_ABC > pNextMission_;
+
     MissionController_ABC* pController_;
     bool bNewMissionStarted_;
     //@}
