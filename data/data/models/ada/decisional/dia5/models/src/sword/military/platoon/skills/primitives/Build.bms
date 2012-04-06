@@ -107,9 +107,9 @@ node "BuildElement"
         Activate( skill.links.observe, 1, { entity = toBuild } )
 
         if self.arrived then
-            if meKnowledge:isDismounted() and not self.params.entity:buildingCapacityWithOutReinforcement() then
+            if meKnowledge:isDismounted() and not self.params.entity:buildingCapacity() then
                 Feedback( self.feedbacks.failed, { element = toBuild, reason = eRC_ConstructionObjetImpossible } )
-            elseif not self.params.entity:buildingDotationWithOutReinforcement() then
+            elseif not self.params.entity:buildingDotation() then
                 Feedback( self.feedbacks.failed, { element = toBuild, reason = eRC_PasDotationConstructionObjet } )
             else
                 Activate( skill.links.dismount, 1 )
