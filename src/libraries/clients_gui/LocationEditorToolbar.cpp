@@ -154,13 +154,9 @@ void LocationEditorToolbar::CreateBookmark()
         if( !ok || name.isEmpty() )
             return;
         bookmarksMenu_->clear();
-        bookmarks_.push_back( Bookmark( name.ascii(), utm ) );
+        bookmarks_.push_back( Bookmark( name.ascii(), utm, menuPoint_ ) );
         layer_.AddLocation( menuPoint_ );
-        unsigned int i = 0;
-        for( CIT_Bookmarks it = bookmarks_.begin(); it != bookmarks_.end(); ++it, ++i )
-            bookmarksMenu_->insertItem( it->name_.c_str(), this, SLOT( GotoBookmark( int ) ), 0, i );
-        bookmarksMenu_->insertSeparator();
-        bookmarksMenu_->insertItem( tr( "Clear bookmarks" ), this, SLOT( ClearBookmarks() ) );
+        CreateMenu();
     }
     catch( ... )
     {
@@ -184,6 +180,38 @@ void LocationEditorToolbar::GotoBookmark( int index )
             if( result == QMessageBox::Yes )
                 bookmarks_.erase( bookmarks_.begin() + index );
         }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocationEditorToolbar::RemoveBookmark
+// Created: LGY 2012-04-06
+// -----------------------------------------------------------------------------
+void LocationEditorToolbar::RemoveBookmark( int index )
+{
+    if( index >= 0 && index < static_cast< int >( bookmarks_.size() ) )
+    {
+        layer_.RemoveLocation( bookmarks_.at( index ).geometry_ );
+        bookmarks_.erase( bookmarks_.begin() + index );
+        bookmarksMenu_->clear();
+        CreateMenu();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: LocationEditorToolbar::CreateMenu
+// Created: LGY 2012-04-06
+// -----------------------------------------------------------------------------
+void LocationEditorToolbar::CreateMenu()
+{
+    unsigned int i = 0;
+    for( CIT_Bookmarks it = bookmarks_.begin(); it != bookmarks_.end(); ++it, ++i )
+    {
+        QMenu* menu = bookmarksMenu_->addMenu( it->name_.c_str() );
+        menu->insertItem( tr( "Center" ), this, SLOT( GotoBookmark( int ) ), 0, i );
+        menu->insertItem( tr( "Remove" ), this, SLOT( RemoveBookmark( int ) ), 0, i );
+    }
+    bookmarksMenu_->insertSeparator();
+    bookmarksMenu_->insertItem( tr( "Clear bookmarks" ), this, SLOT( ClearBookmarks() ) );
 }
 
 // -----------------------------------------------------------------------------

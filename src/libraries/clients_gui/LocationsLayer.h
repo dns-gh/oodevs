@@ -39,6 +39,7 @@ public:
     //@{
     virtual void Paint( kernel::Viewport_ABC& viewport );
     void AddLocation( const geometry::Point2f& point );
+    void RemoveLocation( const geometry::Point2f& point );
     void Reset();
     //@}
 

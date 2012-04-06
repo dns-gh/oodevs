@@ -938,6 +938,14 @@ Voulez-vous le supprimer?</translation>
         <source>Feature</source>
         <translation>Element</translation>
     </message>
+    <message>
+        <source>Center</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Remove</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>gui::LodgingPrototype_ABC</name>

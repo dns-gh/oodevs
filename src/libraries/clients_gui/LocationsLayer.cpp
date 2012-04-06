@@ -67,3 +67,12 @@ void LocationsLayer::Reset()
 {
     locations_.clear();
 }
+
+// -----------------------------------------------------------------------------
+// Name: LocationsLayer::RemoveLocation
+// Created: LGY 2012-04-06
+// -----------------------------------------------------------------------------
+void LocationsLayer::RemoveLocation( const geometry::Point2f& point )
+{
+    locations_.erase( std::find( locations_.begin(), locations_.end(), point ) );
+}

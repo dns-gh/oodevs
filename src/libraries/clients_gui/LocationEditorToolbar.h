@@ -68,6 +68,7 @@ private slots:
 
     void CreateBookmark();
     void GotoBookmark( int index );
+    void RemoveBookmark( int index );
     void ClearBookmarks();
     //@}
 
@@ -82,6 +83,7 @@ private:
     //@{
     bool GetPosition( geometry::Point2f& point );
     void SetAspect( bool oneValue, bool red );
+    void CreateMenu();
     //@}
 
     //! @name Types
@@ -89,16 +91,16 @@ private:
     struct Bookmark
     {
         Bookmark() {}
-        explicit Bookmark( const std::string& name, const std::string& position )
-            : name_( name ), position_( position )
+        explicit Bookmark( const std::string& name, const std::string& position, const geometry::Point2f& geometry )
+            : name_( name ), position_( position ), geometry_( geometry )
         {}
         std::string name_;
         std::string position_;
+        geometry::Point2f geometry_;
     };
 
     typedef std::vector< Bookmark >       T_Bookmarks;
     typedef T_Bookmarks::const_iterator CIT_Bookmarks;
-
     //@}
 
 private:
