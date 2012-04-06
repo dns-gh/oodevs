@@ -38,7 +38,7 @@ namespace
 // Name: UnitsPanel constructor
 // Created: SBO 2006-08-28
 // -----------------------------------------------------------------------------
-UnitsPanel::UnitsPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, const AgentTypes& types, ItemFactory_ABC& factory, SymbolIcons& icons, ColorStrategy_ABC& colorStrategy )
+UnitsPanel::UnitsPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& controllers, const AgentTypes& types, ItemFactory_ABC& factory, SymbolIcons& icons, ColorStrategy_ABC& colorStrategy, bool followSelection /* = false */ )
     : InfoPanel_ABC( parent, panel, tr( "Units" ), "UnitsPanel" )
     , controllers_( controllers )
 {
@@ -57,7 +57,7 @@ UnitsPanel::UnitsPanel( QWidget* parent, PanelStack_ABC& panel, Controllers& con
         QLabel* label = new QLabel( tr( "Display type: " ), box );
         label->setAlignment( Qt::AlignRight | Qt::AlignVCenter );
         combo_ = BuildNatureFieldsCombo( box );
-        list_ = new UnitListView( vbox, controllers_, types, factory );
+        list_ = new UnitListView( vbox, controllers_, types, factory, followSelection );
         connect( combo_, SIGNAL( activated( int ) ), SLOT( Sort() ) );
         connect( list_ , SIGNAL( selectionChanged( Q3ListViewItem* ) ), SLOT( SelectionChanged( Q3ListViewItem* ) ) );
     }

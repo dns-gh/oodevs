@@ -34,7 +34,7 @@ CreationPanels::CreationPanels( QWidget* parent, kernel::Controllers& controller
                                 gui::ParametersLayer& paramLayer, gui::WeatherLayer& weatherLayer, gui::GlProxy& glProxy, ColorController& colorController )
     : Panels( parent )
 {
-    AddPanel( new gui::UnitsPanel ( this, *this, controllers, staticModel.types_, factory, icons, colorStrategy ) );
+    AddPanel( new gui::UnitsPanel ( this, *this, controllers, staticModel.types_, factory, icons, colorStrategy, true ) );
     AddPanel( new gui::PopulationsPanel( this, *this, controllers, ( tools::Resolver< PopulationType >&)( staticModel.types_ ), factory ) );
     inhabitantCreationPanel_ = new InhabitantCreationPanel( this, *this, controllers, staticModel.types_, model.agents_, paramLayer, glProxy );
     AddPanel( inhabitantCreationPanel_ );

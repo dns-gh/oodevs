@@ -34,12 +34,13 @@ using namespace gui;
 // Name: UnitListView constructor
 // Created: SBO 2006-08-28
 // -----------------------------------------------------------------------------
-UnitListView::UnitListView( QWidget* parent, Controllers& controllers, const AgentTypes& list, ItemFactory_ABC& factory )
+UnitListView::UnitListView( QWidget* parent, Controllers& controllers, const AgentTypes& list, ItemFactory_ABC& factory, bool followSelection /* = false */ )
     : ListView< UnitListView >( parent, *this, factory )
     , controllers_    ( controllers )
     , types_          ( list )
     , selectedAgent_  ( controllers )
     , selectedAutomat_( controllers )
+    , followSelection_( followSelection )
 {
     setMinimumSize( 1, 1 );
     addColumn( tools::translate( "gui::UnitListView", "Unit type" ) );
@@ -327,6 +328,8 @@ Q3DragObject* UnitListView::dragObject()
 // -----------------------------------------------------------------------------
 void UnitListView::BeforeSelection()
 {
+    if( !followSelection_ )
+        return;
     selectedAgent_ = 0;
     selectedAutomat_ = 0;
 }
@@ -337,6 +340,8 @@ void UnitListView::BeforeSelection()
 // -----------------------------------------------------------------------------
 void UnitListView::Select( const kernel::Agent_ABC& agent )
 {
+    if( !followSelection_ )
+        return;
     selectedAgent_ = &agent;
 }
 
@@ -346,6 +351,8 @@ void UnitListView::Select( const kernel::Agent_ABC& agent )
 // -----------------------------------------------------------------------------
 void UnitListView::Select( const kernel::Automat_ABC& automat )
 {
+    if( !followSelection_ )
+        return;
     selectedAutomat_ = &automat;
 }
 
@@ -355,6 +362,8 @@ void UnitListView::Select( const kernel::Automat_ABC& automat )
 // -----------------------------------------------------------------------------
 void UnitListView::AfterSelection()
 {
+    if( !followSelection_ )
+        return;
     if( selectedAgent_ && !sorting_.empty() )
         SearchAndSelect( selectedAgent_->GetType().GetName().c_str() );
     else if( selectedAutomat_ && sorting_.empty() )

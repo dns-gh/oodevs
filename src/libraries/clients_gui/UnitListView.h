@@ -48,7 +48,7 @@ class UnitListView : public ListView< UnitListView >
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitListView( QWidget* parent, kernel::Controllers& controllers, const kernel::AgentTypes& list, ItemFactory_ABC& factory );
+             UnitListView( QWidget* parent, kernel::Controllers& controllers, const kernel::AgentTypes& list, ItemFactory_ABC& factory, bool followSelection = false );
     virtual ~UnitListView();
     //@}
 
@@ -90,6 +90,7 @@ private:
     std::string                                 sorting_;
     kernel::SafePointer< kernel::Agent_ABC >    selectedAgent_;
     kernel::SafePointer< kernel::Automat_ABC >  selectedAutomat_;
+    const bool                                  followSelection_;
     //@}
 };
 
