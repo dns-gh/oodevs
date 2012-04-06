@@ -37,6 +37,7 @@
         <link name="observe" skill="sword.military.platoon.skills.actions.Observe">
             <description>Lien vers le skill Observe</description>
         </link>
+        <link name="dismount" skill="sword.military.platoon.skills.actions.Dismount"/>
     </links>
     <resources>
         <resource name="sword.military.platoon.resources.BuildCapacity" variable="buildCapacity">
