@@ -199,7 +199,7 @@ T GetFiltered( boost::shared_mutex& mutex, const T& data, const boost::uuids::uu
 template< typename T >
 bool IsOrphanedSession( T& mutex, const Agent::T_Nodes& nodes, const Session_ABC& session )
 {
-    return HasObject( mutex, nodes, session.GetNode() );
+    return !HasObject( mutex, nodes, session.GetNode() );
 }
 
 // -----------------------------------------------------------------------------
