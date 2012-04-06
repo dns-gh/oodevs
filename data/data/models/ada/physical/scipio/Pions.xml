@@ -9391,6 +9391,11 @@
       <crew-rank count="0" type="Officier"/>
       <crew-rank count="11" type="SousOfficier"/>
     </crew-ranks>
+    <logistics>
+      <category name="munition">
+        <resource capacity="96" logistic-threshold="10" name="ROQ GMLRS" normalized-consumption="0"/>
+      </category>
+    </logistics>
     <postures>
       <posture name="PosteReflexe" setup-time="30s"/>
       <posture name="Poste" setup-time="300s"/>
@@ -19452,4 +19457,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="1807195490" -->
+<!-- signature="2365829308" -->
