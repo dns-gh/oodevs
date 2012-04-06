@@ -144,6 +144,6 @@ namespace
 // -----------------------------------------------------------------------------
 bool Process::Kill( int msTimeout )
 {
-    bool done = SafeTerminate( api_, handle_->value_, msTimeout );
+    bool done = false;//SafeTerminate( api_, handle_->value_, msTimeout );
     return done ? true : UnsafeTerminate( api_, handle_->value_ );
 }
