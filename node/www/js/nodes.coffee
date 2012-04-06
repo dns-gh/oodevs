@@ -12,6 +12,7 @@ Handlebars.registerHelper "is_option", (value, options) ->
         return options.fn this
     return options.inverse this
 
+node_settings = Handlebars.compile $("#node_settings_template").html()
 node_template = Handlebars.compile $("#node_template").html()
 node_error_template = Handlebars.compile $("#node_error_template").html()
 
@@ -70,6 +71,7 @@ class NodeItemView extends Backbone.View
         "click .delete" : "delete"
         "click .stop" : "stop"
         "click .play" : "play"
+        "click .config": "config"
 
     render: =>
         $(@el).empty()
@@ -98,6 +100,13 @@ class NodeItemView extends Backbone.View
             () =>
                 print_error "Unable to start node " + @model.get "name"
                 @toggle_load()
+
+    config: =>
+        on_node_config $(@el).find(".node_settings"),
+            @model.get "name",
+            @model.get "max_sessions",
+            @model.get "parallel_sessions",
+        $(@el).find(".node_settings .modal").modal "show"
 
     toggle_load: =>
         for it in $(@el).find(".session_top_right .btn")
@@ -179,4 +188,18 @@ on_node_click = ->
         return
     node_view.create name: name.val()
 
+on_node_config = (container, name, max, parallel) ->
+    container.html node_settings
+        name: name
+        max_sessions: max
+        parallel_sessions: parallel
+
+on_node_config $("#node_settings"), "", 64, 8
+
 $("#node_create").click on_node_click
+$("#node_config").click ->
+    on_node_config $("#node_settings"),
+        $("#node_name").val(),
+        $("#node_settings .max_sessions").val(),
+        $("#node_settings .parallel_sessions").val()
+    $("#node_settings .modal").modal "show"

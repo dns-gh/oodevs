@@ -1,5 +1,5 @@
 (function() {
-  var NodeItem, NodeItemView, NodeList, NodeListView, ajax, diff_models, node_error_template, node_template, node_view, on_node_click, print_error, validate_input_node,
+  var NodeItem, NodeItemView, NodeList, NodeListView, ajax, diff_models, node_error_template, node_settings, node_template, node_view, on_node_click, on_node_config, print_error, validate_input_node,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = Object.prototype.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
@@ -19,6 +19,8 @@
     if (value in options.hash) return options.fn(this);
     return options.inverse(this);
   });
+
+  node_settings = Handlebars.compile($("#node_settings_template").html());
 
   node_template = Handlebars.compile($("#node_template").html());
 
@@ -115,6 +117,7 @@
 
     function NodeItemView() {
       this.toggle_load = __bind(this.toggle_load, this);
+      this.config = __bind(this.config, this);
       this.play = __bind(this.play, this);
       this.stop = __bind(this.stop, this);
       this["delete"] = __bind(this["delete"], this);
@@ -134,7 +137,8 @@
     NodeItemView.prototype.events = {
       "click .delete": "delete",
       "click .stop": "stop",
-      "click .play": "play"
+      "click .play": "play",
+      "click .config": "config"
     };
 
     NodeItemView.prototype.render = function() {
@@ -179,6 +183,11 @@
         print_error("Unable to start node " + _this.model.get("name"));
         return _this.toggle_load();
       });
+    };
+
+    NodeItemView.prototype.config = function() {
+      on_node_config($(this.el).find(".node_settings"), this.model.get("name", this.model.get("max_sessions", this.model.get("parallel_sessions"))));
+      return $(this.el).find(".node_settings .modal").modal("show");
     };
 
     NodeItemView.prototype.toggle_load = function() {
@@ -336,6 +345,21 @@
     });
   };
 
+  on_node_config = function(container, name, max, parallel) {
+    return container.html(node_settings({
+      name: name,
+      max_sessions: max,
+      parallel_sessions: parallel
+    }));
+  };
+
+  on_node_config($("#node_settings"), "", 64, 8);
+
   $("#node_create").click(on_node_click);
+
+  $("#node_config").click(function() {
+    on_node_config($("#node_settings"), $("#node_name").val(), $("#node_settings .max_sessions").val(), $("#node_settings .parallel_sessions").val());
+    return $("#node_settings .modal").modal("show");
+  });
 
 }).call(this);
