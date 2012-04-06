@@ -1,0 +1,17 @@
+[#ftl]
+<div class="well sidebar-nav">
+    <ul class="nav nav-list">
+        <li class="nav-header">Filters</li>
+        <div id="session_filters" class="controls">
+            <label class="checkbox"><input type="checkbox" checked="checked" name="playing"> Playing</input></label>
+            <label class="checkbox"><input type="checkbox" checked="checked" name="paused"> Paused</input></label>
+            <label class="checkbox"><input type="checkbox" checked="checked" name="replaying"> Replaying</input></label>
+            <label class="checkbox"><input type="checkbox" checked="checked" name="stopped"> Stopped</input></label>
+        </div>
+        <li class="nav-header">Order</li>
+        <div class="controls">
+            <label class="radio"><input id="session_sort_name" type="radio" name="sorts" value="name" checked="checked"> By Name </input></label>
+            <label class="radio"><input id="session_sort_status" type="radio" name="sorts" value="status"> By State </input></label>
+        </div>
+    </ul>
+</div>

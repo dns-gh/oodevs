@@ -4,7 +4,7 @@ body{padding-top:60px;padding-bottom:40px;}
 .paused{border:0;padding:0;margin:0;position:absolute;top:0;left:0;width:32px;height:100%;background-color:#ffd966;}
 .replaying{border:0;padding:0;margin:0;position:absolute;top:0;left:0;width:32px;height:100%;background-color:#6fa8dc;}
 .stopped{border:0;padding:0;margin:0;position:absolute;top:0;left:0;width:32px;height:100%;background-color:#e06666;}
-.session_row{position:relative;min-height:64px;border-color:#000000;}
+.session_row{position:relative;min-height:64px;}
 .session_name{font-size:large;font-weight:bold;}
 .session_exercise{padding-left:24px;}
 .session_model{padding-left:24px;}

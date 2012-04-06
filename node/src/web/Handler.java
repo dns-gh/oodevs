@@ -88,7 +88,7 @@ public class Handler extends HttpServlet {
         if (uri.startsWith("/"))
             uri = uri.substring(1);
         if (uri.isEmpty())
-            uri = index_;
+            uri = index_ + "/index";
         final String target = identify(uri, reply);
         serveTemplate(reply, request, target);
     }

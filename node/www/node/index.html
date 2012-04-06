@@ -1,0 +1,48 @@
+[#ftl]
+[#if !pg??][#assign pg="sessions"/][/#if]
+<!DOCTYPE html>
+<html lang="en">
+    [#include "/head.html"]
+    <body>
+        [#include "/top_bar.html"]
+        <div class="container">
+            <div class="row">
+                <div class="span3">
+                    <div class="well sidebar-nav">
+                        <ul class="nav nav-list">
+                            [#macro nav_item item name img]
+                            <li[#if item == pg] class="active"[/#if]><a href="?pg=${item}"><img width="32" height="32" src="img/tango/32x32/${img}.png" /> ${name} </a></li>
+                            [/#macro]
+                            [@nav_item item="home"     name="Home"     img="places/user-home" /]
+                            [@nav_item item="sessions" name="Sessions" img="actions/document-new" /]
+                            [@nav_item item="data"     name="Data"     img="mimetypes/package-x-generic" /]
+                            [@nav_item item="users"    name="Users"    img="apps/system-users" /]
+                            [@nav_item item="settings" name="Settings" img="categories/preferences-system" /]
+                        </ul>
+                    </div>
+                    [#if pg == "sessions"]
+                    [#include "/node/sessions_side_bar.html"]
+                    [/#if]
+                    <hr />
+                    <p class="footer">&copy; MASA Group 2012</p>
+                </div>
+                <div class="span9">
+                    [#if pg == "sessions"]
+                    [#include "/node/sessions.html"]
+                    [/#if]
+                </div>
+            </div>
+        </div>
+    </body>
+    [#-- script include order is required --]
+    <script>var uuid = "${uuid}"</script>
+    <script src="js/jquery-1.7.2.min.js"></script>
+    <script src="js/bootstrap-2.0.2.min.js"></script>
+    <script src="js/underscore-min.js"></script>
+    <script src="js/backbone-min.js"></script>
+    <script src="js/handlebars-1.0.0.beta.6-min.js"></script>
+    <script src="js/spin.min.js"></script>
+    [#if pg == "sessions"]
+    <script src="js/sessions.js"></script>
+    [/#if]
+</html>
