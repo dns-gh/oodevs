@@ -73,6 +73,7 @@ public class Handler extends HttpServlet {
             root.put(it.getKey(), it.getValue()[0]);
         root.put("uuid", uuid_);
         root.put("name", name_);
+        root.put("type", index_);
         try {
             ctx.process(root, reply.getWriter());
         } catch (final TemplateException e) {
