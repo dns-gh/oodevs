@@ -42,35 +42,38 @@ void MIL_OrderManager_ABC::Update()
 {
     bNewMissionStarted_ = false;
 
-    if( pNextMission_ != pMission_ )
+    if( pNewMission_ )
+    {
+        try
+        {
+            pCurrentMission_->Start( pCurrentMission_ );
+            if( pController_ )
+                pController_->Start( pCurrentMission_ );
+            bNewMissionStarted_ = true;
+        }
+        catch( std::exception& e )
+        {
+            if( pController_ && pCurrentMission_.get() )
+                pController_->Stop( pCurrentMission_ );
+            pNextMission_.reset();
+            pCurrentMission_.reset();
+            bNewMissionStarted_ = false;
+            throw e;
+        }
+        pNewMission_.reset();
+    }
+
+    if( pNextMission_ != pCurrentMission_ )
     {
         boost::shared_ptr< MIL_Mission_ABC > pNewMission = pNextMission_;
         pNextMission_.reset();
 
         StopAllMissions();
-        assert( !pMission_ );
+        assert( !pCurrentMission_ );
 
         pNextMission_ = pNewMission;
-        pMission_ = pNewMission;
-        if( pNewMission )
-        {
-            try
-            {
-                pMission_->Start( pMission_ );
-                if( pController_ )
-                    pController_->Start( pMission_ );
-                bNewMissionStarted_ = true;
-            }
-            catch( std::exception& e )
-            {
-                if( pController_ && pMission_.get() )
-                    pController_->Stop( pMission_ );
-                pNextMission_.reset();
-                pMission_.reset();
-                bNewMissionStarted_ = false;
-                throw e;
-            }
-        }
+        pCurrentMission_ = pNewMission;
+        pNewMission_ = pNewMission;
     }
 }
 
@@ -89,8 +92,8 @@ void MIL_OrderManager_ABC::ReplaceMission( boost::shared_ptr< MIL_Mission_ABC > 
 // -----------------------------------------------------------------------------
 void MIL_OrderManager_ABC::CancelMission()
 {
-    if( pController_ && pMission_.get() )
-        pController_->Stop( pMission_ );
+    if( pController_ && pCurrentMission_.get() )
+        pController_->Stop( pCurrentMission_ );
     pNextMission_.reset();
 }
 
@@ -102,11 +105,11 @@ void MIL_OrderManager_ABC::StopAllMissions()
 {
     if( pNextMission_.get() )
         pNextMission_->Stop( pNextMission_ );
-    if( pMission_.get() )
-        pMission_->Stop( pMission_ );
+    if( pCurrentMission_.get() )
+        pCurrentMission_->Stop( pCurrentMission_ );
 
     pNextMission_.reset();
-    pMission_.reset();
+    pCurrentMission_.reset();
 }
 
 // -----------------------------------------------------------------------------
@@ -115,8 +118,8 @@ void MIL_OrderManager_ABC::StopAllMissions()
 // -----------------------------------------------------------------------------
 const std::string& MIL_OrderManager_ABC::GetMissionName() const
 {
-    if( pMission_ )
-        return pMission_->GetName();
+    if( pCurrentMission_ )
+        return pCurrentMission_->GetName();
     static std::string none( "None" );
     return none;
 }
@@ -127,8 +130,8 @@ const std::string& MIL_OrderManager_ABC::GetMissionName() const
 //-----------------------------------------------------------------------------
 const MT_Vector2D& MIL_OrderManager_ABC::GetDirDanger() const
 {
-    if( pMission_ )
-        return pMission_->GetDirDanger();
+    if( pCurrentMission_ )
+        return pCurrentMission_->GetDirDanger();
     static const MT_Vector2D vDefaultDirDanger( 0, 1 );
     return vDefaultDirDanger;
 }
@@ -139,8 +142,8 @@ const MT_Vector2D& MIL_OrderManager_ABC::GetDirDanger() const
 //-----------------------------------------------------------------------------
 const T_LimaVector& MIL_OrderManager_ABC::GetLimas() const
 {
-    if( pMission_ )
-        return pMission_->GetLimas();
+    if( pCurrentMission_ )
+        return pCurrentMission_->GetLimas();
     static const T_LimaVector emptyLimaVector;
     return emptyLimaVector;
 }
@@ -151,9 +154,9 @@ const T_LimaVector& MIL_OrderManager_ABC::GetLimas() const
 // -----------------------------------------------------------------------------
 MIL_LimaOrder* MIL_OrderManager_ABC::FindLima( const MIL_LimaFunction& function ) const
 {
-    if( !pMission_ )
+    if( !pCurrentMission_ )
         return 0;
-    return pMission_->FindLima( function );
+    return pCurrentMission_->FindLima( function );
 }
 
 // -----------------------------------------------------------------------------
@@ -162,9 +165,9 @@ MIL_LimaOrder* MIL_OrderManager_ABC::FindLima( const MIL_LimaFunction& function 
 // -----------------------------------------------------------------------------
 MIL_LimaOrder* MIL_OrderManager_ABC::FindLima( unsigned int nID ) const
 {
-    if( !pMission_ )
+    if( !pCurrentMission_ )
         return 0;
-    return pMission_->FindLima( nID );
+    return pCurrentMission_->FindLima( nID );
 }
 
 // -----------------------------------------------------------------------------
@@ -173,9 +176,9 @@ MIL_LimaOrder* MIL_OrderManager_ABC::FindLima( unsigned int nID ) const
 // -----------------------------------------------------------------------------
 MIL_LimaOrder* MIL_OrderManager_ABC::FindNextScheduledLima() const
 {
-    if( !pMission_ )
+    if( !pCurrentMission_ )
         return 0;
-    return pMission_->FindNextScheduledLima();
+    return pCurrentMission_->FindNextScheduledLima();
 }
 
 // -----------------------------------------------------------------------------
@@ -184,9 +187,9 @@ MIL_LimaOrder* MIL_OrderManager_ABC::FindNextScheduledLima() const
 // -----------------------------------------------------------------------------
 const MIL_MissionType_ABC* MIL_OrderManager_ABC::GetCurrentMissionType() const
 {
-    if( !pMission_ )
+    if( !pCurrentMission_ )
         return 0;
-    return &pMission_->GetType();
+    return &pCurrentMission_->GetType();
 }
 
 // -----------------------------------------------------------------------------
@@ -204,7 +207,7 @@ bool MIL_OrderManager_ABC::IsNewMissionStarted() const
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MIL_Mission_ABC > MIL_OrderManager_ABC::GetCurrentMission() const
 {
-    return pMission_;
+    return pCurrentMission_;
 }
 
 // -----------------------------------------------------------------------------
