@@ -81,7 +81,7 @@ namespace
     {
         runtime::Factory runtime( log );
         host::UuidFactory uuids;
-        host::FileSystem system;
+        host::FileSystem system( log );
         host::PortFactory ports( cfg.ports.period, cfg.ports.min, cfg.ports.max );
         host::NodeFactory nodes( log, runtime.GetRuntime(), uuids, system, ports, cfg.node.java, cfg.node.jar, cfg.node.root, cfg.ports.host );
         host::SessionFactory sessions( log, runtime.GetRuntime(), uuids, system, ports, cfg.session.data, cfg.session.applications );

@@ -11,6 +11,7 @@
 
 #include <boost/filesystem/fstream.hpp>
 
+#include <cpplog/cpplog.hpp>
 #include <runtime/Utf8.h>
 
 using namespace host;
@@ -19,7 +20,8 @@ using namespace host;
 // Name: FileSystem::FileSystem
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
-FileSystem::FileSystem()
+FileSystem::FileSystem( cpplog::BaseLogger& log )
+    : log_( log )
 {
     // NOTHING
 }
@@ -96,13 +98,33 @@ void FileSystem::CreateDirectory( const boost::filesystem::wpath& path ) const
     boost::filesystem::create_directories( path );
 }
 
+namespace
+{
+    std::string TryRemove( const boost::filesystem::wpath& path )
+    {
+        try
+        {
+            boost::filesystem::remove_all( path );
+            return std::string();
+        }
+        catch( std::exception& err )
+        {
+            return err.what();
+        }
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: FileSystem::Remove
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
 void FileSystem::Remove( const boost::filesystem::wpath& path ) const
 {
-    boost::filesystem::remove_all( path );
+    std::string reply = TryRemove( path );
+    if( !reply.empty() )
+        reply = TryRemove( path );
+    if( !reply.empty() )
+        LOG_ERROR( log_ ) << "[file] Unable to remove path " + runtime::Utf8Convert( path.string() ) + ", " + reply;
 }
 
 // -----------------------------------------------------------------------------

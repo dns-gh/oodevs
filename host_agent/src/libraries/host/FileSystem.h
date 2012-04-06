@@ -12,6 +12,11 @@
 
 #include "FileSystem_ABC.h"
 
+namespace cpplog
+{
+    class BaseLogger;
+}
+
 namespace host
 {
 
@@ -26,7 +31,7 @@ class FileSystem : public FileSystem_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             FileSystem();
+             FileSystem( cpplog::BaseLogger& log );
     virtual ~FileSystem();
     //@}
 
@@ -43,6 +48,9 @@ public:
     virtual std::string ReadFile( const boost::filesystem::wpath& path ) const;
     virtual std::vector< boost::filesystem::wpath > Glob( const boost::filesystem::wpath& path, const std::wstring& name ) const;
     //@}
+
+private:
+    mutable cpplog::BaseLogger& log_;
 };
 
 }
