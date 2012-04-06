@@ -7,6 +7,11 @@ ajax = (url, data, success, error) ->
         success:  success,
         url:      url,
 
+Handlebars.registerHelper "is_option", (value, options) ->
+    if value of options.hash
+        return options.fn this
+    return options.inverse this
+
 node_template = Handlebars.compile $("#node_template").html()
 node_error_template = Handlebars.compile $("#node_error_template").html()
 

@@ -88,12 +88,22 @@
                         </script>
                         <script type="text/template" id="node_template">
                             <div id="id_{{{id}}}" class="node_row accordion-group">
+                                <div class="node_header accordion-heading">
                                 <div class="btn-group node_buttons">
-                                    <a class="btn"><i class="icon-share"></i></a>
-                                    <a class="btn"><i class="icon-cog"></i></a>
-                                    <a class="btn"><i class="icon-trash"></i></a>
+                                    <a title="Loading..." class="btn hide disabled spin_btn"></a>
+                                    {{#is_option status running=""}}
+                                    <a title="Go..." class="btn"><i class="icon-share"></i></a>
+                                    {{/is_option}}
+                                    {{#is_option status stopped=""}}
+                                    <a title="Play" class="btn play"><i class="icon-play"></i></a>
+                                    {{/is_option}}
+                                    {{#is_option status running=""}}
+                                    <a title="Stop" class="btn stop"><i class="icon-stop"></i></a>
+                                    {{/is_option}}
+                                    <a title="Settings..." class="btn"><i class="icon-cog"></i></a>
+                                    <a title="Delete" class="btn"><i class="icon-trash"></i></a>
                                 </div>
-                                <div class="accordion-heading">
+                                    <span class="well {{{status}}}"></span>
                                     <a class="accordion-toggle" data-toggle="collapse" data-parent="#nodes" href="#collapse_{{{id}}}"><img width="32" height="32" src="img/tango/32x32/places/network-server.png"/> {{{name}}} </a>
                                 </div>
                                 <div id="collapse_{{{id}}}" class="accordion-body collapse">

@@ -15,6 +15,11 @@
     });
   };
 
+  Handlebars.registerHelper("is_option", function(value, options) {
+    if (value in options.hash) return options.fn(this);
+    return options.inverse(this);
+  });
+
   node_template = Handlebars.compile($("#node_template").html());
 
   node_error_template = Handlebars.compile($("#node_error_template").html());

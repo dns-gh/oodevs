@@ -1,6 +1,6 @@
 body{padding-top:60px;padding-bottom:40px;}
 .session{border:0;padding:0;margin:0;position:absolute;top:0;left:0;width:32px;height:100%;}
-.playing{border:0;padding:0;margin:0;position:absolute;top:0;left:0;width:32px;height:100%;background-color:#93c47d;}
+.playing,.running{border:0;padding:0;margin:0;position:absolute;top:0;left:0;width:32px;height:100%;background-color:#93c47d;}
 .paused{border:0;padding:0;margin:0;position:absolute;top:0;left:0;width:32px;height:100%;background-color:#ffd966;}
 .replaying{border:0;padding:0;margin:0;position:absolute;top:0;left:0;width:32px;height:100%;background-color:#6fa8dc;}
 .stopped{border:0;padding:0;margin:0;position:absolute;top:0;left:0;width:32px;height:100%;background-color:#e06666;}
@@ -17,4 +17,6 @@ body{padding-top:60px;padding-bottom:40px;}
 .node_top_bar{margin-bottom:20px;}
 .node_row{position:relative;}
 .node_buttons{position:absolute;top:10px;right:8px;}
+.node_header{position:relative;}
+.node_header a{margin-left:24px;}
 .read_only{cursor:text;}
