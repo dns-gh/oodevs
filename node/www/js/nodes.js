@@ -1,5 +1,5 @@
 (function() {
-  var NodeItem, NodeItemView, NodeList, NodeListView, ajax, diff_models, node_error_template, node_template, node_view, on_node_click, on_node_hide, print_error, reset_input_node, validate_input_node,
+  var NodeItem, NodeItemView, NodeList, NodeListView, ajax, diff_models, node_error_template, node_template, node_view, on_node_click, print_error, validate_input_node,
     __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; },
     __hasProp = Object.prototype.hasOwnProperty,
     __extends = function(child, parent) { for (var key in parent) { if (__hasProp.call(parent, key)) child[key] = parent[key]; } function ctor() { this.constructor = child; } ctor.prototype = parent.prototype; child.prototype = new ctor; child.__super__ = parent.prototype; return child; };
@@ -25,9 +25,15 @@
   node_error_template = Handlebars.compile($("#node_error_template").html());
 
   print_error = function(text) {
-    return $("#node_error").html(node_error_template({
+    var ctl;
+    ctl = $("#node_error");
+    ctl.html(node_error_template({
       content: text
     }));
+    ctl.show();
+    return setTimeout((function() {
+      return ctl.hide();
+    }), 3000);
   };
 
   NodeItem = (function(_super) {
@@ -118,7 +124,7 @@
 
     NodeItemView.prototype.tagName = "div";
 
-    NodeItemView.prototype.className = "row";
+    NodeItemView.prototype.className = "accordion-group";
 
     NodeItemView.prototype.initialize = function(obj) {
       this.model.bind('change', this.render);
@@ -307,18 +313,17 @@
 
   node_view = new NodeListView;
 
-  reset_input_node = function(control) {
-    control.parent().parent().removeClass("error");
-    return control.parent().find(".help-inline").hide();
-  };
-
   validate_input_node = function(control, result) {
+    var group;
     if (!result) {
-      control.parent().parent().addClass("error");
-      control.parent().find(".help-inline").show();
+      group = control.parent().parent();
+      group.addClass("error");
+      setTimeout((function() {
+        return group.removeClass("error");
+      }), 3000);
+      print_error("Missing node name");
       return false;
     }
-    reset_input_node(control);
     return true;
   };
 
@@ -326,19 +331,11 @@
     var name;
     name = $("#node_name");
     if (!validate_input_node(name, name.val().length)) return;
-    $("#node_create").modal("hide");
     return node_view.create({
       name: name.val()
     });
   };
 
-  on_node_hide = function() {
-    reset_input_node($("#node_name"));
-    return $("#node_create .modal-footer .alert").hide();
-  };
-
-  $("#node_create .modal-footer .btn_click").click(on_node_click);
-
-  $("#node_create").on("hidden", on_node_hide);
+  $("#node_create").click(on_node_click);
 
 }).call(this);

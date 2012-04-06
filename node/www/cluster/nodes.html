@@ -1,104 +1,89 @@
 [#ftl]
-<div id="node_create" class="modal fade hide">
-    <div class="modal-header">
-        <a class="close" data-dismiss="modal"><i class="icon-remove"></i></a>
-        <h3>Create New Node</h3>
-    </div>
-    <div class="modal-body">
-        <form class="form-horizontal">
+<div class="row">
+    <div class="span9">
+        <div id="node_error"></div>
+        <form class="form-inline">
             <div class="control-group">
-                <label class="control-label" for="node_name">Name</label>
                 <div class="controls">
-                    <input type="text" class="input-large" id="node_name"/>
-                    <span class="hide help-inline">Missing name</span>
+                    <input id="node_name" type="text" placeholder="Node name..."/>
+                    <a class="btn config"><i class="icon-cog"></i></a>
+                    <a id="node_create" class="btn"><i class="icon-plus"></i> Create...</a>
                 </div>
             </div>
         </form>
     </div>
-    <div class="modal-footer">
-        <span class="alert hide alert-error"></span>
-        <a class="btn btn_click"> Create</a>
-        <a class="btn btn-primary" data-dismiss="modal"> Cancel</a>
-    </div>
 </div>
-<div class="row node_top_bar">
+<div class="row">
     <div class="span9">
-        <div id="session_error"></div>
-        <span class="node_actions">
-            <a data-toggle="modal" href="#node_create" class="btn"><i class="icon-plus"></i> Create...</a>
-        </span>
+        <div id="nodes" class="accordion">
+            [#-- auto-generated templates --]
+            <script type="text/template" id="node_error_template">
+                <div class="alert alert-error"><b>Error</b> {{content}}</div>
+            </script>
+            <script type="text/template" id="node_template">
+                <div id="id_{{{id}}}" class="node_row">
+                    <div class="node_header accordion-heading">
+                        <div class="btn-group node_buttons">
+                            <a title="Loading..." class="btn hide disabled spin_btn"></a>
+                            {{#is_option status running=""}}
+                            <a target="blank_" href="http://localhost:{{{port}}}" title="Go..." class="btn"><i class="icon-share"></i></a>
+                            {{/is_option}}
+                            {{#is_option status stopped=""}}
+                            <a title="Play" class="btn play"><i class="icon-play"></i></a>
+                            {{/is_option}}
+                            {{#is_option status running=""}}
+                            <a title="Stop" class="btn stop"><i class="icon-stop"></i></a>
+                            {{/is_option}}
+                            {{#is_option status stopped=""}}
+                            <a title="Settings..." class="btn config disabled"><i class="icon-cog"></i></a>
+                            {{/is_option}}
+                            {{#is_option status stopped=""}}
+                            <a title="Delete" class="btn delete"><i class="icon-trash"></i></a>
+                            {{/is_option}}
+                        </div>
+                        <span class="well {{{status}}}"></span>
+                        <a class="accordion-toggle" data-toggle="collapse" data-parent="#nodes" href="#collapse_{{{id}}}"><img width="32" height="32" src="img/tango/32x32/places/network-server.png"/> {{{name}}} </a>
+                    </div>
+                    <div id="collapse_{{{id}}}" class="accordion-body collapse">
+                        <div class="accordion-inner">
+                            <form class="form-horizontal">
+                                <div class="control-group">
+                                    <label class="control-label" for="url">URL</label>
+                                    <div class="controls">
+                                        <span class="uneditable-input read_only">http://sword.server.com/{{{name}}}</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Sessions</label>
+                                    <div class="controls">
+                                        <span class="uneditable-input read_only">0 total</span>
+                                        <span class="uneditable-input read_only">0 played</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label"></label>
+                                    <div class="controls">
+                                        <span class="uneditable-input read_only">0 parallel</span>
+                                        <span class="uneditable-input read_only">0 running</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Exercises</label>
+                                    <div class="controls">
+                                        <span class="uneditable-input read_only">0 available</span>
+                                    </div>
+                                </div>
+                                <div class="control-group">
+                                    <label class="control-label">Data</label>
+                                    <div class="controls">
+                                        <span class="uneditable-input read_only">0 MB used</span>
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </script>
+        </div>
     </div>
-</div>
-<div id="nodes" class="span9 accordion">
-    [#-- auto-generated templates --]
-    <script type="text/template" id="node_error_template">
-        <div class="alert alert-error">
-            <a class="close" data-dismiss="alert"><i class="icon-remove"></i></a>
-            <b>Error</b> {{content}}
-        </div>
-    </script>
-    <script type="text/template" id="node_template">
-        <div id="id_{{{id}}}" class="node_row accordion-group">
-            <div class="node_header accordion-heading">
-                <div class="btn-group node_buttons">
-                    <a title="Loading..." class="btn hide disabled spin_btn"></a>
-                    {{#is_option status running=""}}
-                    <a target="blank_" href="http://localhost:{{{port}}}" title="Go..." class="btn"><i class="icon-share"></i></a>
-                    {{/is_option}}
-                    {{#is_option status stopped=""}}
-                    <a title="Play" class="btn play"><i class="icon-play"></i></a>
-                    {{/is_option}}
-                    {{#is_option status running=""}}
-                    <a title="Stop" class="btn stop"><i class="icon-stop"></i></a>
-                    {{/is_option}}
-                    {{#is_option status stopped=""}}
-                    <a title="Settings..." class="btn config disabled"><i class="icon-cog"></i></a>
-                    {{/is_option}}
-                    {{#is_option status stopped=""}}
-                    <a title="Delete" class="btn delete"><i class="icon-trash"></i></a>
-                    {{/is_option}}
-                </div>
-                <span class="well {{{status}}}"></span>
-                <a class="accordion-toggle" data-toggle="collapse" data-parent="#nodes" href="#collapse_{{{id}}}"><img width="32" height="32" src="img/tango/32x32/places/network-server.png"/> {{{name}}} </a>
-            </div>
-            <div id="collapse_{{{id}}}" class="accordion-body collapse">
-                <div class="accordion-inner">
-                    <form class="form-horizontal">
-                        <div class="control-group">
-                            <label class="control-label" for="url">URL</label>
-                            <div class="controls">
-                                <span class="uneditable-input read_only">http://sword.server.com/{{{name}}}</span>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">Sessions</label>
-                            <div class="controls">
-                                <span class="uneditable-input read_only">0 total</span>
-                                <span class="uneditable-input read_only">0 played</span>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label"></label>
-                            <div class="controls">
-                                <span class="uneditable-input read_only">0 parallel</span>
-                                <span class="uneditable-input read_only">0 running</span>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">Exercises</label>
-                            <div class="controls">
-                                <span class="uneditable-input read_only">0 available</span>
-                            </div>
-                        </div>
-                        <div class="control-group">
-                            <label class="control-label">Data</label>
-                            <div class="controls">
-                                <span class="uneditable-input read_only">0 MB used</span>
-                            </div>
-                        </div>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </script>
 </div>

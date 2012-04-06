@@ -16,7 +16,10 @@ node_template = Handlebars.compile $("#node_template").html()
 node_error_template = Handlebars.compile $("#node_error_template").html()
 
 print_error = (text) ->
-    $("#node_error").html node_error_template content: text
+    ctl = $("#node_error")
+    ctl.html node_error_template content: text
+    ctl.show()
+    setTimeout (->ctl.hide()), 3000
 
 class NodeItem extends Backbone.Model
     view: NodeItemView
@@ -57,7 +60,7 @@ class NodeList extends Backbone.Collection
 
 class NodeItemView extends Backbone.View
     tagName:   "div"
-    className: "row"
+    className: "accordion-group"
 
     initialize: (obj) ->
         @model.bind 'change', @render
@@ -161,28 +164,19 @@ class NodeListView extends Backbone.View
 
 node_view = new NodeListView
 
-reset_input_node = (control) ->
-    control.parent().parent().removeClass "error"
-    control.parent().find(".help-inline").hide()
-
 validate_input_node = (control, result) ->
     if !result
-        control.parent().parent().addClass "error"
-        control.parent().find(".help-inline").show()
+        group = control.parent().parent()
+        group.addClass "error"
+        setTimeout (->group.removeClass "error"), 3000
+        print_error "Missing node name"
         return false
-    reset_input_node control
     return true
 
 on_node_click = ->
     name = $("#node_name")
     if !validate_input_node name, name.val().length
         return
-    $("#node_create").modal "hide"
     node_view.create name: name.val()
 
-on_node_hide = ->
-    reset_input_node $("#node_name")
-    $("#node_create .modal-footer .alert").hide()
-
-$("#node_create .modal-footer .btn_click").click on_node_click
-$("#node_create").on "hidden", on_node_hide
+$("#node_create").click on_node_click
