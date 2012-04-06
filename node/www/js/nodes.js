@@ -49,6 +49,11 @@
 
     NodeItem.prototype.view = NodeItemView;
 
+    NodeItem.prototype.defaults = {
+      max_sessions: 64,
+      parallel_sessions: 8
+    };
+
     NodeItem.prototype.sync = function(method, model, options) {
       var params;
       if (method === "create") {
@@ -186,7 +191,7 @@
     };
 
     NodeItemView.prototype.config = function() {
-      on_node_config($(this.el).find(".node_settings"), this.model.get("name", this.model.get("max_sessions", this.model.get("parallel_sessions"))));
+      on_node_config($(this.el).find(".node_settings"), this.model.get("name"), this.model.get("max_sessions"), this.model.get("parallel_sessions"));
       return $(this.el).find(".node_settings .modal").modal("show");
     };
 

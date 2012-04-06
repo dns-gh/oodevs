@@ -25,6 +25,10 @@ print_error = (text) ->
 class NodeItem extends Backbone.Model
     view: NodeItemView
 
+    defaults:
+        max_sessions: 64
+        parallel_sessions: 8
+
     sync: (method, model, options) =>
         if method == "create"
             params =
@@ -103,9 +107,9 @@ class NodeItemView extends Backbone.View
 
     config: =>
         on_node_config $(@el).find(".node_settings"),
-            @model.get "name",
-            @model.get "max_sessions",
-            @model.get "parallel_sessions",
+            @model.get("name"),
+            @model.get("max_sessions"),
+            @model.get("parallel_sessions"),
         $(@el).find(".node_settings .modal").modal "show"
 
     toggle_load: =>
