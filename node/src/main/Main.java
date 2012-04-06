@@ -14,6 +14,7 @@ class Main {
     private static void parseParameters(final Agent.Configuration config, final String[] args) throws Exception {
         config.root = "www";
         config.index = "cluster";
+        config.name = "";
         config.port = 8080;
         config.host = 15000;
         config.isDebug = false;
