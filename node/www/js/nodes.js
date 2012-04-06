@@ -108,6 +108,9 @@
     __extends(NodeItemView, _super);
 
     function NodeItemView() {
+      this.toggle_load = __bind(this.toggle_load, this);
+      this.play = __bind(this.play, this);
+      this.stop = __bind(this.stop, this);
       this["delete"] = __bind(this["delete"], this);
       this.render = __bind(this.render, this);
       NodeItemView.__super__.constructor.apply(this, arguments);
@@ -122,6 +125,12 @@
       return this.render();
     };
 
+    NodeItemView.prototype.events = {
+      "click .delete": "delete",
+      "click .stop": "stop",
+      "click .play": "play"
+    };
+
     NodeItemView.prototype.render = function() {
       $(this.el).empty();
       return $(this.el).html(node_template(this.model.attributes));
@@ -129,12 +138,52 @@
 
     NodeItemView.prototype["delete"] = function() {
       var _this = this;
+      this.toggle_load();
       return this.model.destroy({
         wait: true,
         error: function() {
           return print_error("Unable to delete node " + _this.model.get("name"));
         }
       });
+    };
+
+    NodeItemView.prototype.stop = function() {
+      var _this = this;
+      this.toggle_load();
+      return ajax("/api/stop_node", {
+        id: this.model.id
+      }, function(item) {
+        _this.toggle_load();
+        return _this.model.set(item);
+      }, function() {
+        print_error("Unable to stop node " + _this.model.get("name"));
+        return _this.toggle_load();
+      });
+    };
+
+    NodeItemView.prototype.play = function() {
+      var _this = this;
+      this.toggle_load();
+      return ajax("/api/start_node", {
+        id: this.model.id
+      }, function(item) {
+        _this.toggle_load();
+        return _this.model.set(item);
+      }, function() {
+        print_error("Unable to start node " + _this.model.get("name"));
+        return _this.toggle_load();
+      });
+    };
+
+    NodeItemView.prototype.toggle_load = function() {
+      var it, _i, _len, _ref, _results;
+      _ref = $(this.el).find(".session_top_right .btn");
+      _results = [];
+      for (_i = 0, _len = _ref.length; _i < _len; _i++) {
+        it = _ref[_i];
+        _results.push($(it).toggle());
+      }
+      return _results;
     };
 
     return NodeItemView;

@@ -63,12 +63,42 @@ class NodeItemView extends Backbone.View
         @model.bind 'change', @render
         @render()
 
+    events:
+        "click .delete" : "delete"
+        "click .stop" : "stop"
+        "click .play" : "play"
+
     render: =>
         $(@el).empty()
         $(@el).html node_template @model.attributes
 
     delete: =>
+        @toggle_load()
         @model.destroy wait: true, error: => print_error "Unable to delete node " + @model.get "name"
+
+    stop: =>
+        @toggle_load()
+        ajax "/api/stop_node", id: @model.id,
+            (item) =>
+                @toggle_load()
+                @model.set item
+            () =>
+                print_error "Unable to stop node " + @model.get "name"
+                @toggle_load()
+
+    play: =>
+        @toggle_load()
+        ajax "/api/start_node", id: @model.id,
+            (item) =>
+                @toggle_load()
+                @model.set item
+            () =>
+                print_error "Unable to start node " + @model.get "name"
+                @toggle_load()
+
+    toggle_load: =>
+        for it in $(@el).find(".session_top_right .btn")
+            $(it).toggle()
 
 diff_models = (prev, next) ->
     not_found = []

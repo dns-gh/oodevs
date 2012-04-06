@@ -94,7 +94,7 @@
                                 <div class="btn-group node_buttons">
                                     <a title="Loading..." class="btn hide disabled spin_btn"></a>
                                     {{#is_option status running=""}}
-                                    <a title="Go..." class="btn"><i class="icon-share"></i></a>
+                                    <a href="http://localhost:{{{port}}}" title="Go..." class="btn"><i class="icon-share"></i></a>
                                     {{/is_option}}
                                     {{#is_option status stopped=""}}
                                     <a title="Play" class="btn play"><i class="icon-play"></i></a>
@@ -102,8 +102,12 @@
                                     {{#is_option status running=""}}
                                     <a title="Stop" class="btn stop"><i class="icon-stop"></i></a>
                                     {{/is_option}}
-                                    <a title="Settings..." class="btn"><i class="icon-cog"></i></a>
-                                    <a title="Delete" class="btn"><i class="icon-trash"></i></a>
+                                    {{#is_option status stopped=""}}
+                                    <a title="Settings..." class="btn settings"><i class="icon-cog"></i></a>
+                                    {{/is_option}}
+                                    {{#is_option status stopped=""}}
+                                    <a title="Delete" class="btn delete"><i class="icon-trash"></i></a>
+                                    {{/is_option}}
                                 </div>
                                     <span class="well {{{status}}}"></span>
                                     <a class="accordion-toggle" data-toggle="collapse" data-parent="#nodes" href="#collapse_{{{id}}}"><img width="32" height="32" src="img/tango/32x32/places/network-server.png"/> {{{name}}} </a>
