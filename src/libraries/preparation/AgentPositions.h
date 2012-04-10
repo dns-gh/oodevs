@@ -42,8 +42,8 @@ class AgentPositions : public kernel::Moveable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             AgentPositions( const kernel::Agent_ABC& agent, const kernel::CoordinateConverter_ABC& converter, kernel::Controller& controller, const geometry::Point2f& position, kernel::PropertiesDictionary& dico );
-             AgentPositions( xml::xistream& xis, const kernel::Agent_ABC& agent, const kernel::CoordinateConverter_ABC& converter, kernel::Controller& controller, kernel::PropertiesDictionary& dico );
+             AgentPositions( kernel::Agent_ABC& agent, const kernel::CoordinateConverter_ABC& converter, kernel::Controller& controller, const geometry::Point2f& position, kernel::PropertiesDictionary& dico );
+             AgentPositions( xml::xistream& xis, kernel::Agent_ABC& agent, const kernel::CoordinateConverter_ABC& converter, kernel::Controller& controller, kernel::PropertiesDictionary& dico );
     virtual ~AgentPositions();
     //@}
 
@@ -82,7 +82,7 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::Agent_ABC& agent_;
+    kernel::Agent_ABC& agent_;
     const kernel::CoordinateConverter_ABC& converter_;
     kernel::Controller& controller_;
     kernel::Moveable_ABC* moveable_;
