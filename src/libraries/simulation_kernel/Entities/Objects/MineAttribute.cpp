@@ -57,12 +57,17 @@ MineAttribute::MineAttribute( const sword::MissionParameter_Value& attributes  )
     , nCurrentNbrDotation_( 0 )
     , miningPercentage_   ( 1., 0.05, 0., 1.)
 {
-    dotation_ = PHY_DotationType::FindDotationCategory( attributes.list( 1 ).identifier() );
-    if( !dotation_ )
-        throw std::runtime_error( "Unknown 'Dotation Type' for mine attribute" );
-    nCurrentNbrDotation_ = attributes.list( 2 ).quantity();
-    nFullNbrDotation_ = static_cast< unsigned int >( attributes.list( 3 ).areal() );
-    miningPercentage_.Set( attributes.list( 4 ).quantity() );
+    if( attributes.list_size() == 2 )
+        miningPercentage_.Set( attributes.list( 1 ).quantity() );
+    else if( attributes.list_size() == 5 )
+    {
+        dotation_ = PHY_DotationType::FindDotationCategory( attributes.list( 1 ).identifier() );
+        if( !dotation_ )
+            throw std::runtime_error( "Unknown 'Dotation Type' for mine attribute" );
+        nCurrentNbrDotation_ = attributes.list( 2 ).quantity();
+        nFullNbrDotation_ = static_cast< unsigned int >( attributes.list( 3 ).areal() );
+        miningPercentage_.Set( attributes.list( 4 ).quantity() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -72,7 +77,7 @@ MineAttribute::MineAttribute( const sword::MissionParameter_Value& attributes  )
 void MineAttribute::Load( xml::xistream& xis )
 {
     const double completion = xis.attribute< double >( "density", 1.f );
-    if( completion > 0. && completion <= 1. )
+    if( completion >= 0. && completion <= 1. )
         miningPercentage_.Set( completion );
     nCurrentNbrDotation_ = static_cast< unsigned int >( miningPercentage_.Get() * nFullNbrDotation_ );
 }
