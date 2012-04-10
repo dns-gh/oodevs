@@ -112,6 +112,9 @@ node "BuildElement"
                 if meKnowledge:isMounted() and not self.params.entity:canBuildItNow() then
                     Activate( skill.nodes.dismount, 1 )
                 else
+                    if meKnowledge:isDismounted() then
+                        Activate( skill.nodes.dismount, 1 )
+                    end
                     Activate( skill.nodes.Build, 1, { entity = toBuild } )
                 end
             else
