@@ -416,6 +416,14 @@
                 </type>
             </return>
         </method>
+        <method name="canBuildItNow">
+            <description>Indicate the capacity to build this object</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
         <method name="buildIt">
             <description>Build</description>
         </method>

@@ -320,6 +320,10 @@ return
         local objectType = self:getType()
         return integration.canBuildObjectType( objectType, self:getLocalisation() ) and integration.hasEnoughtDotationForObjectType( objectType )
     end,
+    canBuildItNow = function( self )
+        local objectType = self:getType()
+        return integration.canBuildNowObjectType( objectType, self:getLocalisation() ) and integration.hasEnoughtDotationForObjectType( objectType )
+    end,
     buildingCapacity = function( self )
         return integration.canBuildObjectType( self:getType(), self:getLocalisation() )
     end,
