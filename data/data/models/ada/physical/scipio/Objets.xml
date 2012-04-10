@@ -418,12 +418,10 @@
   </object>
   <object geometry="line" name="route departementale" symbol="Route" type="medium road">
     <bridging type="secondary road"/>
-    <mobility default-speed="-1" max-unit-percentage-speed="90" unit-speed-impact-mode="VitesseMaxAgent"/>
     <universal/>
   </object>
   <object geometry="line" name="route nationale" symbol="Route" type="large road">
     <bridging type="main road"/>
-    <mobility default-speed="-1" max-unit-percentage-speed="90" unit-speed-impact-mode="VitesseMaxAgent"/>
     <universal/>
   </object>
   <object geometry="polygon" name="terrain mouille" symbol="G*MPOGZ---****X" type="wet terrain">
@@ -446,4 +444,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="2807460608" -->
+<!-- signature="3941480815" -->
