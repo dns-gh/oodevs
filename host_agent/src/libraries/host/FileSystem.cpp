@@ -153,8 +153,9 @@ std::string FileSystem::ReadFile( const boost::filesystem::wpath& path ) const
 std::vector< boost::filesystem::wpath > FileSystem::Glob( const boost::filesystem::wpath& path, const std::wstring& name ) const
 {
     std::vector< boost::filesystem::wpath > paths;
-    for( boost::filesystem::wrecursive_directory_iterator it( path ); it != boost::filesystem::wrecursive_directory_iterator(); ++it )
-        if( IsFile( *it ) && it->filename() == name )
-            paths.push_back( *it );
+    if( IsDirectory( path ) )
+        for( boost::filesystem::wrecursive_directory_iterator it( path ); it != boost::filesystem::wrecursive_directory_iterator(); ++it )
+            if( IsFile( *it ) && it->filename() == name )
+                paths.push_back( *it );
     return paths;
 }
