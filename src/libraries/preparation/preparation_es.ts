@@ -41,6 +41,10 @@
         <source>Info/Position</source>
         <translation>Info/Posición</translation>
     </message>
+    <message>
+        <source>Info</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>AltitudeModifierAttribute</name>
