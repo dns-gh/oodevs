@@ -142,7 +142,7 @@ namespace
 // Name: Process::Kill
 // Created: BAX 2012-03-07
 // -----------------------------------------------------------------------------
-bool Process::Kill( int msTimeout )
+bool Process::Kill( int /*msTimeout*/ )
 {
     bool done = false;//SafeTerminate( api_, handle_->value_, msTimeout );
     return done ? true : UnsafeTerminate( api_, handle_->value_ );
