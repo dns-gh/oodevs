@@ -2,7 +2,7 @@
 
 	<property name="src.dir" value="../src" />
 	<property name="out.dir" value="../out" />
-	<property name="lib.dir" value="../lib" />
+    <property name="lib.dir" value="../../external" />
 	<property name="jar.dir" value="${out.dir}/jar" />
 
 	<path id="external.jars">
