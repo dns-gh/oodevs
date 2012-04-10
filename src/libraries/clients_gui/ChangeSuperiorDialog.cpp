@@ -32,9 +32,12 @@ ChangeSuperiorDialog::ChangeSuperiorDialog( QWidget* parent, kernel::Controllers
         setWindowTitle( tr( "Select new group") );
     else
         setWindowTitle( tr( "Select new superior") );
+    QVBoxLayout* main = new QVBoxLayout( this );
     setMinimumWidth( 300 );
-    QGridLayout* layout = new QGridLayout( this );
-    QGroupBox* box = new QGroupBox( tr( "Superior" ), this );
+    name_ = new QLabel();
+    main->addWidget( name_ );
+    QGridLayout* layout = new QGridLayout();
+    QGroupBox* box = new QGroupBox( tr( "New superior" ), this );
     QBoxLayout* boxLayout = new QBoxLayout( QBoxLayout::TopToBottom, box );
     superiorLabel_ = new QLabel( "---" );
     boxLayout->addWidget( superiorLabel_ );
@@ -45,6 +48,7 @@ ChangeSuperiorDialog::ChangeSuperiorDialog( QWidget* parent, kernel::Controllers
     layout->addWidget( okButton_, 1, 0 );
     layout->addWidget( cancelButton, 1, 1 );
     okButton_->setDefault( true );
+    main->addLayout( layout );
     connect( okButton_, SIGNAL( clicked() ), this, SLOT( OnOk() ) );
     connect( cancelButton, SIGNAL( clicked() ), this, SLOT( OnCancel() ) );
     controllers_.Register( *this );
@@ -68,6 +72,7 @@ void ChangeSuperiorDialog::Show( kernel::Entity_ABC& entity )
     superiorLabel_->setText( "---" );
     selected_ = 0;
     entity_ = &entity;
+    name_->setText( tr( "Entity moved: " ) + entity_->GetName() );
     okButton_->setEnabled( false );
     show();
 }
