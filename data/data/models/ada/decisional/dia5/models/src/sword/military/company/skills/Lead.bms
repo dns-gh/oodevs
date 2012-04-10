@@ -132,6 +132,7 @@ create = function( self )
         local bestUnits = issueMission ( self, self.params.mainTasks, self.nbrFront, eEtatEchelon_First )
         
         if #bestUnits == 0 then
+            Activate( skill.nodes.RC, 1, { RC = eRC_NoPEInAutomat } )
             return
         end
         manageFeedback( bestUnits )
