@@ -56,9 +56,8 @@ namespace
 
     void ConstructorAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, ParameterList*& attributesList )
     {
-        // $$$$ ABR 2012-03-20: TODO for AM
-        //if( xis.has_child( "improvable" ) )
-        //    container.push_back( new MinePrototype( parent, attributesList ) );
+        if( xis.has_child( "improvable" ) )
+            container.push_back( new MinePrototype( parent, attributesList ) );
     }
 
     void BridgingAttribute( xml::xistream& xis, T_AttributeContainer& container, QWidget* parent, ParameterList*& attributesList )
