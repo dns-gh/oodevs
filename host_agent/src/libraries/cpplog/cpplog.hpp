@@ -465,7 +465,7 @@ namespace cpplog
 		typedef void (*pfBuildFileName)(unsigned long logNumber, std::string& newFileName, void* context);
 
 	private:
-		size_t			m_maxSize;
+		std::streampos  m_maxSize;
 		unsigned long	m_logNumber;
 
 		SizeRotateFileLogger::pfBuildFileName m_buildFunc;
@@ -474,7 +474,7 @@ namespace cpplog
 		std::ofstream	m_outStream;
 
 	public:
-		SizeRotateFileLogger(pfBuildFileName nameFunc, size_t maxSize)
+		SizeRotateFileLogger(pfBuildFileName nameFunc, std::streampos maxSize)
 			: OstreamLogger(m_outStream), m_maxSize(maxSize), m_logNumber(0),
 			  m_buildFunc(nameFunc), m_context(NULL),
 			  m_outStream()
@@ -483,7 +483,7 @@ namespace cpplog
 			RotateLog();
 		}
 
-		SizeRotateFileLogger(pfBuildFileName nameFunc, void* context, size_t maxSize)
+		SizeRotateFileLogger(pfBuildFileName nameFunc, void* context, std::streampos maxSize)
 			: OstreamLogger(m_outStream), m_maxSize(maxSize), m_logNumber(0),
 			  m_buildFunc(nameFunc), m_context(context),
 			  m_outStream()
