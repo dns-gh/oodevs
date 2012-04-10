@@ -35171,7 +35171,7 @@
     <transports/>
     <consumptions>
       <consumption status="ArretMoteurEteint">
-        <resource category="ration" name="RATION DE COMBAT 1" value="6"/>
+        <resource category="ration" name="RATION DE COMBAT 1" value="55"/>
         <resource category="ration" name="EAU MINERALE 1L T 1" value="375"/>
       </consumption>
     </consumptions>
@@ -35648,4 +35648,4 @@
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="0755470967" -->
+<!-- signature="2450194640" -->
