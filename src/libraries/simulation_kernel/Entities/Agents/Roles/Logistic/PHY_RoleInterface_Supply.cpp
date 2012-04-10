@@ -202,7 +202,6 @@ void PHY_RoleInterface_Supply::ResupplyStocks( const PHY_DotationCategory& /*cat
     // NOTHING
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RoleInterface_Supply::Clean
 // Created: NLD 2004-10-04

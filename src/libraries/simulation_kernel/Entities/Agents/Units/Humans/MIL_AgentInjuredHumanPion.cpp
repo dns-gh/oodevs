@@ -48,7 +48,6 @@ void load_construct_data( Archive& archive, MIL_AgentInjuredHumanPion* unit, con
     ::new( unit )MIL_AgentInjuredHumanPion( *pType, *pAutomate, *algorithmFactories, name );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MIL_AgentInjuredHumanPion constructor
 // Created: RFT 2008-10-04

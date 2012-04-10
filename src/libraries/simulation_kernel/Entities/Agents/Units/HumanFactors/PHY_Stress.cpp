@@ -146,4 +146,3 @@ sword::UnitAttributes::EnumUnitStress PHY_Stress::GetAsnID() const
     return nAsnID_;
 }
 
-

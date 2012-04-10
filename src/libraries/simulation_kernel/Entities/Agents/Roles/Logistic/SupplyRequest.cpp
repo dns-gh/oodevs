@@ -102,11 +102,11 @@ bool SupplyRequest::AffectSupplier( boost::shared_ptr< LogisticLink_ABC > suppli
         return false;
     }
     assert( authorizedQuantity_ <= requestedQuantity_ );
-    
+
     // Update the requested quantities according to the quota limitations
     const double ratio = authorizedQuantity_ / requestedQuantity_;
     BOOST_FOREACH( T_ResourceRequests::value_type& data, resourceRequests_ )
-        data.second *= ratio; 
+        data.second *= ratio;
     supplierQuotas_ = supplier;
     requestedQuantity_ = authorizedQuantity_;
     return true;

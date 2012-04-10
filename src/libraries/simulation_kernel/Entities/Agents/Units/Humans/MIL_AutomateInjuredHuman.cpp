@@ -24,7 +24,6 @@
 
 BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AutomateInjuredHuman )
 
-
 template< typename Archive >
 void save_construct_data( Archive& archive, const MIL_AutomateInjuredHuman* automat, const unsigned int /*version*/ )
 {

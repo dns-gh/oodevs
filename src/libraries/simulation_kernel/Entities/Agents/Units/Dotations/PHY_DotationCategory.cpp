@@ -393,7 +393,6 @@ bool PHY_DotationCategory::HasIndirectWeaponCategory( const PHY_IndirectFireDota
     return false;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory::CanBeUsedForIndirectFire
 // Created: NLD 2004-10-11
@@ -490,7 +489,7 @@ double PHY_DotationCategory::FindUrbanAttritionScore( const PHY_MaterialComposit
 // -----------------------------------------------------------------------------
 bool PHY_DotationCategory::IsSignificantChange( double newValue, double oldValue, double capacity ) const
 {
-    if( &type_ == PHY_DotationType::munition_ || 
+    if( &type_ == PHY_DotationType::munition_ ||
         &type_ == PHY_DotationType::mine_ ||
         &type_ == PHY_DotationType::explosif_ ||
         &type_ == PHY_DotationType::agentExtincteur_ ||

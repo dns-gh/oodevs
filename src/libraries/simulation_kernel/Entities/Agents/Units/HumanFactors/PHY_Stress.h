@@ -13,7 +13,6 @@
 #include "MT_Tools/MT_String.h"
 #include "PHY_HumanFactor.h"
 
-
 namespace sword
 {
     enum UnitAttributes_EnumUnitStress;

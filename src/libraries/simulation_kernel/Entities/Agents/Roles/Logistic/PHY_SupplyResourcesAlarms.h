@@ -10,7 +10,6 @@
 #ifndef __PHY_SupplyResourcesAlarms_h_
 #define __PHY_SupplyResourcesAlarms_h_
 
-
 namespace xml
 {
     class xistream;

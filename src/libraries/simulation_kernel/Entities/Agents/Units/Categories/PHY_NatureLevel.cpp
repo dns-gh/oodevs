@@ -98,7 +98,6 @@ const std::string& PHY_NatureLevel::GetName() const
     return strName_;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PHY_NatureLevel::GetID
 // Created: JVT 2004-12-09

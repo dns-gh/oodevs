@@ -82,7 +82,7 @@ void PHY_RolePion_Surrender::Update( bool /*bIsDead*/ )
     if( pPrison_ && pPrison_->IsMarkedForDestruction() )
     {
         LodgingAttribute* pLodgingAttribute = pPrison_->RetrieveAttribute< LodgingAttribute >();
-        if ( pLodgingAttribute )
+        if( pLodgingAttribute )
             pLodgingAttribute->UnmanageResident( owner_ );
 
         pPrison_ = 0;
@@ -143,10 +143,10 @@ bool PHY_RolePion_Surrender::Release()
     if( !IsSurrendered() || !bPrisoner_ )
         return false;
 
-    if ( pPrison_ )
+    if( pPrison_ )
     {
         LodgingAttribute* pLodgingAttribute = pPrison_->RetrieveAttribute< LodgingAttribute >();
-        if ( pLodgingAttribute )
+        if( pLodgingAttribute )
             pLodgingAttribute->UnmanageResident( owner_ );
     }
 
@@ -169,7 +169,7 @@ bool PHY_RolePion_Surrender::Imprison( const MIL_Object_ABC& camp )
     pPrison_ = const_cast< MIL_Object_ABC* >( &camp );
 
     LodgingAttribute* pLodgingAttribute = pPrison_->RetrieveAttribute< LodgingAttribute >();
-    if ( pLodgingAttribute )
+    if( pLodgingAttribute )
         pLodgingAttribute->ManageResident( owner_ );
 
     owner_.GetAutomate().NotifyImprisoned( camp );
@@ -291,9 +291,9 @@ unsigned int PHY_RolePion_Surrender::GetNbrHumansCampUnmanaged() const
 {
     const PHY_RolePion_Composantes& composantes = owner_.GetRole< PHY_RolePion_Composantes >();
     unsigned int nbrUsableHumans = composantes.GetNbrUsableHumans();
-    if ( nbrUsableHumans == 0 )
+    if( nbrUsableHumans == 0 )
         return 0;
-    if ( nbrHumansLodgingManaged_ > nbrUsableHumans )
+    if( nbrHumansLodgingManaged_ > nbrUsableHumans )
         return nbrUsableHumans;
 
     return (nbrUsableHumans - nbrHumansLodgingManaged_);

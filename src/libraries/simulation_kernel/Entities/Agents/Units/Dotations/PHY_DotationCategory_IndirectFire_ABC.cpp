@@ -54,7 +54,6 @@ const PHY_IndirectFireDotationClass& PHY_DotationCategory_IndirectFire_ABC::GetI
     return category_;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PHY_DotationCategory_IndirectFire_ABC::HasHit
 // Created: NLD 2005-08-04

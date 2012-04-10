@@ -7,7 +7,6 @@
 //
 // *****************************************************************************
 
-
 #include "simulation_kernel_pch.h"
 #include "PHY_HumanFactor.h"
 #include "MT_Tools/MT_Logger.h"

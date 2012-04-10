@@ -341,7 +341,6 @@ void PHY_RolePion_Perceiver::DisableSurveillanceLocalisation( int id )
     }
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::EnableRecoPoint
 // Created: JVT 2004-10-21
@@ -546,7 +545,6 @@ void PHY_RolePion_Perceiver::DisableRadarOnLocalisation( const PHY_RadarClass& r
         bRadarStateHasChanged_ = true;
     }
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RolePion_Perceiver::EnableRadar
@@ -776,7 +774,6 @@ private:
     const transport::PHY_RoleAction_Loading*    transport_;
 };
 
-
 // -----------------------------------------------------------------------------
 class sRadarDataComposantes : public OnComponentFunctor_ABC
 {
@@ -919,7 +916,7 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
                                                                                         perceivableUrbanBlock );
         if( !perceivableUrbanBlock.empty() )
         {
-            double occupation = 0.;  
+            double occupation = 0.;
             for( std::vector< const urban::TerrainObject_ABC* >::const_iterator itUrban = perceivableUrbanBlock.begin(); itUrban != perceivableUrbanBlock.end(); ++itUrban )
             {
                 const UrbanObjectWrapper& wrapper = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( **itUrban );
@@ -929,13 +926,13 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
             occupation /= perceivableUrbanBlock.size();
             maxPerceptionDistance *= ( 1 - 9*occupation/10 );
         }
-        
+
         TER_Agent_ABC::T_AgentPtrVector perceivableAgents;
         TER_Object_ABC::T_ObjectVector perceivableObjects;
         TER_PopulationConcentration_ABC::T_ConstPopulationConcentrationVector perceivableConcentrations;
         TER_PopulationFlow_ABC::T_ConstPopulationFlowVector perceivableFlows;
         GetKnowledgeGroup().AppendAddedKnowledge( perceivableAgents, perceivableObjects, perceivableConcentrations, perceivableFlows );
-        
+
         TER_World::GetWorld().GetAgentManager().GetListWithinCircle( *perceiverPosition_, maxPerceptionDistance, perceivableAgents );
         for( itPerception = activePerceptions_.begin(); itPerception != activePerceptions_.end(); ++itPerception )
             (**itPerception).Execute( perceivableAgents, *owner_.GetAlgorithms().detectionComputerFactory_ );
@@ -1021,7 +1018,7 @@ void PHY_RolePion_Perceiver::UpdatePeriphericalVisionState()
     const unsigned int nCurrentTime = MIL_AgentServer::GetWorkspace().GetCurrentTimeStep();
     if( nNextPeriphericalVisionStep_ <= nCurrentTime )
     {
-        while ( nNextPeriphericalVisionStep_ <= nCurrentTime )
+        while( nNextPeriphericalVisionStep_ <= nCurrentTime )
             nNextPeriphericalVisionStep_ += nNbrStepsBetweenPeriphericalVision_;
         bPeriphericalVisionEnabled_ = true;
         return;

@@ -51,7 +51,7 @@ void SupplyStockPullFlowRequestBuilder::Process( SupplyRequestContainer_ABC& con
 {
     BOOST_FOREACH( const sword::SupplyFlowResource& resource, pullFlowParameters_.resources() )
         CreateRequest( recipient_, resource, container );
-    
+
     if( pullFlowParameters_.has_wayoutpath() )
     {
         T_PointVector wayPoints;

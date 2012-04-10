@@ -53,7 +53,7 @@ public:
     virtual bool IsAt    ( const MIL_AutomateLOG& destination ) const;
     virtual boost::shared_ptr< SupplyConvoy_ABC > GetConvoy() const;
     //@}
-    
+
     //! @name SupplyConvoyEventsObserver_ABC
     //@{
     virtual void OnAllResourcesAssignedToConvoy();
@@ -75,7 +75,6 @@ private:
     typedef std::map< const PHY_DotationCategory*, double >                                 T_Resources;
     typedef std::map< const PHY_DotationCategory*, boost::shared_ptr< SupplyRequest_ABC > > T_Requests;
     typedef std::deque< std::pair< SupplyRecipient_ABC*, T_Requests > >                     T_RecipientRequests;
-    
 
     enum E_State
     {

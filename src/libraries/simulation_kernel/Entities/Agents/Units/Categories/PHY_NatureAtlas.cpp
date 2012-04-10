@@ -75,7 +75,6 @@ const PHY_NatureAtlas* PHY_NatureAtlas::Find( const std::string& strName )
     return it == natureAtlas_.end() ? 0 : it->second;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PHY_NatureAtlas::GetName
 // Created: JVT 2004-12-09
@@ -84,7 +83,6 @@ const std::string& PHY_NatureAtlas::GetName() const
 {
     return strName_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: PHY_NatureAtlas::GetID

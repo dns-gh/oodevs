@@ -127,7 +127,7 @@ void PHY_RolePion_Refugee::Release( MIL_AgentPion& callerAgent )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Refugee::ReleaseCamp( MIL_AgentPion& callerAgent, const MIL_Object_ABC& camp )
 {
-    if ( pCamp_ && ( pCamp_ != &camp ) )
+    if( pCamp_ && ( pCamp_ != &camp ) )
         UnmanageLodgingCamp();
 
     if( !owner_.GetType().IsRefugee() || !bManaged_ )
@@ -190,9 +190,9 @@ unsigned int PHY_RolePion_Refugee::GetNbrHumansCampUnmanaged() const
 {
     const PHY_RolePion_Composantes& composantes = owner_.GetRole< PHY_RolePion_Composantes >();
     unsigned int nbrUsableHumans = composantes.GetNbrUsableHumans();
-    if ( nbrUsableHumans == 0 )
+    if( nbrUsableHumans == 0 )
         return 0;
-    if ( nbrHumansLodgingManaged_ > nbrUsableHumans )
+    if( nbrHumansLodgingManaged_ > nbrUsableHumans )
         return nbrUsableHumans;
 
     return (nbrUsableHumans - nbrHumansLodgingManaged_);
@@ -219,10 +219,10 @@ void PHY_RolePion_Refugee::UpdateLodging( unsigned int nbrHumansCampManaged )
     PHY_RolePion_Composantes& composantes = owner_.GetRole< PHY_RolePion_Composantes >();
     unsigned int nbrUsableHumans = composantes.GetNbrUsableHumans();
 
-    if ( nbrUsableHumans > 0 )
+    if( nbrUsableHumans > 0 )
         lodgingSatisfaction_ = std::min( 1.0f, float( nbrHumansCampManaged ) / float( nbrUsableHumans) );
 
-    if ( prevSatisf != lodgingSatisfaction_ )
+    if( prevSatisf != lodgingSatisfaction_ )
         bHasChanged_ = true;
 }
 
@@ -250,11 +250,11 @@ bool PHY_RolePion_Refugee::IsManaged() const
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Refugee::ManageLodgingCamp()
 {
-    if ( !pCamp_ )
+    if( !pCamp_ )
         UpdateLodging( 0 );
 
     LodgingAttribute* pLodgingAttribute = pCamp_->RetrieveAttribute< LodgingAttribute >();
-    if ( pLodgingAttribute )
+    if( pLodgingAttribute )
         pLodgingAttribute->ManageResident( owner_ );
 
     UpdateHealthSatisfaction();
@@ -266,11 +266,11 @@ void PHY_RolePion_Refugee::ManageLodgingCamp()
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Refugee::UnmanageLodgingCamp()
 {
-    if ( !pCamp_ )
+    if( !pCamp_ )
         return;
 
     LodgingAttribute* pLodgingAttribute = pCamp_->RetrieveAttribute< LodgingAttribute >();
-    if ( pLodgingAttribute )
+    if( pLodgingAttribute )
         pLodgingAttribute->UnmanageResident( owner_ );
 
     pCamp_ = 0;
@@ -287,16 +287,16 @@ void PHY_RolePion_Refugee::UpdateSecuritySatisfaction()
     securitySatisfaction_ = 0.5f;
     nearbyUnitsAffinity.resetAffinitySum(   owner_.GetRole< PHY_RolePion_Perceiver >().GetMaxTheoreticalcAgentPerceptionDistance(),
                                             owner_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
-    if ( nearbyUnitsAffinity.maxSqrDistance > 0.01 /*epsilon*/ )
+    if( nearbyUnitsAffinity.maxSqrDistance > 0.01 /*epsilon*/ )
     {
         class_mem_fun_void_t< PHY_RolePion_Refugee, DEC_Knowledge_Agent > methodAffinityAgent( & PHY_RolePion_Refugee::AddAffinityNearUnit, *this );
         owner_.GetKnowledgeGroup().GetKnowledge().ApplyOnKnowledgesAgent( methodAffinityAgent );
 
-        if ( nearbyUnitsAffinity.absAffinitySum_ > 0.0f )
+        if( nearbyUnitsAffinity.absAffinitySum_ > 0.0f )
             securitySatisfaction_ = 0.5f * ( nearbyUnitsAffinity.affinitySum_/nearbyUnitsAffinity.absAffinitySum_ + 1.0f );
     }
 
-    if ( prevSatisf != securitySatisfaction_ )
+    if( prevSatisf != securitySatisfaction_ )
         bHasChanged_ = true;
 }
 
@@ -308,7 +308,7 @@ void PHY_RolePion_Refugee::UpdateHealthSatisfaction()
 {
     float prevSatisf = healthSatisfaction_;
     healthSatisfaction_ = owner_.GetAutomate().GetLogisticHierarchy().HasSuperior() ? 1.0f : 0.0f;
-    if ( prevSatisf != healthSatisfaction_ )
+    if( prevSatisf != healthSatisfaction_ )
         bHasChanged_ = true;
 }
 
@@ -319,7 +319,7 @@ void PHY_RolePion_Refugee::UpdateHealthSatisfaction()
 void PHY_RolePion_Refugee::AddAffinityNearUnit( DEC_Knowledge_Agent& agent )
 {
     const MIL_Army_ABC* army = agent.GetArmy();
-    if ( army && ( agent.GetPosition().SquareDistance( nearbyUnitsAffinity.position ) < nearbyUnitsAffinity.maxSqrDistance ) )
+    if( army && ( agent.GetPosition().SquareDistance( nearbyUnitsAffinity.position ) < nearbyUnitsAffinity.maxSqrDistance ) )
     {
         float agentAffinity = owner_.GetAffinity( army->GetID() );
         nearbyUnitsAffinity.affinitySum_ += agentAffinity;
@@ -328,5 +328,4 @@ void PHY_RolePion_Refugee::AddAffinityNearUnit( DEC_Knowledge_Agent& agent )
 }
 
 } // namespace refugee
-
 

@@ -218,7 +218,7 @@ double PHY_RolePionLOG_Supply::RemoveStockReservation( const PHY_DotationCategor
 // Created: NLD 2005-02-01
 // -----------------------------------------------------------------------------
 bool PHY_RolePionLOG_Supply::CanReserveStock( const PHY_DotationCategory& dotationCategory ) const
-{ 
+{
     assert( pStocks_ );
     if( !bSystemEnabled_ && !owner_.IsDead() ) // <== Stock à terre quand pion mort = libre service
         return 0.;

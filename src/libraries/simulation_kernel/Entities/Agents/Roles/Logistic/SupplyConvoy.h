@@ -34,7 +34,7 @@ public:
     //@{
     typedef std::map< const PHY_DotationCategory*, double > T_Resources;
     //@}
-        
+
 public:
     //! @name Constructors/Destructor
     //@{

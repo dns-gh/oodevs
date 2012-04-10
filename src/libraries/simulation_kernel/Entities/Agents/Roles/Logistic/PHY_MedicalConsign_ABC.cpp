@@ -231,7 +231,7 @@ PHY_RoleInterface_Medical& PHY_MedicalConsign_ABC::GetPionMedical() const
 // Name: PHY_MaintenanceConsign_ABC::GetPionMaintenance
 // Created: NLD 2006-08-11
 // -----------------------------------------------------------------------------
-void PHY_MedicalConsign_ABC::FinishSuccessfullyWithoutDelay()   
+void PHY_MedicalConsign_ABC::FinishSuccessfullyWithoutDelay()
 {
     if( pHumanState_ )
     {

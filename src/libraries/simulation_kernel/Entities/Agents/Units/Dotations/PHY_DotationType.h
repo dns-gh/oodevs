@@ -103,7 +103,7 @@ private:
 
     void RegisterDotation( const std::string& strCategoryName, xml::xistream& xis );
     //@}
-    
+
     //! @name Helpers
     //@{
     static void ReadDotation( xml::xistream& xis );

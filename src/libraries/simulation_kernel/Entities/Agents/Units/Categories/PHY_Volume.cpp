@@ -105,7 +105,6 @@ const PHY_Volume* PHY_Volume::FindVolume( unsigned int nID )
     return it == volumes_.end() ? 0 : it->second;
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PHY_Volume::GetVolumes
 // Created: NLD 2004-08-05

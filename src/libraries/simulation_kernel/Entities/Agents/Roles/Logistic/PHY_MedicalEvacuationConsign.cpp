@@ -273,7 +273,6 @@ void PHY_MedicalEvacuationConsign::EnterStateDiagnosing()
     ResetTimer( PHY_HumanWound::GetDiagnosticTime() );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: PHY_MedicalEvacuationConsign::EnterStateWaitingForCollection
 // Created: NLD 2005-01-10

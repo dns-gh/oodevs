@@ -114,7 +114,7 @@ private:
 
 protected:
     PHY_MedicalHumanState*   pHumanState_;
-   
+
 };
 
 // -----------------------------------------------------------------------------

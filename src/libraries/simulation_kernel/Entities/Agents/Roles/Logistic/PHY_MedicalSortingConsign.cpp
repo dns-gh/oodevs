@@ -106,7 +106,7 @@ bool PHY_MedicalSortingConsign::DoWaitingForSorting()
                 EnterStateFinished();
                 pHumanState_ = 0; // Crade
             }
-        } 
+        }
         return false;
     }
 
