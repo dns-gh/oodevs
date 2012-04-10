@@ -275,7 +275,7 @@ std::string Controller::GetNode( const Request_ABC& request )
 std::string Controller::CreateNode( const Request_ABC& request )
 {
     const std::string name = RequireParameter< std::string >( "name", request );
-    LOG_INFO( log_ ) << "[web] /create_node name:" << name;
+    LOG_INFO( log_ ) << "[web] /create_node name: " << name;
     return WriteHttpReply( agent_.CreateNode( name ) );
 }
 
