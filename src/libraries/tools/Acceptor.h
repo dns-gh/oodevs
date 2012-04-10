@@ -33,6 +33,8 @@ public:
 
     //! @name Operations
     //@{
+    void LockConnections();
+    void UnlockConnections();
     void DenyConnections();
     void AllowConnections();
 	bool IsAllowingConnections() const;
@@ -58,6 +60,7 @@ private:
     boost::asio::io_service& service_;
     boost::asio::ip::tcp::acceptor acceptor_;
     unsigned short port_;
+    unsigned short lock_;
     volatile bool accept_;
     //@}
 };

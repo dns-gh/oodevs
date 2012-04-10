@@ -79,6 +79,24 @@ void ServerNetworker::AllowConnections()
 }
 
 // -----------------------------------------------------------------------------
+// Name: ServerNetworker::LockConnections
+// Created: LDC 2012-04-10
+// -----------------------------------------------------------------------------
+void ServerNetworker::LockConnections()
+{
+    acceptor_->LockConnections();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ServerNetworker::UnlockConnections
+// Created: LDC 2012-04-10
+// -----------------------------------------------------------------------------
+void ServerNetworker::UnlockConnections()
+{
+    acceptor_->UnlockConnections();
+}
+
+// -----------------------------------------------------------------------------
 // Name: ServerNetworker::IsAllowingConnections
 // Created: RPD 2012-01-06
 // -----------------------------------------------------------------------------

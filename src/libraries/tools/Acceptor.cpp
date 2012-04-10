@@ -23,6 +23,7 @@ Acceptor::Acceptor( SocketManager& manager, boost::asio::io_service& service, un
     , service_ ( service )
     , acceptor_( service )
     , port_    ( port )
+    , lock_    ( 0 )
     , accept_  ( false )
 {
     // NOTHING
@@ -56,7 +57,7 @@ void Acceptor::DenyConnections()
 // -----------------------------------------------------------------------------
 void Acceptor::AllowConnections()
 {
-	if ( accept_ )
+	if ( accept_ || lock_ )
 		return;
     accept_ = true;
     boost::asio::ip::tcp::endpoint endpoint( boost::asio::ip::tcp::v4(), port_ );
@@ -70,12 +71,33 @@ void Acceptor::AllowConnections()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Acceptor::LockConnections
+// Created: LDC 2012-04-10
+// -----------------------------------------------------------------------------
+void Acceptor::LockConnections()
+{
+    ++lock_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Acceptor::UnlockConnections
+// Created: LDC 2012-04-10
+// -----------------------------------------------------------------------------
+void Acceptor::UnlockConnections()
+{
+    if( lock_ > 0 )
+        --lock_;
+    if( !lock_ )
+        AllowConnections();
+}
+
+// -----------------------------------------------------------------------------
 // Name: Acceptor::IsAllowingConnections
 // Created: RPD 2012-01-06
 // -----------------------------------------------------------------------------
 bool Acceptor::IsAllowingConnections() const
 {
-	return accept_;
+	return !lock_ && accept_;
 }
 
 // -----------------------------------------------------------------------------

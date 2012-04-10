@@ -86,7 +86,10 @@ Replayer::Replayer( const Config& config )
     handler_.Add( new plugins::score::ScorePlugin( *clientsNetworker_, *clientsNetworker_, *clientsNetworker_, config, registrables_ ) );
     handler_.Add( new plugins::messenger::MessengerPlugin( *clientsNetworker_, *clientsNetworker_, *clientsNetworker_, config, registrables_ ) );
     handler_.Register( *services_ );
+    clientsNetworker_->LockConnections();
     loader_->Start();
+    handler_.Update();
+    clientsNetworker_->UnlockConnections();
 }
 
 // -----------------------------------------------------------------------------
