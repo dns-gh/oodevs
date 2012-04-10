@@ -55,6 +55,10 @@
         <mission name="PION MELEE Controler foule"/>
         <mission name="PION MELEE Renseigner sur foule"/>
         <mission name="PION MELEE Armer PIA"/>
+        <mission name="PION Entrer dans un reseau souterrain"/>
+        <mission name="PION Faire mouvement dans reseau souterrain"/>
+        <mission name="PION Faire mouvement via reseau souterrain"/>
+        <mission name="PION Sortir du reseau souterrain"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -1943,6 +1947,10 @@
         <mission name="PION MELEE Animer Poste De Controle"/>
         <mission name="PION MELEE Interdire foule"/>
         <mission name="PION MELEE Renseigner sur foule"/>
+        <mission name="PION Entrer dans un reseau souterrain"/>
+        <mission name="PION Faire mouvement dans reseau souterrain"/>
+        <mission name="PION Faire mouvement via reseau souterrain"/>
+        <mission name="PION Sortir du reseau souterrain"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -7348,4 +7356,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1828583852" -->
+<!-- signature="4075283604" -->
