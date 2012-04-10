@@ -251,16 +251,20 @@
         <translation>Annuler</translation>
     </message>
     <message>
-        <source>Superior</source>
-        <translation>Supérieur</translation>
-    </message>
-    <message>
         <source>Select new superior</source>
         <translation>Sélectionner le nouveau supérieur</translation>
     </message>
     <message>
         <source>Select new group</source>
         <translation>Sélectionner le nouveau groupe</translation>
+    </message>
+    <message>
+        <source>New superior</source>
+        <translation type="unfinished">Nouveau supérieur</translation>
+    </message>
+    <message>
+        <source>Entity moved: </source>
+        <translation>Unité déplacée : </translation>
     </message>
 </context>
 <context>

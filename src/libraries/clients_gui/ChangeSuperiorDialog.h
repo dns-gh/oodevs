@@ -62,6 +62,7 @@ private:
     //@{
     ChangeSuperior_ABC& changeSuperior_;
     kernel::Controllers& controllers_;
+    QLabel* name_;
     QLabel* superiorLabel_;
     QPushButton* okButton_;
     kernel::Entity_ABC* entity_;

@@ -251,15 +251,19 @@
         <translation type="unfinished">Annuler</translation>
     </message>
     <message>
-        <source>Superior</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Select new superior</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Select new group</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>New superior</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Entity moved: </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
