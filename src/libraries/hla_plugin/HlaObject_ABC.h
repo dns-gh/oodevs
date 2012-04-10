@@ -16,7 +16,7 @@ namespace hla
 {
     class UpdateFunctor_ABC;
     class AttributeIdentifier;
-    class Deserializer;
+    class Deserializer_ABC;
 }
 
 namespace plugins
@@ -41,7 +41,7 @@ public:
     //! @name Operations
     //@{
     virtual void Serialize( ::hla::UpdateFunctor_ABC& functor, bool updateAll ) const = 0;
-    virtual void Deserialize( const ::hla::AttributeIdentifier& identifier, ::hla::Deserializer deserializer ) = 0;
+    virtual void Deserialize( const ::hla::AttributeIdentifier& identifier, ::hla::Deserializer_ABC& deserializer ) = 0;
     //@}
 };
 

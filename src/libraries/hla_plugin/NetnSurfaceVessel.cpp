@@ -52,7 +52,7 @@ void NetnSurfaceVessel::Serialize( ::hla::UpdateFunctor_ABC& functor, bool updat
 // Name: NetnSurfaceVessel::Deserialize
 // Created: SLI 2011-10-04
 // -----------------------------------------------------------------------------
-void NetnSurfaceVessel::Deserialize( const ::hla::AttributeIdentifier& /*identifier*/, ::hla::Deserializer /*deserializer*/ )
+void NetnSurfaceVessel::Deserialize( const ::hla::AttributeIdentifier& /*identifier*/, ::hla::Deserializer_ABC& /*deserializer*/ )
 {
     throw std::runtime_error( __FUNCTION__ " not implemented" );
 }

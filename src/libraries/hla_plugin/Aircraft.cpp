@@ -59,7 +59,7 @@ void Aircraft::Serialize( ::hla::UpdateFunctor_ABC& functor, bool updateAll ) co
 // Name: Aircraft::Deserialize
 // Created: SLI 2011-10-04
 // -----------------------------------------------------------------------------
-void Aircraft::Deserialize( const ::hla::AttributeIdentifier& /*identifier*/, ::hla::Deserializer /*deserializer*/ )
+void Aircraft::Deserialize( const ::hla::AttributeIdentifier& /*identifier*/, ::hla::Deserializer_ABC& /*deserializer*/ )
 {
     throw std::runtime_error( __FUNCTION__ " not implemented" );
 }

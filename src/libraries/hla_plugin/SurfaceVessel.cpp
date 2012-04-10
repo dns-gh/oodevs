@@ -59,7 +59,7 @@ void SurfaceVessel::Serialize( ::hla::UpdateFunctor_ABC& functor, bool updateAll
 // Name: SurfaceVessel::Deserialize
 // Created: SLI 2011-10-04
 // -----------------------------------------------------------------------------
-void SurfaceVessel::Deserialize( const ::hla::AttributeIdentifier& /*identifier*/, ::hla::Deserializer /*deserializer*/ )
+void SurfaceVessel::Deserialize( const ::hla::AttributeIdentifier& /*identifier*/, ::hla::Deserializer_ABC& /*deserializer*/ )
 {
     throw std::runtime_error( __FUNCTION__ " not implemented" );
 }

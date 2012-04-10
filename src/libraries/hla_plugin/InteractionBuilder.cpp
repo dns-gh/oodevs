@@ -33,11 +33,11 @@ namespace
         {
             // NOTHING
         }
-        virtual void Encode( ::hla::Serializer& serializer, const T& object ) const
+        virtual void Encode( ::hla::Serializer_ABC& serializer, const T& object ) const
         {
             ::hla::Encodable< T, R >::Encode( serializer, object );
         }
-        virtual void Decode( ::hla::Deserializer& deserializer, T& object ) const
+        virtual void Decode( ::hla::Deserializer_ABC& deserializer, T& object ) const
         {
             try
             {

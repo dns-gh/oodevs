@@ -96,11 +96,11 @@ BOOST_FIXTURE_TEST_CASE( agregate_entity_serializes_all_its_attributes, Register
 namespace
 {
     template< typename T >
-    bool CheckSerialization( const ::hla::Serializer& serializer, const T& expected )
+    bool CheckSerialization( ::hla::T_SerializerPtr serializer, const T& expected )
     {
-        std::vector< int8 > buffer( serializer.GetSize() );
+        std::vector< int8 > buffer( serializer->GetSize() );
         if( !buffer.empty() )
-            serializer.CopyTo( &buffer[0] );
+            serializer->CopyTo( &buffer[0] );
         ::hla::Deserializer deserializer( &buffer[0], buffer.size() );
         T actual;
         deserializer >> actual;
@@ -108,9 +108,9 @@ namespace
         BOOST_CHECK_THROW( deserializer >> actual, std::runtime_error );
         return true;
     }
-    bool CheckSize( const ::hla::Serializer& serializer, unsigned int size )
+    bool CheckSize( ::hla::T_SerializerPtr serializer, unsigned int size )
     {
-        BOOST_CHECK_EQUAL( size, serializer.GetSize() );
+        BOOST_CHECK_EQUAL( size, serializer->GetSize() );
         return true;
     }
     const unsigned int SILENT_ENTITY_SIZE = 2 * sizeof( int16 ) + 6 * sizeof( int8 ) + 1 * sizeof( int16 ) + sizeof( int32 );

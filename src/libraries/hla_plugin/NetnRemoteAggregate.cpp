@@ -21,13 +21,13 @@ using namespace plugins::hla;
 
 namespace
 {
-    void ReadCallsign( ::hla::Deserializer& deserializer, const std::string& identifier, RemoteAgentListener_ABC& listener )
+    void ReadCallsign( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, RemoteAgentListener_ABC& listener )
     {
         UnicodeString callsign;
         callsign.Deserialize( deserializer );
         listener.CallsignChanged( identifier, callsign.str() );
     }
-    void ReadUniqueId( ::hla::Deserializer& deserializer, const std::string& identifier, RemoteAgentListener_ABC& listener )
+    void ReadUniqueId( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, RemoteAgentListener_ABC& listener )
     {
         UniqueId uniqueId;
         uniqueId.Deserialize( deserializer );
@@ -69,7 +69,7 @@ void NetnRemoteAggregate::Serialize( ::hla::UpdateFunctor_ABC& /*functor*/, bool
 // Name: NetnRemoteAggregate::Deserialize
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-void NetnRemoteAggregate::Deserialize( const ::hla::AttributeIdentifier& identifier, ::hla::Deserializer deserializer )
+void NetnRemoteAggregate::Deserialize( const ::hla::AttributeIdentifier& identifier, ::hla::Deserializer_ABC& deserializer )
 {
     aggregate_->Deserialize( identifier, deserializer );
     attributes_->Deserialize( identifier.ToString(), deserializer );

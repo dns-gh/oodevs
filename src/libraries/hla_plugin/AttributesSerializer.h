@@ -20,7 +20,7 @@
 namespace hla
 {
     class UpdateFunctor_ABC;
-    class Serializer;
+    class Serializer_ABC;
 }
 
 namespace plugins
@@ -65,14 +65,14 @@ public:
     void Register( const std::string& name, const T& value )
     {
         boost::shared_ptr< T > copy( new T( value ) );
-        T_Serializer serializer = boost::bind( &T::Serialize< ::hla::Serializer >, copy, _1 );
+        T_Serializer serializer = boost::bind( &T::Serialize< ::hla::Serializer_ABC >, copy, _1 );
         attributes_.push_back( std::make_pair( name, serializer ) );
     }
     template< typename T >
     void Update( const std::string& name, const T& value )
     {
         boost::shared_ptr< T > copy( new T( value ) );
-        T_Serializer serializer = boost::bind( &T::Serialize< ::hla::Serializer >, copy, _1 );
+        T_Serializer serializer = boost::bind( &T::Serialize< ::hla::Serializer_ABC >, copy, _1 );
         for( T_Attributes::iterator it = attributes_.begin(); it != attributes_.end(); ++it )
             if( it->first == name )
                 it->second = serializer;
@@ -83,7 +83,7 @@ public:
 private:
     //! @name Types
     //@{
-    typedef boost::function< void( ::hla::Serializer& ) > T_Serializer;
+    typedef boost::function< void( ::hla::Serializer_ABC& ) > T_Serializer;
     typedef std::pair< std::string, T_Serializer > T_Attribute;
     typedef std::vector< T_Attribute > T_Attributes;
     typedef std::vector< std::string > T_Updates;

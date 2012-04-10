@@ -11,48 +11,48 @@
 #define plugins_hla_SerializationTools_h
 
 #include <hla/Encodable.h>
-#include <hla/Serializer.h>
-#include <hla/Deserializer.h>
+#include <hla/Serializer_ABC.h>
+#include <hla/Deserializer_ABC.h>
 #include <vector>
 
 namespace hla
 {
     template< unsigned N >
-    Serializer& operator<<( Serializer& serializer, const unsigned char (&buffer)[N] )
+    Serializer_ABC& operator<<( Serializer_ABC& serializer, const unsigned char (&buffer)[N] )
     {
         for( unsigned i = 0; i < N; ++i )
             serializer << buffer[i];
         return serializer;
     }
     template< unsigned N >
-    Deserializer& operator>>( Deserializer& deserializer, unsigned char (&buffer)[N] )
+    Deserializer_ABC& operator>>( Deserializer_ABC& deserializer, unsigned char (&buffer)[N] )
     {
         for( unsigned i = 0; i < N; ++i )
             deserializer >> buffer[i];
         return deserializer;
     }
     template< typename T >
-    Serializer& operator<<( Serializer& serializer, const std::vector< T >& values )
+    Serializer_ABC& operator<<( Serializer_ABC& serializer, const std::vector< T >& values )
     {
         for( std::vector< T >::const_iterator it = values.begin(); it != values.end(); ++it )
             serializer << *it;
         return serializer;
     }
     template< typename T >
-    Deserializer& operator>>( Deserializer& deserializer, std::vector< T >& values )
+    Deserializer_ABC& operator>>( Deserializer_ABC& deserializer, std::vector< T >& values )
     {
         for( std::vector< T >::iterator it = values.begin(); it != values.end(); ++it )
             deserializer >> *it;
         return deserializer;
     }
     template< typename T >
-    Serializer& operator<<( Serializer& serializer, const T& parameter )
+    Serializer_ABC& operator<<( Serializer_ABC& serializer, const T& parameter )
     {
         parameter.Serialize( serializer );
         return serializer;
     }
     template< typename T >
-    Deserializer& operator>>( Deserializer& deserializer, T& parameter )
+    Deserializer_ABC& operator>>( Deserializer_ABC& deserializer, T& parameter )
     {
         parameter.Deserialize( deserializer );
         return deserializer;

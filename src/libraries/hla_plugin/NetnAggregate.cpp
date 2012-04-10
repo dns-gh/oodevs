@@ -59,7 +59,7 @@ void NetnAggregate::Serialize( ::hla::UpdateFunctor_ABC& functor, bool updateAll
 // Name: NetnAggregate::Deserialize
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-void NetnAggregate::Deserialize( const ::hla::AttributeIdentifier& /*identifier*/, ::hla::Deserializer /*deserializer*/ )
+void NetnAggregate::Deserialize( const ::hla::AttributeIdentifier& /*identifier*/, ::hla::Deserializer_ABC& /*deserializer*/ )
 {
     throw std::runtime_error( __FUNCTION__ " not implemented" );
 }

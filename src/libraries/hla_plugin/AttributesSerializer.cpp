@@ -39,8 +39,8 @@ namespace
     template< typename T >
     void Serialize( ::hla::UpdateFunctor_ABC& functor, const T& attribute )
     {
-        ::hla::Serializer serializer;
-        attribute.second( serializer );
+        ::hla::T_SerializerPtr serializer( new ::hla::Serializer() );
+        attribute.second( *serializer );
         functor.Visit( ::hla::AttributeIdentifier( attribute.first ), serializer );
     }
 }

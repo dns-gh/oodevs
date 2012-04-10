@@ -45,7 +45,7 @@ void AttributesDeserializer::Register( const std::string& attribute, T_Notificat
 // Name: AttributesDeserializer::Deserialize
 // Created: SLI 2011-10-10
 // -----------------------------------------------------------------------------
-void AttributesDeserializer::Deserialize( const std::string& identifier, ::hla::Deserializer& deserializer )
+void AttributesDeserializer::Deserialize( const std::string& identifier, ::hla::Deserializer_ABC& deserializer )
 {
     T_Notifications::const_iterator notification = notifications_.find( identifier );
     if( notification != notifications_.end() )

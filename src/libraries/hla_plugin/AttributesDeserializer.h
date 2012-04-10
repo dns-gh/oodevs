@@ -16,7 +16,7 @@
 
 namespace hla
 {
-    class Deserializer;
+    class Deserializer_ABC;
 }
 
 namespace plugins
@@ -36,7 +36,7 @@ class AttributesDeserializer : private boost::noncopyable
 public:
     //! @name Types
     //@{
-    typedef boost::function< void( ::hla::Deserializer&, const std::string&, RemoteAgentListener_ABC& ) > T_Notification;
+    typedef boost::function< void( ::hla::Deserializer_ABC&, const std::string&, RemoteAgentListener_ABC& ) > T_Notification;
     //@}
 
 public:
@@ -49,7 +49,7 @@ public:
     //! @name Operations
     //@{
     void Register( const std::string& attribute, T_Notification notification );
-    void Deserialize( const std::string& identifier, ::hla::Deserializer& deserializer );
+    void Deserialize( const std::string& identifier, ::hla::Deserializer_ABC& deserializer );
     //@}
 
 private:

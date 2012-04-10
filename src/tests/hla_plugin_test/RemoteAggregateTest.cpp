@@ -53,24 +53,27 @@ BOOST_FIXTURE_TEST_CASE( remote_aggregate_cannot_be_serialized, Fixture )
 BOOST_FIXTURE_TEST_CASE( remote_aggregate_deserializes_spatial_attribute_and_notifies_listener, Fixture )
 {
     Spatial spatial( true, 1., 2., 3., 4., 5. );
-    spatial.Serialize( serializer );
+    spatial.Serialize( static_cast< ::hla::Serializer_ABC& >( serializer )  );
     MOCK_EXPECT( listener, Moved ).once().with( "identifier", mock::close( 1., 0.001 ), mock::close( 2., 0.001 ) );
-    aggregate.Deserialize( "Spatial", Deserialize() );
+    ::hla::Deserializer deserializer( Deserialize() );
+    aggregate.Deserialize( "Spatial", deserializer );
 }
 
 BOOST_FIXTURE_TEST_CASE( remote_aggregate_deserializes_force_identifier_attribute_and_notifies_listener, Fixture )
 {
     serializer << static_cast< int8 >( rpr::Friendly );
     MOCK_EXPECT( listener, SideChanged ).once().with( "identifier", rpr::Friendly );
-    aggregate.Deserialize( "ForceIdentifier", Deserialize() );
+    ::hla::Deserializer deserializer( Deserialize() );
+    aggregate.Deserialize( "ForceIdentifier", deserializer );
 }
 
 BOOST_FIXTURE_TEST_CASE( remote_aggregate_deserializes_aggregate_marking_attribute_and_notifies_listener, Fixture )
 {
     const AggregateMarking marking( "name", 42 );
-    marking.Serialize( serializer );
+    marking.Serialize( static_cast< ::hla::Serializer_ABC& >( serializer ) );
     MOCK_EXPECT( listener, NameChanged ).once().with( "identifier", "name42" );
-    aggregate.Deserialize( "AggregateMarking", Deserialize() );
+    ::hla::Deserializer deserializer( Deserialize() );
+    aggregate.Deserialize( "AggregateMarking", deserializer );
 }
 
 BOOST_FIXTURE_TEST_CASE( remote_aggregate_deserializes_entity_type_attribute_and_notifies_listener, Fixture )
@@ -78,14 +81,18 @@ BOOST_FIXTURE_TEST_CASE( remote_aggregate_deserializes_entity_type_attribute_and
     const rpr::EntityType type( "1 2 3" );
     type.Serialize( serializer );
     MOCK_EXPECT( listener, TypeChanged ).once().with( "identifier", rpr::EntityType( "1 2 3 0 0 0 0" ) );
-    aggregate.Deserialize( "EntityType", Deserialize() );
+    ::hla::Deserializer deserializer( Deserialize() );
+    aggregate.Deserialize( "EntityType", deserializer );
 }
 
 BOOST_FIXTURE_TEST_CASE( remote_aggregate_deserializes_silent_entities_attribute_and_notifies_listener_for_each_entity, Fixture )
 {
     const uint16 numberOfSilentEntities = 2;
     serializer << numberOfSilentEntities;
-    aggregate.Deserialize( "NumberOfSilentEntities", Deserialize() );
+    {
+        ::hla::Deserializer deserializer( Deserialize() );
+        aggregate.Deserialize( "NumberOfSilentEntities", deserializer );
+    }
     serializer = ::hla::Serializer();
     const SilentEntity firstSilentEntity( rpr::EntityType( "1 2 3" ), 42 );
     const SilentEntity secondSilentEntity( rpr::EntityType( "4 5 6" ), 43 );
@@ -94,5 +101,8 @@ BOOST_FIXTURE_TEST_CASE( remote_aggregate_deserializes_silent_entities_attribute
     mock::sequence s;
     MOCK_EXPECT( listener, EquipmentUpdated ).once().in( s ).with( "identifier", rpr::EntityType( "1 2 3" ), 42u );
     MOCK_EXPECT( listener, EquipmentUpdated ).once().in( s ).with( "identifier", rpr::EntityType( "4 5 6" ), 43u );
-    aggregate.Deserialize( "SilentEntities", Deserialize() );
+    {
+        ::hla::Deserializer deserializer( Deserialize() );
+        aggregate.Deserialize( "SilentEntities", deserializer );
+    }
 }

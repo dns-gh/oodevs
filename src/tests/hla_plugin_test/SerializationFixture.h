@@ -26,7 +26,7 @@ namespace
         ::hla::Deserializer Serialize( const T& value, unsigned int messageSize )
         {
             ::hla::Serializer serializer;
-            value.Serialize( serializer );
+            value.Serialize( static_cast< ::hla::Serializer_ABC& >( serializer ) );
             boost::shared_ptr< T_Buffer > buffer( new T_Buffer( serializer.GetSize() ) );
             if( !buffer->empty() )
                 serializer.CopyTo( &(*buffer)[0] );
@@ -39,7 +39,7 @@ namespace
         ::hla::Deserializer Serialize( const T& value )
         {
             ::hla::Serializer serializer;
-            value.Serialize( serializer );
+            value.Serialize( static_cast< ::hla::Serializer_ABC& >( serializer ) );
             boost::shared_ptr< T_Buffer > buffer( new T_Buffer( serializer.GetSize() ) );
             if( !buffer->empty() )
                 serializer.CopyTo( &(*buffer)[0] );

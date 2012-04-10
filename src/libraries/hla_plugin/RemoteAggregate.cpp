@@ -17,44 +17,44 @@
 #include "RemoteAgentListener_ABC.h"
 #include "rpr/EntityType.h"
 #include <hla/AttributeIdentifier.h>
-#include <hla/Deserializer.h>
+#include <hla/Deserializer_ABC.h>
 #include <boost/bind.hpp>
 
 using namespace plugins::hla;
 
 namespace
 {
-    void ReadSpatial( ::hla::Deserializer& deserializer, const std::string& identifier, RemoteAgentListener_ABC& listener )
+    void ReadSpatial( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, RemoteAgentListener_ABC& listener )
     {
         Spatial spatial;
         spatial.Deserialize( deserializer );
         listener.Moved( identifier, spatial.worldLocation_.Latitude(), spatial.worldLocation_.Longitude() );
     }
-    void ReadForceIdentifier( ::hla::Deserializer& deserializer, const std::string& identifier, RemoteAgentListener_ABC& listener )
+    void ReadForceIdentifier( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, RemoteAgentListener_ABC& listener )
     {
         int8 force;
         deserializer >> force;
         listener.SideChanged( identifier, static_cast< rpr::ForceIdentifier >( force ) );
     }
-    void ReadAggregateMarking( ::hla::Deserializer& deserializer, const std::string& identifier, RemoteAgentListener_ABC& listener )
+    void ReadAggregateMarking( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, RemoteAgentListener_ABC& listener )
     {
         AggregateMarking marking;
         marking.Deserialize( deserializer );
         listener.NameChanged( identifier, marking.str() );
     }
-    void ReadEntityType( ::hla::Deserializer& deserializer, const std::string& identifier, RemoteAgentListener_ABC& listener )
+    void ReadEntityType( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, RemoteAgentListener_ABC& listener )
     {
         rpr::EntityType type;
         type.Deserialize( deserializer );
         listener.TypeChanged( identifier, type );
     }
-    void ReadNumberOfSilentEntities( ::hla::Deserializer& deserializer, const std::string& /*identifier*/, RemoteAgentListener_ABC& /*listener*/, unsigned int& numberOfSilentEntities )
+    void ReadNumberOfSilentEntities( ::hla::Deserializer_ABC& deserializer, const std::string& /*identifier*/, RemoteAgentListener_ABC& /*listener*/, unsigned int& numberOfSilentEntities )
     {
         uint16 number = 0;
         deserializer >> number;
         numberOfSilentEntities = number;
     }
-    void ReadSilentEntities( ::hla::Deserializer& deserializer, const std::string& identifier, RemoteAgentListener_ABC& listener, unsigned int numberOfSilentEntities )
+    void ReadSilentEntities( ::hla::Deserializer_ABC& deserializer, const std::string& identifier, RemoteAgentListener_ABC& listener, unsigned int numberOfSilentEntities )
     {
         for( unsigned int i = 0; i < numberOfSilentEntities; ++i )
         {
@@ -103,7 +103,7 @@ void RemoteAggregate::Serialize( ::hla::UpdateFunctor_ABC& /*functor*/, bool /*u
 // Name: RemoteAggregate::Deserialize
 // Created: SLI 2011-07-26
 // -----------------------------------------------------------------------------
-void RemoteAggregate::Deserialize( const ::hla::AttributeIdentifier& identifier, ::hla::Deserializer deserializer )
+void RemoteAggregate::Deserialize( const ::hla::AttributeIdentifier& identifier, ::hla::Deserializer_ABC& deserializer )
 {
     attributes_->Deserialize( identifier.ToString(), deserializer );
 }
