@@ -14,19 +14,24 @@
     <!-- Libraries -->
     <target name="libraries" depends="runtime,host,web" description="build all libraries"/>
 
-    <defineset define="_CRT_SECURE_NO_WARNINGS"/>
-    <defineset define="_SCL_SECURE_NO_WARNINGS"/>
-
     <target name="runtime" description="build runtime library">
-        <build-lib name="runtime"/>
+        <build-lib name="runtime">
+            <defineset define="_CRT_SECURE_NO_WARNINGS"/>
+        </build-lib>
     </target>
 
     <target name="host" description="build host library">
-        <build-lib name="host" depends="xerces"/>
+        <build-lib name="host" depends="xerces">
+            <defineset define="_CRT_SECURE_NO_WARNINGS"/>
+            <defineset define="_SCL_SECURE_NO_WARNINGS"/>
+        </build-lib>
     </target>
 
     <target name="web" description="build web library">
-        <build-lib name="web"/>
+        <build-lib name="web">
+            <defineset define="_CRT_SECURE_NO_WARNINGS"/>
+            <defineset define="_SCL_SECURE_NO_WARNINGS"/>
+        </build-lib>
     </target>
 
     <!-- Samples -->
@@ -35,6 +40,7 @@
     <target name="sample_agent" depends="runtime,host,web" description="build sample host agent">
         <build-app name="sample_agent" subsystem="console" depends="boost,xerces" root="${samples.dir}" libs="mongoose@{suffix},runtime@{suffix},host@{suffix},web@{suffix}">
             <syslibset libs="ws2_32"/>
+            <defineset define="_CRT_SECURE_NO_WARNINGS"/>
         </build-app>
     </target>
 
@@ -42,15 +48,21 @@
     <target name="tests" depends="host_test,runtime_test,web_test" description="build tests"/>
 
     <target name="runtime_test" depends="runtime" description="build runtime tests">
-        <build-test name="runtime" depends="boost,xerces" libs="runtime@{suffix}"/>
+        <build-test name="runtime" depends="boost,xerces" libs="runtime@{suffix}">
+            <defineset define="_CRT_SECURE_NO_WARNINGS"/>
+        </build-test>
     </target>
 
     <target name="host_test" depends="host,runtime" description="build host tests">
-        <build-test name="host" depends="boost,xerces" libs="host@{suffix},runtime@{suffix}"/>
+        <build-test name="host" depends="boost,xerces" libs="host@{suffix},runtime@{suffix}">
+            <defineset define="_CRT_SECURE_NO_WARNINGS"/>
+        </build-test>
     </target>
 
     <target name="web_test" depends="web" description="build web tests">
-        <build-test name="web" depends="boost,xerces" libs="web@{suffix}"/>
+        <build-test name="web" depends="boost,xerces" libs="web@{suffix}">
+            <defineset define="_CRT_SECURE_NO_WARNINGS"/>
+        </build-test>
     </target>
 
     <!-- Reports -->
