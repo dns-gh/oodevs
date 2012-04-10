@@ -54,13 +54,13 @@ public:
     //@{
              Session( cpplog::BaseLogger& log,
                       const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
-                      const FileSystem_ABC& system, const boost::filesystem::wpath& data,
-                      const boost::filesystem::wpath& applications,
+                      const FileSystem_ABC& system, const boost::filesystem::path& data,
+                      const boost::filesystem::path& applications,
                       const boost::uuids::uuid& node, const std::string& exercise,
                       const std::string& name, PortFactory_ABC& ports );
              Session( cpplog::BaseLogger& log,
                       const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system,
-                      const boost::filesystem::wpath& data, const boost::filesystem::wpath& applications,
+                      const boost::filesystem::path& data, const boost::filesystem::path& applications,
                       xml::xistream& xis, PortFactory_ABC& ports );
     virtual ~Session();
     //@}
@@ -92,7 +92,7 @@ private:
     //@{
     void CheckPaths() const;
     std::string ToXml() const;
-    boost::filesystem::wpath GetPath() const;
+    boost::filesystem::path GetPath() const;
     //@}
 
 private:
@@ -101,8 +101,8 @@ private:
     mutable cpplog::BaseLogger& log_;
     const runtime::Runtime_ABC& runtime_;
     const FileSystem_ABC& system_;
-    const boost::filesystem::wpath data_;
-    const boost::filesystem::wpath applications_;
+    const boost::filesystem::path data_;
+    const boost::filesystem::path applications_;
     const boost::uuids::uuid id_;
     const boost::uuids::uuid node_;
     const std::string exercise_;

@@ -109,8 +109,8 @@ namespace
         MockFileSystem  system;
         MockPortFactory ports;
         const int port;
-        const boost::filesystem::wpath data;
-        const boost::filesystem::wpath apps;
+        const boost::filesystem::path data;
+        const boost::filesystem::path apps;
         const std::string exercise;
         const std::string name;
         const int processPid;

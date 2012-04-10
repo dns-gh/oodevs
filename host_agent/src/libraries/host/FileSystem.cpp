@@ -39,7 +39,7 @@ FileSystem::~FileSystem()
 // Name: FileSystem::IsFile
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
-bool FileSystem::IsFile( const boost::filesystem::wpath& path ) const
+bool FileSystem::IsFile( const boost::filesystem::path& path ) const
 {
     return boost::filesystem::is_regular_file( path );
 }
@@ -48,7 +48,7 @@ bool FileSystem::IsFile( const boost::filesystem::wpath& path ) const
 // Name: FileSystem::IsDirectory
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
-bool FileSystem::IsDirectory( const boost::filesystem::wpath& path ) const
+bool FileSystem::IsDirectory( const boost::filesystem::path& path ) const
 {
     return boost::filesystem::is_directory( path );
 }
@@ -57,7 +57,7 @@ bool FileSystem::IsDirectory( const boost::filesystem::wpath& path ) const
 // Name: FileSystem::Exists
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
-bool FileSystem::Exists( const boost::filesystem::wpath& path ) const
+bool FileSystem::Exists( const boost::filesystem::path& path ) const
 {
     return boost::filesystem::exists( path );
 }
@@ -66,17 +66,17 @@ bool FileSystem::Exists( const boost::filesystem::wpath& path ) const
 // Name: FileSystem::CopyDirectory
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
-void FileSystem::CopyDirectory( const boost::filesystem::wpath& src, const boost::filesystem::wpath& dst ) const
+void FileSystem::CopyDirectory( const boost::filesystem::path& src, const boost::filesystem::path& dst ) const
 {
     // TODO Use wrecursive_directory_iterator
     if( IsFile( src ) )
         return boost::filesystem::copy_file( src, dst / src.filename() );
     else if( !IsDirectory( src ) )
         return;
-    const boost::filesystem::wpath sub = dst / src.filename();
+    const boost::filesystem::path sub = dst / src.filename();
     if( !boost::filesystem::create_directory( sub ) )
-        throw std::runtime_error( "unable to create " + runtime::Utf8Convert( sub.string() ) );
-    for( boost::filesystem::wdirectory_iterator it( src ); it != boost::filesystem::wdirectory_iterator(); ++it )
+        throw std::runtime_error( "unable to create " + sub.string() );
+    for( boost::filesystem::recursive_directory_iterator it( src ); it != boost::filesystem::recursive_directory_iterator(); ++it )
         CopyDirectory( *it, sub );
 }
 
@@ -84,7 +84,7 @@ void FileSystem::CopyDirectory( const boost::filesystem::wpath& src, const boost
 // Name: FileSystem::CopyFile
 // Created: BAX 2012-03-29
 // -----------------------------------------------------------------------------
-void FileSystem::CopyFile( const boost::filesystem::wpath& src, const boost::filesystem::wpath& dst ) const
+void FileSystem::CopyFile( const boost::filesystem::path& src, const boost::filesystem::path& dst ) const
 {
     boost::filesystem::copy_file( src, dst / src.filename() );
 }
@@ -93,14 +93,14 @@ void FileSystem::CopyFile( const boost::filesystem::wpath& src, const boost::fil
 // Name: FileSystem::CreateDirectory
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
-void FileSystem::CreateDirectory( const boost::filesystem::wpath& path ) const
+void FileSystem::CreateDirectory( const boost::filesystem::path& path ) const
 {
     boost::filesystem::create_directories( path );
 }
 
 namespace
 {
-    std::string TryRemove( const boost::filesystem::wpath& path )
+    std::string TryRemove( const boost::filesystem::path& path )
     {
         try
         {
@@ -118,20 +118,20 @@ namespace
 // Name: FileSystem::Remove
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
-void FileSystem::Remove( const boost::filesystem::wpath& path ) const
+void FileSystem::Remove( const boost::filesystem::path& path ) const
 {
     std::string reply = TryRemove( path );
     if( !reply.empty() )
         reply = TryRemove( path );
     if( !reply.empty() )
-        LOG_ERROR( log_ ) << "[file] Unable to remove path " + runtime::Utf8Convert( path.string() ) + ", " + reply;
+        LOG_ERROR( log_ ) << "[file] Unable to remove path " + path.string() + ", " + reply;
 }
 
 // -----------------------------------------------------------------------------
 // Name: FileSystem::WriteFile
 // Created: BAX 2012-03-20
 // -----------------------------------------------------------------------------
-void FileSystem::WriteFile( const boost::filesystem::wpath& path, const std::string& content ) const
+void FileSystem::WriteFile( const boost::filesystem::path& path, const std::string& content ) const
 {
     boost::filesystem::ofstream( path ) << content;
 }
@@ -140,7 +140,7 @@ void FileSystem::WriteFile( const boost::filesystem::wpath& path, const std::str
 // Name: FileSystem::ReadFile
 // Created: BAX 2012-03-21
 // -----------------------------------------------------------------------------
-std::string FileSystem::ReadFile( const boost::filesystem::wpath& path ) const
+std::string FileSystem::ReadFile( const boost::filesystem::path& path ) const
 {
     boost::filesystem::ifstream ifs( path );
     return std::string( std::istreambuf_iterator< char >( ifs ), std::istreambuf_iterator< char >() );
@@ -150,12 +150,12 @@ std::string FileSystem::ReadFile( const boost::filesystem::wpath& path ) const
 // Name: FileSystem::Glob
 // Created: BAX 2012-03-21
 // -----------------------------------------------------------------------------
-std::vector< boost::filesystem::wpath > FileSystem::Glob( const boost::filesystem::wpath& path, const std::wstring& name ) const
+std::vector< boost::filesystem::path > FileSystem::Glob( const boost::filesystem::path& path, const std::wstring& name ) const
 {
-    std::vector< boost::filesystem::wpath > paths;
+    std::vector< boost::filesystem::path > paths;
     if( IsDirectory( path ) )
-        for( boost::filesystem::wrecursive_directory_iterator it( path ); it != boost::filesystem::wrecursive_directory_iterator(); ++it )
-            if( IsFile( *it ) && it->filename() == name )
+        for( boost::filesystem::recursive_directory_iterator it( path ); it != boost::filesystem::recursive_directory_iterator(); ++it )
+            if( IsFile( *it ) && it->path().filename() == name )
                 paths.push_back( *it );
     return paths;
 }

@@ -108,9 +108,9 @@ namespace
         MockPortFactory ports;
         const int port;
         const int host;
-        const boost::filesystem::wpath java;
-        const boost::filesystem::wpath jar;
-        const boost::filesystem::wpath web;
+        const boost::filesystem::path java;
+        const boost::filesystem::path jar;
+        const boost::filesystem::path web;
         const std::string name;
         const int processPid;
         const std::string processName;

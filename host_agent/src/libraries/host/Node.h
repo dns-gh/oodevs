@@ -54,13 +54,13 @@ public:
     //@{
              Node( cpplog::BaseLogger& log,
                    const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
-                   const FileSystem_ABC& system, const boost::filesystem::wpath& java,
-                   const boost::filesystem::wpath& jar, const boost::filesystem::wpath& web, int host,
+                   const FileSystem_ABC& system, const boost::filesystem::path& java,
+                   const boost::filesystem::path& jar, const boost::filesystem::path& web, int host,
                    const std::string& name, PortFactory_ABC& ports );
              Node( cpplog::BaseLogger& log,
                    const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system,
-                   const boost::filesystem::wpath& java, const boost::filesystem::wpath& jar,
-                   const boost::filesystem::wpath& web, xml::xistream& xis, PortFactory_ABC& ports );
+                   const boost::filesystem::path& java, const boost::filesystem::path& jar,
+                   const boost::filesystem::path& web, xml::xistream& xis, PortFactory_ABC& ports );
     virtual ~Node();
     //@}
 
@@ -78,7 +78,7 @@ private:
     //@{
     void CheckPaths() const;
     std::string ToXml() const;
-    boost::filesystem::wpath GetPath() const;
+    boost::filesystem::path GetPath() const;
     //@}
 
 private:
@@ -87,9 +87,9 @@ private:
     mutable cpplog::BaseLogger& log_;
     const runtime::Runtime_ABC& runtime_;
     const FileSystem_ABC& system_;
-    const boost::filesystem::wpath java_;
-    const boost::filesystem::wpath jar_;
-    const boost::filesystem::wpath web_;
+    const boost::filesystem::path java_;
+    const boost::filesystem::path jar_;
+    const boost::filesystem::path web_;
     const boost::uuids::uuid id_;
     const int host_;
     const std::string name_;

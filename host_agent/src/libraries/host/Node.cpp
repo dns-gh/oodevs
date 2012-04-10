@@ -47,9 +47,9 @@ namespace
     // Name: Utf8Convert
     // Created: BAX 2012-04-03
     // -----------------------------------------------------------------------------
-    std::string Utf8Convert( const boost::filesystem::wpath& path )
+    std::string Utf8Convert( const boost::filesystem::path& path )
     {
-        return runtime::Utf8Convert( path.string() );
+        return runtime::Utf8Convert( path.wstring() );
     }
 
     template< typename T >
@@ -78,8 +78,8 @@ namespace
 // -----------------------------------------------------------------------------
 Node::Node( cpplog::BaseLogger& log,
             const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids, const FileSystem_ABC& system,
-            const boost::filesystem::wpath& java, const boost::filesystem::wpath& jar,
-            const boost::filesystem::wpath& web, int host, const std::string& name, PortFactory_ABC& ports )
+            const boost::filesystem::path& java, const boost::filesystem::path& jar,
+            const boost::filesystem::path& web, int host, const std::string& name, PortFactory_ABC& ports )
     : log_    ( log )
     , runtime_( runtime )
     , system_ ( system )
@@ -103,8 +103,8 @@ Node::Node( cpplog::BaseLogger& log,
 // -----------------------------------------------------------------------------
 Node::Node( cpplog::BaseLogger& log,
             const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system,
-            const boost::filesystem::wpath& java, const boost::filesystem::wpath& jar,
-            const boost::filesystem::wpath& web, xml::xistream& xis, PortFactory_ABC& ports )
+            const boost::filesystem::path& java, const boost::filesystem::path& jar,
+            const boost::filesystem::path& web, xml::xistream& xis, PortFactory_ABC& ports )
     : log_    ( log )
     , runtime_( runtime )
     , system_ ( system )
@@ -164,7 +164,7 @@ boost::uuids::uuid Node::GetTag() const
 // -----------------------------------------------------------------------------
 void Node::Save() const
 {
-    const boost::filesystem::wpath path = GetPath();
+    const boost::filesystem::path path = GetPath();
     system_.CreateDirectory( path );
     system_.WriteFile( path / L"node.id", ToXml() );
 }
@@ -209,9 +209,9 @@ std::string Node::ToXml() const
 // Name: Node::GetPath
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-boost::filesystem::wpath Node::GetPath() const
+boost::filesystem::path Node::GetPath() const
 {
-    boost::filesystem::wpath path = jar_;
+    boost::filesystem::path path = jar_;
     return path.remove_filename() / boost::lexical_cast< std::wstring >( id_ );
 }
 
@@ -223,8 +223,8 @@ void Node::Start()
 {
     boost::lock_guard< boost::shared_mutex > lock( *access_ );
     if( process_ ) return;
-    const boost::filesystem::wpath path = GetPath();
-    boost::filesystem::wpath jar_path = jar_;
+    const boost::filesystem::path path = GetPath();
+    boost::filesystem::path jar_path = jar_;
     process_ = runtime_.Start( Utf8Convert( java_ ), boost::assign::list_of
             ( " " "-jar \""  + Utf8Convert( jar_.filename() ) + "\"" )
             ( "--root \""  + Utf8Convert( web_ ) + "\"" )

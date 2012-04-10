@@ -47,9 +47,9 @@ namespace
     // Name: Utf8Convert
     // Created: BAX 2012-03-19
     // -----------------------------------------------------------------------------
-    std::string Utf8Convert( const boost::filesystem::wpath& path )
+    std::string Utf8Convert( const boost::filesystem::path& path )
     {
-        return runtime::Utf8Convert( path.string() );
+        return runtime::Utf8Convert( path.wstring() );
     }
 
     // -----------------------------------------------------------------------------
@@ -112,8 +112,8 @@ namespace
 // -----------------------------------------------------------------------------
 Session::Session( cpplog::BaseLogger& log,
                   const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
-                  const FileSystem_ABC& system, const boost::filesystem::wpath& data,
-                  const boost::filesystem::wpath& applications,
+                  const FileSystem_ABC& system, const boost::filesystem::path& data,
+                  const boost::filesystem::path& applications,
                   const boost::uuids::uuid& node, const std::string& exercise,
                   const std::string& name, PortFactory_ABC& ports )
     : log_         ( log )
@@ -140,7 +140,7 @@ Session::Session( cpplog::BaseLogger& log,
 // -----------------------------------------------------------------------------
 Session::Session( cpplog::BaseLogger& log,
                   const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system,
-                  const boost::filesystem::wpath& data, const boost::filesystem::wpath& applications,
+                  const boost::filesystem::path& data, const boost::filesystem::path& applications,
                   xml::xistream& xis, PortFactory_ABC& ports )
     : log_         ( log )
     , runtime_     ( runtime )
@@ -171,7 +171,7 @@ void Session::CheckPaths() const
         throw std::runtime_error( Utf8Convert( data_ ) + " is not a directory" );
     if( !system_.IsDirectory( applications_ ) )
         throw std::runtime_error( Utf8Convert( applications_ ) + " is not a directory " );
-    const boost::filesystem::wpath app = applications_ / L"simulation_app.exe";
+    const boost::filesystem::path app = applications_ / L"simulation_app.exe";
     if( !system_.Exists( app ) )
         throw std::runtime_error( Utf8Convert( app ) + " is missing" );
     if( !system_.IsFile( app ) )
@@ -214,7 +214,7 @@ boost::uuids::uuid Session::GetNode() const
 // -----------------------------------------------------------------------------
 void Session::Save() const
 {
-    const boost::filesystem::wpath path = GetPath();
+    const boost::filesystem::path path = GetPath();
     system_.CreateDirectory( path );
     system_.WriteFile( path / L"session.id", ToXml() );
 }
@@ -356,7 +356,7 @@ std::string WriteConfiguration( const std::string& name, int base )
 // Name: Session::GetPath
 // Created: BAX 2012-03-29
 // -----------------------------------------------------------------------------
-boost::filesystem::wpath Session::GetPath() const
+boost::filesystem::path Session::GetPath() const
 {
     return data_ / L"exercises" / runtime::Utf8Convert( exercise_ ) / L"sessions" / boost::lexical_cast< std::wstring >( id_ );
 }
@@ -369,7 +369,7 @@ void Session::Start()
 {
     boost::lock_guard< boost::shared_mutex > lock( *access_ );
     if( process_ ) return;
-    const boost::filesystem::wpath path = GetPath();
+    const boost::filesystem::path path = GetPath();
     system_.WriteFile( path / L"session.xml", WriteConfiguration( name_, port_->Get() ) );
     process_ = runtime_.Start( Utf8Convert( applications_ / L"simulation_app.exe" ), boost::assign::list_of
             ( "--root-dir=\""      + Utf8Convert( data_ ) + "\"" )

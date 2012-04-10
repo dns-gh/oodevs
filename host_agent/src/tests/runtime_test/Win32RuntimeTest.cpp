@@ -49,10 +49,25 @@ namespace
         return true;
     }
 
+    struct PtrPrinter
+    {
+        explicit PtrPrinter(void* ptr)
+            : ptr_( ptr )
+        {
+            // NOTHING
+        }
+        friend std::ostream& operator<<( std::ostream& sink, PtrPrinter printer )
+        {
+            return sink << printer.ptr_;
+        }
+        private:
+        void* ptr_;
+    };
+
     int FakeGetProcessName( HANDLE handle, wchar_t* dst, int size, HANDLE dummy )
     {
         BOOST_CHECK_EQUAL( handle, dummy );
-        std::string name = boost::lexical_cast< std::string >( dummy );
+        std::string name = boost::lexical_cast< std::string >( PtrPrinter( dummy ) );
         std::wstring wname = Utf8Convert( name );
         int count = std::min( size, static_cast< int >( wname.size() ) );
         std::copy( wname.begin(), wname.begin() + count, dst );
@@ -85,7 +100,7 @@ namespace
     void CheckProcess( const Process_ABC& process, int pid, HANDLE handle )
     {
         BOOST_CHECK_EQUAL( process.GetPid(),  pid );
-        BOOST_CHECK_EQUAL( process.GetName(), boost::lexical_cast< std::string >( handle ) );
+        BOOST_CHECK_EQUAL( process.GetName(), boost::lexical_cast< std::string >( PtrPrinter( handle ) ) );
     }
 }
 

@@ -40,8 +40,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              NodeFactory( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
-                          const FileSystem_ABC& system, PortFactory_ABC& ports, const boost::filesystem::wpath& java,
-                          const boost::filesystem::wpath& jar, const boost::filesystem::wpath& web, int host );
+                          const FileSystem_ABC& system, PortFactory_ABC& ports, const boost::filesystem::path& java,
+                          const boost::filesystem::path& jar, const boost::filesystem::path& web, int host );
     virtual ~NodeFactory();
     //@}
 
@@ -58,9 +58,9 @@ private:
     const runtime::Runtime_ABC& runtime_;
     const UuidFactory_ABC& uuids_;
     const FileSystem_ABC& system_;
-    const boost::filesystem::wpath java_;
-    const boost::filesystem::wpath jar_;
-    const boost::filesystem::wpath web_;
+    const boost::filesystem::path java_;
+    const boost::filesystem::path jar_;
+    const boost::filesystem::path web_;
     const int host_;
     PortFactory_ABC& ports_;
     //@}

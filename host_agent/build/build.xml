@@ -78,7 +78,7 @@
 
     <!-- Configure -->
     <target name="configure" description="retrieve dependencies">
-        <update name="boost"/>
+        <update name="boost" version="1.48"/>
         <update name="mongoose"/>
         <update name="turtle" version="trunk"/>
         <update name="xeumeuleu"/>

@@ -28,8 +28,8 @@ using namespace host;
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
 SessionFactory::SessionFactory( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
-                                const FileSystem_ABC& system, PortFactory_ABC& ports, const boost::filesystem::wpath& data,
-                                const boost::filesystem::wpath& applications )
+                                const FileSystem_ABC& system, PortFactory_ABC& ports, const boost::filesystem::path& data,
+                                const boost::filesystem::path& applications )
     : log_         ( log )
     , runtime_     ( runtime )
     , uuids_       ( uuids )
@@ -66,7 +66,7 @@ boost::shared_ptr< Session_ABC > SessionFactory::Create( const boost::uuids::uui
 SessionFactory_ABC::T_Sessions SessionFactory::Reload() const
 {
     SessionFactory_ABC::T_Sessions sessions;
-    BOOST_FOREACH( const boost::filesystem::wpath& path, system_.Glob( data_ / L"exercises", L"session.id" ) )
+    BOOST_FOREACH( const boost::filesystem::path& path, system_.Glob( data_ / L"exercises", L"session.id" ) )
         try
         {
             xml::xistringstream xis( system_.ReadFile( path ) );
@@ -75,7 +75,7 @@ SessionFactory_ABC::T_Sessions SessionFactory::Reload() const
         }
         catch( const std::exception& err )
         {
-            LOG_WARN( log_ ) << "[session] Unable to reload session from " << runtime::Utf8Convert( path.string() ) << " - " << err.what();
+            LOG_WARN( log_ ) << "[session] Unable to reload session from " << path.string() << " - " << err.what();
             continue; // skip invalid session
         }
     return sessions;
@@ -88,11 +88,11 @@ SessionFactory_ABC::T_Sessions SessionFactory::Reload() const
 std::vector< std::string > SessionFactory::GetExercises() const
 {
     std::vector< std::string > exercises;
-    const boost::filesystem::wpath root = data_ / L"exercises";
+    const boost::filesystem::path root = data_ / L"exercises";
     size_t offset = root.string().size() + 1;
-    BOOST_FOREACH( boost::filesystem::wpath path, system_.Glob( root, L"exercise.xml" ) )
+    BOOST_FOREACH( boost::filesystem::path path, system_.Glob( root, L"exercise.xml" ) )
     {
-        const std::wstring leaf = path.remove_filename().string();
+        const std::wstring leaf = path.remove_filename().wstring();
         exercises.push_back( runtime::Utf8Convert( leaf.substr( offset, leaf.size() - offset - 1 ) ) );
     }
     return exercises;

@@ -40,8 +40,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              SessionFactory( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
-                             const FileSystem_ABC& system, PortFactory_ABC& ports, const boost::filesystem::wpath& data,
-                             const boost::filesystem::wpath& applications );
+                             const FileSystem_ABC& system, PortFactory_ABC& ports, const boost::filesystem::path& data,
+                             const boost::filesystem::path& applications );
     virtual ~SessionFactory();
     //@}
 
@@ -59,9 +59,9 @@ private:
     const runtime::Runtime_ABC& runtime_;
     const UuidFactory_ABC& uuids_;
     const FileSystem_ABC& system_;
-    const boost::filesystem::wpath data_;
-    const boost::filesystem::wpath applications_;
-    const boost::filesystem::wpath output_;
+    const boost::filesystem::path data_;
+    const boost::filesystem::path applications_;
+    const boost::filesystem::path output_;
     PortFactory_ABC& ports_;
     //@}
 };
