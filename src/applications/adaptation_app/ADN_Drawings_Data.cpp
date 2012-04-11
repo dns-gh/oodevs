@@ -81,11 +81,11 @@ namespace
 
 
 // -----------------------------------------------------------------------------
-// ADN_Drawings_Data::SymbolInfo
+// ADN_Drawings_Data::DrawingInfo
 // -----------------------------------------------------------------------------
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Drawings_Data::SymbolInfo::SymbolInfo
+// Name: ADN_Drawings_Data::DrawingInfo::DrawingInfo
 // Created: ABR 2011-04-18
 // -----------------------------------------------------------------------------
 ADN_Drawings_Data::DrawingInfo::DrawingInfo( xml::xistream& xis, svg::TextRenderer& renderer, kernel::GlTools_ABC& tools, unsigned int category )
@@ -104,7 +104,7 @@ ADN_Drawings_Data::DrawingInfo::DrawingInfo( xml::xistream& xis, svg::TextRender
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Drawings_Data::SymbolInfo::~SymbolInfo
+// Name: ADN_Drawings_Data::DrawingInfo::~DrawingInfo
 // Created: SBO 2011-04-18
 // -----------------------------------------------------------------------------
 ADN_Drawings_Data::DrawingInfo::~DrawingInfo()
@@ -113,7 +113,7 @@ ADN_Drawings_Data::DrawingInfo::~DrawingInfo()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Drawings_Data::SymbolInfo::GetNodeName
+// Name: ADN_Drawings_Data::DrawingInfo::GetNodeName
 // Created: SBO 2011-04-18
 // -----------------------------------------------------------------------------
 std::string ADN_Drawings_Data::DrawingInfo::GetNodeName()
@@ -122,7 +122,7 @@ std::string ADN_Drawings_Data::DrawingInfo::GetNodeName()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Drawings_Data::SymbolInfo::GetItemName
+// Name: ADN_Drawings_Data::DrawingInfo::GetItemName
 // Created: SBO 2011-04-18
 // -----------------------------------------------------------------------------
 std::string ADN_Drawings_Data::DrawingInfo::GetItemName()
@@ -131,7 +131,7 @@ std::string ADN_Drawings_Data::DrawingInfo::GetItemName()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Drawings_Data::SymbolInfo::GetPixmap
+// Name: ADN_Drawings_Data::DrawingInfo::GetPixmap
 // Created: ABR 2011-04-21
 // -----------------------------------------------------------------------------
 const QPixmap& ADN_Drawings_Data::DrawingInfo::GetPixmap() const
@@ -140,7 +140,7 @@ const QPixmap& ADN_Drawings_Data::DrawingInfo::GetPixmap() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Drawings_Data::SymbolInfo::GetCode
+// Name: ADN_Drawings_Data::DrawingInfo::GetCode
 // Created: ABR 2011-04-21
 // -----------------------------------------------------------------------------
 const std::string ADN_Drawings_Data::DrawingInfo::GetCode() const
@@ -167,7 +167,7 @@ unsigned int ADN_Drawings_Data::DrawingInfo::GetCategory() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Drawings_Data::SymbolInfo::Initialize
+// Name: ADN_Drawings_Data::DrawingInfo::Initialize
 // Created: ABR 2011-04-20
 // -----------------------------------------------------------------------------
 void ADN_Drawings_Data::DrawingInfo::Initialize()
@@ -195,7 +195,7 @@ void ADN_Drawings_Data::DrawingInfo::Initialize()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Drawings_Data::SymbolInfo::Draw
+// Name: ADN_Drawings_Data::DrawingInfo::Draw
 // Created: ABR 2011-04-20
 // -----------------------------------------------------------------------------
 void ADN_Drawings_Data::DrawingInfo::Draw()
@@ -235,6 +235,12 @@ void ADN_Drawings_Data::DrawingInfo::Draw()
         glTranslatef( SYMBOL_ICON_SIZE / 2.f / SYMBOL_SCALE_RATIO_FOR_METER, SYMBOL_ICON_SIZE / 5.f / SYMBOL_SCALE_RATIO_FOR_METER, 0.f );
     }
 
+    if( category_ == 1 && geometry == "point" )
+    {
+        glScalef( 1.2f * SYMBOL_SCALE_RATIO_FOR_METER, 1.2f * SYMBOL_SCALE_RATIO_FOR_METER, 0.f );
+        glTranslatef( SYMBOL_ICON_SIZE / 2.4f / SYMBOL_SCALE_RATIO_FOR_METER, SYMBOL_ICON_SIZE / 2.4f / SYMBOL_SCALE_RATIO_FOR_METER, 0.f );
+    }
+
     // $$$$ ABR 2011-04-21: draw icon
     if( geometry == "polygon" )
         DrawOnPolygon();
@@ -242,13 +248,15 @@ void ADN_Drawings_Data::DrawingInfo::Draw()
         DrawOnLine();
     else if( geometry == "point" )
         DrawOnPoint();
+    else if( geometry == "circle" )
+        DrawOnCircle();
 
     glPopMatrix();
     glPopAttrib();
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Drawings_Data::SymbolInfo::DrawOnPoint
+// Name: ADN_Drawings_Data::DrawingInfo::DrawOnPoint
 // Created: ABR 2011-04-20
 // -----------------------------------------------------------------------------
 void ADN_Drawings_Data::DrawingInfo::DrawOnPoint()
@@ -259,7 +267,7 @@ void ADN_Drawings_Data::DrawingInfo::DrawOnPoint()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Drawings_Data::SymbolInfo::DrawOnLine
+// Name: ADN_Drawings_Data::DrawingInfo::DrawOnLine
 // Created: ABR 2011-04-20
 // -----------------------------------------------------------------------------
 void ADN_Drawings_Data::DrawingInfo::DrawOnLine()
@@ -271,7 +279,7 @@ void ADN_Drawings_Data::DrawingInfo::DrawOnLine()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Drawings_Data::SymbolInfo::DrawOnPolygon
+// Name: ADN_Drawings_Data::DrawingInfo::DrawOnPolygon
 // Created: ABR 2011-04-20
 // -----------------------------------------------------------------------------
 void ADN_Drawings_Data::DrawingInfo::DrawOnPolygon()
@@ -286,7 +294,21 @@ void ADN_Drawings_Data::DrawingInfo::DrawOnPolygon()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Drawings_Data::SymbolInfo::DrawItem
+// Name: ADN_Drawings_Data::DrawingInfo::DrawOnCircle
+// Created: JSR 2012-04-11
+// -----------------------------------------------------------------------------
+void ADN_Drawings_Data::DrawingInfo::DrawOnCircle()
+{
+    T_PointVector points;
+    static const float twoPi = 2.f * std::acos( -1.f );
+    for( float angle = 0; angle < twoPi; angle += twoPi / 20.f + 1e-7f )
+        points.push_back( geometry::Point2f( SYMBOL_ICON_SIZE / 2  + ( SYMBOL_ICON_SIZE / 2 - SYMBOL_ICON_MARGIN ) * std::cos( angle ), SYMBOL_ICON_SIZE / 2  + ( SYMBOL_ICON_SIZE / 2 - SYMBOL_ICON_MARGIN ) * std::sin( angle ) ) );
+    points.push_back( geometry::Point2f( SYMBOL_ICON_SIZE - SYMBOL_ICON_MARGIN, SYMBOL_ICON_SIZE / 2 ) );
+    DrawItem( points );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Drawings_Data::DrawingInfo::DrawItem
 // Created: ABR 2011-04-20
 // -----------------------------------------------------------------------------
 void ADN_Drawings_Data::DrawingInfo::DrawItem( const T_PointVector& points )
@@ -375,6 +397,8 @@ namespace
     {
         if( name == "Taches" || name == "Tasks" )
             return ADN_Drawings_Data::eTasks;
+        else if( name == "Tactical graphics" || name == "Objets tactiques graphiques" || name == "Objects tactiques graphiques" )
+            return ADN_Drawings_Data::eObjects;
         return ADN_Drawings_Data::eGraphics;
     }
 }
@@ -437,15 +461,16 @@ ADN_Drawings_Data::DrawingInfo* const ADN_Drawings_Data::GetDrawing( const std::
 // Name: ADN_Drawings_Data::GetGeometryDrawings
 // Created: ABR 2011-04-21
 // -----------------------------------------------------------------------------
-ADN_Drawings_Data::T_DrawingInfoVector& ADN_Drawings_Data::GetGeometryDrawings( const std::string geometries )
+ADN_Drawings_Data::T_DrawingInfoVector& ADN_Drawings_Data::GetGeometryDrawings( const std::string geometries, T_Types category )
 {
     T_DrawingInfoVector& currentVector = geometryMap_[ geometries ];
     if( currentVector.empty() )
     {
-        QStringList qlist = QStringList::split( ',', geometries.c_str() );
+        QRegExp reg( "[, ]" );
+        QStringList qlist = QStringList::split( reg, geometries.c_str() );
 
         for( IT_DrawingInfoVector it = drawings_.begin(); it != drawings_.end(); ++it )
-            if( (*it)->GetGeometry() == geometries )
+            if( T_Types( (*it)->GetCategory() ) == category && qlist.contains( (*it)->GetGeometry().c_str() ) )
                 currentVector.AddItem( *it );
     }
     return currentVector;

@@ -12,6 +12,7 @@
 #include "DrawingCategory.h"
 #include "resources.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Circle.h"
 #include "clients_kernel/Lines.h"
 #include "clients_kernel/Point.h"
 #include "clients_kernel/Polygon.h"
@@ -33,14 +34,15 @@ DrawingTemplate::DrawingTemplate( xml::xistream& input, const QString& category,
     , markerMiddle_ ( 0 )
     , markerEnd_    ( 0 )
     , marker_       ( 0 )
-    , linePixmap_   ( MAKE_PIXMAP( line ) )
-    , pointPixmap_  ( MAKE_PIXMAP( point ) )
-    , polygonPixmap_( MAKE_PIXMAP( polygon ) )
     , lineUnit      ( eNone )
     , startUnit     ( eNone )
     , middleUnit    ( eNone )
     , endUnit       ( eNone )
     , markerUnit    ( eNone )
+    , linePixmap_   ( MAKE_PIXMAP( line ) )
+    , pointPixmap_  ( MAKE_PIXMAP( point ) )
+    , polygonPixmap_( MAKE_PIXMAP( polygon ) )
+    , circlePixmap_ ( MAKE_PIXMAP( circle ) )
 {
     SVGFactory factory( renderer_ );
 
@@ -123,6 +125,7 @@ QPixmap DrawingTemplate::GetPixmap() const
     return type_ == "line"    ? linePixmap_ :
            type_ == "point"   ? pointPixmap_ :
            type_ == "polygon" ? polygonPixmap_ :
+           type_ == "circle"  ? circlePixmap_ :
            QPixmap();
 }
 
@@ -153,6 +156,8 @@ kernel::Location_ABC* DrawingTemplate::CreateLocation() const
         return new kernel::Point();
     if( type_ == "polygon" )
         return new kernel::Polygon();
+    if( type_ == "circle" )
+        return new kernel::Circle();
     throw std::runtime_error( __FUNCTION__ " Invalid drawing geometry type." );
 }
 
@@ -207,13 +212,13 @@ void DrawingTemplate::Draw( const T_PointVector& points, svg::RenderingContext_A
     {
         geometry::Rectangle2f boundingBox;
         geometry::Point2f center;
-        const std::size_t count = points.size() - 1;
-        for( CIT_PointVector it = points.begin(); it != points.end() - 1; ++it )
+        const std::size_t count = points.size();
+        for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
         {
             boundingBox.Incorporate( *it );
             center += geometry::Vector2f( it->X() / count, it->Y() / count );
         }
-        DrawMarker( context, tools, *marker_, markerUnit, center, geometry::Vector2f( 1.f, 0.f ) * boundingBox.Width() );
+        DrawMarker( context, tools, *marker_, markerUnit, center, geometry::Vector2f( 1.f, 0.f ) * std::max( count == 2 ? 90.f : 0, boundingBox.Width() ) );
     }
 }
 
@@ -257,9 +262,9 @@ void DrawingTemplate::DrawSegment( svg::RenderingContext_ABC& context, const ker
 float DrawingTemplate::ComputeFactor( Unit u, float base, const kernel::GlTools_ABC& tools ) const
 {
     if( u == ePercent )
-        return base;
+        return std::max( 0.8f, base );
     else if( u == ePixel )
-        return tools.Pixels();
+        return std::max( 0.8f, tools.Pixels() );
     return 1;
 }
 

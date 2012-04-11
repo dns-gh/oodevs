@@ -239,6 +239,8 @@ void DrawerPanel::StartDrawing()
             layer_.StartPolygon( *shape );
         else if( selectedStyle_->GetType() == "point" )
             layer_.StartPoint( *shape );
+        else if( selectedStyle_->GetType() == "circle" )
+            layer_.StartCircle( *shape );
         else
             throw std::runtime_error( __FUNCTION__ " Unhandled shape geometry." );
     }

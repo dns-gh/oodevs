@@ -18,12 +18,6 @@
 #include "clients_kernel/Types.h"
 #include "svgl/TextRenderer.h"
 
-#define SYMBOL_PIXMAP_SIZE           64
-#define SYMBOL_ICON_SIZE             128
-#define SYMBOL_ICON_MARGIN           24
-#define SYMBOL_BG_MARGIN             2
-#define SYMBOL_SCALE_RATIO_FOR_METER 0.1f
-
 namespace xml
 {
     class xistream;

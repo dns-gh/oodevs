@@ -113,8 +113,16 @@ private:
     svg::Node_ABC* markerEnd_;
     svg::Node_ABC* marker_;
 
-    Unit lineUnit, startUnit, middleUnit, endUnit, markerUnit;
-    QPixmap linePixmap_, pointPixmap_, polygonPixmap_;
+    Unit lineUnit;
+    Unit startUnit;
+    Unit middleUnit;
+    Unit endUnit;
+    Unit markerUnit;
+
+    QPixmap linePixmap_;
+    QPixmap pointPixmap_;
+    QPixmap polygonPixmap_;
+    QPixmap circlePixmap_;
     //@}
 };
 
