@@ -52,7 +52,7 @@ ADN_Objects_Data_ObjectInfos::ADN_Objects_Data_ObjectInfos()
         symbols_[ i ].SetParentNode( *this );
         geometries_[ i ].SetParentNode( *this );
         geometries_[ i ] = false;
-        symbols_[ i ].SetVector( drawingsData.GetGeometryDrawings( locations[ i ] ) );
+        symbols_[ i ].SetVector( drawingsData.GetGeometryDrawings( locations[ i ], "graphics" ) );
     }
     InitializeCapacities();
 }
@@ -177,7 +177,7 @@ void ADN_Objects_Data_ObjectInfos::ReadArchive( xml::xistream& xis )
 {
     ADN_Drawings_Data& drawingsData = ADN_Workspace::GetWorkspace().GetDrawings().GetData();
     for( int i = 0; i < 4; ++i )
-        symbols_[ i ].SetVector( drawingsData.GetGeometryDrawings( locations[ i ] ) );
+        symbols_[ i ].SetVector( drawingsData.GetGeometryDrawings( locations[ i ], "graphics" ) );
 
     xis >> xml::attribute( "name", strName_ )
         >> xml::attribute( "type", strType_ )

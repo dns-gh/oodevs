@@ -17,12 +17,6 @@
 #include "clients_kernel/Types.h"
 #include "svgl/TextRenderer.h"
 
-#define SYMBOL_PIXMAP_SIZE           64
-#define SYMBOL_ICON_SIZE             128
-#define SYMBOL_ICON_MARGIN           24
-#define SYMBOL_BG_MARGIN             2
-#define SYMBOL_SCALE_RATIO_FOR_METER 0.1f
-
 namespace xml
 {
     class xistream;
@@ -119,7 +113,7 @@ public:
     virtual void Load( const tools::Loader_ABC& fileLoader );
     virtual void Reset();
     DrawingInfo* const GetDrawing( const std::string& code ) const;
-    T_DrawingInfoVector& GetGeometryDrawings( const std::string geometries );
+    T_DrawingInfoVector& GetGeometryDrawings( const std::string geometries, const std::string& category );
     T_DrawingInfoVector& GetCategoryDrawings( const std::string& category );
     //@}
 
