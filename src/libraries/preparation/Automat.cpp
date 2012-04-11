@@ -36,8 +36,7 @@ Automat::Automat( const AutomatType& type, Controller& controller, IdManager& id
     , type_          ( type )
     , verticalOffset_( 0.f )
 {
-    name_ = name.isEmpty() ? type.GetName().c_str() + QString( " [%1]" ).arg( id_ )
-                           : name + " " + QString( "[%1]" ).arg( id_ );
+    name_ = name.isEmpty() ? type.GetName().c_str() : name;
     RegisterSelf( *this );
     CreateDictionary( controller );
 }
