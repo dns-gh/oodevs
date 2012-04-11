@@ -382,6 +382,7 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="entities" max-occurs="unbounded" min-occurs="1" name="Cibles" optional="false" type="AgentKnowledge"/>
+      <parameter dia-name="positions" max-occurs="unbounded" min-occurs="1" name="Positions de tir" optional="true" type="Point"/>
     </mission>
     <mission dia-behavior="france.military.platoon.tasks.Escorter" dia-type="france.military.platoon.tasks.Escorter" id="2069" name="PION MELEE Escorter" package="none">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3061,4 +3062,4 @@
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PoursuivreConvoi" id="406" name="Poursuivre convoi"/>
   </fragorders>
 </missions>
-<!-- signature="1130180631" -->
+<!-- signature="3739580671" -->

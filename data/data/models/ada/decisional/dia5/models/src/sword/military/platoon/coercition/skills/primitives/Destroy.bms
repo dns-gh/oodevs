@@ -33,9 +33,17 @@ rootnode
     -- For each objective of the skill, try to destroy it.
     -- --------------------------------------------------------------------------------
     activate = function( self )
+
+        local positions
+        if self.params.positions == NIL then
+            positions = sword.military.queries.tactical.getPositionsToDestroy[ "execute" ]( { elementsToDestroy = self.params.entities } )
+        else
+            positions = self.params.positions
+        end
+
         for _, entity in pairs( self.params.entities ) do
             Activate( skill.nodes.DestroyElement, entity:destructionPriority(),
-                { entity = entity, positions = self.params.positions } )
+                { entity = entity, positions = positions } )
         end
     end
 }
