@@ -11,6 +11,7 @@
 #define __LoadableSpinBox_h_
 
 #include "LoadableField.h"
+#include "RichSpinBox.h"
 
 namespace gui
 {
@@ -21,7 +22,7 @@ namespace gui
 */
 // Created: BCI 2011-05-09
 // =============================================================================
-class LoadableSpinBox : public LoadableFieldTemplate< QSpinBox >
+class LoadableSpinBox : public LoadableFieldTemplate< RichSpinBox >
 {
 public:
 

@@ -119,7 +119,7 @@ namespace
             for( int i = 0; i < timeTable.time_table_item_size(); ++i )
             {
                 const sword::TimeTable_TimeMapping& map = timeTable.time_table_item( i );
-                table->setItem( i, 0, new Q3TableItem( table, Q3TableItem::Never, QString::number( map.tick() ) ) );
+                table->setItem( i, 0, new Q3TableItem( table, Q3TableItem::Never, locale().toString( map.tick() ) ) );
                 table->setItem( i, 1, new Q3TableItem( table, Q3TableItem::Never, map.simulation_time().data().c_str() ) );
                 table->setItem( i, 2, new Q3TableItem( table, Q3TableItem::Never, map.real_time().data().c_str() ) );
             }
@@ -143,7 +143,7 @@ void ReplayerToolbar::NotifyUpdated( const Simulation::sTimeTable& timeTable )
 // -----------------------------------------------------------------------------
 void ReplayerToolbar::OnSliderMoved( int frame )
 {
-    value_->setText( tr( "Tick %1" ).arg( frame + 1 ) );
+    value_->setText( tr( "Tick %L1" ).arg( frame + 1 ) );
 }
 
 // -----------------------------------------------------------------------------

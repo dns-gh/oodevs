@@ -19,6 +19,10 @@
 #include "clients_kernel/Tools.h"
 #include "clients_gui/VerticalHeaderTableView.h"
 #include "ENT/ENT_Tr.h"
+#pragma warning( push, 1 )
+#pragma warning( disable : 4512 )
+#include <boost/algorithm/string.hpp>
+#pragma warning( pop )
 
 namespace
 {
@@ -28,6 +32,34 @@ namespace
         settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
         return settings.readEntry( "/Common/Language", QTextCodec::locale() );
     }
+
+    bool TransformLang( std::string& language )
+    {
+        if( language != "fr" && language != "en" && language != "es" )
+        {
+            language = boost::algorithm::to_lower_copy( language );
+            if( language.find( "fr" ) != std::string::npos )
+                language = "fr";
+            else if( language.find( "es" ) != std::string::npos )
+                language = "es";
+            else
+                language = "en";
+            return true;
+        }
+        return false;
+    }
+
+    class Locale : public QLocale
+    {
+    public:
+        Locale( const std::string& locale )
+            : QLocale( locale == "en" ? QLocale::English : locale == "fr" ? QLocale::French : QLocale::Spanish, locale == "en" ? QLocale::UnitedStates : locale == "fr" ? QLocale::France: QLocale::Spain )
+        {
+            // NOTHING
+        }
+
+        virtual ~Locale(){}
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -54,6 +86,10 @@ Application::Application( int& argc, char** argv, const QString& license )
     AddTranslator( locale, "resources_gradients" );
     ENT_Tr::InitTranslations();
     setStyle( new gui::VerticalHeaderStyle( style() ) );
+
+    std::string localeStr = locale.toStdString();
+    TransformLang( localeStr );
+    QLocale::setDefault( Locale( localeStr ) );
 }
 
 // -----------------------------------------------------------------------------

@@ -86,6 +86,9 @@ public:
     virtual QValidator::State validate( QString& input, int& nPos ) const;
 
 private:
+    BaseType ComputeLinkedSum() const;
+
+private:
     typedef std::vector< ADN_Type_ABC< BaseType >* >    T_ValuesVector;
     typedef typename T_ValuesVector::const_iterator   CIT_ValuesVector;
 

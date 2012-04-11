@@ -31,7 +31,7 @@ Inhabitant::Inhabitant( const kernel::InhabitantType& type, int number, const QS
     if( healthPeopleNumber )
         healthNeed_ = static_cast< float >( number ) / healthPeopleNumber;
     RegisterSelf( *this );
-    name_ = name.isEmpty() ? tools::translate( "Population", "%1 [%2]" ).arg( type.GetName().c_str() ).arg( id_ ) : name;
+    name_ = name.isEmpty() ? tools::translate( "Population", "%1 [%L2]" ).arg( type.GetName().c_str() ).arg( id_ ) : name;
     CreateDictionary( controller );
 }
 

@@ -18,6 +18,7 @@
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_gui/resources.h"
+#include "clients_gui/RichSpinBox.h"
 #include "gaming/statusicons.h"
 #include "protocol/ServerPublisher_ABC.h"
 #include "protocol/SimulationSenders.h"
@@ -28,11 +29,11 @@ using namespace kernel;
 
 namespace
 {
-    class SpinBox : public QSpinBox
+    class SpinBox : public gui::RichSpinBox
     {
     public:
         SpinBox( int minValue, int maxValue, int step, QWidget* parent, SIMControlToolbar& toolbar )
-            : QSpinBox( minValue, maxValue, step, parent )
+            : gui::RichSpinBox( parent, minValue, maxValue, step )
             , toolBar_( toolbar )
         {
             // NOTHING

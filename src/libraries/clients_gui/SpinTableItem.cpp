@@ -9,6 +9,7 @@
 
 #include "clients_gui_pch.h"
 #include "SpinTableItem.h"
+#include "RichSpinBox.h"
 
 using namespace gui;
 
@@ -23,11 +24,11 @@ using namespace gui;
 template<>
 QWidget* SpinTableItem< int >::createEditor() const
 {
-    QSpinBox* spinBox = new QSpinBox( minValue_, maxValue_, step_, table()->viewport(), "spintableitem" );
+    QSpinBox* spinBox = new RichSpinBox( table()->viewport(), minValue_, maxValue_, step_ );
     QObject::connect( spinBox, SIGNAL( valueChanged( int ) ), table(), SLOT( doValueChanged() ) );
 
     if( !text().isNull() )
-        spinBox->setValue( text().toInt() );
+        spinBox->setValue( locale_.toInt( text() ) );
     else
         spinBox->setValue( 0 );
     return spinBox;
@@ -41,7 +42,7 @@ template<>
 void SpinTableItem< int >::setContentFromEditor( QWidget* widget )
 {
     if( widget->inherits( "QSpinBox" ) )
-        setText( static_cast< QSpinBox* >( widget )->text() );
+        setText( locale_.toString( static_cast< QSpinBox* >( widget )->value() ) );
     else
         Q3TableItem::setContentFromEditor( widget );
 }
@@ -57,14 +58,11 @@ void SpinTableItem< int >::setContentFromEditor( QWidget* widget )
 template<>
 QWidget* SpinTableItem< double >::createEditor() const
 {
-    QDoubleSpinBox* spinBox = new QDoubleSpinBox( table()->viewport() );
-    spinBox->setRange( minValue_, maxValue_ );
-    spinBox->setSingleStep( step_ );
-    spinBox->setDecimals( 2 );
+    QDoubleSpinBox* spinBox = new RichDoubleSpinBox( table()->viewport(), minValue_, maxValue_, step_, 2 );
     QObject::connect( spinBox, SIGNAL( valueChanged( double ) ), table(), SLOT( doValueChanged() ) );
 
     if( !text().isNull() )
-        spinBox->setValue( text().toDouble() );
+        spinBox->setValue( locale_.toDouble( text() ) );
     else
         spinBox->setValue( 0.0 );
     return spinBox;
@@ -78,7 +76,7 @@ template<>
 void SpinTableItem< double >::setContentFromEditor( QWidget* widget )
 {
     if( widget->inherits( "QDoubleSpinBox" ) )
-        setText( static_cast< QDoubleSpinBox* >( widget )->text() );
+        setText( locale_.toString( static_cast< QDoubleSpinBox* >( widget )->value() ) );
     else
         Q3TableItem::setContentFromEditor( widget );
 }

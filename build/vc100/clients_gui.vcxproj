@@ -784,6 +784,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\libraries\clients_gui\RichListItem.h" />
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichSpinBox.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\SearchButton.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\SearchLineEdit.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\SearchListView.h" />

@@ -113,7 +113,7 @@ QString NewProfileDialog::BuildUniqueLogin() const
     static const QString defaultName = tr( "New profile" );
     QString name;
     int i = 0;
-    while( model_.Exists( name = defaultName + ( i > 0 ? " (" + QString::number( i ) + ")" : "" ) ) )
+    while( model_.Exists( name = defaultName + ( i > 0 ? " (" + locale().toString( i ) + ")" : "" ) ) )
         ++i;
     return name;
 }

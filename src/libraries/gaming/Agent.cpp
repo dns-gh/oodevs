@@ -31,7 +31,7 @@ Agent::Agent( const sword::UnitCreation& message, Controller& controller, const 
     , type_( resolver.Get( message.type().id() ) )
 {
     if( name_.isEmpty() )
-        name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.unit().id() );
+        name_ = QString( "%1 %L2" ).arg( type_.GetName().c_str() ).arg( message.unit().id() );
     RegisterSelf( *this );
     CreateDictionary( controller );
 }

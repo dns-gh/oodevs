@@ -55,11 +55,13 @@ void ADN_ActiveProtections_GUI::Build()
     builder.AddField<ADN_CheckBox>( pPropertiesGroup, tr( "Hard kill" ), vConnectors[eActiveProtectionHardKill] );
 
     // dotations
-    Q3GroupBox* pDotationGroup = new Q3GroupBox( 3, Qt::Horizontal, tr( "Resource" ) );
+    Q3GroupBox* pDotationGroup = new Q3GroupBox( 1, Qt::Horizontal, tr( "Resource" ) );
+    QWidget* pHolder = new QWidget( pDotationGroup );
+    new Q3GridLayout( pHolder, 0, 3, 5, 5 );
     ADN_GoToButton* goToButton = new ADN_GoToButton( ::eEquipement );
-    goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector<ADN_Equipement_Data::AmmoCategoryInfo> >( pDotationGroup, tr( "Resource" ), vConnectors[eActiveProtectionDotation], 0, eNone, goToButton ) );
+    goToButton->SetLinkedCombo( builder.AddField< ADN_ComboBox_Vector<ADN_Equipement_Data::AmmoCategoryInfo> >( pHolder, tr( "Resource" ), vConnectors[eActiveProtectionDotation], 0, eNone, goToButton ) );
     builder.SetEnabled( true );
-    builder.AddField<ADN_EditLine_Double>( pDotationGroup, tr( "Usage" ), vConnectors[eActiveProtectionUsage], 0, eGreaterEqualZero );
+    builder.AddField<ADN_EditLine_Double>( pHolder, tr( "Usage" ), vConnectors[eActiveProtectionUsage], 0, eGreaterEqualZero );
 
     // Weapons
     Q3GroupBox* pWeaponsGroup_ = new Q3GroupBox( 1, Qt::Horizontal, tr( "Ammunitions" ) );

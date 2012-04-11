@@ -40,6 +40,7 @@ public:
     virtual void paint( QPainter* p, const QColorGroup& cg, const QRect& cr, bool selected );
     virtual QWidget* createEditor() const;
     virtual void setContentFromEditor( QWidget* w );
+    virtual int alignment() const;
     //@}
 
 private:

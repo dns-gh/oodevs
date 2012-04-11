@@ -134,19 +134,17 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Occupation rate (%1):</source>
+        <source>Occupation rate (%L1):</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
     <name>Règle GL</name>
     <message>
-        <source>2D: %1m
-3D: %2m
-%3°</source>
-        <translation>2D: %1m
-3D: %2m
-%3°</translation>
+        <source>2D: %L1m
+3D: %L2m
+%L3°</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -174,7 +172,7 @@
 <context>
     <name>Urban</name>
     <message>
-        <source>Urban block[%1]</source>
+        <source>Urban block[%L1]</source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1418,20 +1416,8 @@ Voulez-vous le supprimer?</translation>
         <translation>---</translation>
     </message>
     <message>
-        <source>Lat:%1 Lon:%2</source>
-        <translation>Lat:%1 Lon:%2</translation>
-    </message>
-    <message>
-        <source>h:%1 </source>
-        <translation>h:%1 </translation>
-    </message>
-    <message>
         <source>Elevation</source>
         <translation>Elévation</translation>
-    </message>
-    <message>
-        <source>y:%1 x:%2</source>
-        <translation>y:%1 x:%2</translation>
     </message>
     <message>
         <source>Terrain type</source>
@@ -1439,6 +1425,18 @@ Voulez-vous le supprimer?</translation>
     </message>
     <message>
         <source>Object infos</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>y:%L1 x:%L2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Lat:%L1 Lon:%L2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>h:%L1 </source>
         <translation type="unfinished"></translation>
     </message>
 </context>
@@ -1502,11 +1500,11 @@ Voulez-vous le supprimer?</translation>
 <context>
     <name>gui::TerrainPicker</name>
     <message>
-        <source>Wind speed: %1km/h, direction: %2°</source>
+        <source>Wind speed: %L1km/h, direction: %L2°</source>
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Temperature: %2°C</source>
+        <source>Temperature: %L2°C</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

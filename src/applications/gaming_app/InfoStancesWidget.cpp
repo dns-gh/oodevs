@@ -150,7 +150,7 @@ void InfoStancesWidget::Update( const Attributes& attributes )
         installation_->setProgress( std::max< int >( int( float( installation * 100 + attributes.nPostureCompletionPourcentage_ ) / 4.f ), 0 ) );
     QToolTip::add( installation_, tools::translate( "InfoStancesWidget", "Stance '%1' at %2" )
                                     .arg( tools::ToString( attributes.nCurrentPosture_ ) )
-                                    .arg( QString::number( attributes.nPostureCompletionPourcentage_ ) + Units::percentage.AsString() ) );
+                                    .arg( locale().toString( attributes.nPostureCompletionPourcentage_ ) + Units::percentage.AsString() ) );
 }
 
 // -----------------------------------------------------------------------------

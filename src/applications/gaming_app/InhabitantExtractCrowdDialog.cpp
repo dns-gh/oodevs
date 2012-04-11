@@ -21,6 +21,7 @@
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/tools.h"
+#include "clients_gui/RichSpinBox.h"
 #include "gaming/Inhabitant.h"
 //Added by qt3to4:
 #include <Qt3Support/q3gridlayout.h>
@@ -48,10 +49,10 @@ InhabitantExtractCrowdDialog::InhabitantExtractCrowdDialog( QWidget* pParent, ke
     crowdTypeLabel_ = new QLabel( "0", this );
     grid->addWidget( crowdTypeLabel_, 0, 1 );
     grid->addWidget( new QLabel( tools::translate( "InhabitantExtractCrowdDialog", "Alive:" ), this ), 1, 0 );
-    healthySpinBox_ = new QSpinBox ( this );
+    healthySpinBox_ = new gui::RichSpinBox( this, 0, std::numeric_limits< int >::max(), 10 );
     grid->addWidget( healthySpinBox_, 1, 1 );
     grid->addWidget( new QLabel( tools::translate( "InhabitantExtractCrowdDialog", "Wounded:" ), this ), 2, 0 );
-    woundedSpinBox_ = new QSpinBox ( this );
+    woundedSpinBox_ = new gui::RichSpinBox( this, 0, std::numeric_limits< int >::max(), 10 );
     grid->addWidget( woundedSpinBox_, 2, 1 );
     grid->addWidget( new QLabel( tools::translate( "InhabitantExtractCrowdDialog", "Dead:" ), this ), 3, 0 );
     deadSizeLabel_ = new QLabel ( "0", this );
@@ -68,12 +69,6 @@ InhabitantExtractCrowdDialog::InhabitantExtractCrowdDialog( QWidget* pParent, ke
     remainingInhabitantLabel_ = new QLabel( "0", this );
     grid->addWidget( remainingInhabitantLabel_, 6, 1 );
     // Configurations
-    healthySpinBox_->setMinValue( 0 );
-    healthySpinBox_->setMaxValue( std::numeric_limits< int >::max() );
-    healthySpinBox_->setLineStep( 10 );
-    woundedSpinBox_->setMinValue( 0 );
-    woundedSpinBox_->setMaxValue( std::numeric_limits< int >::max() );
-    woundedSpinBox_->setLineStep( 10 );
     crowdTypeLabel_->setAlignment( Qt::AlignCenter );
     crowdTypeLabel_->setFrameStyle( Q3Frame::Box | Q3Frame::Sunken );
     crowdSizeLabel_->setAlignment( Qt::AlignCenter );
@@ -120,9 +115,9 @@ void InhabitantExtractCrowdDialog::Show()
     woundedSpinBox_->setValue( 0 );
     woundedSpinBox_->setMaxValue( selected_->GetWounded() );
     woundedSpinBox_->setEnabled( selected_->GetWounded() != 0 );
-    QToolTip::add( healthySpinBox_, tools::translate( "InhabitantExtractCrowdDialog", QString( "Maximum %1" ).arg( selected_->GetHealthy() ) ) );
-    QToolTip::add( woundedSpinBox_, tools::translate( "InhabitantExtractCrowdDialog", QString( "Maximum %1" ).arg( selected_->GetWounded() ) ) );
-    deadSizeLabel_->setText( QString::number( selected_->GetDead() ) );
+    QToolTip::add( healthySpinBox_, tools::translate( "InhabitantExtractCrowdDialog", QString( "Maximum %L1" ).arg( selected_->GetHealthy() ) ) );
+    QToolTip::add( woundedSpinBox_, tools::translate( "InhabitantExtractCrowdDialog", QString( "Maximum %L1" ).arg( selected_->GetWounded() ) ) );
+    deadSizeLabel_->setText( locale().toString( selected_->GetDead() ) );
     crowdTypeLabel_->setText( static_cast< const Inhabitant& > ( *( selected_.ConstCast() ) ).GetType().GetCrowdType().GetName().c_str() );
     originalInhabitantSize_ = selected_->GetHealthy() + selected_->GetWounded() + selected_->GetDead();
     OnValuesChanged();
@@ -184,8 +179,8 @@ void InhabitantExtractCrowdDialog::closeEvent( QCloseEvent * /* e */ )
 // -----------------------------------------------------------------------------
 void InhabitantExtractCrowdDialog::OnValuesChanged( int /* newValue */ )
 {
-    crowdSizeLabel_->setText( QString::number( healthySpinBox_->value() + woundedSpinBox_->value() ) );
-    remainingInhabitantLabel_->setText( QString::number( originalInhabitantSize_ - ( healthySpinBox_->value() + woundedSpinBox_->value() ) ) );
+    crowdSizeLabel_->setText( locale().toString( healthySpinBox_->value() + woundedSpinBox_->value() ) );
+    remainingInhabitantLabel_->setText( locale().toString( originalInhabitantSize_ - ( healthySpinBox_->value() + woundedSpinBox_->value() ) ) );
 }
 
 // -----------------------------------------------------------------------------

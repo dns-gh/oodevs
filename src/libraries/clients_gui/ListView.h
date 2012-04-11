@@ -133,7 +133,7 @@ private:
         if( valuedItem && valuedItem->IsA< kernel::Entity_ABC >() )
             if( kernel::Entity_ABC* entity = dynamic_cast< kernel::Entity_ABC* >( valuedItem->GetValue< kernel::Entity_ABC >() ) )
             {
-                text += " " + QString::number( entity->GetId() );
+                text += " " + locale().toString( static_cast< unsigned int >( entity->GetId() ) );
             }
         return text.contains( searchedText_, Qt::CaseInsensitive ) != 0;
     }

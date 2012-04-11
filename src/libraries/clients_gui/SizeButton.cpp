@@ -30,7 +30,7 @@ SizeButton::SizeButton( QWidget* parent /* = 0*/, const char* name /* = 0*/, flo
     setTickInterval( 2 );
     setPageStep( 1 );
     setOrientation( Qt::Horizontal );
-    label_.setText( QString( name ).append( QString::number( 1 ) ).append( prefix_ ) );
+    label_.setText( QString( name ).append( locale().toString( 1 ) ).append( prefix_ ) );
 
     connect( this, SIGNAL( valueChanged( int ) ), SLOT( OnValueChanged( int ) ) );
     setValue( int( 2 * value ) );
@@ -58,11 +58,11 @@ void SizeButton::OnValueChanged( int value )
     if( valueLabel_ )
     {
         if ( size_ == 10 )
-            label_.setText( QString( name() ).append( " " ).append( QString::number( size_ ) ).append( prefix_ ) );
+            label_.setText( QString( name() ).append( " " ).append( locale().toString( size_ ) ).append( prefix_ ) );
         else if ( size_ == floor( size_ ) )
-            label_.setText( QString( name() ).append( "   " ).append( QString::number( size_ ) ).append( prefix_ ) );
+            label_.setText( QString( name() ).append( "   " ).append( locale().toString( size_ ) ).append( prefix_ ) );
         else
-            label_.setText( QString( name() ).append( QString::number( size_ ) ).append( prefix_ ) );
+            label_.setText( QString( name() ).append( locale().toString( size_ ) ).append( prefix_ ) );
     }
 }
 
@@ -108,11 +108,11 @@ void SizeButton::Revert()
     if( valueLabel_ )
     {
         if ( size_ == 10 )
-            label_.setText( QString( name() ).append( " " ).append( QString::number( size_ ) ).append( prefix_ ) );
+            label_.setText( QString( name() ).append( " " ).append( locale().toString( size_ ) ).append( prefix_ ) );
         else if ( size_ == floor( size_ ) )
-            label_.setText( QString( name() ).append( "   " ).append( QString::number( size_ ) ).append( prefix_ ) );
+            label_.setText( QString( name() ).append( "   " ).append( locale().toString( size_ ) ).append( prefix_ ) );
         else
-            label_.setText( QString( name() ).append( "" ).append( QString::number( size_ ) ).append( prefix_ ) );
+            label_.setText( QString( name() ).append( "" ).append( locale().toString( size_ ) ).append( prefix_ ) );
     }
 }
 

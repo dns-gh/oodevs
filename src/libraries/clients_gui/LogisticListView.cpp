@@ -117,7 +117,7 @@ ValuedListItem* LogisticListView::CreateItem( ValuedListItem& parent, const Enti
 {
     ValuedListItem* item = HierarchyListView_ABC::CreateItem( &parent );
     item->SetNamed( static_cast< const Entity_ABC& >( entity ) );
-    item->SetToolTip( QString( "%1 [%2]" ).arg( entity.GetName() ).arg( entity.GetId() ) );
+    item->SetToolTip( QString( "%1 [%L2]" ).arg( entity.GetName() ).arg( entity.GetId() ) );
     item->setDragEnabled( true );
     SetVisible( item, profile_.IsVisible( entity ) );
     DisplayIcon( entity, item );

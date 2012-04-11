@@ -732,8 +732,8 @@
 <context>
     <name>KnowledgeGroup</name>
     <message>
-        <source>Group %1</source>
-        <translation>Groupe %1</translation>
+        <source>Group %L1</source>
+        <translation>Groupe %L1</translation>
     </message>
     <message>
         <source>Info/Identifier</source>
@@ -900,8 +900,8 @@
         <translation>Régime de travail</translation>
     </message>
     <message>
-        <source>R%1</source>
-        <translation>R%1</translation>
+        <source>R%L1</source>
+        <translation>R%L1</translation>
     </message>
     <message>
         <source>Priorities</source>
@@ -1234,16 +1234,16 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cell ignition:  %1/%2</source>
-        <translation>Cellule en ignition: %1/%2</translation>
+        <source>Cell ignition:  %L1/%L2</source>
+        <translation>Cellule en ignition: %L1/%L2</translation>
     </message>
     <message>
-        <source>Cell combustion: %1/%2, heat %3</source>
-        <translation>Cellule en combustion: %1/%2, température %3</translation>
+        <source>Cell combustion: %L1/%L2, heat %L3</source>
+        <translation>Cellule en combustion: %L1/%L2, température %L3</translation>
     </message>
     <message>
-        <source>Cell decline: heat %1</source>
-        <translation>Cellule en extinction: température %1</translation>
+        <source>Cell decline: heat %L1</source>
+        <translation>Cellule en extinction: température %L1</translation>
     </message>
     <message>
         <source>Cell extinguished</source>

@@ -13,6 +13,7 @@
 #include "EditorFactory.h"
 #include "clients_kernel/ValueEditor.h"
 #include "clients_kernel/Units.h"
+#include "RichSpinBox.h"
 #include "ValuedComboBox.h"
 #include "Tools.h"
 
@@ -139,125 +140,43 @@ void EditorFactory::Call( QTime* const& value )
 // =============================================================================
 namespace
 {
-    class DecimalSpinBox : public QSpinBox
-    {
-    public:
-        explicit DecimalSpinBox( QWidget* parent, unsigned short decimals = 0 )
-             : QSpinBox( parent )
-             , decimals_  ( decimals )
-             , multiplier_( static_cast< unsigned int >( std::pow( 10.f, decimals ) ) )
-        {
-            setMinValue( 0 );
-            setMaxValue( std::numeric_limits< int >::max() );
-        }
-
-        virtual ~DecimalSpinBox()
-        {
-            // NOTHING
-        }
-
-        virtual QValidator::State validate( QString& input, int& pos ) const
-        {
-            input = input.mid( prefix().length(), input.length() - prefix().length() - suffix().length() );
-            QValidator::State result = QDoubleValidator( minValue(), maxValue(), decimals_, 0 ).validate( input, pos );
-            input = prefix() + input + suffix();
-            return result;
-        }
-
-        virtual void fixup( QString & input ) const
-        {
-            input = input.mid( prefix().length(), input.length() - prefix().length() - suffix().length() );
-
-            const double b = minValue();
-            const double t = maxValue();
-            bool bOk = true;
-            const double rValue = input.toDouble( &bOk );
-            if( ! bOk )
-                return;
-            if( rValue > t )
-                input = QString::number( t );
-            else if( rValue < b )
-                input = QString::number( b );
-
-            input = prefix() + input + suffix();
-        }
-
-        virtual QString textFromValue( int value ) const
-        {
-            if( multiplier_ > 1 )
-                return QString( "%1.%2" ).arg( value / multiplier_ ).arg( value % multiplier_ );
-            return QString::number( value );
-        }
-
-        virtual int valueFromText( const QString& text ) const
-        {
-            QString textValue = text.mid( prefix().length(), text.length() - prefix().length() - suffix().length() );
-            const char* ascii = textValue.ascii();
-            if( !ascii )
-                return 0;
-            bool ok = true;
-            if( multiplier_ > 1 )
-                return static_cast< int >( textValue.toDouble( &ok ) * multiplier_ );
-            return textValue.toInt( &ok );
-        }
-
-    protected:
-        template< typename T >
-        T DecimalValue()
-        {
-            return static_cast< T >( value() ) / static_cast< T >( multiplier_ );
-        }
-
-        template< typename T >
-        void SetValue( const T& value )
-        {
-            setValue( static_cast< int >( value * static_cast< T >( multiplier_ ) + 0.5 ) );
-        }
-
-    protected:
-        int decimals_;
-        unsigned int multiplier_;
-    };
-
-    template< typename T >
-    class NumberEditor : public DecimalSpinBox
+    template< typename BaseSpinBox, typename EditedType, typename T >
+    class NumberEditor : public BaseSpinBox
                        , public ValueEditor< T >
     {
     public:
-        NumberEditor( QWidget* parent, const T& value, unsigned short decimals = 0 )
-             : DecimalSpinBox( parent, decimals )
+        NumberEditor( QWidget* parent, const T& value )
+             : BaseSpinBox( parent )
         {
-             SetValue( value );
+            setValue( static_cast< EditedType >( value ) );
         }
 
         virtual ~NumberEditor() {}
 
         virtual T GetValue()
         {
-            return DecimalValue< T >();
+            return value();
         }
 
     };
 
-    template< typename T >
-    class UnitEditor : public DecimalSpinBox
+    template< typename BaseSpinBox, typename EditedType, typename T >
+    class UnitEditor : public BaseSpinBox
                      , public ValueEditor< UnitedValue< T > >
     {
     public:
-         UnitEditor( QWidget* parent, const UnitedValue< T >& value, unsigned short decimals = 0 )
-             : DecimalSpinBox( parent, decimals )
+         UnitEditor( QWidget* parent, const UnitedValue< T >& value )
+             : BaseSpinBox( parent, static_cast< EditedType >( value.unit_.GetMinValue() ), static_cast< EditedType >( value.unit_.GetMaxValue() ) )
              , unit_( value.unit_ )
          {
-             setMinValue( static_cast< int >( value.unit_.GetMinValue() * multiplier_ ) );
-             setMaxValue( static_cast< int >( value.unit_.GetMaxValue() * multiplier_ ) );
              setSuffix( value.unit_.AsString() );
-             SetValue( value.value_ );
+             setValue( value.value_ );
          }
         virtual ~UnitEditor() {}
 
         virtual UnitedValue< T > GetValue()
         {
-            return UnitedValue< T >( DecimalValue< T >(), unit_ );
+            return UnitedValue< T >( value(), unit_ );
         }
 
     private:
@@ -265,11 +184,23 @@ namespace
     };
 
     template< typename T >
-    QWidget* CreateNumberEditor( QWidget* parent, const T& value, const Unit* unit, unsigned short decimals = 0 )
+    QWidget* CreateNumberEditor( QWidget* parent, const T& value, const Unit* unit )
     {
         if( unit )
-            return new UnitEditor< T >( parent, UnitedValue< T >( value, *unit ), decimals );
-        return new NumberEditor< T >( parent, value, decimals );
+            return new UnitEditor< RichSpinBox, int, T >( parent, UnitedValue< T >( value, *unit ) );
+        return new NumberEditor< RichSpinBox, int, T >( parent, value );
+    }
+
+    template< typename T >
+    QWidget* CreateFloatingNumberEditor( QWidget* parent, const T& value, const Unit* unit, unsigned short decimals = 0 )
+    {
+        RichDoubleSpinBox* spinBox = 0;
+        if( unit )
+            spinBox = new UnitEditor< RichDoubleSpinBox, double, T >( parent, UnitedValue< T >( value, *unit ));
+        else
+            spinBox = new NumberEditor< RichDoubleSpinBox, double, T >( parent, value );
+        spinBox->setDecimals( decimals );
+        return spinBox;
     }
 }
 
@@ -279,7 +210,7 @@ namespace
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( double* const& value )
 {
-    result_ = CreateNumberEditor( parent_, *value, unit_, 2 );
+    result_ = CreateFloatingNumberEditor( parent_, *value, unit_, 2 );
 }
 
 // -----------------------------------------------------------------------------
@@ -288,7 +219,7 @@ void EditorFactory::Call( double* const& value )
 // -----------------------------------------------------------------------------
 void EditorFactory::Call( float* const& value )
 {
-    result_ = CreateNumberEditor( parent_, *value, unit_, 2 );
+    result_ = CreateFloatingNumberEditor( parent_, *value, unit_, 2 );
 }
 
 // -----------------------------------------------------------------------------

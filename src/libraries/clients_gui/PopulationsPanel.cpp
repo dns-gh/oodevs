@@ -39,7 +39,7 @@ PopulationsPanel::PopulationsPanel( QWidget* parent, gui::PanelStack_ABC& panel,
         Q3HBox* box = new Q3HBox( vbox );
         box->setSpacing( 5 );
         new QLabel( tools::translate( "gui::PopulationsPanel", "Healthy number:" ), box );
-        number_ = new QLineEdit( QString::number( 1000 ), box );
+        number_ = new QLineEdit( locale().toString( 1000 ), box );
         number_->setValidator( new QIntValidator( 1, 1000000, number_ ) );
         list_ = new PopulationTypesListView( vbox, controllers_, types, factory );
         connect( list_, SIGNAL( StartDrag( const kernel::PopulationType* ) ), this, SLOT( OnStartDrag( const kernel::PopulationType* ) ) );

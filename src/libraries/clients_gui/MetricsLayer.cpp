@@ -75,7 +75,7 @@ void MetricsLayer::Paint( kernel::Viewport_ABC& )
             glColor4f( COLOR_BLACK );
 
             const geometry::Point2f middle( 0.5f * ( metricPoints_.front().X() + end_.X() ), 0.5f * ( metricPoints_.front().Y() + end_.Y() ) );
-            const QString message = tools::translate( "Règle GL", "2D: %1m\n3D: %2m\n%3°" ).arg( ComputeRuleDistance( false ), 0, 'f', 1 ).arg( ComputeRuleDistance( true ), 0, 'f', 1 ).arg( ComputeAngle(), 0, 'f', 1 );
+            const QString message = tools::translate( "Règle GL", "2D: %L1m\n3D: %L2m\n%L3°" ).arg( ComputeRuleDistance( false ), 0, 'f', 1 ).arg( ComputeRuleDistance( true ), 0, 'f', 1 ).arg( ComputeAngle(), 0, 'f', 1 );
             if( !tooltip_.get() )
             {
                 std::auto_ptr< kernel::GlTooltip_ABC > tooltip( tools_.CreateTooltip() );

@@ -17,8 +17,8 @@
 // Name: ADN_GoToButton constructor
 // Created: ABR 2012-03-05
 // -----------------------------------------------------------------------------
-ADN_GoToButton::ADN_GoToButton( E_WorkspaceElements targetTab, int subTargetTab /* = -1 */ )
-    : QPushButton( qApp->style()->standardIcon( QStyle::SP_ArrowRight ), "" )
+ADN_GoToButton::ADN_GoToButton( E_WorkspaceElements targetTab, int subTargetTab /* = -1 */, QWidget* parent /* = 0 */ )
+    : QPushButton( qApp->style()->standardIcon( QStyle::SP_ArrowRight ), "", parent )
     , linkedCombo_( 0 )
 {
     QToolTip::add( this, "Go to" );

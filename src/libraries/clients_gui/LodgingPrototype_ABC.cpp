@@ -11,6 +11,7 @@
 
 #include "clients_gui_pch.h"
 #include "LodgingPrototype_ABC.h"
+#include "RichSpinBox.h"
 #include "Tools.h"
 
 using namespace gui;
@@ -23,7 +24,7 @@ LodgingPrototype_ABC::LodgingPrototype_ABC( QWidget* parent )
     : ObjectAttributePrototype_ABC( parent, tools::translate( "gui::LodgingPrototype_ABC", "Lodging" ) )
 {
     new QLabel( tools::translate( "gui::LodgingPrototype_ABC", "Capacity:" ), this );
-    lodgingCapacity_ = new QSpinBox( 0, std::numeric_limits< int >::max(), 1, this );
+    lodgingCapacity_ = new RichSpinBox( this, 0, std::numeric_limits< int >::max(), 1 );
 }
 
 // -----------------------------------------------------------------------------

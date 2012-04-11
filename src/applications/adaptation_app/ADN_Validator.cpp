@@ -47,14 +47,17 @@ ADN_IntValidator::~ADN_IntValidator()
 // Name: ADN_IntValidator::fixup
 // Created: ABR 2011-03-17
 // -----------------------------------------------------------------------------
-void ADN_IntValidator::fixup( QString& strInput ) const
+void ADN_IntValidator::fixup( QString& input ) const
 {
+    QLocale locale;
+    input = input.remove( locale.groupSeparator() );
     bool ok = true;
-    int value = strInput.toInt( &ok );
+    int value = input.toInt( &ok );
     if( !ok || value < bottom() )
-        strInput.setNum( bottom() );
+        value = bottom();
     else if( value > top() )
-        strInput.setNum( top() );
+        value = top();
+    input = locale.toString( value );
 }
 
 // -----------------------------------------------------------------------------
@@ -72,27 +75,58 @@ QValidator::State ADN_IntValidator::validate( QString& input, int& nPos ) const
 // -----------------------------------------------------------------------------
 QValidator::State ADN_IntValidator::InternalValidate( int top, int bottom, QString& input, int& nPos ) const
 {
-    if( input.contains( ',' ) || input.contains( '.' ) )
-        return Invalid;
+    QLocale locale;
+    int sizeBefore = input.size();
+    input = input.remove( locale.groupSeparator() );
+    QValidator::State result;
 
-    bool ok = true;
-    int entered = input.toInt( &ok );
-    if( ok && entered > top )
-    {
-        input = QString::number( top );
-        nPos = input.length();
-        return Acceptable;
-    }
-    else if( ok && entered < bottom )
-        return Intermediate;
+    if( input.contains( ',' ) || input.contains( '.' ) )
+        result = Invalid;
     else
-        return QIntValidator::validate( input, nPos );
+    {
+        bool ok = true;
+        long long entered = input.toLongLong( &ok );
+        if( ok && entered > top )
+        {
+            input = QString::number( top );
+            result = Acceptable;
+        }
+        else if( ok && entered < bottom )
+            result = Intermediate;
+        else
+            result = QIntValidator::validate( input, nPos );
+    }
+
+    if( result == Acceptable )
+    {
+        int value = input.toInt();
+        input = locale.toString( value );
+        int sizeAfter = input.size();
+        nPos += ( sizeAfter - sizeBefore );
+        nPos = ( nPos > input.length() ) ? input.length() : ( nPos < 0 ) ? 0 : nPos;
+    }
+    return result;
 }
 
 
 // -----------------------------------------------------------------------------
 // ADN_DoubleValidator
 // -----------------------------------------------------------------------------
+
+namespace
+{
+    QString& removeTrailingZero( QString& input, QChar decimalPoint )
+    {
+        int i = input.find( decimalPoint );
+        if( i >= 0 )
+        {
+            int j = input.size() - 1;
+            while( j > i && input[ j ] == '0' ){ --j; }
+            input.truncate( j + 1 );
+        }
+        return input;
+    }
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_DoubleValidator::ADN_DoubleValidator
@@ -127,18 +161,24 @@ ADN_DoubleValidator::~ADN_DoubleValidator()
 // Name: ADN_DoubleValidator::fixup
 // Created: JDY 03-09-04
 // -----------------------------------------------------------------------------
-void ADN_DoubleValidator::fixup( QString& strInput ) const
+void ADN_DoubleValidator::fixup( QString& input ) const
 {
-    double b = bottom();
-    double t = top();
+    QLocale locale;
+    input = input.remove( locale.groupSeparator() );
+    input = input.replace( ',', locale.decimalPoint() );
+    input = input.replace( '.', locale.decimalPoint() );
+    bool hasDecimal = input.find( locale.decimalPoint() ) != -1 && decimals() != 0;
     bool bOk = true;
-    double rValue = strInput.toDouble( &bOk );
+    double value = input.toDouble( &bOk );
     if( ! bOk )
         return;
-    if( rValue > t )
-        strInput = QString::number( t );
-    else if( rValue < b )
-        strInput = QString::number( b );
+    if( value > top() )
+        value = top();
+    else if( value < bottom() )
+        value = bottom();
+    input = locale.toString( value, 'f', decimals() );
+    if( !hasDecimal )
+        input = removeTrailingZero( input, locale.decimalPoint() );
 }
 
 //-----------------------------------------------------------------------------
@@ -158,64 +198,67 @@ QValidator::State ADN_DoubleValidator::validate( QString& input, int& nPos ) con
 // -----------------------------------------------------------------------------
 QValidator::State ADN_DoubleValidator::InternalValidate( double top, double bottom, QString& input, int& nPos ) const
 {
+    QLocale locale;
+    int sizeBefore = input.size();
+    input = input.remove( locale.groupSeparator() );
+    input = input.replace( ',', locale.decimalPoint() );
+    input = input.replace( '.', locale.decimalPoint() );
+    QValidator::State result = Acceptable;
     int d = decimals();
-    QRegExp empty( QString::fromLatin1( " *-?[.,]? *" ) );
-    if( bottom >= 0 && input.stripWhiteSpace().startsWith( QString::fromLatin1( "-" ) ) )
-        return Invalid;
-    if( input.stripWhiteSpace() == "." || input.stripWhiteSpace() == "," )
-        return Invalid;
-    if( empty.exactMatch( input ) )
-        return Intermediate;
-    bool ok = TRUE;
-    double entered = input.toDouble( &ok );
-    bool nume = input.contains( 'e', FALSE ) != 0;
-    if( !ok )
-    {
-        // explicit exponent regexp
-        QRegExp expexpexp( QString::fromLatin1( "[Ee][+-]?\\d*$" ) );
-        int eeePos = expexpexp.search( input );
-        if( eeePos > 0 && nume == 1 )
-        {
-            QString mantissa = input.left( eeePos );
-            entered = mantissa.toDouble( &ok );
-            if( !ok )
-                return Invalid;
-        }
-        else if( eeePos == 0 )
-            return Intermediate;
-        else
-            return Invalid;
-    }
+    int decimalPointIndex = input.find( locale.decimalPoint() );
+    int trailingChars = ( decimalPointIndex == -1 ) ? d + 1 : d;
 
-    int i = input.find( '.' );
-    if( i < 0 )
-        i = input.find( ',' );
-    if( i >= 0 )
-    {
-        if( d == 0 )
-            return Invalid;
-        else if( nume == 0 )
-        {
-            // has decimal point (but no E), now count digits after that
-            ++i;
-            int j = i;
-            while( input[ j ].isDigit() )
-                ++j;
-            if( j - i > d )
-                return Invalid;
-        }
-    }
-
-    if( entered > top )
-    {
-        input = QString::number( top );
-        nPos = input.length();
-        return Acceptable;
-    }
-    else if( entered < bottom )
-        return Intermediate;
+    QRegExp empty( QString( " *-?" ) + locale.decimalPoint() + "? *" );
+    if( bottom >= 0 && input.stripWhiteSpace().startsWith( '-' ) )
+        result = Invalid;
+    else if( input.stripWhiteSpace() == locale.decimalPoint() )
+        result = Invalid;
+    else if( empty.exactMatch( input ) )
+        result = Intermediate;
     else
-        return Acceptable;
+    {
+        bool ok = false;
+        double entered = locale.toDouble( input, &ok );
+        if( !ok )
+            result = Invalid;
+        else if( decimalPointIndex >= 0 )
+        {
+            if( d == 0 )
+                result = Invalid;
+            else    // has decimal point, now count digits after that
+            {
+                int j = decimalPointIndex + 1;
+                while( input[ j ].isDigit() )
+                {
+                    ++j;
+                    --trailingChars;
+                }
+                if( j - decimalPointIndex - 1 > d )
+                    result = Invalid;
+            }
+        }
+        if( result != Invalid )
+        {
+            if( entered > top )
+            {
+                input = QString::number( top, 'f', d );
+                result = Acceptable;
+            }
+            else
+                result = ( entered < bottom ) ? Intermediate : Acceptable;
+        }
+    }
+
+    if( result == Acceptable )
+    {
+        double value = input.toDouble();
+        input = locale.toString( value, 'f', d );
+        input.truncate( input.size() - trailingChars );
+        int sizeAfter = input.size();
+        nPos += ( sizeAfter - sizeBefore );
+        nPos = ( nPos > input.length() ) ? input.length() : ( nPos < 0 ) ? 0 : nPos;
+    }
+    return result;
 }
 
 
@@ -240,7 +283,7 @@ ADN_PercentageValidator< int, ADN_IntValidator >::ADN_PercentageValidator( QObje
 // -----------------------------------------------------------------------------
 template<>
 ADN_PercentageValidator< double, ADN_DoubleValidator >::ADN_PercentageValidator( QObject* pParent )
-    : ADN_DoubleValidator( 0, 100, 2, pParent )
+    : ADN_DoubleValidator( 0, 100, 10, pParent )
 {
     // NOTHING
 }
@@ -256,26 +299,75 @@ ADN_PercentageValidator< BaseType, BaseValidator >::~ADN_PercentageValidator()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_PercentageValidator::fixup
-// Created: APE 2005-04-15
+// Name: ADN_Validator::ComputeLinkedSum
+// Created: ABR 2012-04-11
 // -----------------------------------------------------------------------------
 template< typename BaseType, typename BaseValidator >
-void ADN_PercentageValidator< BaseType, BaseValidator >::fixup( QString& strInput ) const
+BaseType ADN_PercentageValidator< BaseType, BaseValidator >::ComputeLinkedSum() const
 {
     BaseType rSum = 0;
     for( CIT_ValuesVector it = linkedValues_.begin(); it != linkedValues_.end(); ++it )
         rSum += ( *it )->GetData();
+    return rSum;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_PercentageValidator::ADN_PercentageValidator
+// Created: APE 2005-04-15
+// -----------------------------------------------------------------------------
+template<>
+void ADN_PercentageValidator< int, ADN_IntValidator >::fixup( QString& input ) const
+{
+    QLocale locale;
+    input = input.remove( locale.groupSeparator() );
+
+    int value = 0;
+    int rSum = ComputeLinkedSum();
     if( rSum >= top() )
+        value = 0;
+    else
     {
-        strInput = QString::number( 0.f );
-        return;
+        bool bOk = true;
+        value = input.toInt( &bOk );
+        if( !bOk )
+            return;
+        if( rSum + value > top() )
+            value = top() - rSum;
     }
-    bool bOk = true;
-    BaseType rValue = static_cast< BaseType >( strInput.toDouble( &bOk ) );
-    if( ! bOk )
-        return;
-    if( rSum + rValue > top() )
-        strInput = QString::number( top() - rSum );
+
+    input = locale.toString( value );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_PercentageValidator::ADN_PercentageValidator
+// Created: APE 2005-04-15
+// -----------------------------------------------------------------------------
+template<>
+void ADN_PercentageValidator< double, ADN_DoubleValidator >::fixup( QString& input ) const
+{
+    QLocale locale;
+    input = input.remove( locale.groupSeparator() );
+    input = input.replace( ',', locale.decimalPoint() );
+    input = input.replace( '.', locale.decimalPoint() );
+    bool hasDecimal = input.find( locale.decimalPoint() ) != -1 && decimals() != 0;
+
+    double value = 0;
+    double rSum = ComputeLinkedSum();
+    if( rSum >= top() )
+        value = 0;
+    else
+    {
+        bool bOk = true;
+        value = input.toDouble( &bOk );
+        if( !bOk )
+            return;
+        if( rSum + value > top() )
+            value = top() - rSum;
+    }
+
+    input = locale.toString( value, 'f', decimals() );
+    if( !hasDecimal )
+        input = removeTrailingZero( input, locale.decimalPoint() );
 }
 
 //-----------------------------------------------------------------------------
@@ -287,8 +379,5 @@ void ADN_PercentageValidator< BaseType, BaseValidator >::fixup( QString& strInpu
 template< typename BaseType, typename BaseValidator >
 QValidator::State ADN_PercentageValidator< BaseType, BaseValidator >::validate( QString& input, int& nPos ) const
 {
-    BaseType rSum = 0;
-    for( CIT_ValuesVector it = linkedValues_.begin(); it != linkedValues_.end(); ++it )
-        rSum += ( *it )->GetData();
-    return InternalValidate( top() - rSum, bottom(), input, nPos );
+    return InternalValidate( top() - ComputeLinkedSum(), bottom(), input, nPos );
 }

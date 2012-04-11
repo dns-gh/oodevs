@@ -24,24 +24,6 @@
 #include "ADN_Weapons_GUI.h"
 
 // -----------------------------------------------------------------------------
-// Name: ADN_PH_EditLine_Double
-// Created: JSR 2010-04-28
-// -----------------------------------------------------------------------------
-class ADN_PH_EditLine_Double : public ADN_EditLine_Double
-{
-public:
-    explicit ADN_PH_EditLine_Double(QWidget* parent, const char * name = 0)
-        : ADN_EditLine_Double( parent, name ) {}
-
-protected:
-    virtual void TextChanged(const QString& string)
-    {
-        ADN_EditLine_Double::TextChanged( string );
-        ADN_Workspace::GetWorkspace().GetWeapons().GetGui().UpdateModifiers();
-    }
-};
-
-// -----------------------------------------------------------------------------
 // Name: ADN_HumanFactors_GUI constructor
 // Created: APE 2005-03-21
 // -----------------------------------------------------------------------------

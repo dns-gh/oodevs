@@ -18,6 +18,7 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_gui/ListItemToolTip.h"
 #include "clients_gui/ValuedListItem.h"
+#include "clients_gui/RichSpinBox.h"
 #include "gaming/AfterActionFunction.h"
 #include "gaming/AfterActionModel.h"
 #include "gaming/AfterActionParameter.h"
@@ -52,12 +53,12 @@ AfterActionFunctionList::AfterActionFunctionList( QWidget* parent, Controllers& 
     {
         Q3HBox* box = new Q3HBox( timeGroup_ );
         new QLabel( tr( "First tick" ), box );
-        firstTick_ = new QSpinBox( box );
+        firstTick_ = new gui::RichSpinBox( box );
     }
     {
         Q3HBox* box = new Q3HBox( timeGroup_ );
         new QLabel( tr( "Duration" ), box );
-        duration_ = new QSpinBox( box );
+        duration_ = new gui::RichSpinBox( box );
     }
     connect( functions_, SIGNAL( selectionChanged( Q3ListViewItem* ) ), SLOT( OnSelectionChange( Q3ListViewItem* ) ) );
 

@@ -109,16 +109,16 @@ void StatusBar::OnMouseMove( const geometry::Point2f& position )
             (*it)->setText( tr( "---" ) );
     else
     {
-        const QString xypos = tr( "y:%1 x:%2" ).arg( position.Y(), 4 ).arg( position.X(), 4 );
+        const QString xypos = tr( "y:%L1 x:%L2" ).arg( position.Y(), 4 ).arg( position.X(), 4 );
         coordinateFields_[ CoordinateSystems::E_Local ]->setText( xypos );
 
-        const QString elev = tr( "h:%1 " ).arg( detection_.ElevationAt( position ) );
+        const QString elev = tr( "h:%L1 " ).arg( detection_.ElevationAt( position ) );
         pElevation_->setText( elev );
 
         coordinateFields_[ CoordinateSystems::E_Mgrs ]->setText( converter_.ConvertToMgrs( position ).c_str() );
 
         const geometry::Point2d latLong( converter_.ConvertToGeo( position ) );
-        const QString latlongpos = tr( "Lat:%1 Lon:%2" ).arg( latLong.Y(), 0, 'g', 6 )
+        const QString latlongpos = tr( "Lat:%L1 Lon:%L2" ).arg( latLong.Y(), 0, 'g', 6 )
                                                         .arg( latLong.X(), 0, 'g', 6 );
         coordinateFields_[ CoordinateSystems::E_Wgs84Dd ]->setText( latlongpos );
 
@@ -126,7 +126,7 @@ void StatusBar::OnMouseMove( const geometry::Point2f& position )
         std::string::size_type loc = pos.find( ":", 0 );
         if( loc != std::string::npos )
         {
-            const std::string latlongdmspos( boost::str( boost::format( "Lat:%s, Lon:%s" )     % pos.substr( 0, loc )
+            const std::string latlongdmspos( boost::str( boost::format( "Lat:%s, Lon:%s" )  % pos.substr( 0, loc )
                                                                                             % pos.substr( loc + 1, pos.size() - loc ) ) );
             coordinateFields_[ CoordinateSystems::E_Wgs84Dms ]->setText( latlongdmspos.c_str() );
         }

@@ -24,7 +24,7 @@ TacticalLine_ABC::TacticalLine_ABC( kernel::Controller& controller, const QStrin
     : kernel::EntityImplementation< kernel::TacticalLine_ABC >( controller, idManager.GetNextId(), "" )
 {
     RegisterSelf( *this );
-    name_ = ( baseName + " %1" ).arg( id_ );
+    name_ = ( baseName + " %L1" ).arg( id_ );
     CreateDictionary( controller );
 }
 

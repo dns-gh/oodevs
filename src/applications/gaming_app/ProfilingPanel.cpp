@@ -145,14 +145,14 @@ void ProfilingPanel::NotifyUpdated( const Simulation::sEndTick& )
 
     {
         unsigned long msgsReceived = network_.GetNbMessagesReceived();
-        networkTotalMsgsReceived_->setText( QString::number( msgsReceived ) + " messages - " + QString::number( msgsReceived - previousTotalMsgsReceived_ ) + " for last tick" );
+        networkTotalMsgsReceived_->setText( locale().toString( static_cast< unsigned int >( msgsReceived ) ) + " messages - " + locale().toString( static_cast< unsigned int >( msgsReceived - previousTotalMsgsReceived_ ) ) + " for last tick" );
         networkMsgsReceived_->AddValue( ticks_, msgsReceived - previousTotalMsgsReceived_ );
         previousTotalMsgsReceived_ = msgsReceived;
     }
 
     {
         unsigned long msgsSent = network_.GetNbMessagesSent();
-        networkTotalMsgsSent_->setText( QString::number( msgsSent ) + " messages - " + QString::number( msgsSent - previousTotalMsgsSent_ ) + " for last tick" );
+        networkTotalMsgsSent_->setText( locale().toString( static_cast< unsigned int >( msgsSent ) ) + " messages - " + locale().toString( static_cast< unsigned int >( msgsSent - previousTotalMsgsSent_ ) ) + " for last tick" );
         networkMsgsSent_->AddValue( ticks_, msgsSent - previousTotalMsgsSent_ );
         previousTotalMsgsSent_ = msgsSent;
     }
@@ -172,12 +172,12 @@ void ProfilingPanel::NotifyUpdated( const Simulation::sEndTick& )
     {
         unsigned long shortPathfinds = simulation_.GetShortPathfinds();
         shortPathfinds_->AddValue( ticks_, shortPathfinds );
-        shortPathfindsCount_->setText( QString::number( shortPathfinds ) );
+        shortPathfindsCount_->setText( locale().toString( static_cast< unsigned int >( shortPathfinds ) ) );
     }
 
     {
         unsigned long longPathfinds = simulation_.GetLongPathfinds();
         longPathfinds_->AddValue( ticks_, longPathfinds );
-        longPathfindsCount_->setText( QString::number( longPathfinds ) );
+        longPathfindsCount_->setText( locale().toString( static_cast< unsigned int >( longPathfinds ) ) );
     }
 }

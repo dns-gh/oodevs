@@ -54,7 +54,7 @@ void PopulationListView::NotifyCreated( const Population_ABC& popu )
     ValuedListItem* popItem = CreateItem( teamItem );
     popItem->SetNamed( static_cast< const Entity_ABC& >( popu ) );
     popItem->setDragEnabled( true );
-    popItem->SetToolTip( QString( "%1 [%2]" ).arg( popu.GetName() ).arg( popu.GetId() ) );
+    popItem->SetToolTip( QString( "%1 [%L2]" ).arg( popu.GetName() ).arg( popu.GetId() ) );
 }
 
 // -----------------------------------------------------------------------------

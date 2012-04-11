@@ -12,6 +12,7 @@
 #include "moc_TimeTableRequestDialog.cpp"
 #include "protocol/ServerPublisher_ABC.h"
 #include "protocol/ReplaySenders.h"
+#include "clients_gui/RichSpinBox.h"
 
 // -----------------------------------------------------------------------------
 // Name: TimeTableRequestDialog constructor
@@ -31,11 +32,11 @@ TimeTableRequestDialog::TimeTableRequestDialog( QWidget* parent, Publisher_ABC& 
     pMainLayout->addMultiCellWidget( box, 0, 1, 0, 2 );
 
     new QLabel( tr( "Begin tick:" ), box );
-    beginTick_ = new QSpinBox( 1, maxTick, 1, box );
+    beginTick_ = new gui::RichSpinBox( box, 1, maxTick );
     beginTick_->setValue( 1 );
 
     new QLabel( tr( "End tick:" ), box );
-    endTick_ = new QSpinBox( 1, maxTick, 1, box );
+    endTick_ = new gui::RichSpinBox( box, 1, maxTick );
     endTick_->setValue( maxTick );
 
     QPushButton* pOKButton = new QPushButton( tr( "Ok" ), this );

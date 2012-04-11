@@ -131,7 +131,7 @@ void HierarchyListView_ABC::Display( const Entity_ABC& entity, ValuedListItem* i
     item->SetNamed( entity );
     item->setDropEnabled( true );
     item->setDragEnabled( true );
-    item->SetToolTip( QString( "%1 [%2]" ).arg( entity.GetName() ).arg( entity.GetId() ) );
+    item->SetToolTip( QString( "%1 [%L2]" ).arg( entity.GetName() ).arg( entity.GetId() ) );
     if( const Hierarchies* hierarchy = RetrieveHierarchy( entity ) )
         DeleteTail( ListView< HierarchyListView_ABC >::Display( hierarchy->CreateSubordinateIterator(), item ) );
     DisplayIcon( entity, item );

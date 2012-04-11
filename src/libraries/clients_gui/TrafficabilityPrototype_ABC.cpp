@@ -27,7 +27,7 @@ TrafficabilityPrototype_ABC::TrafficabilityPrototype_ABC( QWidget* parent, doubl
     new QLabel( tools::translate( "gui::TrafficabilityPrototype_ABC", "Max weight:" ), this );
     Q3HBox* box = new Q3HBox( this );
     maxWeight_ = new LoadableLineEdit( box );
-    maxWeight_->setText( QString::number( maxWeight ) );
+    maxWeight_->setText( locale().toString( maxWeight ) );
     maxWeight_->setValidator( new QDoubleValidator( 0, 1000000, 2, maxWeight_ ) );
     new QLabel( kernel::Units::tons.AsString(), box );
 }

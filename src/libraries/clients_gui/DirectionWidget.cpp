@@ -126,7 +126,7 @@ void DirectionWidget::paintEvent( QPaintEvent* )
 // -----------------------------------------------------------------------------
 QString DirectionWidget::GetValue() const
 {
-    return QString::number( point_.x() ) + ":" + QString::number( point_.y() );
+    return locale().toString( point_.x() ) + ":" + locale().toString( point_.y() );
 }
 
 // -----------------------------------------------------------------------------

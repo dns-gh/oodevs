@@ -51,6 +51,15 @@ Validator& ADN_TableItem_Edit<Connector,Validator>::GetValidator()
     return *pValidator_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: ADN_TableItem_Edit::validator
+// Created: ABR 2012-04-11
+// -----------------------------------------------------------------------------
+template <class Connector,class Validator>
+const QValidator* ADN_TableItem_Edit<Connector,Validator>::validator()
+{
+    return pValidator_;
+}
 
 // -----------------------------------------------------------------------------
 // Name: ADN_TableItem_Edit::SetValidator

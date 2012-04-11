@@ -150,6 +150,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     , consistencyDialog_( 0 )
     , performanceDialog_( 0 )
 {
+    setLocale( QLocale() );
     QSettings settings;
     settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
     settings.beginGroup( "/Gaming" );

@@ -13,6 +13,7 @@
 #pragma warning( push, 0 )
 #include <QtCore/qstring.h>
 #include <QtCore/qdatetime.h>
+#include <QtCore/qlocale.h>
 #pragma warning( pop )
 #include "DictionaryExtensions.h"
 #include "Displayer_ABC.h"
@@ -52,8 +53,10 @@ struct NumberFormatter
     template< typename T >
     void operator()( const T& value, Displayer_ABC& displayer ) const
     {
-        displayer.AddToDisplay( QString::number( value ) );
+        displayer.AddToDisplay( locale_.toString( value ) );
     }
+
+    static QLocale locale_;
 };
 
 template< >
@@ -65,9 +68,15 @@ struct Formatter< unsigned int > : public NumberFormatter {};
 template< >
 struct Formatter< int > : public NumberFormatter {};
 template< >
-struct Formatter< unsigned long > : public NumberFormatter {};
-template< >
 struct Formatter< long > : public NumberFormatter {};
+template< >
+struct Formatter< unsigned long > : public NumberFormatter
+{
+    void operator()( const unsigned long& value, Displayer_ABC& displayer ) const
+    {
+        displayer.AddToDisplay( locale_.toString( static_cast< const unsigned int >( value ) ) );
+    }
+};
 template< >
 struct Formatter< char >
 {

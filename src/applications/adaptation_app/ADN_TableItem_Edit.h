@@ -39,6 +39,7 @@ public:
     virtual ~ADN_TableItem_Edit();
 
     Validator& GetValidator();
+    virtual const QValidator* validator();
     void SetValidator( Validator* pValidator );
 
     virtual bool UseColor() const;

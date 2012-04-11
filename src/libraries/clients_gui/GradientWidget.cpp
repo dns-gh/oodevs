@@ -139,7 +139,7 @@ void GradientWidget::OnPresetCopied()
         bool valid;
         do {
             valid = true;
-            newName = QString( "%1 (%2)" ).arg( current->GetName() ).arg( ++i );
+            newName = QString( "%1 (%L2)" ).arg( current->GetName() ).arg( ++i );
             for( unsigned int i = 0; i < presets_.size(); ++i )
                 if( presets_[i]->GetName() == newName )
                 {

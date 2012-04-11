@@ -76,7 +76,9 @@ void TableItemDisplayer::EndDisplay()
 {
     if( !item_ )
         throw std::runtime_error( __FUNCTION__ );
+
     item_->setText( message_ );
+
     item_ = 0;
 }
 

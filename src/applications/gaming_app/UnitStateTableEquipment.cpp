@@ -222,7 +222,7 @@ void UnitStateTableEquipment::Commit( kernel::Entity_ABC& selected ) const
             if( GetEnumData< E_EquipmentState >( row, eState ) == eEquipmentState_RepairableWithEvacuation )
             {
                 assert( breakdowns );
-                breakdownList.AddIdentifier( QString( "Breakdown %1" ).arg( ++i ).ascii(), BreakdownComboIndexToId( *breakdowns, GetEnumData< unsigned int >( row, eBreakdown ) ) );
+                breakdownList.AddIdentifier( QString( "Breakdown %L1" ).arg( ++i ).ascii(), BreakdownComboIndexToId( *breakdowns, GetEnumData< unsigned int >( row, eBreakdown ) ) );
             }
     }
     action->Attach( *new actions::ActionTiming( controllers_.controller_, simulation_ ) );

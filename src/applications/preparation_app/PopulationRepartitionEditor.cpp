@@ -83,9 +83,9 @@ PopulationRepartitionEditor::~PopulationRepartitionEditor()
 void PopulationRepartitionEditor::SetValue( PopulationRepartition*& value )
 {
     value_ = &value;
-    male_->setText( QString::number( value->male_ ) );
-    female_->setText( QString::number( value->female_ ) );
-    children_->setText( QString::number( value->children_ ) );
+    male_->setText( locale().toString( value->male_ ) );
+    female_->setText( locale().toString( value->female_ ) );
+    children_->setText( locale().toString( value->children_ ) );
     OnValueChanged();
 }
 

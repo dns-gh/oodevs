@@ -1371,6 +1371,9 @@
     <ClInclude Include="..\..\src\libraries\clients_gui\SearchButton.h">
       <Filter>Source Files\Lists</Filter>
     </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_gui\RichSpinBox.h">
+      <Filter>Source Files\Tools</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\libraries\clients_gui\HierarchyListView.inl">

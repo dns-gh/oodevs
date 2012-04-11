@@ -12,6 +12,7 @@
 #include "clients_gui_pch.h"
 #include "ResourceLinksDialog_ABC.h"
 #include "moc_ResourceLinksDialog_ABC.cpp"
+#include "RichSpinBox.h"
 #include "SpinTableItem.h"
 #include "TerrainObjectProxy.h"
 #include "tools.h"
@@ -53,7 +54,7 @@ ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QMainWindow* parent, Controlle
     {
         Q3HBox* box = new Q3HBox( groupBox_ );
         new QLabel( tools::translate( "gui::ResourceLinksDialog_ABC", "Production:" ), box );
-        production_ = new QSpinBox( 0, std::numeric_limits< int >::max(), 1, box );
+        production_ = new RichSpinBox( box );
         connect( production_, SIGNAL( valueChanged( int ) ), this, SLOT( OnProductionChanged( int ) ) );
     }
     generateProduction_ = new QPushButton( tools::translate( "gui::ResourceLinksDialog_ABC", "Automatic production" ), groupBox_ ); 
@@ -62,7 +63,7 @@ ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QMainWindow* parent, Controlle
     {
         Q3HBox* box = new Q3HBox( groupBox_ );
         new QLabel( tools::translate( "gui::ResourceLinksDialog_ABC", "Consumption:" ), box );
-        consumption_  = new QSpinBox( 0, std::numeric_limits< int >::max(), 1, box );
+        consumption_  = new RichSpinBox( box );
         connect( consumption_, SIGNAL( valueChanged( int ) ), this, SLOT( OnConsumptionChanged( int ) ) );
     }
     critical_ = new QCheckBox( tools::translate( "gui::ResourceLinksDialog_ABC", "Vital consumption" ), groupBox_ );
@@ -70,13 +71,13 @@ ResourceLinksDialog_ABC::ResourceLinksDialog_ABC( QMainWindow* parent, Controlle
     {
         Q3HBox* box = new Q3HBox( groupBox_ );
         new QLabel( tools::translate( "gui::ResourceLinksDialog_ABC", "Maximal stock:" ), box );
-        maxStock_ = new QSpinBox( 0, std::numeric_limits< int >::max(), 1, box );
+        maxStock_ = new RichSpinBox( box );
         connect( maxStock_, SIGNAL( valueChanged( int ) ), this, SLOT( OnMaxStockChanged( int ) ) );
     }
     {
         stockBox_ = new Q3HBox( groupBox_ );
         new QLabel( tools::translate( "gui::ResourceLinksDialog_ABC", "Initial stock:" ), stockBox_ );
-        stock_ = new QSpinBox( 0, std::numeric_limits< int >::max(), 1, stockBox_ );
+        stock_ = new RichSpinBox( stockBox_ );
         connect( stock_, SIGNAL( valueChanged( int ) ), this, SLOT( OnStockChanged( int ) ) );
         stockBox_->hide();
     }
@@ -179,7 +180,7 @@ void ResourceLinksDialog_ABC::Update()
         bool limited = node.links_[ j ].capacity_ != -1;
         table_->item( j, 2 )->setEnabled( limited );
         static_cast< Q3CheckTableItem* >( table_->item( j, 1 ) )->setChecked( limited );
-        table_->setText( j, 2, QString::number( limited ? node.links_[ j ].capacity_ : 0 ) );
+        table_->setText( j, 2, locale().toString( limited ? node.links_[ j ].capacity_ : 0 ) );
     }
 }
 

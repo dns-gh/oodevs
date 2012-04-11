@@ -156,7 +156,8 @@ void UserProfileRights_ABC::CloseAll()
 // -----------------------------------------------------------------------------
 void UserProfileRights_ABC::SetStatus( Q3ListViewItem* item, Status status )
 {
-    item->setText( 3, QString::number( status ) );
+    QLocale locale;
+    item->setText( 3, locale.toString( status ) );
     if( status == eNothing )
     {
         item->setPixmap( 1, QPixmap() );

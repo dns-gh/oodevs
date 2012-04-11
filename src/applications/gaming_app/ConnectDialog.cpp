@@ -13,6 +13,7 @@
 #include "gaming/Network.h"
 #include "clients_kernel/Logger_ABC.h"
 #include "clients_gui/Tools.h"
+#include "clients_gui/RichSpinBox.h"
 #include "clients_kernel/ContextMenu.h"
 
 //-----------------------------------------------------------------------------
@@ -42,7 +43,7 @@ ConnectDialog::ConnectDialog( QWidget* pParent, Network& network, kernel::Logger
 
     // Port
     ++ nCurRow;
-    pPortSpinBox_ = new QSpinBox( 1, 65535, 1, this );
+    pPortSpinBox_ = new gui::RichSpinBox( this, 1, 65535 );
     pMainLayout->addWidget( new QLabel( tr("Port"), this ), nCurRow, 0 );
     pMainLayout->addWidget( pPortSpinBox_, nCurRow, 1 );
 
@@ -84,9 +85,9 @@ void ConnectDialog::Validate()
     }
     catch( std::exception& e )
     {
-        logger_.Info() << tr( "Not connected to %1:%2\nReason: %3\n" ).arg( pHostNameComboBox_->currentText() )
-                                                                      .arg( pPortSpinBox_->value() )
-                                                                      .arg( e.what() );
+        logger_.Info() << tr( "Not connected to %1:%L2\nReason: %3\n" ).arg( pHostNameComboBox_->currentText() )
+                                                                       .arg( pPortSpinBox_->value() )
+                                                                       .arg( e.what() );
         reject();
     }
 }
@@ -139,7 +140,7 @@ void ConnectDialog::SaveConfig()
 // -----------------------------------------------------------------------------
 void ConnectDialog::FillPopupMenu( kernel::ContextMenu* menu )
 {
-    const QString port = QString::number( pPortSpinBox_->value() );
+    const QString port = locale().toString( pPortSpinBox_->value() );
     for( int n = 0; n < pHostNameComboBox_->count(); ++n )
         menu->insertItem( pHostNameComboBox_->text( n ) + ":" + port, this, SLOT( QuickConnect( int ) ) );
 }

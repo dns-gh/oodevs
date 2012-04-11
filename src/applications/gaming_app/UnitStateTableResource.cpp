@@ -152,8 +152,8 @@ void UnitStateTableResource::NotifyUpdated( const kernel::Dotations_ABC& dotatio
                 for( int row = 0; row < dataModel_.rowCount(); ++row )
                     if( GetUserData( row, eName ).toString() == name )
                     {
-                        SetData( row, eQuantity, QString::number( dotation.quantity_ ), dotation.quantity_ );
-                        SetData( row, eThreshold, QString::number( dotation.thresholdPercentage_, 'f', 2 ), dotation.thresholdPercentage_ );
+                        SetData( row, eQuantity, locale().toString( dotation.quantity_ ), dotation.quantity_ );
+                        SetData( row, eThreshold, locale().toString( dotation.thresholdPercentage_, 'f', 2 ), dotation.thresholdPercentage_ );
                         break;
                     }
             }

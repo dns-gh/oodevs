@@ -16,6 +16,21 @@
 using namespace gui;
 using namespace kernel;
 
+namespace
+{
+    class LeftAlignedTableItem : public Q3TableItem
+    {
+    public:
+        explicit LeftAlignedTableItem( Q3Table* table ) : Q3TableItem( table, Q3TableItem::Never ) {}
+        virtual ~LeftAlignedTableItem() {}
+
+        virtual int alignment() const
+        {
+            return Qt::AlignLeft;
+        }
+    };
+}
+
 // -----------------------------------------------------------------------------
 // Name: PropertiesTable constructor
 // Created: SBO 2006-10-17
@@ -114,7 +129,10 @@ Displayer_ABC& PropertiesTable::SubItem( const QString& name )
         row_ = numRows();
         insertRows( row_ );
         rows_[name] = row_;
-        setText( row_, 0, name );
+        Q3TableItem* item = new LeftAlignedTableItem( this );
+        item->setText( name );
+        setItem( row_, 0, item );
+        //setText( row_, 0, name );
         setFixedHeight( contentsHeight () + 4 );
     }
     else

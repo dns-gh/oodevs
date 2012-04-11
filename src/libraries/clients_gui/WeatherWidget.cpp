@@ -11,6 +11,7 @@
 
 #include "clients_gui_pch.h"
 #include "WeatherWidget.h"
+#include "RichSpinBox.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/Units.h"
 #include "meteo/Meteo.h"
@@ -86,7 +87,7 @@ WeatherWidget::WeatherWidget( QWidget* parent, const QString& title )
 {
     // Speed
     new QLabel( tools::translate( "gui::WeatherWidget", "Wind speed:" ), this );
-    windSpeed_ = new QSpinBox( 0, 300, 5, this );
+    windSpeed_ = new RichSpinBox( this, 0, 300, 5 );
     windSpeed_->setSuffix( Units::kilometersPerHour.AsString() );
 
     // Direction
@@ -98,7 +99,7 @@ WeatherWidget::WeatherWidget( QWidget* parent, const QString& title )
 
     // Temperature
     new QLabel( tools::translate( "gui::WeatherWidget", "Temperature:" ), this );
-    temperature_ = new QSpinBox( -20, 40, 1, this );
+    temperature_ = new RichSpinBox( this, -20, 40, 1 );
     temperature_->setSuffix( "°C" );
 
     // Type
