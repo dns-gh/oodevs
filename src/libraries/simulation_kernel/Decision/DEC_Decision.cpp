@@ -471,8 +471,6 @@ void RegisterMissionParametersFunctions( directia::brain::Brain& brain, bool isM
     brain[ "DEC_Agent_AgentPeutConstruireObjetEmbarque" ] = &DEC_AgentFunctions::AgentCanConstructObjectWithLoaded;
     brain[ "DEC_Agent_AgentPeutConstruireObjetEmbarqueAvecLocalisation" ] = &DEC_AgentFunctions::AgentCanConstructObjectWithLoadedAndLocalisation;
     brain[ "DEC_Agent_AgentADotationPourConstruireObjet" ] = &DEC_AgentFunctions::AgentHasDotationForBuilding;
-    brain[ "DEC_Agent_AgentPeutConstruireObjetEmbarqueSansRenfort" ] = &DEC_AgentFunctions::AgentCanConstructObjectWithOutLoaded;
-    brain[ "DEC_Agent_AgentPeutConstruireObjetEmbarqueSansRenfortAvecLocalisation" ] = &DEC_AgentFunctions::AgentCanConstructObjectWithOutLoadedWithLocalisation;
     brain[ "DEC_Agent_AgentADotationPourConstruireObjetSansRenfort" ] = &DEC_AgentFunctions::AgentHasDotationForBuildingWithOutLoaded;
     brain[ "DEC_Agent_AgentPeutDetruireObjet" ] = &DEC_AgentFunctions::AgentCanDestroyObject;
     brain[ "DEC_Agent_AgentPeutConstruireContournementObjet" ] = &DEC_AgentFunctions::AgentCanBypassObject;
