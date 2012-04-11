@@ -1478,6 +1478,7 @@
     <!-- Package packs -->
     <macrodef name="pack">
         <attribute name="name"/>
+        <attribute name="file" default="SWORD_@{name}_${version.project}.otpak"/>
         <attribute name="description"/>
         <element name="elements" implicit="yes"/>
         <sequential>
@@ -1487,13 +1488,15 @@
                     <description>@{description}</description>
                 </content>
             </echoxml>
-            <concurrent seconds="30">
-                <zip destfile="${dist.dir}/SWORD_@{name}_${version.project}.otpak" filesonly="true">
-                    <elements/>
-                    <fileset dir="${out.dir}" includes="content.xml"/>
-                </zip>
+            <zip destfile="${out.dir}/@{file}" filesonly="true">
+                <elements/>
+                <fileset dir="${out.dir}" includes="content.xml"/>
+            </zip>
+            <concurrent seconds="60">
+                <copy file="${out.dir}/@{file}" todir="${dist.dir}"/>
             </concurrent>
             <delete file="${out.dir}/content.xml"/>
+            <delete file="${out.dir}/@{file}"/>
         </sequential>
     </macrodef>
 
