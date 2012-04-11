@@ -13,10 +13,6 @@
 #include "Knowledge_ABC.h"
 #include "Team_ABC.h"
 
-namespace urban
-{
-    class TerrainObject_ABC;
-}
 namespace kernel
 {
     class Displayer_ABC;

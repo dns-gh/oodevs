@@ -32,7 +32,8 @@ class Usages : public kernel::Usages_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit Usages( kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes, float livingSpace );
+             Usages( kernel::PropertiesDictionary& dictionary, const kernel::AccommodationTypes& accommodationTypes,
+                     float livingSpace );
     virtual ~Usages();
     //@}
 

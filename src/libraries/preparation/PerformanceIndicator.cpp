@@ -39,7 +39,6 @@
 #include <boost/filesystem/convenience.hpp>
 #include <xeumeuleu/xml.hpp>
 #include <xeuseuleu/xsl.hpp>
-#include <urban/WorldParameters.h>
 
 namespace bfs = boost::filesystem;
 
@@ -74,24 +73,24 @@ PerformanceIndicator::~PerformanceIndicator()
 // Name: PerformanceIndicator::Load
 // Created: MMC 2012-02-02
 // -----------------------------------------------------------------------------
-void PerformanceIndicator::Load( const tools::ExerciseConfig& config, const std::string& file, urban::WorldParameters& world )
+void PerformanceIndicator::Load( const tools::ExerciseConfig& config, const std::string& file )
 {
+    tools::WorldParameters worldParameters( config );
     values_.exercise_ = config.GetExerciseName();
     values_.limit_ = static_cast< unsigned int >( limit_ );
-    values_.terrainWidth_ = static_cast< unsigned int >( world.GetWidth() / 1000.f );
-    values_.terrainHeight_ = static_cast< unsigned int >( world.GetHeight() / 1000.f );
+    values_.terrainWidth_ = static_cast< unsigned int >( worldParameters.width_ / 1000.f );
+    values_.terrainHeight_ = static_cast< unsigned int >( worldParameters.height_ / 1000.f );
     float terrainMemSize = 0.f;
     try
     {
-        tools::WorldParameters worlParameters( config );
-        boost::filesystem::path detectionPath( worlParameters.detectionDirectory_ );
+        boost::filesystem::path detectionPath( worldParameters.detectionDirectory_ );
         if( bfs::exists( detectionPath ) && bfs::is_directory( detectionPath ) )
             for( bfs::directory_iterator it( detectionPath ); it != bfs::directory_iterator(); ++it )
                 if( !bfs::is_directory( *it ) && bfs::extension( *it ) == ".dat" )
-                    terrainMemSize += static_cast< float>( bfs::file_size( *it ) );        
-        terrainMemSize += static_cast< float>( bfs::exists( worlParameters.pathfindGraph_ )? bfs::file_size( worlParameters.pathfindGraph_ ) : 0 );
-        terrainMemSize += static_cast< float>( bfs::exists( worlParameters.pathfindLinks_ )? bfs::file_size( worlParameters.pathfindLinks_ ) : 0 );
-        terrainMemSize += static_cast< float>( bfs::exists( worlParameters.pathfindNodes_ )? bfs::file_size( worlParameters.pathfindNodes_ ) : 0 );
+                    terrainMemSize += static_cast< float>( bfs::file_size( *it ) );
+        terrainMemSize += static_cast< float>( bfs::exists( worldParameters.pathfindGraph_ )? bfs::file_size( worldParameters.pathfindGraph_ ) : 0 );
+        terrainMemSize += static_cast< float>( bfs::exists( worldParameters.pathfindLinks_ )? bfs::file_size( worldParameters.pathfindLinks_ ) : 0 );
+        terrainMemSize += static_cast< float>( bfs::exists( worldParameters.pathfindNodes_ )? bfs::file_size( worldParameters.pathfindNodes_ ) : 0 );
 
         if( bfs::exists( file ) )
         {

@@ -20,6 +20,7 @@ namespace kernel
     class Displayer_ABC;
     class InfrastructureType;
     class PropertiesDictionary;
+    class ObjectTypes;
 }
 
 namespace gui
@@ -46,7 +47,8 @@ class InfrastructureAttribute : public kernel::Infrastructure_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             InfrastructureAttribute( const geometry::Point2f& position, const kernel::InfrastructureType& infrastructureType, kernel::PropertiesDictionary& dico );
+             InfrastructureAttribute( xml::xistream& xis, gui::TerrainObjectProxy& object, kernel::PropertiesDictionary& dico,
+                                      const kernel::ObjectTypes& objectTypes );
     virtual ~InfrastructureAttribute();
     //@}
 
@@ -75,7 +77,7 @@ private:
 public:
     //! @name Member data
     //@{
-    const kernel::InfrastructureType& type_;
+    const kernel::InfrastructureType* type_;
     bool enabled_;
     unsigned int threshold_;
     std::string role_;

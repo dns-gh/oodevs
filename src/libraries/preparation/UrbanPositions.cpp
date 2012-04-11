@@ -12,27 +12,34 @@
 #include "clients_kernel/GlTools_ABC.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
-#include <urban/GeometryAttribute.h>
-#include <urban/TerrainObject_ABC.h>
-#include <urban/PhysicalAttribute.h>
+#include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/Architecture_ABC.h"
 
 // -----------------------------------------------------------------------------
 // Name: UrbanPositions constructor
 // Created: JSR 2010-09-06
 // -----------------------------------------------------------------------------
-UrbanPositions::UrbanPositions( const urban::TerrainObject_ABC& object, const kernel::UrbanColor_ABC* pColor )
-    : object_           ( object )
-    , pColor_           ( pColor )
+UrbanPositions::UrbanPositions( xml::xistream& xis, const std::string& name, const kernel::UrbanColor_ABC& color,
+                                const kernel::CoordinateConverter_ABC& converter, const kernel::Architecture_ABC& architecture )
+    : name_             ( name )
+    , color_            ( color )
     , selected_         ( false )
-    , height_           ( 0u )
+    , height_           ( architecture.GetHeight() )
     , hasInfrastructure_( false )
 {
-    const urban::PhysicalAttribute* pPhysical = object.Retrieve< urban::PhysicalAttribute >();;
-    if( pPhysical && pPhysical->GetArchitecture() )
-        height_ = static_cast< unsigned int >( pPhysical->GetArchitecture()->GetHeight() );
-    barycenter_ = object_.Get< urban::GeometryAttribute >().Geometry().Barycenter();
-    boundingBox_ = object_.Get< urban::GeometryAttribute >().Geometry().BoundingBox();
-    area_ = object_.Get< urban::GeometryAttribute >().Geometry().ComputeArea();
+    if( xis.has_child( "footprint" ) )
+    {
+        std::vector< geometry::Point2f > positions;
+        xis >> xml::start( "footprint" )
+                >> xml::list( "point", *this, &UrbanPositions::ReadPoint, positions, converter )
+            >> xml::end;
+        if( positions.front() == positions.back() )
+            positions.pop_back();
+        polygon_ = geometry::Polygon2f( positions );
+        boundingBox_ = polygon_.BoundingBox();
+        barycenter_ = polygon_.Barycenter();
+        area_ = polygon_.ComputeArea();
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -42,6 +49,15 @@ UrbanPositions::UrbanPositions( const urban::TerrainObject_ABC& object, const ke
 UrbanPositions::~UrbanPositions()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanPositions::ReadPoint
+// Created: LGY 2012-04-10
+// -----------------------------------------------------------------------------
+void UrbanPositions::ReadPoint( xml::xistream& xis, std::vector< geometry::Point2f >& positions, const kernel::CoordinateConverter_ABC& converter ) const
+{
+    positions.push_back( converter.ConvertToXY( xis.attribute< std::string >( "location" ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -68,7 +84,7 @@ const geometry::Rectangle2f& UrbanPositions::BoundingBox() const
 // -----------------------------------------------------------------------------
 bool UrbanPositions::IsInside( const geometry::Point2f& point ) const
 {
-    return object_.IsInside( point );
+    return polygon_.IsInside( point );
 }
 
 // -----------------------------------------------------------------------------
@@ -77,7 +93,7 @@ bool UrbanPositions::IsInside( const geometry::Point2f& point ) const
 // -----------------------------------------------------------------------------
 const std::vector< geometry::Point2f >& UrbanPositions::Vertices() const
 {
-    return object_.Get< urban::GeometryAttribute >().Geometry().Vertices();
+    return polygon_.Vertices();
 }
 
 // -----------------------------------------------------------------------------
@@ -86,8 +102,8 @@ const std::vector< geometry::Point2f >& UrbanPositions::Vertices() const
 // -----------------------------------------------------------------------------
 void UrbanPositions::Draw( const geometry::Point2f& /*where*/, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const
 {
-    if( pColor_ && viewport.IsHotpointVisible() )
-        tools.DrawDecoratedPolygon( object_.Get< urban::GeometryAttribute >().Geometry(), *pColor_, hasInfrastructure_ ? object_.GetName() : std::string(), 0, selected_ );
+    if( viewport.IsHotpointVisible() )
+        tools.DrawDecoratedPolygon( polygon_, color_, hasInfrastructure_ ? name_ : std::string(), 0, selected_ );
 }
 
 // -----------------------------------------------------------------------------

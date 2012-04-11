@@ -12,7 +12,6 @@
 
 #include "tools/Resolver.h"
 #include "clients_gui/UrbanDisplayOptions.h"
-#include <urban/Model.h>
 
 namespace kernel
 {
@@ -31,8 +30,8 @@ namespace tools
     class SchemaWriter_ABC;
 }
 
-class Model;
 class StaticModel;
+class UrbanFactory_ABC;
 
 // =============================================================================
 /** @class  UrbanModel
@@ -40,8 +39,7 @@ class StaticModel;
 */
 // Created: SLG 2009-02-10
 // =============================================================================
-class UrbanModel : public urban::Model
-                 , public tools::Resolver< gui::TerrainObjectProxy >
+class UrbanModel : public tools::Resolver< gui::TerrainObjectProxy >
 {
 public:
     //! @name Constructors/Destructor
@@ -52,16 +50,18 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const std::string& directoryPath, urban::WorldParameters& world, ::Model& model );
+    void Load( const std::string& directoryPath );
     void Serialize( const std::string& filename, const tools::SchemaWriter_ABC& schemaWriter ) const;
     void LoadUrbanState( xml::xistream& xis );
     void Purge();
-    void SendCreation( urban::TerrainObject_ABC& urbanObject );
     //@}
 
 private:
     //! @name Helpers
     //@{
+    void ReadCity( xml::xistream& xis );
+    void ReadDistrict( xml::xistream& xis );
+    void ReadBlock( xml::xistream& xis );
     void ReadUrbanObject( xml::xistream& xis );
     void ReadCapacity( const std::string& capacity, xml::xistream& xis, gui::TerrainObjectProxy& proxy );
     template< typename T, typename U >
@@ -83,6 +83,7 @@ private:
     const tools::Resolver< kernel::Object_ABC >& objects_;
     std::string urbanStateVersion_;
     std::auto_ptr< gui::UrbanDisplayOptions > urbanDisplayOptions_;
+    std::auto_ptr< UrbanFactory_ABC > factory_;
     //@}
 };
 

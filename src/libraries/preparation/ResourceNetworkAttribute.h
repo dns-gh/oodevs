@@ -27,11 +27,6 @@ namespace kernel
     class ResourceNetworkType;
 }
 
-namespace urban
-{
-    class ResourceNetworkAttribute;
-}
-
 namespace xml
 {
     class xistream;
@@ -59,8 +54,6 @@ public:
     //! @name Constructors/Destructor
     //@{
              ResourceNetworkAttribute( kernel::Controllers& controllers, xml::xistream& xis, const geometry::Point2f position
-                                     , const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources );
-             ResourceNetworkAttribute( kernel::Controllers& controllers, const urban::ResourceNetworkAttribute* network, const geometry::Point2f position
                                      , const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources );
              ResourceNetworkAttribute( kernel::Controllers& controllers, const geometry::Point2f position
                                      , const T_Urbans& urbans, const T_Objects& objects, const T_Resources& resources );

@@ -9,23 +9,25 @@
 
 #include "preparation_pch.h"
 #include "UrbanColor.h"
-#include <urban/ColorAttribute.h>
-#include <urban/TerrainObject_ABC.h>
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: UrbanColor constructor
 // Created: LGY 2011-04-19
 // -----------------------------------------------------------------------------
-UrbanColor::UrbanColor( const urban::ColorAttribute* colorAttribute )
+UrbanColor::UrbanColor( xml::xistream& xis )
     : initial_( 200u, 200u, 200u )
     , current_( 200u, 200u, 200u )
     , alpha_  ( 0.7f )
 {
-    if( colorAttribute )
+    if( xis.has_child( "color" ) )
     {
-        initial_ = Color( colorAttribute->Red(), colorAttribute->Green(), colorAttribute->Blue() );
-        alpha_ = colorAttribute->Alpha();
+        xis >> xml::start( "color" );
+        initial_ = Color( xis.attribute< unsigned short >( "red" ), xis.attribute< unsigned short >( "green" ),
+                          xis.attribute< unsigned short >( "blue" ) );
+        alpha_ = xis.attribute< float >( "alpha" );
         current_ = initial_;
+        xis >> xml::end;
     }
 }
 

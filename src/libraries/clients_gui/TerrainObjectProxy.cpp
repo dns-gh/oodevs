@@ -22,6 +22,7 @@
 #include "clients_kernel/Usages_ABC.h"
 #include "protocol/Simulation.h"
 #include <boost/foreach.hpp>
+#include <xeumeuleu/xml.hpp>
 
 using namespace gui;
 using namespace kernel;
@@ -37,6 +38,29 @@ const QString TerrainObjectProxy::typeName_ = "terrainObjectProxy";
 TerrainObjectProxy::TerrainObjectProxy( Controllers& controllers, const std::string& name, unsigned int id, const ObjectType& type
                                       , UrbanDisplayOptions& options, const AccommodationTypes& accommodations )
     : EntityImplementation< Object_ABC >( controllers.controller_, id, name.c_str() )
+    , Creatable< TerrainObjectProxy >( controllers.controller_, this )
+    , controllers_    ( controllers )
+    , density_        ( 0 )
+    , type_           ( type )
+    , accommodations_ ( accommodations )
+    , livingSpace_    ( 0 )
+    , nominalCapacity_( 0 )
+    , options_        ( options )
+{
+    RegisterSelf( *this );
+    CreateDictionary( controllers.controller_ );
+    UpdateColor();
+    controllers_.Register( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: TerrainObjectProxy constructor
+// Created: LGY 2012-04-10
+// -----------------------------------------------------------------------------
+TerrainObjectProxy::TerrainObjectProxy( xml::xistream& xis, kernel::Controllers& controllers,
+                                        const kernel::ObjectType& type, UrbanDisplayOptions& options,
+                                        const kernel::AccommodationTypes& accommodations )
+    : EntityImplementation< Object_ABC >( controllers.controller_, xis.attribute< unsigned int >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
     , Creatable< TerrainObjectProxy >( controllers.controller_, this )
     , controllers_    ( controllers )
     , density_        ( 0 )

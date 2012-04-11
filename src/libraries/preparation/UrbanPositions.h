@@ -12,14 +12,16 @@
 
 #include "clients_kernel/UrbanPositions_ABC.h"
 
-namespace urban
+namespace xml
 {
-    class TerrainObject_ABC;
+    class xistream;
 }
 
 namespace kernel
 {
     class UrbanColor_ABC;
+    class CoordinateConverter_ABC;
+    class Architecture_ABC;
 }
 
 // =============================================================================
@@ -33,7 +35,8 @@ class UrbanPositions : public kernel::UrbanPositions_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             UrbanPositions( const urban::TerrainObject_ABC& object, const kernel::UrbanColor_ABC* pColor );
+             UrbanPositions( xml::xistream& xis, const std::string& name, const kernel::UrbanColor_ABC& pColor,
+                             const kernel::CoordinateConverter_ABC& converter, const kernel::Architecture_ABC& architecture );
     virtual ~UrbanPositions();
     //@}
 
@@ -50,13 +53,20 @@ public:
     //@}
 
 private:
+    //! @name Helpers
+    //@{
+    void ReadPoint( xml::xistream& xis, std::vector< geometry::Point2f >& positions, const kernel::CoordinateConverter_ABC& converter ) const;
+    //@}
+
+private:
     //! @name Member data
     //@{
-    const urban::TerrainObject_ABC& object_;
-    const kernel::UrbanColor_ABC* pColor_;
+    const std::string name_;
+    const kernel::UrbanColor_ABC& color_;
     bool selected_;
     unsigned int height_;
     bool hasInfrastructure_;
+    geometry::Polygon2f polygon_;
     geometry::Point2f barycenter_;
     geometry::Rectangle2f boundingBox_;
     float area_;

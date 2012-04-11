@@ -12,9 +12,9 @@
 
 #include "clients_kernel/UrbanColor_ABC.h"
 
-namespace urban
+namespace xml
 {
-    class ColorAttribute;
+    class xistream;
 }
 
 // =============================================================================
@@ -28,7 +28,7 @@ class UrbanColor : public kernel::UrbanColor_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-    explicit UrbanColor( const urban::ColorAttribute* colorAttribute );
+    explicit UrbanColor( xml::xistream& xis );
     virtual ~UrbanColor();
     //@}
 
