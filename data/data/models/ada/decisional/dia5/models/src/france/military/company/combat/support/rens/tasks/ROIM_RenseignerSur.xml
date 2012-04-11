@@ -11,6 +11,42 @@
         </parameter>
     </parameters>
     <stages>
+        <stage label="Renseignement sur la zone">
+            <skills>
+                <skill name="sword.military.company.skills.Lead" main="true">
+                    <parameter name="companyTask">
+                        <value>
+                            <string>france.military.company.combat.support.rens.tasks.ROIM_RenseignerSur</string>
+                        </value>
+                    </parameter>
+                    <parameter name="mainTasks">
+                        <value>
+                            <string>france.military.platoon.combat.support.rens.tasks.ROIMMettreEnOeuvre</string>
+                        </value>
+                    </parameter>
+                    <parameter name="supportTasks">
+                        <value>
+                            <string>france.military.platoon.combat.support.rens.tasks.ROIMMettreEnOeuvre</string>
+                        </value>
+                    </parameter>
+                    <parameter name="defaultTask">
+                        <value>
+                            <string>france.military.platoon.combat.support.rens.tasks.ROIMMettreEnOeuvre</string>
+                        </value>
+                    </parameter>
+                    <parameter name="taskForSupporting">
+                        <value>
+                            <string>france.military.platoon.combat.support.rens.tasks.ROIMMettreEnOeuvre</string>
+                        </value>
+                    </parameter>
+                    <parameter name="disableWhenDone">
+                        <value>
+                            <boolean>true</boolean>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
         <stage label="Renseignement sur la zone" disable-when-done="true">
             <skills>
                 <skill name="sword.military.company.skills.Lead" main="true">
@@ -26,17 +62,17 @@
                     </parameter>
                     <parameter name="supportTasks">
                         <value>
-                            <string>france.military.platoon.combat.support.rens.tasks.ROIMMettreEnOeuvre</string>
+                            <string>france.military.platoon.combat.support.rens.tasks.ROIM_RenseignerSur</string>
                         </value>
                     </parameter>
                     <parameter name="defaultTask">
                         <value>
-                            <string>france.military.platoon.tasks.Suivre</string>
+                            <string>france.military.platoon.combat.support.rens.tasks.ROIM_RenseignerSur</string>
                         </value>
                     </parameter>
                     <parameter name="taskForSupporting">
                         <value>
-                            <string>france.military.platoon.tasks.Renforcer</string>
+                            <string>france.military.platoon.combat.support.rens.tasks.ROIM_RenseignerSur</string>
                         </value>
                     </parameter>
                 </skill>
