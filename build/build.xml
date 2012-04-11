@@ -1487,10 +1487,12 @@
                     <description>@{description}</description>
                 </content>
             </echoxml>
-            <zip destfile="${dist.dir}/SWORD_@{name}_${version.project}.otpak" filesonly="true">
-                <elements/>
-                <fileset dir="${out.dir}" includes="content.xml"/>
-            </zip>
+            <concurrent seconds="30">
+                <zip destfile="${dist.dir}/SWORD_@{name}_${version.project}.otpak" filesonly="true">
+                    <elements/>
+                    <fileset dir="${out.dir}" includes="content.xml"/>
+                </zip>
+            </concurrent>
             <delete file="${out.dir}/content.xml"/>
         </sequential>
     </macrodef>
