@@ -20,14 +20,14 @@ method "decontaminateIt" ( masalife.brain.integration.startStopAction(
 -- --------------------------------------------------------------------------------
 -- Information
 -- --------------------------------------------------------------------------------
-method "getPosition" ( 
+method "getPosition" (
     function( self )
-        return integration.getAreaPosition( self )
+        return integration.getAreaPositionSecu( self )
     end )
 
-method "getPositions" ( 
+method "getPositions" (
     function( self )
-        return integration.getAreaPositions( self )
+        return integration.getAreaPositionsSecu( self )
     end )
 
 return {}
