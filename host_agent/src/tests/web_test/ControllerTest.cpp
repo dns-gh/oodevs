@@ -284,3 +284,9 @@ BOOST_FIXTURE_TEST_CASE( controller_reject_invalid_ids, Fixture )
         CheckNotify( 400, "invalid \"uuid\" 1" );
     }
 }
+
+BOOST_FIXTURE_TEST_CASE( controller_reject_invalid_parameters, Fixture )
+{
+    SetRequest( "GET", "/list_exercises", boost::assign::map_list_of( "offset", "abc" ) );
+    CheckNotify( 400, "invalid parameter \"offset\"=\"abc\"" );
+}

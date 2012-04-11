@@ -149,7 +149,16 @@ template< typename T >
 T GetParameter( const std::string& name, const Request_ABC& data, const T& value )
 {
     const boost::optional< std::string > option = data.GetParameter( name );
-    return option == boost::none ? value : boost::lexical_cast< T >( *option );
+    if( option == boost::none )
+        return value;
+    try
+    {
+        return boost::lexical_cast< T >( *option );
+    }
+    catch( const boost::bad_lexical_cast& /*err*/ )
+    {
+        throw HttpException( BadRequest, "invalid parameter \"" + name + "\"=\""  + *option + "\"" );
+    }
 }
 
 template< typename T >
