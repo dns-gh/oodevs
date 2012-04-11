@@ -11,9 +11,9 @@
         </parameter>
     </parameters>
     <stages>
-        <stage label="Mettre en oeuvre sur position" permanent="true">
+        <stage label="Mettre en oeuvre sur position" disable-when-done="true">
             <skills>
-                <skill name="france.military.platoon.combat.support.rens.skills.ROIMMettreEnOeuvre">
+                <skill name="france.military.platoon.combat.support.rens.skills.ROIMMettreEnOeuvre" main="true">
                     <parameter name="position">
                         <value>
                             <parameter>position</parameter>
