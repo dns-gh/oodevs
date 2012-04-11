@@ -1304,22 +1304,13 @@ std::pair< const PHY_DotationCategory*, double > DEC_AgentFunctions::GetAgentMis
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_AgentFunctions::AgentCanConstructObjectWithOutLoaded
-// Created: LMT 2012-01-25
-// -----------------------------------------------------------------------------
-bool DEC_AgentFunctions::AgentCanConstructObjectWithOutLoaded( const DEC_Decision_ABC* agent, const std::string& type )
-{
-    return AgentCanConstructObjectWithOutLoadedWithLocalisation( agent, type, 0 );
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_AgentFunctions::AgentCanConstructObjectWithOutLoadedWithLocalisation
 // Created: JSR 2012-02-27
 // -----------------------------------------------------------------------------
 bool DEC_AgentFunctions::AgentCanConstructObjectWithOutLoadedWithLocalisation( const DEC_Decision_ABC* agent, const std::string& type, const TER_Localisation* localisation )
 {
     if( !agent )
-        throw std::runtime_error( "Invalid pion in AgentCanConstructObjectWithOutLoaded" );
+        throw std::runtime_error( "Invalid pion in AgentCanConstructObjectWithOutLoadedWithLocalisation" );
     return agent->GetPion().GetRole< PHY_RoleAction_Objects >().CanConstructWithReinforcement( type, localisation, false );
 }
 

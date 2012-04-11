@@ -72,7 +72,6 @@ public:
     static bool AgentCanConstructObjectWithLoaded( const DEC_Decision_ABC* agent, const std::string& type );
     static bool AgentCanConstructObjectWithLoadedAndLocalisation( const DEC_Decision_ABC* agent, const std::string& type, const TER_Localisation* localisation );
     static bool AgentHasDotationForBuilding(const DEC_Decision_ABC* agent, const std::string& type );
-    static bool AgentCanConstructObjectWithOutLoaded( const DEC_Decision_ABC* agent, const std::string& type );
     static bool AgentCanConstructObjectWithOutLoadedWithLocalisation( const DEC_Decision_ABC* agent, const std::string& type, const TER_Localisation* localisation );
     static bool AgentHasDotationForBuildingWithOutLoaded(const DEC_Decision_ABC* agent, const std::string& type );
     static bool HasDotationForBuildingWithoutReinforcement( MIL_Agent_ABC& callerAgent, const std::string& type );
