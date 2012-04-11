@@ -45,6 +45,9 @@ void ObstaclePrototype::Commit()
         list.AddIdentifier( "TargetType", types_->GetValue() );
         list.AddBool( "Activation", IsActivated() );
         list.AddQuantity( "ActivationTime", GetActivationTime() );
-        list.AddQuantity( "ActivityTime", GetActivityTime() );
+
+        actions::parameters::ParameterList& ActivityList = attributesList_->AddList( "ActivityTime" );
+        ActivityList.AddIdentifier( "ActivityType", sword::ObjectMagicAction_Attribute_activity_time );
+        ActivityList.AddQuantity( "ActivityTime", GetActivityTime() );
     }
 }
