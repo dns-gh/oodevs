@@ -241,9 +241,9 @@ return
     end,
     respondToIt = masalife.brain.integration.startStopAction( 
     { 
-        start = integration.startDestroyingIt, 
+        start = integration.startRespondIt, 
         started = function( self, ... ) end, 
-        stop = integration.stopDestroyingIt
+        stop = integration.stopRespondIt
      } ),
     fleeFromIt = function( self )
          -- $$$$ MIA: nothing by default
