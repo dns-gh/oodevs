@@ -28,6 +28,14 @@ integration.startDestroyingItWithMissileAir = function( target, percentage )
     actionCallbacks[ target[myself].actionTir ] = function( arg ) target[myself].eTir = arg end
   end
 end
+-- respond actions
+integration.startRespondIt = function( target )
+  target[myself] = target[myself] or {}
+  if not target[myself].actionRespond then
+    target[myself].actionRespond = DEC_StartTirDirect( target.source, 100, eTirDirectNormal, -1 )
+    actionCallbacks[ target[myself].actionRespond ] = function( arg ) target[myself].eTir = arg end
+  end
+end
 
 integration.startedDestroyingIt = function( target )
     if target[myself].eTir == eActionTirDirect_NoAmmo and not target[myself].noAmmo then
@@ -54,6 +62,15 @@ integration.stopDestroyingIt = function( target )
     if  target[myself].actionTir ~= nil then
         target[myself].actionTir = DEC__StopAction( target[myself].actionTir )
         target[myself].actionTir = nil
+        target[myself].eTir = nil
+        g_myEnemy = nil
+    end
+end
+integration.stopRespondIt = function( target )
+    target[myself] = target[myself] or {}
+    if  target[myself].actionRespond ~= nil then
+        target[myself].actionRespond = DEC__StopAction( target[myself].actionRespond )
+        target[myself].actionRespond = nil
         target[myself].eTir = nil
         g_myEnemy = nil
     end
