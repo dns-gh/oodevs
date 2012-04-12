@@ -18,6 +18,7 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/PopulationPrototype.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_gui/RichSpinBox.h"
 #include "Tools.h"
 
 using namespace gui;
@@ -39,8 +40,8 @@ PopulationsPanel::PopulationsPanel( QWidget* parent, gui::PanelStack_ABC& panel,
         Q3HBox* box = new Q3HBox( vbox );
         box->setSpacing( 5 );
         new QLabel( tools::translate( "gui::PopulationsPanel", "Healthy number:" ), box );
-        number_ = new QLineEdit( locale().toString( 1000 ), box );
-        number_->setValidator( new QIntValidator( 1, 1000000, number_ ) );
+        number_ = new RichSpinBox( box, 1, 1000000, 10 );
+        number_->setValue( 1000 );
         list_ = new PopulationTypesListView( vbox, controllers_, types, factory );
         connect( list_, SIGNAL( StartDrag( const kernel::PopulationType* ) ), this, SLOT( OnStartDrag( const kernel::PopulationType* ) ) );
     }
@@ -75,7 +76,7 @@ void PopulationsPanel::OnStartDrag( const PopulationType* type )
     if( !selected_ ||!type )
         return;
     prototype_.type_ = type;
-    prototype_.number_ = number_->text().toInt();
+    prototype_.number_ = number_->value();
     Q3DragObject* drag = new gui::ValuedDragObject( &prototype_, this );
     drag->drag();
 }

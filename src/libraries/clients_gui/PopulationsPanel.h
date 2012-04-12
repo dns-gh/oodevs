@@ -80,7 +80,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     PopulationTypesListView* list_;
-    QLineEdit* number_;
+    QSpinBox* number_;
     const kernel::Entity_ABC* selected_;
     kernel::PopulationPrototype prototype_;
     //@}
