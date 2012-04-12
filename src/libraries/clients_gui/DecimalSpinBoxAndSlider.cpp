@@ -30,6 +30,7 @@ DecimalSpinBoxAndSlider::DecimalSpinBoxAndSlider( QWidget* parent, float& value,
         layout_ = new Q3VBoxLayout( this );
     spinbox_ = new RichDoubleSpinBox( this, min, max, gap, precision );
     spinbox_->setValue( value_ );
+    spinbox_->setMinimumWidth( 30 * precision );
     slider_ = new QSlider( static_cast< int >( precision_ * min ), static_cast< int >( precision_ * max ), static_cast< int >( precision_ * gap ), static_cast< int >( precision_ * value_ ), sliderOrientation, this );
     if( spinboxFirst )
     {
@@ -88,7 +89,9 @@ float DecimalSpinBoxAndSlider::value() const
 void DecimalSpinBoxAndSlider::setSpinboxValue( int value )
 {
     value_ = value / precision_;
+    spinbox_->blockSignals( true );
     spinbox_->setValue( value_ );
+    spinbox_->blockSignals( false );
     emit valueChanged( value_ );
 }
 
@@ -99,7 +102,9 @@ void DecimalSpinBoxAndSlider::setSpinboxValue( int value )
 void DecimalSpinBoxAndSlider::setSliderValue( double value )
 {
     value_ = static_cast< float >( value );
+    slider_->blockSignals( true );
     slider_->setValue( static_cast< int >( value * precision_ ) );
+    slider_->blockSignals( false );
     emit valueChanged( value_ );
 }
 
