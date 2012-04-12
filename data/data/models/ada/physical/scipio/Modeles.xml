@@ -1128,7 +1128,9 @@
         <mission name="PION ASYMETRIQUE Assassiner Officiers"/>
         <mission name="PION ASYMETRIQUE Commettre un Attentat"/>
         <mission name="PION ASYMETRIQUE Commettre un Attentat Suicide"/>
-        <mission name="PION ASYMETRIQUE Prendre en Otage"/>
+        <mission name="PION ASYMETRIQUE Prendre en Otage">
+          <fragorder name="Deposer Unite Capturee"/>
+        </mission>
         <mission name="PION ASYMETRIQUE Renseigner"/>
         <mission name="PION ASYMETRIQUE Se Dissimuler"/>
         <mission name="PION ASYMETRIQUE S'Infiltrer"/>
@@ -1245,7 +1247,9 @@
         <mission name="PION Sortir du reseau souterrain"/>
         <mission name="PION Faire mouvement dans reseau souterrain"/>
         <mission name="PION Faire mouvement via reseau souterrain"/>
-        <mission name="PION ASYMETRIQUE Prendre en Otage"/>
+        <mission name="PION ASYMETRIQUE Prendre en Otage">
+          <fragorder name="Deposer Unite Capturee"/>
+        </mission>
         <mission name="PION ASYMETRIQUE Renseigner"/>
         <mission name="PION MELEE Controler"/>
         <mission name="PION MELEE Harceler"/>
@@ -6530,7 +6534,9 @@
     </automat>
     <automat dia-type="france.military.company.roles.Automate" file="BMAutomat.bms" masalife="true" name="Masalife.Automate.Milice">
       <missions>
-        <mission name="AUTOMATE ASYMETRIQUE Prendre en Otage"/>
+        <mission name="AUTOMATE ASYMETRIQUE Prendre en Otage">
+          <fragorder name="Deposer Unite Capturee"/>
+        </mission>
         <mission name="AUTOMATE ASYMETRIQUE Renseigner"/>
         <mission name="AUTOMATE COMMUNES Faire Mouvement"/>
         <mission name="AUTOMATE COMMUNES Franchir"/>
@@ -7356,4 +7362,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="4075283604" -->
+<!-- signature="2795663360" -->

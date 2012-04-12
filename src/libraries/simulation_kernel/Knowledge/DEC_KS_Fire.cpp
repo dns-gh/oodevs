@@ -123,6 +123,15 @@ void DEC_KS_Fire::Talk( int /*currentTimeStep*/ )
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KS_Fire::IsAttacked
+// Created: JSR 2012-04-12
+// -----------------------------------------------------------------------------
+bool DEC_KS_Fire::IsAttacked() const
+{
+    return pionsAttacking_.size() > 0 || populationsAttacking_.size() > 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KS_Fire::NotifyHitByDirectFire
 // Created: NLD 2004-03-29
 // -----------------------------------------------------------------------------

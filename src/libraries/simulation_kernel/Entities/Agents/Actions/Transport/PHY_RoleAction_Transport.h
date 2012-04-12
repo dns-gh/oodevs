@@ -106,6 +106,7 @@ public:
     //@{
     bool IsFinished    () const;
     bool IsTransporting() const;
+    double RemainingWeight( MIL_Agent_ABC& pion ) const;
 
     bool AddPion         ( MIL_Agent_ABC& pion, bool bTransportOnlyLoadable );
     void Cancel          ();

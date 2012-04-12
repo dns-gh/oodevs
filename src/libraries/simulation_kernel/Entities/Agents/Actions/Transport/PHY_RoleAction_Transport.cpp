@@ -571,3 +571,15 @@ bool PHY_RoleAction_Transport::IsTransporting() const
 {
     return rWeightTransported_ > 0.;
 }
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Transport::RemainingWeight
+// Created: JSR 2012-04-12
+// -----------------------------------------------------------------------------
+double PHY_RoleAction_Transport::RemainingWeight( MIL_Agent_ABC& pion ) const
+{
+    CIT_TransportedPionMap it = transportedPions_.find( &pion );
+    if( it == transportedPions_.end() )
+        return 0;
+    return it->second.rRemainingWeight_;
+}

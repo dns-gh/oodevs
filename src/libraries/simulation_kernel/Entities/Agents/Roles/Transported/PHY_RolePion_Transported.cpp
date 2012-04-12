@@ -12,21 +12,24 @@
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Transported.h"
 #include "AlgorithmsFactories.h"
+#include "LocationActionNotificationHandler_ABC.h"
+#include "MoveComputer_ABC.h"
+#include "NetworkNotificationHandler_ABC.h"
+#include "TransportPermissionComputer_ABC.h"
+#include "TransportChangeNotificationHandler_ABC.h"
+#include "TransportNotificationHandler_ABC.h"
+#include "VisionConeNotificationHandler_ABC.h"
+#include "OnComponentFunctor_ABC.h"
+#include "OnComponentFunctorComputer_ABC.h"
+#include "OnComponentFunctorComputerFactory_ABC.h"
+#include "Entities/Agents/Actions/Transport/PHY_RoleAction_Transport.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Units/Composantes/PHY_ComposantePion.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
+#include "Knowledge/DEC_KS_Fire.h"
 #include "MT_Tools/MT_Vector2D.h"
 #include "protocol/ClientSenders.h"
-#include "simulation_kernel/LocationActionNotificationHandler_ABC.h"
-#include "simulation_kernel/MoveComputer_ABC.h"
-#include "simulation_kernel/NetworkNotificationHandler_ABC.h"
-#include "simulation_kernel/TransportPermissionComputer_ABC.h"
-#include "simulation_kernel/TransportChangeNotificationHandler_ABC.h"
-#include "simulation_kernel/TransportNotificationHandler_ABC.h"
-#include "simulation_kernel/VisionConeNotificationHandler_ABC.h"
-#include "simulation_kernel/OnComponentFunctor_ABC.h"
-#include "simulation_kernel/OnComponentFunctorComputer_ABC.h"
-#include "simulation_kernel/OnComponentFunctorComputerFactory_ABC.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( transport::PHY_RolePion_Transported )
 
@@ -101,10 +104,10 @@ void PHY_RolePion_Transported::save( MIL_CheckPointOutArchive& file, const unsig
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Transported::CancelTransport( const MIL_Agent_ABC& transporter )
 {
-
     if( pTransporter_ != &transporter )
         return ;//false;
-    pion_.Apply( &location::LocationActionNotificationHandler_ABC::Show, vLoadingPosition_ );
+    if( !pTransporter_ || !pTransporter_->GetKnowledge().GetKsFire().IsAttacked() || pTransporter_->GetRole< PHY_RoleAction_Transport >().RemainingWeight( pion_ ) > 0 )
+        pion_.Apply( &location::LocationActionNotificationHandler_ABC::Show, vLoadingPosition_ );
     pTransporter_ = 0;
     bHasChanged_ = true;
     vLoadingPosition_.Reset();
