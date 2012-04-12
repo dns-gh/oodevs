@@ -9,21 +9,24 @@
 
 #include "preparation_pch.h"
 #include "FormationFactory.h"
+#include "Color.h"
 #include "Formation.h"
 #include "FormationHierarchies.h"
-#include "TacticalLines.h"
+#include "FormationPositions.h"
 #include "LogisticBaseStates.h"
 #include "LogisticLevelAttritube.h"
 #include "FormationPositions.h"
+#include "StaticModel.h"
+#include "Symbol.h"
+#include "TacticalLines.h"
+#include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DictionaryExtensions.h"
+#include "clients_kernel/Diplomacies_ABC.h"
+#include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/ObjectTypes.h"
-#include "clients_kernel/Color_ABC.h"
+#include "clients_kernel/SymbolFactory.h"
 #include "clients_kernel/SymbolHierarchy_ABC.h"
-#include "clients_kernel/Team_ABC.h"
-#include "StaticModel.h"
-#include "Color.h"
-#include "Symbol.h"
 
 using namespace kernel;
 
@@ -59,7 +62,8 @@ kernel::Formation_ABC* FormationFactory::Create( kernel::Entity_ABC& parent, con
     PropertiesDictionary& dico = formation->Get< PropertiesDictionary >();
     if( !name.isEmpty() )
         formation->Rename( name );
-    formation->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol() );
+    const kernel::Karma& karma = parent.Get< kernel::TacticalHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
+    formation->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( symbolsFactory_.GetSymbolBase( karma ) ) );
     formation->Attach< kernel::TacticalHierarchies >( *new FormationHierarchies( controllers_.controller_, *formation, &parent, symbolsFactory_ ) );
     formation->Attach< kernel::Positions >( *new FormationPositions( *formation ) );
     formation->Attach< LogisticHierarchiesBase>( *new LogisticBaseStates( controllers_.controller_, *formation, staticModel_.objectTypes_, dico ) );

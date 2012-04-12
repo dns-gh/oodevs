@@ -15,9 +15,9 @@
 // Name: Symbol constructor
 // Created: LGY 2011-07-28
 // -----------------------------------------------------------------------------
-Symbol::Symbol()
+Symbol::Symbol( const std::string& symbol )
 {
-    // NOTHING
+    MergeSymbol( symbol );
 }
 
 // -----------------------------------------------------------------------------

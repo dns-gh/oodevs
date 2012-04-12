@@ -27,8 +27,9 @@ namespace xml
 namespace kernel
 {
     class AgentNature;
-    class SymbolRule;
     class HierarchyLevel_ABC;
+    class Karma;
+    class SymbolRule;
 
 // =============================================================================
 /** @class  SymbolFactory
@@ -52,6 +53,7 @@ public:
     std::string CreateLevelSymbol( const std::string& level ) const;
     std::string CreateLevelSymbol( const kernel::HierarchyLevel_ABC& level ) const;
     std::string CreateAutomatSymbol() const;
+    std::string GetSymbolBase( const Karma& karma ) const;
     SymbolRule* GetSymbolRule() const;
     bool IsThisChainAvailable( const std::string& chain ) const;
     void Load( const tools::ExerciseConfig& config );

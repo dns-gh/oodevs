@@ -24,8 +24,10 @@
 #include "clients_kernel/Color_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
+#include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/GhostPrototype.h"
+#include "clients_kernel/SymbolFactory.h"
 #include "clients_kernel/SymbolHierarchy_ABC.h"
 
 using namespace kernel;
@@ -74,7 +76,8 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, const kerne
     else
     {
         assert( prototype.ghostType_ == eGhostType_Automat );
-        result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol() );
+        const kernel::Karma& karma = parent.Get< kernel::TacticalHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
+        result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( symbolsFactory_.GetSymbolBase( karma ) ) );
         Entity_ABC* kg = AgentFactory::FindorCreateKnowledgeGroup( parent, knowledgeGroupFactory_ );
         result->Attach< CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, kg ) );
     }
