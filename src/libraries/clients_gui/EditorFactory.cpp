@@ -155,7 +155,7 @@ namespace
 
         virtual T GetValue()
         {
-            return value();
+            return static_cast< T >( value() );
         }
 
     };
@@ -176,7 +176,7 @@ namespace
 
         virtual UnitedValue< T > GetValue()
         {
-            return UnitedValue< T >( value(), unit_ );
+            return UnitedValue< T >( static_cast< T >( value() ), unit_ );
         }
 
     private:
