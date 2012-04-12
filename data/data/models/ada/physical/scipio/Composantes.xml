@@ -26421,7 +26421,7 @@
     </breakdowns>
     <equipment-category>HMT</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Canon tractÃ© 105mm par Ural 375D" id="269" name="Eqp 122D30 et Zil 157" protection="VehiculeNonProtege" size="Petit" weight="3.2">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Canon tracté 105mm par Ural 375D" id="269" name="Eqp 122D30 et Zil 157" protection="VehiculeNonProtege" size="Petit" weight="3.2">
     <speeds max="50">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="15"/>
@@ -26511,7 +26511,7 @@
     </breakdowns>
     <equipment-category>Hommes</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Canon tractÃ© 130 mm par AT-S" id="270" name="Eqp 130M46 et AT-S" protection="VehiculeNonProtege" size="Petit" weight="8">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Canon tracté 130 mm par AT-S" id="270" name="Eqp 130M46 et AT-S" protection="VehiculeNonProtege" size="Petit" weight="8">
     <speeds max="50">
       <speed terrain="unknown" value="30"/>
       <speed terrain="forest" value="15"/>
@@ -26599,7 +26599,7 @@
     </breakdowns>
     <equipment-category>Hommes</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="VÃ©hicule de commandement et reconnaissance artillerie" id="271" max-slope="0.6" name="1 V 13" protection="BlindeLeger" size="Moyen" weight="13">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="Véhicule de commandement et reconnaissance artillerie" id="271" max-slope="0.6" name="1 V 13" protection="BlindeLeger" size="Moyen" weight="13">
     <speeds max="60">
       <speed terrain="unknown" value="15"/>
       <speed terrain="forest" value="25"/>
@@ -27098,7 +27098,7 @@
     </breakdowns>
     <equipment-category>HARM</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="poste sol air tres courte portÃ©e et vÃ©hicule de transport" id="277" max-slope="0.6" name="SA 7 + BRDM2 transporteur" protection="BlindeLeger" size="Moyen" weight="7">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="poste sol air tres courte portée et véhicule de transport" id="277" max-slope="0.6" name="SA 7 + BRDM2 transporteur" protection="BlindeLeger" size="Moyen" weight="7">
     <speeds max="100">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="50"/>
@@ -27186,7 +27186,7 @@
     </breakdowns>
     <equipment-category>BLIND</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="poste sol air tres courte portÃ©e et vÃ©hicule de transport" id="278" max-slope="0.6" name="SA 14 + BRDM2 transporteur" protection="BlindeLeger" size="Moyen" weight="7">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="poste sol air tres courte portée et véhicule de transport" id="278" max-slope="0.6" name="SA 14 + BRDM2 transporteur" protection="BlindeLeger" size="Moyen" weight="7">
     <speeds max="100">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="50"/>
@@ -27274,7 +27274,7 @@
     </breakdowns>
     <equipment-category>BLIND</equipment-category>
   </equipment>
-  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="poste sol air tres courte portÃ©e et vÃ©hicule de transport" id="279" max-slope="0.6" name="SA 16 + BRDM2 transporteur" protection="BlindeLeger" size="Moyen" weight="7">
+  <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="poste sol air tres courte portée et véhicule de transport" id="279" max-slope="0.6" name="SA 16 + BRDM2 transporteur" protection="BlindeLeger" size="Moyen" weight="7">
     <speeds max="100">
       <speed terrain="unknown" value="20"/>
       <speed terrain="forest" value="50"/>
@@ -35648,4 +35648,4 @@
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="2450194640" -->
+<!-- signature="0213596916" -->
