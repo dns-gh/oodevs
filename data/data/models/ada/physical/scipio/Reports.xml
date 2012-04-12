@@ -348,7 +348,7 @@
   <report category="operational" id="252" message="Bloquée"/>
   <report category="operational" id="253" message="Filtrée"/>
   <report category="operational" id="254" message="Attentat terroriste dans la foule"/>
-  <report category="operational" id="255" message="Foule victime d'explosion de mines : %1">
+  <report category="operational" id="255" message="Foule victime d'explosion de mines : %1 morts, %2 bléssés">
     <parameter type="Integer"/>
     <parameter type="Integer"/>
   </report>
@@ -615,4 +615,4 @@
     <parameter type="AgentKnowledge"/>
   </report>
 </reports>
-<!-- signature="2005092241" -->
+<!-- signature="0614162827" -->
