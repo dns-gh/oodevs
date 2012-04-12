@@ -146,7 +146,7 @@ void Ghost::CreateDictionary( kernel::Controller& controller )
 // -----------------------------------------------------------------------------
 void Ghost::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
 {
-    QString id = QString( "[%1]" ).arg( GetId() );
+    QString id = QString( "[%L1]" ).arg( GetId() );
     displayer.Item( "" ).Start( Styles::bold )
         .Add( ( Ghost_ABC* ) this )
         .AddToDisplay( id );

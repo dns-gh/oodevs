@@ -10,6 +10,7 @@
 #include "preparation_app_pch.h"
 #include "ScoreGaugeConfiguration.h"
 #include "moc_ScoreGaugeConfiguration.cpp"
+#include "clients_gui/RichSpinBox.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "indicators/Gauge.h"
@@ -66,7 +67,7 @@ ScoreGaugeConfiguration::ScoreGaugeConfiguration( QWidget* parent, kernel::Contr
             Q3HBox* hbox = new Q3HBox( box );
             {
                 QLabel* label = new QLabel( tr( "Steps: " ), hbox );
-                steps_ = new QSpinBox( 1, 100, 1, hbox );
+                steps_ = new gui::RichSpinBox( hbox, 1, 100, 1 );
                 label->setBuddy( steps_ );
                 connect( steps_, SIGNAL( valueChanged( int ) ), SLOT( OnChangeStep( int ) ) );
             }

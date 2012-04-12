@@ -18,6 +18,7 @@
 #include "clients_kernel/SimpleLocationDrawer.h"
 #include "clients_gui/LocationCreator.h"
 #include "clients_gui/RichLabel.h"
+#include "clients_gui/RichSpinBox.h"
 #include "preparation/AgentsModel.h"
 
 #pragma warning( disable : 4355 )
@@ -54,8 +55,8 @@ InhabitantCreationPanel::InhabitantCreationPanel( QWidget* parent, gui::PanelSta
     inhabitantTypes_->setSorting( true );
 
     new QLabel( tr( "Number:" ), groupBox );
-    number_ = new QLineEdit( QString::number( 1000 ), groupBox );
-    number_->setValidator( new QIntValidator( 1, 1000000000, number_ ) );
+    number_ = new gui::RichSpinBox( groupBox, 1 );
+    number_->setValue( 1000 );
 
     position_ = new gui::RichLabel( tr( "Location:" ), groupBox );
     locationLabel_ = new QLabel( tr( "---" ), groupBox );
@@ -115,7 +116,7 @@ void InhabitantCreationPanel::Commit2()
 {
     if( CheckValidity() )
     {
-        agentsModel_.CreateInhabitant( const_cast< Team_ABC& >( *teams_->GetValue() ), *inhabitantTypes_->GetValue(), number_->text().toInt(), name_->text(), *location_ );
+        agentsModel_.CreateInhabitant( const_cast< Team_ABC& >( *teams_->GetValue() ), *inhabitantTypes_->GetValue(), number_->value(), name_->text(), *location_ );
         name_->setText( "" );
         ResetLocation();
     }

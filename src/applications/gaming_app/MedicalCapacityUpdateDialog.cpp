@@ -21,6 +21,7 @@
 #include "clients_kernel/ObjectType.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/MedicalTreatmentType.h"
+#include "clients_gui/RichSpinBox.h"
 #include "gaming/MedicalTreatmentAttribute.h"
 #include "protocol/Protocol.h"
 #include <boost/bind.hpp>
@@ -39,11 +40,11 @@ MedicalCapacityUpdateDialog::Capacity::Capacity( QWidget* parent, const MedicalT
     new QLabel( QString( name_.c_str() ), lhs );
 
     Q3HBox* rhs = new Q3HBox( box );
-    patients_ = new QSpinBox( 0, capacity.baseline_, 1, rhs );
+    patients_ = new gui::RichSpinBox( rhs, 0, capacity.baseline_ );
     patients_->setValue( capacity.baseline_ - capacity.available_ );
 
     new QLabel( QString( " / " ), rhs );
-    baseline_ = new QSpinBox( 0, std::max( (int)capacity.baseline_, 500 ), 1, rhs );
+    baseline_ = new gui::RichSpinBox( rhs, 0, std::max( (int)capacity.baseline_, 500 ) );
     baseline_->setValue( capacity.baseline_ );
     baseline_->setDisabled( true );
 }
@@ -123,7 +124,7 @@ void MedicalCapacityUpdateDialog::CreateCanvas()
     {
         Q3GroupBox* canvas = new Q3GroupBox( 1, Qt::Horizontal, tr( "Doctors" ), this );
         new QLabel( tr( "Doctors:" ), canvas );
-        doctors_ = new QSpinBox( 0, 1000, 1, canvas );
+        doctors_ = new gui::RichSpinBox( canvas, 0, 1000 );
         layout->add( canvas );
     }
     {

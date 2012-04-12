@@ -35,7 +35,7 @@ Formation::Formation( const sword::FormationCreation& message, Controller& contr
     , logisticLevel_( &kernel::LogisticLevel::Resolve( message.logistic_level() ) )
 {
     if( name_.isEmpty() )
-        name_ = QString( "%1 %2" ).arg( level_.GetName() ).arg( message.formation().id() );
+        name_ = QString( "%1 %L2" ).arg( level_.GetName() ).arg( message.formation().id() );
     RegisterSelf( *this );
     CreateDictionary( controller );
 }

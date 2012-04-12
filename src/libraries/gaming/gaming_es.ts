@@ -756,10 +756,6 @@
 <context>
     <name>KnowledgeGroup</name>
     <message>
-        <source>Group %1</source>
-        <translation>Grupo %1</translation>
-    </message>
-    <message>
         <source>Info/Identifier</source>
         <translation>Info/Identificador</translation>
     </message>
@@ -774,6 +770,10 @@
     <message>
         <source>Type/Delay</source>
         <translation>Tipo/Retardo</translation>
+    </message>
+    <message>
+        <source>Group %L1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -924,16 +924,16 @@
         <translation>Esquema de trabajo</translation>
     </message>
     <message>
-        <source>R%1</source>
-        <translation>R%1</translation>
-    </message>
-    <message>
         <source>Priorities</source>
         <translation>Prioridades</translation>
     </message>
     <message>
         <source>Tactical priorities</source>
         <translation>Prioridades tácticas</translation>
+    </message>
+    <message>
+        <source>R%L1</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Maintenance system</source>
@@ -1258,18 +1258,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Cell ignition:  %1/%2</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cell combustion: %1/%2, heat %3</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
-        <source>Cell decline: heat %1</source>
-        <translation type="unfinished"></translation>
-    </message>
-    <message>
         <source>Cell extinguished</source>
         <translation type="unfinished"></translation>
     </message>
@@ -1319,6 +1307,18 @@
     </message>
     <message>
         <source>Trafficability:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cell ignition:  %L1/%L2</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cell combustion: %L1/%L2, heat %L3</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cell decline: heat %L1</source>
         <translation type="unfinished"></translation>
     </message>
     <message>

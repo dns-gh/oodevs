@@ -28,7 +28,7 @@ Team::Team( Controllers& controllers, IdManager& idManager )
     : EntityImplementation< Team_ABC >( controllers.controller_, idManager.GetNextId(), "" )
     , controllers_( controllers )
 {
-    name_ = tools::translate( "Preparation", "Army %1" ).arg( id_ );
+    name_ = tools::translate( "Preparation", "Army %L1" ).arg( id_ );
     RegisterSelf( *this );
     CreateDictionary( controllers.controller_ );
     controllers_.Register( *this );

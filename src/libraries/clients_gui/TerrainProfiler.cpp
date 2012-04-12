@@ -12,6 +12,7 @@
 #include "clients_gui_pch.h"
 #include "TerrainProfiler.h"
 #include "moc_TerrainProfiler.cpp"
+#include "RichSpinBox.h"
 #include "TerrainProfile.h"
 #include "TerrainProfilerLayer.h"
 #include "Tools.h"
@@ -42,8 +43,8 @@ TerrainProfiler::TerrainProfiler( QMainWindow* parent, kernel::Controllers& cont
             height_ = new QSlider( -100, 0, 1, 2, Qt::Vertical, vbox );
             height_->setTickmarks( QSlider::TicksRight );
             height_->setTickInterval( 10 );
-            heightValue_ = new QSpinBox( 0, 100, 1, vbox );
-            heightValue_->setSuffix( QString( " %1" ).arg( kernel::Units::meters.AsString() ) );
+            heightValue_ = new RichSpinBox( vbox, 0, 100, 1 );
+            heightValue_->setSuffix( QString( " %L1" ).arg( kernel::Units::meters.AsString() ) );
             vbox->setMaximumWidth( 50 );
         }
         profile_ = new TerrainProfile( box, detection );

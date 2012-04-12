@@ -38,7 +38,7 @@ Population::Population( const PopulationType& type, int number, Controller& cont
     repartition_->female_ = static_cast< unsigned int >( type.GetFemale() * 100 );
     repartition_->children_ = static_cast< unsigned int >( type.GetChildren() * 100 );
     RegisterSelf( *this );
-    name_ = ( type.GetName().c_str() + QString( " [%1]" ) ).arg( id_ );
+    name_ = ( type.GetName().c_str() + QString( " [%L1]" ) ).arg( id_ );
     CreateDictionary( controller );
 }
 
@@ -155,7 +155,7 @@ unsigned int Population::GetTotalLivingHumans() const
 // -----------------------------------------------------------------------------
 void Population::DisplayInTooltip( kernel::Displayer_ABC& displayer ) const
 {
-    QString id = QString( "[%1]" ).arg( GetId() );
+    QString id = QString( "[%L1]" ).arg( GetId() );
     displayer.Item( "" ).Start( Styles::bold ).Add( static_cast< const Population_ABC* >( this ) ).AddToDisplay( id );
     displayer.End();
     displayer.Display( tools::translate( "Crowd", "Type:" ), type_ );

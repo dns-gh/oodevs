@@ -484,10 +484,10 @@
         <translation>Annuler</translation>
     </message>
     <message>
-        <source>Not connected to %1:%2
+        <source>Not connected to %1:%L2
 Reason: %3
 </source>
-        <translation>Non connecté à %1:%2
+        <translation>Non connecté à %1:%L2
 Reason: %3
 </translation>
     </message>
@@ -694,8 +694,8 @@ Reason: %3
         <translation>Prises à partie</translation>
     </message>
     <message>
-        <source>%1 pending messages</source>
-        <translation>%1 message(s) en attente</translation>
+        <source>%L1 pending messages</source>
+        <translation>%L1 message(s) en attente</translation>
     </message>
 </context>
 <context>
@@ -2726,8 +2726,8 @@ Etes-vous sûr de vouloir remplacer le modèle ?</translation>
         <translation>Contrôle du rejeu</translation>
     </message>
     <message>
-        <source>Tick %1</source>
-        <translation>Tick %1</translation>
+        <source>Tick %L1</source>
+        <translation>Tick %L1</translation>
     </message>
     <message>
         <source>Time table</source>

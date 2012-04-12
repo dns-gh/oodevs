@@ -15,6 +15,7 @@
 #include "ADN_Connector_ABC.h"
 #include "ADN_Connector_String.h"
 #include "ADN_App.h"
+#include "ADN_EditLine.h"
 #include "ADN_MainWindow.h"
 #include "ADN_Validator.h"
 
@@ -23,14 +24,13 @@
 #include <QtGui/qcombobox.h>
 #include <QtGui/qvalidator.h>
 
-class ADN_TimeField_EditLine : public QLineEdit
+class ADN_TimeField_EditLine : public ADN_EditLine_ToolTiped
 {
 public:
     ADN_TimeField_EditLine( QWidget* pParent )
-        : QLineEdit( pParent )
+        : ADN_EditLine_ToolTiped( pParent )
         , bIsFocusing_( false )
     {
-        setAlignment( Qt::AlignRight );
         setFrame( true );
     }
 

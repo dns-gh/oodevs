@@ -111,7 +111,7 @@ private:
     gui::ValuedComboBox< const kernel::Team_ABC* >* teams_;
     gui::ValuedComboBox< const kernel::InhabitantType* >* inhabitantTypes_;
     QLineEdit* name_;
-    QLineEdit* number_;
+    QSpinBox* number_;
     gui::RichLabel* position_;
     QLabel* locationLabel_;
     gui::LocationCreator* locationCreator_;

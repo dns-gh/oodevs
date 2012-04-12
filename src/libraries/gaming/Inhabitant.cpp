@@ -56,7 +56,7 @@ Inhabitant::Inhabitant( const sword::PopulationCreation& message, Controller& co
     , medicalInfrastructures_   ( 0 )
 {
     if( name_.isEmpty() )
-        name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.id().id() );
+        name_ = QString( "%1 %L2" ).arg( type_.GetName().c_str() ).arg( message.id().id() );
     Polygon2f polygon;
     for( int i = 0; i < message.objects_size(); ++i )
     {

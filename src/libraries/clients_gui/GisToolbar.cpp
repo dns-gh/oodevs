@@ -14,6 +14,7 @@
 #include "moc_GisToolbar.cpp"
 #include "ColorButton.h"
 #include "ContourLinesObserver.h"
+#include "RichSpinBox.h"
 #include "TerrainProfiler.h"
 #include "Tools.h"
 #include "clients_kernel/Controllers.h"
@@ -55,7 +56,7 @@ GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, c
         mode_->insertItem( tools::translate( "gui::GisToolBar", ">" ) );
         mode_->setMaximumWidth( 60 );
         QToolTip::add( mode_, tools::translate( "gui::GisToolBar", "Display water below or above specified height" ) );
-        height_ = new QSpinBox( 0, 10000, 1, waterShedBox );
+        height_ = new RichSpinBox( waterShedBox, 0, 10000, 1 );
         height_->setSuffix( kernel::Units::meters.AsString() );
         height_->setEnabled( false );
         QToolTip::add( height_, tools::translate( "gui::GisToolBar", "Set water height limit" ) );
@@ -79,7 +80,7 @@ GisToolbar::GisToolbar( QMainWindow* parent, kernel::Controllers& controllers, c
         contourBoxEnabled_ = new QCheckBox( tools::translate( "gui::GisToolBar", "Contour lines" ), contourBox );
         QToolTip::add( contourBoxEnabled_, tools::translate( "gui::GisToolBar", "Enable/disable contour lines display" ) );
 
-        linesHeight_ = new QSpinBox( 1, 10000, 1, contourBox );
+        linesHeight_ = new RichSpinBox( contourBox, 1, 10000, 1 );
         linesHeight_->setValue( 20 );
         linesHeight_->setSuffix( kernel::Units::meters.AsString() );
         linesHeight_->setEnabled( false );
@@ -134,7 +135,7 @@ void GisToolbar::NotifyUpdated( const kernel::ModelLoaded& /*model*/ )
 void GisToolbar::NotifyUpdated( const ContourLinesObserver& observer )
 {
     short percentage = observer.GetPercentage();
-    progress_->setText( percentage == 0 ? QString() : QString::number( percentage ) + "% " );
+    progress_->setText( percentage == 0 ? QString() : locale().toString( percentage ) + "% " );
 }
 
 // -----------------------------------------------------------------------------

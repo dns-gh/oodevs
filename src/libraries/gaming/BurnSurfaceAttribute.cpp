@@ -149,15 +149,15 @@ void BurnSurfaceAttribute::TerrainPicked( const geometry::Point2f& terrainCoordi
         {
         case sword::pre_ignition:
             if( cell.ignitionEnergy_ >= 0 && cell.ignitionThreshold_ >= 0 )
-                outputInfos.push_back( tools::translate( "Object", "Cell ignition:  %1/%2" ).arg( cell.ignitionEnergy_ ).arg( cell.ignitionThreshold_ ) );
+                outputInfos.push_back( tools::translate( "Object", "Cell ignition:  %L1/%L2" ).arg( cell.ignitionEnergy_ ).arg( cell.ignitionThreshold_ ) );
             break;
         case sword::combustion:
             if( cell.combustionEnergy_ >= 0 && cell.maxCombustionEnergy_ >= 0 && cell.currentHeat_ >= 0 )
-                outputInfos.push_back( tools::translate( "Object", "Cell combustion: %1/%2, heat %3" ).arg( cell.combustionEnergy_ ).arg( cell.maxCombustionEnergy_ ).arg( cell.currentHeat_ ) );
+                outputInfos.push_back( tools::translate( "Object", "Cell combustion: %L1/%L2, heat %L3" ).arg( cell.combustionEnergy_ ).arg( cell.maxCombustionEnergy_ ).arg( cell.currentHeat_ ) );
             break;
         case sword::decline:
             if( cell.currentHeat_ >= 0 )
-                outputInfos.push_back( tools::translate( "Object", "Cell decline: heat %1" ).arg( cell.currentHeat_ ) );
+                outputInfos.push_back( tools::translate( "Object", "Cell decline: heat %L1" ).arg( cell.currentHeat_ ) );
             break;
         case sword::extinguished:
             outputInfos.push_back( tools::translate( "Object", "Cell extinguished" ) );

@@ -225,7 +225,7 @@ void ModelConsistencyDialog::UpdateDataModel()
         for( ModelConsistencyChecker::CIT_SafeEntities entityIt = error.entities_.begin(); entityIt != error.entities_.end(); ++entityIt )
         {
             if( *entityIt && **entityIt )
-                idList += ( ( idList.isEmpty() ) ? "" : ( entityIt + 1 == error.entities_.end() ) ? tr( " and " ) : ", " ) + QString::number( ( **entityIt )->GetId() );
+                idList += ( ( idList.isEmpty() ) ? "" : ( entityIt + 1 == error.entities_.end() ) ? tr( " and " ) : ", " ) + locale().toString( static_cast< unsigned int >( ( **entityIt )->GetId() ) );
         }
 
         for( ModelConsistencyChecker::CIT_SafeEntities entityIt = error.entities_.begin(); entityIt != error.entities_.end(); ++entityIt, ++currentRow )
@@ -235,7 +235,7 @@ void ModelConsistencyDialog::UpdateDataModel()
             if( entity )
             {
                 AddIcon( entity, error.type_, items );
-                AddItem( static_cast< unsigned int >( entity->GetId() ), QString::number( entity->GetId() ), entity, error.type_, items );
+                AddItem( static_cast< unsigned int >( entity->GetId() ), locale().toString( static_cast< unsigned int >( entity->GetId() ) ), entity, error.type_, items );
                 AddItem( entity->GetName(), entity->GetName(), entity, error.type_, items );
             }
             else

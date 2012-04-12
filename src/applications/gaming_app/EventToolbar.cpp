@@ -146,6 +146,6 @@ void EventToolbar::NotifyDeleted( const kernel::Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void EventToolbar::UpdateMessageButton()
 {
-    messageButton_->setTextLabel( QString::number( messageAgents_.size() ) );
-    QToolTip::add( messageButton_, tr( "%1 pending messages" ).arg( messageAgents_.size() ) );
+    messageButton_->setTextLabel( locale().toString( messageAgents_.size() ) );
+    QToolTip::add( messageButton_, tr( "%L1 pending messages" ).arg( messageAgents_.size() ) );
 }

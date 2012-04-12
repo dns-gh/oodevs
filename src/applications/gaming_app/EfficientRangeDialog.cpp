@@ -14,6 +14,7 @@
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Options.h"
 #include "clients_kernel/VolumeType.h"
+#include "clients_gui/RichSpinBox.h"
 
 // -----------------------------------------------------------------------------
 // Name: EfficientRangeDialog constructor
@@ -35,7 +36,7 @@ EfficientRangeDialog::EfficientRangeDialog( QWidget* parent, kernel::Controllers
     pMainLayout->addMultiCellWidget( box, 0, 1, 0, 2 );
 
     new QLabel( tr( "Percentage (PH):" ), box );
-    phSpinbox_ = new QSpinBox( 0, 100, 1, box );
+    phSpinbox_ = new gui::RichSpinBox( box, 0, 100 );
 
     new QLabel( tr( "Size:" ), box );
     volumeCombo_ = new QComboBox( box );

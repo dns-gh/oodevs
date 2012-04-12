@@ -15,6 +15,7 @@
 #include "ADN_Connector_String.h"
 #include "ADN_Connector_Int.h"
 #include "ADN_Connector_Double.h"
+#include "ADN_Weapons_GUI.h"
 
 //*****************************************************************************
 // Created: JDY 03-07-01
@@ -42,5 +43,23 @@ private:
 typedef ADN_EditLine< ADN_Connector_String< ADN_EditLine_ABC >, QRegExpValidator >    ADN_EditLine_String;
 typedef ADN_EditLine< ADN_Connector_Int< ADN_EditLine_ABC >,    ADN_IntValidator >    ADN_EditLine_Int;
 typedef ADN_EditLine< ADN_Connector_Double< ADN_EditLine_ABC >, ADN_DoubleValidator > ADN_EditLine_Double;
+
+// -----------------------------------------------------------------------------
+// Name: ADN_PH_EditLine_Double
+// Created: JSR 2010-04-28
+// -----------------------------------------------------------------------------
+class ADN_PH_EditLine_Double : public ADN_EditLine_Double
+{
+public:
+    explicit ADN_PH_EditLine_Double(QWidget* parent, const char * name = 0)
+        : ADN_EditLine_Double( parent, name ) {}
+
+protected:
+    virtual void TextChanged(const QString& string)
+    {
+        ADN_EditLine_Double::TextChanged( string );
+        ADN_Workspace::GetWorkspace().GetWeapons().GetGui().UpdateModifiers();
+    }
+};
 
 #endif // __ADN_EditLine_h_

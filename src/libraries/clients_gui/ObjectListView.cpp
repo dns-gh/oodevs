@@ -67,7 +67,7 @@ void ObjectListView::NotifyCreated( const Object_ABC& object )
     ValuedListItem* item = CreateItem( typeItem );
     item->SetNamed( static_cast< const Entity_ABC& >( object ) );
     item->setVisible( profile_.IsVisible( object ) );
-    item->SetToolTip( QString( "%1 [%2]" ).arg( object.GetName() ).arg( object.GetId() ) );
+    item->SetToolTip( QString( "%1 [%L2]" ).arg( object.GetName() ).arg( object.GetId() ) );
     item->setDragEnabled( true );
 }
 

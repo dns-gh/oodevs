@@ -383,31 +383,33 @@ template<>
 inline
 void ADN_GuiBuilder::SetValidator( ADN_DoubleValidator& validator, E_Validator nValidator )
 {
+    static int decimals = 10;
+
     if( nValidator == eNone )
         return;
 
     switch( nValidator )
     {
     case eGreaterZero:
-        validator.setRange( 0.001, INT_MAX, 3 );
+        validator.setRange( 0.001, INT_MAX, decimals );
         break;
     case eGreaterEqualZero:
-        validator.setRange( 0, INT_MAX, 3 );
+        validator.setRange( 0, INT_MAX, decimals );
         break;
     case eLowerZero:
-        validator.setRange( INT_MIN, -0.001 );
+        validator.setRange( INT_MIN, -0.001, decimals );
         break;
     case eLowerEqualZero:
-        validator.setRange( INT_MIN, 0 );
+        validator.setRange( INT_MIN, 0, decimals );
         break;
     case ePercentage:
-        validator.setRange( 0, 100, 2 );
+        validator.setRange( 0, 100, decimals );
         break;
     case eZeroOne:
-        validator.setRange( 0, 1, 3 );
+        validator.setRange( 0, 1, decimals );
         break;
     case eDegrees:
-        validator.setRange( 0, 360, 2 );
+        validator.setRange( 0, 360, decimals );
         break;
     default:
         assert( 0 );
@@ -428,7 +430,7 @@ void ADN_GuiBuilder::SetValidator( ADN_DoublePercentageValidator& validator, E_V
     switch( nValidator )
     {
     case ePercentage:
-        validator.setRange( 0, 100, 2 );
+        validator.setRange( 0, 100, 10 );
         break;
     case eGreaterZero:
     case eGreaterEqualZero:
@@ -533,6 +535,17 @@ void ADN_GuiBuilder::DoValidator< ADN_EditLine_Double >( ADN_EditLine_Double* pW
 template<>
 inline
 void ADN_GuiBuilder::DoValidator< ADN_TimeField >( ADN_TimeField* pWidget, E_Validator nValidator )
+{
+    SetValidator( pWidget->GetValidator(), nValidator );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_GuiBuilder::DoValidator
+// Created: APE 2005-04-14
+// -----------------------------------------------------------------------------
+template<>
+inline
+void ADN_GuiBuilder::DoValidator< ADN_PH_EditLine_Double >( ADN_PH_EditLine_Double* pWidget, E_Validator nValidator )
 {
     SetValidator( pWidget->GetValidator(), nValidator );
 }

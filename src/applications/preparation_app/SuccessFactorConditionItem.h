@@ -70,7 +70,7 @@ private:
     //@{
     gui::ValuedComboBox< const Score_ABC* >* score_;
     gui::ValuedComboBox< QString >* operator_;
-    QLineEdit* value_;
+    QDoubleSpinBox* value_;
     QPushButton* deleteButton_;
     //@}
 };

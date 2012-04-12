@@ -54,7 +54,7 @@ void InhabitantListView::NotifyCreated( const Inhabitant_ABC& inhabitant )
     ValuedListItem* popItem = CreateItem( teamItem );
     popItem->SetNamed( static_cast< const Entity_ABC& >( inhabitant ) );
     popItem->setDragEnabled( true );
-    popItem->SetToolTip( QString( "%1 [%2]" ).arg( inhabitant.GetName() ).arg( inhabitant.GetId() ) );
+    popItem->SetToolTip( QString( "%1 [%L2]" ).arg( inhabitant.GetName() ).arg( inhabitant.GetId() ) );
 }
 
 // -----------------------------------------------------------------------------

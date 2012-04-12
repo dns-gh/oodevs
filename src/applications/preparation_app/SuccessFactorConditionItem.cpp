@@ -12,6 +12,7 @@
 #include "SuccessFactorConditionsEditor.h"
 #include "moc_SuccessFactorConditionItem.cpp"
 #include "clients_gui/resources.h"
+#include "clients_gui/RichSpinBox.h"
 #include "preparation/Score_ABC.h"
 #include "preparation/ScoresModel.h"
 #include "preparation/SuccessFactorCondition.h"
@@ -42,8 +43,7 @@ SuccessFactorConditionItem::SuccessFactorConditionItem( QWidget* parent, const S
         FillOperators();
     }
     {
-        value_ = new QLineEdit( "0", this );
-        value_->setValidator( new QDoubleValidator( value_ ) );
+        value_ = new gui::RichDoubleSpinBox( this, std::numeric_limits< double >::min() );
         value_->setAlignment( Qt::AlignRight );
     }
     {
@@ -84,7 +84,7 @@ void SuccessFactorConditionItem::StartEdit( const SuccessFactorCondition& condit
 {
     score_->SetCurrentItem( &condition.GetScore() );
     operator_->SetCurrentItem( condition.GetOperator().c_str() );
-    value_->setText( QString::number( condition.GetValue() ) );
+    value_->setValue( condition.GetValue() );
 }
 
 // -----------------------------------------------------------------------------

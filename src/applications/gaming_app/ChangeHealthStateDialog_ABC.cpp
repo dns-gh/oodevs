@@ -17,6 +17,7 @@
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/ContextMenu.h"
 #include "clients_kernel/tools.h"
+#include "clients_gui/RichSpinBox.h"
 
 // -----------------------------------------------------------------------------
 // Name: ChangeHealthStateDialog_ABC constructor
@@ -82,11 +83,8 @@ ChangeHealthStateDialog_ABC::~ChangeHealthStateDialog_ABC()
 void ChangeHealthStateDialog_ABC::AddLine( unsigned int line, const QString& label )
 {
     grid_->addWidget( new QLabel( label, this ), line, 0 );
-    spinboxes_[ line ] = new QSpinBox( this );
+    spinboxes_[ line ] = new gui::RichSpinBox( this, 0, std::numeric_limits< int >::max(), 10 );
     grid_->addWidget( spinboxes_[ line ], line, 1 );
-    spinboxes_[ line ]->setMinValue( 0 );
-    spinboxes_[ line ]->setMaxValue( std::numeric_limits< int >::max() );
-    spinboxes_[ line ]->setLineStep( 10 );
     connect( spinboxes_[ line ], SIGNAL( valueChanged( int ) ), SLOT( OnValuesChanged() ) );
 }
 
@@ -141,7 +139,7 @@ void ChangeHealthStateDialog_ABC::Show()
         it->second->setValue( GetValue( it->first ) );
         total += it->second->value();
     }
-    originalTotalLabel_->setText( QString::number( total ) );
+    originalTotalLabel_->setText( locale().toString( total ) );
     OnValuesChanged();
     show();
 }
@@ -191,5 +189,5 @@ void ChangeHealthStateDialog_ABC::OnValuesChanged()
     unsigned int total = 0;
     for( CIT_Spinboxes it = spinboxes_.begin(); it != spinboxes_.end(); ++it )
         total += it->second->value();
-    newTotalLabel_->setText( QString::number( total ) );
+    newTotalLabel_->setText( locale().toString( total ) );
 }

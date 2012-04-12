@@ -12,7 +12,6 @@
 #include "clients_gui_pch.h"
 #include "UnitStateTableResource.h"
 #include "moc_UnitStateTableResource.cpp"
-#include "SpinTableItem.h"
 
 using namespace gui;
 
@@ -55,9 +54,9 @@ void UnitStateTableResource::MergeLine( const QString& name, const QString& cate
             quantity += GetUserData( row, eQuantity ).toUInt();
             maximum += GetUserData( row, eMaximum ).toUInt();
             consumption += GetUserData( row, eConsumption ).toDouble();
-            SetData( row, eMaximum, QString::number( maximum ), maximum );
-            SetData( row, eQuantity, QString::number( quantity ), quantity );
-            SetData( row, eConsumption, QString::number( consumption ), consumption );
+            SetData( row, eMaximum, locale().toString( maximum ), maximum );
+            SetData( row, eQuantity, locale().toString( quantity ), quantity );
+            SetData( row, eConsumption, locale().toString( consumption ), consumption );
             return;
         }
     AddLine( name, category, quantity, maximum, threshold, consumption );
@@ -73,10 +72,10 @@ void UnitStateTableResource::AddLine( const QString& name, const QString& catego
     AddItem( row, eName, name, name );
     AddItem( row, eCategory, category, category );
     AddItem( row, ePercentage, "", "" );
-    AddItem( row, eMaximum, QString::number( maximum ), maximum );
-    AddItem( row, eQuantity, QString::number( quantity ), quantity, Qt::ItemIsEditable );
-    AddItem( row, eThreshold, QString::number( threshold, 'f', 2 ), threshold, Qt::ItemIsEditable );
-    AddItem( row, eConsumption, QString::number( consumption ), consumption );
+    AddItem( row, eMaximum, locale().toString( maximum ), maximum );
+    AddItem( row, eQuantity, locale().toString( quantity ), quantity, Qt::ItemIsEditable );
+    AddItem( row, eThreshold, locale().toString( threshold, 'f', 2 ), threshold, Qt::ItemIsEditable );
+    AddItem( row, eConsumption, locale().toString( consumption ), consumption );
 }
 
 // -----------------------------------------------------------------------------
@@ -94,7 +93,7 @@ void UnitStateTableResource::OnItemChanged( QStandardItem* item )
         else
         {
             double percentage = std::min( quantity * 100. / static_cast< double >( maximum ), 100. );
-            SetData( item->row(), ePercentage, QString::number( percentage, 'f', 2 ), percentage );
+            SetData( item->row(), ePercentage, locale().toString( percentage, 'f', 2 ), percentage );
         }
         dataModel_.item( item->row(), eMaximum )->setBackground( ( quantity <= maximum ) ? item->background() : QBrush( Qt::gray ) );
         dataModel_.item( item->row(), ePercentage )->setBackground( ( quantity <= maximum ) ? item->background() : QBrush( Qt::gray ) );

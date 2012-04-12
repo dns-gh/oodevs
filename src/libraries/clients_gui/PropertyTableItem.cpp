@@ -40,12 +40,32 @@ PropertyTableItem::~PropertyTableItem()
 }
 
 // -----------------------------------------------------------------------------
+// Name: PropertyTableItem::alignment
+// Created: ABR 2012-04-06
+// -----------------------------------------------------------------------------
+int PropertyTableItem::alignment() const
+{
+    return Qt::AlignRight;
+}
+
+// -----------------------------------------------------------------------------
 // Name: PropertyTableItem::createEditor
 // Created: SBO 2006-10-18
 // -----------------------------------------------------------------------------
 QWidget* PropertyTableItem::createEditor() const
 {
-    return property_.CreateEditor( table(), factory_ );
+    QWidget* editor = property_.CreateEditor( table(), factory_ );
+    if( !editor )
+        return 0;
+    if( editor->inherits( "QLineEdit" ) )
+        static_cast< QLineEdit* >( editor )->setAlignment( Qt::AlignRight );
+    else if( editor->inherits( "QAbstractSpinBox" ) )
+        static_cast< QAbstractSpinBox* >( editor )->setAlignment( Qt::AlignRight );
+    else if( editor->inherits( "QComboBox" ) )
+    {
+        // Seems to be not possible without setting the combo editable which is laggy and crappy.
+    }
+    return editor;
 }
 
 // -----------------------------------------------------------------------------

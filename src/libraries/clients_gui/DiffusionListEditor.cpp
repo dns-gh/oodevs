@@ -176,7 +176,7 @@ void DiffusionListEditor::Fill( kernel::SafePointer< kernel::Entity_ABC > curren
                 else
                 {
                     item->setFlags( Qt::ItemIsEnabled | Qt::ItemIsUserCheckable );
-                    item->setCheckState( diffusionList.contains( QString::number( receivers_[ col ]->GetId() ) ) ? Qt::Checked : Qt::Unchecked );
+                    item->setCheckState( diffusionList.contains( locale().toString( static_cast< unsigned int >( receivers_[ col ]->GetId() ) ) ) ? Qt::Checked : Qt::Unchecked );
                 }
                 dataModel_.setItem( row, col, item );
             }
@@ -223,7 +223,7 @@ void DiffusionListEditor::OnGenerate()
             if( emitters_[ row ]->GetId() != receivers_[ col ]->GetId() )
             {
                 QStandardItem* item = dataModel_.item( row, col );
-                item->setCheckState( generatedDiffusionList.contains( QString::number( receivers_[ col ]->GetId() ) ) ? Qt::Checked : Qt::Unchecked );
+                item->setCheckState( generatedDiffusionList.contains( locale().toString( static_cast< unsigned int >( receivers_[ col ]->GetId() ) ) ) ? Qt::Checked : Qt::Unchecked );
             }
         }
     }

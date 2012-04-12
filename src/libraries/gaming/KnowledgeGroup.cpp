@@ -19,7 +19,7 @@
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
 KnowledgeGroup::KnowledgeGroup( unsigned long nId, kernel::Controller& controller, const std::string& type, const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types )
-    : kernel::EntityImplementation< kernel::KnowledgeGroup_ABC >( controller, nId, QString( tools::translate( "KnowledgeGroup", "Group %1" ) ).arg( nId ) )
+    : kernel::EntityImplementation< kernel::KnowledgeGroup_ABC >( controller, nId, QString( tools::translate( "KnowledgeGroup", "Group %L1" ) ).arg( nId ) )
     , type_( type )
     , types_( types )
     , activated_( true ) // LTO

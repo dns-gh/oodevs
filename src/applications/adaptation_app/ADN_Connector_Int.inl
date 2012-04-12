@@ -44,7 +44,11 @@ void ADN_Connector_Int<T>::SetDataPrivate(void *data)
     char   istring[256];
     sprintf_s(istring,"%d",*(int*)data);
     if( strcmp(istring,pGfx_->text().ascii()) )
+    {
+        int pos = pGfx_->cursorPosition();
         pGfx_->setText(istring);
+        pGfx_->setCursorPosition( pos );
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -54,7 +58,11 @@ void ADN_Connector_Int<T>::SetDataPrivate(void *data)
 template <class T>
 void  ADN_Connector_Int<T>::SetDataChanged(const QString& string)
 {
-    int newval = string.toInt();
+    QLocale locale;
+    bool ok = false;
+    int newval = locale.toInt( string, &ok );
+    if( !ok )
+        newval = string.toInt( &ok );
     emit DataChanged( ( void* ) &newval );
 }
 

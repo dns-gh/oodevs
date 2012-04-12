@@ -484,12 +484,10 @@
         <translation>Cancelar</translation>
     </message>
     <message>
-        <source>Not connected to %1:%2
+        <source>Not connected to %1:%L2
 Reason: %3
 </source>
-        <translation>No conectado a %1:%2
-Motivo: %3
-</translation>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -694,8 +692,8 @@ Motivo: %3
         <translation>Conflictos</translation>
     </message>
     <message>
-        <source>%1 pending messages</source>
-        <translation>%1 mensaje(s) pendientes</translation>
+        <source>%L1 pending messages</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2726,11 +2724,11 @@ Motivo: %3
         <translation>Reproducir control</translation>
     </message>
     <message>
-        <source>Tick %1</source>
-        <translation>Tick %1</translation>
+        <source>Time table</source>
+        <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>Time table</source>
+        <source>Tick %L1</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

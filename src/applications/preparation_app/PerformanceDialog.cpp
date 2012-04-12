@@ -142,22 +142,22 @@ namespace
 void PerformanceDialog::UpdateDisplay()
 {
     const PerformanceIndicator::Values& values =  model_.performanceIndicator_.ComputeValues();
-    profiles_       ->setText( tr( "Number of profiles: " )                 + QString::number( values.profiles_ ) );
-    units_          ->setText( tr( "Number of units: " )                    + QString::number( values.units_ ) );
-    populations_    ->setText( tr( "Number of populations: " )              + QString::number( values.populations_ ) );
-    crowds_         ->setText( tr( "Number of crowds: " )                   + QString::number( values.crowds_ ) );
-    urbanBlocs_     ->setText( tr( "Number of urban blocs: " )              + QString::number( values.blocs_ ) );
-    objects_        ->setText( tr( "Number of objects: " )                  + QString::number( values.objects_ ) );
-    knowledges_     ->setText( tr( "Number of knowledge groups: " )         + QString::number( values.knowledgeGroups_ ) );
-    terrainLoad_    ->setText( tr( "Terrain memory size: " )                + QString::number( values.terrainLoad_, 'f', 3 ) + " Mo" ) ;
-    terrainSize_    ->setText( tr( "Terrain size: " )                       + QString::number( values.terrainWidth_ ) + " km x "
-                                                                            + QString::number( values.terrainHeight_ ) + " km" );
-    maxAutomatsKG_  ->setText( tr( "Max automats in a knowledge group: " )  + QString::number( values.maxAutomatsKG_ ) );
-    maxUnitsKG_     ->setText( tr( "Max units in a knowledge group:" )      + QString::number( values.maxUnitsKG_ ) );
-    avgAutomatKG_   ->setText( tr( "Average automats by knowledge group: " )+ QString::number( values.avgAutomatsKG_ ) );
-    avgUnitsKG_     ->setText( tr( "Average units by knowledge group: " )   + QString::number( values.avgUnitsKG_ ) );
-    loadLevel_      ->setText( "<b>" + tr( "Load level: " )                 + QString::number( static_cast< unsigned int >( values.performance_ ) ) + " / " + QString::number( values.limit_ ) + "<\b>" );
-    limitValue_     ->setText( "<b>" + QString::number( values.limit_ ) + "<\b>" );
+    profiles_       ->setText( tr( "Number of profiles: " )                 + locale().toString( values.profiles_ ) );
+    units_          ->setText( tr( "Number of units: " )                    + locale().toString( values.units_ ) );
+    populations_    ->setText( tr( "Number of populations: " )              + locale().toString( values.populations_ ) );
+    crowds_         ->setText( tr( "Number of crowds: " )                   + locale().toString( values.crowds_ ) );
+    urbanBlocs_     ->setText( tr( "Number of urban blocs: " )              + locale().toString( values.blocs_ ) );
+    objects_        ->setText( tr( "Number of objects: " )                  + locale().toString( values.objects_ ) );
+    knowledges_     ->setText( tr( "Number of knowledge groups: " )         + locale().toString( values.knowledgeGroups_ ) );
+    terrainLoad_    ->setText( tr( "Terrain memory size: " )                + locale().toString( values.terrainLoad_, 'f', 3 ) + " Mo" ) ;
+    terrainSize_    ->setText( tr( "Terrain size: " )                       + locale().toString( values.terrainWidth_ ) + " km x "
+                                                                            + locale().toString( values.terrainHeight_ ) + " km" );
+    maxAutomatsKG_  ->setText( tr( "Max automats in a knowledge group: " )  + locale().toString( values.maxAutomatsKG_ ) );
+    maxUnitsKG_     ->setText( tr( "Max units in a knowledge group:" )      + locale().toString( values.maxUnitsKG_ ) );
+    avgAutomatKG_   ->setText( tr( "Average automats by knowledge group: " )+ locale().toString( values.avgAutomatsKG_ ) );
+    avgUnitsKG_     ->setText( tr( "Average units by knowledge group: " )   + locale().toString( values.avgUnitsKG_ ) );
+    loadLevel_      ->setText( "<b>" + tr( "Load level: " )                 + locale().toString( static_cast< unsigned int >( values.performance_ ) ) + " / " + locale().toString( values.limit_ ) + "<\b>" );
+    limitValue_     ->setText( "<b>" + locale().toString( values.limit_ ) + "<\b>" );
     limitLine_->move( progressValue_->pos().x() - 3,
                       progressValue_->pos().y() + progressValue_->size().height() * ( 100 - progressLimit_ ) / 100 - limitLine_->size().height() / 2 - 6 );
     limitValue_->move( progressValue_->pos().x() + progressValue_->size().width() + 6,
@@ -166,42 +166,42 @@ void PerformanceDialog::UpdateDisplay()
 
     QString detail;
     detail +=        tr( "Exercise: " )         + QString::fromStdString( values.exercise_ ) + "\n";
-    detail += "\n" + tr( "Teams: " )            + QString::number( values.teams_ );
-    detail += "\n" + tr( "Profiles: ")          + QString::number( values.profiles_ );
-    detail += "\n" + tr( "Automats: ")          + QString::number( values.automats_ );
-    detail += "\n" + tr( "Units: ")             + QString::number( values.units_ );
-    detail += "\n" + tr( "Crowds: ")            + QString::number( values.crowds_ );
-    detail += "\n" + tr( "Populations: ")       + QString::number( values.populations_ );
-    detail += "\n" + tr( "Urban blocs: ")       + QString::number( values.blocs_ );
-    detail += "\n" + tr( "Objects: ")           + QString::number( values.objects_ );
-    detail += "\n" + tr( "Knowledge groups: ")  + QString::number( values.knowledgeGroups_ );
-    detail += "\n" + tr( "Terrain: ")           + QString::number( values.terrainWidth_ ) + " km x " + QString::number( values.terrainHeight_ ) + " km";
-    detail += "\n" + tr( "Terrain memory size: " ) + " " + QString::number( values.terrainLoad_, 'f', 6 ) + " Mo";
-    detail += "\n" + tr( "Max automats in a knowledge group: " )     + QString::number( values.maxAutomatsKG_ );
-    detail += "\n" + tr( "Max units in a knowledge group:" )         + QString::number( values.maxUnitsKG_ );
-    detail += "\n" + tr( "Average automats by knowledge group: " )   + QString::number( values.avgAutomatsKG_ );
-    detail += "\n" + tr( "Average units by knowledge group: " )      + QString::number( values.avgUnitsKG_ );
-    detail += "\n" + tr( "Load level: " )                            + QString::number( values.performance_, 'f', 2 ) + " / " + QString::number( values.limit_ );
+    detail += "\n" + tr( "Teams: " )            + locale().toString( values.teams_ );
+    detail += "\n" + tr( "Profiles: ")          + locale().toString( values.profiles_ );
+    detail += "\n" + tr( "Automats: ")          + locale().toString( values.automats_ );
+    detail += "\n" + tr( "Units: ")             + locale().toString( values.units_ );
+    detail += "\n" + tr( "Crowds: ")            + locale().toString( values.crowds_ );
+    detail += "\n" + tr( "Populations: ")       + locale().toString( values.populations_ );
+    detail += "\n" + tr( "Urban blocs: ")       + locale().toString( values.blocs_ );
+    detail += "\n" + tr( "Objects: ")           + locale().toString( values.objects_ );
+    detail += "\n" + tr( "Knowledge groups: ")  + locale().toString( values.knowledgeGroups_ );
+    detail += "\n" + tr( "Terrain: ")           + locale().toString( values.terrainWidth_ ) + " km x " + locale().toString( values.terrainHeight_ ) + " km";
+    detail += "\n" + tr( "Terrain memory size: " ) + " " + locale().toString( values.terrainLoad_, 'f', 6 ) + " Mo";
+    detail += "\n" + tr( "Max automats in a knowledge group: " )     + locale().toString( values.maxAutomatsKG_ );
+    detail += "\n" + tr( "Max units in a knowledge group:" )         + locale().toString( values.maxUnitsKG_ );
+    detail += "\n" + tr( "Average automats by knowledge group: " )   + locale().toString( values.avgAutomatsKG_ );
+    detail += "\n" + tr( "Average units by knowledge group: " )      + locale().toString( values.avgUnitsKG_ );
+    detail += "\n" + tr( "Load level: " )                            + locale().toString( values.performance_, 'f', 2 ) + " / " + locale().toString( values.limit_ );
     for( PerformanceIndicator::CIT_TeamsDatas it = values.teamsDatas_.begin(); it != values.teamsDatas_.end(); ++it )
     {
         const PerformanceIndicator::TeamData& teamData = it->second;
         detail += "\n\n" + tr( "Team: " ) + QString::fromStdString( teamData.name_ );
-        detail += "\n\t" + tr( "Formations: " ) + QString::number( teamData.formations_ );
-        detail += "\n\t" + tr( "Automats: " ) + QString::number( teamData.automats_ );
+        detail += "\n\t" + tr( "Formations: " ) + locale().toString( teamData.formations_ );
+        detail += "\n\t" + tr( "Automats: " ) + locale().toString( teamData.automats_ );
         for( PerformanceIndicator::CIT_EntityTypeCount subIt = teamData.automatTypes_.begin(); subIt != teamData.automatTypes_.end(); ++subIt )
-            detail += "\n\t\t" + QString::fromStdString( subIt->first ) + QString( ": " ) + QString::number( subIt->second );
-        detail += "\n\n\t" + tr( "Units: " ) + QString::number( teamData.units_ );
+            detail += "\n\t\t" + QString::fromStdString( subIt->first ) + QString( ": " ) + locale().toString( subIt->second );
+        detail += "\n\n\t" + tr( "Units: " ) + locale().toString( teamData.units_ );
         for( PerformanceIndicator::CIT_EntityTypeCount subIt = teamData.unitTypes_.begin(); subIt != teamData.unitTypes_.end(); ++subIt )
-            detail += "\n\t\t" + QString::fromStdString( subIt->first ) + QString( ": " ) + QString::number( subIt->second );
-        detail += "\n\n\t" + tr( "Crowds: " ) + QString::number( teamData.crowds_ );
-        detail += "\n\t" + tr( "Populations: " ) + QString::number( teamData.populations_ );
-        detail += "\n\t" + tr( "Objects: " ) + QString::number( teamData.objects_ );
+            detail += "\n\t\t" + QString::fromStdString( subIt->first ) + QString( ": " ) + locale().toString( subIt->second );
+        detail += "\n\n\t" + tr( "Crowds: " ) + locale().toString( teamData.crowds_ );
+        detail += "\n\t" + tr( "Populations: " ) + locale().toString( teamData.populations_ );
+        detail += "\n\t" + tr( "Objects: " ) + locale().toString( teamData.objects_ );
         for( PerformanceIndicator::CIT_EntityTypeCount subIt = teamData.objectTypes_.begin(); subIt != teamData.objectTypes_.end(); ++subIt )
-            detail += "\n\t\t" + QString::fromStdString( subIt->first ) + QString( ": " ) + QString::number( subIt->second );
-        detail += "\n\n\t" + tr( "Knowledge groups: " ) + QString::number( teamData.knowledgeGroups_ );
+            detail += "\n\t\t" + QString::fromStdString( subIt->first ) + QString( ": " ) + locale().toString( subIt->second );
+        detail += "\n\n\t" + tr( "Knowledge groups: " ) + locale().toString( teamData.knowledgeGroups_ );
         for( PerformanceIndicator::CIT_KGDatas subIt = teamData.datasKG_.begin(); subIt != teamData.datasKG_.end(); ++subIt )
-            detail += "\n\t\t" + QString::fromStdString( subIt->first ) + QString( ": \t" ) + tr( "Automats: " ) + QString::number( subIt->second.automats_ ) + QString( "\t" )
-            + tr( "Units: " ) + QString::number( subIt->second.units_ );
+            detail += "\n\t\t" + QString::fromStdString( subIt->first ) + QString( ": \t" ) + tr( "Automats: " ) + locale().toString( subIt->second.automats_ ) + QString( "\t" )
+            + tr( "Units: " ) + locale().toString( subIt->second.units_ );
     }
     detail += "\n";
     textEdit_->setText( detail );

@@ -201,8 +201,8 @@
         <translation>Info/Nom</translation>
     </message>
     <message>
-        <source>Formation [%1]</source>
-        <translation>Formation [%1]</translation>
+        <source>Formation [%L1]</source>
+        <translation>Formation [%L1]</translation>
     </message>
 </context>
 <context>
@@ -269,8 +269,8 @@
         <translation>Info/Nom</translation>
     </message>
     <message>
-        <source>Knowledge group [%1]</source>
-        <translation>Groupe de connaissance [%1]</translation>
+        <source>Knowledge group [%L1]</source>
+        <translation>Groupe de connaissance [%L1]</translation>
     </message>
     <message>
         <source>Type/Name</source>
@@ -461,8 +461,8 @@
         <translation>Durée d&apos;activité :</translation>
     </message>
     <message>
-        <source>%1 [%2]</source>
-        <translation>%1 [%2]</translation>
+        <source>%1 [%L2]</source>
+        <translation>%1 [%L2]</translation>
     </message>
     <message>
         <source>Information</source>
@@ -648,8 +648,8 @@
         <translation>Santé/Infrastructures nécessaires</translation>
     </message>
     <message>
-        <source>%1 [%2]</source>
-        <translation>%1 [%2]</translation>
+        <source>%1 [%L2]</source>
+        <translation>%1 [%L2]</translation>
     </message>
     <message>
         <source>Living Area/Urban blocks/%1</source>
@@ -679,8 +679,8 @@
 <context>
     <name>Preparation</name>
     <message>
-        <source>Army %1</source>
-        <translation>Camp %1</translation>
+        <source>Army %L1</source>
+        <translation>Camp %L1</translation>
     </message>
 </context>
 <context>

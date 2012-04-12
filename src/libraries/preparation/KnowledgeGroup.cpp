@@ -26,7 +26,7 @@ KnowledgeGroup::KnowledgeGroup( Controller& controller, IdManager& idManager, to
     , type_( ResolveType( "Standard", types ) )
 {
     UpdateCommunicationDelay();
-    name_ = tools::translate( "KnowledgeGroup", "Knowledge group [%1]" ).arg( id_ );
+    name_ = tools::translate( "KnowledgeGroup", "Knowledge group [%L1]" ).arg( id_ );
     RegisterSelf( *this );
     CreateDictionary( controller );
 }
@@ -41,7 +41,7 @@ KnowledgeGroup::KnowledgeGroup( xml::xistream& xis, Controller& controller, IdMa
 {
     name_ = xis.attribute< std::string >( "name", "" ).c_str();
     if( name_.isEmpty() )
-        name_ = tools::translate( "KnowledgeGroup", "Knowledge group [%1]" ).arg( id_ );
+        name_ = tools::translate( "KnowledgeGroup", "Knowledge group [%L1]" ).arg( id_ );
     UpdateCommunicationDelay(); // LTO
     idManager.Lock( id_ );
     RegisterSelf( *this );

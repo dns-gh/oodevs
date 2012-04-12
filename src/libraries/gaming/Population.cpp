@@ -44,7 +44,7 @@ Population::Population( const sword::CrowdCreation& message, Controllers& contro
     , armedIndividuals_    ( 0, false )
 {
     if( name_.isEmpty() )
-        name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.crowd().id() );
+        name_ = QString( "%1 %L2" ).arg( type_.GetName().c_str() ).arg( message.crowd().id() );
     RegisterSelf( *this );
     CreateDictionary( controllers_.controller_ );
     controllers_.Register( *this );

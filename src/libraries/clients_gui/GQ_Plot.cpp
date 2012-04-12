@@ -830,8 +830,8 @@ QString GQ_Plot::GetStrCoordinates( const T_Point& point ) const
     if( pCoordToString_ )
         return pCoordToString_->GetConversion( point );
 
-    QString strCoords = QString( "(%1, %2)" ).arg( x_.GetStrValue( point.first  ) )
-                                             .arg( y_.GetStrValue( point.second ) );
+    QString strCoords = QString( "(%L1, %L2)" ).arg( x_.GetStrValue( point.first  ) )
+                                               .arg( y_.GetStrValue( point.second ) );
 
     return strCoords;
 }

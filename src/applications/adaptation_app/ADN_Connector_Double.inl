@@ -33,6 +33,21 @@ ADN_Connector_Double<T>::~ADN_Connector_Double()
 {
 }
 
+namespace
+{
+    QString& removeTrailingZero( QString& input, QChar decimalPoint )
+    {
+        int i = input.find( decimalPoint );
+        if( i >= 0 )
+        {
+            int j = input.size() - 1;
+            while( j > i && input[ j ] == '0' ){ --j; }
+            input.truncate( j == i ? j : j + 1 );
+        }
+        return input;
+    }
+}
+
 //-----------------------------------------------------------------------------
 // Name: ADN_Connector_Double<T>::SetDataPrivate
 // Created: JDY 03-07-08
@@ -41,11 +56,19 @@ template <class T>
 void ADN_Connector_Double<T>::SetDataPrivate(void *data)
 {
     assert(data);
-//    char   istring[256];
-//    sprintf(istring,"%f",*(double*)data);
-    QString strText = QString::number( *(double*)data, 'g', 10 );
+    QLocale locale;
+    int decimals = 3;
+    if( pGfx_ && pGfx_->validator() )
+        if( const QDoubleValidator* validator = dynamic_cast< const QDoubleValidator* >( pGfx_->validator() ) )
+            decimals = validator->decimals();
+    QString strText = locale.toString( *(double*)data, 'f', decimals );
+    strText = removeTrailingZero( strText, locale.decimalPoint() );
     if( strText != pGfx_->text() )
+    {
+        int pos = pGfx_->cursorPosition();
         pGfx_->setText(strText);
+        pGfx_->setCursorPosition( pos );
+    }
 }
 
 //-----------------------------------------------------------------------------
@@ -55,7 +78,11 @@ void ADN_Connector_Double<T>::SetDataPrivate(void *data)
 template <class T>
 void  ADN_Connector_Double<T>::SetDataChanged(const QString& string)
 {
-    double newval = string.toDouble();
+    QLocale locale;
+    bool ok = false;
+    double newval = locale.toDouble( string, &ok );
+    if( !ok )
+        newval = string.toDouble( &ok );
     emit DataChanged( ( void* ) &newval );
 }
 

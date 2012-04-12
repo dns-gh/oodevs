@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "CommonDelegate.h"
 #include "moc_CommonDelegate.cpp"
+#include "RichSpinBox.h"
 
 using namespace gui;
 
@@ -125,18 +126,13 @@ QWidget* CommonDelegate::createEditor( QWidget* parent, const QStyleOptionViewIt
     if( SpinBoxDescription< int >* element = spinBoxs_.Find( position->id_ ) )
     {
         std::pair< int, int > minMax = GetMinMax< int >( *element, newIndex );
-        QSpinBox* editor = new QSpinBox( parent );
-        editor->setRange( minMax.first, minMax.second );
-        editor->setSingleStep( element->gap_ );
+        QSpinBox* editor = new RichSpinBox( parent, minMax.first, minMax.second, element->gap_ );
         return editor;
     }
     else if( SpinBoxDescription< double >* element = doubleSpinBoxs_.Find( position->id_ ) )
     {
         std::pair< double, double > minMax = GetMinMax< double >( *element, newIndex );
-        QDoubleSpinBox* editor = new QDoubleSpinBox( parent );
-        editor->setRange( minMax.first, minMax.second );
-        editor->setSingleStep( element->gap_ );
-        editor->setDecimals( element->precision_ );
+        QDoubleSpinBox* editor = new RichDoubleSpinBox( parent, minMax.first, minMax.second, element->gap_, element->precision_ );
         return editor;
     }
     else if( QStringList* element = comboBoxs_.Find( position->id_ ) )
@@ -162,14 +158,14 @@ void CommonDelegate::setEditorData( QWidget* editor, const QModelIndex& index ) 
 
     if( SpinBoxDescription< int >* element = spinBoxs_.Find( position->id_ ) )
     {
-        int value = newIndex.model()->data( newIndex, Qt::EditRole ).toInt();
         QSpinBox* spinBox = static_cast< QSpinBox* >( editor );
+        int value = spinBox->locale().toInt( newIndex.model()->data( newIndex, Qt::EditRole ).toString() );
         spinBox->setValue( value );
     }
     else if( SpinBoxDescription< double >* element = doubleSpinBoxs_.Find( position->id_ ) )
     {
-        double value = newIndex.model()->data( newIndex, Qt::EditRole ).toDouble();
         QDoubleSpinBox* spinBox = static_cast< QDoubleSpinBox* >( editor );
+        double value = spinBox->locale().toDouble( newIndex.model()->data( newIndex, Qt::EditRole ).toString() );
         spinBox->setValue( value );
     }
     else if( QStringList* element = comboBoxs_.Find( position->id_ ) )
@@ -195,14 +191,14 @@ void CommonDelegate::setModelData( QWidget* editor, QAbstractItemModel* model, c
     {
         QSpinBox* spinBox = static_cast< QSpinBox* >( editor );
         spinBox->interpretText();
-        model->setData( index, spinBox->value(), Qt::EditRole );
+        model->setData( index, spinBox->locale().toString( spinBox->value() ), Qt::EditRole );
         model->setData( index, spinBox->value(), Qt::UserRole );
     }
     else if( SpinBoxDescription< double >* element = doubleSpinBoxs_.Find( position->id_ ) )
     {
         QDoubleSpinBox* spinBox = static_cast< QDoubleSpinBox* >( editor );
         spinBox->interpretText();
-        model->setData( index, QString::number( spinBox->value(), 'f', element->precision_ ), Qt::EditRole );
+        model->setData( index, spinBox->locale().toString( spinBox->value(), 'f', element->precision_ ), Qt::EditRole );
         model->setData( index, spinBox->value(), Qt::UserRole );
     }
     else if( QStringList* element = comboBoxs_.Find( position->id_ ) )

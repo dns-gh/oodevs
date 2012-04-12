@@ -12,7 +12,6 @@
 #include "clients_gui_pch.h"
 #include "UnitStateTableCrew.h"
 #include "moc_UnitStateTableCrew.cpp"
-#include "SpinTableItem.h"
 #include "clients_kernel/Tools.h"
 #include "clients_kernel/ContextMenu.h"
 
@@ -182,7 +181,7 @@ void UnitStateTableCrew::ComputeValues( E_HumanRank rank )
         if( rank == GetEnumData< E_HumanRank >( row, eRank ) )
             delegate_.SetSpinBoxMinMax( row, eNumber, 0, static_cast< int >( nbrOfficersHealthy_[ rank ] + GetUserData( row, eNumber ).toUInt() ) );
     // Update first line left value
-    SetData( rank, eNumber, QString::number( nbrOfficersHealthy_[ rank ] ), nbrOfficersHealthy_[ rank ] );
+    SetData( rank, eNumber, locale().toString( nbrOfficersHealthy_[ rank ] ), nbrOfficersHealthy_[ rank ] );
 }
 
 // -----------------------------------------------------------------------------
@@ -211,7 +210,7 @@ void UnitStateTableCrew::AddLine( int number /* = 0*/,
     SetCheckedState( row, ePsy, psy );
     AddItem( row, eContaminated, QString(), contaminated, checkFlags );
     SetCheckedState( row, eContaminated, contaminated );
-    AddItem( row, eNumber, QString::number( number ), number, flags );
+    AddItem( row, eNumber, locale().toString( number ), number, flags );
 
     if( !isHealthy )
         delegate_.AddSpinBox( row, row, eNumber, eNumber, 0, nbrOfficersTotal_[ rank ] );
@@ -250,7 +249,7 @@ void UnitStateTableCrew::MergeLine( E_HumanRank rank, E_HumanState state, E_Inju
             ( state != eHumanState_Injured || seriousness == GetEnumData< E_InjuriesSeriousness >( row, eInjuries ) ) )
         {
             unsigned int newValue = GetUserData( row, eNumber ).toUInt() + number;
-            SetData( row, eNumber, QString::number( newValue ), newValue );
+            SetData( row, eNumber, locale().toString( newValue ), newValue );
             break;
         }
     }

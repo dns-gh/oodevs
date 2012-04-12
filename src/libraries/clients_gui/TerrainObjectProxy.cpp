@@ -104,7 +104,7 @@ void TerrainObjectProxy::DoUpdate( const sword::UrbanUpdate& /*msg*/ )
 QString TerrainObjectProxy::GetName() const
 {
     if( name_.isEmpty() )
-        return QString( tools::translate( "Urban", "Urban block[%1]" ).arg( id_ ) );
+        return QString( tools::translate( "Urban", "Urban block[%L1]" ).arg( id_ ) );
     return name_;
 }
 
@@ -156,7 +156,7 @@ void TerrainObjectProxy::DisplayInSummary( Displayer_ABC& displayer ) const
     displayer.Display( tools::translate( "Block", "Density:" ), density_ );
     displayer.Display( tools::translate( "Block", "Total of inhabitants:" ), GetHumans() );
     for( CIT_BlockOccupation it = motivations_.begin(); it != motivations_.end(); ++it )
-        displayer.Display( tools::translate( "Block", "Occupation rate (%1):" ).arg( it->first ), it->second.second );
+        displayer.Display( tools::translate( "Block", "Occupation rate (%L1):" ).arg( it->first ), it->second.second );
 }
 
 namespace

@@ -124,9 +124,10 @@ void StatusBar::NotifyUpdated( const Simulation& simulation )
     pTime_->setText( QString( "%1 - %2" ).arg( simulation.GetDateAsString() ).arg( simulation.GetTimeAsString() ) );
     const float actualSpeed = simulation.GetActualSpeed();
     const float effectiveSpeed = simulation.GetEffectiveSpeed();
+    QLocale locale;
     pSpeed_->setText( QString( "%1/%2" )
-                        .arg( actualSpeed > 0 ? QString::number( actualSpeed ) : QString( "--" ), 4 )
-                        .arg( effectiveSpeed > 0 ? QString::number( effectiveSpeed ) : QString( "--" ), 4 ) );
+                        .arg( actualSpeed > 0 ? locale.toString( actualSpeed ) : QString( "--" ), 4 )
+                        .arg( effectiveSpeed > 0 ? locale.toString( effectiveSpeed ) : QString( "--" ), 4 ) );
 }
 
 // -----------------------------------------------------------------------------

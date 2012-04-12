@@ -10,6 +10,7 @@
 #include "clients_gui_pch.h"
 #include "SpinBoxDisplayer.h"
 #include "clients_kernel/Units.h"
+#include "RichSpinBox.h"
 
 using namespace kernel;
 using namespace gui;
@@ -23,9 +24,7 @@ SpinBoxDisplayer::SpinBoxDisplayer( QBoxLayout* parent, const QString& name, int
     QHBoxLayout* layout = new QHBoxLayout();
     parent->addLayout( layout );
     layout->addWidget( new QLabel( name ) );
-    edit_ = new QSpinBox();
-    edit_->setRange( min, max );
-    edit_->setSingleStep( step );
+    edit_ = new RichSpinBox( 0, min, max, step );
     layout->addWidget( edit_ );
 }
 

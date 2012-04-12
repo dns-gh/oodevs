@@ -262,7 +262,7 @@ void UnitListView::Sort( Q3ListViewItem* item )
 void UnitListView::Display( const AgentComposition& type, ValuedListItem* item )
 {
     item->SetFontColor( QColor( 100, 100, 100 ) );
-    item->Set( &type, type.GetType().GetName().c_str(), QString::number( type.GetCount() ) );
+    item->Set( &type, type.GetType().GetName().c_str(), locale().toString( type.GetCount() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -273,9 +273,9 @@ void UnitListView::Display( const AutomatComposition& type, ValuedListItem* item
 {
     QString cnt;
     if( type.GetMax() != type.GetMin() )
-        cnt = QString( "%1..%2" ).arg( type.GetMin() ).arg( type.GetMax() == std::numeric_limits< unsigned int >::max() ? "*" : QString::number( type.GetMax() ) );
+        cnt = QString( "%L1..%L2" ).arg( type.GetMin() ).arg( type.GetMax() == std::numeric_limits< unsigned int >::max() ? "*" : locale().toString( type.GetMax() ) );
     else
-        cnt = QString::number( type.GetMin() );
+        cnt = locale().toString( type.GetMin() );
 
     tools::Iterator< const AgentComposition& > it( type.GetType().CreateIterator() );
     DeleteTail( ListView< UnitListView >::Display( it, item ) );

@@ -18,9 +18,9 @@ using namespace gui;
 // Created: BCI 2011-05-09
 // -----------------------------------------------------------------------------
 LoadableSpinBox::LoadableSpinBox( int minValue, int maxValue, int step, QWidget* parent, const QString& probableName )
-    : LoadableFieldTemplate< QSpinBox >( parent, probableName )
+    : LoadableFieldTemplate< RichSpinBox >( parent, probableName )
 {
-    SetDefaultValueWidget( new QSpinBox( minValue, maxValue, step, this ) );
+    SetDefaultValueWidget( new RichSpinBox( this, minValue, maxValue, step ) );
 }
 
 // -----------------------------------------------------------------------------

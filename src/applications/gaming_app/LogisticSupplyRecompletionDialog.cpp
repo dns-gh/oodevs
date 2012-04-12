@@ -52,7 +52,7 @@ LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* par
     , selected_( controllers )
 {
     setCaption( tr( "Recompletion" ) );
-    resize( 280, 430 );
+    resize( 300, 500 );
     Q3VBoxLayout* mainLayout = new Q3VBoxLayout( this );
     mainLayout->setSpacing( 5 );
     mainLayout->setMargin( 5 );
@@ -65,9 +65,9 @@ LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* par
     equipmentsTable_->horizontalHeader()->setLabel( 0, tr( "Equipment" ) );
     equipmentsTable_->horizontalHeader()->setLabel( 1, tr( "Count" ) );
     equipmentsTable_->horizontalHeader()->setLabel( 2, tr( "Max" ) );
-    equipmentsTable_->setColumnWidth( 0, equipmentsTable_->columnWidth( 0 ) + 20 );
-    equipmentsTable_->setColumnWidth( 1, 50 );
-    equipmentsTable_->setColumnWidth( 2, 50 );
+    equipmentsTable_->setColumnStretchable( 0, true );
+    equipmentsTable_->setColumnWidth( 1, 60 );
+    equipmentsTable_->setColumnWidth( 2, 60 );
     equipmentsTable_->setColumnReadOnly( 2, true );
     equipmentsTable_->setLeftMargin( 0 );
     equipmentsTable_->setShowGrid( false );
@@ -78,8 +78,9 @@ LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* par
     personalsTable_->horizontalHeader()->setLabel( 2, tr( "Count" ) );
     personalsTable_->horizontalHeader()->setLabel( 3, tr( "Max" ) );
     personalsTable_->setColumnWidth( 0, 20 );
+    personalsTable_->setColumnStretchable( 1, true );
     personalsTable_->setColumnWidth( 2, 60 );
-    personalsTable_->setColumnWidth( 3, 40 );
+    personalsTable_->setColumnWidth( 3, 60 );
     personalsTable_->setColumnReadOnly( 1, true );
     personalsTable_->setColumnReadOnly( 3, true );
     personalsTable_->setLeftMargin( 0 );
@@ -96,7 +97,8 @@ LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* par
     dotationsTable_->horizontalHeader()->setLabel( 1, tr( "Resource" ) );
     dotationsTable_->horizontalHeader()->setLabel( 2, tr( "Quantity %" ) );
     dotationsTable_->setColumnWidth( 0, 20 );
-    dotationsTable_->setColumnWidth( 2, 60 );
+    dotationsTable_->setColumnStretchable( 1, true );
+    dotationsTable_->setColumnWidth( 2, 70 );
     dotationsTable_->setColumnReadOnly( 1, true );
     dotationsTable_->setLeftMargin( 0 );
     dotationsTable_->setShowGrid( false );
@@ -107,7 +109,8 @@ LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* par
     munitionsFamilyTable_->horizontalHeader()->setLabel( 1, tr( "Ammo" ) );
     munitionsFamilyTable_->horizontalHeader()->setLabel( 2, tr( "Quantity %" ) );
     munitionsFamilyTable_->setColumnWidth( 0, 20 );
-    munitionsFamilyTable_->setColumnWidth( 2, 60 );
+    munitionsFamilyTable_->setColumnStretchable( 1, true );
+    munitionsFamilyTable_->setColumnWidth( 2, 70 );
     munitionsFamilyTable_->setColumnReadOnly( 1, true );
     munitionsFamilyTable_->setLeftMargin( 0 );
     munitionsFamilyTable_->setShowGrid( false );
@@ -123,7 +126,8 @@ LogisticSupplyRecompletionDialog::LogisticSupplyRecompletionDialog( QWidget* par
     stockTable_->horizontalHeader()->setLabel( 1, tr( "Resource" ) );
     stockTable_->horizontalHeader()->setLabel( 2, tr( "Quantity %" ) );
     stockTable_->setColumnWidth( 0, 20 );
-    stockTable_->setColumnWidth( 2, 60 );
+    stockTable_->setColumnStretchable( 1, true );
+    stockTable_->setColumnWidth( 2, 70 );
     stockTable_->setColumnReadOnly( 1, true );
     stockTable_->setLeftMargin( 0 );
     stockTable_->setShowGrid( false );
@@ -192,8 +196,8 @@ void LogisticSupplyRecompletionDialog::InitializeEquipments()
         equipmentsTable_->setNumRows( 0 );
         equipmentsTable_->insertRows( 0, 1 );
         equipmentsTable_->setItem( 0, 0, new ExclusiveComboTableItem( equipmentsTable_, equipmentsList_ ) );
-        equipmentsTable_->setText( 0, 1, "0" );
-        equipmentsTable_->setMinimumHeight( equipmentsTable_->rowHeight( 0 ) * 4 );
+        equipmentsTable_->setItem( 0, 1, new SpinTableItem< int >( equipmentsTable_, 0, std::numeric_limits< int >::max() ) );
+        equipmentsTable_->setMinimumHeight( std::max< int >( equipmentsTable_->rowHeight( 0 ) * 4, 20 ) );
     }
 }
 
@@ -209,7 +213,7 @@ void LogisticSupplyRecompletionDialog::InitializePersonal()
         AddPersonal( sword::officer, tr( "officers" ), troops->GetTotalByRank( eHumanRank_Officier ) );
         AddPersonal( sword::sub_officer, tr( "warrant-officers" ), troops->GetTotalByRank( eHumanRank_SousOfficer ) );
         AddPersonal( sword::trooper, tr( "private" ), troops->GetTotalByRank( eHumanRank_Mdr ) );
-        personalsTable_->setMinimumHeight( personalsTable_->rowHeight( 0 ) * 5 );
+        personalsTable_->setMinimumHeight( std::max< int >( personalsTable_->rowHeight( 0 ) * 5, 20 ) );
     }
 }
 
@@ -223,7 +227,7 @@ void LogisticSupplyRecompletionDialog::AddPersonal( unsigned nPos, const QString
     personalsTable_->setItem( nPos, 0, new Q3CheckTableItem( personalsTable_, 0 ) );
     personalsTable_->setText( nPos, 1, label );
     personalsTable_->setItem( nPos, 2, new SpinTableItem< int >( personalsTable_, 0, nMax, 1 ) );
-    personalsTable_->setText( nPos, 3, QString::number( nMax ) );
+    personalsTable_->setText( nPos, 3, locale().toString( nMax ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -249,7 +253,7 @@ void LogisticSupplyRecompletionDialog::InitializeDotations()
         dotationsTable_->setItem( nPos, 2, new SpinTableItem< int >( dotationsTable_, 0, 100, 1 ) );
         catetoriesNames_.push_back( type.GetCategoryName().c_str() );
     }
-    dotationsTable_->setMinimumHeight( dotationsTable_->rowHeight( 0 ) * 5 );
+    dotationsTable_->setMinimumHeight( std::max< int >( dotationsTable_->rowHeight( 0 ) * 5, 20 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -264,7 +268,7 @@ void LogisticSupplyRecompletionDialog::InitializeAmmunitions()
     AddAmmunition( eMunitionType_MissileAir,    ENT_Tr::ConvertFromAmmunitionType( eMunitionType_MissileAir, ENT_Tr::eToTr ).c_str() );
     AddAmmunition( eMunitionType_Mitraille,     ENT_Tr::ConvertFromAmmunitionType( eMunitionType_Mitraille, ENT_Tr::eToTr ).c_str() );
     AddAmmunition( eMunitionType_ALR,           ENT_Tr::ConvertFromAmmunitionType( eMunitionType_ALR, ENT_Tr::eToTr ).c_str() );
-    munitionsFamilyTable_->setMinimumHeight( munitionsFamilyTable_->rowHeight( 0 ) * 5 );
+    munitionsFamilyTable_->setMinimumHeight( std::max< int >( munitionsFamilyTable_->rowHeight( 0 ) * 5, 20 ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -292,7 +296,7 @@ void LogisticSupplyRecompletionDialog::InitializeSupplies()
     if( supplies )
     {
         stockTable_->setNumRows( 0 );
-        stockTable_->setMinimumHeight( stockTable_->rowHeight( 0 ) * 5 );
+        stockTable_->setMinimumHeight( std::max< int >( stockTable_->rowHeight( 0 ) * 5, 20 ) );
 
         tools::Iterator< const Dotation& > it = supplies->CreateIterator();
         while( it.HasMoreElements() )
@@ -302,7 +306,9 @@ void LogisticSupplyRecompletionDialog::InitializeSupplies()
             stockTable_->insertRows( nPos, 1 );
             stockTable_->setItem( nPos, 0, new Q3CheckTableItem( stockTable_, 0 ) );
             stockTable_->setText( nPos, 1, stock.type_->GetName().c_str() );
-            stockTable_->setText( nPos, 2, QString::number( stock.quantity_ ) );
+            SpinTableItem< int >* item = new SpinTableItem< int >( stockTable_, 0, std::numeric_limits< int >::max() );
+            item->setText( locale().toString( stock.quantity_ ) );
+            stockTable_->setItem( nPos, 2, item );
             stocks_[ stock.type_->GetName().c_str() ] = &stock;
             show = true;
         }
@@ -329,7 +335,7 @@ namespace
 {
     std::string CreateName( const std::string& str, int& index )
     {
-        return QString( (str + " %1" ).c_str() ).arg( index++ ).ascii();
+        return QString( (str + " %L1" ).c_str() ).arg( index++ ).ascii();
     }
 }
 
@@ -375,7 +381,7 @@ void LogisticSupplyRecompletionDialog::FillEquipments( actions::parameters::Para
         for( int nRow = 0; nRow < equipmentsTable_->numRows() - 1; ++nRow )
         {
             Q3ComboTableItem* pEquipementItem  = static_cast< Q3ComboTableItem* >( equipmentsTable_->item( nRow, 0 ) );
-            Q3TableItem*      pNbrItem         = equipmentsTable_->item( nRow, 1 );
+            SpinTableItem< int >* pNbrItem = static_cast< SpinTableItem< int >* >( equipmentsTable_->item( nRow, 1 ) );
 
             ParameterList& personalList = list.AddList( CreateName( "Equipment", index ) );
             personalList.AddIdentifier( "Equipment", equipments_[ pEquipementItem->currentText() ]->type_.GetId() );
@@ -402,9 +408,7 @@ void LogisticSupplyRecompletionDialog::FillDotations( actions::parameters::Param
         for( int nRow = 0; nRow < dotationsTable_->numRows(); ++nRow )
         {
             Q3CheckTableItem* pDotationItemCheckBox = static_cast< Q3CheckTableItem* >( dotationsTable_->item( nRow, 0 ) );
-            Q3TableItem*      pDotationItem         = dotationsTable_->item( nRow, 1 );
             Q3TableItem*      pPercentageItem       = dotationsTable_->item( nRow, 2 );
-            const std::string name = pDotationItem->text().toStdString();
             assert( pDotationItemCheckBox );
             if( !pDotationItemCheckBox->isChecked() )
                 continue;
@@ -468,7 +472,7 @@ void LogisticSupplyRecompletionDialog::FillSupplies( actions::parameters::Parame
         {
             Q3CheckTableItem* pItemCheckBox = static_cast< Q3CheckTableItem* >( stockTable_->item( nRow, 0 ) );
             Q3TableItem*      pItem         = stockTable_->item( nRow, 1 );
-            Q3TableItem*      pQttyItem     = stockTable_->item( nRow, 2 );
+            SpinTableItem< int >*pQttyItem  = static_cast< SpinTableItem< int >* >( stockTable_->item( nRow, 2 ) );
 
             assert( pItemCheckBox );
             if( !pItemCheckBox->isChecked() )
@@ -606,7 +610,7 @@ void LogisticSupplyRecompletionDialog::OnEquipmentChanged( int nRow, int nCol )
     assert( pComboTableItem );
 
     // update quantity colum to bound it to max value
-    Q3TableItem* pTableItem = static_cast< Q3TableItem* >( equipmentsTable_->item( nRow, 1 ) );
+    SpinTableItem< int >* pTableItem = static_cast< SpinTableItem< int >* >( equipmentsTable_->item( nRow, 1 ) );
     assert( pTableItem );
     int nMax = 0;
     if( pComboTableItem->currentItem() > 0 )
@@ -638,15 +642,14 @@ void LogisticSupplyRecompletionDialog::OnEquipmentChanged( int nRow, int nCol )
             uint nPos = nRow + 1;
             equipmentsTable_->insertRows( nPos, 1 );
             equipmentsTable_->setItem( nPos, 0, new ExclusiveComboTableItem( equipmentsTable_, equipmentsList_ ) );
-            equipmentsTable_->setText( nPos, 1, "0" );
+            equipmentsTable_->setItem( nPos, 1, new SpinTableItem< int >( equipmentsTable_, 0, std::numeric_limits< int >::max() ) );
             // need to set again the combo box selected element
             pComboTableItem->setCurrentItem( nCurrentItem );
         }
         // select quantity field
         equipmentsTable_->setCurrentCell( nRow, 1 );
-        QString strMax;
-        strMax.setNum( equipmentsMax_[ pComboTableItem->currentItem() - 1 ] );
-        equipmentsTable_->setText( nRow, 2, strMax );
+        equipmentsTable_->setText( nRow, 2, locale().toString( equipmentsMax_[ pComboTableItem->currentItem() - 1 ] ) );
+        pTableItem->SetMinMaxValue( 0, equipmentsMax_[ pComboTableItem->currentItem() - 1 ] );
     }
 
 }

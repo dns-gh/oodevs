@@ -201,8 +201,8 @@
         <translation>Info/Nombre</translation>
     </message>
     <message>
-        <source>Formation [%1]</source>
-        <translation>Formacion [%1]</translation>
+        <source>Formation [%L1]</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -269,16 +269,16 @@
         <translation>Info/Nombre</translation>
     </message>
     <message>
-        <source>Knowledge group [%1]</source>
-        <translation>Grupo de reconocimiento [%1]</translation>
-    </message>
-    <message>
         <source>Type/Name</source>
         <translation>Tipo/Nombre</translation>
     </message>
     <message>
         <source>Type/Delay</source>
         <translation>Tipo/Detalle</translation>
+    </message>
+    <message>
+        <source>Knowledge group [%L1]</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -461,10 +461,6 @@
         <translation>Tiempo de actividad :</translation>
     </message>
     <message>
-        <source>%1 [%2]</source>
-        <translation>%1 [%2]</translation>
-    </message>
-    <message>
         <source>Information</source>
         <translation>Informacion</translation>
     </message>
@@ -612,6 +608,10 @@
         <source>Improvable:</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>%1 [%L2]</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Population</name>
@@ -648,10 +648,6 @@
         <translation type="unfinished"></translation>
     </message>
     <message>
-        <source>%1 [%2]</source>
-        <translation type="unfinished">%1 [%2]</translation>
-    </message>
-    <message>
         <source>Living Area/Urban blocks/%1</source>
         <translation type="unfinished"></translation>
     </message>
@@ -675,12 +671,16 @@
         <source>Living Area/Capacities/%1</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>%1 [%L2]</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Preparation</name>
     <message>
-        <source>Army %1</source>
-        <translation>Ejército %1</translation>
+        <source>Army %L1</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

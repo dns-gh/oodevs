@@ -27,7 +27,7 @@ TacticalLine_ABC::TacticalLine_ABC( const QString& baseName, unsigned long id, P
     , id_( id )
 {
     RegisterSelf( *this );
-    name_ = ( baseName + " %1" ).arg( id_ & 0x3FFFFF );
+    name_ = ( baseName + " %L1" ).arg( id_ & 0x3FFFFF );
 }
 
 // -----------------------------------------------------------------------------

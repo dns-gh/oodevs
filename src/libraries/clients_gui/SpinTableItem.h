@@ -38,6 +38,7 @@ public:
     virtual QWidget* createEditor() const;
     virtual void setContentFromEditor( QWidget* widget );
     void SetMinMaxValue( int minValue, int maxValue );
+    virtual int alignment() const;
     //@}
 
 private:
@@ -46,6 +47,7 @@ private:
     T minValue_;
     T maxValue_;
     T step_;
+    QLocale locale_;
     //@}
 };
 
@@ -59,6 +61,7 @@ SpinTableItem< T >::SpinTableItem( Q3Table* table, T minValue, T maxValue, T ste
     , minValue_( minValue )
     , maxValue_( maxValue )
     , step_( step )
+    , locale_()
 {
     // NOTHING
 }
@@ -82,6 +85,16 @@ void SpinTableItem< T >::SetMinMaxValue( int minValue, int maxValue )
 {
     minValue_ = minValue;
     maxValue_ = maxValue;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SpinTableItem::alignment
+// Created: ABR 2012-04-10
+// -----------------------------------------------------------------------------
+template< typename T >
+int SpinTableItem< T >::alignment() const
+{
+    return Qt::AlignRight;
 }
 
 } // namespace gui

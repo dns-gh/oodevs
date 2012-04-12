@@ -158,7 +158,7 @@ void DotationsEditor::AddItem( const Dotation* dotation /* =0*/ )
     table_->setItem( row, 0, item );
     if( dotation )
     {
-        table_->setText( row, 1, QString::number( dotation->quantity_ ) );
+        table_->setText( row, 1, locale().toString( dotation->quantity_ ) );
         item->setCurrentItem( dotation->type_.GetName().c_str() );
     }
     table_->setCurrentCell( row, 1 );

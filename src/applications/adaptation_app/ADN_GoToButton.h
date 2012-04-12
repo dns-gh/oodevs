@@ -30,7 +30,7 @@ class ADN_GoToButton : public QPushButton
 public:
     //! @name Constructors/Destructor
     //@{
-             ADN_GoToButton( E_WorkspaceElements targetTab, int subTargetTab = -1 );
+    explicit ADN_GoToButton( E_WorkspaceElements targetTab, int subTargetTab = -1, QWidget* parent = 0 );
     virtual ~ADN_GoToButton();
     //@}
 

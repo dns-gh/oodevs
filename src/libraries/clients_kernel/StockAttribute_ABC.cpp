@@ -35,7 +35,7 @@ void StockAttribute_ABC::Display( Displayer_ABC& displayer ) const
     Displayer_ABC& local =
         displayer.Group( tools::translate( "Stock", "Stock resource attribute" ) );
     for( StockDotations::const_iterator it = stockDotations_.begin(); it != stockDotations_.end(); ++it )
-        local.Display( it->first->GetName().c_str(), QString( "%1 / %2" ).arg( it->second.stock_ ).arg( it->second.maxStock_ ) );
+        local.Display( it->first->GetName().c_str(), QString( "%L1 / %L2" ).arg( it->second.stock_ ).arg( it->second.maxStock_ ) );
 }
 
 // -----------------------------------------------------------------------------

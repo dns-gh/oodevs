@@ -35,7 +35,7 @@ Automat::Automat( const sword::AutomatCreation& message, Controller& controller,
     , logisticLevel_ ( &kernel::LogisticLevel::Resolve( message.logistic_level() ) )
 {
     if( name_.isEmpty() )
-        name_ = QString( "%1 %2" ).arg( type_.GetName().c_str() ).arg( message.automat().id() );
+        name_ = QString( "%1 %L2" ).arg( type_.GetName().c_str() ).arg( message.automat().id() );
     RegisterSelf( *this );
     PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
     Attach( dictionary );

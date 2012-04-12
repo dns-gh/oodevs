@@ -15,6 +15,8 @@
 
 using namespace kernel;
 
+QLocale NumberFormatter::locale_ = QLocale();
+
 // -----------------------------------------------------------------------------
 // Name: FormatterNotImplemented::Error
 // Created: AGE 2006-02-21

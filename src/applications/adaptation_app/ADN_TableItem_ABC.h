@@ -34,6 +34,7 @@ public:
     //@{
     void* GetData();
     virtual void DoValueChanged() = 0;
+    const QValidator* validator() { return 0; };
     //@}
 
     //! @name Colors
@@ -41,6 +42,12 @@ public:
     virtual bool UseColor() const;
     virtual void SetUseColor( bool );
     virtual std::pair< double, double > GetRangeForColor() const;
+    //@}
+
+    //! @name Cursor position
+    //@{
+    virtual void setCursorPosition( int /*pos*/ ) {}
+    virtual int cursorPosition() const { return 0; }
     //@}
 
 protected:
