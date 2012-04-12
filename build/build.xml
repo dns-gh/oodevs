@@ -963,6 +963,7 @@
         </sequential>
     </macrodef>
 
+    <!-- Temporary, waiting for a migration to scipio physical base
     <target name="checkpoint_test" depends="application.simulation_app" description="save and load a checkpoint">
         <run-simulation exercise="france/CheckpointTests">
             <arg value="--savecheckpoint=tempcheckpoint"/>
@@ -972,6 +973,7 @@
             <arg value="--deletecheckpoint"/>
         </run-simulation>
     </target>
+    -->
 
     <macrodef name="test-scripts">
         <attribute name="dataset"/>
@@ -992,11 +994,7 @@
     </macrodef>
 
     <target name="scripts_test" description="run all script tests">
-        <test-scripts dataset="ada" physical="france"/>
         <test-scripts dataset="ada" physical="scipio"/>
-        <!--
-        <test-scripts dataset="ada" physical="security-fr"/>
-        -->
         <test-scripts dataset="ada" physical="worldwide"/>
     </target>
 
@@ -1087,9 +1085,7 @@
     </macrodef>
 
     <target name="adaptation_test" description="load and save adaptation main data then check that output is the same as input">
-        <test-adaptation input="${data.dir}/data/models/ada/physical/france"/>
         <test-adaptation input="${data.dir}/data/models/ada/physical/scipio"/>
-        <test-adaptation input="${data.dir}/data/models/ada/physical/security-fr"/>
         <test-adaptation input="${data.dir}/data/models/ada/physical/worldwide"/>
     </target>
 
@@ -1140,7 +1136,6 @@
 
     <target name="exercises_test" description="validates some significant exercises">
         <test-exercise exercise="worldwide/Egypt"/>
-        <test-exercise exercise="france/Cabourg"/>
         <test-exercise exercise="scipio/Poseidon VA"/>
     </target>
 
@@ -1219,13 +1214,13 @@
         </sequential>
     </macrodef>
 
-    <target name="reports_test" description="check that ada/physical/france/Reports.xml and ada/physical/worldwide/Reports.xml contain the same amount of reports">
+    <target name="reports_test" description="check that ada/physical/scipio/Reports.xml and ada/physical/worldwide/Reports.xml contain the same amount of reports">
         <count property="reports_test.worldwide" string="report id=" file="${data.dir}/data/models/Ada/physical/worldwide/Reports.xml"/>
-        <count property="reports_test.france" string="report id=" file="${data.dir}/data/models/Ada/physical/france/Reports.xml"/>
-        <fail message="File 'reports.xml' from physical databases doesn't contain the same amount of entries - France:${reports_test.france} vs Worldwide:${reports_test.worldwide}">
+        <count property="reports_test.scipio" string="report id=" file="${data.dir}/data/models/Ada/physical/scipio/Reports.xml"/>
+        <fail message="File 'reports.xml' from physical databases doesn't contain the same amount of entries - Scipio:${reports_test.scipio} vs Worldwide:${reports_test.worldwide}">
             <condition>
                 <not>
-                    <equals arg1="${reports_test.worldwide}" arg2="${reports_test.france}"/>
+                    <equals arg1="${reports_test.worldwide}" arg2="${reports_test.scipio}"/>
                 </not>
             </condition>
         </fail>
@@ -1433,54 +1428,6 @@
         </pack>
     </target>
 
-    <target name="package.otpack.defense.france" description="package du defense-france otpack">
-        <pack name="defense-france" description="defense-france exercises package">
-            <include name="data/models/ada/physical/france/**"/>
-            <include name="data/propagations/test/**"/>
-            <include name="exercises/france/Cabourg/**"/>
-            <include name="exercises/france/BMDrosoville/**"/>
-            <include name="exercises/france/TerrainDifficile/**"/>
-            <include name="exercises/scipio/Poseidon VA/**"/>
-            <include name="exercises/france/tutorials/01 - Generalites/**"/>
-            <include name="exercises/france/tutorials/02 - Jeu/**"/>
-            <include name="exercises/france/tutorials/03 - Mission/**"/>
-            <include name="exercises/france/tutorials/04 - ABC/**"/>
-            <include name="exercises/france/tutorials/05 - Infanterie/**"/>
-            <include name="exercises/france/tutorials/06 - Genie/**"/>
-            <include name="exercises/france/tutorials/07 - Artillerie/**"/>
-            <include name="exercises/france/tutorials/071 - NRBC/**"/>
-            <include name="exercises/france/tutorials/072 - ALAT/**"/>
-            <include name="exercises/france/tutorials/073 - LOG/**"/>
-            <include name="exercises/france/tutorials/08 - Fonctions Avancees/**"/>
-            <include name="exercises/france/tutorials/09 - Rejeu et AAA/**"/>
-            <include name="exercises/france/tutorials/10 - Preparation/**"/>
-            <include name="exercises/france/tests/capteurs/**"/>
-            <include name="exercises/france/tests/capteurs-delai/**"/>
-            <include name="exercises/france/tests/nested_knowledge_groups/**"/>
-            <include name="exercises/france/tests/suicide/**"/>
-            <include name="exercises/scipio/tests/Test1_9_2/**"/>
-            <include name="exercises/france/tests/ValidationTests/**"/>
-            <include name="exercises/france/tests/ValidationTests aux tomates/**"/>
-            <include name="exercises/france/tests/ValidationTests LOG/**"/>
-            <include name="exercises/scipio/tests/ValidationTests LOG 1_9_2/**"/>
-            <include name="exercises/france/tests/Water/**"/>
-            <include name="exercises/france/tests/missions/**"/>
-            <include name="exercises/france/tests/embrayer/**"/>
-            <include name="exercises/france/tests/jamming-shoot/**"/>
-            <include name="exercises/france/tests/attrition/**"/>
-            <include name="exercises/france/tests/coi/**"/>
-            <include name="exercises/france/tests/Meteo/**"/>
-            <include name="exercises/france/tests/embrayerAuto/**"/>
-            <include name="data/terrains/Nord egypt/**"/>
-            <include name="data/terrains/Paris_Est/**"/>
-            <include name="data/terrains/Malaisie/**"/>
-            <include name="data/terrains/Cabourg/**"/>
-            <include name="data/terrains/Drosoville_France/**"/>
-            <include name="data/terrains/Angers_x9/**"/>
-            <include name="data/terrains/PortoV3Lite/**"/>
-        </pack>
-    </target>
-
     <target name="package.otpack.defense.scipio" description="package du defense-scipio Referentiel Simulation otpack">
         <pack name="ScipioStab-RefSim" description="defense-scipio exercises package">
             <include name="data/models/ada/decisional/bms/**"/>
@@ -1510,25 +1457,6 @@
             <include name="exercises/scipio/exercisesVA/VEM_Logistique/**"/>
             <include name="data/terrains/PortoV3Lite/**"/>
 			<include name="data/terrains/StNazairePontSuspendu/**"/>
-        </pack>
-    </target>
-
-    <target name="package.otpack.security.worldwide" description="package du security-worldwide otpack">
-        <pack name="security-worldwide" description="security-worldwide exercises package">
-            <include name="data/models/ada/physical/worldwide/**"/>
-            <include name="data/models/ada/physical/security-fr/**"/>
-            <include name="data/propagations/test/**"/>
-            <include name="exercises/security/CODAH_JANUS/**"/>
-            <include name="data/terrains/lehavre_4.2.0/**"/>
-        </pack>
-    </target>
-
-    <target name="package.otpack.security.masa" description="package du security-masa otpack">
-        <pack name="security-masa" description="security-masa exercises package">
-            <include name="data/models/ada/physical/security-fr/**"/>
-            <include name="data/propagations/test/**"/>
-            <include name="exercises/security/CODAH_JANUS/**"/>
-            <include name="data/terrains/lehavre_4.2.0/**"/>
         </pack>
     </target>
 
