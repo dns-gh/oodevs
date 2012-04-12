@@ -110,8 +110,6 @@ ObstacleAttribute::ObstacleAttribute( const sword::MissionParameter_Value& attri
     , endActivity_   ( 0 )
     , creationTime_  ( MIL_Singletons::GetTime().GetRealTime() )
 {
-    if( attributes.list_size() > 4 )
-        activityTime_  = attributes.list( 4 ).quantity();
     if( activationTime_ != 0 && activityTime_ == 0 )  // $$$$ _RC_ LGY 2011-08-31: default 6h
         activityTime_ = 21600;
     endActivity_ = activationTime_ + activityTime_;

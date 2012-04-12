@@ -241,6 +241,11 @@ bool Profile::IsVisible( const Entity_ABC& entity ) const
 // -----------------------------------------------------------------------------
 bool Profile::IsKnowledgeVisible( const Knowledge_ABC& knowledge ) const
 {
+    if( !knowledge.GetEntity() && IsSupervision() && knowledge.GetTeam() )
+        if( std::find( readTeams_.begin(), readTeams_.end(), knowledge.GetTeam()->GetId() ) != readTeams_.end() 
+            || std::find( writeTeams_.begin(), writeTeams_.end(), knowledge.GetTeam()->GetId() ) != writeTeams_.end() )
+            return false;
+
     return IsInHierarchy( knowledge.GetOwner(), readEntities_, false );
 }
 

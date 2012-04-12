@@ -132,8 +132,6 @@ int ObstaclePrototype_ABC::GetActivationTime() const
 // -----------------------------------------------------------------------------
 int ObstaclePrototype_ABC::GetActivityTime() const
 {
-    if( IsActivated() )
-        return 0;
     QTime time = activityTime_->time();
     return 3600 * time.hour() + 60 * time.minute() + time.second();
 }
