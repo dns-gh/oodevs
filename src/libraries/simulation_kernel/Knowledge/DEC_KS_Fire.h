@@ -44,6 +44,7 @@ public:
     virtual void Prepare();
     virtual void Clean();
     virtual void Talk( int currentTimeStep );
+    bool IsAttacked() const;
     //@}
 
     //! @name Events

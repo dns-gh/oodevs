@@ -1,9 +1,26 @@
 rootnode
 {
+    connections = { skill.nodes.CR },
+
     done = function( self ) end,
 
+    activate = function( self )
+          if meKnowledge:isWounded() then
+           Activate( skill.nodes.CR, 1, { RC = eRC_TerroristDropped, unit = self.params.unit } )
+        end
+    end,
+    
     destroy = function( self )
         DEC_Agent_ForcerSilenceRadio( self.params.unit.source, false )
         self.params.unit:unloadIt()
+    end,
+}
+-- **************************************************************************** 
+-- CR 
+-- ****************************************************************************
+node "CR"
+{
+    create = function( self )
+        meKnowledge:RC( self.params.RC, self.params.unit.source  )
     end,
 }

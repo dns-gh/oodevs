@@ -834,6 +834,14 @@ que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe
                 </type>
             </return>
         </method>
+        <method name="isWounded" abstract="false">
+            <description>Envoie vrai si l'unité est touchée</description>
+            <return>
+                <type>
+                    <simple name="numeric"/>
+                </type>
+            </return>
+        </method>
         <method name="getDestructionState">
             <description>Retourne le niveau de destruction physique courant de l'unité.</description>
             <return>

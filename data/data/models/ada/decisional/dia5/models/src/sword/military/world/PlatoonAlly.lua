@@ -246,6 +246,9 @@ return
     operationalLevel = function( self )
         return self:getOperationalCapacity()
     end,
+    isWounded = function( self )
+        return self:getOperationalCapacity() < 95
+    end,
     neutralizationPriority = function() 
         return 0 -- $$$ Pour le moment pas appelé car on ne détruit pas d'amis dans SCIPIO
     end,

@@ -36,7 +36,7 @@ rootnode
 
         local positions
         if self.params.positions == NIL then
-            positions = sword.military.queries.tactical.getPositionsToDestroy[ "execute" ]( { elementsToDestroy = self.params.entities } )
+            positions = sword.military.queries.tactical.getPositionsToDestroy[ "execute" ]( { elementsToDestroy = self.params.entities, dynamic = true } )
         else
             positions = self.params.positions
         end
