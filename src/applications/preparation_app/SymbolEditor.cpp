@@ -172,6 +172,21 @@ void SymbolEditor::OnChangeSymbol( QAction* action )
     selected_ = 0;
 }
 
+namespace
+{
+    void AddSymbolAction( QMenu* menu, const std::string& symbolName, const QPixmap& pixmap, bool disable )
+    {
+        std::string displayString( symbolName );
+        std::size_t position = displayString.rfind( '/' );
+        if( position != std::string::npos )
+            displayString = displayString.substr( position + 1 );
+        QAction* action = menu->addAction( QIcon( pixmap ), displayString.c_str() );
+        action->setData( QVariant( symbolName.c_str() ) );
+        if( disable )
+            action->setEnabled( false );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: SymbolEditor::Update
 // Created: LGY 2011-07-27
@@ -183,28 +198,27 @@ void SymbolEditor::Update()
     const kernel::TacticalHierarchies& pHierarchy = selected_->Get< kernel::TacticalHierarchies >();
     const std::string karma = Convert( pHierarchy.GetTop().Get< kernel::Diplomacies_ABC >().GetKarma() );
     std::set< std::string > symbols;
+    std::string currentSymbol = pHierarchy.GetSymbol();
+    pFactory_->FillSymbols( currentSymbol, karma, symbols );
     tools::Iterator< const kernel::Entity_ABC& > it = pHierarchy.CreateSubordinateIterator();
     while( it.HasMoreElements() )
         pFactory_->FillSymbols( it.NextElement().Get< kernel::TacticalHierarchies >().GetSymbol(), karma, symbols );
     T_Symbols pixmaps;
-    BOOST_FOREACH( const std::string& symbol, symbols )
-        pixmaps[ symbol ] = symbols_.GetSymbol( *selected_, symbol, pHierarchy.GetLevel() );
+    for( std::set< std::string >::const_iterator it = symbols.begin(); it != symbols.end(); ++it )
+        pixmaps[ *it ] = symbols_.GetSymbol( *selected_, *it, pHierarchy.GetLevel() );
     if( ! IsValid( pixmaps ) )
         QTimer::singleShot( 100, this, SLOT( Update() ) );
     else
     {
         bool overriden = selected_->Get< kernel::SymbolHierarchy_ABC >().IsOverriden();
-        BOOST_FOREACH( const T_Symbols::value_type& pixmap, pixmaps )
+        for( std::set< std::string >::const_iterator it = symbols.begin(); it != symbols.end(); ++it )
         {
-            std::string displayString = pixmap.first;
-            std::size_t position = displayString.rfind( '/' );
-            if( position != std::string::npos )
-                displayString = displayString.substr( position + 1 );
-            QAction* action = menu_->addAction( QIcon( pixmap.second ), displayString.c_str() );
-            action->setData( QVariant( pixmap.first.c_str() ) );
-            if( overriden && pHierarchy.GetSymbol() == pixmap.first )
-                action->setEnabled( false );
+            const QPixmap& pixmap = symbols_.GetSymbol( *selected_, *it, pHierarchy.GetLevel() );
+            AddSymbolAction( menu_, *it, pixmap, ( overriden && currentSymbol == *it ) );
         }
+        std::string additionalSymbol( "symbols/sfgpuus" );
+        if( symbols.end() == symbols.find( additionalSymbol ) )
+            AddSymbolAction( menu_, additionalSymbol, symbols_.GetSymbol( *selected_, additionalSymbol, pHierarchy.GetLevel() ), false );
         if( overriden )
             menu_->addAction( tr( "Default" ) );
         connect( menu_, SIGNAL( triggered( QAction* ) ), this, SLOT( OnChangeSymbol( QAction* ) ) );

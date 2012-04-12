@@ -31,8 +31,8 @@ class Symbol : public kernel::SymbolHierarchy
 public:
     //! @name Constructors/Destructor
     //@{
-             Symbol();
-             Symbol( xml::xistream& xis );
+    explicit Symbol( const std::string& symbol );
+    explicit Symbol( xml::xistream& xis );
     virtual ~Symbol();
     //@}
 

@@ -9,9 +9,11 @@
 
 #include "clients_kernel_pch.h"
 #include "SymbolFactory.h"
+#include "App6Symbol.h"
 #include "HierarchyLevel_ABC.h"
-#include "SymbolRule.h"
+#include "Karma.h"
 #include "SymbolCase.h"
+#include "SymbolRule.h"
 #include "tools/ExerciseConfig.h"
 #include "tools/Loader_ABC.h"
 #include <boost/bind.hpp>
@@ -119,7 +121,7 @@ void SymbolFactory::TraverseTree( xml::xostream& out, const SymbolRule& rule )
         *currentChain_.back() = it->first;
         *currentSymbol_.back() = it->second->GetValue();
         std::string current;
-        std::string symbol ( "s*gpu" );
+        std::string symbol ( "s*gpuc" );
 
         for( std::vector< std::string* >::iterator iter = currentChain_.begin(); iter != currentChain_.end(); ++iter )
         {
@@ -221,6 +223,17 @@ std::string SymbolFactory::CreateAutomatSymbol() const
     if( !initialized_ )
         return "";
     return automatSymbol_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: SymbolFactory::GetSymbolBase
+// Created: LDC 2012-04-11
+// -----------------------------------------------------------------------------
+std::string SymbolFactory::GetSymbolBase( const Karma& karma ) const
+{
+    std::string result( symbolBase_ );
+    kernel::App6Symbol::SetKarma( result, karma );
+    return result;
 }
 
 // -----------------------------------------------------------------------------

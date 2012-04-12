@@ -20,7 +20,6 @@
 #include "AutomatDecisions.h"
 #include "AutomatHierarchies.h"
 #include "AutomatPositions.h"
-#include "clients_kernel/CommandPostAttributes_ABC.h"
 #include "InitialState.h"
 #include "KnowledgeGroupsModel.h"
 #include "LogisticBaseStates.h"
@@ -48,14 +47,17 @@
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/AutomatType.h"
+#include "clients_kernel/CommandPostAttributes_ABC.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/DictionaryExtensions.h"
+#include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/SymbolFactory.h"
 #include "clients_kernel/SymbolHierarchy_ABC.h"
 #include "clients_kernel/Color_ABC.h"
 #include <xeumeuleu/xml.hpp>
@@ -66,12 +68,13 @@ using namespace kernel;
 // Name: AgentFactory constructor
 // Created: AGE 2006-02-13
 // -----------------------------------------------------------------------------
-AgentFactory::AgentFactory( Controllers& controllers, Model& model, const ::StaticModel& staticModel, IdManager& idManager, KnowledgeGroupFactory_ABC& knowledgeGroupFactory )
+AgentFactory::AgentFactory( Controllers& controllers, Model& model, const ::StaticModel& staticModel, IdManager& idManager, KnowledgeGroupFactory_ABC& knowledgeGroupFactory, kernel::SymbolFactory& symbolsFactory )
     : controllers_( controllers )
     , model_( model )
     , static_( staticModel )
     , idManager_( idManager )
     , knowledgeGroupFactory_( knowledgeGroupFactory )
+    , symbolsFactory_( symbolsFactory )
 {
     // NOTHING
 }
@@ -137,7 +140,8 @@ Automat_ABC* AgentFactory::Create( Entity_ABC& parent, const AutomatType& type, 
     Automat* result = new Automat( type, controllers_.controller_, idManager_, name );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new AutomatPositions( *result ) );
-    result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol() );
+    const kernel::Karma& karma = parent.Get< kernel::TacticalHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
+    result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( symbolsFactory_.GetSymbolBase( karma ) ) );
     result->Attach< kernel::TacticalHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, &parent ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, *result ) );
     Entity_ABC* kg = FindorCreateKnowledgeGroup( parent, knowledgeGroupFactory_ );
@@ -371,22 +375,21 @@ kernel::Automat_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kerne
     Automat* result = new Automat( type, controllers_.controller_, idManager_, ghost.GetName() );
     PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
     result->Attach< Positions >( *new AutomatPositions( *result ) );
-    result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol() );
+    const kernel::Karma& karma = ghost.Get< kernel::TacticalHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
+    result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( symbolsFactory_.GetSymbolBase( karma ) ) );
     result->Attach( *new AutomatDecisions( controllers_.controller_, *result ) );
     // Tactical Hierarchies
     {
-        const kernel::TacticalHierarchies* ghostHierarchy = ghost.Retrieve< kernel::TacticalHierarchies >();
-        assert( ghostHierarchy );
-        Entity_ABC* tactSuperior = const_cast< Entity_ABC* >( ghostHierarchy->GetSuperior() );
+        const kernel::TacticalHierarchies& ghostHierarchy = ghost.Get< kernel::TacticalHierarchies >();
+        Entity_ABC* tactSuperior = const_cast< Entity_ABC* >( ghostHierarchy.GetSuperior() );
         assert( tactSuperior );
         result->Attach< kernel::TacticalHierarchies >( *new AutomatHierarchies( controllers_.controller_, *result, tactSuperior ) );
         result->Attach< ProfileHierarchies_ABC >( *new ProfileHierarchies( controllers_.controller_, *result, tactSuperior ) );
     }
     // Communication Hierarchies
     {
-        const CommunicationHierarchies* ghostHierarchy = ghost.Retrieve< CommunicationHierarchies >();
-        assert( ghostHierarchy );
-        Entity_ABC* comSuperior = const_cast< Entity_ABC* >( ghostHierarchy->GetSuperior() );
+        const CommunicationHierarchies& ghostHierarchy = ghost.Get< CommunicationHierarchies >();
+        Entity_ABC* comSuperior = const_cast< Entity_ABC* >( ghostHierarchy.GetSuperior() );
         assert( comSuperior );
         result->Attach< CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, comSuperior ) );
     }
