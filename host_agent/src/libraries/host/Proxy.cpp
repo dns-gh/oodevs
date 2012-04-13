@@ -63,7 +63,11 @@ Proxy::Proxy( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime,
     , access_ ( new boost::mutex() )
 {
     const boost::filesystem::path tag = GetPath() / L"proxy.id";
-    if( !system_.IsFile( tag ) || !Reload( tag ) )
+    bool hasProcess = system_.IsFile( tag );
+    if( hasProcess )
+        if( !( hasProcess = Reload( tag ) ) )
+            LOG_WARN( log_ ) << "[proxy] Unable to reload proxy process";
+    if( !hasProcess )
         Start();
 }
 

@@ -118,8 +118,11 @@ Node::Node( cpplog::BaseLogger& log,
     , process_( GetProcess( runtime_, xis ) )
     , port_   ( ports.Create( ParseItem< int >( xis, "port" ) ) )
 {
-    CheckPaths();
     LOG_INFO( log_ ) << "[node] + " << id_ << " " << name_;
+    if( !process_ )
+        LOG_WARN( log_ ) << "[node] " << name_ << " Unable to reload process";
+    CheckPaths();
+
     Save();
 }
 
