@@ -28,11 +28,11 @@ namespace
 {
     MOCK_BASE_CLASS( MockLog, cpplog::BaseLogger )
     {
-        MOCK_METHOD( sendLogMessage, 1 );
         MockLog()
         {
             MOCK_EXPECT( this->sendLogMessage ).returns( true );
         }
+        MOCK_METHOD( sendLogMessage, 1 );
     };
 
     MOCK_BASE_CLASS( MockRuntime, runtime::Runtime_ABC )
@@ -64,18 +64,14 @@ namespace
     MOCK_BASE_CLASS( MockProcess, runtime::Process_ABC )
     {
         MockProcess( int pid, const std::string& name )
-            : pid_( pid ), name_( name )
         {
-            MOCK_EXPECT( this->GetPid ).returns( pid_ );
-            MOCK_EXPECT( this->GetName ).returns( name_ );
+            MOCK_EXPECT( this->GetPid ).returns( pid );
+            MOCK_EXPECT( this->GetName ).returns( name );
         }
         MOCK_METHOD( GetPid, 0 );
         MOCK_METHOD( GetName, 0 );
         MOCK_METHOD( Join, 1 );
         MOCK_METHOD( Kill, 1 );
-    private:
-        int pid_;
-        const std::string name_;
     };
 
     struct Fixture
@@ -89,33 +85,21 @@ namespace
             // NOTHING
         }
 
-        ~Fixture()
-        {
-            // NOTHING
-        }
-
         const std::string java;
         const std::string jar;
         const int port;
+        std::string tag;
         MockLog log;
         MockRuntime runtime;
         MockFileSystem system;
         MockClient client;
         boost::shared_ptr< MockProcess > process;
 
-        void SaveTag( std::string* tag )
-        {
-            if( tag )
-                MOCK_EXPECT( system.WriteFile ).once().with( mock::any, mock::retrieve( *tag ) );
-            else
-                MOCK_EXPECT( system.WriteFile ).once();
-        }
-
-        boost::shared_ptr< Proxy > MakeProxy( std::string* tag = 0 )
+        boost::shared_ptr< Proxy > MakeProxy()
         {
             MOCK_EXPECT( system.IsFile ).once().with( "proxy.id" ).returns( false );
             MOCK_EXPECT( system.CreateDirectory );
-            SaveTag( tag );
+            MOCK_EXPECT( system.WriteFile ).once().with( mock::any, mock::retrieve( tag ) );
             MOCK_EXPECT( runtime.Start ).once().with( java, boost::assign::list_of
                 ( " " "-jar \"" + jar + "\"" )
                 ( "--port \"" + boost::lexical_cast< std::string >( port ) + "\"" ),
@@ -123,7 +107,7 @@ namespace
             return boost::make_shared< Proxy >( log, runtime, system, java, jar, port, client );
         }
 
-        boost::shared_ptr< Proxy > ReloadProxy( const std::string& tag )
+        boost::shared_ptr< Proxy > ReloadProxy()
         {
             MOCK_EXPECT( runtime.GetProcess ).once().with( process->GetPid() ).returns( process );
             MOCK_EXPECT( system.IsFile ).once().with( "proxy.id" ).returns( true );
@@ -183,9 +167,8 @@ BOOST_FIXTURE_TEST_CASE( proxy_unregisters, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( proxy_reloads, Fixture )
 {
-    std::string tag;
     MOCK_EXPECT( process->Kill ).once().returns( true );
-    MakeProxy( &tag );
+    MakeProxy();
     MOCK_EXPECT( process->Kill ).once().returns( true );
-    ReloadProxy( tag );
+    ReloadProxy();
 }
