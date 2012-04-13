@@ -1,4 +1,5 @@
 ajax = (url, data, success, error) ->
+    url = window.location.protocol + "//" + window.location.hostname + ":" + proxy + url
     $.ajax
         cache:    false
         data:     data,

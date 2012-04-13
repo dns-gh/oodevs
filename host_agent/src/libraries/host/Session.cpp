@@ -156,8 +156,10 @@ Session::Session( cpplog::BaseLogger& log,
     , port_        ( ports.Create( ParseItem< int >( xis, "port" ) ) )
     , status_      ( process_ ? ConvertStatus( ParseItem< std::string >( xis, "status" ) ) : STATUS_STOPPED )
 {
-    CheckPaths();
     LOG_INFO( log_ ) << "[session] + " << id_ << " " << name_;
+    if( !process_ )
+        LOG_WARN( log_ ) << "[session] " << name_ << " Unable to reload process";
+    CheckPaths();
     Save();
 }
 

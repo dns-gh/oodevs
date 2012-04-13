@@ -26,6 +26,7 @@ namespace host
 {
     class FileSystem_ABC;
     class PortFactory_ABC;
+    class Proxy_ABC;
     class UuidFactory_ABC;
 
 // =============================================================================
@@ -40,8 +41,8 @@ public:
     //! @name Constructors/Destructor
     //@{
              NodeFactory( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
-                          const FileSystem_ABC& system, PortFactory_ABC& ports, const boost::filesystem::path& java,
-                          const boost::filesystem::path& jar, const boost::filesystem::path& web, int host );
+                          const FileSystem_ABC& system, const Proxy_ABC& proxy, PortFactory_ABC& ports,
+                          const boost::filesystem::path& java, const boost::filesystem::path& jar, const boost::filesystem::path& web );
     virtual ~NodeFactory();
     //@}
 
@@ -58,10 +59,10 @@ private:
     const runtime::Runtime_ABC& runtime_;
     const UuidFactory_ABC& uuids_;
     const FileSystem_ABC& system_;
+    const Proxy_ABC& proxy_;
     const boost::filesystem::path java_;
     const boost::filesystem::path jar_;
     const boost::filesystem::path web_;
-    const int host_;
     PortFactory_ABC& ports_;
     //@}
 };

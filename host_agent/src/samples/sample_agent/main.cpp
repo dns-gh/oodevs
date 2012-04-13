@@ -92,13 +92,13 @@ namespace
         host::FileSystem system( log );
         web::Client client;
         host::Proxy proxy( log, runtime.GetRuntime(), system, cfg.java, cfg.proxy.jar, cfg.ports.proxy, client );
+        proxy.Register( "api", "localhost", cfg.ports.host );
         host::PortFactory ports( cfg.ports.period, cfg.ports.min, cfg.ports.max );
-        host::NodeFactory nodes( log, runtime.GetRuntime(), uuids, system, ports, cfg.java, cfg.node.jar, cfg.node.root, cfg.ports.host );
+        host::NodeFactory nodes( log, runtime.GetRuntime(), uuids, system, proxy, ports, cfg.java, cfg.node.jar, cfg.node.root );
         host::SessionFactory sessions( log, runtime.GetRuntime(), uuids, system, ports, cfg.session.data, cfg.session.applications );
         host::Agent agent( log, nodes, sessions );
         web::Controller controller( log, agent );
         web::Server server( log, controller, cfg.ports.host );
-        proxy.Register( "host", "localhost", cfg.ports.host );
         server.Run();
     }
 }

@@ -58,6 +58,7 @@ public:
 
     //! @name Methods
     //@{
+    virtual int GetPort() const;
     virtual void Register( const std::string& prefix, const std::string& host, int port ) const;
     virtual void Unregister( const std::string& prefix ) const;
     //@}

@@ -11,7 +11,6 @@ import org.eclipse.jetty.servlet.FilterHolder;
 import org.eclipse.jetty.servlet.ServletContextHandler;
 import org.eclipse.jetty.servlet.ServletHolder;
 import org.eclipse.jetty.servlets.GzipFilter;
-import org.eclipse.jetty.servlets.ProxyServlet;
 
 public class Agent {
 
@@ -24,7 +23,7 @@ public class Agent {
         public String index;
         public String name;
         public int port;
-        public int host;
+        public int proxy;
         public boolean isDebug;
     };
 
@@ -39,9 +38,6 @@ public class Agent {
         ctx.addServlet(files, "/img/*");
         ctx.addServlet(files, "/js/*");
         ctx.addServlet(files, "/favicon.ico");
-
-        final ServletHolder proxy = new ServletHolder(new ProxyServlet.Transparent("/api", "localhost", config.host));
-        ctx.addServlet(proxy, "/api/*");
 
         final ServletHolder handler = new ServletHolder(new Handler(config));
         ctx.addServlet(handler, "/");

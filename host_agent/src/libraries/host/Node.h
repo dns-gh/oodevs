@@ -39,6 +39,7 @@ namespace host
     class FileSystem_ABC;
     class PortFactory_ABC;
     class Port_ABC;
+    class Proxy_ABC;
     class UuidFactory_ABC;
 
 // =============================================================================
@@ -54,11 +55,11 @@ public:
     //@{
              Node( cpplog::BaseLogger& log,
                    const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
-                   const FileSystem_ABC& system, const boost::filesystem::path& java,
-                   const boost::filesystem::path& jar, const boost::filesystem::path& web, int host,
-                   const std::string& name, PortFactory_ABC& ports );
+                   const FileSystem_ABC& system, const Proxy_ABC& proxy,
+                   const boost::filesystem::path& java, const boost::filesystem::path& jar,
+                   const boost::filesystem::path& web, const std::string& name, PortFactory_ABC& ports );
              Node( cpplog::BaseLogger& log,
-                   const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system,
+                   const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system, const Proxy_ABC& proxy,
                    const boost::filesystem::path& java, const boost::filesystem::path& jar,
                    const boost::filesystem::path& web, xml::xistream& xis, PortFactory_ABC& ports );
     virtual ~Node();
@@ -87,11 +88,11 @@ private:
     mutable cpplog::BaseLogger& log_;
     const runtime::Runtime_ABC& runtime_;
     const FileSystem_ABC& system_;
+    const Proxy_ABC& proxy_;
     const boost::filesystem::path java_;
     const boost::filesystem::path jar_;
     const boost::filesystem::path web_;
     const boost::uuids::uuid id_;
-    const int host_;
     const std::string name_;
     std::auto_ptr< boost::shared_mutex > access_;
     boost::shared_ptr< runtime::Process_ABC > process_;

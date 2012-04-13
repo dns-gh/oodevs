@@ -17,6 +17,7 @@
 #include <host/FileSystem_ABC.h>
 #include <host/PortFactory_ABC.h>
 #include <host/Node.h>
+#include <host/Proxy_ABC.h>
 #include <host/UuidFactory_ABC.h>
 
 #include <xeumeuleu/xml.hpp>
@@ -29,7 +30,7 @@ using namespace host;
 
 namespace
 {
-    const std::string default_id_string = "12345678-90AB-CDEF-9876-543210123456";
+    const std::string default_id_string = "12345678-90ab-cdef-9876-543210123456";
     const boost::uuids::uuid default_id = boost::uuids::string_generator()( default_id_string );
 
     MOCK_BASE_CLASS( MockLog, cpplog::BaseLogger )
@@ -99,6 +100,17 @@ namespace
         MOCK_METHOD_EXT( Create, 1, std::auto_ptr< Port_ABC >( int ), Create1 );
     };
 
+    MOCK_BASE_CLASS( MockProxy, Proxy_ABC )
+    {
+        MockProxy( int port )
+        {
+            MOCK_EXPECT( this->GetPort ).returns( port );
+        }
+        MOCK_METHOD( GetPort, 0 );
+        MOCK_METHOD( Register, 3 );
+        MOCK_METHOD( Unregister, 1 );
+    };
+
     struct Fixture
     {
         MockLog         log;
@@ -106,8 +118,8 @@ namespace
         MockUuidFactory uuids;
         MockFileSystem  system;
         MockPortFactory ports;
+        MockProxy       proxy;
         const int port;
-        const int host;
         const boost::filesystem::path java;
         const boost::filesystem::path jar;
         const boost::filesystem::path web;
@@ -116,7 +128,7 @@ namespace
         const std::string processName;
         Fixture()
             : port       ( 10000 )
-            , host       ( 15000 )
+            , proxy      ( 8080 )
             , java       ( L"java" )
             , jar        ( L"jar" )
             , web        ( L"web" )
@@ -144,7 +156,9 @@ namespace
             MOCK_EXPECT( uuids.Create ).once().returns( default_id );
             MOCK_EXPECT( ports.Create0 ).once().returns( std::auto_ptr< Port_ABC >( new MockPort( port ) ) );
             SaveNodeTag( tag );
-            return boost::shared_ptr< Node >( new Node( log, runtime, uuids, system, java, jar, web, host, name, ports ) );
+            MOCK_EXPECT( proxy.Register ).once().with( default_id_string, "localhost", port );
+            MOCK_EXPECT( proxy.Unregister ).once().with( default_id_string );
+            return boost::shared_ptr< Node >( new Node( log, runtime, uuids, system, proxy, java, jar, web, name, ports ) );
         }
 
         boost::shared_ptr< Node > MakeNode( const std::string& tag, boost::shared_ptr< MockProcess > process )
@@ -154,7 +168,9 @@ namespace
             MOCK_EXPECT( ports.Create1 ).once().returns( new MockPort( port ) );
             xml::xistringstream xis( tag );
             SaveNodeTag( 0 );
-            return boost::shared_ptr< Node >( new Node( log, runtime, system, java, jar, web, xis, ports ) );
+            MOCK_EXPECT( proxy.Register ).once().with( default_id_string, "localhost", port );
+            MOCK_EXPECT( proxy.Unregister ).once().with( default_id_string );
+            return boost::shared_ptr< Node >( new Node( log, runtime, system, proxy, java, jar, web, xis, ports ) );
         }
 
         boost::shared_ptr< MockProcess > StartNode( Node& node, std::string* tag = 0, const std::string& name = std::string() )
@@ -211,7 +227,6 @@ BOOST_FIXTURE_TEST_CASE( node_converts_to_json, Fixture )
         "\"id\" : \"12345678-90ab-cdef-9876-543210123456\", "
         "\"name\" : \"my_name\", "
         "\"port\" : 10000, "
-        "\"host\" : 15000, "
         "\"status\" : \"stopped\""
         " }"
     );
@@ -220,7 +235,6 @@ BOOST_FIXTURE_TEST_CASE( node_converts_to_json, Fixture )
         "\"id\" : \"12345678-90ab-cdef-9876-543210123456\", "
         "\"name\" : \"my_name\", "
         "\"port\" : 10000, "
-        "\"host\" : 15000, "
         "\"status\" : \"running\""
         " }"
     );

@@ -3,6 +3,7 @@ package main;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
 import java.util.concurrent.locks.ReentrantReadWriteLock;
@@ -45,10 +46,12 @@ public class Handler extends HttpServlet {
         ProxyHolder proxy = null;
         if (uri.startsWith("/"))
             uri = uri.substring(1);
-        if (uri.equals("register"))
+        if (uri.equals("register_proxy"))
             insertProxy(req, res);
-        else if (uri.equals("unregister"))
+        else if (uri.equals("unregister_proxy"))
             removeProxy(req, res);
+        else if (uri.equals("list_proxies"))
+            listProxies(req, res);
         else if ((proxy = findProxy(req, uri)) != null)
             proxy.service(req, res);
         else
@@ -89,6 +92,15 @@ public class Handler extends HttpServlet {
         }
     }
 
+    private Set<String> List() {
+        read_.lock();
+        try {
+            return targets_.keySet();
+        } finally {
+            read_.unlock();
+        }
+    }
+
     private void insertProxy(final ServletRequest req, final ServletResponse res) throws ServletException {
         final String prefix = RequireParameter(req, "prefix");
         final String host = RequireParameter(req, "host");
@@ -100,11 +112,9 @@ public class Handler extends HttpServlet {
         log_.info("Added proxy from /" + prefix + " to " + host + ":" + port);
     }
 
-    private ProxyHolder findProxy(final ServletRequest req, String uri) {
+    private ProxyHolder findProxy(final ServletRequest req, final String uri) {
         final int split = uri.indexOf('/');
-        if (split != -1)
-            uri = uri.substring(0, split);
-        return Get(uri);
+        return split == -1 ? null : Get(uri.substring(0, split));
     }
 
     private void removeProxy(final ServletRequest req, final ServletResponse res) throws ServletException {
@@ -114,5 +124,13 @@ public class Handler extends HttpServlet {
             throw new ServletException("Unable to unregister unknown proxy " + prefix);
         target.destroy();
         log_.info("Removed proxy /" + prefix);
+    }
+
+    private void listProxies(final ServletRequest req, final ServletResponse res) throws IOException {
+        String reply = "";
+        for (final String item : List())
+            reply += "\"" + item + "\", ";
+        reply = "[" + reply.substring(0, Math.max(0, reply.length() - 2)) + "]";
+        res.getWriter().print(reply);
     }
 }

@@ -82,6 +82,15 @@ Proxy::~Proxy()
 }
 
 // -----------------------------------------------------------------------------
+// Name: Proxy::GetPort
+// Created: BAX 2012-04-13
+// -----------------------------------------------------------------------------
+int Proxy::GetPort() const
+{
+    return port_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Proxy::GetPath
 // Created: BAX 2012-04-11
 // -----------------------------------------------------------------------------
@@ -182,7 +191,8 @@ void Proxy::Save() const
 // -----------------------------------------------------------------------------
 void Proxy::Register( const std::string& prefix, const std::string& host, int port ) const
 {
-    client_.Get( "localhost", port_, "/register", boost::assign::map_list_of
+    LOG_INFO( log_ ) << "[proxy] Adding proxy from /" << prefix << " to " << host << ":" << port;
+    client_.Get( "localhost", port_, "/register_proxy", boost::assign::map_list_of
         ( "prefix", prefix )
         ( "host", host )
         ( "port", boost::lexical_cast< std::string >( port ) ) );
@@ -194,5 +204,6 @@ void Proxy::Register( const std::string& prefix, const std::string& host, int po
 // -----------------------------------------------------------------------------
 void Proxy::Unregister( const std::string& prefix ) const
 {
-    client_.Get( "localhost", port_, "/unregister", boost::assign::map_list_of( "prefix", prefix ) );
+    LOG_INFO( log_ ) << "[proxy] Removing proxy from /" << prefix;
+    client_.Get( "localhost", port_, "/unregister_proxy", boost::assign::map_list_of( "prefix", prefix ) );
 }

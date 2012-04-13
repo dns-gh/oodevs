@@ -10,6 +10,7 @@
 #include "Node.h"
 #include "FileSystem_ABC.h"
 #include "PortFactory_ABC.h"
+#include "Proxy_ABC.h"
 #include "UuidFactory_ABC.h"
 
 #include "cpplog/cpplog.hpp"
@@ -78,22 +79,23 @@ namespace
 // -----------------------------------------------------------------------------
 Node::Node( cpplog::BaseLogger& log,
             const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids, const FileSystem_ABC& system,
-            const boost::filesystem::path& java, const boost::filesystem::path& jar,
-            const boost::filesystem::path& web, int host, const std::string& name, PortFactory_ABC& ports )
+            const Proxy_ABC& proxy, const boost::filesystem::path& java, const boost::filesystem::path& jar,
+            const boost::filesystem::path& web, const std::string& name, PortFactory_ABC& ports )
     : log_    ( log )
     , runtime_( runtime )
     , system_ ( system )
+    , proxy_  ( proxy )
     , java_   ( java )
     , jar_    ( jar )
     , web_    ( web )
     , id_     ( uuids.Create() )
-    , host_   ( host )
     , name_   ( name )
     , access_ ( new boost::shared_mutex() )
     , port_   ( ports.Create() )
 {
     CheckPaths();
     LOG_INFO( log_ ) << "[node] + " << id_ << " " << name_;
+    proxy.Register( boost::lexical_cast< std::string >( id_ ), "localhost", port_->Get() );
     Save();
 }
 
@@ -103,26 +105,26 @@ Node::Node( cpplog::BaseLogger& log,
 // -----------------------------------------------------------------------------
 Node::Node( cpplog::BaseLogger& log,
             const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system,
-            const boost::filesystem::path& java, const boost::filesystem::path& jar,
+            const Proxy_ABC& proxy, const boost::filesystem::path& java, const boost::filesystem::path& jar,
             const boost::filesystem::path& web, xml::xistream& xis, PortFactory_ABC& ports )
     : log_    ( log )
     , runtime_( runtime )
     , system_ ( system )
+    , proxy_  ( proxy )
     , java_   ( java )
     , jar_    ( jar )
     , web_    ( web )
     , id_     ( boost::uuids::string_generator()( ParseItem< std::string >( xis, "id" ) ) )
-    , host_   ( ParseItem< int >( xis, "host" ) )
     , name_   ( ParseItem< std::string >( xis, "name" ) )
     , access_ ( new boost::shared_mutex() )
     , process_( GetProcess( runtime_, xis ) )
     , port_   ( ports.Create( ParseItem< int >( xis, "port" ) ) )
 {
+    CheckPaths();
     LOG_INFO( log_ ) << "[node] + " << id_ << " " << name_;
     if( !process_ )
         LOG_WARN( log_ ) << "[node] " << name_ << " Unable to reload process";
-    CheckPaths();
-
+    proxy.Register( boost::lexical_cast< std::string >( id_ ), "localhost", port_->Get() );
     Save();
 }
 
@@ -149,6 +151,7 @@ Node::~Node()
     if( process_ )
         process_->Kill( MAX_KILL_TIMEOUT_MS );
     system_.Remove( GetPath() );
+    proxy_.Unregister( boost::lexical_cast< std::string >( id_ ) );
     LOG_INFO( log_ ) << "[node] - " << id_ << " " << name_;
 }
 
@@ -183,10 +186,9 @@ std::string Node::ToJson() const
         "\"id\" : \"%1%\", "
         "\"name\" : \"%2%\", "
         "\"port\" : %3%, "
-        "\"host\" : %4%, "
-        "\"status\" : \"%5%\""
+        "\"status\" : \"%4%\""
         " }" )
-        % id_ % name_ % port_->Get() % host_ % (process_ ? "running" : "stopped")
+        % id_ % name_ % port_->Get() % (process_ ? "running" : "stopped")
         ).str();
 }
 
@@ -200,8 +202,7 @@ std::string Node::ToXml() const
     xos << xml::start( "node" )
             << xml::attribute( "id", boost::lexical_cast< std::string >( id_ ) )
             << xml::attribute( "name", name_ )
-            << xml::attribute( "port", port_->Get() )
-            << xml::attribute( "host", host_ );
+            << xml::attribute( "port", port_->Get() );
     if( process_ )
         xos << xml::attribute( "process_pid", process_->GetPid() )
             << xml::attribute( "process_name", process_->GetName() );
@@ -232,7 +233,7 @@ void Node::Start()
             ( " " "-jar \""  + Utf8Convert( jar_.filename() ) + "\"" )
             ( "--root \""  + Utf8Convert( web_ ) + "\"" )
             ( "--port \"" + boost::lexical_cast< std::string >( port_->Get() ) + "\"" )
-            ( "--host \"" + boost::lexical_cast< std::string >( host_ ) + "\"" )
+            ( "--proxy \"" + boost::lexical_cast< std::string >( proxy_.GetPort() ) + "\"" )
             ( "--uuid \"" + boost::lexical_cast< std::string >( id_ ) + "\"" )
             ( "--name \"" + name_ + "\"" )
             ( "--node" ),

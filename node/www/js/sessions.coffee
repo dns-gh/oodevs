@@ -1,4 +1,5 @@
 ajax = (url, data, success, error) ->
+    url = window.location.protocol + "//" + window.location.hostname + ":" + proxy + url
     $.ajax
         cache:    false
         data:     data,
@@ -278,7 +279,7 @@ on_session_load = ->
         box = $("#session_create .modal-footer .alert")
         box.html "Unable to fetch exercises"
         box.show()
-    ajax "api/list_exercises", limit: 40, done, error
+    ajax "/api/list_exercises", limit: 40, done, error
 
 $("#session_create .modal-footer .btn_click").click on_session_click
 $("#session_create").on "hidden", on_session_hide

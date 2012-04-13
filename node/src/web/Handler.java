@@ -30,12 +30,14 @@ public class Handler extends HttpServlet {
     private final MimeUtil2 mimes_;
     private final String index_;
     private final String name_;
+    private final int proxy_;
 
     public Handler(final Agent.Configuration config) throws Exception {
         uuid_ = config.uuid;
         root_ = new File(config.root);
         index_ = config.index;
         name_ = config.name;
+        proxy_ = config.proxy;
         if (!root_.isDirectory())
             throw new IOException(root_ + " is not a directory");
         cfg_ = new Configuration();
@@ -74,6 +76,7 @@ public class Handler extends HttpServlet {
         root.put("uuid", uuid_);
         root.put("name", name_);
         root.put("type", index_);
+        root.put("proxy", String.valueOf(proxy_));
         try {
             ctx.process(root, reply.getWriter());
         } catch (final TemplateException e) {
