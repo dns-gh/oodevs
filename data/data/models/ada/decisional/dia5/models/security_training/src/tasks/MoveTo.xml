@@ -9,7 +9,7 @@
                 <boolean>false</boolean>
             </default>
         </parameter>
-        <parameter name="wayPoints">
+        <parameter name="waypoints">
             <type>
                 <list>
                     <class name="agent.world.Destination"/>
@@ -23,7 +23,7 @@
                 <skill name="behaviors.skills.MoveAlong" main="true">
                     <parameter name="entities">
                         <value>
-                            <parameter>wayPoints</parameter>
+                            <parameter>waypoints</parameter>
                         </value>
                     </parameter>
                 </skill>

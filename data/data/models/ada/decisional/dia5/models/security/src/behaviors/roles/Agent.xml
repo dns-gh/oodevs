@@ -26,6 +26,7 @@
         <skill name="behaviors.skills.primitives.UndoAlert"/>
         <skill name="agent.behaviors.skills.actions.Evacuate"/>
         <skill name="agent.behaviors.skills.actions.RestrainProduction"/>
+        <skill name="behaviors.skills.Extinguish"/>
         <skill name="behaviors.skills.primitives.RestrainResourceProduction"/>
         <skill name="agent.behaviors.skills.actions.EnhanceProduction"/>
         <skill name="behaviors.skills.primitives.EnhanceResourceProduction"/>
@@ -82,10 +83,7 @@
     <resources>
         <resource name="agent.behaviors.resources.Motion"/>
         <resource name="agent.behaviors.resources.Launcher"/>
-        <resource name="agent.behaviors.resources.Extinguisher">
-            <requirements>
-                <resource name="agent.behaviors.resources.Motion"/>
-            </requirements>
-        </resource>
+        <resource name="agent.behaviors.resources.Extinguisher"/>
+    </resources>
     </resources>
 </role>

@@ -1697,14 +1697,14 @@ overwhelming force.]]></doctrine>
     </mission>
     <mission dia-behavior="tasks.MoveTo" dia-type="tasks.MoveTo" id="4442" name="MLSECURITY - Move toward">
       <description>
-        <doctrine><![CDATA[To move toward a specified destination. Agent will try to get as close as it is possible to the target destination.]]></doctrine>
+        <doctrine><![CDATA[To move alonh waypoints to reach a specified destination. Agent will try to get as close as it is possible to the target destination.]]></doctrine>
         <usage><![CDATA[The agent compute its path toward the issued destination. If urgency mode is set to "true" (optional parameter), agent will try to reach the destination as quick as possible depending on its physical capability.]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="destination" name="destination to reach" optional="false" type="LocationComposite">
+      <parameter dia-name="waypoints" max-occurs="unbounded" min-occurs="1" name="waypoints (last one is the final destination)" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
           <parameter type="Polygon"/>
@@ -3638,4 +3638,4 @@ A unit won't follow if it cannot perform the mission (mission is not set for thi
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="3978442220" -->
+<!-- signature="1038235420" -->
