@@ -225,6 +225,7 @@ BOOST_FIXTURE_TEST_CASE( node_converts_to_json, Fixture )
     boost::shared_ptr< Node > ptr = MakeNode();
     BOOST_CHECK_EQUAL( ptr->ToJson(), "{ "
         "\"id\" : \"12345678-90ab-cdef-9876-543210123456\", "
+        "\"type\" : \"node\", "
         "\"name\" : \"my_name\", "
         "\"port\" : 10000, "
         "\"status\" : \"stopped\""
@@ -233,6 +234,7 @@ BOOST_FIXTURE_TEST_CASE( node_converts_to_json, Fixture )
     StartNode( *ptr );
     BOOST_CHECK_EQUAL( ptr->ToJson(), "{ "
         "\"id\" : \"12345678-90ab-cdef-9876-543210123456\", "
+        "\"type\" : \"node\", "
         "\"name\" : \"my_name\", "
         "\"port\" : 10000, "
         "\"status\" : \"running\""

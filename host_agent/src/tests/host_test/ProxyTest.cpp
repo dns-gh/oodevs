@@ -158,7 +158,7 @@ BOOST_FIXTURE_TEST_CASE( proxy_registers, Fixture )
     MOCK_EXPECT( client.Get ).once().calls( boost::bind( &CheckClientGet,
         _1, "localhost",
         _2, port,
-        _3, "/register",
+        _3, "/register_proxy",
         _4, boost::assign::map_list_of
             ( "prefix", dstPrefix )
             ( "host",   dstHost )
@@ -175,7 +175,7 @@ BOOST_FIXTURE_TEST_CASE( proxy_unregisters, Fixture )
     MOCK_EXPECT( client.Get ).once().calls( boost::bind( &CheckClientGet,
         _1, "localhost",
         _2, port,
-        _3, "/unregister",
+        _3, "/unregister_proxy",
         _4, boost::assign::map_list_of( "prefix", dstPrefix ) ) );
     proxy->Unregister( dstPrefix );
     MOCK_EXPECT( process->Kill ).once().returns( true );
