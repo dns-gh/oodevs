@@ -966,11 +966,11 @@
     <!-- Temporary, waiting for a migration to scipio physical base
     <target name="checkpoint_test" depends="application.simulation_app" description="save and load a checkpoint">
         <run-simulation exercise="france/CheckpointTests">
-            <arg value="--savecheckpoint=tempcheckpoint"/>
+            <arg value="- -savecheckpoint=tempcheckpoint"/>
         </run-simulation>
         <run-simulation exercise="france/CheckpointTests">
-            <arg value="--checkpoint=tempcheckpoint"/>
-            <arg value="--deletecheckpoint"/>
+            <arg value="- -checkpoint=tempcheckpoint"/>
+            <arg value="- -deletecheckpoint"/>
         </run-simulation>
     </target>
     -->
