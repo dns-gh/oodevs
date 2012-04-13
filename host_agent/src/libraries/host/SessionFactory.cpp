@@ -89,11 +89,13 @@ std::vector< std::string > SessionFactory::GetExercises() const
 {
     std::vector< std::string > exercises;
     const boost::filesystem::path root = data_ / L"exercises";
-    size_t offset = root.string().size() + 1;
+    const size_t offset = root.string().size() + 1;
     BOOST_FOREACH( boost::filesystem::path path, system_.Glob( root, L"exercise.xml" ) )
     {
-        const std::wstring leaf = path.remove_filename().wstring();
-        exercises.push_back( runtime::Utf8Convert( leaf.substr( offset, leaf.size() - offset - 1 ) ) );
+        std::wstring leaf = path.remove_filename().wstring();
+        leaf = leaf.substr( offset, leaf.size() - offset );
+        std::replace( leaf.begin(), leaf.end(), L'\\', L'/' );
+        exercises.push_back( runtime::Utf8Convert( leaf ) );
     }
     return exercises;
 }
