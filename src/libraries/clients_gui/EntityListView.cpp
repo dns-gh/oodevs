@@ -26,10 +26,10 @@ namespace
             return 1;
         if( !item2.IsA< const Entity_ABC >() )
             return -1;
-        const Entity_ABC* entity1 = item1.GetValue< const Entity_ABC >();
+        const Entity_ABC* entity1 = item1.GetValueNoCheck< const Entity_ABC >();
         if( !entity1 )
             return -1;
-        const Entity_ABC* entity2 = item2.GetValue< const Entity_ABC >();
+        const Entity_ABC* entity2 = item2.GetValueNoCheck< const Entity_ABC >();
         if( !entity2 )
             return 1;
         return entity1->GetId() - entity2->GetId();
@@ -103,7 +103,9 @@ void EntityListView::OnRequestCenter()
 // -----------------------------------------------------------------------------
 void EntityListView::NotifySelected( const Entity_ABC* entity )
 {
-    ValuedListItem* item = entity ? FindItem( entity, firstChild() ) : 0;
+    ValuedListItem* item = 0;
+    if( entity && !IsTypeRejected( *entity ) )
+        item = FindItem( entity, firstChild() );
     if( item )
     {
         if( item != selectedItem() )
@@ -127,6 +129,8 @@ void EntityListView::NotifySelected( const Entity_ABC* entity )
 // -----------------------------------------------------------------------------
 void EntityListView::NotifyActivated( const Entity_ABC& entity )
 {
+    if( IsTypeRejected( entity ) )
+        return;
     ValuedListItem* item = FindItem( &entity, firstChild() );
     if( item )
         ensureItemVisible( item );
@@ -143,7 +147,7 @@ void EntityListView::NotifyUpdated( const Profile_ABC& /*profile*/ )
     {
         if( item->IsA< const Entity_ABC >() )
         {
-            const Entity_ABC& entity = *item->GetValue< const Entity_ABC >();
+            const Entity_ABC& entity = *item->GetValueNoCheck< const Entity_ABC >();
             item->setVisible( profile_.IsVisible( entity ) );
         }
         ++it;
@@ -156,6 +160,8 @@ void EntityListView::NotifyUpdated( const Profile_ABC& /*profile*/ )
 // -----------------------------------------------------------------------------
 void EntityListView::NotifyUpdated( const Entity_ABC& entity )
 {
+    if( IsTypeRejected( entity ) )
+        return;
     if( ValuedListItem* item = FindItem( &entity, firstChild() ) )
         item->SetNamed( entity );
 }

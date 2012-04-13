@@ -29,7 +29,6 @@ namespace kernel
     class Displayer_ABC;
     class Controller;
     class Agent_ABC;
-    class CoordinateConverter_ABC;
     class ObjectType;
     class Team_ABC;
 }
@@ -49,7 +48,7 @@ public:
     //! @name Constructors/Destructor
     //@{
              ObjectKnowledge( const kernel::Entity_ABC& owner, const sword::ObjectKnowledgeCreation& message,
-                              kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
+                              kernel::Controller& controller,
                               const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver,
                               const tools::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver );
     virtual ~ObjectKnowledge();
@@ -84,7 +83,6 @@ private:
 private:
     //! @name Member data
     //@{
-    const kernel::CoordinateConverter_ABC& converter_;
     const tools::Resolver_ABC< kernel::Object_ABC >& objectResolver_;
     const kernel::Entity_ABC& owner_;
     const kernel::ObjectType* type_;

@@ -45,6 +45,7 @@ protected:
     //@{
     virtual void NotifyCreated( const kernel::Population_ABC& population );
     virtual void NotifyDeleted( const kernel::Population_ABC& population );
+    virtual bool IsTypeRejected( const kernel::Entity_ABC& entity ) const;
     //@}
 
 private:

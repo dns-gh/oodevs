@@ -251,7 +251,7 @@ void TimelineListView::Update()
     {
         gui::ValuedListItem* item = static_cast< gui::ValuedListItem* >( it.current() );
         if( item->IsA< const kernel::Entity_ABC >() )
-            item->setVisible( ShouldDisplay( *item->GetValue< const kernel::Entity_ABC >() ) );
+            item->setVisible( ShouldDisplay( *item->GetValueNoCheck< const kernel::Entity_ABC >() ) );
         ++it;
     }
 }

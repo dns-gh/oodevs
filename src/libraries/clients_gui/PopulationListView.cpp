@@ -65,3 +65,12 @@ void PopulationListView::NotifyDeleted( const Population_ABC& element )
 {
     delete FindItem( static_cast< const Entity_ABC* >( &element ), firstChild() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: PopulationListView::IsTypeRejected
+// Created: JSR 2012-04-13
+// -----------------------------------------------------------------------------
+bool PopulationListView::IsTypeRejected( const kernel::Entity_ABC& entity ) const
+{
+    return entity.GetTypeName() != Population_ABC::typeName_;
+}

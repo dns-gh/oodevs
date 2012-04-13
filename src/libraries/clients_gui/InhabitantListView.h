@@ -44,6 +44,7 @@ private:
     //@{
     virtual void NotifyCreated( const kernel::Inhabitant_ABC& inhabitant );
     virtual void NotifyDeleted( const kernel::Inhabitant_ABC& inhabitant );
+    virtual bool IsTypeRejected( const kernel::Entity_ABC& entity ) const;
     //@}
 
 private:

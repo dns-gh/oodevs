@@ -52,6 +52,7 @@ protected:
     //@{
     virtual void NotifySelected( const kernel::Entity_ABC* entity );
     virtual void NotifyCreated( const kernel::Team_ABC& team );
+    virtual bool IsTypeRejected( const kernel::Entity_ABC& entity ) const = 0;
     //@}
 
 protected slots:

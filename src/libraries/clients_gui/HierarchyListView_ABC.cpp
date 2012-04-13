@@ -288,7 +288,7 @@ void HierarchyListView_ABC::UpdateItem( ValuedListItem* root )
         UpdateItem( static_cast< ValuedListItem* >( root->firstChild() ) );
         if( root->IsA< const Entity_ABC >() )
         {
-            const Entity_ABC& entity = *root->GetValue< const Entity_ABC >();
+            const Entity_ABC& entity = *root->GetValueNoCheck< const Entity_ABC >();
             DisplayIcon( entity, root );
             SetVisible( root, profile_.IsVisible( entity ) );
         }
@@ -379,7 +379,7 @@ void HierarchyListView_ABC::viewportDropEvent( QDropEvent* pEvent )
 bool HierarchyListView_ABC::Drop( const Entity_ABC& entity, ValuedListItem& target )
 {
     return target.IsA< const Entity_ABC >()
-        && Drop( entity, *target.GetValue< const Entity_ABC >() );
+        && Drop( entity, *target.GetValueNoCheck< const Entity_ABC >() );
 }
 
 // -----------------------------------------------------------------------------

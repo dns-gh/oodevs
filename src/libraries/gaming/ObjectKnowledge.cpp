@@ -11,8 +11,6 @@
 #include "ObjectKnowledge.h"
 #include "ObjectPositions.h"
 #include "clients_kernel/ActionController.h"
-#include "clients_kernel/Controller.h"
-#include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/Displayer_ABC.h"
 #include "clients_kernel/Location_ABC.h"
 #include "clients_kernel/Object_ABC.h"
@@ -30,10 +28,9 @@ using namespace kernel;
 // Name: ObjectKnowledge constructor
 // Created: NLD 2004-03-18
 // -----------------------------------------------------------------------------
-ObjectKnowledge::ObjectKnowledge( const Entity_ABC& owner, const sword::ObjectKnowledgeCreation& message, Controller& controller, const CoordinateConverter_ABC& converter,
+ObjectKnowledge::ObjectKnowledge( const Entity_ABC& owner, const sword::ObjectKnowledgeCreation& message, Controller& controller,
                                   const tools::Resolver_ABC< Object_ABC >& objectResolver, const tools::Resolver_ABC< kernel::ObjectType, std::string >& typeResolver )
     : EntityImplementation< ObjectKnowledge_ABC >( controller, message.knowledge().id(), "" )
-    , converter_     ( converter )
     , owner_         ( owner )
     , objectResolver_( objectResolver )
     , type_          ( & typeResolver.Get( message.type().id() ) )

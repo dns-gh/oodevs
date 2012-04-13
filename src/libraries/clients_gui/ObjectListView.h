@@ -50,6 +50,7 @@ private:
     //@{
     virtual void NotifyCreated( const kernel::Object_ABC& object );
     virtual void NotifyDeleted( const kernel::Object_ABC& object );
+    virtual bool IsTypeRejected( const kernel::Entity_ABC& entity ) const;
     //@}
 
 private:

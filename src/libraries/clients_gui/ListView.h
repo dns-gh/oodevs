@@ -104,7 +104,7 @@ private:
         QString text = item->text( 0 );
         ValuedListItem* valuedItem = static_cast< ValuedListItem* >( item );
         if( valuedItem->IsA< kernel::Entity_ABC >() )
-            if( kernel::Entity_ABC* entity = dynamic_cast< kernel::Entity_ABC* >( valuedItem->GetValue< kernel::Entity_ABC >() ) )
+            if( kernel::Entity_ABC* entity = valuedItem->GetValueNoCheck< kernel::Entity_ABC >() )
             {
                 text += " " + locale().toString( static_cast< unsigned int >( entity->GetId() ) );
             }

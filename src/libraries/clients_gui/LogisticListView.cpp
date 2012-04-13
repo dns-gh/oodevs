@@ -304,9 +304,9 @@ bool LogisticListView::Drop( const Entity_ABC& entity, ValuedListItem& target )
 {
     bool result = false;
     if( target.IsA< const Entity_ABC >() )
-        result = Drop( entity, *target.GetValue< const Entity_ABC >() );
+        result = Drop( entity, *target.GetValueNoCheck< const Entity_ABC >() );
     if( target.IsA< const LogisticLevel >() )
-        result = Drop( entity, *target.GetValue< const LogisticLevel >() );
+        result = Drop( entity, *target.GetValueNoCheck< const LogisticLevel >() );
     target.Select( controllers_.actions_ );
     ValuedListItem* item = FindItem( &entity, firstChild() );
     item->Select( controllers_.actions_ );
@@ -360,8 +360,8 @@ bool LogisticListView::CanDrop( const Entity_ABC* srcEntity, QPoint dstPosition 
     if( !srcFormation && !srcAutomat )
         return false; // can drop only automats or formations
 
-    const Entity_ABC*    dstEntity =   ( dstItem->IsA< const Entity_ABC >() )    ? dynamic_cast< const Entity_ABC* >( dstItem->GetValue< const Entity_ABC >() )       : 0;
-    const LogisticLevel* dstLogistic = ( dstItem->IsA< const LogisticLevel >() ) ? dynamic_cast< const LogisticLevel* >( dstItem->GetValue< const LogisticLevel >() ) : 0;
+    const Entity_ABC*    dstEntity =   ( dstItem->IsA< const Entity_ABC >() )    ? dstItem->GetValueNoCheck< const Entity_ABC >()    : 0;
+    const LogisticLevel* dstLogistic = ( dstItem->IsA< const LogisticLevel >() ) ? dstItem->GetValueNoCheck< const LogisticLevel >() : 0;
     if( !dstEntity && !dstLogistic )
         return false; // can only drop to an Entity or a LogisticLevel
 

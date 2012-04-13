@@ -65,3 +65,12 @@ void InhabitantListView::NotifyDeleted( const Inhabitant_ABC& inhabitant )
 {
     delete FindItem( static_cast< const Entity_ABC* >( &inhabitant ), firstChild() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: InhabitantListView::IsTypeRejected
+// Created: JSR 2012-04-13
+// -----------------------------------------------------------------------------
+bool InhabitantListView::IsTypeRejected( const kernel::Entity_ABC& entity ) const
+{
+    return entity.GetTypeName() != Inhabitant_ABC::typeName_;
+}
