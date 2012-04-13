@@ -58,7 +58,7 @@ MineAttribute::MineAttribute( const sword::MissionParameter_Value& attributes  )
     , miningPercentage_   ( 1., 0.05, 0., 1.)
 {
     if( attributes.list_size() == 2 )
-        miningPercentage_.Set( attributes.list( 1 ).quantity() );
+        miningPercentage_.Set( static_cast< double >( attributes.list( 1 ).quantity() )/100. );
     else if( attributes.list_size() == 5 )
     {
         dotation_ = PHY_DotationType::FindDotationCategory( attributes.list( 1 ).identifier() );
