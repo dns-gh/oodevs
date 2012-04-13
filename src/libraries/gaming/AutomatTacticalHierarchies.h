@@ -47,7 +47,7 @@ public:
     //@{
     virtual const kernel::Entity_ABC* GetSuperior() const;
     virtual std::string GetLevel() const;
-    virtual void UpdateSymbol( bool up = true );
+    virtual void UpdateSymbolUpward();
     //@}
 
 private:
@@ -62,6 +62,7 @@ private:
     virtual void DoUpdate( const sword::AutomatChangeSuperior& message );
     virtual void DoUpdate( const kernel::InstanciationComplete& message );
     virtual void MergeSymbol( const kernel::Entity_ABC& entity );
+    virtual void UpdateLevel();
     static std::string Max( const std::string& lhs, const std::string& rhs );
     static std::string Increase( const std::string& value );
     static char Level( const std::string& value );

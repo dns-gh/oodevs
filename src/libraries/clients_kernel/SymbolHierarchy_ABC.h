@@ -39,6 +39,7 @@ public:
     virtual void OverrideValue( const std::string& value ) = 0;
     virtual bool IsOverriden() const = 0;
     virtual void MergeSymbol( const std::string& symbol ) = 0;
+    virtual void ResetSymbol( const std::string& symbol ) = 0;
     virtual void PrepareForMerge() = 0;
     virtual void Reset() = 0;
     virtual void UpdateKarma( const Karma& karma ) = 0;

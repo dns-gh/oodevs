@@ -77,14 +77,45 @@ void AutomatHierarchies::DoUpdate( const kernel::InstanciationComplete& ic )
 // $$$$ AGE 2006-11-23: Tout ce bazar est dégueu, a tous les points de vue
 
 // -----------------------------------------------------------------------------
-// Name: AutomatHierarchies::UpdateSymbol
+// Name: AutomatHierarchies::UpdateSymbolUpward
 // Created: AGE 2006-11-23
 // -----------------------------------------------------------------------------
-void AutomatHierarchies::UpdateSymbol( bool up /* = true*/ )
+void AutomatHierarchies::UpdateSymbolUpward()
 {
-    if( up )
-        level_.clear();
-    MergingTacticalHierarchies::UpdateSymbol( up );
+    level_.clear();
+    tools::Iterator< const kernel::Entity_ABC& > it = CreateSubordinateIterator();
+    while( it.HasMoreElements() )
+    {
+        if( const TacticalHierarchies* hierarchies = it.NextElement().Retrieve< TacticalHierarchies >() )
+        {
+            const std::string childLevel = hierarchies->GetLevel();
+            if( level_.empty() && !childLevel.empty() )
+                level_ = childLevel;
+		    else if( !childLevel.empty() )
+                level_ = MergingTacticalHierarchies::MaxLevel( level_, childLevel );
+        }
+    }
+    MergingTacticalHierarchies::UpdateSymbolUpward();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatHierarchies::UpdateLevel
+// Created: LDC 2012-04-12
+// -----------------------------------------------------------------------------
+void AutomatHierarchies::UpdateLevel()
+{
+    tools::Iterator< const kernel::Entity_ABC& > it = CreateSubordinateIterator();
+    while( it.HasMoreElements() )
+    {
+        if( const TacticalHierarchies* hierarchies = it.NextElement().Retrieve< TacticalHierarchies >() )
+        {
+            const std::string childLevel = hierarchies->GetLevel();
+            if( level_.empty() && !childLevel.empty() )
+                level_ = childLevel;
+		    else if( !childLevel.empty() )
+                level_ = MergingTacticalHierarchies::MaxLevel( level_, childLevel );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------

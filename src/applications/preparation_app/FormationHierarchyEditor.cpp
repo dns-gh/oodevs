@@ -79,7 +79,7 @@ void FormationHierarchyEditor::UpdateHierarchies()
 {
     if( kernel::TacticalHierarchies* pTactical = selected_.ConstCast()->Retrieve< kernel::TacticalHierarchies >() )
     {
-        pTactical->UpdateSymbol();
+        pTactical->UpdateSymbolUpward();
         controllers_.controller_.Update( *pTactical );
     }
 }

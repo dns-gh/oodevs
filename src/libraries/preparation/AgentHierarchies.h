@@ -37,7 +37,7 @@ public:
     virtual const kernel::Entity_ABC* GetSuperior() const;
     virtual std::string GetLevel() const;
     virtual std::string GetSymbol() const;
-    virtual void UpdateSymbol( bool up = true );
+    virtual void UpdateSymbolUpward();
     void UpdateSymbol( const std::string& level, const std::string& symbol );
     //@}
 

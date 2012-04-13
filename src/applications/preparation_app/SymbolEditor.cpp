@@ -243,7 +243,7 @@ void SymbolEditor::UpdateHierarchies()
 {
     if( kernel::TacticalHierarchies* pTactical = selected_.ConstCast()->Retrieve< kernel::TacticalHierarchies >() )
     {
-        pTactical->UpdateSymbol();
+        pTactical->UpdateSymbolUpward();
         controllers_.controller_.Update( *pTactical );
         if( const kernel::CommunicationHierarchies* pCommunication = selected_->Retrieve< kernel::CommunicationHierarchies >() )
             controllers_.controller_.Update( *pCommunication );

@@ -31,10 +31,19 @@ std::string TacticalHierarchies::GetLevel() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: TacticalHierarchies::UpdateSymbol
+// Name: TacticalHierarchies::UpdateSymbolDownward
 // Created: AGE 2006-11-23
 // -----------------------------------------------------------------------------
-void TacticalHierarchies::UpdateSymbol( bool /*up*/ /* = true*/ )
+void TacticalHierarchies::UpdateSymbolDownward()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: TacticalHierarchies::UpdateSymbolUpward
+// Created: LDC 2012-04-12
+// -----------------------------------------------------------------------------
+void TacticalHierarchies::UpdateSymbolUpward()
 {
     // NOTHING
 }

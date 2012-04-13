@@ -33,7 +33,8 @@ public:
     virtual const Entity_ABC& GetEntity() const = 0;
     virtual std::string GetSymbol() const = 0;
     virtual std::string GetLevel() const = 0;
-    virtual void UpdateSymbol( bool up = true ) = 0;
+    virtual void UpdateSymbolUpward() = 0;
+    virtual void UpdateSymbolDownward() = 0;
 };
 
 // =============================================================================
@@ -55,7 +56,8 @@ public:
     //@{
     virtual std::string GetSymbol() const;
     virtual std::string GetLevel() const;
-    virtual void UpdateSymbol( bool up = true );
+    virtual void UpdateSymbolDownward();
+    virtual void UpdateSymbolUpward();
     //@}
 };
 

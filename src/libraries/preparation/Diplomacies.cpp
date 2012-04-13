@@ -152,7 +152,7 @@ void Diplomacies::SetKarma( const TeamKarma& karma )
     karma_ = karma;
     // $$$$ SBO 2008-12-10: use notifications somehow
     Team_ABC& that = const_cast< Team_ABC& >( team_ );
-    that.Get< TacticalHierarchies >().UpdateSymbol( false );
+    that.Get< TacticalHierarchies >().UpdateSymbolDownward();
     controller_.Update( *static_cast< const Diplomacies_ABC* >( this ) );
     controller_.Update( team_ );
 }
