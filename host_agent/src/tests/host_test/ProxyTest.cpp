@@ -172,7 +172,6 @@ BOOST_FIXTURE_TEST_CASE( proxy_unregisters, Fixture )
     boost::shared_ptr< Proxy > proxy = MakeProxy();
     const std::string dstPrefix = "some_prefix";
     const std::string dstHost = "some_host";
-    const int dstPort = 15000;
     MOCK_EXPECT( client.Get ).once().calls( boost::bind( &CheckClientGet,
         _1, "localhost",
         _2, port,
