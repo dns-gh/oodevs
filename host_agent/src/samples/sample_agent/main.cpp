@@ -11,9 +11,11 @@
 #include <host/Agent.h>
 #include <host/UuidFactory.h>
 #include <host/FileSystem.h>
+#include <host/Proxy.h>
 #include <host/PortFactory.h>
 #include <host/NodeFactory.h>
 #include <host/SessionFactory.h>
+#include <web/Client.h>
 #include <web/Controller.h>
 #include <web/Server.h>
 
@@ -38,16 +40,21 @@ namespace
 
     struct Configuration
     {
+        std::wstring java;
         struct
         {
             int host;
+            int proxy;
             int period;
             int min;
             int max;
         } ports;
         struct
         {
-            std::wstring java;
+            std::wstring jar;
+        } proxy;
+        struct
+        {
             std::wstring jar;
             std::wstring root;
         } node;
@@ -66,7 +73,8 @@ namespace
                 found |= ReadParameter( ports.period, "--port_period", i, argc, argv );
                 found |= ReadParameter( ports.min, "--port_min", i, argc, argv );
                 found |= ReadParameter( ports.max, "--port_max", i, argc, argv );
-                found |= ReadParameter( node.java, "--node_java", i, argc, argv );
+                found |= ReadParameter( ports.proxy, "--port_proxy", i, argc, argv );
+                found |= ReadParameter( java, "--java", i, argc, argv );
                 found |= ReadParameter( node.jar, "--node_jar", i, argc, argv );
                 found |= ReadParameter( node.root, "--node_root", i, argc, argv );
                 found |= ReadParameter( session.data, "--session_data", i, argc, argv );
@@ -82,12 +90,15 @@ namespace
         runtime::Factory runtime( log );
         host::UuidFactory uuids;
         host::FileSystem system( log );
+        web::Client client;
+        host::Proxy proxy( log, runtime.GetRuntime(), system, cfg.java, cfg.proxy.jar, cfg.ports.proxy, client );
         host::PortFactory ports( cfg.ports.period, cfg.ports.min, cfg.ports.max );
-        host::NodeFactory nodes( log, runtime.GetRuntime(), uuids, system, ports, cfg.node.java, cfg.node.jar, cfg.node.root, cfg.ports.host );
+        host::NodeFactory nodes( log, runtime.GetRuntime(), uuids, system, ports, cfg.java, cfg.node.jar, cfg.node.root, cfg.ports.host );
         host::SessionFactory sessions( log, runtime.GetRuntime(), uuids, system, ports, cfg.session.data, cfg.session.applications );
         host::Agent agent( log, nodes, sessions );
         web::Controller controller( log, agent );
         web::Server server( log, controller, cfg.ports.host );
+        proxy.Register( "host", "localhost", cfg.ports.host );
         server.Run();
     }
 }
@@ -102,7 +113,9 @@ int main( int argc, const char* argv[] )
     cfg.ports.period         = 40;
     cfg.ports.min            = 50000;
     cfg.ports.max            = 60000;
-    cfg.node.java            = L"C:/Program Files/Java/jdk1.6.0_31/bin/java.exe";
+    cfg.ports.proxy          = 8080;
+    cfg.java                 = L"C:/Program Files/Java/jdk1.6.0_31/bin/java.exe";
+    cfg.proxy.jar            = L"e:/cloud_hg/proxy/out/jar/proxy.jar";
     cfg.node.jar             = L"e:/cloud_hg/node/out/jar/node.jar";
     cfg.node.root            = L"e:/cloud_hg/node/www";
     cfg.session.data         = L"d:/apps/sword_434_data";
