@@ -62,7 +62,8 @@ file( GLOB files
 )
 add_executable_target( sample_agent ${files} )
 set_target_folder( sample_agent samples )
-add_target_external_library( sample_agent mongoose_d mongoose )
+add_target_external_library( sample_agent cpp-netlib_uri-${platform}-mt_d cpp-netlib_uri-${platform}-mt )
+add_target_external_library( sample_agent cpp-netlib_server-${platform}-mt_d cpp-netlib_server-${platform}-mt )
 target_link_libraries( sample_agent
     runtime
     host

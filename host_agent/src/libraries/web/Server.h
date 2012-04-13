@@ -7,44 +7,45 @@
 //
 // *****************************************************************************
 
-#ifndef MONGOOSE_SERVER_H
-#define MONGOOSE_SERVER_H
+#ifndef SERVER_H
+#define SERVER_H
 
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 
-struct mg_context;
-struct mg_request_info;
-struct mg_connection;
+namespace cpplog
+{
+    class BaseLogger;
+}
 
 namespace web
 {
     class Observer_ABC;
 
 // =============================================================================
-/** @class  WebServer_ABC
+/** @class  Server
     @brief  Web server definition
 */
 // Created: BAX 2012-02-28
 // =============================================================================
-class MongooseServer : public boost::noncopyable
+class Server : public boost::noncopyable
 {
 public:
     //! @name Destructor
-             MongooseServer( Observer_ABC& observer, int port );
-    virtual ~MongooseServer();
+             Server( cpplog::BaseLogger& logger, Observer_ABC& observer, int port );
+    virtual ~Server();
     //@}
 
-    //! @name Operations
+    //! @name Public Functions
     //@{
-    void Notify( mg_connection* link, const mg_request_info* request );
+    void Run();
     //@}
 
 private:
     //! @name Member data
     //@{
-    Observer_ABC& observer_;
-    boost::shared_ptr< mg_context > context_;
+    struct Private;
+    boost::shared_ptr< Private > private_;
     //@}
 };
 

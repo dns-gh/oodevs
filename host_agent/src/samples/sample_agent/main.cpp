@@ -15,7 +15,7 @@
 #include <host/NodeFactory.h>
 #include <host/SessionFactory.h>
 #include <web/Controller.h>
-#include <web/MongooseServer.h>
+#include <web/Server.h>
 
 #define  CPPLOG_THREADING
 #include <cpplog/cpplog.hpp>
@@ -87,8 +87,8 @@ namespace
         host::SessionFactory sessions( log, runtime.GetRuntime(), uuids, system, ports, cfg.session.data, cfg.session.applications );
         host::Agent agent( log, nodes, sessions );
         web::Controller controller( log, agent );
-        web::MongooseServer server( controller, cfg.ports.host );
-        getc( stdin );
+        web::Server server( log, controller, cfg.ports.host );
+        server.Run();
     }
 }
 

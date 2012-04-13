@@ -38,7 +38,7 @@
     <target name="samples" depends="sample_agent" description="build all samples"/>
 
     <target name="sample_agent" depends="runtime,host,web" description="build sample host agent">
-        <build-app name="sample_agent" subsystem="console" depends="boost,xerces" root="${samples.dir}" libs="mongoose@{suffix},runtime@{suffix},host@{suffix},web@{suffix}">
+        <build-app name="sample_agent" subsystem="console" depends="boost,cpp-netlib,xerces" root="${samples.dir}" libs="runtime@{suffix},host@{suffix},web@{suffix}">
             <syslibset libs="ws2_32"/>
             <defineset define="_CRT_SECURE_NO_WARNINGS"/>
         </build-app>
@@ -79,7 +79,7 @@
     <!-- Configure -->
     <target name="configure" description="retrieve dependencies">
         <update name="boost" version="1.48"/>
-        <update name="mongoose"/>
+        <update name="cpp-netlib"/>
         <update name="turtle" version="trunk"/>
         <update name="xeumeuleu"/>
         <update name="xerces-c"/>
