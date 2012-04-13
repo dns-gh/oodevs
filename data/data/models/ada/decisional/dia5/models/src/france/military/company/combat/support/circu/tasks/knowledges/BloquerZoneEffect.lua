@@ -10,7 +10,7 @@ return
       for i=1, #params.zones do
           local objective = params.zones[i]
           -- division de la zone en sous-zones
-          local nbParts = math.mac((nbFront /#params.zones),1)
+          local nbParts = math.max((nbFront /#params.zones),1)
           local subAreas = DEC_Geometry_SplitLocalisation( objective.source, nbParts, nil ) -- TODO: voir la fonction integration.splitArea pour remplacer la fonction DEC_Geometry_SplitLocalisation
           subAreas = subAreas.first
           for _, area in pairs( subAreas ) do
