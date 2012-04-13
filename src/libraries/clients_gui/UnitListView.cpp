@@ -316,9 +316,9 @@ Q3DragObject* UnitListView::dragObject()
         return 0;
 
     if( pItem->IsA< const AgentType >() )
-        return new ValuedDragObject( pItem->GetValue< const AgentType >(), this );
+        return new ValuedDragObject( pItem->GetValueNoCheck< const AgentType >(), this );
     else if( pItem->IsA< const AutomatType >() )
-        return new ValuedDragObject( pItem->GetValue< const AutomatType >(), this );
+        return new ValuedDragObject( pItem->GetValueNoCheck< const AutomatType >(), this );
     return 0;
 }
 

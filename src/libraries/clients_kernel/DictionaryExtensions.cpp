@@ -11,6 +11,9 @@
 #include "DictionaryExtensions.h"
 #include "AttributeType.h"
 #include "Controllers.h"
+#include "Agent_ABC.h"
+#include "Automat_ABC.h"
+#include "Formation_ABC.h"
 #include "Entity_ABC.h"
 #include "ExtensionType.h"
 #include "ExtensionTypes.h"
@@ -28,7 +31,7 @@ using namespace kernel;
 // Name: DictionaryExtensions constructor
 // Created: JSR 2010-10-04
 // -----------------------------------------------------------------------------
-DictionaryExtensions::DictionaryExtensions( kernel::Controllers& controllers, const std::string& extensionType, const ExtensionTypes& resolver )
+DictionaryExtensions::DictionaryExtensions( Controllers& controllers, const std::string& extensionType, const ExtensionTypes& resolver )
     : controllers_  ( controllers )
     , enabled_      ( false )
     , extensionType_( extensionType )
@@ -41,7 +44,7 @@ DictionaryExtensions::DictionaryExtensions( kernel::Controllers& controllers, co
 // Name: DictionaryExtensions constructor
 // Created: JSR 2010-10-06
 // -----------------------------------------------------------------------------
-DictionaryExtensions::DictionaryExtensions( kernel::Controllers& controllers, const std::string& extensionType, xml::xistream& xis, const ExtensionTypes& resolver )
+DictionaryExtensions::DictionaryExtensions( Controllers& controllers, const std::string& extensionType, xml::xistream& xis, const ExtensionTypes& resolver )
     : controllers_  ( controllers )
     , enabled_      ( xis.has_child( "extensions" ) )
     , extensionType_( extensionType )
@@ -189,8 +192,10 @@ void DictionaryExtensions::SetValueWithDictionnaryLink( const std::string& name,
 // Name: DictionaryExtensions::NotifyDeleted
 // Created: ABR 2011-05-13
 // -----------------------------------------------------------------------------
-void DictionaryExtensions::NotifyDeleted( const kernel::Entity_ABC& element )
+void DictionaryExtensions::NotifyDeleted( const Entity_ABC& element )
 {
+    if( element.GetTypeName() != Agent_ABC::typeName_ && element.GetTypeName() != Automat_ABC::typeName_ && element.GetTypeName() != Formation_ABC::typeName_ )
+        return;
     std::string& values = extensions_[ resolver_.GetNameByType( AttributeType::ETypeDiffusionList ) ];
     if( !values.empty() )
     {

@@ -129,17 +129,17 @@ void PopulationKnowledgePanel::OnSelectionChanged( Q3ListViewItem* i )
     display_->Group( tools::translate( "PopulationKnowledgePanel", "Concentration" ) ).Hide();
     if( item && item->IsA< const PopulationKnowledge_ABC >() )
     {
-        subSelected_ = item->GetValue< const PopulationKnowledge_ABC >();
+        subSelected_ = item->GetValueNoCheck< const PopulationKnowledge_ABC >();
         subSelected_->Display( *display_ );
     }
     else if( item && item->IsA< const PopulationConcentrationKnowledge >() )
     {
-        selectedPart_ = item->GetValue< const PopulationConcentrationKnowledge >();
+        selectedPart_ = item->GetValueNoCheck< const PopulationConcentrationKnowledge >();
         selectedPart_->Display( *display_ );
     }
     else if( item && item->IsA< const PopulationFlowKnowledge >() )
     {
-        selectedPart_ = item->GetValue< const PopulationFlowKnowledge >();
+        selectedPart_ = item->GetValueNoCheck< const PopulationFlowKnowledge >();
         selectedPart_->Display( *display_ );
     }
 }

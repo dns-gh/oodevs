@@ -333,7 +333,7 @@ void ObjectKnowledgePanel::OnSelectionChanged( Q3ListViewItem* i )
     ValuedListItem* item = (ValuedListItem*)( i );
     if( item->IsA< const ObjectKnowledge_ABC >() )
     {
-        subSelected_ = item->GetValue< const ObjectKnowledge_ABC >();
+        subSelected_ = item->GetValueNoCheck< const ObjectKnowledge_ABC >();
         if( subSelected_ )
         {
             NotifyUpdated( *subSelected_ );

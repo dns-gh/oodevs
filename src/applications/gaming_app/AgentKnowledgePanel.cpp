@@ -206,7 +206,7 @@ void AgentKnowledgePanel::OnSelectionChanged( Q3ListViewItem* i )
     if( ! item || ! item->IsA< const AgentKnowledge_ABC >() )
         subSelected_ = 0;
     else
-        subSelected_ = item->GetValue< const AgentKnowledge_ABC >();
+        subSelected_ = item->GetValueNoCheck< const AgentKnowledge_ABC >();
 
     if( subSelected_ )
     {

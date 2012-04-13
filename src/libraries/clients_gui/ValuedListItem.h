@@ -54,12 +54,14 @@ public:
     //@{
     template< typename T >
     bool Holds( T* value ) const {
-        return IsA< T >() && GetValue< T >() == value;
+        return IsA< T >() && GetValueNoCheck< T >() == value;
     }
     template< typename T >
     bool IsA() const;
     template< typename T >
     T* GetValue() const;
+    template< typename T >
+    T* GetValueNoCheck() const;
     template< typename T >
     void SetValue( T* value );
     template< typename T >
@@ -302,6 +304,17 @@ T* ValuedListItem::GetValue() const
 {
     if( ! IsA< T >() )
         throw std::runtime_error( std::string( "Value is not of the requested type : " ) + typeid( container_ ).name() + " does not hold a " + typeid( T ).name() );
+    return static_cast< ValueContainer< T >* >( container_ )->GetValue();
+}
+
+// -----------------------------------------------------------------------------
+// Name: ValuedListItem::GetValueNoCheck
+// Created: JSR 2012-04-13
+// -----------------------------------------------------------------------------
+template< typename T >
+T* ValuedListItem::GetValueNoCheck() const
+{
+    // To be used to skip checking when IsA was already called before, for performance issues
     return static_cast< ValueContainer< T >* >( container_ )->GetValue();
 }
 

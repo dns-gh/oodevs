@@ -193,7 +193,7 @@ void UrbanKnowledgePanel::OnSelectionChanged( Q3ListViewItem* i )
     if( !item || !item->IsA< const UrbanKnowledge_ABC >() )
         subSelected_ = 0;
     else
-        subSelected_ = item->GetValue< const UrbanKnowledge_ABC >();
+        subSelected_ = item->GetValueNoCheck< const UrbanKnowledge_ABC >();
 
     if( subSelected_ )
     {

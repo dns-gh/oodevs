@@ -123,9 +123,9 @@ void UnitsPanel::SelectionChanged( Q3ListViewItem* item )
     if( ValuedListItem* value = dynamic_cast< ValuedListItem* >( item ) )
     {
         if( value->IsA< const AgentType >() )
-            icon_->NotifySelected( *value->GetValue< const AgentType >() );
+            icon_->NotifySelected( *value->GetValueNoCheck< const AgentType >() );
         else if( value->IsA< const AutomatType >() )
-            icon_->NotifySelected( *value->GetValue< const AutomatType >() );
+            icon_->NotifySelected( *value->GetValueNoCheck< const AutomatType >() );
     }
 }
 

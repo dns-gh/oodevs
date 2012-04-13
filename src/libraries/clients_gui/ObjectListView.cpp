@@ -99,3 +99,12 @@ QSize ObjectListView::sizeHint() const
 {
     return QSize( 230, 340 );
 }
+
+// -----------------------------------------------------------------------------
+// Name: ObjectListView::IsTypeRejected
+// Created: JSR 2012-04-13
+// -----------------------------------------------------------------------------
+bool ObjectListView::IsTypeRejected( const kernel::Entity_ABC& entity ) const
+{
+    return entity.GetTypeName() != Object_ABC::typeName_;
+}
