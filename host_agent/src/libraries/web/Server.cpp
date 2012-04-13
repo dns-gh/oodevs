@@ -21,7 +21,7 @@
 #endif
 #ifdef _MSC_VER
 #   pragma warning( push )
-#   pragma warning( disable : 4100 4244 4345 4512 )
+#   pragma warning( disable : 4100 4127 4244 4345 4512 )
 #endif
 #include <boost/network/include/http/server.hpp>
 #include <boost/network/utils/thread_pool.hpp>
