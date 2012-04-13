@@ -57,7 +57,7 @@ public:
                    const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
                    const FileSystem_ABC& system, const Proxy_ABC& proxy,
                    const boost::filesystem::path& java, const boost::filesystem::path& jar,
-                   const boost::filesystem::path& web, const std::string& name, PortFactory_ABC& ports );
+                   const boost::filesystem::path& web, const std::string& type, const std::string& name, PortFactory_ABC& ports );
              Node( cpplog::BaseLogger& log,
                    const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system, const Proxy_ABC& proxy,
                    const boost::filesystem::path& java, const boost::filesystem::path& jar,
@@ -92,6 +92,7 @@ private:
     const boost::filesystem::path java_;
     const boost::filesystem::path jar_;
     const boost::filesystem::path web_;
+    const std::string type_;
     const boost::uuids::uuid id_;
     const std::string name_;
     std::auto_ptr< boost::shared_mutex > access_;

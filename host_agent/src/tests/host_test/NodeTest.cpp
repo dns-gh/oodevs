@@ -158,7 +158,7 @@ namespace
             SaveNodeTag( tag );
             MOCK_EXPECT( proxy.Register ).once().with( default_id_string, "localhost", port );
             MOCK_EXPECT( proxy.Unregister ).once().with( default_id_string );
-            return boost::shared_ptr< Node >( new Node( log, runtime, uuids, system, proxy, java, jar, web, name, ports ) );
+            return boost::shared_ptr< Node >( new Node( log, runtime, uuids, system, proxy, java, jar, web, false, name, ports ) );
         }
 
         boost::shared_ptr< Node > MakeNode( const std::string& tag, boost::shared_ptr< MockProcess > process )

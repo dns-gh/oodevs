@@ -48,8 +48,8 @@ public:
 
     //! @name Methods
     //@{
-    virtual boost::shared_ptr< Node_ABC > Create( const std::string& name ) const;
-    virtual T_Nodes Reload() const;
+    virtual boost::shared_ptr< Node_ABC > Create( const std::string& type, const std::string& name ) const;
+    virtual T_Nodes Reload( const std::string& type ) const;
     //@}
 
 private:

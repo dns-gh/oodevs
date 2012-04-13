@@ -45,8 +45,8 @@ namespace
 
     MOCK_BASE_CLASS( MockNodeFactory, NodeFactory_ABC )
     {
-        MOCK_METHOD( Create, 1 );
-        MOCK_METHOD( Reload, 0 );
+        MOCK_METHOD( Create, 2 );
+        MOCK_METHOD( Reload, 1 );
         MockNodeFactory()
         {
             MOCK_EXPECT( this->Reload ).once().returns( NodeFactory_ABC::T_Nodes() );
@@ -133,7 +133,7 @@ namespace
         boost::shared_ptr< MockNode > AddNode( const std::string& id, const std::string& name )
         {
             boost::shared_ptr< MockNode > node = CreateMockNode( id, name );
-            MOCK_EXPECT( nodes.Create ).once().with( name ).returns( node );
+            MOCK_EXPECT( nodes.Create ).once().with( "node", name ).returns( node );
             MOCK_EXPECT( node->Start ).once();
             CheckReply( agent.CreateNode( name ), node->ToJson() );
             return node;

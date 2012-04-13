@@ -13,7 +13,7 @@ class Main {
 
     private static void parseParameters(final Agent.Configuration config, final String[] args) throws Exception {
         config.root = "www";
-        config.index = "cluster";
+        config.type = "cluster";
         config.name = "";
         config.port = 8081;
         config.proxy = 8080;
@@ -42,8 +42,10 @@ class Main {
                 config.uuid = args[++i];
             } else if (it.equals("--debug") || it.equals("-d")) {
                 config.isDebug = true;
-            } else if (it.equals("--node") || it.equals("-n")) {
-                config.index = "node";
+            } else if (it.equals("--type") || it.equals("-t")) {
+                if (i + 1 == args.length)
+                    throw new Exception("Missing --type parameter");
+                config.type = args[++i];
             } else {
                 throw new Exception("Unrecognized parameter " + it);
             }
@@ -61,7 +63,7 @@ class Main {
         log_.info("root:  " + config.root);
         log_.info("port:  " + config.port);
         log_.info("proxy: " + config.proxy);
-        log_.info("type:  " + config.index);
+        log_.info("type:  " + config.type);
         log_.info("debug: " + (config.isDebug ? "true" : "false"));
     }
 

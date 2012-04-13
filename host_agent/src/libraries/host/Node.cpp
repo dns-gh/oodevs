@@ -56,14 +56,14 @@ namespace
     template< typename T >
     T ParseItem( xml::xisubstream xis, const std::string& name )
     {
-        xis >> xml::start( "node" );
+        xis >> xml::start( "root" );
         return xis.attribute< T >( name );
     }
 
     boost::shared_ptr< runtime::Process_ABC > GetProcess( const runtime::Runtime_ABC& runtime, xml::xisubstream xis )
     {
         boost::shared_ptr< runtime::Process_ABC > nil;
-        xis >> xml::start( "node" );
+        xis >> xml::start( "root" );
         if( !xis.has_attribute( "process_pid" ) || !xis.has_attribute( "process_name" ) )
             return nil;
         boost::shared_ptr< runtime::Process_ABC > ptr = runtime.GetProcess( xis.attribute< int >( "process_pid" ) );
@@ -80,7 +80,7 @@ namespace
 Node::Node( cpplog::BaseLogger& log,
             const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids, const FileSystem_ABC& system,
             const Proxy_ABC& proxy, const boost::filesystem::path& java, const boost::filesystem::path& jar,
-            const boost::filesystem::path& web, const std::string& name, PortFactory_ABC& ports )
+            const boost::filesystem::path& web, const std::string& type, const std::string& name, PortFactory_ABC& ports )
     : log_    ( log )
     , runtime_( runtime )
     , system_ ( system )
@@ -88,14 +88,15 @@ Node::Node( cpplog::BaseLogger& log,
     , java_   ( java )
     , jar_    ( jar )
     , web_    ( web )
+    , type_   ( type )
     , id_     ( uuids.Create() )
     , name_   ( name )
     , access_ ( new boost::shared_mutex() )
     , port_   ( ports.Create() )
 {
     CheckPaths();
-    LOG_INFO( log_ ) << "[node] + " << id_ << " " << name_;
-    proxy.Register( boost::lexical_cast< std::string >( id_ ), "localhost", port_->Get() );
+    LOG_INFO( log_ ) << "[" + type_ + "] + " << id_ << " " << name_;
+    proxy.Register( type_ == "cluster" ? type_ : boost::lexical_cast< std::string >( id_ ), "localhost", port_->Get() );
     Save();
 }
 
@@ -114,6 +115,7 @@ Node::Node( cpplog::BaseLogger& log,
     , java_   ( java )
     , jar_    ( jar )
     , web_    ( web )
+    , type_   ( ParseItem< std::string >( xis, "type" ) )
     , id_     ( boost::uuids::string_generator()( ParseItem< std::string >( xis, "id" ) ) )
     , name_   ( ParseItem< std::string >( xis, "name" ) )
     , access_ ( new boost::shared_mutex() )
@@ -121,10 +123,10 @@ Node::Node( cpplog::BaseLogger& log,
     , port_   ( ports.Create( ParseItem< int >( xis, "port" ) ) )
 {
     CheckPaths();
-    LOG_INFO( log_ ) << "[node] + " << id_ << " " << name_;
+    LOG_INFO( log_ ) << "[" + type_ + "] + " << id_ << " " << name_;
     if( !process_ )
-        LOG_WARN( log_ ) << "[node] " << name_ << " Unable to reload process";
-    proxy.Register( boost::lexical_cast< std::string >( id_ ), "localhost", port_->Get() );
+        LOG_WARN( log_ ) << "[" + type_ + "] " << name_ << " Unable to reload process";
+    proxy.Register( type_ == "cluster" ? type_ : boost::lexical_cast< std::string >( id_ ), "localhost", port_->Get() );
     Save();
 }
 
@@ -152,7 +154,7 @@ Node::~Node()
         process_->Kill( MAX_KILL_TIMEOUT_MS );
     system_.Remove( GetPath() );
     proxy_.Unregister( boost::lexical_cast< std::string >( id_ ) );
-    LOG_INFO( log_ ) << "[node] - " << id_ << " " << name_;
+    LOG_INFO( log_ ) << "[" + type_ + "] - " << id_ << " " << name_;
 }
 
 // -----------------------------------------------------------------------------
@@ -172,7 +174,7 @@ void Node::Save() const
 {
     const boost::filesystem::path path = GetPath();
     system_.CreateDirectory( path );
-    system_.WriteFile( path / L"node.id", ToXml() );
+    system_.WriteFile( path / runtime::Utf8Convert( type_ + ".id" ), ToXml() );
 }
 
 // -----------------------------------------------------------------------------
@@ -184,11 +186,12 @@ std::string Node::ToJson() const
     boost::shared_lock< boost::shared_mutex > lock( *access_ );
     return (boost::format( "{ "
         "\"id\" : \"%1%\", "
-        "\"name\" : \"%2%\", "
-        "\"port\" : %3%, "
-        "\"status\" : \"%4%\""
+        "\"type\" : \"%2%\", "
+        "\"name\" : \"%3%\", "
+        "\"port\" : %4%, "
+        "\"status\" : \"%5%\""
         " }" )
-        % id_ % name_ % port_->Get() % (process_ ? "running" : "stopped")
+        % id_ % type_ % name_ % port_->Get() % (process_ ? "running" : "stopped")
         ).str();
 }
 
@@ -199,8 +202,9 @@ std::string Node::ToJson() const
 std::string Node::ToXml() const
 {
     xml::xostringstream xos;
-    xos << xml::start( "node" )
+    xos << xml::start( "root" )
             << xml::attribute( "id", boost::lexical_cast< std::string >( id_ ) )
+            << xml::attribute( "type", type_ )
             << xml::attribute( "name", name_ )
             << xml::attribute( "port", port_->Get() );
     if( process_ )
@@ -236,7 +240,7 @@ void Node::Start()
             ( "--proxy \"" + boost::lexical_cast< std::string >( proxy_.GetPort() ) + "\"" )
             ( "--uuid \"" + boost::lexical_cast< std::string >( id_ ) + "\"" )
             ( "--name \"" + name_ + "\"" )
-            ( "--node" ),
+            ( "--type \"" + type_ + "\"" ),
             Utf8Convert( jar_path.remove_filename() ) );
     if( !process_ ) return;
 

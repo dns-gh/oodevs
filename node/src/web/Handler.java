@@ -28,14 +28,14 @@ public class Handler extends HttpServlet {
     private final String uuid_;
     private final File root_;
     private final MimeUtil2 mimes_;
-    private final String index_;
+    private final String type_;
     private final String name_;
     private final int proxy_;
 
     public Handler(final Agent.Configuration config) throws Exception {
         uuid_ = config.uuid;
         root_ = new File(config.root);
-        index_ = config.index;
+        type_ = config.type;
         name_ = config.name;
         proxy_ = config.proxy;
         if (!root_.isDirectory())
@@ -75,7 +75,7 @@ public class Handler extends HttpServlet {
             root.put(it.getKey(), it.getValue()[0]);
         root.put("uuid", uuid_);
         root.put("name", name_);
-        root.put("type", index_);
+        root.put("type", type_);
         root.put("proxy", String.valueOf(proxy_));
         try {
             ctx.process(root, reply.getWriter());
@@ -91,7 +91,7 @@ public class Handler extends HttpServlet {
         if (uri.startsWith("/"))
             uri = uri.substring(1);
         if (uri.isEmpty())
-            uri = index_ + "/index";
+            uri = type_ + "/index";
         final String target = identify(uri, reply);
         serveTemplate(reply, request, target);
     }

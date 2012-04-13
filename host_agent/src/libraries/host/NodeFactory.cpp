@@ -13,6 +13,7 @@
 #include "Node.h"
 
 #include "cpplog/cpplog.hpp"
+#include "runtime/Utf8.h"
 
 #include <xeumeuleu/xml.hpp>
 
@@ -55,20 +56,21 @@ NodeFactory::~NodeFactory()
 // Name: NodeFactory::Create
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-boost::shared_ptr< Node_ABC > NodeFactory::Create( const std::string& name ) const
+boost::shared_ptr< Node_ABC > NodeFactory::Create( const std::string& type, const std::string& name ) const
 {
-    return boost::shared_ptr< Node >( new Node( log_, runtime_, uuids_, system_, proxy_, java_, jar_, web_, name, ports_ ) );
+    return boost::shared_ptr< Node >( new Node( log_, runtime_, uuids_, system_, proxy_, java_, jar_, web_, type, name, ports_ ) );
 }
 
 // -----------------------------------------------------------------------------
 // Name: NodeFactory::Reload
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-NodeFactory_ABC::T_Nodes NodeFactory::Reload() const
+NodeFactory_ABC::T_Nodes NodeFactory::Reload( const std::string& type ) const
 {
     NodeFactory_ABC::T_Nodes reply;
     boost::filesystem::path dir = jar_;
-    BOOST_FOREACH( const boost::filesystem::path& path, system_.Glob( dir.remove_filename() , L"node.id" ) )
+    const std::wstring wtype = runtime::Utf8Convert( type );
+    BOOST_FOREACH( const boost::filesystem::path& path, system_.Glob( dir.remove_filename(), wtype + L".id" ) )
         try
         {
             xml::xistringstream xis( system_.ReadFile( path ) );
@@ -77,7 +79,7 @@ NodeFactory_ABC::T_Nodes NodeFactory::Reload() const
         }
         catch( const std::exception& err )
         {
-            LOG_WARN( log_ ) << "[node] Unable to reload node from " << path.string() << " - " << err.what();
+            LOG_WARN( log_ ) << "[" + type + "] Unable to reload " << path.string() << " - " << err.what();
             continue; // skip invalid session
         }
     return reply;

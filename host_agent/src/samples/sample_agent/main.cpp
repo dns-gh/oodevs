@@ -13,6 +13,7 @@
 #include <host/FileSystem.h>
 #include <host/Proxy.h>
 #include <host/PortFactory.h>
+#include <host/Node_ABC.h>
 #include <host/NodeFactory.h>
 #include <host/SessionFactory.h>
 #include <web/Client.h>
@@ -55,6 +56,10 @@ namespace
         } proxy;
         struct
         {
+            bool enabled;
+        } cluster;
+        struct
+        {
             std::wstring jar;
             std::wstring root;
         } node;
@@ -74,6 +79,7 @@ namespace
                 found |= ReadParameter( ports.min, "--port_min", i, argc, argv );
                 found |= ReadParameter( ports.max, "--port_max", i, argc, argv );
                 found |= ReadParameter( ports.proxy, "--port_proxy", i, argc, argv );
+                found |= ReadParameter( cluster.enabled, "--cluster", i, argc, argv );
                 found |= ReadParameter( java, "--java", i, argc, argv );
                 found |= ReadParameter( node.jar, "--node_jar", i, argc, argv );
                 found |= ReadParameter( node.root, "--node_root", i, argc, argv );
@@ -85,6 +91,16 @@ namespace
         }
     };
 
+    boost::shared_ptr< host::Node_ABC > CreateCluster( const host::NodeFactory_ABC& factory )
+    {
+        host::NodeFactory_ABC::T_Nodes nodes = factory.Reload( "cluster" );
+        if( nodes.empty() )
+            return factory.Create( "cluster", "" );
+        while( nodes.size() > 1 )
+            nodes.erase( nodes.begin() );
+        return nodes.begin()->second;
+    }
+
     void Start( cpplog::BaseLogger& log, Configuration& cfg )
     {
         runtime::Factory runtime( log );
@@ -95,6 +111,11 @@ namespace
         proxy.Register( "api", "localhost", cfg.ports.host );
         host::PortFactory ports( cfg.ports.period, cfg.ports.min, cfg.ports.max );
         host::NodeFactory nodes( log, runtime.GetRuntime(), uuids, system, proxy, ports, cfg.java, cfg.node.jar, cfg.node.root );
+        boost::shared_ptr< host::Node_ABC > cluster;
+        if( cfg.cluster.enabled )
+            cluster = CreateCluster( nodes );
+        if( cluster )
+            cluster->Start();
         host::SessionFactory sessions( log, runtime.GetRuntime(), uuids, system, ports, cfg.session.data, cfg.session.applications );
         host::Agent agent( log, nodes, sessions );
         web::Controller controller( log, agent );

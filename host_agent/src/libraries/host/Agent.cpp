@@ -250,7 +250,7 @@ Agent::Agent( cpplog::BaseLogger& log, const NodeFactory_ABC& nodeFactory, const
     , nodeFactory_   ( nodeFactory )
     , sessionFactory_( sessionFactory )
     , access_        ( new boost::shared_mutex() )
-    , nodes_         ( nodeFactory_.Reload() )
+    , nodes_         ( nodeFactory_.Reload( "node" ) )
     , sessions_      ( sessionFactory_.Reload() )
 {
     DummyLock dummy;
@@ -299,7 +299,7 @@ Reply Agent::GetNode( const boost::uuids::uuid& id ) const
 // -----------------------------------------------------------------------------
 Reply Agent::CreateNode( const std::string& name )
 {
-    boost::shared_ptr< Node_ABC > ptr = nodeFactory_.Create( name );
+    boost::shared_ptr< Node_ABC > ptr = nodeFactory_.Create( "node", name );
     if( !ptr )
         return Reply( "unable to create new node", false ); // TODO add better error message
     AddObject( *access_, nodes_, ptr );

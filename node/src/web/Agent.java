@@ -20,7 +20,7 @@ public class Agent {
     public static class Configuration {
         public String uuid;
         public String root;
-        public String index;
+        public String type;
         public String name;
         public int port;
         public int proxy;
