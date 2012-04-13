@@ -85,5 +85,4 @@
         <resource name="agent.behaviors.resources.Launcher"/>
         <resource name="agent.behaviors.resources.Extinguisher"/>
     </resources>
-    </resources>
 </role>
