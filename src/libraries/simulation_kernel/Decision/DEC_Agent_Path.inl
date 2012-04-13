@@ -18,16 +18,6 @@ const DEC_Agent_PathClass& DEC_Agent_Path::GetPathClass() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::GetPathType
-// Created: NLD 2006-01-30
-// -----------------------------------------------------------------------------
-inline
-const DEC_PathType& DEC_Agent_Path::GetPathType() const
-{
-    return pathType_;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_Agent_Path::GetUnitSpeeds
 // Created: NLD 2005-02-22
 // -----------------------------------------------------------------------------
@@ -135,4 +125,14 @@ inline
 bool DEC_Agent_Path::UseStrictClosest() const
 {
     return ! automateFuseau_.IsNull();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Agent_Path::GetNextPoints
+// Created: CMA 2012-02-20
+// -----------------------------------------------------------------------------
+inline
+const T_PointVector& DEC_Agent_Path::GetNextPoints() const
+{
+    return nextPathPoints_;
 }

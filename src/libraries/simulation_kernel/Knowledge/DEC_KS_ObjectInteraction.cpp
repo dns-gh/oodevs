@@ -17,6 +17,7 @@
 #include "DEC_BlackBoard_CanContainKnowledgeObjectCollision.h"
 #include "DEC_BlackBoard_CanContainKnowledgeObjectPerception.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
+#include "simulation_terrain/TER_World.h"
 #include "MT_Tools/MT_Stl.h"
 #include <boost/serialization/utility.hpp>
 #include <boost/serialization/vector.hpp>
@@ -171,10 +172,18 @@ void DEC_KS_ObjectInteraction::NotifyObjectInteraction( MIL_Object_ABC& object )
 // Name: DEC_KS_ObjectInteraction::NotifyObjectCollision
 // Created: NLD 2004-04-29
 // -----------------------------------------------------------------------------
-void DEC_KS_ObjectInteraction::NotifyObjectCollision( MIL_Object_ABC& object, const MT_Vector2D& vPosition )
+void DEC_KS_ObjectInteraction::NotifyObjectCollision( MIL_Object_ABC& object, const MT_Vector2D& vPosition, const MT_Vector2D& vDirection )
 {
+    static const double epsilon = 1e-8;
+    static const double lineFactor = 2 * TER_World::GetWorld().GetWeldValue();
     const TER_Localisation& objectLocation = object.GetLocalisation();
-    MT_Vector2D collisionPosition;
-    objectLocation.ComputeNearestPoint( vPosition, collisionPosition );
-    objectCollisions_.push_back( std::make_pair( &object, collisionPosition ) );
+    MT_Vector2D vThrough( vPosition + lineFactor * vDirection );
+    MT_Line orientedLine( vPosition, vThrough );
+    TER_DistanceLess collisionCmp( vPosition );
+    T_PointSet collisions( collisionCmp );
+    if( objectLocation.Intersect2D( orientedLine, collisions, epsilon ) && !collisions.empty() )
+    {
+        MT_Vector2D collisionPosition( *collisions.begin() );
+        objectCollisions_.push_back( std::make_pair( &object, collisionPosition ) );
+    }
 }

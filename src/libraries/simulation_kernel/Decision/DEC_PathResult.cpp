@@ -10,6 +10,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_PathResult.h"
 #include "DEC_PathPoint.h"
+#include "Decision/DEC_PathType.h"
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Network/NET_ASN_Tools.h"
@@ -20,12 +21,11 @@
 // Name: DEC_PathResult constructor
 // Created: NLD 2005-09-30
 // -----------------------------------------------------------------------------
-DEC_PathResult::DEC_PathResult()
-    : lastWaypoint_( 0 )
-    , precision_( 0.0001 )
+DEC_PathResult::DEC_PathResult( const DEC_PathType& pathType )
+    : pathType_( pathType )
     , bSectionJustEnded_( false )
 {
-    // NOTHING
+    itCurrentPathPoint_ = resultList_.end();
 }
 
 //-----------------------------------------------------------------------------
@@ -38,152 +38,25 @@ DEC_PathResult::~DEC_PathResult()
     resultList_.clear();
 }
 
-//-----------------------------------------------------------------------------
-// Name: DEC_PathResult::GetPointOnPathCloseTo
-// Created: CMA 2011-12-06
-//-----------------------------------------------------------------------------
-MT_Vector2D DEC_PathResult::GetPointOnPathCloseTo( const MT_Vector2D& posToTest ) const
-{
-    assert( !resultList_.empty() );
-    CIT_PathPointList itStart = resultList_.begin();
-    CIT_PathPointList itEnd   = resultList_.begin();
-    ++itEnd;
-    MT_Vector2D result( (*itStart)->GetPos() );
-    double rDistance = std::numeric_limits< double >::max();
-    for( itStart = resultList_.begin(); itEnd != resultList_.end(); ++itStart, ++itEnd )
-    {
-        MT_Line vLine( (*itStart)->GetPos(), (*itEnd)->GetPos() );
-        MT_Vector2D vClosest = vLine.ClosestPointOnLine( posToTest );
-        double rCurrentDistance = vClosest.SquareDistance( posToTest );
-        if( rCurrentDistance < rDistance )
-        {
-            rDistance = rCurrentDistance;
-            result = vClosest;
-        }
-    }
-    assert( !_isnan( result.rX_ ) );
-    assert( !_isnan( result.rY_ ) );
-    return result;
-}
-
-// -----------------------------------------------------------------------------
-// Name: DEC_PathResult::GetNextPointOutsideObstacle
-// Created: LDC 2011-01-12
-// -----------------------------------------------------------------------------
-MT_Vector2D DEC_PathResult::GetNextPointOutsideObstacle( const MT_Vector2D& posToTest, MIL_Object_ABC* obstacle, const MT_Vector2D* const lastWaypoint, bool forceNextPoint ) const
-{
-    if( resultList_.size() <= 1 )
-        return posToTest;
-    static const double rWeldValue = TER_World::GetWorld().GetWeldValue();
-    CIT_PathPointList itEnd = resultList_.begin();
-    ++itEnd;
-    bool currentPositionReached = false;
-    bool obstacleCrossed = false;
-    boost::shared_ptr< TER_Localisation > obstacleLocalisation;
-    if( obstacle )
-    {
-        TER_Localisation location = obstacle->GetLocalisation();
-        obstacleLocalisation.reset( new TER_Localisation( location ) );
-    }
-    MT_Vector2D firstPositionAfterCurrent;
-    for( CIT_PathPointList itStart = resultList_.begin(); itEnd != resultList_.end(); ++itStart, ++itEnd )
-    {
-        MT_Vector2D endPos = (*itEnd)->GetPos();
-        if( !currentPositionReached )
-        {
-            MT_Line vLine( (*itStart)->GetPos(), endPos );
-            if( vLine.IsInside( posToTest, rWeldValue ) )
-            {
-                currentPositionReached = true;
-                firstPositionAfterCurrent = endPos;
-                if( !obstacle )
-                    return endPos;
-            }
-        }
-        if( currentPositionReached )
-        {
-            MT_Line line( endPos, posToTest );
-            obstacleCrossed |= ( obstacleLocalisation && obstacleLocalisation->Intersect2D( line ) );
-            if( obstacleCrossed && ( !obstacleLocalisation || !obstacleLocalisation->IsInside( endPos ) ) )
-                return endPos;
-        }
-    }
-    // If we are already on a joining path or there is only one position crossing the obstacle:
-    if( currentPositionReached )
-        return forceNextPoint ? posToTest : firstPositionAfterCurrent;
-    else if( !lastWaypoint )// jump to the last point after the obstacle. We may skip waypoints this way but at least we are not stuck and don't move backwards.
-    {
-        T_PathPointList::const_reverse_iterator ritEnd = resultList_.rbegin();
-        ++ritEnd;
-        for( T_PathPointList::const_reverse_iterator ritStart = resultList_.rbegin(); ritEnd != resultList_.rend(); ++ritStart, ++ritEnd )
-        {
-            MT_Vector2D endPos = (*ritEnd)->GetPos();
-            MT_Line line( endPos, posToTest );
-            obstacleCrossed |= ( obstacleLocalisation && obstacleLocalisation->Intersect2D( line ) );
-            if( obstacleCrossed && ( !obstacleLocalisation || !obstacleLocalisation->IsInside( endPos )  ) )
-                return endPos;
-        }
-    }
-    else
-    {
-        itEnd = resultList_.begin();
-        CIT_PathPointList itStart = itEnd;
-        ++itEnd;
-        while( itEnd != resultList_.end() )
-        {
-            MT_Line vLine( (*itStart)->GetPos(), (*itEnd)->GetPos() );
-            ++itStart;
-            ++itEnd;
-            if( vLine.IsInside( *lastWaypoint, rWeldValue ) )
-                break;
-        }
-        if( itEnd != resultList_.end() )
-            ++itEnd; // Force to go after the way point we reached.
-        for( ; itEnd != resultList_.end(); ++itEnd )
-        {
-            MT_Vector2D endPos = (*itEnd)->GetPos();
-            if( !IsWaypoint( endPos ) )
-                continue;
-            MT_Line line( endPos, posToTest );
-            obstacleCrossed |= ( obstacleLocalisation && obstacleLocalisation->Intersect2D( line ) );
-            if( obstacleCrossed && ( !obstacleLocalisation || !obstacleLocalisation->IsInside( endPos ) ) )
-                return endPos;
-        }
-    }
-    return posToTest;
-}
-
 // -----------------------------------------------------------------------------
 // Name: DEC_PathResult::GetCurrentKeyOnPath
 // Created: NLD 2004-09-22
 // -----------------------------------------------------------------------------
-DEC_PathResult::CIT_PathPointList DEC_PathResult::GetCurrentKeyOnPath( const MT_Vector2D& vPos ) const
+DEC_PathResult::CIT_PathPointList DEC_PathResult::GetCurrentKeyOnPath() const
 {
-    if( resultList_.empty() )
-        return resultList_.end();
-    static const double rWeldValue = TER_World::GetWorld().GetWeldValue();
-    if( resultList_.size() == 1 )
-    {
-        if( vPos.Distance( resultList_.front()->GetPos() ) <= rWeldValue )
-            return resultList_.begin();
-        return resultList_.end();
-    }
-    CIT_PathPointList itEnd = resultList_.begin();
-    MT_Vector2D startPos = (*itEnd)->GetPos();
+    if( itCurrentPathPoint_ == resultList_.end() )
+        return itCurrentPathPoint_;
+    CIT_PathPointList itStart = itCurrentPathPoint_;
+    CIT_PathPointList itEnd = itCurrentPathPoint_;
     ++itEnd;
-    CIT_PathPointList result = resultList_.end();
-    int size = resultList_.size();
-    int i = 0;
-    for( CIT_PathPointList itStart = resultList_.begin(); itEnd != resultList_.end(); ++itStart, ++itEnd, ++i )
+    for( ; itEnd != resultList_.end(); ++itStart, ++itEnd )
     {
-        MT_Line vLine( (*itStart)->GetPos(), (*itEnd)->GetPos() );
-        if( vLine.IsInside( vPos, rWeldValue ) ) //$$$ DE LA MERDE EN BOITE
-        {
-            if( i != size - 2 || result == resultList_.end() ) // $$$$ LDC Case you want to repeat and loop the movement.
-                result = itStart;
-        }
+        if( (*itStart)->GetPos() == (*itEnd)->GetPos() )
+            continue;
+        else
+            return itStart;
     }
-    return result;
+    return itStart;
 }
 
 //-----------------------------------------------------------------------------
@@ -222,7 +95,7 @@ MT_Vector2D DEC_PathResult::InternalGetFuturePosition( const CIT_PathPointList& 
 //-----------------------------------------------------------------------------
 MT_Vector2D DEC_PathResult::GetFuturePosition( const MT_Vector2D& vStartPos, double rDist, bool bBoundOnPath ) const
 {
-    CIT_PathPointList itCurrentPathPoint = GetCurrentKeyOnPath( vStartPos );
+    CIT_PathPointList itCurrentPathPoint = GetCurrentKeyOnPath();
     if( itCurrentPathPoint == resultList_.end() )
         return vStartPos;
     CIT_PathPointList itNextPathPoint = itCurrentPathPoint;
@@ -244,11 +117,10 @@ MT_Vector2D DEC_PathResult::GetFuturePosition( const MT_Vector2D& vStartPos, dou
 // Name: DEC_PathResult::ComputeFutureObjectCollision
 // Created: NLD 2003-10-08
 // -----------------------------------------------------------------------------
-bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, double& rDistanceBefore, double& rDistanceAfter, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) const
+bool DEC_PathResult::ComputeFutureObjectCollision( const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, bool applyScale ) const
 {
     static const double epsilon = 1e-8;
-    rDistanceBefore = std::numeric_limits< double >::max();
-    rDistanceAfter = std::numeric_limits< double >::max(); 
+    rDistance = std::numeric_limits< double >::max();
     pObject.reset();
     E_State nPathState = GetState();
     if( objectsToTest.empty() )
@@ -257,7 +129,7 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos,
         return false;
     if( resultList_.empty() )
         return false;
-    CIT_PathPointList itCurrentPathPoint = GetCurrentKeyOnPath( vStartPos );
+    CIT_PathPointList itCurrentPathPoint = GetCurrentKeyOnPath();
     if( itCurrentPathPoint == resultList_.end() )
         return false;
     CIT_PathPointList itNextPathPoint = itCurrentPathPoint;
@@ -279,11 +151,21 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos,
     std::size_t hullSize = pathHull.GetBorderPoints().size();
     bool hullIntersectionIsFaster = hullSize > 2 && hullSize < hullPoints.size();
     // Determination de tous les objets connus avec lesquels il va y avoir collision dans le déplacement en cours
+    std::auto_ptr< const TER_Localisation > pScaledObjectLocation;
     for( CIT_KnowledgeObjectVector itKnowledge = objectsToTest.begin(); itKnowledge != objectsToTest.end(); ++itKnowledge )
     {
         boost::shared_ptr< DEC_Knowledge_Object > pKnowledge = *itKnowledge;
-        const TER_Localisation& objectLocation = pKnowledge->GetLocalisation();
-        MT_Rect objectBBox = objectLocation.GetBoundingBox();
+        const TER_Localisation* pObjectLocation = 0;
+        if( applyScale )
+        {
+            pObjectLocation = new TER_Localisation( pKnowledge->GetLocalisation() );
+            const_cast< TER_Localisation* >( pObjectLocation )->Scale( 10 ); // $$$ CMA arbitrary 10m precision (useful for recomputing path when it is very close to obstacle)
+            pScaledObjectLocation.reset( pObjectLocation );
+        }
+        else
+            pObjectLocation = &pKnowledge->GetLocalisation();
+
+        MT_Rect objectBBox = pObjectLocation->GetBoundingBox();
         if( !bbox.Intersect2D( objectBBox ) && !bbox.Contains( objectBBox ) && !objectBBox.Contains( bbox ) )
             continue;
         if( hullIntersectionIsFaster )
@@ -301,13 +183,13 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos,
                 TER_DistanceLess colCmp( *pPrevPathHullPos );
                 T_PointSet collisions( colCmp );
 
-                hullIntersected |= objectLocation.Intersect2D( lineTmp, collisions, epsilon );
+                hullIntersected |= pObjectLocation->Intersect2D( lineTmp, collisions, epsilon );
                 pPrevPathHullPos = &(*itPathHullPoint);
             }
             if( !hullIntersected )
             {
                 TER_Localisation localisationHull( pathHull );
-                if( !objectLocation.Contains( localisationHull, epsilon ) && !localisationHull.Contains( objectLocation, epsilon ) )
+                if( !pObjectLocation->Contains( localisationHull, epsilon ) && !localisationHull.Contains( *pObjectLocation, epsilon ) )
                     continue;
             }
         }
@@ -318,20 +200,17 @@ bool DEC_PathResult::ComputeFutureObjectCollision( const MT_Vector2D& vStartPos,
             MT_Line lineTmp( *pPrevPos, (*itPathPoint)->GetPos() );
             TER_DistanceLess colCmp( *pPrevPos );
             T_PointSet collisions( colCmp );
-            if( objectLocation.Intersect2D( lineTmp, collisions, epsilon ) )
+            if( pObjectLocation->Intersect2D( lineTmp, collisions, epsilon ) )
             {
                 if( collisions.empty() ) // should never happen
                     continue;
                 rDistanceSum += pPrevPos->Distance( *collisions.begin() );
-                if( !pObject || rDistanceSum < rDistanceBefore )
+                if( !pObject || rDistanceSum < rDistance )
                 {
-                    rDistanceBefore = rDistanceSum;
+                    rDistance = rDistanceSum;
                     pObject = pKnowledge;
-                    if( collisions.size() > 1 )
-                        rDistanceAfter = rDistanceSum;
                 }
-                else
-                    rDistanceAfter = rDistanceSum;
+                break;
             }
             else
                 rDistanceSum += pPrevPos->Distance( (*itPathPoint)->GetPos() );
@@ -369,6 +248,8 @@ void DEC_PathResult::AddResultPoint( const MT_Vector2D& vPos, const TerrainData&
     }
     boost::shared_ptr< DEC_PathPoint > point( new DEC_PathPoint( vPos, nObjectTypes, nObjectTypesToNextPoint ) );
     resultList_.push_back( point );
+    if( resultList_.size() == 1 )
+        itCurrentPathPoint_ = resultList_.begin();
 }
 
 // -----------------------------------------------------------------------------
@@ -384,9 +265,9 @@ void DEC_PathResult::NotifySectionEnded()
 // Name: DEC_PathResult::NotifyPointReached
 // Created: LDC 2012-01-18
 // -----------------------------------------------------------------------------
-void DEC_PathResult::NotifyPointReached( const MT_Vector2D& )
+void DEC_PathResult::NotifyPointReached( const CIT_PathPointList& itCurrentPathPoint )
 {
-    // NOTHING
+    itCurrentPathPoint_ = itCurrentPathPoint;
 }
 
 // -----------------------------------------------------------------------------

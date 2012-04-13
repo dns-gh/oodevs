@@ -18,3 +18,13 @@ const DEC_PathResult::T_PathPointList& DEC_PathResult::GetResult( bool useCheck 
         MT_LOG_ERROR_MSG( "Path is being computed" );
     return resultList_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_PathResult::GetPathType
+// Created: CMA 2012-03-29
+// -----------------------------------------------------------------------------
+inline
+const DEC_PathType& DEC_PathResult::GetPathType() const
+{
+    return pathType_;
+}

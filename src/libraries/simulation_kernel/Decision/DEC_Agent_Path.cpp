@@ -48,22 +48,23 @@
 // Created: JDY 03-04-10
 //-----------------------------------------------------------------------------
 DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const T_PointVector& points, const DEC_PathType& pathType )
-    : DEC_PathResult           ()
+    : DEC_PathResult           ( pathType )
     , queryMaker_              ( queryMaker )
     , bRefine_                 ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
     , vDirDanger_              ( queryMaker.GetOrderManager().GetDirDanger() )
     , unitSpeeds_              ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >() )
     , rMaxSlope_               ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSlope() )
     , rCostOutsideOfAllObjects_( 0. )
-    , pathType_                ( pathType )
     , pathClass_               ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , bDecPointsInserted_      ( false )
 {
     fuseau_= queryMaker.GetOrderManager().GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
     initialPathPoints_.reserve( 1 + points.size() );
+    nextPathPoints_.reserve( points.size() );
     initialPathPoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
     std::copy( points.begin(), points.end(), std::back_inserter( initialPathPoints_ ) );
+    std::copy( points.begin(), points.end(), std::back_inserter( nextPathPoints_ ) );
     Initialize( initialPathPoints_ );
 }
 
@@ -72,23 +73,26 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const T_PointVe
 // Created: LDC 2009-06-18
 // -----------------------------------------------------------------------------
 DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, std::vector< boost::shared_ptr< MT_Vector2D > >& points, const DEC_PathType& pathType )
-    : DEC_PathResult           ()
+    : DEC_PathResult           ( pathType )
     , queryMaker_              ( queryMaker )
     , bRefine_                 ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
     , vDirDanger_              ( queryMaker.GetOrderManager().GetDirDanger() )
     , unitSpeeds_              ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >() )
     , rMaxSlope_               ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSlope() )
     , rCostOutsideOfAllObjects_( 0. )
-    , pathType_                ( pathType )
     , pathClass_               ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , bDecPointsInserted_      ( false )
 {
     fuseau_ = queryMaker.GetOrderManager().GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
     initialPathPoints_.reserve( 1 + points.size() );
+    nextPathPoints_.reserve( points.size() );
     initialPathPoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
     for( std::vector< boost::shared_ptr< MT_Vector2D > >::const_iterator it = points.begin(); it != points.end(); ++it )
+    {
         initialPathPoints_.push_back( **it );
+        nextPathPoints_.push_back( **it );
+    }
     Initialize( initialPathPoints_ );
 }
 
@@ -97,22 +101,23 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, std::vector< bo
 // Created: JVT 02-09-17
 //-----------------------------------------------------------------------------
 DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const MT_Vector2D& vPosEnd, const DEC_PathType& pathType )
-    : DEC_PathResult            ()
+    : DEC_PathResult            ( pathType )
     , queryMaker_               ( queryMaker )
     , bRefine_                  ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
     , vDirDanger_               ( queryMaker.GetOrderManager().GetDirDanger() )
     , unitSpeeds_               ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >() )
     , rMaxSlope_                ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSlope() )
     , rCostOutsideOfAllObjects_ ( 0. )
-    , pathType_                 ( pathType )
     , pathClass_                ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , bDecPointsInserted_       ( false )
 {
     fuseau_ = queryMaker.GetOrderManager().GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
     initialPathPoints_.reserve( 2 );
+    nextPathPoints_.reserve( 1 );
     initialPathPoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
     initialPathPoints_.push_back( vPosEnd );
+    nextPathPoints_.push_back( vPosEnd );
     Initialize( initialPathPoints_ );
 }
 
@@ -121,7 +126,7 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const MT_Vector
 // Created: LMT 2010-05-04
 // -----------------------------------------------------------------------------
 DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const MT_Vector2D& vPosEnd, const DEC_PathType& pathType, bool loaded )
-    : DEC_PathResult           ()
+    : DEC_PathResult           ( pathType )
     , queryMaker_              ( queryMaker )
     , bRefine_                 ( queryMaker.GetType().GetUnitType().CanFly() && !queryMaker.IsAutonomous() )
     , vDirDanger_              ( queryMaker.GetOrderManager().GetDirDanger() )
@@ -129,15 +134,16 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const MT_Vector
     , rMaxSlope_               ( queryMaker.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSlope() )
     , pathKnowledgeObjects_    ( )
     , rCostOutsideOfAllObjects_( 0. )
-    , pathType_                ( pathType )
     , pathClass_               ( DEC_Agent_PathClass::GetPathClass( pathType, queryMaker ) )
     , bDecPointsInserted_      ( false )
 {
     fuseau_ = queryMaker.GetOrderManager().GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
     initialPathPoints_.reserve( 2 );
+    nextPathPoints_.reserve( 1 );
     initialPathPoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
     initialPathPoints_.push_back( vPosEnd );
+    nextPathPoints_.push_back( vPosEnd );
     Initialize( initialPathPoints_ );
 }
 
@@ -146,7 +152,7 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const MT_Vector
 // Created: NLD 2005-06-30
 // -----------------------------------------------------------------------------
 DEC_Agent_Path::DEC_Agent_Path( const DEC_Agent_Path& rhs )
-    : DEC_PathResult           ()
+    : DEC_PathResult           ( rhs.GetPathType() )
     , queryMaker_              ( rhs.queryMaker_ )
     , bRefine_                 ( rhs.bRefine_ )
     , vDirDanger_              ( rhs.vDirDanger_ )
@@ -154,10 +160,10 @@ DEC_Agent_Path::DEC_Agent_Path( const DEC_Agent_Path& rhs )
     , unitSpeeds_              ( queryMaker_.GetRole< moving::PHY_RoleAction_Moving >() )
     , rMaxSlope_               ( rhs.rMaxSlope_ )
     , rCostOutsideOfAllObjects_( 0. )
-    , pathType_                ( rhs.pathType_ )
     , pathClass_               ( rhs.pathClass_ )
     , bDecPointsInserted_      ( false )
     , initialPathPoints_       ( rhs.initialPathPoints_ )
+    , nextPathPoints_          ( rhs.nextPathPoints_ )
 {
     fuseau_ = rhs.fuseau_;
     automateFuseau_ = rhs.automateFuseau_;
@@ -568,7 +574,7 @@ void DEC_Agent_Path::Execute( TerrainPathfinder& pathfind )
         MT_LOG_MESSAGE_MSG( "DEC_Agent_Path::Compute: " << this << " : computation begin" );
         MT_LOG_MESSAGE_MSG( "   Thread    : " << MIL_AgentServer::GetWorkspace().GetPathFindManager().GetCurrentThread() );
         MT_LOG_MESSAGE_MSG( "   Agent     : " << queryMaker_.GetID() );
-        MT_LOG_MESSAGE_MSG( "   Path type : " << pathType_.GetName().c_str() );
+        MT_LOG_MESSAGE_MSG( "   Path type : " << DEC_PathResult::GetPathType().GetName().c_str() );
         MT_LOG_MESSAGE_MSG( GetPathAsString() );
         profiler_.Start();
     }
@@ -622,30 +628,42 @@ bool DEC_Agent_Path::IsDestinationTrafficable() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::GetNextPointOutsideObstacle
-// Created: LDC 2012-01-12
-// -----------------------------------------------------------------------------
-MT_Vector2D DEC_Agent_Path::GetNextPointOutsideObstacle( const MT_Vector2D& currentPos, MIL_Object_ABC* obstacle, bool forceNextPoint ) const
-{
-    if( initialPathPoints_.size() > 1 )
-        return DEC_PathResult::GetNextPointOutsideObstacle( currentPos, obstacle, lastWaypoint_, forceNextPoint );
-    else if( initialPathPoints_.size() == 1 )
-        return initialPathPoints_.front();
-    return currentPos;
-}
-
-// -----------------------------------------------------------------------------
 // Name: DEC_Agent_Path::NotifyPointReached
 // Created: LDC 2012-01-18
 // -----------------------------------------------------------------------------
-void DEC_Agent_Path::NotifyPointReached( const MT_Vector2D& point )
+void DEC_Agent_Path::NotifyPointReached( const CIT_PathPointList& itCurrentPathPoint )
 {
-    for( T_PointVector::const_iterator it = initialPathPoints_.begin(); it != initialPathPoints_.end(); ++it )
-        if( point == *it )
+//    static const double rWeldValue = TER_World::GetWorld().GetWeldValue();
+    bool verifyPointTrafficability = false;
+    for( T_PointVector::iterator it = initialPathPoints_.begin(); it != initialPathPoints_.end(); ++it )
+    {
+        if( static_cast< float >( (*itCurrentPathPoint)->GetPos().rX_ ) == static_cast< float >( it->rX_ ) &&
+            static_cast< float >( (*itCurrentPathPoint)->GetPos().rY_ ) == static_cast< float >( it->rY_ ) )
         {
-            lastWaypoint_ = &point;
+            T_PointVector::iterator it1 = it;
+            if( it1 != --initialPathPoints_.end() )
+                it1++;
+            nextPathPoints_.clear();
+            std::copy( it1, initialPathPoints_.end(), std::back_inserter( nextPathPoints_ ) );
+            verifyPointTrafficability = nextPathPoints_.size() > 1;
             break;
         }
+    }
+    if( verifyPointTrafficability )
+    {
+        T_KnowledgeObjectVector knowledgesObject;
+        queryMaker_.GetArmy().GetKnowledge().GetObjects( knowledgesObject );
+        for( CIT_KnowledgeObjectVector itKnowledgeObject = knowledgesObject.begin(); itKnowledgeObject != knowledgesObject.end(); ++itKnowledgeObject )
+        {
+            const DEC_Knowledge_Object& knowledge = **itKnowledgeObject;
+            if( knowledge.CanCollideWith( queryMaker_ ) && knowledge.GetLocalisation().IsInside( nextPathPoints_.front() ) )
+            {
+                nextPathPoints_.erase( nextPathPoints_.begin() );
+                break;
+            }
+        }
+    }
+    DEC_PathResult::NotifyPointReached( itCurrentPathPoint );
 }
 
 // -----------------------------------------------------------------------------

@@ -21,6 +21,7 @@ namespace sword
 }
 
 class DEC_PathPoint;
+class DEC_PathType;
 class MIL_Object_ABC;
 
 //*****************************************************************************
@@ -42,24 +43,23 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             DEC_PathResult();
+             DEC_PathResult( const DEC_PathType& pathType );
     virtual ~DEC_PathResult();
     //@}
 
     //! @name Accessors
     //@{
     const T_PathPointList& GetResult( bool useCheck = true ) const;
+    const DEC_PathType& GetPathType() const;
     //@}
 
     //! @name Tools
     //@{
-    CIT_PathPointList GetCurrentKeyOnPath( const MT_Vector2D& vPos ) const;
-    MT_Vector2D       GetPointOnPathCloseTo( const MT_Vector2D& posToTest ) const;
-    MT_Vector2D GetNextPointOutsideObstacle( const MT_Vector2D& posToTest, MIL_Object_ABC* obstacle, const MT_Vector2D* const lastWaypoint, bool forceNextPoint ) const;
+    CIT_PathPointList GetCurrentKeyOnPath() const;
     MT_Vector2D GetFuturePosition( const MT_Vector2D& vStartPos, double rDist, bool bBoundOnPath ) const;
-    bool ComputeFutureObjectCollision( const MT_Vector2D& vStartPos, const T_KnowledgeObjectVector& objectsToTest, double& rDistanceBefore, double& rDistanceAfter, boost::shared_ptr< DEC_Knowledge_Object >& pObject ) const;
+    bool ComputeFutureObjectCollision( const T_KnowledgeObjectVector& objectsToTest, double& rDistance, boost::shared_ptr< DEC_Knowledge_Object >& pObject, bool applyScale ) const;
     virtual void InsertDecPoints() = 0;
-    virtual void NotifyPointReached( const MT_Vector2D& point );
+    virtual void NotifyPointReached( const CIT_PathPointList& itCurrentPathPoint );
     virtual bool IsWaypoint( const MT_Vector2D& point ) const;
     //@}
 
@@ -80,13 +80,13 @@ protected:
     //! @name Member data
     //@{
     T_PathPointList resultList_; //$$$
-    const MT_Vector2D* lastWaypoint_;
-    double precision_;
+    CIT_PathPointList itCurrentPathPoint_;
     //@}
 
 private:
     //! @name Member data
     //@{
+    const DEC_PathType& pathType_;
     bool bSectionJustEnded_;
     //@}
 };
