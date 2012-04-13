@@ -80,7 +80,7 @@
     <target name="configure" description="retrieve dependencies">
         <update name="boost" version="1.48"/>
         <update name="cpp-netlib"/>
-        <update name="turtle" version="trunk"/>
+        <update name="turtle"/>
         <update name="xeumeuleu"/>
         <update name="xerces-c"/>
     </target>
