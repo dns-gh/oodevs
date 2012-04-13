@@ -789,7 +789,7 @@
     -->
     <target name="test" depends="generate-license,scripts_test,adaptation_test,tools_test,3a_test,plugins_test,hla_plugin_test,
                                  shield_test,clients_test,exercises_test,data_migrations_test,dispatcher_test,application.simulation_kernel_test,
-                                 application.integration_decisionnal_test,protocol_test,positions_plugin_test,
+                                 application.integration_decisionnal_test,protocol_test,checkpoint_test,positions_plugin_test,
                                  actions_test,launcher_test,reports_test,flood_test" description="run all tests"/>
 
     <target name="3a_test" depends="library.3a">
@@ -956,10 +956,10 @@
     </macrodef>
 
     <target name="checkpoint_test" depends="application.simulation_app" description="save and load a checkpoint">
-        <run-simulation exercise="france/CheckpointTests">
+        <run-simulation exercise="scipio/tests/CheckpointTests">
             <arg value="--savecheckpoint=tempcheckpoint"/>
         </run-simulation>
-        <run-simulation exercise="france/CheckpointTests">
+        <run-simulation exercise="scipio/tests/CheckpointTests">
             <arg value="--checkpoint=tempcheckpoint"/>
             <arg value="--deletecheckpoint"/>
         </run-simulation>

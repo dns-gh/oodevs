@@ -1,0 +1,254 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<actions>
+  <action id="193" name="ASA Defendre Site" target="1125" time="2010-09-01T12:08:10" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="31TCN2785406674"/>
+        <point coordinates="31TCM2474779668"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="31TBN8392609593"/>
+        <point coordinates="31TBM8282284257"/>
+      </location>
+    </parameter>
+    <parameter name="Zone" type="polygon">
+      <location type="polygon">
+        <point coordinates="31TBN8545201097"/>
+        <point coordinates="31TBM8620498966"/>
+        <point coordinates="31TBN8769901241"/>
+        <point coordinates="31TBN8649902870"/>
+        <point coordinates="31TBN8545201097"/>
+      </location>
+    </parameter>
+    <parameter name="Positions sections" type="list">
+      <parameter name="Positions sections (élément 1)" type="location">
+        <location type="point">
+          <point coordinates="31TBN8796604242"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="304" name="Stationner" target="1181" time="2010-09-01T12:08:10" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="31TCN2785406674"/>
+        <point coordinates="31TCM2474779668"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="31TBN8392609593"/>
+        <point coordinates="31TBM8282284257"/>
+      </location>
+    </parameter>
+    <parameter name="Zone attente" type="polygon">
+      <location type="polygon">
+        <point coordinates="31TCN0713400650"/>
+        <point coordinates="31TCM0675094776"/>
+        <point coordinates="31TCM0453098020"/>
+        <point coordinates="31TCN0466102182"/>
+        <point coordinates="31TCN0713400650"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="331" name="Suivre" target="1129" time="2010-09-01T12:08:10" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="31TCN2785406674"/>
+        <point coordinates="31TCM2474779668"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="31TBN8392609593"/>
+        <point coordinates="31TBM8282284257"/>
+      </location>
+    </parameter>
+    <parameter name="compagnie" type="automat" value="1181"/>
+  </action>
+  <action id="299" name="Faire Mouvement" target="1179" time="2010-09-01T12:08:10" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="31TCN2785406674"/>
+        <point coordinates="31TCM2474779668"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="31TBN8392609593"/>
+        <point coordinates="31TBM8282284257"/>
+      </location>
+    </parameter>
+    <parameter name="Itineraire" type="path">
+      <parameter name="Point de passage 1" type="pathpoint">
+        <location type="point">
+          <point coordinates="31TBM9893090192"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 2" type="pathpoint">
+        <location type="point">
+          <point coordinates="31TCM0543692419"/>
+        </location>
+      </parameter>
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="31TCM0867591437"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
+  <action id="316" name="NBC Reconnaitre Une Zone" target="1176" time="2010-09-01T12:08:10" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="31TCN2785406674"/>
+        <point coordinates="31TCM2474779668"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="31TBN8392609593"/>
+        <point coordinates="31TBM8282284257"/>
+      </location>
+    </parameter>
+    <parameter name="Zone" type="polygon">
+      <location type="polygon">
+        <point coordinates="31TBM9194089160"/>
+        <point coordinates="31TBM9970784561"/>
+        <point coordinates="31TCM0130790396"/>
+        <point coordinates="31TBM9194089160"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="261" name="INF Eclairer" target="1119" time="2010-09-01T12:08:10" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="31TCN2785406674"/>
+        <point coordinates="31TCM2474779668"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="31TBN8392609593"/>
+        <point coordinates="31TBM8282284257"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="286" name="LOG Se Deployer" target="1108" time="2010-09-01T12:08:10" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="31TCN2785406674"/>
+        <point coordinates="31TCM2474779668"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="31TBN8392609593"/>
+        <point coordinates="31TBM8282284257"/>
+      </location>
+    </parameter>
+    <parameter name="Position deploiement" type="point">
+      <location type="point">
+        <point coordinates="31TBM8663399159"/>
+      </location>
+    </parameter>
+  </action>
+    <action id="2072" name="MELEE S'emparer De" target="1201" time="2010-09-01T12:08:10" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Objectif" type="urbanblock" value="3065"/>
+  </action>
+  <action id="2099" name="MELEE Reconnaitre" target="1200" time="2010-09-01T12:08:10" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Objectifs" type="list">
+      <parameter name="Objectifs (élément 1)" type="polygon">
+        <location type="polygon">
+          <point coordinates="31TCM1612791247"/>
+          <point coordinates="31TCM1681890638"/>
+          <point coordinates="31TCM1680992002"/>
+          <point coordinates="31TCM1536792393"/>
+          <point coordinates="31TCM1451891297"/>
+          <point coordinates="31TCM1612791247"/>
+        </location>
+      </parameter>
+    </parameter>
+    <parameter name="Fouille des objectifs" type="bool" value="false"/>
+  </action>
+  <action id="2076" name="GENIE Realiser Travaux" target="1202" time="2010-09-01T12:08:10" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Chantiers" type="list">
+      <parameter name="Chantiers (élément 1)" type="plannedwork" value="abattis">
+        <parameter name="Obstacle type" type="obstacletype" value="0"/>
+        <parameter name="Location" type="location">
+          <location type="polygon">
+            <point coordinates="31TCM1865586098"/>
+            <point coordinates="31TCM1778285487"/>
+            <point coordinates="31TCM1719286334"/>
+            <point coordinates="31TCM1865586098"/>
+          </location>
+        </parameter>
+      </parameter>
+    </parameter>
+    <parameter name="Position de regroupement" type="point">
+      <location type="point">
+        <point coordinates="31TCM1805687418"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="2133" name="ASY Commettre un Attentat Suicide" target="1219" time="2010-09-02T04:44:50" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Cible de l'attentat" type="urbanblock" value="3029"/>
+    <parameter name="Munition" type="resourcetype" value="78"/>
+  </action>
+  <action id="2132" name="ASY Commettre un Attentat" target="1222" time="2010-09-01T12:13:40" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Cible de l'attentat" type="agentknowledge" value="1210"/>
+    <parameter name="Position de repli" type="point">
+      <location type="point">
+        <point coordinates="31TCM1185593979"/>
+      </location>
+    </parameter>
+    <parameter name="Munition" type="resourcetype" value="13"/>
+  </action>
+  <action id="30" name="ASS Assurer Mise En Oeuvre Sur Position" target="1209" time="2010-09-01T12:36:30" type="mission">
+    <parameter name="direction dangereuse" type="heading" value="360"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit"/>
+    <parameter name="Limit 2" type="limit"/>
+    <parameter name="Position implantation" type="point">
+      <location type="point">
+        <point coordinates="31TCM1220897666"/>
+      </location>
+    </parameter>
+    <parameter name="Presence contre batterie" type="bool" value="true"/>
+  </action>
+</actions>
