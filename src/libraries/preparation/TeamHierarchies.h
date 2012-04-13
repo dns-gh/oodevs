@@ -31,7 +31,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual void UpdateSymbol( bool up = true );
+    virtual void UpdateSymbolDownward();
     //@}
 
 private:

@@ -35,6 +35,7 @@ public:
     virtual const std::string& GetValue() const;
     virtual void OverrideValue( const std::string& value );
     virtual void MergeSymbol( const std::string& symbol );
+    virtual void ResetSymbol( const std::string& symbol );
     virtual void PrepareForMerge();
     virtual void Reset();
     virtual bool IsOverriden() const;

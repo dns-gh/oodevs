@@ -80,14 +80,14 @@ void AgentHierarchies::UpdateKarma( const kernel::Entity_ABC& superior )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AgentHierarchies::UpdateSymbol
-// Created: AGE 2006-11-24
+// Name: AgentHierarchies::UpdateSymbolUpward
+// Created: JSR 2012-04-12
 // -----------------------------------------------------------------------------
-void AgentHierarchies::UpdateSymbol( bool up /* = true*/ )
+void AgentHierarchies::UpdateSymbolUpward()
 {
-    if( ! up && GetSuperior() )
+    if( GetSuperior() )
         UpdateKarma( *GetSuperior() );
-    TacticalHierarchies::UpdateSymbol( up );
+    TacticalHierarchies::UpdateSymbolUpward();
 }
 
 // -----------------------------------------------------------------------------

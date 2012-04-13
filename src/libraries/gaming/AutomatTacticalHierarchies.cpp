@@ -64,14 +64,45 @@ void AutomatTacticalHierarchies::DoUpdate( const InstanciationComplete& message 
 }
 
 // -----------------------------------------------------------------------------
-// Name: AutomatTacticalHierarchies::UpdateSymbol
+// Name: AutomatTacticalHierarchies::UpdateSymbolUpward
 // Created: AGE 2006-11-23
 // -----------------------------------------------------------------------------
-void AutomatTacticalHierarchies::UpdateSymbol( bool up /* = true*/ )
+void AutomatTacticalHierarchies::UpdateSymbolUpward()
 {
-    if( up )
-        level_.clear();
-    MergingTacticalHierarchies::UpdateSymbol( up );
+    level_.clear();
+    tools::Iterator< const kernel::Entity_ABC& > it = CreateSubordinateIterator();
+    while( it.HasMoreElements() )
+    {
+        if( const TacticalHierarchies* hierarchies = it.NextElement().Retrieve< TacticalHierarchies >() )
+        {
+            const std::string childLevel = hierarchies->GetLevel();
+            if( level_.empty() && !childLevel.empty() )
+                level_ = childLevel;
+		    else if( !childLevel.empty() )
+                level_ = MergingTacticalHierarchies::MaxLevel( level_, childLevel );
+        }
+    }
+    MergingTacticalHierarchies::UpdateSymbolUpward();
+}
+
+// -----------------------------------------------------------------------------
+// Name: AutomatTacticalHierarchies::UpdateLevel
+// Created: LDC 2012-04-12
+// -----------------------------------------------------------------------------
+void AutomatTacticalHierarchies::UpdateLevel()
+{
+    tools::Iterator< const kernel::Entity_ABC& > it = CreateSubordinateIterator();
+    while( it.HasMoreElements() )
+    {
+        if( const TacticalHierarchies* hierarchies = it.NextElement().Retrieve< TacticalHierarchies >() )
+        {
+            const std::string childLevel = hierarchies->GetLevel();
+            if( level_.empty() && !childLevel.empty() )
+                level_ = childLevel;
+		    else if( !childLevel.empty() )
+                level_ = MergingTacticalHierarchies::MaxLevel( level_, childLevel );
+        }
+    }
 }
 
 // -----------------------------------------------------------------------------

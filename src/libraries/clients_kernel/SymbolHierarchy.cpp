@@ -53,6 +53,17 @@ void SymbolHierarchy::MergeSymbol( const std::string& symbol )
 }
 
 // -----------------------------------------------------------------------------
+// Name: SymbolHierarchy::ResetSymbol
+// Created: LDC 2012-04-12
+// -----------------------------------------------------------------------------
+void SymbolHierarchy::ResetSymbol( const std::string& symbol )
+{
+    originalSymbol_ = symbol;
+    if( !overriden_ )
+        symbol_ = originalSymbol_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: SymbolHierarchy::PrepareForMerge
 // Created: JSR 2011-08-03
 // -----------------------------------------------------------------------------

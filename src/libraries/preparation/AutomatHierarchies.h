@@ -34,7 +34,7 @@ public:
     void ChangeSuperior( kernel::Entity_ABC& superior );
     virtual const kernel::Entity_ABC* GetSuperior() const;
     virtual std::string GetLevel() const;
-    virtual void UpdateSymbol( bool up = true );
+    virtual void UpdateSymbolUpward();
     //@}
 
 private:
@@ -49,6 +49,7 @@ private:
     virtual void SerializeAttributes( xml::xostream& xos ) const;
     virtual void DoUpdate( const kernel::InstanciationComplete& );
     virtual void MergeSymbol( const kernel::Entity_ABC& entity );
+    virtual void UpdateLevel();
     //@}
 
 private:

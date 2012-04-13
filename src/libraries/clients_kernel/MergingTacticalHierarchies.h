@@ -34,7 +34,8 @@ public:
     //! @name Operations
     //@{
     virtual std::string GetSymbol() const;
-    virtual void UpdateSymbol( bool up = true );
+    virtual void UpdateSymbolUpward();
+    virtual void UpdateSymbolDownward();
 
     static std::string MaxLevel( const std::string& lhs, const std::string& rhs );
     static std::string IncreaseLevel( const std::string& level );
@@ -48,6 +49,7 @@ protected:
     virtual void UnregisterSubordinate( const kernel::Entity_ABC& entity );
     virtual void DoUpdate( const kernel::InstanciationComplete& );
     virtual void MergeSymbol( const kernel::Entity_ABC& entity );
+    virtual void UpdateLevel();
     //@}
 
 private:
@@ -60,6 +62,7 @@ private:
 private:
     //! @name Helpers
     //@{
+    void UpdateSymbol();
     static char Level( const std::string& value );
     static unsigned Count( const std::string& value );
     //@}

@@ -60,19 +60,16 @@ void TeamHierarchies::SerializeLogistics( xml::xostream& xos ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: TeamHierarchies::UpdateSymbol
+// Name: TeamHierarchies::UpdateSymbolDownward
 // Created: AGE 2006-11-24
 // -----------------------------------------------------------------------------
-void TeamHierarchies::UpdateSymbol( bool up /* = true*/ )
+void TeamHierarchies::UpdateSymbolDownward()
 {
-    if( ! up )
+    tools::Iterator< const kernel::Entity_ABC& > it = CreateSubordinateIterator();
+    while( it.HasMoreElements() )
     {
-        tools::Iterator< const kernel::Entity_ABC& > it = CreateSubordinateIterator();
-        while( it.HasMoreElements() )
-        {
-            const kernel::TacticalHierarchies* child = it.NextElement().Retrieve< kernel::TacticalHierarchies >();
-            if( child )
-                const_cast< kernel::TacticalHierarchies* >( child )->UpdateSymbol( false );
-        }
+        const kernel::TacticalHierarchies* child = it.NextElement().Retrieve< kernel::TacticalHierarchies >();
+        if( child )
+            const_cast< kernel::TacticalHierarchies* >( child )->UpdateSymbolDownward();
     }
 }
