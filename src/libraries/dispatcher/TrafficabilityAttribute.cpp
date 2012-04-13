@@ -48,5 +48,5 @@ void TrafficabilityAttribute::Update( const sword::ObjectAttributes& asnMsg )
 // -----------------------------------------------------------------------------
 void TrafficabilityAttribute::Send( sword::ObjectAttributes& asnMsg ) const
 {
-    asnMsg.mutable_trafficability()->set_value( max_ );
+    asnMsg.mutable_trafficability()->set_value( static_cast< float >( max_ ) );
 }

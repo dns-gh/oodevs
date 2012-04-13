@@ -74,7 +74,7 @@ int Socket::Send( unsigned long tag, Message& message )
             boost::asio::async_write( *socket_, message.MakeOutputBuffer( tag ),
                                   boost::bind( &Socket::Sent, shared_from_this(),
                                                message, boost::asio::placeholders::error ) );
-        size = queue_.size();
+        size = static_cast< int >( queue_.size() );
         if( 0 == size % bigSize )
         {
             MT_LOG_INFO_MSG( "Queuing " << size << " messages queued for " << endpoint_ );
@@ -106,7 +106,7 @@ void Socket::Sent( const Message&, const boost::system::error_code& error )
                                   boost::bind( &Socket::Sent, shared_from_this(),
                                                message, boost::asio::placeholders::error ) );
         }
-        int size = queue_.size();
+        int size = static_cast< int >( queue_.size() );
         if( size && ( 0 == size % bigSize ) )
         {
             MT_LOG_INFO_MSG( "There are " << size << " messages queued for " << endpoint_ );

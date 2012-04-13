@@ -70,7 +70,7 @@ bool NotificationMessageHandler::OnReceiveMessage( const sword::SimToClient& mes
     if( message.message().has_control_export_request_ack() )
     {
         const ::sword::ControlExportRequestAck& ackMessage = message.message().control_export_request_ack();
-        if( ackMessage.error_code() == ::sword::ControlExportRequestAck_ErrorCode::ControlExportRequestAck_ErrorCode_success )
+        if( ackMessage.error_code() == ::sword::ControlExportRequestAck_ErrorCode_success )
         {
             SessionNotification response;
             sword::SessionNotification_ExportCreation* exportCreation = response().mutable_notification()->mutable_export_creation();

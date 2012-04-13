@@ -74,7 +74,7 @@ void Score::Send( dispatcher::ClientPublisher_ABC& publisher, int context ) cons
 // -----------------------------------------------------------------------------
 unsigned int Score::Size() const
 {
-    return values_.size();
+    return static_cast< unsigned int >( values_.size() );
 }
 
 // -----------------------------------------------------------------------------

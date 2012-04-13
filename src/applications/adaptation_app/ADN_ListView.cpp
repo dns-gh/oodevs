@@ -505,7 +505,7 @@ void ADN_ListView::SaveToXls( const QString& path, const QString& sheetName ) co
     if( nbRow < numeric_limits< USHORT >::max() )
     {
         xls.New( 1 );
-        SaveToSheet( xls, sheetName.ascii(), 0, firstChild(), maxDepth, nbRow );
+        SaveToSheet( xls, sheetName.ascii(), 0, firstChild(), maxDepth );
     }
     else
     {
@@ -514,7 +514,7 @@ void ADN_ListView::SaveToXls( const QString& path, const QString& sheetName ) co
         xls.New( sheet );
         sheet = 0;
         for( Q3ListViewItem* item = firstChild(); item; item = item->nextSibling(), ++sheet )
-            SaveToSheet( xls, item->text( 0 ).ascii(), sheet, item->firstChild(), maxDepth - 1, nbRow );
+            SaveToSheet( xls, item->text( 0 ).ascii(), sheet, item->firstChild(), maxDepth - 1 );
     }
 
     xls.SaveAs( path.ascii() );
@@ -524,7 +524,7 @@ void ADN_ListView::SaveToXls( const QString& path, const QString& sheetName ) co
 // Name: ADN_ListView::SaveToSheet
 // Created: ABR 2012-02-10
 // -----------------------------------------------------------------------------
-void ADN_ListView::SaveToSheet( BasicExcel& xls, const char* sheetName, int sheetNumber, Q3ListViewItem* qItem, int maxDepth, int nbRow ) const
+void ADN_ListView::SaveToSheet( BasicExcel& xls, const char* sheetName, int sheetNumber, Q3ListViewItem* qItem, int maxDepth ) const
 {
     // Initialize sheet
     xls.RenameWorksheet( sheetNumber, sheetName );
@@ -574,7 +574,7 @@ void ADN_ListView::SaveToSheet( BasicExcel& xls, const char* sheetName, int shee
     }
 
     // Fill table from qItem
-    RecursiveFillSheetFromItem( qItem, *sheet, fmt_mgr, 0, maxDepth, row, columnMaxContentSize, nbRow );
+    RecursiveFillSheetFromItem( qItem, *sheet, fmt_mgr, 0, maxDepth, row, columnMaxContentSize );
 
     // Bottom border
     if( row < std::numeric_limits< USHORT >::max() )
@@ -607,12 +607,12 @@ void ADN_ListView::SaveToSheet( BasicExcel& xls, const char* sheetName, int shee
 // Name: ADN_ListView::RecursiveFillSheetFromItem
 // Created: ABR 2012-02-10
 // -----------------------------------------------------------------------------
-void ADN_ListView::RecursiveFillSheetFromItem( Q3ListViewItem* qItem, BasicExcelWorksheet& sheet, XLSFormatManager& fmt_mgr, int depth, int maxDepth, int& row, std::vector< int >& columnMaxContentSize, int nbRow ) const
+void ADN_ListView::RecursiveFillSheetFromItem( Q3ListViewItem* qItem, BasicExcelWorksheet& sheet, XLSFormatManager& fmt_mgr, int depth, int maxDepth, int& row, std::vector< int >& columnMaxContentSize ) const
 {
     for( Q3ListViewItem* item = qItem; item; item = item->nextSibling() )
     {
-        FillSheetFromItem( item, sheet, fmt_mgr, depth, maxDepth, row, columnMaxContentSize, nbRow );
-        RecursiveFillSheetFromItem( item->firstChild(), sheet, fmt_mgr, depth + 1, maxDepth, row, columnMaxContentSize, nbRow );
+        FillSheetFromItem( item, sheet, fmt_mgr, depth, maxDepth, row, columnMaxContentSize );
+        RecursiveFillSheetFromItem( item->firstChild(), sheet, fmt_mgr, depth + 1, maxDepth, row, columnMaxContentSize );
     }
 }
 
@@ -620,7 +620,7 @@ void ADN_ListView::RecursiveFillSheetFromItem( Q3ListViewItem* qItem, BasicExcel
 // Name: ADN_ListView::FillSheetFromItem
 // Created: ABR 2012-02-10
 // -----------------------------------------------------------------------------
-void ADN_ListView::FillSheetFromItem( Q3ListViewItem* qItem, BasicExcelWorksheet& sheet, XLSFormatManager& fmt_mgr, int depth, int maxDepth, int& row, std::vector< int >& columnMaxContentSize, int nbRow ) const
+void ADN_ListView::FillSheetFromItem( Q3ListViewItem* qItem, BasicExcelWorksheet& sheet, XLSFormatManager& fmt_mgr, int depth, int maxDepth, int& row, std::vector< int >& columnMaxContentSize ) const
 {
     for( int col = 0; col < columns(); ++col )
     {

@@ -279,7 +279,7 @@ void ScoresModel::AddLine( std::ostream& file, std::size_t index ) const
     {
         try
         {
-            file << separator_ << score->second->GetValue( index );
+            file << separator_ << score->second->GetValue( static_cast< unsigned int >( index ) );
         }
         catch ( std::exception& /*e*/ )
         {

@@ -85,9 +85,9 @@ private:
     bool ApplyFilterLine( ADN_ListViewItem* item );
     bool ApplyFilterList( ADN_ListViewItem* item );
     void ApplyFilter( boost::function< bool ( ADN_ListViewItem* ) > func );
-    void SaveToSheet( YExcel::BasicExcel& xls, const char* sheetName, int sheetNumber, Q3ListViewItem* item, int maxDepth, int nbRow ) const;
-    void RecursiveFillSheetFromItem( Q3ListViewItem* qItem, YExcel::BasicExcelWorksheet& sheet, ExcelFormat::XLSFormatManager& fmt_mgr, int depth, int maxDepth, int& row, std::vector< int >& columnMaxContentSize, int nbRow ) const;
-    void FillSheetFromItem( Q3ListViewItem* qItem, YExcel::BasicExcelWorksheet& sheet, ExcelFormat::XLSFormatManager& fmt_mgr, int depth, int maxDepth, int& row, std::vector< int >& columnMaxContentSize, int nbRow ) const;
+    void SaveToSheet( YExcel::BasicExcel& xls, const char* sheetName, int sheetNumber, Q3ListViewItem* item, int maxDepth ) const;
+    void RecursiveFillSheetFromItem( Q3ListViewItem* qItem, YExcel::BasicExcelWorksheet& sheet, ExcelFormat::XLSFormatManager& fmt_mgr, int depth, int maxDepth, int& row, std::vector< int >& columnMaxContentSize ) const;
+    void FillSheetFromItem( Q3ListViewItem* qItem, YExcel::BasicExcelWorksheet& sheet, ExcelFormat::XLSFormatManager& fmt_mgr, int depth, int maxDepth, int& row, std::vector< int >& columnMaxContentSize ) const;
     ADN_ListViewItem* FindItem( Q3ListViewItem* qItem, const QString& itemName );
 
 private slots:

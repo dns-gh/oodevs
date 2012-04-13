@@ -9,7 +9,6 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Sensors_Postures_GUI.h"
-#include "moc_ADN_Sensors_Postures_GUI.cpp"
 #include "ADN_App.h"
 #include "ADN_CommonGfx.h"
 #include "ADN_Connector_Table_ABC.h"

@@ -35,7 +35,7 @@ int __cdecl NoMoreMemoryHandler( std::size_t nSize )
     }
 }
 
-int __cdecl SilentNoMoreMemoryHandler( std::size_t nSize )
+int __cdecl SilentNoMoreMemoryHandler( std::size_t /*nSize*/ )
 {
     throw std::bad_alloc();
 }
