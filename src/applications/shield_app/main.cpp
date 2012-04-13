@@ -33,7 +33,7 @@ namespace
     {
     public:
         explicit Client( const std::string& host, const std::string& profile, const std::string& password )
-            : tools::ClientNetworker( host )
+            : tools::ClientNetworker( host, true )
             , profile_ (profile)
             , password_ (password)
 

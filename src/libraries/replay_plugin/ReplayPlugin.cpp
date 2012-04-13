@@ -32,7 +32,6 @@ ReplayPlugin::ReplayPlugin( Model_ABC& model, ClientPublisher_ABC& clients, tool
     , factor_     ( 1 )
     , tickNumber_ ( 0 )
     , running_    ( false )
-    , doFirstTick_( true )
     , skipToFrame_( -1 )
     , factory_    ( new ReplayExtensionFactory( replayModel ) )
 {
@@ -99,11 +98,8 @@ void ReplayPlugin::NotifyClientAuthenticated( ClientPublisher_ABC& client, const
 // -----------------------------------------------------------------------------
 void ReplayPlugin::OnTimer()
 {
-    if( running_ || doFirstTick_ )
-    {
+    if( running_  )
         loader_.Tick();
-        doFirstTick_ = false;
-    }
     if( running_ || tickNumber_ != loader_.GetTickNumber() )
         tickNumber_ = loader_.GetTickNumber();
 }

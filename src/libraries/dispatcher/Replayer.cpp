@@ -23,6 +23,7 @@
 #include "rights_plugin/RightsPlugin.h"
 #include "score_plugin/ScorePlugin.h"
 #include "messenger_plugin/MessengerPlugin.h"
+#include "MT_Tools/MT_Logger.h"
 #include <xeumeuleu/xml.hpp>
 
 using namespace dispatcher;
@@ -88,7 +89,7 @@ Replayer::Replayer( const Config& config )
     handler_.Register( *services_ );
     clientsNetworker_->LockConnections();
     loader_->Start();
-    handler_.Update();
+    loader_->Tick();
     clientsNetworker_->UnlockConnections();
 }
 

@@ -90,7 +90,6 @@ private:
     unsigned int factor_;
     unsigned int tickNumber_;
     bool running_;
-    bool doFirstTick_;
     int skipToFrame_;
     MT_TimerManager manager_;
     std::auto_ptr< ReplayExtensionFactory > factory_;
