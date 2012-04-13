@@ -9,13 +9,14 @@
 #ifndef PROCESS_H__
 #define PROCESS_H__
 #include <runtime/Process_ABC.h>
-#include <memory>
+#include <boost/shared_ptr.hpp>
 
 namespace runtime
 {
+    class Api_ABC;
 
-class Api_ABC;
-class Handle;
+    typedef boost::shared_ptr< void > Handle;
+    Handle MakeHandle( const Api_ABC& api, void* value );
 
 // =============================================================================
 /** @class  Process
@@ -29,7 +30,7 @@ public:
     //! @name Constructor/Destructor
     //@{
     Process( const Api_ABC& api, int identifier );
-    Process( const Api_ABC& api, int identifier, std::auto_ptr< Handle > handle );
+    Process( const Api_ABC& api, int identifier, Handle handle );
     virtual ~Process();
     //@}
 
@@ -46,7 +47,7 @@ private:
     //@{
     const Api_ABC& api_;
     int pid_;
-    std::auto_ptr< Handle > handle_;
+    Handle handle_;
     const std::string name_;
     //@}
 };

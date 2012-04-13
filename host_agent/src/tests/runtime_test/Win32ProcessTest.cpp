@@ -12,7 +12,6 @@
 #include <runtime/Utf8.h>
 #include <runtime/win32/Api_ABC.h>
 #include <runtime/win32/Process.h>
-#include <runtime/win32/Handle.h>
 #include <boost/bind.hpp>
 
 using namespace runtime;
@@ -59,7 +58,7 @@ BOOST_AUTO_TEST_CASE( process_with_handle_constructs )
 {
     MockApi api;
     int pid = 42;
-    std::auto_ptr< Handle > ptr( new Handle( api, dummy ) );
+    Handle ptr = MakeHandle( api, dummy );
     MOCK_EXPECT( api.GetProcessName ).once().with( dummy, mock::any, mock::any ).returns( 0 );
     MOCK_EXPECT( api.CloseHandle ).once().with( dummy ).returns( true );
     Process process( api, pid, ptr );

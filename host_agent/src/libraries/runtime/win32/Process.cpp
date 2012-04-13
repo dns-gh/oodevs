@@ -8,15 +8,28 @@
 // *****************************************************************************
 #include "Process.h"
 #include "Api_ABC.h"
-#include "Handle.h"
 #include <runtime/Utf8.h>
+
+#include <boost/bind.hpp>
 #include <boost/format.hpp>
+#include <boost/static_assert.hpp>
 
 using namespace runtime;
 
+BOOST_STATIC_ASSERT( sizeof Handle::pointer == sizeof HANDLE );
+
+// -----------------------------------------------------------------------------
+// Name: runtime::MakeHandle
+// Created: BAX 2012-04-11
+// -----------------------------------------------------------------------------
+Handle runtime::MakeHandle( const Api_ABC& api, void* value )
+{
+    return value ? Handle( value, boost::bind( &Api_ABC::CloseHandle, &api, _1 ) ) : Handle();
+}
+
 namespace
 {
-    std::auto_ptr< Handle > MakeHandle( const Api_ABC& api, int pid )
+    Handle GetHandle( const Api_ABC& api, int pid )
     {
         int flags = 0;
         flags |= PROCESS_QUERY_INFORMATION; // CreateRemoteThread
@@ -29,13 +42,13 @@ namespace
         HANDLE handle = api.OpenProcess( flags, false, pid );
         if( !handle )
             throw std::runtime_error( ( boost::format( "unable to open process %1%" ) % pid ).str() );
-        return std::auto_ptr< Handle >( new Handle( api, handle ) );
+        return runtime::MakeHandle( api, handle );
     }
 
-    std::string GetName( const Api_ABC& api, const Handle& handle )
+    std::string GetName( const Api_ABC& api, Handle handle )
     {
         wchar_t name[MAX_PATH];
-        int size = api.GetProcessName( handle.value_, name, sizeof name - 1 );
+        int size = api.GetProcessName( handle.get(), name, sizeof name - 1 );
         return size ? Utf8Convert( name ) : "";
     }
 }
@@ -45,10 +58,10 @@ namespace
 // Created: BAX 2012-03-07
 // -----------------------------------------------------------------------------
 Process::Process( const Api_ABC& api, int pid )
-    : api_( api )
-    , pid_( pid )
-    , handle_( MakeHandle( api_, pid_ ) )
-    , name_( ::GetName( api_, *handle_ ) )
+    : api_   ( api )
+    , pid_   ( pid )
+    , handle_( GetHandle( api_, pid_ ) )
+    , name_  ( ::GetName( api_, handle_ ) )
 {
     // NOTHING
 }
@@ -57,11 +70,11 @@ Process::Process( const Api_ABC& api, int pid )
 // Name: Process::Process
 // Created: BAX 2012-03-07
 // -----------------------------------------------------------------------------
-Process::Process( const Api_ABC& api, int pid, std::auto_ptr< Handle > handle )
+Process::Process( const Api_ABC& api, int pid, Handle handle )
     : api_   ( api )
     , pid_   ( pid )
     , handle_( handle )
-    , name_  ( ::GetName( api_, *handle_ ) )
+    , name_  ( ::GetName( api_, handle_ ) )
 {
     // NOTHING
 }
@@ -99,7 +112,7 @@ const std::string& Process::GetName() const
 // -----------------------------------------------------------------------------
 bool Process::Join( int msTimeout )
 {
-    int reply = api_.WaitForSingleObjectEx( handle_->value_, msTimeout, false );
+    int reply = api_.WaitForSingleObjectEx( handle_.get(), msTimeout, false );
     return reply == WAIT_OBJECT_0;
 }
 
@@ -132,7 +145,7 @@ namespace
         if( !thread )
             return false;
 
-        Handle dispose( api, thread );
+        Handle dispose = runtime::MakeHandle( api, thread );
         int reply = api.WaitForSingleObjectEx( process, msTimeout, false );
         return reply == WAIT_OBJECT_0;
     }
@@ -145,5 +158,5 @@ namespace
 bool Process::Kill( int /*msTimeout*/ )
 {
     bool done = false;//SafeTerminate( api_, handle_->value_, msTimeout );
-    return done ? true : UnsafeTerminate( api_, handle_->value_ );
+    return done ? true : UnsafeTerminate( api_, handle_.get() );
 }

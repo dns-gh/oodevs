@@ -8,7 +8,6 @@
 // *****************************************************************************
 #include "Runtime.h"
 #include "Process.h"
-#include "Handle.h"
 #include "Api_ABC.h"
 #include <runtime/Utf8.h>
 #include <cpplog/cpplog.hpp>
@@ -118,11 +117,11 @@ namespace
                         &startup, &info );
         if( info.hThread )
             api.CloseHandle( info.hThread );
-        std::auto_ptr< Handle > handle( new Handle( api, info.hProcess ) );
+        Handle handle = MakeHandle( api, info.hProcess );
         if( !done )
             throw std::runtime_error( "unable to create process" );
 
-        return boost::make_shared< Process >( api, info.dwProcessId, boost::ref( handle ) );
+        return boost::make_shared< Process >( api, info.dwProcessId, handle );
     }
 }
 

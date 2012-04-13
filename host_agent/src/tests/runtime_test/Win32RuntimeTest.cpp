@@ -12,7 +12,6 @@
 #include <runtime/Utf8.h>
 #include <runtime/win32/Api_ABC.h>
 #include <runtime/win32/Process.h>
-#include <runtime/win32/Handle.h>
 #include <runtime/win32/Runtime.h>
 #include <cpplog/cpplog.hpp>
 #include <boost/lexical_cast.hpp>
