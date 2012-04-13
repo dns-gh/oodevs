@@ -346,10 +346,6 @@
         </build-lib>
     </target>
 
-    <target name="library.import" description="build import static library">
-        <build-lib name="import" pattern="lib${ant.project.name}_import-${platform}-mt@{suffix}" suffix="-gd"/>
-    </target>
-
     <target name="library.script_plugin" depends="library.dispatcher" description="build script_plugin static library">
         <build-lib name="script_plugin" pattern="lib${ant.project.name}_script_plugin-${platform}-mt@{suffix}" suffix="-gd" depends="qt4">
             <defineset define="QT3_SUPPORT"/>
@@ -793,7 +789,7 @@
     -->
     <target name="test" depends="generate-license,scripts_test,adaptation_test,tools_test,3a_test,plugins_test,hla_plugin_test,
                                  shield_test,clients_test,exercises_test,data_migrations_test,dispatcher_test,application.simulation_kernel_test,
-                                 application.integration_decisionnal_test,protocol_test,import_test,positions_plugin_test,
+                                 application.integration_decisionnal_test,protocol_test,positions_plugin_test,
                                  actions_test,launcher_test,reports_test,flood_test" description="run all tests"/>
 
     <target name="3a_test" depends="library.3a">
@@ -894,10 +890,6 @@
                   lib${ant.project.name}_protocol-${platform}-mt">
             <defineset define="QT3_SUPPORT"/>
         </build-test>
-    </target>
-
-    <target name="import_test" depends="library.import">
-        <build-test name="import" depends="boost,xerces" libs="geocoord,lib${ant.project.name}_import-${platform}-mt"/>
     </target>
 
     <target name="launcher_test" depends="application.launcher_dll,library.frontend">
