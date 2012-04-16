@@ -10,6 +10,7 @@
 #ifndef __BridgingCapacity_h_
 #define __BridgingCapacity_h_
 
+#include "MIL.h"
 #include "ObjectCapacity_ABC.h"
 #include "MIL_DynamicPathDataHandler.h"
 #include "MT_Tools/MT_Vector2DTypes.h"
@@ -41,7 +42,10 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const unsigned int );
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name Operations
@@ -59,13 +63,14 @@ private:
 
     //! @name Helpers
     //@{
-    void CreateBridgeGeometry( const T_PointVector& points, T_PointVector& output ) const;
+    void CreateBridgeGeometry( const T_PointVector& points );
     //@}
 
 private:
     //! @name Member data
     //@{
     std::string type_;
+    T_PointVector bridge_;
     MIL_DynamicPathDataHandler handler_;
     //@}
 };

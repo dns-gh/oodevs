@@ -57,15 +57,43 @@ BridgingCapacity::~BridgingCapacity()
     // NOTHING
 }
 
+namespace
+{
+    TerrainData Convert( const std::string& type )
+    {
+        if( type == "highway" )
+            return TerrainData::Motorway();
+        else if( type == "main road" )
+            return TerrainData::LargeRoad();
+        else if( type == "secondary road" )
+            return TerrainData::MediumRoad();
+        else if( type == "country road" )
+            return TerrainData::SmallRoad();
+        return TerrainData::Bridge();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: BridgingCapacity::load
-// Created: JCR 2008-07-03
+// Created: JSR 2012-04-16
 // -----------------------------------------------------------------------------
-template< typename Archive >
-void BridgingCapacity::serialize( Archive& file, const unsigned int )
+void BridgingCapacity::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this )
-         & type_;
+    file >> boost::serialization::base_object< ObjectCapacity_ABC >( *this )
+         >> type_
+         >> bridge_;
+    handler_.Reset( new TER_DynamicData( bridge_, Convert( type_ ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: BridgingCapacity::save
+// Created: JSR 2012-04-16
+// -----------------------------------------------------------------------------
+void BridgingCapacity::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << boost::serialization::base_object< ObjectCapacity_ABC >( *this )
+         << type_
+         << bridge_;
 }
 
 // -----------------------------------------------------------------------------
@@ -86,22 +114,6 @@ void BridgingCapacity::Instanciate( MIL_Object_ABC& object ) const
     object.AddCapacity( new BridgingCapacity( *this ) );
 }
 
-namespace
-{
-    TerrainData Convert( const std::string& type )
-    {
-        if( type == "highway" )
-            return TerrainData::Motorway();
-        else if( type == "main road" )
-            return TerrainData::LargeRoad();
-        else if( type == "secondary road" )
-            return TerrainData::MediumRoad();
-        else if( type == "country road" )
-            return TerrainData::SmallRoad();
-        return TerrainData::Bridge();
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: BridgingCapacity::Finalize
 // Created: JCR 2008-08-19
@@ -110,9 +122,8 @@ void BridgingCapacity::Finalize( MIL_Object_ABC& object )
 {
     if( type_ != "" )
     {
-        T_PointVector vector;
-        CreateBridgeGeometry( object.GetLocalisation().GetPoints(), vector );
-        handler_.Reset( new TER_DynamicData( vector, Convert( type_ ) ) );
+        CreateBridgeGeometry( object.GetLocalisation().GetPoints() );
+        handler_.Reset( new TER_DynamicData( bridge_, Convert( type_ ) ) );
     }
 }
 
@@ -120,14 +131,14 @@ void BridgingCapacity::Finalize( MIL_Object_ABC& object )
 // Name: BridgingCapacity::CreateBridgeGeometry
 // Created: JCR 2008-08-19
 // -----------------------------------------------------------------------------
-void BridgingCapacity::CreateBridgeGeometry( const T_PointVector& points, T_PointVector& output ) const
+void BridgingCapacity::CreateBridgeGeometry( const T_PointVector& points )
 {
     assert( !points.empty() );
-    output.reserve( points.size() * 2 );
+    bridge_.reserve( points.size() * 2 );
     if( points.size() == 1 )
     {
-        output.push_back( points.front() );
-        output.push_back( points.front() );
+        bridge_.push_back( points.front() );
+        bridge_.push_back( points.front() );
     }
     else
     {
@@ -138,8 +149,8 @@ void BridgingCapacity::CreateBridgeGeometry( const T_PointVector& points, T_Poin
             const MT_Vector2D* pCurPoint = &*itPoint;
             MT_Vector2D direction( *pCurPoint - *pLastPoint );
             direction.Normalize() *= 150;
-            output.push_back( *pLastPoint - direction );
-            output.push_back( *pCurPoint  + direction );
+            bridge_.push_back( *pLastPoint - direction );
+            bridge_.push_back( *pCurPoint  + direction );
             pLastPoint = pCurPoint;
         }
     }
