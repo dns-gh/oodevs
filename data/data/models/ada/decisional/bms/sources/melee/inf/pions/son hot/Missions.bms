@@ -1,0 +1,25 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/pions/son hot/Missions.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JDY 02-11-06 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Pions/Son Hot/Missions.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 24/05/05 13:56 $
+]]--[[// $Revision: 10 $
+]]--[[// $Workfile: Missions.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+--[[//=============================================================================
+]]--[[// Declaration de toutes les missions de la Section d'Infanterie
+]]--[[//=============================================================================
+]]
+include "Melee/Inf/Pions/Son Hot/Missions/Appuyer.bms"
+
+include "Melee/Inf/Pions/Son Hot/Missions/Barrer.bms"
+
+include "Melee/Inf/Pions/Son Hot/Missions/Surveiller.bms"
+

@@ -1,0 +1,20 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/automates/pel pir/missions/Missions.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: MIA 04-02-06 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Abc/Automates/Pel PIR/Missions/Missions.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 13/05/05 16:31 $
+]]--[[// $Revision: 6 $
+]]--[[// $Workfile: Missions.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+--[[// ProtegerPC
+]]include "Melee/Abc/Automates/Pel PIR/Missions/ProtegerPC/ProtegerPC - MRT.bms"
+
+include "Melee/Abc/Automates/Pel PIR/Missions/ProtegerPC/ProtegerPC - CDT.bms"
+

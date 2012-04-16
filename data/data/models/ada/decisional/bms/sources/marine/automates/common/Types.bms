@@ -1,0 +1,4 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/marine/automates/common/Types.bms"] = true
+
+

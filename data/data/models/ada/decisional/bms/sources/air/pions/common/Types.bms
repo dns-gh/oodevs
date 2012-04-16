@@ -1,0 +1,14 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/air/pions/common/Types.bms"] = true
+
+--[[//Si nouveau type, modifier la fonction S_EstPatrouilleAIR()
+]]
+--[[// *****************************************************************************
+]]--[[// Structures des pions AIR
+]]--[[// *****************************************************************************
+]]
+--[[// structure pour le modèle des hélicoptères de manoeuvre dédiés à la log
+]]
+
+--[[// structure pour le modèle de la patrouille d'hélicoptères de manoeuvre
+]]

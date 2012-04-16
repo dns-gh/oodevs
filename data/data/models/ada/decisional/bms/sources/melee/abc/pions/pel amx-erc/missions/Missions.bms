@@ -1,0 +1,54 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/pions/pel amx-erc/missions/Missions.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: MIA 03-02-10 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Abc/Pions/Pel AMX-ERC/Missions/Missions.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 13/05/05 16:31 $
+]]--[[// $Revision: 9 $
+]]--[[// $Workfile: Missions.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[//=============================================================================
+]]--[[// Pion AMX 10 RC / E RC 90
+]]--[[//=============================================================================
+]]include "Melee/Abc/Pions/Pel AMX-ERC/Missions/ReconnaitreAxe.bms"
+
+include "Melee/Abc/Pions/Pel AMX-ERC/Missions/ReconnaitrePoint.bms"
+
+include "Melee/Abc/Pions/Pel AMX-ERC/Missions/Attaquer.bms"
+
+include "Melee/Abc/Pions/Pel AMX-ERC/Missions/Appuyer.bms"
+
+include "Melee/Abc/Pions/Pel AMX-ERC/Missions/AppuyerSurPosition.bms"
+
+include "Melee/Abc/Pions/Pel AMX-ERC/Missions/Soutenir.bms"
+
+include "Melee/Abc/Pions/Pel AMX-ERC/Missions/Surveiller.bms"
+
+include "Melee/Abc/Pions/Pel AMX-ERC/Missions/ControlerZone.bms"
+
+include "Melee/Abc/Pions/Pel AMX-ERC/Missions/Barrer.bms"
+
+include "Melee/Abc/Pions/Pel AMX-ERC/Missions/Escorter.bms"
+
+include "Melee/Abc/Pions/Pel AMX-ERC/Missions/Jalonner.bms"
+
+include "Melee/Abc/Pions/Pel AMX-ERC/Missions/Couvrir.bms"
+
+include "Melee/Abc/Pions/Pel AMX-ERC/Missions/ContreAttaquer.bms"
+
+include "Melee/Abc/Pions/Pel AMX-ERC/Missions/Reduire.bms"
+
+include "Melee/Abc/Pions/Pel AMX-ERC/Missions/SEmparerZone.bms"
+
+include "Melee/Abc/Pions/Pel AMX-ERC/Missions/Relever.bms"
+
+include "Melee/Abc/Pions/Pel AMX-ERC/Missions/Fixer.bms"
+
+include "Melee/Abc/Pions/Pel AMX-ERC/Missions/Freiner.bms"
+
+include "Melee/Abc/Pions/Pel AMX-ERC/Missions/FlancGarder.bms"

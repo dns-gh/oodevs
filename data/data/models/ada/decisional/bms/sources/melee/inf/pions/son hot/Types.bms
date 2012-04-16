@@ -1,0 +1,19 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/pions/son hot/Types.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JDY 02-11-06 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Pions/Son Hot/Types.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 24/05/05 13:56 $
+]]--[[// $Revision: 10 $
+]]--[[// $Workfile: Types.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Definition des types pour Section HOT
+]]--[[//-----------------------------------------------------------------------------
+]]

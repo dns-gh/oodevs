@@ -1,0 +1,6 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/population/refugies/pions/refugie/Motivations.bms"] = true
+
+--[[// TEMP ? MOT particulières aux pions populations
+]]include "Common/Pions/Motivations.bms"
+

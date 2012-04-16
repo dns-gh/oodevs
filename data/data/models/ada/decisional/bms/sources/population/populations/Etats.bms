@@ -1,0 +1,139 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/population/populations/Etats.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//  VE_Domination
+]]--[[//
+]]--[[//  Seule la valeur est utilisée, les autres paramètres sont inutiles
+]]--[[//  Sert à modéliser un double niveau, la variable évolue entre deux bornes: 0 et 1
+]]--[[//  : initialisée à 1, évolution naturelle positive lente
+]]--[[//
+]]--[[//  NE PAS CONNECTER DIRECTEMENT A UNE MOTIVATION !
+]]--[[// *****************************************************************************
+]]
+motivation_plugin = motivation_plugin or {}
+motivation_plugin.stimuli = motivation_plugin.stimuli or {}
+motivation_plugin.statevariables = motivation_plugin.statevariables or {}
+motivation_plugin.emotions = motivation_plugin.emotions or {}
+motivation_plugin.motivations = motivation_plugin.motivations or {}
+
+motivation_plugin.statevariables[ "VE_Domination" ] =
+{
+    --[[// Boundary of the comfort interval. 
+]]min_confort = 0,
+    --[[// Boundary of the comfort interval.
+]]max_confort = 1,
+    --[[// Boundary of the tolerance interval.
+]]tolerance_limit = 1,
+    --[[// Boundary of the comfort interval.
+]]viability_limit = 1,
+    --[[// Initial value of the state variable.
+]]init_value = 1,
+    --[[// Evolution of the variable for 1 time unit.
+]]natural_evolution = 0,
+    --[[// Output when state variable is max_confort.
+]]tolerance_min_output = 1,
+    --[[// Output when state variable is tolerance_limit.
+]]tolerance_max_output = 1,
+    --[[// Max output of the state variable.
+]]viability_max_output = 1,
+    --[[// emergency_increase_rate + tolerance_max_output
+]]emergency_increase_rate = 1,
+}
+
+--[[// = Output when state variable is at
+]]--[[// (tolerance_limit + viability_limit) / 2.
+]]--[[// *****************************************************************************
+]]--[[//  VE_Stationner
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.statevariables[ "VE_Stationner" ] =
+{
+    --[[// Boundary of the comfort interval. 
+]]min_confort = 0,
+    --[[// Boundary of the comfort interval.
+]]max_confort = 0,
+    --[[// Boundary of the tolerance interval.
+]]tolerance_limit = 1,
+    --[[// Boundary of the comfort interval.
+]]viability_limit = 1,
+    --[[// Initial value of the state variable.
+]]init_value = 0,
+    --[[// Evolution of the variable for 1 time unit.
+]]natural_evolution = 0,
+    --[[// Output when state variable is max_confort.
+]]tolerance_min_output = 0,
+    --[[// Output when state variable is tolerance_limit.
+]]tolerance_max_output = 1,
+    --[[// Max output of the state variable.
+]]viability_max_output = 1,
+    --[[// emergency_increase_rate + tolerance_max_output
+]]emergency_increase_rate = 1,
+}
+
+--[[// = Output when state variable is at
+]]--[[// (tolerance_limit + viability_limit) / 2.
+]]--[[// *****************************************************************************
+]]--[[//  VE_Courage
+]]--[[//
+]]--[[// *****************************************************************************
+]]motivation_plugin.statevariables[ "VE_Courage" ] =
+{
+    --[[// Boundary of the comfort interval. 
+]]min_confort = 0,
+    --[[// Boundary of the comfort interval.
+]]max_confort = 0,
+    --[[// Boundary of the tolerance interval.
+]]tolerance_limit = 1,
+    --[[// Boundary of the comfort interval.
+]]viability_limit = 1,
+    --[[// Initial value of the state variable.
+]]init_value = 1,
+    --[[// Evolution of the variable for 1 time unit.
+]]natural_evolution = 0,
+    --[[// Output when state variable is max_confort.
+]]tolerance_min_output = 0,
+    --[[// Output when state variable is tolerance_limit.
+]]tolerance_max_output = 1,
+    --[[// Max output of the state variable.
+]]viability_max_output = 1,
+    --[[// emergency_increase_rate + tolerance_max_output
+]]emergency_increase_rate = 1,
+}
+
+--[[// = Output when state variable is at
+]]--[[// (tolerance_limit + viability_limit) / 2.
+]]--[[// *****************************************************************************
+]]--[[//  VE_Morts
+]]--[[//
+]]--[[//  Seule la valeur est utilisée, les autres paramètres sont inutiles
+]]--[[//
+]]--[[//  NE PAS CONNECTER DIRECTEMENT A UNE MOTIVATION !
+]]--[[// *****************************************************************************
+]]motivation_plugin.statevariables[ "VE_Morts" ] =
+{
+    --[[// Boundary of the comfort interval. 
+]]min_confort = 0,
+    --[[// Boundary of the comfort interval.
+]]max_confort = 100000,
+    --[[// Boundary of the tolerance interval.
+]]tolerance_limit = 100000,
+    --[[// Boundary of the comfort interval.
+]]viability_limit = 100000,
+    --[[// Initial value of the state variable.
+]]init_value = 0,
+    --[[// Evolution of the variable for 1 time unit.
+]]natural_evolution = 0,
+    --[[// Output when state variable is max_confort.
+]]tolerance_min_output = 1,
+    --[[// Output when state variable is tolerance_limit.
+]]tolerance_max_output = 1,
+    --[[// Max output of the state variable.
+]]viability_max_output = 1,
+    --[[// emergency_increase_rate + tolerance_max_output
+]]emergency_increase_rate = 1,
+}
+
+--[[// = Output when state variable is at
+]]--[[// (tolerance_limit + viability_limit) / 2.
+]]

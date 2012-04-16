@@ -1,0 +1,3 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/glaise/glaise_melee/inf/automates/cie vab/missions/freiner/Freiner MRT.bms"] = true
+

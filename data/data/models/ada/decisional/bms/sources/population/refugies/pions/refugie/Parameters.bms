@@ -1,0 +1,7 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/population/refugies/pions/refugie/Parameters.bms"] = true
+
+function M_POLY_DOCTRINE_MODULATION_VITESSE_RALENTIR()
+    return 1
+end
+

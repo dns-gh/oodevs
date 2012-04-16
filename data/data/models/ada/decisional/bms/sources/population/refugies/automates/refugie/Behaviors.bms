@@ -1,0 +1,15 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/population/refugies/automates/refugie/Behaviors.bms"] = true
+
+--[[// Paramètres généraux
+]]--[[// -------------------
+]]use_priority = yes
+
+max_instances = 200
+
+max_activations = 200
+
+
+--[[// Commun pion Refugies
+]]include "Population/Refugies/Automates/Common/Behaviors.bms"
+

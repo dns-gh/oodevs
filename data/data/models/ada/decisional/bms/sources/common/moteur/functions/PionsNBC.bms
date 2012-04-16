@@ -1,0 +1,7 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/common/moteur/functions/PionsNBC.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[// globals
+]]--[[// *****************************************************************************
+]]--[[/*T_Localisation*/]]

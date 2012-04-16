@@ -1,0 +1,10 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/population/milices/pion/Motivations.bms"] = true
+
+include "Population/Milices/Common/Motivations/Stimulus.bms"
+
+include "Population/Milices/Common/Motivations/Etats.bms"
+
+include "Population/Milices/Common/Motivations/Motivations.bms"
+
+

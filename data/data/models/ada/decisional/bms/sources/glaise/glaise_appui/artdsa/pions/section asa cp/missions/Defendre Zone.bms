@@ -1,0 +1,3 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/glaise/glaise_appui/artdsa/pions/section asa cp/missions/Defendre Zone.bms"] = true
+

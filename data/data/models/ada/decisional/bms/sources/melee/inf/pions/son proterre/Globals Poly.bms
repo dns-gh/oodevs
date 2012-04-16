@@ -1,0 +1,37 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/inf/pions/son proterre/Globals Poly.bms"] = true
+
+--[[// *****************************************************************************
+]]--[[//
+]]--[[// $Created: JCR 03-08-05 $
+]]--[[// $Archive: /MVW_v10/Build/Data/Data/Modeles/Sources/Melee/Inf/Pions/Son ProTerre/Globals Poly.hal $
+]]--[[// $Author: Ggr $
+]]--[[// $Modtime: 21/09/05 16:27 $
+]]--[[// $Revision: 16 $
+]]--[[// $Workfile: Globals Poly.hal $
+]]--[[//
+]]--[[// *****************************************************************************
+]]
+--[[//-----------------------------------------------------------------------------
+]]--[[// Macros generique utilise pdt les phases de deplacement
+]]--[[//-----------------------------------------------------------------------------
+]]
+
+
+function M_POLY_MODELE_PION_CAPACITE_RECO_POINT()
+    return 1000
+end
+
+
+
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Macros generique inter-armes sur reception d'ordres de conduite
+]]--[[//-----------------------------------------------------------------------------
+]]
+
+--[[//-----------------------------------------------------------------------------
+]]--[[// Reaction sur comportementale sur une LCAR
+]]--[[//-----------------------------------------------------------------------------
+]]
+

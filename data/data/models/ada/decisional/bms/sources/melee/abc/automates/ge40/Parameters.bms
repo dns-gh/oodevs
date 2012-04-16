@@ -1,0 +1,3 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/melee/abc/automates/ge40/Parameters.bms"] = true
+

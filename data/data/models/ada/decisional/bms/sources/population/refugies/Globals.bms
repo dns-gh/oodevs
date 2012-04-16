@@ -1,0 +1,6 @@
+includedFiles = includedFiles or {}
+includedFiles["sources/population/refugies/Globals.bms"] = true
+
+include "Common/Pions/Globals.bms"
+
+include "Population/Refugies/Parameters.bms"
