@@ -114,7 +114,7 @@ namespace
         }
     };
 
-    bool contains( const web::Client_ABC::T_Parameters& actual, const web::Client_ABC::T_Parameters& expected )
+    bool Contains( const web::Client_ABC::T_Parameters& actual, const web::Client_ABC::T_Parameters& expected )
     {
         BOOST_FOREACH( const web::Client_ABC::T_Parameters::value_type& value, expected )
         {
@@ -133,7 +133,7 @@ BOOST_FIXTURE_TEST_CASE( proxy_registers, Fixture )
     const std::string dstHost = "some_host";
     const int dstPort = 15000;
     MOCK_EXPECT( client.Get ).once().with( "localhost", port, "/register_proxy",
-        boost::bind( &contains, _1, boost::assign::map_list_of
+        boost::bind( &Contains, _1, boost::assign::map_list_of
             ( "prefix", dstPrefix )
             ( "host",   dstHost )
             ( "port",   boost::lexical_cast< std::string >( dstPort ) ) ) );
@@ -146,7 +146,7 @@ BOOST_FIXTURE_TEST_CASE( proxy_unregisters, Fixture )
     boost::shared_ptr< Proxy > proxy = MakeProxy();
     const std::string dstPrefix = "some_prefix";
     MOCK_EXPECT( client.Get ).once().with( "localhost", port, "/unregister_proxy",
-        boost::bind( &contains, _1, boost::assign::map_list_of( "prefix", dstPrefix ) ) );
+        boost::bind( &Contains, _1, boost::assign::map_list_of( "prefix", dstPrefix ) ) );
     proxy->Unregister( dstPrefix );
     MOCK_EXPECT( process->Kill ).once().returns( true );
 }
