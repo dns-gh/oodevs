@@ -1,7 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/marine/common/Types.bms"] = true
-
-include "Marine/Pions/Common/Types.bms"
-
-include "Marine/Automates/Common/Types.bms"
-

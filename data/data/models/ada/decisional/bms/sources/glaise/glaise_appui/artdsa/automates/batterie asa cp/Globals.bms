@@ -1,7 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/glaise/glaise_appui/artdsa/automates/batterie asa cp/Globals.bms"] = true
-
-include "glaise/glaise_Appui/ArtDsa/Automates/Common/Globals.bms"
-
-include "glaise/glaise_Appui/ArtDsa/Automates/batterie ASA cp/Parameters.bms"
-

@@ -1,8 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/air/pions/common/Actions.bms"] = true
-
---[[// actions génériques à tous les pions de l'AIR
-]]include "Air/Pions/Common/Actions/Actions - Dep.bms"
-
-include "Air/Pions/Common/Actions/Actions - Maj.bms"
-

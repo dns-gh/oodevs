@@ -1,7 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/common/moteur/functions/AutomatesLOG.bms"] = true
-
---[[// *****************************************************************************
-]]--[[// globals
-]]--[[// *****************************************************************************
-]]--[[/*T_MaintenancePriorites*/]]--[[/*T_ListeAutomates*/]]--[[/*E_MaintenanceRegimeTravail*/]]--[[/*T_SantePriorites*/]]--[[/*T_ListeAutomates*/]]

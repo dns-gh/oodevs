@@ -1,5 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/air/automates/escadrille assaut/Globals.bms"] = true
-
-include "Air/Automates/Common/Globals.bms"
-

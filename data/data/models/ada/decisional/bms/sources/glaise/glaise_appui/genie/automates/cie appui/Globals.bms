@@ -1,8 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/glaise/glaise_appui/genie/automates/cie appui/Globals.bms"] = true
-
---[[//-----------------------------------------------------------------------------
-]]--[[// fichiers à inclure
-]]--[[//-----------------------------------------------------------------------------
-]]include "glaise/glaise_appui/Genie/Automates/Globals.bms"
-

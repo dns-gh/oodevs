@@ -1,4 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/humus/humus_common/Behaviors.bms"] = true
-
-include "Humus/Humus_Common/Actions.bms"

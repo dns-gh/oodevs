@@ -1,8 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/air/pions/common/MissionsGeneriques.bms"] = true
-
---[[//Missions Generiques aux pions Air
-]]include "Air/Pions/Common/Missions/FaireMouvement.bms"
-
-include "Air/Pions/Common/Missions/Suivre.bms"
-

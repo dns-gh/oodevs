@@ -1,7 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/common/moteur/functions/AutomatesASA.bms"] = true
-
---[[// *****************************************************************************
-]]--[[// globals
-]]--[[// *****************************************************************************
-]]--[[/*T_ListePoints*//*nbPositions*//*T_Point*//*position centrale*//*distance au centre*/]]--[[/*T_ListePoints*//*nbPositions*//*T_Point*//*position a défendre*//*angle*//*distance de la position a défendre*//*distance entre sections*//*T_Direction*/]]--[[/*T_ListePoints*//*nbPositions*//*T_Point*//*position a défendre*//*distance point à défendre*//*distance entre rideaux*//*distance entre sections*//*T_Direction*/]]

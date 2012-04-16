@@ -1,8 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/glaise/glaise_appui/artdsa/automates/batterie asa cp/Parameters.bms"] = true
-
-function M_POLY_DOCTRINE_DISTANCE_MAX_ENTRE_SECTIONS()
-    return 10000
-end
-
-

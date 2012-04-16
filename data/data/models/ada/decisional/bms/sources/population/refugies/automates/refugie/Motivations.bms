@@ -1,4 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/population/refugies/automates/refugie/Motivations.bms"] = true
-
-include "Common/Pions/Motivations V3/Etats.bms"

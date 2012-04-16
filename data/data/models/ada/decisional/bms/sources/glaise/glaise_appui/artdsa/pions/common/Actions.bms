@@ -1,8 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/glaise/glaise_appui/artdsa/pions/common/Actions.bms"] = true
-
---[[// actions génériques à tous les pions de l'ASA
-]]include "Glaise/Glaise_Appui/ArtDsa/Pions/Common/Actions/Actions - Maj.bms"
-
-include "Glaise/Glaise_Appui/ArtDsa/Pions/Common/Actions/Actions - Manoeuvre.bms"
-

@@ -1,9 +1,0 @@
-includedFiles = includedFiles or {}
-includedFiles["sources/melee/abc/automates/ge40/Motivations.bms"] = true
-
-include "Common/Pions/Motivations V3/Etats.bms"
-
-include "Melee/Common/Motivations/Etats.bms"
-
-include "Melee/Inf/Etats.bms"
-
