@@ -209,10 +209,11 @@ void ConstructionAttribute::save( MIL_CheckPointOutArchive& ar, const unsigned i
        ar << dotation_->GetName();
     else
        ar << emptyString;
+    double constructionPercentage = constructionPercentage_.Get();
     ar << nFullNbrDotation_
        << nCurrentNbrDotation_
-       << (double)constructionPercentage_.Get()
-       << density_;
+       << density_
+       << constructionPercentage;
 }
 
 // -----------------------------------------------------------------------------

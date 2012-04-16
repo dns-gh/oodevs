@@ -120,7 +120,7 @@ private:
     const MIL_InhabitantType&                    type_;
     const unsigned int                           nID_;
     MIL_Army_ABC*                                pArmy_;
-    MIL_Object_ABC*                              pPopulationMovingObject_;
+    unsigned long                                movingObjectId_;
     std::auto_ptr< MIL_LivingArea >              pLivingArea_;
     std::auto_ptr< MIL_Schedule_ABC >            pSchedule_;
     std::auto_ptr< MIL_InhabitantSatisfactions > pSatisfactions_;

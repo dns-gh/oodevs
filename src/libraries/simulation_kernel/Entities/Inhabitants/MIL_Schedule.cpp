@@ -150,6 +150,15 @@ void MIL_Schedule::UpdateNetwork( client::PopulationUpdate& msg ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_Schedule::SetMovingAfterCheckpoint
+// Created: JSR 2012-04-16
+// -----------------------------------------------------------------------------
+void MIL_Schedule::SetMovingAfterCheckpoint()
+{
+    isMoving_ = true;
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_Schedule::Update
 // Created: LGY 2011-01-19
 // -----------------------------------------------------------------------------

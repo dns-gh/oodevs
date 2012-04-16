@@ -63,7 +63,7 @@ MIL_Inhabitant::MIL_Inhabitant( xml::xistream& xis, const MIL_InhabitantType& ty
     , type_                   ( type )
     , nID_                    ( xis.attribute< unsigned int >( "id" ) )
     , pArmy_                  ( &army )
-    , pPopulationMovingObject_( 0 )
+    , movingObjectId_         ( 0 )
     , nNbrHealthyHumans_      ( 0 )
     , nNbrDeadHumans_         ( 0 )
     , nNbrWoundedHumans_      ( 0 )
@@ -94,7 +94,7 @@ MIL_Inhabitant::MIL_Inhabitant( const MIL_InhabitantType& type )
     , type_                   ( type )
     , nID_                    ( 0 )
     , pArmy_                  ( 0 )
-    , pPopulationMovingObject_( 0 )
+    , movingObjectId_         ( 0 )
     , pLivingArea_            ( 0 )
     , pSchedule_              ( 0 )
     , pSatisfactions_         ( 0 )
@@ -151,12 +151,15 @@ void MIL_Inhabitant::load( MIL_CheckPointInArchive& file, const unsigned int )
          >> pSatisfactions
          >> pLivingArea
          >> pAffinities
-         >> pExtensions;
+         >> pExtensions
+         >> movingObjectId_;
     pLivingArea_.reset( pLivingArea );
     pSatisfactions_.reset( pSatisfactions );
     pAffinities_.reset( pAffinities );
     pExtensions_.reset( pExtensions );
     pSchedule_.reset( new MIL_Schedule( *pLivingArea_ ) );
+    if( movingObjectId_ )
+        pSchedule_->SetMovingAfterCheckpoint();
     type_.InitializeSchedule( *pSchedule_ );
 }
 
@@ -180,7 +183,8 @@ void MIL_Inhabitant::save( MIL_CheckPointOutArchive& file, const unsigned int ) 
          << pSatisfactions
          << pLivingArea
          << pAffinities
-         << pExtensions;
+         << pExtensions
+         << movingObjectId_;
 }
 
 // -----------------------------------------------------------------------------
@@ -253,9 +257,9 @@ void MIL_Inhabitant::UpdateState()
     {
         pSchedule_->Update( MIL_AgentServer::GetWorkspace().GetRealTime(), MIL_AgentServer::GetWorkspace().GetTickDuration() );
         // $$$$ _RC_ JSR 2011-03-23: L'objet doit être créé dans le livingarea, dans startmoving, et détruit dans finishmoving!!!
-        if( pSchedule_->IsMoving() && !pPopulationMovingObject_ )
+        if( pSchedule_->IsMoving() && !movingObjectId_ )
             CreateInhabitantMovingObject();
-        if( !pSchedule_->IsMoving() && pPopulationMovingObject_ )
+        if( !pSchedule_->IsMoving() && movingObjectId_ )
             DestroyInhabitantMovingObject();
         pSatisfactions_->IncreaseSafety( type_.GetSafetyGainPerHour() );
         pSatisfactions_->SetLodgingSatisfaction( pLivingArea_->ComputeOccupationFactor() );
@@ -368,8 +372,12 @@ void MIL_Inhabitant::OnReceiveMsgChangeHealthState( const sword::UnitMagicAction
     nNbrDeadHumans_ = dead.value().Get( 0 ).quantity();
     healthStateChanged_ = true;
     pLivingArea_->DistributeHumans( nNbrHealthyHumans_ + nNbrWoundedHumans_ + nNbrDeadHumans_ );
-    if( pPopulationMovingObject_ )
-        pPopulationMovingObject_->Get< CrowdCapacity >().SetDensityFactor( static_cast< double >( nNbrHealthyHumans_ ) /( nNbrHealthyHumans_ + nNbrWoundedHumans_ + nNbrDeadHumans_ ) );
+    if( movingObjectId_ )
+    {
+        MIL_Object_ABC* obj = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( movingObjectId_ );
+        if( obj )
+            obj->Get< CrowdCapacity >().SetDensityFactor( static_cast< double >( nNbrHealthyHumans_ ) /( nNbrHealthyHumans_ + nNbrWoundedHumans_ + nNbrDeadHumans_ ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -464,9 +472,10 @@ void MIL_Inhabitant::CreateInhabitantMovingObject()
     if( hull.empty() )
         return;
 
-    pPopulationMovingObject_ = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( "population moving", *pArmy_, TER_Localisation( TER_Localisation::ePolygon, hull ) );
+    MIL_Object_ABC* obj = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( "population moving", *pArmy_, TER_Localisation( TER_Localisation::ePolygon, hull ) );
     CrowdCapacity* capacity = new CrowdCapacity( type_.GetAssociatedCrowdType(), static_cast< double >( nNbrHealthyHumans_ ) /( nNbrHealthyHumans_ + nNbrWoundedHumans_ + nNbrDeadHumans_ ) );
-    capacity->Register( *pPopulationMovingObject_ );
+    capacity->Register( *obj );
+    movingObjectId_ = obj->GetID();
 }
 
 // -----------------------------------------------------------------------------
@@ -475,8 +484,10 @@ void MIL_Inhabitant::CreateInhabitantMovingObject()
 // -----------------------------------------------------------------------------
 void MIL_Inhabitant::DestroyInhabitantMovingObject()
 {
-    pPopulationMovingObject_->MarkForDestruction();
-    pPopulationMovingObject_ = 0;
+    MIL_Object_ABC* obj = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( movingObjectId_ );
+    if( obj )
+        obj->MarkForDestruction();
+    movingObjectId_ = 0;
 }
 
 // -----------------------------------------------------------------------------
