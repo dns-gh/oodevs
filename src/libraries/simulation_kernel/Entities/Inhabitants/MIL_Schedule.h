@@ -45,6 +45,7 @@ public:
     virtual void RestartLastEvent();
     virtual void SendFullState( client::PopulationUpdate& msg ) const;
     virtual void UpdateNetwork( client::PopulationUpdate& msg ) const;
+    virtual void SetMovingAfterCheckpoint();
     //@}
 
 private:
