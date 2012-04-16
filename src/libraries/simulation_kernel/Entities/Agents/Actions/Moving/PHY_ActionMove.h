@@ -60,16 +60,9 @@ private:
     //@}
 
 private:
-    //! @name Types
-    //@{
-    typedef std::set< unsigned int > T_ObjectKnowledgeSet; // Dia ids
-    //@}
-
-private:
     MIL_AgentPion& pion_;
     moving::PHY_RoleAction_Moving& role_;
     boost::shared_ptr< DEC_Agent_Path > pMainPath_;
-    T_ObjectKnowledgeSet objectAvoidAttempts_;
     T_KnowledgeObjectVector objectsToAvoid_;
     std::vector< TER_Localisation > geometrySignatures_;
     bool executionSuspended_;

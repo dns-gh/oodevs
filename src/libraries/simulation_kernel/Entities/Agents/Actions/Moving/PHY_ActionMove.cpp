@@ -80,7 +80,6 @@ bool PHY_ActionMove::UpdateObjectsToAvoid()
             if( geometrySignatures_[i] != knowledges[i]->GetLocalisation() )
             {
                 geometrySignatures_[i] = knowledges[i]->GetLocalisation();
-                objectAvoidAttempts_.erase( knowledges[i]->GetID() );
                 modified = true;
             }
         }
@@ -118,8 +117,6 @@ bool PHY_ActionMove::AvoidObstacles()
 
     assert( pObjectColliding && pObjectColliding->IsValid() );
     obstacleId_ = pObjectColliding->GetObjectKnown() ? pObjectColliding->GetObjectKnown()->GetID() : 0;
-    const unsigned int nObjectToAvoidDiaID = pObjectColliding->GetID();
-    objectAvoidAttempts_.insert( nObjectToAvoidDiaID );
 
     const std::string name = MIL_ObjectLoader::GetLoader().GetType( pObjectColliding->GetType().GetName() ).GetRealName();
     role_.SendRC( MIL_Report::eReport_DifficultMovementProgression, name );
