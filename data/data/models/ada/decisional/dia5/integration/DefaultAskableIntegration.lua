@@ -26,6 +26,7 @@ integration.stopInterrogatePion = function( pion )
         end
     end
     pion[myself].actionInterrogate = DEC__StopAction( pion[myself].actionInterrogate )
+    pion[myself].actionInterrogateState = nil
     return true
 end
 
@@ -55,5 +56,6 @@ integration.stopInterrogateCrowd = function( crowd )
         end
     end
     crowd[myself].actionInterrogate = DEC__StopAction( crowd[myself].actionInterrogate )
+    crowd[myself].actionInterrogateState = nil
     return true
 end
