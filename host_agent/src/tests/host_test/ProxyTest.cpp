@@ -11,11 +11,13 @@
 
 #include <host/Proxy.h>
 #include <host/FileSystem_ABC.h>
+#include <host/Pool_ABC.h>
 #include <cpplog/cpplog.hpp>
 #include <runtime/Runtime_ABC.h>
 #include <runtime/Process_ABC.h>
 #include <web/Client_ABC.h>
 
+#include <boost/bind/apply.hpp>
 #include <boost/assign/list_of.hpp>
 #include <boost/bind.hpp>
 #include <boost/foreach.hpp>
@@ -74,6 +76,16 @@ namespace
         MOCK_METHOD( Kill, 1 );
     };
 
+    MOCK_BASE_CLASS( MockPool, Pool_ABC )
+    {
+        MockPool()
+        {
+            MOCK_EXPECT( this->Post ).calls( boost::bind( boost::apply< void >(), _1 ) );
+        }
+        MOCK_METHOD( Post, 1 );
+        MOCK_METHOD( Stop, 0 );
+    };
+
     struct Fixture
     {
         Fixture()
@@ -91,6 +103,7 @@ namespace
         MockRuntime runtime;
         MockFileSystem system;
         MockClient client;
+        MockPool pool;
         boost::shared_ptr< MockProcess > process;
 
         boost::shared_ptr< Proxy > MakeProxy()
@@ -102,7 +115,7 @@ namespace
                 ( " " "-jar \"" + jar + "\"" )
                 ( "--port \"" + boost::lexical_cast< std::string >( port ) + "\"" ),
                 "" ).returns( process );
-            return boost::make_shared< Proxy >( log, runtime, system, java, jar, port, client );
+            return boost::make_shared< Proxy >( log, runtime, system, java, jar, port, client, pool );
         }
 
         boost::shared_ptr< Proxy > ReloadProxy()
@@ -110,7 +123,7 @@ namespace
             MOCK_EXPECT( runtime.GetProcess ).once().with( process->GetPid() ).returns( process );
             MOCK_EXPECT( system.IsFile ).once().with( "proxy.id" ).returns( true );
             MOCK_EXPECT( system.ReadFile ).once().with( "proxy.id" ).returns( tag );
-            return boost::make_shared< Proxy >( log, runtime, system, java, jar, port, client );
+            return boost::make_shared< Proxy >( log, runtime, system, java, jar, port, client, pool );
         }
     };
 

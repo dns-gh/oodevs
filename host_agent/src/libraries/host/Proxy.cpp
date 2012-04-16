@@ -8,6 +8,7 @@
 // *****************************************************************************
 #include "Proxy.h"
 #include "FileSystem_ABC.h"
+#include "Pool_ABC.h"
 
 #include "cpplog/cpplog.hpp"
 #include "runtime/Process_ABC.h"
@@ -18,6 +19,7 @@
 #include <xeumeuleu/xml.hpp>
 
 #include <boost/assign/list_of.hpp>
+#include <boost/bind.hpp>
 #include <boost/lexical_cast.hpp>
 
 #ifdef _MSC_VER
@@ -52,13 +54,15 @@ std::string Utf8Convert( const boost::filesystem::path& path )
 // -----------------------------------------------------------------------------
 Proxy::Proxy( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime,
               const FileSystem_ABC& system, const boost::filesystem::path& java,
-              const boost::filesystem::path& jar, int port, web::Client_ABC& client )
+              const boost::filesystem::path& jar, int port, web::Client_ABC& client,
+              Pool_ABC& pool )
     : log_    ( log )
     , runtime_( runtime )
     , system_ ( system )
     , java_   ( java )
     , jar_    ( jar )
     , port_   ( port )
+    , pool_   ( pool )
     , client_ ( client )
     , access_ ( new boost::mutex() )
 {
@@ -192,10 +196,11 @@ void Proxy::Save() const
 void Proxy::Register( const std::string& prefix, const std::string& host, int port ) const
 {
     LOG_INFO( log_ ) << "[proxy] Adding proxy from /" << prefix << " to " << host << ":" << port;
-    client_.Get( "localhost", port_, "/register_proxy", boost::assign::map_list_of
+    pool_.Post( boost::bind( &web::Client_ABC::Get, &client_,
+        "localhost", port_, "/register_proxy", boost::assign::map_list_of
         ( "prefix", prefix )
         ( "host", host )
-        ( "port", boost::lexical_cast< std::string >( port ) ) );
+        ( "port", boost::lexical_cast< std::string >( port ) ) ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -205,5 +210,6 @@ void Proxy::Register( const std::string& prefix, const std::string& host, int po
 void Proxy::Unregister( const std::string& prefix ) const
 {
     LOG_INFO( log_ ) << "[proxy] Removing proxy from /" << prefix;
-    client_.Get( "localhost", port_, "/unregister_proxy", boost::assign::map_list_of( "prefix", prefix ) );
+    pool_.Post( boost::bind( &web::Client_ABC::Get, &client_,
+        "localhost", port_, "/unregister_proxy", boost::assign::map_list_of( "prefix", prefix ) ) );
 }

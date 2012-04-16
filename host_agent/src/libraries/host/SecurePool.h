@@ -7,49 +7,49 @@
 //
 // *****************************************************************************
 
-#ifndef SERVER_H
-#define SERVER_H
+#ifndef SECURE_POOL_H
+#define SECURE_POOL_H
 
-#include <boost/noncopyable.hpp>
-#include <boost/shared_ptr.hpp>
+#include "Pool_ABC.h"
+#include <string>
 
 namespace cpplog
 {
     class BaseLogger;
 }
 
-namespace web
+namespace host
 {
-    class Observer_ABC;
 
 // =============================================================================
-/** @class  Server
-    @brief  Web server definition
+/** @class  SecurePool
+    @brief  Secure thread pool class definition
 */
-// Created: BAX 2012-02-28
+// Created: BAX 2012-04-16
 // =============================================================================
-class Server : public boost::noncopyable
+class SecurePool
 {
 public:
-    //! @name Destructor
-             Server( cpplog::BaseLogger& logger, Observer_ABC& observer, int port );
-    virtual ~Server();
+    //! @name Constructors/Destructors
+    //@{
+             SecurePool( cpplog::BaseLogger& log, const std::string& name, Pool_ABC& pool );
+    virtual ~SecurePool();
     //@}
 
-    //! @name Public Functions
+    //! @name Methods
     //@{
-    void Run();
-    void Stop();
+    virtual void Post( const Pool_ABC::Task& task );
     //@}
 
 private:
-    //! @name Member data
+    //! @name Private members
     //@{
-    struct Private;
-    boost::shared_ptr< Private > private_;
+    cpplog::BaseLogger& log_;
+    const std::string name_;
+    Pool_ABC& pool_;
     //@}
 };
 
 }
 
-#endif // MONGOOSE_SERVER_H
+#endif // SECURE_POOL_H

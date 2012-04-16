@@ -37,6 +37,7 @@ namespace web
 namespace host
 {
     class FileSystem_ABC;
+    class Pool_ABC;
 
 // =============================================================================
 /** @class  Proxy
@@ -52,7 +53,7 @@ public:
              Proxy( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime,
                     const FileSystem_ABC& system, const boost::filesystem::path& java,
                     const boost::filesystem::path& jar, int port,
-                    web::Client_ABC& client );
+                    web::Client_ABC& client, Pool_ABC& pool );
     virtual ~Proxy();
     //@}
 
@@ -81,6 +82,7 @@ private:
     const boost::filesystem::path java_;
     const boost::filesystem::path jar_;
     const int port_;
+    Pool_ABC& pool_;
     web::Client_ABC& client_;
     std::auto_ptr< boost::mutex > access_;
     boost::shared_ptr< runtime::Process_ABC > process_;

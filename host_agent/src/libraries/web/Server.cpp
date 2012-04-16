@@ -112,14 +112,16 @@ private:
 
 struct Server::Private : public boost::noncopyable
 {
-    Private( Observer_ABC& observer, int port )
-        : handler_( observer )
+    Private( cpplog::BaseLogger& log, Observer_ABC& observer, int port )
+        : log_    ( log )
+        , handler_( observer )
         , pool_   ( 8 )
         , server_ ( "0.0.0.0", boost::lexical_cast< std::string >( port ), handler_, pool_ )
     {
         // NOTHING
     }
 
+    cpplog::BaseLogger& log_;
     Handler handler_;
     boost::network::utils::thread_pool pool_;
     HttpServer server_;
@@ -129,8 +131,8 @@ struct Server::Private : public boost::noncopyable
 // Name: Server::Server
 // Created: BAX 2012-02-28
 // -----------------------------------------------------------------------------
-Server::Server( cpplog::BaseLogger& /*logger*/, Observer_ABC& observer, int port )
-    : private_( boost::make_shared< Private >( observer, port ) )
+Server::Server( cpplog::BaseLogger& log, Observer_ABC& observer, int port )
+    : private_( boost::make_shared< Private >( log, observer, port ) )
 {
     // NOTHING
 }
@@ -153,3 +155,11 @@ void Server::Run()
     private_->server_.run();
 }
 
+// -----------------------------------------------------------------------------
+// Name: Server::Stop
+// Created: BAX 2012-04-11
+// -----------------------------------------------------------------------------
+void Server::Stop()
+{
+    private_->server_.stop();
+}

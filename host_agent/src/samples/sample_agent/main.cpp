@@ -9,13 +9,15 @@
 
 #include <runtime/Factory.h>
 #include <host/Agent.h>
-#include <host/UuidFactory.h>
 #include <host/FileSystem.h>
-#include <host/Proxy.h>
-#include <host/PortFactory.h>
 #include <host/Node_ABC.h>
 #include <host/NodeFactory.h>
+#include <host/Pool.h>
+#include <host/PortFactory.h>
+#include <host/Proxy.h>
+#include <host/SecurePool.h>
 #include <host/SessionFactory.h>
+#include <host/UuidFactory.h>
 #include <web/Client.h>
 #include <web/Controller.h>
 #include <web/Server.h>
@@ -103,11 +105,12 @@ namespace
 
     void Start( cpplog::BaseLogger& log, Configuration& cfg )
     {
+        host::Pool pool( 8 );
         runtime::Factory runtime( log );
         host::UuidFactory uuids;
         host::FileSystem system( log );
         web::Client client;
-        host::Proxy proxy( log, runtime.GetRuntime(), system, cfg.java, cfg.proxy.jar, cfg.ports.proxy, client );
+        host::Proxy proxy( log, runtime.GetRuntime(), system, cfg.java, cfg.proxy.jar, cfg.ports.proxy, client, pool );
         proxy.Register( "api", "localhost", cfg.ports.host );
         host::PortFactory ports( cfg.ports.period, cfg.ports.min, cfg.ports.max );
         host::NodeFactory nodes( log, runtime.GetRuntime(), uuids, system, proxy, ports, cfg.java, cfg.node.jar, cfg.node.root );
@@ -120,7 +123,11 @@ namespace
         host::Agent agent( log, nodes, sessions );
         web::Controller controller( log, agent );
         web::Server server( log, controller, cfg.ports.host );
-        server.Run();
+        host::SecurePool run( log, "server", pool );
+        run.Post( boost::bind( &web::Server::Run, &server ) );
+        getc( stdin );
+        server.Stop();
+        pool.Stop();
     }
 }
 
