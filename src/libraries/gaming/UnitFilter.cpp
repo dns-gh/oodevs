@@ -13,6 +13,7 @@
 #include "clients_kernel/AgentKnowledge_ABC.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Object_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 
@@ -226,25 +227,41 @@ bool UnitFilter::IsInKnowledgeGroup( const Entity_ABC& other ) const
         return true;
     const CommunicationHierarchies* pHierarchy = other.Retrieve< CommunicationHierarchies >();
     const CommunicationHierarchies* selfHierarchy = entity_->Retrieve< CommunicationHierarchies >();
-    if( !pHierarchy || pHierarchy->IsJammed() || !selfHierarchy || selfHierarchy->IsJammed() )
-        return false;
-    const AgentKnowledges* entityKnowledges = 0;
-    const AgentKnowledges* selfKnowledges = 0;
-    for( const Entity_ABC* superior = pHierarchy->GetSuperior(); superior; superior = superior->Get< CommunicationHierarchies >().GetSuperior() )
+    if( pHierarchy && !pHierarchy->IsJammed() && selfHierarchy && !selfHierarchy->IsJammed() )
     {
-        entityKnowledges = superior->Retrieve< AgentKnowledges >();
-        if( entityKnowledges )
+        const AgentKnowledges* entityKnowledges = 0;
+        const AgentKnowledges* selfKnowledges = 0;
+        for( const Entity_ABC* superior = pHierarchy->GetSuperior(); superior; superior = superior->Get< CommunicationHierarchies >().GetSuperior() )
         {
-            for( const Entity_ABC* selfSuperior = selfHierarchy->GetSuperior(); selfSuperior; selfSuperior = selfSuperior->Get< CommunicationHierarchies >().GetSuperior() )
+            entityKnowledges = superior->Retrieve< AgentKnowledges >();
+            if( entityKnowledges )
             {
-                selfKnowledges = selfSuperior->Retrieve< AgentKnowledges >();
-                if( selfKnowledges )
-                    return selfKnowledges ==  entityKnowledges;
+                for( const Entity_ABC* selfSuperior = selfHierarchy->GetSuperior(); selfSuperior; selfSuperior = selfSuperior->Get< CommunicationHierarchies >().GetSuperior() )
+                {
+                    selfKnowledges = selfSuperior->Retrieve< AgentKnowledges >();
+                    if( selfKnowledges )
+                        return selfKnowledges ==  entityKnowledges;
+                }
+                return false;
             }
-            return false;
+        }
+        return &pHierarchy->GetTop() == &selfHierarchy->GetTop();
+    }
+    else if( other.GetTypeName() == Formation_ABC::typeName_ )
+    {
+        if( const TacticalHierarchies* tacticalHierarchies = other.Retrieve< kernel::TacticalHierarchies >() )
+        {
+            bool hasAnyChildInTheSameKnowledgeGroup = false;
+            tools::Iterator< const Entity_ABC& > children = tacticalHierarchies->CreateSubordinateIterator();
+            while( children.HasMoreElements() && !hasAnyChildInTheSameKnowledgeGroup )
+            {
+                const Entity_ABC& child = children.NextElement();
+                hasAnyChildInTheSameKnowledgeGroup |= IsInKnowledgeGroup( child );
+            }
+            return hasAnyChildInTheSameKnowledgeGroup;
         }
     }
-    return &pHierarchy->GetTop() == &selfHierarchy->GetTop();
+    return false;
 }
 
 // -----------------------------------------------------------------------------

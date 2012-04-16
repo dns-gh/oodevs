@@ -23,6 +23,8 @@
 #include "clients_kernel/Population_ABC.h"
 #include <boost/bind.hpp>
 
+using namespace kernel;
+
 // -----------------------------------------------------------------------------
 // Name: RightsResolver constructor
 // Created: LGY 2011-11-25
@@ -45,7 +47,7 @@ RightsResolver::~RightsResolver()
 // Name: RightsResolver::IsVisible
 // Created: LGY 2011-11-25
 // -----------------------------------------------------------------------------
-bool RightsResolver::IsVisible( const kernel::Entity_ABC& entity ) const
+bool RightsResolver::IsVisible( const Entity_ABC& entity ) const
 {
     return IsInHierarchy( entity, readEntities_, false );
 }
@@ -54,7 +56,7 @@ bool RightsResolver::IsVisible( const kernel::Entity_ABC& entity ) const
 // Name: RightsResolver::IsKnowledgeVisible
 // Created: LGY 2011-11-25
 // -----------------------------------------------------------------------------
-bool RightsResolver::IsKnowledgeVisible( const kernel::Knowledge_ABC& knowledge ) const
+bool RightsResolver::IsKnowledgeVisible( const Knowledge_ABC& knowledge ) const
 {
     if( !knowledge.GetEntity() && IsSupervision() && knowledge.GetTeam() )
         if( std::find( readTeams_.begin(), readTeams_.end(), knowledge.GetTeam()->GetId() ) != readTeams_.end() 
@@ -68,7 +70,7 @@ bool RightsResolver::IsKnowledgeVisible( const kernel::Knowledge_ABC& knowledge 
 // Name: RightsResolver::CanBeOrdered
 // Created: LGY 2011-11-25
 // -----------------------------------------------------------------------------
-bool RightsResolver::CanBeOrdered( const kernel::Entity_ABC& entity ) const
+bool RightsResolver::CanBeOrdered( const Entity_ABC& entity ) const
 {
     return IsInHierarchy( entity, readWriteEntities_, true );
 }
@@ -77,7 +79,7 @@ bool RightsResolver::CanBeOrdered( const kernel::Entity_ABC& entity ) const
 // Name: RightsResolver::CanDoMagic
 // Created: LGY 2011-11-25
 // -----------------------------------------------------------------------------
-bool RightsResolver::CanDoMagic( const kernel::Entity_ABC& entity ) const
+bool RightsResolver::CanDoMagic( const Entity_ABC& entity ) const
 {
     return CanBeOrdered( entity );
 }
@@ -90,10 +92,10 @@ void RightsResolver::Update( const Model& model )
 {
     readWriteEntities_.clear();
     readEntities_.clear();
-    ResolveEntities< kernel::Team_ABC >      (  model.GetTeamResolver()      , readTeams_      , writeTeams_ );
-    ResolveEntities< kernel::Formation_ABC > (  model.GetFormationResolver() , readFormations_ , writeFormations_ );
-    ResolveEntities< kernel::Automat_ABC >   (  model.GetAutomatResolver()   , readAutomats_   , writeAutomats_ );
-    ResolveEntities< kernel:: Population_ABC >( model.GetPopulationResolver(), readPopulations_, writePopulations_ );
+    ResolveEntities< Team_ABC >      (  model.GetTeamResolver()      , readTeams_      , writeTeams_ );
+    ResolveEntities< Formation_ABC > (  model.GetFormationResolver() , readFormations_ , writeFormations_ );
+    ResolveEntities< Automat_ABC >   (  model.GetAutomatResolver()   , readAutomats_   , writeAutomats_ );
+    ResolveEntities<  Population_ABC >( model.GetPopulationResolver(), readPopulations_, writePopulations_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -113,17 +115,17 @@ void RightsResolver::ResolveEntities( const tools::Resolver_ABC< Entity >& resol
 // Name: RightsResolver::IsChildOfCommunicationHierarchy
 // Created: LGY 2011-11-25
 // -----------------------------------------------------------------------------
-bool RightsResolver::IsChildOfCommunicationHierarchy( const kernel::CommunicationHierarchies& target, const kernel::Entity_ABC& entity )
+bool RightsResolver::IsChildOfCommunicationHierarchy( const CommunicationHierarchies& target, const Entity_ABC& entity )
 {
-    const kernel::TacticalHierarchies* tacticalHierarchies = entity.Retrieve< kernel::TacticalHierarchies >();
+    const TacticalHierarchies* tacticalHierarchies = entity.Retrieve< TacticalHierarchies >();
     if( !tacticalHierarchies )
         return false;
 
-    tools::Iterator< const kernel::Entity_ABC& > children = tacticalHierarchies->CreateSubordinateIterator();
+    tools::Iterator< const Entity_ABC& > children = tacticalHierarchies->CreateSubordinateIterator();
     while( children.HasMoreElements() )
     {
-        const kernel::Entity_ABC& child = children.NextElement();
-        const kernel::CommunicationHierarchies* childCommunicationHierarchies = child.Retrieve< kernel::CommunicationHierarchies >();
+        const Entity_ABC& child = children.NextElement();
+        const CommunicationHierarchies* childCommunicationHierarchies = child.Retrieve< CommunicationHierarchies >();
         if( childCommunicationHierarchies )
         {
             if( &child == &target.GetEntity() )
@@ -142,13 +144,13 @@ bool RightsResolver::IsChildOfCommunicationHierarchy( const kernel::Communicatio
 // Name: RightsResolver::IsInHierarchy
 // Created: LGY 2011-11-25
 // -----------------------------------------------------------------------------
-bool RightsResolver::IsInHierarchy( const kernel::Entity_ABC& entityToTest, const T_Entities& entities, bool childOnly )
+bool RightsResolver::IsInHierarchy( const Entity_ABC& entityToTest, const T_Entities& entities, bool childOnly )
 {
     //$$$$ NLD - 2010-11-10 - hum, compliqué :)
     if( entities.find( &entityToTest ) != entities.end() )
         return true;
-    const kernel::TacticalHierarchies* tactical = entityToTest.Retrieve< kernel::TacticalHierarchies >();
-    const kernel::CommunicationHierarchies* communication = entityToTest.Retrieve< kernel::CommunicationHierarchies >();
+    const TacticalHierarchies* tactical = entityToTest.Retrieve< TacticalHierarchies >();
+    const CommunicationHierarchies* communication = entityToTest.Retrieve< CommunicationHierarchies >();
     if( !tactical && !communication )
         return true;
     if( ( IsInSpecificHierarchy( entityToTest, tactical, entities, childOnly ) && !( communication && communication->IsJammed() ) ) )
@@ -157,7 +159,7 @@ bool RightsResolver::IsInHierarchy( const kernel::Entity_ABC& entityToTest, cons
         return IsInSpecificHierarchy( entityToTest, communication, entities, childOnly );
 
     // Knowledges specific case
-    if( entityToTest.GetTypeName() == kernel::KnowledgeGroup_ABC::typeName_ )
+    if( entityToTest.GetTypeName() == KnowledgeGroup_ABC::typeName_ )
     {
         if( !communication )
             return false;
@@ -165,7 +167,7 @@ bool RightsResolver::IsInHierarchy( const kernel::Entity_ABC& entityToTest, cons
             return true;
         for( CIT_Entities it = entities.begin(); it != entities.end(); ++it )
         {
-            const kernel::CommunicationHierarchies* hierarchy = ( *it )->Retrieve< kernel::CommunicationHierarchies >();
+            const CommunicationHierarchies* hierarchy = ( *it )->Retrieve< CommunicationHierarchies >();
             if( !hierarchy ) // = (*it) est une formation ?
                 return IsChildOfCommunicationHierarchy( *communication, **it );
         }
@@ -173,10 +175,10 @@ bool RightsResolver::IsInHierarchy( const kernel::Entity_ABC& entityToTest, cons
     }
     for( CIT_Entities it = entities.begin(); it != entities.end(); ++it )
     {
-        const kernel::CommunicationHierarchies* hierarchy = ( *it )->Retrieve< kernel::CommunicationHierarchies >();
+        const CommunicationHierarchies* hierarchy = ( *it )->Retrieve< CommunicationHierarchies >();
         if( hierarchy && tactical && hierarchy->GetSuperior() == 0 && tactical->IsSubordinateOf( **it ) )
             return true;
-        bool isObject = ( entityToTest.GetTypeName() == kernel::Object_ABC::typeName_ );
+        bool isObject = ( entityToTest.GetTypeName() == Object_ABC::typeName_ );
         if( AreInSameKnowledgeGroup( entityToTest, **it, isObject ) )
             return true;
     }
@@ -187,20 +189,20 @@ bool RightsResolver::IsInHierarchy( const kernel::Entity_ABC& entityToTest, cons
 // Name: RightsResolver::AreInSameKnowledgeGroup
 // Created: LGY 2011-11-25
 // -----------------------------------------------------------------------------
-bool RightsResolver::AreInSameKnowledgeGroup( const kernel::Entity_ABC& entity1, const kernel::Entity_ABC& entity2, bool compareTop )
+bool RightsResolver::AreInSameKnowledgeGroup( const Entity_ABC& entity1, const Entity_ABC& entity2, bool compareTop )
 {
-    const kernel::CommunicationHierarchies* hierarchy1 = entity1.Retrieve< kernel::CommunicationHierarchies >();
-    const kernel::CommunicationHierarchies* hierarchy2 = entity2.Retrieve< kernel::CommunicationHierarchies >();
+    const CommunicationHierarchies* hierarchy1 = entity1.Retrieve< CommunicationHierarchies >();
+    const CommunicationHierarchies* hierarchy2 = entity2.Retrieve< CommunicationHierarchies >();
     if( hierarchy1 && hierarchy2 )
     {
         const AgentKnowledges* entityKnowledges1 = 0;
         const AgentKnowledges* entityKnowledges2 = 0;
-        for( const kernel::Entity_ABC* superior1 = &entity1; superior1; superior1 = superior1->Get< kernel::CommunicationHierarchies >().GetSuperior() )
+        for( const Entity_ABC* superior1 = &entity1; superior1; superior1 = superior1->Get< CommunicationHierarchies >().GetSuperior() )
         {
             entityKnowledges1 = superior1->Retrieve< AgentKnowledges >();
             if( entityKnowledges1 )
             {
-                for( const kernel::Entity_ABC* superior2 = &entity2; superior2; superior2 = superior2->Get< kernel::CommunicationHierarchies >().GetSuperior() )
+                for( const Entity_ABC* superior2 = &entity2; superior2; superior2 = superior2->Get< CommunicationHierarchies >().GetSuperior() )
                 {
                     entityKnowledges2 = superior2->Retrieve< AgentKnowledges >();
                     if( entityKnowledges2 )
@@ -212,9 +214,39 @@ bool RightsResolver::AreInSameKnowledgeGroup( const kernel::Entity_ABC& entity1,
         return compareTop ? &hierarchy1->GetTop() == &hierarchy2->GetTop() : false;
     }
     else if( compareTop && !hierarchy2 )
-        if( const kernel::TacticalHierarchies* tacticalHierarchies1 = entity1.Retrieve< kernel::TacticalHierarchies >() )
-            if( const kernel::TacticalHierarchies* tacticalHierarchies2 = entity2.Retrieve< kernel::TacticalHierarchies >() )
+    {
+        if( const TacticalHierarchies* tacticalHierarchies1 = entity1.Retrieve< TacticalHierarchies >() )
+            if( const TacticalHierarchies* tacticalHierarchies2 = entity2.Retrieve< TacticalHierarchies >() )
                 return &tacticalHierarchies1->GetTop() == &tacticalHierarchies2->GetTop();
+    }
+    else if( entity1.GetTypeName() == Formation_ABC::typeName_ )
+    {
+        if( const TacticalHierarchies* tacticalHierarchies = entity1.Retrieve< TacticalHierarchies >() )
+        {
+            bool hasAnyChildInTheSameKnowledgeGroup = false;
+            tools::Iterator< const Entity_ABC& > children = tacticalHierarchies->CreateSubordinateIterator();
+            while( children.HasMoreElements() && !hasAnyChildInTheSameKnowledgeGroup )
+            {
+                const Entity_ABC& child = children.NextElement();
+                hasAnyChildInTheSameKnowledgeGroup |= AreInSameKnowledgeGroup( child, entity2, compareTop );
+            }
+            return hasAnyChildInTheSameKnowledgeGroup;
+        }
+    }
+    else if( entity2.GetTypeName() == Formation_ABC::typeName_ )
+    {
+        if( const TacticalHierarchies* tacticalHierarchies = entity2.Retrieve< TacticalHierarchies >() )
+        {
+            bool hasAnyChildInTheSameKnowledgeGroup = false;
+            tools::Iterator< const Entity_ABC& > children = tacticalHierarchies->CreateSubordinateIterator();
+            while( children.HasMoreElements() && !hasAnyChildInTheSameKnowledgeGroup )
+            {
+                const Entity_ABC& child = children.NextElement();
+                hasAnyChildInTheSameKnowledgeGroup |= AreInSameKnowledgeGroup( entity1, child, compareTop );
+            }
+            return hasAnyChildInTheSameKnowledgeGroup;
+        }
+    }
     return false;
 }
 
@@ -222,7 +254,7 @@ bool RightsResolver::AreInSameKnowledgeGroup( const kernel::Entity_ABC& entity1,
 // Name: RightsResolver::IsInSpecificHierarchy
 // Created: LGY 2011-11-25
 // -----------------------------------------------------------------------------
-bool RightsResolver::IsInSpecificHierarchy( const kernel::Entity_ABC& entity, const kernel::Hierarchies* hierarchy, const T_Entities& entities, bool childOnly )
+bool RightsResolver::IsInSpecificHierarchy( const Entity_ABC& entity, const Hierarchies* hierarchy, const T_Entities& entities, bool childOnly )
 {
     if( !hierarchy )
         return false;
@@ -236,13 +268,13 @@ bool RightsResolver::IsInSpecificHierarchy( const kernel::Entity_ABC& entity, co
 // Name: RightsResolver::IsInHierarchy
 // Created: LGY 2011-11-25
 // -----------------------------------------------------------------------------
-bool RightsResolver::IsInHierarchy( const kernel::Entity_ABC& entity, const kernel::Hierarchies& hierarchy, const kernel::Entity_ABC& other, bool childOnly )
+bool RightsResolver::IsInHierarchy( const Entity_ABC& entity, const Hierarchies& hierarchy, const Entity_ABC& other, bool childOnly )
 {
     if( hierarchy.IsSubordinateOf( other ) )
         return true;
     if( childOnly )
         return false;
-    const kernel::Hierarchies* otherHierarchies = hierarchy.RetrieveHierarchies( other );
+    const Hierarchies* otherHierarchies = hierarchy.RetrieveHierarchies( other );
     return otherHierarchies && otherHierarchies->IsSubordinateOf( entity );
 }
 
@@ -250,7 +282,7 @@ bool RightsResolver::IsInHierarchy( const kernel::Entity_ABC& entity, const kern
 // Name: RightsResolver::Add
 // Created: LGY 2011-11-25
 // -----------------------------------------------------------------------------
-void RightsResolver::Add( const kernel::Entity_ABC& entity, const T_Ids& readIds, const T_Ids& readWriteIds )
+void RightsResolver::Add( const Entity_ABC& entity, const T_Ids& readIds, const T_Ids& readWriteIds )
 {
     const unsigned long id = entity.GetId();
     const bool canBeOrdered = std::find( readWriteIds.begin(), readWriteIds.end(), id ) != readWriteIds.end();
@@ -265,7 +297,7 @@ void RightsResolver::Add( const kernel::Entity_ABC& entity, const T_Ids& readIds
 // Name: RightsResolver::Remove
 // Created: LGY 2011-11-25
 // -----------------------------------------------------------------------------
-void RightsResolver::Remove( const kernel::Entity_ABC& entity )
+void RightsResolver::Remove( const Entity_ABC& entity )
 {
     readEntities_.erase( &entity );
     readWriteEntities_.erase( &entity );
@@ -275,7 +307,7 @@ void RightsResolver::Remove( const kernel::Entity_ABC& entity )
 // Name: RightsResolver::NotifyCreated
 // Created: LGY 2011-11-25
 // -----------------------------------------------------------------------------
-void RightsResolver::NotifyCreated( const kernel::Automat_ABC& automat )
+void RightsResolver::NotifyCreated( const Automat_ABC& automat )
 {
     Add( automat, readAutomats_, writeAutomats_ );
 }
@@ -284,7 +316,7 @@ void RightsResolver::NotifyCreated( const kernel::Automat_ABC& automat )
 // Name: RightsResolver::NotifyDeleted
 // Created: LGY 2011-11-25
 // -----------------------------------------------------------------------------
-void RightsResolver::NotifyDeleted( const kernel::Automat_ABC& automat )
+void RightsResolver::NotifyDeleted( const Automat_ABC& automat )
 {
     Remove( automat );
 }
@@ -293,7 +325,7 @@ void RightsResolver::NotifyDeleted( const kernel::Automat_ABC& automat )
 // Name: RightsResolver::NotifyCreated
 // Created: LGY 2011-11-25
 // -----------------------------------------------------------------------------
-void RightsResolver::NotifyCreated( const kernel::Population_ABC& popu )
+void RightsResolver::NotifyCreated( const Population_ABC& popu )
 {
     Add( popu, readPopulations_, writePopulations_ );
 }
@@ -302,7 +334,7 @@ void RightsResolver::NotifyCreated( const kernel::Population_ABC& popu )
 // Name: RightsResolver::NotifyDeleted
 // Created: LGY 2011-11-25
 // -----------------------------------------------------------------------------
-void RightsResolver::NotifyDeleted( const kernel::Population_ABC& popu )
+void RightsResolver::NotifyDeleted( const Population_ABC& popu )
 {
     Remove( popu );
 }
@@ -311,7 +343,7 @@ void RightsResolver::NotifyDeleted( const kernel::Population_ABC& popu )
 // Name: RightsResolver::NotifyCreated
 // Created: LGY 2011-11-25
 // -----------------------------------------------------------------------------
-void RightsResolver::NotifyCreated( const kernel::Team_ABC& team )
+void RightsResolver::NotifyCreated( const Team_ABC& team )
 {
     Add( team, readTeams_, writeTeams_ );
 }
@@ -320,7 +352,7 @@ void RightsResolver::NotifyCreated( const kernel::Team_ABC& team )
 // Name: RightsResolver::NotifyDeleted
 // Created: LGY 2011-11-25
 // -----------------------------------------------------------------------------
-void RightsResolver::NotifyDeleted( const kernel::Team_ABC& team )
+void RightsResolver::NotifyDeleted( const Team_ABC& team )
 {
     Remove( team );
 }
@@ -329,7 +361,7 @@ void RightsResolver::NotifyDeleted( const kernel::Team_ABC& team )
 // Name: RightsResolver::NotifyCreated
 // Created: LGY 2011-11-25
 // -----------------------------------------------------------------------------
-void RightsResolver::NotifyCreated( const kernel::Formation_ABC& formation )
+void RightsResolver::NotifyCreated( const Formation_ABC& formation )
 {
     Add( formation, readFormations_, writeFormations_ );
 }
@@ -338,7 +370,7 @@ void RightsResolver::NotifyCreated( const kernel::Formation_ABC& formation )
 // Name: RightsResolver::NotifyDeleted
 // Created: LGY 2011-11-25
 // -----------------------------------------------------------------------------
-void RightsResolver::NotifyDeleted( const kernel::Formation_ABC& formation )
+void RightsResolver::NotifyDeleted( const Formation_ABC& formation )
 {
     Remove( formation );
 }
