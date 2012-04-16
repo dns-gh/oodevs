@@ -106,7 +106,9 @@ class NodeItemView extends Backbone.View
                 print_error "Unable to start node " + @model.get "name"
                 @toggle_load()
 
-    config: =>
+    config: (evt) =>
+        if $(evt.currentTarget).hasClass "disabled"
+            return
         on_node_config $(@el).find(".node_settings"),
             @model.get("name"),
             @model.get("max_sessions"),

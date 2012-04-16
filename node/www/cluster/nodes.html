@@ -61,11 +61,9 @@
                             {{#is_option status stopped=""}}
                             <a title="Play" class="btn play"><i class="icon-play"></i></a>
                             {{/is_option}}
+                            <a title="Settings..." class="btn config{{#is_option status running=""}} disabled{{/is_option}}"><i class="icon-cog"></i></a>
                             {{#is_option status running=""}}
                             <a title="Stop" class="btn stop"><i class="icon-stop"></i></a>
-                            {{/is_option}}
-                            {{#is_option status stopped=""}}
-                            <a title="Settings..." class="btn config"><i class="icon-cog"></i></a>
                             {{/is_option}}
                             {{#is_option status stopped=""}}
                             <a title="Delete" class="btn delete"><i class="icon-trash"></i></a>

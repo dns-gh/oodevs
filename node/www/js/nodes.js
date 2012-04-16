@@ -191,7 +191,8 @@
       });
     };
 
-    NodeItemView.prototype.config = function() {
+    NodeItemView.prototype.config = function(evt) {
+      if ($(evt.currentTarget).hasClass("disabled")) return;
       on_node_config($(this.el).find(".node_settings"), this.model.get("name"), this.model.get("max_sessions"), this.model.get("parallel_sessions"));
       return $(this.el).find(".node_settings .modal").modal("show");
     };
