@@ -508,11 +508,11 @@
     });
   }
 
-  $(".session_search .btn").click(function() {
+  $(".session_search input").keyup(function() {
     return session_view.set_search(get_search());
   });
 
-  $(".session_search input").change(function() {
+  $(".session_search input").bind("input propertychange", function() {
     return session_view.set_search(get_search());
   });
 

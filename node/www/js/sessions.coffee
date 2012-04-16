@@ -288,5 +288,5 @@ $("#session_sort_name").click -> session_view.model.set_order "name"
 $("#session_sort_status").click -> session_view.model.set_order "status"
 for item in $("#session_filters input")
     $(item).click -> session_view.set_filter()
-$(".session_search .btn").click -> session_view.set_search get_search()
-$(".session_search input").change -> session_view.set_search get_search()
+$(".session_search input").keyup -> session_view.set_search get_search()
+$(".session_search input").bind "input propertychange", -> session_view.set_search get_search()
