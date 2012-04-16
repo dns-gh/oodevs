@@ -149,5 +149,4 @@ boost::shared_ptr< Process_ABC > Runtime::Start( const std::string& cmd,
         LOG_WARN( log_ ) << "[runtime] Unable to start process " << cmd << " " << boost::algorithm::join( args, " " ) << ", " << err.what();
         return boost::shared_ptr< Process_ABC >();
     }
-
 }
