@@ -149,6 +149,13 @@ int main( int argc, const char* argv[] )
     {
         LOG_FATAL( log ) << "[cfg] Unable to parse configuration, " << err.what();
     }
-    Start( log, cfg );
+    try
+    {
+        Start( log, cfg );
+    }
+    catch( const std::runtime_error& err )
+    {
+        LOG_FATAL( log ) << "[main] Unable to start, " << err.what();
+    }
     LOG_INFO( log ) << "Host Agent - Exit";
 }
