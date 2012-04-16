@@ -18,7 +18,7 @@ body{padding-top:60px;padding-bottom:40px;}
 .node_buttons{position:absolute;top:10px;right:8px;}
 .node_header{position:relative;}
 .node_header a{margin-left:24px;}
-.read_only{cursor:text;}
+.read_only{cursor:text;border:0;margin-top:1px;}
 .footer{text-align:center;}
 .brand_name{margin-right:-20px;}
 .pull-right .label{float:left;margin-top:11px;}
