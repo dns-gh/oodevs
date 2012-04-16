@@ -39,8 +39,32 @@ DEC_PathResult::~DEC_PathResult()
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_PathResult::IsOnPath
+// Created: CMA 2012-04-16
+// -----------------------------------------------------------------------------
+bool DEC_PathResult::IsOnPath( const MT_Vector2D& vPos ) const
+{
+    if( resultList_.empty() )
+        return false;
+    static const double rWeldValue = TER_World::GetWorld().GetWeldValue();
+    if( resultList_.size() == 1 )
+        return ( vPos.Distance( resultList_.front()->GetPos() ) <= rWeldValue );
+    CIT_PathPointList itStart = resultList_.begin();
+    CIT_PathPointList itEnd = resultList_.begin();
+    ++itEnd;
+    for( ; itEnd != resultList_.end(); ++itStart, ++itEnd )
+    {
+        MT_Line vLine( (*itStart)->GetPos(), (*itEnd)->GetPos() );
+        if( vLine.IsInside( vPos, rWeldValue ) )
+            return true;
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_PathResult::GetCurrentKeyOnPath
 // Created: NLD 2004-09-22
+// Last modified: CMA 2012-04-13
 // -----------------------------------------------------------------------------
 DEC_PathResult::CIT_PathPointList DEC_PathResult::GetCurrentKeyOnPath() const
 {

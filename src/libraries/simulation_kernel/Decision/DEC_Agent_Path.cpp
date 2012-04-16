@@ -633,7 +633,6 @@ bool DEC_Agent_Path::IsDestinationTrafficable() const
 // -----------------------------------------------------------------------------
 void DEC_Agent_Path::NotifyPointReached( const CIT_PathPointList& itCurrentPathPoint )
 {
-//    static const double rWeldValue = TER_World::GetWorld().GetWeldValue();
     bool verifyPointTrafficability = false;
     for( T_PointVector::iterator it = initialPathPoints_.begin(); it != initialPathPoints_.end(); ++it )
     {
