@@ -155,7 +155,8 @@ int main( int argc, const char* argv[] )
     }
     catch( const std::runtime_error& err )
     {
-        LOG_FATAL( log ) << "[main] Unable to start, " << err.what();
+        LOG_ERROR( log ) << "[main] Unable to start, " << err.what();
     }
     LOG_INFO( log ) << "Host Agent - Exit";
+    return 0;
 }
