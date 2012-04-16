@@ -10,6 +10,7 @@
 #ifndef __AvoidanceCapacity_h_
 #define __AvoidanceCapacity_h_
 
+#include "MIL.h"
 #include "ObjectCapacity_ABC.h"
 #include "MIL_DynamicPathDataHandler.h"
 #include "simulation_terrain/TER_Localisation.h"
@@ -36,7 +37,10 @@ public:
 
     //! @name CheckPoints
     //@{
-    template< typename Archive > void serialize( Archive&, const unsigned int );
+    BOOST_SERIALIZATION_SPLIT_MEMBER()
+
+    void load( MIL_CheckPointInArchive&, const unsigned int );
+    void save( MIL_CheckPointOutArchive&, const unsigned int ) const;
     //@}
 
     //! @name Operations

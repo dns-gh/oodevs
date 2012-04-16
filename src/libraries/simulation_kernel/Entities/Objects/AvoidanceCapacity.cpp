@@ -60,15 +60,28 @@ AvoidanceCapacity::AvoidanceCapacity( const AvoidanceCapacity& from )
 }
 
 // -----------------------------------------------------------------------------
-// Name: AvoidanceCapacity::serialize
-// Created: JCR 2008-05-30
+// Name: AvoidanceCapacity::load
+// Created: JSR 2012-04-16
 // -----------------------------------------------------------------------------
-template< typename Archive >
-void AvoidanceCapacity::serialize( Archive& file, const unsigned int )
+void AvoidanceCapacity::load( MIL_CheckPointInArchive& file, const unsigned int )
 {
-    file & boost::serialization::base_object< ObjectCapacity_ABC >( *this );
-    file & avoid_
-         & distance_;
+    file >> boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    file >> avoid_
+         >> distance_;
+    const T_PointVector& points = avoid_.GetPoints();
+    if( points.size() > 3 )
+        handler_.Reset( new TER_DynamicData( points, TER_AnalyzerManager::DefaultTerrainData() ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: AvoidanceCapacity::save
+// Created: JSR 2012-04-16
+// -----------------------------------------------------------------------------
+void AvoidanceCapacity::save( MIL_CheckPointOutArchive& file, const unsigned int ) const
+{
+    file << boost::serialization::base_object< ObjectCapacity_ABC >( *this );
+    file << avoid_
+         << distance_;
 }
 
 // -----------------------------------------------------------------------------
