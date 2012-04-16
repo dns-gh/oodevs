@@ -395,9 +395,39 @@ bool Profile::AreInSameKnowledgeGroup( const Entity_ABC& entity1, const Entity_A
         return compareTop ? &hierarchy1->GetTop() == &hierarchy2->GetTop() : false;
     }
     else if( compareTop && !hierarchy2 )
+    {
         if( const TacticalHierarchies* tacticalHierarchies1 = entity1.Retrieve< kernel::TacticalHierarchies >() )
             if( const TacticalHierarchies* tacticalHierarchies2 = entity2.Retrieve< kernel::TacticalHierarchies >() )
                 return &tacticalHierarchies1->GetTop() == &tacticalHierarchies2->GetTop();
+    }
+    else if( entity1.GetTypeName() == Formation_ABC::typeName_ )
+    {
+        if( const TacticalHierarchies* tacticalHierarchies = entity1.Retrieve< kernel::TacticalHierarchies >() )
+        {
+            bool hasAnyChildInTheSameKnowledgeGroup = false;
+            tools::Iterator< const Entity_ABC& > children = tacticalHierarchies->CreateSubordinateIterator();
+            while( children.HasMoreElements() && !hasAnyChildInTheSameKnowledgeGroup )
+            {
+                const Entity_ABC& child = children.NextElement();
+                hasAnyChildInTheSameKnowledgeGroup |= AreInSameKnowledgeGroup( child, entity2, compareTop );
+            }
+            return hasAnyChildInTheSameKnowledgeGroup;
+        }
+    }
+    else if( entity2.GetTypeName() == Formation_ABC::typeName_ )
+    {
+        if( const TacticalHierarchies* tacticalHierarchies = entity2.Retrieve< kernel::TacticalHierarchies >() )
+        {
+            bool hasAnyChildInTheSameKnowledgeGroup = false;
+            tools::Iterator< const Entity_ABC& > children = tacticalHierarchies->CreateSubordinateIterator();
+            while( children.HasMoreElements() && !hasAnyChildInTheSameKnowledgeGroup )
+            {
+                const Entity_ABC& child = children.NextElement();
+                hasAnyChildInTheSameKnowledgeGroup |= AreInSameKnowledgeGroup( entity1, child, compareTop );
+            }
+            return hasAnyChildInTheSameKnowledgeGroup;
+        }
+    }
     return false;
 }
 
