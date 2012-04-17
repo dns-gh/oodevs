@@ -136,9 +136,10 @@ void ADN_Composantes_GUI::Build()
     Q3VGroupBox* pSpeedGroup = new Q3VGroupBox( tr( "Speeds" ) );
     QWidget* pMaxSpeedHolder = builder.AddFieldHolder( pSpeedGroup );
     // Max speed
-    builder.AddField<ADN_EditLine_Double>( pMaxSpeedHolder, tr( "Max speed" ), vInfosConnectors[eMaxSpeed], tr( "km/h" ), eGreaterZero );
-    pSpeeds_ = new ADN_Composantes_Speeds_GUI( pSpeedGroup );
+    ADN_EditLine_Double* maxSpeed = builder.AddField<ADN_EditLine_Double>( pMaxSpeedHolder, tr( "Max speed" ), vInfosConnectors[eMaxSpeed], tr( "km/h" ), eGreaterZero );
+    pSpeeds_ = new ADN_Composantes_Speeds_GUI( maxSpeed, pSpeedGroup );
     vInfosConnectors[eSpeeds] = &pSpeeds_->GetConnector();
+
     // Sensors
     Q3HGroupBox* pSensorsGroup = new Q3HGroupBox( tr( "Sensors" ) );
     pSensors_ = new ADN_Composantes_Sensors_GUI( pSensorsGroup );
@@ -242,6 +243,8 @@ void ADN_Composantes_GUI::Build()
     connect( this, SIGNAL( ApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ), pSearchListView, SLOT( OnApplyFilterList( const ADN_NavigationInfos::UsedBy& ) ) );
     pListView_ = pSearchListView->GetListView();
     connect( pListView_, SIGNAL( selectionChanged() ), this, SLOT( OnProtectionTypeChanged() ) );
+    connect( pListView_, SIGNAL( ItemSelected( void* ) ), pSpeeds_, SLOT( OnItemSelected( void* ) ) );
+
     pConsumptions_->SetListView( pListView_ );
 
     // Tab widget

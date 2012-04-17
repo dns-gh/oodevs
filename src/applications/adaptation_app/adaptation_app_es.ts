@@ -1230,6 +1230,17 @@ estacionado con motor encendido</translation>
         <source>Construction (%)</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>ADN_Composantes_GUI</source>
+        <comment>At least one speed is above the new max speed.
+Click &quot;Ok&quot; to bound it to the new max speed value.</comment>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>ADN_Composantes_GUI</source>
+        <comment>Warning</comment>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Composantes_WeaponsListView</name>
