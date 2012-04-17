@@ -151,12 +151,24 @@ void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, boost::sh
 // Name: MIL_Report::PostEvent
 // Created: LGY 2011-10-14
 // -----------------------------------------------------------------------------
-
 template< typename T > inline
 void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, const std::string& nParam )
 {
     std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > parameters;
     boost::shared_ptr<MIL_MissionParameter_ABC> pParameter( MIL_MissionParameterFactory::Create( nParam ) );
+    parameters.push_back( pParameter );
+    PostEvent( receiver, nReport, parameters );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Report::PostEvent
+// Created: MMC 2012-04-16
+// -----------------------------------------------------------------------------
+template< typename T > inline
+void MIL_Report::PostEvent( const T& receiver, E_EngineReport nReport, DEC_Knowledge_Population& populationKnowledge )
+{
+    std::vector< boost::shared_ptr<MIL_MissionParameter_ABC> > parameters;
+    boost::shared_ptr<MIL_MissionParameter_ABC> pParameter( MIL_MissionParameterFactory::CreatePopulationKnowledge( &populationKnowledge ) );
     parameters.push_back( pParameter );
     PostEvent( receiver, nReport, parameters );
 }

@@ -145,6 +145,7 @@ public:
         eReport_UnderIndirectFire,
         eReport_UrbanCollisionStarted,
         eReport_UrbanCollisionStopped,
+        eReport_SetUponByPopulation,
         eNbrReport
     };
 
@@ -638,6 +639,7 @@ public:
     template< typename T > static void PostEvent( const T& receiver, E_EngineReport nReport, int nParam1, int nParam2, int nParam3 );
     template< typename T > static void PostEvent( const T& receiver, E_EngineReport nReport, const MIL_Effect_IndirectFire& flyingShell );
     template< typename T > static void PostEvent( const T& receiver, E_EngineReport nReport, boost::shared_ptr< DEC_Knowledge_Agent > agentKnowledge );
+    template< typename T > static void PostEvent( const T& receiver, E_EngineReport nReport, DEC_Knowledge_Population& populationKnowledge );
     //@}
 
 private:
