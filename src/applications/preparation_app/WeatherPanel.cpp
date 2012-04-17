@@ -62,6 +62,8 @@ WeatherPanel::WeatherPanel( QWidget* parent, gui::PanelStack_ABC& panel, Control
     CreateLocalParameters();
     localWeathers_ = new WeatherListView( localLayout_, converter );
     connect( localWeathers_, SIGNAL( selectionChanged() ), this, SLOT( LocalSelectionChanged() ) );
+    connect( sunrise_, SIGNAL( timeChanged( const QTime& ) ), SLOT( OnSunRiseChanged( const QTime& ) ) );
+    connect( sunset_, SIGNAL( timeChanged( const QTime& ) ), SLOT( OnSunSetChanged( const QTime& ) ) );
 
     controllers_.Register( *this );
 }
@@ -131,4 +133,22 @@ void WeatherPanel::Reset()
     selectedLocal_ = 0;
     if( currentModel_ )
         NotifyUpdated( *currentModel_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeatherPanel::OnSunRiseChanged
+// Created: MMC 2012-04-17
+// -----------------------------------------------------------------------------
+void WeatherPanel::OnSunRiseChanged( const QTime &date )
+{
+    sunset_->setMinimumTime( date );
+}
+
+// -----------------------------------------------------------------------------
+// Name: WeatherPanel::OnSunSetChanged
+// Created: MMC 2012-04-17
+// -----------------------------------------------------------------------------
+void WeatherPanel::OnSunSetChanged( const QTime &date )
+{
+    sunrise_->setMaximumTime( date );
 }

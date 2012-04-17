@@ -58,6 +58,8 @@ private slots:
     //@{
     virtual void Commit();
     virtual void Reset();
+    void OnSunRiseChanged( const QTime &date );
+    void OnSunSetChanged( const QTime &date );
     //@}
 
 private:
