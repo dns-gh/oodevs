@@ -8,7 +8,7 @@
 // *****************************************************************************
 #include "Proxy.h"
 #include "FileSystem_ABC.h"
-#include "Pool_ABC.h"
+#include "SecurePool.h"
 
 #include "cpplog/cpplog.hpp"
 #include "runtime/Process_ABC.h"
@@ -62,7 +62,7 @@ Proxy::Proxy( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime,
     , java_   ( java )
     , jar_    ( jar )
     , port_   ( port )
-    , pool_   ( pool )
+    , pool_   ( new SecurePool( log, "proxy", pool ) )
     , client_ ( client )
     , access_ ( new boost::mutex() )
 {
@@ -186,7 +186,7 @@ void Proxy::Save() const
 {
     const boost::filesystem::path path = GetPath();
     system_.CreateDirectory( path );
-    system_.WriteFile( path / L"proxy.id", ToXml() );
+    pool_->Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, path / L"proxy.id", ToXml() ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -196,7 +196,7 @@ void Proxy::Save() const
 void Proxy::Register( const std::string& prefix, const std::string& host, int port ) const
 {
     LOG_INFO( log_ ) << "[proxy] Adding proxy from /" << prefix << " to " << host << ":" << port;
-    pool_.Post( boost::bind( &web::Client_ABC::Get, &client_,
+    pool_->Post( boost::bind( &web::Client_ABC::Get, &client_,
         "localhost", port_, "/register_proxy", boost::assign::map_list_of
         ( "prefix", prefix )
         ( "host", host )
@@ -210,6 +210,6 @@ void Proxy::Register( const std::string& prefix, const std::string& host, int po
 void Proxy::Unregister( const std::string& prefix ) const
 {
     LOG_INFO( log_ ) << "[proxy] Removing proxy from /" << prefix;
-    pool_.Post( boost::bind( &web::Client_ABC::Get, &client_,
+    pool_->Post( boost::bind( &web::Client_ABC::Get, &client_,
         "localhost", port_, "/unregister_proxy", boost::assign::map_list_of( "prefix", prefix ) ) );
 }

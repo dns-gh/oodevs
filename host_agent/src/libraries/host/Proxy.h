@@ -38,6 +38,7 @@ namespace host
 {
     class FileSystem_ABC;
     class Pool_ABC;
+    class SecurePool;
 
 // =============================================================================
 /** @class  Proxy
@@ -82,8 +83,8 @@ private:
     const boost::filesystem::path java_;
     const boost::filesystem::path jar_;
     const int port_;
-    Pool_ABC& pool_;
     web::Client_ABC& client_;
+    std::auto_ptr< SecurePool > pool_;
     std::auto_ptr< boost::mutex > access_;
     boost::shared_ptr< runtime::Process_ABC > process_;
     //@}
