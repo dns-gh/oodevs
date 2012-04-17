@@ -57,6 +57,7 @@ void MIL_OrderManager_ABC::Update()
                 pController_->Stop( pCurrentMission_ );
             pNextMission_.reset();
             pCurrentMission_.reset();
+            pNewMission_.reset();
             bNewMissionStarted_ = false;
             throw e;
         }
