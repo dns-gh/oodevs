@@ -1275,6 +1275,18 @@ Arrêt moteur allumé</translation>
         <source>Construction (%)</source>
         <translation>Construction (%)</translation>
     </message>
+    <message>
+        <source>ADN_Composantes_GUI</source>
+        <comment>At least one speed is above the new max speed.
+Click &quot;Ok&quot; to bound it to the new max speed value.</comment>
+        <translation>Au moins une vitesse est au dessus de la nouvelle vitesse maximum.
+Cliquez sur &quot;Ok&quot; pour la(les) borner avec la nouvelle valeur de la vitesse maximum.</translation>
+    </message>
+    <message>
+        <source>ADN_Composantes_GUI</source>
+        <comment>Warning</comment>
+        <translation>Attention</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Composantes_WeaponsListView</name>

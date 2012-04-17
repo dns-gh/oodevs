@@ -9,10 +9,12 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Composantes_Speeds_GUI.h"
+#include "moc_ADN_Composantes_Speeds_GUI.cpp"
 #include "ADN_Connector_Table_ABC.h"
 #include "ADN_Composantes_Data.h"
 
 typedef ADN_Composantes_Data::SpeedInfos SpeedInfos;
+typedef ADN_Composantes_Data::ComposanteInfos ComposanteInfos;
 
 //-----------------------------------------------------------------------------
 // Internal Table connector to be connected with ADN_Composantes_Speeds_GUI
@@ -57,8 +59,10 @@ private:
 // Name: ADN_Composantes_Speeds_GUI constructor
 // Created: JDY 03-07-03
 //-----------------------------------------------------------------------------
-ADN_Composantes_Speeds_GUI::ADN_Composantes_Speeds_GUI( QWidget* parent )
+ADN_Composantes_Speeds_GUI::ADN_Composantes_Speeds_GUI( QLineEdit* maxSpeed, QWidget* parent )
     : ADN_Table2( parent, "ADN_Composantes_Speeds_GUI" )
+    , maxSpeed_( maxSpeed )
+    , popupIsDisplayed_( false )
 {
     setSorting( true );
     setSelectionMode( Q3Table::Single );
@@ -71,6 +75,7 @@ ADN_Composantes_Speeds_GUI::ADN_Composantes_Speeds_GUI( QWidget* parent )
     horizontalHeader()->setLabel( 1, tr( "Speed (km/h)" ) );
     horizontalHeader()->setLabel( 2, tr( "Construction (%)" ) );
     pConnector_ = new ADN_CT_Composantes_Speeds( *this );
+    connect( maxSpeed, SIGNAL( editingFinished() ), SLOT( OnMaxSpeedFinishedEditing() ) );
 }
 
 //-----------------------------------------------------------------------------
@@ -80,4 +85,75 @@ ADN_Composantes_Speeds_GUI::ADN_Composantes_Speeds_GUI( QWidget* parent )
 ADN_Composantes_Speeds_GUI::~ADN_Composantes_Speeds_GUI()
 {
     delete pConnector_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Speeds_GUI::UpdateSpeedsValidator
+// Created: ABR 2012-04-17
+// -----------------------------------------------------------------------------
+bool ADN_Composantes_Speeds_GUI::UpdateSpeedsValidator( double maxSpeed )
+{
+    bool needReBound = false;
+    for( int row = 0; row < numRows(); ++row )
+    {
+        ADN_TableItem_Double* item = static_cast< ADN_TableItem_Double* >( this->item( row, 1 ) );
+        item->GetValidator().setTop( maxSpeed );
+        bool ok = false;
+        double value = locale().toDouble( item->text(), &ok );
+        if( !needReBound && ok && value > maxSpeed )
+            needReBound = true;
+    }
+    return needReBound;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Speeds_GUI::OnItemSelected
+// Created: ABR 2012-04-17
+// -----------------------------------------------------------------------------
+void ADN_Composantes_Speeds_GUI::OnItemSelected( void* pData )
+{
+    ComposanteInfos* infos = static_cast< ComposanteInfos* >( pData );
+    oldMaxSpeed_ = infos->rMaxSpeed_.GetData();
+    UpdateSpeedsValidator( oldMaxSpeed_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Speeds_GUI::OnMaxSpeedFinishedEditing
+// Created: ABR 2012-04-16
+// -----------------------------------------------------------------------------
+void ADN_Composantes_Speeds_GUI::OnMaxSpeedFinishedEditing()
+{
+    if( popupIsDisplayed_ )
+        return;
+    bool ok = false;
+    double maxSpeed = locale().toDouble( maxSpeed_->text(), &ok );
+    if( ok && UpdateSpeedsValidator( maxSpeed ) )
+    {
+        popupIsDisplayed_ = true;
+        int nResult = QMessageBox::warning( this,
+            tr( "ADN_Composantes_GUI", "Warning" ),
+            tr( "ADN_Composantes_GUI", "At least one speed is above the new max speed.\nClick \"Ok\" to bound it to the new max speed value." ),
+            //qApp->translate( "ADN_Composantes_GUI", "Max speed changed" ),
+            //qApp->translate( "ADN_Composantes_GUI", "At least one speed is above the new max speed.\nClick \"Ok\" to bound it to the new max speed value." ),
+            QMessageBox::Ok     | QMessageBox::Default,
+            QMessageBox::Cancel | QMessageBox::Escape );
+        popupIsDisplayed_ = false;
+
+        if( nResult == QMessageBox::Ok )
+        {
+            for( int row = 0; row < numRows(); ++row )
+            {
+                ADN_TableItem_Double* item = static_cast< ADN_TableItem_Double* >( this->item( row, 1 ) );
+                SpeedInfos* infos = static_cast< SpeedInfos* >( item->GetData() );
+                if( infos->rSpeed_.GetData() > maxSpeed )
+                    infos->rSpeed_ = maxSpeed;
+            }
+        }
+        else
+        {
+            maxSpeed_->setText( locale().toString( oldMaxSpeed_ ) );
+            maxSpeed = oldMaxSpeed_;
+        }
+    }
+    oldMaxSpeed_ = maxSpeed;
 }

@@ -1587,9 +1587,6 @@
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Composantes_Sensors_GUI.h">
       <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Composantes_Speeds_GUI.h">
-      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Units_Data.h">
       <Filter>Source Files\Workspace\Units\Units Data</Filter>
     </ClInclude>
@@ -2494,6 +2491,9 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_SearchListView.h">
       <Filter>Source Files\Common widgets\List view</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Composantes_Speeds_GUI.h">
+      <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>
