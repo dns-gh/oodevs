@@ -140,6 +140,8 @@ private:
     //! @name Helpers
     //@{
     void ApplyLethalDamage( unsigned int nDead, PHY_FireResults_ABC& fireResult );
+    void UpdateCollidingAttackingAgents( MIL_Agent_ABC& target );
+    void ClearCollidingAttackingAgents();
     //@}
 
 private:
@@ -172,6 +174,7 @@ private:
     T_IntoxicationEffects intoxicationEffects_;
     T_ContaminationEffects contaminationEffects_;
     std::auto_ptr< MIL_DecontaminationEffect > pDecontaminationEffect_;
+    T_AgentVector collidingAttackingAgents_;
     //@}
 };
 

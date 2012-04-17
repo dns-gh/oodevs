@@ -30,7 +30,9 @@
 #include "Entities/Objects/MIL_Object_ABC.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Objects/MIL_NbcAgentType.h"
+#include "Entities/Orders/MIL_Report.h"
 #include "Entities/MIL_Army.h"
+#include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
 #include "Tools/MIL_Geometry.h"
 #include "simulation_terrain/TER_AgentManager.h"
 #include "simulation_terrain/TER_Localisation.h"
@@ -99,6 +101,7 @@ void MIL_PopulationElement_ABC::FireOnPion( double rIntensity, MIL_Agent_ABC& ta
     if( compTargets.empty() )
         return;
 
+    UpdateCollidingAttackingAgents( target );
     target.NotifyAttackedBy( *pPopulation_ );
 
     const double rPH = GetPopulation().GetType().GetPH( *pAttitude_, rDensity_ );
@@ -242,6 +245,7 @@ void MIL_PopulationElement_ABC::UpdateCollisions()
         MIL_Object_ABC& object = static_cast< MIL_Object_ABC& >( **it );
         object.NotifyPopulationMovingInside( *this );
     }
+    ClearCollidingAttackingAgents();
 }
 
 // -----------------------------------------------------------------------------
@@ -641,4 +645,40 @@ void MIL_PopulationElement_ABC::Attack( MIL_PopulationElement_ABC& element )
                 element.WoundHumans( static_cast< unsigned int >( humanAttacker *
                                    ( attritionData.GetReparableWithEvacuation() + attritionData.GetReparableWithoutEvacuation() ) ) );
         }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationElement_ABC::UpdateCollidingAttackingAgents
+// Created: MMC 2012-04-16
+// -----------------------------------------------------------------------------
+void MIL_PopulationElement_ABC::UpdateCollidingAttackingAgents( MIL_Agent_ABC& target )
+{
+    if( std::find( collidingAttackingAgents_.begin(), collidingAttackingAgents_.end(), &target ) != collidingAttackingAgents_.end() )
+        return;
+
+    collidingAttackingAgents_.push_back( &target );
+    DEC_Knowledge_Population* pKnPopulation = target.GetKnowledge().ResolveKnowledgePopulation( *pPopulation_ );
+    if( !pKnPopulation )
+        return;
+
+    MIL_Report::PostEvent( target, MIL_Report::eReport_SetUponByPopulation, *pKnPopulation );
+}
+
+namespace
+{
+    bool CheckCollidingAttackingAgents( MIL_Agent_ABC* agent, const std::vector< MIL_Agent_ABC* >& collidingAgents )
+    {
+        return std::find( collidingAgents.begin(), collidingAgents.end(), agent ) == collidingAgents.end();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_PopulationElement_ABC::ClearCollidingAttackingAgents
+// Created: MMC 2012-04-16
+// -----------------------------------------------------------------------------
+void MIL_PopulationElement_ABC::ClearCollidingAttackingAgents()
+{
+    collidingAttackingAgents_.erase( std::remove_if( collidingAttackingAgents_.begin(), collidingAttackingAgents_.end(),
+                                                     boost::bind( &CheckCollidingAttackingAgents, _1, boost::cref( collidingAgents_ ) ) ), 
+                                     collidingAttackingAgents_.end() );
 }
