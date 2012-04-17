@@ -39,6 +39,21 @@ UrbanPositions::UrbanPositions( const sword::Location& location, const sword::Ur
     area_ = polygon_.ComputeArea();
     if( attributes.has_architecture() )
         height_ = static_cast< unsigned int >( attributes.architecture().height() );
+    if( !IsInside( barycenter_ ) )
+    {
+        geometry::Point2f point( barycenter_.X(), barycenter_.Y() );
+        double distance = std::numeric_limits< double >::max();
+        for( CIT_PointVector it = positions.begin(); it != positions.end(); ++it )
+        {
+            double result = barycenter_.Distance( *it );
+            if( result < distance )
+            {
+                point = geometry::Point2f( (*it).X(), (*it).Y() );
+                distance = result;
+            }
+        }
+        barycenter_ = point;
+    }
 }
 
 // -----------------------------------------------------------------------------

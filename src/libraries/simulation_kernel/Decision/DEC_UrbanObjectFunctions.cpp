@@ -67,9 +67,7 @@ T_ConstKnowledgeAgentVector DEC_UrbanObjectFunctions::GetLivingEnemiesInBU( cons
 // -----------------------------------------------------------------------------
 boost::shared_ptr< MT_Vector2D > DEC_UrbanObjectFunctions::GetCurrentBarycenter( UrbanObjectWrapper* pUrbanObject )
 {
-    if( pUrbanObject )
-        return boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( pUrbanObject->GetLocalisation().ComputeBarycenter() ) );
-    return boost::shared_ptr< MT_Vector2D >( new MT_Vector2D() );
+    return GetBarycenter( pUrbanObject );
 }
 
 // -----------------------------------------------------------------------------
