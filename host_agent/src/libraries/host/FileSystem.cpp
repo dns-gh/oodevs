@@ -76,7 +76,7 @@ void FileSystem::CopyDirectory( const boost::filesystem::path& src, const boost:
     const boost::filesystem::path sub = dst / src.filename();
     if( !boost::filesystem::create_directory( sub ) )
         throw std::runtime_error( "unable to create " + sub.string() );
-    for( boost::filesystem::recursive_directory_iterator it( src ); it != boost::filesystem::recursive_directory_iterator(); ++it )
+    for( boost::filesystem::directory_iterator it( src ); it != boost::filesystem::directory_iterator(); ++it )
         CopyDirectory( *it, sub );
 }
 
