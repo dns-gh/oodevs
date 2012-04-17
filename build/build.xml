@@ -1516,7 +1516,7 @@
                 <include name="data/terrains/afghan_kabuldist/**"/>
                 <include name="data/terrains/Nord egypt/**"/>
                 <include name="data/terrains/Paris_Est/**"/>
-            </zipfileset>
+			</zipfileset>
             <zipfileset dir="${data.dir}/exercises/worldwide" prefix="exercises">
                 <include name="Egypt/**"/>
                 <include name="Logistic_example/**"/>
@@ -1551,6 +1551,7 @@
                 <include name="data/terrains/Paris_Est/**"/>
                 <include name="data/terrains/Angers_x9_en/**"/>
                 <include name="data/terrains/Sw_terrain2/**"/>
+				<include name="data/terrains/TerrainTest/**"/>
             </zipfileset>
             <zipfileset dir="${data.dir}/exercises/worldwide" prefix="exercises">
                 <include name="Egypt/**"/>
