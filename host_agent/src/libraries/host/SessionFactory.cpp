@@ -8,8 +8,8 @@
 // *****************************************************************************
 
 #include "SessionFactory.h"
-#include "PortFactory_ABC.h"
 #include "FileSystem_ABC.h"
+#include "PortFactory_ABC.h"
 #include "Session.h"
 
 #include "cpplog/cpplog.hpp"
@@ -29,7 +29,7 @@ using namespace host;
 // -----------------------------------------------------------------------------
 SessionFactory::SessionFactory( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
                                 const FileSystem_ABC& system, PortFactory_ABC& ports, const boost::filesystem::path& data,
-                                const boost::filesystem::path& applications )
+                                const boost::filesystem::path& applications, Pool_ABC& pool )
     : log_         ( log )
     , runtime_     ( runtime )
     , uuids_       ( uuids )
@@ -37,6 +37,7 @@ SessionFactory::SessionFactory( cpplog::BaseLogger& log, const runtime::Runtime_
     , data_        ( data )
     , applications_( applications )
     , ports_       ( ports )
+    , pool_        ( pool )
 {
     // NOTHING
 }
@@ -56,7 +57,7 @@ SessionFactory::~SessionFactory()
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Session_ABC > SessionFactory::Create( const boost::uuids::uuid& node, const std::string& exercise, const std::string& name ) const
 {
-    return boost::shared_ptr< Session_ABC >( new Session( log_, runtime_, uuids_, system_, data_, applications_, node, exercise, name, ports_ ) );
+    return boost::shared_ptr< Session_ABC >( new Session( log_, pool_, runtime_, uuids_, system_, data_, applications_, node, exercise, name, ports_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -70,7 +71,7 @@ SessionFactory_ABC::T_Sessions SessionFactory::Reload() const
         try
         {
             xml::xistringstream xis( system_.ReadFile( path ) );
-            boost::shared_ptr< Session_ABC > ptr = boost::make_shared< Session >( boost::ref( log_ ), runtime_, system_, data_, applications_, boost::ref( xis ), boost::ref( ports_ ) );
+            boost::shared_ptr< Session_ABC > ptr = boost::make_shared< Session >( boost::ref( log_ ), pool_, runtime_, system_, data_, applications_, boost::ref( xis ), boost::ref( ports_ ) );
             sessions.insert( std::make_pair( ptr->GetTag(), ptr ) );
         }
         catch( const std::exception& err )

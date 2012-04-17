@@ -10,6 +10,7 @@
 #include "Session.h"
 #include "FileSystem_ABC.h"
 #include "PortFactory_ABC.h"
+#include "SecurePool.h"
 #include "UuidFactory_ABC.h"
 
 #include "cpplog/cpplog.hpp"
@@ -20,12 +21,13 @@
 #include <xeumeuleu/xml.hpp>
 
 #include <boost/assign/list_of.hpp>
+#include <boost/bind.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/uuid/uuid_io.hpp>
 #include <boost/uuid/uuid_generators.hpp>
+#include <boost/uuid/uuid_io.hpp>
 
 #ifdef _MSC_VER
 #   pragma warning( push )
@@ -110,7 +112,7 @@ namespace
 // Name: Session::Session
 // Created: BAX 2012-03-16
 // -----------------------------------------------------------------------------
-Session::Session( cpplog::BaseLogger& log,
+Session::Session( cpplog::BaseLogger& log, Pool_ABC& pool,
                   const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
                   const FileSystem_ABC& system, const boost::filesystem::path& data,
                   const boost::filesystem::path& applications,
@@ -125,6 +127,7 @@ Session::Session( cpplog::BaseLogger& log,
     , node_        ( node )
     , exercise_    ( exercise )
     , name_        ( name )
+    , pool_        ( new SecurePool( log, "session", pool ) )
     , access_      ( new boost::shared_mutex() )
     , port_        ( ports.Create() )
     , status_      ( STATUS_STOPPED )
@@ -138,7 +141,7 @@ Session::Session( cpplog::BaseLogger& log,
 // Name: Session::Session
 // Created: BAX 2012-03-21
 // -----------------------------------------------------------------------------
-Session::Session( cpplog::BaseLogger& log,
+Session::Session( cpplog::BaseLogger& log, Pool_ABC& pool,
                   const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system,
                   const boost::filesystem::path& data, const boost::filesystem::path& applications,
                   xml::xistream& xis, PortFactory_ABC& ports )
@@ -151,6 +154,7 @@ Session::Session( cpplog::BaseLogger& log,
     , node_        ( boost::uuids::string_generator()( ParseItem< std::string >( xis, "node" ) ) )
     , exercise_    ( ParseItem< std::string >( xis, "exercise" ) )
     , name_        ( ParseItem< std::string >( xis, "name" ) )
+    , pool_        ( new SecurePool( log, "session", pool ) )
     , access_      ( new boost::shared_mutex() )
     , process_     ( GetProcess( runtime_, xis ) )
     , port_        ( ports.Create( ParseItem< int >( xis, "port" ) ) )
@@ -218,7 +222,7 @@ void Session::Save() const
 {
     const boost::filesystem::path path = GetPath();
     system_.CreateDirectory( path );
-    system_.WriteFile( path / L"session.id", ToXml() );
+    pool_->Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, path / L"session.id", ToXml() ) );
 }
 
 // -----------------------------------------------------------------------------

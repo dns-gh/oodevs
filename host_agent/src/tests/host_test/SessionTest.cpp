@@ -15,12 +15,14 @@
 #include <runtime/Runtime_ABC.h>
 
 #include <host/FileSystem_ABC.h>
+#include <host/Pool_ABC.h>
 #include <host/PortFactory_ABC.h>
 #include <host/Session.h>
 #include <host/UuidFactory_ABC.h>
 
 #include <xeumeuleu/xml.hpp>
 
+#include <boost/bind/apply.hpp>
 #include <boost/foreach.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/uuid/uuid_generators.hpp>
@@ -101,6 +103,16 @@ namespace
         MOCK_METHOD_EXT( Create, 1, std::auto_ptr< Port_ABC >( int ), Create1 );
     };
 
+    MOCK_BASE_CLASS( MockPool, Pool_ABC )
+    {
+        MockPool()
+        {
+            MOCK_EXPECT( this->Post ).calls( boost::bind( boost::apply< void >(), _1 ) );
+        }
+        MOCK_METHOD( Post, 1 );
+        MOCK_METHOD( Stop, 0 );
+    };
+
     struct Fixture
     {
         MockLog         log;
@@ -108,6 +120,7 @@ namespace
         MockUuidFactory uuids;
         MockFileSystem  system;
         MockPortFactory ports;
+        MockPool        pool;
         const int port;
         const boost::filesystem::path data;
         const boost::filesystem::path apps;
@@ -145,7 +158,7 @@ namespace
             MOCK_EXPECT( uuids.Create ).once().returns( default_id );
             MOCK_EXPECT( ports.Create0 ).once().returns( std::auto_ptr< Port_ABC >( new MockPort( port ) ) );
             SaveSessionTag( tag );
-            return boost::shared_ptr< Session >( new Session( log, runtime, uuids, system, data, apps, default_node, exercise, name, ports ) );
+            return boost::shared_ptr< Session >( new Session( log, pool, runtime, uuids, system, data, apps, default_node, exercise, name, ports ) );
         }
 
         boost::shared_ptr< Session > MakeSession( const std::string& tag, boost::shared_ptr< MockProcess > process )
@@ -155,7 +168,7 @@ namespace
             MOCK_EXPECT( ports.Create1 ).once().returns( new MockPort( port ) );
             xml::xistringstream xis( tag );
             SaveSessionTag( 0 );
-            return boost::shared_ptr< Session >( new Session( log, runtime, system, data, apps, xis, ports ) );
+            return boost::shared_ptr< Session >( new Session( log, pool, runtime, system, data, apps, xis, ports ) );
         }
 
         boost::shared_ptr< MockProcess > StartSession( Session& session, std::string* tag = 0, const std::string& name = std::string() )

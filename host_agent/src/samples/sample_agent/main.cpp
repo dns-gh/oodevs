@@ -119,7 +119,7 @@ namespace
             cluster = CreateCluster( nodes );
         if( cluster )
             cluster->Start();
-        host::SessionFactory sessions( log, runtime.GetRuntime(), uuids, system, ports, cfg.session.data, cfg.session.applications );
+        host::SessionFactory sessions( log, runtime.GetRuntime(), uuids, system, ports, cfg.session.data, cfg.session.applications, pool );
         host::Agent agent( log, nodes, sessions );
         web::Controller controller( log, agent );
         web::Server server( log, controller, cfg.ports.host );

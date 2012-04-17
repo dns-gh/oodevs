@@ -25,6 +25,7 @@ namespace runtime
 namespace host
 {
     class FileSystem_ABC;
+    class Pool_ABC;
     class PortFactory_ABC;
     class UuidFactory_ABC;
 
@@ -41,7 +42,7 @@ public:
     //@{
              SessionFactory( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
                              const FileSystem_ABC& system, PortFactory_ABC& ports, const boost::filesystem::path& data,
-                             const boost::filesystem::path& applications );
+                             const boost::filesystem::path& applications, Pool_ABC& pool );
     virtual ~SessionFactory();
     //@}
 
@@ -62,6 +63,7 @@ private:
     const boost::filesystem::path data_;
     const boost::filesystem::path applications_;
     const boost::filesystem::path output_;
+    Pool_ABC& pool_;
     PortFactory_ABC& ports_;
     //@}
 };
