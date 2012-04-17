@@ -301,7 +301,7 @@ Reply Agent::CreateNode( const std::string& name )
 {
     boost::shared_ptr< Node_ABC > ptr = nodeFactory_.Create( "node", name );
     if( !ptr )
-        return Reply( "unable to create new node", false ); // TODO add better error message
+        return Reply( "unable to create new node", false );
     AddObject( *access_, nodes_, ptr );
     ptr->Start();
     return Reply( ptr->ToJson() );
@@ -392,7 +392,7 @@ Reply Agent::CreateSession( const boost::uuids::uuid& node, const std::string& e
 
     boost::shared_ptr< Session_ABC > ptr = sessionFactory_.Create( node, exercise, name );
     if( !ptr )
-        return Reply( "unable to create new session", false ); // TODO add better error message
+        return Reply( "unable to create new session", false );
     AddObject( *access_, sessions_, ptr );
     ptr->Start();
     return Reply( ptr->ToJson() );
