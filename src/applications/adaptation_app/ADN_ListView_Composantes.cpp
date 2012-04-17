@@ -66,6 +66,7 @@ void ADN_ListView_Composantes::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Composantes_GUI::eArmor]->Connect( &pInfos->ptrArmor_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eSize]->Connect( &pInfos->ptrSize_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eWeight]->Connect( &pInfos->rWeight_, bConnect );
+    vItemConnectors_[ADN_Composantes_GUI::eMaxSpeed]->Connect( &pInfos->rMaxSpeed_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eNNOCode]->Connect( &pInfos->strCodeNNO_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eEMAT6Code]->Connect( &pInfos->strCodeEMAT6_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eEMAT8Code]->Connect( &pInfos->strCodeEMAT8_, bConnect );
@@ -87,7 +88,6 @@ void ADN_ListView_Composantes::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Composantes_GUI::eCrowdDisembarkingTimePerPerson]->Connect( &pInfos->crowdDisembarkingTimePerPerson_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eCanCarryCrowd]->Connect( &pInfos->bCanCarryCrowd_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eSpeeds]->Connect( &pInfos->vSpeeds_, bConnect );
-    vItemConnectors_[ADN_Composantes_GUI::eMaxSpeed]->Connect( &pInfos->rMaxSpeed_, bConnect ); // $$$$ ABR 2012-04-16: Must be after eSpeeds
     vItemConnectors_[ADN_Composantes_GUI::eSensors]->Connect( &pInfos->vSensors_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eRadars]->Connect( &pInfos->vRadars_, bConnect );
     vItemConnectors_[ADN_Composantes_GUI::eWeapons]->Connect( &pInfos->vWeapons_, bConnect );

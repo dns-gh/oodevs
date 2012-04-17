@@ -133,8 +133,6 @@ void ADN_Composantes_Speeds_GUI::OnMaxSpeedFinishedEditing()
         int nResult = QMessageBox::warning( this,
             tr( "ADN_Composantes_GUI", "Warning" ),
             tr( "ADN_Composantes_GUI", "At least one speed is above the new max speed.\nClick \"Ok\" to bound it to the new max speed value." ),
-            //qApp->translate( "ADN_Composantes_GUI", "Max speed changed" ),
-            //qApp->translate( "ADN_Composantes_GUI", "At least one speed is above the new max speed.\nClick \"Ok\" to bound it to the new max speed value." ),
             QMessageBox::Ok     | QMessageBox::Default,
             QMessageBox::Cancel | QMessageBox::Escape );
         popupIsDisplayed_ = false;
