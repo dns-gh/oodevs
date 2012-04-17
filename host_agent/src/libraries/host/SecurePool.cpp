@@ -48,6 +48,10 @@ namespace
         {
             LOG_ERROR( log ) << "[" << name << "] " << err.what();
         }
+        catch( ... )
+        {
+            LOG_ERROR( log ) << "[" << name << "] Unexpected exception";
+        }
     }
 }
 
