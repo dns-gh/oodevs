@@ -37,9 +37,11 @@ namespace xml
 namespace host
 {
     class FileSystem_ABC;
-    class PortFactory_ABC;
+    class Pool_ABC;
     class Port_ABC;
+    class PortFactory_ABC;
     class Proxy_ABC;
+    class SecurePool;
     class UuidFactory_ABC;
 
 // =============================================================================
@@ -53,12 +55,12 @@ class Node : public Node_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Node( cpplog::BaseLogger& log,
+             Node( cpplog::BaseLogger& log, Pool_ABC& pool,
                    const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
                    const FileSystem_ABC& system, const Proxy_ABC& proxy,
                    const boost::filesystem::path& java, const boost::filesystem::path& jar,
                    const boost::filesystem::path& web, const std::string& type, const std::string& name, PortFactory_ABC& ports );
-             Node( cpplog::BaseLogger& log,
+             Node( cpplog::BaseLogger& log, Pool_ABC& pool,
                    const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system, const Proxy_ABC& proxy,
                    const boost::filesystem::path& java, const boost::filesystem::path& jar,
                    const boost::filesystem::path& web, xml::xistream& xis, PortFactory_ABC& ports );
@@ -95,6 +97,7 @@ private:
     const std::string type_;
     const boost::uuids::uuid id_;
     const std::string name_;
+    std::auto_ptr< SecurePool > pool_;
     std::auto_ptr< boost::shared_mutex > access_;
     boost::shared_ptr< runtime::Process_ABC > process_;
     std::auto_ptr< Port_ABC > port_;

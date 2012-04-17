@@ -15,13 +15,15 @@
 #include <runtime/Runtime_ABC.h>
 
 #include <host/FileSystem_ABC.h>
-#include <host/PortFactory_ABC.h>
 #include <host/Node.h>
+#include <host/Pool_ABC.h>
+#include <host/PortFactory_ABC.h>
 #include <host/Proxy_ABC.h>
 #include <host/UuidFactory_ABC.h>
 
 #include <xeumeuleu/xml.hpp>
 
+#include <boost/bind/apply.hpp>
 #include <boost/foreach.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/uuid/uuid_generators.hpp>
@@ -111,6 +113,16 @@ namespace
         MOCK_METHOD( Unregister, 1 );
     };
 
+    MOCK_BASE_CLASS( MockPool, Pool_ABC )
+    {
+        MockPool()
+        {
+            MOCK_EXPECT( this->Post ).calls( boost::bind( boost::apply< void >(), _1 ) );
+        }
+        MOCK_METHOD( Post, 1 );
+        MOCK_METHOD( Stop, 0 );
+    };
+
     struct Fixture
     {
         MockLog         log;
@@ -119,6 +131,7 @@ namespace
         MockFileSystem  system;
         MockPortFactory ports;
         MockProxy       proxy;
+        MockPool        pool;
         const int port;
         const boost::filesystem::path java;
         const boost::filesystem::path jar;
@@ -158,7 +171,7 @@ namespace
             SaveNodeTag( tag );
             MOCK_EXPECT( proxy.Register ).once().with( default_id_string, "localhost", port );
             MOCK_EXPECT( proxy.Unregister ).once().with( default_id_string );
-            return boost::shared_ptr< Node >( new Node( log, runtime, uuids, system, proxy, java, jar, web, "node", name, ports ) );
+            return boost::shared_ptr< Node >( new Node( log, pool, runtime, uuids, system, proxy, java, jar, web, "node", name, ports ) );
         }
 
         boost::shared_ptr< Node > MakeNode( const std::string& tag, boost::shared_ptr< MockProcess > process )
@@ -170,7 +183,7 @@ namespace
             SaveNodeTag( 0 );
             MOCK_EXPECT( proxy.Register ).once().with( default_id_string, "localhost", port );
             MOCK_EXPECT( proxy.Unregister ).once().with( default_id_string );
-            return boost::shared_ptr< Node >( new Node( log, runtime, system, proxy, java, jar, web, xis, ports ) );
+            return boost::shared_ptr< Node >( new Node( log, pool, runtime, system, proxy, java, jar, web, xis, ports ) );
         }
 
         boost::shared_ptr< MockProcess > StartNode( Node& node, std::string* tag = 0, const std::string& name = std::string() )

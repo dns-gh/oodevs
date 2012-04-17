@@ -11,8 +11,8 @@
 #include "FileSystem_ABC.h"
 #include "PortFactory_ABC.h"
 #include "Proxy_ABC.h"
+#include "SecurePool.h"
 #include "UuidFactory_ABC.h"
-
 #include "cpplog/cpplog.hpp"
 #include "runtime/Process_ABC.h"
 #include "runtime/Runtime_ABC.h"
@@ -21,12 +21,13 @@
 #include <xeumeuleu/xml.hpp>
 
 #include <boost/assign/list_of.hpp>
+#include <boost/bind.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/uuid/uuid_io.hpp>
 #include <boost/uuid/uuid_generators.hpp>
+#include <boost/uuid/uuid_io.hpp>
 
 #ifdef _MSC_VER
 #   pragma warning( push )
@@ -77,7 +78,7 @@ namespace
 // Name: Node::Node
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-Node::Node( cpplog::BaseLogger& log,
+Node::Node( cpplog::BaseLogger& log, Pool_ABC& pool,
             const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids, const FileSystem_ABC& system,
             const Proxy_ABC& proxy, const boost::filesystem::path& java, const boost::filesystem::path& jar,
             const boost::filesystem::path& web, const std::string& type, const std::string& name, PortFactory_ABC& ports )
@@ -91,6 +92,7 @@ Node::Node( cpplog::BaseLogger& log,
     , type_   ( type )
     , id_     ( uuids.Create() )
     , name_   ( name )
+    , pool_   ( new SecurePool( log, "node", pool ) )
     , access_ ( new boost::shared_mutex() )
     , port_   ( ports.Create() )
 {
@@ -104,7 +106,7 @@ Node::Node( cpplog::BaseLogger& log,
 // Name: Node::Node
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-Node::Node( cpplog::BaseLogger& log,
+Node::Node( cpplog::BaseLogger& log, Pool_ABC& pool,
             const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system,
             const Proxy_ABC& proxy, const boost::filesystem::path& java, const boost::filesystem::path& jar,
             const boost::filesystem::path& web, xml::xistream& xis, PortFactory_ABC& ports )
@@ -118,6 +120,7 @@ Node::Node( cpplog::BaseLogger& log,
     , type_   ( ParseItem< std::string >( xis, "type" ) )
     , id_     ( boost::uuids::string_generator()( ParseItem< std::string >( xis, "id" ) ) )
     , name_   ( ParseItem< std::string >( xis, "name" ) )
+    , pool_   ( new SecurePool( log, "node", pool ) )
     , access_ ( new boost::shared_mutex() )
     , process_( GetProcess( runtime_, xis ) )
     , port_   ( ports.Create( ParseItem< int >( xis, "port" ) ) )
@@ -174,7 +177,7 @@ void Node::Save() const
 {
     const boost::filesystem::path path = GetPath();
     system_.CreateDirectory( path );
-    system_.WriteFile( path / runtime::Utf8Convert( type_ + ".id" ), ToXml() );
+    pool_->Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, path / runtime::Utf8Convert( type_ + ".id" ), ToXml() ) );
 }
 
 // -----------------------------------------------------------------------------

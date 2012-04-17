@@ -28,7 +28,7 @@ using namespace host;
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
 NodeFactory::NodeFactory( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
-                          const FileSystem_ABC& system, const Proxy_ABC& proxy, PortFactory_ABC& ports,
+                          const FileSystem_ABC& system, const Proxy_ABC& proxy, PortFactory_ABC& ports, Pool_ABC& pool,
                           const boost::filesystem::path& java, const boost::filesystem::path& jar, const boost::filesystem::path& web )
     : log_    ( log )
     , runtime_( runtime )
@@ -38,6 +38,7 @@ NodeFactory::NodeFactory( cpplog::BaseLogger& log, const runtime::Runtime_ABC& r
     , java_   ( java )
     , jar_    ( jar )
     , web_    ( web )
+    , pool_   ( pool )
     , ports_  ( ports )
 {
     // NOTHING
@@ -58,7 +59,7 @@ NodeFactory::~NodeFactory()
 // -----------------------------------------------------------------------------
 boost::shared_ptr< Node_ABC > NodeFactory::Create( const std::string& type, const std::string& name ) const
 {
-    return boost::shared_ptr< Node >( new Node( log_, runtime_, uuids_, system_, proxy_, java_, jar_, web_, type, name, ports_ ) );
+    return boost::shared_ptr< Node >( new Node( log_, pool_, runtime_, uuids_, system_, proxy_, java_, jar_, web_, type, name, ports_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -74,7 +75,7 @@ NodeFactory_ABC::T_Nodes NodeFactory::Reload( const std::string& type ) const
         try
         {
             xml::xistringstream xis( system_.ReadFile( path ) );
-            boost::shared_ptr< Node_ABC > ptr = boost::make_shared< Node >( boost::ref( log_ ), runtime_, system_, proxy_, java_, jar_, web_, boost::ref( xis ), boost::ref( ports_ ) );
+            boost::shared_ptr< Node_ABC > ptr( new Node( log_, pool_, runtime_, system_, proxy_, java_, jar_, web_, xis, ports_ ) );
             reply.insert( std::make_pair( ptr->GetTag(), ptr ) );
         }
         catch( const std::exception& err )

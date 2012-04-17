@@ -113,7 +113,7 @@ namespace
         host::Proxy proxy( log, runtime.GetRuntime(), system, cfg.java, cfg.proxy.jar, cfg.ports.proxy, client, pool );
         proxy.Register( "api", "localhost", cfg.ports.host );
         host::PortFactory ports( cfg.ports.period, cfg.ports.min, cfg.ports.max );
-        host::NodeFactory nodes( log, runtime.GetRuntime(), uuids, system, proxy, ports, cfg.java, cfg.node.jar, cfg.node.root );
+        host::NodeFactory nodes( log, runtime.GetRuntime(), uuids, system, proxy, ports, pool, cfg.java, cfg.node.jar, cfg.node.root );
         boost::shared_ptr< host::Node_ABC > cluster;
         if( cfg.cluster.enabled )
             cluster = CreateCluster( nodes );
