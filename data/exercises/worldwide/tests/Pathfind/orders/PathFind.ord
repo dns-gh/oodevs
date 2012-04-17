@@ -456,4 +456,103 @@
       </location>
     </parameter>
   </action>
+  <action id="221" name="ARMOR - attack" target="1434" time="2011-09-19T20:02:10" type="mission">
+    <parameter name="Direction dangereuse" type="heading" value="0"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="30TXS6063769607"/>
+        <point coordinates="30TXS4283442693"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="30TXS7624667295"/>
+        <point coordinates="30TXS5807441250"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="503" name="COMMON - move parallel" target="1414" time="2011-09-19T20:02:10" type="mission">
+    <parameter name="Direction dangereuse" type="heading" value="0"/>
+    <parameter name="Limas" type="phaseline"/>
+    <parameter name="Limit 1" type="limit">
+      <location type="line">
+        <point coordinates="30TXS6063769607"/>
+        <point coordinates="30TXS4283442693"/>
+      </location>
+    </parameter>
+    <parameter name="Limit 2" type="limit">
+      <location type="line">
+        <point coordinates="30TXS7624667295"/>
+        <point coordinates="30TXS5807441250"/>
+      </location>
+    </parameter>
+    <parameter name="Route" type="path">
+      <parameter name="Point de passage 1" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXS6178261088"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 2" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXS6008159670"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 3" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXS5610960548"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 4" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXS6594454833"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 5" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXS5497959490"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 6" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXS6473953142"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 7" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXS5802454553"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 8" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXS5531956737"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 9" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXS5345957059"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 10" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXS6030451967"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 11" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXS6350550867"/>
+        </location>
+      </parameter>
+      <parameter name="Point de passage 12" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXS5663452564"/>
+        </location>
+      </parameter>
+      <parameter name="Destination" type="pathpoint">
+        <location type="point">
+          <point coordinates="30TXS5210943735"/>
+        </location>
+      </parameter>
+    </parameter>
+  </action>
 </actions>
