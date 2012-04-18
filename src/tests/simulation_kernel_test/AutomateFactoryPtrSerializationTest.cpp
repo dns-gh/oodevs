@@ -11,16 +11,22 @@ BOOST_AUTO_TEST_CASE( VerifyAutomateFactoryPtr_Serialization )
     std::stringstream s;
     {
         MIL_IDManager manager;
-        MIL_CheckPointOutArchive out( s );
+        MIL_CheckPointOutArchive* out = new MIL_CheckPointOutArchive( s );
         AutomateFactory_ABC* factory = new AutomateFactory( manager, 100, 100 );
-        out << factory;
+        ( *out ) << factory;
         delete factory;
+#ifndef _DEBUG //$$$$ boost + nedmalloc + binary_ioarchive + std::locale = crash
+        delete out;
+#endif
     }
     {
-        MIL_CheckPointInArchive in( s );
+        MIL_CheckPointInArchive* in = new MIL_CheckPointInArchive( s );
         AutomateFactory_ABC* factory = 0;
-        in >> factory;
+        ( *in ) >> factory;
         BOOST_CHECK( factory );
         delete factory;
+#ifndef _DEBUG //$$$$ boost + nedmalloc + binary_ioarchive + std::locale = crash
+        delete in;
+#endif
     }
 }

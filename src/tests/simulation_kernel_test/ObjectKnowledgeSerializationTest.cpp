@@ -101,14 +101,20 @@ BOOST_FIXTURE_TEST_CASE( VerifyObjectKnowledge_Serialization, ObjectKnowledgeSer
     knowledge.Update( PHY_PerceptionLevel::identified_ );
     std::stringstream s;
     {
-        MIL_CheckPointOutArchive out( s );
-        out << knowledge;
+        MIL_CheckPointOutArchive* out = new MIL_CheckPointOutArchive( s );
+        ( *out ) << knowledge;
+#ifndef _DEBUG //$$$$ boost + nedmalloc + binary_ioarchive + std::locale = crash
+        delete out;
+#endif
     }
     {
-        MIL_CheckPointInArchive in( s );
+        MIL_CheckPointInArchive* in = new MIL_CheckPointInArchive( s );
         DEC_Knowledge_Object reloaded;
-        in >> reloaded;
+        ( *in ) >> reloaded;
         MOCK_EXPECT( publisher, Send ).once(); // object knowledge destruction
+#ifndef _DEBUG //$$$$ boost + nedmalloc + binary_ioarchive + std::locale = crash
+        delete in;
+#endif
     }
     MOCK_EXPECT( publisher, Send ).once(); // object knowledge destruction
 }
