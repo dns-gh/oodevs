@@ -362,6 +362,7 @@ void RegisterEngineerObjectsFunctions( directia::brain::Brain& brain )
     brain.Register( "DEC_GenObject_DelaiActiviteMines", &DEC_Gen_Object::GetMinesActivityTime );
     brain.Register( "DEC_GenObject_DateActivationMines", &DEC_Gen_Object::GetActivationTime );
     brain.Register( "DEC_GenObject_Name", &DEC_Gen_Object::GetName );
+    brain.Register( "DEC_GenObject_HasCapacity", &DEC_Gen_Object::HasCapacity );
 }
 
 // -----------------------------------------------------------------------------
@@ -376,6 +377,7 @@ void RegisterObjectsFunctions( directia::brain::Brain& brain )
     brain[ "DEC_ConnaissanceObjet_ActiverIssueDeReseauSouterrain" ] = &DEC_KnowledgeObjectFunctions::ActivateUndergroundNetworkExit;
     brain[ "DEC_ConnaissanceObjet_DesactiverIssueDeReseauSouterrain" ] = &DEC_KnowledgeObjectFunctions::DeactivateUndergroundNetworkExit;
     brain[ "DEC_ConnaissanceObjet_IssuesDuMemeReseauSouterrain" ] = DEC_KnowledgeObjectFunctions::EnterAndExitInSameUndergroundNetwork;
+    brain[ "DEC_ObjectKnowledge_HasCapacity" ] = &DEC_KnowledgeObjectFunctions::HasCapacity;
 }
 
 // -----------------------------------------------------------------------------

@@ -294,7 +294,7 @@ bool DEC_KnowledgePopulationFunctions::HasWoundedHumans( const MIL_AgentPion& ca
     DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
     if( pKnowledge )
     {
-			MIL_Population& population = pKnowledge->GetPopulationKnown();
+            MIL_Population& population = pKnowledge->GetPopulationKnown();
             return population.GetWoundedHumans() > 0;
     }
     return false;
@@ -309,9 +309,9 @@ bool DEC_KnowledgePopulationFunctions::HealWoundedHumans( const MIL_AgentPion& c
     DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
     if( pKnowledge )
     {
-			MIL_Population& population = pKnowledge->GetPopulationKnown();
+            MIL_Population& population = pKnowledge->GetPopulationKnown();
             population.HealWounded();
-			return true;
+            return true;
     }
     return false;
 }
@@ -325,7 +325,7 @@ int DEC_KnowledgePopulationFunctions::GetNbreOfWoundedHumans( const MIL_AgentPio
     DEC_Knowledge_Population* pKnowledge = caller.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
     if( pKnowledge )
     {
-			MIL_Population& population = pKnowledge->GetPopulationKnown();
+            MIL_Population& population = pKnowledge->GetPopulationKnown();
             return population.GetWoundedHumans();
     }
     return 0;

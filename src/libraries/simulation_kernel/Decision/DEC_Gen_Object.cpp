@@ -9,8 +9,10 @@
 
 #include "simulation_kernel_pch.h"
 #include "DEC_Gen_Object.h"
+#include "MIL_AgentServer.h"
+#include "Entities/MIL_EntityManager.h"
 #include "Entities/Automates/MIL_Automate.h"
-#include "Entities/MIL_EntityManager_ABC.h"
+#include "Entities/Objects/CapacityRetriever.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Network/NET_ASN_Tools.h"
 #include "Network/NET_AsnException.h"
@@ -171,6 +173,18 @@ void DEC_Gen_Object::Serialize( sword::PlannedWork& msg ) const
     if( !name_.empty() )
         msg.set_name( name_ );
     NET_ASN_Tools::WriteLocation( localisation_, *msg.mutable_position() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Gen_Object::HasCapacity
+// Created: JSR 2012-04-18
+// -----------------------------------------------------------------------------
+bool DEC_Gen_Object::HasCapacity( const std::string& capacity ) const
+{
+    if( type_.empty() )
+        return false;
+    const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( type_ );
+    return CapacityRetriever::RetrieveCapacity( type, capacity ) != 0;
 }
 
 // -----------------------------------------------------------------------------

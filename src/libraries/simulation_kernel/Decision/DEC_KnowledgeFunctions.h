@@ -82,6 +82,7 @@ public:
     template< typename T > static T_KnowledgeObjectDiaIDVector GetObjectsInCircle( const T& caller, const MT_Vector2D* pCenter, double rRadius, const std::vector< std::string >& filters );
     template< typename T > static T_KnowledgeObjectDiaIDVector GetObjectsInZone( const T& caller, const TER_Localisation* pLoc, const std::vector< std::string >& parameters );
     template< typename T > static T_KnowledgeObjectDiaIDVector GetObjectsInFuseau( const T& caller, const std::string& type );
+    static T_KnowledgeObjectDiaIDVector GetObjectsWithCapacityInZone( const DEC_Decision_ABC* callerAgent, const std::string& capacity, const TER_Localisation* pLoc );
 
     static T_KnowledgePopulationDiaIDVector GetPopulationsColliding( const MIL_AgentPion& callerAgent );
     static T_KnowledgePopulationDiaIDVector GetPopulationsAttacking( const MIL_AgentPion& callerAgent );

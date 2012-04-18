@@ -18,10 +18,11 @@
 #include "DEC_Knowledge_Object.h"
 #include "DEC_Knowledge_ObjectCollision.h"
 #include "DEC_Knowledge_Urban.h"
+#include "Entities/Objects/CapacityRetriever.h"
+#include "Entities/Objects/InteractWithEnemyCapacity.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/ResourceNetworkCapacity.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
-#include "Entities/Objects/InteractWithEnemyCapacity.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "protocol/Protocol.h"
@@ -225,6 +226,45 @@ void DEC_KnowledgeBlackBoard_Army::GetObjectsInZone( T_KnowledgeObjectDiaIDVecto
 void DEC_KnowledgeBlackBoard_Army::GetObjectsInZone( T_KnowledgeObjectDiaIDVector& container, const MIL_ObjectFilter& filter, const TER_Polygon& zone )
 {
     sObjectKnowledgesInZoneFilteredInserter< TER_Polygon > functor( container, filter, zone );
+
+    assert( pKnowledgeObjectContainer_ );
+    pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );
+}
+
+namespace
+{
+    class sObjectKnowledgesInZoneCapacityInserter
+    {
+    public:
+        sObjectKnowledgesInZoneCapacityInserter( T_KnowledgeObjectDiaIDVector& container, const std::string& capacity, const TER_Localisation& zone )
+            : pContainer_( container )
+            , capacity_  ( capacity )
+            , pZone_     ( zone )
+        {
+            // NOTHING
+        }
+
+        void operator()( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
+        {
+            if( knowledge && knowledge->IsValid() && CapacityRetriever::RetrieveCapacity( knowledge->GetType(), capacity_ ) != 0
+                && pZone_.IsInside( knowledge->GetLocalisation().ComputeBarycenter() ) )
+                    pContainer_.push_back( knowledge );
+        }
+
+    private:
+        T_KnowledgeObjectDiaIDVector& pContainer_;
+        const std::string& capacity_;
+        const TER_Localisation& pZone_;
+    };
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeBlackBoard_Army::GetObjectsWithCapacityInZone
+// Created: JSR 2012-04-17
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeBlackBoard_Army::GetObjectsWithCapacityInZone( T_KnowledgeObjectDiaIDVector& container, const std::string& capacity, const TER_Localisation& zone )
+{
+    sObjectKnowledgesInZoneCapacityInserter functor( container, capacity, zone );
 
     assert( pKnowledgeObjectContainer_ );
     pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );
