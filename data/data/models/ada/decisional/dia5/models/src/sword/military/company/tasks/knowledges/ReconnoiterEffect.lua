@@ -44,10 +44,8 @@ return
         -- Ordonner la table d'objectives par ordre de proximité à l'unité subordonnée
         table.sort( positions, comp )
         -- Si aucun objectif dans le sous-fuseau => ajouter un point dans le fuseau au meme niveau que l'objectif le plus lointain
-        if not next( positions ) then
-            local pos = DEC_Geometrie_CalculerPointSurFuseau( fuseau.source, myself.leadData.advanceMax )
-            positions[ #positions + 1 ] = CreateKnowledge( sword.military.world.Point, pos )
-        end
+        local pos = DEC_Geometrie_CalculerPointSurFuseau( fuseau.source, myself.leadData.advanceMax )
+        positions[ #positions + 1 ] = CreateKnowledge( sword.military.world.Point, pos )
       
       
         return positions, fuseau
