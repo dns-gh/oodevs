@@ -124,7 +124,8 @@ private:
     MIL_AgentPion& owner_;
     MIL_AgentPion* pPionReinforced_;
     T_PionSet      reinforcements_;
-    bool           bHasChanged_;
+    bool           bReinforcedChanged_;
+    bool           bReinforcementsChanged_;
     bool           bExternalCanReinforce_;
     //@}
 };
