@@ -117,6 +117,7 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     errorDescriptions_[ eStockMaxExceeded ]                = tr( "Allocated stocks of nature %1 exceed max capacity." );
     errorDescriptions_[ eLogisticInitialization ]          = tr( "No logistic link initialized." );
     errorDescriptions_[ eNoLogisticBase ]                  = tr( "No valid logistic base defined." );
+    errorDescriptions_[ eNoLogisticFormation ]             = tr( "Logistic sector not included in a logistic base." );
 
     // Profile
     errorDescriptions_[ eProfileUniqueness ]               = tr( "Association with multiple profiles: %1." );

@@ -1346,6 +1346,10 @@
         <source>No orbat.xml found. The orbat.xml file will be created after the first save.</source>
         <translation>Orbat.xml non présent. Le fichier orbat.xml sera créé après la première sauvegarde.</translation>
     </message>
+    <message>
+        <source>Logistic sector not included in a logistic base.</source>
+        <translation>Secteur logistique non inclus dans une base logistique.</translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>
