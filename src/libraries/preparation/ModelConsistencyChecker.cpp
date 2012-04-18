@@ -31,6 +31,7 @@
 #include "clients_kernel/AgentComposition.h"
 #include "clients_kernel/AgentType.h"
 #include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/AutomatType.h"
 #include "clients_kernel/ComponentType.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Diplomacies_ABC.h"
@@ -41,6 +42,7 @@
 #include "clients_kernel/ExtensionType.h"
 #include "clients_kernel/ExtensionTypes.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "clients_kernel/LogisticLevel.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
@@ -138,6 +140,7 @@ bool ModelConsistencyChecker::CheckConsistency( bool( *IsError )( E_ConsistencyC
     CheckMaxStockExceeded();
     CheckLogisticInitialization();
     CheckLogisticBase();
+    CheckLogisticFormation();
 
     CheckProfileUniqueness();
     CheckProfileInitialization();
@@ -557,6 +560,69 @@ void ModelConsistencyChecker::CheckLogisticBase()
         const LogisticAttribute* attribute = obj.Retrieve< LogisticAttribute >();
         if( attribute && !attribute->HasValidLogisticBase() )
             AddError( eNoLogisticBase, &obj );
+    }
+}
+
+namespace
+{
+    bool HasLogisticCapacity( const Automat_ABC& automat )
+    {
+        const kernel::AutomatType& type = automat.GetType();
+        if( type.IsTC2() )
+            return true;
+        const TacticalHierarchies* hierarchy = static_cast< const TacticalHierarchies* >( automat.Retrieve< TacticalHierarchies >() );
+        if( !hierarchy )
+            return false;
+        tools::Iterator< const Entity_ABC& > it = hierarchy->CreateSubordinateIterator();
+        while( it.HasMoreElements() )
+        {
+            const Entity_ABC& childEntity = it.NextElement();
+            const Agent_ABC* agent = dynamic_cast< const Agent_ABC* >( &childEntity );
+            if( agent && ( agent->GetType().HasStocks() || agent->Retrieve< Stocks >() ) )
+                return true;
+        }
+        return false;
+    }
+
+    bool IsLogisticBaseFormation( const Formation_ABC& formation )
+    {
+        if( formation.GetLogisticLevel() == kernel::LogisticLevel::logistic_base_ )
+            return true;
+        const TacticalHierarchies* hierarchy = static_cast< const TacticalHierarchies* >( formation.Retrieve< TacticalHierarchies >() );
+        if( !hierarchy )
+            return false;
+        const Entity_ABC* superior = hierarchy->GetSuperior();
+        if( !superior )
+            return false;
+        const Formation_ABC* pParentFormation = dynamic_cast< const Formation_ABC* >( superior );
+        if( !pParentFormation )
+            return false;
+        return IsLogisticBaseFormation( *pParentFormation );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelConsistencyChecker::CheckLogisticFormation
+// Created: MMC 2012-04-18
+// -----------------------------------------------------------------------------
+void ModelConsistencyChecker::CheckLogisticFormation()
+{
+    Iterator< const Automat_ABC& > it = model_.GetAutomatResolver().CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const Automat_ABC& automat = it.NextElement();
+        if( !HasLogisticCapacity( automat ) )
+            continue;
+        if( automat.GetLogisticLevel() == kernel::LogisticLevel::logistic_base_ )
+            continue;
+        const TacticalHierarchies* hierarchy = static_cast< const TacticalHierarchies* >( automat.Retrieve< TacticalHierarchies >() );
+        if( hierarchy && hierarchy->GetSuperior() )
+        {
+            const Formation_ABC* pParentFormation = dynamic_cast< const Formation_ABC* >( hierarchy->GetSuperior() );
+            if( pParentFormation && IsLogisticBaseFormation( *pParentFormation ) )
+                continue;
+        }
+        AddError( eNoLogisticFormation, &automat );
     }
 }
 

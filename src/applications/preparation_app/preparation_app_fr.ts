@@ -1362,6 +1362,10 @@
         <source>Error</source>
         <translation>Erreur</translation>
     </message>
+    <message>
+        <source>Logistic sector not included in a logistic base.</source>
+        <translation>Secteur logistique non inclus dans une base logistique.</translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>

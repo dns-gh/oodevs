@@ -1362,6 +1362,10 @@
         <source>No valid logistic base defined.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Logistic sector not included in a logistic base.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>
