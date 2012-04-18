@@ -90,7 +90,7 @@ void ObjectKnowledge::DoUpdate( const sword::ObjectKnowledgeUpdate& message )
         optionals_.automat_perceptionPresent = 1;
         automatPerceptions_.clear();
         for( int i = 0; i < message.perceiving_automats().elem_size(); ++i )
-            automatPerceptions_.push_back( &model_.Automats().Get( message.perceiving_automats().elem( i ).id() ) );
+            automatPerceptions_.push_back( message.perceiving_automats().elem( i ).id() );
     }
     if( message.has_object() )
     {
@@ -139,10 +139,10 @@ void ObjectKnowledge::SendFullUpdate( ClientPublisher_ABC& publisher ) const
     if( optionals_.relevancePresent )
         message().set_relevance( nRelevance_ );
     if( optionals_.automat_perceptionPresent )
-        for( std::vector< const kernel::Automat_ABC* >::const_iterator it = automatPerceptions_.begin(); it != automatPerceptions_.end(); ++it )
+        for( std::vector< unsigned int >::const_iterator it = automatPerceptions_.begin(); it != automatPerceptions_.end(); ++it )
         {
             sword::AutomatId& data = *message().mutable_perceiving_automats()->add_elem();
-            data.set_id( (*it)->GetId() );
+            data.set_id( *it );
         }
     attributes_.Send( *message().mutable_attributes() );
     message.Send( publisher );
