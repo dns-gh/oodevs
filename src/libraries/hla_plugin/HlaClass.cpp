@@ -121,7 +121,7 @@ void HlaClass::Reflected( HlaObject_ABC& /*object*/ )
 // Name: HlaClass::RequestConfirmDivestiture
 // Created: AHC 2012-02-24
 // -----------------------------------------------------------------------------
-bool HlaClass::RequestConfirmDivestiture( const ::hla::ObjectIdentifier& /*objectID*/, const HlaObject_ABC& /*object*/ )
+bool HlaClass::RequestConfirmDivestiture( const ::hla::ObjectIdentifier& /*objectID*/, const HlaObject_ABC& /*object*/, const ::hla::T_AttributeIdentifiers& /*attributes*/ )
 {
     return false;
 }
@@ -130,7 +130,7 @@ bool HlaClass::RequestConfirmDivestiture( const ::hla::ObjectIdentifier& /*objec
 // Name: HlaClass::OwnershipAcquisitionNotification
 // Created: AHC 2012-02-24
 // -----------------------------------------------------------------------------
-void HlaClass::OwnershipAcquisitionNotification( const ::hla::ObjectIdentifier& /*objectID*/, const HlaObject_ABC& /*object*/ )
+void HlaClass::OwnershipAcquisitionNotification( const ::hla::ObjectIdentifier& /*objectID*/, const HlaObject_ABC& /*object*/, const ::hla::T_AttributeIdentifiers& /*attributes*/ )
 {
     // NOTHING
 }
@@ -139,7 +139,7 @@ void HlaClass::OwnershipAcquisitionNotification( const ::hla::ObjectIdentifier& 
 // Name: HlaClass::RequestOwnershipAssumption
 // Created: AHC 2012-02-24
 // -----------------------------------------------------------------------------
-bool HlaClass::RequestOwnershipAssumption( const ::hla::ObjectIdentifier& /*objectID*/, const HlaObject_ABC& /*object*/ )
+bool HlaClass::RequestOwnershipAssumption( const ::hla::ObjectIdentifier& /*objectID*/, const HlaObject_ABC& /*object*/, const ::hla::T_AttributeIdentifiers& /*attributes*/ )
 {
     return false;
 }
