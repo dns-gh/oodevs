@@ -20,6 +20,8 @@
 // =============================================================================
 class ADN_MissionParameterType : public ADN_TableItem_ComboBox
 {
+    Q_OBJECT
+
 public:
     //! @name Constructors/Destructor
     //@{
@@ -31,6 +33,12 @@ public:
     //@{
     void Update();
     void Disconnect();
+    //@}
+
+signals:
+    //! @name Signals
+    //@{
+    void TypeChanged( E_MissionParameterType type );
     //@}
 
 private:

@@ -9,6 +9,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_MissionParameterType.h"
+#include "moc_ADN_MissionParameterType.cpp"
 #include "ADN_Tr.h"
 #include "ADN_Missions_GUI.h"
 
@@ -65,15 +66,17 @@ void ADN_MissionParameterType::DoValueChanged()
 {
     ADN_TableItem_ComboBox::DoValueChanged();
     ADN_Missions_Data::MissionParameter* param = static_cast< ADN_Missions_Data::MissionParameter* >( pData_ );
-    bool isEnum = param->type_.GetData() == eMissionParameterTypeEnumeration;
+    E_MissionParameterType type = param->type_.GetData();
+    bool isEnum = type == eMissionParameterTypeEnumeration;
     if( !isEnum )
         param->values_.Clear();
     itemConnectors_[ADN_Missions_GUI::eParameterValues]->Connect( &param->values_, isEnum );
-    bool isChoice = param->type_.GetData() == eMissionParameterTypeLocationComposite;
+    bool isChoice = type == eMissionParameterTypeLocationComposite;
     itemConnectors_[ADN_Missions_GUI::eChoiceValues]->Connect( &param->choices_, isChoice );
-    bool isNumeric = param->type_.GetData() == eMissionParameterTypeNumeric;
+    bool isNumeric = type == eMissionParameterTypeNumeric;
     itemConnectors_[ADN_Missions_GUI::eMinValue]->Connect( &param->minValue_, isNumeric );
     itemConnectors_[ADN_Missions_GUI::eMaxValue]->Connect( &param->maxValue_, isNumeric );
+    emit TypeChanged( type );
 }
 
 // -----------------------------------------------------------------------------

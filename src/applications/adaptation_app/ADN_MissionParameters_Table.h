@@ -37,10 +37,17 @@ public:
     void ResetCurrent();
     //@}
 
+    signals:
+    //! @name Signals
+    //@{
+    void TypeChanged( E_MissionParameterType type );
+    //@}
+
 private slots:
     //! @name Slots
     //@{
     void OnSelectionChanged();
+    void OnTypeChanged( E_MissionParameterType type );
     //@}
 
 private:
