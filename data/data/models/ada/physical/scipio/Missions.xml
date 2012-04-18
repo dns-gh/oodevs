@@ -2685,7 +2685,7 @@
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
-      <parameter dia-name="objective" name="Position de déploiement" optional="false" type="Point"/>
+      <parameter dia-name="objective" name="Zone de déploiement" optional="false" type="Polygon"/>
       <parameter dia-name="meetingPoint" name="Point de regroupement" optional="false" type="Point"/>
       <parameter dia-name="jammingTime" max-value="240" min-value="1" name="Délais de brouillage" optional="false" type="Integer"/>
     </mission>
@@ -3062,4 +3062,4 @@
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PoursuivreConvoi" id="406" name="Poursuivre convoi"/>
   </fragorders>
 </missions>
-<!-- signature="3739580671" -->
+<!-- signature="0456233269" -->
