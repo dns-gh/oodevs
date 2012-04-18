@@ -59,6 +59,7 @@ public:
     virtual double GetCollidingPopulationDensity() const;
     virtual bool HasCollision() const;
     virtual bool HasCollisionWithCrowd( const MIL_Population& population ) const;
+    virtual void DisableCrowdEffect( bool disable );
     //@}
 
     //! @name Serialization
@@ -72,6 +73,7 @@ private:
     MIL_Agent_ABC& owner_;
     mutable double rPopulationDensity_;
     bool           bHasChanged_;
+    bool           disableEffect_;
     mutable bool   bDensityComputed_;
     //@}
 };

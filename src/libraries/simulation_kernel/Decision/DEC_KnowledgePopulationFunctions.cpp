@@ -16,6 +16,7 @@
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Agents/Roles/Composantes//PHY_RolePion_Composantes.h"
 #include "Entities/Agents/Roles/Dotations/PHY_RoleInterface_Dotations.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Populations/MIL_Population.h"
@@ -329,4 +330,17 @@ int DEC_KnowledgePopulationFunctions::GetNbreOfWoundedHumans( const MIL_AgentPio
             return population.GetWoundedHumans();
     }
     return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgePopulationFunctions::CanLoadCrowdConcentration
+// Created: JSR 2012-04-18
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgePopulationFunctions::CanLoadCrowdConcentration( const DEC_Decision_ABC& callerAgent, int knowledgeId, unsigned int concentrationId )
+{
+    DEC_Knowledge_Population* pKnowledge = callerAgent.GetKnowledgeGroup().GetKnowledge().GetKnowledgePopulationFromID( knowledgeId );
+    if( !pKnowledge )
+        return false;
+    unsigned int humans = pKnowledge->GetPopulationKnown().GetAllHumansInConcentration( concentrationId );
+    return humans <= callerAgent.GetPion().GetRole< PHY_RolePion_Composantes >().GetCrowdTransporterCapacity();
 }

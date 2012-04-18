@@ -49,6 +49,7 @@ public:
     virtual double GetCollidingPopulationDensity() const = 0;
     virtual bool HasCollision() const = 0;
     virtual bool HasCollisionWithCrowd( const MIL_Population& population ) const = 0;
+    virtual void DisableCrowdEffect( bool disable ) = 0;
     //@}
 
 private:

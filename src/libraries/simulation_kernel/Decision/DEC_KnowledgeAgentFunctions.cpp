@@ -18,6 +18,7 @@
 #include "Entities/Agents/Roles/Illumination/PHY_RoleInterface_Illumination.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
 #include "Entities/Agents/Roles/Perception/PHY_RoleInterface_Perceiver.h"
+#include "Entities/Agents/Roles/Population/PHY_RoleInterface_Population.h"
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
 #include "Entities/Agents/Units/Categories/PHY_NatureAtlas.h"
 #include "Entities/MIL_Army_ABC.h"
@@ -421,6 +422,17 @@ void DEC_KnowledgeAgentFunctions::UnitDecisionalState( const DEC_Knowledge_Agent
     msg().set_key( key.c_str() );
     msg().set_value( value.c_str() );
     msg.Send( NET_Publisher_ABC::Publisher() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeAgentFunctions::DisableCrowdEffect
+// Created: JSR 2012-04-18
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeAgentFunctions::DisableCrowdEffect( boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge, bool disable )
+{
+    if( !pKnowledge )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+    pKnowledge->GetAgentKnown().GetRole< PHY_RoleInterface_Population >().DisableCrowdEffect( disable );
 }
 
 // -----------------------------------------------------------------------------

@@ -43,6 +43,7 @@
 #include "Entities/Agents/Units/Radars/PHY_RadarClass.h"
 #include "Entities/Effects/MIL_EffectManager.h"
 #include "Entities/Effects/MIL_Effect_Suicide.h"
+#include "Entities/Specialisations/LOG/Medical/MIL_AgentTypePionLOGMedical.h"
 #include "Entities/Objects/ActivableCapacity.h"
 #include "Entities/Objects/BypassAttribute.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
@@ -209,6 +210,17 @@ bool DEC_AgentFunctions::IsDead( const MIL_Agent_ABC& callerAgent )
 bool DEC_AgentFunctions::IsPC( const MIL_Agent_ABC& callerAgent )
 {
     return callerAgent.IsPC();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::IsMedical
+// Created: JSR 2012-04-18
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::IsMedical( const DEC_Decision_ABC* agent )
+{
+    if( !agent )
+        throw std::runtime_error( "Invalid pion in DEC_AgentFunctions::IsMedical" );
+    return dynamic_cast< const MIL_AgentTypePionLOGMedical* >( &agent->GetPion().GetType() ) != 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -1158,6 +1170,16 @@ float DEC_AgentFunctions::GetIlluminatingRange( const MIL_Agent_ABC& callerAgent
 bool DEC_AgentFunctions::IsImmobilized( DEC_Decision_ABC* pAgent )
 {
     return pAgent && pAgent->GetPion().GetRole< PHY_RoleInterface_Composantes >().IsImmobilized();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::DisableCrowdEffect
+// Created: JSR 2012-04-18
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::DisableCrowdEffect( const DEC_Decision_ABC* pAgent, bool disable )
+{
+    if( pAgent )
+        pAgent->GetPion().GetRole< PHY_RoleInterface_Population >().DisableCrowdEffect( disable );
 }
 
 // -----------------------------------------------------------------------------

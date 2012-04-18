@@ -33,6 +33,7 @@ PHY_RolePion_Population::PHY_RolePion_Population( MIL_Agent_ABC& pion )
     : owner_             ( pion )
     , rPopulationDensity_( 0. )
     , bHasChanged_       ( true )
+    , disableEffect_     ( false )
     , bDensityComputed_  ( false )
 {
     // NOTHING
@@ -63,6 +64,8 @@ void PHY_RolePion_Population::serialize( Archive& file, const unsigned int )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Population::Execute( moving::SpeedComputer_ABC& algorithm ) const
 {
+    if( disableEffect_ )
+        return;
     T_KnowledgePopulationCollisionVector collisions;
     owner_.GetKnowledge().GetPopulationsColliding( collisions );
 
@@ -79,6 +82,8 @@ void PHY_RolePion_Population::Execute( moving::SpeedComputer_ABC& algorithm ) co
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Population::Execute( firing::WeaponReloadingComputer_ABC& algorithm ) const
 {
+    if( disableEffect_ )
+        return;
     T_KnowledgePopulationCollisionVector collisions;
     owner_.GetKnowledge().GetPopulationsColliding( collisions );
 
@@ -174,4 +179,13 @@ bool PHY_RolePion_Population::HasChanged() const
 bool PHY_RolePion_Population::IsInvulnerable() const
 {
     return false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RolePion_Population::DisableCrowdEffect
+// Created: JSR 2012-04-18
+// -----------------------------------------------------------------------------
+void PHY_RolePion_Population::DisableCrowdEffect( bool disable )
+{
+    disableEffect_ = disable;
 }

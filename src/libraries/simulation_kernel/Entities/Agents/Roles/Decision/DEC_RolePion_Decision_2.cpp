@@ -401,6 +401,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
 
     // Pion accessors
     brain[ "DEC_Agent_EstPC" ] = boost::bind( &DEC_AgentFunctions::IsPC, boost::cref( GetPion() ) );
+    brain[ "DEC_Agent_IsMedical" ] = &DEC_AgentFunctions::IsMedical;
     brain[ "DEC_Agent_EstTransporte" ] = boost::bind( &DEC_AgentFunctions::IsTransported, boost::cref( GetPion() ) );
     brain[ "DEC_Agent_EstEnVol" ] = boost::bind( &DEC_AgentFunctions::IsFlying, boost::cref( GetPion() ) );
     brain[ "DEC_Agent_HauteurDeVol" ] =
@@ -482,6 +483,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_PeutReleverPion" ] =
         boost::function< bool( const DEC_Decision_ABC* ) >( boost::bind( &DEC_AgentFunctions::CanRelievePion, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Suicide" ] = boost::bind( &DEC_AgentFunctions::Suicide, boost::ref( GetPion() ) );
+    brain[ "DEC_Agent_DisableCrowdEffect" ] = &DEC_AgentFunctions::DisableCrowdEffect;
 
     // Agent knowledge accessors
     brain[ "DEC_ConnaissanceAgent_NiveauDePerceptionCourant" ] =
@@ -510,6 +512,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_KnowledgeAgent_IsInObject" ] =
         boost::function< bool( const std::string&, boost::shared_ptr< DEC_Knowledge_Agent >, int ) >( boost::bind( &DEC_KnowledgeAgentFunctions::IsInObject, boost::cref( GetPion() ), _1, _2, _3 ) );
     brain[ "DEC_ConnaissanceAgent_EstTerroriste" ] = &DEC_KnowledgeAgentFunctions::IsTerrorist;
+    brain[ "DEC_AgentKnowledge_DisableCrowdEffect" ] = &DEC_KnowledgeAgentFunctions::DisableCrowdEffect;
 
     // Object knowledges accessors
     brain[ "DEC_ConnaissanceObjet_EstUnEnnemi" ] =
@@ -573,6 +576,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< bool( int ) >( boost::bind( &DEC_KnowledgePopulationFunctions::HealWoundedHumans, boost::ref( GetPion() ), _1 ) );
      brain[ "DEC_Crowd_GetNbreOfWoundedHumans" ] =
         boost::function< int( int ) >( boost::bind( &DEC_KnowledgePopulationFunctions::GetNbreOfWoundedHumans, boost::ref( GetPion() ), _1 ) );
+    brain[ "DEC CrowdKnowledge_CanLoadCrowdConcentration" ] = &DEC_KnowledgePopulationFunctions::CanLoadCrowdConcentration;
 
 
     // Urban knowledges accessors

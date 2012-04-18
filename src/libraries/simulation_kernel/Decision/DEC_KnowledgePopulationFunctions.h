@@ -49,9 +49,10 @@ public:
                            static boost::shared_ptr< MT_Vector2D > GetFlowHead( const DEC_Decision_ABC& callerAgent, int knowledgeId );
                            static int GetClosestConcentration( const DEC_Decision_ABC& callerAgent, int knowledgeId, const MT_Vector2D& point, int refDistance );
                            static bool ExtractWoundedFromCrowd( const MIL_AgentPion& callerPion, unsigned int knowledgeId, const MT_Vector2D* position );
-						   static bool HasWoundedHumans( const MIL_AgentPion& caller, int knowledgeId );
-						   static bool HealWoundedHumans( const MIL_AgentPion& caller, int knowledgeId );
-						   static int GetNbreOfWoundedHumans( const MIL_AgentPion& caller, int knowledgeId );
+                           static bool HasWoundedHumans( const MIL_AgentPion& caller, int knowledgeId );
+                           static bool HealWoundedHumans( const MIL_AgentPion& caller, int knowledgeId );
+                           static int GetNbreOfWoundedHumans( const MIL_AgentPion& caller, int knowledgeId );
+                           static bool CanLoadCrowdConcentration( const DEC_Decision_ABC& callerAgent, int knowledgeId, unsigned int concentrationId );
     //@}
 };
 
