@@ -44,7 +44,8 @@ void load_construct_data( Archive& archive, PHY_RolePion_Reinforcement* role, co
 // -----------------------------------------------------------------------------
 PHY_RolePion_Reinforcement::PHY_RolePion_Reinforcement( MIL_AgentPion& pion )
     : pion_                          ( pion )
-    , bHasChanged_                   ( true )
+    , bReinforcedChanged_            ( false )
+    , bReinforcementsChanged_        ( false )
     , bExternalCanReinforce_         ( true )
     , reinforcements_                ()
     , pPionReinforced_               ( 0 )
@@ -126,7 +127,7 @@ bool PHY_RolePion_Reinforcement::Reinforce( MIL_AgentPion& pionToReinforce )
 
     pionToReinforce.GetRole< PHY_RolePion_Reinforcement >().NotifyReinforcementAdded( pion_ );
     pPionReinforced_ = &pionToReinforce;
-    bHasChanged_ = true;
+    bReinforcedChanged_ = true;
     return true;
 }
 
@@ -140,7 +141,7 @@ void PHY_RolePion_Reinforcement::CancelReinforcement()
     {
         pPionReinforced_->GetRole< PHY_RolePion_Reinforcement >().NotifyReinforcementRemoved( pion_ );
         pPionReinforced_ = 0;
-        bHasChanged_ = true;
+        bReinforcedChanged_ = true;
     }
 }
 
@@ -168,7 +169,8 @@ void PHY_RolePion_Reinforcement::Update( bool bIsDead )
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Reinforcement::Clean()
 {
-    bHasChanged_ = false;
+    bReinforcedChanged_ = false;
+    bReinforcementsChanged_ = false;
 }
 
 // -----------------------------------------------------------------------------
@@ -180,8 +182,7 @@ void PHY_RolePion_Reinforcement::SendFullState( client::UnitAttributes& msg ) co
     msg().mutable_reinforced_unit()->set_id( pPionReinforced_ ? pPionReinforced_->GetID() : 0 );
     if( !reinforcements_.empty() )
     {
-        unsigned int i = 0;
-        for( CIT_PionSet it = reinforcements_.begin(); it != reinforcements_.end(); ++it, ++i )
+        for( CIT_PionSet it = reinforcements_.begin(); it != reinforcements_.end(); ++it )
             msg().mutable_reinforcements()->add_elem()->set_id( (**it).GetID() );
     }
 }
@@ -192,8 +193,14 @@ void PHY_RolePion_Reinforcement::SendFullState( client::UnitAttributes& msg ) co
 // -----------------------------------------------------------------------------
 void PHY_RolePion_Reinforcement::SendChangedState( client::UnitAttributes& msg ) const
 {
-    if( bHasChanged_ )
-        SendFullState( msg );
+    if( bReinforcedChanged_ )
+        msg().mutable_reinforced_unit()->set_id( pPionReinforced_ ? pPionReinforced_->GetID() : 0 );
+    if( bReinforcementsChanged_ )
+    {
+        msg().mutable_reinforcements();
+        for( CIT_PionSet it = reinforcements_.begin(); it != reinforcements_.end(); ++it )
+            msg().mutable_reinforcements()->add_elem()->set_id( (**it).GetID() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -204,7 +211,7 @@ void PHY_RolePion_Reinforcement::NotifyReinforcementAdded( MIL_AgentPion& reinfo
 {
     if( ! reinforcements_.insert( &reinforcement ).second )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Insert failed" );
-    bHasChanged_ = true;
+    bReinforcementsChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -215,7 +222,7 @@ void PHY_RolePion_Reinforcement::NotifyReinforcementRemoved( MIL_AgentPion& rein
 {
     if( reinforcements_.erase( &reinforcement ) != 1 )
         throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, "Erase failed" );
-    bHasChanged_ = true;
+    bReinforcementsChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -242,7 +249,7 @@ bool PHY_RolePion_Reinforcement::IsReinforced() const
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_Reinforcement::HasChanged() const
 {
-    return bHasChanged_;
+    return bReinforcedChanged_ || bReinforcementsChanged_;
 }
 
 // -----------------------------------------------------------------------------

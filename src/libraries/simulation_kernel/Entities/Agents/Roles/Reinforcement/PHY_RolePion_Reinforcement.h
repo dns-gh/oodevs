@@ -116,7 +116,8 @@ private:
     MIL_AgentPion& pion_;
     MIL_AgentPion* pPionReinforced_;
     T_PionSet      reinforcements_;
-    bool           bHasChanged_;
+    bool           bReinforcedChanged_;
+    bool           bReinforcementsChanged_;
     bool           bExternalCanReinforce_;
 
     template< typename Archive > friend  void save_construct_data( Archive& archive, const PHY_RolePion_Reinforcement* role, const unsigned int /*version*/ );
