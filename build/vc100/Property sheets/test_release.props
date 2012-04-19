@@ -14,6 +14,16 @@
     <libDirectIA>directia-$(CurrentPlatform)-mt-4_6.lib</libDirectIA>
     <libGdal>gdal_i.lib;gdal_ogr.lib</libGdal>
     <libGraphics>graphics.lib</libGraphics>
+    <libLog4cxx>log4cxx.lib</libLog4cxx>
+    <libGlu>glu32.lib</libGlu>
+    <libGeoStore>geostore.lib</libGeoStore>
+    <libGeoData>geodata.lib</libGeoData>
+    <libPathfind>pathfind.lib</libPathfind>
+    <libSpatialContainer>spatialcontainer.lib</libSpatialContainer>
+    <libSpatialite>spatialite_i.lib</libSpatialite>
+    <libTerrain>terrain.lib</libTerrain>
+    <libAnalysis>analysis.lib</libAnalysis>
+    <libSvgl>svgl.lib</libSvgl>
     <SrcDir>..\..\src\tests\$(ProjectName)</SrcDir>
   </PropertyGroup>
   <PropertyGroup>
@@ -88,6 +98,36 @@ $(TargetDir)$(TargetName).exe --report_level=no --log_level=warning --data_direc
     </BuildMacro>
     <BuildMacro Include="libGraphics">
       <Value>$(libGraphics)</Value>
+    </BuildMacro>
+    <BuildMacro Include="libLog4cxx">
+      <Value>$(libLog4cxx)</Value>
+    </BuildMacro>
+    <BuildMacro Include="libGlu">
+      <Value>$(libGlu)</Value>
+    </BuildMacro>
+    <BuildMacro Include="libGeoStore">
+      <Value>$(libGeoStore)</Value>
+    </BuildMacro>
+    <BuildMacro Include="libGeoData">
+      <Value>$(libGeoData)</Value>
+    </BuildMacro>
+    <BuildMacro Include="libPathfind">
+      <Value>$(libPathfind)</Value>
+    </BuildMacro>
+    <BuildMacro Include="libSpatialContainer">
+      <Value>$(libSpatialContainer)</Value>
+    </BuildMacro>
+    <BuildMacro Include="libSpatialite">
+      <Value>$(libSpatialite)</Value>
+    </BuildMacro>
+    <BuildMacro Include="libTerrain">
+      <Value>$(libTerrain)</Value>
+    </BuildMacro>
+    <BuildMacro Include="libAnalysis">
+      <Value>$(libAnalysis)</Value>
+    </BuildMacro>
+    <BuildMacro Include="libSvgl">
+      <Value>$(libSvgl)</Value>
     </BuildMacro>
     <BuildMacro Include="SrcDir">
       <Value>$(SrcDir)</Value>
