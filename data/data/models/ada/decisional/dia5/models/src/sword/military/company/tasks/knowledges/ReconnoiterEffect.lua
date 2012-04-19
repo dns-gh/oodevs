@@ -16,6 +16,7 @@ return
     
     getObjectives = function( self, params, entity )
         local positions = {}
+        local addLastPoint = true
         local fuseau = self:getAOR( params )
         
         if not next( params.objectives ) then
@@ -30,6 +31,9 @@ return
             local myPositions = objective:getPositions()
             for i = 1, #myPositions do
                 if DEC_Geometrie_EstPointDansFuseau_AvecParamFuseau( fuseau.source, myPositions[i] ) then
+                    if DEC_Geometrie_PositionAdvanceAlongFuseauAutomat( objective:getPosition() ) >= myself.leadData.advanceMax then
+                      addLastPoint = false
+                    end
                     if not exists(positions, objective) then
                         positions[ #positions + 1 ] = objective
                     end
@@ -43,10 +47,11 @@ return
         end
         -- Ordonner la table d'objectives par ordre de proximité à l'unité subordonnée
         table.sort( positions, comp )
-        -- Si aucun objectif dans le sous-fuseau => ajouter un point dans le fuseau au meme niveau que l'objectif le plus lointain
-        local pos = DEC_Geometrie_CalculerPointSurFuseau( fuseau.source, myself.leadData.advanceMax )
-        positions[ #positions + 1 ] = CreateKnowledge( sword.military.world.Point, pos )
-      
+        -- ajouter un point dans le fuseau au meme niveau que l'objectif le plus lointain
+        if not next( positions ) or addLastPoint then
+          local pos = DEC_Geometrie_CalculerPointSurFuseau( fuseau.source, myself.leadData.advanceMax )
+          positions[ #positions + 1 ] = CreateKnowledge( sword.military.world.Point, pos )
+        end
       
         return positions, fuseau
     end,
@@ -65,11 +70,7 @@ return
     end,
     
     getPeiObjectives = function( self, params, entity )
-        local positions = {}
-        local fuseau = self:getPeiAOR( params )
-        -- Ajout du dernier point au bout du sous-fuseau
-        positions[ #positions + 1 ] = CreateKnowledge( sword.military.world.Point, DEC_Geometrie_CalculerPointSurFuseau( fuseau.source, myself.leadData.advanceMax ))
-        return positions, fuseau
+        return self.getObjectives( params, entity )
     end,
     
     getPeiAOR = function( self, params )
