@@ -1,0 +1,767 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project DefaultTargets="Build" ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup Label="ProjectConfigurations">
+    <ProjectConfiguration Include="debug|Win32">
+      <Configuration>debug</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="debug|x64">
+      <Configuration>debug</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|Win32">
+      <Configuration>release</Configuration>
+      <Platform>Win32</Platform>
+    </ProjectConfiguration>
+    <ProjectConfiguration Include="release|x64">
+      <Configuration>release</Configuration>
+      <Platform>x64</Platform>
+    </ProjectConfiguration>
+  </ItemGroup>
+  <PropertyGroup Label="Globals">
+    <ProjectGuid>{4C239167-193C-454C-845F-AC8223619707}</ProjectGuid>
+    <RootNamespace>terrain_workshop_app</RootNamespace>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|Win32'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+  </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="Configuration">
+    <ConfigurationType>Application</ConfigurationType>
+  </PropertyGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
+  <ImportGroup Label="ExtensionSettings">
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\application_release.props" />
+    <Import Project="Property sheets\include_qt.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\link_qt.props" />
+    <Import Project="Property sheets\link_xerces.props" />
+    <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\link_opengl.props" />
+    <Import Project="Property sheets\link_zip.props" />
+    <Import Project="Property sheets\link_glu.props" />
+    <Import Project="Property sheets\link_geocoord.props" />
+    <Import Project="Property sheets\link_Gdal.props" />
+    <Import Project="Property sheets\link_urban.props" />
+    <Import Project="Property sheets\link_geodata.props" />
+    <Import Project="Property sheets\link_geostore.props" />
+    <Import Project="Property sheets\link_analysis.props" />
+    <Import Project="Property sheets\link_terrain.props" />
+    <Import Project="Property sheets\link_spatialcontainer.props" />
+    <Import Project="Property sheets\link_spatialite.props" />
+    <Import Project="Property sheets\link_svgl.props" />
+    <Import Project="Property sheets\link_pathfind.props" />
+    <Import Project="Property sheets\link_xalan.props" />
+    <Import Project="Property sheets\link_graphics.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\application_release.props" />
+    <Import Project="Property sheets\include_qt.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\link_qt.props" />
+    <Import Project="Property sheets\link_xerces.props" />
+    <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\link_opengl.props" />
+    <Import Project="Property sheets\link_zip.props" />
+    <Import Project="Property sheets\link_glu.props" />
+    <Import Project="Property sheets\link_geocoord.props" />
+    <Import Project="Property sheets\link_Gdal.props" />
+    <Import Project="Property sheets\link_urban.props" />
+    <Import Project="Property sheets\link_geodata.props" />
+    <Import Project="Property sheets\link_geostore.props" />
+    <Import Project="Property sheets\link_analysis.props" />
+    <Import Project="Property sheets\link_terrain.props" />
+    <Import Project="Property sheets\link_spatialcontainer.props" />
+    <Import Project="Property sheets\link_spatialite.props" />
+    <Import Project="Property sheets\link_svgl.props" />
+    <Import Project="Property sheets\link_pathfind.props" />
+    <Import Project="Property sheets\link_xalan.props" />
+    <Import Project="Property sheets\link_graphics.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|Win32'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_win32.props" />
+    <Import Project="Property sheets\application_debug.props" />
+    <Import Project="Property sheets\include_qt.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\link_qt.props" />
+    <Import Project="Property sheets\link_xerces.props" />
+    <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\link_opengl.props" />
+    <Import Project="Property sheets\link_zip.props" />
+    <Import Project="Property sheets\link_glu.props" />
+    <Import Project="Property sheets\link_geocoord.props" />
+    <Import Project="Property sheets\link_Gdal.props" />
+    <Import Project="Property sheets\link_urban.props" />
+    <Import Project="Property sheets\link_geodata.props" />
+    <Import Project="Property sheets\link_geostore.props" />
+    <Import Project="Property sheets\link_analysis.props" />
+    <Import Project="Property sheets\link_terrain.props" />
+    <Import Project="Property sheets\link_spatialcontainer.props" />
+    <Import Project="Property sheets\link_spatialite.props" />
+    <Import Project="Property sheets\link_svgl.props" />
+    <Import Project="Property sheets\link_pathfind.props" />
+    <Import Project="Property sheets\link_xalan.props" />
+    <Import Project="Property sheets\link_graphics.props" />
+  </ImportGroup>
+  <ImportGroup Condition="'$(Configuration)|$(Platform)'=='debug|x64'" Label="PropertySheets">
+    <Import Project="$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props" Condition="exists('$(UserRootDir)\Microsoft.Cpp.$(Platform).user.props')" Label="LocalAppDataPlatform" />
+    <Import Project="Property sheets\base_x64.props" />
+    <Import Project="Property sheets\application_debug.props" />
+    <Import Project="Property sheets\include_qt.props" />
+    <Import Project="Property sheets\include_out_directory.props" />
+    <Import Project="Property sheets\link_qt.props" />
+    <Import Project="Property sheets\link_xerces.props" />
+    <Import Project="Property sheets\link_tools.props" />
+    <Import Project="Property sheets\link_opengl.props" />
+    <Import Project="Property sheets\link_zip.props" />
+    <Import Project="Property sheets\link_glu.props" />
+    <Import Project="Property sheets\link_geocoord.props" />
+    <Import Project="Property sheets\link_Gdal.props" />
+    <Import Project="Property sheets\link_urban.props" />
+    <Import Project="Property sheets\link_geodata.props" />
+    <Import Project="Property sheets\link_geostore.props" />
+    <Import Project="Property sheets\link_analysis.props" />
+    <Import Project="Property sheets\link_terrain.props" />
+    <Import Project="Property sheets\link_spatialcontainer.props" />
+    <Import Project="Property sheets\link_spatialite.props" />
+    <Import Project="Property sheets\link_svgl.props" />
+    <Import Project="Property sheets\link_pathfind.props" />
+    <Import Project="Property sheets\link_xalan.props" />
+    <Import Project="Property sheets\link_graphics.props" />
+  </ImportGroup>
+  <PropertyGroup Label="UserMacros" />
+  <PropertyGroup>
+    <_ProjectFileVersion>10.0.30319.1</_ProjectFileVersion>
+  </PropertyGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+    <ClCompile />
+    <Link />
+    <Link />
+    <Link>
+      <AdditionalDependencies>htmlhelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+    <ClCompile />
+    <Link />
+    <Link />
+    <Link>
+      <AdditionalDependencies>htmlhelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|Win32'">
+    <ClCompile />
+    <Link />
+    <Link />
+    <Link>
+      <AdditionalDependencies>htmlhelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+    <ClCompile />
+    <Link />
+    <Link />
+    <Link>
+      <AdditionalDependencies>htmlhelp.lib;%(AdditionalDependencies)</AdditionalDependencies>
+    </Link>
+  </ItemDefinitionGroup>
+  <ItemGroup>
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\Application.cpp">
+      <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='release|Win32'">false</PreprocessToFile>
+      <PreprocessToFile Condition="'$(Configuration)|$(Platform)'=='release|x64'">false</PreprocessToFile>
+      <PreprocessSuppressLineNumbers Condition="'$(Configuration)|$(Platform)'=='release|Win32'">false</PreprocessSuppressLineNumbers>
+      <PreprocessSuppressLineNumbers Condition="'$(Configuration)|$(Platform)'=='release|x64'">false</PreprocessSuppressLineNumbers>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\ColorButton.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\Config.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\DeletionAction.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\InformationsWidget.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\InfrastructureAction.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\LinkAction.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\main.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\NodeAction.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\PerceptionLayer.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\PropertySpinBoxWrapper.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\SelectionCommandsInterface.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\SelectionLayer.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\TemplateAction.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\terrain_workshop_app_pch.cpp">
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|Win32'">Create</PrecompiledHeader>
+      <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\MainWindow.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\resources.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\TerrainPicker.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\AnalysisLayer.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\EditorLayer.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\Layer_ABC.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\MapLayerProxy.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\PathLayer.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\PathSection.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\RasterLayer.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\TerrainLayer.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\UrbanLayer.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\Menu.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\ExploratorWidget.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\PropertiesWidget.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\PropertyComboWrapper.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\PropertyLineWrapper.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\ResourceNetworkPanel.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\TerrainDataWidget.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\UsagesWidget.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\GLWidget.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\CircularEventStrategy.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\ExclusiveEventStrategy.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\GLSymbols.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\SvglRenderer.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\StatusBar.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\ToolBar.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\ProjectCreationDialog.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\RasterAlphaDialog.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\SelectPhysicalModelDialog.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\TerrainExportDialog.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\CommandsInterface.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\TerrainDictionary.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\Tools.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\Viewport2d.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\Viewport_ABC.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\Controller.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\MenuController.cpp" />
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\GenProcess.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="..\..\src\applications\terrain_workshop_app\Action_ABC.h" />
+    <ClInclude Include="..\..\src\applications\terrain_workshop_app\Application.h" />
+    <CustomBuild Include="..\..\src\applications\terrain_workshop_app\ColorButton.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(FullPath)</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <ClInclude Include="..\..\src\applications\terrain_workshop_app\Config.h" />
+    <CustomBuild Include="..\..\src\applications\terrain_workshop_app\DeletionAction.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(FullPath)</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\terrain_workshop_app\InfrastructureAction.h">
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(FullPath)</Message>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\terrain_workshop_app\SelectionCommandsInterface.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(FullPath)</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <ClInclude Include="..\..\src\applications\terrain_workshop_app\CursorController_ABC.h" />
+    <CustomBuild Include="..\..\src\applications\terrain_workshop_app\NodeAction.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(FullPath)</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\terrain_workshop_app\LinkAction.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(FullPath)</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <ClInclude Include="..\..\src\applications\terrain_workshop_app\InformationsWidget.h" />
+    <ClInclude Include="..\..\src\applications\terrain_workshop_app\MultipleSelectionObserver_ABC.h" />
+    <ClInclude Include="..\..\src\applications\terrain_workshop_app\PerceptionLayer.h" />
+    <CustomBuild Include="..\..\src\applications\terrain_workshop_app\PropertySpinBoxWrapper.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(FullPath)</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <ClInclude Include="..\..\src\applications\terrain_workshop_app\RichSpinBox.h" />
+    <ClInclude Include="..\..\src\applications\terrain_workshop_app\SelectionLayer.h" />
+    <CustomBuild Include="..\..\src\applications\terrain_workshop_app\TemplateAction.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp</Command>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(FullPath)</Message>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <ClInclude Include="..\..\src\applications\terrain_workshop_app\terrain_workshop_app_pch.h" />
+    <CustomBuild Include="..\..\src\applications\terrain_workshop_app\MainWindow.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">moc%27ing %(FullPath)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(FullPath)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <ClInclude Include="..\..\src\applications\terrain_workshop_app\resources.h" />
+    <CustomBuild Include="..\..\src\applications\terrain_workshop_app\TerrainPicker.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <ClInclude Include="..\..\src\applications\terrain_workshop_app\AnalysisLayer.h" />
+    <ClInclude Include="..\..\src\applications\terrain_workshop_app\EditorLayer.h" />
+    <ClInclude Include="..\..\src\applications\terrain_workshop_app\Layer_ABC.h" />
+    <ClInclude Include="..\..\src\applications\terrain_workshop_app\MapLayerProxy.h" />
+    <ClInclude Include="..\..\src\applications\terrain_workshop_app\PathLayer.h" />
+    <ClInclude Include="..\..\src\applications\terrain_workshop_app\PathSection.h" />
+    <ClInclude Include="..\..\src\applications\terrain_workshop_app\RasterLayer.h" />
+    <CustomBuild Include="..\..\src\applications\terrain_workshop_app\TerrainLayer.h">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|Win32'">
+      </Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+      </Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|Win32'">%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(Outputs)</Outputs>
+    </CustomBuild>
+    <ClInclude Include="..\..\src\applications\terrain_workshop_app\UrbanLayer.h" />
+    <CustomBuild Include="..\..\src\applications\terrain_workshop_app\Menu.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">moc%27ing %(FullPath)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(FullPath)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\terrain_workshop_app\ExploratorWidget.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|Win32'">
+      </Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+      </Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|Win32'">
+      </Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">
+      </Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|Win32'">%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\terrain_workshop_app\PropertiesWidget.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">moc%27ing %(FullPath)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(FullPath)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\terrain_workshop_app\PropertyComboWrapper.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">moc%27ing %(FullPath)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(FullPath)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\terrain_workshop_app\PropertyLineWrapper.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">moc%27ing %(FullPath)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(FullPath)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\terrain_workshop_app\ResourceNetworkPanel.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">moc%27ing %(FullPath)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(FullPath)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\terrain_workshop_app\TerrainDataWidget.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">moc%27ing %(FullPath)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(FullPath)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\terrain_workshop_app\UsagesWidget.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">moc%27ing %(FullPath)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(FullPath)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\terrain_workshop_app\GLWidget.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
+      </Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
+      </Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">%(Outputs)</Outputs>
+    </CustomBuild>
+    <ClInclude Include="..\..\src\applications\terrain_workshop_app\View_ABC.h" />
+    <ClInclude Include="..\..\src\applications\terrain_workshop_app\CircularEventStrategy.h" />
+    <ClInclude Include="..\..\src\applications\terrain_workshop_app\ExclusiveEventStrategy.h" />
+    <ClInclude Include="..\..\src\applications\terrain_workshop_app\GLSymbols.h" />
+    <ClInclude Include="..\..\src\applications\terrain_workshop_app\SvglRenderer.h" />
+    <CustomBuild Include="..\..\src\applications\terrain_workshop_app\StatusBar.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">moc%27ing %(FullPath)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(FullPath)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\terrain_workshop_app\ToolBar.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">moc%27ing %(FullPath)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(FullPath)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\terrain_workshop_app\ProjectCreationDialog.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">moc%27ing %(FullPath)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(FullPath)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\terrain_workshop_app\RasterAlphaDialog.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">moc%27ing %(FullPath)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(FullPath)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\terrain_workshop_app\SelectPhysicalModelDialog.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">moc%27ing %(FullPath)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(FullPath)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\terrain_workshop_app\TerrainExportDialog.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">moc%27ing %(FullPath)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(FullPath)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\terrain_workshop_app\CommandsInterface.h">
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">moc%27ing %(FullPath)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc%27ing %(FullPath)</Message>
+      <Message Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc%27ing %(FullPath)</Message>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|Win32'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">moc %(FullPath) -o $(IntDir)moc_%(Filename).cpp
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|Win32'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
+    </CustomBuild>
+    <ClInclude Include="..\..\src\applications\terrain_workshop_app\TerrainDictionary.h" />
+    <ClInclude Include="..\..\src\applications\terrain_workshop_app\Tools.h" />
+    <ClInclude Include="..\..\src\applications\terrain_workshop_app\Viewport2d.h" />
+    <ClInclude Include="..\..\src\applications\terrain_workshop_app\Viewport_ABC.h" />
+    <ClInclude Include="..\..\src\applications\terrain_workshop_app\ContextMenuObserver_ABC.h" />
+    <ClInclude Include="..\..\src\applications\terrain_workshop_app\Controller.h" />
+    <ClInclude Include="..\..\src\applications\terrain_workshop_app\MenuController.h" />
+    <ClInclude Include="..\..\src\applications\terrain_workshop_app\GenProcess.h" />
+    <ClInclude Include="..\..\src\applications\terrain_workshop_app\ProcessObserver_ABC.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="..\..\src\applications\terrain_workshop_app\terrain_workshop_app_fr.ts" />
+    <CustomBuild Include="..\..\src\applications\terrain_workshop_app\translator.pro">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">lupdate -verbose %(FullPath)
+lrelease -verbose %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">lupdate -verbose %(FullPath)
+lrelease -verbose %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">./translator;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">./translator;%(Outputs)</Outputs>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|Win32'">lupdate -verbose %(FullPath)
+lrelease -verbose %(FullPath)
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">lupdate -verbose %(FullPath)
+lrelease -verbose %(FullPath)
+</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|Win32'">./translator;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">./translator;%(Outputs)</Outputs>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\terrain_workshop_app\urban_fr.ts">
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">lrelease -verbose "%(FullPath)"
+</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">lrelease -verbose "%(FullPath)"
+</Command>
+    </CustomBuild>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="license_gui.vcxproj">
+      <Project>{18cfec8a-e69c-433a-8959-faafd82f9b7f}</Project>
+    </ProjectReference>
+    <ProjectReference Include="MT_Tools.vcxproj">
+      <Project>{8979d7d9-b248-4739-a7be-04ac0112ac08}</Project>
+    </ProjectReference>
+    <ProjectReference Include="tools.vcxproj">
+      <Project>{c11d1c79-d437-4299-a75a-98dd97036d5b}</Project>
+    </ProjectReference>
+  </ItemGroup>
+  <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
+  <ImportGroup Label="ExtensionTargets">
+  </ImportGroup>
+</Project>
