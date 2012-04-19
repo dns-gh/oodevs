@@ -185,6 +185,7 @@ void DEC_Knowledge_Urban::UpdateRelevance()
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Urban::WriteMsgPerceptionSources( sword::UrbanKnowledgeUpdate& message ) const
 {
+    message.mutable_automat_perceptions();
     for( CIT_PerceptionSource it = perceivedByAutomate_.begin(); it != perceivedByAutomate_.end(); ++it )
         message.mutable_automat_perceptions()->add_elem()->set_id( ( *it )->GetID() );
 }
@@ -247,7 +248,8 @@ void DEC_Knowledge_Urban::SendFullState()
     message().set_max_progress( static_cast< int >( rMaxProgressPercent_ * 100 ) );
     nLastProgressSent_ = progress;
     message().set_perceived( bLastPerceived_ );
-    WriteMsgPerceptionSources( message() );
+    if( !perceivedByAutomate_.empty() )
+        WriteMsgPerceptionSources( message() );
     message.Send( NET_Publisher_ABC::Publisher() );
 }
 

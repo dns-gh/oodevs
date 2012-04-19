@@ -405,15 +405,15 @@ void DEC_Knowledge_Agent::UpdateRelevance(int currentTimeStep)
 // -----------------------------------------------------------------------------
 void DEC_Knowledge_Agent::WriteMsgPerceptionSources( sword::UnitKnowledgeUpdate& asnMsg ) const
 {
-    if( !perceptionLevelPerAutomateMap_.empty() )
-        for( CIT_PerceptionAutomateSourceMap it = perceptionLevelPerAutomateMap_.begin(); it != perceptionLevelPerAutomateMap_.end(); ++it )
-        {
-            sword::AutomatPerception& perception = *asnMsg.mutable_perceptions()->add_elem();
-            perception.mutable_automat()->set_id( it->first->GetID() );
-            sword::UnitIdentification::Level level;
-            it->second->Serialize( level );
-            perception.set_identification_level( level );
-        }
+    asnMsg.mutable_perceptions();
+    for( CIT_PerceptionAutomateSourceMap it = perceptionLevelPerAutomateMap_.begin(); it != perceptionLevelPerAutomateMap_.end(); ++it )
+    {
+        sword::AutomatPerception& perception = *asnMsg.mutable_perceptions()->add_elem();
+        perception.mutable_automat()->set_id( it->first->GetID() );
+        sword::UnitIdentification::Level level;
+        it->second->Serialize( level );
+        perception.set_identification_level( level );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -479,7 +479,8 @@ void DEC_Knowledge_Agent::SendFullState()
     sword::UnitIdentification::Level maxlevel( asnMsg().max_identification_level() );
     pMaxPerceptionLevel_->Serialize( maxlevel );
     asnMsg().set_max_identification_level( maxlevel );
-    WriteMsgPerceptionSources( asnMsg() );
+    if( !perceptionLevelPerAutomateMap_.empty() )
+        WriteMsgPerceptionSources( asnMsg() );
     asnMsg().set_critical_intelligence( criticalIntelligence_ );
     dataDetection_.SendFullState( asnMsg() );
     dataRecognition_ .SendFullState( asnMsg() );
