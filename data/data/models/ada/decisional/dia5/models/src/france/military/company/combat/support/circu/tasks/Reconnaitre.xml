@@ -31,11 +31,6 @@
 				<parameter>objectives</parameter>
 			</value>
 		</parameter>
-		<parameter name="peiTasks">
-			<value>
-				<string>france.military.platoon.combat.tasks.Eclairer</string>
-			</value>
-		</parameter>
 		<parameter name="defaultTask">
 			<value>
 				<string>france.military.platoon.tasks.Suivre</string>
