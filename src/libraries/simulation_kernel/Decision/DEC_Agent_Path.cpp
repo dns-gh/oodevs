@@ -642,9 +642,10 @@ void DEC_Agent_Path::NotifyPointReached( const CIT_PathPointList& itCurrentPathP
             T_PointVector::iterator it1 = it;
             if( it1 != --initialPathPoints_.end() )
                 it1++;
+            std::size_t sizeBefore = nextPathPoints_.size();
             nextPathPoints_.clear();
             std::copy( it1, initialPathPoints_.end(), std::back_inserter( nextPathPoints_ ) );
-            verifyPointTrafficability = nextPathPoints_.size() > 1;
+            verifyPointTrafficability = ( nextPathPoints_.size() > 1 ) && ( nextPathPoints_.size() == sizeBefore );
             break;
         }
     }
@@ -655,10 +656,25 @@ void DEC_Agent_Path::NotifyPointReached( const CIT_PathPointList& itCurrentPathP
         for( CIT_KnowledgeObjectVector itKnowledgeObject = knowledgesObject.begin(); itKnowledgeObject != knowledgesObject.end(); ++itKnowledgeObject )
         {
             const DEC_Knowledge_Object& knowledge = **itKnowledgeObject;
-            if( knowledge.CanCollideWith( queryMaker_ ) && knowledge.GetLocalisation().IsInside( nextPathPoints_.front() ) )
+            if( knowledge.CanCollideWith( queryMaker_ ) )
             {
-                nextPathPoints_.erase( nextPathPoints_.begin() );
-                break;
+                const TER_Localisation& localisation = knowledge.GetLocalisation();
+                if( localisation.GetType() == TER_Localisation::ePoint )
+                {
+                    const T_PointVector& points = localisation.GetPoints();
+                    if( !points.empty() && 
+                        static_cast< float >( points.front().rX_ ) == static_cast< float >( nextPathPoints_.front().rX_ ) &&
+                        static_cast< float >( points.front().rY_ ) == static_cast< float >( nextPathPoints_.front().rY_ ) )
+                    {
+                        nextPathPoints_.erase( nextPathPoints_.begin() );
+                        break;
+                    }
+                }
+                else if( localisation.IsInside( nextPathPoints_.front() ) )
+                {
+                    nextPathPoints_.erase( nextPathPoints_.begin() );
+                    break;
+                }
             }
         }
     }

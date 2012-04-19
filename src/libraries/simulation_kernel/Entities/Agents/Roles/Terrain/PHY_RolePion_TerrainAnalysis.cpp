@@ -189,17 +189,17 @@ void PHY_RolePion_TerrainAnalysis::FindSafetyPositionsWithinCircle( std::vector<
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_TerrainAnalysis::CanMoveOnTerrain( const std::vector< MT_Vector2D >& points ) const
 {
-    if( !owner_.GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() )
+    if( owner_.GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() )
+        return true;
+
+    bool result = false;
+    for( std::vector< MT_Vector2D >::const_iterator it = points.begin(); it != points.end(); ++it )
     {
-        for( std::vector< MT_Vector2D >::const_iterator it = points.begin(); it != points.end(); ++it )
-        {
-            const TerrainData data = TER_AnalyzerManager::GetAnalyzerManager().Pick( *it );
-            double maxSpeed = owner_.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSpeed( data );
-            if( maxSpeed <= 0. )
-                return false;
-        }
+        const TerrainData data = TER_AnalyzerManager::GetAnalyzerManager().Pick( *it );
+        double maxSpeed = owner_.GetRole< moving::PHY_RoleAction_Moving >().GetMaxSpeed( data );
+        result |= ( maxSpeed > 0. );
     }
-    return true;
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -208,16 +208,14 @@ bool PHY_RolePion_TerrainAnalysis::CanMoveOnTerrain( const std::vector< MT_Vecto
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_TerrainAnalysis::CanMoveOnUrbanBlock( const std::vector< MT_Vector2D >& points ) const
 {
-    if( !owner_.GetType().GetUnitType().CanFly() )
-    {
-        double weight = owner_.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight( true );
-        for( std::vector< MT_Vector2D >::const_iterator it = points.begin(); it != points.end(); ++it )
-        {
-            if( !DEC_GeometryFunctions::IsUrbanBlockTrafficable( *it, weight ) )
-                return false;
-        }
-    }
-    return true;
+    if( owner_.GetType().GetUnitType().CanFly() )
+        return true;
+
+    bool result = false;
+    double weight = owner_.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight( true );
+    for( std::vector< MT_Vector2D >::const_iterator it = points.begin(); it != points.end(); ++it )
+        result |= DEC_GeometryFunctions::IsUrbanBlockTrafficable( *it, weight );
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -226,15 +224,16 @@ bool PHY_RolePion_TerrainAnalysis::CanMoveOnUrbanBlock( const std::vector< MT_Ve
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_TerrainAnalysis::CanMoveOnBurningCells( const std::vector< MT_Vector2D >& points ) const
 {
-    if( !owner_.GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() )
-    {
-        for( std::vector< MT_Vector2D >::const_iterator it = points.begin(); it != points.end(); ++it )
-        {
-            if( it != points.begin() && !MIL_AgentServer::GetWorkspace().GetBurningCells().IsTrafficable( *( it - 1 ), *it ) )
-                return false;
-        }
-    }
-    return true;
+    if( owner_.GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() || points.size() == 1 )
+        return true;
+
+    bool result = false;
+    std::vector< MT_Vector2D >::const_iterator itStart = points.begin();
+    std::vector< MT_Vector2D >::const_iterator itEnd = points.begin();
+    ++itEnd;
+    for( ; itEnd != points.end(); ++itStart, ++itEnd )
+        result |= MIL_AgentServer::GetWorkspace().GetBurningCells().IsTrafficable( *itStart, *itEnd );
+    return result;
 }
 
 // -----------------------------------------------------------------------------
@@ -243,15 +242,18 @@ bool PHY_RolePion_TerrainAnalysis::CanMoveOnBurningCells( const std::vector< MT_
 // -----------------------------------------------------------------------------
 bool PHY_RolePion_TerrainAnalysis::CanMoveOnKnowledgeObject( const std::vector< MT_Vector2D >& points ) const
 {
+    if( owner_.GetRole< PHY_RoleAction_InterfaceFlying >().IsFlying() )
+        return true;
+
+    bool result = false;
     T_KnowledgeObjectVector knowledgesObject;
     owner_.GetArmy().GetKnowledge().GetObjects( knowledgesObject );
     for( CIT_KnowledgeObjectVector it = knowledgesObject.begin(); it != knowledgesObject.end(); ++it )
     {
         const DEC_Knowledge_Object& knowledge = **it;
-        if( knowledge.RetrieveAttribute< FloodAttribute >() != 0 && knowledge.IsObjectInsidePathPoint( points, owner_ ) )
-            return false;
+        result |= !knowledge.IsObjectInsidePathPoint( points, owner_ );
     }
-    return true;
+    return result;
 }
 
 // -----------------------------------------------------------------------------
