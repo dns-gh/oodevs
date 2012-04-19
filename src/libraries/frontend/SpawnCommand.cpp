@@ -106,7 +106,7 @@ void SpawnCommand::Start()
         DWORD errCode = GetLastError();
         throw std::exception( tools::translate( "SpawnCommand", "Could not start process: %1, error: %2" ).arg( debug.c_str() ).arg( errCode ).ascii() );
     }
-     
+
     if ( HANDLE jobObject = OpenJobObject( JOB_OBJECT_ALL_ACCESS, TRUE, jobName_.c_str() ) )
         AssignProcessToJobObject( jobObject, internal_->pid_.hProcess );
 }

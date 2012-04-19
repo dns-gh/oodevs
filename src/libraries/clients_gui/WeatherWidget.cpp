@@ -29,7 +29,7 @@ namespace
             : QDial( parent )
             , image_    ( imagePath )
             , sizeRatio_( sizeRatio )
-        { 
+        {
             image_.setAlphaBuffer( true );
             imageRatio_ = ( image_.width() > image_.height() )
                 ? (float) image_.height() / (float) image_.width()

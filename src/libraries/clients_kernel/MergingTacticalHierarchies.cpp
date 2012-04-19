@@ -46,7 +46,6 @@ std::string MergingTacticalHierarchies::GetSymbol() const
     return entity_.Get< SymbolHierarchy_ABC >().GetValue();
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: MergingTacticalHierarchies::UpdateSymbolUpward
 // Created: LDC 2012-04-12

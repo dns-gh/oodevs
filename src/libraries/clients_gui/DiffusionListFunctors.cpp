@@ -61,7 +61,6 @@ bool DiffusionListFunctor_ABC::IsFromCurrentTeam( const kernel::Entity_ABC& agen
     return hierarchy.GetTop().GetId() == currentTeam_.GetId();
 }
 
-
 // -----------------------------------------------------------------------------
 // DiffusionListReceiversExtractor
 // -----------------------------------------------------------------------------
@@ -107,7 +106,6 @@ void DiffusionListReceiversExtractor::operator()( const kernel::Entity_ABC& agen
         targetsNames_ << ( longName.empty() ? agent.GetName() : longName.c_str() );
     }
 }
-
 
 // -----------------------------------------------------------------------------
 // DiffusionListEmittersExtractor
@@ -159,7 +157,6 @@ void DiffusionListEmittersExtractor::operator()( const kernel::Entity_ABC& agent
         targetsNames_ << ( longName.empty() ? agent.GetName() : longName.c_str() );
     }
 }
-
 
 // -----------------------------------------------------------------------------
 // DiffusionListGenerator
