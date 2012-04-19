@@ -33,13 +33,31 @@ SchemaWriter::~SchemaWriter()
 }
 
 // -----------------------------------------------------------------------------
+// Name: SchemaWriter::WriteSchema
+// Created: ABR 2012-04-18
+// -----------------------------------------------------------------------------
+void SchemaWriter::WriteSchema( xml::xostream& xos, const std::string& category, const std::string& schemaName ) const
+{
+    xos << xml::prefix( "http://www.w3.org/2001/XMLSchema-instance", "xsi" )
+        << xml::attribute( "model-version", tools::AppModelVersion() )
+        << xml::ns( "http://www.w3.org/2001/XMLSchema-instance" )
+        << xml::attribute( "noNamespaceSchemaLocation", "schemas/" + std::string( tools::AppMajorVersion() ) + "/" + category + "/" + schemaName + ".xsd" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SchemaWriter::WritePhysicalSchema
+// Created: ABR 2012-04-18
+// -----------------------------------------------------------------------------
+void SchemaWriter::WritePhysicalSchema( xml::xostream& xos, const std::string& schemaName ) const
+{
+    WriteSchema( xos, "physical", schemaName );
+}
+
+// -----------------------------------------------------------------------------
 // Name: SchemaWriter destructor
 // Created: NLD 2011-02-28
 // -----------------------------------------------------------------------------
 void SchemaWriter::WriteExerciseSchema( xml::xostream& xos, const std::string& schemaName ) const
 {
-    xos << xml::prefix( "http://www.w3.org/2001/XMLSchema-instance", "xsi" )
-            << xml::attribute( "model-version", tools::AppModelVersion() )
-            << xml::ns( "http://www.w3.org/2001/XMLSchema-instance" )
-            << xml::attribute( "noNamespaceSchemaLocation", "schemas/" + std::string( tools::AppMajorVersion() ) + "/exercise/" + schemaName + ".xsd" );
+    WriteSchema( xos, "exercise", schemaName );
 }

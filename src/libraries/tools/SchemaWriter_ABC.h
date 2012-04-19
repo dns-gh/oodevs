@@ -37,6 +37,8 @@ public:
 
     //! @name Operations
     //@{
+    virtual void WriteSchema( xml::xostream& xos, const std::string& category, const std::string& schemaName ) const = 0;
+    virtual void WritePhysicalSchema( xml::xostream& xos, const std::string& schemaName ) const = 0;
     virtual void WriteExerciseSchema( xml::xostream& xos, const std::string& schemaName ) const = 0;
     //@}
 };
