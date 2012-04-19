@@ -173,12 +173,12 @@ int PHY_RoleAction_Objects::Construct( MIL_Object_ABC* pObject, boost::shared_pt
 int PHY_RoleAction_Objects::Destroy( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge )
 {
     if( !pKnowledge || !pKnowledge->IsValid() )
-        return 0;
+        return eImpossible;
     MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown();
     if( !pObject )
     {
         pion_.GetArmy().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( pKnowledge );
-        return 0;
+        return eImpossible;
     }
 
     MIL_Object_ABC& object = *pObject;
