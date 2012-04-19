@@ -290,12 +290,12 @@ void DEC_Knowledge_Agent::UpdatePerceptionSources( const DEC_Knowledge_AgentPerc
     if( it == perceptionLevelPerAutomateMap_.end() )
         perceptionLevelPerAutomateMap_.insert( std::make_pair( &automateSource, &perception.GetCurrentPerceptionLevel() ) );
     else
-        it->second = &std::min( *it->second, perception.GetCurrentPerceptionLevel() );
+        it->second = &std::max( *it->second, perception.GetCurrentPerceptionLevel() );
     IT_PerceptionAgentSourceMap it2 = perceptionLevelPerAgentMap_.find( &pionSource );
     if( it2 == perceptionLevelPerAgentMap_.end() )
         perceptionLevelPerAgentMap_.insert( std::make_pair( &pionSource, &perception.GetCurrentPerceptionLevel() ) );
     else
-        it2->second = &std::min( *it2->second, perception.GetCurrentPerceptionLevel() );
+        it2->second = &std::max( *it2->second, perception.GetCurrentPerceptionLevel() );
 }
 
 // -----------------------------------------------------------------------------
