@@ -34,6 +34,7 @@
 #include "Entities/Objects/ImprovableCapacity.h"
 #include "Entities/Objects/WorkableCapacity.h"
 #include "Entities/Objects/SpawnCapacity.h"
+#include "Entities/Objects/StructuralCapacity.h"
 #include "Entities/Objects/OccupantAttribute.h"
 #include "Entities/Objects/StockAttribute.h"
 #include "Entities/Objects/FireAttribute.h"
@@ -158,29 +159,64 @@ int PHY_RoleAction_Objects::Construct( MIL_Object_ABC* pObject, boost::shared_pt
 int PHY_RoleAction_Objects::Destroy( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge )
 {
     if( !pKnowledge || !pKnowledge->IsValid() )
-        return 0;
+        return eImpossible;
     MIL_Object_ABC* pObject = pKnowledge->GetObjectKnown();
     if( !pObject )
     {
         owner_.GetArmy().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( pKnowledge );
-        return 0;
+        return eImpossible;
     }
 
     MIL_Object_ABC& object = *pObject;
+
+    int ret = Destroy( object, 0 );
+
+    if( ret == eFinished )
+    {
+        const ConstructionAttribute* construction = object.RetrieveAttribute< ConstructionAttribute >();
+        if( construction && construction->GetState() == 0 )
+            owner_.GetArmy().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( pKnowledge );
+    }
+    else if( ret == eRunning )
+        owner_.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( *pObject );
+    return ret;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Objects::Destroy
+// Created: JSR 2012-04-19
+// -----------------------------------------------------------------------------
+int PHY_RoleAction_Objects::Destroy( MIL_Object_ABC& object, double finalState )
+{
     if( !object().CanBeDestroyed() )
         return eImpossible;
     PHY_RoleAction_Objects_DataComputer dataComputer( owner_, eDestroy, object );
 
-    const double rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
+    double rDeltaPercentage = dataComputer.ComputeDeltaPercentage();
     if( rDeltaPercentage == std::numeric_limits< double >::max() )
         return eNoCapacity;
 
     // $$$$ TODO: refactor to handle more than a single resource
-    const ConstructionAttribute& attribute = object.GetAttribute< ConstructionAttribute >();
-    const unsigned int nDotationRecovered = attribute.GetDotationRecoveredWhenDestroying( rDeltaPercentage );
+    unsigned int nDotationRecovered = 0;
+    const ConstructionAttribute* construction = object.RetrieveAttribute< ConstructionAttribute >();
+    const StructuralCapacity* structural = object.Retrieve< StructuralCapacity >();
+    if( construction )
+    {
+        if( construction->GetState() <= finalState )
+            return eFinished;
+        rDeltaPercentage = std::min( rDeltaPercentage, construction->GetState() - finalState );
+        nDotationRecovered = construction->GetDotationRecoveredWhenDestroying( rDeltaPercentage );
+    }
+    if( structural )
+    {
+        if( structural->GetStructuralState() <= finalState )
+            return eFinished;
+        rDeltaPercentage = std::min( rDeltaPercentage, structural->GetStructuralState() - finalState );
+    }
+
     object().Destroy( rDeltaPercentage );
 
-    if( nDotationRecovered && pObject->GetArmy() && owner_.GetArmy() == *pObject->GetArmy() )
+    if( nDotationRecovered && object.GetArmy() && owner_.GetArmy() == *object.GetArmy() )
     {
         BuildableCapacity* pCapacity = object.Retrieve< BuildableCapacity >();
         if( pCapacity )
@@ -189,12 +225,10 @@ int PHY_RoleAction_Objects::Destroy( boost::shared_ptr< DEC_Knowledge_Object >& 
             dataComputer.RecoverDotations( *pDotationCategory, nDotationRecovered );
         }
     }
-    if( attribute.GetState() == 0. )
-    {
-        owner_.GetArmy().GetKnowledge().GetKsObjectKnowledgeSynthetizer().AddObjectKnowledgeToForget( pKnowledge );
+    if( construction && construction->GetState() <= finalState )
         return eFinished;
-    }
-    owner_.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( object );
+    if( structural && structural->GetStructuralState() <= finalState )
+        return eFinished;
     return eRunning;
 }
 
@@ -491,13 +525,23 @@ int PHY_RoleAction_Objects::ResumeWork( boost::shared_ptr< DEC_Knowledge_Object 
 // -----------------------------------------------------------------------------
 int PHY_RoleAction_Objects::ResumeWork( UrbanObjectWrapper* pUrbanBlock )
 {
-    MIL_Object_ABC* pObject = pUrbanBlock;
-    if( !pObject )
+    if( !pUrbanBlock )
         return eImpossible;
-    MIL_Object_ABC& object = *pObject;
-    if( ! object().IsBuilt() )
-        return Construct( object );
-    return eFinished;
+    return Construct( *pUrbanBlock );
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Objects::DeteriorateUrbanBlock
+// Created: JSR 2012-04-19
+// -----------------------------------------------------------------------------
+int PHY_RoleAction_Objects::DeteriorateUrbanBlock( UrbanObjectWrapper* pUrbanBlock, double percentage )
+{
+    if( !pUrbanBlock )
+        return eImpossible;
+    int ret = Destroy( *pUrbanBlock, percentage );
+    if( ret == eRunning )
+        owner_.GetKnowledge().GetKsObjectInteraction().NotifyObjectInteraction( *pUrbanBlock );
+    return ret;
 }
 
 // -----------------------------------------------------------------------------
@@ -682,10 +726,36 @@ bool PHY_RoleAction_Objects::CanBypassTypeWithReinforcement( const std::string& 
 }
 
 // -----------------------------------------------------------------------------
-// Name: PHY_RoleAction_Objects::EnoughtDotationForBuilding
+// Name: PHY_RoleAction_Objects::CanExtinguish
+// Created: JSR 2012-04-19
+// -----------------------------------------------------------------------------
+bool PHY_RoleAction_Objects::CanExtinguish( boost::shared_ptr< DEC_Knowledge_Object >& pKnowledge ) const
+{
+    if( !pKnowledge || !pKnowledge->IsValid() )
+        return false;
+    MIL_Object_ABC* object = pKnowledge->GetObjectKnown();
+    if( !object )
+        return false;
+    if( object->RetrieveAttribute< BurnAttribute >() == 0 )
+        return false;
+    if( object->Retrieve< ExtinguishableCapacity >() == 0 )
+        return false;
+    FireAttribute* fire = object->RetrieveAttribute< FireAttribute >();
+    if( !fire )
+        return false;
+    TER_Localisation localisation = object->GetLocalisation();
+    PHY_RoleAction_Objects_CapabilityComputer capabilityComputer( owner_, eExtinguish, object->GetType(), &localisation, false );
+    if( !capabilityComputer.HasCapability() )
+        return false;
+    PHY_RoleAction_Objects_DataComputer dataComputer( owner_, eExtinguish, *object );
+    return fire->FindBestExtinguisherAgent( boost::bind( &PHY_RoleAction_Objects_DataComputer::HasDotations, &dataComputer, _1, 1 ) ) != 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Objects::EnoughDotationForBuilding
 // Created: LMT 2010-07-07
 // -----------------------------------------------------------------------------
-bool PHY_RoleAction_Objects::EnoughtDotationForBuilding( const std::string& objectType, MIL_Agent_ABC& pion, bool bWithLoaded ) const
+bool PHY_RoleAction_Objects::EnoughDotationForBuilding( const std::string& objectType, MIL_Agent_ABC& pion, bool bWithLoaded ) const
 {
     bool result = false;
     const MIL_ObjectType_ABC& type = MIL_AgentServer::GetWorkspace().GetEntityManager().FindObjectType( objectType );
@@ -701,7 +771,7 @@ bool PHY_RoleAction_Objects::EnoughtDotationForBuilding( const std::string& obje
     {
         const PHY_RoleInterface_Reinforcement::T_PionSet& reinforcements = pion.GetRole< PHY_RoleInterface_Reinforcement >().GetReinforcements();
         for( PHY_RoleInterface_Reinforcement::CIT_PionSet itReinforcement = reinforcements.begin(); itReinforcement != reinforcements.end(); ++itReinforcement )
-            result = result || EnoughtDotationForBuilding( objectType, **itReinforcement, bWithLoaded );
+            result = result || EnoughDotationForBuilding( objectType, **itReinforcement, bWithLoaded );
     }
     return result || dotationComputer->GetDotationValue( *pDotationCategory ) > 0;
 }
@@ -843,6 +913,15 @@ void PHY_RoleAction_Objects::Clean()
 // Created: NLD 2005-01-19
 // -----------------------------------------------------------------------------
 void PHY_RoleAction_Objects::ResumeWorkSuspended()
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleAction_Objects::DeteriorateUrbanBlockSuspended
+// Created: JSR 2012-04-19
+// -----------------------------------------------------------------------------
+void PHY_RoleAction_Objects::DeteriorateUrbanBlockSuspended()
 {
     // NOTHING
 }

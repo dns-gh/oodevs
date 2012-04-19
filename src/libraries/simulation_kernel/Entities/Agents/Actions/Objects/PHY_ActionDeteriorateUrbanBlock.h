@@ -3,12 +3,12 @@
 // This file is part of a MASA library or program.
 // Refer to the included end-user license agreement for restrictions.
 //
-// Copyright (c) 2011 MASA Group
+// Copyright (c) 2012 MASA Group
 //
 // *****************************************************************************
 
-#ifndef __PHY_ActionResumeWorkUrbanBlock_h_
-#define __PHY_ActionResumeWorkUrbanBlock_h_
+#ifndef __PHY_ActionDeteriorateUrbanBlock_h_
+#define __PHY_ActionDeteriorateUrbanBlock_h_
 
 #include "Entities/Actions/PHY_DecisionCallbackAction_ABC.h"
 
@@ -17,12 +17,12 @@ class MIL_AgentPion;
 class UrbanObjectWrapper;
 
 // =============================================================================
-/** @class  PHY_ActionResumeWorkUrbanBlock
-    @brief  PHY_ActionResumeWorkUrbanBlock
+/** @class  PHY_ActionDeteriorateUrbanBlock
+    @brief  PHY_ActionDeteriorateUrbanBlock
 */
-// Created: LGY 2011-03-23
+// Created: JSR 2012-04-19
 // =============================================================================
-class PHY_ActionResumeWorkUrbanBlock : public PHY_DecisionCallbackAction_ABC
+class PHY_ActionDeteriorateUrbanBlock : public PHY_DecisionCallbackAction_ABC
 {
 public:
     //! @name Types
@@ -33,8 +33,8 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             PHY_ActionResumeWorkUrbanBlock( MIL_AgentPion& pion, UrbanObjectWrapper* pUrbanBlock );
-    virtual ~PHY_ActionResumeWorkUrbanBlock();
+             PHY_ActionDeteriorateUrbanBlock( MIL_AgentPion& pion, UrbanObjectWrapper* pUrbanBlock, double percentage );
+    virtual ~PHY_ActionDeteriorateUrbanBlock();
     //@}
 
     //! @name Operations
@@ -49,7 +49,8 @@ private:
     //@{
     PHY_RoleAction_Objects& role_;
     UrbanObjectWrapper* pUrbanBlock_;
+    double percentage_;
     //@}
 };
 
-#endif // __PHY_ActionResumeWorkUrbanBlock_h_
+#endif // __PHY_ActionDeteriorateUrbanBlock_h_

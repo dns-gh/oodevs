@@ -42,6 +42,7 @@
 #include "Entities/Agents/Actions/Objects/PHY_ActionBypassObject.h"
 #include "Entities/Agents/Actions/Objects/PHY_ActionOccupyObject.h"
 #include "Entities/Agents/Actions/Objects/PHY_ActionAnimateObject.h"
+#include "Entities/Agents/Actions/Objects/PHY_ActionDeteriorateUrbanBlock.h"
 #include "Entities/Agents/Actions/Objects/PHY_ActionResumeWorkObject.h"
 #include "Entities/Agents/Actions/Objects/PHY_ActionResumeWorkUrbanBlock.h"
 #include "Entities/Agents/Actions/Objects/PHY_ActionDistributeObject.h"
@@ -225,6 +226,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Object >, bool ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionResumeWorkObject, boost::shared_ptr< DEC_Knowledge_Object>, bool >, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC_ReparerBlocUrbain" ] =
         boost::function< unsigned int( UrbanObjectWrapper* ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionResumeWorkUrbanBlock, UrbanObjectWrapper* >, boost::ref( GetPion() ), _1 ) );
+    brain[ "DEC_DeteriorateUrbanBlock" ] =
+        boost::function< unsigned int( UrbanObjectWrapper*, double ) >( boost::bind( &DEC_ActionFunctions::StartAction< PHY_ActionDeteriorateUrbanBlock, UrbanObjectWrapper*, double >, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC__StartAnimerObjet" ] =
         boost::function< unsigned int( boost::shared_ptr< DEC_Knowledge_Object > ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionAnimateObject, boost::shared_ptr< DEC_Knowledge_Object > >, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_StartDistributionObjet" ] =
@@ -445,6 +448,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_CanUseDotation" ] =
         boost::function< bool ( const PHY_DotationCategory* ) >( boost::bind( &DEC_AgentFunctions::CanUseDotation, boost::ref( GetPion() ), _1 ) );
     brain[ "DEC_Agent_IlluminateRange" ] = boost::bind( &DEC_AgentFunctions::GetIlluminatingRange, boost::cref( GetPion() ) );
+    brain[ "DEC_Agent_CanExtinguish" ] = &DEC_AgentFunctions::AgentCanExtinguish;
+    brain[ "DEC_Agent_CanFly" ] = &DEC_AgentFunctions::AgentCanFly;
 
     brain[ "DEC_Agent_AutonomieEnDeplacement" ] = boost::bind( &DEC_AgentFunctions::TimeLeftForMoving, boost::cref( GetPion() ) );
     brain[ "DEC_Agent_TempsPourParcourirDistanceEnLigneDroite" ] =
