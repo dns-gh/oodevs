@@ -1503,7 +1503,7 @@
     <target name="configure" description="initialize local project structure with libraries">
         <update name="geometry" version="1.0.1"/>
         <update name="geocoord" version="1.0"/>
-        <update name="terrain" version="5.1" modules="terrain,graphics,spatialcontainer,pathfind,analysis,vmap,geodata,gdal_ogr,urban"/>
+        <update name="terrain" version="5.1" modules="terrain,graphics,spatialcontainer,pathfind,analysis,vmap,geodata,gdal_ogr,urban,geostore"/>
         <update name="terrain" version="5.1" package="terraintools_${platform}.zip"/>
         <update name="qt" version="4.7.0"/>
         <update name="boost" version="1.42"/>
@@ -1535,6 +1535,7 @@
         <update name="mak" version="4.0" package="lib/${platform}" todir="${lib.dir}"/>
         <update name="mak" version="4.0" package="dll/${platform}" todir="${run.dir}/plugins/vrforces"/>
         <update name="wise" version="3.9"/>
+        <update name="spatialite" version="2.3.1"/>
         <antcall target="deploy-application-data"/>
         <antcall target="generate-database"/>
         <antcall target="generate-symbols"/>
