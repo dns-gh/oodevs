@@ -70,7 +70,7 @@ return
     end,
     
     getPeiObjectives = function( self, params, entity )
-        return self.getObjectives( params, entity )
+        return self:getObjectives( params, entity )
     end,
     
     getPeiAOR = function( self, params )
