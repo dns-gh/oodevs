@@ -201,7 +201,7 @@ void Proxy::Register( const std::string& prefix, const std::string& host, int po
 // -----------------------------------------------------------------------------
 void Proxy::Unregister( const std::string& prefix ) const
 {
-    LOG_INFO( log_ ) << "[proxy] Removing proxy from /" << prefix;
+    LOG_INFO( log_ ) << "[proxy] Removing proxy to /" << prefix;
     pool_->Post( boost::bind( &web::Client_ABC::Get, &client_,
         "localhost", port_, "/unregister_proxy", boost::assign::map_list_of( "prefix", prefix ) ) );
 }
