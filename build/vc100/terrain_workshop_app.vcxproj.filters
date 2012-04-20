@@ -20,12 +20,6 @@
     <Filter Include="Source Files\Graphic interface\Gl">
       <UniqueIdentifier>{b510f667-2fa7-4046-8fda-6fdad2ce43dd}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Source Files\Graphic interface\Gl\Strategies">
-      <UniqueIdentifier>{aa5b540c-81c1-4415-ac5e-0b560fe3a88d}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Graphic interface\Gl\svg">
-      <UniqueIdentifier>{b55ae1ab-9fe1-41a1-80a8-f5d81a8ef0a8}</UniqueIdentifier>
-    </Filter>
     <Filter Include="Source Files\Graphic interface\Toolbars">
       <UniqueIdentifier>{6c5c37fc-cdee-47cb-9d83-330b7781f44f}</UniqueIdentifier>
     </Filter>
@@ -37,9 +31,6 @@
     </Filter>
     <Filter Include="Source Files\Tools">
       <UniqueIdentifier>{8cf221b5-6025-4aa6-b9cb-62d018c1c633}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Source Files\Tools\Viewport">
-      <UniqueIdentifier>{6fd3b8f1-183c-44e0-8e6a-9b7c80baa9a0}</UniqueIdentifier>
     </Filter>
     <Filter Include="Source Files\Controller">
       <UniqueIdentifier>{e359b173-c8d1-4f8c-8bb1-db243cf6e509}</UniqueIdentifier>
@@ -67,16 +58,7 @@
     <ClCompile Include="..\..\src\applications\terrain_workshop_app\MainWindow.cpp">
       <Filter>Source Files\Graphic interface</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\terrain_workshop_app\TerrainPicker.cpp">
-      <Filter>Source Files\Graphic interface</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\terrain_workshop_app\EditorLayer.cpp">
-      <Filter>Source Files\Graphic interface\Layers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\terrain_workshop_app\Layer_ABC.cpp">
-      <Filter>Source Files\Graphic interface\Layers</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\terrain_workshop_app\MapLayerProxy.cpp">
       <Filter>Source Files\Graphic interface\Layers</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\terrain_workshop_app\RasterLayer.cpp">
@@ -112,18 +94,6 @@
     <ClCompile Include="..\..\src\applications\terrain_workshop_app\GLWidget.cpp">
       <Filter>Source Files\Graphic interface\Gl</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\terrain_workshop_app\CircularEventStrategy.cpp">
-      <Filter>Source Files\Graphic interface\Gl\Strategies</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\terrain_workshop_app\ExclusiveEventStrategy.cpp">
-      <Filter>Source Files\Graphic interface\Gl\Strategies</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\terrain_workshop_app\GLSymbols.cpp">
-      <Filter>Source Files\Graphic interface\Gl\svg</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\terrain_workshop_app\SvglRenderer.cpp">
-      <Filter>Source Files\Graphic interface\Gl\svg</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\terrain_workshop_app\StatusBar.cpp">
       <Filter>Source Files\Graphic interface\Toolbars</Filter>
     </ClCompile>
@@ -142,20 +112,11 @@
     <ClCompile Include="..\..\src\applications\terrain_workshop_app\TerrainDictionary.cpp">
       <Filter>Source Files\Tools</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\applications\terrain_workshop_app\Viewport2d.cpp">
-      <Filter>Source Files\Tools\Viewport</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\terrain_workshop_app\Viewport_ABC.cpp">
-      <Filter>Source Files\Tools\Viewport</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\applications\terrain_workshop_app\Controller.cpp">
       <Filter>Source Files\Controller</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\terrain_workshop_app\MenuController.cpp">
       <Filter>Source Files\Controller</Filter>
-    </ClCompile>
-    <ClCompile Include="..\..\src\applications\terrain_workshop_app\ColorButton.cpp">
-      <Filter>Source Files\Graphic interface\Panels</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\applications\terrain_workshop_app\SelectionLayer.cpp">
       <Filter>Source Files\Graphic interface\Layers</Filter>
@@ -187,6 +148,9 @@
     <ClCompile Include="..\..\src\applications\terrain_workshop_app\SelectPhysicalModelDialog.cpp">
       <Filter>Source Files\Graphic interface\Dialog</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\terrain_workshop_app\TerrainPicker.cpp">
+      <Filter>Source Files\Graphic interface\Layers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\terrain_workshop_app\Application.h">
@@ -201,41 +165,14 @@
     <ClInclude Include="..\..\src\applications\terrain_workshop_app\EditorLayer.h">
       <Filter>Source Files\Graphic interface\Layers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\terrain_workshop_app\Layer_ABC.h">
-      <Filter>Source Files\Graphic interface\Layers</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\terrain_workshop_app\MapLayerProxy.h">
-      <Filter>Source Files\Graphic interface\Layers</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\terrain_workshop_app\RasterLayer.h">
       <Filter>Source Files\Graphic interface\Layers</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\terrain_workshop_app\UrbanLayer.h">
       <Filter>Source Files\Graphic interface\Layers</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\terrain_workshop_app\View_ABC.h">
-      <Filter>Source Files\Graphic interface\Gl</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\terrain_workshop_app\CircularEventStrategy.h">
-      <Filter>Source Files\Graphic interface\Gl\Strategies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\terrain_workshop_app\ExclusiveEventStrategy.h">
-      <Filter>Source Files\Graphic interface\Gl\Strategies</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\terrain_workshop_app\GLSymbols.h">
-      <Filter>Source Files\Graphic interface\Gl\svg</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\terrain_workshop_app\SvglRenderer.h">
-      <Filter>Source Files\Graphic interface\Gl\svg</Filter>
-    </ClInclude>
     <ClInclude Include="..\..\src\applications\terrain_workshop_app\TerrainDictionary.h">
       <Filter>Source Files\Tools</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\terrain_workshop_app\Viewport2d.h">
-      <Filter>Source Files\Tools\Viewport</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\terrain_workshop_app\Viewport_ABC.h">
-      <Filter>Source Files\Tools\Viewport</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\terrain_workshop_app\ContextMenuObserver_ABC.h">
       <Filter>Source Files\Controller</Filter>
@@ -267,9 +204,6 @@
     <ClInclude Include="..\..\src\applications\terrain_workshop_app\ToolBar.h">
       <Filter>Source Files\Graphic interface\Toolbars</Filter>
     </ClInclude>
-    <ClInclude Include="..\..\src\applications\terrain_workshop_app\SelectPhysicalModelDialog.h">
-      <Filter>Source Files\Graphic interface\Dialog</Filter>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <None Include="..\..\src\applications\terrain_workshop_app\terrain_workshop_app_fr.ts">
@@ -278,9 +212,6 @@
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="..\..\src\applications\terrain_workshop_app\MainWindow.h">
-      <Filter>Source Files\Graphic interface</Filter>
-    </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\terrain_workshop_app\TerrainPicker.h">
       <Filter>Source Files\Graphic interface</Filter>
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\terrain_workshop_app\TerrainLayer.h">
@@ -328,9 +259,6 @@
     <CustomBuild Include="..\..\src\applications\terrain_workshop_app\urban_fr.ts">
       <Filter>Translation</Filter>
     </CustomBuild>
-    <CustomBuild Include="..\..\src\applications\terrain_workshop_app\ColorButton.h">
-      <Filter>Source Files\Graphic interface\Panels</Filter>
-    </CustomBuild>
     <CustomBuild Include="..\..\src\applications\terrain_workshop_app\InfrastructureAction.h">
       <Filter>Source Files\Commands\Action</Filter>
     </CustomBuild>
@@ -351,6 +279,12 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\terrain_workshop_app\PropertySpinBoxWrapper.h">
       <Filter>Source Files\Graphic interface\Panels</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\terrain_workshop_app\SelectPhysicalModelDialog.h">
+      <Filter>Source Files\Graphic interface\Dialog</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\terrain_workshop_app\TerrainPicker.h">
+      <Filter>Source Files\Graphic interface\Layers</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

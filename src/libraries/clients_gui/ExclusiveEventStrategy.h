@@ -32,6 +32,7 @@ public:
 
     //! @name Operations
     //@{
+    void AddTerrainLayer( MapLayer_ABC& layer );
     void TakeExclusiveFocus( MapLayer_ABC& layer );
     void ReleaseExclusiveFocus();
     //@}
@@ -64,6 +65,7 @@ private:
     //@{
     EventStrategy_ABC& forward_;
     MapLayer_ABC* layer_;
+    MapLayer_ABC* layerTerrain_;
     //@}
 };
 
