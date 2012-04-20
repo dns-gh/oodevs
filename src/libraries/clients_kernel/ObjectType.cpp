@@ -25,12 +25,12 @@ ObjectType::ObjectType( xml::xistream& xis )
     , canBeValorized_( false )
     , canBeBypassed_ ( false )
 {
-    xis >> xml::optional() >> xml::start( "geometries" )
+    xis >> xml::optional >> xml::start( "geometries" )
             >> xml::list( "geometry", *this, &ObjectType::ReadGeometry )
         >> xml::end
-        >> xml::optional() >> xml::start( "constructor" )
+        >> xml::optional >> xml::start( "constructor" )
             >> xml::list( "improvable", *this, &ObjectType::SetValorizable )
-        >> xml::end();
+        >> xml::end;
     xis >> xml::list( *this, &ObjectType::ReadCapacities );
 }
 

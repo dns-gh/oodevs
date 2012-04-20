@@ -32,7 +32,7 @@ OrderParameter::OrderParameter( xml::xistream& xis )
     xis >> xml::list( "value", *this, &OrderParameter::ReadValue )
         >> xml::optional >> xml::start( "choice" )
             >> xml::list( "parameter", *this, &OrderParameter::ReadChoice )
-        >> xml::end()
+        >> xml::end
         >> xml::optional >> xml::attribute< unsigned int >( "min-occurs", minOccurs_ );
     std::string maxString( "1" );
     xis >> xml::optional >> xml::attribute< std::string >( "max-occurs", maxString );

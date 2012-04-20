@@ -415,7 +415,7 @@ void ExportWidget::WriteContent( zip::ozipfile& archive ) const
     xos << xml::start( "content" )
         << xml::content( "name", name )
         << xml::content( "description", description )
-        << xml::end();
+        << xml::end;
     {
         std::istringstream input( xos.str() );
         zip::ozipstream output( archive, "content.xml" );

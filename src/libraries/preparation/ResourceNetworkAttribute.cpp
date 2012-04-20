@@ -164,9 +164,9 @@ void ResourceNetworkAttribute::SerializeAttributes( xml::xostream& xos ) const
                         << xml::attribute( "kind", node.links_[ i ].urban_ ? "urban-object" : "terrain-object" )
                         << xml::attribute( "target", node.links_[ i ].id_ )
                         << xml::attribute( "capacity", node.links_[ i ].capacity_ )
-                        << xml::end();
+                        << xml::end;
                 }
-            xos << xml::end();
+            xos << xml::end;
         }
         xos << xml::end;
     }

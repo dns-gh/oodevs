@@ -50,6 +50,6 @@ void AttritionEffectOnHuman::WriteArchive( xml::xostream& output )
         << xml::attribute( "equipment-state", ADN_Tr::ConvertFromEquipmentState( nEquipmentState_.GetData() ) )
         << xml::attribute( "injured-percentage", nInjuredPercentage_ )
         << xml::attribute( "dead-percentage", nDeadPercentage_ )
-        << xml::end();
+        << xml::end;
 }
 

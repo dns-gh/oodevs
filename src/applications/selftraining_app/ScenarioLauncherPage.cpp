@@ -58,7 +58,7 @@ namespace
         {
             std::auto_ptr< xml::xistream > xis = fileLoader.LoadFile( fileName );
             *xis >> xml::start( "exercise" )
-                    >> xml::optional() >> xml::attribute( "valid", isValid )
+                    >> xml::optional >> xml::attribute( "valid", isValid )
                  >> xml::end;
         }
         catch( ... )
@@ -75,8 +75,8 @@ namespace
         {
             std::auto_ptr< xml::xistream > xis = fileLoader.LoadFile( fileName );
             *xis >> xml::start( "exercise" )
-                    >> xml::optional() >> xml::start( "meta" )
-                        >> xml::optional() >> xml::start( "tutorial" )
+                    >> xml::optional >> xml::start( "meta" )
+                        >> xml::optional >> xml::start( "tutorial" )
                             >> xml::attribute( "target", target )
                     >> xml::end
                 >> xml::end;
@@ -110,12 +110,12 @@ namespace
             std::auto_ptr< xml::xistream > xis = fileLoader.LoadFile( fileName );
             ResourcesLoadingWrapper loadingWrapper( result );
             *xis >> xml::start( "exercise" )
-                    >> xml::optional() >> xml::start( "meta" )
-                        >> xml::optional() >> xml::start( "resources" )
+                    >> xml::optional >> xml::start( "meta" )
+                        >> xml::optional >> xml::start( "resources" )
                             >> xml::list( "resource", loadingWrapper, &ResourcesLoadingWrapper::ReadResource )
-                        >> xml::end()
-                    >> xml::end()
-                >> xml::end();
+                        >> xml::end
+                    >> xml::end
+                >> xml::end;
         }
         catch( ... )
         {

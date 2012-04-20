@@ -49,7 +49,7 @@ namespace
     int GetActivationTime( xml::xistream& xis )
     {
         int result = 0;
-        xis >> xml::optional()
+        xis >> xml::optional
             >> xml::start( "activation-time" )
                 >> xml::attribute( "value", result )
             >> xml::end;
@@ -58,7 +58,7 @@ namespace
     int GetActivityTime( xml::xistream& xis )
     {
         int result = 0;
-        xis >> xml::optional()
+        xis >> xml::optional
             >> xml::start( "activity-time" )
                 >> xml::attribute( "value", result )
             >> xml::end;

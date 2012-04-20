@@ -283,8 +283,8 @@ void ADN_Urban_Data::UrbanMaterialInfos::WriteMaterial( xml::xostream& output )
               << xml::start( "attritions" );
     for( IT_AttritionInfos_Vector it = vAttritionInfos_.begin(); it != vAttritionInfos_.end(); ++it )
         ( *it )->WriteArchive( output );
-    output   << xml::end()
-           << xml::end();
+    output   << xml::end
+           << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -298,7 +298,7 @@ ADN_Urban_Data::UrbanMaterialInfos::UrbanMaterialInfos( xml::xistream& input )
     input >> xml::attribute( "name", strName_ )
           >> xml::start( "attritions" )
               >> xml::list( "attrition", *this, &ADN_Urban_Data::UrbanMaterialInfos::ReadAttrition )
-          >> xml::end();
+          >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -399,7 +399,7 @@ void ADN_Urban_Data::WriteFacades( xml::xostream& output ) const
         std::string strData = ( *itFacade )->GetData();
         output << xml::start( "facade-type" )
                     << xml::attribute( "name", trim( strData ) )
-               << xml::end();
+               << xml::end;
     }
     output << xml::end;
 }
@@ -476,7 +476,7 @@ void ADN_Urban_Data::WriteAccommodations( xml::xostream& output ) const
                 << xml::attribute( "role", "default" )
                 << xml::attribute( "nominal-capacity", defaultNominalCapacity_.GetData() )
                 << xml::attribute( "max-capacity", defaultMaxCapacity_.GetData() )
-            << xml::end();
+            << xml::end;
     for( CIT_AccommodationInfos_Vector it = vAccommodations_.begin(); it != vAccommodations_.end(); ++it )
         ( *it )->WriteAccommodation( output );
     output << xml::end;

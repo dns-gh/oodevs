@@ -181,7 +181,7 @@ void ADN_Missions_Data::MissionParameter::ReadArchive( xml::xistream& input )
         input >> xml::optional >> xml::attribute( "max-occurs", maxOccurs_ );
     type_ = ADN_Tr::ConvertToMissionParameterType( type );
     input >> xml::list( "value", *this, &ADN_Missions_Data::MissionParameter::ReadValue );
-    input >> xml::optional()
+    input >> xml::optional
               >> xml::start( "choice" )
                   >> xml::list( "parameter", boost::bind( &ADN_Missions_Data::MissionParameter::ReadChoice< T_Choice_Vector >, this, _1, boost::ref( choices_ ) ) )
               >> xml::end;

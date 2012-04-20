@@ -74,7 +74,7 @@ void ADN_Funeral_Data::ReadArchive( xml::xistream& input )
     input >> xml::start( "funeral" )
             >> xml::start( "fake-transporter" )
                 >> xml::attribute( "speed", fakeTransporterSpeed_ )
-            >> xml::end()
+            >> xml::end
             >> xml::start( "packagings" )
                 >> xml::list( "packaging", *this, &ADN_Funeral_Data::ReadFuneralPackagingResource )
             >> xml::end
@@ -92,7 +92,7 @@ void ADN_Funeral_Data::WriteArchive( xml::xostream& output )
     ADN_Tools::AddSchema( output, "Funeral" );
     output  << xml::start( "fake-transporter" )
                 << xml::attribute( "speed", fakeTransporterSpeed_ )
-            << xml::end()
+            << xml::end
             << xml::start( "packagings" );
     for( IT_FuneralPackagingResource_Vector it = funeralPackagingResources_.begin(); it != funeralPackagingResources_.end(); ++it )
         (*it)->WriteArchive( output );

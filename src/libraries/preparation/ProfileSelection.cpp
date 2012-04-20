@@ -47,7 +47,7 @@ ProfileSelection::ProfileSelection( const ProfileSelection& selection )
 ProfileSelection::ProfileSelection( kernel::Controllers& controllers, xml::xistream& xis, const ProfilesModel& model )
     : controllers_( controllers )
 {
-    xis >> xml::optional() >> xml::start( "profiles" )
+    xis >> xml::optional >> xml::start( "profiles" )
             >> xml::list( "profile", *this, &ProfileSelection::ReadProfile, model )
         >> xml::end;
     controllers_.Register( *this );

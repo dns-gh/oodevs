@@ -420,7 +420,7 @@ namespace
         xos << xml::start( rootNode );
         xos << xis;
         ADN_Tools::AddSchema( xos, schemaName );
-        xos << xml::end();
+        xos << xml::end;
 
         tools::WriteXmlCrc32Signature( inputFile );
     }

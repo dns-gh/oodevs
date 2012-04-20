@@ -42,10 +42,10 @@ namespace frontend
         std::string terrain, population, dataset, physical;
         std::auto_ptr< xml::xistream > xis = fileLoader.LoadFile( config.GetExerciseFile( exercise ) );
         *xis >> xml::start( "exercise" )
-            >> xml::start( "terrain" ) >> xml::attribute( "name", terrain ) >> xml::end()
-            >> xml::optional() >> xml::start( "population" ) >> xml::attribute( "name", population ) >> xml::end()
-            >> xml::start( "model" ) >> xml::attribute( "dataset", dataset ) >> xml::attribute( "physical", physical ) >> xml::end()
-            >> xml::end();
+            >> xml::start( "terrain" ) >> xml::attribute( "name", terrain ) >> xml::end
+            >> xml::optional >> xml::start( "population" ) >> xml::attribute( "name", population ) >> xml::end
+            >> xml::start( "model" ) >> xml::attribute( "dataset", dataset ) >> xml::attribute( "physical", physical ) >> xml::end
+            >> xml::end;
 
         Q3ListViewItem* dataItem = new Q3ListViewItem( content, "data" );
         dataItem->setOpen( true );

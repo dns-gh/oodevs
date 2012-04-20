@@ -71,7 +71,7 @@ void AttritionInfos::WriteArchive( xml::xostream& output, const std::string& tag
         << xml::attribute( "destruction", rDestroy_.GetData() / 100.0 )
         << xml::attribute( "repairable-with-evacuation", rRepairWithEvac_.GetData() / 100.0 )
         << xml::attribute( "repairable-without-evacuation", rRepairNoEvac_.GetData() / 100.0 )
-        << xml::end();
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------

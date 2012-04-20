@@ -79,7 +79,7 @@ void ADN_FuneralPackagingResource::WriteArchive( xml::xostream& output )
             << xml::attribute( "resource", resource_.GetData()->strName_ )
             << xml::attribute( "process-duration", processDuration_ )
             << xml::attribute( "terminal", terminal_ )
-            << xml::end();
+            << xml::end;
 }
 
 // -----------------------------------------------------------------------------

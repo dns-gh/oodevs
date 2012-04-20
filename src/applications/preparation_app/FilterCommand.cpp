@@ -124,7 +124,7 @@ void FilterCommand::ReadArguments( xml::xistream& xis )
 {
     xis >> xml::start( "arguments" )
             >> xml::list( "argument", *this, &FilterCommand::ReadArgument )
-        >> xml::end();
+        >> xml::end;
 }
 
 // -----------------------------------------------------------------------------

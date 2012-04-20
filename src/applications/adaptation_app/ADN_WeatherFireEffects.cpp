@@ -79,7 +79,7 @@ void ADN_WeatherFireEffects::WriteArchive( xml::xostream& xos, const std::string
     xos << xml::start( tag )
             << xml::attribute( "weather", ADN_Tools::Scriptify( ADN_Tr::ConvertFromSensorWeatherModifiers( weatherType_ ) ) )
             << xml::attribute( "heat-decrease-rate", heatDecreaseRate_ )
-        << xml::end();
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------

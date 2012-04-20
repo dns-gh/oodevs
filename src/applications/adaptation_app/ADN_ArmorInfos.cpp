@@ -57,17 +57,17 @@ void ArmorInfos::ReadArchive( xml::xistream& input )
     input >> xml::start( "neutralization" )
         >> xml::attribute( "average-time", neutralizationAverageTime_ )
         >> xml::attribute( "variance", neutralizationVariance_ )
-        >> xml::end();
+        >> xml::end;
 
     if( nType_ != eProtectionType_Human )
     {
         input >> xml::start( "random-breakdown-probability" )
             >> xml::attribute( "eva", rBreakdownEVA_ )
             >> xml::attribute( "neva", rBreakdownNEVA_ )
-            >> xml::end()
+            >> xml::end
             >> xml::start( "attrition-effects" )
             >> xml::list( "attrition-effect", *this, &ArmorInfos::ReadAttrition )
-            >> xml::end();
+            >> xml::end;
     }
 }
 
@@ -105,18 +105,18 @@ void ArmorInfos::WriteArchive( xml::xostream& output )
     output << xml::start( "neutralization" )
         << xml::attribute( "average-time", neutralizationAverageTime_ )
         << xml::attribute( "variance", neutralizationVariance_ )
-        << xml::end();
+        << xml::end;
 
     if( nType_ != eProtectionType_Human )
     {
         output << xml::start( "random-breakdown-probability" )
             << xml::attribute( "eva", rBreakdownEVA_ )
             << xml::attribute( "neva", rBreakdownNEVA_ )
-            << xml::end()
+            << xml::end
             << xml::start( "attrition-effects" );
         for( IT_AttritionEffectOnHuman_Vector it = vAttritionEffects_.begin(); it != vAttritionEffects_.end(); ++it )
             (*it)->WriteArchive( output );
-        output << xml::end();
+        output << xml::end;
     }
-    output << xml::end();
+    output << xml::end;
 }

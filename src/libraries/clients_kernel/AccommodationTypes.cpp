@@ -62,7 +62,7 @@ void AccommodationTypes::Purge()
 void AccommodationTypes::ReadAccommodations( xml::xistream& xis )
 {
     xis >> xml::start( "urban" )
-            >> xml::optional() >> xml::start( "accommodations" )
+            >> xml::optional >> xml::start( "accommodations" )
             >> xml::list( "accommodation", *this, &AccommodationTypes::ReadAccommodation );
 }
 

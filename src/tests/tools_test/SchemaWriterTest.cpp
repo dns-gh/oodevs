@@ -20,7 +20,7 @@ BOOST_AUTO_TEST_CASE( test_schema_writer )
     xml::xostringstream xos;
     xos << xml::start( "test" );
     schemaWriter.WriteExerciseSchema( xos, "test" );
-    xos << xml::end();
+    xos << xml::end;
     xos.str();
 
     xml::xistringstream xisTmp( "<test xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" model-version=\"" + std::string( tools::AppModelVersion() ) + "\" xsi:noNamespaceSchemaLocation=\"schemas/" + std::string( tools::AppMajorVersion() ) + "/exercise/test.xsd\"/>" );

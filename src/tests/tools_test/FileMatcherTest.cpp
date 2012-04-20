@@ -21,7 +21,7 @@ BOOST_AUTO_TEST_CASE( test_matcher_root_node )
     xml::xistringstream matcherConf( "<match-if root-node=\"physical\" assign-schema=\"yeah.xsd\"/>" );
     matcherConf >> xml::start( "match-if" );
     boost::shared_ptr< tools::FileMatcher_ABC > matcher = factory.CreateFileMatcher( matcherConf );
-    matcherConf >> xml::end();
+    matcherConf >> xml::end;
 
     xml::xistringstream xisMatching( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>"
                                      "<physical xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"whatever.xsd\">"
@@ -48,7 +48,7 @@ BOOST_AUTO_TEST_CASE( test_matcher_filename )
     xml::xistringstream matcherConf( "<match-if filename=\"valid-test.xml\" assign-schema=\"yeah.xsd\"/>" );
     matcherConf >> xml::start( "match-if" );
     boost::shared_ptr< tools::FileMatcher_ABC > matcher = factory.CreateFileMatcher( matcherConf );
-    matcherConf >> xml::end();
+    matcherConf >> xml::end;
 
     std::string newSchema;
     xml::xistringstream xisEmpty( "<?xml version=\"1.0\"?><empty/>" );
@@ -76,7 +76,7 @@ BOOST_AUTO_TEST_CASE( test_matcher_non_versioned_schema )
     xml::xistringstream matcherConf( "<match-if non-versioned-schema=\"/stupid/schema.xsd\" assign-schema=\"/great/schema.xsd\"/>" );
     matcherConf >> xml::start( "match-if" );
     boost::shared_ptr< tools::FileMatcher_ABC > matcher = factory.CreateFileMatcher( matcherConf );
-    matcherConf >> xml::end();
+    matcherConf >> xml::end;
 
     xml::xistringstream xisMatching( "<?xml version=\"1.0\" encoding=\"UTF-8\" standalone=\"no\" ?>"
                                      "<physical xmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\" xsi:noNamespaceSchemaLocation=\"/stupid/schema.xsd\">"

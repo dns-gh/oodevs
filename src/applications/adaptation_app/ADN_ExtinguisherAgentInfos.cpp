@@ -77,7 +77,7 @@ void ADN_ExtinguisherAgentInfos::WriteArchive( xml::xostream& xos, const std::st
     xos << xml::start( tag )
             << xml::attribute( "agent", ptrAgent_.GetData()->strName_ )
             << xml::attribute( "heat-decrease-rate", heatDecreaseRate_ )
-        << xml::end();
+        << xml::end;
 }
 
 // -----------------------------------------------------------------------------

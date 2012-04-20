@@ -142,7 +142,7 @@ bool ImportWidget::ReadPackageContentFile()
         xis >> xml::start( "content" )
                 >> xml::content( "name", name )
                 >> xml::content( "description", description )
-            >> xml::end();
+            >> xml::end;
         packageName_->setText( name.c_str() );
         packageDescription_->setText( description.c_str() );
     }

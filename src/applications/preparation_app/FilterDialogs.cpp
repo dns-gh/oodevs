@@ -72,7 +72,7 @@ void FilterDialogs::Load( xml::xistream& xis )
     {
         xis >> xml::start( "sections" )
                 >> xml::list( "section", *this, &FilterDialogs::ReadSection )
-            >> xml::end();
+            >> xml::end;
     }
     catch( std::exception& e )
     {

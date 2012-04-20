@@ -24,7 +24,7 @@ InfrastructureType::InfrastructureType( xml::xistream& xis )
     , name_  ( xis.attribute< std::string >( "name" ) )
     , symbol_( "infrastructures/" + xis.attribute< std::string >( "symbol" ) )
 {
-    xis >> xml::optional() >> xml::start( "capacities" )
+    xis >> xml::optional >> xml::start( "capacities" )
         >> xml::list( *this, &InfrastructureType::ReadCapacity )
         >> xml::end;
 }
