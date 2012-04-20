@@ -162,6 +162,7 @@ BOOST_FIXTURE_TEST_CASE( session_controller_creates, Fixture )
         ( "--session \"" + idIdleText + "\"" ) ),
         "e:/apps" ).returns( boost::make_shared< MockProcess >( 1377, GetApp( apps ) ) );
     MOCK_EXPECT( sub.system.WriteFile ).exactly( 2 );
+    MOCK_EXPECT( sub.system.MakeDirectory ).once().with( "e:/data/exercises/baroud/sessions/" + idIdleText );
     SessionController::T_Session session = control.Create( idNode, "zebulon", "baroud" );
     BOOST_CHECK_EQUAL( session->GetId(), idIdle );
     BOOST_CHECK_EQUAL( control.Count(), size_t( 1 ) );

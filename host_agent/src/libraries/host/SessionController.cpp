@@ -175,7 +175,9 @@ SessionController::T_Session SessionController::Create( const boost::uuids::uuid
     if( !valid )
         return T_Session();
     LOG_INFO( log_ ) << "[session] Added " << session->id_ << " " << session->name_;
-    system_.WriteFile( GetPath( *session ) / "session.xml", session->GetConfiguration() );
+    const boost::filesystem::path path = GetPath( *session );
+    system_.MakeDirectory( path );
+    system_.WriteFile( path / "session.xml", session->GetConfiguration() );
     Start( *session, true );
     return session;
 }
