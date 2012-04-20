@@ -11,13 +11,10 @@
 #define __ColorAttribute_h_
 
 #include "UrbanObjectAttribute_ABC.h"
-
-class ColorRGBA;
+#include <boost/noncopyable.hpp>
 
 namespace dispatcher
 {
-    class Model;
-
 // =============================================================================
 /** @class  ColorAttribute
     @brief  Color attribute
@@ -25,6 +22,7 @@ namespace dispatcher
 // Created: RPD 2010-01-06
 // =============================================================================
 class ColorAttribute : public UrbanObjectAttribute_ABC
+                     , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -40,16 +38,12 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    ColorAttribute( const ColorAttribute& );            //!< Copy constructor
-    ColorAttribute& operator=( const ColorAttribute& ); //!< Assignment operator
-    //@}
-
-private:
     //! @name Member data
     //@{
-    std::auto_ptr< ColorRGBA > color_;
+    int red_;
+    int green_;
+    int blue_;
+    float alpha_;
     //@}
 };
 

@@ -10,7 +10,6 @@
 #include "dispatcher_pch.h"
 #include "ColorAttribute.h"
 #include "protocol/SimulationSenders.h"
-#include <urban/ColorRGBA.h>
 
 using namespace dispatcher;
 
@@ -19,10 +18,10 @@ using namespace dispatcher;
 // Created: RPD 2010-01-06
 // -----------------------------------------------------------------------------
 ColorAttribute::ColorAttribute( const sword::UrbanAttributes& message )
-    : color_( new ColorRGBA( static_cast< unsigned short >( message.color().red() ),
-                             static_cast< unsigned short >( message.color().green() ),
-                             static_cast< unsigned short >( message.color().blue() ),
-                             message.color().alpha() ) )
+    : red_  ( message.color().red() )
+    , green_( message.color().green() )
+    , blue_ ( message.color().blue() )
+    , alpha_( message.color().alpha() )
 {
     // NOTHING
 }
@@ -44,10 +43,10 @@ void ColorAttribute::Update( const sword::UrbanAttributes& message )
 {
    if( message.has_color() )
    {
-       color_.reset( new ColorRGBA( static_cast< unsigned short >( message.color().red() ),
-                                    static_cast< unsigned short >( message.color().green() ),
-                                    static_cast< unsigned short >( message.color().blue() ),
-                                    message.color().alpha() ) );
+        red_ =  message.color().red();
+        green_ = message.color().green();
+        blue_ = message.color().blue();
+        alpha_ = message.color().alpha();
    }
 }
 
@@ -58,8 +57,8 @@ void ColorAttribute::Update( const sword::UrbanAttributes& message )
 void ColorAttribute::Send( sword::UrbanAttributes& message ) const
 {
     sword::RgbaColor& color = *message.mutable_color();
-    color.set_red( color_->Red() );
-    color.set_green( color_->Green() );
-    color.set_blue( color_->Blue() );
-    color.set_alpha( color_->Alpha() );
+    color.set_red( red_ );
+    color.set_green( green_ );
+    color.set_blue( blue_ );
+    color.set_alpha( alpha_ );
 }
