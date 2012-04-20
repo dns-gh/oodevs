@@ -130,7 +130,7 @@ BOOST_FIXTURE_TEST_CASE( agent_list_nodes, Fixture )
 BOOST_FIXTURE_TEST_CASE( agent_count_nodes, Fixture )
 {
     MOCK_EXPECT( nodes.Count ).once().returns( 17 );
-    CheckReply( agent.CountNodes(), "{\"count\":\"17\"}\n" );
+    CheckReply( agent.CountNodes(), "{\"count\":\"17\"}" );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_get_node, Fixture )
@@ -175,7 +175,7 @@ BOOST_FIXTURE_TEST_CASE( agent_list_sessions, Fixture )
 BOOST_FIXTURE_TEST_CASE( agent_count_sessions, Fixture )
 {
     MOCK_EXPECT( sessions.Count ).once().returns( 17 );
-    CheckReply( agent.CountSessions( boost::uuids::nil_uuid() ), "{\"count\":\"17\"}\n" );
+    CheckReply( agent.CountSessions( boost::uuids::nil_uuid() ), "{\"count\":\"17\"}" );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_get_session, Fixture )
@@ -227,5 +227,5 @@ BOOST_FIXTURE_TEST_CASE( agent_list_empty_exercises, Fixture )
     MOCK_EXPECT( sessions.GetExercises ).once().returns( list );
     CheckReply( agent.ListExercises( 0, INT_MAX ), "[\"a\", \"b\", \"c\"]" );
     MOCK_EXPECT( sessions.GetExercises ).once().returns( list );
-    CheckReply( agent.CountExercises(), "{\"count\":\"3\"}\n" );
+    CheckReply( agent.CountExercises(), "{\"count\":\"3\"}" );
 }

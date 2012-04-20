@@ -95,24 +95,24 @@ BOOST_FIXTURE_TEST_CASE( node_converts, Fixture )
         "\"port\":\"1337\"";
     BOOST_CHECK_EQUAL( ToJson( node->GetProperties() ), base + ","
         "\"status\":\"stopped\""
-        "}\n" );
+        "}" );
     BOOST_CHECK_EQUAL( ToJson( node->Save() ), base +
-        "}\n" );
+        "}" );
     ProcessPtr process = StartNode( *node, processPid, processName );
     BOOST_CHECK_EQUAL( ToJson( node->GetProperties() ), base + ","
         "\"status\":\"running\""
-        "}\n" );
+        "}" );
     BOOST_CHECK_EQUAL( ToJson( node->Save() ), base + ","
         "\"process\":{"
             "\"pid\":\"7331\","
             "\"name\":\"myProcessName\""
-        "}}\n" );
+        "}}" );
     StopNode( *node, process );
     BOOST_CHECK_EQUAL( ToJson( node->GetProperties() ), base + ","
         "\"status\":\"stopped\""
-        "}\n" );
+        "}" );
     BOOST_CHECK_EQUAL( ToJson( node->Save() ), base +
-        "}\n" );
+        "}" );
 }
 
 BOOST_FIXTURE_TEST_CASE( node_reloads, Fixture )

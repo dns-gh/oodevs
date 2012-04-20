@@ -26,7 +26,8 @@ std::string host::ToJson( const boost::property_tree::ptree& tree )
 {
     std::ostringstream out;
     boost::property_tree::write_json( out, tree, false );
-    return out.str();
+    const std::string json = out.str();
+    return json.substr( 0, json.size() - 1 );
 }
 
 // -----------------------------------------------------------------------------

@@ -100,27 +100,27 @@ BOOST_FIXTURE_TEST_CASE( session_converts, Fixture )
         "\"port\":\"1337\",";
     BOOST_CHECK_EQUAL( ToJson( session->GetProperties() ), base +
         "\"status\":\"stopped\""
-        "}\n" );
+        "}" );
     BOOST_CHECK_EQUAL( ToJson( session->Save() ), base +
         "\"status\":\"stopped\""
-        "}\n" );
+        "}" );
     ProcessPtr process = StartSession( *session, processPid, processName );
     BOOST_CHECK_EQUAL( ToJson( session->GetProperties() ), base +
         "\"status\":\"running\""
-        "}\n" );
+        "}" );
     BOOST_CHECK_EQUAL( ToJson( session->Save() ), base +
         "\"status\":\"running\","
         "\"process\":{"
             "\"pid\":\"7331\","
             "\"name\":\"myProcessName\""
-        "}}\n" );
+        "}}" );
     StopSession( *session, process );
     BOOST_CHECK_EQUAL( ToJson( session->GetProperties() ), base +
         "\"status\":\"stopped\""
-        "}\n" );
+        "}" );
     BOOST_CHECK_EQUAL( ToJson( session->Save() ), base +
         "\"status\":\"stopped\""
-        "}\n" );
+        "}" );
 }
 
 BOOST_FIXTURE_TEST_CASE( session_reloads, Fixture )
