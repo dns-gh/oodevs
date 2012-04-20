@@ -11,6 +11,7 @@
 
 #include <stdlib.h>
 #include <QtGui/qlineedit.h>
+#include "ADN_Validator.h"
 
 //-----------------------------------------------------------------------------
 // Name: ADN_TableItem_Edit constructor
@@ -28,6 +29,7 @@ ADN_TableItem_Edit<Connector,Validator>::ADN_TableItem_Edit(ADN_Table*parent,voi
     pValidator_ = new Validator(this);
     assert( pConnector_ != 0 );
     assert( pValidator_ != 0 );
+    nAlignment_ = pValidator_->GetAlignment();
 }
 
 

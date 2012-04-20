@@ -12,8 +12,17 @@
 
 #include "ADN_Types.h"
 
+class ADN_BaseValidator
+{
+public:
+    ADN_BaseValidator() {}
+    ~ADN_BaseValidator() {}
+
+    virtual Qt::Alignment GetAlignment() { return Qt::AlignRight; }
+};
+
 template< typename BaseType >
-class ADN_Validator_ABC
+class ADN_Validator_ABC : public ADN_BaseValidator
 {
 public:
     ADN_Validator_ABC() {}
