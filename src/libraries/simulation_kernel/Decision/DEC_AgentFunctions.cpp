@@ -15,6 +15,7 @@
 #include "DEC_GeometryFunctions.h"
 #include "DotationComputer_ABC.h"
 #include "OnComponentComputer_ABC.h"
+#include "Decision/DEC_Gen_Object.h"
 #include "Entities/Agents/Actions/Flying/PHY_RoleAction_InterfaceFlying.h"
 #include "Entities/Agents/Actions/Loading/PHY_RoleAction_Loading.h"
 #include "Entities/Agents/Actions/Moving/PHY_RoleAction_Moving.h"
@@ -1527,4 +1528,18 @@ bool DEC_AgentFunctions::AgentHasRadar( const DEC_Decision_ABC* agent, int typeR
 bool DEC_AgentFunctions::AgentHasFuseau(const MIL_Agent_ABC& callerAgent )
 { 
     return !callerAgent.GetOrderManager().GetFuseau().IsNull();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::CreateInstantaneously
+// Created: JSR 2012-04-19
+// -----------------------------------------------------------------------------
+void DEC_AgentFunctions::CreateInstantaneously( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Gen_Object > pGenObject )
+{
+    if( !callerAgent || !pGenObject )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+    MIL_Object_ABC* object = MIL_AgentServer::GetWorkspace().GetEntityManager().CreateObject( &callerAgent->GetPion().GetArmy(), pGenObject->GetTypeName(), &pGenObject->GetLocalisation(), pGenObject->GetObstacleType(), pGenObject->GetExternalIdentifier(), pGenObject->GetName() );
+    if( !object )
+        throw std::runtime_error( __FUNCTION__ ": unable to create object." );
+    object->Initialize( *pGenObject.get() );
 }

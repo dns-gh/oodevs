@@ -232,6 +232,15 @@ void ResourceNetworkCapacity::SetActivation( unsigned long resourceId, bool acti
 }
 
 // -----------------------------------------------------------------------------
+// Name: ResourceNetworkCapacity::CreateNode
+// Created: JSR 2012-04-20
+// -----------------------------------------------------------------------------
+void ResourceNetworkCapacity::CreateNode( unsigned long resourceId )
+{
+    nodeProperties_->CreateNode( resourceId );
+}
+
+// -----------------------------------------------------------------------------
 // Name: ResourceNetworkCapacity::CreateLink
 // Created: GGE 2011-06-10
 // -----------------------------------------------------------------------------

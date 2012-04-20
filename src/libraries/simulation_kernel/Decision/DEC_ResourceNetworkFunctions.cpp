@@ -247,3 +247,21 @@ bool DEC_ResourceNetworkFunctions::DestroyResourceNetworkLink( boost::shared_ptr
         return false;
     return capacitySource->DestroyLink( target->GetObjectId(), target->GetResource() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_ResourceNetworkFunctions::CreateNode
+// Created: JSR 2012-04-20
+// -----------------------------------------------------------------------------
+bool DEC_ResourceNetworkFunctions::CreateNode( boost::shared_ptr< DEC_Knowledge_Object > pObject, PHY_ResourceNetworkType* resourceType )
+{
+    if( !pObject.get() || !pObject->IsValid() || !resourceType )
+        return false;
+    MIL_Object_ABC* object = pObject->GetObjectKnown();
+    if( !object )
+        return false;
+    ResourceNetworkCapacity* capacity = object->Retrieve< ResourceNetworkCapacity >();
+    if( !capacity )
+        return false;
+    capacity->CreateNode( resourceType->GetId() );
+    return true;
+}

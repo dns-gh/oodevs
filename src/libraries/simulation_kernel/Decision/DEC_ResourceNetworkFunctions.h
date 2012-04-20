@@ -17,6 +17,7 @@ class DEC_Knowledge_Object;
 class DEC_ResourceNetwork;
 class MIL_Object_ABC;
 class MT_Vector2D;
+class PHY_ResourceNetworkType;
 class TER_Localisation;
 
 // =============================================================================
@@ -43,6 +44,7 @@ public:
     static bool CreateResourceNetworkLinkFromObject( boost::shared_ptr< DEC_Knowledge_Object > source, boost::shared_ptr< DEC_ResourceNetwork > target );
     static bool CreateResourceNetworkLinkFromUrbanBlock( UrbanObjectWrapper* source, boost::shared_ptr< DEC_ResourceNetwork > target );
     static bool DestroyResourceNetworkLink( boost::shared_ptr< DEC_ResourceNetwork > source, boost::shared_ptr< DEC_ResourceNetwork > target );
+    static bool CreateNode( boost::shared_ptr< DEC_Knowledge_Object > object, PHY_ResourceNetworkType* resourceType );
     //@}
 
 private:

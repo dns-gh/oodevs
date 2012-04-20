@@ -90,6 +90,7 @@ public:
 
     void ActivateAll();
     void SetActivation( unsigned long resourceId, bool activated );
+    void CreateNode( unsigned long resourceId );
     void CreateLink( unsigned long targetId, unsigned long resourceId, unsigned int production );
     bool DestroyLink( unsigned long targetId, const std::string& resource );
     void AddConsumption( unsigned long resourceId, double consumption );

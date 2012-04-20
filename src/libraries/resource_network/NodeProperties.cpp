@@ -187,10 +187,10 @@ void NodeProperties::SetActivation( unsigned long resourceId, bool activated )
 }
 
 // -----------------------------------------------------------------------------
-// Name: NodeProperties::CreateLink
-// Created: GGE 2011-06-10
+// Name: NodeProperties::CreateNode
+// Created: JSR 2012-04-20
 // -----------------------------------------------------------------------------
-void NodeProperties::CreateLink( unsigned long targetId, unsigned long resourceId, unsigned int production )
+NodeElement& NodeProperties::CreateNode( unsigned long resourceId )
 {
     NodeElement* element = Find( resourceId );
     if( !element )
@@ -198,8 +198,18 @@ void NodeProperties::CreateLink( unsigned long targetId, unsigned long resourceI
         element = new NodeElement( resourceId, tools_->GetResourceName( resourceId ) );
         Register( resourceId, *element );
     }
-    element->SetProduction( production );
-    element->CreateLink( targetId );
+    return *element;
+}
+
+// -----------------------------------------------------------------------------
+// Name: NodeProperties::CreateLink
+// Created: GGE 2011-06-10
+// -----------------------------------------------------------------------------
+void NodeProperties::CreateLink( unsigned long targetId, unsigned long resourceId, unsigned int production )
+{
+    NodeElement& element = CreateNode( resourceId );
+    element.SetProduction( production );
+    element.CreateLink( targetId );
 }
 
 // -----------------------------------------------------------------------------

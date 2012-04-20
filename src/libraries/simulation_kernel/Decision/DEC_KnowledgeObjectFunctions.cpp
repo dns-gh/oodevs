@@ -510,6 +510,18 @@ bool DEC_KnowledgeObjectFunctions::HasCapacity( boost::shared_ptr< DEC_Knowledge
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::BuildInstantaneously
+// Created: JSR 2012-04-20
+// -----------------------------------------------------------------------------
+void DEC_KnowledgeObjectFunctions::BuildInstantaneously( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
+{
+    if( !pKnowledge || !pKnowledge->IsValid() )
+        return;
+    if( MIL_Object_ABC* obj = pKnowledge->GetObjectKnown() )
+        ( *obj )().Construct();
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeObjectFunctions::IsUndergroundNetworkExit
 // Created: JSR 2011-06-06
 // -----------------------------------------------------------------------------

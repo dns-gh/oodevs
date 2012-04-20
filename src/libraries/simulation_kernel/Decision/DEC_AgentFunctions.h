@@ -22,6 +22,7 @@ class TER_Localisation;
 class MT_Vector2D;
 class UrbanObjectWrapper;
 class DEC_Gen_Object;
+class MIL_Object_ABC;
 
 // =============================================================================
 // Created: NLD 2004-03-31
@@ -71,6 +72,7 @@ public:
     static void DisableDiscreteMode( MIL_Agent_ABC& callerAgent );
     static bool AgentCanFly( const DEC_Decision_ABC* agent );
     static double GetCurrentSpeed( const DEC_Decision_ABC* agent );
+    static void CreateInstantaneously( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_Gen_Object > genObject );
 
     static bool AgentCanConstructObjectWithLoaded( const DEC_Decision_ABC* agent, const std::string& type );
     static bool AgentCanConstructObjectWithLoadedAndLocalisation( const DEC_Decision_ABC* agent, const std::string& type, const TER_Localisation* localisation );

@@ -271,6 +271,7 @@ void RegisterResourceNetworkFunctions( directia::brain::Brain& brain )
     brain[ "DEC_ResourceNetwork_CreateLinkFromObject" ] = &DEC_ResourceNetworkFunctions::CreateResourceNetworkLinkFromObject;
     brain[ "DEC_ResourceNetwork_CreateLinkFromUrbanBlock" ] = &DEC_ResourceNetworkFunctions::CreateResourceNetworkLinkFromUrbanBlock;
     brain[ "DEC_ResourceNetwork_DestroyLink" ] = &DEC_ResourceNetworkFunctions::DestroyResourceNetworkLink;
+    brain[ "DEC_ResourceNetwork_Create" ] = &DEC_ResourceNetworkFunctions::CreateNode;
     brain.Register( "GetTypeName", &DEC_ResourceNetwork::GetTypeName );
 }
 
@@ -378,6 +379,7 @@ void RegisterObjectsFunctions( directia::brain::Brain& brain )
     brain[ "DEC_ConnaissanceObjet_DesactiverIssueDeReseauSouterrain" ] = &DEC_KnowledgeObjectFunctions::DeactivateUndergroundNetworkExit;
     brain[ "DEC_ConnaissanceObjet_IssuesDuMemeReseauSouterrain" ] = DEC_KnowledgeObjectFunctions::EnterAndExitInSameUndergroundNetwork;
     brain[ "DEC_ObjectKnowledge_HasCapacity" ] = &DEC_KnowledgeObjectFunctions::HasCapacity;
+    brain[ "DEC_ObjectKnowledge_BuildInstantaneously" ] = &DEC_KnowledgeObjectFunctions::BuildInstantaneously;
 }
 
 // -----------------------------------------------------------------------------
