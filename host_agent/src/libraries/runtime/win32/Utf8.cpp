@@ -12,6 +12,7 @@
 #define  BOOST_BIND_ENABLE_STDCALL
 #endif
 #include <boost/bind.hpp>
+#include <boost/filesystem/path.hpp>
 #define  NOMINMAX
 #include <windows.h>
 
@@ -59,4 +60,13 @@ std::string runtime::Utf8Convert( const std::wstring& text )
     return Convert< std::wstring, std::string, char >( text,
         boost::bind( WideCharToMultiByte, CP_UTF8, 0, _1, _2, _3, _4,
             reinterpret_cast< LPCSTR >( 0 ), reinterpret_cast< LPBOOL >( 0 ) ) );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Utf8Convert
+// Created: BAX 2012-04-17
+// -----------------------------------------------------------------------------
+std::string runtime::Utf8Convert( const boost::filesystem::path& path )
+{
+    return Utf8Convert( path.wstring() );
 }

@@ -9,6 +9,7 @@
 
 #include "runtime_test.h"
 #include <runtime/Utf8.h>
+#include <boost/filesystem/path.hpp>
 
 using namespace runtime;
 
@@ -51,6 +52,14 @@ BOOST_AUTO_TEST_CASE( utf8_to_unicode_converts )
 BOOST_AUTO_TEST_CASE( unicode_to_utf8_converts )
 {
     const std::wstring input( tamil_utf16, COUNT_OF( tamil_utf16 ) );
+    const std::string expected( reinterpret_cast< const char* >( tamil_utf8 ), COUNT_OF( tamil_utf8 ) );
+    const std::string actual = Utf8Convert( input );
+    BOOST_CHECK( expected == actual );
+}
+
+BOOST_AUTO_TEST_CASE( unicode_path_to_utf8_converts )
+{
+    const boost::filesystem::path input( std::wstring( tamil_utf16, COUNT_OF( tamil_utf16 ) ) );
     const std::string expected( reinterpret_cast< const char* >( tamil_utf8 ), COUNT_OF( tamil_utf8 ) );
     const std::string actual = Utf8Convert( input );
     BOOST_CHECK( expected == actual );
