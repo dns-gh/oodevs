@@ -56,7 +56,7 @@ private:
 
     //! @name Private members
     //@{
-    std::auto_ptr< boost::shared_mutex > access_;
+    const std::auto_ptr< boost::shared_mutex > access_;
     const int period_;
     const int min_;
     const int max_;

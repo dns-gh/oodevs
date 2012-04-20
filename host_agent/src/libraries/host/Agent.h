@@ -12,11 +12,10 @@
 
 #include "Agent_ABC.h"
 #include <boost/shared_ptr.hpp>
-#include <map>
 
 namespace boost
 {
-    class shared_mutex;
+    class mutex;
 }
 
 namespace cpplog
@@ -26,10 +25,8 @@ namespace cpplog
 
 namespace host
 {
-    class Session_ABC;
-    class SessionFactory_ABC;
-    class Node_ABC;
-    class NodeFactory_ABC;
+    class NodeController_ABC;
+    class SessionController_ABC;
 
 // =============================================================================
 /** @class  Agent
@@ -42,7 +39,7 @@ class Agent : public Agent_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Agent( cpplog::BaseLogger& log, const NodeFactory_ABC& nodeFactory, const SessionFactory_ABC& sessionFactory );
+             Agent( cpplog::BaseLogger& log, NodeController_ABC& nodes, SessionController_ABC& sessions );
     virtual ~Agent();
     //@}
 
@@ -62,7 +59,7 @@ public:
     virtual Reply ListSessions ( const boost::uuids::uuid& node, int offset, int limit ) const;
     virtual Reply CountSessions( const boost::uuids::uuid& node ) const;
     virtual Reply GetSession   ( const boost::uuids::uuid& id ) const;
-    virtual Reply CreateSession( const boost::uuids::uuid& node, const std::string& exercise, const std::string& name );
+    virtual Reply CreateSession( const boost::uuids::uuid& node, const std::string& name, const std::string& exercise );
     virtual Reply DeleteSession( const boost::uuids::uuid& id );
     virtual Reply StartSession ( const boost::uuids::uuid& id ) const;
     virtual Reply StopSession  ( const boost::uuids::uuid& id ) const;
@@ -74,21 +71,13 @@ public:
     virtual Reply CountExercises() const;
     //@}
 
-    //! @name Type helpers
-    //@{
-    typedef std::map< boost::uuids::uuid, boost::shared_ptr< Session_ABC > > T_Sessions;
-    typedef std::map< boost::uuids::uuid, boost::shared_ptr< Node_ABC > > T_Nodes;
-    //@}
-
 private:
     //! @name Member data
     //@{
     mutable cpplog::BaseLogger& log_;
-    const NodeFactory_ABC& nodeFactory_;
-    const SessionFactory_ABC& sessionFactory_;
-    std::auto_ptr< boost::shared_mutex > access_;
-    T_Nodes nodes_;
-    T_Sessions sessions_;
+    const std::auto_ptr< boost::mutex > access_;
+    NodeController_ABC& nodes_;
+    SessionController_ABC& sessions_;
     //@}
 };
 

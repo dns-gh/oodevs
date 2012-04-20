@@ -7,20 +7,19 @@
 //
 // *****************************************************************************
 #include "Proxy.h"
-#include "FileSystem_ABC.h"
-#include "SecurePool.h"
 
 #include "cpplog/cpplog.hpp"
+#include "FileSystem_ABC.h"
 #include "runtime/Process_ABC.h"
 #include "runtime/Runtime_ABC.h"
 #include "runtime/Utf8.h"
+#include "SecurePool.h"
 #include "web/Client_ABC.h"
-
-#include <xeumeuleu/xml.hpp>
 
 #include <boost/assign/list_of.hpp>
 #include <boost/bind.hpp>
 #include <boost/lexical_cast.hpp>
+#include <xeumeuleu/xml.hpp>
 
 #ifdef _MSC_VER
 #   pragma warning( push )
@@ -33,20 +32,7 @@
 #endif
 
 using namespace host;
-
-namespace
-{
-const int MAX_KILL_TIMEOUT_MS = 3*1000;
-
-// -----------------------------------------------------------------------------
-// Name: Utf8Convert
-// Created: BAX 2012-04-11
-// -----------------------------------------------------------------------------
-std::string Utf8Convert( const boost::filesystem::path& path )
-{
-    return runtime::Utf8Convert( path.wstring() );
-}
-}
+using runtime::Utf8Convert;
 
 // -----------------------------------------------------------------------------
 // Name: Proxy::Proxy
@@ -82,7 +68,7 @@ Proxy::Proxy( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime,
 Proxy::~Proxy()
 {
     if( process_ )
-        process_->Kill( MAX_KILL_TIMEOUT_MS );
+        process_->Kill( 0 );
 }
 
 // -----------------------------------------------------------------------------
@@ -173,7 +159,7 @@ void Proxy::Stop()
 {
     boost::lock_guard< boost::mutex > lock( *access_ );
     if( process_ )
-        process_->Kill( MAX_KILL_TIMEOUT_MS );
+        process_->Kill( 0 );
     process_.reset();
     Save();
 }

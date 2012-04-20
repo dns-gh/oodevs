@@ -11,16 +11,13 @@
 #define NODE_H
 
 #include "Node_ABC.h"
-#include "NodeFactory_ABC.h"
+
+#include <boost/function.hpp>
+#include <boost/shared_ptr.hpp>
 
 namespace boost
 {
     class shared_mutex;
-}
-
-namespace cpplog
-{
-    class BaseLogger;
 }
 
 namespace runtime
@@ -29,24 +26,14 @@ namespace runtime
     class Process_ABC;
 }
 
-namespace xml
-{
-    class xistream;
-}
-
 namespace host
 {
-    class FileSystem_ABC;
-    class Pool_ABC;
     class Port_ABC;
     class PortFactory_ABC;
-    class Proxy_ABC;
-    class SecurePool;
-    class UuidFactory_ABC;
 
 // =============================================================================
-/** @class  Node
-    @brief  Node class definition
+/** @class  Node_ABC
+    @brief  Node_ABC interface
 */
 // Created: BAX 2012-04-03
 // =============================================================================
@@ -55,55 +42,50 @@ class Node : public Node_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Node( cpplog::BaseLogger& log, Pool_ABC& pool,
-                   const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
-                   const FileSystem_ABC& system, const Proxy_ABC& proxy,
-                   const boost::filesystem::path& java, const boost::filesystem::path& jar,
-                   const boost::filesystem::path& web, const std::string& type, const std::string& name, PortFactory_ABC& ports );
-             Node( cpplog::BaseLogger& log, Pool_ABC& pool,
-                   const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system, const Proxy_ABC& proxy,
-                   const boost::filesystem::path& java, const boost::filesystem::path& jar,
-                   const boost::filesystem::path& web, xml::xistream& xis, PortFactory_ABC& ports );
+             Node( const boost::uuids::uuid& id, const std::string& name, std::auto_ptr< Port_ABC > port );
+             Node( const boost::property_tree::ptree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports );
     virtual ~Node();
     //@}
 
-    //! @name Overrided methods
+    //! @name Node_ABC methods
     //@{
-    virtual boost::uuids::uuid GetTag() const;
-    virtual std::string ToJson() const;
-    virtual void Save() const;
-    virtual void Start();
-    virtual void Stop();
+    virtual boost::uuids::uuid GetId() const;
+    virtual boost::property_tree::ptree GetProperties() const;
     //@}
 
-private:
-    //! @name Private methods
+    //! @name Typedef helpers
     //@{
-    void CheckPaths() const;
-    std::string ToXml() const;
-    boost::filesystem::path GetPath() const;
+    typedef boost::shared_ptr< runtime::Process_ABC > T_Process;
+    typedef boost::function< T_Process( const Node& ) > T_Starter;
     //@}
 
-private:
-    //! @name Member data
+    //! @name Public methods
     //@{
-    mutable cpplog::BaseLogger& log_;
-    const runtime::Runtime_ABC& runtime_;
-    const FileSystem_ABC& system_;
-    const Proxy_ABC& proxy_;
-    const boost::filesystem::path java_;
-    const boost::filesystem::path jar_;
-    const boost::filesystem::path web_;
-    const std::string type_;
+    boost::property_tree::ptree Save() const;
+    bool Start( const T_Starter& starter );
+    bool Stop();
+    //@}
+
+    //! @name Public members
+    //@{
     const boost::uuids::uuid id_;
     const std::string name_;
-    std::auto_ptr< SecurePool > pool_;
-    std::auto_ptr< boost::shared_mutex > access_;
-    boost::shared_ptr< runtime::Process_ABC > process_;
-    std::auto_ptr< Port_ABC > port_;
+    const std::auto_ptr< Port_ABC > port_;
+    //@}
+
+private:
+    //! @name Public methods
+    //@{
+    boost::property_tree::ptree GetCommonProperties() const;
+    //@}
+
+private:
+    //! @name Private members
+    //@{
+    const std::auto_ptr< boost::shared_mutex > access_;
+    T_Process process_;
     //@}
 };
-
 }
 
 #endif // NODE_H

@@ -11,12 +11,11 @@
 #define NODE_ABC_H
 
 #include <boost/noncopyable.hpp>
+#include <boost/property_tree/ptree_fwd.hpp>
 #include <boost/uuid/uuid.hpp>
-#include <string>
 
 namespace host
 {
-
 // =============================================================================
 /** @class  Node_ABC
     @brief  Node_ABC interface
@@ -34,10 +33,8 @@ public:
 
     //! @name Methods
     //@{
-    virtual boost::uuids::uuid GetTag() const = 0;
-    virtual std::string ToJson() const = 0;
-    virtual void Start() = 0;
-    virtual void Stop() = 0;
+    virtual boost::uuids::uuid GetId() const = 0;
+    virtual boost::property_tree::ptree GetProperties() const = 0;
     //@}
 };
 

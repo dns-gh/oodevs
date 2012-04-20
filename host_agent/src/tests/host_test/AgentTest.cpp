@@ -8,93 +8,54 @@
 // *****************************************************************************
 
 #include "host_test.h"
-
-#include <cpplog/cpplog.hpp>
-
-#include <runtime/Process_ABC.h>
-#include <runtime/Runtime_ABC.h>
+#include "Mocks.h"
 
 #include <host/Agent.h>
-#include <host/NodeFactory_ABC.h>
-#include <host/Node_ABC.h>
-#include <host/SessionFactory_ABC.h>
-#include <host/Session_ABC.h>
+#include <host/Json.h>
 
 #include <boost/assign/list_of.hpp>
-#include <boost/format.hpp>
+#include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/uuid/uuid_generators.hpp>
+#include <boost/uuid/uuid_io.hpp>
 
-using namespace runtime;
 using namespace host;
+using mocks::MockLog;
+using mocks::MockNode;
+using mocks::MockNodeController;
+using mocks::MockSession;
+using mocks::MockSessionController;
 
 namespace
 {
-    const std::string default_node_string = "0123456789abcdef0123456789abcdef";
-    const boost::uuids::uuid default_node = boost::uuids::string_generator()( default_node_string );
-
-    MOCK_BASE_CLASS( MockLog, cpplog::BaseLogger )
-    {
-        MOCK_METHOD( sendLogMessage, 1 );
-        MockLog()
-        {
-            MOCK_EXPECT( this->sendLogMessage ).returns( true );
-        }
-    };
-
-    MOCK_BASE_CLASS( MockNodeFactory, NodeFactory_ABC )
-    {
-        MOCK_METHOD( Create, 2 );
-        MOCK_METHOD( Reload, 1 );
-        MockNodeFactory()
-        {
-            MOCK_EXPECT( this->Reload ).once().returns( NodeFactory_ABC::T_Nodes() );
-        }
-    };
-
-    MOCK_BASE_CLASS( MockNode, Node_ABC )
-    {
-        MOCK_METHOD( GetTag, 0 );
-        MOCK_METHOD( ToJson, 0 );
-        MOCK_METHOD( Start, 0 );
-        MOCK_METHOD( Stop, 0 );
-    };
-
-    MOCK_BASE_CLASS( MockSessionFactory, SessionFactory_ABC )
-    {
-        MOCK_METHOD( Create, 3 );
-        MOCK_METHOD( Reload, 0 );
-        MOCK_METHOD( GetExercises, 0 );
-        MockSessionFactory()
-        {
-            MOCK_EXPECT( this->Reload ).once().returns( SessionFactory_ABC::T_Sessions() );
-        }
-    };
-
-    MOCK_BASE_CLASS( MockSession, Session_ABC )
-    {
-        MOCK_METHOD( GetTag, 0 );
-        MOCK_METHOD( GetNode, 0 );
-        MOCK_METHOD( ToJson, 0 );
-        MOCK_METHOD( Start, 0 );
-        MOCK_METHOD( Stop, 0 );
-    };
+    const std::string defaultNodeString = "0123456789abcdef0123456789abcdef";
+    const boost::uuids::uuid defaultNode = boost::uuids::string_generator()( defaultNodeString );
+    const std::string anotherNodeString = "0123456bcde4567f0123456789abcdef";
+    const boost::uuids::uuid anotherNode = boost::uuids::string_generator()( anotherNodeString );
 
     static boost::shared_ptr< MockNode > CreateMockNode( const std::string& id, const std::string& name )
     {
         boost::shared_ptr< MockNode > ptr = boost::make_shared< MockNode >();
-        MOCK_EXPECT( ptr->GetTag ).returns( boost::uuids::string_generator()( id ) );
-        MOCK_EXPECT( ptr->ToJson ).returns( id + name );
+        MOCK_EXPECT( ptr->GetId ).returns( boost::uuids::string_generator()( id ) );
+        boost::property_tree::ptree tree;
+        tree.put( "id", id );
+        tree.put( "name", name );
+        MOCK_EXPECT( ptr->GetProperties ).returns( tree );
         return ptr;
     }
 
     static boost::shared_ptr< MockSession > CreateMockSession( const boost::uuids::uuid& node, const std::string& id, const std::string& exercise, const std::string& name )
     {
         boost::shared_ptr< MockSession > ptr = boost::make_shared< MockSession >();
-        MOCK_EXPECT( ptr->GetTag ).returns( boost::uuids::string_generator()( id ) );
+        MOCK_EXPECT( ptr->GetId ).returns( boost::uuids::string_generator()( id ) );
         MOCK_EXPECT( ptr->GetNode ).returns( node );
-        MOCK_EXPECT( ptr->ToJson ).returns( id + exercise + name );
+        boost::property_tree::ptree tree;
+        tree.put( "id", id );
+        tree.put( "node", node );
+        tree.put( "name", name );
+        tree.put( "exercise", exercise );
+        MOCK_EXPECT( ptr->GetProperties ).returns( tree );
         return ptr;
     }
 
@@ -116,130 +77,141 @@ namespace
     {
         Fixture()
             : agent( log, nodes, sessions )
+            , node ( AddNode( defaultNodeString, "nodeName" ) )
+            , mockSessions( boost::assign::list_of
+                ( AddSession( defaultNode, "myExercise", "myName", 0, true ) )
+                ( AddSession( anotherNode, "anExercise", "aName", 1, true ) ) )
         {
             // NOTHING
         }
 
-        boost::shared_ptr< MockSession > AddSession( const boost::uuids::uuid& node, const std::string& exercise, const std::string& name, int idx )
+        boost::shared_ptr< MockSession > AddSession( const boost::uuids::uuid& node, const std::string& exercise, const std::string& name, int idx, bool hasNode = false )
         {
             const std::string uuid = CreatePrefixedUuid( idx );
             boost::shared_ptr< MockSession > session = CreateMockSession( node, uuid, exercise, name );
             MOCK_EXPECT( sessions.Create ).once().with( node, exercise, name ).returns( session );
-            MOCK_EXPECT( session->Start ).once();
-            CheckReply( agent.CreateSession( node, exercise, name ), session->ToJson() );
+            if( hasNode )
+                MOCK_EXPECT( nodes.Has ).once().with( node ).returns( true );
+            CheckReply( agent.CreateSession( node, exercise, name ), ToJson( session->GetProperties() ) );
             return session;
         }
 
         boost::shared_ptr< MockNode > AddNode( const std::string& id, const std::string& name )
         {
             boost::shared_ptr< MockNode > node = CreateMockNode( id, name );
-            MOCK_EXPECT( nodes.Create ).once().with( "node", name ).returns( node );
-            MOCK_EXPECT( node->Start ).once();
-            CheckReply( agent.CreateNode( name ), node->ToJson() );
+            MOCK_EXPECT( nodes.Create ).once().with( name ).returns( node );
+            CheckReply( agent.CreateNode( name ), ToJson( node->GetProperties() ) );
             return node;
         }
 
+        bool CheckIsNodePredicate( SessionController_ABC::T_Predicate predicate, const boost::uuids::uuid& id )
+        {
+            BOOST_FOREACH( boost::shared_ptr< Session_ABC > ptr, mockSessions )
+                BOOST_CHECK_EQUAL( predicate( *ptr ), ptr->GetNode() == id );
+            return true;
+        }
+
         MockLog log;
-        MockSessionFactory sessions;
-        MockNodeFactory nodes;
+        MockSessionController sessions;
+        MockNodeController nodes;
         Agent agent;
+        boost::shared_ptr< MockNode > node;
+        std::vector< boost::shared_ptr< Session_ABC > > mockSessions;
     };
 }
 
-BOOST_FIXTURE_TEST_CASE( agent_creates_node, Fixture )
+BOOST_FIXTURE_TEST_CASE( agent_list_nodes, Fixture )
 {
-    boost::shared_ptr< MockNode > node = AddNode( default_node_string, "node_name" );
-    CheckReply( agent.ListNodes( 0, 2 ), "[" + node->ToJson() + "]" );
-    CheckReply( agent.CountNodes(), "{ \"count\" : 1 }" );
-    CheckReply( agent.GetNode( node->GetTag() ), node->ToJson() );
+    const int offset = 0, limit = 2;
+    MOCK_EXPECT( nodes.List ).once().with( offset, limit ).returns( boost::assign::list_of( node ) );
+    CheckReply( agent.ListNodes( offset, limit ), "[" + ToJson( node->GetProperties() ) + "]" );
 }
 
-BOOST_FIXTURE_TEST_CASE( agent_deletes_node, Fixture )
+BOOST_FIXTURE_TEST_CASE( agent_count_nodes, Fixture )
 {
-    boost::shared_ptr< MockNode > node = AddNode( default_node_string, "node_name" );
-    MOCK_EXPECT( node->Stop ).once();
-    CheckReply( agent.DeleteNode( node->GetTag() ), node->ToJson() );
-    CheckReply( agent.CountNodes(), "{ \"count\" : 0 }" );
-    CheckReply( agent.ListNodes( 0, 10 ), "[]" );
+    MOCK_EXPECT( nodes.Count ).once().returns( 17 );
+    CheckReply( agent.CountNodes(), "{\"count\":\"17\"}\n" );
 }
 
-BOOST_FIXTURE_TEST_CASE( agent_stop_start_nodes, Fixture )
+BOOST_FIXTURE_TEST_CASE( agent_get_node, Fixture )
 {
-    boost::shared_ptr< MockNode > node = AddNode( default_node_string, "node_name" );
-    MOCK_EXPECT( node->Stop ).once();
-    CheckReply( agent.StopNode( node->GetTag() ), node->ToJson() );
-    MOCK_EXPECT( node->Start ).once();
-    CheckReply( agent.StartNode( node->GetTag() ), node->ToJson() );
+    MOCK_EXPECT( nodes.Get ).once().with( defaultNode ).returns( node );
+    CheckReply( agent.GetNode( defaultNode ), ToJson( node->GetProperties() ) );
+}
+
+BOOST_FIXTURE_TEST_CASE( agent_create_node, Fixture )
+{
+    MOCK_EXPECT( nodes.Create ).once().with( "zomg" ).returns( node );
+    CheckReply( agent.CreateNode( "zomg" ), ToJson( node->GetProperties() ) );
+}
+
+BOOST_FIXTURE_TEST_CASE( agent_delete_node, Fixture )
+{
+    MOCK_EXPECT( nodes.Delete ).once().with( defaultNode ).returns( node );
+    MOCK_EXPECT( sessions.List ).with( boost::bind( &Fixture::CheckIsNodePredicate, this, _1, defaultNode ), 0, mock::any ).once().returns( boost::assign::list_of( mockSessions[0] ) );
+    MOCK_EXPECT( sessions.Delete ).once().with( mockSessions[0]->GetId() ).returns( mockSessions[0] );
+    CheckReply( agent.DeleteNode( defaultNode ), ToJson( node->GetProperties() ) );
+}
+
+BOOST_FIXTURE_TEST_CASE( agent_start_node, Fixture )
+{
+    MOCK_EXPECT( nodes.Start ).once().with( defaultNode ).returns( node );
+    CheckReply( agent.StartNode( defaultNode ), ToJson( node->GetProperties() ) );
+}
+
+BOOST_FIXTURE_TEST_CASE( agent_stop_node, Fixture )
+{
+    MOCK_EXPECT( nodes.Stop ).once().with( defaultNode ).returns( node );
+    CheckReply( agent.StopNode( defaultNode ), ToJson( node->GetProperties() ) );
+}
+
+BOOST_FIXTURE_TEST_CASE( agent_list_sessions, Fixture )
+{
+    const int offset = 1, limit = 1;
+    MOCK_EXPECT( sessions.List ).once().with( mock::any, offset, limit ).returns( boost::assign::list_of( mockSessions[1] ) );
+    CheckReply( agent.ListSessions( defaultNode, offset, limit ), "[" + ToJson( mockSessions[1]->GetProperties() ) + "]" );
+}
+
+BOOST_FIXTURE_TEST_CASE( agent_count_sessions, Fixture )
+{
+    MOCK_EXPECT( sessions.Count ).once().returns( 17 );
+    CheckReply( agent.CountSessions( boost::uuids::nil_uuid() ), "{\"count\":\"17\"}\n" );
+}
+
+BOOST_FIXTURE_TEST_CASE( agent_get_session, Fixture )
+{
+    MOCK_EXPECT( sessions.Get ).once().with( mockSessions[1]->GetId() ).returns( mockSessions[1] );
+    CheckReply( agent.GetSession( mockSessions[1]->GetId() ), ToJson( mockSessions[1]->GetProperties() ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_cannot_create_orphan_session, Fixture )
 {
-    CheckReply( agent.CreateSession( default_node, "exercise", "name" ), "invalid node", false );
+    MOCK_EXPECT( nodes.Has ).once().with( defaultNode ).returns( false );
+    CheckReply( agent.CreateSession( defaultNode, "exercise", "name" ), "invalid node", false );
 }
 
-BOOST_FIXTURE_TEST_CASE( agent_creates_session, Fixture )
+BOOST_FIXTURE_TEST_CASE( agent_create_session, Fixture )
 {
-    AddNode( default_node_string, "node_name" );
-    boost::shared_ptr< MockSession > session = AddSession( default_node, "exercise_name", "session_name", 10000 );
-    CheckReply( agent.ListSessions( default_node, 0, 2 ), "[" + session->ToJson() + "]" );
-    CheckReply( agent.CountSessions( default_node ), "{ \"count\" : 1 }" );
-    CheckReply( agent.GetSession( session->GetTag() ), session->ToJson() );
+    MOCK_EXPECT( nodes.Has ).once().with( defaultNode ).returns( true );
+    boost::shared_ptr< MockSession > session = AddSession( defaultNode, "exerciseName", "sessionName", 10000 );
 }
 
-BOOST_FIXTURE_TEST_CASE( agent_clips_list_parameters, Fixture )
+BOOST_FIXTURE_TEST_CASE( agent_delete_session, Fixture )
 {
-    AddNode( default_node_string, "node_name" );
-    std::vector< boost::shared_ptr< MockSession > > list;
-    for( int i = 0; i < 8; ++i )
-        list.push_back( AddSession( default_node, "exercise_name", "session_name", i ) );
-    CheckReply( agent.CountSessions( default_node ), "{ \"count\" : 8 }" );
-    CheckReply( agent.ListSessions( default_node, -1,  1 ), "[" + list.front()->ToJson() + "]" );
-    CheckReply( agent.ListSessions( default_node,  8,  1 ), "[]" );
-    CheckReply( agent.ListSessions( default_node,  0, -1 ), "[]" );
-    CheckReply( agent.ListSessions( default_node,  7,  2 ), "[" + list.back()->ToJson() + "]" );
+    MOCK_EXPECT( sessions.Delete ).once().with( mockSessions[1]->GetId() ).returns( mockSessions[1] );
+    CheckReply( agent.DeleteSession( mockSessions[1]->GetId() ), ToJson( mockSessions[1]->GetProperties() ) );
 }
 
-BOOST_FIXTURE_TEST_CASE( agent_deletes_session, Fixture )
+BOOST_FIXTURE_TEST_CASE( agent_start_session, Fixture )
 {
-    AddNode( default_node_string, "node_name" );
-    boost::shared_ptr< MockSession > session = AddSession( default_node, "exercise_name", "session_name", 10000 );
-    MOCK_EXPECT( session->Stop ).once();
-    CheckReply( agent.DeleteSession( session->GetTag() ), session->ToJson() );
-    CheckReply( agent.CountSessions( default_node ), "{ \"count\" : 0 }" );
-    CheckReply( agent.ListSessions( default_node, 0, 10 ), "[]" );
+    MOCK_EXPECT( sessions.Start ).once().with( mockSessions[1]->GetId() ).returns( mockSessions[1] );
+    CheckReply( agent.StartSession( mockSessions[1]->GetId() ), ToJson( mockSessions[1]->GetProperties() ) );
 }
 
-BOOST_FIXTURE_TEST_CASE( agent_stop_start_sessions, Fixture )
+BOOST_FIXTURE_TEST_CASE( agent_stop_session, Fixture )
 {
-    AddNode( default_node_string, "node_name" );
-    boost::shared_ptr< MockSession > session = AddSession( default_node, "exercise_name", "session_name", 10000 );
-    MOCK_EXPECT( session->Stop ).once();
-    CheckReply( agent.StopSession( session->GetTag() ), session->ToJson() );
-    MOCK_EXPECT( session->Start ).once();
-    CheckReply( agent.StartSession( session->GetTag() ), session->ToJson() );
-}
-
-BOOST_FIXTURE_TEST_CASE( agent_manages_sessions_per_node, Fixture )
-{
-    boost::shared_ptr< MockNode > node = AddNode( default_node_string, "node_name" );
-    const boost::uuids::uuid another_node = AddNode( "12345678-90AB-CDEF-9876-543210123456", "another_node" )->GetTag();
-
-    std::vector< boost::shared_ptr< MockSession > > list;
-    list.push_back( AddSession( default_node, "exercise_name", "session_name", 0 ) );
-    list.push_back( AddSession( another_node, "another_exercise", "another_name", 1 ) );
-
-    CheckReply( agent.CountSessions( boost::uuids::nil_uuid() ), "{ \"count\" : 2 }" );
-    CheckReply( agent.CountSessions( default_node ), "{ \"count\" : 1 }" );
-    CheckReply( agent.CountSessions( another_node ), "{ \"count\" : 1 }" );
-    CheckReply( agent.ListSessions( boost::uuids::nil_uuid(), 0,  10 ), "[" + list.front()->ToJson() + ", " + list.back()->ToJson() + "]" );
-    CheckReply( agent.ListSessions( default_node, 0,  10 ), "[" + list.front()->ToJson() + "]" );
-    CheckReply( agent.ListSessions( another_node, 0,  10 ), "[" + list.back()->ToJson() + "]" );
-
-    MOCK_EXPECT( node->Stop ).once();
-    CheckReply( agent.DeleteNode( default_node ), node->ToJson() );
-    CheckReply( agent.CountSessions( boost::uuids::nil_uuid() ), "{ \"count\" : 1 }" );
-    CheckReply( agent.CountSessions( default_node ), "{ \"count\" : 0 }" );
-    CheckReply( agent.CountSessions( another_node ), "{ \"count\" : 1 }" );
+    MOCK_EXPECT( sessions.Stop ).once().with( mockSessions[1]->GetId() ).returns( mockSessions[1] );
+    CheckReply( agent.StopSession( mockSessions[1]->GetId() ), ToJson( mockSessions[1]->GetProperties() ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_list_exercises, Fixture )
@@ -255,5 +227,5 @@ BOOST_FIXTURE_TEST_CASE( agent_list_empty_exercises, Fixture )
     MOCK_EXPECT( sessions.GetExercises ).once().returns( list );
     CheckReply( agent.ListExercises( 0, INT_MAX ), "[\"a\", \"b\", \"c\"]" );
     MOCK_EXPECT( sessions.GetExercises ).once().returns( list );
-    CheckReply( agent.CountExercises(), "{ \"count\" : 3 }" );
+    CheckReply( agent.CountExercises(), "{\"count\":\"3\"}\n" );
 }

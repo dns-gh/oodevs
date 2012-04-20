@@ -66,7 +66,7 @@ public:
     virtual Reply ListSessions ( const boost::uuids::uuid& node, int offset, int limit ) const = 0;
     virtual Reply CountSessions( const boost::uuids::uuid& node ) const = 0;
     virtual Reply GetSession   ( const boost::uuids::uuid& id ) const = 0;
-    virtual Reply CreateSession( const boost::uuids::uuid& node, const std::string& exercise, const std::string& name ) = 0;
+    virtual Reply CreateSession( const boost::uuids::uuid& node, const std::string& name, const std::string& exercise ) = 0;
     virtual Reply DeleteSession( const boost::uuids::uuid& id ) = 0;
     virtual Reply StartSession ( const boost::uuids::uuid& id ) const = 0;
     virtual Reply StopSession  ( const boost::uuids::uuid& id ) const = 0;

@@ -8,84 +8,24 @@
 // *****************************************************************************
 
 #include "host_test.h"
-
+#include "Mocks.h"
 #include <host/Proxy.h>
-#include <host/FileSystem_ABC.h>
-#include <host/Pool_ABC.h>
-#include <cpplog/cpplog.hpp>
-#include <runtime/Runtime_ABC.h>
-#include <runtime/Process_ABC.h>
-#include <web/Client_ABC.h>
 
-#include <boost/bind/apply.hpp>
 #include <boost/assign/list_of.hpp>
-#include <boost/bind.hpp>
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/make_shared.hpp>
 
 using namespace host;
+using mocks::MockClient;
+using mocks::MockFileSystem;
+using mocks::MockLog;
+using mocks::MockPool;
+using mocks::MockProcess;
+using mocks::MockRuntime;
 
 namespace
 {
-    MOCK_BASE_CLASS( MockLog, cpplog::BaseLogger )
-    {
-        MockLog()
-        {
-            MOCK_EXPECT( sendLogMessage ).returns( true );
-        }
-        MOCK_METHOD( sendLogMessage, 1 );
-    };
-
-    MOCK_BASE_CLASS( MockRuntime, runtime::Runtime_ABC )
-    {
-        MOCK_METHOD( GetProcesses, 0 );
-        MOCK_METHOD( GetProcess, 1 );
-        MOCK_METHOD( Start, 3 );
-    };
-
-    MOCK_BASE_CLASS( MockFileSystem, FileSystem_ABC )
-    {
-        MOCK_METHOD( IsFile, 1 );
-        MOCK_METHOD( IsDirectory, 1 );
-        MOCK_METHOD( Exists, 1 );
-        MOCK_METHOD( CopyDirectory, 2 );
-        MOCK_METHOD( CopyFile, 2 );
-        MOCK_METHOD( MakeDirectory, 1 );
-        MOCK_METHOD( Remove, 1 );
-        MOCK_METHOD( WriteFile, 2 );
-        MOCK_METHOD( ReadFile, 1 );
-        MOCK_METHOD( Glob, 2 );
-    };
-
-    MOCK_BASE_CLASS( MockClient, web::Client_ABC )
-    {
-        MOCK_METHOD( Get, 4 );
-    };
-
-    MOCK_BASE_CLASS( MockProcess, runtime::Process_ABC )
-    {
-        MockProcess( int pid, const std::string& name )
-        {
-            MOCK_EXPECT( GetPid ).returns( pid );
-            MOCK_EXPECT( GetName ).returns( name );
-        }
-        MOCK_METHOD( GetPid, 0 );
-        MOCK_METHOD( GetName, 0 );
-        MOCK_METHOD( Join, 1 );
-        MOCK_METHOD( Kill, 1 );
-    };
-
-    MOCK_BASE_CLASS( MockPool, Pool_ABC )
-    {
-        MockPool()
-        {
-            MOCK_EXPECT( Post ).calls( boost::bind( boost::apply< void >(), _1 ) );
-        }
-        MOCK_METHOD( Post, 1 );
-        MOCK_METHOD( Stop, 0 );
-    };
-
     struct Fixture
     {
         Fixture()
@@ -93,7 +33,9 @@ namespace
             , jar    ( "jar" )
             , port   ( 1337 )
             , process( boost::make_shared< MockProcess >( 7331, "el_process_name" ) )
-        {}
+        {
+            // NOTHING
+        }
 
         const std::string java;
         const std::string jar;

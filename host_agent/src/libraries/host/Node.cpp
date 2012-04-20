@@ -8,25 +8,14 @@
 // *****************************************************************************
 
 #include "Node.h"
-#include "FileSystem_ABC.h"
+
 #include "PortFactory_ABC.h"
-#include "Proxy_ABC.h"
-#include "SecurePool.h"
-#include "UuidFactory_ABC.h"
-#include "cpplog/cpplog.hpp"
 #include "runtime/Process_ABC.h"
 #include "runtime/Runtime_ABC.h"
-#include "runtime/Utf8.h"
-
-#include <xeumeuleu/xml.hpp>
 
 #include <boost/assign/list_of.hpp>
-#include <boost/bind.hpp>
-#include <boost/date_time/posix_time/posix_time.hpp>
-#include <boost/filesystem/operations.hpp>
-#include <boost/format.hpp>
-#include <boost/lexical_cast.hpp>
-#include <boost/uuid/uuid_generators.hpp>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/uuid/string_generator.hpp>
 #include <boost/uuid/uuid_io.hpp>
 
 #ifdef _MSC_VER
@@ -43,222 +32,151 @@ using namespace host;
 
 namespace
 {
-    const int MAX_KILL_TIMEOUT_MS = 3*1000;
-
-    // -----------------------------------------------------------------------------
-    // Name: Utf8Convert
-    // Created: BAX 2012-04-03
-    // -----------------------------------------------------------------------------
-    std::string Utf8Convert( const boost::filesystem::path& path )
+std::auto_ptr< Port_ABC > AcquirePort( int wanted, PortFactory_ABC& ports )
+{
+    try
     {
-        return runtime::Utf8Convert( path.wstring() );
+        return ports.Create( wanted );
     }
-
-    template< typename T >
-    T ParseItem( xml::xisubstream xis, const std::string& name )
+    catch( const std::exception& /*err*/ )
     {
-        xis >> xml::start( "root" );
-        return xis.attribute< T >( name );
+        return ports.Create();
     }
+}
 
-    boost::shared_ptr< runtime::Process_ABC > GetProcess( const runtime::Runtime_ABC& runtime, xml::xisubstream xis )
-    {
-        boost::shared_ptr< runtime::Process_ABC > nil;
-        xis >> xml::start( "root" );
-        if( !xis.has_attribute( "process_pid" ) || !xis.has_attribute( "process_name" ) )
-            return nil;
-        boost::shared_ptr< runtime::Process_ABC > ptr = runtime.GetProcess( xis.attribute< int >( "process_pid" ) );
-        if( !ptr || ptr->GetName() != xis.attribute< std::string >( "process_name" ) )
-            return nil;
+Node::T_Process GetProcess( const boost::property_tree::ptree& tree, const runtime::Runtime_ABC& runtime )
+{
+    const boost::optional< int > pid = tree.get_optional< int >( "process.pid" );
+    if( pid == boost::none )
+        return Node::T_Process();
+    return runtime.GetProcess( *pid );
+}
+
+Node::T_Process AcquireProcess( const boost::property_tree::ptree& tree, const runtime::Runtime_ABC& runtime, int expected )
+{
+    Node::T_Process ptr = GetProcess( tree, runtime );
+    if( !ptr  )
+        return Node::T_Process();
+    if( expected == tree.get< int >( "port" ) && ptr->GetName() == tree.get< std::string >( "process.name" ) )
         return ptr;
-    }
+    return Node::T_Process();
+}
 }
 
 // -----------------------------------------------------------------------------
 // Name: Node::Node
-// Created: BAX 2012-04-03
+// Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-Node::Node( cpplog::BaseLogger& log, Pool_ABC& pool,
-            const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids, const FileSystem_ABC& system,
-            const Proxy_ABC& proxy, const boost::filesystem::path& java, const boost::filesystem::path& jar,
-            const boost::filesystem::path& web, const std::string& type, const std::string& name, PortFactory_ABC& ports )
-    : log_    ( log )
-    , runtime_( runtime )
-    , system_ ( system )
-    , proxy_  ( proxy )
-    , java_   ( java )
-    , jar_    ( jar )
-    , web_    ( web )
-    , type_   ( type )
-    , id_     ( uuids.Create() )
+Node::Node( const boost::uuids::uuid& id, const std::string& name, std::auto_ptr< Port_ABC > port )
+    : id_     ( id )
     , name_   ( name )
-    , pool_   ( new SecurePool( log, "node", pool ) )
+    , port_   ( port )
     , access_ ( new boost::shared_mutex() )
-    , port_   ( ports.Create() )
+    , process_()
 {
-    CheckPaths();
-    LOG_INFO( log_ ) << "[" + type_ + "] + " << id_ << " " << name_;
-    proxy.Register( type_ == "cluster" ? type_ : boost::lexical_cast< std::string >( id_ ), "localhost", port_->Get() );
-    Save();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: Node::Node
-// Created: BAX 2012-04-03
+// Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-Node::Node( cpplog::BaseLogger& log, Pool_ABC& pool,
-            const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system,
-            const Proxy_ABC& proxy, const boost::filesystem::path& java, const boost::filesystem::path& jar,
-            const boost::filesystem::path& web, xml::xistream& xis, PortFactory_ABC& ports )
-    : log_    ( log )
-    , runtime_( runtime )
-    , system_ ( system )
-    , proxy_  ( proxy )
-    , java_   ( java )
-    , jar_    ( jar )
-    , web_    ( web )
-    , type_   ( ParseItem< std::string >( xis, "type" ) )
-    , id_     ( boost::uuids::string_generator()( ParseItem< std::string >( xis, "id" ) ) )
-    , name_   ( ParseItem< std::string >( xis, "name" ) )
-    , pool_   ( new SecurePool( log, "node", pool ) )
+Node::Node( const boost::property_tree::ptree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports )
+    : id_     ( boost::uuids::string_generator()( tree.get< std::string >( "id" ) ) )
+    , name_   ( tree.get< std::string >( "name" ) )
+    , port_   ( AcquirePort( tree.get< int >( "port" ), ports ) )
     , access_ ( new boost::shared_mutex() )
-    , process_( GetProcess( runtime_, xis ) )
-    , port_   ( ports.Create( ParseItem< int >( xis, "port" ) ) )
+    , process_( AcquireProcess( tree, runtime, port_->Get() ) )
 {
-    CheckPaths();
-    LOG_INFO( log_ ) << "[" + type_ + "] + " << id_ << " " << name_;
-    if( !process_ )
-        LOG_WARN( log_ ) << "[" + type_ + "] " << name_ << " Unable to reload process";
-    proxy.Register( type_ == "cluster" ? type_ : boost::lexical_cast< std::string >( id_ ), "localhost", port_->Get() );
-    Save();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Node::CheckPaths
-// Created: BAX 2012-04-03
-// -----------------------------------------------------------------------------
-void Node::CheckPaths() const
-{
-    if( !system_.IsDirectory( web_ ) )
-        throw std::runtime_error( Utf8Convert( web_ ) + " is not a directory" );
-    if( !system_.Exists( jar_ ) )
-        throw std::runtime_error( Utf8Convert( jar_ ) + " is missing" );
-    if( !system_.IsFile( jar_ ) )
-        throw std::runtime_error( Utf8Convert( jar_ ) + " is not a file" );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: Node::~Node
-// Created: BAX 2012-04-03
+// Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
 Node::~Node()
 {
-    if( process_ )
-        process_->Kill( MAX_KILL_TIMEOUT_MS );
-    system_.Remove( GetPath() );
-    proxy_.Unregister( boost::lexical_cast< std::string >( id_ ) );
-    LOG_INFO( log_ ) << "[" + type_ + "] - " << id_ << " " << name_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Node::GetTag
-// Created: BAX 2012-04-03
+// Name: Node::GetId
+// Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-boost::uuids::uuid Node::GetTag() const
+boost::uuids::uuid Node::GetId() const
 {
     return id_;
 }
 
 // -----------------------------------------------------------------------------
+// Name: Node::GetCommonProperties
+// Created: BAX 2012-04-17
+// -----------------------------------------------------------------------------
+boost::property_tree::ptree Node::GetCommonProperties() const
+{
+    boost::property_tree::ptree tree;
+    tree.put( "id", id_ );
+    tree.put( "name", name_ );
+    tree.put( "port", port_->Get() );
+    return tree;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Node::GetProperties
+// Created: BAX 2012-04-17
+// -----------------------------------------------------------------------------
+boost::property_tree::ptree Node::GetProperties() const
+{
+    boost::property_tree::ptree tree = GetCommonProperties();
+    tree.put( "status", process_ ? "running" : "stopped" );
+    return tree;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Node::Save
-// Created: BAX 2012-04-03
+// Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-void Node::Save() const
+boost::property_tree::ptree Node::Save() const
 {
-    const boost::filesystem::path path = GetPath();
-    system_.MakeDirectory( path );
-    pool_->Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, path / runtime::Utf8Convert( type_ + ".id" ), ToXml() ) );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Node::ToJson
-// Created: BAX 2012-04-03
-// -----------------------------------------------------------------------------
-std::string Node::ToJson() const
-{
-    boost::shared_lock< boost::shared_mutex > lock( *access_ );
-    return (boost::format( "{ "
-        "\"id\" : \"%1%\", "
-        "\"type\" : \"%2%\", "
-        "\"name\" : \"%3%\", "
-        "\"port\" : %4%, "
-        "\"status\" : \"%5%\""
-        " }" )
-        % id_ % type_ % name_ % port_->Get() % (process_ ? "running" : "stopped")
-        ).str();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Node::ToXml
-// Created: BAX 2012-04-03
-// -----------------------------------------------------------------------------
-std::string Node::ToXml() const
-{
-    xml::xostringstream xos;
-    xos << xml::start( "root" )
-            << xml::attribute( "id", boost::lexical_cast< std::string >( id_ ) )
-            << xml::attribute( "type", type_ )
-            << xml::attribute( "name", name_ )
-            << xml::attribute( "port", port_->Get() );
-    if( process_ )
-        xos << xml::attribute( "process_pid", process_->GetPid() )
-            << xml::attribute( "process_name", process_->GetName() );
-    return xos.str();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Node::GetPath
-// Created: BAX 2012-04-03
-// -----------------------------------------------------------------------------
-boost::filesystem::path Node::GetPath() const
-{
-    boost::filesystem::path path = jar_;
-    return path.remove_filename() / boost::lexical_cast< std::wstring >( id_ );
+    boost::property_tree::ptree tree = GetCommonProperties();
+    boost::lock_guard< boost::shared_mutex > lock( *access_ );
+    if( !process_ )
+        return tree;
+    tree.put( "process.pid", process_->GetPid() );
+    tree.put( "process.name", process_->GetName() );
+    return tree;
 }
 
 // -----------------------------------------------------------------------------
 // Name: Node::Start
-// Created: BAX 2012-04-03
+// Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-void Node::Start()
+bool Node::Start( const T_Starter& starter )
 {
     boost::lock_guard< boost::shared_mutex > lock( *access_ );
-    if( process_ ) return;
-    const boost::filesystem::path path = GetPath();
-    boost::filesystem::path jar_path = jar_;
-    process_ = runtime_.Start( Utf8Convert( java_ ), boost::assign::list_of
-            ( " " "-jar \""  + Utf8Convert( jar_.filename() ) + "\"" )
-            ( "--root \""  + Utf8Convert( web_ ) + "\"" )
-            ( "--port \"" + boost::lexical_cast< std::string >( port_->Get() ) + "\"" )
-            ( "--proxy \"" + boost::lexical_cast< std::string >( proxy_.GetPort() ) + "\"" )
-            ( "--uuid \"" + boost::lexical_cast< std::string >( id_ ) + "\"" )
-            ( "--name \"" + name_ + "\"" )
-            ( "--type \"" + type_ + "\"" ),
-            Utf8Convert( jar_path.remove_filename() ) );
-    if( !process_ ) return;
+    if( process_ )
+        return true;
 
-    Save();
+    T_Process ptr = starter( *this );
+    if( !ptr )
+        return false;
+
+    process_ = ptr;
+    return true;
 }
 
 // -----------------------------------------------------------------------------
 // Name: Node::Stop
-// Created: BAX 2012-04-03
+// Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
-void Node::Stop()
+bool Node::Stop()
 {
     boost::lock_guard< boost::shared_mutex > lock( *access_ );
-    if( process_ )
-        process_->Kill( MAX_KILL_TIMEOUT_MS );
+    if( !process_ )
+        return true;
+
+    process_->Kill( 0 );
     process_.reset();
-    Save();
+    return true;
 }

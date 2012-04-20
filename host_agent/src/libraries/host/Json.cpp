@@ -15,10 +15,10 @@
 // Name: ToJson
 // Created: BAX 2012-04-18
 // -----------------------------------------------------------------------------
-std::string ToJson( const boost::property_tree::ptree& tree )
+std::string host::ToJson( const boost::property_tree::ptree& tree )
 {
     std::ostringstream out;
-    boost::property_tree::write_json( out, tree );
+    boost::property_tree::write_json( out, tree, false );
     return out.str();
 }
 
@@ -26,7 +26,7 @@ std::string ToJson( const boost::property_tree::ptree& tree )
 // Name: FromJson
 // Created: BAX 2012-04-18
 // -----------------------------------------------------------------------------
-boost::property_tree::ptree FromJson( const std::string& data )
+boost::property_tree::ptree host::FromJson( const std::string& data )
 {
     std::istringstream input( data );
     boost::property_tree::ptree tree;

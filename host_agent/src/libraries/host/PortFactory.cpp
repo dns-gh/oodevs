@@ -8,6 +8,7 @@
 // *****************************************************************************
 
 #include "PortFactory.h"
+
 #include <boost/bind.hpp>
 #include <boost/format.hpp>
 #include <boost/function.hpp>
@@ -26,10 +27,6 @@ using namespace host;
 
 namespace
 {
-// -----------------------------------------------------------------------------
-// Name: Port class definition
-// Created: BAX 2012-03-20
-// -----------------------------------------------------------------------------
 class Port : public Port_ABC
 {
 public:
@@ -50,7 +47,6 @@ public:
     int port_;
     boost::function< void( int ) > deleter_;
 };
-
 }
 
 // -----------------------------------------------------------------------------

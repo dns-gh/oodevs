@@ -11,7 +11,16 @@
 #define FILE_SYSTEM_ABC_H
 
 #include <boost/noncopyable.hpp>
-#include <boost/filesystem.hpp>
+#include <string>
+#include <vector>
+
+namespace boost
+{
+namespace filesystem3
+{
+    class path;
+}
+}
 
 namespace host
 {
@@ -33,16 +42,16 @@ public:
 
     //! @name Methods
     //@{
-    virtual bool IsFile( const boost::filesystem::path& path ) const = 0;
-    virtual bool IsDirectory( const boost::filesystem::path& path ) const = 0;
-    virtual bool Exists( const boost::filesystem::path& path ) const = 0;
-    virtual void CopyDirectory( const boost::filesystem::path& dst, const boost::filesystem::path& src ) const = 0;
-    virtual void CopyFile( const boost::filesystem::path& dst, const boost::filesystem::path& src ) const = 0;
-    virtual void MakeDirectory( const boost::filesystem::path& path ) const = 0;
-    virtual void Remove( const boost::filesystem::path& path ) const = 0;
-    virtual void WriteFile( const boost::filesystem::path& path, const std::string& content ) const = 0;
-    virtual std::string ReadFile( const boost::filesystem::path& path ) const = 0;
-    virtual std::vector< boost::filesystem::path > Glob( const boost::filesystem::path& path, const std::wstring& name ) const = 0;
+    virtual bool IsFile( const boost::filesystem3::path& path ) const = 0;
+    virtual bool IsDirectory( const boost::filesystem3::path& path ) const = 0;
+    virtual bool Exists( const boost::filesystem3::path& path ) const = 0;
+    virtual void CopyDirectory( const boost::filesystem3::path& dst, const boost::filesystem3::path& src ) const = 0;
+    virtual void CopyFile( const boost::filesystem3::path& dst, const boost::filesystem3::path& src ) const = 0;
+    virtual void MakeDirectory( const boost::filesystem3::path& path ) const = 0;
+    virtual void Remove( const boost::filesystem3::path& path ) const = 0;
+    virtual void WriteFile( const boost::filesystem3::path& path, const std::string& content ) const = 0;
+    virtual std::string ReadFile( const boost::filesystem3::path& path ) const = 0;
+    virtual std::vector< boost::filesystem3::path > Glob( const boost::filesystem3::path& path, const std::wstring& name ) const = 0;
     //@}
 };
 

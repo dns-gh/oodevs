@@ -11,16 +11,13 @@
 #define SESSION_H
 
 #include "Session_ABC.h"
-#include "SessionFactory_ABC.h"
+
+#include <boost/function.hpp>
+#include <boost/shared_ptr.hpp>
 
 namespace boost
 {
     class shared_mutex;
-}
-
-namespace cpplog
-{
-    class BaseLogger;
 }
 
 namespace runtime
@@ -29,19 +26,10 @@ namespace runtime
     class Process_ABC;
 }
 
-namespace xml
-{
-    class xistream;
-}
-
 namespace host
 {
-    class FileSystem_ABC;
-    class Pool_ABC;
     class Port_ABC;
     class PortFactory_ABC;
-    class SecurePool;
-    class UuidFactory_ABC;
 
 // =============================================================================
 /** @class  Session
@@ -54,27 +42,39 @@ class Session : public Session_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Session( cpplog::BaseLogger& log, Pool_ABC& pool,
-                      const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
-                      const FileSystem_ABC& system, const boost::filesystem::path& data,
-                      const boost::filesystem::path& applications,
-                      const boost::uuids::uuid& node, const std::string& exercise,
-                      const std::string& name, PortFactory_ABC& ports );
-             Session( cpplog::BaseLogger& log, Pool_ABC& pool,
-                      const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system,
-                      const boost::filesystem::path& data, const boost::filesystem::path& applications,
-                      xml::xistream& xis, PortFactory_ABC& ports );
+             Session( const boost::uuids::uuid& id, const boost::uuids::uuid& node, const std::string& name, const std::string& exercise, std::auto_ptr< Port_ABC > port );
+             Session( const boost::property_tree::ptree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports );
     virtual ~Session();
     //@}
 
-    //! @name Overrided methods
+    //! @name Session_ABC methods
     //@{
-    virtual boost::uuids::uuid GetTag() const;
+    virtual boost::uuids::uuid GetId() const;
     virtual boost::uuids::uuid GetNode() const;
-    virtual std::string ToJson() const;
-    virtual void Save() const;
-    virtual void Start();
-    virtual void Stop();
+    virtual boost::property_tree::ptree GetProperties() const;
+    //@}
+
+    //! @name Typedef helpers
+    //@{
+    typedef boost::shared_ptr< runtime::Process_ABC > T_Process;
+    typedef boost::function< T_Process( const Session& ) > T_Starter;
+    //@}
+
+    //! @name Public methods
+    //@{
+    boost::property_tree::ptree Save() const;
+    std::string GetConfiguration() const;
+    bool Start( const T_Starter& starter );
+    bool Stop();
+    //@}
+
+    //! @name Public members
+    //@{
+    const boost::uuids::uuid id_;
+    const boost::uuids::uuid node_;
+    const std::string name_;
+    const std::string exercise_;
+    const std::auto_ptr< Port_ABC > port_;
     //@}
 
     //! @name Status enumeration
@@ -90,29 +90,10 @@ public:
     //@}
 
 private:
-    //! @name Private methods
+    //! @name Private members
     //@{
-    void CheckPaths() const;
-    std::string ToXml() const;
-    boost::filesystem::path GetPath() const;
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    mutable cpplog::BaseLogger& log_;
-    const runtime::Runtime_ABC& runtime_;
-    const FileSystem_ABC& system_;
-    const boost::filesystem::path data_;
-    const boost::filesystem::path applications_;
-    const boost::uuids::uuid id_;
-    const boost::uuids::uuid node_;
-    const std::string exercise_;
-    const std::string name_;
-    std::auto_ptr< SecurePool > pool_;
-    std::auto_ptr< boost::shared_mutex > access_;
-    boost::shared_ptr< runtime::Process_ABC > process_;
-    std::auto_ptr< Port_ABC > port_;
+    const std::auto_ptr< boost::shared_mutex > access_;
+    T_Process process_;
     Status status_;
     //@}
 };

@@ -8,8 +8,9 @@
 // *****************************************************************************
 
 #include "SecurePool.h"
-#include "Pool_ABC.h"
+
 #include "cpplog/cpplog.hpp"
+#include "Pool_ABC.h"
 
 #include <boost/bind.hpp>
 
@@ -38,21 +39,21 @@ SecurePool::~SecurePool()
 
 namespace
 {
-    void WrapTask( const Pool_ABC::Task& task, cpplog::BaseLogger& log, const std::string& name )
+void WrapTask( const Pool_ABC::Task& task, cpplog::BaseLogger& log, const std::string& name )
+{
+    try
     {
-        try
-        {
-            task();
-        }
-        catch( const std::exception& err )
-        {
-            LOG_ERROR( log ) << "[" << name << "] " << err.what();
-        }
-        catch( ... )
-        {
-            LOG_ERROR( log ) << "[" << name << "] Unexpected exception";
-        }
+        task();
     }
+    catch( const std::exception& err )
+    {
+        LOG_ERROR( log ) << "[" << name << "] " << err.what();
+    }
+    catch( ... )
+    {
+        LOG_ERROR( log ) << "[" << name << "] Unexpected exception";
+    }
+}
 }
 
 // -----------------------------------------------------------------------------

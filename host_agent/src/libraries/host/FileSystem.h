@@ -37,16 +37,16 @@ public:
 
     //! @name Methods
     //@{
-    virtual bool IsFile( const boost::filesystem::path& path ) const;
-    virtual bool IsDirectory( const boost::filesystem::path& path ) const;
-    virtual bool Exists( const boost::filesystem::path& path ) const;
-    virtual void CopyDirectory( const boost::filesystem::path& dst, const boost::filesystem::path& src ) const;
-    virtual void CopyFile( const boost::filesystem::path& dst, const boost::filesystem::path& src ) const;
-    virtual void MakeDirectory( const boost::filesystem::path& path ) const;
-    virtual void Remove( const boost::filesystem::path& path ) const;
-    virtual void WriteFile( const boost::filesystem::path& path, const std::string& content ) const;
-    virtual std::string ReadFile( const boost::filesystem::path& path ) const;
-    virtual std::vector< boost::filesystem::path > Glob( const boost::filesystem::path& path, const std::wstring& name ) const;
+    virtual bool IsFile( const boost::filesystem3::path& path ) const;
+    virtual bool IsDirectory( const boost::filesystem3::path& path ) const;
+    virtual bool Exists( const boost::filesystem3::path& path ) const;
+    virtual void CopyDirectory( const boost::filesystem3::path& dst, const boost::filesystem3::path& src ) const;
+    virtual void CopyFile( const boost::filesystem3::path& dst, const boost::filesystem3::path& src ) const;
+    virtual void MakeDirectory( const boost::filesystem3::path& path ) const;
+    virtual void Remove( const boost::filesystem3::path& path ) const;
+    virtual void WriteFile( const boost::filesystem3::path& path, const std::string& content ) const;
+    virtual std::string ReadFile( const boost::filesystem3::path& path ) const;
+    virtual std::vector< boost::filesystem3::path > Glob( const boost::filesystem3::path& path, const std::wstring& name ) const;
     //@}
 
 private:

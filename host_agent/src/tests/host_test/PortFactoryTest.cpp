@@ -8,7 +8,6 @@
 // *****************************************************************************
 
 #include "host_test.h"
-
 #include <host/PortFactory.h>
 
 using namespace host;

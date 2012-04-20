@@ -44,7 +44,7 @@ public:
 private:
     //! @name Private members
     //@{
-    cpplog::BaseLogger& log_;
+    mutable cpplog::BaseLogger& log_;
     const std::string name_;
     Pool_ABC& pool_;
     //@}

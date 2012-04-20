@@ -8,26 +8,17 @@
 // *****************************************************************************
 
 #include "Session.h"
-#include "FileSystem_ABC.h"
-#include "PortFactory_ABC.h"
-#include "SecurePool.h"
-#include "UuidFactory_ABC.h"
 
-#include "cpplog/cpplog.hpp"
+#include "PortFactory_ABC.h"
 #include "runtime/Process_ABC.h"
 #include "runtime/Runtime_ABC.h"
-#include "runtime/Utf8.h"
 
-#include <xeumeuleu/xml.hpp>
-
-#include <boost/assign/list_of.hpp>
-#include <boost/bind.hpp>
 #include <boost/date_time/posix_time/posix_time.hpp>
-#include <boost/filesystem/operations.hpp>
-#include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
-#include <boost/uuid/uuid_generators.hpp>
+#include <boost/property_tree/ptree.hpp>
+#include <boost/uuid/string_generator.hpp>
 #include <boost/uuid/uuid_io.hpp>
+#include <xeumeuleu/xml.hpp>
 
 #ifdef _MSC_VER
 #   pragma warning( push )
@@ -43,171 +34,122 @@ using namespace host;
 
 namespace
 {
-    const int MAX_KILL_TIMEOUT_MS = 3*1000;
+enum SessionPort
+{
+    SIMULATION_PORT,
+    DISPATCHER_PORT,
+    WEB_CONTROL_PORT,
+    DIA_DEBUGGER_PORT,
+    NETWORK_LOGGER_PORT,
+    SESSION_PORT_COUNT,
+};
 
-    // -----------------------------------------------------------------------------
-    // Name: Utf8Convert
-    // Created: BAX 2012-03-19
-    // -----------------------------------------------------------------------------
-    std::string Utf8Convert( const boost::filesystem::path& path )
+std::string ConvertStatus( Session::Status status )
+{
+    switch( status )
     {
-        return runtime::Utf8Convert( path.wstring() );
+        default:
+        case Session::STATUS_STOPPED:   return "stopped";
+        case Session::STATUS_PLAYING:   return "running";
+        case Session::STATUS_REPLAYING: return "replaying";
+        case Session::STATUS_PAUSED:    return "paused";
     }
+}
 
-    // -----------------------------------------------------------------------------
-    // Name: SessionPort Enums
-    // Created: BAX 2012-03-20
-    // -----------------------------------------------------------------------------
-    enum SessionPort
-    {
-        SIMULATION_PORT,
-        DISPATCHER_PORT,
-        WEB_CONTROL_PORT,
-        DIA_DEBUGGER_PORT,
-        NETWORK_LOGGER_PORT,
-        SESSION_PORT_COUNT,
-    };
+Session::Status ConvertStatus( const std::string& status )
+{
+    if( status == "running" )   return Session::STATUS_PLAYING;
+    if( status == "replaying" ) return Session::STATUS_REPLAYING;
+    if( status == "paused" )    return Session::STATUS_PAUSED;
+    return Session::STATUS_STOPPED;
+}
 
-    template< typename T >
-    T ParseItem( xml::xisubstream xis, const std::string& name )
+std::auto_ptr< Port_ABC > AcquirePort( int wanted, PortFactory_ABC& ports )
+{
+    try
     {
-        xis >> xml::start( "session" );
-        return xis.attribute< T >( name );
+        return ports.Create( wanted );
     }
-
-    std::string ConvertStatus( Session::Status status )
+    catch( const std::exception& /*err*/ )
     {
-        switch( status )
-        {
-            default:
-            case Session::STATUS_STOPPED:   return "stopped";
-            case Session::STATUS_PLAYING:   return "playing";
-            case Session::STATUS_REPLAYING: return "replaying";
-            case Session::STATUS_PAUSED:    return "paused";
-        }
+        return ports.Create();
     }
+}
 
-    Session::Status ConvertStatus( const std::string& status )
-    {
-        if( status == "playing" )   return Session::STATUS_PLAYING;
-        if( status == "replaying" ) return Session::STATUS_REPLAYING;
-        if( status == "paused" )    return Session::STATUS_PAUSED;
-        return Session::STATUS_STOPPED;
-    }
+Session::T_Process GetProcess( const boost::property_tree::ptree& tree, const runtime::Runtime_ABC& runtime )
+{
+    const boost::optional< int > pid = tree.get_optional< int >( "process.pid" );
+    if( pid == boost::none )
+        return Session::T_Process();
+    return runtime.GetProcess( *pid );
+}
 
-    boost::shared_ptr< runtime::Process_ABC > GetProcess( const runtime::Runtime_ABC& runtime, xml::xisubstream xis )
-    {
-        boost::shared_ptr< runtime::Process_ABC > nil;
-        xis >> xml::start( "session" );
-        if( !xis.has_attribute( "process_pid" ) || !xis.has_attribute( "process_name" ) )
-            return nil;
-        boost::shared_ptr< runtime::Process_ABC > ptr = runtime.GetProcess( xis.attribute< int >( "process_pid" ) );
-        if( !ptr || ptr->GetName() != xis.attribute< std::string >( "process_name" ) )
-            return nil;
+Session::T_Process AcquireProcess( const boost::property_tree::ptree& tree, const runtime::Runtime_ABC& runtime, int expected )
+{
+    Session::T_Process ptr = GetProcess( tree, runtime );
+    if( !ptr  )
+        return Session::T_Process();
+    if( expected == tree.get< int >( "port" ) && ptr->GetName() == tree.get< std::string >( "process.name" ) )
         return ptr;
-    }
+    return Session::T_Process();
+}
 }
 
 // -----------------------------------------------------------------------------
 // Name: Session::Session
-// Created: BAX 2012-03-16
+// Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
-Session::Session( cpplog::BaseLogger& log, Pool_ABC& pool,
-                  const runtime::Runtime_ABC& runtime, const UuidFactory_ABC& uuids,
-                  const FileSystem_ABC& system, const boost::filesystem::path& data,
-                  const boost::filesystem::path& applications,
-                  const boost::uuids::uuid& node, const std::string& exercise,
-                  const std::string& name, PortFactory_ABC& ports )
-    : log_         ( log )
-    , runtime_     ( runtime )
-    , system_      ( system )
-    , data_        ( data )
-    , applications_( applications )
-    , id_          ( uuids.Create() )
-    , node_        ( node )
-    , exercise_    ( exercise )
-    , name_        ( name )
-    , pool_        ( new SecurePool( log, "session", pool ) )
-    , access_      ( new boost::shared_mutex() )
-    , port_        ( ports.Create() )
-    , status_      ( STATUS_STOPPED )
+Session::Session( const boost::uuids::uuid& id, const boost::uuids::uuid& node, const std::string& name, const std::string& exercise, std::auto_ptr< Port_ABC > port )
+    : id_      ( id )
+    , node_    ( node )
+    , name_    ( name )
+    , exercise_( exercise )
+    , port_    ( port )
+    , access_  ( new boost::shared_mutex )
+    , process_ ()
+    , status_  ( Session::STATUS_STOPPED )
 {
-    CheckPaths();
-    LOG_INFO( log_ ) << "[session] + " << id_ << " " << name_;
-    Save();
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: Session::Session
-// Created: BAX 2012-03-21
+// Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
-Session::Session( cpplog::BaseLogger& log, Pool_ABC& pool,
-                  const runtime::Runtime_ABC& runtime, const FileSystem_ABC& system,
-                  const boost::filesystem::path& data, const boost::filesystem::path& applications,
-                  xml::xistream& xis, PortFactory_ABC& ports )
-    : log_         ( log )
-    , runtime_     ( runtime )
-    , system_      ( system )
-    , data_        ( data )
-    , applications_( applications )
-    , id_          ( boost::uuids::string_generator()( ParseItem< std::string >( xis, "id" ) ) )
-    , node_        ( boost::uuids::string_generator()( ParseItem< std::string >( xis, "node" ) ) )
-    , exercise_    ( ParseItem< std::string >( xis, "exercise" ) )
-    , name_        ( ParseItem< std::string >( xis, "name" ) )
-    , pool_        ( new SecurePool( log, "session", pool ) )
-    , access_      ( new boost::shared_mutex() )
-    , process_     ( GetProcess( runtime_, xis ) )
-    , port_        ( ports.Create( ParseItem< int >( xis, "port" ) ) )
-    , status_      ( process_ ? ConvertStatus( ParseItem< std::string >( xis, "status" ) ) : STATUS_STOPPED )
+Session::Session( const boost::property_tree::ptree& tree, const runtime::Runtime_ABC& runtime, PortFactory_ABC& ports )
+    : id_      ( boost::uuids::string_generator()( tree.get< std::string >( "id" ) ) )
+    , node_    ( boost::uuids::string_generator()( tree.get< std::string >( "node" ) ) )
+    , name_    ( tree.get< std::string >( "name" ) )
+    , exercise_( tree.get< std::string >( "exercise" ) )
+    , port_    ( AcquirePort( tree.get< int >( "port" ), ports ) )
+    , access_  ( new boost::shared_mutex )
+    , process_ ( AcquireProcess( tree, runtime, port_->Get() ) )
+    , status_  ( process_ ? ConvertStatus( tree.get< std::string >( "status" ) ) : Session::STATUS_STOPPED )
 {
-    LOG_INFO( log_ ) << "[session] + " << id_ << " " << name_;
-    if( !process_ )
-        LOG_WARN( log_ ) << "[session] " << name_ << " Unable to reload process";
-    CheckPaths();
-    Save();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Session::CheckPaths
-// Created: BAX 2012-03-21
-// -----------------------------------------------------------------------------
-void Session::CheckPaths() const
-{
-    if( !system_.IsDirectory( data_ ) )
-        throw std::runtime_error( Utf8Convert( data_ ) + " is not a directory" );
-    if( !system_.IsDirectory( applications_ ) )
-        throw std::runtime_error( Utf8Convert( applications_ ) + " is not a directory " );
-    const boost::filesystem::path app = applications_ / L"simulation_app.exe";
-    if( !system_.Exists( app ) )
-        throw std::runtime_error( Utf8Convert( app ) + " is missing" );
-    if( !system_.IsFile( app ) )
-        throw std::runtime_error( Utf8Convert( app ) + " is not a file" );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
 // Name: Session::~Session
-// Created: BAX 2012-03-16
+// Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
 Session::~Session()
 {
-    if( process_ )
-        process_->Kill( MAX_KILL_TIMEOUT_MS );
-    system_.Remove( GetPath() );
-    LOG_INFO( log_ ) << "[session] - " << id_ << " " << name_;
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
-// Name: Session::GetTag
-// Created: BAX 2012-03-16
+// Name: Session::GetId
+// Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
-boost::uuids::uuid Session::GetTag() const
+boost::uuids::uuid Session::GetId() const
 {
     return id_;
 }
 
 // -----------------------------------------------------------------------------
 // Name: Session::GetNode
-// Created: BAX 2012-04-03
+// Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
 boost::uuids::uuid Session::GetNode() const
 {
@@ -215,64 +157,74 @@ boost::uuids::uuid Session::GetNode() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Session::GetProperties
+// Created: BAX 2012-04-19
+// -----------------------------------------------------------------------------
+boost::property_tree::ptree Session::GetProperties() const
+{
+    boost::property_tree::ptree tree;
+    tree.put( "id", id_ );
+    tree.put( "node", node_ );
+    tree.put( "name", name_ );
+    tree.put( "exercise", exercise_ );
+    tree.put( "port", port_->Get() );
+    tree.put( "status", ConvertStatus( status_ ) );
+    return tree;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Session::Save
-// Created: BAX 2012-03-29
+// Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
-void Session::Save() const
+boost::property_tree::ptree Session::Save() const
 {
-    const boost::filesystem::path path = GetPath();
-    system_.MakeDirectory( path );
-    pool_->Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, path / L"session.id", ToXml() ) );
+    boost::property_tree::ptree tree = GetProperties();
+    boost::lock_guard< boost::shared_mutex > lock( *access_ );
+    if( !process_ )
+        return tree;
+    tree.put( "process.pid", process_->GetPid() );
+    tree.put( "process.name", process_->GetName() );
+    return tree;
 }
 
 // -----------------------------------------------------------------------------
-// Name: Session::ToJson
-// Created: BAX 2012-03-16
+// Name: Session::Start
+// Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
-std::string Session::ToJson() const
+bool Session::Start( const T_Starter& starter )
 {
-    boost::shared_lock< boost::shared_mutex > lock( *access_ );
-    return (boost::format( "{ "
-        "\"id\" : \"%1%\", "
-        "\"node\" : \"%2%\", "
-        "\"name\" : \"%3%\", "
-        "\"port\" : %4%, "
-        "\"exercise\" : \"%5%\", "
-        "\"status\" : \"%6%\""
-        " }" )
-        % id_ % node_ % name_ % port_->Get() % exercise_
-        % ConvertStatus( status_ )
-        ).str();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Session::ToXml
-// Created: BAX 2012-03-21
-// -----------------------------------------------------------------------------
-std::string Session::ToXml() const
-{
-    xml::xostringstream xos;
-    xos << xml::start( "session" )
-            << xml::attribute( "id", boost::lexical_cast< std::string >( id_ ) )
-            << xml::attribute( "node", boost::lexical_cast< std::string >( node_ ) )
-            << xml::attribute( "exercise", exercise_ )
-            << xml::attribute( "name", name_ )
-            << xml::attribute( "port", port_->Get() );
+    boost::lock_guard< boost::shared_mutex > lock( *access_ );
     if( process_ )
-        xos << xml::attribute( "process_pid", process_->GetPid() )
-            << xml::attribute( "process_name", process_->GetName() );
-    xos << xml::attribute( "status", ConvertStatus( status_ ) );
-    return xos.str();
+        return true;
+
+    T_Process ptr = starter( *this );
+    if( !ptr )
+        return false;
+
+    process_ = ptr;
+    status_  = Session::STATUS_PLAYING;
+    return true;
+}
+
+// -----------------------------------------------------------------------------
+// Name: Session::Stop
+// Created: BAX 2012-04-19
+// -----------------------------------------------------------------------------
+bool Session::Stop()
+{
+    boost::lock_guard< boost::shared_mutex > lock( *access_ );
+    if( !process_ )
+        return true;
+
+    process_->Kill( 0 );
+    process_.reset();
+    status_ = Session::STATUS_STOPPED;
+    return true;
 }
 
 namespace
 {
-
-// -----------------------------------------------------------------------------
-// Name: WriteDispatchConfiguration
-// Created: BAX 2012-03-20
-// -----------------------------------------------------------------------------
-void WriteDispatcherConfiguration( xml::xostream& xos, int base )
+void GetDispatcherConfiguration( xml::xostream& xos, int base )
 {
     xos << xml::start( "dispatcher" )
             << xml::start( "network" )
@@ -288,11 +240,7 @@ void WriteDispatcherConfiguration( xml::xostream& xos, int base )
         << xml::end;
 }
 
-// -----------------------------------------------------------------------------
-// Name: WriteSimulationConfiguration
-// Created: BAX 2012-03-20
-// -----------------------------------------------------------------------------
-void WriteSimulationConfiguration( xml::xostream& xos, int base )
+void GetSimulationConfiguration( xml::xostream& xos, int base )
 {
     xos << xml::start( "simulation" )
             << xml::start( "GarbageCollector" )
@@ -337,11 +285,7 @@ void WriteSimulationConfiguration( xml::xostream& xos, int base )
         << xml::end;
 }
 
-// -----------------------------------------------------------------------------
-// Name: WriteConfiguration
-// Created: BAX 2012-03-20
-// -----------------------------------------------------------------------------
-std::string WriteConfiguration( const std::string& name, int base )
+std::string GetConfiguration( const std::string& name, int base )
 {
     xml::xostringstream xos;
     xos << xml::start( "session" )
@@ -351,57 +295,17 @@ std::string WriteConfiguration( const std::string& name, int base )
                 << xml::content( "name", name )
             << xml::end
             << xml::start( "config" );
-    WriteDispatcherConfiguration( xos, base );
-    WriteSimulationConfiguration( xos, base );
+    GetDispatcherConfiguration( xos, base );
+    GetSimulationConfiguration( xos, base );
     return xos.str();
 }
-
 }
 
 // -----------------------------------------------------------------------------
-// Name: Session::GetPath
-// Created: BAX 2012-03-29
+// Name: Session::GetConfiguration
+// Created: BAX 2012-04-19
 // -----------------------------------------------------------------------------
-boost::filesystem::path Session::GetPath() const
+std::string Session::GetConfiguration() const
 {
-    return data_ / L"exercises" / runtime::Utf8Convert( exercise_ ) / L"sessions" / boost::lexical_cast< std::wstring >( id_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Session::Start
-// Created: BAX 2012-03-16
-// -----------------------------------------------------------------------------
-void Session::Start()
-{
-    boost::lock_guard< boost::shared_mutex > lock( *access_ );
-    if( process_ ) return;
-    const boost::filesystem::path path = GetPath();
-    system_.WriteFile( path / L"session.xml", WriteConfiguration( name_, port_->Get() ) );
-    process_ = runtime_.Start( Utf8Convert( applications_ / L"simulation_app.exe" ), boost::assign::list_of
-            ( "--root-dir=\""      + Utf8Convert( data_ ) + "\"" )
-            ( "--exercises-dir=\"" + Utf8Convert( data_ / L"exercises" ) + "\"" )
-            ( "--terrains-dir=\""  + Utf8Convert( data_ / L"data/terrains" ) + "\"" )
-            ( "--models-dir=\""    + Utf8Convert( data_ / L"data/models" ) + "\"" )
-            ( "--exercise=\""      + exercise_ + "\"" )
-            ( "--session=\""       + boost::lexical_cast< std::string >( id_ ) + "\"" ),
-        Utf8Convert( applications_ )
-    );
-    if( !process_ ) return;
-
-    status_ = STATUS_PLAYING;
-    Save();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Session::Stop
-// Created: BAX 2012-03-16
-// -----------------------------------------------------------------------------
-void Session::Stop()
-{
-    boost::lock_guard< boost::shared_mutex > lock( *access_ );
-    if( process_ )
-        process_->Kill( MAX_KILL_TIMEOUT_MS );
-    process_.reset();
-    status_ = STATUS_STOPPED;
-    Save();
+    return ::GetConfiguration( name_, port_->Get() );
 }
