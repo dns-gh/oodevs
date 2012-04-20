@@ -32,19 +32,27 @@ public:
     //! @name Functions
     //@{
     static boost::shared_ptr< MT_Vector2D > GetResourceNetworkPosition( boost::shared_ptr< DEC_ResourceNetwork > resourceNetwork );
-    static void DeactivateResourceNetworkElement( boost::shared_ptr< DEC_ResourceNetwork > resourceNetwork );
-    static void ActivateResourceNetworkElement( boost::shared_ptr< DEC_ResourceNetwork > resourceNetwork );
+
+    static bool CreateNode( boost::shared_ptr< DEC_Knowledge_Object > object, PHY_ResourceNetworkType* resourceType );
     static void CreateResourceNetworkObjectAndLink( DEC_Decision_ABC* caller, const std::string& type, const TER_Localisation* pLocalisation, boost::shared_ptr< DEC_ResourceNetwork > target, unsigned int production );
-    static unsigned int CreateResourceNetworkObjectAndLinkReturn( DEC_Decision_ABC* caller, const std::string& type, const TER_Localisation* pLocalisation, boost::shared_ptr< DEC_ResourceNetwork > target, unsigned int production );
-    static void DestroyResourceNetworkObjectLink( unsigned int objectResourceID );
-    static void IncreaseResourceProduction( boost::shared_ptr< DEC_ResourceNetwork > resourceNetwork, unsigned int production ); 
-    static void DecreaseResourceProduction( boost::shared_ptr< DEC_ResourceNetwork > resourceNetwork, unsigned int production );
-    static T_ResourceNetworkVector GetResourceNetworksInZone( DEC_Decision_ABC* caller, const TER_Localisation* pLocalisation );
-    static T_ResourceNetworkVector GetResourceNetworksInZoneByType( DEC_Decision_ABC* caller, const std::string& type, const TER_Localisation* pLocalisation );
     static bool CreateResourceNetworkLinkFromObject( boost::shared_ptr< DEC_Knowledge_Object > source, boost::shared_ptr< DEC_ResourceNetwork > target );
     static bool CreateResourceNetworkLinkFromUrbanBlock( UrbanObjectWrapper* source, boost::shared_ptr< DEC_ResourceNetwork > target );
+    static unsigned int CreateResourceNetworkObjectAndLinkReturn( DEC_Decision_ABC* caller, const std::string& type, const TER_Localisation* pLocalisation, boost::shared_ptr< DEC_ResourceNetwork > target, unsigned int production );
+
+    static void DestroyResourceNetworkObjectLink( unsigned int objectResourceID );
     static bool DestroyResourceNetworkLink( boost::shared_ptr< DEC_ResourceNetwork > source, boost::shared_ptr< DEC_ResourceNetwork > target );
-    static bool CreateNode( boost::shared_ptr< DEC_Knowledge_Object > object, PHY_ResourceNetworkType* resourceType );
+
+    static void DeactivateResourceNetworkElement( boost::shared_ptr< DEC_ResourceNetwork > resourceNetwork );
+    static void ActivateResourceNetworkElement( boost::shared_ptr< DEC_ResourceNetwork > resourceNetwork );
+
+    static void IncreaseResourceProduction( boost::shared_ptr< DEC_ResourceNetwork > resourceNetwork, unsigned int production ); 
+    static void DecreaseResourceProduction( boost::shared_ptr< DEC_ResourceNetwork > resourceNetwork, unsigned int production );
+    
+    static T_ResourceNetworkVector GetResourceNetworksInZone( DEC_Decision_ABC* caller, const TER_Localisation* pLocalisation );
+    static T_ResourceNetworkVector GetResourceNetworksInZoneByType( DEC_Decision_ABC* caller, const std::string& type, const TER_Localisation* pLocalisation );
+
+    static bool GetSupply( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_ResourceNetwork > resourceNetwork );
+    static bool Supply( const DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_ResourceNetwork > resourceNetwork );
     //@}
 
 private:

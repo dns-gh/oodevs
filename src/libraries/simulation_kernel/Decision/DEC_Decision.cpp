@@ -272,6 +272,8 @@ void RegisterResourceNetworkFunctions( directia::brain::Brain& brain )
     brain[ "DEC_ResourceNetwork_CreateLinkFromUrbanBlock" ] = &DEC_ResourceNetworkFunctions::CreateResourceNetworkLinkFromUrbanBlock;
     brain[ "DEC_ResourceNetwork_DestroyLink" ] = &DEC_ResourceNetworkFunctions::DestroyResourceNetworkLink;
     brain[ "DEC_ResourceNetwork_Create" ] = &DEC_ResourceNetworkFunctions::CreateNode;
+    brain[ "DEC_ResourceNetwork_GetSupply" ] = &DEC_ResourceNetworkFunctions::GetSupply;
+    brain[ "DEC_ResourceNetwork_Supply" ] = &DEC_ResourceNetworkFunctions::Supply;
     brain.Register( "GetTypeName", &DEC_ResourceNetwork::GetTypeName );
 }
 

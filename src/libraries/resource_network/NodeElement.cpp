@@ -583,6 +583,7 @@ float NodeElement::GetConsumptionState() const
 double NodeElement::AddToStock( double quantity )
 {
     unsigned int old = stockCapacity_;
-    stockCapacity_ = std::min( stockMaxCapacity_, stockCapacity_ + static_cast< unsigned int >( quantity ) );
+    int newStock = static_cast< int >( stockCapacity_ ) + static_cast< int >( quantity );
+    stockCapacity_ = std::max( 0, std::min( static_cast< int >( stockMaxCapacity_ ), newStock ) );
     return stockCapacity_ - old;
 }
