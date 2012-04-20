@@ -53,6 +53,7 @@ Proxy::Proxy( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime,
     , client_ ( client )
     , access_ ( new boost::mutex() )
 {
+    system_.MakeDirectory( GetPath() );
     const boost::filesystem::path tag = GetPath() / L"proxy.id";
     LOG_INFO( log_ ) << "[proxy] Listening to localhost:" << port;
     bool hasProcess = system_.IsFile( tag );
@@ -176,7 +177,6 @@ void Proxy::Stop()
 void Proxy::Save() const
 {
     const boost::filesystem::path path = GetPath();
-    system_.MakeDirectory( path );
     pool_->Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, path / L"proxy.id", ToJson( GetProperties() ) ) );
 }
 

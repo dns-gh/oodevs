@@ -129,6 +129,7 @@ BOOST_FIXTURE_TEST_CASE( node_controller_creates, Fixture<> )
         ( "--port \"1337\"" ),
         "e:/jar" ).returns( boost::make_shared< MockProcess >( 1377, java ) );
     MOCK_EXPECT( sub.system.WriteFile ).once();
+    MOCK_EXPECT( sub.system.MakeDirectory ).once().with( "e:/jar/" + idIdleText );
     NodeController::T_Node node = control.Create( "zebulon" );
     BOOST_CHECK_EQUAL( node->GetId(), idIdle );
     BOOST_CHECK_EQUAL( control.Count(), size_t( 1 ) );

@@ -174,6 +174,7 @@ NodeController::T_Node NodeController::Create( const std::string& name )
     if( !valid )
         return T_Node();
     LOG_INFO( log_ ) << "[" << type_ << "] Added " << type_ << " " << node->id_ << " " << node->name_;
+    system_.MakeDirectory( GetPath( jar_, *node ) );
     proxy_.Register( GetPrefix( type_, *node ), "localhost", port );
     Start( *node, true );
     return node;
