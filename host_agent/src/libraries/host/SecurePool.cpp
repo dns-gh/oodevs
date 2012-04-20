@@ -14,7 +14,58 @@
 
 #include <boost/bind.hpp>
 
+#ifdef _MSC_VER
+#   pragma warning( push )
+#   pragma warning( disable : 4244 )
+#endif
+#include <boost/thread/condition.hpp>
+#include <boost/thread/locks.hpp>
+#include <boost/thread/mutex.hpp>
+#ifdef _MSC_VER
+#   pragma warning( pop )
+#endif
+
 using namespace host;
+
+class host::WaitGroup : public boost::noncopyable
+{
+public:
+    WaitGroup()
+        : counter_( 0 )
+    {
+        // NOTHING
+    }
+
+    ~WaitGroup()
+    {
+        // NOTHING
+    }
+
+    void Add()
+    {
+        boost::unique_lock< boost::mutex > lock( access_ );
+        counter_++;
+    }
+
+    void Done()
+    {
+        boost::unique_lock< boost::mutex > lock( access_ );
+        counter_--;
+        condition_.notify_one();
+    }
+
+    void Join()
+    {
+        boost::unique_lock< boost::mutex > lock( access_ );
+        while( counter_ > 0 )
+            condition_.wait( lock );
+    }
+
+private:
+    boost::mutex access_;
+    boost::condition_variable condition_;
+    int counter_;
+};
 
 // -----------------------------------------------------------------------------
 // Name: SecurePool::SecurePool
@@ -23,6 +74,7 @@ using namespace host;
 SecurePool::SecurePool( cpplog::BaseLogger& log, const std::string& name, Pool_ABC& pool )
     : log_ ( log )
     , name_( name )
+    , wait_( new WaitGroup() )
     , pool_( pool )
 {
     // NOTHING
@@ -34,12 +86,12 @@ SecurePool::SecurePool( cpplog::BaseLogger& log, const std::string& name, Pool_A
 // -----------------------------------------------------------------------------
 SecurePool::~SecurePool()
 {
-    // NOTHING
+    wait_->Join();
 }
 
 namespace
 {
-void WrapTask( const Pool_ABC::Task& task, cpplog::BaseLogger& log, const std::string& name )
+void WrapTask( WaitGroup& wait, const Pool_ABC::Task& task, cpplog::BaseLogger& log, const std::string& name )
 {
     try
     {
@@ -53,6 +105,7 @@ void WrapTask( const Pool_ABC::Task& task, cpplog::BaseLogger& log, const std::s
     {
         LOG_ERROR( log ) << "[" << name << "] Unexpected exception";
     }
+    wait.Done();
 }
 }
 
@@ -62,5 +115,6 @@ void WrapTask( const Pool_ABC::Task& task, cpplog::BaseLogger& log, const std::s
 // -----------------------------------------------------------------------------
 void SecurePool::Post( const Pool_ABC::Task& task )
 {
-    pool_.Post( boost::bind( &::WrapTask, task, boost::ref( log_ ), name_ ) );
+    wait_->Add();
+    pool_.Post( boost::bind( &::WrapTask, boost::ref( *wait_ ), task, boost::ref( log_ ), name_ ) );
 }

@@ -21,7 +21,7 @@ namespace cpplog
 
 namespace host
 {
-
+    class WaitGroup;
 // =============================================================================
 /** @class  SecurePool
     @brief  Secure thread pool class definition
@@ -47,6 +47,7 @@ private:
     //@{
     mutable cpplog::BaseLogger& log_;
     const std::string name_;
+    const std::auto_ptr< WaitGroup > wait_;
     Pool_ABC& pool_;
     //@}
 };
