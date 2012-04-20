@@ -55,9 +55,8 @@ queryImplementation "getPositionsToSupport"
                 
                  -- si pas de position on vient à hauteur de l'agent soutenu
                 if not foundAPositionForThisObjective then
-                    local reachingArea = CreateProxyKnowledge( 
+                    newResult[ #newResult + 1 ] = CreateProxyKnowledge( 
                     sword.military.world.SupportingArea, objective )
-                    newResult[ #newResult + 1 ] = CreateKnowledge( sword.military.world.Point, DEC_Geometrie_CopiePoint(reachingArea:getPosition()))
                 end
             end
             
