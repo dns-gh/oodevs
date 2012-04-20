@@ -111,11 +111,11 @@ namespace
         host::Agent agent( log, nodes, sessions );
         web::Controller controller( log, agent );
         web::Server server( log, controller, cfg.ports.host );
+        server.Listen();
         host::SecurePool run( log, "server", pool );
         run.Post( boost::bind( &web::Server::Run, &server ) );
         getc( stdin );
         server.Stop();
-        pool.Stop();
     }
 }
 
