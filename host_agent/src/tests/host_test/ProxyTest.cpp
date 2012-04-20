@@ -57,6 +57,7 @@ namespace
                 ( " " "-jar \"" + jar + "\"" )
                 ( "--port \"" + boost::lexical_cast< std::string >( port ) + "\"" ),
                 "" ).returns( process );
+            MOCK_EXPECT( system.Remove ).once().with( "proxy.id" );
             return boost::make_shared< Proxy >( log, runtime, system, java, jar, port, client, pool );
         }
 
@@ -65,6 +66,7 @@ namespace
             MOCK_EXPECT( runtime.GetProcess ).once().with( process->GetPid() ).returns( process );
             MOCK_EXPECT( system.IsFile ).once().with( "proxy.id" ).returns( true );
             MOCK_EXPECT( system.ReadFile ).once().with( "proxy.id" ).returns( tag );
+            MOCK_EXPECT( system.Remove ).once().with( "proxy.id" );
             return boost::make_shared< Proxy >( log, runtime, system, java, jar, port, client, pool );
         }
     };
