@@ -78,7 +78,7 @@ NodeController::NodeController( cpplog::BaseLogger& log,
     , jar_    ( jar )
     , web_    ( web )
     , type_   ( type )
-    , pool_   ( new SecurePool( log, "node", pool ) )
+    , pool_   ( new SecurePool( log, type, pool ) )
     , ports_  ( ports )
     , nodes_  ( new Container< Node >() )
 {
