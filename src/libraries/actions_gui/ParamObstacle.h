@@ -11,7 +11,6 @@
 #define __ParamObstacle_h_
 
 #include "ParamLocationComposite.h"
-//#include "Param_ABC.h"
 #include "clients_kernel/OrderParameter.h"
 #include "clients_gui/ValuedComboBox.h"
 
@@ -43,7 +42,7 @@ namespace actions
 */
 // Created: APE 2004-05-18
 // =============================================================================
-class ParamObstacle : public ParamLocationComposite // public Param_ABC
+class ParamObstacle : public ParamLocationComposite
 {
     Q_OBJECT
 
@@ -62,7 +61,6 @@ public:
     virtual QWidget* BuildInterface( QWidget* parent );
     virtual bool CheckValidity();
     virtual bool InternalCheckValidity() const;
-    //virtual void CreateInternalMenu( kernel::ContextMenu& menu );
     virtual kernel::ContextMenu::T_MenuVariant CreateMenu( kernel::ContextMenu& menu );
     virtual void NotifyChanged( Param_ABC& param );
 
