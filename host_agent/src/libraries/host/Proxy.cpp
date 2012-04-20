@@ -54,6 +54,7 @@ Proxy::Proxy( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime,
     , access_ ( new boost::mutex() )
 {
     const boost::filesystem::path tag = GetPath() / L"proxy.id";
+    LOG_INFO( log_ ) << "[proxy] Listening to localhost:" << port;
     bool hasProcess = system_.IsFile( tag );
     if( hasProcess )
     {
