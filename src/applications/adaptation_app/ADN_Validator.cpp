@@ -133,7 +133,7 @@ namespace
 // Created: ABR 2011-03-17
 // -----------------------------------------------------------------------------
 ADN_DoubleValidator::ADN_DoubleValidator( QObject* parent )
-    : QDoubleValidator( 0, std::numeric_limits< double >::max(), 2, parent )
+    : QDoubleValidator( 0, std::numeric_limits< double >::max(), 10, parent )
 {
     // NOTHING
 }
