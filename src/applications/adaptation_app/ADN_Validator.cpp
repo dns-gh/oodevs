@@ -121,7 +121,7 @@ namespace
         {
             int j = input.size() - 1;
             while( j > i && input[ j ] == '0' ){ --j; }
-            input.truncate( j + 1 );
+            input.truncate( ( j == i ) ? j : j + 1 );
         }
         return input;
     }
@@ -132,7 +132,7 @@ namespace
 // Created: ABR 2011-03-17
 // -----------------------------------------------------------------------------
 ADN_DoubleValidator::ADN_DoubleValidator( QObject* parent )
-    : QDoubleValidator( parent )
+    : QDoubleValidator( 0, std::numeric_limits< double >::max(), 2, parent )
 {
     // NOTHING
 }
