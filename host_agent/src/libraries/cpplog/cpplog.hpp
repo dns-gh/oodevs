@@ -198,6 +198,7 @@ namespace cpplog
 		// Constructor that initializes our stream.
 		LogData(loglevel_t logLevel)
 			: stream(buffer, k_logBufferSize), level(logLevel)
+			, line(0), fullPath(0), fileName(0), buffer()
 #ifdef CPPLOG_SYSTEM_IDS
 			  , processId(0), threadId(0)
 #endif
@@ -379,7 +380,7 @@ namespace cpplog
 	{
 	private:
 		std::ostream&	m_logStream;
-		OstreamLogger& operator=( const OstreamLogger& ) {}
+		OstreamLogger& operator=( const OstreamLogger& )
 
 	public:
 		OstreamLogger(std::ostream& outStream)
@@ -730,7 +731,7 @@ namespace cpplog
 		{
 			for( std::vector<LoggerInfo>::iterator It = m_loggers.begin();
 				 It != m_loggers.end();
-				 It++ )
+				 ++It )
 			{
 				if( (*It).owned )
 					delete (*It).logger;
@@ -749,7 +750,7 @@ namespace cpplog
 
 			for( std::vector<LoggerInfo>::iterator It = m_loggers.begin();
 				 It != m_loggers.end();
-				 It++ )
+				 ++It )
 			{
 				deleteMessage = deleteMessage && (*It).logger->sendLogMessage(logData);
 			}

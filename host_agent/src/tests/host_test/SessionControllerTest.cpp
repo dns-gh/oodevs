@@ -122,7 +122,7 @@ namespace
         }
     };
 
-    bool CheckParameters( const std::vector< std::string > actual, const std::vector< std::string >& expected )
+    bool CheckParameters( const std::vector< std::string >& actual, const std::vector< std::string >& expected )
     {
         if( actual.size() != expected.size() )
             return false;

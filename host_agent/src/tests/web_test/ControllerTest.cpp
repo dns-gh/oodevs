@@ -205,7 +205,6 @@ BOOST_FIXTURE_TEST_CASE( controller_get_session, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( controller_create_session, Fixture )
 {
-    const std::string node = "888";
     const std::string exercise = "exercise_name";
     const std::string name = "session_name";
     SetRequest( "GET", "/create_session", boost::assign::map_list_of
@@ -220,8 +219,6 @@ BOOST_FIXTURE_TEST_CASE( controller_create_session, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( controller_create_session_without_node_parameter_returns_bad_request, Fixture )
 {
-    const std::string exercise = "exercise_name";
-    const std::string name = "session_name";
     MOCK_EXPECT( request.GetMethod ).once().returns( "GET" );
     MOCK_EXPECT( request.GetUri ).once().returns( "/create_session" );
     MOCK_EXPECT( request.GetParameter ).once().with( "node" ).returns( boost::none );

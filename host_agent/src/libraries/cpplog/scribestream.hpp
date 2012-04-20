@@ -19,7 +19,7 @@ private:
     std::string m_category;
 
 public:
-    scribe_buf() : m_client(NULL)
+    scribe_buf() : m_client(NULL), m_port(0)
     {}
 
     virtual ~scribe_buf()
