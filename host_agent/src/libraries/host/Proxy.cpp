@@ -75,6 +75,7 @@ Proxy::~Proxy()
 {
     if( process_ )
         process_->Kill( 0 );
+    pool_->Post( boost::bind( &FileSystem_ABC::Remove, &system_, GetPath() / "proxy.id" ) );
 }
 
 // -----------------------------------------------------------------------------
