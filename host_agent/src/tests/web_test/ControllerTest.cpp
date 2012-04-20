@@ -213,7 +213,7 @@ BOOST_FIXTURE_TEST_CASE( controller_create_session, Fixture )
         ( "name", name )
     );
     const std::string expected = "a json session";
-    MOCK_EXPECT( agent.CreateSession ).once().with( default_id, exercise, name ).returns( expected );
+    MOCK_EXPECT( agent.CreateSession ).once().with( default_id, name, exercise ).returns( expected );
     CheckNotify( 200, expected );
 }
 

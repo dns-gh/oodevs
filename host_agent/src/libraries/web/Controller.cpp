@@ -356,7 +356,7 @@ std::string Controller::CreateSession( const Request_ABC& request )
     const std::string exercise = RequireParameter< std::string >( "exercise", request );
     const std::string name = RequireParameter< std::string >( "name", request );
     LOG_INFO( log_ ) << "[web] /create_session node: " << node << " name: " << name << " exercise: " << exercise;
-    return WriteHttpReply( agent_.CreateSession( Convert( node ), exercise, name ) );
+    return WriteHttpReply( agent_.CreateSession( Convert( node ), name, exercise ) );
 }
 
 // -----------------------------------------------------------------------------
