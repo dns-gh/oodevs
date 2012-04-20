@@ -48,10 +48,7 @@ file( GLOB files
     "${root_dir}/src/libraries/host/*.cpp"
 )
 add_static_library( host ${files} )
-target_link_libraries( host
-    runtime
-    xerces-c_3
-)
+target_link_libraries( host runtime )
 set_target_folder( host libraries )
 
 ################################################################################

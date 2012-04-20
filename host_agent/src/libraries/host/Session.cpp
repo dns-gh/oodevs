@@ -16,9 +16,9 @@
 #include <boost/date_time/posix_time/posix_time.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/property_tree/ptree.hpp>
+#include <boost/property_tree/xml_parser.hpp>
 #include <boost/uuid/string_generator.hpp>
 #include <boost/uuid/uuid_io.hpp>
-#include <xeumeuleu/xml.hpp>
 
 #ifdef _MSC_VER
 #   pragma warning( push )
@@ -224,80 +224,50 @@ bool Session::Stop()
 
 namespace
 {
-void GetDispatcherConfiguration( xml::xostream& xos, int base )
+void GetDispatcherConfiguration( boost::property_tree::ptree& tree, int base )
 {
-    xos << xml::start( "dispatcher" )
-            << xml::start( "network" )
-                << xml::attribute( "client", "localhost:" + boost::lexical_cast< std::string >( base + SIMULATION_PORT ) )
-                << xml::attribute( "server", base + DISPATCHER_PORT )
-            << xml::end
-            << xml::start( "plugins" )
-                << xml::start( "web_control" )
-                    << xml::attribute( "server", base + WEB_CONTROL_PORT )
-                    << xml::attribute( "library", "web_control_plugin_dll-vc100-mt" )
-                << xml::end
-            << xml::end
-        << xml::end;
+    const std::string prefix = "session.config.dispatcher.";
+    tree.put( prefix + "network.<xmlattr>.client", "localhost:" + boost::lexical_cast< std::string >( base + SIMULATION_PORT ) );
+    tree.put( prefix + "network.<xmlattr>.server", base + DISPATCHER_PORT );
+    tree.put( prefix + "plugins.web_control.<xmlattr>.server", base + WEB_CONTROL_PORT );
+    tree.put( prefix + "plugins.web_control.<xmlattr>.library", "web_control_plugin_dll-vc100-mt" );
 }
 
-void GetSimulationConfiguration( xml::xostream& xos, int base )
+void GetSimulationConfiguration( boost::property_tree::ptree& tree, int base )
 {
-    xos << xml::start( "simulation" )
-            << xml::start( "GarbageCollector" )
-                << xml::attribute( "setpause", 100 )
-                << xml::attribute( "setstepmul", 100 )
-            << xml::end
-            << xml::start( "checkpoint" )
-                << xml::attribute( "frequency", "100000h" )
-                << xml::attribute( "keep", 1 )
-                << xml::attribute( "usecrc", true )
-            << xml::end
-            << xml::start( "debug" )
-                << xml::attribute( "decisional", false )
-                << xml::attribute( "diadebugger", false )
-                << xml::attribute( "diadebuggerport", base + DIA_DEBUGGER_PORT )
-                << xml::attribute( "networklogger", false )
-                << xml::attribute( "networkloggerport", base + NETWORK_LOGGER_PORT )
-                << xml::attribute( "pathfind", false )
-            << xml::end
-            << xml::start( "decisional" )
-                << xml::attribute( "useonlybinaries", false )
-            << xml::end
-            << xml::start( "dispatcher" )
-                << xml::attribute( "embedded", true )
-            << xml::end
-            << xml::start( "network" )
-                << xml::attribute( "port", base + SIMULATION_PORT )
-            << xml::end
-            << xml::start( "orbat" )
-                << xml::attribute( "checkcomposition", false )
-            << xml::end
-            << xml::start( "pathfinder" )
-                << xml::attribute( "threads", 1 )
-            << xml::end
-            << xml::start( "profiling" )
-                << xml::attribute( "enabled", false )
-            << xml::end
-            << xml::start( "time" )
-                << xml::attribute( "factor", 10 )
-                << xml::attribute( "step", 10 )
-            << xml::end
-        << xml::end;
+    const std::string prefix = "session.config.simulation.";
+    tree.put( prefix + "GarbageCollector.<xmlattr>.setpause", 100 );
+    tree.put( prefix + "GarbageCollector.<xmlattr>.setstepmul", 100 );
+    tree.put( prefix + "checkpoint.<xmlattr>.frequency", "100000h" );
+    tree.put( prefix + "checkpoint.<xmlattr>.keep", 1 );
+    tree.put( prefix + "checkpoint.<xmlattr>.usecrc", true );
+    tree.put( prefix + "debug.<xmlattr>.decisional", false );
+    tree.put( prefix + "debug.<xmlattr>.diadebugger", false );
+    tree.put( prefix + "debug.<xmlattr>.diadebuggerport", base + DIA_DEBUGGER_PORT );
+    tree.put( prefix + "debug.<xmlattr>.networklogger", false );
+    tree.put( prefix + "debug.<xmlattr>.networkloggerport", base + NETWORK_LOGGER_PORT );
+    tree.put( prefix + "debug.<xmlattr>.pathfind", false );
+    tree.put( prefix + "decisional.<xmlattr>.useonlybinaries", false );
+    tree.put( prefix + "dispatcher.<xmlattr>.embedded", true );
+    tree.put( prefix + "network.<xmlattr>.port", base + SIMULATION_PORT );
+    tree.put( prefix + "orbat.<xmlattr>.checkcomposition", false );
+    tree.put( prefix + "pathfinder.<xmlattr>.threads", 1 );
+    tree.put( prefix + "profiling.<xmlattr>.enabled", false );
+    tree.put( prefix + "time.<xmlattr>.factor", 10 );
+    tree.put( prefix + "time.<xmlattr>.step", 10 );
 }
 
 std::string GetConfiguration( const std::string& name, int base )
 {
-    xml::xostringstream xos;
-    xos << xml::start( "session" )
-            << xml::start( "meta" )
-                << xml::content( "comment", "Auto-generated by Cloud Host Agent" )
-                << xml::content( "date", boost::posix_time::to_iso_string( boost::posix_time::second_clock::local_time() ) )
-                << xml::content( "name", name )
-            << xml::end
-            << xml::start( "config" );
-    GetDispatcherConfiguration( xos, base );
-    GetSimulationConfiguration( xos, base );
-    return xos.str();
+    boost::property_tree::ptree tree;
+    tree.put( "session.meta.comment", "Auto-generated by Cloud Host Agent" );
+    tree.put( "session.meta.date", boost::posix_time::to_iso_string( boost::posix_time::second_clock::local_time() ) );
+    tree.put( "session.meta.name", name );
+    GetDispatcherConfiguration( tree, base );
+    GetSimulationConfiguration( tree, base );
+    std::ostringstream output;
+    boost::property_tree::write_xml( output, tree );
+    return output.str();
 }
 }
 
