@@ -48,7 +48,7 @@ namespace
 
         SessionPtr MakeSession()
         {
-            return boost::make_shared< Session >( defaultId, defaultNode, defaultName, defaultExercise, std::auto_ptr< MockPort >( new MockPort( defaultPort ) ) );
+            return boost::make_shared< Session >( defaultId, defaultNode, defaultName, defaultExercise, std::auto_ptr< Port_ABC >( new MockPort( defaultPort ) ) );
         }
 
         SessionPtr ReloadSession( const boost::property_tree::ptree& tree, ProcessPtr process = ProcessPtr() )

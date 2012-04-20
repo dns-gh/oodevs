@@ -7,8 +7,8 @@
 //
 // *****************************************************************************
 
-#ifndef SESSION_FACTORY_H
-#define SESSION_FACTORY_H
+#ifndef SESSION_CONTROLLER_H
+#define SESSION_CONTROLLER_H
 
 #include "SessionController_ABC.h"
 
@@ -100,4 +100,4 @@ private:
 
 }
 
-#endif // SESSION_FACTORY_H
+#endif // SESSION_CONTROLLER_H

@@ -11,6 +11,7 @@
 #define SECURE_POOL_H
 
 #include "Pool_ABC.h"
+#include <boost/noncopyable.hpp>
 #include <string>
 
 namespace cpplog
@@ -27,7 +28,7 @@ namespace host
 */
 // Created: BAX 2012-04-16
 // =============================================================================
-class SecurePool
+class SecurePool : public boost::noncopyable
 {
 public:
     //! @name Constructors/Destructors

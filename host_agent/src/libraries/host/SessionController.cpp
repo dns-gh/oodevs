@@ -170,7 +170,6 @@ SessionController::T_Session SessionController::Get( const boost::uuids::uuid& i
 SessionController::T_Session SessionController::Create( const boost::uuids::uuid& node, const std::string& name, const std::string& exercise )
 {
     std::auto_ptr< Port_ABC > ptrPort = ports_.Create();
-    const int port = ptrPort->Get();
     boost::shared_ptr< Session > session = boost::make_shared< Session >( uuids_.Create(), node, name, exercise, ptrPort );
     bool valid = sessions_->Attach( session );
     if( !valid )

@@ -142,9 +142,9 @@ namespace
 BOOST_FIXTURE_TEST_CASE( session_controller_reloads, Fixture )
 {
     Reload();
-    BOOST_CHECK_EQUAL( control.Count(), 2 );
+    BOOST_CHECK_EQUAL( control.Count(), size_t( 2 ) );
     SessionController::T_Sessions sessions = control.List();
-    BOOST_CHECK_EQUAL( sessions.size(), 2 );
+    BOOST_CHECK_EQUAL( sessions.size(), size_t( 2 ) );
     BOOST_CHECK( control.Get( idActive ) );
     BOOST_CHECK( control.Get( idIdle ) );
 }
@@ -164,11 +164,11 @@ BOOST_FIXTURE_TEST_CASE( session_controller_creates, Fixture )
     MOCK_EXPECT( sub.system.WriteFile ).exactly( 2 );
     SessionController::T_Session session = control.Create( idNode, "zebulon", "baroud" );
     BOOST_CHECK_EQUAL( session->GetId(), idIdle );
-    BOOST_CHECK_EQUAL( control.Count(), 1 );
+    BOOST_CHECK_EQUAL( control.Count(), size_t( 1 ) );
     BOOST_CHECK( control.Has( idIdle ) );
     BOOST_CHECK_EQUAL( control.Get( idIdle ), session );
     SessionController::T_Sessions sessions = control.List();
-    BOOST_REQUIRE_EQUAL( sessions.size(), 1 );
+    BOOST_REQUIRE_EQUAL( sessions.size(), size_t( 1 ) );
     BOOST_CHECK_EQUAL( sessions.front(), session );
 }
 
@@ -180,10 +180,10 @@ BOOST_FIXTURE_TEST_CASE( session_controller_deletes, Fixture )
     SessionController::T_Session session = control.Delete( idActive );
     BOOST_CHECK_EQUAL( session->GetId(), idActive );
     BOOST_CHECK( !control.Has( idActive ) );
-    BOOST_CHECK_EQUAL( control.Count(), 1 );
+    BOOST_CHECK_EQUAL( control.Count(), size_t( 1 ) );
     session = control.Delete( idIdle );
     BOOST_CHECK_EQUAL( session->GetId(), idIdle );
-    BOOST_CHECK_EQUAL( control.Count(), 0 );
+    BOOST_CHECK_EQUAL( control.Count(), size_t( 0 ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( session_controller_starts, Fixture )

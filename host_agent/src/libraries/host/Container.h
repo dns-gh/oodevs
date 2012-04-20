@@ -7,14 +7,15 @@
 //
 // *****************************************************************************
 
-#ifndef CONTROLLER_H
-#define CONTROLLER_H
+#ifndef CONTAINER_H
+#define CONTAINER_H
 
 #include <string>
 
 #include <boost/foreach.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/uuid/uuid.hpp>
+#include <vector>
 
 #ifdef _MSC_VER
 #   pragma warning( push )
@@ -127,4 +128,4 @@ private:
 };
 }
 
-#endif CONTROLLER_H
+#endif CONTAINER_H

@@ -9,7 +9,14 @@
 
 #include "Json.h"
 
+#ifdef _MSC_VER
+#   pragma warning( push )
+#   pragma warning( disable : 4100 4512 )
+#endif
 #include <boost/property_tree/json_parser.hpp>
+#ifdef _MSC_VER
+#pragma warning( pop )
+#endif
 
 // -----------------------------------------------------------------------------
 // Name: ToJson

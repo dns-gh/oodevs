@@ -107,9 +107,9 @@ namespace
 BOOST_FIXTURE_TEST_CASE( node_controller_reloads, Fixture<> )
 {
     Reload();
-    BOOST_CHECK_EQUAL( control.Count(), 2 );
+    BOOST_CHECK_EQUAL( control.Count(), size_t( 2 ) );
     NodeController::T_Nodes nodes = control.List( 0, INT_MAX );
-    BOOST_CHECK_EQUAL( nodes.size(), 2 );
+    BOOST_CHECK_EQUAL( nodes.size(), size_t( 2 ) );
     BOOST_CHECK( control.Get( idActive ) );
     BOOST_CHECK( control.Get( idIdle ) );
 }
@@ -131,11 +131,11 @@ BOOST_FIXTURE_TEST_CASE( node_controller_creates, Fixture<> )
     MOCK_EXPECT( sub.system.WriteFile ).once();
     NodeController::T_Node node = control.Create( "zebulon" );
     BOOST_CHECK_EQUAL( node->GetId(), idIdle );
-    BOOST_CHECK_EQUAL( control.Count(), 1 );
+    BOOST_CHECK_EQUAL( control.Count(), size_t( 1 ) );
     BOOST_CHECK( control.Has( idIdle ) );
     BOOST_CHECK_EQUAL( control.Get( idIdle ), node );
     NodeController::T_Nodes nodes = control.List( 0, INT_MAX );
-    BOOST_REQUIRE_EQUAL( nodes.size(), 1 );
+    BOOST_REQUIRE_EQUAL( nodes.size(), size_t( 1 ) );
     BOOST_CHECK_EQUAL( nodes.front(), node );
 }
 
@@ -148,11 +148,11 @@ BOOST_FIXTURE_TEST_CASE( node_controller_deletes, Fixture<> )
     NodeController::T_Node node = control.Delete( idActive );
     BOOST_CHECK_EQUAL( node->GetId(), idActive );
     BOOST_CHECK( !control.Has( idActive ) );
-    BOOST_CHECK_EQUAL( control.Count(), 1 );
+    BOOST_CHECK_EQUAL( control.Count(), size_t( 1 ) );
     MOCK_EXPECT( sub.proxy.Unregister ).once().with( idIdleText );
     node = control.Delete( idIdle );
     BOOST_CHECK_EQUAL( node->GetId(), idIdle );
-    BOOST_CHECK_EQUAL( control.Count(), 0 );
+    BOOST_CHECK_EQUAL( control.Count(), size_t( 0 ) );
 }
 
 BOOST_FIXTURE_TEST_CASE( node_controller_starts, Fixture<> )

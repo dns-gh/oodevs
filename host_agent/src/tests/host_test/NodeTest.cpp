@@ -45,7 +45,7 @@ namespace
 
         NodePtr MakeNode()
         {
-            return boost::make_shared< Node >( defaultId, defaultName, std::auto_ptr< MockPort >( new MockPort( defaultPort ) ) );
+            return boost::make_shared< Node >( defaultId, defaultName, std::auto_ptr< Port_ABC >( new MockPort( defaultPort ) ) );
         }
 
         NodePtr ReloadNode( const boost::property_tree::ptree& tree, ProcessPtr process = ProcessPtr() )
