@@ -88,3 +88,12 @@ unsigned int Architecture::GetOccupation() const
 {
     return occupation_;
 }
+
+// -----------------------------------------------------------------------------
+// Name: Architecture::GetHeight
+// Created: LGY 2012-04-10
+// -----------------------------------------------------------------------------
+unsigned int Architecture::GetHeight() const
+{
+    return static_cast< unsigned int >( height_ );
+}

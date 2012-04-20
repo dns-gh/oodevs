@@ -13,9 +13,9 @@
 #include "clients_kernel/Architecture_ABC.h"
 #include <memory>
 
-namespace urban
+namespace xml
 {
-    class Architecture;
+    class xistream;
 }
 
 // =============================================================================
@@ -29,7 +29,7 @@ class Architecture : public kernel::Architecture_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Architecture( const urban::Architecture& architecture, std::auto_ptr< kernel::Architecture_ABC > pArchitecture );
+             Architecture( xml::xistream& xis, std::auto_ptr< kernel::Architecture_ABC > pArchitecture );
     virtual ~Architecture();
     //@}
 
@@ -40,6 +40,7 @@ public:
     virtual const std::string& GetMaterial() const;
     virtual unsigned int GetFloorNumber() const;
     virtual unsigned int GetOccupation() const;
+    virtual unsigned int GetHeight() const;
     //@}
 
 private:

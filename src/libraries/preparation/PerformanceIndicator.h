@@ -34,11 +34,6 @@ namespace xml
     class xistream;
 }
 
-namespace urban
-{
-    class WorldParameters;
-}
-
 class Model;
 
 // =============================================================================
@@ -100,7 +95,7 @@ public:
         Values(): limit_( 0 ), profiles_( 0 )
                          , units_( 0 ), automats_( 0 ), blocs_( 0 ), objects_( 0 ), crowds_( 0 ), populations_( 0 )
                          , terrainWidth_( 0 ), terrainHeight_( 0 )   
-                         , terrainLoad_( 0.f ), teams_( 0 ), knowledgeGroups_( 0 )                      
+                         , terrainLoad_( 0.f ), teams_( 0 ), knowledgeGroups_( 0 )
                          , maxAutomatsKG_( 0 ), maxUnitsKG_( 0 )
                          , avgAutomatsKG_( 0 ), avgUnitsKG_( 0 )
                          , automatsKG_( 0 ), unitsKG_( 0 )
@@ -133,7 +128,7 @@ public:
 
     //! @name Operations
     //@{
-    void Load( const tools::ExerciseConfig& config, const std::string& file, urban::WorldParameters& world );
+    void Load( const tools::ExerciseConfig& config, const std::string& file );
     const PerformanceIndicator::Values& ComputeValues();
     //@}
 

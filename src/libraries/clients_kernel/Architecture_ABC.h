@@ -40,6 +40,7 @@ public:
     virtual const std::string& GetMaterial() const = 0;
     virtual unsigned int GetFloorNumber() const = 0;
     virtual unsigned int GetOccupation() const = 0;
+    virtual unsigned int GetHeight() const = 0;
     //@}
 };
 

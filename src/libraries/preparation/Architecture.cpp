@@ -9,18 +9,34 @@
 
 #include "preparation_pch.h"
 #include "Architecture.h"
-#include <urban/TerrainObject_ABC.h>
-#include <urban/PhysicalAttribute.h>
+#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: Architecture constructor
 // Created: LGY 2011-04-14
 // -----------------------------------------------------------------------------
-Architecture::Architecture( const urban::Architecture& architecture, std::auto_ptr< kernel::Architecture_ABC > pArchitecture )
+Architecture::Architecture( xml::xistream& xis, std::auto_ptr< kernel::Architecture_ABC > pArchitecture )
     : pArchitecture_( pArchitecture )
 {
-    Initialize( static_cast< float >( architecture.GetHeight() ), architecture.GetFloorNumber(), architecture.GetParkingFloors(), architecture.GetRoofShape(),
-                architecture.GetMaterial(), architecture.GetOccupation(), architecture.GetTrafficability() );
+    xis >> xml::optional
+            >> xml::start( "physical" );
+        if( xis.has_child( "architecture" ) )
+        {
+            unsigned int height, floorNumber, parkingFloors;
+            std::string roofShape, material;
+            float occupation, trafficability;
+            xis >> xml::start( "architecture" )
+                    >> xml::optional >> xml::attribute( "height", height )
+                    >> xml::optional >> xml::attribute( "floor-number", floorNumber )
+                    >> xml::optional >> xml::attribute( "roof-shape", roofShape )
+                    >> xml::optional >> xml::attribute( "material", material )
+                    >> xml::optional >> xml::attribute( "occupation", occupation )
+                    >> xml::optional >> xml::attribute( "trafficability", trafficability )
+                    >> xml::optional >> xml::attribute( "parking-floors", parkingFloors )
+                >> xml::end;
+            Initialize( static_cast< float >( height ), floorNumber, parkingFloors, roofShape, material, occupation, trafficability );
+        }
+    xis     >> xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -67,4 +83,13 @@ unsigned int Architecture::GetFloorNumber() const
 unsigned int Architecture::GetOccupation() const
 {
     return pArchitecture_->GetOccupation();
+}
+
+// -----------------------------------------------------------------------------
+// Name: Architecture::GetHeight
+// Created: LGY 2012-04-10
+// -----------------------------------------------------------------------------
+unsigned int Architecture::GetHeight() const
+{
+    return pArchitecture_->GetHeight();
 }

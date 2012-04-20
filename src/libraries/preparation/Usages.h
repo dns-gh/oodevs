@@ -13,9 +13,9 @@
 #include "clients_kernel/Usages_ABC.h"
 #include <memory>
 
-namespace urban
+namespace xml
 {
-    class TerrainObject_ABC;
+    class xistream;
 }
 
 // =============================================================================
@@ -29,7 +29,7 @@ class Usages : public kernel::Usages_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Usages( const urban::TerrainObject_ABC& object, std::auto_ptr< kernel::Usages_ABC > pUsages );
+             Usages( xml::xistream& xis, std::auto_ptr< kernel::Usages_ABC > pUsages );
     virtual ~Usages();
     //@}
 
@@ -37,6 +37,12 @@ public:
     //@{
     virtual void Add( const std::string& usage, unsigned int proportion );
     virtual unsigned int Find( const std::string& usage ) const;
+    //@}
+
+private:
+    //! @name Helpers
+    //@{
+    void ReadUsages( xml::xistream& xis );
     //@}
 
 private:

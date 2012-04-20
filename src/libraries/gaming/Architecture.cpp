@@ -68,3 +68,12 @@ unsigned int Architecture::GetOccupation() const
 {
     return pArchitecture_->GetOccupation();
 }
+
+// -----------------------------------------------------------------------------
+// Name: Architecture::GetHeight
+// Created: LGY 2012-04-11
+// -----------------------------------------------------------------------------
+unsigned int Architecture::GetHeight() const
+{
+    return pArchitecture_->GetHeight();
+}

@@ -50,7 +50,6 @@
 #include "tools/Loader_ABC.h"
 #include "tools/SchemaWriter.h"
 #include <tools/XmlCrc32Signature.h>
-#include <urban/WorldParameters.h>
 #include <xeumeuleu/xml.hpp>
 #include <boost/bind.hpp>
 #include <boost/filesystem/path.hpp>
@@ -292,11 +291,10 @@ void Model::Load( const tools::ExerciseConfig& config )
     //$$ LOADING DE FICHIERS A UNIFIER
     const std::string directoryPath = boost::filesystem::path( config.GetTerrainFile() ).branch_path().native_file_string();
     const bfs::path urbanFile = bfs::path( directoryPath, bfs::native ) / "urban" / "urban.xml";
-    urban::WorldParameters world( directoryPath );
     if( bfs::exists( urbanFile ) )
     {
         config.GetLoader().CheckFile( urbanFile.native_file_string() );
-        urban_.Load( directoryPath, world, *this );
+        urban_.Load( directoryPath );
         const std::string urbanStateFile = config.GetUrbanStateFile() ;
         if( bfs::exists( bfs::path( urbanStateFile, bfs::native ) ) )
             config.GetLoader().LoadFile( urbanStateFile, boost::bind( &UrbanModel::LoadUrbanState, &urban_, _1 ) );
@@ -317,7 +315,7 @@ void Model::Load( const tools::ExerciseConfig& config )
     LoadOptional( config.GetLoader(), config.GetScoresFile(), scores_, schemaWriter );
     LoadOptional( config.GetLoader(), config.GetSuccessFactorsFile(), successFactors_, schemaWriter );
 
-    performanceIndicator_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "PerformanceIndicator.xml" ), world );
+    performanceIndicator_.Load( config, tools::GeneralConfig::BuildResourceChildFile( "PerformanceIndicator.xml" ) );
     SetLoaded( true );
 }
 

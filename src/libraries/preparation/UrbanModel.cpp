@@ -9,33 +9,21 @@
 
 #include "preparation_pch.h"
 #include "UrbanModel.h"
-#include "Architecture.h"
-#include "ConsistencyErrorTypes.h"
 #include "InfrastructureAttribute.h"
 #include "MedicalTreatmentAttribute.h"
-#include "Model.h"
 #include "ResourceNetworkAttribute.h"
 #include "StaticModel.h"
 #include "StructuralStateAttribute.h"
-#include "UrbanPositions.h"
-#include "Usages.h"
-#include "UrbanColor.h"
+#include "UrbanFactory.h"
+#include "UrbanFactory_ABC.h"
 #include "clients_gui/TerrainObjectProxy.h"
-#include "clients_gui/Usages.h"
-#include "clients_gui/Architecture.h"
-#include "clients_kernel/ObjectTypes.h"
-#include "clients_kernel/InfrastructureType.h"
-#include "clients_kernel/PropertiesDictionary.h"
 #include "tools/SchemaWriter_ABC.h"
-#include <urban/PhysicalAttribute.h>
-#include <urban/InfrastructureAttribute.h>
-#include <urban/ResourceNetworkAttribute.h>
-#include <urban/TerrainObject_ABC.h>
-#include <urban/GeometryAttribute.h>
-#include <urban/ColorAttribute.h>
-#include <urban/TerrainObjectVisitor_ABC.h>
-#include <urban/WorldParameters.h>
 #include <xeumeuleu/xml.hpp>
+#include <boost/filesystem.hpp>
+
+#pragma warning( disable : 4355 )
+
+namespace bfs = boost::filesystem;
 
 using namespace kernel;
 using namespace tools;
@@ -56,6 +44,8 @@ UrbanModel::UrbanModel( Controllers& controllers, const ::StaticModel& staticMod
     , objects_            ( objects )
     , urbanStateVersion_  ( ::defaultUrbanStateVersion )
     , urbanDisplayOptions_( new gui::UrbanDisplayOptions( controllers, accommodationTypes_ ) )
+    , factory_            ( new UrbanFactory( controllers_, objectTypes_, objects_,
+                                              *urbanDisplayOptions_, *this, accommodationTypes_, staticModel.coordinateConverter_ ) )
 {
     // NOTHING
 }
@@ -69,59 +59,59 @@ UrbanModel::~UrbanModel()
     Purge();
 }
 
-namespace
-{
-    class UrbanSendingCreationVisitor : public urban::TerrainObjectVisitor_ABC
-    {
-    public:
-        UrbanSendingCreationVisitor( UrbanModel& urbanModel, Model& model, const ObjectTypes& objectTypes )
-            : urbanModel_ ( urbanModel )
-            , model_      ( model )
-            , objectTypes_( objectTypes )
-        {
-            // NOTHING
-        }
-
-        ~UrbanSendingCreationVisitor()
-        {
-            // NOTHING
-        }
-
-        virtual void VisitBlock( urban::TerrainObject_ABC& urbanObject )
-        {
-            const urban::PhysicalAttribute* pPhysical = urbanObject.Retrieve< urban::PhysicalAttribute >();
-            if( pPhysical && pPhysical->GetArchitecture() )
-            {
-                if( !objectTypes_.StringResolver< MaterialCompositionType >::Find( pPhysical->GetArchitecture()->GetMaterial() ) )
-                {
-                    model_.AppendLoadingError( eOthers, "Urban Bloc " + urbanObject.GetName() + ": Unknown Material " + pPhysical->GetArchitecture()->GetMaterial() );
-                    return;
-                }
-                if( !objectTypes_.StringResolver< RoofShapeType >::Find( pPhysical->GetArchitecture()->GetRoofShape() ) )
-                {
-                    model_.AppendLoadingError( eOthers, "Urban Bloc " + urbanObject.GetName() + ": Unknown Roof shape " + pPhysical->GetArchitecture()->GetRoofShape() );
-                    return;
-                }
-            }
-            urbanModel_.SendCreation( urbanObject );
-        }
-    private:
-        UrbanModel& urbanModel_;
-        Model& model_;
-        const ObjectTypes& objectTypes_;
-    };
-}
-
 // -----------------------------------------------------------------------------
 // Name: UrbanModel::Load
 // Created: SBO 2010-06-10
 // -----------------------------------------------------------------------------
-void UrbanModel::Load( const std::string& directoryPath, urban::WorldParameters& world, ::Model& model )
+void UrbanModel::Load( const std::string& directoryPath )
 {
     Purge();
-    urban::Model::Load( directoryPath, world );
-    UrbanSendingCreationVisitor visitor( *this, model, objectTypes_ );
-    Accept( visitor );
+    const bfs::path fullPath = bfs::path( directoryPath, bfs::native ) / "urban" / "urban.xml";
+    if( bfs::exists( fullPath ) )
+    {
+        xml::xifstream input( fullPath.native_file_string() );
+        input >> xml::start( "urban" )
+                >> xml::start( "urban-objects" )
+                   >> xml::list( "urban-object", *this, &UrbanModel::ReadCity )
+                >> xml::end
+              >> xml::end;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::ReadCity
+// Created: LGY 2012-04-10
+// -----------------------------------------------------------------------------
+void UrbanModel::ReadCity( xml::xistream& xis )
+{
+    xis >> xml::optional
+            >> xml::start( "urban-objects" )
+                >> xml::list( "urban-object", *this, &UrbanModel::ReadDistrict )
+           >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::ReadDistrict
+// Created: LGY 2012-04-10
+// -----------------------------------------------------------------------------
+void UrbanModel::ReadDistrict( xml::xistream& xis )
+{
+    xis >> xml::optional
+        >> xml::start( "urban-objects" )
+            >> xml::list( "urban-object", *this, &UrbanModel::ReadBlock )
+        >> xml::end;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanModel::ReadBlock
+// Created: LGY 2012-04-10
+// -----------------------------------------------------------------------------
+void UrbanModel::ReadBlock( xml::xistream& xis )
+{
+    gui::TerrainObjectProxy* pTerrainObject = factory_->Create( xis );
+    pTerrainObject->Polish();
+    if( !Resolver< gui::TerrainObjectProxy >::Find( pTerrainObject->GetId() ) )
+        Resolver< gui::TerrainObjectProxy >::Register( pTerrainObject->GetId(), *pTerrainObject );
 }
 
 // -----------------------------------------------------------------------------
@@ -216,43 +206,5 @@ void UrbanModel::UpdateCapacity( xml::xistream& xis, gui::TerrainObjectProxy& pr
 void UrbanModel::Purge()
 {
     Resolver< gui::TerrainObjectProxy >::DeleteAll();
-    urban::Model::Purge();
     urbanStateVersion_ = ::defaultUrbanStateVersion;
-}
-
-// -----------------------------------------------------------------------------
-// Name: UrbanModel::SendCreation
-// Created: JSR 2010-06-21
-// -----------------------------------------------------------------------------
-void UrbanModel::SendCreation( urban::TerrainObject_ABC& urbanObject )
-{
-    const ObjectType& type = objectTypes_.StringResolver< ObjectType >::Get( "urban block" );
-    gui::TerrainObjectProxy* pTerrainObject = new gui::TerrainObjectProxy( controllers_, urbanObject.GetName(), urbanObject.GetId(), type, *urbanDisplayOptions_, accommodationTypes_ );
-    PropertiesDictionary& dictionary = pTerrainObject->Get< PropertiesDictionary >();
-    pTerrainObject->Attach< StructuralStateAttribute_ABC >( *new StructuralStateAttribute( 100, dictionary ) );
-    pTerrainObject->Attach< UrbanColor_ABC >( *new UrbanColor( urbanObject.Retrieve< urban::ColorAttribute >() ) );
-    UrbanPositions_ABC* urbanPositions = 0;
-    if( const urban::GeometryAttribute* pGeometryAttribute = urbanObject.Retrieve< urban::GeometryAttribute >() )
-    {
-        urbanPositions = new UrbanPositions( urbanObject, pTerrainObject->Retrieve< UrbanColor_ABC >() );
-        pTerrainObject->Attach< UrbanPositions_ABC >( *urbanPositions );
-        const urban::ResourceNetworkAttribute* resource = urbanObject.Retrieve< urban::ResourceNetworkAttribute >();
-        pTerrainObject->Attach< ResourceNetwork_ABC >( *new ResourceNetworkAttribute( controllers_, resource, pTerrainObject->Get< UrbanPositions_ABC >().Barycenter(), *this, objects_, objectTypes_ ) );
-    }
-    const urban::PhysicalAttribute* pPhysical = urbanObject.Retrieve< urban::PhysicalAttribute >();
-    if( pPhysical && pPhysical->GetArchitecture() )
-        pTerrainObject->Attach< Architecture_ABC >( *new Architecture( *pPhysical->GetArchitecture(), std::auto_ptr< Architecture_ABC >( new gui::Architecture( dictionary ) ) ) );
-    pTerrainObject->Attach< Usages_ABC >( *new Usages( urbanObject, std::auto_ptr< Usages_ABC >( new gui::Usages( dictionary, accommodationTypes_, pTerrainObject->GetLivingSpace() ) ) ) );
-    const urban::InfrastructureAttribute* infra = urbanObject.Retrieve< urban::InfrastructureAttribute >();
-    if( infra && urbanPositions )
-        if( const InfrastructureType* infraType = objectTypes_.StringResolver< InfrastructureType >::Find( infra->GetType() ) )
-        {
-            pTerrainObject->Attach< Infrastructure_ABC >( *new InfrastructureAttribute( urbanPositions->Barycenter(), *infraType, dictionary ) );
-            if( infraType->FindCapacity( "medical" ) )
-                pTerrainObject->Attach< MedicalTreatmentAttribute_ABC >( *new MedicalTreatmentAttribute( objectTypes_, dictionary ) );
-            urbanPositions->SetInfrastructurePresent();
-        }
-    pTerrainObject->Polish();
-    if( !Resolver< gui::TerrainObjectProxy >::Find( urbanObject.GetId() ) )
-        Resolver< gui::TerrainObjectProxy >::Register( urbanObject.GetId(), *pTerrainObject );
 }

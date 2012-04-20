@@ -32,6 +32,11 @@ namespace sword
     class UrbanUpdate;
 }
 
+namespace xml
+{
+    class xistream;
+}
+
 namespace gui
 {
     class UrbanDisplayOptions;
@@ -58,8 +63,11 @@ public:
 public:
     //! @name Constructors/Destructor
     //@{
-             TerrainObjectProxy( kernel::Controllers& controllers, const std::string& name, unsigned int id
-                 , const kernel::ObjectType& type, UrbanDisplayOptions& options, const kernel::AccommodationTypes& accommodations );
+             TerrainObjectProxy( kernel::Controllers& controllers, const std::string& name, unsigned int id,
+                                 const kernel::ObjectType& type, UrbanDisplayOptions& options,
+                                 const kernel::AccommodationTypes& accommodations );
+             TerrainObjectProxy( xml::xistream& xis, kernel::Controllers& controllers, const kernel::ObjectType& type,
+                                 UrbanDisplayOptions& options, const kernel::AccommodationTypes& accommodations );
     virtual ~TerrainObjectProxy();
     //@}
 
