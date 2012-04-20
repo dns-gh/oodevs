@@ -15,6 +15,33 @@
 
 using namespace gui;
 
+namespace
+{
+    unsigned int Convert( const std::string& color )
+    {
+        unsigned int alpha;
+        std::stringstream ss( color );
+        ss >> std::hex >> alpha;
+        return alpha;
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorButton constructor
+// Created: LGY 2011-09-30
+// -----------------------------------------------------------------------------
+ColorButton::ColorButton( QWidget* parent, const std::string& color )
+    : QToolButton( parent )
+    , options_( QColorDialog::ShowAlphaChannel )
+{
+    setAutoRaise( true );
+    current_.setNamedColor( color.substr( 0, 7 ).c_str() );
+    current_.setAlpha( Convert( color.substr( 7, 8 ) ) );
+    previous_ = current_;
+    connect( this, SIGNAL( clicked() ), SLOT( OnClick() ) );
+    repaint();
+}
+
 // -----------------------------------------------------------------------------
 // Name: ColorButton constructor
 // Created: SBO 2006-04-04
@@ -23,6 +50,7 @@ ColorButton::ColorButton( QWidget* parent /* = 0*/, const char* name /* = 0*/, Q
     : QToolButton( parent, name )
     , previous_( color )
     , current_( color )
+    , options_( static_cast< QColorDialog::ColorDialogOption >( 0 ) )
 {
     setAutoRaise( true );
     setMinimumSize( 25, 25 );
@@ -54,7 +82,7 @@ void ColorButton::drawButton( QPainter* )
 // -----------------------------------------------------------------------------
 void ColorButton::paintEvent( QPaintEvent* )
 {
-     QPainter paint;
+    QPainter paint;
     if ( paint.begin( this ) )
     {
         paint.fillRect( 4, 4, width() - 8, height() - 8, current_ );
@@ -69,9 +97,18 @@ void ColorButton::paintEvent( QPaintEvent* )
 // -----------------------------------------------------------------------------
 void ColorButton::OnClick()
 {
-    QColor color = QColorDialog::getColor( current_, this, tr( "Select color" ) );
+    QColor color = QColorDialog::getColor( current_, this, tr( "Select color" ), options_ );
     if( color.isValid() )
         SetColor( color );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ColorButton::SetAlpha
+// Created: ABR 2012-04-19
+// -----------------------------------------------------------------------------
+void ColorButton::SetAlpha( unsigned int alpha )
+{
+    current_.setAlpha( alpha );
 }
 
 // -----------------------------------------------------------------------------
@@ -82,7 +119,7 @@ void ColorButton::SetColor( const QColor& rgb )
 {
     current_ = rgb;
     repaint();
-    emit ColorChanged( rgb );
+    emit ColorChanged( current_ );
 }
 
 // -----------------------------------------------------------------------------
