@@ -90,10 +90,10 @@ void FileSystem::CopyFile( const boost::filesystem::path& src, const boost::file
 }
 
 // -----------------------------------------------------------------------------
-// Name: FileSystem::CreateDirectory
+// Name: FileSystem::MakeDirectory
 // Created: BAX 2012-03-19
 // -----------------------------------------------------------------------------
-void FileSystem::CreateDirectory( const boost::filesystem::path& path ) const
+void FileSystem::MakeDirectory( const boost::filesystem::path& path ) const
 {
     boost::filesystem::create_directories( path );
 }

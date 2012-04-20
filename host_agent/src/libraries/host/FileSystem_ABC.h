@@ -38,7 +38,7 @@ public:
     virtual bool Exists( const boost::filesystem::path& path ) const = 0;
     virtual void CopyDirectory( const boost::filesystem::path& dst, const boost::filesystem::path& src ) const = 0;
     virtual void CopyFile( const boost::filesystem::path& dst, const boost::filesystem::path& src ) const = 0;
-    virtual void CreateDirectory( const boost::filesystem::path& path ) const = 0;
+    virtual void MakeDirectory( const boost::filesystem::path& path ) const = 0;
     virtual void Remove( const boost::filesystem::path& path ) const = 0;
     virtual void WriteFile( const boost::filesystem::path& path, const std::string& content ) const = 0;
     virtual std::string ReadFile( const boost::filesystem::path& path ) const = 0;

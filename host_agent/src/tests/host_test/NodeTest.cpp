@@ -80,7 +80,7 @@ namespace
         MOCK_METHOD( Exists, 1 );
         MOCK_METHOD( CopyDirectory, 2 );
         MOCK_METHOD( CopyFile, 2 );
-        MOCK_METHOD( CreateDirectory, 1 );
+        MOCK_METHOD( MakeDirectory, 1 );
         MOCK_METHOD( Remove, 1 );
         MOCK_METHOD( WriteFile, 2 );
         MOCK_METHOD( ReadFile, 1 );
@@ -149,7 +149,7 @@ namespace
             , processPid ( 1337 )
             , processName( "java.exe" )
         {
-            MOCK_EXPECT( system.CreateDirectory );
+            MOCK_EXPECT( system.MakeDirectory );
             MOCK_EXPECT( system.Exists ).with( jar ).returns( true );
             MOCK_EXPECT( system.IsFile ).with( jar ).returns( true );
             MOCK_EXPECT( system.IsDirectory ).with( web ).returns( true );

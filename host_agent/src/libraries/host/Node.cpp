@@ -176,7 +176,7 @@ boost::uuids::uuid Node::GetTag() const
 void Node::Save() const
 {
     const boost::filesystem::path path = GetPath();
-    system_.CreateDirectory( path );
+    system_.MakeDirectory( path );
     pool_->Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, path / runtime::Utf8Convert( type_ + ".id" ), ToXml() ) );
 }
 

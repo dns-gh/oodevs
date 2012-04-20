@@ -221,7 +221,7 @@ boost::uuids::uuid Session::GetNode() const
 void Session::Save() const
 {
     const boost::filesystem::path path = GetPath();
-    system_.CreateDirectory( path );
+    system_.MakeDirectory( path );
     pool_->Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, path / L"session.id", ToXml() ) );
 }
 
