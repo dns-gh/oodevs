@@ -198,11 +198,12 @@ namespace cpplog
 		// Constructor that initializes our stream.
 		LogData(loglevel_t logLevel)
 			: stream(buffer, k_logBufferSize), level(logLevel)
-			, line(0), fullPath(0), fileName(0), buffer()
+			, line(0), fullPath(0), fileName(0)
 #ifdef CPPLOG_SYSTEM_IDS
 			  , processId(0), threadId(0)
 #endif
 		{
+			*buffer = 0;
 		}
 
 		virtual ~LogData()
