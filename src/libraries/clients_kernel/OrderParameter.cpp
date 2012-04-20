@@ -14,6 +14,7 @@
 #pragma warning( disable : 4512 )
 #include <boost/algorithm/string.hpp>
 #pragma warning( pop )
+#include <boost/bind.hpp>
 #include <xeumeuleu/xml.hpp>
 
 using namespace kernel;
@@ -30,10 +31,16 @@ OrderParameter::OrderParameter( xml::xistream& xis )
     , maxOccurs_( 1 )
 {
     xis >> xml::list( "value", *this, &OrderParameter::ReadValue )
-        >> xml::optional >> xml::start( "choice" )
-            >> xml::list( "parameter", *this, &OrderParameter::ReadChoice )
+        >> xml::optional
+        >> xml::start( "choice" )
+            >> xml::list( "parameter", boost::bind( &OrderParameter::ReadChoice, this, _1, boost::ref( aliases_ ) ) )
         >> xml::end
-        >> xml::optional >> xml::attribute< unsigned int >( "min-occurs", minOccurs_ );
+        >> xml::optional
+            >> xml::start( "objects" )
+                >> xml::list( "parameter", boost::bind( &OrderParameter::ReadChoice, this, _1, boost::ref( genObjects_ ) ) )
+            >> xml::end
+        >> xml::optional
+            >> xml::attribute< unsigned int >( "min-occurs", minOccurs_ );
     std::string maxString( "1" );
     xis >> xml::optional >> xml::attribute< std::string >( "max-occurs", maxString );
     if( maxString == "unbounded" )
@@ -181,11 +188,11 @@ void OrderParameter::ReadValue( xml::xistream& xis )
 // Name: OrderParameter::ReadChoice
 // Created: LDC 2010-08-18
 // -----------------------------------------------------------------------------
-void OrderParameter::ReadChoice( xml::xistream& xis )
+void OrderParameter::ReadChoice( xml::xistream& xis, T_Aliases& data )
 {
     std::string type;
     xis >> xml::attribute( "type", type );
-    aliases_.insert( boost::algorithm::to_lower_copy( type ) );
+    data.insert( boost::algorithm::to_lower_copy( type ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -259,4 +266,13 @@ std::string OrderParameter::CompatibleType( const std::string& type ) const
     if( type == "location" && type_ == "locationcomposite")
         return type;
     return "";
+}
+
+// -----------------------------------------------------------------------------
+// Name: OrderParameter::HasGenObject
+// Created: LGY 2012-04-20
+// -----------------------------------------------------------------------------
+bool OrderParameter::HasGenObject( const std::string& type ) const
+{
+    return genObjects_.find( type ) != genObjects_.end();
 }

@@ -64,6 +64,7 @@ public:
     void SetOptional( bool optional );
     void SetMinMaxOccurs( unsigned int min, unsigned int max );
     bool IsOptional() const;
+    bool HasGenObject( const std::string& type ) const;
     unsigned int MinOccurs() const;
     unsigned int MaxOccurs() const;
     bool IsList() const;
@@ -77,18 +78,18 @@ public:
     //@}
 
 private:
-    //! @name Helpers
-    //@{
-    void ReadValue( xml::xistream& xis );
-    void ReadChoice( xml::xistream& xis );
-    //@}
-
     //! @name Types
     //@{
     typedef std::map< unsigned int, OrderParameterValue >   T_OrderParameterValues;
     typedef T_OrderParameterValues::const_iterator        CIT_OrderParameterValues;
     typedef std::set< std::string >                         T_Aliases;
     typedef T_Aliases::const_iterator                     CIT_Aliases;
+    //@}
+
+    //! @name Helpers
+    //@{
+    void ReadValue( xml::xistream& xis );
+    void ReadChoice( xml::xistream& xis, T_Aliases& data );
     //@}
 
 private:
@@ -101,6 +102,7 @@ private:
     unsigned int maxOccurs_;
     T_OrderParameterValues values_;
     T_Aliases aliases_;
+    T_Aliases genObjects_;
     //@}
 };
 
