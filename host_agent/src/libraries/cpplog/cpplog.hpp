@@ -381,7 +381,7 @@ namespace cpplog
 	{
 	private:
 		std::ostream&	m_logStream;
-		OstreamLogger& operator=( const OstreamLogger& )
+		OstreamLogger& operator=( const OstreamLogger& );
 
 	public:
 		OstreamLogger(std::ostream& outStream)
