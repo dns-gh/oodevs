@@ -12,6 +12,7 @@
 
 #include "Proxy_ABC.h"
 #include <boost/filesystem/path.hpp>
+#include <boost/property_tree/ptree_fwd.hpp>
 
 namespace boost
 {
@@ -68,7 +69,7 @@ public:
 private:
     //! @name Private methods
     boost::filesystem::path GetPath() const;
-    std::string ToXml() const;
+    boost::property_tree::ptree GetProperties() const;
     void Save() const;
     bool Reload( const boost::filesystem::path& path );
     void Start();

@@ -10,6 +10,7 @@
 
 #include "cpplog/cpplog.hpp"
 #include "FileSystem_ABC.h"
+#include "Json.h"
 #include "runtime/Process_ABC.h"
 #include "runtime/Runtime_ABC.h"
 #include "runtime/Utf8.h"
@@ -19,7 +20,7 @@
 #include <boost/assign/list_of.hpp>
 #include <boost/bind.hpp>
 #include <boost/lexical_cast.hpp>
-#include <xeumeuleu/xml.hpp>
+#include <boost/property_tree/ptree.hpp>
 
 #ifdef _MSC_VER
 #   pragma warning( push )
@@ -97,14 +98,13 @@ boost::filesystem::path Proxy::GetPath() const
 // Name: Proxy::ToXml
 // Created: BAX 2012-04-11
 // -----------------------------------------------------------------------------
-std::string Proxy::ToXml() const
+boost::property_tree::ptree Proxy::GetProperties() const
 {
-    xml::xostringstream xos;
-    xos << xml::start( "proxy" )
-        << xml::attribute( "port", port_ )
-        << xml::attribute( "process_pid", process_->GetPid() )
-        << xml::attribute( "process_name", process_->GetName() );
-    return xos.str();
+    boost::property_tree::ptree tree;
+    tree.put( "port", port_ );
+    tree.put( "process.pid", process_->GetPid() );
+    tree.put( "process.name", process_->GetName() );
+    return tree;
 }
 
 // -----------------------------------------------------------------------------
@@ -115,15 +115,16 @@ bool Proxy::Reload( const boost::filesystem::path& path )
 {
     try
     {
-        xml::xistringstream xis( system_.ReadFile( path ) );
-        xis >> xml::start( "proxy" );
-        const int port = xis.attribute< int >( "port" );
-        if( port_ != port )
+        const boost::property_tree::ptree tree = FromJson( system_.ReadFile( path ) );
+        const boost::optional< int > port = tree.get_optional< int >( "port" );
+        if( port == boost::none || *port != port_ )
             return false;
-        if( !xis.has_attribute( "process_pid" ) || !xis.has_attribute( "process_name" ) )
+        const boost::optional< int > pid  = tree.get_optional< int >( "process.pid" );
+        const boost::optional< std::string > name = tree.get_optional< std::string >( "process.name" );
+        if( pid == boost::none || name == boost::none )
             return false;
-        boost::shared_ptr< runtime::Process_ABC > ptr = runtime_.GetProcess( xis.attribute< int >( "process_pid" ) );
-        if( !ptr || ptr->GetName() != xis.attribute< std::string >( "process_name" ) )
+        boost::shared_ptr< runtime::Process_ABC > ptr = runtime_.GetProcess( *pid );
+        if( !ptr || ptr->GetName() != *name )
             return false;
         process_ = ptr;
         return true;
@@ -175,7 +176,7 @@ void Proxy::Save() const
 {
     const boost::filesystem::path path = GetPath();
     system_.MakeDirectory( path );
-    pool_->Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, path / L"proxy.id", ToXml() ) );
+    pool_->Post( boost::bind( &FileSystem_ABC::WriteFile, &system_, path / L"proxy.id", ToJson( GetProperties() ) ) );
 }
 
 // -----------------------------------------------------------------------------
