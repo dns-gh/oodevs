@@ -195,7 +195,10 @@ Reply Agent::StopNode( const boost::uuids::uuid& id ) const
 // -----------------------------------------------------------------------------
 Reply Agent::ListSessions( const boost::uuids::uuid& node, int offset, int limit ) const
 {
-    return List( sessions_.List( boost::bind( &IsNode, _1, node ), offset, limit ) );
+    SessionController_ABC::T_Predicate predicate;
+    if( !node.is_nil() )
+        predicate = boost::bind( &IsNode, _1, node );
+    return List( sessions_.List( predicate, offset, limit ) );
 }
 
 // -----------------------------------------------------------------------------

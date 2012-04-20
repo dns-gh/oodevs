@@ -170,6 +170,8 @@ BOOST_FIXTURE_TEST_CASE( agent_list_sessions, Fixture )
     const int offset = 1, limit = 1;
     MOCK_EXPECT( sessions.List ).once().with( mock::any, offset, limit ).returns( boost::assign::list_of( mockSessions[1] ) );
     CheckReply( agent.ListSessions( defaultNode, offset, limit ), "[" + ToJson( mockSessions[1]->GetProperties() ) + "]" );
+    MOCK_EXPECT( sessions.List ).once().with( mock::any, 0, 1 ).returns( boost::assign::list_of( mockSessions[0] ) );
+    CheckReply( agent.ListSessions( boost::uuids::nil_uuid(), 0, 1 ), "[" + ToJson( mockSessions[0]->GetProperties() ) + "]" );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_count_sessions, Fixture )
