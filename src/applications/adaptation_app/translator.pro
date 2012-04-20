@@ -107,6 +107,7 @@ ADN_ListView_Templates.cpp \
 ADN_Logistic_GUI.cpp \
 ADN_MainWindow.cpp \
 ADN_Maintenance_GUI.cpp \
+ADN_MissionGenObjectTypes_Table.cpp \
 ADN_MissionParameterValues_Table.cpp \
 ADN_MissionParameters_Table.cpp \
 ADN_MissionTypes_Table.cpp \

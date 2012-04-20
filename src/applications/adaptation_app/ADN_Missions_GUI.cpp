@@ -17,6 +17,7 @@
 #include "ADN_MissionParameters_Table.h"
 #include "ADN_MissionParameterValues_Table.h"
 #include "ADN_ComboBox_Vector.h"
+#include "ADN_MissionGenObjectTypes_Table.h"
 #include "ADN_ComboBox_Drawings.h"
 #include "ADN_MissionParameter_GroupBox.h"
 #include "ADN_Drawings_Data.h"
@@ -116,6 +117,13 @@ QWidget* ADN_Missions_GUI::BuildMissions( QWidget*& pContent, ADN_Missions_Data:
     builder.AddField< ADN_EditLine_Int >( pLimitHolder, tr( "Maximum" ), vInfosConnectors[ eMaxValue ] );
     connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), pLimit, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
 
+    ADN_MissionParameter_GroupBox* pGenObject = new ADN_MissionParameter_GroupBox( 1, Qt::Horizontal, tr( "Allowed types" ), eMissionParameterTypeGenObject );
+    QCheckBox* all = new QCheckBox( pGenObject );
+    all->setText( tr( "all" ) );
+    ADN_MissionGenObjectTypes_Table* genObjectList = new ADN_MissionGenObjectTypes_Table( pGenObject, vInfosConnectors[ eGenObjects ], all );
+    connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), pGenObject, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
+    connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), genObjectList, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
+
     // Connect the gui to the data.
     paramList->SetItemConnectors( vInfosConnectors );
 
@@ -130,6 +138,7 @@ QWidget* ADN_Missions_GUI::BuildMissions( QWidget*& pContent, ADN_Missions_Data:
     parameterLayout->addWidget( pLimit );
     parameterLayout->addWidget( pEnum );
     parameterLayout->addWidget( pChoice );
+    parameterLayout->addWidget( pGenObject );
 
     // Content layout
     pContent = new QWidget();
@@ -214,6 +223,13 @@ QWidget* ADN_Missions_GUI::BuildFragOrders()
     builder.AddField< ADN_EditLine_Int >( pLimitHolder, tr( "Maximum" ), vInfosConnectors[ eMaxValue ] );
     connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), pLimit, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
 
+    ADN_MissionParameter_GroupBox* pGenObject = new ADN_MissionParameter_GroupBox( 1, Qt::Horizontal, tr( "Allowed types" ), eMissionParameterTypeGenObject );
+    QCheckBox* all = new QCheckBox( pGenObject );
+    all->setText( tr( "all" ) );
+    ADN_MissionGenObjectTypes_Table* genObjectList = new ADN_MissionGenObjectTypes_Table( pGenObject, vInfosConnectors[ eGenObjects ], all );
+    connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), pGenObject, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
+    connect( paramList, SIGNAL( TypeChanged( E_MissionParameterType ) ), genObjectList, SLOT( OnTypeChanged( E_MissionParameterType ) ) );
+
     // Connect the gui to the data.
     paramList->SetItemConnectors( vInfosConnectors );
 
@@ -228,6 +244,7 @@ QWidget* ADN_Missions_GUI::BuildFragOrders()
     parameterLayout->addWidget( pLimit );
     parameterLayout->addWidget( pEnum );
     parameterLayout->addWidget( pChoice );
+    parameterLayout->addWidget( pGenObject );
 
     // Content layout
     pFragOrderWidget_ = new QWidget();

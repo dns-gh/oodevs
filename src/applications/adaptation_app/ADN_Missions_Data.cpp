@@ -13,9 +13,11 @@
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
 #include "ADN_Tools.h"
+#include "ADN_Objects_Data.h"
 #include "ADN_OpenFile_Exception.h"
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_AiEngine_Data.h"
+#include "ADN_DataException.h"
 #include "ADN_Tr.h"
 #include "tools/Loader_ABC.h"
 #include <boost/bind.hpp>
@@ -97,6 +99,7 @@ ADN_Missions_Data::MissionParameter::MissionParameter()
     , maxOccurs_ ( 1 )
     , minValue_  ( std::numeric_limits< int >::min() )
     , maxValue_  ( std::numeric_limits< int >::max() )
+    , genObjects_( ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos() )
 {
     ADN_Type_Enum< E_MissionParameterType, eNbrMissionParameterType >::SetConverter( &ADN_Tr::ConvertFromMissionParameterType );
     FillChoices();
@@ -147,6 +150,12 @@ ADN_Missions_Data::MissionParameter* ADN_Missions_Data::MissionParameter::Create
         MissionType* newType = (*it)->CreateCopy();
         newParam->choices_.AddItem( newType );
     }
+    newParam->genObjects_.reserve( genObjects_.size() );
+    for( helpers::IT_MissionGenObjectTypes_Infos_Vector it = genObjects_.begin(); it != genObjects_.end(); ++it )
+    {
+        helpers::ADN_MissionGenObjectTypes_Infos* newType = (*it)->CreateCopy();
+        newParam->genObjects_.AddItem( newType );
+    }
     return newParam;
 }
 
@@ -172,9 +181,31 @@ void ADN_Missions_Data::MissionParameter::ReadArchive( xml::xistream& input )
         input >> xml::optional >> xml::attribute( "max-occurs", maxOccurs_ );
     type_ = ADN_Tr::ConvertToMissionParameterType( type );
     input >> xml::list( "value", *this, &ADN_Missions_Data::MissionParameter::ReadValue );
-    input >> xml::optional() >> xml::start( "choice" )
-            >> xml::list( "parameter", *this, &ADN_Missions_Data::MissionParameter::ReadChoice )
-          >> xml::end;
+    input >> xml::optional()
+              >> xml::start( "choice" )
+                  >> xml::list( "parameter", boost::bind( &ADN_Missions_Data::MissionParameter::ReadChoice< T_Choice_Vector >, this, _1, boost::ref( choices_ ) ) )
+              >> xml::end;
+    if( type_.GetData() == eMissionParameterTypeGenObject )
+    {
+        if( !input.has_child( "objects" ) )
+            FillGenObjects();
+        else
+        {
+            input >> xml::start( "objects" )
+                      >> xml::list( "parameter", boost::bind( &ADN_Missions_Data::MissionParameter::ReadChoice< helpers::T_MissionGenObjectTypes_Infos_Vector >, this, _1, boost::ref( genObjects_ ) ) )
+                  >> xml::end;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::FillGenObjects
+// Created: LGY 2012-04-19
+// -----------------------------------------------------------------------------
+void ADN_Missions_Data::MissionParameter::FillGenObjects()
+{
+    for( std::size_t i = 0; i < genObjects_.size(); ++i )
+        genObjects_[ i ]->isAllowed_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -209,15 +240,16 @@ void ADN_Missions_Data::MissionParameter::ReadValue( xml::xistream& input )
 // Name: ADN_Missions_Data::MissionParameter::ReadChoice
 // Created: LDC 2010-08-19
 // -----------------------------------------------------------------------------
-void ADN_Missions_Data::MissionParameter::ReadChoice( xml::xistream& input )
+template< typename T >
+void ADN_Missions_Data::MissionParameter::ReadChoice( xml::xistream& input, T& data )
 {
     std::string name;
     input >> xml::attribute( "type", name );
-    for( std::size_t i = 0; i < choices_.size(); ++i )
+    for( std::size_t i = 0; i < data.size(); ++i )
     {
-        if( choices_[i]->name_ == name )
+        if( data[i]->name_ == name )
         {
-            choices_[i]->isAllowed_ = true;
+            data[i]->isAllowed_ = true;
             return;
         }
     }
@@ -232,6 +264,33 @@ namespace
             list[i][0] = i == 0 ? list[i][0].lower() : list[i][0].upper();
         return list.join( "" ).append( '_' );
     }
+
+    template< typename T >
+    void Write(  xml::xostream& output, const T& data, E_MissionParameterType type, E_MissionParameterType expected, const std::string& tag )
+    {
+        bool hasChoice = false;
+        for( std::size_t i = 0; i < data.size() && !hasChoice; ++i )
+            hasChoice = data[i]->isAllowed_.GetData();
+        if( hasChoice && type == expected )
+        {
+            output << xml::start( tag );
+            for( std::size_t i = 0; i < data.size(); ++i )
+                data[i]->WriteArchive( output );
+            output << xml::end;
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Missions_Data::HasGenObjects
+// Created: LGY 2012-04-19
+// -----------------------------------------------------------------------------
+bool ADN_Missions_Data::MissionParameter::HasGenObjects() const
+{
+    for( std::size_t i = 0; i < genObjects_.size(); ++i )
+        if( genObjects_[ i ]->isAllowed_.GetData() )
+         return true;
+    return false;
 }
 
 // -----------------------------------------------------------------------------
@@ -263,16 +322,10 @@ void ADN_Missions_Data::MissionParameter::WriteArchive( xml::xostream& output )
         output << xml::attribute( "max-value", maxValue_ );
     for( unsigned int i = 0; i < values_.size(); ++i )
         values_[i]->WriteArchive( output, i );
-    bool hasChoice = false;
-    for( std::size_t i = 0; i < choices_.size() && !hasChoice; ++i )
-        hasChoice = choices_[i]->isAllowed_.GetData();
-    if( hasChoice && type_.GetData() == eMissionParameterTypeLocationComposite )
-    {
-        output << xml::start( "choice" );
-        for( std::size_t i = 0; i < choices_.size(); ++i )
-            choices_[i]->WriteArchive( output );
-        output << xml::end;
-    }
+    Write( output, choices_, type_.GetData(), eMissionParameterTypeLocationComposite, "choice" );
+    if( type_.GetData() == eMissionParameterTypeGenObject && !HasGenObjects() )
+        throw ADN_DataException( tools::translate( "ADN_Missions_Data",  "Invalid mission" ).ascii(), tools::translate( "ADN_Missions_Data", "'%1' parameter should have at least one object." ).arg( strName_.GetData().c_str() ).ascii() );
+    Write( output, genObjects_, type_.GetData(), eMissionParameterTypeGenObject, "objects" );
     output << xml::end;
 }
 

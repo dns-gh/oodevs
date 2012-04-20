@@ -1366,6 +1366,12 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MissionParameter_GroupBox.cpp">
       <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MissionGenObjectTypes_Table.cpp">
+      <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MissionGenObjectTypes_Infos.cpp">
+      <Filter>Source Files\Workspace\Helpers</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">
@@ -1684,15 +1690,6 @@
       <Filter>Source Files\Workspace\Missions\Missions data</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ListView_MissionTypes.h">
-      <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_MissionParameterType.h">
-      <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_MissionParameterValues_Table.h">
-      <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_MissionTypes_Table.h">
       <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_FragOrder_Wizard.h">
@@ -2087,6 +2084,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_MissionParameterValues_Table.h">
       <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_MissionGenObjectTypes_Infos.h">
+      <Filter>Source Files\Workspace\Helpers</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -2500,6 +2500,18 @@
     </CustomBuild>
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Composantes_Speeds_GUI.h">
       <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_MissionParameterType.h">
+      <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_MissionTypes_Table.h">
+      <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_MissionParameter_GroupBox.h">
+      <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
+    </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_MissionGenObjectTypes_Table.h">
+      <Filter>Source Files\Workspace\Missions\Missions GUI</Filter>
     </CustomBuild>
   </ItemGroup>
 </Project>

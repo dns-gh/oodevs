@@ -76,6 +76,8 @@ void ADN_MissionParameterType::DoValueChanged()
     bool isNumeric = type == eMissionParameterTypeNumeric;
     itemConnectors_[ADN_Missions_GUI::eMinValue]->Connect( &param->minValue_, isNumeric );
     itemConnectors_[ADN_Missions_GUI::eMaxValue]->Connect( &param->maxValue_, isNumeric );
+    bool isGenObjects = type == eMissionParameterTypeGenObject;
+    itemConnectors_[ADN_Missions_GUI::eGenObjects]->Connect( &param->genObjects_, isGenObjects );
     emit TypeChanged( type );
 }
 
@@ -92,5 +94,6 @@ void ADN_MissionParameterType::Disconnect()
         itemConnectors_[ADN_Missions_GUI::eChoiceValues]->Disconnect( &param->choices_ );
         itemConnectors_[ADN_Missions_GUI::eMinValue]->Disconnect( &param->minValue_ );
         itemConnectors_[ADN_Missions_GUI::eMaxValue]->Disconnect( &param->maxValue_ );
+        itemConnectors_[ADN_Missions_GUI::eGenObjects]->Disconnect( &param->genObjects_ );
     }
 }

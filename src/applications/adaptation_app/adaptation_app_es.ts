@@ -257,63 +257,63 @@ estacionado con motor encendido</translation>
     <name>ADN_AutomatLog_ListView</name>
     <message>
         <source>Automat &gt; Unit &gt; Comp &gt; Item</source>
-        <translation>Autómata &gt; Unidad &gt; Comp &gt; Objeto</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Units</source>
-        <translation>Unidades</translation>
-    </message>
-    <message>
-        <source>Total</source>
-        <translation>Total</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Equipments</source>
-        <translation>Equipos</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Resources</source>
-        <translation>Recursos</translation>
+        <translation type="unfinished"></translation>
     </message>
     <message>
         <source>Norm. Consumption</source>
-        <translation>Consumo normalizado</translation>
+        <translation type="unfinished">Consumo normalizado</translation>
     </message>
     <message>
         <source>Consumption
 Moving</source>
-        <translation>Consumo en
+        <translation type="unfinished">Consumo en
 movimiento</translation>
     </message>
     <message>
         <source>Autonomy
 Moving</source>
-        <translation>Autonomía en
+        <translation type="unfinished">Autonomía en
 movimiento</translation>
     </message>
     <message>
         <source>Consumption
 Parked engine stopped</source>
-        <translation>Consumo
-estacionado con motor detenido</translation>
+        <translation type="unfinished">Consumo
+Estacionado con motor detenido</translation>
     </message>
     <message>
         <source>Autonomy
 Parked engine Stopped</source>
-        <translation>Autonomía
+        <translation type="unfinished">Autonomía
 estacionado con motor detenido</translation>
     </message>
     <message>
         <source>Consumption
 Parked engine running</source>
-        <translation>Consumo
+        <translation type="unfinished">Consumo
 Estacionado con motor encendido</translation>
     </message>
     <message>
         <source>Autonomy
 Parked engine running</source>
-        <translation>Autonomía
+        <translation type="unfinished">Autonomía
 estacionado con motor encendido</translation>
+    </message>
+    <message>
+        <source>Total</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>
@@ -2678,6 +2678,17 @@ tirador</translation>
     </message>
 </context>
 <context>
+    <name>ADN_MissionGenObjectTypes_Table</name>
+    <message>
+        <source>Type</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Allowed</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_MissionParameterValues_Table</name>
     <message>
         <source>Name</source>
@@ -2774,6 +2785,17 @@ tirador</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Missions_Data</name>
+    <message>
+        <source>Invalid mission</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>&apos;%1&apos; parameter should have at least one object.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_Missions_GUI</name>
     <message>
         <source>Unit missions</source>
@@ -2853,6 +2875,10 @@ tirador</translation>
     </message>
     <message>
         <source>Maximum</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>all</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

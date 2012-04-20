@@ -208,6 +208,7 @@
 				</xs:complexType>
 			</xs:element>
 			<xs:element name="choice" type="parameterChoice" minOccurs="0"/>
+			<xs:element name="objects" type="genObjectsParameter" minOccurs="0"/>
 			<xs:element name="labels" type="parameterLabels" minOccurs="0"/>
 		</xs:sequence>
 		<xs:attribute name="dia-name" type="xs:string" use="required">
@@ -266,6 +267,15 @@
 			<xs:element name="parameter" minOccurs="0" maxOccurs="unbounded">
 				<xs:complexType>
 					<xs:attribute name="type" type="T_MissionParameterType" use="required"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="genObjectsParameter">
+		<xs:sequence>
+			<xs:element name="parameter" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:attribute name="type" type="xs:string" use="required"/>
 				</xs:complexType>
 			</xs:element>
 		</xs:sequence>

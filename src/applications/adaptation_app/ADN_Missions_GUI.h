@@ -33,6 +33,7 @@ public:
         eParameterValues,
         eFragOrderAvailableWithoutMission,
         eChoiceValues,
+        eGenObjects,
         eMinValue,
         eMaxValue,
         eDiaType,

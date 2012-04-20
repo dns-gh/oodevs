@@ -15,6 +15,7 @@
 #include "ADN_Enums.h"
 #include "IdentifierFactory.h"
 #include "ADN_Drawings_Data.h"
+#include "ADN_MissionGenObjectTypes_Infos.h"
 
 namespace xml { class xistream; }
 
@@ -83,13 +84,17 @@ public:
 
         void ReadArchive ( xml::xistream& input );
         void ReadValue   ( xml::xistream& input );
-        void ReadChoice  ( xml::xistream& input );
+        template< typename T >
+        void ReadChoice  ( xml::xistream& input, T& data );
         void WriteArchive( xml::xostream& output );
 
     private:
         void FillChoices();
+        void FillGenObjects();
+        bool HasGenObjects() const;
 
     public:
+        ADN_Type_String                                                   strMission_;
         ADN_Type_String                                                   strName_;
         ADN_Type_Enum< E_MissionParameterType, eNbrMissionParameterType > type_;
         ADN_Type_Bool                                                     isOptional_;
@@ -99,7 +104,7 @@ public:
         ADN_Type_Int                                                      maxValue_;
         T_MissionParameterValue_Vector                                    values_;
         T_Choice_Vector                                                   choices_;
-
+        helpers::T_MissionGenObjectTypes_Infos_Vector                     genObjects_;
         ADN_Type_String                                                   diaName_;
     };
 

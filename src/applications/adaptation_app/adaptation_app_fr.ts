@@ -2679,6 +2679,17 @@ du tireur</translation>
     </message>
 </context>
 <context>
+    <name>ADN_MissionGenObjectTypes_Table</name>
+    <message>
+        <source>Type</source>
+        <translation>Type</translation>
+    </message>
+    <message>
+        <source>Allowed</source>
+        <translation>Autorisé</translation>
+    </message>
+</context>
+<context>
     <name>ADN_MissionParameterValues_Table</name>
     <message>
         <source>Name</source>
@@ -2775,6 +2786,17 @@ du tireur</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Missions_Data</name>
+    <message>
+        <source>Invalid mission</source>
+        <translation>Mission invalide</translation>
+    </message>
+    <message>
+        <source>&apos;%1&apos; parameter should have at least one object.</source>
+        <translation>Le paramètre &apos;%1&apos; doit avoir au moins un objet.</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Missions_GUI</name>
     <message>
         <source>Unit missions</source>
@@ -2855,6 +2877,10 @@ du tireur</translation>
     <message>
         <source>Maximum</source>
         <translation>Maximum</translation>
+    </message>
+    <message>
+        <source>all</source>
+        <translation>tout</translation>
     </message>
 </context>
 <context>
