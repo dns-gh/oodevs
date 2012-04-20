@@ -34,7 +34,7 @@ namespace
         MOCK_METHOD( sendLogMessage, 1 );
         MockLog()
         {
-            MOCK_EXPECT( this->sendLogMessage ).returns( true );
+            MOCK_EXPECT( sendLogMessage ).returns( true );
         }
     };
 

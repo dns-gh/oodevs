@@ -41,7 +41,7 @@ namespace
         MOCK_METHOD( sendLogMessage, 1 );
         MockLog()
         {
-            MOCK_EXPECT( this->sendLogMessage ).returns( true );
+            MOCK_EXPECT( sendLogMessage ).returns( true );
         }
     };
 
@@ -57,8 +57,8 @@ namespace
         MockProcess( int pid, const std::string& name )
             : pid_( pid ), name_( name )
         {
-            MOCK_EXPECT( this->GetPid ).returns( pid_ );
-            MOCK_EXPECT( this->GetName ).returns( name_ );
+            MOCK_EXPECT( GetPid ).returns( pid_ );
+            MOCK_EXPECT( GetName ).returns( name_ );
         }
         MOCK_METHOD( GetPid, 0 );
         MOCK_METHOD( GetName, 0 );
@@ -93,7 +93,7 @@ namespace
         MOCK_METHOD( Get, 0 );
         MockPort( int port )
         {
-            MOCK_EXPECT( this->Get ).returns( port );
+            MOCK_EXPECT( Get ).returns( port );
         }
     };
 
@@ -107,7 +107,7 @@ namespace
     {
         MockPool()
         {
-            MOCK_EXPECT( this->Post ).calls( boost::bind( boost::apply< void >(), _1 ) );
+            MOCK_EXPECT( Post ).calls( boost::bind( boost::apply< void >(), _1 ) );
         }
         MOCK_METHOD( Post, 1 );
         MOCK_METHOD( Stop, 0 );
