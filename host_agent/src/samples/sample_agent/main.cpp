@@ -116,10 +116,12 @@ namespace
         run.Post( boost::bind( &web::Server::Run, &server ) );
         getc( stdin );
         server.Stop();
+        BOOST_FOREACH( host::NodeController_ABC::T_Node node, cluster.List( 0, INT_MAX ) )
+            cluster.Delete( node->GetId() );
     }
 }
 
-int main( int argc, const char* argv[] )
+int StartServer( int argc, const char* argv[] )
 {
     cpplog::StdErrLogger base;
     cpplog::BackgroundLogger log( base );
@@ -154,4 +156,9 @@ int main( int argc, const char* argv[] )
     }
     LOG_INFO( log ) << "Host Agent - Exit";
     return 0;
+}
+
+int main( int argc, const char* argv[] )
+{
+    return StartServer( argc, argv );
 }
