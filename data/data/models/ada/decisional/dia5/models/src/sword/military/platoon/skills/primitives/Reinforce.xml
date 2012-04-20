@@ -30,11 +30,11 @@
         <link name="observe" skill="sword.military.platoon.skills.actions.Observe">
             <description>Lien vers le skill Observe</description>
         </link>
-        <link name="mount" skill="sword.military.platoon.skills.actions.Mount">
-            <description>Lien vers le skill Mount</description>
-        </link>
         <link name="dismount" skill="sword.military.platoon.skills.actions.Dismount">
             <description>Lien vers le skill Dismount</description>
+        </link>
+        <link name="mount" skill="sword.military.platoon.skills.actions.Mount">
+            <description>Lien vers le skill Mount</description>
         </link>
     </links>
 </skill>

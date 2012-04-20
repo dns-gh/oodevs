@@ -63,7 +63,7 @@ return
       return {}
     end,
     
-    getEntityToReinforce = function( self, params)
+    getEntityToReinforce = function( self, params )
         myself.leadData.objectiveReinforces = myself.leadData.objectiveReinforces or self:getEntitiesToSupport( params )
         myself.leadData.objectiveReinforceIndex =  myself.leadData.objectiveReinforceIndex or 0
         myself.leadData.objectiveReinforceIndex = myself.leadData.objectiveReinforceIndex % #myself.leadData.objectiveReinforces + 1
