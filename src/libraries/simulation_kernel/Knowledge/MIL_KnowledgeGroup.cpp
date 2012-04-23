@@ -133,7 +133,7 @@ MIL_KnowledgeGroup::MIL_KnowledgeGroup()
 MIL_KnowledgeGroup::MIL_KnowledgeGroup( const MIL_KnowledgeGroup& source, const MIL_Agent_ABC& pion, MIL_KnowledgeGroup* parent )
     : type_               ( source.type_ )
     , id_                 ( idManager_.GetFreeId() )
-    , name_               ( source.name_ )
+    , name_               ( source.name_ + " (" + pion.GetName() + ")" )
     , army_               ( source.army_ )
     , parent_             ( parent ) // LTO
     , knowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_KnowledgeGroup( *this ) )
