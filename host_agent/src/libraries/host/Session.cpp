@@ -89,9 +89,9 @@ Session::T_Process AcquireProcess( const boost::property_tree::ptree& tree, cons
     Session::T_Process ptr = GetProcess( tree, runtime );
     if( !ptr  )
         return Session::T_Process();
-    if( expected == tree.get< int >( "port" ) && ptr->GetName() == tree.get< std::string >( "process.name" ) )
-        return ptr;
-    return Session::T_Process();
+    if( expected != tree.get< int >( "port" ) || ptr->GetName() != tree.get< std::string >( "process.name" ) )
+        return Session::T_Process();
+    return ptr;
 }
 }
 
