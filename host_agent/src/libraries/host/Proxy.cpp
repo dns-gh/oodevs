@@ -187,12 +187,12 @@ void Proxy::Save() const
 // -----------------------------------------------------------------------------
 void Proxy::Register( const std::string& prefix, const std::string& host, int port ) const
 {
-    LOG_INFO( log_ ) << "[proxy] Adding proxy from /" << prefix << " to " << host << ":" << port;
     pool_->Post( boost::bind( &web::Client_ABC::Get, &client_,
         "localhost", port_, "/register_proxy", boost::assign::map_list_of
         ( "prefix", prefix )
         ( "host", host )
         ( "port", boost::lexical_cast< std::string >( port ) ) ) );
+    LOG_INFO( log_ ) << "[proxy] Added proxy from /" << prefix << " to " << host << ":" << port;
 }
 
 // -----------------------------------------------------------------------------
@@ -201,7 +201,7 @@ void Proxy::Register( const std::string& prefix, const std::string& host, int po
 // -----------------------------------------------------------------------------
 void Proxy::Unregister( const std::string& prefix ) const
 {
-    LOG_INFO( log_ ) << "[proxy] Removing proxy to /" << prefix;
     pool_->Post( boost::bind( &web::Client_ABC::Get, &client_,
         "localhost", port_, "/unregister_proxy", boost::assign::map_list_of( "prefix", prefix ) ) );
+    LOG_INFO( log_ ) << "[proxy] Removed proxy to /" << prefix;
 }
