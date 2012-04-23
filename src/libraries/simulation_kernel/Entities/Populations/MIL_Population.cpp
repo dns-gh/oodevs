@@ -301,6 +301,8 @@ void MIL_Population::WriteODB( xml::xostream& xos ) const
     assert( pArmy_ );
     assert( pDefaultAttitude_ );
     assert( !concentrations_.empty() || !flows_.empty() );
+    if( concentrations_.empty() && flows_.empty() )
+        MT_LOG_ERROR_MSG( "Saving Population with no flow nor concentration." );
     xos << xml::start( "population" );
     MIL_Entity_ABC::WriteODB ( xos ) ;
     xos << xml::attribute( "id", nID_ )
@@ -308,7 +310,7 @@ void MIL_Population::WriteODB( xml::xostream& xos ) const
         << xml::attribute( "attitude", pDefaultAttitude_->GetName() );
     if( !concentrations_.empty() )
         xos << xml::attribute( "position", MIL_Tools::ConvertCoordSimToMos( concentrations_.front()->GetPosition() ) );
-    else
+    else if( !flows_.empty() )
         xos << xml::attribute( "position", MIL_Tools::ConvertCoordSimToMos( flows_.front()->GetPosition() ) );
     xos << xml::start( "composition" )
             << xml::attribute( "healthy", GetHealthyHumans() )
@@ -1684,7 +1686,8 @@ bool MIL_Population::HasReachedDestinationCompletely( const MT_Vector2D& destina
 // -----------------------------------------------------------------------------
 MT_Vector2D MIL_Population::GetFlowHeadPosition()
 {
-    assert( HasFlow() );
+    if( !HasFlow() )
+        throw std::runtime_error( "Asking head position of a crowd without flow." );
     MIL_PopulationFlow* firstFlow = *flows_.begin();
     return firstFlow->GetPosition();
 }
