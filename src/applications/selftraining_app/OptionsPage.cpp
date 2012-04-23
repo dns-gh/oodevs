@@ -28,8 +28,7 @@ namespace
 {
     std::string ReadLang()
     {
-        QSettings settings;
-        settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
+        QSettings settings( "MASA Group", qApp->translate( "Application", "SWORD" ) );
         return settings.readEntry( "/Common/Language", QTextCodec::locale() ).ascii();
     }
 
@@ -282,8 +281,7 @@ void OptionsPage::OnApply()
 // -----------------------------------------------------------------------------
 void OptionsPage::Commit()
 {
-    QSettings settings;
-    settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
+    QSettings settings( "MASA Group", qApp->translate( "Application", "SWORD" ) );
     settings.writeEntry( "/Common/Language", selectedLanguage_.c_str() );
     settings.writeEntry( "/Common/DataDirectory", selectedDataDir_.c_str() );
     settings.writeEntry( "/Common/UserProfile", selectedProfile_ );

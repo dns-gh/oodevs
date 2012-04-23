@@ -48,8 +48,7 @@ namespace
 {
     QString ReadDataDirectory()
     {
-        QSettings settings;
-        settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
+        QSettings settings( "MASA Group", qApp->translate( "Application", "SWORD" ) );
         return settings.readEntry( "/Common/DataDirectory", "" );
     }
 
@@ -429,8 +428,7 @@ void ADN_MainWindow::OpenProject( const std::string& szFilename, const bool isAd
     mainTabWidget_->show();
     if( !isAdminMode && !fileLoaderObserver_->GetInvalidSignedFiles().empty() )
     {
-        QSettings settings;
-        settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
+        QSettings settings( "MASA Group", qApp->translate( "Application", "SWORD" ) );
         if( settings.readNumEntry( "/Common/NoSignatureCheck", 0 ) != 1 )
             QMessageBox::warning( this, qApp->translate( "Application", "SWORD" )
                     , tr( "The signatures for the following files do not exist or are invalid : " ) + "\n" + fileLoaderObserver_->GetInvalidSignedFiles().c_str() );

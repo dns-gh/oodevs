@@ -25,8 +25,7 @@ namespace
 {
     QString GetDirectory()
     {
-        QSettings settings;
-        settings.setPath( "MASA Group", qApp->translate( "Application", "SWORD" ) );
+        QSettings settings( "MASA Group", qApp->translate( "Application", "SWORD" ) );
         return settings.readEntry( "/Common/Components/Terrain/RootDirectory", "noValue" );
     }
 

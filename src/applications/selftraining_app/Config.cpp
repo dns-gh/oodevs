@@ -22,8 +22,7 @@ namespace
 {
     Config::EProfile ReadUserProfile()
     {
-        QSettings settings;
-        settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
+        QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
         QString value = settings.readEntry( "/Common/UserProfile", "" );
         if( value.isEmpty() )
             return Config::eAdministrator;
