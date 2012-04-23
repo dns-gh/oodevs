@@ -118,8 +118,7 @@ void NodeController::Reload()
             if( !node )
                 continue;
             nodes_->Attach( node );
-            LOG_INFO( log_ ) << "[" << type_ << "] Reloaded " << node->id_ << " " << node->name_ << " :" << node->port_->Get();
-            proxy_.Register( GetPrefix( type_, *node ), "localhost", node->port_->Get() );
+            Create( *node, true );
         }
         catch( const std::exception& err )
         {
@@ -166,20 +165,30 @@ NodeController::T_Node NodeController::Get( const boost::uuids::uuid& id ) const
 
 // -----------------------------------------------------------------------------
 // Name: NodeController::Create
+// Created: BAX 2012-04-23
+// -----------------------------------------------------------------------------
+void NodeController::Create( Node& node, bool isReload )
+{
+    const int port = node.port_->Get();
+    LOG_INFO( log_ ) << "[" << type_ << "] " << ( isReload ? "Reloaded " : "Added " ) << node.id_ << " " << node.name_ << " :" << port;
+    if( !isReload )
+        system_.MakeDirectory( GetPath( jar_, node ) );
+    proxy_.Register( GetPrefix( type_, node ), "localhost", port );
+    if( isReload )
+        Save( node );
+    else
+        Start( node, true );
+}
+
+// -----------------------------------------------------------------------------
+// Name: NodeController::Create
 // Created: BAX 2012-04-17
 // -----------------------------------------------------------------------------
 NodeController::T_Node NodeController::Create( const std::string& name )
 {
-    std::auto_ptr< Port_ABC > ptrPort = ports_.Create();
-    const int port = ptrPort->Get();
-    boost::shared_ptr< Node > node = boost::make_shared< Node >( uuids_.Create(), name, ptrPort );
-    bool valid = nodes_->Attach( node );
-    if( !valid )
-        return T_Node();
-    LOG_INFO( log_ ) << "[" << type_ << "] Added " << node->id_ << " " << node->name_ << " :" << node->port_->Get();
-    system_.MakeDirectory( GetPath( jar_, *node ) );
-    proxy_.Register( GetPrefix( type_, *node ), "localhost", port );
-    Start( *node, true );
+    boost::shared_ptr< Node > node = boost::make_shared< Node >( uuids_.Create(), name, ports_.Create() );
+    nodes_->Attach( node );
+    Create( *node, false );
     return node;
 }
 

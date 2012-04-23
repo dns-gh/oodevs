@@ -78,6 +78,7 @@ private:
     //! @name Private methods
     //@{
     void Save( const Node& node ) const;
+    void Create( Node& node, bool isReload );
     boost::shared_ptr< runtime::Process_ABC > StartWith( const Node& node ) const;
     void Start( Node& node, bool mustSave ) const;
     void Stop( Node& node, bool skipSave ) const;
