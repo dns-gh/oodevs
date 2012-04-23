@@ -600,25 +600,6 @@ void ModelConsistencyChecker::CheckLogisticBase()
 
 namespace
 {
-    bool HasLogisticCapacity( const Automat_ABC& automat )
-    {
-        const kernel::AutomatType& type = automat.GetType();
-        if( type.IsTC2() )
-            return true;
-        const TacticalHierarchies* hierarchy = static_cast< const TacticalHierarchies* >( automat.Retrieve< TacticalHierarchies >() );
-        if( !hierarchy )
-            return false;
-        tools::Iterator< const Entity_ABC& > it = hierarchy->CreateSubordinateIterator();
-        while( it.HasMoreElements() )
-        {
-            const Entity_ABC& childEntity = it.NextElement();
-            const Agent_ABC* agent = dynamic_cast< const Agent_ABC* >( &childEntity );
-            if( agent && ( agent->GetType().HasStocks() || agent->Retrieve< Stocks >() ) )
-                return true;
-        }
-        return false;
-    }
-
     bool IsLogisticBaseFormation( const Formation_ABC& formation )
     {
         if( formation.GetLogisticLevel() == kernel::LogisticLevel::logistic_base_ )
@@ -646,7 +627,8 @@ void ModelConsistencyChecker::CheckLogisticFormation()
     while( it.HasMoreElements() )
     {
         const Automat_ABC& automat = it.NextElement();
-        if( !HasLogisticCapacity( automat ) )
+        const kernel::AutomatType& type = automat.GetType();
+        if( !type.HasLogistics() )
             continue;
         if( automat.GetLogisticLevel() == kernel::LogisticLevel::logistic_base_ )
             continue;
