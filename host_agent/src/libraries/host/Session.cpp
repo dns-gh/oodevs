@@ -266,7 +266,7 @@ std::string GetConfiguration( const std::string& name, int base )
     GetDispatcherConfiguration( tree, base );
     GetSimulationConfiguration( tree, base );
     std::ostringstream output;
-    boost::property_tree::write_xml( output, tree );
+    boost::property_tree::write_xml( output, tree, boost::property_tree::xml_writer_make_settings( ' ', 4 ) );
     return output.str();
 }
 }
