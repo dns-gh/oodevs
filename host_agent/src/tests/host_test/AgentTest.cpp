@@ -79,19 +79,18 @@ namespace
             : agent( log, nodes, sessions )
             , node ( AddNode( defaultNodeString, "nodeName" ) )
             , mockSessions( boost::assign::list_of
-                ( AddSession( defaultNode, "myExercise", "myName", 0, true ) )
-                ( AddSession( anotherNode, "anExercise", "aName", 1, true ) ) )
+                ( AddSession( defaultNode, "myExercise", "myName", 0 ) )
+                ( AddSession( anotherNode, "anExercise", "aName", 1 ) ) )
         {
             // NOTHING
         }
 
-        boost::shared_ptr< MockSession > AddSession( const boost::uuids::uuid& node, const std::string& exercise, const std::string& name, int idx, bool hasNode = false )
+        boost::shared_ptr< MockSession > AddSession( const boost::uuids::uuid& node, const std::string& exercise, const std::string& name, int idx )
         {
             const std::string uuid = CreatePrefixedUuid( idx );
             boost::shared_ptr< MockSession > session = CreateMockSession( node, uuid, exercise, name );
             MOCK_EXPECT( sessions.Create ).once().with( node, exercise, name ).returns( session );
-            if( hasNode )
-                MOCK_EXPECT( nodes.Has ).once().with( node ).returns( true );
+            MOCK_EXPECT( nodes.Has ).once().with( node ).returns( true );
             CheckReply( agent.CreateSession( node, exercise, name ), ToJson( session->GetProperties() ) );
             return session;
         }
@@ -215,7 +214,6 @@ BOOST_FIXTURE_TEST_CASE( agent_cannot_create_orphan_session, Fixture )
 
 BOOST_FIXTURE_TEST_CASE( agent_create_session, Fixture )
 {
-    MOCK_EXPECT( nodes.Has ).once().with( defaultNode ).returns( true );
     boost::shared_ptr< MockSession > session = AddSession( defaultNode, "exerciseName", "sessionName", 10000 );
 }
 
