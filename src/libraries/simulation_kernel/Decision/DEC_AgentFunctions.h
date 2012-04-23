@@ -154,6 +154,7 @@ public:
     static boost::shared_ptr< MT_Vector2D > GetInterceptionPoint( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Agent > pKnowledge );
 
     // NBC
+    static bool IsAgentNBC( const MIL_Agent_ABC& callerAgent );
     static bool IsContaminated( const MIL_Agent_ABC& callerAgent );
     static bool IsIntoxicated( const MIL_Agent_ABC& callerAgent );
     static void WearNbcProtectionSuit( MIL_Agent_ABC& callerAgent );

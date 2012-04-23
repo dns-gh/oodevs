@@ -462,6 +462,14 @@ que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe
                 </type>
             </return>
         </method>
+        <method name="isAgentNBC">
+            <description>Indique si l'unité est de type NBC</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
         <method name="switchRadioOff">
             <description>Couper les equipements afin d'opérer un silence radio</description>
         </method>

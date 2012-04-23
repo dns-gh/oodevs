@@ -50,6 +50,7 @@
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/MIL_Army.h"
+#include "Entities/Specialisations/NBC/MIL_AgentTypePionNBC.h"
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Knowledge/DEC_Knowledge_Object.h"
 #include "Knowledge/DEC_KnowledgeBlackBoard_AgentPion.h"
@@ -119,6 +120,15 @@ void DEC_AgentFunctions::ActivatePartialBlackout( MIL_Agent_ABC& callerAgent )
 void DEC_AgentFunctions::DeactivateBlackout( MIL_Agent_ABC& callerAgent )
 {
     callerAgent.GetRole< PHY_RoleInterface_Communications >().DeactivateBlackout();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_AgentFunctions::IsAgentNBC
+// Created: DDA 2012-04-12
+// -----------------------------------------------------------------------------
+bool DEC_AgentFunctions::IsAgentNBC( const MIL_Agent_ABC& callerAgent )
+{
+    return dynamic_cast< const MIL_AgentTypePionNBC* >( &callerAgent.GetType() ) != 0;
 }
 
 // -----------------------------------------------------------------------------

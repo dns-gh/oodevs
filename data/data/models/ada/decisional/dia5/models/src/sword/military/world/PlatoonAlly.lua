@@ -315,6 +315,9 @@ return
     isPoisoned = function( self )
         return integration.isPoisoned( self )
     end,
+    isAgentNBC = function( self )
+        return integration.isAgentNBC( self )
+    end,
     sendTaskToPion = function( self, receiver, mission_type, mission_objectives, echelon )
         integration.SendMessage( "CreateMissionPionVersPion", receiver, { mission_type = mission_type,  mission_objectives = mission_objectives, echelon = echelon }, { type = "dynamic" } )
     end,
