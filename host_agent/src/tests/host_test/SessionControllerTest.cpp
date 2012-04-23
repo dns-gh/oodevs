@@ -40,11 +40,6 @@ namespace
         return reply;
     }
 
-    bool IsAny( const Session_ABC& /*session*/ )
-    {
-        return true;
-    }
-
     struct SubFixture
     {
         SubFixture( const std::string& data, const std::string& apps )
@@ -92,6 +87,11 @@ namespace
                                  "\"status\":\"stopped\""
                                  "}";
 
+    bool IsKnownNode( const Session_ABC& session )
+    {
+        return session.GetNode() == idNode;
+    }
+
     struct Fixture
     {
         Fixture()
@@ -117,7 +117,7 @@ namespace
             MOCK_EXPECT( sub.runtime.GetProcess ).once().with( 1234 ).returns( process );
             MOCK_EXPECT( sub.system.ReadFile ).once().with( "session.id" ).returns( sessionIdle );
             MOCK_EXPECT( sub.ports.Create1 ).once().with( 1338 ).returns( new MockPort( 1338 ) );
-            control.Reload( &IsAny );
+            control.Reload( &IsKnownNode );
             return process;
         }
     };
