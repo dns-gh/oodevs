@@ -39,6 +39,16 @@
         <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="Running Water" stock="0"/>
       </resources>
     </urban-object>
+    <urban-object id="91">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="Electricity" stock="0"/>
+      </resources>
+    </urban-object>
+    <urban-object id="92">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="Electricity" stock="0"/>
+      </resources>
+    </urban-object>
     <urban-object id="107">
       <resources>
         <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="Natural Gas" stock="0"/>
@@ -89,6 +99,20 @@
         </node>
       </resources>
     </urban-object>
+    <urban-object id="262">
+      <resources>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="0" resource-type="Electricity" stock="0">
+          <link capacity="-1" kind="urban-object" target="91"/>
+          <link capacity="-1" kind="urban-object" target="92"/>
+        </node>
+        <node consumption="0" critical-consumption="false" enabled="true" initial-stock="0" production="100" resource-type="Natural Gas" stock="0">
+          <link capacity="-1" kind="urban-object" target="49"/>
+          <link capacity="-1" kind="urban-object" target="47"/>
+          <link capacity="-1" kind="urban-object" target="46"/>
+          <link capacity="-1" kind="urban-object" target="7"/>
+        </node>
+      </resources>
+    </urban-object>
   </urban-objects>
 </urban-state>
-<!-- signature="2669406965" -->
+<!-- signature="1192016431" -->

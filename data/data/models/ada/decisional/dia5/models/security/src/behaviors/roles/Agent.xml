@@ -78,6 +78,7 @@
         <skill name="agent.behaviors.skills.actions.Dismount"/>
         <skill name="behaviors.skills.Dismount"/>
         <skill name="behaviors.skills.ExtractVictimsFromCrowdsWithinArea"/>
+        <skill name="behaviors.skills.CreateAWork"/>
     </skills>
     <resources>
         <resource name="agent.behaviors.resources.Motion"/>

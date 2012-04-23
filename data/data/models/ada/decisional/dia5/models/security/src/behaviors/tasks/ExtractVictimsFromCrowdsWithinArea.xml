@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.tasks.ExtractVictimsFromCrowdsWithinArea" source-version="1.0.0">
+    <parameters>
+        <parameter name="area">
+            <type>
+                <class name="ontology.classes.Area"/>
+            </type>
+        </parameter>
+    </parameters>
+    <stages>
+        <stage label="Moving to extract victims from crowds" disable-when-done="true">
+            <skills>
+                <skill name="behaviors.skills.ExtractVictimsFromCrowdsWithinArea" main="true">
+                    <parameter name="area">
+                        <value>
+                            <parameter>area</parameter>
+                        </value>
+                    </parameter>
+                </skill>
+            </skills>
+        </stage>
+    </stages>
+</task>

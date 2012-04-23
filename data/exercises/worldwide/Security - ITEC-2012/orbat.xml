@@ -107,6 +107,9 @@
             <unit command-post="false" id="89" name="ML_Security - Crowd transporter" position="29TNF3089755119" type="ML_Security - Crowd transporter"/>
             <unit command-post="false" id="90" name="ML_Security - Civil Protection - Safety" position="29TNF3124654958" type="ML_Security - Civil Protection - Safety"/>
             <unit command-post="false" id="91" name="ML_Security - Civil Protection - Safety" position="29TNF3106655023" type="ML_Security - Civil Protection - Safety"/>
+            <unit command-post="false" id="195" name="ML_Security - helicopters" position="29TNF3771255800" type="ML_Security - helicopters"/>
+            <unit command-post="false" id="196" name="ML_Security - helicopters" position="29TNF3830455707" type="ML_Security - helicopters"/>
+            <unit command-post="false" id="197" name="ML_Security - helicopters" position="29TNF3824355677" type="ML_Security - helicopters"/>
           </automat>
           <automat engaged="false" id="28" knowledge-group="8" logistic-level="logistic-base" name="Logistic combat train [28]" type="LOG.Logistic combat train">
             <unit command-post="true" id="29" name="Logistic CT" position="29TNF3547054990" type="LOG.Logistic CT"/>
@@ -260,6 +263,43 @@
             <urban-block id="10"/>
             <urban-block id="48"/>
             <urban-block id="49"/>
+          </living-area>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
+            <adhesion party="138" value="0"/>
+          </adhesions>
+        </inhabitant>
+        <inhabitant id="193" name="test pop" type="popType1">
+          <composition dead="0" healthy="100000" wounded="0"/>
+          <health-need quantity="100"/>
+          <information></information>
+          <living-area>
+            <urban-block id="87"/>
+            <urban-block id="92"/>
+            <urban-block id="93"/>
+            <urban-block id="94"/>
+          </living-area>
+          <adhesions>
+            <adhesion party="1" value="0"/>
+            <adhesion party="2" value="0"/>
+            <adhesion party="113" value="0"/>
+            <adhesion party="138" value="0"/>
+          </adhesions>
+        </inhabitant>
+        <inhabitant id="194" name="my pop" type="popType1">
+          <composition dead="0" healthy="1000000" wounded="0"/>
+          <health-need quantity="1000"/>
+          <information></information>
+          <living-area>
+            <urban-block id="54"/>
+            <urban-block id="65"/>
+            <urban-block id="68"/>
+            <urban-block id="69"/>
+            <urban-block id="70"/>
+            <urban-block id="77"/>
+            <urban-block id="211"/>
           </living-area>
           <adhesions>
             <adhesion party="1" value="0"/>
@@ -1026,4 +1066,4 @@
     </party>
   </diplomacy>
 </orbat>
-<!-- signature="3803829852" -->
+<!-- signature="1114530980" -->

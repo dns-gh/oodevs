@@ -4,7 +4,7 @@ include "Integration.lua"
 
 local libPath = select(1,...)
 local role    = select(2,...)
-masalife.brain.core.loadModel( role, { libPath .. "/models/directia.core/directia.core.bml", libPath .. "/models/common/src", libPath .. "/models/security/src", libPath .. "/models/security_training/src" } )
+masalife.brain.core.loadModel( role, { libPath .. "/models/directia.core/directia.core.bml", libPath .. "/models/common/src", libPath .. "/models/security/src" } )
                                        
 integration.ontology = {
     types = {
