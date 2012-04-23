@@ -106,7 +106,11 @@ namespace
         host::NodeController nodes( log, runtime.GetRuntime(), system, uuids, proxy, cfg.java, cfg.node.jar, cfg.node.root, "node", pool, ports );
         host::NodeController cluster( log, runtime.GetRuntime(), system, uuids, proxy, cfg.java, cfg.node.jar, cfg.node.root, "cluster", pool, ports );
         if( cfg.cluster.enabled )
-            cluster.Create( "cluster" );
+        {
+            cluster.Reload();
+            if( !cluster.Count() )
+                cluster.Create( "cluster" );
+        }
         host::SessionController sessions( log, runtime.GetRuntime(), system, uuids, cfg.session.data, cfg.session.applications, pool, ports );
         host::Agent agent( log, nodes, sessions );
         web::Controller controller( log, agent );
@@ -116,8 +120,6 @@ namespace
         run.Post( boost::bind( &web::Server::Run, &server ) );
         getc( stdin );
         server.Stop();
-        BOOST_FOREACH( host::NodeController_ABC::T_Node node, cluster.List( 0, INT_MAX ) )
-            cluster.Delete( node->GetId() );
     }
 }
 
