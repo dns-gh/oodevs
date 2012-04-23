@@ -30,12 +30,14 @@
 #include "clients_kernel/Agent_ABC.h"
 #include "clients_kernel/AgentComposition.h"
 #include "clients_kernel/AgentType.h"
+#include "clients_kernel/AgentTypes.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/AutomatType.h"
 #include "clients_kernel/ComponentType.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Diplomacies_ABC.h"
 #include "clients_kernel/DotationType.h"
+#include "clients_kernel/DotationCapacityType.h"
 #include "clients_kernel/EquipmentType.h"
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Ghost_ABC.h"
@@ -288,6 +290,88 @@ void ModelConsistencyChecker::CheckUniqueness( E_ConsistencyCheck type, bool ( *
     }
 }
 
+
+namespace
+{
+    bool IsStockCompatible( const kernel::Agent_ABC& stockAgent, const kernel::DotationType& dotation, const ::StaticModel& staticModel )
+    {
+        kernel::AgentType& agentType = staticModel.types_.tools::Resolver< kernel::AgentType >::Get( stockAgent.GetType().GetId() );
+        return agentType.IsStockCategoryDefined( dotation.GetLogisticSupplyClass() );
+    }
+
+    const Entity_ABC* GetLogBase( const Entity_ABC& entity )
+    {
+        const TacticalHierarchies* hierarchy = static_cast< const TacticalHierarchies* >( entity.Retrieve< TacticalHierarchies >() );         
+        if( !hierarchy || !hierarchy->GetSuperior() )
+            return 0;
+        const Automat_ABC* pAutomatParent = dynamic_cast< const Automat_ABC* >( hierarchy->GetSuperior() );
+        const Formation_ABC* pFormationParent = dynamic_cast< const Formation_ABC* >( hierarchy->GetSuperior() );
+        if( pAutomatParent && pAutomatParent->GetLogisticLevel() == kernel::LogisticLevel::logistic_base_ )
+            return pAutomatParent;
+        if( pFormationParent && pFormationParent->GetLogisticLevel() == kernel::LogisticLevel::logistic_base_  )
+            return pFormationParent;
+        return GetLogBase( *hierarchy->GetSuperior() );
+    }
+
+    bool HasConsumption( const Agent_ABC& agent, const Agent_ABC& stockAgent, const ::StaticModel& staticModel )
+    {
+        kernel::AgentType& agentType = staticModel.types_.tools::Resolver< kernel::AgentType >::Get( agent.GetType().GetId() );
+        tools::Iterator< const kernel::AgentComposition& > agentCompositionIterator = agentType.CreateIterator();
+        while( agentCompositionIterator.HasMoreElements() )
+        {
+            const kernel::AgentComposition& agentComposition = agentCompositionIterator.NextElement();
+            const kernel::EquipmentType& equipmentType = staticModel.objectTypes_.tools::Resolver< kernel::EquipmentType >::Get( agentComposition.GetType().GetId() );
+            tools::Iterator< const kernel::DotationCapacityType& > resourcesIterator = equipmentType.CreateResourcesIterator();
+            while( resourcesIterator.HasMoreElements() )
+            {
+                const kernel::DotationCapacityType& dotationCapacity = resourcesIterator.NextElement();
+                const kernel::DotationType& category = staticModel.objectTypes_.kernel::Resolver2< kernel::DotationType >::Get( dotationCapacity.GetName() );
+                if( agentComposition.GetCount() > 0 && dotationCapacity.GetNormalizedConsumption() > 0. )
+                    if( IsStockCompatible( stockAgent, category, staticModel ) )
+                        return true;
+            }
+        }
+        return false;
+    }
+
+    bool HasChildrenConsumption( const kernel::Entity_ABC& entity, const Agent_ABC& stockAgent, const ::StaticModel& staticModel )
+    {
+        const kernel::TacticalHierarchies* pTacticalHierarchies = entity.Retrieve< kernel::TacticalHierarchies >();
+        if( pTacticalHierarchies )
+        {
+            tools::Iterator< const kernel::Entity_ABC& > children = pTacticalHierarchies->CreateSubordinateIterator();
+            while( children.HasMoreElements() )
+            {
+                const kernel::Entity_ABC& childrenEntity = children.NextElement();
+                const Agent_ABC* pAgent = dynamic_cast< const Agent_ABC* >( &childrenEntity );
+                if( pAgent )
+                {
+                    if( HasConsumption( *pAgent, stockAgent, staticModel ) )
+                        return true;
+                }
+                else if( HasChildrenConsumption( childrenEntity, stockAgent, staticModel ) )
+                    return true;
+            }
+        }
+        return false;
+    }
+
+    bool HasLogRequirements( const Entity_ABC& logBase, const Agent_ABC& stockAgent, const ::StaticModel& staticModel )
+    {
+        const LogisticHierarchiesBase* pLogChildrenHierarchy = logBase.Retrieve< LogisticHierarchiesBase >();
+        if( !pLogChildrenHierarchy )
+            return false;
+        tools::Iterator< const kernel::Entity_ABC& > logChildren = pLogChildrenHierarchy->CreateSubordinateIterator();
+        while( logChildren.HasMoreElements() )
+        {
+            const kernel::Entity_ABC& entity = logChildren.NextElement();
+            if( HasChildrenConsumption( entity, stockAgent, staticModel ) )
+                return true;
+        }
+        return false;
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: ModelConsistencyChecker::CheckStockInitialization
 // Created: ABR 2011-09-22
@@ -300,7 +384,11 @@ void ModelConsistencyChecker::CheckStockInitialization()
         const Agent_ABC& agent = it.NextElement();
         const Stocks* stocks = agent.Retrieve< Stocks >();
         if( agent.GetType().HasStocks() && stocks && !stocks->HasDotations() )
-            AddError( eStockInitialization, &agent );
+        {
+            const Entity_ABC* pLogBase = GetLogBase( agent );
+            if( pLogBase && HasLogRequirements( *pLogBase, agent, staticModel_ ) )
+                AddError( eStockInitialization, &agent );
+        }
     }
 }
 
