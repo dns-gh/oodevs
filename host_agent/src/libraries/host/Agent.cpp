@@ -80,8 +80,7 @@ Reply Create( T ptr, const std::string& name )
 }
 
 template< typename T, typename U >
-Reply Dispatch( T& controller, const U& member,
-                        const boost::uuids::uuid& id, const std::string& action )
+Reply Dispatch( T& controller, const U& member, const boost::uuids::uuid& id, const std::string& action )
 {
     boost::shared_ptr< typename T::T_Base > ptr = CALL_MEMBER( controller, member )( id );
     if( !ptr )
