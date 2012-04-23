@@ -452,6 +452,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_Agent_EstRendu" ] = &DEC_ActionFunctions::IsSurrendered;
 
     // NBC
+    brain[ "DEC_Agent_EstAgentNBC" ] = boost::bind( &DEC_AgentFunctions::IsAgentNBC , boost::cref( GetPion() ) );
     brain[ "DEC_Agent_EstContamine" ] = boost::bind( &DEC_AgentFunctions::IsContaminated , boost::cref( GetPion() ) );
     brain[ "DEC_Agent_EstEmpoisonne" ] = boost::bind( &DEC_AgentFunctions::IsIntoxicated , boost::cref( GetPion() ) );
     brain[ "DEC_Agent_MettreTenueProtectionNBC" ] = boost::bind( &DEC_AgentFunctions::WearNbcProtectionSuit, boost::ref( GetPion() ) );

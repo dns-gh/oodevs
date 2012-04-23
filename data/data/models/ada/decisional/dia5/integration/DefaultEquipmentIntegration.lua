@@ -31,6 +31,10 @@ integration.isPoisoned = function()
     return DEC_Agent_EstEmpoisonne()
 end
 
+integration.isAgentNBC = function()
+    return DEC_Agent_EstAgentNBC()
+end
+
 --- Define nbc alert enumeration
 -- @author MGD
 -- @release 2010-04-27
