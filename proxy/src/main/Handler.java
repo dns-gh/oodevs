@@ -3,6 +3,7 @@ package main;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.Set;
 import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReadWriteLock;
@@ -92,10 +93,10 @@ public class Handler extends HttpServlet {
         }
     }
 
-    private Set<String> List() {
+    private Set<Entry<String, ProxyHolder>> List() {
         read_.lock();
         try {
-            return targets_.keySet();
+            return targets_.entrySet();
         } finally {
             read_.unlock();
         }
@@ -128,8 +129,8 @@ public class Handler extends HttpServlet {
 
     private void listProxies(final ServletRequest req, final ServletResponse res) throws IOException {
         String reply = "";
-        for (final String item : List())
-            reply += "\"" + item + "\", ";
+        for (final Entry<String, ProxyHolder> it : List())
+            reply += "{ \"prefix\" : \"" + it.getKey() + "\", \"host\" : \"" + it.getValue().getHost() + "\", \"port\" : " + it.getValue().getPort() + " }, ";
         reply = "[" + reply.substring(0, Math.max(0, reply.length() - 2)) + "]";
         res.getWriter().print(reply);
     }

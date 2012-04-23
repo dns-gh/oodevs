@@ -15,15 +15,27 @@ import org.eclipse.jetty.servlets.ProxyServlet.Transparent;
 public class ProxyHolder {
 
     private final Transparent proxy_;
+    private final String host_;
+    private final int port_;
     private final Lock read_;
     private final Lock write_;
 
     public ProxyHolder(final String prefix, final String host, final int port, final ServletConfig config) throws ServletException {
         proxy_ = new Transparent("/" + prefix, host, port);
         proxy_.init(config);
+        host_ = host;
+        port_ = port;
         final ReadWriteLock lock = new ReentrantReadWriteLock();
         read_ = lock.readLock();
         write_ = lock.writeLock();
+    }
+
+    public String getHost() {
+        return host_;
+    }
+
+    public int getPort() {
+        return port_;
     }
 
     public void service(final ServletRequest req, final ServletResponse res) throws ServletException, IOException {
