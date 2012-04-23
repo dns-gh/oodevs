@@ -220,6 +220,9 @@ std::string Controller::Notify( const Request_ABC& request )
     const std::string& uri = request.GetUri();
     try
     {
+        if( uri == "/get_cluster" )     return GetCluster( request );
+        if( uri == "/start_cluster" )   return StartCluster( request );
+        if( uri == "/stop_cluster" )    return StopCluster( request );
         // nodes
         if( uri == "/list_nodes" )      return ListNodes( request );
         if( uri == "/count_nodes" )     return CountNodes( request );
@@ -246,6 +249,36 @@ std::string Controller::Notify( const Request_ABC& request )
     }
 
     return WriteHttpReply( NotFound, "Unknown URI" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::GetCluster
+// Created: BAX 2012-04-03
+// -----------------------------------------------------------------------------
+std::string Controller::GetCluster( const Request_ABC& request )
+{
+    LOG_INFO( log_ ) << "[web] get_cluster";
+    return WriteHttpReply( CALL_MEMBER( agent_, &Agent_ABC::GetCluster )() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::StartCluster
+// Created: BAX 2012-04-23
+// -----------------------------------------------------------------------------
+std::string Controller::StartCluster( const Request_ABC& request )
+{
+    LOG_INFO( log_ ) << "[web] start_cluster";
+    return WriteHttpReply( CALL_MEMBER( agent_, &Agent_ABC::StartCluster )() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Controller::StopCluster
+// Created: BAX 2012-04-23
+// -----------------------------------------------------------------------------
+std::string Controller::StopCluster( const Request_ABC& request )
+{
+    LOG_INFO( log_ ) << "[web] stop_cluster";
+    return WriteHttpReply( CALL_MEMBER( agent_, &Agent_ABC::StopCluster )() );
 }
 
 // -----------------------------------------------------------------------------

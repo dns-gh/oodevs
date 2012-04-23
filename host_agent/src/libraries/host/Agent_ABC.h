@@ -50,6 +50,13 @@ public:
     virtual ~Agent_ABC() {}
     //@}
 
+    //! @name Cluster Methods
+    //@{
+    virtual Reply GetCluster() const = 0;
+    virtual Reply StartCluster() const = 0;
+    virtual Reply StopCluster() const = 0;
+    //@}
+
     //! @name Node Methods
     //@{
     virtual Reply ListNodes( int offset, int limit ) const = 0;

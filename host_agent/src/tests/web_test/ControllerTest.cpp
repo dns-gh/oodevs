@@ -42,6 +42,10 @@ namespace
 
     MOCK_BASE_CLASS( MockAgent, host::Agent_ABC )
     {
+        // cluster
+        MOCK_METHOD( GetCluster, 0 );
+        MOCK_METHOD( StartCluster, 0 );
+        MOCK_METHOD( StopCluster, 0 );
         // nodes
         MOCK_METHOD( ListNodes, 2 );
         MOCK_METHOD( CountNodes, 0 );
@@ -111,6 +115,30 @@ namespace
         MockAgent agent;
         Controller controller;
     };
+}
+
+BOOST_FIXTURE_TEST_CASE( controller_get_cluster, Fixture )
+{
+    SetRequest( "GET", "/get_cluster" );
+    const std::string expected = "a json cluster";
+    MOCK_EXPECT( agent.GetCluster ).once().returns( expected );
+    CheckNotify( 200, expected );
+}
+
+BOOST_FIXTURE_TEST_CASE( controller_start_cluster, Fixture )
+{
+    SetRequest( "GET", "/start_cluster" );
+    const std::string expected = "a json cluster";
+    MOCK_EXPECT( agent.StartCluster ).once().returns( expected );
+    CheckNotify( 200, expected );
+}
+
+BOOST_FIXTURE_TEST_CASE( controller_stop_cluster, Fixture )
+{
+    SetRequest( "GET", "/stop_cluster" );
+    const std::string expected = "a json cluster";
+    MOCK_EXPECT( agent.StopCluster ).once().returns( expected );
+    CheckNotify( 200, expected );
 }
 
 BOOST_FIXTURE_TEST_CASE( controller_list_nodes, Fixture )

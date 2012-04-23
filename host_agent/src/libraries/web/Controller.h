@@ -48,6 +48,13 @@ public:
     //@}
 
 private:
+    //! @name Cluster Methods
+    //@{
+    std::string GetCluster  ( const Request_ABC& request );
+    std::string StartCluster( const Request_ABC& request );
+    std::string StopCluster ( const Request_ABC& request );
+    //@}
+
     //! @name Node Methods
     //@{
     std::string ListNodes ( const Request_ABC& request );

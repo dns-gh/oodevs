@@ -39,8 +39,15 @@ class Agent : public Agent_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Agent( cpplog::BaseLogger& log, NodeController_ABC& nodes, SessionController_ABC& sessions );
+             Agent( cpplog::BaseLogger& log, NodeController_ABC* cluster, NodeController_ABC& nodes, SessionController_ABC& sessions );
     virtual ~Agent();
+    //@}
+
+    //! @name Cluster Methods
+    //@{
+    virtual Reply GetCluster() const;
+    virtual Reply StartCluster() const;
+    virtual Reply StopCluster() const;
     //@}
 
     //! @name Node Methods
@@ -76,6 +83,8 @@ private:
     //@{
     mutable cpplog::BaseLogger& log_;
     const std::auto_ptr< boost::mutex > access_;
+    NodeController_ABC* cluster_;
+    boost::uuids::uuid clusterId_;
     NodeController_ABC& nodes_;
     SessionController_ABC& sessions_;
     //@}

@@ -105,14 +105,8 @@ namespace
         host::PortFactory ports( cfg.ports.period, cfg.ports.min, cfg.ports.max );
         host::NodeController nodes( log, runtime.GetRuntime(), system, uuids, proxy, cfg.java, cfg.node.jar, cfg.node.root, "node", pool, ports );
         host::NodeController cluster( log, runtime.GetRuntime(), system, uuids, proxy, cfg.java, cfg.node.jar, cfg.node.root, "cluster", pool, ports );
-        if( cfg.cluster.enabled )
-        {
-            cluster.Reload();
-            if( !cluster.Count() )
-                cluster.Create( "cluster" );
-        }
         host::SessionController sessions( log, runtime.GetRuntime(), system, uuids, cfg.session.data, cfg.session.applications, pool, ports );
-        host::Agent agent( log, nodes, sessions );
+        host::Agent agent( log, cfg.cluster.enabled ? &cluster : 0, nodes, sessions );
         web::Controller controller( log, agent );
         web::Server server( log, controller, cfg.ports.host );
         server.Listen();

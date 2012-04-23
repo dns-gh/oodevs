@@ -87,18 +87,36 @@ Reply Dispatch( T& controller, const U& member, const boost::uuids::uuid& id, co
         return Reply( "unable to " + action + " " + boost::lexical_cast< std::string >( id ), false );
     return Reply( ToJson( ptr->GetProperties() ) );
 }
+
+template< typename T, typename U >
+Reply ClusterDispatch( T* controller, const U& member, const boost::uuids::uuid& id, const std::string& action )
+{
+    if( !controller )
+        return Reply( "Cluster not enabled", false );
+    return Dispatch( *controller, member, id, action );
+}
 }
 
 // -----------------------------------------------------------------------------
 // Name: Agent::Agent
 // Created: BAX 2012-03-07
 // -----------------------------------------------------------------------------
-Agent::Agent( cpplog::BaseLogger& log, NodeController_ABC& nodes, SessionController_ABC& sessions )
+Agent::Agent( cpplog::BaseLogger& log, NodeController_ABC* cluster, NodeController_ABC& nodes, SessionController_ABC& sessions )
     : log_     ( log )
+    , cluster_ ( cluster )
     , nodes_   ( nodes )
     , sessions_( sessions )
     , access_  ( new boost::mutex() )
 {
+    if( cluster_ )
+    {
+        cluster_->Reload();
+        if( cluster_->Count() )
+            clusterId_ = cluster_->List( 0, 1 ).front()->GetId();
+        else
+            clusterId_ = cluster_->Create( "cluster" )->GetId();
+        cluster_->Start( clusterId_ );
+    }
     nodes_.Reload();
     sessions_.Reload( boost::bind( &HasKnownNode, _1, boost::cref( nodes_ ) ) );
 }
@@ -110,6 +128,33 @@ Agent::Agent( cpplog::BaseLogger& log, NodeController_ABC& nodes, SessionControl
 Agent::~Agent()
 {
     // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::GetCluster
+// Created: BAX 2012-04-23
+// -----------------------------------------------------------------------------
+Reply Agent::GetCluster() const
+{
+    return ClusterDispatch( cluster_, &NodeController_ABC::Get, clusterId_, "find cluster" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::StartCluster
+// Created: BAX 2012-04-23
+// -----------------------------------------------------------------------------
+Reply Agent::StartCluster() const
+{
+    return ClusterDispatch( cluster_, &NodeController_ABC::Start, clusterId_, "start cluster" );
+}
+
+// -----------------------------------------------------------------------------
+// Name: Agent::StopCluster
+// Created: BAX 2012-04-23
+// -----------------------------------------------------------------------------
+Reply Agent::StopCluster() const
+{
+    return ClusterDispatch( cluster_, &NodeController_ABC::Stop, clusterId_, "start cluster" );
 }
 
 // -----------------------------------------------------------------------------
