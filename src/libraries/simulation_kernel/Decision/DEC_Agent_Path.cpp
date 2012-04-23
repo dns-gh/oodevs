@@ -622,9 +622,9 @@ void DEC_Agent_Path::Execute( TerrainPathfinder& pathfind )
 bool DEC_Agent_Path::IsDestinationTrafficable() const
 {
     const PHY_RoleInterface_TerrainAnalysis& analysis = queryMaker_.GetRole< PHY_RoleInterface_TerrainAnalysis >();
-    return analysis.CanMoveOnUrbanBlock( initialPathPoints_ ) &&
-           analysis.CanMoveOnBurningCells( initialPathPoints_ ) &&
-           analysis.CanMoveOnKnowledgeObject( initialPathPoints_ );
+    return analysis.CanMoveOnUrbanBlock( nextPathPoints_ ) &&
+           analysis.CanMoveOnBurningCells( nextPathPoints_ ) &&
+           analysis.CanMoveOnKnowledgeObject( nextPathPoints_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -649,35 +649,8 @@ void DEC_Agent_Path::NotifyPointReached( const CIT_PathPointList& itCurrentPathP
             break;
         }
     }
-    if( verifyPointTrafficability )
-    {
-        T_KnowledgeObjectVector knowledgesObject;
-        queryMaker_.GetArmy().GetKnowledge().GetObjects( knowledgesObject );
-        for( CIT_KnowledgeObjectVector itKnowledgeObject = knowledgesObject.begin(); itKnowledgeObject != knowledgesObject.end(); ++itKnowledgeObject )
-        {
-            const DEC_Knowledge_Object& knowledge = **itKnowledgeObject;
-            if( knowledge.CanCollideWith( queryMaker_ ) )
-            {
-                const TER_Localisation& localisation = knowledge.GetLocalisation();
-                if( localisation.GetType() == TER_Localisation::ePoint )
-                {
-                    const T_PointVector& points = localisation.GetPoints();
-                    if( !points.empty() && 
-                        static_cast< float >( points.front().rX_ ) == static_cast< float >( nextPathPoints_.front().rX_ ) &&
-                        static_cast< float >( points.front().rY_ ) == static_cast< float >( nextPathPoints_.front().rY_ ) )
-                    {
-                        nextPathPoints_.erase( nextPathPoints_.begin() );
-                        break;
-                    }
-                }
-                else if( localisation.IsInside( nextPathPoints_.front() ) )
-                {
-                    nextPathPoints_.erase( nextPathPoints_.begin() );
-                    break;
-                }
-            }
-        }
-    }
+    if( verifyPointTrafficability && !queryMaker_.GetRole< PHY_RoleInterface_TerrainAnalysis >().CanMoveOn( nextPathPoints_.front() ) )
+        nextPathPoints_.erase( nextPathPoints_.begin() );
     DEC_PathResult::NotifyPointReached( itCurrentPathPoint );
 }
 

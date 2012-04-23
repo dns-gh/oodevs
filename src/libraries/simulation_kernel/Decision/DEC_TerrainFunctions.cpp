@@ -65,5 +65,7 @@ bool DEC_TerrainFunctions::CanMoveOn( const DEC_Decision_ABC* agent, boost::shar
 {
     if( !agent )
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
-    return agent->GetPion().GetRole< PHY_RoleInterface_TerrainAnalysis >().CanMoveOn( position );
+    if( !position )
+        return false;
+    return agent->GetPion().GetRole< PHY_RoleInterface_TerrainAnalysis >().CanMoveOn( *position );
 }

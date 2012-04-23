@@ -42,7 +42,7 @@ public:
     virtual bool CanMoveOnUrbanBlock            ( const std::vector< MT_Vector2D >& points ) const;
     virtual bool CanMoveOnBurningCells          ( const std::vector< MT_Vector2D >& points ) const;
     virtual bool CanMoveOnKnowledgeObject       ( const std::vector< MT_Vector2D >& points ) const;
-    virtual bool CanMoveOn                      ( boost::shared_ptr< MT_Vector2D > position ) const;
+    virtual bool CanMoveOn                      ( const MT_Vector2D& position ) const;
 
     //@}
 

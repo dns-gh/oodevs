@@ -573,7 +573,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPositionWit
     if( pKnowledge )
     {
         pResult.reset( new MT_Vector2D( pKnowledge->GetSafetyPosition( callerAgent, rMinDistance ) ) );
-        if( !callerAgent.GetRole< PHY_RolePion_TerrainAnalysis >().CanMoveOn( pResult ) )
+        if( !callerAgent.GetRole< PHY_RolePion_TerrainAnalysis >().CanMoveOn( *pResult ) )
             pResult.reset();
     }
     return pResult;
@@ -610,7 +610,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeSafetyPositionWit
         TER_World::GetWorld().ClipPointInsideWorld( vSafetyPos );
 
         pResult.reset( new MT_Vector2D( vSafetyPos ) );
-        if( !callerAgent.GetRole< PHY_RolePion_TerrainAnalysis >().CanMoveOn( pResult ) )
+        if( !callerAgent.GetRole< PHY_RolePion_TerrainAnalysis >().CanMoveOn( *pResult ) )
             pResult.reset();
     }
     return pResult;

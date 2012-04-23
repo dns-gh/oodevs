@@ -34,9 +34,9 @@ public:
 
     //! @name Operations
     //@{
-    bool     Execute  ( TerrainPathfinder& pathfind, unsigned int nComputationEndTime );
+    bool   Execute  ( TerrainPathfinder& pathfind, unsigned int nComputationEndTime );
     double GetLength() const;
-    void     Cancel   ();
+    void   Cancel   ();
     //@}
 
     //! @name Accessors
