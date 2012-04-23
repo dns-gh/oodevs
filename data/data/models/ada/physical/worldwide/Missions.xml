@@ -231,6 +231,14 @@
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="pointDeDeploiement_" name="Deployment point" optional="false" type="Point"/>
+      <parameter dia-name="modeDeploiement_" name="Deployment mode" optional="false" type="Enumeration">
+        <value id="0" name="square"/>
+        <value id="1" name="triangle"/>
+        <value id="2" name="3 units net"/>
+        <value id="3" name="4 units net"/>
+        <value id="4" name="double walls"/>
+        <value id="5" name="simple wall"/>
+      </parameter>
     </mission>
     <mission dia-behavior="MIS_Pion_ASS_AssurerMiseEnOeuvre" dia-type="T_Mission_Pion_ASS_AssurerMiseEnOeuvre" id="31" name="FieldArtillery - operate">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
@@ -3516,4 +3524,4 @@ overwhelming force.]]></doctrine>
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="3639651771" -->
+<!-- signature="2580872723" -->
