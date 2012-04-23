@@ -610,7 +610,10 @@ void MIL_BurningCells::BurnAgent( MIL_Object_ABC& object, MIL_Agent_ABC& agent )
     MT_Vector2D position = agent.GetRole< PHY_RolePion_Location >().GetPosition();
     BurningCellsByCoordinatesMap::const_iterator it = burningCellsByCoordinates_.find( ComputeCellOriginFromPoint( position.rX_, position.rY_ ) );
     if( it != burningCellsByCoordinates_.end() )
-        agent.GetRole< PHY_RoleInterface_Composantes >().ApplyBurn( object.GetAttribute< FireAttribute >().GetBurnEffect() );
+    {
+        if( it->second->phase_ == sword::combustion || it->second->phase_ == sword::decline )
+            agent.GetRole< PHY_RoleInterface_Composantes >().ApplyBurn( object.GetAttribute< FireAttribute >().GetBurnEffect() );
+    }
 }
 // -----------------------------------------------------------------------------
 // Name: MIL_BurningCells::BurnPopulation
