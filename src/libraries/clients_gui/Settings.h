@@ -28,7 +28,7 @@ class Settings : public QSettings, public kernel::Settings_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             Settings();
+             Settings( const QString & organization, const QString & application );
     virtual ~Settings();
     //@}
 

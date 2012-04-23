@@ -78,8 +78,7 @@ void FileLoaderObserver::NotifyFileMigrated( const std::string& /*file*/ , const
 // -----------------------------------------------------------------------------
 void FileLoaderObserver::DisplayErrors() const
 {
-    QSettings settings;
-    settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
+    QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
     if( !invalidSignatureFiles_.empty() || !missingSignatureFiles_.empty() )
     {
         QMessageBox::warning( 0, tools::translate( "Application", "SWORD" )

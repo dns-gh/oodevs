@@ -23,8 +23,7 @@ namespace
 {
     QString ReadLang()
     {
-        QSettings settings;
-        settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
+        QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
         return settings.readEntry( "/Common/Language", QTextCodec::locale() );
     }
 }

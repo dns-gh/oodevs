@@ -151,8 +151,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     , performanceDialog_( 0 )
 {
     setLocale( QLocale() );
-    QSettings settings;
-    settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
+    QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
     settings.beginGroup( "/Gaming" );
     restoreGeometry( settings.value("mainWindowGeometry").toByteArray() );
 
@@ -613,8 +612,7 @@ void MainWindow::closeEvent( QCloseEvent* pEvent )
         pEvent->ignore();
         return;
     }
-    QSettings settings;
-    settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
+    QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
     settings.beginGroup( "/Gaming" );
     settings.setValue( "mainWindowGeometry", pDockManager_->SaveGeometry() );
     settings.setValue( "mainWindowState", pDockManager_->SaveState() );
@@ -661,8 +659,7 @@ void MainWindow::ClearLoadingErrors()
 // -----------------------------------------------------------------------------
 void MainWindow::WriteOptions()
 {
-    Settings settings;
-    settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
+    Settings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
     settings.beginGroup( "/Preparation/Options" );
     controllers_.options_.Save( settings );
     settings.endGroup();
@@ -674,8 +671,7 @@ void MainWindow::WriteOptions()
 // -----------------------------------------------------------------------------
 void MainWindow::ReadOptions()
 {
-    Settings settings;
-    settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
+    Settings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
     settings.beginGroup( "/Preparation/Options" );
     controllers_.options_.Load( settings );
     settings.endGroup();

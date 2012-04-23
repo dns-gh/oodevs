@@ -29,8 +29,7 @@ namespace
 {
     QString ReadDataDirectory()
     {
-        QSettings settings;
-        settings.setPath( "MASA Group", tools::translate( "Application", "SWORD" ) );
+        QSettings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
         return settings.readEntry( "/Common/DataDirectory", "" );
     }
 

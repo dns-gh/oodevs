@@ -34,8 +34,7 @@ namespace
 {
     QString ReadLang()
     {
-        QSettings settings;
-        settings.setPath( "MASA Group", "SWORD" );
+        QSettings settings( "MASA Group", "SWORD" );
         return settings.readEntry( "/Common/Language", QTextCodec::locale() );
     }
 }

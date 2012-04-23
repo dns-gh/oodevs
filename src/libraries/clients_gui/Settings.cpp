@@ -19,7 +19,8 @@ using namespace gui;
 // Name: Settings constructor
 // Created: APE 2004-06-01
 // -----------------------------------------------------------------------------
-Settings::Settings()
+Settings::Settings( const QString & organization, const QString & application )
+    : QSettings( organization, application )
 {
     // NOTHING
 }
