@@ -33,7 +33,12 @@ integration.getUrbanBlockCoverAndConcealmentLevelFor = function( self, entity, o
 end
 
 integration.getSafetyPositionFromCrowd = function( crowd, distance )
-    return CreateKnowledge( sword.military.world.Point, DEC_Geometrie_CalculerPositionSureteAvecPopulation( crowd.source, distance ))
+    local position = DEC_Geometrie_CalculerPositionSureteAvecPopulation( crowd.source, distance )
+    if position then
+        return CreateKnowledge( sword.military.world.Point, position)
+    else
+        return meKnowledge:getMyPosition()
+    end
 end
 
 integration.getSafetyPositionsFromFireObjects = function( objects, distance )
