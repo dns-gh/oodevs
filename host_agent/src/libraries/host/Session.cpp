@@ -50,7 +50,7 @@ std::string ConvertStatus( Session::Status status )
     {
         default:
         case Session::STATUS_STOPPED:   return "stopped";
-        case Session::STATUS_PLAYING:   return "running";
+        case Session::STATUS_PLAYING:   return "playing";
         case Session::STATUS_REPLAYING: return "replaying";
         case Session::STATUS_PAUSED:    return "paused";
     }
@@ -58,7 +58,7 @@ std::string ConvertStatus( Session::Status status )
 
 Session::Status ConvertStatus( const std::string& status )
 {
-    if( status == "running" )   return Session::STATUS_PLAYING;
+    if( status == "playing" )   return Session::STATUS_PLAYING;
     if( status == "replaying" ) return Session::STATUS_REPLAYING;
     if( status == "paused" )    return Session::STATUS_PAUSED;
     return Session::STATUS_STOPPED;

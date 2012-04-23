@@ -72,7 +72,7 @@ namespace
                                    "\"name\":\"myName\","
                                    "\"exercise\":\"myExercise\","
                                    "\"port\":\"1337\","
-                                   "\"status\":\"running\","
+                                   "\"status\":\"playing\","
                                    "\"process\":{\"pid\":\"1234\",\"name\":\"e:/apps/simulation_app.exe\"}"
                                    "}";
 

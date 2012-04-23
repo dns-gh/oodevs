@@ -106,10 +106,10 @@ BOOST_FIXTURE_TEST_CASE( session_converts, Fixture )
         "}" );
     ProcessPtr process = StartSession( *session, processPid, processName );
     BOOST_CHECK_EQUAL( ToJson( session->GetProperties() ), base +
-        "\"status\":\"running\""
+        "\"status\":\"playing\""
         "}" );
     BOOST_CHECK_EQUAL( ToJson( session->Save() ), base +
-        "\"status\":\"running\","
+        "\"status\":\"playing\","
         "\"process\":{"
             "\"pid\":\"7331\","
             "\"name\":\"myProcessName\""
