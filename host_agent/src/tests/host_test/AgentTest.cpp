@@ -118,6 +118,27 @@ namespace
         boost::shared_ptr< MockNode > node;
         std::vector< boost::shared_ptr< Session_ABC > > mockSessions;
     };
+
+    bool CheckSessionReloadPredicate( MockNodeController& nodes, SessionController_ABC::T_Predicate predicate )
+    {
+        boost::shared_ptr< MockSession > session = CreateMockSession( defaultNode, anotherNodeString, "a", "b" );
+        MOCK_EXPECT( nodes.Has ).once().with( defaultNode ).returns( false );
+        if( predicate( *session ) )
+            return false;
+        MOCK_EXPECT( nodes.Has ).once().with( defaultNode ).returns( true );
+        return predicate( *session );
+
+    }
+}
+
+BOOST_AUTO_TEST_CASE( agent_reloads )
+{
+    MockLog log;
+    MockNodeController nodes;
+    MockSessionController sessions;
+    mock::reset( sessions );
+    MOCK_EXPECT( sessions.Reload ).once().with( boost::bind( &CheckSessionReloadPredicate, boost::ref( nodes ), _1 ) );
+    Agent agent( log, nodes, sessions );
 }
 
 BOOST_FIXTURE_TEST_CASE( agent_list_nodes, Fixture )

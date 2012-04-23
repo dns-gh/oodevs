@@ -45,9 +45,9 @@ T Clip( T value, T min, T max )
     return std::min( std::max( value, min ), max );
 }
 
-bool IsOrphanedNode( const Session_ABC& session, const NodeController_ABC& nodes )
+bool HasKnownNode( const Session_ABC& session, const NodeController_ABC& nodes )
 {
-    return !nodes.Has( session.GetNode() );
+    return nodes.Has( session.GetNode() );
 }
 
 bool IsNode( const Session_ABC& session, const boost::uuids::uuid& id )
@@ -100,7 +100,7 @@ Agent::Agent( cpplog::BaseLogger& log, NodeController_ABC& nodes, SessionControl
     , access_  ( new boost::mutex() )
 {
     nodes_.Reload();
-    sessions_.Reload( boost::bind( &IsOrphanedNode, _1, boost::cref( nodes_ ) ) );
+    sessions_.Reload( boost::bind( &HasKnownNode, _1, boost::cref( nodes_ ) ) );
 }
 
 // -----------------------------------------------------------------------------
