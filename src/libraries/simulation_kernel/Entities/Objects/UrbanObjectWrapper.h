@@ -92,7 +92,11 @@ public:
     const urban::TerrainObject_ABC& GetObject() const;  // $$$$ _RC_ LGY 2011-02-18: à supprimer
     void Accept( urban::MotivationsVisitor_ABC& visitor ) const;
     float GetLivingSpace() const;
-    const std::vector< boost::shared_ptr< MT_Vector2D > >& ComputeLocalisationsInsideBlock();
+    const std::vector< boost::shared_ptr< MT_Vector2D > >& ComputeLocalisationsInsideBlock() const;
+
+    bool HasArchitecture() const;
+    const std::string& GetMaterial() const;
+    bool HasParent() const;
     //@}
 
     //! @name Inhabitants
@@ -136,7 +140,7 @@ private:
     const urban::TerrainObject_ABC* object_;
     T_Inhabitants inhabitants_;
     T_LivingAreas livingAreas_;
-    std::vector< boost::shared_ptr< MT_Vector2D > > strechedArea_;
+    mutable std::vector< boost::shared_ptr< MT_Vector2D > > strechedArea_;
     static const float stretchOffset_;
     //@}
 };

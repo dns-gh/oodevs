@@ -343,13 +343,12 @@ float UrbanObjectWrapper::GetLivingSpace() const
 // Name: UrbanObjectWrapper::ComputeLocalisationsInsideBlock
 // Created: MIA 2011-06-13
 // -----------------------------------------------------------------------------
-const std::vector< boost::shared_ptr< MT_Vector2D > >& UrbanObjectWrapper::ComputeLocalisationsInsideBlock()
+const std::vector< boost::shared_ptr< MT_Vector2D > >& UrbanObjectWrapper::ComputeLocalisationsInsideBlock() const
 {
     if( strechedArea_.size() == 0 )
     {
-        const UrbanObjectWrapper& constThis = *this;
-        const T_PointVector& points = constThis.GetLocalisation().GetPoints();
-        const MT_Vector2D barycenter = constThis.GetLocalisation().ComputeBarycenter();
+        const T_PointVector& points = GetLocalisation().GetPoints();
+        const MT_Vector2D barycenter = GetLocalisation().ComputeBarycenter();
         for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
             strechedArea_.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( *it + MT_Vector2D( *it - barycenter ).Normalize() * stretchOffset_ ) ) );
     }
@@ -591,4 +590,37 @@ void UrbanObjectWrapper::OnReceiveSetEvacuated( const sword::MissionParameter_Va
 void UrbanObjectWrapper::AddLivingArea( MIL_LivingArea& livingArea )
 {
     livingAreas_.push_back( &livingArea );
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::HasArchitecture
+// Created: JSR 2012-04-20
+// -----------------------------------------------------------------------------
+bool UrbanObjectWrapper::HasArchitecture() const
+{
+    const urban::PhysicalAttribute* pPhysical = object_->Retrieve< urban::PhysicalAttribute >();
+    return pPhysical !=0 && pPhysical->GetArchitecture() != 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::GetMaterial
+// Created: JSR 2012-04-20
+// -----------------------------------------------------------------------------
+const std::string& UrbanObjectWrapper::GetMaterial() const
+{
+    static const std::string empty;
+    if( const urban::PhysicalAttribute* pPhysical = object_->Retrieve< urban::PhysicalAttribute >() )
+        if( const urban::Architecture* architecture = pPhysical->GetArchitecture() )
+            return architecture->GetMaterial();
+    return empty;
+}
+
+// -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::HasParent
+// Created: JSR 2012-04-20
+// -----------------------------------------------------------------------------
+bool UrbanObjectWrapper::HasParent() const
+{
+    return object_->GetParent() != 0;
 }

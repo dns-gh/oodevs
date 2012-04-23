@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_DotationCategory_IndirectFire.h"
+#include "MIL_UrbanCache.h"
 #include "PHY_DotationCategory.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
 #include "Entities/Agents/Roles/Location/PHY_RoleInterface_Location.h"
@@ -36,7 +37,6 @@
 #include "simulation_terrain/TER_World.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_AgentManager.h"
-#include <urban/Model.h>
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
@@ -141,15 +141,15 @@ void PHY_DotationCategory_IndirectFire::ApplyEffect( const MIL_Agent_ABC* pFirer
 
         if( !allTargets.empty() )
         {
-            std::vector< const urban::TerrainObject_ABC* > urbanList;
+            std::vector< UrbanObjectWrapper* > urbanList;
             if( MIL_AgentServer::IsInitialized() )
-                MIL_AgentServer::GetWorkspace().GetUrbanModel().GetListWithinCircle( geometry::Point2f( static_cast< float >( vTargetPosition.rX_ ), static_cast< float >( vTargetPosition.rY_ ) ),
+                MIL_AgentServer::GetWorkspace().GetUrbanCache().GetListWithinCircle( geometry::Point2f( static_cast< float >( vTargetPosition.rX_ ), static_cast< float >( vTargetPosition.rY_ ) ),
                                                                    static_cast< float >( rInterventionTypeFired * rDispersionX_ ), urbanList );
             for( TER_Agent_ABC::CIT_AgentPtrVector itAllTarget = allTargets.begin(); itAllTarget != allTargets.end(); ++itAllTarget )
             {
                 MIL_Agent_ABC& target = static_cast< PHY_RoleInterface_Location& >( **itAllTarget ).GetAgent();
-                if( const UrbanObjectWrapper* wrapper = target.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock() )
-                    if( std::find( targets.begin(), targets.end(), *itAllTarget ) == targets.end() || std::find( urbanList.begin(), urbanList.end(), &wrapper->GetObject() ) != urbanList.end() )
+                if( UrbanObjectWrapper* wrapper = const_cast< UrbanObjectWrapper* >( target.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock() ) )
+                    if( std::find( targets.begin(), targets.end(), *itAllTarget ) == targets.end() || std::find( urbanList.begin(), urbanList.end(), wrapper ) != urbanList.end() )
                         targets.push_back( *itAllTarget );
             }
         }

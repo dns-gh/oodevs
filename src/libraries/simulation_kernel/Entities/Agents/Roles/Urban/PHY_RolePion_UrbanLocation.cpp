@@ -25,7 +25,6 @@
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "simulation_terrain/TER_ObjectManager.h"
 #include "simulation_terrain/TER_World.h"
-#include <urban/TerrainObject_ABC.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_RolePion_UrbanLocation )
 
@@ -134,7 +133,7 @@ void PHY_RolePion_UrbanLocation::NotifyMovingOutsideObject( MIL_Object_ABC& obje
 {
     if( const UrbanObjectWrapper* urbanObject = dynamic_cast< UrbanObjectWrapper* >( &object ) )
     {
-        if( !urbanObject->GetObject().GetParent() )
+        if( !urbanObject->HasParent() )
             isInCity_ = false;
         if( !urbanObject->HasChild() )
         {

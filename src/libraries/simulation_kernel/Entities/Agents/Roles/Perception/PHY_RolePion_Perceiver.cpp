@@ -9,6 +9,7 @@
 
 #include "simulation_kernel_pch.h"
 #include "PHY_RolePion_Perceiver.h"
+#include "MIL_UrbanCache.h"
 #include "Entities/MIL_Army.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/MIL_AgentPion.h"
@@ -66,8 +67,6 @@
 #include "simulation_terrain/TER_PopulationFlowVisitor_ABC.h"
 #include "simulation_terrain/TER_PopulationManager.h"
 #include "simulation_terrain/TER_World.h"
-#include <urban/model.h>
-#include <urban/TerrainObject_ABC.h>
 #include <boost/serialization/map.hpp>
 
 using namespace detection;
@@ -909,19 +908,18 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
 
         double maxPerceptionDistance = GetMaxAgentPerceptionDistance();
 
-        std::vector< const urban::TerrainObject_ABC* > perceivableUrbanBlock;
-        MIL_AgentServer::GetWorkspace().GetUrbanModel().GetListWithinCircle( geometry::Point2f( static_cast< float >( perceiverPosition_->rX_ ),
+        std::vector< UrbanObjectWrapper* > perceivableUrbanBlock;
+        MIL_AgentServer::GetWorkspace().GetUrbanCache().GetListWithinCircle( geometry::Point2f( static_cast< float >( perceiverPosition_->rX_ ),
                                                                                                            static_cast< float >( perceiverPosition_->rY_ ) ),
                                                                                         maxBlockPerceptionDistance,
                                                                                         perceivableUrbanBlock );
         if( !perceivableUrbanBlock.empty() )
         {
             double occupation = 0.;
-            for( std::vector< const urban::TerrainObject_ABC* >::const_iterator itUrban = perceivableUrbanBlock.begin(); itUrban != perceivableUrbanBlock.end(); ++itUrban )
+            for( int i = 0; i < perceivableUrbanBlock.size(); ++i )
             {
-                const UrbanObjectWrapper& wrapper = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( **itUrban );
-                NotifyPerception( wrapper, PHY_PerceptionLevel::identified_ );
-                occupation += wrapper.GetOccupation();
+                NotifyPerception( *perceivableUrbanBlock[ i ], PHY_PerceptionLevel::identified_ );
+                occupation += perceivableUrbanBlock[ i ]->GetOccupation();
             }
             occupation /= perceivableUrbanBlock.size();
             maxPerceptionDistance *= ( 1 - 9*occupation/10 );
@@ -1182,7 +1180,7 @@ bool PHY_RolePion_Perceiver::NotifyPerception( MIL_PopulationFlow& flow, const P
 // Name: PHY_RolePion_Perceiver::NotifyPerception
 // Created: MGD 2009-11-20
 // -----------------------------------------------------------------------------
-void PHY_RolePion_Perceiver::NotifyPerception( const UrbanObjectWrapper& object, const PHY_PerceptionLevel& level ) const
+void PHY_RolePion_Perceiver::NotifyPerceptionUrban( const UrbanObjectWrapper& object, const PHY_PerceptionLevel& level ) const
 {
     owner_.GetKnowledge().GetKsPerception().NotifyPerception( object, level );
 }

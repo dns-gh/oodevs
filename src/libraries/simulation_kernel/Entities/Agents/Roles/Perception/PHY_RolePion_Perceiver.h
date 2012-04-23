@@ -93,7 +93,7 @@ public:
     bool NotifyPerception( MIL_PopulationConcentration& concentration, const PHY_PerceptionLevel& level );
     bool NotifyPerception( MIL_PopulationFlow& flow, const PHY_PerceptionLevel& level, const T_PointVector& shape );
     void NotifyPerception( const MIL_Effect_IndirectFire& flyingShell ) const;
-    void NotifyPerception( const UrbanObjectWrapper& block, const PHY_PerceptionLevel& level ) const;
+    void NotifyPerceptionUrban( const UrbanObjectWrapper& block, const PHY_PerceptionLevel& level ) const;
     //@}
 
     //! @name Operations

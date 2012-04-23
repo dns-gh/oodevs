@@ -19,8 +19,6 @@
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Tools/MIL_Geometry.h"
 #include "MT_Tools/MT_Ellipse.h"
-#include <urban/GeometryAttribute.h>
-#include <urban/TerrainObject_ABC.h>
 #pragma warning( push, 0 )
 #include <boost/geometry/geometry.hpp>
 #pragma warning( pop )

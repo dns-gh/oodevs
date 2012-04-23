@@ -28,6 +28,7 @@
 #include "Entities/Agents/Units/Sensors/PHY_SensorType.h"
 #include "Entities/Agents/Perceptions/PHY_PerceptionLevel.h"
 #include "Entities/Agents/MIL_AgentPion.h"
+#include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Entities/Populations/MIL_PopulationConcentration.h"
 #include "Entities/Populations/MIL_PopulationFlow.h"
 #include "meteo/PHY_Lighting.h"
@@ -37,12 +38,6 @@
 #include "Knowledge/DEC_Knowledge_Agent.h"
 #include "Tools/MIL_Tools.h"
 #include "tools/Resolver.h"
-#include <geometry/Types.h>
-#include <urban/GeometryAttribute.h>
-#include <urban/PhysicalAttribute.h>
-#include <urban/TerrainObject_ABC.h>
-#include <urban/Model.h>
-#include <urban/TerrainObjectVisitor_ABC.h>
 #include <xeumeuleu/xml.hpp>
 
 namespace
@@ -509,45 +504,42 @@ bool PHY_SensorTypeAgent::ComputeUrbanExtinction( const MT_Vector2D& vSource, co
     geometry::Point2f vSourcePoint( static_cast< float >( vSource.rX_ ), static_cast< float >( vSource.rY_ ) );
     geometry::Point2f vTargetPoint( static_cast< float >( vTarget.rX_ ), static_cast< float >( vTarget.rY_ ) );
 
-    std::vector< const urban::TerrainObject_ABC* > list;
+    std::vector< const UrbanObjectWrapper* > list;
     MIL_AgentServer::GetWorkspace().GetUrbanCache().GetUrbanBlocksWithinSegment( vSourcePoint, vTargetPoint, list );
 
     if( !list.empty() )
     {
-        for( std::vector< const urban::TerrainObject_ABC* >::const_iterator it = list.begin(); it != list.end() && rVisionNRJ > 0; it++ )
+        for( std::vector< const UrbanObjectWrapper* >::const_iterator it = list.begin(); it != list.end() && rVisionNRJ > 0; it++ )
         {
-            const urban::TerrainObject_ABC& object = **it;
-
-            const urban::PhysicalAttribute* pPhysical = object.Retrieve< urban::PhysicalAttribute >();
-            const urban::GeometryAttribute* pGeom = object.Retrieve< urban::GeometryAttribute >();
-
-            if( !pGeom || !pPhysical || !pPhysical->GetArchitecture() )
+            const UrbanObjectWrapper& object = **it;
+            if( !object.HasArchitecture() )
                 continue;
-            const PHY_MaterialCompositionType* materialCompositionType = PHY_MaterialCompositionType::Find( pPhysical->GetArchitecture()->GetMaterial() );
+            const PHY_MaterialCompositionType* materialCompositionType = PHY_MaterialCompositionType::Find( object.GetMaterial() );
             if( !materialCompositionType )
                 continue;
 
-            const geometry::Polygon2f& footPrint = pGeom->Geometry();
-            std::vector< geometry::Point2f > intersectPoints = footPrint.Intersect( geometry::Segment2f( vSourcePoint, vTargetPoint ) );
-            if( !intersectPoints.empty() || footPrint.IsInside( vSourcePoint ) || footPrint.IsInside( vTargetPoint ) )
+            const TER_Localisation& footPrint = object.GetLocalisation();
+
+            TER_DistanceLess cmp ( vSource );
+            T_PointSet intersectPoints( cmp );
+            if( footPrint.IsInside( vSource ) || footPrint.IsInside( vTarget ) || footPrint.Intersect2D( MT_Line( vSource, vTarget ), intersectPoints ) )
             {
                 bIsAroundBU = true;
-                float intersectionDistance = 0;
-                std::sort( intersectPoints.begin(), intersectPoints.end() );
+                double intersectionDistance = 0;
                 if( intersectPoints.size() == 1 )
                 {
-                    if( footPrint.IsInside( vSourcePoint ) )
-                        intersectionDistance = vSourcePoint.Distance( *intersectPoints.begin() );
-                    else if( footPrint.IsInside( vTargetPoint ) )
-                        intersectionDistance = vTargetPoint.Distance( *intersectPoints.begin() );
+                    if( footPrint.IsInside( vSource ) )
+                        intersectionDistance = vSource.Distance( *intersectPoints.begin() );
+                    else if( footPrint.IsInside( vTarget ) )
+                        intersectionDistance = vTarget.Distance( *intersectPoints.begin() );
                 }
                 else if( intersectPoints.empty() )
-                    intersectionDistance = vSourcePoint.Distance( vTargetPoint );
+                    intersectionDistance = vSource.Distance( vTarget );
                 else
                     intersectionDistance = ( *intersectPoints.begin() ).Distance( *intersectPoints.rbegin() );
 
                 double rDistanceModificator = urbanBlockFactors_[ materialCompositionType->GetId() ];
-                double occupationFactor = std::sqrt( pPhysical->GetArchitecture()->GetOccupation() );
+                double occupationFactor = std::sqrt( object.GetOccupation() );
                 if( occupationFactor == 1. && rDistanceModificator <= epsilon )
                     rVisionNRJ = -1 ;
                 else
@@ -834,11 +826,11 @@ double PHY_SensorTypeAgent::GetFactor( const PHY_Volume& volume ) const
 // Name: PHY_SensorTypeAgent::GetUrbanFactor
 // Created: SLG 2010-04-30
 // -----------------------------------------------------------------------------
-double PHY_SensorTypeAgent::GetUrbanBlockFactor( const urban::TerrainObject_ABC& block ) const
+double PHY_SensorTypeAgent::GetUrbanBlockFactor( const UrbanObjectWrapper& block ) const
 {
-    const urban::PhysicalAttribute* pPhysical = block.Retrieve< urban::PhysicalAttribute >();
-    if( pPhysical && pPhysical->GetArchitecture() )
-        if( const PHY_MaterialCompositionType* materialCompositionType = PHY_MaterialCompositionType::Find( pPhysical->GetArchitecture()->GetMaterial() ) )
+    const std::string material = block.GetMaterial();
+    if( !material.empty() )
+        if( const PHY_MaterialCompositionType* materialCompositionType = PHY_MaterialCompositionType::Find( material ) )
             return urbanBlockFactors_[ materialCompositionType->GetId() ];
     return 1.f;
 }

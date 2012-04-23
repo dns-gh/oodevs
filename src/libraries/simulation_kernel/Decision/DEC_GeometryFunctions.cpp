@@ -13,6 +13,7 @@
 #include "DEC_GeometryFunctions.h"
 #include "DEC_FrontAndBackLinesComputer.h"
 #include "MIL_AgentServer.h"
+#include "MIL_UrbanCache.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Agents/Roles/Composantes/PHY_RoleInterface_Composantes.h"
@@ -36,9 +37,6 @@
 #include "simulation_terrain/TER_World.h"
 #include "MT_Tools/MT_Logger.h"
 #include "MT_Tools/MT_Random.h"
-#include <urban/GeometryAttribute.h>
-#include <urban/Model.h>
-#include <urban/TerrainObject_ABC.h>
 #include <directia/brain/Brain.h>
 #include <boost/foreach.hpp>
 
@@ -984,15 +982,15 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeLocalisationBaryc
 // -----------------------------------------------------------------------------
 std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeUrbanBlockLocalisations( UrbanObjectWrapper* pUrbanObject )
 {
-	typedef std::vector< boost::shared_ptr< MT_Vector2D > > T_Vectors;
+    typedef std::vector< boost::shared_ptr< MT_Vector2D > > T_Vectors;
     T_Vectors result;
     if( pUrbanObject )
     {
         boost::shared_ptr< MT_Vector2D > position( new MT_Vector2D( pUrbanObject->GetLocalisation().ComputeBarycenter() ) );
         result.push_back( position );
         const T_Vectors& area = pUrbanObject->ComputeLocalisationsInsideBlock();
-		for( T_Vectors::const_iterator it = area.begin(); it != area.end(); ++it )
-			result.push_back( *it );
+        for( T_Vectors::const_iterator it = area.begin(); it != area.end(); ++it )
+            result.push_back( *it );
     }
     return result;
 }
@@ -1009,16 +1007,15 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeTrafficableLocali
     boost::shared_ptr< MT_Vector2D > pBarycenter( new MT_Vector2D( MT_ComputeBarycenter( pLocalisation->GetPoints() ) ) );
     if( pBarycenter.get() )
     {
-        const urban::TerrainObject_ABC* object = MIL_AgentServer::GetWorkspace().GetUrbanModel().FindBlock( VECTOR_TO_POINT( *pBarycenter ) );
+        const UrbanObjectWrapper* object = MIL_AgentServer::GetWorkspace().GetUrbanCache().FindBlock( VECTOR_TO_POINT( *pBarycenter ) );
         if( object )
         {
-            const UrbanObjectWrapper& terrainObject = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *object );
             const double myWeight = pion.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight();
-            if( terrainObject.GetTrafficability() <= myWeight )
+            if( object->GetTrafficability() <= myWeight )
             {
                 const float distance = 10.f; // $$$$ _RC_ LGY 2010-10-11: delta hardcoded
-                const T_PointVector& points = terrainObject.GetLocalisation().GetPoints();
-                const MT_Vector2D barycenter = terrainObject.GetLocalisation().ComputeBarycenter();
+                const T_PointVector& points = object->GetLocalisation().GetPoints();
+                const MT_Vector2D barycenter = object->GetLocalisation().ComputeBarycenter();
                 for( CIT_PointVector it = points.begin(); it != points.end(); ++it )
                 {
                     const MT_Vector2D point( *it + MT_Vector2D( *it - barycenter ).Normalize() * distance );
@@ -1041,27 +1038,26 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeTrafficableLocali
 // -----------------------------------------------------------------------------
 std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeTrafficableLocalisation( const MT_Vector2D& point )
 {
-    if( const urban::TerrainObject_ABC* terrainObject = MIL_AgentServer::GetWorkspace().GetUrbanModel().FindBlock( VECTOR_TO_POINT( point ) ) )
+    if( const UrbanObjectWrapper* wrapper = MIL_AgentServer::GetWorkspace().GetUrbanCache().FindBlock( VECTOR_TO_POINT( point ) ) )
     {
-        UrbanObjectWrapper& wrapper = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *terrainObject );
-		std::vector< boost::shared_ptr< MT_Vector2D > > points = wrapper.ComputeLocalisationsInsideBlock();
-		std::vector< boost::shared_ptr< MT_Vector2D > > trafficablePoints;
-		for( std::vector< boost::shared_ptr< MT_Vector2D > >::const_iterator it = points.begin(); it != points.end(); ++it )
-		{
+        const std::vector< boost::shared_ptr< MT_Vector2D > > points = wrapper->ComputeLocalisationsInsideBlock();
+        std::vector< boost::shared_ptr< MT_Vector2D > > trafficablePoints;
+        for( std::vector< boost::shared_ptr< MT_Vector2D > >::const_iterator it = points.begin(); it != points.end(); ++it )
+        {
             if( !(*it) )
                 continue;
-			if( ! DEC_GeometryFunctions::IsPointInUrbanBlock( **it, &wrapper ) )
-				trafficablePoints.push_back( *it );
-		}
+            if( ! DEC_GeometryFunctions::IsPointInUrbanBlock( **it, wrapper ) )
+                trafficablePoints.push_back( *it );
+        }
         return trafficablePoints;
     }
     else
-	{
-		// $$$$ JSR 2011-06-13 optimiser pour ne pas passer un tableau d'un seul point
-	    std::vector< boost::shared_ptr< MT_Vector2D > > result;
+    {
+        // $$$$ JSR 2011-06-13 optimiser pour ne pas passer un tableau d'un seul point
+        std::vector< boost::shared_ptr< MT_Vector2D > > result;
         result.push_back( boost::shared_ptr< MT_Vector2D >( new MT_Vector2D( point ) ));
-	    return result;
-	}
+        return result;
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -1070,11 +1066,8 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeTr
 // -----------------------------------------------------------------------------
 bool DEC_GeometryFunctions::IsUrbanBlockTrafficable( const MT_Vector2D& point, double weight )
 {
-    if( const urban::TerrainObject_ABC* object = MIL_AgentServer::GetWorkspace().GetUrbanModel().FindBlock( VECTOR_TO_POINT( point ) ) )
-    {
-        const UrbanObjectWrapper& terrainObject = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *object );
-        return terrainObject.GetTrafficability() > weight;
-    }
+    if( const UrbanObjectWrapper* object = MIL_AgentServer::GetWorkspace().GetUrbanCache().FindBlock( VECTOR_TO_POINT( point ) ) )
+        return object->GetTrafficability() > weight;
     return true;
 }
 
@@ -1112,17 +1105,15 @@ bool DEC_GeometryFunctions::IsPointInUrbanBlockTrafficableForPlatoon( DEC_Decisi
 bool DEC_GeometryFunctions::IsPointInCity( const MT_Vector2D& point )
 {
     // $$$$ LDC RC: static because the cities can't be changed at run-time and there's no point recomputing the vector everytime.
-    static std::vector< const urban::TerrainObject_ABC* > cities = MIL_AgentServer::GetWorkspace().GetUrbanModel().GetCities();
-    geometry::Point2f geoPoint( static_cast< float >( point.rX_ ), static_cast< float >( point.rY_ ) );
-    for( std::vector< const urban::TerrainObject_ABC* >::const_iterator it = cities.begin(); it != cities.end(); ++it )
+    static std::vector< const UrbanObjectWrapper* > cities = MIL_AgentServer::GetWorkspace().GetUrbanCache().GetCities();
+    for( std::vector< const UrbanObjectWrapper* >::const_iterator it = cities.begin(); it != cities.end(); ++it )
     {
         if( !(*it) )
         {
             MT_LOG_ERROR_MSG( "Null pointer in urban block list in IsPointInCity" );
             continue;
         }
-        const urban::GeometryAttribute* geom = ( *it )->Retrieve< urban::GeometryAttribute >();
-        if( geom && geom->Geometry().IsInside( geoPoint ) )
+        if( ( *it )->GetLocalisation().IsInside( point ) )
             return true;
     }
     return false;

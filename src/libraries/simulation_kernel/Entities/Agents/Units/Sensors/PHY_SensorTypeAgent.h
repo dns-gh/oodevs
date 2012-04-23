@@ -29,12 +29,9 @@ class MIL_Agent_ABC;
 class MIL_PopulationConcentration;
 class MIL_PopulationFlow;
 class DEC_Knowledge_Agent;
+class UrbanObjectWrapper;
 class PHY_SensorType;
 
-namespace urban
-{
-    class TerrainObject_ABC;
-}
 // =============================================================================
 // @class  PHY_SensorTypeAgent
 // Created: JVT 2004-08-03
@@ -52,7 +49,7 @@ public:
           double        GetMaxDistance            () const;
           double        GetAngle                  () const;
           double        GetFactor                 ( const PHY_Volume& volume ) const;
-          double GetUrbanBlockFactor( const urban::TerrainObject_ABC& target ) const;
+          double        GetUrbanBlockFactor( const UrbanObjectWrapper& target ) const;
           bool            CanScan                   () const;
           bool            CanDetectFirer            ( double distance ) const;
     const PHY_SensorType& GetType                   () const;

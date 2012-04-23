@@ -29,10 +29,6 @@
 #include "Entities/MIL_EntityManager.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Tools/MIL_Geometry.h"
-#include <urban/GeometryAttribute.h>
-#include <urban/PhysicalAttribute.h>
-#include <urban/Model.h>
-#include <urban/TerrainObject_ABC.h>
 
 #define VECTOR_TO_POINT( point ) geometry::Point2f( static_cast< float >( ( point ).rX_ ), static_cast< float >( ( point ).rY_ ) )
 
@@ -173,7 +169,7 @@ bool PHY_ZURBPerceptionComputer::ComputeParametersPerception( const MIL_Agent_AB
     geometry::Point2f vSourcePoint( VECTOR_TO_POINT( perceiverPosition ) );
     geometry::Point2f vTargetPoint( VECTOR_TO_POINT( targetPosition ) );
 
-    std::vector< const urban::TerrainObject_ABC* > list;
+    std::vector< const UrbanObjectWrapper* > list;
     MIL_AgentServer::GetWorkspace().GetUrbanCache().GetUrbanBlocksWithinSegment( vSourcePoint, vTargetPoint, list );
     const UrbanObjectWrapper* perceiverUrbanBlock = perceiver_.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
     const PHY_Posture& currentPerceiverPosture = perceiver_.GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture();
@@ -192,21 +188,19 @@ bool PHY_ZURBPerceptionComputer::ComputeParametersPerception( const MIL_Agent_AB
     for( std::set< const PHY_SensorTypeAgent* >::const_iterator itSensor = dataFunctor.sensors_.begin(); itSensor != dataFunctor.sensors_.end(); ++itSensor )
     {
         double worstFactor = 1.;
-        for( std::vector< const urban::TerrainObject_ABC* >::const_iterator it = list.begin(); it != list.end() && worstFactor > 0.; ++it )
-            if( perceiverUrbanBlock == 0 || !( perceiverUrbanBlock->Is( **it ) && ( &currentPerceiverPosture == &PHY_Posture::poste_ || &currentPerceiverPosture == &PHY_Posture::posteAmenage_ ) ) )
+        for( std::vector< const UrbanObjectWrapper* >::const_iterator it = list.begin(); it != list.end() && worstFactor > 0.; ++it )
+            if( perceiverUrbanBlock == 0 || !( perceiverUrbanBlock == *it && ( &currentPerceiverPosture == &PHY_Posture::poste_ || &currentPerceiverPosture == &PHY_Posture::posteAmenage_ ) ) )
             {
-                const urban::TerrainObject_ABC& object = **it;                 
+                const UrbanObjectWrapper& object = **it;
                 double objectHeight = sensorHeight;
                 double occupation = 1.;
                 double structuralState = 1.;
-                if( const urban::PhysicalAttribute* pPhysical = object.Retrieve< urban::PhysicalAttribute >() )
-                    if( const urban::Architecture* architecture = pPhysical->GetArchitecture() )
-                    {
-                        UrbanObjectWrapper& objectUrbanBlock = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( object );
-                        objectHeight += objectUrbanBlock.GetStructuralHeight();
-                        structuralState = objectUrbanBlock.GetStructuralState();
-                        occupation = architecture->GetOccupation();
-                    }
+                if( object.HasArchitecture() )
+                {
+                    objectHeight += object.GetStructuralHeight();
+                    structuralState = object.GetStructuralState();
+                    occupation = object.GetOccupation();
+                }
                 assert( objectHeight );
                 double heightFactor         = perceiverUrbanBlockHeight / objectHeight;
                 double materialVisibility   = std::min( 1., ( *itSensor )->GetUrbanBlockFactor( object ) );

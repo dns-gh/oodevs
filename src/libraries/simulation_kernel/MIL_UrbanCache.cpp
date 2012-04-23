@@ -4,6 +4,8 @@
 
 #include "simulation_kernel_pch.h"
 #include "MIL_UrbanCache.h"
+#include "MIL_AgentServer.h"
+#include "Entities/MIL_EntityManager.h"
 #include "MT_Tools/MT_Logger.h"
 #include <urban/model.h>
 
@@ -21,7 +23,7 @@ MIL_UrbanCache::MIL_UrbanCache( urban::Model& urbanModel )
 // Name: MIL_UrbanCache::GetUrbanBlocksWithinSegment
 // Created: LDC 2011-12-28
 // -----------------------------------------------------------------------------
-void MIL_UrbanCache::GetUrbanBlocksWithinSegment( const geometry::Point2f& vSourcePoint, const geometry::Point2f& vTargetPoint, std::vector< const urban::TerrainObject_ABC* >& list )
+void MIL_UrbanCache::GetUrbanBlocksWithinSegment( const geometry::Point2f& vSourcePoint, const geometry::Point2f& vTargetPoint, std::vector< const UrbanObjectWrapper* >& list )
 {
     geometry::Point2f start;
     geometry::Point2f end;
@@ -45,7 +47,11 @@ void MIL_UrbanCache::GetUrbanBlocksWithinSegment( const geometry::Point2f& vSour
             return;
         }
     }
-    urbanModel_.GetListWithinSegment( vSourcePoint, vTargetPoint, list );
+    std::vector< const urban::TerrainObject_ABC* > tmpList;
+    urbanModel_.GetListWithinSegment( vSourcePoint, vTargetPoint, tmpList );
+    list.reserve( tmpList.size() );
+    for( int i = 0; i < tmpList.size(); ++i )
+        list.push_back( &MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *tmpList[ i ] ) );
     cache_[ start ][ end ] = list;
 }
 
@@ -62,8 +68,34 @@ void MIL_UrbanCache::Clear()
 // Name: MIL_UrbanCache::GetListWithinCircle
 // Created: LDC 2011-12-30
 // -----------------------------------------------------------------------------
-void MIL_UrbanCache::GetListWithinCircle( const geometry::Point2f& center, float radius, std::vector< const urban::TerrainObject_ABC* >& result ) const
+void MIL_UrbanCache::GetListWithinCircle( const geometry::Point2f& center, float radius, std::vector< UrbanObjectWrapper* >& result ) const
 {
-    urbanModel_.GetListWithinCircle( center, radius, result );
+    std::vector< const urban::TerrainObject_ABC* > tmpList;
+    urbanModel_.GetListWithinCircle( center, radius, tmpList );
+    result.reserve( tmpList.size() );
+    for( int i = 0; i < tmpList.size(); ++i )
+        result.push_back( &MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *tmpList[ i ] ) );
 }
 
+// -----------------------------------------------------------------------------
+// Name: MIL_UrbanCache::FindBlock
+// Created: JSR 2012-04-20
+// -----------------------------------------------------------------------------
+const UrbanObjectWrapper* MIL_UrbanCache::FindBlock( const geometry::Point2f& point ) const
+{
+    const urban::TerrainObject_ABC* ret = urbanModel_.FindBlock( point );
+    return ret ? &MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *ret ) : 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: std::vector< const UrbanObjectWrapper* > MIL_UrbanCache::GetCities
+// Created: JSR 2012-04-20
+// -----------------------------------------------------------------------------
+std::vector< const UrbanObjectWrapper* > MIL_UrbanCache::GetCities() const
+{
+    std::vector< const UrbanObjectWrapper* > result;
+    std::vector< const urban::TerrainObject_ABC* > tmpList = urbanModel_.GetCities();
+    for( int i = 0; i < tmpList.size(); ++i )
+        result.push_back( &MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( *tmpList[ i ] ) );
+    return result;
+}
