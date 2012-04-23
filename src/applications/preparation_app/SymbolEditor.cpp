@@ -12,18 +12,19 @@
 #include "moc_SymbolEditor.cpp"
 #include "preparation/ProfileHierarchies_ABC.h"
 #include "clients_gui/EntitySymbols.h"
-#include "clients_kernel/Controllers.h"
-#include "clients_kernel/Controller.h"
-#include "clients_kernel/Automat_ABC.h"
-#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Agent_ABC.h"
-#include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/App6Symbol.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/Controller.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_kernel/Diplomacies_ABC.h"
+#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Karma.h"
 #include "clients_kernel/SymbolFactory.h"
-#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/SymbolHierarchy_ABC.h"
-#include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/TacticalHierarchies.h"
+#include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/tools.h"
 #include "tools/Iterator.h"
 #include <boost/foreach.hpp>
@@ -196,13 +197,14 @@ void SymbolEditor::Update()
     if( !selected_ || !menu_ )
         return;
     const kernel::TacticalHierarchies& pHierarchy = selected_->Get< kernel::TacticalHierarchies >();
-    const std::string karma = Convert( pHierarchy.GetTop().Get< kernel::Diplomacies_ABC >().GetKarma() );
+    const kernel::Karma& karma = pHierarchy.GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
+    const std::string karmaString = Convert( karma );
     std::set< std::string > symbols;
     std::string currentSymbol = pHierarchy.GetSymbol();
-    pFactory_->FillSymbols( currentSymbol, karma, symbols );
+    pFactory_->FillSymbols( currentSymbol, karmaString, symbols );
     tools::Iterator< const kernel::Entity_ABC& > it = pHierarchy.CreateSubordinateIterator();
     while( it.HasMoreElements() )
-        pFactory_->FillSymbols( it.NextElement().Get< kernel::TacticalHierarchies >().GetSymbol(), karma, symbols );
+        pFactory_->FillSymbols( it.NextElement().Get< kernel::TacticalHierarchies >().GetSymbol(), karmaString, symbols );
     T_Symbols pixmaps;
     for( std::set< std::string >::const_iterator it = symbols.begin(); it != symbols.end(); ++it )
         pixmaps[ *it ] = symbols_.GetSymbol( *selected_, *it, pHierarchy.GetLevel() );
@@ -216,7 +218,8 @@ void SymbolEditor::Update()
             const QPixmap& pixmap = symbols_.GetSymbol( *selected_, *it, pHierarchy.GetLevel() );
             AddSymbolAction( menu_, *it, pixmap, ( overriden && currentSymbol == *it ) );
         }
-        std::string additionalSymbol( "symbols/sfgpuus" );
+        std::string additionalSymbol( "symbols/s*gpuus" );
+        kernel::App6Symbol::SetKarma( additionalSymbol, karma );
         if( symbols.end() == symbols.find( additionalSymbol ) )
             AddSymbolAction( menu_, additionalSymbol, symbols_.GetSymbol( *selected_, additionalSymbol, pHierarchy.GetLevel() ), false );
         if( overriden )
