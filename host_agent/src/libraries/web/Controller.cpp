@@ -257,7 +257,6 @@ std::string Controller::Notify( const Request_ABC& request )
 // -----------------------------------------------------------------------------
 std::string Controller::GetCluster( const Request_ABC& request )
 {
-    LOG_INFO( log_ ) << "[web] get_cluster";
     return WriteHttpReply( CALL_MEMBER( agent_, &Agent_ABC::GetCluster )() );
 }
 
