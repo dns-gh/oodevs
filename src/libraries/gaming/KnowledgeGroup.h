@@ -40,7 +40,7 @@ class KnowledgeGroup : public kernel::EntityImplementation< kernel::KnowledgeGro
 public:
     //! @name Constructors/Destructor
     //@{
-             KnowledgeGroup( unsigned long nId, kernel::Controller& controller, const std::string& sType, const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types );
+             KnowledgeGroup( unsigned long nId, const std::string& name, kernel::Controller& controller, const std::string& sType, const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types );
     virtual ~KnowledgeGroup();
     //@}
 

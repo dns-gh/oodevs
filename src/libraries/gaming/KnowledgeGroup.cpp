@@ -14,12 +14,22 @@
 #include "clients_kernel/PropertiesDictionary.h"
 #include "clients_kernel/ModelVisitor_ABC.h"
 
+namespace
+{
+    QString ComputeName( const std::string& name, unsigned long nId )
+    {
+        if( !name.empty() )
+            return QString::fromStdString( name );
+        return QString( tools::translate( "KnowledgeGroup", "Group %L1" ) ).arg( nId );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: KnowledgeGroup constructor
 // Created: AGE 2005-09-21
 // -----------------------------------------------------------------------------
-KnowledgeGroup::KnowledgeGroup( unsigned long nId, kernel::Controller& controller, const std::string& type, const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types )
-    : kernel::EntityImplementation< kernel::KnowledgeGroup_ABC >( controller, nId, QString( tools::translate( "KnowledgeGroup", "Group %L1" ) ).arg( nId ) )
+KnowledgeGroup::KnowledgeGroup( unsigned long nId, const std::string& name, kernel::Controller& controller, const std::string& type, const tools::Resolver_ABC< kernel::KnowledgeGroupType, std::string >& types )
+    : kernel::EntityImplementation< kernel::KnowledgeGroup_ABC >( controller, nId, ComputeName( name, nId ) )
     , type_( type )
     , types_( types )
     , activated_( true ) // LTO
