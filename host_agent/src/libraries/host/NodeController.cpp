@@ -114,11 +114,12 @@ void NodeController::Reload()
     BOOST_FOREACH( const boost::filesystem::path& path, system_.Glob( dir.remove_filename(), wtype + L".id" ) )
         try
         {
-            boost::shared_ptr< Node > ptr = boost::make_shared< Node >( FromJson( system_.ReadFile( path ) ), runtime_, ports_ );
-            if( !ptr )
+            boost::shared_ptr< Node > node = boost::make_shared< Node >( FromJson( system_.ReadFile( path ) ), runtime_, ports_ );
+            if( !node )
                 continue;
-            nodes_->Attach( ptr );
-            LOG_INFO( log_ ) << "[" << type_ << "] Reloaded " << ptr->id_ << " " << ptr->name_ << " :" << ptr->port_->Get();
+            nodes_->Attach( node );
+            LOG_INFO( log_ ) << "[" << type_ << "] Reloaded " << node->id_ << " " << node->name_ << " :" << node->port_->Get();
+            proxy_.Register( GetPrefix( type_, *node ), "localhost", node->port_->Get() );
         }
         catch( const std::exception& err )
         {

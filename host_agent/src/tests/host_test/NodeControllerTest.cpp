@@ -92,12 +92,16 @@ namespace
         boost::shared_ptr< MockProcess > Reload()
         {
             MOCK_EXPECT( sub.system.Glob ).once().with( "e:/jar", L"node.id" ).returns( boost::assign::list_of< boost::filesystem::path >( "a/b/c/node.id" )( "node.id" ) );
+
             MOCK_EXPECT( sub.system.ReadFile ).once().with( "a/b/c/node.id" ).returns( nodeActive );
             MOCK_EXPECT( sub.ports.Create1 ).once().with( 1337 ).returns( new MockPort( 1337 ) );
             boost::shared_ptr< MockProcess > process = boost::make_shared< MockProcess >( 1234, "e:/java/some_java.exe" );
             MOCK_EXPECT( sub.runtime.GetProcess ).once().with( 1234 ).returns( process );
+            MOCK_EXPECT( sub.proxy.Register ).once().with( idActiveText, "localhost", 1337 );
+
             MOCK_EXPECT( sub.system.ReadFile ).once().with( "node.id" ).returns( nodeIdle );
             MOCK_EXPECT( sub.ports.Create1 ).once().with( 1338 ).returns( new MockPort( 1338 ) );
+            MOCK_EXPECT( sub.proxy.Register ).once().with( idIdleText, "localhost", 1338 );
             control.Reload();
             return process;
         }
