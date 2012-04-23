@@ -43,7 +43,7 @@
         <object-cost type="nbc cloud" value="10000"/>
         <object-cost type="decontamination site" value="10"/>
         <object-cost type="logistic support area" value="10"/>
-        <object-cost type="jamming area" value="10000"/>
+        <object-cost type="jamming area" value="10"/>
         <object-cost type="rota area" value="10000"/>
         <object-cost type="nbc zone" value="10000"/>
         <object-cost type="landing area" value="10"/>
@@ -407,4 +407,4 @@
     <rule channeling-range="1" cost-out-of-channeling="5000" type="base"/>
   </population-rules>
 </pathfind>
-<!-- signature="4238519158" -->
+<!-- signature="3145461272" -->
