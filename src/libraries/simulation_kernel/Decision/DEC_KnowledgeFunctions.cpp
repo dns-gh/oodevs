@@ -272,8 +272,7 @@ T_UrbanObjectVector DEC_KnowledgeFunctions::GetUrbanBlockInCircle( boost::shared
         throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
     //Urban
     T_UrbanObjectVector result;
-    geometry::Point2f centerPoint( static_cast< float >( center->rX_ ), static_cast< float >( center->rY_ ) );
-    MIL_AgentServer::GetWorkspace().GetUrbanCache().GetListWithinCircle( centerPoint, radius, result );
+    MIL_AgentServer::GetWorkspace().GetUrbanCache().GetListWithinCircle( *center, radius, result );
     return result;
 }
 

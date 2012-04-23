@@ -30,8 +30,6 @@
 #include "Entities/Objects/UrbanObjectWrapper.h"
 #include "Tools/MIL_Geometry.h"
 
-#define VECTOR_TO_POINT( point ) geometry::Point2f( static_cast< float >( ( point ).rX_ ), static_cast< float >( ( point ).rY_ ) )
-
 // -----------------------------------------------------------------------------
 // Name: PHY_ZURBPerceptionComputer constructor
 // Created: SLG 2010-04-29
@@ -166,11 +164,9 @@ bool PHY_ZURBPerceptionComputer::ComputeParametersPerception( const MIL_Agent_AB
 
     MT_Vector2D targetPosition = target.GetRole< PHY_RoleInterface_Location >().GetPosition();
     MT_Vector2D perceiverPosition = perceiver_.GetRole< PHY_RoleInterface_Location >().GetPosition();
-    geometry::Point2f vSourcePoint( VECTOR_TO_POINT( perceiverPosition ) );
-    geometry::Point2f vTargetPoint( VECTOR_TO_POINT( targetPosition ) );
 
     std::vector< const UrbanObjectWrapper* > list;
-    MIL_AgentServer::GetWorkspace().GetUrbanCache().GetUrbanBlocksWithinSegment( vSourcePoint, vTargetPoint, list );
+    MIL_AgentServer::GetWorkspace().GetUrbanCache().GetUrbanBlocksWithinSegment( perceiverPosition, targetPosition, list );
     const UrbanObjectWrapper* perceiverUrbanBlock = perceiver_.GetRole< PHY_RoleInterface_UrbanLocation >().GetCurrentUrbanBlock();
     const PHY_Posture& currentPerceiverPosture = perceiver_.GetRole< PHY_RoleInterface_Posture >().GetCurrentPosture();
 

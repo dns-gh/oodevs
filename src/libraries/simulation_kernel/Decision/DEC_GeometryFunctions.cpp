@@ -42,8 +42,6 @@
 
 #define PRECISION 0.0000001
 
-#define VECTOR_TO_POINT( point ) geometry::Point2f( static_cast< float >( ( point ).rX_ ), static_cast< float >( ( point ).rY_ ) )
-
 // -----------------------------------------------------------------------------
 // Name: DEC_GeometryFunctions::ComputeAgentsBarycenter
 // Created: NLD 2004-10-14
@@ -1007,7 +1005,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeTrafficableLocali
     boost::shared_ptr< MT_Vector2D > pBarycenter( new MT_Vector2D( MT_ComputeBarycenter( pLocalisation->GetPoints() ) ) );
     if( pBarycenter.get() )
     {
-        const UrbanObjectWrapper* object = MIL_AgentServer::GetWorkspace().GetUrbanCache().FindBlock( VECTOR_TO_POINT( *pBarycenter ) );
+        const UrbanObjectWrapper* object = MIL_AgentServer::GetWorkspace().GetUrbanCache().FindBlock( *pBarycenter );
         if( object )
         {
             const double myWeight = pion.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight();
@@ -1038,7 +1036,7 @@ boost::shared_ptr< MT_Vector2D > DEC_GeometryFunctions::ComputeTrafficableLocali
 // -----------------------------------------------------------------------------
 std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeTrafficableLocalisation( const MT_Vector2D& point )
 {
-    if( const UrbanObjectWrapper* wrapper = MIL_AgentServer::GetWorkspace().GetUrbanCache().FindBlock( VECTOR_TO_POINT( point ) ) )
+    if( const UrbanObjectWrapper* wrapper = MIL_AgentServer::GetWorkspace().GetUrbanCache().FindBlock( point ) )
     {
         const std::vector< boost::shared_ptr< MT_Vector2D > > points = wrapper->ComputeLocalisationsInsideBlock();
         std::vector< boost::shared_ptr< MT_Vector2D > > trafficablePoints;
@@ -1066,7 +1064,7 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_GeometryFunctions::ComputeTr
 // -----------------------------------------------------------------------------
 bool DEC_GeometryFunctions::IsUrbanBlockTrafficable( const MT_Vector2D& point, double weight )
 {
-    if( const UrbanObjectWrapper* object = MIL_AgentServer::GetWorkspace().GetUrbanCache().FindBlock( VECTOR_TO_POINT( point ) ) )
+    if( const UrbanObjectWrapper* object = MIL_AgentServer::GetWorkspace().GetUrbanCache().FindBlock( point ) )
         return object->GetTrafficability() > weight;
     return true;
 }

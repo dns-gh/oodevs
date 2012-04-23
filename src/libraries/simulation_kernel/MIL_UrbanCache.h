@@ -14,6 +14,7 @@
 #include <map>
 
 class UrbanObjectWrapper;
+class MT_Vector2D;
 
 namespace urban
 {
@@ -24,15 +25,16 @@ class MIL_UrbanCache
 {
 public:
     MIL_UrbanCache( urban::Model& urbanModel );
-    void GetUrbanBlocksWithinSegment( const geometry::Point2f& vSourcePoint, const geometry::Point2f& vTargetPoint, std::vector< const UrbanObjectWrapper* >& list );
-    void GetListWithinCircle( const geometry::Point2f& center, float radius, std::vector< UrbanObjectWrapper* >& result ) const;
-    const UrbanObjectWrapper* FindBlock( const geometry::Point2f& point ) const;
+    void GetUrbanBlocksWithinSegment( const MT_Vector2D& vSourcePoint, const MT_Vector2D& vTargetPoint, std::vector< const UrbanObjectWrapper* >& list );
+    void GetListWithinCircle( const MT_Vector2D& center, float radius, std::vector< UrbanObjectWrapper* >& result ) const;
+    const UrbanObjectWrapper* FindBlock( const MT_Vector2D& point ) const;
     std::vector< const UrbanObjectWrapper* > GetCities() const;
+    double GetUrbanBlockCost( float weight, const MT_Vector2D& from, const MT_Vector2D& to ) const;
     void Clear();
 
 private:
-    typedef std::map< geometry::Point2f, std::vector< const UrbanObjectWrapper* > > T_InnerCache;
-    typedef std::map< geometry::Point2f, T_InnerCache > T_Cache;
+    typedef std::map< MT_Vector2D, std::vector< const UrbanObjectWrapper* > > T_InnerCache;
+    typedef std::map< MT_Vector2D, T_InnerCache > T_Cache;
 
 private:
     urban::Model& urbanModel_;

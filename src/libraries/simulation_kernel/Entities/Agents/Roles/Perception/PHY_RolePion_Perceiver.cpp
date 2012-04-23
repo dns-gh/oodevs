@@ -909,10 +909,7 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
         double maxPerceptionDistance = GetMaxAgentPerceptionDistance();
 
         std::vector< UrbanObjectWrapper* > perceivableUrbanBlock;
-        MIL_AgentServer::GetWorkspace().GetUrbanCache().GetListWithinCircle( geometry::Point2f( static_cast< float >( perceiverPosition_->rX_ ),
-                                                                                                           static_cast< float >( perceiverPosition_->rY_ ) ),
-                                                                                        maxBlockPerceptionDistance,
-                                                                                        perceivableUrbanBlock );
+        MIL_AgentServer::GetWorkspace().GetUrbanCache().GetListWithinCircle( *perceiverPosition_, maxBlockPerceptionDistance, perceivableUrbanBlock );
         if( !perceivableUrbanBlock.empty() )
         {
             double occupation = 0.;
