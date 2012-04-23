@@ -14,8 +14,14 @@
       </filter>
       <filter output="xml" target="orbat" xsl="simpleOrbat">
         <descriptions>
-          <description name="Simplified orbat export" lang="en"><![CDATA[Extracts teams, automats, units, populations and objects from orbat.<br>Outputs an XML file.]]></description>
-          <description name="Export d'OdB simplifié" lang="fr"><![CDATA[Extrait les camps, automates, unités, populations et objets de l'OdB.<br>Le résultat est un fichier XML.]]></description>
+          <description name="Simplified entities export" lang="en"><![CDATA[Extracts teams, automats, units, populations and objects from orbat.<br>Outputs an XML file.]]></description>
+          <description name="Export simplifié des entités" lang="fr"><![CDATA[Extrait les camps, automates, unités, populations et objets de l'OdB.<br>Le résultat est un fichier XML.]]></description>
+        </descriptions>
+      </filter>
+      <filter output="xml" target="orbat" xsl="orbat">
+        <descriptions>
+          <description name="Orbat export" lang="en"><![CDATA[Exports the orbat file.<br>Outputs an XML file usable by import odb function.]]></description>
+          <description name="Export de l'Ordre de Bataille" lang="fr"><![CDATA[Exporter l'orbat.<br>Le résultat est un fichier XML importable par la fonction "importer ordre de bataille"]]></description>
         </descriptions>
       </filter>
       <filter command="ExportDQP.exe" directory="D:\THALES\SCIPIO\PrepaSE\bin">
@@ -71,4 +77,4 @@
     </filters>
   </section>
 </sections>
-<!-- signature="1256158481" -->
+<!-- signature="0683764755" -->
