@@ -87,8 +87,10 @@ integration.canReinforceWithDotation = function ( unitToSupport, support, object
 end
 integration.unitsAbleToReinforce = function ( unitToSupport, units, obstacle, action )
     list = {}
-    for _, unit in pairs ( units ) do 
-        list[#list + 1] = unit.source
+    for _, unit in pairs ( units ) do
+        if not unit.source.reinforceGivenByUser then
+            list[#list + 1] = unit.source
+        end	
     end
     local localisationObject = obstacle:getLocalisation()
     local localisationisOK = false

@@ -356,6 +356,9 @@ return
     sendStopNeededReinforcement = function( self, receiver, unit )
         integration.SendMessage( "stopNeedReinforcement", receiver, { unit = unit }, { type = "dynamic" } )
     end,
+    sendReinforceGivenByUser = function( self, receiver, unit )
+        integration.SendMessage( "reinforceGivenByUser", receiver, { unit = unit }, { type = "dynamic" } )
+    end,
     sendNoLongerNeedReinforcement = function( self, receiver, unit )
         integration.SendMessage( "needCapacityByReinforcement", receiver, {object = nil, unit = unit, action = nil}, { type = "dynamic" } )
         integration.SendMessage( "needDotationByReinforcement", receiver, {object = nil, dotation = 0, unit = unit }, { type = "dynamic" } )

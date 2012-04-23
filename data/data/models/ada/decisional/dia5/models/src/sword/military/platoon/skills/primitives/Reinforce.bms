@@ -21,7 +21,11 @@ rootnode
 
     create = function( self )
         self.arrived = false
+        if not DEC_Agent_AutomateEstEmbraye() and masalife.brain.core.class.isOfType( self.params.entity, sword.military.world.PlatoonAlly ) then
+           meKnowledge:sendReinforceGivenByUser( integration.GetSuperiorKnowledge( meKnowledge ), meKnowledge )
+        end
         self.params.entity:changeAutomate()
+        self.isMounted = meKnowledge:isMounted() 
     end,
 
     -- -------------------------------------------------------------------------------- 
@@ -32,21 +36,21 @@ rootnode
         Activate( skill.links.observe, 1, { entity = self.params.entity } )
 
         if self.arrived then
-           if self.params.entity:canReinforceIt() then
-               if not meKnowledge:isDismounted() and meKnowledge:canDismount() then
-                   Activate( skill.links.dismount, 1 )
-               end
-               Activate( skill.nodes.reinforce, 1, { entity = self.params.entity } )
-           else
-               self.arrived = false
-               if not meKnowledge:isMounted() and meKnowledge:canMount() then
-                   Activate( skill.links.mount, 1 )
-               end
-               -- skip activate to force a new pathfind in order not to activate each tic moveandtakeposition
-               return
-           end
+            if self.params.entity:canReinforceIt() then
+                if self.isMounted and meKnowledge:canDismount() then
+                    Activate( skill.links.dismount, 1 )
+                end
+                Activate( skill.nodes.reinforce, 1, { entity = self.params.entity } )
+            else
+                self.arrived = false
+                if self.isMounted and meKnowledge:canMount() then
+                    Activate( skill.links.mount, 1 )
+                end
+                -- skip activate to force a new pathfind in order not to activate each tic moveandtakeposition
+                return
+            end
         else
-            if not meKnowledge:isMounted() and meKnowledge:canMount() then
+            if self.isMounted and meKnowledge:canMount() then
                 Activate( skill.links.mount, 1 )
             end
         end

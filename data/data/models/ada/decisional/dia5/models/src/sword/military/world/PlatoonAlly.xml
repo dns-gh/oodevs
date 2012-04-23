@@ -1248,6 +1248,14 @@ que pourrait subir l'agent dans son efficacité à résoudre la tâche de groupe
                 </type>
             </argument>
         </method>
+        <method name="sendReinforceGivenByUser">
+            <description>The agent received an order to reinforce by user.</description>
+            <argument name="receiver">
+                <type>
+                    <class name="sword.military.world.Company"/>
+                </type>
+            </argument>
+        </method>
         <method name="sendNoLongerNeedReinforcement">
             <description>The agent doesn't need reinforcement anymore.</description>
             <argument name="receiver">

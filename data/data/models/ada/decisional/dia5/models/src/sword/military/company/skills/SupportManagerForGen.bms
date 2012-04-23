@@ -22,6 +22,7 @@ activate = function( self )
        if pion.source.stopNeedReinforcement then
             local support = self.linkSupportSupported [pion]
             if support then
+                support.source.reinforceGivenByUser = false
                 self.supportList[#self.supportList + 1 ] = support
                 self.supportedList = removeFromList( pion, self.supportedList )
                 self.linkSupportSupported[pion] = nil
