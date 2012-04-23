@@ -327,7 +327,7 @@ void ADN_ListView::ContextMenuDelete()
 //-----------------------------------------------------------------------------
 bool ADN_ListView::SetCurrentItem( Q3ListViewItem* pItem )
 {
-    if( pItem != 0 )
+    if( pItem != 0 && pItem->isVisible() )
         return SetCurrentItem( static_cast<ADN_ListViewItem*>( pItem )->GetData() );
     else
         return SetCurrentItem( (void*)0 );
