@@ -115,8 +115,10 @@ void NodeController::Reload()
         try
         {
             boost::shared_ptr< Node > ptr = boost::make_shared< Node >( FromJson( system_.ReadFile( path ) ), runtime_, ports_ );
-            if( ptr )
-                nodes_->Attach( ptr );
+            if( !ptr )
+                continue;
+            nodes_->Attach( ptr );
+            LOG_INFO( log_ ) << "[" << type_ << "] Reloaded " << ptr->id_ << " " << ptr->name_ << " :" << ptr->port_->Get();
         }
         catch( const std::exception& err )
         {
@@ -173,7 +175,7 @@ NodeController::T_Node NodeController::Create( const std::string& name )
     bool valid = nodes_->Attach( node );
     if( !valid )
         return T_Node();
-    LOG_INFO( log_ ) << "[" << type_ << "] Added " << type_ << " " << node->id_ << " " << node->name_;
+    LOG_INFO( log_ ) << "[" << type_ << "] Added " << node->id_ << " " << node->name_ << " :" << node->port_->Get();
     system_.MakeDirectory( GetPath( jar_, *node ) );
     proxy_.Register( GetPrefix( type_, *node ), "localhost", port );
     Start( *node, true );
@@ -199,7 +201,7 @@ NodeController::T_Node NodeController::Delete( const boost::uuids::uuid& id )
     boost::shared_ptr< Node > node = nodes_->Detach( id );
     if( !node )
         return node;
-    LOG_INFO( log_ ) << "[" << type_ << "] Removed " << type_ << " " << node->id_ << " " << node->name_;
+    LOG_INFO( log_ ) << "[" << type_ << "] Removed " << node->id_ << " " << node->name_ << " :" << node->port_->Get();
     proxy_.Unregister( GetPrefix( type_, *node ) );
     Stop( *node, true );
     pool_->Post( boost::bind( &FileSystem_ABC::Remove, &system_, GetPath( jar_, *node ) ) );

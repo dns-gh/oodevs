@@ -117,8 +117,10 @@ void SessionController::Reload( T_Predicate predicate )
         try
         {
             boost::shared_ptr< Session > ptr = boost::make_shared< Session >( FromJson( system_.ReadFile( path ) ), runtime_, ports_ );
-            if( ptr && predicate( *ptr ) )
-                sessions_->Attach( ptr );
+            if( !ptr || !predicate( *ptr ) )
+                continue;
+            sessions_->Attach( ptr );
+            LOG_INFO( log_ ) << "[session] Reloaded " << ptr->id_ << " " << ptr->name_ << " :" << ptr->port_->Get();
         }
         catch( const std::exception& err )
         {
@@ -174,7 +176,7 @@ SessionController::T_Session SessionController::Create( const boost::uuids::uuid
     bool valid = sessions_->Attach( session );
     if( !valid )
         return T_Session();
-    LOG_INFO( log_ ) << "[session] Added " << session->id_ << " " << session->name_;
+    LOG_INFO( log_ ) << "[session] Added " << session->id_ << " " << session->name_ << " :" << session->port_->Get();
     const boost::filesystem::path path = GetPath( *session );
     system_.MakeDirectory( path );
     system_.WriteFile( path / "session.xml", session->GetConfiguration() );
@@ -201,7 +203,7 @@ SessionController::T_Session SessionController::Delete( const boost::uuids::uuid
     boost::shared_ptr< Session > session = sessions_->Detach( id );
     if( !session )
         return session;
-    LOG_INFO( log_ ) << "[session] Removed " << session->id_ << " " << session->name_;
+    LOG_INFO( log_ ) << "[session] Removed " << session->id_ << " " << session->name_ << " :" << session->port_->Get();
     Stop( *session, true );
     pool_->Post( boost::bind( &FileSystem_ABC::Remove, &system_, GetPath( *session ) ) );
     return session;
