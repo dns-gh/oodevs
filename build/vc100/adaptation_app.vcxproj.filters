@@ -443,6 +443,9 @@
     <Filter Include="Source Files\Workspace\Container\Container GUI">
       <UniqueIdentifier>{372c418f-bfe1-4ee7-990d-0b29db600bf5}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Source Files\Workspace\Categories\Categories GUI\Wizard">
+      <UniqueIdentifier>{d8687a76-bad9-47a6-b0bc-2f6277dc72ec}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\applications\adaptation_app\adaptation_app_pch.cpp">
@@ -1357,6 +1360,9 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_GoToButton.cpp">
       <Filter>Source Files\Common widgets</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ArmorCategory_Wizard.cpp">
+      <Filter>Source Files\Workspace\Categories\Categories GUI\Wizard</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">
@@ -2072,6 +2078,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Sensors_Postures_GUI.h">
       <Filter>Source Files\Workspace\Sensors\Sensors GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ArmorCategory_Wizard.h">
+      <Filter>Source Files\Workspace\Categories\Categories GUI\Wizard</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -167,6 +167,25 @@
     </message>
 </context>
 <context>
+    <name>ADN_ArmorCategory_Wizard</name>
+    <message id="0">
+        <source>New armor plating creation</source>
+        <translation>Création d&apos;une nouvelle catégorie de blindage</translation>
+    </message>
+    <message>
+        <source>Armor plating</source>
+        <translation>Catégorie de blindage</translation>
+    </message>
+    <message>
+        <source>Creation finished</source>
+        <translation>Création terminée</translation>
+    </message>
+    <message>
+        <source>Click &quot;Done&quot; to create the new armor plating.</source>
+        <translation>Cliquez sur &quot;Terminer&quot; pour créer la nouvelle catégorie de blindage.</translation>
+    </message>
+</context>
+<context>
     <name>ADN_AutomatLogCategory_ListView</name>
     <message>
         <source>Item &gt; Automat &gt; Unit &gt; Comp</source>
@@ -2205,14 +2224,6 @@ du tireur</translation>
         <source>Armor-Plating</source>
         <translation>Catégorie de blindage</translation>
     </message>
-    <message>
-        <source>New Armor-Plating</source>
-        <translation>Créer une catégorie de blindage</translation>
-    </message>
-    <message>
-        <source>Delete Armor-Plating</source>
-        <translation>Effacer cette catégorie de blindage</translation>
-    </message>
 </context>
 <context>
     <name>ADN_ListView_Categories_DotationNature</name>
@@ -4097,16 +4108,12 @@ Assurez vous que le fichier n&apos;est pas protègé en écriture.</translation>
 <context>
     <name>ADN_Sensors_Environments_GUI</name>
     <message>
-        <source>Environments</source>
-        <translation>Type terrain</translation>
-    </message>
-    <message>
         <source>Modifiers</source>
         <translation>Modificateurs</translation>
     </message>
-    <message id="0">
-        <source>ADN_Sensors_Environments_GUI</source>
-        <translation>ADN_Sensors_Environments_GUI</translation>
+    <message>
+        <source>Environments</source>
+        <translation>Type terrain</translation>
     </message>
 </context>
 <context>
