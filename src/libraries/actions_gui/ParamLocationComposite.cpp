@@ -130,10 +130,10 @@ void ParamLocationComposite::Draw( const geometry::Point2f& point, const kernel:
 // Name: ParamLocationComposite::BuildInterface
 // Created: LDC 2010-08-18
 // -----------------------------------------------------------------------------
-QWidget* ParamLocationComposite::BuildInterface( QWidget* parent )
+QWidget* ParamLocationComposite::BuildInterface( QWidget* parent, kernel::Entity_ABC& entity )
 {
     stack_ = new QStackedWidget( parent );
-    InternalBuildInterface();
+    InternalBuildInterface( entity );
     return stack_;
 }
 
@@ -141,11 +141,11 @@ QWidget* ParamLocationComposite::BuildInterface( QWidget* parent )
 // Name: ParamLocationComposite::InternalBuildInterface
 // Created: ABR 2012-01-09
 // -----------------------------------------------------------------------------
-void ParamLocationComposite::InternalBuildInterface()
+void ParamLocationComposite::InternalBuildInterface( kernel::Entity_ABC& entity )
 {
     for( CIT_Params it = params_.begin(); it != params_.end(); ++it )
     {
-        QWidget* widget = (*it)->BuildInterface( stack_ );
+        QWidget* widget = (*it)->BuildInterface( stack_, entity );
         stack_->addWidget( widget );
         connect( static_cast< QGroupBox* >( widget ), SIGNAL( clicked( bool ) ), this, SLOT( OnChecked( bool ) ) );
         widgets_.push_back( widget );

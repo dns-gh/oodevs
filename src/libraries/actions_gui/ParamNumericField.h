@@ -39,7 +39,7 @@ public:
     //@{
     virtual void Show();
     virtual void Hide();
-    virtual QWidget* BuildInterface( QWidget* parent );
+    virtual QWidget* BuildInterface( QWidget* parent, kernel::Entity_ABC& entity );
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     void SetLimits( NumericType min, NumericType max );
     //@}

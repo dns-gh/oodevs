@@ -16,7 +16,7 @@
 // Created: SBO 2007-02-19
 // -----------------------------------------------------------------------------
 MaintenanceStatusWidget::MaintenanceStatusWidget( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : LogisticStatusWidget_ABC< MaintenanceStates >( parent, controllers, factory )
+    : LogisticStatusWidget_ABC< kernel::MaintenanceStates_ABC >( parent, controllers, factory )
 {
     display_->AddGroup( tools::translate( "MaintenanceStates", "Maintenance system state" ) )
                 .AddLabel( tools::findTranslation( "MaintenanceStates", "System status" ) )

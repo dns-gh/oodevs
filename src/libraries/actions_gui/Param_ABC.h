@@ -83,7 +83,7 @@ public:
     virtual void RemoveFromController();
     virtual void RegisterIn( kernel::ActionController& controller );
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    virtual QWidget* BuildInterface( QWidget* parent );
+    virtual QWidget* BuildInterface( QWidget* parent, kernel::Entity_ABC& entity );
     virtual bool CheckValidity();
     virtual bool InternalCheckValidity() const;
     virtual void CommitTo( actions::ParameterContainer_ABC& ) const = 0;

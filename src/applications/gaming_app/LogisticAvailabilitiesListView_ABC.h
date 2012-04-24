@@ -10,9 +10,9 @@
 #ifndef __LogisticAvailabilitiesListView_ABC_h_
 #define __LogisticAvailabilitiesListView_ABC_h_
 
-#include "gaming/Availability.h"
 #include "gaming/Dotation.h"
 #include "ResourcesListView_ABC.h"
+#include "clients_kernel/Availability.h"
 #include "clients_kernel/Displayer_ABC.h"
 
 #include "gaming/MaintenanceStates.h"
@@ -39,7 +39,7 @@ public:
 
     //! @name Operations
     //@{
-    void Display( const Availability& availability, kernel::Displayer_ABC& displayer, gui::ValuedListItem* )
+    void Display( const kernel::Availability& availability, kernel::Displayer_ABC& displayer, gui::ValuedListItem* )
     {
         availability.Display( displayer );
     }
@@ -75,13 +75,13 @@ private:
 */
 // Created: SBO 2007-02-20
 // =============================================================================
-class MaintenanceAvailabilitiesListView_ABC : public LogisticAvailabilitiesListView_ABC< MaintenanceAvailabilitiesListView_ABC, MaintenanceStates >
+class MaintenanceAvailabilitiesListView_ABC : public LogisticAvailabilitiesListView_ABC< MaintenanceAvailabilitiesListView_ABC, kernel::MaintenanceStates_ABC >
 {
 public:
     //! @name Constructors/Destructor
     //@{
              MaintenanceAvailabilitiesListView_ABC( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-                 : LogisticAvailabilitiesListView_ABC< MaintenanceAvailabilitiesListView_ABC, MaintenanceStates >( parent, *this, controllers, factory )
+                 : LogisticAvailabilitiesListView_ABC< MaintenanceAvailabilitiesListView_ABC, kernel::MaintenanceStates_ABC >( parent, *this, controllers, factory )
              {}
     virtual ~MaintenanceAvailabilitiesListView_ABC() {}
     //@}

@@ -60,7 +60,7 @@ public:
     //! @name Operations
     //@{
     void CommitTo( actions::ParameterContainer_ABC& action ) const;
-    virtual QWidget* BuildInterface( QWidget* parent );
+    virtual QWidget* BuildInterface( QWidget* parent, kernel::Entity_ABC& entity );
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& extent, const kernel::GlTools_ABC& tools ) const;
     virtual void NotifyContextMenu( const geometry::Point2f&, kernel::ContextMenu& );
     virtual void NotifyContextMenu( const kernel::Nothing&, kernel::ContextMenu& );

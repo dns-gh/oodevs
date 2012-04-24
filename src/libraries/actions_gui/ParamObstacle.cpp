@@ -87,9 +87,9 @@ void ParamObstacle::RemoveFromController()
 // Name: ParamObstacle::BuildInterface
 // Created: SBO 2007-03-13
 // -----------------------------------------------------------------------------
-QWidget* ParamObstacle::BuildInterface( QWidget* parent )
+QWidget* ParamObstacle::BuildInterface( QWidget* parent, kernel::Entity_ABC& entity )
 {
-    Param_ABC::BuildInterface( parent );
+    Param_ABC::BuildInterface( parent, entity );
     QVBoxLayout* layout = new QVBoxLayout( group_ );
 
     // Type
@@ -121,7 +121,7 @@ QWidget* ParamObstacle::BuildInterface( QWidget* parent )
 
     // Density
     {
-        QGroupBox* densityBox = static_cast< QGroupBox* >( static_cast< Param_ABC* >( density_ )->BuildInterface( parent ) );
+        QGroupBox* densityBox = static_cast< QGroupBox* >( static_cast< Param_ABC* >( density_ )->BuildInterface( parent, entity ) );
         density_->SetLimits( 0.f, 5.f );
         densityBox->layout()->setMargin( 0 );
         densityBox->layout()->setSpacing( 0 );
@@ -130,7 +130,7 @@ QWidget* ParamObstacle::BuildInterface( QWidget* parent )
 
     // TC2
     {
-        QGroupBox* tc2Box = static_cast< QGroupBox* >( static_cast< Param_ABC* >( tc2_ )->BuildInterface( parent ) );
+        QGroupBox* tc2Box = static_cast< QGroupBox* >( static_cast< Param_ABC* >( tc2_ )->BuildInterface( parent, entity ) );
         tc2Box->layout()->setMargin( 0 );
         tc2Box->layout()->setSpacing( 0 );
         layout->addWidget( tc2Box );
@@ -138,7 +138,7 @@ QWidget* ParamObstacle::BuildInterface( QWidget* parent )
 
     // Location
     {
-        QGroupBox* locationBox = static_cast< QGroupBox* >( static_cast< Param_ABC* >( location_ )->BuildInterface( parent ) );
+        QGroupBox* locationBox = static_cast< QGroupBox* >( static_cast< Param_ABC* >( location_ )->BuildInterface( parent, entity ) );
         locationBox->layout()->setMargin( 0 );
         locationBox->layout()->setSpacing( 0 );
         layout->addWidget( locationBox );

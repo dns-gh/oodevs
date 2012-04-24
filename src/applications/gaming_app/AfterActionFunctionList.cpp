@@ -234,7 +234,7 @@ void AfterActionFunctionList::CreateParameter( const AfterActionParameter& param
     if( pParameter )
     {
         paramList_.push_back( pParameter );
-        pParameter->BuildInterface( parameters_ );
+        pParameter->BuildInterface( parameters_, builder_.GetCurrentEntity() );
         pParameter->RegisterIn( controllers_.actions_ );
     }
     else

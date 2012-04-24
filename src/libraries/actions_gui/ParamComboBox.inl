@@ -48,9 +48,9 @@ ParamComboBox< T >::~ParamComboBox()
 // Created: SBO 2007-03-13
 // -----------------------------------------------------------------------------
 template< typename T >
-QWidget* ParamComboBox< T >::BuildInterface( QWidget* parent )
+QWidget* ParamComboBox< T >::BuildInterface( QWidget* parent, kernel::Entity_ABC& entity )
 {
-    Param_ABC::BuildInterface( parent );
+    Param_ABC::BuildInterface( parent, entity );
     QVBoxLayout* layout = new QVBoxLayout( group_ );
 
     comboBox_ = new ::gui::ValuedComboBox< T >( parent );

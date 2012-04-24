@@ -149,7 +149,7 @@ void Param_ABC::NotifyChanged( Param_ABC& /*param*/ )
 // Name: Param_ABC::BuildInterface
 // Created: ABR 2011-11-21
 // -----------------------------------------------------------------------------
-QWidget* Param_ABC::BuildInterface( QWidget* parent )
+QWidget* Param_ABC::BuildInterface( QWidget* parent, kernel::Entity_ABC& )
 {
     group_ = new ::gui::RichGroupBox( GetName(), parent );
     group_->setCheckable( IsOptional() );

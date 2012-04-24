@@ -171,7 +171,7 @@ void MissionInterface_ABC::ChangeOkValueButton( bool planningMode )
 void MissionInterface_ABC::AddParameter( Param_ABC& parameter )
 {
     parameters_.push_back( &parameter );
-    parameter.BuildInterface( parameter.IsOptional() ? optionalTab_ : mainTab_ );
+    parameter.BuildInterface( parameter.IsOptional() ? optionalTab_ : mainTab_, entity_ );
     parameter.RegisterIn( controller_ );
 }
 

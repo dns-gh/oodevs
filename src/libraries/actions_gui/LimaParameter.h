@@ -47,7 +47,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual QWidget* BuildInterface( QWidget* parent );
+    virtual QWidget* BuildInterface( QWidget* parent, kernel::Entity_ABC& entity );
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void CommitTo( actions::ParameterContainer_ABC& action ) const;
     //@}

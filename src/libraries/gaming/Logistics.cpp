@@ -47,10 +47,10 @@ Logistics::~Logistics()
 // -----------------------------------------------------------------------------
 void Logistics::DoUpdate( const sword::LogMaintenanceState& message )
 {
-    if( ! holder_.Retrieve< MaintenanceStates >() )
+    if( ! holder_.Retrieve< kernel::MaintenanceStates_ABC >() )
     {
         MaintenanceStates* ext = new MaintenanceStates( holder_, controller_, static_.objectTypes_, model_.GetAutomatResolver(), dico_ );
-        holder_.Attach( *ext );
+        holder_.Attach< kernel::MaintenanceStates_ABC >( *ext );
         ext->DoUpdate( message );
     }
 }

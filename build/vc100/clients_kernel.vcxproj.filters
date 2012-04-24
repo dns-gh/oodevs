@@ -442,6 +442,9 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\XmlDescription.cpp">
       <Filter>Source Files\XML model</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Availability.cpp">
+      <Filter>Source Files\XML model</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_kernel\Application_ABC.h">
@@ -1034,6 +1037,12 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_kernel\VariantPointer.h">
       <Filter>Source Files\Tools</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\MaintenanceStates_ABC.h">
+      <Filter>Source Files\XML model</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Availability.h">
+      <Filter>Source Files\XML model</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

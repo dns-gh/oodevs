@@ -29,7 +29,7 @@ namespace gui
 */
 // Created: SBO 2007-02-20
 // =============================================================================
-class InfoMaintenanceDialog : public InfoDialog< MaintenanceStates >
+class InfoMaintenanceDialog : public InfoDialog< kernel::MaintenanceStates_ABC >
 {
 public:
     //! @name Constructors/Destructor
