@@ -1378,7 +1378,7 @@ namespace
 
     void LoadResourcesFile( const std::string& file, boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain )
     {
-        return (*pArchetypeBrain)[ "include" ]( bfs::path( bfs::path( "./resources", bfs::native ) / file ).native_file_string() );
+        (*pArchetypeBrain)[ "include" ]( bfs::path( bfs::path( "./resources", bfs::native ) / file ).native_file_string() );
     }
 }
 
