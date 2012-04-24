@@ -10,8 +10,8 @@
 #ifndef __MaintenanceStates_h_
 #define __MaintenanceStates_h_
 
-#include "clients_kernel/Availability.h"
-#include "clients_kernel/MaintenanceStates_ABC.h"
+#include "Availability.h"
+#include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "tools/Resolver_ABC.h"
 
@@ -35,8 +35,8 @@ namespace sword
 */
 // Created: AGE 2006-02-14
 // =============================================================================
-class MaintenanceStates : public kernel::Updatable_ABC< sword::LogMaintenanceState >
-                        , public kernel::MaintenanceStates_ABC
+class MaintenanceStates : public kernel::Extension_ABC
+                        , public kernel::Updatable_ABC< sword::LogMaintenanceState >
 {
 public:
     //! @name Constructors/Destructor
@@ -50,10 +50,6 @@ public:
     //@{
     void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void DoUpdate( const sword::LogMaintenanceState& message );
-    virtual const std::vector< const kernel::EquipmentType* >& GetPriorities() const;
-    virtual const std::vector< kernel::Availability >& GetDispoHaulers() const;
-    virtual const std::vector< kernel::Availability >& GetDispoRepairers() const;
-    virtual bool HasPriority( const kernel::EquipmentType* ) const;
     //@}
 
 private:
@@ -71,11 +67,11 @@ private:
     //! @name Types
     //@{
     typedef std::vector< const kernel::EquipmentType* > T_Priorities;
-    typedef std::vector< kernel::Availability >         T_Availabilities;
+    typedef std::vector< Availability >                 T_Availabilities;
     typedef std::vector< const kernel::Automat_ABC* >   T_Automats;
     //@}
 
-private:
+public:
     //! @name Member data
     //@{
     kernel::Entity_ABC& entity_;

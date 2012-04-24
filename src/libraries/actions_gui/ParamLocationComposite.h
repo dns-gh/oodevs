@@ -56,7 +56,7 @@ public:
     virtual void RemoveFromController();
 
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    virtual QWidget* BuildInterface( QWidget* parent, kernel::Entity_ABC& entity );
+    virtual QWidget* BuildInterface( QWidget* parent );
     virtual void CommitTo( actions::ParameterContainer_ABC& container ) const;
     virtual bool CheckValidity();
     //@}
@@ -64,7 +64,7 @@ public:
 protected:
     //! @name Helpers
     //@{
-    void InternalBuildInterface( kernel::Entity_ABC& entity );
+    void InternalBuildInterface();
     virtual void NotifyChanged( Param_ABC& param );
     virtual bool IsChecked() const;
     //@}

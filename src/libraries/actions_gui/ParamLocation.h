@@ -48,9 +48,6 @@ public:
     //@{
     void SetShapeFilter( bool point, bool line, bool polygon, bool circle, bool rectangle );
     //@}
-
-private:
-    kernel::Entity_ABC& entity_;
 };
 
     }

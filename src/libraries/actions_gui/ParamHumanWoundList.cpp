@@ -44,9 +44,9 @@ ParamHumanWoundList::~ParamHumanWoundList()
 // Name: ParamHumanWoundList::BuildInterface
 // Created: SBO 2007-03-13
 // -----------------------------------------------------------------------------
-QWidget* ParamHumanWoundList::BuildInterface( QWidget* parent, kernel::Entity_ABC& entity )
+QWidget* ParamHumanWoundList::BuildInterface( QWidget* parent )
 {
-    Param_ABC::BuildInterface( parent, entity );
+    Param_ABC::BuildInterface( parent );
     QGridLayout* layout = new QGridLayout( group_ );
 
     list_ = new Q3ListView( parent );

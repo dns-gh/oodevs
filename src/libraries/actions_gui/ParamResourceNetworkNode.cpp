@@ -52,9 +52,9 @@ ParamResourceNetworkNode::~ParamResourceNetworkNode()
 // Name: ParamResourceNetworkNode::BuildInterface
 // Created: JSR 2011-05-02
 // -----------------------------------------------------------------------------
-QWidget* ParamResourceNetworkNode::BuildInterface( QWidget* parent, kernel::Entity_ABC& entity )
+QWidget* ParamResourceNetworkNode::BuildInterface( QWidget* parent )
 {
-    Param_ABC::BuildInterface( parent, entity );
+    Param_ABC::BuildInterface( parent );
     QGridLayout* layout = new QGridLayout( group_ );
 
     objectName_->setMinimumWidth( 100 );

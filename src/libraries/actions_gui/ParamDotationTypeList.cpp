@@ -45,9 +45,9 @@ ParamDotationTypeList::~ParamDotationTypeList()
 // Name: ParamDotationTypeList::BuildInterface
 // Created: SBO 2007-03-13
 // -----------------------------------------------------------------------------
-QWidget* ParamDotationTypeList::BuildInterface( QWidget* parent, kernel::Entity_ABC& entity )
+QWidget* ParamDotationTypeList::BuildInterface( QWidget* parent )
 {
-    Param_ABC::BuildInterface( parent, entity );
+    Param_ABC::BuildInterface( parent );
     QVBoxLayout* layout = new QVBoxLayout( group_ );
 
     list_ = new Q3ListView( parent );

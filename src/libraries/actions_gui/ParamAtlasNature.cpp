@@ -45,9 +45,9 @@ ParamAtlasNature::~ParamAtlasNature()
 // Name: ParamAtlasNature::BuildInterface
 // Created: SBO 2007-03-13
 // -----------------------------------------------------------------------------
-QWidget* ParamAtlasNature::BuildInterface( QWidget* parent, kernel::Entity_ABC& entity )
+QWidget* ParamAtlasNature::BuildInterface( QWidget* parent )
 {
-    Param_ABC::BuildInterface( parent, entity );
+    Param_ABC::BuildInterface( parent );
     QVBoxLayout* layout = new QVBoxLayout( group_ );
     Q3ButtonGroup* buttonGroup = new Q3ButtonGroup( 2, Qt::Horizontal, parent );
     buttonGroup->setMargin( 0 );

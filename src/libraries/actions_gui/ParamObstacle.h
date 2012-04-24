@@ -58,7 +58,7 @@ public:
     virtual void RegisterIn( kernel::ActionController& controller );
     virtual void RemoveFromController();
     virtual void Draw( const geometry::Point2f& point, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
-    virtual QWidget* BuildInterface( QWidget* parent, kernel::Entity_ABC& entity );
+    virtual QWidget* BuildInterface( QWidget* parent );
     virtual bool CheckValidity();
     virtual bool InternalCheckValidity() const;
     virtual kernel::ContextMenu::T_MenuVariant CreateMenu( kernel::ContextMenu& menu );

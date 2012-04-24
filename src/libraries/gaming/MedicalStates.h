@@ -10,7 +10,7 @@
 #ifndef __MedicalStates_h_
 #define __MedicalStates_h_
 
-#include "clients_kernel/Availability.h"
+#include "Availability.h"
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Types.h"
 #include "clients_kernel/Updatable_ABC.h"
@@ -68,7 +68,7 @@ private:
     //@{
     typedef std::vector< E_HumanWound > T_Priorities;
     typedef std::vector< const kernel::Automat_ABC* > T_Automats;
-    typedef std::vector< kernel::Availability > T_Availabilities;
+    typedef std::vector< Availability > T_Availabilities;
     //@}
 
 public:

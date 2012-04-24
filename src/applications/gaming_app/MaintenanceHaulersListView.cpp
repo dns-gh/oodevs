@@ -38,8 +38,8 @@ MaintenanceHaulersListView::~MaintenanceHaulersListView()
 // Name: MaintenanceHaulersListView::NotifyUpdated
 // Created: SBO 2007-02-19
 // -----------------------------------------------------------------------------
-void MaintenanceHaulersListView::NotifyUpdated( const kernel::MaintenanceStates_ABC& a )
+void MaintenanceHaulersListView::NotifyUpdated( const MaintenanceStates& a )
 {
     if( ShouldUpdate( a ) )
-        DeleteTail( DisplayList( a.GetDispoHaulers().begin(), a.GetDispoHaulers().end() ) );
+        DeleteTail( DisplayList( a.dispoHaulers_.begin(), a.dispoHaulers_.end() ) );
 }

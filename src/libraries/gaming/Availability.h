@@ -16,6 +16,7 @@ namespace kernel
 {
     class EquipmentType;
     class Displayer_ABC;
+}
 
 // =============================================================================
 /** @class  Availability
@@ -55,6 +56,5 @@ public:
     unsigned int atRest_;
     //@}
 };
-}
 
 #endif // __Availability_h_

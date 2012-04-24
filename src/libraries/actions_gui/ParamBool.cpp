@@ -57,9 +57,9 @@ void ParamBool::SetValue( bool value )
 // Name: ParamBool::BuildInterface
 // Created: SBO 2007-03-13
 // -----------------------------------------------------------------------------
-QWidget* ParamBool::BuildInterface( QWidget* parent, kernel::Entity_ABC& entity )
+QWidget* ParamBool::BuildInterface( QWidget* parent )
 {
-    Param_ABC::BuildInterface( parent, entity );
+    Param_ABC::BuildInterface( parent );
     QHBoxLayout* layout = new QHBoxLayout( group_ );
     layout->setAlignment( Qt::AlignCenter );
     comboBox_ = new QComboBox( parent );

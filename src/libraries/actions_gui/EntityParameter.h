@@ -50,7 +50,7 @@ public:
     //@{
     virtual void Show();
     virtual void Hide();
-    virtual QWidget* BuildInterface( QWidget* parent, kernel::Entity_ABC& entity );
+    virtual QWidget* BuildInterface( QWidget* parent );
     //@}
 
 protected:

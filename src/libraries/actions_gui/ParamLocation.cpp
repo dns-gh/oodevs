@@ -18,7 +18,6 @@ using namespace actions::gui;
 // -----------------------------------------------------------------------------
 ParamLocation::ParamLocation( const InterfaceBuilder_ABC& builder, const kernel::OrderParameter& parameter )
     : ParamLocationComposite( builder, parameter )
-    , entity_( builder.GetCurrentEntity() )
 {
     SetShapeFilter( true, true, true, true, true );
 }
@@ -50,5 +49,5 @@ void ParamLocation::SetShapeFilter( bool point, bool line, bool polygon, bool ci
     if( rectangle )
         AddElement( "rectangle" );
     if( stack_ )
-        InternalBuildInterface( entity_ );
+        InternalBuildInterface();
 }

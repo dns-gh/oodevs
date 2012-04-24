@@ -21,7 +21,7 @@
 */
 // Created: SBO 2007-02-19
 // =============================================================================
-class MaintenanceStatusWidget : public LogisticStatusWidget_ABC< kernel::MaintenanceStates_ABC >
+class MaintenanceStatusWidget : public LogisticStatusWidget_ABC< MaintenanceStates >
 {
 public:
     //! @name Constructors/Destructor

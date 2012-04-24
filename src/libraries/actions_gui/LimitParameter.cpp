@@ -53,9 +53,9 @@ LimitParameter::~LimitParameter()
 // Name: LimitParameter::BuildInterface
 // Created: SBO 2007-03-13
 // -----------------------------------------------------------------------------
-QWidget* LimitParameter::BuildInterface( QWidget* parent, kernel::Entity_ABC& entity )
+QWidget* LimitParameter::BuildInterface( QWidget* parent )
 {
-    Param_ABC::BuildInterface( parent, entity );
+    Param_ABC::BuildInterface( parent );
     QVBoxLayout* layout = new QVBoxLayout( group_ );
     entityLabel_ = new QLabel( "---", parent );
     entityLabel_->setMinimumWidth( 100 );

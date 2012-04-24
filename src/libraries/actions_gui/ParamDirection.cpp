@@ -45,9 +45,9 @@ ParamDirection::~ParamDirection()
 // Name: ParamDirection::BuildInterface
 // Created: SBO 2007-03-13
 // -----------------------------------------------------------------------------
-QWidget* ParamDirection::BuildInterface( QWidget* parent, kernel::Entity_ABC& entity )
+QWidget* ParamDirection::BuildInterface( QWidget* parent )
 {
-    Param_ABC::BuildInterface( parent, entity );
+    Param_ABC::BuildInterface( parent );
     QHBoxLayout* layout = new QHBoxLayout( group_ );
     QDial* dial = new QDial( 0, 359, 1, 0, parent );
     layout->addWidget( dial );

@@ -46,7 +46,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual QWidget* BuildInterface( QWidget* parent, kernel::Entity_ABC& entity );
+    virtual QWidget* BuildInterface( QWidget* parent );
     virtual void CommitTo( actions::ParameterContainer_ABC& ) const;
     virtual bool InternalCheckValidity() const;
     virtual void CreateInternalMenu( kernel::ContextMenu& menu );

@@ -13,12 +13,11 @@
 #include "InterfaceBuilder_ABC.h"
 #include "actions/Action_ABC.h"
 #include "actions/MaintenancePriorities.h"
+#include "clients_kernel/EquipmentType.h"
+#include "clients_kernel/StaticModel.h"
+#include "clients_kernel/ObjectTypes.h"
 #include "clients_gui/ValuedListItem.h"
 #include "clients_gui/resources.h"
-#include "clients_kernel/EquipmentType.h"
-#include "clients_kernel/MaintenanceStates_ABC.h"
-#include "clients_kernel/ObjectTypes.h"
-#include "clients_kernel/StaticModel.h"
 
 using namespace actions::gui;
 
@@ -61,10 +60,9 @@ namespace
 // Name: ParamEquipmentList::BuildInterface
 // Created: SBO 2007-03-13
 // -----------------------------------------------------------------------------
-QWidget* ParamEquipmentList::BuildInterface( QWidget* parent, kernel::Entity_ABC& entity )
+QWidget* ParamEquipmentList::BuildInterface( QWidget* parent )
 {
-    Param_ABC::BuildInterface( parent, entity );
-    kernel::MaintenanceStates_ABC* maintenance = entity.Retrieve< kernel::MaintenanceStates_ABC >();
+    Param_ABC::BuildInterface( parent );
     QGridLayout* layout = new QGridLayout( group_ );
     {
         baseList_ = CreateList( parent );
@@ -73,11 +71,8 @@ QWidget* ParamEquipmentList::BuildInterface( QWidget* parent, kernel::Entity_ABC
         while( it.HasMoreElements() )
         {
             const kernel::EquipmentType& type = it.NextElement();
-            if( !maintenance || !maintenance->HasPriority( &type ) )
-            {
-                ::gui::ValuedListItem* item = new ::gui::ValuedListItem( baseList_ );
-                item->SetNamed( type );
-            }
+            ::gui::ValuedListItem* item = new ::gui::ValuedListItem( baseList_ );
+            item->SetNamed( type );
         }
 
         QPushButton* addBtn = new QPushButton( MAKE_ICON( right_arrow ), QString::null, parent );
@@ -96,16 +91,6 @@ QWidget* ParamEquipmentList::BuildInterface( QWidget* parent, kernel::Entity_ABC
     {
         list_ = CreateList( parent );
         list_->setSorting( -1, true );
-
-        if( maintenance )
-        {
-            std::vector< const kernel::EquipmentType* > priorities = maintenance->GetPriorities();
-            for( std::vector< const kernel::EquipmentType* >::const_reverse_iterator it = priorities.rbegin(); it != priorities.rend(); ++it )
-            {
-                ::gui::ValuedListItem* item = new ::gui::ValuedListItem( list_ );
-                item->SetNamed( **it );
-            }
-        }
 
         QPushButton* upBtn = new QPushButton( MAKE_ICON( arrow_up ), QString::null, parent );
         upBtn->setFixedSize( 32, 32 );
