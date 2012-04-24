@@ -1363,7 +1363,7 @@
     package
     ============================================================================
     -->
-    <target name="package" depends="package.app" description="package the installers and packs"/>
+    <target name="package" depends="package.app,package.debug,package.otpacks,package.wise-driver,package.ts,package.plugins" description="package the installers and packs"/>
 
     <!-- Package plugins -->
     <target name="package.plugins" depends="package.plugin.vrforces,package.plugin.hla,package.plugin.bml,package.plugin.dis,package.plugin.timeline,package.plugin.crossbow,package.plugin.edxlhave" description="package plugin individual installers"/>
@@ -1668,6 +1668,6 @@
 
     <target name="build" depends="libraries,applications"/>
 
-    <target name="all" depends="build,package" description="build and package distribution"/>
+    <target name="all" depends="configure,build,test,documentation,package" description="build and package distribution"/>
 
 </project>
