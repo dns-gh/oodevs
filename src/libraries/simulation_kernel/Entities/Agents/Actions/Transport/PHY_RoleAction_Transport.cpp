@@ -385,8 +385,7 @@ void PHY_RoleAction_Transport::MagicUnloadPion( MIL_Agent_ABC& transported )
     MT_Vector2D* positionDummy( 0 );
     transported.Apply(&TransportNotificationHandler_ABC::UnloadFromTransport, owner_, it->second.bTransportOnlyLoadable_, positionDummy );
 
-    assert( rWeightTransported_ >= it->second.rTransportedWeight_ );
-    rWeightTransported_ -= it->second.rTransportedWeight_;
+    rWeightTransported_ = std::max( 0., rWeightTransported_ - it->second.rTransportedWeight_ );
     transportedPions_.erase( it );
     bHasChanged_ = true;
 }
