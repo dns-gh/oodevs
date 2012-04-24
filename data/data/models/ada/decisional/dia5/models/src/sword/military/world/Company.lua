@@ -54,6 +54,10 @@ masalife.brain.communication.setMessageTreatment( "stopNeedReinforcement",
     function( content, sender )
        content.unit.source.stopNeedReinforcement = true
     end )
+masalife.brain.communication.setMessageTreatment( "reinforceGivenByUser",
+    function( content, sender )
+       content.unit.source.reinforceGivenByUser = true
+    end )
     
 -- -------------------------------------------------------------------------------- 
 -- Predicates

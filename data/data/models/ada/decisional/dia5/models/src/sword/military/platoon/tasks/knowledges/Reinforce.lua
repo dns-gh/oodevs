@@ -5,7 +5,11 @@ local result =
     end,
 
     fillParameters = function( self, companyTask, params, entity, marcheRetrograde, objectif )
-        return { objective = companyTask:getEntityToReinforce( params ) }
+        if objectif and objectif ~= NIL then
+            return { objective = objectif }
+        else
+            return { objective = companyTask:getEntityToReinforce( params ) }
+        end	
     end
 }
 
