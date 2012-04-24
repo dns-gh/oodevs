@@ -78,7 +78,7 @@ public:
     const T_PathKnowledgePopulationVector& GetPathKnowledgePopulations() const;
     const DEC_Agent_PathClass& GetPathClass() const;
     double GetUnitMajorWeight() const;
-    const T_PointVector& GetNextPoints() const;
+    const T_PointVector& GetNextWaypoints() const;
     //@}
 
     //! @name Tools
@@ -126,8 +126,8 @@ private:
     // Path calculation parameters
     const DEC_Agent_PathClass& pathClass_;
     bool bRefine_;
-    T_PointVector initialPathPoints_;
-    T_PointVector nextPathPoints_;
+    T_PointVector initialWaypoints_;
+    T_PointVector nextWaypoints_;
     MIL_Fuseau fuseau_;
     MIL_Fuseau automateFuseau_;
     MT_Vector2D vDirDanger_;

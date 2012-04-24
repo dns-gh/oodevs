@@ -128,11 +128,11 @@ bool DEC_Agent_Path::UseStrictClosest() const
 }
 
 // -----------------------------------------------------------------------------
-// Name: DEC_Agent_Path::GetNextPoints
+// Name: DEC_Agent_Path::GetNextWaypoints
 // Created: CMA 2012-02-20
 // -----------------------------------------------------------------------------
 inline
-const T_PointVector& DEC_Agent_Path::GetNextPoints() const
+const T_PointVector& DEC_Agent_Path::GetNextWaypoints() const
 {
-    return nextPathPoints_;
+    return nextWaypoints_;
 }

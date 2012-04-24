@@ -19,6 +19,16 @@ DEC_Path_ABC::E_State DEC_Path::GetState() const
     return nState_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: DEC_Path::GetComputedWaypoints
+// Created: CMA 2012-02-23
+// -----------------------------------------------------------------------------
+inline
+const T_PointVector& DEC_Path::GetComputedWaypoints() const
+{
+    return computedWaypoints_;
+}
+
 // =============================================================================
 // TOOLS
 // =============================================================================

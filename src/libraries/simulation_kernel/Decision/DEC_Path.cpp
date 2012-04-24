@@ -100,6 +100,9 @@ void DEC_Path::DoExecute( TerrainPathfinder& pathfind )
         DEC_PathSection_ABC& pathSection = **itPathSection;
         if( !pathSection.Execute( pathfind, nComputationEndTime ) )
         {
+            if( !pathPoints.empty() )
+                computedWaypoints_.push_back( pathPoints.back()->GetPos() );
+
             if( bJobCanceled_ )
             {
                 nState_ = eCanceled;
@@ -122,6 +125,8 @@ void DEC_Path::DoExecute( TerrainPathfinder& pathfind )
                     (*itNextPathSection)->SetPosStart( pathPoints.back()->GetPos() );
             }
         }
+        else if( !pathPoints.empty() )
+            computedWaypoints_.push_back( pathPoints.back()->GetPos() );
         NotifySectionEnded();
     }
     nState_ = eValid;

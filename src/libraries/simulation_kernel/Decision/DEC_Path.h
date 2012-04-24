@@ -13,6 +13,7 @@
 #define __DEC_Path_h_
 
 #include "DEC_Path_ABC.h"
+#include "MT_Tools/Mt_Vector2DTypes.h"
 #include <string>
 #include <vector>
 
@@ -58,6 +59,7 @@ protected:
 
     std::string GetStateAsString() const;
     std::string GetPathAsString() const;
+    const T_PointVector& GetComputedWaypoints() const;
 
     virtual void NotifySectionEnded() = 0;
 
@@ -72,9 +74,13 @@ private:
     //@}
 
 private:
+    //! @name Member data
+    //@{
     T_PathSectionVector pathSections_;
+    T_PointVector computedWaypoints_;
     E_State nState_;
     bool bJobCanceled_;
+    //@}
 };
 
 #include "DEC_Path.inl"

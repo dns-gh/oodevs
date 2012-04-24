@@ -60,12 +60,12 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const T_PointVe
 {
     fuseau_= queryMaker.GetOrderManager().GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
-    initialPathPoints_.reserve( 1 + points.size() );
-    nextPathPoints_.reserve( points.size() );
-    initialPathPoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
-    std::copy( points.begin(), points.end(), std::back_inserter( initialPathPoints_ ) );
-    std::copy( points.begin(), points.end(), std::back_inserter( nextPathPoints_ ) );
-    Initialize( initialPathPoints_ );
+    initialWaypoints_.reserve( 1 + points.size() );
+    nextWaypoints_.reserve( points.size() );
+    initialWaypoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    std::copy( points.begin(), points.end(), std::back_inserter( initialWaypoints_ ) );
+    std::copy( points.begin(), points.end(), std::back_inserter( nextWaypoints_ ) );
+    Initialize( initialWaypoints_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -85,15 +85,15 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, std::vector< bo
 {
     fuseau_ = queryMaker.GetOrderManager().GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
-    initialPathPoints_.reserve( 1 + points.size() );
-    nextPathPoints_.reserve( points.size() );
-    initialPathPoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    initialWaypoints_.reserve( 1 + points.size() );
+    nextWaypoints_.reserve( points.size() );
+    initialWaypoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
     for( std::vector< boost::shared_ptr< MT_Vector2D > >::const_iterator it = points.begin(); it != points.end(); ++it )
     {
-        initialPathPoints_.push_back( **it );
-        nextPathPoints_.push_back( **it );
+        initialWaypoints_.push_back( **it );
+        nextWaypoints_.push_back( **it );
     }
-    Initialize( initialPathPoints_ );
+    Initialize( initialWaypoints_ );
 }
 
 //-----------------------------------------------------------------------------
@@ -113,12 +113,12 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const MT_Vector
 {
     fuseau_ = queryMaker.GetOrderManager().GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
-    initialPathPoints_.reserve( 2 );
-    nextPathPoints_.reserve( 1 );
-    initialPathPoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
-    initialPathPoints_.push_back( vPosEnd );
-    nextPathPoints_.push_back( vPosEnd );
-    Initialize( initialPathPoints_ );
+    initialWaypoints_.reserve( 2 );
+    nextWaypoints_.reserve( 1 );
+    initialWaypoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    initialWaypoints_.push_back( vPosEnd );
+    nextWaypoints_.push_back( vPosEnd );
+    Initialize( initialWaypoints_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -139,12 +139,12 @@ DEC_Agent_Path::DEC_Agent_Path( const MIL_Agent_ABC& queryMaker, const MT_Vector
 {
     fuseau_ = queryMaker.GetOrderManager().GetFuseau();
     automateFuseau_ = queryMaker.GetAutomate().GetOrderManager().GetFuseau();
-    initialPathPoints_.reserve( 2 );
-    nextPathPoints_.reserve( 1 );
-    initialPathPoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
-    initialPathPoints_.push_back( vPosEnd );
-    nextPathPoints_.push_back( vPosEnd );
-    Initialize( initialPathPoints_ );
+    initialWaypoints_.reserve( 2 );
+    nextWaypoints_.reserve( 1 );
+    initialWaypoints_.push_back( queryMaker_.GetRole< PHY_RoleInterface_Location >().GetPosition() );
+    initialWaypoints_.push_back( vPosEnd );
+    nextWaypoints_.push_back( vPosEnd );
+    Initialize( initialWaypoints_ );
 }
 
 //-----------------------------------------------------------------------------
@@ -162,12 +162,12 @@ DEC_Agent_Path::DEC_Agent_Path( const DEC_Agent_Path& rhs )
     , rCostOutsideOfAllObjects_( 0. )
     , pathClass_               ( rhs.pathClass_ )
     , bDecPointsInserted_      ( false )
-    , initialPathPoints_       ( rhs.initialPathPoints_ )
-    , nextPathPoints_          ( rhs.nextPathPoints_ )
+    , initialWaypoints_        ( rhs.initialWaypoints_ )
+    , nextWaypoints_           ( rhs.nextWaypoints_ )
 {
     fuseau_ = rhs.fuseau_;
     automateFuseau_ = rhs.automateFuseau_;
-    Initialize( initialPathPoints_ );
+    Initialize( initialWaypoints_ );
 }
 
 //-----------------------------------------------------------------------------
@@ -622,9 +622,9 @@ void DEC_Agent_Path::Execute( TerrainPathfinder& pathfind )
 bool DEC_Agent_Path::IsDestinationTrafficable() const
 {
     const PHY_RoleInterface_TerrainAnalysis& analysis = queryMaker_.GetRole< PHY_RoleInterface_TerrainAnalysis >();
-    return analysis.CanMoveOnUrbanBlock( nextPathPoints_ ) &&
-           analysis.CanMoveOnBurningCells( nextPathPoints_ ) &&
-           analysis.CanMoveOnKnowledgeObject( nextPathPoints_ );
+    return analysis.CanMoveOnUrbanBlock( nextWaypoints_ ) &&
+           analysis.CanMoveOnBurningCells( nextWaypoints_ ) &&
+           analysis.CanMoveOnKnowledgeObject( nextWaypoints_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -633,24 +633,17 @@ bool DEC_Agent_Path::IsDestinationTrafficable() const
 // -----------------------------------------------------------------------------
 void DEC_Agent_Path::NotifyPointReached( const CIT_PathPointList& itCurrentPathPoint )
 {
-    bool verifyPointTrafficability = false;
-    for( T_PointVector::iterator it = initialPathPoints_.begin(); it != initialPathPoints_.end(); ++it )
+    const T_PointVector& computedWaypoints = GetComputedWaypoints();
+    for( T_PointVector::const_iterator it = computedWaypoints.begin(); it != computedWaypoints.end(); ++it )
     {
         if( static_cast< float >( (*itCurrentPathPoint)->GetPos().rX_ ) == static_cast< float >( it->rX_ ) &&
-            static_cast< float >( (*itCurrentPathPoint)->GetPos().rY_ ) == static_cast< float >( it->rY_ ) )
+            static_cast< float >( (*itCurrentPathPoint)->GetPos().rY_ ) == static_cast< float >( it->rY_ ) &&
+            nextWaypoints_.size() > 1 )
         {
-            T_PointVector::iterator it1 = it;
-            if( it1 != --initialPathPoints_.end() )
-                it1++;
-            std::size_t sizeBefore = nextPathPoints_.size();
-            nextPathPoints_.clear();
-            std::copy( it1, initialPathPoints_.end(), std::back_inserter( nextPathPoints_ ) );
-            verifyPointTrafficability = ( nextPathPoints_.size() > 1 ) && ( nextPathPoints_.size() == sizeBefore );
+            nextWaypoints_.erase( nextWaypoints_.begin() );
             break;
         }
     }
-    if( verifyPointTrafficability && !queryMaker_.GetRole< PHY_RoleInterface_TerrainAnalysis >().CanMoveOn( nextPathPoints_.front() ) )
-        nextPathPoints_.erase( nextPathPoints_.begin() );
     DEC_PathResult::NotifyPointReached( itCurrentPathPoint );
 }
 
@@ -660,7 +653,7 @@ void DEC_Agent_Path::NotifyPointReached( const CIT_PathPointList& itCurrentPathP
 // -----------------------------------------------------------------------------
 bool DEC_Agent_Path::IsWaypoint( const MT_Vector2D& point ) const
 {
-    for( T_PointVector::const_iterator it = initialPathPoints_.begin(); it != initialPathPoints_.end(); ++it )
+    for( T_PointVector::const_iterator it = initialWaypoints_.begin(); it != initialWaypoints_.end(); ++it )
         if( *it == point )
             return true;
     return false;
