@@ -255,7 +255,7 @@ std::string Controller::Notify( const Request_ABC& request )
 // Name: Controller::GetCluster
 // Created: BAX 2012-04-03
 // -----------------------------------------------------------------------------
-std::string Controller::GetCluster( const Request_ABC& request )
+std::string Controller::GetCluster( const Request_ABC& /*request*/ )
 {
     return WriteHttpReply( CALL_MEMBER( agent_, &Agent_ABC::GetCluster )() );
 }
@@ -264,7 +264,7 @@ std::string Controller::GetCluster( const Request_ABC& request )
 // Name: Controller::StartCluster
 // Created: BAX 2012-04-23
 // -----------------------------------------------------------------------------
-std::string Controller::StartCluster( const Request_ABC& request )
+std::string Controller::StartCluster( const Request_ABC& /*request*/ )
 {
     LOG_INFO( log_ ) << "[web] start_cluster";
     return WriteHttpReply( CALL_MEMBER( agent_, &Agent_ABC::StartCluster )() );
@@ -274,7 +274,7 @@ std::string Controller::StartCluster( const Request_ABC& request )
 // Name: Controller::StopCluster
 // Created: BAX 2012-04-23
 // -----------------------------------------------------------------------------
-std::string Controller::StopCluster( const Request_ABC& request )
+std::string Controller::StopCluster( const Request_ABC& /*request*/ )
 {
     LOG_INFO( log_ ) << "[web] stop_cluster";
     return WriteHttpReply( CALL_MEMBER( agent_, &Agent_ABC::StopCluster )() );
