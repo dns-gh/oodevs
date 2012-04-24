@@ -43,6 +43,9 @@
 #include <directia/tools/binders/ScriptRef.h>
 #include <geometry/Point2.h>
 #include <boost/bind.hpp>
+#include <boost/filesystem.hpp>
+
+namespace bfs = boost::filesystem;
 
 // -----------------------------------------------------------------------------
 // Name: ScriptRefs
@@ -1372,6 +1375,11 @@ void RegisterMissionParameters( directia::brain::Brain& brain, directia::tools::
 namespace
 {
     std::map< std::string, boost::shared_ptr< directia::brain::Brain > > brainTable;
+
+    void LoadResourcesFile( const std::string& file, boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain )
+    {
+        return (*pArchetypeBrain)[ "include" ]( bfs::path( bfs::path( "./resources", bfs::native ) / file ).native_file_string() );
+    }
 }
 
 bool CreateBrain( boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, boost::shared_ptr< directia::brain::Brain >& pBrain,
@@ -1391,6 +1399,8 @@ bool CreateBrain( boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, 
                 + PLUGIN( "communication" )
                 + PLUGIN46( "errorhandler" )
                 + "} cwd='" + includePath + "'" ) );
+            (*pArchetypeBrain)[ "LoadResourcesFile" ] = boost::function< void( const std::string& ) >(
+                boost::bind( &LoadResourcesFile, _1, boost::ref( pArchetypeBrain ) ) );
             (*pArchetypeBrain)["include"]( brainFile ,includePath, type );
             if( !reload )
                 brainTable[type] = pArchetypeBrain;
@@ -1403,6 +1413,8 @@ bool CreateBrain( boost::shared_ptr< directia::brain::Brain >& pArchetypeBrain, 
                 + PLUGIN46( "motivation" )
                 + PLUGIN46( "errorhandler" )
                 + "} cwd='" + includePath + "'" ) );
+            (*pArchetypeBrain)[ "LoadResourcesFile" ] = boost::function< void( const std::string& ) >(
+                boost::bind( &LoadResourcesFile, _1, boost::ref( pArchetypeBrain ) ) );
             (*pArchetypeBrain)["include"]( brainFile ,includePath, type );
             if( !reload )
                 brainTable[brainFile] = pArchetypeBrain;

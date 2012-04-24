@@ -774,7 +774,7 @@
     
     <target name="generate-database" depends="generate-common-database" description="compile behavior model database">
         <bmc src="${models.dir}/src" core="${models.dir}/directia.core/directia.core.bml" luac="false"/>
-        <extract-knowledges dir="${models.dir}" tofile="${models.dir}/../integration/TaskKnowledge.lua"/>
+        <extract-knowledges dir="${models.dir}" tofile="${data.dir}/app-data/resources/integration/TaskKnowledge.lua"/>
     </target>
 
     <target name="generate-database-security" depends="generate-common-database" description="compile behavior model database for security">
@@ -1363,7 +1363,7 @@
     package
     ============================================================================
     -->
-    <target name="package" depends="package.app,package.debug,package.otpacks,package.wise-driver,package.ts,package.plugins" description="package the installers and packs"/>
+    <target name="package" depends="package.app" description="package the installers and packs"/>
 
     <!-- Package plugins -->
     <target name="package.plugins" depends="package.plugin.vrforces,package.plugin.hla,package.plugin.bml,package.plugin.dis,package.plugin.timeline,package.plugin.crossbow,package.plugin.edxlhave" description="package plugin individual installers"/>
@@ -1668,6 +1668,6 @@
 
     <target name="build" depends="libraries,applications"/>
 
-    <target name="all" depends="configure,build,test,documentation,package" description="build and package distribution"/>
+    <target name="all" depends="build,package" description="build and package distribution"/>
 
 </project>
