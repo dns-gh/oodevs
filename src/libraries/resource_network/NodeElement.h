@@ -72,6 +72,7 @@ public:
     bool NeedUpdate() const;
     float GetFunctionalState() const;
     float GetConsumptionState() const;
+    double GetStock() const;
     double AddToStock( double quantity );
     //@}
 

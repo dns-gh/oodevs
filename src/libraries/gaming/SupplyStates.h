@@ -15,6 +15,7 @@
 #include "clients_kernel/Extension_ABC.h"
 #include "clients_kernel/Updatable_ABC.h"
 #include "tools/Resolver.h"
+#include <boost/noncopyable.hpp>
 
 namespace kernel
 {
@@ -41,6 +42,7 @@ class SupplyAvailability;
 class SupplyStates : public kernel::Extension_ABC
                    , public kernel::Updatable_ABC< sword::LogSupplyState >
                    , public tools::Resolver< Dotation >
+                   , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -53,15 +55,10 @@ public:
     //@{
     void Display( kernel::Displayer_ABC& displayer ) const;
     virtual void DoUpdate( const sword::LogSupplyState& message );
+    Dotation* GetConnectedNetworkStock() const;
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    SupplyStates( const SupplyStates& );            //!< Copy constructor
-    SupplyStates& operator=( const SupplyStates& ); //!< Assignment operator
-    //@}
-
     //! @name Helpers
     //@{
     void CreateDictionary( kernel::PropertiesDictionary& dico ) const;
@@ -78,6 +75,7 @@ public:
     kernel::Controller& controller_;
     const tools::Resolver_ABC< kernel::EquipmentType >& resolver_;
     const tools::Resolver_ABC< kernel::DotationType >& dotationResolver_;
+    std::auto_ptr< Dotation > resourceNetworkStock_;
 
     bool             bChainEnabled_;
     T_Availabilities dispoTransporters_;

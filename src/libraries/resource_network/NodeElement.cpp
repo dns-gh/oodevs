@@ -577,6 +577,15 @@ float NodeElement::GetConsumptionState() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: NodeElement::GetStock
+// Created: JSR 2012-04-23
+// -----------------------------------------------------------------------------
+double NodeElement::GetStock() const
+{
+    return stockCapacity_;
+}
+
+// -----------------------------------------------------------------------------
 // Name: NodeElement::AddToStock
 // Created: BCI 2011-02-21
 // -----------------------------------------------------------------------------
@@ -585,5 +594,5 @@ double NodeElement::AddToStock( double quantity )
     unsigned int old = stockCapacity_;
     int newStock = static_cast< int >( stockCapacity_ ) + static_cast< int >( quantity );
     stockCapacity_ = std::max( 0, std::min( static_cast< int >( stockMaxCapacity_ ), newStock ) );
-    return stockCapacity_ - old;
+    return static_cast< double >( stockCapacity_ ) - old;
 }

@@ -64,6 +64,15 @@ void AgentLogSupply::Update( const sword::LogSupplyState& asnMsg )
                 stocks_.Register( asnMsg.stocks().elem( i ).resource().id(), *pDotation );
             }
         }
+
+    if( asnMsg.has_network_stock() )
+    {
+        int id = asnMsg.network_stock().resource().id();
+        if( id == 0 )
+            resourceNetworkStock_.reset();
+        else
+            resourceNetworkStock_.reset( new Dotation( asnMsg.network_stock() ) );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -83,5 +92,7 @@ void AgentLogSupply::Send( ClientPublisher_ABC& publisher ) const
         for( tools::Iterator< const Dotation& > it = stocks_.CreateIterator(); it.HasMoreElements(); )
             it.NextElement().Send( *asn().mutable_stocks()->add_elem() );
     }
+    if( resourceNetworkStock_.get() )
+        resourceNetworkStock_->Send( *asn().mutable_network_stock() );
     asn.Send( publisher );
 }

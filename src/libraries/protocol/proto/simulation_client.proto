@@ -1765,10 +1765,11 @@ message SeqOfDotationStock {
     @brief Notifies of the update of the supply state for a unit
 */
 message LogSupplyState {
-    optional UnitId                             unit         = 1; //!< The unit identifier
-    optional bool                               chain        = 2; //!< Whether the supply chain is in place or not
-    optional SeqOfDotationStock                 stocks       = 3; //!< The dotation stocks
-    optional SeqOfLogSupplyEquimentAvailability transporters = 4; //!< The transporter availabilities
+    optional UnitId                             unit          = 1; //!< The unit identifier
+    optional bool                               chain         = 2; //!< Whether the supply chain is in place or not
+    optional SeqOfDotationStock                 stocks        = 3; //!< The dotation stocks
+    optional SeqOfLogSupplyEquimentAvailability transporters  = 4; //!< The transporter availabilities
+    optional DotationStock                      network_stock = 5; //!< The resource contained in a connected resource network if any.
 }
 
 /** @struct DotationQuota
@@ -1777,7 +1778,7 @@ message LogSupplyState {
 message DotationQuota {
    required ResourceType resource = 1; //!< The resource type
    required int32        quantity = 2; //!< The quantity
-}                               
+}
 
 /** @struct SeqOfDotationQuota
     @brief Lists the quotas of dotations
@@ -1792,7 +1793,7 @@ message SeqOfDotationQuota {
 message LogSupplyQuotas {
     required ParentEntity       supplied = 1; //!< The parent entity
     required ParentEntity       supplier = 2; //!< The supplier entity
-    required SeqOfDotationQuota quotas  = 3;  //!< The quotas
+    required SeqOfDotationQuota quotas   = 3;  //!< The quotas
 }
 
 /** @struct CrowdCreation

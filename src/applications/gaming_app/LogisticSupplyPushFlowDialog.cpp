@@ -409,15 +409,26 @@ void LogisticSupplyPushFlowDialog::AddDotation( const SupplyStates& states )
     while( it.HasMoreElements() )
     {
         const Dotation& dotation = it.NextElement();
-        const QString type = dotation.type_->GetName().c_str();
-        Dotation& supply = supplies_[ type ];
-        if( ! supply.type_ )
-        {
-            dotationTypes_.append( type );
-            supply.type_ = dotation.type_;
-        }
-        supply.quantity_ += dotation.quantity_;
+        DoAddDotation( dotation );
     }
+    if( Dotation* connected = states.GetConnectedNetworkStock() )
+        DoAddDotation( *connected );
+}
+
+// -----------------------------------------------------------------------------
+// Name: LogisticSupplyPushFlowDialog::DoAddDotation
+// Created: JSR 2012-04-24
+// -----------------------------------------------------------------------------
+void LogisticSupplyPushFlowDialog::DoAddDotation( const Dotation& dotation )
+{
+    const QString type = dotation.type_->GetName().c_str();
+    Dotation& supply = supplies_[ type ];
+    if( ! supply.type_ )
+    {
+        dotationTypes_.append( type );
+        supply.type_ = dotation.type_;
+    }
+    supply.quantity_ += dotation.quantity_;
 }
 
 // -----------------------------------------------------------------------------

@@ -15,6 +15,7 @@
 #include "MT_Tools/MT_Vector2DTypes.h"
 
 class DEC_Decision_ABC;
+class DEC_ResourceNetwork;
 class MIL_Agent_ABC;
 class MIL_Automate;
 class PHY_ComposanteTypePion;
@@ -91,6 +92,9 @@ public:
     static void PionRequestSupply( MIL_Agent_ABC& callerAgent );
 
     static void ChangeDotationsValueUsingTC2( MIL_Agent_ABC& callerAgent, int dotationType, const double rCapacityFactor, int ammoDotationClassId );
+
+    static void ConnectToResourceNode( DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_ResourceNetwork > resourceNetwork );
+    static void DisconnectFromResourceNode( DEC_Decision_ABC* callerAgent );
     //@}
 
     //! @name Misc

@@ -113,6 +113,8 @@ public:
     virtual void Apply( boost::function< void( PHY_DotationStock& ) > visitor ) const;
     virtual void ResupplyStocks();
     virtual void ResupplyStocks( const PHY_DotationCategory& category, double rNbr );
+    virtual void ConnectToResourceNode( unsigned int objectId, const std::string& resource );
+    virtual void DisconnectFromResourceNode();
     //@}
 
     //! @name Convoy

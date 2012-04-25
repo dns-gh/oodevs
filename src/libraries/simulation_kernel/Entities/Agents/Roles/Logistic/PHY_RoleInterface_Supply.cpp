@@ -217,4 +217,23 @@ void PHY_RoleInterface_Supply::Clean()
 // -----------------------------------------------------------------------------
 void PHY_RoleInterface_Supply::Apply( boost::function< void( PHY_DotationStock& ) > visitor ) const
 {
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleInterface_Supply::ConnectToResourceNode
+// Created: JSR 2012-04-23
+// -----------------------------------------------------------------------------
+void PHY_RoleInterface_Supply::ConnectToResourceNode( unsigned int objectId, const std::string& resource )
+{
+    // NOTHING
+}
+
+// -----------------------------------------------------------------------------
+// Name: PHY_RoleInterface_Supply::DisconnectFromResourceNode
+// Created: JSR 2012-04-23
+// -----------------------------------------------------------------------------
+void PHY_RoleInterface_Supply::DisconnectFromResourceNode()
+{
+    // NOTHING
 }

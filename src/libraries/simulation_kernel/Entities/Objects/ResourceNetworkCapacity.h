@@ -99,6 +99,7 @@ public:
     void AddProduction( unsigned long resourceId, unsigned int production );
     void DecreaseProduction( unsigned long resourceId, unsigned int production );
 
+    double GetStock( const PHY_DotationCategory& dotation ) const;
     double AddToStock( const PHY_DotationCategory& dotation, double quantity );
 
     void RegisterNode( unsigned int id );

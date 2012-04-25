@@ -106,6 +106,7 @@ private:
     //! @name Helpers
     //@{
     void AddDotation( const SupplyStates& states );
+    void DoAddDotation( const Dotation& dotation );
     void InsertMenuEntry( const kernel::Entity_ABC& agent, kernel::ContextMenu& menu );
 
     void AddRecipient( const QString& recipientName );

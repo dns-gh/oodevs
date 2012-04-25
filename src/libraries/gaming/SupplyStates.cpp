@@ -67,15 +67,32 @@ void SupplyStates::DoUpdate( const sword::LogSupplyState& message )
         while( nSize > 0 )
         {
             const sword::DotationStock& value = message.stocks().elem( --nSize );
-            DotationType& type = dotationResolver_.Get( value.resource().id() );
             Dotation* dotation = Find( value.resource().id() );
             if( dotation )
                 dotation->quantity_ = value.quantity();
             else
-                Register( value.resource().id(), *new Dotation( type, value.quantity() ) );
+                Register( value.resource().id(), *new Dotation( dotationResolver_.Get( value.resource().id() ), value.quantity() ) );
         }
     }
+    if( message.has_network_stock() )
+    {
+        int id = message.network_stock().resource().id();
+        if( id == 0 )
+            resourceNetworkStock_.reset();
+        else
+            resourceNetworkStock_.reset( new Dotation( dotationResolver_.Get( id ), message.network_stock().quantity() ) );
+    }
+
     controller_.Update( *this );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SupplyStates::GetConnectedNetworkStock
+// Created: JSR 2012-04-24
+// -----------------------------------------------------------------------------
+Dotation* SupplyStates::GetConnectedNetworkStock() const
+{
+    return resourceNetworkStock_.get();
 }
 
 // -----------------------------------------------------------------------------

@@ -81,6 +81,7 @@ public:
     bool NeedUpdate() const;
     float GetFunctionalState() const;
     float GetConsumptionState( unsigned long resourceId ) const;
+    double GetStock( unsigned long resourceId ) const;
     double AddToStock( unsigned long resourceId, double quantity );
     void DecreaseProduction( unsigned long resourceId, unsigned int production );
     void AddProduction( unsigned long resourceId, unsigned int production );

@@ -239,6 +239,8 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
     brain[ "DEC_Stock_IsExtractPossible" ] = boost::function< bool( boost::shared_ptr< DEC_Knowledge_Object >, const std::vector< const PHY_DotationCategory* >& ) >( boost::bind( &DEC_ActionFunctions::Stock_IsExtractPossible, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC_Stock_IsSupplyPossible" ] = boost::function< bool( boost::shared_ptr< DEC_Knowledge_Object >, const std::vector< const PHY_DotationCategory* >& ) >( boost::bind( &DEC_ActionFunctions::Stock_IsSupplyPossible, boost::ref( GetPion() ), _1, _2 ) );
     brain[ "DEC_Stock_IsDistributePossible" ] = boost::function< bool( boost::shared_ptr< DEC_Knowledge_Object >, boost::shared_ptr< DEC_Knowledge_Population > ) >( boost::bind( &DEC_ActionFunctions::Stock_IsDistributePossible, boost::ref( GetPion() ), _1, _2 ) );
+    brain[ "DEC_Stock_ConnectToResourceNode" ] = &DEC_LogisticFunctions::ConnectToResourceNode;
+    brain[ "DEC_Stock_DisconnectFromResourceNode" ] = &DEC_LogisticFunctions::DisconnectFromResourceNode;
     brain[ "DEC__StartControlerZone" ] =
         boost::function< unsigned int( const TER_Localisation*, double, bool ) >( boost::bind( &DEC_ActionFunctions::StartAction  < PHY_ActionControlZone, const TER_Localisation*, double, bool >, boost::ref( GetPion() ), _1, _2, _3 ) );
     brain[ "DEC_StartEmbarquement" ] =

@@ -12,6 +12,7 @@
 
 #include "EquipmentAvailability.h"
 #include "tools/Resolver.h"
+#include <boost/noncopyable.hpp>
 
 namespace sword
 {
@@ -35,7 +36,7 @@ namespace dispatcher
 */
 // Created: NLD 2006-09-19
 // =============================================================================
-class AgentLogSupply
+class AgentLogSupply : private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -51,12 +52,6 @@ public:
     //@}
 
 private:
-    //! @name Copy/Assignment
-    //@{
-    AgentLogSupply( const AgentLogSupply& );            //!< Copy constructor
-    AgentLogSupply& operator=( const AgentLogSupply& ); //!< Assignment operator
-    //@}
-
     //! @name Types
     //@{
     typedef EquipmentAvailability< sword::LogSupplyEquimentAvailability > T_Availability;
@@ -65,8 +60,9 @@ private:
 private:
     const kernel::Agent_ABC&      agent_;
     bool                          bSystemEnabled_;
-    tools::Resolver< Dotation >  stocks_;
+    tools::Resolver< Dotation >   stocks_;
     std::vector< T_Availability > convoyersAvailability_;
+    std::auto_ptr< Dotation >     resourceNetworkStock_;
 };
 
 }

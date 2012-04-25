@@ -23,6 +23,7 @@ namespace xml
     class xostream;
 }
 
+class DEC_ResourceNetwork;
 class MIL_AgentPionLOG_ABC;
 class PHY_DotationStockContainer;
 class PHY_ComposantePion;
@@ -93,6 +94,8 @@ public:
     virtual void Apply( boost::function< void( PHY_DotationStock& ) > visitor ) const;
     virtual void ResupplyStocks    ();
     virtual void ResupplyStocks    ( const PHY_DotationCategory& category, double rNbr );
+    virtual void ConnectToResourceNode( unsigned int objectId, const std::string& resource );
+    virtual void DisconnectFromResourceNode();
     //@}
 
     //! @name Network
@@ -105,6 +108,7 @@ private:
     //! @name Tools
     //@{
     double GetStockValue( const PHY_DotationCategory& category ) const;
+    double GetResourceNetworkConnectedStockValue( const PHY_DotationCategory& category ) const;
     double GetConvoyTransportersAvailabilityRatio() const;
     //@}
 
@@ -116,11 +120,14 @@ private:
 private:
     //! @name Member data
     //@{
-    MIL_AgentPionLOG_ABC&       owner_;
-    bool                        bSystemEnabled_;
-    bool                        bHasChanged_;
-    bool                        bExternalMustChangeState_;
-    PHY_DotationStockContainer* pStocks_;
+    MIL_AgentPionLOG_ABC&                owner_;
+    bool                                 bSystemEnabled_;
+    bool                                 bHasChanged_;
+    bool                                 bExternalMustChangeState_;
+    PHY_DotationStockContainer*          pStocks_;
+    std::auto_ptr< DEC_ResourceNetwork > pResourceNetworkConnected_;
+    mutable int                          resourceNetworkStockSent_;
+    mutable bool                         bResourceConnectionChanged_;
     //@}
 };
 

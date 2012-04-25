@@ -304,6 +304,18 @@ float ResourceNetworkCapacity::GetFunctionalState() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ResourceNetworkCapacity::GetStock
+// Created: JSR 2012-04-23
+// -----------------------------------------------------------------------------
+double ResourceNetworkCapacity::GetStock( const PHY_DotationCategory& dotation ) const
+{
+    if( const PHY_ResourceNetworkType* pType = PHY_ResourceNetworkType::FindByDotation( dotation ) )
+        return nodeProperties_->GetStock( pType->GetId() );
+    else
+        return 0.;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ResourceNetworkCapacity::AddToStock
 // Created: BCI 2011-02-21
 // -----------------------------------------------------------------------------

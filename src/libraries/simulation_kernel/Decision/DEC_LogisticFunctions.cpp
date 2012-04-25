@@ -12,6 +12,7 @@
 #include "simulation_kernel_pch.h"
 #include "DEC_LogisticFunctions.h"
 #include "DEC_Decision_ABC.h"
+#include "DEC_ResourceNetwork.h"
 #include "Entities/Agents/Units/Dotations/PHY_DotationType.h"
 #include "Entities/Agents/Units/Dotations/PHY_AmmoDotationClass.h"
 #include "Entities/Agents/Units/Logistic/PHY_MaintenanceWorkRate.h"
@@ -380,6 +381,32 @@ void DEC_LogisticFunctions::ChangeDotationsValueUsingTC2( MIL_Agent_ABC& callerA
     assert( pDotationType );
     const PHY_AmmoDotationClass* pAmmoDotationClass = PHY_AmmoDotationClass::Find( ammoDotationClassId );
     callerAgent.GetRole< dotation::PHY_RoleInterface_Dotations >().ChangeDotationsValueUsingTC2( *pDotationType, pAmmoDotationClass, rCapacityFactor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_LogisticFunctions::ConnectToResourceNode
+// Created: JSR 2012-04-23
+// -----------------------------------------------------------------------------
+void DEC_LogisticFunctions::ConnectToResourceNode( DEC_Decision_ABC* callerAgent, boost::shared_ptr< DEC_ResourceNetwork > resourceNetwork )
+{
+    if( !callerAgent || !resourceNetwork )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+    PHY_RoleInterface_Supply* role = callerAgent->GetPion().RetrieveRole< PHY_RoleInterface_Supply >();
+    if( role )
+        role->ConnectToResourceNode( resourceNetwork->GetObjectId(), resourceNetwork->GetResource() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_LogisticFunctions::DisconnectFromResourceNode
+// Created: JSR 2012-04-23
+// -----------------------------------------------------------------------------
+void DEC_LogisticFunctions::DisconnectFromResourceNode( DEC_Decision_ABC* callerAgent )
+{
+    if( !callerAgent )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+    PHY_RoleInterface_Supply* role = callerAgent->GetPion().RetrieveRole< PHY_RoleInterface_Supply >();
+    if( role )
+        role->DisconnectFromResourceNode();
 }
 
 // -----------------------------------------------------------------------------
