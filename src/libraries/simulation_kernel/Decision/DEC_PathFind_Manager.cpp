@@ -45,6 +45,7 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_Config& config )
     std::vector< unsigned int > dangerousObjects;
     MIL_DangerousObjectFilter filter;
     MIL_ObjectFactory::FindDangerousIDs( dangerousObjects, filter );
+    double rMinEndConnectionLength = MIL_ObjectFactory::GetMaxAvoidanceDistance();
 
     const std::string fileLoaded = config.GetLoader().LoadPhysicalFile( "pathfinder", boost::bind( &DEC_PathFind_Manager::ReadPathfind, this, _1, dangerousObjects ) );
     config.AddFileToCRC( fileLoaded );
@@ -52,10 +53,10 @@ DEC_PathFind_Manager::DEC_PathFind_Manager( MIL_Config& config )
     bUseInSameThread_ = config.GetPathFinderThreads() == 0;
     MT_LOG_INFO_MSG( MT_FormatString( "Starting %d pathfind thread(s)", config.GetPathFinderThreads() ) );
     if( bUseInSameThread_ ) // juste one "thread" that will never start
-        pathFindThreads_.push_back( & TER_World::GetWorld().GetPathFindManager().CreatePathFinderThread( *this, nMaxEndConnections_, true ) );
+        pathFindThreads_.push_back( & TER_World::GetWorld().GetPathFindManager().CreatePathFinderThread( *this, nMaxEndConnections_, rMinEndConnectionLength, true ) );
     else
         for( unsigned int i = 0; i < config.GetPathFinderThreads(); ++i )
-            pathFindThreads_.push_back( & TER_World::GetWorld().GetPathFindManager().CreatePathFinderThread( *this, nMaxEndConnections_ ) );
+            pathFindThreads_.push_back( & TER_World::GetWorld().GetPathFindManager().CreatePathFinderThread( *this, nMaxEndConnections_, rMinEndConnectionLength ) );
 }
 
 // -----------------------------------------------------------------------------

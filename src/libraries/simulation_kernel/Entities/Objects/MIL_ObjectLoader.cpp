@@ -17,6 +17,7 @@
 #include "UrbanObjectWrapper.h"
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
+#include "Entities/Objects/AvoidanceCapacity.h"
 #include "Network/NET_ASN_Tools.h"
 #include "protocol/Protocol.h"
 #include <xeumeuleu/xml.hpp>
@@ -252,7 +253,7 @@ namespace
     public:
         AvoidableObjectInserter( std::vector< unsigned int >& container, const MIL_ObjectFilter& filter )
             : container_( container )
-            , filter_    ( filter )
+            , filter_   ( filter )
         {
             // NOTHING
         }
@@ -267,6 +268,29 @@ namespace
         std::vector< unsigned int >& container_;
         const MIL_ObjectFilter& filter_;
     };
+
+    class AvoidableObjectDistance : boost::noncopyable
+    {
+    public:
+        AvoidableObjectDistance( double& maxDistance )
+            : maxDistance_( maxDistance )
+        {
+            // NOTHING
+        }
+
+        void operator()( const ObjectPrototype& prototype )
+        {
+            if( const AvoidanceCapacity* pAvoidanceCapacity = prototype.GetType().GetCapacity< AvoidanceCapacity >() )
+            {
+                const double distance = pAvoidanceCapacity->GetDistance();
+                if( distance > maxDistance_ )
+                    maxDistance_ = distance;
+            }
+        }
+
+    private:
+        double& maxDistance_;
+    };
 }
 
 // -----------------------------------------------------------------------------
@@ -277,4 +301,16 @@ const void MIL_ObjectLoader::GetDangerousIDs( std::vector< unsigned int >& dange
 {
     AvoidableObjectInserter functor( dangerousIDs, filter );
     ApplyOnPrototypes( functor );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectLoader::GetMaxAvoidanceDistance
+// Created: CMA 2012-04-25
+// -----------------------------------------------------------------------------
+const double MIL_ObjectLoader::GetMaxAvoidanceDistance() const
+{
+    double maxDistance = 0.;
+    AvoidableObjectDistance functor( maxDistance );
+    ApplyOnPrototypes( functor );
+    return maxDistance;
 }

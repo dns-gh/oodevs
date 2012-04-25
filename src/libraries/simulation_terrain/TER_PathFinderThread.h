@@ -33,7 +33,7 @@ class TER_PathFinderThread : public tools::thread::RequestProcessor_ABC< boost::
 public:
     //! @name Constructors/Destructor
     //@{
-             TER_PathFinderThread( const TER_StaticData& staticData, tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >& queue, unsigned int nMaxEndConnections, bool bUseSameThread );
+             TER_PathFinderThread( const TER_StaticData& staticData, tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >& queue, unsigned int nMaxEndConnections, double rMinEndConnectionLength, bool bUseSameThread );
     virtual ~TER_PathFinderThread();
     //@}
 
