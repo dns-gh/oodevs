@@ -5,12 +5,6 @@
     <import file="${env.PONEY_HOME}/poney.xml"/>
     <var name="repositories" value="${repositories},${sword.repository}"/>
 
-	<property name="out.dir" value="../out" />
-
-	<target name="clean">
-		<delete dir="${out.dir}" />
-	</target>
-
     <target name="configure" description="retrieve dependencies">
         <update name="sword" version="Defense/releases/internal/sword5-dev" package="SWORD_binaries_${platform}_sword5-dev"/>
         <update name="vcredist" package="vcredist"/>
@@ -20,6 +14,6 @@
         <nsis name="cloud"/>
     </target>
 
-	<target name="all" depends="clean,package" />
+	<target name="all" depends="package" />
 
 </project>
