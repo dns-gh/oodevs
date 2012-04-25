@@ -14,7 +14,7 @@
 
 namespace host
 {
-    std::string ToJson( const boost::property_tree::ptree& tree );
+    std::string ToJson( const boost::property_tree::ptree& tree, bool isPretty = false );
     boost::property_tree::ptree FromJson( const std::string& data );
 }
 

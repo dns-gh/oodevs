@@ -22,10 +22,10 @@
 // Name: ToJson
 // Created: BAX 2012-04-18
 // -----------------------------------------------------------------------------
-std::string host::ToJson( const boost::property_tree::ptree& tree )
+std::string host::ToJson( const boost::property_tree::ptree& tree, bool isPretty )
 {
     std::ostringstream out;
-    boost::property_tree::write_json( out, tree, false );
+    boost::property_tree::write_json( out, tree, isPretty );
     const std::string json = out.str();
     return json.substr( 0, json.size() - 1 );
 }
