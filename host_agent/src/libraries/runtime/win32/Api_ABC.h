@@ -44,6 +44,7 @@ public:
     virtual bool                   GetExitCodeProcess   ( HANDLE hProcess, DWORD* lpExitCode ) const = 0;
     virtual HANDLE                 CreateRemoteThreadExt( HANDLE hProcess, SECURITY_ATTRIBUTES* lpThreadAttributes, size_t dwStackSize, LPTHREAD_START_ROUTINE lpStartAddress, void* lpParameter, int dwCreationFlags, LPPROC_THREAD_ATTRIBUTE_LIST lpAttributeList, DWORD* lpThreadId ) const = 0;
     virtual LPTHREAD_START_ROUTINE GetExitProcessPointer() const = 0;
+    virtual std::wstring           GetModuleFilename    () const = 0;
     //@}
 };
 

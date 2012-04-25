@@ -42,6 +42,7 @@ public:
     virtual boost::shared_ptr< Process_ABC > Start( const std::string& cmd,
                                                     const std::vector< std::string >& args,
                                                     const std::string& run ) const;
+    virtual boost::filesystem3::path GetModuleFilename() const;
     //@}
 
 private:

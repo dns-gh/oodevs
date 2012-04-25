@@ -13,6 +13,14 @@
 #include <boost/noncopyable.hpp>
 #include <boost/shared_ptr.hpp>
 
+namespace boost
+{
+namespace filesystem3
+{
+    class path;
+}
+}
+
 namespace runtime
 {
 
@@ -45,6 +53,7 @@ public:
     virtual boost::shared_ptr< Process_ABC > Start( const std::string& cmd,
                                                     const std::vector< std::string >& args,
                                                     const std::string& run ) const = 0;
+    virtual boost::filesystem3::path GetModuleFilename() const = 0;
     //@}
 };
 

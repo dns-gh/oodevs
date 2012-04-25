@@ -120,6 +120,7 @@ namespace mocks
         MOCK_METHOD( GetProcesses, 0 );
         MOCK_METHOD( GetProcess, 1 );
         MOCK_METHOD( Start, 3 );
+        MOCK_METHOD( GetModuleFilename, 0 );
     };
 
     MOCK_BASE_CLASS( MockFileSystem, host::FileSystem_ABC )

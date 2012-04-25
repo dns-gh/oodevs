@@ -11,6 +11,7 @@
 #include "Api_ABC.h"
 #include <runtime/Utf8.h>
 #include <cpplog/cpplog.hpp>
+#include <boost/filesystem/path.hpp>
 #include <boost/foreach.hpp>
 #include <boost/make_shared.hpp>
 #include <boost/ref.hpp>
@@ -149,4 +150,9 @@ boost::shared_ptr< Process_ABC > Runtime::Start( const std::string& cmd,
         LOG_WARN( log_ ) << "[runtime] Unable to start process " << cmd << " " << boost::algorithm::join( args, " " ) << ", " << err.what();
         return boost::shared_ptr< Process_ABC >();
     }
+}
+
+boost::filesystem::path Runtime::GetModuleFilename() const
+{
+    return api_.GetModuleFilename();
 }
