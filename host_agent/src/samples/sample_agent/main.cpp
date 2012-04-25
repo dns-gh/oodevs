@@ -94,19 +94,17 @@ namespace
         }
     };
 
-    void Start( cpplog::BaseLogger& log, Configuration& cfg )
+    void Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const host::FileSystem_ABC& system, Configuration& cfg )
     {
         host::Pool pool( 8 );
-        runtime::Factory runtime( log );
         host::UuidFactory uuids;
-        host::FileSystem system( log );
         web::Client client;
-        host::Proxy proxy( log, runtime.GetRuntime(), system, cfg.java, cfg.proxy.jar, cfg.ports.proxy, client, pool );
+        host::Proxy proxy( log, runtime, system, cfg.java, cfg.proxy.jar, cfg.ports.proxy, client, pool );
         proxy.Register( "api", "localhost", cfg.ports.host );
         host::PortFactory ports( cfg.ports.period, cfg.ports.min, cfg.ports.max );
-        host::NodeController nodes( log, runtime.GetRuntime(), system, uuids, proxy, cfg.java, cfg.node.jar, cfg.node.root, "node", pool, ports );
-        host::NodeController cluster( log, runtime.GetRuntime(), system, uuids, proxy, cfg.java, cfg.node.jar, cfg.node.root, "cluster", pool, ports );
-        host::SessionController sessions( log, runtime.GetRuntime(), system, uuids, cfg.session.data, cfg.session.applications, pool, ports );
+        host::NodeController nodes( log, runtime, system, uuids, proxy, cfg.java, cfg.node.jar, cfg.node.root, "node", pool, ports );
+        host::NodeController cluster( log, runtime, system, uuids, proxy, cfg.java, cfg.node.jar, cfg.node.root, "cluster", pool, ports );
+        host::SessionController sessions( log, runtime, system, uuids, cfg.session.data, cfg.session.applications, pool, ports );
         host::Agent agent( log, cfg.cluster.enabled ? &cluster : 0, nodes, sessions );
         web::Controller controller( log, agent );
         web::Server server( log, controller, cfg.ports.host );
@@ -123,6 +121,11 @@ int StartServer( int argc, const char* argv[] )
     cpplog::StdErrLogger base;
     cpplog::BackgroundLogger log( base );
     LOG_INFO( log ) << "Host Agent - (c) copyright MASA Group 2012";
+
+    runtime::Factory factory( log );
+    const runtime::Runtime_ABC& runtime = factory.GetRuntime();
+    host::FileSystem system( log );
+
     Configuration cfg;
     cfg.ports.host           = 15000;
     cfg.ports.period         = 40;
@@ -145,7 +148,7 @@ int StartServer( int argc, const char* argv[] )
     }
     try
     {
-        Start( log, cfg );
+        Start( log, runtime, system, cfg );
     }
     catch( const std::runtime_error& err )
     {
