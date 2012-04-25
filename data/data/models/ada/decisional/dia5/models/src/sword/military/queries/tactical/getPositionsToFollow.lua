@@ -9,8 +9,8 @@ queryImplementation "getPositionsToFollow"
         -- --------------------------------------------------------------------------------
         for _, elementToFollow in pairs( params.elementsToFollow ) do
             local trackingPosition = CreateProxyKnowledge( 
-                sword.military.world.ReachingArea, elementToFollow, 
-                { distanceMin = params.distanceMin } )
+                sword.military.world.SupportingArea, elementToFollow, 
+                { distanceMin = params.distanceMin } ) -- suivre à distance de tir
             if trackingPosition:isReachingFor( elementToFollow ) then
                 allRes[ #allRes + 1 ] = trackingPosition
             else -- find close positions around element to follow
