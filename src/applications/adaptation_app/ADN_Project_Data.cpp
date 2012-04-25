@@ -427,10 +427,23 @@ namespace
 }
 
 //-----------------------------------------------------------------------------
+// Name: ADN_Project_Data::WritePathfind
+// Created: CMA 2012-04-25
+//-----------------------------------------------------------------------------
+void ADN_Project_Data::WritePathfind( xml::xistream& xis, const std::string& path )
+{
+    xml::xofstream xos( path );
+    xis >> xml::start( "pathfind" );
+    xos << xml::start( "pathfind" );
+    ADN_Tools::AddSchema( xos, "Pathfind" );
+    xis >> xml::list( boost::bind( &ADN_Project_Data::FilterNode, this, _2, _3, boost::ref( xos ) ) );
+}
+
+//-----------------------------------------------------------------------------
 // Name: ADN_Project_Data::Save
 // Created: JDY 03-06-20
 //-----------------------------------------------------------------------------
-void ADN_Project_Data::Save()
+void ADN_Project_Data::Save( const tools::Loader_ABC& fileLoader )
 {
     assert( ! szFile_.GetFileName().GetData().empty() );
 
@@ -445,14 +458,7 @@ void ADN_Project_Data::Save()
     std::string path = workDir_.GetWorkingDirectory().GetData() + dataInfos_.szPathfinder_.GetData();
     if( bfs::exists( bfs::path( path ) ) )
     {
-        {
-            xml::xifstream xis( path );
-            xml::xofstream xos( path );
-            xis >> xml::start( "pathfind" );
-            xos << xml::start( "pathfind" );
-            ADN_Tools::AddSchema( xos, "Pathfind" );
-            xis >> xml::list( boost::bind( &ADN_Project_Data::FilterNode, this, _2, _3, boost::ref( xos ) ) );
-        }
+        fileLoader.LoadFile( path, boost::bind( &ADN_Project_Data::WritePathfind, this, _1, boost::cref( path ) ) );
         tools::WriteXmlCrc32Signature( path );
     }
     addedObjects_.clear();

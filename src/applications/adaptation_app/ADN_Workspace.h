@@ -102,8 +102,8 @@ public:
     void Build( ADN_MainWindow& mainWindow );
     void Reset( const std::string& filename, bool bVisible = true );
     void Load( const std::string& filename, const tools::Loader_ABC& fileLoader );
-    bool Save();
-    bool SaveAs( const std::string& filename );
+    bool Save( const tools::Loader_ABC& fileLoader );
+    bool SaveAs( const std::string& filename, const tools::Loader_ABC& fileLoader );
     void ExportHtml( const std::string& strPath );
     bool IsValidDatabase();
     void ShowSymbols( bool );

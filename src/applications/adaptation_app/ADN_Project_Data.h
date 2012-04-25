@@ -147,7 +147,7 @@ public:
     virtual void FilesNeeded( T_StringList& vFiles ) const;
     virtual void Reset();
     virtual void Load( const tools::Loader_ABC& fileLoader );
-    virtual void Save();
+    virtual void Save( const tools::Loader_ABC& fileLoader );
 
     DataInfos&           GetDataInfos();
     const DataInfos&     GetDataInfos() const;
@@ -156,6 +156,7 @@ public:
 
 private:
     void FilterNode( const std::string& node, xml::xistream& xis, xml::xostream& xos );
+    void WritePathfind( xml::xistream& xis, const std::string& path );
 
 public:
     DataInfos dataInfos_;

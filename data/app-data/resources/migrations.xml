@@ -157,5 +157,6 @@
   </migration>
   <migration from="4.3.4" to="5.0.0">
     <upgrade schema="schemas/4.3.4/physical/Resources.xsd" apply="schemas/5.0.0/xsl/resources_4.3.4-5.0.0.xsl"/>
+    <upgrade schema="schemas/4.3.4/physical/Pathfind.xsd" apply="schemas/5.0.0/xsl/pathfind_4.3.4-5.0.0.xsl"/>
   </migration>
 </migrations>

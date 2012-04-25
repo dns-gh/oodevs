@@ -273,7 +273,7 @@ void ADN_MainWindow::SaveProjectAs( const std::string& filename )
 {
     std::string res( filename );
     std::replace( res.begin(), res.end(), '\\', '/' );
-    workspace_.SaveAs( res );
+    workspace_.SaveAs( res, *fileLoader_ );
 }
 
 //-----------------------------------------------------------------------------
@@ -290,7 +290,7 @@ void ADN_MainWindow::SaveProject()
     bool bNoReadOnlyFiles = true;
     try
     {
-        bNoReadOnlyFiles = workspace_.Save();
+        bNoReadOnlyFiles = workspace_.Save( *fileLoader_ );
     }
     catch( ADN_Exception_ABC& exception )
     {
@@ -325,7 +325,7 @@ void ADN_MainWindow::SaveAsProject()
     bool hasSaved = true;
     try
     {
-        hasSaved = workspace_.SaveAs( res );
+        hasSaved = workspace_.SaveAs( res, *fileLoader_ );
         if( !hasSaved )
             QMessageBox::critical( this, tr( "Saving error" ), tr( "Something went wrong during the saving process." ) );
     }

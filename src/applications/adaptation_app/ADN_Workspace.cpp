@@ -357,7 +357,7 @@ namespace
 // Name: ADN_Workspace::SaveAs
 // Created: JDY 03-07-04
 //-----------------------------------------------------------------------------
-bool ADN_Workspace::SaveAs( const std::string& filename )
+bool ADN_Workspace::SaveAs( const std::string& filename, const tools::Loader_ABC& fileLoader )
 {
     if( !IsValidDatabase() )
         return false;
@@ -424,7 +424,7 @@ bool ADN_Workspace::SaveAs( const std::string& filename )
         pProgressIndicator_->Reset( tr( "Saving project..." ) );
         pProgressIndicator_->SetNbrOfSteps( eNbrWorkspaceElements + 1 );
         projectData_->SetFile( filename );
-        projectData_->Save();
+        projectData_->Save( fileLoader );
         for( int n = 0; n < eNbrWorkspaceElements; ++n )
         {
             elements_[n]->GetDataABC().Save();
@@ -467,9 +467,9 @@ bool ADN_Workspace::SaveAs( const std::string& filename )
 // Name: ADN_Workspace::Save
 // Created: JDY 03-07-04
 //-----------------------------------------------------------------------------
-bool ADN_Workspace::Save()
+bool ADN_Workspace::Save( const tools::Loader_ABC& fileLoader )
 {
-    return SaveAs( GetProject().GetFileInfos().GetFileNameFull() );
+    return SaveAs( GetProject().GetFileInfos().GetFileNameFull(), fileLoader );
 }
 
 // -----------------------------------------------------------------------------
