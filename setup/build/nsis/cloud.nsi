@@ -3,7 +3,7 @@
 ; This file is part of a MASA library or program.
 ; Refer to the included end-user license agreement for restrictions.
 ;
-; Copyright (c) 2010 Mathématiques Appliquées SA (MASA)
+; Copyright (c) 2012 Mathématiques Appliquées SA (MASA)
 ;
 ; ------------------------------------------------------------------------------
 
@@ -13,7 +13,7 @@
 !define SWORD "..\..\out\${PLATFORM}"
 
 Name "Sword Cloud"
-OutFile "${DISTDIR}\sword_cloud_setup.exe"
+OutFile "${DISTDIR}\sword_cloud_${PLATFORM}_setup.exe"
 InstallDir "$PROGRAMFILES\$(^Name)"
 InstallDirRegKey HKLM "Software\MASA Group\$(^Name)" "Install_Dir"
 
