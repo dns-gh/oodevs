@@ -26,6 +26,7 @@ UrbanPositions::UrbanPositions( xml::xistream& xis, const std::string& name, con
     , selected_         ( false )
     , height_           ( architecture.GetHeight() )
     , hasInfrastructure_( false )
+    , area_             ( 0.f )
 {
     if( xis.has_child( "footprint" ) )
     {
@@ -33,12 +34,15 @@ UrbanPositions::UrbanPositions( xml::xistream& xis, const std::string& name, con
         xis >> xml::start( "footprint" )
                 >> xml::list( "point", *this, &UrbanPositions::ReadPoint, positions, converter )
             >> xml::end;
-        if( positions.front() == positions.back() )
-            positions.pop_back();
-        polygon_ = geometry::Polygon2f( positions );
-        boundingBox_ = polygon_.BoundingBox();
-        barycenter_ = polygon_.Barycenter();
-        area_ = polygon_.ComputeArea();
+        if( !positions.empty() )
+        {
+            if( positions.front() == positions.back() )
+                positions.pop_back();
+            polygon_ = geometry::Polygon2f( positions );
+            boundingBox_ = polygon_.BoundingBox();
+            barycenter_ = polygon_.Barycenter();
+            area_ = polygon_.ComputeArea();
+        }
     }
 }
 
