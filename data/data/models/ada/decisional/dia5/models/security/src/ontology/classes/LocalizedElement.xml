@@ -40,7 +40,7 @@ This implementation returns true if this element's proximity is equal to 100%.</
 Returns true once the agent has reached the end-point of the path (please note that this end-point may be distinct from the target position to reach). &#xD;
 </description>
             <argument name="pathType">
-                <description>The path type used by agent Unit to reach the given destination.</description>
+                <description>The path type used by the agent to reach the given destination.</description>
                 <type>
                     <any/>
                 </type>
@@ -54,7 +54,7 @@ Returns true once the agent has reached the end-point of the path (please note t
         <method name="canBeHit" abstract="false">
             <description>Returns 'true' if this element can be hit with the given type of dotation.&#xD;
 &#xD;
-This implementation  returns 'true' if the distance between agent unit and this element (the target) is smaller than the maximum firing distance allowed by the given dotation, false otherwise.  If agent doesn't have adapted launcher for the dotation,  it returns false as well.</description>
+This implementation  returns 'true' if the distance between the agent and this element (the target) is smaller than the maximum firing distance allowed by the given dotation, false otherwise.  If agent doesn't have adapted launcher for the dotation,  it returns false as well.</description>
             <argument name="typeOfResource">
                 <description>Type of resource (dotation) to launch on this element.</description>
                 <type>

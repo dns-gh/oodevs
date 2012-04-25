@@ -23,7 +23,7 @@ Agent moves toward the given decontamination plot. Once it is reached, agent req
     </links>
     <feedbacks>
         <feedback name="done">
-            <description>Sent when agent unit has been decontaminated by the decontamination plot.</description>
+            <description>Sent when the agent has been decontaminated by the decontamination plot.</description>
         </feedback>
     </feedbacks>
 </skill>

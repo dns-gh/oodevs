@@ -35,7 +35,7 @@ Depending on its crowd transport capacity, agent will make as many round trips a
             <description>Sent when no more crowd's concenrtation left on the issued 'loadingPosition'.</description>
         </feedback>
         <feedback name="failed">
-            <description>Sent if agent unit has no Crowd transport capability or if there is no crowd's concentraiton nearby the 'loadingPosition' at the creation of the skill.</description>
+            <description>Sent if the agent has no Crowd transport capability or if there is no crowd's concentraiton nearby the 'loadingPosition' at the creation of the skill.</description>
         </feedback>
     </feedbacks>
 </skill>

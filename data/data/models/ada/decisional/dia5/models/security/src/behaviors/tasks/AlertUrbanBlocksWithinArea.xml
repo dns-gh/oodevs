@@ -12,7 +12,7 @@ If no urban block exists in the area, the mission failed and terminates.</descri
         </parameter>
     </parameters>
     <stages>
-        <stage label="Starting to alert urban blocks" disable-when-done="true">
+        <stage label="alert urban blocks" disable-when-done="true">
             <description>Move along urban blocks in the area and make them alerted.</description>
             <skills>
                 <skill name="behaviors.skills.primitives.Alert" main="true">

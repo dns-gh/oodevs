@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <skill xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.skills.Transport" source-version="1.0.0">
     <description>For an agent to know how to transport a set of transportable entities.&#xD;
-Entities are visited in the order of the list and are loaded on agent Unit. Once all elements are loaded (some entities could not be loaded), agent Unit moves toward issued destination and unload transported entities, one by one. </description>
+Entities are visited in the order of the list and are loaded on the agent. Once all elements are loaded (some entities could not be loaded), the agent moves toward issued destination and unload transported entities, one by one. </description>
     <parameters>
         <parameter name="entitiesToTransport">
             <description>The transportable entities to transport toward the given destination.</description>
@@ -31,7 +31,7 @@ Entities are visited in the order of the list and are loaded on agent Unit. Once
             <description>Sent when no more element left to transport.</description>
         </feedback>
         <feedback name="failed">
-            <description>Sent once agent Unit visited all element to transport and  if it wasn't able to load any of them.</description>
+            <description>Sent once the agent visited all element to transport and  if it wasn't able to load any of them.</description>
         </feedback>
     </feedbacks>
 </skill>

@@ -16,7 +16,7 @@ The mission is done when all works have been visited (even if one one the object
             </type>
         </parameter>
         <parameter name="waitForReinforcement">
-            <description>If this parameter is set to 'true', the agent Unit decide to wait reinforcement in the case it is not able to perform work depending on its physical capability.</description>
+            <description>If this parameter is set to 'true', the the agent decide to wait reinforcement in the case it is not able to perform work depending on its physical capability.</description>
             <type>
                 <simple name="boolean"/>
             </type>

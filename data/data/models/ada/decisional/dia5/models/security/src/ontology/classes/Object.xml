@@ -34,7 +34,9 @@
             </return>
         </method>
         <method name="canBeExtinguished" abstract="false">
-            <description>Returns true if this entity can be extinguished by agent Unit.</description>
+            <description>Returns true if this entity can be extinguished by the agent.&#xD;
+&#xD;
+This implementation returns 'true' if this element has the &quot;burn&quot; capacity (see objects capacities in authoring tool), and if the agent has the physical capabitiy to extinguish it. It returns 'false' otherwise.</description>
             <return>
                 <type>
                     <simple name="boolean"/>
@@ -128,7 +130,7 @@ Returns 'true' when element is deconstructed.</description>
             </return>
         </method>
         <method name="operateIt" abstract="false">
-            <description>To manage and run this element in order to activate it. Operating a 'system' object is a permanent effect. The object is activated until tthe agent Unit is operating it.</description>
+            <description>To manage and run this element in order to activate it. Operating a 'system' object is a permanent effect. The object is activated until tthe the agent is operating it.</description>
             <return>
                 <type>
                     <simple name="boolean"/>

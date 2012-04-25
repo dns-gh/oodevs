@@ -328,7 +328,7 @@ Display a message.</description>
             </return>
         </method>
         <method name="load">
-            <description>For this element (agent Unit) to load the given entity (A loaded entity is ready to be transported).</description>
+            <description>For this element (the agent) to load the given entity (A loaded entity is ready to be transported).</description>
             <argument name="entity">
                 <description>The entity to load.</description>
                 <type>
@@ -343,7 +343,7 @@ Display a message.</description>
             </return>
         </method>
         <method name="unload">
-            <description>For this element (agent Unit) to unload the given entity.</description>
+            <description>For this element (the agent) to unload the given entity.</description>
             <argument name="entity">
                 <description>The transported unit to unload.</description>
                 <type>

@@ -127,7 +127,7 @@ This action can take time (depending on the current status of the population, e.
             </argument>
         </method>
         <method name="load" abstract="false">
-            <description>For this element (agent Unit) to load the given entity (A loaded entity is ready to be transported).</description>
+            <description>For this element (the agent) to load the given entity (A loaded entity is ready to be transported).</description>
             <argument name="entity">
                 <description>The entity to load.</description>
                 <type>
@@ -141,7 +141,7 @@ This action can take time (depending on the current status of the population, e.
             </return>
         </method>
         <method name="unload" abstract="false">
-            <description>For this element (agent Unit) to unload the given entity.</description>
+            <description>For this element (the agent) to unload the given entity.</description>
             <argument name="entity">
                 <description>The transported unit to unload.</description>
                 <type>
@@ -332,7 +332,7 @@ This action can take time (depending on the current status of the population, e.
         </method>
         <method name="loadCrowdConcentration">
             <description>To load a given crowd concentration.&#xD;
-Maximum elements of the cencontration are loaded, depending on agent Unit physical capabilities.</description>
+Maximum elements of the cencontration are loaded, depending on the agent physical capabilities.</description>
             <argument name="crowd">
                 <description>$$$ TODO</description>
                 <type>
@@ -363,7 +363,7 @@ Maximum elements of the cencontration are loaded, depending on agent Unit physic
         </method>
         <method name="canTransportCrowd">
             <description>Check if this element can transport a Crowd. &#xD;
-Returns true if agent Unit has physical capabilities to loasd a 'Crowd' object.</description>
+Returns true if the agent has physical capabilities to loasd a 'Crowd' object.</description>
             <argument name="crowd">
                 <description>Returns true if this agent has the physical capacties to transport the given crowd.</description>
                 <type>

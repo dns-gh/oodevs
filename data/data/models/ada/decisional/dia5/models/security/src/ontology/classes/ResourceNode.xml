@@ -40,7 +40,7 @@ A resource network node can be supplied with resources from another node or by a
             </return>
         </method>
         <method name="operateIt" abstract="false">
-            <description>To manage and run this element in order to activate it. Operating a 'system' object is a permanent effect. The object is activated until tthe agent Unit is operating it.</description>
+            <description>To manage and run this element in order to activate it. Operating a 'system' object is a permanent effect. The object is activated until tthe the agent is operating it.</description>
             <return>
                 <type>
                     <simple name="boolean"/>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface xmlns="http://www.masagroup.net/directia/schemas/bm" name="agent.world.Reinforceable" source-version="1.0.0" extends="agent.world.Destination">
-    <description>Every simulated entities that can be reinforced by agent Unit. Reinforcement make target entity enhanced with physical capabilities  of agent Unit.</description>
+    <description>Every simulated entities that can be reinforced by the agent. Reinforcement make target entity enhanced with physical capabilities  of the agent.</description>
     <methods>
         <method name="reinforceIt">
             <description>To reinforce this element. Returns 'true' if this element has been reinforced.</description>

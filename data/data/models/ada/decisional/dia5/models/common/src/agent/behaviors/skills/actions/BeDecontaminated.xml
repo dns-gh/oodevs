@@ -14,7 +14,7 @@
     </body-type>
     <feedbacks>
         <feedback name="beDecontaminatedActionCompleted">
-            <description>Sent when agent unit is decontaminated.</description>
+            <description>Sent when the agent is decontaminated.</description>
         </feedback>
     </feedbacks>
 </skill>

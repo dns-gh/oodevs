@@ -22,7 +22,7 @@ A 'Fire' object has a life time cycle (increase and decrease rate depending on a
             </return>
         </method>
         <method name="canBeExtinguished">
-            <description>Returns true if this entity can be extinguished by agent Unit.</description>
+            <description>Returns true if this entity can be extinguished by the agent.</description>
             <return>
                 <type>
                     <simple name="boolean"/>

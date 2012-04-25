@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <task xmlns="http://www.masagroup.net/directia/schemas/bm" name="behaviors.tasks.CommitSuicideAttack" source-version="1.0.0">
-    <description>To commit a suicide attack on a given target agent, using the 'launchProjectile' skill. Agent unit will follow the target agent (a non-teammate, a teammate or a crowd) and launch the choosen projectile on it. This skill make agent unit commit suicide, using the &quot;commitSuicide&quot; action on itself.</description>
+    <description>To commit a suicide attack on a given target agent, using the 'launchProjectile' skill. the agent will follow the target agent (a non-teammate, a teammate or a crowd) and launch the choosen projectile on it. This skill make the agent commit suicide, using the &quot;commitSuicide&quot; action on itself.</description>
     <parameters>
         <parameter name="targetAgent">
             <description>The target to launch projectile on.</description>

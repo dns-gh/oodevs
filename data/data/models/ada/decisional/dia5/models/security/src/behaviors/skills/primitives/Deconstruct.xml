@@ -46,6 +46,12 @@ Contrariwise (&quot;instantaneously&quot; parameter is set to 'false'), visited 
         </link>
     </links>
     <feedbacks>
+        <feedback name="done">
+            <description>Sent when all &quot;Work&quot; have been visited (even if one or few of them haven't been deconstructed).</description>
+        </feedback>
+        <feedback name="failed">
+            <description>Sent if the set of &quot;works&quot; is empty (no element to act on).</description>
+        </feedback>
         <feedback name="notDeconstructed">
             <description>Sent each time a 'Work' cannot be deconstructed (no pysical capability for instance).</description>
             <argument name="work">
@@ -53,12 +59,6 @@ Contrariwise (&quot;instantaneously&quot; parameter is set to 'false'), visited 
                     <class name="agent.world.Work"/>
                 </type>
             </argument>
-        </feedback>
-        <feedback name="done">
-            <description>Sent when all &quot;Work&quot; have been visited (even if one or few of them haven't been deconstructed).</description>
-        </feedback>
-        <feedback name="failed">
-            <description>Sent if the set of &quot;works&quot; is empty (no element to act on).</description>
         </feedback>
         <feedback name="deconstructionRunning">
             <description>Sent while a work is being deconstructed by agent.</description>

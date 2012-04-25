@@ -8,7 +8,7 @@
             </type>
         </parameter>
         <parameter name="position" nullable="true">
-            <description>The position from which agent unit launch the projectile.</description>
+            <description>The position from which the agent launches the projectile.</description>
             <type>
                 <class name="agent.world.Destination"/>
             </type>

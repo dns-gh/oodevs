@@ -54,9 +54,9 @@ This implementation returns true once a new crowd of wounded elements have been 
             </return>
         </method>
         <method name="canBeLoaded" abstract="false">
-            <description>Returns true if this entity can be loaded on agent Unit.&#xD;
+            <description>Returns true if this entity can be loaded on the agent.&#xD;
 &#xD;
-This implementation returns 'true' if 'this' entity is reached (entity is acessible) by agent Unit and if entity is not already loaded (transported).</description>
+This implementation returns 'true' if 'this' entity is reached (entity is acessible) by the agent and if entity is not already loaded (transported).</description>
             <return>
                 <type>
                     <simple name="boolean"/>
@@ -64,9 +64,9 @@ This implementation returns 'true' if 'this' entity is reached (entity is acessi
             </return>
         </method>
         <method name="canBeUnloaded" abstract="false">
-            <description>Returns true if 'this' entity can be unloaded from agent Unit.&#xD;
+            <description>Returns true if 'this' entity can be unloaded from the agent.&#xD;
 &#xD;
-This implementation returns 'true' if 'this' entity is loaded (transported) by agent Unit.</description>
+This implementation returns 'true' if 'this' entity is loaded (transported) by the agent.</description>
             <return>
                 <type>
                     <simple name="boolean"/>
@@ -74,9 +74,9 @@ This implementation returns 'true' if 'this' entity is loaded (transported) by a
             </return>
         </method>
         <method name="isLoaded" abstract="false">
-            <description>Returns 'true' if this entity is 100% loaded in agent Unit.&#xD;
+            <description>Returns 'true' if this entity is 100% loaded in the agent.&#xD;
 &#xD;
-This implementation returns 'true' if entity is transported by agent Unit.</description>
+This implementation returns 'true' if entity is transported by the agent.</description>
             <return>
                 <type>
                     <simple name="boolean"/>
@@ -84,9 +84,9 @@ This implementation returns 'true' if entity is transported by agent Unit.</desc
             </return>
         </method>
         <method name="loadIt" abstract="false">
-            <description>Action of loading this element on agent Unit.&#xD;
+            <description>Action of loading this element on the agent.&#xD;
 &#xD;
-This implementation makes agent Unit &quot;magically&quot; load 'this' entity after a defined delay (in minutes). This action is not dealing with realistic transport of troops. No special  physical capabilities is needed to execute this action.</description>
+This implementation makes the agent &quot;magically&quot; load 'this' entity after a defined delay (in minutes). This action is not dealing with realistic transport of troops. No special  physical capabilities is needed to execute this action.</description>
             <return>
                 <description>Returns 'true' on action completion,  'false' otherwise.</description>
                 <type>
@@ -95,13 +95,13 @@ This implementation makes agent Unit &quot;magically&quot; load 'this' entity af
             </return>
         </method>
         <method name="unloadIt" abstract="false">
-            <description>Action of unloading this element from agent Unit.&#xD;
+            <description>Action of unloading this element from the agent.&#xD;
 &#xD;
-This implementation makes agent Unit magically unload  the crowd after a defined delay (in minutes). Unloading position is right on the agent Unit's position.</description>
+This implementation makes the agent magically unload  the crowd after a defined delay (in minutes). Unloading position is right on the the agent's position.</description>
             <return>
                 <description>Returns 'true' on action completion,  'false' otherwise.&#xD;
 &#xD;
-This implementation makes agent Unit &quot;magically&quot; unload 'this' entity after a defined delay (in minutes).</description>
+This implementation makes the agent &quot;magically&quot; unload 'this' entity after a defined delay (in minutes).</description>
                 <type>
                     <simple name="boolean"/>
                 </type>
@@ -122,7 +122,7 @@ This implementation makes agent Unit &quot;magically&quot; unload 'this' entity 
             </return>
         </method>
         <method name="healIt" abstract="false">
-            <description>For agent Unit, to act on this element to heal all wounded persons within it. &#xD;
+            <description>For the agent, to act on this element to heal all wounded persons within it. &#xD;
 &#xD;
 This implementation heal magically all injured elements within the Crowd.&#xD;
 </description>

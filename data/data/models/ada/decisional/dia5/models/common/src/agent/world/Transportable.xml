@@ -3,7 +3,7 @@
     <description>The property for some entity to be moves by vehicle. </description>
     <methods>
         <method name="canBeLoaded">
-            <description>Returns true if this entity can be loaded on agent Unit.</description>
+            <description>Returns true if this entity can be loaded on the agent.</description>
             <return>
                 <type>
                     <simple name="boolean"/>
@@ -11,7 +11,7 @@
             </return>
         </method>
         <method name="canBeUnloaded">
-            <description>Returns true if THIS entity can be unloaded from agent Unit.</description>
+            <description>Returns true if THIS entity can be unloaded from the agent.</description>
             <return>
                 <type>
                     <simple name="boolean"/>
@@ -19,7 +19,7 @@
             </return>
         </method>
         <method name="isLoaded">
-            <description>Returns 'true' if this entity is 100% loaded in agent Unit.</description>
+            <description>Returns 'true' if this entity is 100% loaded into the agent.</description>
             <return>
                 <type>
                     <simple name="boolean"/>
@@ -27,7 +27,7 @@
             </return>
         </method>
         <method name="loadIt">
-            <description>Action of loading this element on agent Unit.</description>
+            <description>Action of loading this element on the agent.</description>
             <return>
                 <description>Returns 'true' on action completion,  'false' otherwise.</description>
                 <type>
@@ -36,7 +36,7 @@
             </return>
         </method>
         <method name="unloadIt">
-            <description>Action of unloading this element from agent Unit.</description>
+            <description>Action of unloading this element from the agent.</description>
             <return>
                 <description>Returns 'true' on action completion,  'false' otherwise.</description>
                 <type>

@@ -11,7 +11,7 @@
             </return>
         </method>
         <method name="healIt">
-            <description>For agent Unit, to act on this element to heal all wounded persons within it.</description>
+            <description>For the agent, to act on this element to heal all wounded persons within it.</description>
             <return>
                 <type>
                     <simple name="boolean"/>
