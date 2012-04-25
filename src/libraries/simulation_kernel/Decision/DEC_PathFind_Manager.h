@@ -85,6 +85,7 @@ private:
     T_Requests longRequests_;
     double rDistanceThreshold_;
     unsigned int nMaxComputationDuration_;
+    unsigned int nMaxEndConnections_;
     unsigned int treatedRequests_;
     T_PathFindThreadPtrVector pathFindThreads_;
     boost::mutex cleanAndDestroyMutex_;

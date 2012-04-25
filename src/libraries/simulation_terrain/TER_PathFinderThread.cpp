@@ -29,13 +29,14 @@ using namespace pathfind;
 // Name: TER_PathFinderThread constructor
 // Created: AGE 2005-02-23
 // -----------------------------------------------------------------------------
-TER_PathFinderThread::TER_PathFinderThread( const TER_StaticData& staticData, tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >& queue, bool bUseSameThread )
+TER_PathFinderThread::TER_PathFinderThread( const TER_StaticData& staticData, tools::thread::MessageQueue_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >& queue, unsigned int nMaxEndConnections, bool bUseSameThread )
     : tools::thread::RequestProcessor_ABC< boost::shared_ptr< TER_PathFindRequest_ABC > >( queue )
     , pPathfinder_   ( 0 )
     , bUseSameThread_( bUseSameThread )
 {
     pPathfinder_ = new TerrainPathfinder( staticData );
     pPathfinder_->SetPickingDistances( 1000.f, 10000.f ); // minpicking, maxpicking
+    pPathfinder_->SetMaxEndConnections( nMaxEndConnections );
     if( !bUseSameThread )
         Start();
 }
