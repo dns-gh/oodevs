@@ -34,7 +34,10 @@ namespace
             , port   ( 1337 )
             , process( boost::make_shared< MockProcess >( 7331, "el_process_name" ) )
         {
-            // NOTHING
+            MOCK_EXPECT( system.Exists ).with( java ).returns( true );
+            MOCK_EXPECT( system.IsFile ).with( java ).returns( true );
+            MOCK_EXPECT( system.Exists ).with( jar ).returns( true );
+            MOCK_EXPECT( system.IsFile ).with( jar ).returns( true );
         }
 
         const std::string java;

@@ -53,7 +53,14 @@ Proxy::Proxy( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime,
     , client_ ( client )
     , access_ ( new boost::mutex() )
 {
-    system_.MakeDirectory( GetPath() );
+    if( !system_.Exists( java_ ) )
+        throw std::runtime_error( runtime::Utf8Convert( java_ ) + " is missing" );
+    if( !system_.IsFile( java_ ) )
+        throw std::runtime_error( runtime::Utf8Convert( java_ ) + " is not a file" );
+    if( !system_.Exists( jar_ ) )
+        throw std::runtime_error( runtime::Utf8Convert( jar_ ) + " is missing" );
+    if( !system_.IsFile( jar_ ) )
+        throw std::runtime_error( runtime::Utf8Convert( jar_ ) + " is not a file" );
     const boost::filesystem::path tag = GetPath() / L"proxy.id";
     LOG_INFO( log_ ) << "[proxy] Listening to localhost:" << port;
     bool hasProcess = system_.IsFile( tag );
