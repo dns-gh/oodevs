@@ -199,7 +199,7 @@ masalife.brain.communication.setMessageTreatment( "TaskDone",
         if myFrontElements and frontElement then
             if myFrontElements[ frontElement ] then
                 myFrontElements[ frontElement ] = nil
-                if not next( myFrontElements ) then
+                if #myFrontElements == 0 then
                     myself.feedback = true
                     integration.listenFrontElementCallbacks = {}
                 end

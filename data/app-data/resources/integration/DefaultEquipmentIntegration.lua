@@ -364,7 +364,7 @@ integration.setAvailableDrones = function ( self )
         local operationalLevel = pion:DEC_Agent_EtatOpsMajeur() * 100
         -- if DEC_GetSzName( pion ) == "Masalife.RENS.Drone SDTI" and operationalLevel ~= 0 then
         if operationalLevel ~= 0 then 
-            if not pion:GetbMiseEnOeuvre_() and not pion:GetbEnExploitation_() then
+            if DEC_Geometrie_DistanceBetweenPoints( DEC_Agent_Position(), DEC_Agent_PositionPtr(pion) ) < 80 and  not pion:GetbMiseEnOeuvre_() and not pion:GetbEnExploitation_() then
                 pion:SetbMiseEnOeuvre_( true ) -- mandatory to permit the flight
                 DEC_Transport_DebarquerPionSansDelais( pion )
                 myself.droneAvailable = pion 
