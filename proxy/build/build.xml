@@ -51,6 +51,6 @@
 		<java fork="true" jar="${jar.dir}/${ant.project.name}.jar" />
 	</target>
 
-	<target name="all" depends="clean, package" />
+	<target name="all" depends="package" />
 
 </project>

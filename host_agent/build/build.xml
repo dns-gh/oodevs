@@ -90,5 +90,5 @@
     </target>
 
     <!-- All -->
-    <target name="all" depends="clean,configure,libraries,samples,tests,reports"/>
+    <target name="all" depends="configure,libraries,samples,tests,reports"/>
 </project>
