@@ -1485,6 +1485,7 @@
                 <content>
                     <name>@{name}</name>
                     <description>@{description}</description>
+                    <version>${version.major}</version>
                 </content>
             </echoxml>
             <zip destfile="${out.dir}/@{file}" filesonly="true">
