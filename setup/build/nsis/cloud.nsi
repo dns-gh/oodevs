@@ -31,17 +31,20 @@ FunctionEnd
 Section $(^Name)
     SectionIn RO
     SetShellVarContext all
+
+    CreateDirectory "$INSTDIR\data"
     SetOutPath "$INSTDIR\bin"
 
     ; cloud applications
     File "${HOST_AGENT}\out\${PLATFORM}\release\samples\sample_agent\sample_agent.exe"
-    File "${PROXY}\out\jar\proxy.jar"
-    File "${PROXY}\out\jar\log4j.properties"
     File "${NODE}\out\jar\node.jar"
+    File "${PROXY}\out\jar\log4j.properties"
+    File "${PROXY}\out\jar\proxy.jar"
 
     ; sword applications
     File "${SWORD}\directia-${PLATFORM}-mt-4_6.dll"
     File "${SWORD}\dispatcher-${PLATFORM}-mt.dll"
+    File "${SWORD}\functions.xml"
     File "${SWORD}\geos.dll"
     File "${SWORD}\libpq.dll"
     File "${SWORD}\log4cxx.dll"
@@ -53,7 +56,6 @@ Section $(^Name)
     File "${SWORD}\plugin_masalife_brain_${PLATFORM}-mt.plugin"
     File "${SWORD}\plugin_motivation_${PLATFORM}-mt-4_6.plugin"
     File "${SWORD}\proj.dll"
-    File "${SWORD}\functions.xml"
     File "${SWORD}\simulation_app.exe"
     File /x "*_d.dll" "${SWORD}\gdal*.dll"
     File /x "*D.dll" "${SWORD}\Xalan*.dll"
@@ -74,9 +76,13 @@ Section $(^Name)
     ; modules
     File "${SWORD}\*_module.dll"
 
+    ; website
+    SetOutPath "$INSTDIR"
+    File /r /x ".svn" "${NODE}\www"
+
     ; shortcuts
     CreateDirectory "$SMPROGRAMS\$(^Name)"
-    CreateShortcut "$SMPROGRAMS\$(^Name).lnk" "$INSTDIR\bin\sample_agent.exe" ""
+    CreateShortcut "$SMPROGRAMS\$(^Name)\Cloud Server.lnk" "$INSTDIR\bin\sample_agent.exe" ""
 
     ; registry
     WriteRegStr HKLM "Software\MASA Group\$(^Name)" "Install_Dir" "$INSTDIR"
@@ -91,11 +97,11 @@ SectionEnd
 ;--------------------------------
 Section
     WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" "DisplayName" "$(^Name)"
-    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" "UninstallString" '"$INSTDIR\uninstall.exe"'
+    WriteRegStr HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" "UninstallString" '"$INSTDIR\Uninstall.exe"'
     WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" "NoModify" 1
     WriteRegDWORD HKLM "Software\Microsoft\Windows\CurrentVersion\Uninstall\$(^Name)" "NoRepair" 1
-    WriteUninstaller "uninstall.exe"
-    CreateShortCut "$SMPROGRAMS\$(^Name)\uninstall.lnk" "$INSTDIR\uninstall.exe"
+    WriteUninstaller "Uninstall.exe"
+    CreateShortCut "$SMPROGRAMS\$(^Name)\Uninstall.lnk" "$INSTDIR\Uninstall.exe"
 SectionEnd
 
 ;--------------------------------
