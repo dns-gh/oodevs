@@ -110,6 +110,7 @@
     <ClCompile Include="..\..\src\libraries\gaming\TrafficabilityAttribute.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\TroopsCompatibilityVersion.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\VisionConesToggler.cpp" />
+    <ClCompile Include="..\..\src\libraries\gaming\Availability.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\Borrowings.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\Casualties.cpp" />
     <ClCompile Include="..\..\src\libraries\gaming\Dotation.cpp" />
@@ -333,6 +334,7 @@
     <ClInclude Include="..\..\src\libraries\gaming\TroopsCompatibilityVersion.h" />
     <ClInclude Include="..\..\src\libraries\gaming\VisionConesToggler.h" />
     <ClInclude Include="..\..\src\libraries\gaming\Attr_Def.h" />
+    <ClInclude Include="..\..\src\libraries\gaming\Availability.h" />
     <ClInclude Include="..\..\src\libraries\gaming\Borrowings.h" />
     <ClInclude Include="..\..\src\libraries\gaming\Casualties.h" />
     <ClInclude Include="..\..\src\libraries\gaming\Dotation.h" />

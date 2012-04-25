@@ -92,7 +92,6 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="..\..\src\libraries\clients_kernel\Application_ABC.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_kernel\Availability.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\clients_kernel_pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Create</PrecompiledHeader>
@@ -224,7 +223,6 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\clients_kernel\Application_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\Availability.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\clients_kernel_pch.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Filter_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Finalizable_ABC.h" />
@@ -236,7 +234,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\Level.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\LogisticLevel.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\LogisticSupplyClass.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\MaintenanceStates_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\OverFlyingObserver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\StaticModel.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\AltitudeModified.h" />
