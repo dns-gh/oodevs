@@ -49,7 +49,14 @@ rootnode
             Activate( skill.links.moveAlong, 1, { entities = self.itinerary } )
         end
     end,
+    
+    destroy = function( self )
+        meKnowledge.source:SetbEnExploitation_ ( false )
+        meKnowledge.source:SetbMiseEnOeuvre_ ( false )
+    end,
+    
 }
+
 -- **************************************************************************** 
 -- CR 
 -- ****************************************************************************
