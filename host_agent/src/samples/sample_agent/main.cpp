@@ -83,6 +83,7 @@ namespace
                 found |= ReadParameter( ports.proxy, "--port_proxy", i, argc, argv );
                 found |= ReadParameter( cluster.enabled, "--cluster", i, argc, argv );
                 found |= ReadParameter( java, "--java", i, argc, argv );
+                found |= ReadParameter( proxy.jar, "--proxy_jar", i, argc, argv );
                 found |= ReadParameter( node.jar, "--node_jar", i, argc, argv );
                 found |= ReadParameter( node.root, "--node_root", i, argc, argv );
                 found |= ReadParameter( session.data, "--session_data", i, argc, argv );
