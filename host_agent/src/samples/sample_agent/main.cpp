@@ -10,6 +10,7 @@
 #include <runtime/Factory.h>
 #include <host/Agent.h>
 #include <host/FileSystem.h>
+#include <host/Json.h>
 #include <host/Node_ABC.h>
 #include <host/NodeController.h>
 #include <host/Pool.h>
@@ -18,6 +19,8 @@
 #include <host/SecurePool.h>
 #include <host/SessionController.h>
 #include <host/UuidFactory.h>
+#include <runtime/Runtime_ABC.h>
+#include <runtime/Utf8.h>
 #include <web/Client.h>
 #include <web/Controller.h>
 #include <web/Server.h>
@@ -26,10 +29,12 @@
 #include <cpplog/cpplog.hpp>
 
 #include <boost/lexical_cast.hpp>
+#include <boost/property_tree/ptree.hpp>
+
+using runtime::Utf8Convert;
 
 namespace
 {
-
     template< typename T >
     bool ReadParameter( T& dst, const std::string& name, int& idx, int argc, const char* argv[] )
     {
@@ -71,7 +76,7 @@ namespace
             std::wstring applications;
         } session;
 
-        void Parse( int argc, const char* argv[] )
+        bool Parse( cpplog::BaseLogger& log, int argc, const char* argv[] )
         {
             for( int i = 0; i < argc; ++i )
             {
@@ -89,8 +94,12 @@ namespace
                 found |= ReadParameter( session.data, "--session_data", i, argc, argv );
                 found |= ReadParameter( session.applications, "--session_applications", i, argc, argv );
                 if( !found )
-                    throw std::runtime_error( std::string( "unsupported parameter " ) + argv[i] );
+                {
+                    LOG_ERROR( log ) << "[cfg] Unknown parameter " << argv[i];
+                    return false;
+                }
             }
+            return true;
         }
     };
 
@@ -114,6 +123,16 @@ namespace
         getc( stdin );
         server.Stop();
     }
+
+    template< typename T >
+    T GetTree( boost::property_tree::ptree& tree, const std::string& key, const T& value )
+    {
+        const boost::optional< T > opt = tree.get_optional< T >( key );
+        if( opt != boost::none )
+            return *opt;
+        tree.put< T >( key, value );
+        return value;
+    }
 }
 
 int StartServer( int argc, const char* argv[] )
@@ -122,38 +141,50 @@ int StartServer( int argc, const char* argv[] )
     cpplog::BackgroundLogger log( base );
     LOG_INFO( log ) << "Host Agent - (c) copyright MASA Group 2012";
 
-    runtime::Factory factory( log );
-    const runtime::Runtime_ABC& runtime = factory.GetRuntime();
-    host::FileSystem system( log );
+    try
+    {
+        runtime::Factory factory( log );
+        const runtime::Runtime_ABC& runtime = factory.GetRuntime();
+        host::FileSystem system( log );
 
-    Configuration cfg;
-    cfg.ports.host           = 15000;
-    cfg.ports.period         = 40;
-    cfg.ports.min            = 50000;
-    cfg.ports.max            = 60000;
-    cfg.ports.proxy          = 8080;
-    cfg.java                 = L"C:/Program Files/Java/jdk1.6.0_31/bin/java.exe";
-    cfg.proxy.jar            = L"e:/cloud_hg/proxy/out/jar/proxy.jar";
-    cfg.node.jar             = L"e:/cloud_hg/node/out/jar/node.jar";
-    cfg.node.root            = L"e:/cloud_hg/node/www";
-    cfg.session.data         = L"d:/apps/sword_434_data";
-    cfg.session.applications = L"d:/apps/sword_434/applications";
-    try
-    {
-        cfg.Parse( argc-1, argv+1 );
-    }
-    catch( const std::runtime_error& err )
-    {
-        LOG_FATAL( log ) << "[cfg] Unable to parse configuration, " << err.what();
-    }
-    try
-    {
+        boost::property_tree::ptree tree;
+        const boost::filesystem::path root = runtime.GetModuleFilename().remove_filename();
+        const boost::filesystem::path config = root / "host_agent.config";
+        if( system.IsFile( config ) )
+            tree = host::FromJson( system.ReadFile( config ) );
+
+        const char* home = getenv( "JAVA_HOME" );
+        const std::string java = GetTree( tree, "java", home ? std::string( home ) + "/bin/java.exe" : "" );
+        if( java.empty() )
+            throw std::runtime_error( "Missing JAVA_HOME environment variable. Please install a Java Runtime Environment" );
+
+        Configuration cfg;
+        cfg.ports.host           = GetTree( tree, "ports.host", 15000 );
+        cfg.ports.period         = GetTree( tree, "ports.period", 40 );
+        cfg.ports.min            = GetTree( tree, "ports.min", 50000 );
+        cfg.ports.max            = GetTree( tree, "ports.max", 60000 );
+        cfg.ports.proxy          = GetTree( tree, "ports.proxy", 8080 );
+        cfg.cluster.enabled      = GetTree( tree, "cluster.enabled", true );
+        cfg.java                 = Utf8Convert( java );
+        cfg.proxy.jar            = Utf8Convert( GetTree( tree, "proxy.jar",            Utf8Convert( root / "proxy.jar" ) ) );
+        cfg.node.jar             = Utf8Convert( GetTree( tree, "node.jar",             Utf8Convert( root / "node.jar" ) ) );
+        cfg.node.root            = Utf8Convert( GetTree( tree, "node.root",            Utf8Convert( root / "../www" ) ) );
+        cfg.session.data         = Utf8Convert( GetTree( tree, "session.data",         Utf8Convert( root / "../data" ) ) );
+        cfg.session.applications = Utf8Convert( GetTree( tree, "session.applications", Utf8Convert( root / "../bin" ) ) );
+
+        system.WriteFile( root / "host_agent.config", host::ToJson( tree, true ) );
+
+        bool valid = cfg.Parse( log, argc-1, argv+1 );
+        if( !valid )
+            return -1;
         Start( log, runtime, system, cfg );
     }
     catch( const std::runtime_error& err )
     {
         LOG_ERROR( log ) << "[main] Unable to start, " << err.what();
+        return -1;
     }
+
     LOG_INFO( log ) << "Host Agent - Exit";
     return 0;
 }
