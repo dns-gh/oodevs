@@ -158,7 +158,8 @@ void PHY_ActionMove::Execute()
         return;
     }
     if( ( AvoidObstacles() && MIL_AgentServer::GetWorkspace().GetEntityManager().FindObject( obstacleId_ ) ) ||
-        ( executionSuspended_ && pMainPath_->GetState() != DEC_Path_ABC::eComputing && pion_.GetRole< PHY_RoleInterface_Location >().GetPosition() != (*pMainPath_->GetCurrentKeyOnPath())->GetPos() ) )
+        ( executionSuspended_ && pMainPath_->GetState() != DEC_Path_ABC::eComputing &&
+        ( pMainPath_->GetCurrentKeyOnPath() == pMainPath_->GetResult().end() || pion_.GetRole< PHY_RoleInterface_Location >().GetPosition() != (*pMainPath_->GetCurrentKeyOnPath())->GetPos() ) ) )
     {
         // Recompute Pathfind in order to avoid obstacle or to get back previous path after suspension.
         CreateNewPath();
