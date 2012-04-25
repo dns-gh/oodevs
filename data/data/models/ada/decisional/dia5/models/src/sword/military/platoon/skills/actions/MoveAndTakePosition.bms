@@ -54,6 +54,10 @@ node "TakePosition"
             end
         else
             myself.blockForcesContinue = nil
+            if myself.blocked then
+                Feedback( self.feedbacks.done, { reason = "blocked",
+                                             element = self.params.position } )
+            end
         end
     end
 }
