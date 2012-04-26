@@ -37,9 +37,11 @@ rootnode
     activate = function( self )
         local Activate = Activate
 
-        -- No entities to safeguard from issued. Get neaby enemies by default
+        -- No entities to safeguard from issued. Get nearby enemies by default
         if self.params.entities == NIL then
-            self.entitiesToSafeguardFrom = sword.military.queries.enemies.getAgentsEngagingMe[ "execute" ]()
+            self.agentsEngagingMe = sword.military.queries.enemies.getAgentsEngagingMe[ "execute" ]()
+            self.enemiesCloseToMe = sword.military.queries.enemies.getNearbyEnemies[ "execute" ]()
+            self.entitiesToSafeguardFrom = fusionList( self.agentsEngagingMe, self.enemiesCloseToMe )
         else
             self.entitiesToSafeguardFrom = self.params.entities
         end
