@@ -47,5 +47,15 @@ A resource network node can be supplied with resources from another node or by a
                 </type>
             </return>
         </method>
+        <method name="canBeOperated" abstract="false">
+            <description>Returns 'true' if this entity can be operated by the agent, 'false' otherwise.&#xD;
+&#xD;
+This implementation returns 'false'. </description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
     </methods>
 </class>

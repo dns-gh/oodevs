@@ -36,7 +36,8 @@
         <method name="canBeExtinguished" abstract="false">
             <description>Returns true if this entity can be extinguished by the agent.&#xD;
 &#xD;
-This implementation returns 'true' if this element has the &quot;burn&quot; capacity (see objects capacities in authoring tool), and if the agent has the physical capabitiy to extinguish it. It returns 'false' otherwise.</description>
+This implementation returns 'true' if this element has the &quot;burn&quot; capacity (see objects capacities in authoring tool). It means that this object element is a fire.&#xD;
+It returns 'false' otherwise.</description>
             <return>
                 <type>
                     <simple name="boolean"/>
@@ -206,6 +207,16 @@ This implementation returns a position outside the effect area of this element.<
             <return>
                 <type>
                     <class name="agent.world.Destination"/>
+                </type>
+            </return>
+        </method>
+        <method name="canBeOperated" abstract="false">
+            <description>Returns true if this entity can be operated by the agent.&#xD;
+&#xD;
+This implementation returns 'true' if this element (the object to operate) can be operated (see definition of objects capacities in authoring tool). To operate an object, the agent doesn't need specific physical capabilities.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
                 </type>
             </return>
         </method>

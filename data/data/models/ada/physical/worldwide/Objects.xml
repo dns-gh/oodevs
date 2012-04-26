@@ -797,5 +797,13 @@
       <urban-modifier material-type="Vegetation" value="0.7"/>
     </urban-destruction>
   </object>
+  <object name="MyTestPosition" type="MyTestPosition">
+    <geometries>
+      <geometry symbol="" type="polygon"/>
+    </geometries>
+    <constructor default-consumption-mode="EnTravaux" unit-type="raw"/>
+    <perception blinded="false"/>
+    <protection geniePrepared="false" max-size="50"/>
+  </object>
 </objects>
-<!-- signature="2094870965" -->
+<!-- signature="0998341559" -->

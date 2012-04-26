@@ -725,7 +725,6 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Work" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -809,7 +808,6 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Work" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -893,7 +891,6 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Work" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -977,7 +974,6 @@ overwhelming force.]]></doctrine>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Work" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -2366,7 +2362,6 @@ A visited object won't be created and build if agent doesn't have the physical c
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="works" max-occurs="unbounded" min-occurs="1" name="works to perform" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -2475,7 +2470,6 @@ A visited object won't be created and build if agent doesn't have the physical c
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="plannedWork" name="Planned attack" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -2572,7 +2566,6 @@ A visited object won't be created and build if agent doesn't have the physical c
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="works" max-occurs="unbounded" min-occurs="1" name="Plan of attack" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -2660,7 +2653,6 @@ A visited object won't be created and build if agent doesn't have the physical c
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="plannedWork" name="planned object to operate" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -2749,7 +2741,6 @@ A visited object won't be created and build if agent doesn't have the physical c
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
       <parameter dia-name="plannedWork" name="planned check point" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -2967,6 +2958,17 @@ A unit won't follow if it cannot perform the mission (mission is not set for thi
       <parameter dia-name="works" max-occurs="unbounded" min-occurs="1" name="objects to deconstruct (and) remove" optional="false" type="ObjectKnowledge"/>
       <parameter dia-name="waitForReinforcement" name="wait for reinforcement" optional="true" type="Boolean"/>
       <parameter dia-name="instantaneously" name="instantaneously" optional="true" type="Boolean"/>
+    </mission>
+    <mission dia-behavior="behaviors.tasks.PatrolWithinArea" dia-type="behaviors.tasks.PatrolWithinArea" id="4494" name="MLSECURITY - Patrol within area">
+      <description>
+        <doctrine><![CDATA[To visit a given set of entities within the issued area.]]></doctrine>
+        <usage><![CDATA[Agent will move along positions. When it has visited the last position, the agent starts over with the first one. The set of entities and the order of visit are user defined.]]></usage>
+      </description>
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
+      <parameter dia-name="area" name="the area to patrol within" optional="false" type="Polygon"/>
     </mission>
   </units>
   <automats>
@@ -3458,7 +3460,6 @@ A unit won't follow if it cannot perform the mission (mission is not set for thi
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Engineer works" optional="true" type="PlannedWork">
         <objects>
-          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -3546,7 +3547,6 @@ A unit won't follow if it cannot perform the mission (mission is not set for thi
       <parameter dia-name="delaisCourts_" name="Short delay" optional="false" type="Boolean"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Engineer works" optional="true" type="PlannedWork">
         <objects>
-          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -3630,7 +3630,6 @@ A unit won't follow if it cannot perform the mission (mission is not set for thi
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Engineer works" optional="true" type="PlannedWork">
         <objects>
-          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -3731,7 +3730,6 @@ A unit won't follow if it cannot perform the mission (mission is not set for thi
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
       <parameter dia-name="travaux_" max-occurs="unbounded" min-occurs="1" name="Work" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -4604,7 +4602,6 @@ A unit won't follow if it cannot perform the mission (mission is not set for thi
       <parameter dia-name="pion_" name="Subordinate" optional="false" type="Agent"/>
       <parameter dia-name="obstacle_" name="Obstacle" optional="false" type="PlannedWork">
         <objects>
-          <parameter type="Mine Cluster"/>
           <parameter type="Safe Point"/>
           <parameter type="Jamming Area"/>
           <parameter type="Full jamming Area"/>
@@ -4724,4 +4721,4 @@ A unit won't follow if it cannot perform the mission (mission is not set for thi
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="0911810833" -->
+<!-- signature="0377804696" -->

@@ -657,5 +657,6 @@
   <report category="operational" id="462" message="Terrorist %1 dropped">
     <parameter type="AgentKnowledge"/>
   </report>
+  <report category="operational" id="463" message="Object cannot be operated"/>
 </reports>
-<!-- signature="1838233183" -->
+<!-- signature="0772513983" -->

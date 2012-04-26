@@ -4,7 +4,7 @@
 -- ****************************************************************************
 queryImplementation "GetAllReachableDestinationInArea" 
 {
-    ["execute"] = function ( params )
+    [ "execute" ] = function ( params )
 
         local allRes = knowledgeManager.getQueryResult( "GetAllReachableDestinationInArea" )
         if next( allRes ) then return allRes end
@@ -28,6 +28,14 @@ queryImplementation "GetAllReachableDestinationInArea"
             if DEC_Geometrie_EstPointDansLocalisation( crossroad:getPosition(), params.area.source ) then
                 allRes[ #allRes + 1 ] = crossroad
             end
+        end
+
+        -- -------------------------------------------------------------------------------- 
+        -- Occupyable objects
+        -- --------------------------------------------------------------------------------
+        local simObjects = integration.getObjectsKnowledgeInZoneWithCapacity( "protection", params.area )
+        for _, simObject in pairs( simObjects ) do
+            allRes[ #allRes + 1 ] = CreateKnowledge( ontology.classes.Object, simObject )
         end
 
         -- -------------------------------------------------------------------------------- 

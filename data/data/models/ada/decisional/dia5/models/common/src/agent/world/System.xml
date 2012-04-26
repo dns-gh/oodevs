@@ -26,5 +26,13 @@
                 </type>
             </return>
         </method>
+        <method name="canBeOperated">
+            <description>Returns true if this entity can be operated by the agent.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
     </methods>
 </interface>

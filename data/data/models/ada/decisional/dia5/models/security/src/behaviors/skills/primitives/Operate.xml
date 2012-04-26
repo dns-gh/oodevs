@@ -26,5 +26,8 @@ Because operating a system requires the presence of the agent, action can only b
         <feedback name="operating">
             <description>Sent once the agent is operating the issued system.</description>
         </feedback>
+        <feedback name="failed">
+            <description>Sent if the agent is not able to operate the issued system. It means that the element issued cannot be operated (see object capacities definition in authoring tool).</description>
+        </feedback>
     </feedbacks>
 </skill>

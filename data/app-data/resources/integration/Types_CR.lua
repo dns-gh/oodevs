@@ -475,4 +475,5 @@ eRC_UrbanCollisionStopped = 459
 eRC_NotInSameUndergroundNetwork = 460
 eRC_FireIsBeingExtinguished = 461
 eRC_TerroristDropped = 462
-eNbr = 463
+eRC_ImpossibleToOperateObject = 463
+eNbr = 464

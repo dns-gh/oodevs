@@ -613,6 +613,8 @@ public:
         eRC_UrbanCollisionStopped,
         eRC_NotInSameUndergroundNetwork,//460
         eRC_FireIsBeingExtinguished,
+        eRC_TerroristDropped,
+        eRC_ImpossibleToOperateObject,
         eLast
     };
     //@}

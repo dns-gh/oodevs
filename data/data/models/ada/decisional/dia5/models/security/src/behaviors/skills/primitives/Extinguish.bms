@@ -52,7 +52,7 @@ rootnode
                 if self.position[ 1 ]:isReached() or self.arrived then
                     if self.fire:canBeExtinguished() then
                         Activate( skill.links.extinguish, 1, { fire = self.fire } )
-                    elseif not self.fire:isExtinguished() then -- agent cannot extinguish and fire burns...
+                    else
                         self:impossibleToExtinguish( { fire = self.fire } )
                     end
                 else

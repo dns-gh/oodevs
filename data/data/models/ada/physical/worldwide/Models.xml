@@ -2611,6 +2611,7 @@
         <mission name="MLSECURITY - Make follow"/>
         <mission name="MLSECURITY - Reinforce"/>
         <mission name="MLSECURITY - Deconstruct (and remove) works"/>
+        <mission name="MLSECURITY - Patrol within area"/>
       </missions>
       <fragorders/>
     </unit>
@@ -3876,4 +3877,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="3277192016" -->
+<!-- signature="0964320606" -->
