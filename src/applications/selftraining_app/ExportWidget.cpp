@@ -16,6 +16,7 @@
 #include "frontend/ListViewHelper.h"
 #include "tools/GeneralConfig.h"
 #include "tools/Loader_ABC.h"
+#include "tools/Version.h"
 #include <boost/filesystem/operations.hpp>
 #include <boost/filesystem/convenience.hpp>
 #include <xeumeuleu/xml.h>
@@ -415,6 +416,7 @@ void ExportWidget::WriteContent( zip::ozipfile& archive ) const
     xos << xml::start( "content" )
         << xml::content( "name", name )
         << xml::content( "description", description )
+        << xml::content( "version", tools::AppProjectVersion() )
         << xml::end;
     {
         std::istringstream input( xos.str() );
