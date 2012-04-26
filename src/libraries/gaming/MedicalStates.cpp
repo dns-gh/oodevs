@@ -75,19 +75,19 @@ void MedicalStates::DoUpdate( const sword::LogMedicalState& message )
     {
         dispoRamassageAmbulances_.resize( message.collection_ambulances().elem_size() );
         for( int i = 0; i < message.collection_ambulances().elem_size(); ++i )
-            dispoRamassageAmbulances_[i] = Availability( resolver_, message.collection_ambulances().elem( i ) );
+            dispoRamassageAmbulances_[i] = kernel::Availability( resolver_, message.collection_ambulances().elem( i ) );
     }
     if( message.has_evacuation_ambulances() )
     {
         dispoReleveAmbulances_.resize( message.evacuation_ambulances().elem_size() );
         for( int i = 0; i < message.evacuation_ambulances().elem_size(); ++i )
-            dispoReleveAmbulances_[i] = Availability( resolver_, message.evacuation_ambulances().elem( i ) );
+            dispoReleveAmbulances_[i] = kernel::Availability( resolver_, message.evacuation_ambulances().elem( i ) );
     }
     if( message.has_doctors()  )
     {
         dispoDoctors_.resize( message.doctors().elem_size() );
         for( int i = 0; i < message.doctors().elem_size(); ++i )
-            dispoDoctors_[i] = Availability( resolver_, message.doctors().elem( i ) );
+            dispoDoctors_[i] = kernel::Availability( resolver_, message.doctors().elem( i ) );
     }
     if( message.has_chain() || message.has_priorities() || message.has_tactical_priorities() )
         controller_.Update( kernel::DictionaryUpdated( entity_, tools::translate( "Reinforcements", "Reinforcements" ) ) );

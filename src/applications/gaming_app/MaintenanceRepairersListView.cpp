@@ -38,8 +38,8 @@ MaintenanceRepairersListView::~MaintenanceRepairersListView()
 // Name: MaintenanceRepairersListView::NotifyUpdated
 // Created: SBO 2007-02-19
 // -----------------------------------------------------------------------------
-void MaintenanceRepairersListView::NotifyUpdated( const MaintenanceStates& a )
+void MaintenanceRepairersListView::NotifyUpdated( const kernel::MaintenanceStates_ABC& a )
 {
     if( ShouldUpdate( a ) )
-        DeleteTail( DisplayList( a.dispoRepairers_.begin(), a.dispoRepairers_.end() ) );
+        DeleteTail( DisplayList( a.GetDispoRepairers().begin(), a.GetDispoRepairers().end() ) );
 }

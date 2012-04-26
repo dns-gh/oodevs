@@ -20,7 +20,7 @@
 // Created: SBO 2007-02-20
 // -----------------------------------------------------------------------------
 InfoMaintenanceDialog::InfoMaintenanceDialog( QWidget* parent, kernel::Controllers& controllers, gui::ItemFactory_ABC& factory )
-    : InfoDialog< MaintenanceStates >( parent, controllers, tools::translate( "InfoMaintenanceDialog", "Maintenance system" ) )
+    : InfoDialog< kernel::MaintenanceStates_ABC >( parent, controllers, tools::translate( "InfoMaintenanceDialog", "Maintenance system" ) )
 {
     QTabWidget* tabs = new QTabWidget( RootWidget() );
     tabs->addTab( new MaintenanceConsignsWidget( tabs, controllers, factory ), tools::translate( "InfoMaintenanceDialog", "Consigns" ) );
@@ -47,5 +47,5 @@ InfoMaintenanceDialog::~InfoMaintenanceDialog()
 bool InfoMaintenanceDialog::ShouldDisplay( const kernel::Entity_ABC& element ) const
 {
     const LogMaintenanceConsigns* consigns = element.Retrieve< LogMaintenanceConsigns >();
-    return ( consigns && consigns->IsRelevant() ) || element.Retrieve< MaintenanceStates >();
+    return ( consigns && consigns->IsRelevant() ) || element.Retrieve< kernel::MaintenanceStates_ABC >();
 }

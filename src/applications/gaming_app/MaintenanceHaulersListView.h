@@ -30,7 +30,7 @@ public:
 private:
     //! @name Helpers
     //@{
-    virtual void NotifyUpdated( const MaintenanceStates& a );
+    virtual void NotifyUpdated( const kernel::MaintenanceStates_ABC& a );
     //@}
 };
 

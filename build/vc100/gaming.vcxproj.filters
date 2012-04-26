@@ -148,9 +148,6 @@
     <ClCompile Include="..\..\src\libraries\gaming\VisionConesToggler.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="..\..\src\libraries\gaming\Availability.cpp">
-      <Filter>Source Files\stuff a dispatcher</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\libraries\gaming\Borrowings.cpp">
       <Filter>Source Files\stuff a dispatcher</Filter>
     </ClCompile>
@@ -814,9 +811,6 @@
       <Filter>Source Files</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\gaming\Attr_Def.h">
-      <Filter>Source Files\stuff a dispatcher</Filter>
-    </ClInclude>
-    <ClInclude Include="..\..\src\libraries\gaming\Availability.h">
       <Filter>Source Files\stuff a dispatcher</Filter>
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\gaming\Borrowings.h">

@@ -84,13 +84,13 @@ void MaintenanceStates::DoUpdate( const sword::LogMaintenanceState& message )
     {
         dispoHaulers_.resize( message.haulers().elem_size() );
         for( int i = 0; i < message.haulers().elem_size(); ++i )
-            dispoHaulers_[i] = Availability( resolver_, message.haulers().elem( i ) );
+            dispoHaulers_[i] = kernel::Availability( resolver_, message.haulers().elem( i ) );
     }
     if( message.has_repairers() )
     {
         dispoRepairers_.resize( message.repairers().elem_size() );
         for( int i = 0; i < message.repairers().elem_size(); ++i )
-            dispoRepairers_[i] = Availability( resolver_, message.repairers().elem( i ) );
+            dispoRepairers_[i] = kernel::Availability( resolver_, message.repairers().elem( i ) );
     }
 
     if( message.has_priorities() || message.has_work_rate() || message.has_tactical_priorities() || message.has_chain() )
@@ -110,4 +110,40 @@ void MaintenanceStates::Display( Displayer_ABC& displayer ) const
                 .Display( tools::translate( "MaintenanceStates", "Working scheme" ), tools::translate( "MaintenanceStates", "R%L1" ).arg( nWorkRate_ ) )
                 .Display( tools::translate( "MaintenanceStates", "Priorities" ), priorities_ )
                 .Display( tools::translate( "MaintenanceStates", "Tactical priorities" ), tacticalPriorities_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: std::vector< const kernel::EquipmentType* > MaintenanceStates::GetPriorities
+// Created: LDC 2012-04-24
+// -----------------------------------------------------------------------------
+const std::vector< const kernel::EquipmentType* >& MaintenanceStates::GetPriorities() const
+{
+    return priorities_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: std::vector< kernel::Availability >& MaintenanceStates::GetDispoHaulers
+// Created: LDC 2012-04-24
+// -----------------------------------------------------------------------------
+const std::vector< kernel::Availability >& MaintenanceStates::GetDispoHaulers() const
+{
+    return dispoHaulers_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: std::vector< kernel::Availability >& MaintenanceStates::GetDispoRepairers
+// Created: LDC 2012-04-24
+// -----------------------------------------------------------------------------
+const std::vector< kernel::Availability >& MaintenanceStates::GetDispoRepairers() const
+{
+    return dispoRepairers_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MaintenanceStates::HasPriority
+// Created: LDC 2012-04-24
+// -----------------------------------------------------------------------------
+bool MaintenanceStates::HasPriority( const kernel::EquipmentType* type ) const
+{
+    return std::find( priorities_.begin(), priorities_.end(), type ) != priorities_.end();
 }
