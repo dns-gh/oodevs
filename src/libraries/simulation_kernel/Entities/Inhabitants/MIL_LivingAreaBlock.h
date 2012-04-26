@@ -55,6 +55,7 @@ public:
     //! @name Operations
     //@{
     const UrbanObjectWrapper& GetObject() const;
+    unsigned int GetTotalNumberOfPersons() const;
     unsigned int GetPersonsForAccomodation( const std::string& accomodation ) const;
     unsigned int GetNominalOccupation( const std::string& motivation ) const;
     unsigned int GetNominalOccupation( const std::string& motivation, const PHY_AccomodationType* accomodation ) const;
@@ -87,7 +88,6 @@ private:
     //! @name Helpers
     //@{
     float GetProportion( const std::string& motivation ) const;
-    unsigned int GetTotalNumberOfPersons() const;
     //@}
 
 private:

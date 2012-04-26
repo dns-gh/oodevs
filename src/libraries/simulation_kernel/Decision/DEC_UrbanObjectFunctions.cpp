@@ -121,15 +121,15 @@ std::vector< boost::shared_ptr< MT_Vector2D > > DEC_UrbanObjectFunctions::GetBou
 // Name: DEC_UrbanObjectFunctions::GetPathfindCost
 // Created: MGD 2010-03-18
 // -----------------------------------------------------------------------------
-float DEC_UrbanObjectFunctions::GetPathfindCost( const MIL_AgentPion& callerAgent, UrbanObjectWrapper* pUrbanObject )
+double DEC_UrbanObjectFunctions::GetPathfindCost( const MIL_AgentPion& callerAgent, UrbanObjectWrapper* pUrbanObject )
 {
     if( pUrbanObject )
     {
         if( callerAgent.GetRole< PHY_RoleInterface_Composantes >().GetMajorComponentWeight() > pUrbanObject->GetTrafficability() )
-            return -1.f;
+            return -1.;
         return pUrbanObject->GetOccupation();
     }
-    return 0.f;
+    return 0;
 }
 
 // -----------------------------------------------------------------------------

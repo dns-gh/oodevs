@@ -33,7 +33,7 @@ public:
     static boost::shared_ptr< MT_Vector2D > GetCurrentBarycenter( UrbanObjectWrapper* pUrbanObject );
     static boost::shared_ptr< MT_Vector2D > GetBarycenter( UrbanObjectWrapper* pUrbanObject );
     static std::vector< boost::shared_ptr< MT_Vector2D > > GetBoundingBox( UrbanObjectWrapper* pUrbanObject );
-    static float GetPathfindCost( const MIL_AgentPion& callerAgent, UrbanObjectWrapper* pUrbanObject );
+    static double GetPathfindCost( const MIL_AgentPion& callerAgent, UrbanObjectWrapper* pUrbanObject );
     static float GetRapForLocal( const MIL_AgentPion& callerAgent, UrbanObjectWrapper* pUrbanObject );
     static T_ConstKnowledgeAgentVector GetLivingEnemiesInBU( const MIL_AgentPion& callerAgent, UrbanObjectWrapper* pUrbanObject );
     static void DestroyUrbanBlock(  MIL_AgentPion& callerAgent, UrbanObjectWrapper* pUrbanObject, const PHY_DotationCategory* category );

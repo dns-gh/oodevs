@@ -356,17 +356,30 @@ void MIL_LivingAreaBlock::DecreasePeopleWhenMoving( const std::string& motivatio
 // -----------------------------------------------------------------------------
 unsigned int MIL_LivingAreaBlock::IncreasePeopleWhenMoving( const std::string& motivation, unsigned int number, MIL_LivingArea& livingArea )
 {
+    if( number == 0 )
+        return 0;
     unsigned int remaining = 0;
-    unsigned int newValue = persons_[ motivation ] + number;
-    unsigned int maxOccupation = GetMaxOccupation( motivation );
-    if( maxOccupation < newValue )
+    if( motivation != "" )
     {
-        remaining = newValue - maxOccupation;
-        persons_[ motivation ] = maxOccupation;
+        unsigned int maxOccupation = GetMaxOccupation( motivation );
+        if( maxOccupation == 0 )
+            return number;
+        unsigned int newValue = persons_[ motivation ] + number;
+        if( maxOccupation < newValue )
+        {
+            remaining = newValue - maxOccupation;
+            persons_[ motivation ] = maxOccupation;
+        }
+        else
+            persons_[ motivation ] = newValue;
+        urbanObject_->UpdateInhabitants( livingArea, motivation, persons_[ motivation ] );
     }
     else
-        persons_[ motivation ] = newValue;
-    urbanObject_->UpdateInhabitants( livingArea, motivation, persons_[ motivation ] );
+    {
+        remaining = number;
+        for( PHY_AccomodationType::CIT_AccomodationMap accommodation = PHY_AccomodationType::GetAccomodations().begin(); accommodation != PHY_AccomodationType::GetAccomodations().end() && remaining > 0; ++accommodation )
+            remaining = IncreasePeopleWhenMoving( accommodation->first, remaining, livingArea );
+    }
     hasChanged_ = true;
     return remaining;
 }
