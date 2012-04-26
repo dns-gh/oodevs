@@ -182,5 +182,5 @@ void ParamEquipmentList::Move( Q3ListView* from, Q3ListView* to )
 // -----------------------------------------------------------------------------
 bool ParamEquipmentList::InternalCheckValidity() const
 {
-    return list_ && list_->childCount() != 0;
+    return true;
 }
