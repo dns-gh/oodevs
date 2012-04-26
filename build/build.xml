@@ -1207,6 +1207,7 @@
         <test-data-migration old-version="4.3.0" exercise="Cabourg"/>
         <test-data-migration old-version="4.3.4embraer" exercise="Egypt"/>
         <test-data-migration old-version="4.3.0cae" exercise="Paris"/>
+        <test-data-migration old-version="5.0.0" exercise="Egypt"/>
     </target>
 
     <target name="protocol_test" description="build protocol test application" depends="library.protocol,library.tools">

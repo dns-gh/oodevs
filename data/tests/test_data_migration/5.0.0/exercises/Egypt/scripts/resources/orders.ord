@@ -1,0 +1,319 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no" ?>
+<!-- Voici des commentaires XML -->
+
+<actions>
+
+<!-- Milices -->
+  <action id="358" name="Change population ROE" target="159" time="2008-01-30T19:54:39" type="fragorder">
+    <parameter name="Order conduite changer regles engagement population" type="Enumeration" value="4"/>
+  </action>
+    <action id="358" name="Change population ROE" target="160" time="2008-01-30T19:54:39" type="fragorder">
+    <parameter name="Order conduite changer regles engagement population" type="Enumeration" value="4"/>
+  </action>
+    <action id="358" name="Change population ROE" target="161" time="2008-01-30T19:54:39" type="fragorder">
+    <parameter name="Order conduite changer regles engagement population" type="Enumeration" value="4"/>
+  </action>
+    <action id="358" name="Change population ROE" target="162" time="2008-01-30T19:54:39" type="fragorder">
+    <parameter name="Order conduite changer regles engagement population" type="Enumeration" value="4"/>
+  </action>
+    <action id="358" name="Change population ROE" target="163" time="2008-01-30T19:54:39" type="fragorder">
+    <parameter name="Order conduite changer regles engagement population" type="Enumeration" value="4"/>
+  </action>
+  
+
+    <action id="173" name="Asymetric - attack population (in an area)" target="159" time="2008-01-31T04:38:49" type="mission">
+    <parameter name="Danger direction" type="Direction" value="128"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Area" type="Polygon">
+      <location type="polygon">
+        <point coordinates="35RPQ8696412999"/>
+        <point coordinates="35RPQ8729112778"/>
+        <point coordinates="35RPQ8755612970"/>
+        <point coordinates="35RPQ8718513365"/>
+        <point coordinates="35RPQ8696412999"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="173" name="Asymetric - attack population (in an area)" target="163" time="2008-01-31T04:56:19" type="mission">
+    <parameter name="Danger direction" type="Direction" value="132"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Area" type="Polygon">
+      <location type="polygon">
+        <point coordinates="35RPQ8813212380"/>
+        <point coordinates="35RPQ8918111664"/>
+        <point coordinates="35RPQ8923912173"/>
+        <point coordinates="35RPQ8824512823"/>
+        <point coordinates="35RPQ8813212380"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="173" name="Asymetric - attack population (in an area)" target="162" time="2008-01-31T05:12:09" type="mission">
+    <parameter name="Danger direction" type="Direction" value="58"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Area" type="Polygon">
+      <location type="polygon">
+        <point coordinates="35RPQ8590010998"/>
+        <point coordinates="35RPQ8696310283"/>
+        <point coordinates="35RPQ8755211084"/>
+        <point coordinates="35RPQ8661311681"/>
+        <point coordinates="35RPQ8590010998"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="173" name="Asymetric - attack population (in an area)" target="161" time="2008-01-31T05:34:29" type="mission">
+    <parameter name="Danger direction" type="Direction" value="125"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Area" type="Polygon">
+      <location type="polygon">
+        <point coordinates="35RPQ8969511356"/>
+        <point coordinates="35RPQ9145511089"/>
+        <point coordinates="35RPQ9196211982"/>
+        <point coordinates="35RPQ8953212497"/>
+        <point coordinates="35RPQ8969511356"/>
+      </location>
+    </parameter>
+  </action>
+  <action id="173" name="Asymetric - attack population (in an area)" target="160" time="2008-01-31T05:52:19" type="mission">
+    <parameter name="Danger direction" type="Direction" value="104"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit"/>
+    <parameter name="Boundary limit 2" type="Limit"/>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Area" type="Polygon">
+      <location type="polygon">
+        <point coordinates="35RPQ8419808781"/>
+        <point coordinates="35RPQ8630508320"/>
+        <point coordinates="35RPQ8764710855"/>
+        <point coordinates="35RPQ8578311300"/>
+        <point coordinates="35RPQ8419808781"/>
+      </location>
+    </parameter>
+  </action>
+  
+<!-- Population -->
+
+    <action id="342" name="Population - move" target="37" time="2008-01-31T09:04:39" type="mission">
+    <parameter name="Objective" type="Point">
+      <location type="point">
+        <point coordinates="35RPP6914788440"/>
+      </location>
+    </parameter>
+  </action>
+  
+<!-- Red Defence -->
+
+  <action id="290" name="Red - Infantry - hold" target="118" time="2008-01-30T21:06:29" type="mission">
+    <parameter name="Danger direction" type="Direction" value="197"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="35RPQ7291805239"/>
+        <point coordinates="35RPQ7842114013"/>
+        <point coordinates="35RPQ8721124545"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="35RPQ9886920637"/>
+        <point coordinates="35RPQ8989809022"/>
+        <point coordinates="35RPQ8710300864"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Position" type="Polygon">
+      <location type="polygon">
+        <point coordinates="35RPQ8733607270"/>
+        <point coordinates="35RPQ8079809125"/>
+        <point coordinates="35RPQ8040711625"/>
+        <point coordinates="35RPQ8930410032"/>
+        <point coordinates="35RPQ8733607270"/>
+      </location>
+    </parameter>
+    <parameter name="Obstacle erection" type="Bool" value="true"/>
+  </action>
+  <action id="236" name="Red - Armor - hold" target="127" time="2008-01-31T02:19:19" type="mission">
+    <parameter name="Danger direction" type="Direction" value="198"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="35RPQ7291805239"/>
+        <point coordinates="35RPQ7842114013"/>
+        <point coordinates="35RPQ8721124545"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="35RPQ9886920637"/>
+        <point coordinates="35RPQ8989809022"/>
+        <point coordinates="35RPQ8710300864"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Deployment area" type="Polygon">
+      <location type="polygon">
+        <point coordinates="35RPQ7992606649"/>
+        <point coordinates="35RPQ8582102676"/>
+        <point coordinates="35RPQ8683904708"/>
+        <point coordinates="35RPQ8158507733"/>
+        <point coordinates="35RPQ7992606649"/>
+      </location>
+    </parameter>
+  </action>
+
+
+
+<!-- Blue offensive -->
+
+  <action id="226" name="Blue - Armor - scout" target="172" time="2008-01-31T03:04:09" type="mission">
+    <parameter name="Danger direction" type="Direction" value="32"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="35RPQ8000914199"/>
+        <point coordinates="35RPQ7887113720"/>
+        <point coordinates="35RPP6195586621"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="35RPP8069481729"/>
+        <point coordinates="35RPP8031892283"/>
+        <point coordinates="35RPP8078394975"/>
+        <point coordinates="35RPP8301095532"/>
+        <point coordinates="35RPP8718499209"/>
+        <point coordinates="35RPQ8939300679"/>
+        <point coordinates="35RPQ8782004873"/>
+        <point coordinates="35RPQ8778806528"/>
+        <point coordinates="35RPQ9222111695"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+  </action>
+
+  <action id="221" name="Blue - Armor - attack" target="146" time="2008-01-30T23:24:59" type="mission">
+    <parameter name="Danger direction" type="Direction" value="44"/>
+    <parameter name="Phase lines" type="PhaseLineList">
+      <parameter name="Phase line 1" type="lima" value="LD">
+        <parameter name="Location" type="location">
+          <location type="line">
+            <point coordinates="35RPQ6950304847"/>
+            <point coordinates="35RPQ8068503037"/>
+            <point coordinates="35RPP9061397052"/>
+          </location>
+        </parameter>
+        <parameter name="Schedule" type="datetime" value="20080130T215839"/>
+      </parameter>
+    </parameter>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="35RPQ8000914199"/>
+        <point coordinates="35RPQ7887113720"/>
+        <point coordinates="35RPP6195586621"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="35RPP8069481729"/>
+        <point coordinates="35RPP8031892283"/>
+        <point coordinates="35RPP8078394975"/>
+        <point coordinates="35RPP8301095532"/>
+        <point coordinates="35RPP8718499209"/>
+        <point coordinates="35RPQ8939300679"/>
+        <point coordinates="35RPQ8782004873"/>
+        <point coordinates="35RPQ8778806528"/>
+        <point coordinates="35RPQ9222111695"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+  </action>
+
+  <action id="221" name="Blue - Armor - attack" target="62" time="2008-01-30T23:24:59" type="mission">
+    <parameter name="Danger direction" type="Direction" value="44"/>
+    <parameter name="Phase lines" type="PhaseLineList">
+      <parameter name="Phase line 1" type="lima" value="LD">
+        <parameter name="Location" type="location">
+          <location type="line">
+            <point coordinates="35RPQ6950304847"/>
+            <point coordinates="35RPQ8068503037"/>
+            <point coordinates="35RPP9061397052"/>
+          </location>
+        </parameter>
+        <parameter name="Schedule" type="datetime" value="20080130T215839"/>
+      </parameter>
+    </parameter>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="35RPQ8000914199"/>
+        <point coordinates="35RPQ7887113720"/>
+        <point coordinates="35RPP6195586621"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="35RPP8069481729"/>
+        <point coordinates="35RPP8031892283"/>
+        <point coordinates="35RPP8078394975"/>
+        <point coordinates="35RPP8301095532"/>
+        <point coordinates="35RPP8718499209"/>
+        <point coordinates="35RPQ8939300679"/>
+        <point coordinates="35RPQ8782004873"/>
+        <point coordinates="35RPQ8778806528"/>
+        <point coordinates="35RPQ9222111695"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+  </action>
+  
+  <action id="223" name="Blue - Armor - control" target="77" time="2008-01-31T09:19:49" type="mission">
+    <parameter name="Danger direction" type="Direction" value="41"/>
+    <parameter name="Phase lines" type="PhaseLineList"/>
+    <parameter name="Boundary limit 1" type="Limit">
+      <location type="line">
+        <point coordinates="35RPQ8000914199"/>
+        <point coordinates="35RPQ7887113720"/>
+        <point coordinates="35RPP6195586621"/>
+      </location>
+    </parameter>
+    <parameter name="Boundary limit 2" type="Limit">
+      <location type="line">
+        <point coordinates="35RPP8069481729"/>
+        <point coordinates="35RPP8031892283"/>
+        <point coordinates="35RPP8078394975"/>
+        <point coordinates="35RPP8301095532"/>
+        <point coordinates="35RPP8718499209"/>
+        <point coordinates="35RPQ8939300679"/>
+        <point coordinates="35RPQ8782004873"/>
+        <point coordinates="35RPQ8778806528"/>
+        <point coordinates="35RPQ9222111695"/>
+      </location>
+    </parameter>
+    <parameter name="Intelligences" type="IntelligenceList"/>
+    <parameter name="Area to control" type="Polygon">
+      <location type="polygon">
+        <point coordinates="35RPP7113398230"/>
+        <point coordinates="35RPP7929193791"/>
+        <point coordinates="35RPQ8626404838"/>
+        <point coordinates="35RPQ7728308379"/>
+        <point coordinates="35RPP7113398230"/>
+      </location>
+    </parameter>
+  </action>
+
+<!-- Blue refugee camp -->
+
+
+
+
+</actions>
