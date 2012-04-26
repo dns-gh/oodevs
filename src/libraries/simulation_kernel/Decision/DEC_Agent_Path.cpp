@@ -634,15 +634,12 @@ bool DEC_Agent_Path::IsDestinationTrafficable() const
 void DEC_Agent_Path::NotifyPointReached( const CIT_PathPointList& itCurrentPathPoint )
 {
     const T_PointVector& computedWaypoints = GetComputedWaypoints();
-    for( T_PointVector::const_iterator it = computedWaypoints.begin(); it != computedWaypoints.end(); ++it )
+    if( nextWaypoints_.size() > 1 && computedWaypoints.size() > 1 &&
+        static_cast< float >( (*itCurrentPathPoint)->GetPos().rX_ ) == static_cast< float >( computedWaypoints.front().rX_ ) &&
+        static_cast< float >( (*itCurrentPathPoint)->GetPos().rY_ ) == static_cast< float >( computedWaypoints.front().rY_ ) )
     {
-        if( static_cast< float >( (*itCurrentPathPoint)->GetPos().rX_ ) == static_cast< float >( it->rX_ ) &&
-            static_cast< float >( (*itCurrentPathPoint)->GetPos().rY_ ) == static_cast< float >( it->rY_ ) &&
-            nextWaypoints_.size() > 1 )
-        {
-            nextWaypoints_.erase( nextWaypoints_.begin() );
-            break;
-        }
+        nextWaypoints_.erase( nextWaypoints_.begin() );
+        RemoveComputedWaypoint();
     }
     DEC_PathResult::NotifyPointReached( itCurrentPathPoint );
 }

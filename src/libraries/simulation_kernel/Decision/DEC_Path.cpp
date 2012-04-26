@@ -89,6 +89,7 @@ void DEC_Path::DoExecute( TerrainPathfinder& pathfind )
         throw std::runtime_error( "List of path sections is empty" );
     const DEC_PathResult::T_PathPointList& pathPoints = dynamic_cast< const DEC_PathResult* >( &pathSections_.front()->GetPath() )->GetResult( false );
 
+    computedWaypoints_.clear();
     nState_ = eComputing;
     for( T_PathSectionVector::iterator itPathSection = pathSections_.begin(); itPathSection != pathSections_.end(); ++itPathSection )
     {
@@ -178,4 +179,14 @@ std::string DEC_Path::GetPathAsString() const
     for( CIT_PathSectionVector itSection = pathSections_.begin(); itSection != pathSections_.end(); ++itSection )
         strTmp << " -> " << ( *itSection )->GetPosEnd();
     return strTmp.str();
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Path::RemoveComputedWaypoint
+// Created: CMA 2012-04-26
+// -----------------------------------------------------------------------------
+void DEC_Path::RemoveComputedWaypoint()
+{
+    if( !computedWaypoints_.empty() )
+        computedWaypoints_.erase( computedWaypoints_.begin() );
 }

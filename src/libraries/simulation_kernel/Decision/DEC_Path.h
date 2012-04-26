@@ -64,6 +64,7 @@ protected:
     virtual void NotifySectionEnded() = 0;
 
     void DoExecute( TerrainPathfinder& pathfind );
+    void RemoveComputedWaypoint();
     //@}
 
 private:
