@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<reports model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.0.0/physical/Reports.xsd">
+<reports model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.1.0/physical/Reports.xsd">
   <report category="information" id="0" message="ras"/>
   <report category="operational" id="1" message="En poste face à obstacle : %1">
     <parameter type="ObjectKnowledge"/>
@@ -659,4 +659,4 @@
   </report>
   <report category="operational" id="463" message="Impossible d'animer l'objet"/>
 </reports>
-<!-- signature="1605394888" -->
+<!-- signature="0850110815" -->

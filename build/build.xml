@@ -16,7 +16,7 @@
     <property name="version.project" value="${version.project.major}"/>
     <property name="version.company" value="MASA Group"/>
     <property name="version.product" value="Sword"/>
-    <property name="version.major" value="5.0.0"/>
+    <property name="version.major" value="5.1.0"/>
     <property name="version.minor" value="${version.major}.${svn.revision}"/>
     <property name="version.version" value="0.0.0.${svn.revision}"/><!-- required for version extension -->
     <property name="masalife.version" value="2011-1.1.x/sword"/>
@@ -1204,13 +1204,9 @@
         <test-data-migration old-version="4.2.0" exercise="Cabourg"/>
         <test-data-migration old-version="4.2.1" exercise="Cabourg"/>
         <test-data-migration old-version="4.2.2" exercise="Cabourg"/>
-        <!--
-        <test-data-migration old-version="4.2.0" exercise="BMDrosoville"/>
-        <test-data-migration old-version="4.2.1" exercise="BMDrosoville"/>
-        <test-data-migration old-version="4.2.2" exercise="BMDrosoville"/>
         <test-data-migration old-version="4.3.0" exercise="Cabourg"/>
-        <test-data-migration old-version="4.3.0" exercise="BMDrosoville"/>
-        -->
+        <test-data-migration old-version="4.3.4embraer" exercise="Egypt"/>
+        <test-data-migration old-version="4.3.0cae" exercise="Paris"/>
     </target>
 
     <target name="protocol_test" description="build protocol test application" depends="library.protocol,library.tools">

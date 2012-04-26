@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<resources model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.0.0/physical/Resources.xsd">
+<resources model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.1.0/physical/Resources.xsd">
   <resource category="munition" codeEMAT6="" codeEMAT8="1305 452 0200" codeLFRIL="" codeNNO="1305 14 399 9367" id="1" id-nature="3" logistic-supply-class="Unite non tranche D" name="CART 12.7 SBP" nature="Solide" network-usable="false" package-mass="0.035" package-size="200" package-volume="0.025" type="Mitraille">
     <attritions>
       <attrition destruction="0" protection="Composite" repairable-with-evacuation="0" repairable-without-evacuation="0.02"/>
@@ -2758,4 +2758,4 @@
   <resource category="funeraire" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="145" id-nature="3" logistic-supply-class="Unite vivre" name="Sac de transport de dépouille mortuaire" nature="Solide" network-usable="false" package-mass="0.001" package-size="1" package-volume="1"/>
   <resource category="funeraire" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="146" id-nature="3" logistic-supply-class="Unite vivre" name="Conteneur de transport post mortem" nature="Solide" network-usable="false" package-mass="0.1" package-size="1" package-volume="2"/>
 </resources>
-<!-- signature="0197398277" -->
+<!-- signature="4109237049" -->

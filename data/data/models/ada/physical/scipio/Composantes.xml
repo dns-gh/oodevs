@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no" ?>
-<equipments model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.0.0/physical/Equipments.xsd">
+<equipments model-version="4.8.2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="schemas/5.1.0/physical/Equipments.xsd">
   <equipment codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" comment="" id="1" max-slope="1" name="Bombardier" protection="Aeronef" size="Gros" weight="1000">
     <speeds max="700">
       <speed terrain="unknown" value="600"/>
@@ -35648,4 +35648,4 @@
     <equipment-category>VNBLIN</equipment-category>
   </equipment>
 </equipments>
-<!-- signature="3241070267" -->
+<!-- signature="1224931076" -->

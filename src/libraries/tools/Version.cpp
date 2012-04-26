@@ -12,7 +12,7 @@
 #include <boost/preprocessor/stringize.hpp>
 
 #ifndef APP_MAJOR_VERSION
-#   define APP_MAJOR_VERSION 5.0.0
+#   define APP_MAJOR_VERSION 5.1.0
 #endif
 
 #ifndef APP_PROJECT_VERSION

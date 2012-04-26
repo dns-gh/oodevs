@@ -156,7 +156,12 @@
     <upgrade schema="schemas/4.3.3/physical/DrawingTemplates.xsd" apply="schemas/4.3.4/xsl/drawingTemplates_4.3.3-4.3.4.xsl"/>
   </migration>
   <migration from="4.3.4" to="5.0.0">
-    <upgrade schema="schemas/4.3.4/physical/Resources.xsd" apply="schemas/5.0.0/xsl/resources_4.3.4-5.0.0.xsl"/>
-    <upgrade schema="schemas/4.3.4/physical/Pathfind.xsd" apply="schemas/5.0.0/xsl/pathfind_4.3.4-5.0.0.xsl"/>
+    <upgrade schema="schemas/4.3.4/physical/Objects.xsd" apply="schemas/5.0.0/xsl/objects_4.3.4-5.0.xsl"/>
+    <upgrade schema="schemas/4.3.4/physical/HumanFactors.xsd" apply="schemas/5.0.0/xsl/human-factors_4.3.4-5.0.xsl"/>
+    <upgrade schema="schemas/4.3.4/physical/Pathfind.xsd" apply="schemas/5.0.0/xsl/Pathfind_4.3.4-5.0.xsl"/>
+  </migration>
+  <migration from="5.0.0" to="5.1.0">
+    <upgrade schema="schemas/5.0.0/physical/Resources.xsd" apply="schemas/5.1.0/xsl/resources_5.0.0-5.1.0.xsl"/>
+    <upgrade schema="schemas/5.0.0/physical/Pathfind.xsd" apply="schemas/5.1.0/xsl/pathfind_5.0.0-5.1.0.xsl"/>
   </migration>
 </migrations>

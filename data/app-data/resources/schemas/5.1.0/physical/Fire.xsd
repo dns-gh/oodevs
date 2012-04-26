@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified" attributeFormDefault="unqualified" version="4.8.2">
+	<xs:include schemaLocation="tools.xsd"/>
+	<xs:simpleType name="T_ExtinguisherAgentType">
+		<xs:annotation>
+			<xs:documentation>Types d'agents anti-feu</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:string">
+			<xs:enumeration value="EauEnMasse"/>
+			<xs:enumeration value="EauEnPulvrisation"/>
+			<xs:enumeration value="Mousses"/>
+			<xs:enumeration value="Poudres"/>
+			<xs:enumeration value="CO2"/>
+			<xs:enumeration value="Solide"/>
+			<xs:enumeration value="HydrocarburesHalogenes"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:element name="fire-classes">
+		<xs:complexType>
+			<xs:all>
+				<xs:element name="fire-surface">
+					<xs:complexType>
+						<xs:attribute name="length" type="xs:nonNegativeInteger" use="required"/>
+						<xs:attribute name="width" type="xs:nonNegativeInteger" use="required"/>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="class" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="extinguisher-agents">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="agent" minOccurs="0" maxOccurs="unbounded">
+											<xs:complexType>
+												<xs:sequence/>
+												<xs:attribute name="effect" type="xs:nonNegativeInteger" use="required"/>
+												<xs:attribute name="nature" type="T_ExtinguisherAgentType" use="required"/>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+						<xs:attribute name="id" type="xs:nonNegativeInteger" use="required"/>
+						<xs:attribute name="name" type="xs:string" use="required"/>
+						<xs:attribute name="defaultheat" type="T_NonNegativeDouble" use="required"/>
+						<xs:attribute name="heatmax" type="T_NonNegativeDouble" use="required"/>
+						<xs:attribute name="tempthreshold" type="T_NonNegativeDouble" use="required"/>
+						<xs:attribute name="increaserate" type="T_NonNegativeDouble" use="required"/>
+						<xs:attribute name="decreaserate" type="T_NonNegativeDouble" use="required"/>
+						<xs:attribute name="propagation-threshold" type="T_NonNegativeDouble" use="required"/>
+					</xs:complexType>
+				</xs:element>
+			</xs:all>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

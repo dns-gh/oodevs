@@ -1,0 +1,36 @@
+-- The Paris scenario -- 
+
+Scenario:
+Issue orders to the blue forces to seize "La Ferté Gaucher" and "Redais" (cf.Paris demo.png) before the militia take them. The militia intend to seize and hold the villages using the presence of a local army (local army and militia support each other). The local army intends to deny the access to the villages by holding positions that will allow militia to move toward these key positions.
+The blue forces need to gain contact with the local army in order to seize and control the two villages before the militia take them.
+
+Forces involved:
+- Peacekeeping forces 
+	--> Engineer counter mobility company: can perform works in order to slow down or stop the enemy progression
+	--> Firing Artillery Battery: can deliver indirect fire on key positions to support friendly forces. The firing platoon needs to be deployed on firing position (mission "Operate")
+	--> Teeth arms units: one light armored squadron and two heavy tanks squadrons. These are the forces that can gain the contact directly with the enemy.
+- Local army: two small teeth arms battalion. 
+- Local forces: a few militia groups
+
+Start the scenario:
+- Launch the sword application (Frontend) and select the "Paris" exercise.
+- Open the "action" and "action timeline" windows (left click on "Windows" in the sword toolbar), then select the "action" and "action timeline". 
+  
+
+Play the scenario:
+The red forces orders are recorded.
+All the recorded orders are available in the folder "[sword installation directory]\exercises\Paris\orders\".
+- Open the red orders (click on the folder icon in the action window). Select "Enemies orders.ord". The orders will appear in a list the "Actions" window. The "Actions timeline" display the same orders with time references. The orders will be automatically issued at the defined time references once the "Play" button is pushed.
+- Launch the orders sequence by left clicking on the "Play" icon. 
+
+Time is now critical. The blue orders need to be issued before the militias groups begin their movement toward the villages.
+The orders can be issued at the company level or platoon level if automata are disengaged (depending on user preference). 
+The missions are accessible by right clicking on the involved units. This can be done on units representations in the Orbat window or directly on the units displayed on the map.
+
+An example of friend forces missions that can be issued are recorder in a file named:
+"Enemies vs friends orders.ord"
+ 
+
+Scenario evolution and adaptation:
+All the present forces in the scenario can receive orders. The user can issue new orders to the blue and red forces, change the time references of the recorded orders by moving them along the action timeline. It is also possible to give and record new orders (click on "record" button in the "action" window and issue orders to record, save them by clicking on the "save" button).
+User can also create new formations and new units by editing the scenario.
