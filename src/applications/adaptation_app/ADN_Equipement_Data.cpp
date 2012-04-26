@@ -440,9 +440,10 @@ void ADN_Equipement_Data::IndirectAmmoInfos::Initialize()
     if( !strObjectType_.empty() )
     {
         ADN_Objects_Data_ObjectInfos* pObject = ADN_Workspace::GetWorkspace().GetObjects().GetData().FindObject( strObjectType_ );
-        if( !pObject )
-            throw ADN_DataException( tools::translate( "Equipment_Data", "Invalid data" ).ascii(), tools::translate( "Equipment_Data", "Object type - Invalid object '%1'" ).arg( strObjectType_.c_str() ).ascii() );
-        objectType_ = pObject;
+        if( pObject )
+            objectType_ = pObject;
+        else
+            QMessageBox::warning( QApplication::activeWindow(), tools::translate( "Equipment_Data", "Invalid data" ), tools::translate( "Equipment_Data", "Object type - Invalid object '%1'" ).arg( strObjectType_.c_str() ), QMessageBox::Ok, Qt::NoButton );
     }
     else if( !ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos().empty() )
     {
