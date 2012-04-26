@@ -12,8 +12,6 @@
 
 #include "DEC_Model_ABC.h"
 
-class DEC_DIAWorkspace ;
-
 namespace xml
 {
     class xistream;
