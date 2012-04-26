@@ -13,6 +13,7 @@
 #include "tools/SelectionObserver_ABC.h"
 #include "tools/ElementObserver_ABC.h"
 #include "clients_kernel/LivingAreaVisitor_ABC.h"
+#include "clients_kernel/SafePointer.h"
 
 namespace kernel
 {
@@ -64,7 +65,7 @@ private:
     //@{
     kernel::Controllers& controllers_;
     Model& model_;
-    const kernel::Entity_ABC* current_;
+    kernel::SafePointer< kernel::Entity_ABC > current_;
     QStringList horizontalHeaders_;
     QStandardItemModel* dataModel_;
     QSortFilterProxyModel* proxyModel_;

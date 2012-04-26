@@ -27,7 +27,7 @@ InhabitantPanel::InhabitantPanel( QMainWindow* mainWindow, kernel::Controllers& 
     : QDockWidget( "Inhabitant", mainWindow )
     , controllers_( controllers )
     , model_      ( model )
-    , current_    ( 0 )
+    , current_    ( controllers )
 {
     setObjectName( "ProfilesPanel" );
     QWidget* main = new QWidget( this );
