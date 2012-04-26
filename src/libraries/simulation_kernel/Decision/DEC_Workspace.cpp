@@ -31,6 +31,7 @@
 #include "Tools/MIL_AffinitiesMap.h"
 #include "MT_Tools/MT_ScipioException.h"
 #include "MT_Tools/MT_FormatString.h"
+#include "tools/Version.h"
 #include <xeumeuleu/xml.hpp>
 #include <boost/filesystem/operations.hpp>
 #include <boost/algorithm/string.hpp>
@@ -164,7 +165,14 @@ void DEC_Workspace::InitializeDIA( MIL_Config& config )
 //-----------------------------------------------------------------------------
 void DEC_Workspace::LoadDIA( MIL_Config& config, xml::xistream& xis )
 {
-    xis >> xml::start( "decisional" );
+    std::string decisionalVersion;
+    xis >> xml::start( "decisional" )
+        >> xml::attribute( "model-version", decisionalVersion );
+
+    const std::string runtimeVersion = tools::AppProjectVersion();
+    if( decisionalVersion != tools::AppProjectVersion() )
+        throw std::runtime_error( "Decisional model version (" + decisionalVersion + ") does not match runtime version (" + runtimeVersion + ")" );
+
     std::map< std::string, std::string > strSourcePaths;
     xis >> xml::start( "RepertoiresSources" )
             >> xml::list( "RepertoireSources" , *this, &DEC_Workspace::RegisterSourcePath, config, strSourcePaths )
