@@ -109,9 +109,12 @@ private:
     typedef T_BlockCompositions::iterator                             IT_BlockCompositions;
     typedef T_BlockCompositions::const_iterator                      CIT_BlockCompositions;
 
-    typedef std::map< MIL_LivingAreaBlock*, float > T_BlockRatio;
-    typedef T_BlockRatio::iterator                 IT_BlockRatio;
-    typedef T_BlockRatio::const_iterator          CIT_BlockRatio;
+    typedef std::pair< float, float > T_Ratios;
+    // 1er float -> ratio de gens à bouger vers la motivation courante, 2nd float -> ratio pour les autres motivations
+
+    typedef std::map< MIL_LivingAreaBlock*, T_Ratios > T_FinalBlockRatios;
+    typedef T_FinalBlockRatios::iterator              IT_FinalBlockRatios;
+    typedef T_FinalBlockRatios::const_iterator       CIT_FinalBlockRatios;
     //@}
 
 private:
@@ -121,6 +124,9 @@ private:
     T_Blocks GetBlockUsage( const std::string& motivation ) const;
     const T_Blocks GetNonConfinedBlocks() const;
     void Clean();
+    unsigned int ComputeStartingBlocks();
+    unsigned int ComputeEvacuatedPeople();
+    void ForceEvacuation( const std::string& motivation );
     //@}
 
 private:
@@ -132,7 +138,7 @@ private:
     T_Blocks blocks_;
     T_BlockCompositions startingBlocks_;
     T_BlockCompositions currentStartingState_;
-    T_BlockRatio finalBlocks_;
+    T_FinalBlockRatios finalBlocks_;
     //@}
 };
 

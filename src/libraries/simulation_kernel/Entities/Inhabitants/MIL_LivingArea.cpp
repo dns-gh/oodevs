@@ -260,20 +260,7 @@ void MIL_LivingArea::StartMotivation( const std::string& motivation )
 {
     Clean();
     // calcul du nombre de gens à déplacer et de la liste de départ
-    unsigned int movingNumber = 0;
-    BOOST_FOREACH( MIL_LivingAreaBlock* block, blocks_ )
-    {
-        if( !block->CanMove() )
-            continue;
-        for( PHY_AccomodationType::CIT_AccomodationMap it = PHY_AccomodationType::GetAccomodations().begin(); it != PHY_AccomodationType::GetAccomodations().end(); ++it )
-        {
-            unsigned int nbrForAccommodation = block->GetPersonsForAccomodation( it->first );
-            if( nbrForAccommodation == 0 )
-                continue;
-            startingBlocks_[ block ][ it->first ] = nbrForAccommodation;
-            movingNumber += nbrForAccommodation;
-        }
-    }
+    unsigned int movingNumber = ComputeStartingBlocks();
     if( movingNumber == 0 )
         return;
 
@@ -301,33 +288,43 @@ void MIL_LivingArea::StartMotivation( const std::string& motivation )
     if( movingNumber <= nominalRemaining )
     {
         for( T_FreeSpaces::const_iterator it = blocksFreeSpaces.begin(); it != blocksFreeSpaces.end(); ++it )
-            finalBlocks_[ it->first ] = static_cast< float >( it->second.first ) / nominalRemaining;
+            finalBlocks_[ it->first ].first = static_cast< float >( it->second.first ) / nominalRemaining;
     }
     else if( movingNumber <= maximalRemaining )
     {
         for( T_FreeSpaces::const_iterator it = blocksFreeSpaces.begin(); it != blocksFreeSpaces.end(); ++it )
-            finalBlocks_[ it->first ] = static_cast< float >( it->second.second ) / maximalRemaining;
+            finalBlocks_[ it->first ].first = static_cast< float >( it->second.second ) / maximalRemaining;
     }
     else
     {
-        float ratio = static_cast< float >( maximalRemaining ) / movingNumber;
-        movingNumber = maximalRemaining;
-        for( IT_BlockCompositions it = startingBlocks_.begin(); it != startingBlocks_.end(); ++it )
-            for( IT_PersonsPerAccomodation itMotivation = it->second.begin(); itMotivation != it->second.end(); ++itMotivation )
-            {
-                unsigned int person = static_cast< unsigned int >( ratio * itMotivation->second + 1.f );
-                person = std::min( it->first->GetMaxOccupation( itMotivation->first ), std::min( movingNumber, person ) );
-                itMotivation->second = person;
-                movingNumber -= person;
-            }
-        assert( movingNumber == 0 );
-        for( T_FreeSpaces::const_iterator it = blocksFreeSpaces.begin(); it != blocksFreeSpaces.end(); ++it )
-            finalBlocks_[ it->first ] = static_cast< float >( it->second.second ) / maximalRemaining;
+        if( maximalRemaining == 0 )
+        {
+            for( IT_BlockCompositions it = startingBlocks_.begin(); it != startingBlocks_.end(); ++it )
+                for( IT_PersonsPerAccomodation itMotivation = it->second.begin(); itMotivation != it->second.end(); ++itMotivation )
+                    itMotivation->second = 0;
+        }
+        else
+        {
+            float ratio = static_cast< float >( maximalRemaining ) / movingNumber;
+            movingNumber = maximalRemaining;
+            for( IT_BlockCompositions it = startingBlocks_.begin(); it != startingBlocks_.end(); ++it )
+                for( IT_PersonsPerAccomodation itMotivation = it->second.begin(); itMotivation != it->second.end(); ++itMotivation )
+                {
+                    unsigned int person = static_cast< unsigned int >( ratio * itMotivation->second + 1.f );
+                    person = std::min( it->first->GetMaxOccupation( itMotivation->first ), std::min( movingNumber, person ) );
+                    itMotivation->second = person;
+                    movingNumber -= person;
+                }
+            assert( movingNumber == 0 );
+            for( T_FreeSpaces::const_iterator it = blocksFreeSpaces.begin(); it != blocksFreeSpaces.end(); ++it )
+                finalBlocks_[ it->first ].first = static_cast< float >( it->second.second ) / maximalRemaining;
+        }
+
+        ForceEvacuation( motivation );
+
     }
-    if( !startingBlocks_.empty() || !finalBlocks_.empty() )
-    {
+    if( !finalBlocks_.empty() )
         currentStartingState_ = startingBlocks_;
-    }
 }
 
 // -----------------------------------------------------------------------------
@@ -336,7 +333,7 @@ void MIL_LivingArea::StartMotivation( const std::string& motivation )
 // -----------------------------------------------------------------------------
 void MIL_LivingArea::MovePeople( const std::string& motivation, int occurence )
 {
-    if( startingBlocks_.empty() && finalBlocks_.empty() )
+    if( finalBlocks_.empty() )
         return;
     unsigned int totalLeaving = 0;
     for( CIT_BlockCompositions it = startingBlocks_.begin(); it != startingBlocks_.end(); ++it )
@@ -348,12 +345,14 @@ void MIL_LivingArea::MovePeople( const std::string& motivation, int occurence )
             currentStartingState_[ it->first ][ accomodation->first ] -= leaving;
         }
     unsigned int tmp = totalLeaving;
-    for( CIT_BlockRatio it = finalBlocks_.begin(); it != finalBlocks_.end() && tmp > 0; ++it )
+    for( CIT_FinalBlockRatios it = finalBlocks_.begin(); it != finalBlocks_.end() && tmp > 0; ++it )
     {
-        unsigned int arriving = static_cast< unsigned int >( it->second * totalLeaving + 0.5f );
-        arriving = std::min( tmp, arriving );
+        unsigned int arriving = std::min( tmp, static_cast< unsigned int >( it->second.first * totalLeaving + 0.5f ) );
         tmp -= arriving;
         it->first->IncreasePeopleWhenMoving( motivation, arriving, *this );
+        arriving = std::min( tmp, static_cast< unsigned int >( it->second.second * totalLeaving + 0.5f ) );
+        tmp -= arriving;
+        it->first->IncreasePeopleWhenMoving( "", arriving, *this );
     }
 }
 
@@ -363,7 +362,7 @@ void MIL_LivingArea::MovePeople( const std::string& motivation, int occurence )
 // -----------------------------------------------------------------------------
 void MIL_LivingArea::FinishMoving( const std::string& motivation )
 {
-    if( startingBlocks_.empty() && finalBlocks_.empty() )
+    if( finalBlocks_.empty() )
         return;
     unsigned int totalLeaving = 0;
     for( CIT_BlockCompositions it = startingBlocks_.begin(); it != startingBlocks_.end(); ++it )
@@ -375,15 +374,20 @@ void MIL_LivingArea::FinishMoving( const std::string& motivation )
         }
     unsigned int tmp = totalLeaving;
     unsigned int remaining = 0;
-    for( CIT_BlockRatio it = finalBlocks_.begin(); it != finalBlocks_.end() && tmp > 0; ++it )
+    for( CIT_FinalBlockRatios it = finalBlocks_.begin(); it != finalBlocks_.end() && tmp > 0; ++it )
     {
-        unsigned int arriving = static_cast< unsigned int >( it->second * totalLeaving + 0.5f );
-        arriving = std::min( tmp, arriving );
+        unsigned int arriving = std::min( tmp, static_cast< unsigned int >( it->second.first * totalLeaving + 0.5f ) );
         tmp -= arriving;
         remaining += it->first->IncreasePeopleWhenMoving( motivation, arriving, *this );
+        arriving = std::min( tmp, static_cast< unsigned int >( it->second.second * totalLeaving + 0.5f ) );
+        tmp -= arriving;
+        remaining += it->first->IncreasePeopleWhenMoving( "", arriving, *this );
     }
-    for( CIT_BlockRatio it = finalBlocks_.begin(); it != finalBlocks_.end() && remaining > 0; ++it )
+    for( CIT_FinalBlockRatios it = finalBlocks_.begin(); it != finalBlocks_.end() && remaining > 0; ++it )
+    {
         remaining = it->first->IncreasePeopleWhenMoving( motivation, remaining, *this );
+        remaining = it->first->IncreasePeopleWhenMoving( "", remaining, *this );
+    }
     Clean();
 }
 
@@ -566,18 +570,20 @@ bool MIL_LivingArea::IsEvacuated( const TER_Localisation& localisation ) const
 T_PointVector MIL_LivingArea::ComputeMovingArea() const
 {
     // $$$$ _RC_ JSR 2011-03-24: A vérifier, et à appeler du schedule
+    T_PointVector hull;
+    if( startingBlocks_.empty() || finalBlocks_.empty() )
+        return hull;
     T_PointVector vertices;
     for( CIT_BlockCompositions it = startingBlocks_.begin(); it != startingBlocks_.end(); ++it )
     {
         const T_PointVector& objectVertices = it->first->GetObject().GetLocalisation().GetPoints();
         vertices.insert( vertices.end(), objectVertices.begin(), objectVertices.end() );
     }
-    for( CIT_BlockRatio it = finalBlocks_.begin(); it != finalBlocks_.end(); ++it )
+    for( CIT_FinalBlockRatios it = finalBlocks_.begin(); it != finalBlocks_.end(); ++it )
     {
         const T_PointVector& objectVertices = it->first->GetObject().GetLocalisation().GetPoints();
         vertices.insert( vertices.end(), objectVertices.begin(), objectVertices.end() );
     }
-    T_PointVector hull;
     MIL_Geometry::ComputeHull( hull, vertices );
     return hull;
 }
@@ -593,4 +599,87 @@ const MIL_LivingArea::T_Blocks MIL_LivingArea::GetNonConfinedBlocks() const
         if( block->CanMove() )
             results.push_back( block );
     return results;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LivingArea::ComputeStartingBlocks
+// Created: JSR 2012-04-26
+// -----------------------------------------------------------------------------
+unsigned int MIL_LivingArea::ComputeStartingBlocks()
+{
+    unsigned int movingNumber = 0;
+    BOOST_FOREACH( MIL_LivingAreaBlock* block, blocks_ )
+    {
+        if( !block->CanMove() )
+            continue;
+        for( PHY_AccomodationType::CIT_AccomodationMap it = PHY_AccomodationType::GetAccomodations().begin(); it != PHY_AccomodationType::GetAccomodations().end(); ++it )
+        {
+            unsigned int nbrForAccommodation = block->GetPersonsForAccomodation( it->first );
+            if( nbrForAccommodation == 0 )
+                continue;
+            startingBlocks_[ block ][ it->first ] = nbrForAccommodation;
+            movingNumber += nbrForAccommodation;
+        }
+    }
+    return movingNumber;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LivingArea::ComputeEvacuatedPeople
+// Created: JSR 2012-04-26
+// -----------------------------------------------------------------------------
+unsigned int MIL_LivingArea::ComputeEvacuatedPeople()
+{
+    int evacuated = 0;
+    for( IT_BlockCompositions it = startingBlocks_.begin(); it != startingBlocks_.end(); ++it )
+    {
+        if( !it->first->IsEvacuated() || it->first->GetTotalNumberOfPersons() == 0 )
+            continue;
+        for( IT_PersonsPerAccomodation itMotivation = it->second.begin(); itMotivation != it->second.end(); ++itMotivation )
+        {
+            int oldToMove = itMotivation->second;
+            itMotivation->second = it->first->GetPersonsForAccomodation( itMotivation->first );
+            evacuated += itMotivation->second - oldToMove;
+        }
+    }
+    return evacuated;
+}
+
+
+// -----------------------------------------------------------------------------
+// Name: MIL_LivingArea::ForceEvacuation
+// Created: JSR 2012-04-26
+// -----------------------------------------------------------------------------
+void MIL_LivingArea::ForceEvacuation( const std::string& motivation )
+{
+    if( ComputeEvacuatedPeople() == 0 )
+        return;
+
+    std::map< MIL_LivingAreaBlock*, unsigned int > freeSpaces;
+    int forcedMaximalRemaining = 0;
+    BOOST_FOREACH( MIL_LivingAreaBlock* block, blocks_ )
+    {
+        if( !block->CanMove() || block->IsEvacuated() )
+            continue;
+        unsigned int people = 0;
+        unsigned int maximalOccupation = 0;
+        for( PHY_AccomodationType::CIT_AccomodationMap it = PHY_AccomodationType::GetAccomodations().begin(); it != PHY_AccomodationType::GetAccomodations().end(); ++it )
+        {
+            if( it->first != motivation )
+            {
+                people += block->GetPersonsForAccomodation( it->first );
+                maximalOccupation += block->GetMaxOccupation( it->first );
+            }
+        }
+
+        if( maximalOccupation != 0 )
+        {
+            unsigned int blockMaximalRemaining = maximalOccupation > people ? maximalOccupation - people : 0;
+            freeSpaces[ block ] = blockMaximalRemaining;
+            forcedMaximalRemaining += blockMaximalRemaining;
+        }
+    }
+
+    for( std::map< MIL_LivingAreaBlock*, unsigned int >::const_iterator it = freeSpaces.begin(); it != freeSpaces.end(); ++it )
+        finalBlocks_[ it->first ].second = static_cast< float >( it->second ) / forcedMaximalRemaining;
 }

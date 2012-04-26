@@ -253,8 +253,8 @@ void UrbanObjectWrapper::SendCreation() const
             msg->set_floor_number( architecture->GetFloorNumber() );
             msg->set_roof_shape( architecture->GetRoofShape().c_str() );
             msg->set_material( architecture->GetMaterial().c_str() );
-            msg->set_occupation( architecture->GetOccupation() );
-            msg->set_trafficability( architecture->GetTrafficability() );
+            msg->set_occupation( static_cast< float >( architecture->GetOccupation() ) );
+            msg->set_trafficability( static_cast< float >( architecture->GetTrafficability() ) );
             msg->set_parking_floors( architecture->GetParkingFloors() );
         }
         if( pPhysical->GetMotivations() )
@@ -437,7 +437,7 @@ float UrbanObjectWrapper::GetStructuralState() const
 // Name: UrbanObjectWrapper::GetOccupation
 // Created: JSR 2011-05-26
 // -----------------------------------------------------------------------------
-float UrbanObjectWrapper::GetOccupation() const
+double UrbanObjectWrapper::GetOccupation() const
 {
     if( const urban::PhysicalAttribute* pPhysical = object_->Retrieve< urban::PhysicalAttribute >() )
         if( const urban::Architecture* architecture = pPhysical->GetArchitecture() )
@@ -449,12 +449,12 @@ float UrbanObjectWrapper::GetOccupation() const
 // Name: UrbanObjectWrapper::GetTrafficability
 // Created: JSR 2011-05-26
 // -----------------------------------------------------------------------------
-float UrbanObjectWrapper::GetTrafficability() const
+double UrbanObjectWrapper::GetTrafficability() const
 {
     if( const urban::PhysicalAttribute* pPhysical = object_->Retrieve< urban::PhysicalAttribute >() )
         if( const urban::Architecture* architecture = pPhysical->GetArchitecture() )
             return architecture->GetTrafficability();
-    return std::numeric_limits< float >::max();
+    return std::numeric_limits< double >::max();
 }
 
 // -----------------------------------------------------------------------------
