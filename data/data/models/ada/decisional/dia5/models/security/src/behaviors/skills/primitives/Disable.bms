@@ -8,7 +8,7 @@
 rootnode 
 {
     connections = { skill.links.reach, skill.links.disable },
-    feedbacks   = { "disabled" },
+    feedbacks   = { "disabled", "notDisabled" },
 
     -- --------------------------------------------------------------------------------
     -- Feedbacks
@@ -19,6 +19,12 @@ rootnode
 
     disableActionCompleted = function( self, params ) -- from disable skill
         Feedback( self.feedbacks.disabled, { system = params.system } )
+        self.nextTargetIndex = self.nextTargetIndex + 1
+        self.arrived = false
+    end,
+
+    impossibleToDisabled = function( self, params ) -- called within this skill
+        Feedback( self.feedbacks.notDisabled, { system = params.system } )
         self.nextTargetIndex = self.nextTargetIndex + 1
         self.arrived = false
     end,
@@ -42,7 +48,11 @@ rootnode
             if self.nextTargetIndex <= paramsSize then
                 self.system = self.params.systems[ self.nextTargetIndex ]
                 if self.arrived then
-                    Activate( skill.links.disable, 1, { system = self.system } )
+                    if self.system:canBeDisabled() then
+                        Activate( skill.links.disable, 1, { system = self.system } )
+                    else
+                        self:impossibleToDisabled( { system = self.system } )
+                    end
                 else
                     Activate( skill.links.reach, 1, { destination = self.system } )
                 end

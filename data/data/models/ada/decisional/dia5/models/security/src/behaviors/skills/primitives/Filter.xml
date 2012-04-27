@@ -35,5 +35,8 @@ Because filtering crowds with a checkpoint requires the presence of the agent, a
         <feedback name="filtering">
             <description>Sent once the agent makes the filtration running.</description>
         </feedback>
+        <feedback name="failed">
+            <description>Sent if the agent is not able to use the checkpoint to filtrate crowds. It means that the checkpoint has not the 'filtrate' capacity (see object capacities definition in authoring tool).</description>
+        </feedback>
     </feedbacks>
 </skill>

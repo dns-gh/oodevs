@@ -220,5 +220,35 @@ This implementation returns 'true' if this element (the object to operate) can b
                 </type>
             </return>
         </method>
+        <method name="canBeUsedToFilter" abstract="false">
+            <description>Returns 'true' if this entity can be extinguished by the agent.&#xD;
+&#xD;
+This implementation returns 'true' if this element can be used as a checkpoint  (see definition of objects capacities in authoring tool).</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canBeDisabled" abstract="false">
+            <description>Returns 'true' if this entity can be disabled by the agent.&#xD;
+&#xD;
+This implementation returns 'false', an object element cannot be disabled.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canBeEnabled" abstract="false">
+            <description>Returns 'true' if this entity can be enabled by the agent.&#xD;
+&#xD;
+This implemention returns 'true' if this object can be activated (see capacity definition in authoring tool).</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
     </methods>
 </class>

@@ -103,14 +103,24 @@ method "createLinkWith" (
 -- --------------------------------------------------------------------------------
 -- System
 -- --------------------------------------------------------------------------------
+method "canBeDisabled"(
+    function( self )
+        return false -- an object cannot be disabled once it has been enabled.
+    end )
+
+method "canBeEnabled"(
+    function( self )
+        return integration.canActivateIt( self )
+    end )
+
 method "disableIt" (
     function( self )
-        return true -- $$$ MIA TODO
+        return false -- an object cannot be disabled
     end )
 
 method "enableIt" (
     function( self )
-        return true -- $$$ MIA TODO
+        return integration.activateItSecu( self )
     end )
 
 method "canBeOperated"(
@@ -135,6 +145,11 @@ method "operateIt" ( masalife.brain.integration.startStopAction(
 -- --------------------------------------------------------------------------------
 -- CheckPoint
 -- --------------------------------------------------------------------------------
+method "canBeUsedToFilter"(
+    function( self )
+        return integration.canFilter( self )
+    end )
+
 method "filter" ( masalife.brain.integration.startStopAction( 
 {
     start = function( self, intensity )

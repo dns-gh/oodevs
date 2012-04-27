@@ -5,7 +5,12 @@
 -- @author MGD
 -- @release 2010-02-23
 integration.canActivateIt = function( object )
-  return DEC_Agent_PeutActiverObjet( object.source )
+    if DEC_Agent_PeutActiverObjet( object.source ) then
+        return true
+    else
+        DEC_Trace( "object cannot be activated" )
+        return false
+    end
 end
 
 integration.activationLevel = function( object )

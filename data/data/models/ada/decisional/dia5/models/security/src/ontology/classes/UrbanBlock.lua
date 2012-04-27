@@ -95,13 +95,20 @@ method "canBeDeconstructed" (
         return false -- $$$ MIA TODO
     end )
 
-method "deconstructIt" ( 
-    function( self )
-        return false -- $$$ MIA TODO
-    end )
+method "deconstructIt" ( masalife.brain.integration.startStopAction( 
+{
+    -- $$$ TODO
+    start = function( self )
+    end,
+    started = function( self )
+    end,
+    stop = function( self )
+    end
+} ) )
 
 method "removeIt" (
     function( self )
+        meKnowledge:sendMessage( "The agent cannot remove a urban block instantaneously" )
         return false -- A urban block cannot be removed
     end )
 

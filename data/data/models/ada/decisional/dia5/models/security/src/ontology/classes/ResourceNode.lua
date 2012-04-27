@@ -1,6 +1,16 @@
 -- --------------------------------------------------------------------------------
 -- System activation/deactivation
 -- --------------------------------------------------------------------------------
+method "canBeDisabled"(
+    function( self )
+        return true -- ressource node can always be disabled (magic action)
+    end )
+
+method "canBeEnabled"(
+    function( self )
+        return true -- ressource node can always be enabled (magic action)
+    end )
+
 method "enableIt" ( 
     function( self ) 
         return integration.enable( self )

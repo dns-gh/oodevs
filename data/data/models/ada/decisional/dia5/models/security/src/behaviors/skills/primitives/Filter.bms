@@ -10,7 +10,7 @@ rootnode
     feedbacks   = { "filtering" },
 
     -- --------------------------------------------------------------------------------
-    -- Feedbacks
+    -- Feedbacks and slots
     -- --------------------------------------------------------------------------------
     done = function( self, params ) -- from reach skill
         self.arrived = true
@@ -18,6 +18,10 @@ rootnode
 
     filtrationActionRunning = function( self, params ) -- from filter skill
         Feedback( self.feedbacks.filtering, { object = params.checkpoint } )
+    end,
+
+    impossibleToFilter = function( self, params ) -- called within this skill
+        Feedback( self.feedbacks.failed, params )
     end,
 
     -- --------------------------------------------------------------------------------
@@ -34,8 +38,12 @@ rootnode
         local Activate = Activate
 
         if self.arrived then
+            if self.params.checkpoint:canBeUsedToFilter() then
             Activate( skill.links.filter, 1, 
               { checkpoint = self.params.checkpoint, intensity = self.params.intensity } )
+            else
+                self:impossibleToFilter()
+            end
         end
         Activate( skill.links.reach, 1, { destination = self.params.checkpoint } )
         self.arrived = false

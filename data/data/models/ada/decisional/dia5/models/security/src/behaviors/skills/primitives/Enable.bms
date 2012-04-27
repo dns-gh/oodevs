@@ -8,7 +8,7 @@
 rootnode 
 {
     connections = { skill.links.reach, skill.links.enable },
-    feedbacks   = { "enabled" },
+    feedbacks   = { "enabled", "notEnabled" },
 
     -- --------------------------------------------------------------------------------
     -- Feedbacks
@@ -19,6 +19,12 @@ rootnode
 
     enableActionCompleted = function( self, params ) -- from action
         Feedback( self.feedbacks.enabled, { system = params.system } )
+        self.nextTargetIndex = self.nextTargetIndex + 1
+        self.arrived = false
+    end,
+
+    impossibleToEnabled = function( self, params ) -- called within this skill
+        Feedback( self.feedbacks.notEnabled, { system = params.system } )
         self.nextTargetIndex = self.nextTargetIndex + 1
         self.arrived = false
     end,
@@ -42,7 +48,11 @@ rootnode
             if self.nextTargetIndex <= paramsSize then
                 self.system = self.params.systems[ self.nextTargetIndex ]
                 if self.arrived then
-                    Activate( skill.links.enable, 1, { system = self.system } )
+                    if self.system:canBeEnabled() then
+                        Activate( skill.links.enable, 1, { system = self.system } )
+                    else
+                        self:impossibleToEnabled( { system = self.system } )
+                    end
                 else
                     Activate( skill.links.reach, 1, { destination = self.system } )
                 end

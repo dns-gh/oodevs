@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="tasks.EnableResourceNodesTest" source-version="1.0.0">
+<task xmlns="http://www.masagroup.net/directia/schemas/bm" name="tasks.EnableTest" source-version="1.0.0">
     <parameters>
-        <parameter name="resourceNodes">
-            <description>A list of resource nodes. </description>
+        <parameter name="systems">
+            <description>A list of systems. </description>
             <type>
                 <list>
-                    <class name="ontology.classes.ResourceNode"/>
+                    <class name="agent.world.System"/>
                 </list>
             </type>
         </parameter>
@@ -16,7 +16,7 @@
                 <skill name="behaviors.skills.primitives.Enable" main="true">
                     <parameter name="systems">
                         <value>
-                            <parameter>resourceNodes</parameter>
+                            <parameter>systems</parameter>
                         </value>
                     </parameter>
                 </skill>

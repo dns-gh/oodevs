@@ -38,7 +38,7 @@ end
 --- EquipNBC outfit
 -- @author MGD
 -- @release 2010-04-27
-integration.equipNBCOutfit = function()
+integration.equipNBCOutfitSecu = function()
     meKnowledge:sendReport( eRC_TenueProtectionNBCMise )
     DEC_Agent_MettreTenueProtectionNBC()
 end
@@ -46,7 +46,7 @@ end
 --- UnequipNBC outfit
 -- @author MGD
 -- @release 2010-04-27
-integration.unequipNBCOutfit = function()
+integration.unequipNBCOutfitSecu = function()
     meKnowledge:sendReport( eRC_TenueProtectionNBCEnlevee )
     DEC_Agent_EnleverTenueProtectionNBC()
 end

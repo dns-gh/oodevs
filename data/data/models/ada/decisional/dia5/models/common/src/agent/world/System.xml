@@ -34,5 +34,21 @@
                 </type>
             </return>
         </method>
+        <method name="canBeEnabled">
+            <description>Returns 'true' if this entity can be enabled by the agent.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canBeDisabled">
+            <description>Returns 'true' if this entity can be disabled by the agent.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
     </methods>
 </interface>

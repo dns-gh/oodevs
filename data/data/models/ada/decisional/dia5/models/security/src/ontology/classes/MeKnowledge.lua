@@ -193,13 +193,13 @@ method "decontaminate" (
 method "equipWithNBCProtection" ( masalife.brain.integration.startStopAction(
 { 
     start = function( self )
-        integration.equipNBCOutfit()
+        integration.equipNBCOutfitSecu()
     end,
     started = function( self )
         return true
     end,
     stop = function( self )
-        integration.unequipNBCOutfit()
+        integration.unequipNBCOutfitSecu()
     end
 } ) )
 

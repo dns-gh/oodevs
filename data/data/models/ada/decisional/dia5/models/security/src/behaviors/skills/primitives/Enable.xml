@@ -34,6 +34,14 @@ Enable/disable skills may be used to model the damage/sabotage of a resource nod
                 </type>
             </argument>
         </feedback>
+        <feedback name="notEnabled">
+            <description>Sent each time a 'System' cannot be enabled.</description>
+            <argument name="system">
+                <type>
+                    <class name="agent.world.System"/>
+                </type>
+            </argument>
+        </feedback>
         <feedback name="done">
             <description>Sent when all 'systems' have been visited, even of once of them has not been enabled.</description>
         </feedback>

@@ -57,5 +57,25 @@ This implementation returns 'false'. </description>
                 </type>
             </return>
         </method>
+        <method name="canBeDisabled" abstract="false">
+            <description>Returns 'true' if this entity can be disabled by the agent.&#xD;
+&#xD;
+This implementation returns 'true' because enabled a ressource node is a magic action.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
+        <method name="canBeEnabled" abstract="false">
+            <description>Returns 'true' if this entity can be enabled by the agent.&#xD;
+&#xD;
+This implementation returns 'true' because disabled a ressource node is a magic action.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
     </methods>
 </class>
