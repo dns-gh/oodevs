@@ -98,6 +98,8 @@ private:
     UserProfile* profile_;
     QLineEdit* login_;
     QLineEdit* password_;
+    QLineEdit* automats_;
+    QLineEdit* knowledgeGroups_;
     Q3GroupBox* userRoleGroup_;
     QLabel* userRoleLabel_;
     QComboBox* userRole_;

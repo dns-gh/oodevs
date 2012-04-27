@@ -2503,6 +2503,14 @@
         <source>Crowds</source>
         <translation type="unfinished">Foules</translation>
     </message>
+    <message>
+        <source>Automats:</source>
+        <translation>Automates:</translation>
+    </message>
+    <message>
+        <source>Knowledge groups:</source>
+        <translation>Groupes de connaissance:</translation>
+    </message>
 </context>
 <context>
     <name>WeatherListView</name>
