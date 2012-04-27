@@ -13,7 +13,6 @@
 #include "PHY_RoePopulation.h"
 
 PHY_RoePopulation::T_RoePopulationMap PHY_RoePopulation::roePopulations_;
-const PHY_RoePopulation               PHY_RoePopulation::none_( "None", PHY_RoePopulation::eNone, sword::UnitAttributes::no_rule );
 
 // -----------------------------------------------------------------------------
 // Name: PHY_RoePopulation::Initialize
@@ -21,7 +20,6 @@ const PHY_RoePopulation               PHY_RoePopulation::none_( "None", PHY_RoeP
 // -----------------------------------------------------------------------------
 void PHY_RoePopulation::Initialize()
 {
-    roePopulations_[ none_.GetName() ] = &none_;
     roePopulations_[ "emploi force interdit"                     ] = new PHY_RoePopulation( "Emploi force interdit"                    , eEmploiForceInterdit                , sword::UnitAttributes::no_force                     );
     roePopulations_[ "maintien a distance par moyens non letaux" ] = new PHY_RoePopulation( "Maintien à distance par moyens non létaux", eMaintienADistanceParMoyensNonLetaux, sword::UnitAttributes::non_lethal_force );
     roePopulations_[ "armes letales autorisees"                  ] = new PHY_RoePopulation( "Armes létales autorisées"                 , eArmesLetalesAutorisees             , sword::UnitAttributes::lethal_force                  );
@@ -33,7 +31,6 @@ void PHY_RoePopulation::Initialize()
 // -----------------------------------------------------------------------------
 void PHY_RoePopulation::Terminate()
 {
-    roePopulations_.erase( none_.GetName() );
     for( CIT_RoePopulationMap it = roePopulations_.begin(); it != roePopulations_.end(); ++it )
         delete it->second;
     roePopulations_.clear();

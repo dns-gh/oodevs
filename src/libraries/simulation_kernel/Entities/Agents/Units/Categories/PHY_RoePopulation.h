@@ -22,12 +22,6 @@
 class PHY_RoePopulation : private boost::noncopyable
 {
 public:
-    //! @name Constants
-    //@{
-    static const PHY_RoePopulation none_;
-    //@}
-
-public:
     //! @name Types
     //@{
     typedef std::map< std::string, const PHY_RoePopulation* > T_RoePopulationMap;
@@ -62,10 +56,9 @@ private:
     //@{
     enum E_Type
     {
-        eNone                                = 0,
-        eEmploiForceInterdit                 = 1,
-        eMaintienADistanceParMoyensNonLetaux = 2,
-        eArmesLetalesAutorisees              = 3
+        eEmploiForceInterdit                 = 0,
+        eMaintienADistanceParMoyensNonLetaux = 1,
+        eArmesLetalesAutorisees              = 2
     };
     //@}
 
