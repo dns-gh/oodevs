@@ -44,7 +44,11 @@ integration.stopExtinguish = function( fire )
     fire.actionExtinguishState = nil
 end
 
-integration.canBeExtinguished = function( self )
-    --- $$$ MIA TODO
-    return true 
+integration.canBeExtinguished = function( object )
+    if DEC_ObjectKnowledge_HasCapacity( object.source, "extinguishable" ) then
+        return true
+    else
+        meKnowledge:sendReport( eRC_ImpossibleToExtinguishFire )
+        return false
+    end
 end

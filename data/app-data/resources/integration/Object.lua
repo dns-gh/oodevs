@@ -34,19 +34,6 @@ integration.getPlannedObjectNearestBorderPosition = function( object )
     return object.getPlannedObjectNearestBorderPosition
 end
 
--- --------------------------------------------------------------------------------
---  Fire capacity
--- renvoie true si l'objet réel associé à la connaissance existe, brûle et est éteignable, 
--- et si l'agent est capable d'éteindre l'objet réel et dispose des ressources nécessaires
--- --------------------------------------------------------------------------------
-integration.canBeExtinguished = function( object )
-    if DEC_ObjectKnowledge_HasCapacity( object.source, "burn" ) then
-        return true
-    else
-        meKnowledge:sendReport( eRC_ImpossibleToExtinguishFire )
-        return false
-    end
-end
 
 integration.getObjectsKnowledgeInZoneWithCapacity = function( capacityName, zone )
     return DEC_ObjectKnowledge_GetObjectsInZone( meKnowledge.source, capacityName, zone.source )
