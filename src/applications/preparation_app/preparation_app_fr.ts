@@ -2437,6 +2437,14 @@
         <translation type="unfinished">&apos;Lecture&apos; permet de voir une unité.
 &apos;Ecriture&apos; permet de contrôler une unité.</translation>
     </message>
+    <message>
+        <source>Automats:</source>
+        <translation>Automates:</translation>
+    </message>
+    <message>
+        <source>Knowledge groups:</source>
+        <translation>Groupes de connaissance:</translation>
+    </message>
 </context>
 <context>
     <name>WeatherListView</name>

@@ -79,6 +79,8 @@ private:
     UserProfile* profile_;
     QLineEdit* login_;
     QLineEdit* password_;
+    QLineEdit* automats_;
+    QLineEdit* knowledgeGroups_;
     QCheckBox* supervisor_;
     UserProfileRights_ABC* unitRights_;
     UserProfileRights_ABC* populationRights_;

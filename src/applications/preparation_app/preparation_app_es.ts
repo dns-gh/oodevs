@@ -2436,6 +2436,14 @@
 &apos;Write&apos; permission allows you to control a unit.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Automats:</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Knowledge groups:</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>WeatherListView</name>

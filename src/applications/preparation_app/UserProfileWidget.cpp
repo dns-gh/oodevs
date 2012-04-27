@@ -14,16 +14,19 @@
 #include "UserProfilePopulationRights.h"
 #include "ProfilesChecker_ABC.h"
 #include "clients_kernel/AttributeType.h"
+#include "clients_kernel/Automat_ABC.h"
+#include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
 #include "clients_kernel/DictionaryType.h"
 #include "clients_kernel/DictionaryEntryType.h"
 #include "clients_kernel/ExtensionType.h"
 #include "clients_kernel/ExtensionTypes.h"
+#include "clients_kernel/KnowledgeGroup_ABC.h"
+#include "clients_kernel/Tools.h"
 #include "preparation/UserProfile.h"
 #include "preparation/ProfilesModel.h"
 #include "preparation/Model.h"
-#include "clients_kernel/Tools.h"
 
 using namespace kernel;
 
@@ -50,6 +53,12 @@ UserProfileWidget::UserProfileWidget( QWidget* parent, Controllers& controllers,
         login_ = new QLineEdit( group );
         new QLabel( tr( "Password:" ), group );
         password_ = new QLineEdit( group );
+        new QLabel( tr( "Automats:" ), group );
+        automats_= new QLineEdit( group );
+        automats_->setReadOnly( true );
+        new QLabel( tr( "Knowledge groups:" ), group );
+        knowledgeGroups_ = new QLineEdit( group );
+        knowledgeGroups_->setReadOnly( true );
 
         addTab( box, tr( "General" ) );
         connect( login_, SIGNAL( editingFinished() ), this, SLOT( OnLoginChanged() ) );
@@ -88,6 +97,39 @@ UserProfileWidget::~UserProfileWidget()
     // NOTHING
 }
 
+namespace
+{
+    const KnowledgeGroup_ABC* GetKnowledgeGroup( const Entity_ABC& entity )
+    {
+        const CommunicationHierarchies* commParentHirearchies = entity.Retrieve< CommunicationHierarchies >();
+        if( !commParentHirearchies )
+            return 0;
+        const Entity_ABC* pSuperior = commParentHirearchies->GetSuperior();
+        if( !pSuperior )
+            return 0;
+        const KnowledgeGroup_ABC* kg = dynamic_cast< const KnowledgeGroup_ABC* >( pSuperior );
+        if( kg )
+            return kg;
+        return GetKnowledgeGroup( *pSuperior );
+    }
+
+    unsigned int GetKGCount( std::set< unsigned long > automats, Model& model )
+    {
+        std::set< unsigned long > knowledgeGroups;
+        for( std::set< unsigned long >::iterator it = automats.begin(); it != automats.end(); ++it )
+        {
+            Automat_ABC* pAutomat = model.FindAutomat( *it );
+            if( pAutomat )
+            {
+                const KnowledgeGroup_ABC* kg = GetKnowledgeGroup( *pAutomat );
+                if( kg )
+                    knowledgeGroups.insert( kg->GetId() );
+            }
+        }
+        return static_cast< unsigned int >( knowledgeGroups.size() );
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: UserProfileWidget::Display
 // Created: SBO 2007-01-16
@@ -97,6 +139,10 @@ void UserProfileWidget::Display( UserProfile& profile )
     profile_ = &profile;
     login_->setText( profile.GetLogin() );
     password_->setText( profile.GetPassword() );
+    std::set< unsigned long > automats;
+    profile.VisitAllAutomats( automats );
+    automats_->setText( locale().toString( automats.size() ) );
+    knowledgeGroups_->setText( locale().toString( GetKGCount( automats, model_ ) ) );
     supervisor_->setChecked( profile.IsSupervisor() );
     unitRights_->Display( profile );
     populationRights_->Display( profile );
