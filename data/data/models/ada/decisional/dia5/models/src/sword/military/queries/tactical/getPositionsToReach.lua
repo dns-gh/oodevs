@@ -12,7 +12,7 @@ queryImplementation "getPositionsToReach"
         -- --------------------------------------------------------------------------------
         local position, scaledObject, objectPosition
         for _, element in pairs ( params.elementsToReach ) do
-            if masalife.brain.core.class.isOfType( element, sword.military.world.Object) then
+            if masalife.brain.core.class.isOfType( element, sword.military.world.Object) and element:isAvoidable() then
                 scaledObject = DEC_Geometrie_AgrandirLocalisation(  element:getLocalisation() , 50 )
                 objectPosition = DEC_Geometrie_ComputeNearestBorder( meKnowledge:getPosition(), scaledObject )
                 position = CreateKnowledge( sword.military.world.Point, objectPosition )

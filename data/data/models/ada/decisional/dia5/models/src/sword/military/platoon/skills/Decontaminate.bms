@@ -37,7 +37,7 @@ rootnode
         if self.decontaminated == false then
             Activate( skill.links.getDecon, 0.9, { objectives = self.params.objectives } )
         end
-        Activate( skill.links.moveToward, 0.1, { entities = { self.params.meetongPoint } } )
+        Activate( skill.links.moveToward, 0.1, { entities = self.params.meetingPoint } )
         
         self.arrived = false
     end,

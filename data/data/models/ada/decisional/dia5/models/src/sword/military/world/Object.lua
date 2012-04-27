@@ -295,6 +295,9 @@ return
     isMined = function( self )
         return integration.isMined( self )
     end,
+    isAvoidable = function( self )
+        return integration.isAvoidable( self )
+    end,
     canDemineIt = function( self )
         return integration.canDemineIt( self )
     end,
