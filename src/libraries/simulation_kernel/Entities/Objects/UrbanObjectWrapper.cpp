@@ -383,6 +383,15 @@ bool UrbanObjectWrapper::HasChild() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: UrbanObjectWrapper::IsBlock
+// Created: JSR 2012-04-27
+// -----------------------------------------------------------------------------
+bool UrbanObjectWrapper::IsBlock() const
+{
+    return GetObject().GetParent() != 0 && GetObject().GetParent()->GetParent() != 0;
+}
+
+// -----------------------------------------------------------------------------
 // Name: UrbanObjectWrapper::ComputeComplexity
 // Created: JSR 2011-02-18
 // -----------------------------------------------------------------------------

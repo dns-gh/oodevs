@@ -66,7 +66,11 @@ void MIL_ObjectManager::load( MIL_CheckPointInArchive& file, const unsigned int 
     for( CIT_ObjectMap it = objects_.begin(); it != objects_.end(); ++it )
     {
         if( UrbanObjectWrapper* wrapper = dynamic_cast< UrbanObjectWrapper* >( it->second ) )
+        {
             urbanObjects_.insert( std::make_pair( &wrapper->GetObject(), wrapper ) );
+            if( wrapper->IsBlock() )
+                urbanBlocks_.push_back( wrapper );
+        }
         if( it->second->IsUniversal() )
             universalObjects_.insert( it->second );
     }
@@ -125,7 +129,15 @@ void MIL_ObjectManager::UpdateStates()
                 }
                 object.SendDestruction();
                 if( UrbanObjectWrapper* wrapper = dynamic_cast< UrbanObjectWrapper* >( &object ) )
+                {
                     urbanObjects_.erase( &wrapper->GetObject() );
+                    for( CIT_UrbanBlocksVector it = urbanBlocks_.begin(); it != urbanBlocks_.end(); ++it )
+                        if( *it == wrapper )
+                        {
+                            urbanBlocks_.erase( it );
+                            break;
+                        }
+                }
             }
             catch( std::exception& e )
             {
@@ -306,7 +318,10 @@ MIL_Object_ABC* MIL_ObjectManager::CreateUrbanObject( const urban::TerrainObject
 {
     MIL_Object_ABC* pObject = builder_->BuildUrbanObject( object );
     RegisterObject( pObject );
-    urbanObjects_.insert( std::make_pair( &object, static_cast< UrbanObjectWrapper* >( pObject ) ) );
+    UrbanObjectWrapper* wrapper = static_cast< UrbanObjectWrapper* >( pObject );
+    urbanObjects_.insert( std::make_pair( &object, wrapper ) );
+    if( wrapper->IsBlock() )
+        urbanBlocks_.push_back( wrapper );
     return pObject;
 }
 
@@ -464,10 +479,19 @@ void MIL_ObjectManager::OnReceiveChangeResourceLinks( const sword::MagicAction& 
 }
 
 // -----------------------------------------------------------------------------
-// Name: std::set< MIL_Object_ABC* >& MIL_ObjectManager::GetUniversalObjects
+// Name: MIL_ObjectManager::GetUniversalObjects
 // Created: LDC 2012-01-26
 // -----------------------------------------------------------------------------
 const std::set< MIL_Object_ABC* >& MIL_ObjectManager::GetUniversalObjects() const
 {
     return universalObjects_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_ObjectManager::GetUrbanBlocks
+// Created: JSR 2012-04-27
+// -----------------------------------------------------------------------------
+const MIL_ObjectManager::T_UrbanBlocksVector& MIL_ObjectManager::GetUrbanBlocks() const
+{
+    return urbanBlocks_;
 }

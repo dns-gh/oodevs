@@ -18,12 +18,14 @@
 #include "DEC_Knowledge_Object.h"
 #include "DEC_Knowledge_ObjectCollision.h"
 #include "DEC_Knowledge_Urban.h"
+#include "MIL_AgentServer.h"
+#include "Entities/MIL_Army_ABC.h"
+#include "Entities/MIL_EntityManager.h"
 #include "Entities/Objects/CapacityRetriever.h"
 #include "Entities/Objects/InteractWithEnemyCapacity.h"
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/ResourceNetworkCapacity.h"
 #include "Entities/Objects/UrbanObjectWrapper.h"
-#include "Entities/MIL_Army_ABC.h"
 #include "Entities/Objects/MIL_ObjectFilter.h"
 #include "protocol/Protocol.h"
 
@@ -631,35 +633,13 @@ DEC_BlackBoard_CanContainKnowledgeUrban& DEC_KnowledgeBlackBoard_Army::GetKnowle
     return *pKnowledgeUrbanContainer_;
 }
 
-namespace
-{
-    class sUrbanKnowledgesInserter
-    {
-    public:
-        sUrbanKnowledgesInserter( T_UrbanObjectVector& container )
-        : pContainer_( container )
-        {
-        }
-
-        void operator() ( UrbanObjectWrapper* pUrbanObject )
-        {
-            pContainer_.push_back( pUrbanObject );
-        }
-
-    private:
-        T_UrbanObjectVector& pContainer_;
-    };
-}
 // -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeBlackBoard_Army::GetObjects
 // Created: MGD 2010-02-10
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeBlackBoard_Army::GetUrbanObjects( T_UrbanObjectVector& container ) const
 {
-    sUrbanKnowledgesInserter functor( container );
-
-    assert( pKnowledgeUrbanContainer_ );
-    pKnowledgeUrbanContainer_->ApplyOnUrbanBlocks( functor );
+    container = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanBlocks();
 }
 
 // -----------------------------------------------------------------------------
@@ -694,42 +674,37 @@ DEC_KS_UrbanKnowledgeSynthetizer& DEC_KnowledgeBlackBoard_Army::GetKsUrbanKnowle
 
 namespace
 {
+
+    void FindResourceNetworks( const MIL_Object_ABC& object, const TER_Localisation& zone, const std::string& type, T_ResourceNetworkVector& container )
+    {
+        const ResourceNetworkCapacity* capacity = object.Retrieve< ResourceNetworkCapacity >();
+        if( capacity && zone.Contains( object.GetLocalisation() ) && ( type.empty() || capacity->ContainsType( type ) ) )
+        {
+            const T_ResourceNetworkVector& nodes = capacity->GetDECResourceNetworks( object.GetID() );
+            container.insert( container.end(), nodes.begin(), nodes.end() );
+        }
+    }
+
     class sResourceNetworkInserter
     {
     public:
         sResourceNetworkInserter( T_ResourceNetworkVector& container, const TER_Localisation& zone, const std::string& type )
-            : pContainer_( container )
+            : container_( container )
             , zone_      ( zone )
             , type_      ( type )
         {
-        }
-
-        void operator() ( UrbanObjectWrapper* pUrbanObject )
-        {
-            assert( pUrbanObject );
-            Execute( *pUrbanObject );
+            // NOTHING
         }
 
         void operator() ( boost::shared_ptr< DEC_Knowledge_Object >& knowledge )
         {
             if( knowledge->IsValid() )
                 if( MIL_Object_ABC* obj = knowledge->GetObjectKnown() )
-                    Execute( *obj );
+                    FindResourceNetworks( *obj, zone_, type_, container_ );
         }
 
     private:
-        void Execute( MIL_Object_ABC& object ) const
-        {
-            ResourceNetworkCapacity* capacity = object.Retrieve< ResourceNetworkCapacity >();
-            if( capacity && zone_.Contains( object.GetLocalisation() ) && ( type_.empty() || capacity->ContainsType( type_ ) ) )
-            {
-                const T_ResourceNetworkVector& nodes = capacity->GetDECResourceNetworks( object.GetID() );
-                pContainer_.insert( pContainer_.end(), nodes.begin(), nodes.end() );
-            }
-        }
-
-    private:
-        T_ResourceNetworkVector& pContainer_;
+        T_ResourceNetworkVector& container_;
         const TER_Localisation& zone_;
         const std::string& type_;
     };
@@ -741,10 +716,11 @@ namespace
 // -----------------------------------------------------------------------------
 void DEC_KnowledgeBlackBoard_Army::GetResourceNetworksInZone( T_ResourceNetworkVector& container, const TER_Localisation& zone, const std::string type /*= ""*/ )
 {
+    const std::vector< UrbanObjectWrapper* >& blocks = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanBlocks();
+    for( int i = 0; i < blocks.size(); ++i )
+        FindResourceNetworks( *blocks[ i ], zone, type, container );
     sResourceNetworkInserter functor( container, zone, type );
-    assert( pKnowledgeUrbanContainer_ );
     assert( pKnowledgeObjectContainer_ );
-    pKnowledgeUrbanContainer_->ApplyOnUrbanBlocks( functor );
     pKnowledgeObjectContainer_->ApplyOnKnowledgesObject( functor );
 }
 

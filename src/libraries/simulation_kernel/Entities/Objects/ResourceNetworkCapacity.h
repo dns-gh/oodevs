@@ -108,7 +108,7 @@ public:
     void SendFullState( sword::UrbanAttributes& message ) const;
     void SendFullState( sword::ObjectAttributes& asn ) const;
 
-    const T_ResourceNetworkVector& GetDECResourceNetworks( unsigned int objectId );
+    const T_ResourceNetworkVector& GetDECResourceNetworks( unsigned int objectId ) const;
     //@}
 
 private:
@@ -122,7 +122,7 @@ private:
     //! @name Member data
     //@{
     boost::shared_ptr< resource::NodeProperties > nodeProperties_;
-    T_ResourceNetworkVector DECResourceNetworks_;
+    mutable T_ResourceNetworkVector DECResourceNetworks_;
     //@}
 };
 

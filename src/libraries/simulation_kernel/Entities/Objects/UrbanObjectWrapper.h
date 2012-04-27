@@ -83,6 +83,7 @@ public:
     bool Is( const urban::TerrainObject_ABC& object ) const;
     const std::string& GetName() const;
     bool HasChild() const;
+    bool IsBlock() const;
     float ComputeComplexity() const;
     float GetHeight() const;
     float GetStructuralHeight() const;

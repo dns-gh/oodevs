@@ -207,7 +207,7 @@ void NodeElement::Finalize( const ResourceTools_ABC& tools )
 // Name: NodeElement::AppendResource
 // Created: JSR 2012-01-17
 // -----------------------------------------------------------------------------
-void NodeElement::AppendResource( std::vector< std::string >& resources )
+void NodeElement::AppendResource( std::vector< std::string >& resources ) const
 {
     resources.push_back( resourceName_ );
 }

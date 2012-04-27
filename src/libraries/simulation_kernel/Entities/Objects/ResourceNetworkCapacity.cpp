@@ -331,7 +331,7 @@ double ResourceNetworkCapacity::AddToStock( const PHY_DotationCategory& dotation
 // Name: ResourceNetworkCapacity::GetDECResourceNetworks
 // Created: JSR 2012-01-17
 // -----------------------------------------------------------------------------
-const T_ResourceNetworkVector& ResourceNetworkCapacity::GetDECResourceNetworks( unsigned int objectId )
+const T_ResourceNetworkVector& ResourceNetworkCapacity::GetDECResourceNetworks( unsigned int objectId ) const
 {
     std::vector< std::string > resources;
     nodeProperties_->GetAvailableResources( resources );

@@ -16,51 +16,8 @@
 #include "Entities/MIL_Army_ABC.h"
 #include "Entities/MIL_EntityManager.h"
 #include "MT_Tools/MT_ScipioException.h"
-#include <urban/Model.h>
-#include <urban/TerrainObject_ABC.h>
-#include <urban/TerrainObjectVisitor_ABC.h>
 
 BOOST_CLASS_EXPORT_IMPLEMENT( DEC_BlackBoard_CanContainKnowledgeUrban )
-
-namespace
-{
-    class UrbanBlockKnowledgeCreator : public urban::TerrainObjectVisitor_ABC
-    {
-    public:
-        UrbanBlockKnowledgeCreator( DEC_BlackBoard_CanContainKnowledgeUrban::T_KnowledgeUrbanMap& elements, const MIL_Army_ABC& army,
-            std::vector< UrbanObjectWrapper* >& urbanBlocks )
-            : elements_         ( elements )
-            , army_             ( army )
-            , urbanBlocks_      ( urbanBlocks )
-        {
-            // NOTHING
-        }
-
-        virtual ~UrbanBlockKnowledgeCreator()
-        {
-            // NOTHING
-        }
-
-        virtual void VisitBlock( urban::TerrainObject_ABC& object )
-        {
-            try
-            {
-                UrbanObjectWrapper& wrapper = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanObjectWrapper( object );
-                elements_[ wrapper.GetID() ] = boost::shared_ptr< DEC_Knowledge_Urban >( new DEC_Knowledge_Urban( army_, wrapper ) );
-                urbanBlocks_.push_back( &wrapper );
-            }
-            catch( ... )
-            {
-                // object not wrapped
-            }
-        }
-
-    private:
-        DEC_BlackBoard_CanContainKnowledgeUrban::T_KnowledgeUrbanMap& elements_;
-        std::vector< UrbanObjectWrapper* >& urbanBlocks_;
-        const MIL_Army_ABC& army_;
-    };
-}
 
 // -----------------------------------------------------------------------------
 // Name: DEC_BlackBoard_CanContainKnowledgeUrban constructor
@@ -105,8 +62,9 @@ void DEC_BlackBoard_CanContainKnowledgeUrban::save( MIL_CheckPointOutArchive& fi
 // -----------------------------------------------------------------------------
 void DEC_BlackBoard_CanContainKnowledgeUrban::Finalize()
 {
-    UrbanBlockKnowledgeCreator visitor( urbanMapFromConcrete_, army_, urbanBlocks_ );
-    MIL_AgentServer::GetWorkspace().GetUrbanModel().Accept( visitor );
+    const std::vector< UrbanObjectWrapper* >& blocks = MIL_AgentServer::GetWorkspace().GetEntityManager().GetUrbanBlocks();
+    for( int i = 0; i < blocks.size(); ++i )
+        urbanMapFromConcrete_[ blocks[ i ]->GetID() ] = boost::shared_ptr< DEC_Knowledge_Urban >( new DEC_Knowledge_Urban( army_, *blocks[ i ] ) );
 }
 
 // -----------------------------------------------------------------------------

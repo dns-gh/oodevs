@@ -2322,3 +2322,12 @@ const std::set< MIL_Object_ABC* >& MIL_EntityManager::GetUniversalObjects() cons
 {
     return pObjectManager_->GetUniversalObjects();
 }
+
+// -----------------------------------------------------------------------------
+// Name: MIL_EntityManager::GetUrbanBlocks
+// Created: JSR 2012-04-27
+// -----------------------------------------------------------------------------
+const std::vector< UrbanObjectWrapper* >& MIL_EntityManager::GetUrbanBlocks() const
+{
+    return pObjectManager_->GetUrbanBlocks();
+}

@@ -76,19 +76,6 @@ public:
             fct( knowledge );
         }
     }
-
-    template < class UnaryFunction >
-    void ApplyOnUrbanBlocks( UnaryFunction& fct ) const
-    {
-        if( urbanBlocks_.empty() )
-            const_cast< DEC_BlackBoard_CanContainKnowledgeUrban* >( this )->Finalize();
-        for( std::vector< UrbanObjectWrapper* >::const_iterator it = urbanBlocks_.begin(); it != urbanBlocks_.end(); )
-        {
-            UrbanObjectWrapper* object = *it;
-            ++it;
-            fct( object );
-        }
-    }
     //@}
 
 private:
@@ -102,7 +89,6 @@ private:
     //@{
     const MIL_Army_ABC& army_;
     T_KnowledgeUrbanMap urbanMapFromConcrete_;
-    std::vector< UrbanObjectWrapper* > urbanBlocks_;
     //@}
 };
 
