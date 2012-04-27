@@ -6,6 +6,7 @@
 -- @release 2010-02-23
 integration.canActivateIt = function( object )
     if DEC_Agent_PeutActiverObjet( object.source ) then
+        meKnowledge:RC( eRC_ActivationObstacleDeManoeuvre )
         return true
     else
         DEC_Trace( "object cannot be activated" )
@@ -23,6 +24,11 @@ integration.activateIt = function( object )
         return true
     end
     return false
+end
+
+integration.activateItSecu = function( object )
+    DEC_ActiverObjet( object.source )
+    return true
 end
 
 integration.isManeuverObstacle = function ( object )
