@@ -230,6 +230,14 @@
                 </type>
             </return>
         </method>
+        <method name="isAvoidable">
+            <description>Renvoie vraie si l'ojet est contournable.</description>
+            <return>
+                <type>
+                    <simple name="boolean"/>
+                </type>
+            </return>
+        </method>
         <method name="canDemineIt">
             <description>Renvoie vraie si l'ojet peut etre dévalorisé.</description>
             <return>

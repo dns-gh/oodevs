@@ -114,7 +114,13 @@ end
 integration.isInEffectArea = function( object )
     return DEC_ConnaissanceObjet_PointEstProcheZoneEffet( meKnowledge:getPosition(), object.source, 100 )
 end
-
+--- Return if the unit is avoidable
+-- @param knowledge on an object
+-- @author DDA
+-- @release 2012-04-27
+integration.isAvoidable = function( object )
+    return DEC_ObjectKnowledge_HasCapacity( object.source, "avoidable" )
+end
 -- ============================================================================
 -- Object deconstruction SECU
 -- comments: -- $$$ MIA TEMP SECURITY à merger avec military
