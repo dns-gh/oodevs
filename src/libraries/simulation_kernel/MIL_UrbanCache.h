@@ -12,6 +12,7 @@
 
 #include <geometry/types.h>
 #include <map>
+#include <boost/noncopyable.hpp>
 
 class UrbanObjectWrapper;
 class MT_Vector2D;
@@ -21,7 +22,7 @@ namespace urban
     class Model;
 }
 
-class MIL_UrbanCache
+class MIL_UrbanCache : private boost::noncopyable
 {
 public:
     MIL_UrbanCache( urban::Model& urbanModel );

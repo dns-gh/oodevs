@@ -131,12 +131,9 @@ void MIL_ObjectManager::UpdateStates()
                 if( UrbanObjectWrapper* wrapper = dynamic_cast< UrbanObjectWrapper* >( &object ) )
                 {
                     urbanObjects_.erase( &wrapper->GetObject() );
-                    for( CIT_UrbanBlocksVector it = urbanBlocks_.begin(); it != urbanBlocks_.end(); ++it )
-                        if( *it == wrapper )
-                        {
-                            urbanBlocks_.erase( it );
-                            break;
-                        }
+                    IT_UrbanBlocksVector it = std::find( urbanBlocks_.begin(), urbanBlocks_.end(), wrapper );
+                    if( it != urbanBlocks_.end() )
+                        urbanBlocks_.erase( it );
                 }
             }
             catch( std::exception& e )

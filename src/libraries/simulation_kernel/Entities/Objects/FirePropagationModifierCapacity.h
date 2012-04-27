@@ -60,6 +60,7 @@ private:
     //! @name Copy constructor
     //@{
     explicit FirePropagationModifierCapacity( const FirePropagationModifierCapacity& );
+    FirePropagationModifierCapacity& operator=( const FirePropagationModifierCapacity& ); //!< Assignment operator
     //@}
 
     //! @name Helpers
