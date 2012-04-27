@@ -128,7 +128,7 @@ namespace
 // Name: ADN_App::Initialize
 // Created: JDY 03-06-19
 //-----------------------------------------------------------------------------
-bool ADN_App::Initialize( const std::string& inputFile, const std::string& outputFile, bool nosymbols, int argc, char** argv )
+bool ADN_App::Initialize( const std::string& inputFile, const std::string& outputFile, bool nosymbols, bool noreadonly, int argc, char** argv )
 {
     const QString locale = ReadLang();
     AddTranslator( locale, "qt" );
@@ -150,7 +150,7 @@ bool ADN_App::Initialize( const std::string& inputFile, const std::string& outpu
 
     // Create and set the application's main window.
     pMainWindow_ = new ADN_MainWindow( *config_, argc , argv );
-    ADN_Workspace::GetWorkspace().ShowSymbols( !nosymbols );
+    ADN_Workspace::GetWorkspace().SetOptions( !nosymbols, noreadonly );
     pMainWindow_->Build();
     setMainWidget( pMainWindow_ );
     pMainWindow_->showMaximized();

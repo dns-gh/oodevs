@@ -2649,6 +2649,18 @@ tirador</translation>
         <source>Help</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source> [ Read Only ]</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>The database you are trying to override is read-only. Please select another directory.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>ADN_Maintenance_GUI</name>

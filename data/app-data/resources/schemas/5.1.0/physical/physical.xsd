@@ -55,6 +55,7 @@
         <xs:element name="funeral" type="FileReference"/>
       </xs:all>
       <xs:attribute name="model-version" type="T_Version"/>
+      <xs:attribute name="read-only" type="xs:boolean" use="optional"/>
     </xs:complexType>
   </xs:element>
 </xs:schema>

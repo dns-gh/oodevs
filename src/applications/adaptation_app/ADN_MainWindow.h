@@ -90,6 +90,8 @@ private slots:
 private:
     void SetMenuEnabled( bool bEnable );
     bool OfferToSave();
+    void DoSaveProject();
+
 
 private:
     typedef std::pair< QString, ADN_Callback_ABC<ADN_Table*>* > T_TableRegistrationItem;

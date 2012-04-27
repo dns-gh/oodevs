@@ -40,6 +40,10 @@ public:
         void ReadArchive( xml::xistream& );
         void WriteArchive( xml::xostream& );
 
+        bool IsReadOnly();
+        void DisableReadOnly();
+        void SetNoReadOnly();
+
     public:
         ADN_Type_String szDecisional_;
         ADN_Type_String szSizes_;
@@ -83,6 +87,10 @@ public:
         ADN_Type_String szScores_;
         ADN_Type_String szSymbols_;
         ADN_Type_String szFilters_;
+
+    private:
+        bool readOnlyEnabled_;
+        bool readOnly_;
     };
 
 //*****************************************************************************

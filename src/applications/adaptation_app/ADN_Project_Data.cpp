@@ -35,6 +35,8 @@ std::string                     ADN_Project_Data::FileInfos::szUntitled_ = "Unti
 // Created: JDY 03-06-26
 //-----------------------------------------------------------------------------
 ADN_Project_Data::DataInfos::DataInfos()
+    : readOnly_       ( false )
+    , readOnlyEnabled_( true )
 {
     // NOTHING
 }
@@ -66,12 +68,41 @@ namespace
 }
 
 // -----------------------------------------------------------------------------
+// Name: ADN_Project_Data::DataInfos::IsReadOnly
+// Created: JSR 2012-04-26
+// -----------------------------------------------------------------------------
+bool ADN_Project_Data::DataInfos::IsReadOnly()
+{
+    return readOnly_ && readOnlyEnabled_;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Project_Data::DataInfos::DisableReadOnly
+// Created: JSR 2012-04-26
+// -----------------------------------------------------------------------------
+void ADN_Project_Data::DataInfos::DisableReadOnly()
+{
+    readOnly_ = false;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Project_Data::DataInfos::SetNoReadOnly
+// Created: JSR 2012-04-26
+// -----------------------------------------------------------------------------
+void ADN_Project_Data::DataInfos::SetNoReadOnly()
+{
+    readOnlyEnabled_ = false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DataInfos::ReadArchive
 // Created: APE 2004-11-17
 // -----------------------------------------------------------------------------
 void ADN_Project_Data::DataInfos::ReadArchive( xml::xistream& input )
 {
-    input >> xml::start( "physical" );
+    readOnly_ = false;
+    input >> xml::start( "physical" )
+          >> xml::optional >> xml::attribute( "read-only", readOnly_ );
     ReadFile( input, "decisional", szDecisional_ );
     ReadFile( input, "volumes", szSizes_ );
     ReadFile( input, "protections", szArmors_ );
@@ -123,6 +154,8 @@ void ADN_Project_Data::DataInfos::ReadArchive( xml::xistream& input )
 void ADN_Project_Data::DataInfos::WriteArchive( xml::xostream& output )
 {
     output << xml::start( "physical" );
+    if( readOnly_ )
+        output << xml::attribute( "read-only", readOnly_ );
     ADN_Tools::AddSchema( output, "Physical" );
     WriteFile( output, "decisional", szDecisional_ );
     WriteFile( output, "volumes", szSizes_ );

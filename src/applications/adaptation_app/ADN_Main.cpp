@@ -72,6 +72,7 @@ int main( int nArgc, char** ppArgv )
         ( "input,i" , po::value< std::string >( &inputFile  )->default_value( "" ), "specify root input file (physical.xml)" )
         ( "output,o", po::value< std::string >( &outputFile )->default_value( "" ), "specify output file (physical.xml) (open/save-mode: input must be specified)" )
         ( "nosymbols,n", "turn off unit symbols view" )
+        ( "noreadonly", "disable read-only protection" )
     ;
     po::variables_map vm;
     po::store( po::parse_command_line( nArgc, ppArgv, desc ), vm );
@@ -80,7 +81,8 @@ int main( int nArgc, char** ppArgv )
     try
     {
         bool nosymbols = vm.count( "nosymbols" ) != 0;
-        if( app.Initialize( inputFile, outputFile, nosymbols, nArgc, ppArgv ) )
+        bool noreadonly = vm.count( "noreadonly" ) != 0;
+        if( app.Initialize( inputFile, outputFile, nosymbols, noreadonly, nArgc, ppArgv ) )
             nResult = app.exec();
         else
             nResult = EXIT_SUCCESS;

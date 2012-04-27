@@ -106,7 +106,7 @@ public:
     bool SaveAs( const std::string& filename, const tools::Loader_ABC& fileLoader );
     void ExportHtml( const std::string& strPath );
     bool IsValidDatabase();
-    void ShowSymbols( bool );
+    void SetOptions( bool symbols, bool noreadonly );
     bool ShowSymbols() const;
 
     ADN_Project_Data& GetProject();
@@ -156,6 +156,7 @@ public slots:
     void OnGoToRequested( const ADN_NavigationInfos::GoTo& goToInfo );
 
 private:
+    void Initialize();
     void AddPage( ADN_MainWindow& mainWindow, E_WorkspaceElements element );
 
 private:

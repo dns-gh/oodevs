@@ -2650,6 +2650,18 @@ du tireur</translation>
         <source>Help</source>
         <translation>Aide</translation>
     </message>
+    <message>
+        <source> [ Read Only ]</source>
+        <translation> [ Lecture Seule ]</translation>
+    </message>
+    <message>
+        <source>Warning</source>
+        <translation>Avertissement</translation>
+    </message>
+    <message>
+        <source>The database you are trying to override is read-only. Please select another directory.</source>
+        <translation>La base que vous essayez d&apos;écraser est en lecture seule. Veuillez sélectionner un autre répertoire.</translation>
+    </message>
 </context>
 <context>
     <name>ADN_Maintenance_GUI</name>

@@ -266,7 +266,7 @@ void ADN_MainWindow::SetMenuEnabled( bool bEnabled )
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_MainWindow::SaveProject
+// Name: ADN_MainWindow::SaveProjectAs
 // Created: SBO 2006-11-16
 // -----------------------------------------------------------------------------
 void ADN_MainWindow::SaveProjectAs( const std::string& filename )
@@ -276,15 +276,24 @@ void ADN_MainWindow::SaveProjectAs( const std::string& filename )
     workspace_.SaveAs( res, *fileLoader_ );
 }
 
-//-----------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 // Name: ADN_MainWindow::SaveProject
-// Created: JDY 03-06-19
-//-----------------------------------------------------------------------------
+// Created: JSR 2012-04-26
+// -----------------------------------------------------------------------------
 void ADN_MainWindow::SaveProject()
 {
-//    if( ! bNeedSave_ )
-//    return;
+    if( workspace_.GetProject().GetDataInfos().IsReadOnly() )
+        SaveAsProject();
+    else
+        DoSaveProject();
+}
 
+//-----------------------------------------------------------------------------
+// Name: ADN_MainWindow::DoSaveProject
+// Created: JDY 03-06-19
+//-----------------------------------------------------------------------------
+void ADN_MainWindow::DoSaveProject()
+{
     QApplication::setOverrideCursor( Qt::waitCursor ); // this might take time
 
     bool bNoReadOnlyFiles = true;
@@ -318,10 +327,26 @@ void ADN_MainWindow::SaveAsProject()
     if( strDirectoryName.isEmpty() )
         return;
 
-    QApplication::setOverrideCursor( Qt::waitCursor ); // this might take time
     std::string res = strDirectoryName.toStdString();
     std::replace( res.begin(), res.end(), '\\', '/' );
     res += "/physical.xml";
+
+    bfs::path physicalPath( res );
+    if( bfs::exists( res ) )
+    {
+        bool readOnly = false;
+        xml::xifstream xis( res );
+        xis >> xml::optional >> xml::start( "physical" )
+            >> xml::optional >> xml::attribute( "read-only", readOnly );
+        if( readOnly )
+        {
+            QMessageBox::warning( this, tr( "Warning" ), tr( "The database you are trying to override is read-only. Please select another directory." ) );
+            SaveAsProject();
+            return;
+        }
+    }
+
+    QApplication::setOverrideCursor( Qt::waitCursor ); // this might take time
     bool hasSaved = true;
     try
     {
@@ -423,7 +448,10 @@ void ADN_MainWindow::OpenProject( const std::string& szFilename, const bool isAd
     else
         workspace_.Load( szFilename, *fileLoader_ );
     QApplication::restoreOverrideCursor();    // restore original cursor
-    setCaption( tr( "Sword Adaptation Tool - %1" ).arg( szFilename.c_str() ) );
+    QString title = tr( "Sword Adaptation Tool - %1" ).arg( szFilename.c_str() );
+    if( workspace_.GetProject().GetDataInfos().IsReadOnly() )
+        title += tr( " [ Read Only ]");
+    setCaption( title );
     SetMenuEnabled( true );
     mainTabWidget_->show();
     if( !isAdminMode && !fileLoaderObserver_->GetInvalidSignedFiles().empty() )
@@ -475,7 +503,7 @@ void ADN_MainWindow::TestData()
         int nResult = QMessageBox::question( this, tr( "Data test" ), tr( "Project will be saved in order to execute data test." ), QMessageBox::Ok, QMessageBox::Cancel );
         if( nResult == QMessageBox::Cancel )
             return;
-        SaveProject();
+        DoSaveProject();
     }
 
     try
@@ -547,7 +575,11 @@ void ADN_MainWindow::ChangeSaveState( bool bNoCommand )
         else
         {
             szProject = ADN_Project_Data::GetWorkDirInfos().GetWorkingDirectory().GetData() + szProject;
-            setCaption( tr( "Sword Adaptation Tool - " ) + szProject.c_str() );
+
+            QString title = tr( "Sword Adaptation Tool - " ) + szProject.c_str();
+            if( workspace_.GetProject().GetDataInfos().IsReadOnly() )
+                title += tr( " [ Read Only ]");
+            setCaption( title );
         }
     }
 }

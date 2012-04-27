@@ -101,8 +101,11 @@ ADN_Workspace* ADN_Workspace::pWorkspace_=0;
 //-----------------------------------------------------------------------------
 ADN_Workspace& ADN_Workspace::GetWorkspace()
 {
-    if (!pWorkspace_)
-        new ADN_Workspace();
+    if ( !pWorkspace_ )
+    {
+        pWorkspace_ = new ADN_Workspace();
+        pWorkspace_->Initialize();
+    }
     return *pWorkspace_;
 }
 
@@ -112,9 +115,7 @@ ADN_Workspace& ADN_Workspace::GetWorkspace()
 //-----------------------------------------------------------------------------
 void ADN_Workspace::CleanWorkspace()
 {
-    if (pWorkspace_)
-        delete pWorkspace_;
-    pWorkspace_=0;
+    delete pWorkspace_;
 }
 
 //-----------------------------------------------------------------------------
@@ -126,8 +127,15 @@ ADN_Workspace::ADN_Workspace()
     , pUndoStack_        ( 0 )
     , nOpenMode_         ( eOpenMode_Normal )
 {
-    pWorkspace_ = this;
+    // NOTHING
+}
 
+// -----------------------------------------------------------------------------
+// Name: ADN_Workspace::Initialize
+// Created: JSR 2012-04-26
+// -----------------------------------------------------------------------------
+void ADN_Workspace::Initialize()
+{
     projectData_ = new ADN_Project_Data();
     // Creation order
     elements_[eDrawings]          = new ADN_WorkspaceElement< ADN_Drawings_Data, ADN_Drawings_GUI>( tr( "Drawings" ) );
@@ -313,12 +321,14 @@ bool ADN_Workspace::IsValidDatabase()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ADN_Workspace::IsValidDatabase
+// Name: ADN_Workspace::SetOptions
 // Created: LDC 2011-09-21
 // -----------------------------------------------------------------------------
-void ADN_Workspace::ShowSymbols( bool symbols )
+void ADN_Workspace::SetOptions( bool symbols, bool noreadonly )
 {
     symbols_ = symbols;
+    if( noreadonly )
+        GetProject().GetDataInfos().SetNoReadOnly();
 }
 
 // -----------------------------------------------------------------------------
@@ -460,6 +470,7 @@ bool ADN_Workspace::SaveAs( const std::string& filename, const tools::Loader_ABC
     GetUndoStack().clear();
     // Save is ended
     ResetProgressIndicator();
+    projectData_->GetDataInfos().DisableReadOnly();
     return true;
 }
 
