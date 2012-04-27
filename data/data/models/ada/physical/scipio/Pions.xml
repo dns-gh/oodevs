@@ -16535,39 +16535,7 @@
     <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.INF" id="561" name="GLAISE - INF . BTR 80" type="Pion INF">
-    <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
-    <equipments>
-      <equipment count="3" crew="3" major="true" type="BTR 80"/>
-      <equipment count="19" crew="1" loadable="true" type="Fantassin AK47"/>
-      <equipment count="3" crew="1" loadable="true" type="Tireur Elite"/>
-      <equipment count="2" crew="5" loadable="true" type="Eqp AT7"/>
-    </equipments>
-    <sensors-range range="3000"/>
-    <equipments-range range="1500"/>
-    <crew-ranks>
-      <crew-rank count="1" type="Officier"/>
-      <crew-rank count="8" type="SousOfficier"/>
-    </crew-ranks>
-    <postures>
-      <posture name="PosteReflexe" setup-time="30s"/>
-      <posture name="Poste" setup-time="300s"/>
-      <posture name="PosteAmenage" setup-time="1800s"/>
-      <posture name="PostePrepareGenie" setup-time="1800s"/>
-    </postures>
-    <setup footprint-radius="10" speed-modifier="0.7"/>
-    <nbc decontamination-delay="600s"/>
-    <distance-before-points>
-      <distance-before-point type="forest" value="500"/>
-      <distance-before-point type="urban area" value="500"/>
-      <distance-before-point type="crossroad" value="500"/>
-      <distance-before-point type="bridge" value="500"/>
-    </distance-before-points>
-    <drill-blow length="300" width="300"/>
-    <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
-    <crossing-height height="0m"/>
-  </unit>
-  <unit decisional-model="Masalife.INF.Appui Mortier" id="562" name="GLAISE - INF . Groupe Mortier 81" type="Pion INF">
+  <unit decisional-model="Masalife.INF.Appui Mortier" id="561" name="GLAISE - INF . Groupe Mortier 81" type="Pion INF">
     <nature atlas-nature="ASS" level="oo" nature-app6="combat/field artillery/mortar"/>
     <equipments>
       <equipment count="2" crew="3" type="BTR 70"/>
@@ -16601,7 +16569,7 @@
     <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.INF.HOT" id="563" name="GLAISE - AC . Section BRDM2 AT 5" type="Pion INF">
+  <unit decisional-model="Masalife.INF.HOT" id="562" name="GLAISE - AC . Section BRDM2 AT 5" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/anti armor/armored/wheeled"/>
     <equipments>
       <equipment count="3" crew="3" major="true" type="BRDM 2 AT5"/>
@@ -16630,7 +16598,7 @@
     <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.INF.HOT" id="564" name="GLAISE - AC . Section toyota 106 SR" type="Pion INF">
+  <unit decisional-model="Masalife.INF.HOT" id="563" name="GLAISE - AC . Section toyota 106 SR" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/anti armor/armored/wheeled"/>
     <equipments>
       <equipment count="5" crew="4" major="true" type="Toyota 106 SR"/>
@@ -16659,7 +16627,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ABC.AMX" id="565" name="GLAISE - ABC . Section T62" type="Pion ABC">
+  <unit decisional-model="Masalife.ABC.AMX" id="564" name="GLAISE - ABC . Section T62" type="Pion ABC">
     <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/track"/>
     <equipments>
       <equipment count="3" crew="4" major="true" type="Char T62"/>
@@ -16688,7 +16656,7 @@
     <efficiencies combat="100" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ABC.AMX" id="566" name="GLAISE - ABC . Section CHIEFTAIN" type="Pion ABC">
+  <unit decisional-model="Masalife.ABC.AMX" id="565" name="GLAISE - ABC . Section CHIEFTAIN" type="Pion ABC">
     <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/track"/>
     <equipments>
       <equipment count="3" crew="4" major="true" type="Char CHIEFTAIN"/>
@@ -16717,7 +16685,7 @@
     <efficiencies combat="100" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ABC.PC" id="567" name="GLAISE - ABC . PC Escadron T62" type="Pion ABC">
+  <unit decisional-model="Masalife.ABC.PC" id="566" name="GLAISE - ABC . PC Escadron T62" type="Pion ABC">
     <nature atlas-nature="Blinde" level="i" nature-app6="combat/armor/track"/>
     <equipments>
       <equipment count="1" crew="4" major="true" type="Char T62"/>
@@ -16746,7 +16714,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ABC.PC" id="568" name="GLAISE - ABC . PC Escadron T72 BM" type="Pion ABC">
+  <unit decisional-model="Masalife.ABC.PC" id="567" name="GLAISE - ABC . PC Escadron T72 BM" type="Pion ABC">
     <nature atlas-nature="Blinde" level="i" nature-app6="combat/armor/track"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="Char T72 BM"/>
@@ -16775,7 +16743,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ABC.PC" id="569" name="GLAISE - ABC . PC Escadron CHIEFTAIN" type="Pion ABC">
+  <unit decisional-model="Masalife.ABC.PC" id="568" name="GLAISE - ABC . PC Escadron CHIEFTAIN" type="Pion ABC">
     <nature atlas-nature="Blinde" level="i" nature-app6="combat/armor/track"/>
     <equipments>
       <equipment count="1" crew="4" major="true" type="Char CHIEFTAIN"/>
@@ -16804,7 +16772,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ABC.EI" id="570" name="GLAISE - ABC . Patrouille EI BMP 2" type="Pion ABC">
+  <unit decisional-model="Masalife.ABC.EI" id="569" name="GLAISE - ABC . Patrouille EI BMP 2" type="Pion ABC">
     <nature atlas-nature="Blinde" level="oo" nature-app6="combat/reconnaissance"/>
     <equipments>
       <equipment count="3" crew="3" major="true" type="BMP 2 + AT5"/>
@@ -16827,7 +16795,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.INF" id="571" name="GLAISE - INF . Section BMP 1" type="Pion INF">
+  <unit decisional-model="Masalife.INF" id="570" name="GLAISE - INF . Section BMP 1" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/mechanized"/>
     <equipments>
       <equipment count="3" crew="3" major="true" type="BMP 1 + AT4"/>
@@ -16860,7 +16828,7 @@
     <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.INF.PC" id="572" name="GLAISE - INF . PC Cie BMP 1" type="Pion INF">
+  <unit decisional-model="Masalife.INF.PC" id="571" name="GLAISE - INF . PC Cie BMP 1" type="Pion INF">
     <nature atlas-nature="Vehicule" level="i" nature-app6="combat/infantry/mechanized"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="BMP 1"/>
@@ -16889,7 +16857,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.INF.PC" id="573" name="GLAISE - INF . PC Cie BMP 2" type="Pion INF">
+  <unit decisional-model="Masalife.INF.PC" id="572" name="GLAISE - INF . PC Cie BMP 2" type="Pion INF">
     <nature atlas-nature="Vehicule" level="i" nature-app6="combat/infantry/mechanized"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="BMP 2"/>
@@ -16918,7 +16886,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.INF.HOT" id="574" name="GLAISE - ABC . Section Reco NBC BRDM 2" type="Pion NBC">
+  <unit decisional-model="Masalife.INF.HOT" id="573" name="GLAISE - ABC . Section Reco NBC BRDM 2" type="Pion NBC">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/anti armor/armored/wheeled"/>
     <equipments>
       <equipment count="1" crew="4" major="true" type="BRDM 2 RKh"/>
@@ -16947,7 +16915,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.NRBC.Reco - ROTA" id="575" name="GLAISE - NRBC . Equipe Reco RKh" type="Pion NBC">
+  <unit decisional-model="Masalife.NRBC.Reco - ROTA" id="574" name="GLAISE - NRBC . Equipe Reco RKh" type="Pion NBC">
     <nature atlas-nature="Blinde" level="o" nature-app6="combat support/nbc"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="RKh M"/>
@@ -16976,7 +16944,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Genie.PAA - EFA" id="576" name="GLAISE - GEN . Groupe MTU 72" type="Pion GEN">
+  <unit decisional-model="Masalife.Genie.PAA - EFA" id="575" name="GLAISE - GEN . Groupe MTU 72" type="Pion GEN">
     <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/combat/recon"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="MTU 72"/>
@@ -17005,7 +16973,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="100" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Genie.PAA - EFA" id="577" name="GLAISE - GEN . Groupe GSP" type="Pion GEN">
+  <unit decisional-model="Masalife.Genie.PAA - EFA" id="576" name="GLAISE - GEN . Groupe GSP" type="Pion GEN">
     <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/combat/recon"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="GSP"/>
@@ -17034,7 +17002,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="100" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Genie.DISP - OT - MLF - MFRD - Enfouisseur - Chantier" id="578" name="GLAISE - GEN . Groupe BTM" type="Pion GEN">
+  <unit decisional-model="Masalife.Genie.DISP - OT - MLF - MFRD - Enfouisseur - Chantier" id="577" name="GLAISE - GEN . Groupe BTM" type="Pion GEN">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/engineer"/>
     <equipments>
       <equipment count="2" crew="1" major="true" type="BTM"/>
@@ -17063,7 +17031,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="100" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Genie.DISP - OT - MLF - MFRD - Enfouisseur - Chantier" id="579" name="GLAISE - GEN . Groupe BAT2" type="Pion GEN">
+  <unit decisional-model="Masalife.Genie.DISP - OT - MLF - MFRD - Enfouisseur - Chantier" id="578" name="GLAISE - GEN . Groupe BAT2" type="Pion GEN">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/engineer"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="BAT2"/>
@@ -17092,7 +17060,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="100" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Genie.DISP - OT - MLF - MFRD - Enfouisseur - Chantier" id="580" name="GLAISE - GEN . Groupe GMZ 3" type="Pion GEN">
+  <unit decisional-model="Masalife.Genie.DISP - OT - MLF - MFRD - Enfouisseur - Chantier" id="579" name="GLAISE - GEN . Groupe GMZ 3" type="Pion GEN">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/engineer/combat/mechanized"/>
     <equipments>
       <equipment count="2" crew="4" major="true" type="GMZ 3"/>
@@ -17121,7 +17089,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="100" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Genie.DISP - OT - MLF - MFRD - Enfouisseur - Chantier" id="581" name="GLAISE - GEN . Groupe MDK2" type="Pion GEN">
+  <unit decisional-model="Masalife.Genie.DISP - OT - MLF - MFRD - Enfouisseur - Chantier" id="580" name="GLAISE - GEN . Groupe MDK2" type="Pion GEN">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/engineer/combat/mechanized"/>
     <equipments>
       <equipment count="2" crew="1" major="true" type="MDK2"/>
@@ -17150,7 +17118,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="50" engineering-support="0" mobility-support="50" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Genie" id="582" name="GLAISE - GEN . Section combat" type="Pion GEN">
+  <unit decisional-model="Masalife.Genie" id="581" name="GLAISE - GEN . Section combat" type="Pion GEN">
     <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer"/>
     <equipments>
       <equipment count="1" crew="3" type="ZIL 131"/>
@@ -17179,7 +17147,7 @@
     <efficiencies combat="0" combat-support="10" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Genie.PC" id="583" name="GLAISE - GEN . PC Cie Genie" type="Pion GEN">
+  <unit decisional-model="Masalife.Genie.PC" id="582" name="GLAISE - GEN . PC Cie Genie" type="Pion GEN">
     <nature atlas-nature="None" level="i" nature-app6="combat/engineer"/>
     <equipments>
       <equipment count="3" crew="10" major="true" type="BTR 70 GEN"/>
@@ -17208,7 +17176,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Genie.PAA - EFA" id="584" name="GLAISE - GEN . Groupe PMP" type="Pion GEN">
+  <unit decisional-model="Masalife.Genie.PAA - EFA" id="583" name="GLAISE - GEN . Groupe PMP" type="Pion GEN">
     <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/combat/recon"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="PMP"/>
@@ -17237,7 +17205,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="100" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ABC.EI" id="585" name="GLAISE - ABC . Patrouille EI BRDM2" type="Pion ABC">
+  <unit decisional-model="Masalife.ABC.EI" id="584" name="GLAISE - ABC . Patrouille EI BRDM2" type="Pion ABC">
     <nature atlas-nature="Blinde" level="oo" nature-app6="combat/reconnaissance"/>
     <equipments>
       <equipment count="2" crew="4" major="true" type="BRDM 2"/>
@@ -17260,7 +17228,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.INF" id="586" name="GLAISE - INF . Section BMP 2 sans AT" type="Pion INF">
+  <unit decisional-model="Masalife.INF" id="585" name="GLAISE - INF . Section BMP 2 sans AT" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/mechanized"/>
     <equipments>
       <equipment count="15" crew="1" loadable="true" type="Fantassin AK47"/>
@@ -17293,7 +17261,7 @@
     <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.INF" id="587" name="GLAISE - INF . Section BMP 1 sans AT" type="Pion INF">
+  <unit decisional-model="Masalife.INF" id="586" name="GLAISE - INF . Section BMP 1 sans AT" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/mechanized"/>
     <equipments>
       <equipment count="15" crew="1" loadable="true" type="Fantassin AK47"/>
@@ -17326,7 +17294,7 @@
     <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.INF.PC" id="588" name="GLAISE - INF . PC Cie BTR70" type="Pion INF">
+  <unit decisional-model="Masalife.INF.PC" id="587" name="GLAISE - INF . PC Cie BTR70" type="Pion INF">
     <nature atlas-nature="Vehicule" level="i" nature-app6="combat/infantry/motorized"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="BTR 70"/>
@@ -17355,7 +17323,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.INF" id="589" name="GLAISE - INF . Section BTR70" type="Pion INF">
+  <unit decisional-model="Masalife.INF" id="588" name="GLAISE - INF . Section BTR70" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
       <equipment count="15" crew="1" loadable="true" type="Fantassin AK47"/>
@@ -17388,7 +17356,7 @@
     <efficiencies combat="100" combat-support="20" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ABC.EI" id="590" name="GLAISE - ABC . Peloton SCORPION" type="Pion ABC">
+  <unit decisional-model="Masalife.ABC.EI" id="589" name="GLAISE - ABC . Peloton SCORPION" type="Pion ABC">
     <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/wheeled"/>
     <equipments>
       <equipment count="3" crew="3" major="true" type="SCORPION"/>
@@ -17418,7 +17386,7 @@
     <efficiencies combat="100" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ABC.EI" id="591" name="GLAISE - ABC . Patrouille EI BMP 1" type="Pion ABC">
+  <unit decisional-model="Masalife.ABC.EI" id="590" name="GLAISE - ABC . Patrouille EI BMP 1" type="Pion ABC">
     <nature atlas-nature="Blinde" level="oo" nature-app6="combat/reconnaissance"/>
     <equipments>
       <equipment count="3" crew="3" major="true" type="BMP 1 + AT4"/>
@@ -17441,7 +17409,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ABC.PC" id="592" name="GLAISE - ABC . PC Peloton EI" type="Pion ABC">
+  <unit decisional-model="Masalife.ABC.PC" id="591" name="GLAISE - ABC . PC Peloton EI" type="Pion ABC">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/reconnaissance"/>
     <equipments>
       <equipment count="1" crew="4" major="true" type="BRDM 2"/>
@@ -17470,7 +17438,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.INF" id="593" name="GLAISE - INF . Section BMP 2" type="Pion INF">
+  <unit decisional-model="Masalife.INF" id="592" name="GLAISE - INF . Section BMP 2" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/mechanized"/>
     <equipments>
       <equipment count="3" crew="3" major="true" type="BMP 2 + AT5"/>
@@ -17503,7 +17471,7 @@
     <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ABC.AMX" id="594" name="GLAISE - ABC . Section T72 BM" type="Pion ABC">
+  <unit decisional-model="Masalife.ABC.AMX" id="593" name="GLAISE - ABC . Section T72 BM" type="Pion ABC">
     <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/track/heavy"/>
     <equipments>
       <equipment count="3" crew="3" major="true" type="Char T72 BM"/>
@@ -17532,7 +17500,7 @@
     <efficiencies combat="100" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.TC2" id="595" name="GLAISE - LOG . TC2 char" type="Pion LOG TC2">
+  <unit decisional-model="Masalife.LOG.TC2" id="594" name="GLAISE - LOG . TC2 char" type="Pion LOG TC2">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="14" crew="7" type="UAZ 469"/>
@@ -17582,7 +17550,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.INF.HOT" id="596" name="GLAISE - INF . Groupe AC 106 SR" type="Pion INF">
+  <unit decisional-model="Masalife.INF.HOT" id="595" name="GLAISE - INF . Groupe AC 106 SR" type="Pion INF">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/anti armor/armored/wheeled"/>
     <equipments>
       <equipment count="5" crew="3" major="true" type="Toyota 106 SR"/>
@@ -17611,7 +17579,7 @@
     <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.INF.HOT" id="597" name="GLAISE - INF . Groupe AC BRDM2 AT5" type="Pion INF">
+  <unit decisional-model="Masalife.INF.HOT" id="596" name="GLAISE - INF . Groupe AC BRDM2 AT5" type="Pion INF">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/anti armor/armored/wheeled"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="BRDM 2 AT5"/>
@@ -17640,7 +17608,7 @@
     <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ABC.PC" id="598" name="GLAISE - ABC . PC Escadron RECO" type="Pion ABC">
+  <unit decisional-model="Masalife.ABC.PC" id="597" name="GLAISE - ABC . PC Escadron RECO" type="Pion ABC">
     <nature atlas-nature="Blinde" level="i" nature-app6="combat/reconnaissance"/>
     <equipments>
       <equipment count="1" crew="4" major="true" type="BRDM 2"/>
@@ -17669,7 +17637,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.INF.PC" id="599" name="GLAISE - INF . Section CDT BRDM 2 AT5" type="Pion INF">
+  <unit decisional-model="Masalife.INF.PC" id="598" name="GLAISE - INF . Section CDT BRDM 2 AT5" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/anti armor/armored/wheeled"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="BMP 2"/>
@@ -17698,7 +17666,7 @@
     <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Genie.PAA - EFA" id="600" name="GLAISE - GEN . Groupe TMM" type="Pion GEN">
+  <unit decisional-model="Masalife.Genie.PAA - EFA" id="599" name="GLAISE - GEN . Groupe TMM" type="Pion GEN">
     <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/combat/recon"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="TMM"/>
@@ -17727,7 +17695,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="100" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Genie.DISP - OT - MLF - MFRD - Enfouisseur - Chantier" id="601" name="GLAISE - GEN . Groupe PMR-3" type="Pion GEN">
+  <unit decisional-model="Masalife.Genie.DISP - OT - MLF - MFRD - Enfouisseur - Chantier" id="600" name="GLAISE - GEN . Groupe PMR-3" type="Pion GEN">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/engineer/combat/mechanized"/>
     <equipments>
       <equipment count="2" crew="5" major="true" type="PMR-3 + ZIL 157"/>
@@ -17756,7 +17724,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="50" engineering-support="0" mobility-support="50" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Genie.PAA - EFA" id="602" name="GLAISE - GEN . Groupe PTS" type="Pion GEN">
+  <unit decisional-model="Masalife.Genie.PAA - EFA" id="601" name="GLAISE - GEN . Groupe PTS" type="Pion GEN">
     <nature atlas-nature="None" level="oo" nature-app6="combat/engineer/combat/recon"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="PTS"/>
@@ -17785,7 +17753,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="50" engineering-support="0" mobility-support="50" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Genie.DISP - OT - MLF - MFRD - Enfouisseur - Chantier" id="603" name="GLAISE - GEN . Groupe PZM" type="Pion GEN">
+  <unit decisional-model="Masalife.Genie.DISP - OT - MLF - MFRD - Enfouisseur - Chantier" id="602" name="GLAISE - GEN . Groupe PZM" type="Pion GEN">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/engineer/combat/mechanized"/>
     <equipments>
       <equipment count="3" crew="1" major="true" type="PZM-2"/>
@@ -17814,7 +17782,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="50" engineering-support="0" mobility-support="50" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Genie.PC" id="604" name="GLAISE - GEN . Section CDT genie franchissement" type="Pion GEN">
+  <unit decisional-model="Masalife.Genie.PC" id="603" name="GLAISE - GEN . Section CDT genie franchissement" type="Pion GEN">
     <nature atlas-nature="None" level="i" nature-app6="combat/engineer/combat/recon"/>
     <equipments>
       <equipment count="3" crew="10" major="true" type="BTR 70 GEN"/>
@@ -17843,7 +17811,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="100" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Genie.PC" id="605" name="GLAISE - GEN . Section CDT genie organisation terrain" type="Pion GEN">
+  <unit decisional-model="Masalife.Genie.PC" id="604" name="GLAISE - GEN . Section CDT genie organisation terrain" type="Pion GEN">
     <nature atlas-nature="Vehicule" level="i" nature-app6="combat/engineer/combat/mechanized"/>
     <equipments>
       <equipment count="3" crew="10" major="true" type="BTR 70 GEN"/>
@@ -17872,7 +17840,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="100" engineering-support="0" mobility-support="100" protection-support="100" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="606" name="GLAISE - CIRCU . PL KAMAZ 4310" type="Pion CIRCULATION">
+  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="605" name="GLAISE - CIRCU . PL KAMAZ 4310" type="Pion CIRCULATION">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="PL KAMAZ 4310"/>
@@ -17894,7 +17862,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="607" name="GLAISE - CIRCU . PL KAMAZ 5320" type="Pion CIRCULATION">
+  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="606" name="GLAISE - CIRCU . PL KAMAZ 5320" type="Pion CIRCULATION">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="PL KAMAZ 5320"/>
@@ -17916,7 +17884,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="608" name="GLAISE - CIRCU . PL MAZ 500" type="Pion CIRCULATION">
+  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="607" name="GLAISE - CIRCU . PL MAZ 500" type="Pion CIRCULATION">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="PL MAZ 500"/>
@@ -17938,7 +17906,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="609" name="GLAISE - CIRCU . PL OURAL 4320" type="Pion CIRCULATION">
+  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="608" name="GLAISE - CIRCU . PL OURAL 4320" type="Pion CIRCULATION">
     <nature atlas-nature="Log" level="oo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="PL OURAL 4320"/>
@@ -17960,7 +17928,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.PC" id="610" name="GLAISE - LOG . PC PL" type="Pion LOG BLD Ravitaillement">
+  <unit decisional-model="Masalife.LOG.PC" id="609" name="GLAISE - LOG . PC PL" type="Pion LOG BLD Ravitaillement">
     <nature atlas-nature="Log" level="i" nature-app6="combat service support/supply"/>
     <equipments>
       <equipment count="1" crew="2" loadable="true" major="true" type="UAZ 469"/>
@@ -17982,7 +17950,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="611" name="GLAISE - CIRCU . PL humanitaire" type="Pion CIRCULATION">
+  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="610" name="GLAISE - CIRCU . PL humanitaire" type="Pion CIRCULATION">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment count="5" crew="3" major="true" type="PL OURAL 4320"/>
@@ -18004,7 +17972,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.INF" id="612" name="GLAISE - INF . Section CDT CAC" type="Pion INF">
+  <unit decisional-model="Masalife.INF" id="611" name="GLAISE - INF . Section CDT CAC" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/anti armor/armored/wheeled"/>
     <equipments>
       <equipment count="3" crew="3" major="true" type="BRDM 2 AT5"/>
@@ -18033,7 +18001,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.INF" id="613" name="GLAISE - INF . Section CAC" type="Pion INF">
+  <unit decisional-model="Masalife.INF" id="612" name="GLAISE - INF . Section CAC" type="Pion INF">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/infantry/motorized"/>
     <equipments>
       <equipment count="3" crew="3" major="true" type="BRDM 2 AT5"/>
@@ -18062,7 +18030,7 @@
     <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit can-fly="true" decisional-model="Masalife.AIR.Patrouille Assaut" id="614" name="GLAISE - ALFT- Patrouille SU 25" type="Pion ALAT">
+  <unit can-fly="true" decisional-model="Masalife.AIR.Patrouille Assaut" id="613" name="GLAISE - ALFT- Patrouille SU 25" type="Pion ALAT">
     <nature atlas-nature="Helicoptere" level="ooo" nature-app6="combat/aviation/rotary wing/attack"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="SU 25"/>
@@ -18090,7 +18058,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ABC.EI" id="615" name="GLAISE - ABC . PC Peloton EI BRDM2" type="Pion ABC">
+  <unit decisional-model="Masalife.ABC.EI" id="614" name="GLAISE - ABC . PC Peloton EI BRDM2" type="Pion ABC">
     <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/reconnaissance"/>
     <equipments>
       <equipment count="2" crew="4" major="true" type="BRDM 2"/>
@@ -18113,7 +18081,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.INF" id="616" name="GLAISE - INF . Cie CDT CAC" type="Pion INF">
+  <unit decisional-model="Masalife.INF" id="615" name="GLAISE - INF . Cie CDT CAC" type="Pion INF">
     <nature atlas-nature="Vehicule" level="i" nature-app6="combat/anti armor/armored/wheeled"/>
     <equipments>
       <equipment count="3" crew="3" major="true" type="BRDM 2 AT5"/>
@@ -18142,7 +18110,7 @@
     <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.NRBC.Reco - ROTA" id="617" name="GLAISE - NRBC . PC Reco RKh" type="Pion NBC">
+  <unit decisional-model="Masalife.NRBC.Reco - ROTA" id="616" name="GLAISE - NRBC . PC Reco RKh" type="Pion NBC">
     <nature atlas-nature="Blinde" level="oo" nature-app6="combat support/nbc/chemical"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="RKh M"/>
@@ -18171,7 +18139,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="618" name="GLAISE - CIRCU . PC MAZ 500" type="Pion CIRCULATION">
+  <unit decisional-model="Masalife.CIRCU.Peloton Transport Blindes" id="617" name="GLAISE - CIRCU . PC MAZ 500" type="Pion CIRCULATION">
     <nature atlas-nature="Log" level="ooo" nature-app6="combat service support/transportation"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="PL MAZ 500"/>
@@ -18193,7 +18161,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ABC.PC" id="619" name="GLAISE - ABC . PC Escadron T72" type="Pion ABC">
+  <unit decisional-model="Masalife.ABC.PC" id="618" name="GLAISE - ABC . PC Escadron T72" type="Pion ABC">
     <nature atlas-nature="Blinde" level="i" nature-app6="combat/armor/wheeled/medium"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="Char T72"/>
@@ -18222,7 +18190,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ABC.AMX" id="620" name="GLAISE - ABC . Section T72" type="Pion ABC">
+  <unit decisional-model="Masalife.ABC.AMX" id="619" name="GLAISE - ABC . Section T72" type="Pion ABC">
     <nature atlas-nature="Blinde" level="ooo" nature-app6="combat/armor/track/heavy"/>
     <equipments>
       <equipment count="3" crew="3" major="true" type="Char T72"/>
@@ -18251,7 +18219,7 @@
     <efficiencies combat="100" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="0"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Coge" id="621" name="RENS . Coge Linx" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Coge" id="620" name="RENS . Coge Linx" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="i" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/direction finding"/>
     <equipments>
       <equipment count="2" crew="4" major="true" type="VAB LINX"/>
@@ -18279,7 +18247,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit can-fly="true" decisional-model="Masalife.RENS.Drone DRAC" id="622" is-autonomous="true" name="RENS . Drone DRAC" type="Pion RENS">
+  <unit can-fly="true" decisional-model="Masalife.RENS.Drone DRAC" id="621" is-autonomous="true" name="RENS . Drone DRAC" type="Pion RENS">
     <nature atlas-nature="Indefini" level="oo" nature-app6="combat/aviation/unmanned aerial vehicle/fixed_wing"/>
     <equipments>
       <equipment count="1" crew="0" major="true" type="Drone DRAC"/>
@@ -18307,7 +18275,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit can-fly="true" decisional-model="Masalife.RENS.Drone SDTI" id="623" is-autonomous="true" name="RENS . Drone SDTI" type="Pion RENS">
+  <unit can-fly="true" decisional-model="Masalife.RENS.Drone SDTI" id="622" is-autonomous="true" name="RENS . Drone SDTI" type="Pion RENS">
     <nature atlas-nature="Indefini" level="oo" nature-app6="combat/aviation/unmanned aerial vehicle/fixed_wing"/>
     <equipments>
       <equipment count="1" crew="0" major="true" type="Drone SDTI"/>
@@ -18335,7 +18303,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Section ROHUM" id="624" name="RENS . Equipe de recueil information" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Section ROHUM" id="623" name="RENS . Equipe de recueil information" type="Pion RENS">
     <nature atlas-nature="None" level="oo" nature-app6="special operation forces/unit ground/military intelligence"/>
     <equipments>
       <equipment count="1" crew="2" loadable="true" type="Fantassin + FAMAS 5.56 INF"/>
@@ -18365,7 +18333,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Sections mise en oeuvre DRAC" id="625" name="RENS . Section MO DRAC" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Sections mise en oeuvre DRAC" id="624" name="RENS . Section MO DRAC" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/aviation/fixed wing"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="VBL 7,62"/>
@@ -18394,7 +18362,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Sections mise en oeuvre SDTI" id="626" name="RENS . PC MO DRAC" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Sections mise en oeuvre SDTI" id="625" name="RENS . PC MO DRAC" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat/aviation/fixed wing"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="TRM 4000"/>
@@ -18422,7 +18390,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="30" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Sections mise en oeuvre SDTI" id="627" name="RENS . Section MO SDTI" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Sections mise en oeuvre SDTI" id="626" name="RENS . Section MO SDTI" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat/aviation/unmanned aerial vehicle/fixed_wing"/>
     <equipments>
       <equipment count="4" crew="2" major="true" type="VLRA"/>
@@ -18452,7 +18420,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Pat URH" id="628" name="RENS . Equipe URH OFF" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Pat URH" id="627" name="RENS . Equipe URH OFF" type="Pion RENS">
     <nature atlas-nature="None" level="ooo" nature-app6="special operation forces/unit ground/military intelligence"/>
     <equipments>
       <equipment count="4" crew="1" loadable="true" major="true" type="Fantassin URH"/>
@@ -18482,7 +18450,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Pat URH" id="629" name="RENS . Equipe URH S/OFF" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Pat URH" id="628" name="RENS . Equipe URH S/OFF" type="Pion RENS">
     <nature atlas-nature="None" level="oo" nature-app6="special operation forces/unit ground/military intelligence"/>
     <equipments>
       <equipment count="4" crew="1" loadable="true" major="true" type="Fantassin URH"/>
@@ -18512,7 +18480,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Groupe BROVAB" id="630" name="RENS . Groupe BROMURE" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Groupe BROVAB" id="629" name="RENS . Groupe BROMURE" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/jamming"/>
     <equipments>
       <equipment count="4" crew="3" major="true" type="VAB BROMURE"/>
@@ -18542,7 +18510,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Groupe ELGE" id="631" name="RENS . Groupe ELGE" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Groupe ELGE" id="630" name="RENS . Groupe ELGE" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/direction finding"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="VTC P4 BROD"/>
@@ -18570,7 +18538,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Groupe ELGE" id="632" name="RENS . Groupe ROEM" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Groupe ELGE" id="631" name="RENS . Groupe ROEM" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/direction finding"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="VBL 7,62 ROEM"/>
@@ -18598,7 +18566,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.START - STAIR - ELODEE" id="633" name="RENS . Module Interception SAEC" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.START - STAIR - ELODEE" id="632" name="RENS . Module Interception SAEC" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/direction finding"/>
     <equipments>
       <equipment count="5" crew="3" major="true" type="VLRA SAEC"/>
@@ -18628,7 +18596,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.START - STAIR - ELODEE" id="634" name="RENS . Module Localisation SPRINT" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.START - STAIR - ELODEE" id="633" name="RENS . Module Localisation SPRINT" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="oo" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/direction finding"/>
     <equipments>
       <equipment count="1" crew="2" type="VTC P4 7,62"/>
@@ -18658,7 +18626,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.START - STAIR - ELODEE" id="635" name="RENS . Module STAIR" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.START - STAIR - ELODEE" id="634" name="RENS . Module STAIR" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/direction finding"/>
     <equipments>
       <equipment count="3" crew="3" major="true" type="VLRA STAIR"/>
@@ -18688,7 +18656,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Pat recherche blindee" id="636" name="RENS . Patrouille Recherche Blindee" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Pat recherche blindee" id="635" name="RENS . Patrouille Recherche Blindee" type="Pion RENS">
     <nature atlas-nature="None" level="oo" nature-app6="special operation forces/unit ground/military intelligence"/>
     <equipments>
       <equipment count="4" crew="1" loadable="true" type="Fantassin + FAMAS 5.56 INF"/>
@@ -18718,7 +18686,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Pat recherche moto" id="637" name="RENS . Patrouille Recherche Moto" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Pat recherche moto" id="636" name="RENS . Patrouille Recherche Moto" type="Pion RENS">
     <nature atlas-nature="None" level="oo" nature-app6="special operation forces/unit ground/military intelligence"/>
     <equipments>
       <equipment count="5" crew="1" loadable="true" major="true" type="Moto CAGIVA 350"/>
@@ -18747,7 +18715,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Pat recherche nautique" id="638" name="RENS . Patrouille Recherche Nautique" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Pat recherche nautique" id="637" name="RENS . Patrouille Recherche Nautique" type="Pion RENS">
     <nature atlas-nature="None" level="oo" nature-app6="special operation forces/unit ground/military intelligence"/>
     <equipments>
       <equipment count="2" crew="1" major="true" type="VBL 7,62"/>
@@ -18778,7 +18746,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Pat recherche RASIT" id="639" name="RENS . Patrouille Recherche Radar" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Pat recherche RASIT" id="638" name="RENS . Patrouille Recherche Radar" type="Pion RENS">
     <nature atlas-nature="None" level="oo" nature-app6="special operation forces/unit ground/military intelligence"/>
     <equipments>
       <equipment count="1" crew="1" major="true" type="TRM 2000 RASIT"/>
@@ -18808,7 +18776,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit can-fly="true" decisional-model="Masalife.RENS.Patrouille Viviane" id="640" name="RENS . Patrouille Rens Viviane" type="Pion RENS">
+  <unit can-fly="true" decisional-model="Masalife.RENS.Patrouille Viviane" id="639" name="RENS . Patrouille Rens Viviane" type="Pion RENS">
     <nature atlas-nature="Helicoptere" level="ooo" nature-app6="combat/aviation/rotary wing"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="Helicoptere HAV"/>
@@ -18838,7 +18806,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Pat recherche blindee" id="641" name="RENS . PC RBRR" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Pat recherche blindee" id="640" name="RENS . PC RBRR" type="Pion RENS">
     <nature atlas-nature="None" level="ooo" nature-app6="special operation forces/unit ground/military intelligence"/>
     <equipments>
       <equipment count="4" crew="1" loadable="true" type="Fantassin + FAMAS 5.56 INF"/>
@@ -18868,7 +18836,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="30" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Groupe ELGE" id="642" name="RENS . PC ROEM" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Groupe ELGE" id="641" name="RENS . PC ROEM" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/direction finding"/>
     <equipments>
       <equipment count="1" crew="3" major="true" type="VBL 7,62 ROEM"/>
@@ -18896,7 +18864,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="30" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Pat recherche blindee" id="643" name="RENS . Section CDT ROHUM" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Pat recherche blindee" id="642" name="RENS . Section CDT ROHUM" type="Pion RENS">
     <nature atlas-nature="PC" level="ooo" nature-app6="combat/reconnaissance"/>
     <equipments>
       <equipment count="2" crew="2" major="true" type="VBL 7,62"/>
@@ -18918,7 +18886,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.START - STAIR - ELODEE" id="644" name="RENS . Section ELODEE" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.START - STAIR - ELODEE" id="643" name="RENS . Section ELODEE" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/direction finding"/>
     <equipments>
       <equipment count="3" crew="2" type="TRM 2000 12,7"/>
@@ -18950,7 +18918,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Stations Horizon" id="645" name="RENS . Stations Horizon" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Stations Horizon" id="644" name="RENS . Stations Horizon" type="Pion RENS">
     <nature atlas-nature="Helicoptere" level="i" nature-app6="combat/aviation/rotary wing/scout"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="VLRA Horizon"/>
@@ -18980,7 +18948,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Stations Linx" id="646" name="RENS . Stations LINX" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Stations Linx" id="645" name="RENS . Stations LINX" type="Pion RENS">
     <nature atlas-nature="Vehicule" level="ooo" nature-app6="combat support/military intelligence/signal intelligence/electronic warfare/direction finding"/>
     <equipments>
       <equipment count="4" crew="4" major="true" type="VAB LINX"/>
@@ -19008,7 +18976,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit can-fly="true" decisional-model="Masalife.RENS.Drone SDTI" id="647" is-autonomous="true" name="RENS . DRAC" type="Pion RENS">
+  <unit can-fly="true" decisional-model="Masalife.RENS.Drone SDTI" id="646" is-autonomous="true" name="RENS . DRAC" type="Pion RENS">
     <nature atlas-nature="Indefini" level="o" nature-app6="combat/aviation/unmanned aerial vehicle/fixed_wing"/>
     <equipments>
       <equipment count="1" crew="0" major="true" type="Drone DRAC"/>
@@ -19036,7 +19004,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Pat URH" id="648" name="GLAISE - RENS . Patrouille URH" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Pat URH" id="647" name="GLAISE - RENS . Patrouille URH" type="Pion RENS">
     <nature atlas-nature="None" level="oo" nature-app6="special operation forces/unit ground/military intelligence"/>
     <equipments>
       <equipment count="4" crew="1" major="true" type="Moto GLAISE"/>
@@ -19065,7 +19033,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="100" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.RENS.Pat URH" id="649" name="GLAISE - RENS . PC URH" type="Pion RENS">
+  <unit decisional-model="Masalife.RENS.Pat URH" id="648" name="GLAISE - RENS . PC URH" type="Pion RENS">
     <nature atlas-nature="None" level="ooo" nature-app6="special operation forces/unit ground/military intelligence"/>
     <equipments>
       <equipment count="4" crew="1" major="true" type="Moto GLAISE"/>
@@ -19094,7 +19062,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="50" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Stations Horizon" id="650" name="ALAT - Stations Horizon" type="Pion RENS">
+  <unit decisional-model="Stations Horizon" id="649" name="ALAT - Stations Horizon" type="Pion RENS">
     <nature atlas-nature="Helicoptere" level="i" nature-app6="combat/aviation/rotary wing/scout"/>
     <equipments>
       <equipment count="2" crew="3" major="true" type="VLRA Horizon"/>
@@ -19124,7 +19092,7 @@
     <efficiencies combat="50" combat-support="50" counter-mobility-support="50" engineering-support="50" mobility-support="50" protection-support="50" recon="50" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="651" name="MILICE OXYDE . PICK UP 14.5" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="650" name="MILICE OXYDE . PICK UP 14.5" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="8" crew="1" loadable="true" type="Milicien AK47"/>
@@ -19154,7 +19122,7 @@
     <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="652" name="MILICE OXYDE . PICK UP AK47" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="651" name="MILICE OXYDE . PICK UP AK47" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="6" crew="1" loadable="true" type="Milicien AK47"/>
@@ -19185,7 +19153,7 @@
     <efficiencies combat="100" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="653" name="MILICE OXYDE . PICK UP CDT 14.5" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="652" name="MILICE OXYDE . PICK UP CDT 14.5" type="Pion MILICE">
     <nature atlas-nature="PC" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="6" crew="1" loadable="true" type="Milicien AK47"/>
@@ -19216,7 +19184,7 @@
     <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="654" name="MILICE OXYDE . PICK UP CDT AK47" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="653" name="MILICE OXYDE . PICK UP CDT AK47" type="Pion MILICE">
     <nature atlas-nature="PC" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="8" crew="1" loadable="true" type="Milicien AK47"/>
@@ -19246,7 +19214,7 @@
     <efficiencies combat="100" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.LOG.PC" id="655" name="LOG . TC2 Stock" type="Pion LOG TC2">
+  <unit decisional-model="Masalife.LOG.PC" id="654" name="LOG . TC2 Stock" type="Pion LOG TC2">
     <nature atlas-nature="PC" level="i" nature-app6="combat service support"/>
     <equipments>
       <equipment count="0" crew="1" major="true" type="Stock"/>
@@ -19275,7 +19243,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ASS.Section Tir" id="656" name="MILICE . PICK UP MO60" type="Pion ASS">
+  <unit decisional-model="Masalife.ASS.Section Tir" id="655" name="MILICE . PICK UP MO60" type="Pion ASS">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="1" crew="2" major="true" type="Pick Up LADA Mo 60"/>
@@ -19304,7 +19272,7 @@
     <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ASS.Section Tir" id="657" name="MILICE . PICK UP BM8" type="Pion ASS">
+  <unit decisional-model="Masalife.ASS.Section Tir" id="656" name="MILICE . PICK UP BM8" type="Pion ASS">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="4" crew="1" loadable="true" type="Milicien AK47"/>
@@ -19334,7 +19302,7 @@
     <efficiencies combat="100" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ASS.Section Tir" id="658" name="MILICE . PICK UP SA7" type="Pion ASS">
+  <unit decisional-model="Masalife.ASS.Section Tir" id="657" name="MILICE . PICK UP SA7" type="Pion ASS">
     <nature atlas-nature="None" level="oo" nature-app6="combat/air defense"/>
     <equipments>
       <equipment count="2" crew="2" loadable="true" type="Milicien AK47"/>
@@ -19364,7 +19332,7 @@
     <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.ASS.PC" id="659" name="MILICE OXYDE . PICK UP CDT SA7" type="Pion ASS">
+  <unit decisional-model="Masalife.ASS.PC" id="658" name="MILICE OXYDE . PICK UP CDT SA7" type="Pion ASS">
     <nature atlas-nature="PC" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="8" crew="1" loadable="true" type="Milicien AK47"/>
@@ -19394,7 +19362,7 @@
     <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="100"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="660" name="MILICE OXYDE . PICK UP ZU23/2" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="659" name="MILICE OXYDE . PICK UP ZU23/2" type="Pion MILICE">
     <nature atlas-nature="None" level="oo" nature-app6="combat"/>
     <equipments>
       <equipment count="6" crew="1" loadable="true" type="Milicien AK47"/>
@@ -19425,7 +19393,7 @@
     <efficiencies combat="0" combat-support="100" counter-mobility-support="0" engineering-support="0" mobility-support="0" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Milice" id="661" name="MILICE OXYDE . PICK UP CDT ZU23/2" type="Pion MILICE">
+  <unit decisional-model="Masalife.Milice" id="660" name="MILICE OXYDE . PICK UP CDT ZU23/2" type="Pion MILICE">
     <nature atlas-nature="PC" level="ooo" nature-app6="combat"/>
     <equipments>
       <equipment count="6" crew="1" loadable="true" type="Milicien AK47"/>
@@ -19457,4 +19425,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="3606698357" -->
+<!-- signature="2393570614" -->

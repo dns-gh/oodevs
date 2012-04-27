@@ -135,7 +135,7 @@
     <mobility default-speed="0" max-unit-percentage-speed="0" unit-speed-impact-mode="AuPlusLent"/>
     <population-filter density="0.5"/>
   </object>
-  <object geometry="polygon" name="eboulement" symbol="G*MPORC---****X" type="landslide">
+  <object geometry="polygon" name="eboulement" symbol="G*EBOUL---****X" type="landslide">
     <activable/>
     <avoidable distance="500"/>
     <constructor default-consumption-mode="EnTravaux" unit-type="raw">
@@ -444,4 +444,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="3941480815" -->
+<!-- signature="1926180529" -->
