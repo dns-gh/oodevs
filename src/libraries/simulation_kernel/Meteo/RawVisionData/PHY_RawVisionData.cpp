@@ -250,14 +250,20 @@ void PHY_RawVisionData::ModifyAltitude( const TER_Localisation& localisation, sh
     unsigned int endCol = GetCol( boundingBox.GetRight() );
     unsigned int startRow = GetCol( boundingBox.GetBottom() );
     unsigned int endRow = GetCol( boundingBox.GetTop() );
-    for( unsigned int y = startRow; y <= endRow + 1 && y < nNbrRow_; ++y )
-        for( unsigned int x = startCol; x <= endCol + 1 && x < nNbrCol_; ++x )
-            if( localisation.IsInside( MT_Vector2D( x * rCellSize_, y * rCellSize_ ) ) )
+    for( unsigned int y = startRow; y < endRow + 1 && y < nNbrRow_; ++y )
+        for( unsigned int x = startCol; x < endCol + 1 && x < nNbrCol_; ++x )
+        {
+            if( localisation.IsInside( MT_Vector2D( x         * rCellSize_, y         * rCellSize_ ) )
+             || localisation.IsInside( MT_Vector2D( ( x + 1 ) * rCellSize_, y         * rCellSize_ ) )
+             || localisation.IsInside( MT_Vector2D( x         * rCellSize_, ( y + 1 ) * rCellSize_ ) )
+             || localisation.IsInside( MT_Vector2D( ( x + 1 ) * rCellSize_, ( y + 1 ) * rCellSize_ ) )
+             || localisation.Intersect2DWithCircle( MT_Vector2D( ( x + 0.5 ) * rCellSize_, ( y + 0.5 ) * rCellSize_ ), 0.5 * rCellSize_ ) )
             {
                 int newHeight = static_cast< int >( ppCells_[ x ][ y ].h ) + heightOffset;
                 static const int maxShort = static_cast< int >( std::numeric_limits< short >::max() );
                 ppCells_[ x ][ y ].h = static_cast< short >( std::min( newHeight, maxShort ) );
             }
+        }
 }
 
 //-----------------------------------------------------------------------------
