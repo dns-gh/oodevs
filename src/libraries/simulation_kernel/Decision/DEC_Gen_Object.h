@@ -61,6 +61,7 @@ public:
     unsigned int GetActivationTime() const;
     const std::string& GetName() const;
     const MIL_Automate* GetTC2() const;
+    bool HasCapacity( const std::string& capacity ) const;
     //@}
 
     //! @name Operations

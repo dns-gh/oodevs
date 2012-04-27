@@ -68,6 +68,7 @@ public:
     static int GetCurrentPerceptionLevel( const MIL_Agent_ABC& callerAgent, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static float EstimatedWorkTime( MIL_Agent_ABC& pion, boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static bool CanBeValorized( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
+    static bool HasCapacity( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, const std::string& capacity );
 
     static bool IsUndergroundNetworkExit( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );
     static int ActivateUndergroundNetworkExit( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge );

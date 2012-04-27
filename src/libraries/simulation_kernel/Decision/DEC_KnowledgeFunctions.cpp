@@ -452,6 +452,19 @@ T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsCollidingFromType
 }
 
 // -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeFunctions::GetObjectsWithCapacityInZone
+// Created: JSR 2012-04-17
+// -----------------------------------------------------------------------------
+T_KnowledgeObjectDiaIDVector DEC_KnowledgeFunctions::GetObjectsWithCapacityInZone( const DEC_Decision_ABC* callerAgent, const std::string& capacity, const TER_Localisation* pLoc )
+{
+    if( !pLoc || !callerAgent )
+        throw std::runtime_error( __FUNCTION__ ": invalid parameter." );
+    T_KnowledgeObjectDiaIDVector knowledges;
+    callerAgent->GetPion().GetArmy().GetKnowledge().GetObjectsWithCapacityInZone( knowledges, capacity, *pLoc );
+    return knowledges;
+}
+
+// -----------------------------------------------------------------------------
 // Name: DEC_KnowledgeFunctions::GetPopulationsColliding
 // Created: NLD 2005-10-21
 // -----------------------------------------------------------------------------

@@ -18,6 +18,7 @@
 #include "Entities/Objects/MIL_ObjectType_ABC.h"
 #include "Entities/Objects/MIL_ObjectManipulator_ABC.h"
 #include "Entities/Objects/AnimatorAttribute.h"
+#include "Entities/Objects/CapacityRetriever.h"
 #include "Entities/Objects/ConstructionAttribute.h"
 #include "Entities/Objects/ContaminationCapacity.h"
 #include "Entities/Objects/DecontaminationCapacity.h"
@@ -484,6 +485,17 @@ float DEC_KnowledgeObjectFunctions::EstimatedWorkTime( MIL_Agent_ABC& pion, boos
 bool DEC_KnowledgeObjectFunctions::CanBeValorized( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge )
 {
     return IsValidObjectCapacity< ImprovableCapacity >( pKnowledge ) != 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_KnowledgeObjectFunctions::HasCapacity
+// Created: JSR 2012-04-17
+// -----------------------------------------------------------------------------
+bool DEC_KnowledgeObjectFunctions::HasCapacity( boost::shared_ptr< DEC_Knowledge_Object > pKnowledge, const std::string& capacity )
+{
+    if( pKnowledge && pKnowledge->IsValid() )
+        return CapacityRetriever::RetrieveCapacity( pKnowledge->GetType(), capacity ) != 0;
+    return false;
 }
 
 // -----------------------------------------------------------------------------

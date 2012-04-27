@@ -115,7 +115,7 @@ void DEC_RolePion_Decision::RegisterUserArchetypeFunctions ( directia::brain::Br
     brain[ "DEC_ConnaissanceObjet_ChangeDensitePopulationSortanteEnPourcentage" ] = &DEC_KnowledgeObjectFunctions::SetExitingPopulationDensityInPercentage;
     brain[ "DEC_ConnaissanceObjet_ResetDensitePopulationSortante" ] = &DEC_KnowledgeObjectFunctions::ResetExitingPopulationDensity;
     brain[ "DEC_ConnaissanceObjet_PointEstDansZoneEvitement"] = &DEC_KnowledgeObjectFunctions::IsInAvoidanceArea;
-    brain[ "DEC_ConnaissanceObjet_PointEstProcheZoneEffet"] = &DEC_KnowledgeObjectFunctions::IsNearEffectArea;    
+    brain[ "DEC_ConnaissanceObjet_PointEstProcheZoneEffet"] = &DEC_KnowledgeObjectFunctions::IsNearEffectArea;
     brain[ "DEC_ConnaissanceObjet_BurningLevel" ] = &DEC_KnowledgeObjectFunctions::GetBurningLevel;
 
     // Urban knowledges accessors
@@ -627,6 +627,7 @@ void DEC_RolePion_Decision::RegisterUserFunctions( directia::brain::Brain& brain
         boost::function< std::vector< boost::shared_ptr< DEC_Knowledge_Object > >( const MT_Vector2D*, double, const std::vector< std::string >& ) >( boost::bind( &DEC_KnowledgeFunctions::GetObjectsInCircle< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2, _3 ) );
     brain[ "DEC_ObjectKnowledgesInZone" ] =
         boost::function< std::vector< boost::shared_ptr< DEC_Knowledge_Object > >( const TER_Localisation*, const std::vector< std::string >& ) >( boost::bind( &DEC_KnowledgeFunctions::GetObjectsInZone< MIL_AgentPion >, boost::ref( GetPion() ), _1, _2 ) );
+    brain[ "DEC_ObjectKnowledge_GetObjectsInZone" ] = &DEC_KnowledgeFunctions::GetObjectsWithCapacityInZone;
     brain[ "DEC_Connaissances_ObjetsDansFuseau" ] =
         boost::function< std::vector< boost::shared_ptr< DEC_Knowledge_Object > >( const std::string& ) >( boost::bind( &DEC_KnowledgeFunctions::GetObjectsInFuseau< MIL_AgentPion >, boost::cref( GetPion() ), _1 ) );
     brain[ "DEC_Connaissances_CollisionsObjets" ] = boost::bind( &DEC_KnowledgeFunctions::GetObjectsColliding, boost::ref( GetPion() ) );

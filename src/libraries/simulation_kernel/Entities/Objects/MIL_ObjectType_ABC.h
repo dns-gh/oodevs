@@ -12,6 +12,7 @@
 
 #include "tools/Extendable.h"
 #include "simulation_kernel/Entities/Objects/ObjectCapacity_ABC.h"
+#include <boost/noncopyable.hpp>
 
 // =============================================================================
 /** @class  MIL_ObjectType_ABC
@@ -20,6 +21,7 @@
 // Created: JCR 2008-06-02
 // =============================================================================
 class MIL_ObjectType_ABC : protected tools::Extendable< ObjectCapacity_ABC >
+                         , private boost::noncopyable
 {
 public:
     //! @name Constructors/Destructor
@@ -36,13 +38,6 @@ public:
     virtual double GetPointSize() const = 0;
     template< typename Capacity >
     const Capacity* GetCapacity() const;
-    //@}
-
-private:
-    //! @name Copy/Assignment
-    //@{
-    MIL_ObjectType_ABC( const MIL_ObjectType_ABC& );            //!< Copy constructor
-    MIL_ObjectType_ABC& operator=( const MIL_ObjectType_ABC& ); //!< Assignment operator
     //@}
 };
 
