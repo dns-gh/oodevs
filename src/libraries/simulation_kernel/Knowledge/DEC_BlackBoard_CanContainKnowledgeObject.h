@@ -56,6 +56,7 @@ public:
     void GetCachedObjectsAtInteractionHeight( T_KnowledgeObjectVector& container, double rHeight ) const;
     void SetCachedObjectsAtInteractionHeight( const T_KnowledgeObjectVector& container, double rHeight );
     void UpdateUniversalObjects( const MIL_Army_ABC& team );
+    void Merge( const DEC_BlackBoard_CanContainKnowledgeObject* subGroup );
     //@}
 
     //! @name Queries

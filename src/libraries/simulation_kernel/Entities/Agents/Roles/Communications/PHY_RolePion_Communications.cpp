@@ -158,11 +158,8 @@ void PHY_RolePion_Communications::Jam( const MIL_Object_ABC& jammer )
     if( bIsAutonomous_ )
         return;
 
-    // $$$$ >>>> MODIF FDS 2010-03-17
-    // Copie of Knowledge group for jamming use
     if( CanEmit() )
         CopyKnowledgeGroup();
-    // $$$$ <<<< MODIF FDS 2010-03-17
 
     bHasChanged_ = jammers_.insert( &jammer ).second;
 }
@@ -201,6 +198,7 @@ void PHY_RolePion_Communications::Unjam( const MIL_Object_ABC& jammer )
     // delete copy of knowledge group used in jamming
     if( pJammingKnowledgeGroup_ && CanEmit() )
     {
+        owner_.GetKnowledgeGroup().Merge( *pJammingKnowledgeGroup_ );
         pJammingKnowledgeGroup_->Destroy();
         delete pJammingKnowledgeGroup_;
         pJammingKnowledgeGroup_ = 0;

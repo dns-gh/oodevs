@@ -53,6 +53,7 @@ public:
     DEC_Knowledge_Population& CreateKnowledgePopulation ( const MIL_KnowledgeGroup& knowledgeGroup, MIL_Population& populationPerceived );
     void DestroyKnowledgePopulation( DEC_Knowledge_Population& knowledge );
     void Accept( KnowledgesVisitor_ABC& visitor ) const;
+    void Merge( const DEC_BlackBoard_CanContainKnowledgePopulation& subGroup );
     //@}
 
     //! @name Queries

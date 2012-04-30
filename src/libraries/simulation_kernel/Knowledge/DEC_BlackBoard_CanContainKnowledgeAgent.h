@@ -55,6 +55,7 @@ public:
     void                 DestroyKnowledgeAgent( DEC_Knowledge_Agent& knowledge );
     void                 SaveAllCurrentKnowledgeAgent();
     void Accept( KnowledgesVisitor_ABC& visitor ) const;
+    void Merge( const DEC_BlackBoard_CanContainKnowledgeAgent& subGroup );
     //@}
 
     //! @name Queries

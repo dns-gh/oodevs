@@ -225,6 +225,17 @@ void MIL_KnowledgeGroup::Destroy()
 }
 
 // -----------------------------------------------------------------------------
+// Name: MIL_KnowledgeGroup::Merge
+// Created: LDC 2012-04-27
+// -----------------------------------------------------------------------------
+void MIL_KnowledgeGroup::Merge( const MIL_KnowledgeGroup& subGroup )
+{
+    knowledgeBlackBoard_->GetKnowledgeAgentContainer().Merge( subGroup.knowledgeBlackBoard_->GetKnowledgeAgentContainer() );
+    GetKnowledgeObjectContainer().Merge( subGroup.knowledgeBlackBoard_->GetKnowledgeObjectContainer() );
+    knowledgeBlackBoard_->GetKnowledgePopulationContainer().Merge( subGroup.knowledgeBlackBoard_->GetKnowledgePopulationContainer() );
+}
+
+// -----------------------------------------------------------------------------
 // Name: MIL_KnowledgeGroup::InitializeKnowledgeGroup
 // Created: SLG 2009-11-11
 // LTO

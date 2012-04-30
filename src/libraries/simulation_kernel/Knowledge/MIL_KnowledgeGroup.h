@@ -128,6 +128,7 @@ public:
     void OnReceiveKnowledgeGroupCreation   ( const sword::KnowledgeGroupCreationRequest& message );
     void OnReceiveKnowledgeGroupUpdate     ( const sword::KnowledgeMagicAction& message, const tools::Resolver< MIL_Army_ABC >& armies );
     void Destroy();
+    void Merge( const MIL_KnowledgeGroup& subGroup );
     //@}
 
     //! @name Accessors

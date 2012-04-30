@@ -335,3 +335,12 @@ void DEC_BlackBoard_CanContainKnowledgeAgent::Accept( KnowledgesVisitor_ABC& vis
 {
     visitor.VisitKnowledgesAgent( realAgentMap_.size() );
 }
+
+// -----------------------------------------------------------------------------
+// Name: DEC_BlackBoard_CanContainKnowledgeAgent::Merge
+// Created: LDC 2012-04-30
+// -----------------------------------------------------------------------------
+void DEC_BlackBoard_CanContainKnowledgeAgent::Merge( const DEC_BlackBoard_CanContainKnowledgeAgent& subGroup )
+{
+
+}
