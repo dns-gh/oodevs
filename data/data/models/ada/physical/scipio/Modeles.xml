@@ -718,7 +718,7 @@
         <fragorder name="Changer Ambiance"/>
       </fragorders>
     </unit>
-    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Genie.SOUVIM - Deminage lourd">
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Genie.Deminage lourd">
       <missions>
         <mission name="PION COMMUNES Decrocher"/>
         <mission name="PION COMMUNES Faire Mouvement"/>
@@ -2798,11 +2798,17 @@
           <fragorder name="Modifier Regime Travail Maintenance"/>
           <fragorder name="Modifier Priorites Reparations"/>
           <fragorder name="Modifier Priorites Tactiques Reparations"/>
+          <fragorder name="Pion Renforcer En Remorqueurs"/>
+          <fragorder name="Pion Transferer Remorqueurs"/>
+          <fragorder name="Pion Reprendre Aux Ordres Remorqueurs"/>
         </mission>
         <mission name="PION LOGISTIQUE Reparer">
           <fragorder name="Modifier Regime Travail Maintenance"/>
           <fragorder name="Modifier Priorites Reparations"/>
           <fragorder name="Modifier Priorites Tactiques Reparations"/>
+          <fragorder name="Pion Renforcer En Remorqueurs"/>
+          <fragorder name="Pion Transferer Remorqueurs"/>
+          <fragorder name="Pion Reprendre Aux Ordres Remorqueurs"/>
         </mission>
         <mission name="PION MELEE Renseigner sur foule"/>
       </missions>
@@ -4572,6 +4578,9 @@
         <mission name="PION COMMUNES Stationner"/>
         <mission name="PION COMMUNES Suivre"/>
         <mission name="PION MELEE Renseigner sur foule"/>
+        <mission name="PION GENIE Appui Mobilite"/>
+        <mission name="PION GENIE Degager Obstacles"/>
+        <mission name="PION GENIE Depolluer zone"/>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -4709,6 +4718,50 @@
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
+        <fragorder name="Mettre Tenue NBC"/>
+        <fragorder name="Enlever Tenue NBC"/>
+        <fragorder name="Passer En Silence Radio Total"/>
+        <fragorder name="Arreter Silence Radio"/>
+        <fragorder name="Passer En Silence Radar"/>
+        <fragorder name="Arreter Silence Radar"/>
+        <fragorder name="Recuperer Transporteurs"/>
+        <fragorder name="Attendre Se Poster"/>
+        <fragorder name="Pion Interdire Munition"/>
+        <fragorder name="Pion Autoriser Munition"/>
+        <fragorder name="Pion Autoriser Toutes Munitions"/>
+        <fragorder name="Passer En Silence Radio Partiel"/>
+        <fragorder name="Pion Observer"/>
+        <fragorder name="Pion Orienter Capteurs"/>
+        <fragorder name="Poursuivre"/>
+        <fragorder name="Changer les regles d'engagement"/>
+        <fragorder name="Changer Regles Engagement Civils"/>
+        <fragorder name="Interrompre"/>
+        <fragorder name="Changer Ambiance"/>
+      </fragorders>
+    </unit>
+    <unit dia-type="france.military.platoon.roles.Pion" file="BMPion.bms" masalife="true" name="Masalife.Genie.SOUVIM">
+      <missions>
+        <mission name="PION COMMUNES Decrocher"/>
+        <mission name="PION COMMUNES Faire Mouvement"/>
+        <mission name="PION COMMUNES Franchir"/>
+        <mission name="PION COMMUNES Escorter Refugies Vers Position"/>
+        <mission name="PION COMMUNES Escorter Refugies Vers Camp"/>
+        <mission name="PION COMMUNES Escorter Prisonniers Vers Camp"/>
+        <mission name="PION COMMUNES Escorter Prisonniers Vers Position"/>
+        <mission name="PION COMMUNES Renforcer"/>
+        <mission name="PION COMMUNES Se Faire Decontaminer"/>
+        <mission name="PION COMMUNES Stationner"/>
+        <mission name="PION COMMUNES Suivre"/>
+        <mission name="PION MELEE Animer Poste De Controle"/>
+        <mission name="PION MELEE Interdire foule"/>
+        <mission name="PION MELEE Renseigner sur foule"/>
+        <mission name="PION GENIE Appui Mobilite"/>
+        <mission name="PION GENIE Ouvrir Itineraire"/>
+      </missions>
+      <fragorders>
+        <fragorder name="Rejoindre"/>
+        <fragorder name="Embarquer"/>
+        <fragorder name="Debarquer"/>
         <fragorder name="Mettre Tenue NBC"/>
         <fragorder name="Enlever Tenue NBC"/>
         <fragorder name="Passer En Silence Radio Total"/>
@@ -7362,4 +7415,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="2795663360" -->
+<!-- signature="1551336807" -->

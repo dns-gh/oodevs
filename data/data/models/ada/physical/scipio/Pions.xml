@@ -2348,7 +2348,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="100" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Genie.SOUVIM - Deminage lourd" id="80" name="GEN . Section Deminage Lourd D9" type="Pion GEN">
+  <unit decisional-model="Masalife.Genie.Deminage lourd" id="80" name="GEN . Section Deminage Lourd D9" type="Pion GEN">
     <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer"/>
     <equipments>
       <equipment count="3" crew="2" major="true" type="Char AMX 30 B2 DT"/>
@@ -2373,7 +2373,7 @@
     <efficiencies combat="0" combat-support="0" counter-mobility-support="0" engineering-support="0" mobility-support="100" protection-support="0" recon="0" urban-area="50"/>
     <crossing-height height="0m"/>
   </unit>
-  <unit decisional-model="Masalife.Genie.SOUVIM - Deminage lourd" id="81" name="GEN . Section SOUVIM" type="Pion GEN">
+  <unit decisional-model="Masalife.Genie.SOUVIM" id="81" name="GEN . Section SOUVIM" type="Pion GEN">
     <nature atlas-nature="None" level="ooo" nature-app6="combat/engineer"/>
     <equipments>
       <equipment count="1" crew="5" major="true" type="SOUVIM"/>
@@ -3879,9 +3879,9 @@
     </crew-ranks>
     <logistics>
       <category name="munition">
-        <resource capacity="108" logistic-threshold="50" name="CPLT 120 OE PRY F2" normalized-consumption="0"/>
-        <resource capacity="29" logistic-threshold="50" name="CPLT 120 OFUM PH F1" normalized-consumption="0"/>
-        <resource capacity="7" logistic-threshold="50" name="CPLT 120 OECL PRY F1" normalized-consumption="0"/>
+        <resource capacity="172" logistic-threshold="50" name="CPLT 120 OE PRY F2" normalized-consumption="0"/>
+        <resource capacity="48" logistic-threshold="50" name="CPLT 120 OFUM PH F1" normalized-consumption="0"/>
+        <resource capacity="12" logistic-threshold="50" name="CPLT 120 OECL PRY F1" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -3916,9 +3916,9 @@
     </crew-ranks>
     <logistics>
       <category name="munition">
-        <resource capacity="180" logistic-threshold="50" name="CPLT 120 OE PRY F2" normalized-consumption="0"/>
-        <resource capacity="48" logistic-threshold="50" name="CPLT 120 OFUM PH F1" normalized-consumption="0"/>
-        <resource capacity="12" logistic-threshold="50" name="CPLT 120 OECL PRY F1" normalized-consumption="0"/>
+        <resource capacity="264" logistic-threshold="50" name="CPLT 120 OE PRY F2" normalized-consumption="0"/>
+        <resource capacity="72" logistic-threshold="50" name="CPLT 120 OFUM PH F1" normalized-consumption="0"/>
+        <resource capacity="18" logistic-threshold="50" name="CPLT 120 OECL PRY F1" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -3952,9 +3952,9 @@
     </crew-ranks>
     <logistics>
       <category name="munition">
-        <resource capacity="180" logistic-threshold="50" name="CPLT 120 OE PRY F2" normalized-consumption="0"/>
-        <resource capacity="48" logistic-threshold="50" name="CPLT 120 OECL PRY F1" normalized-consumption="0"/>
-        <resource capacity="12" logistic-threshold="50" name="CPLT 120 OFUM PH F1" normalized-consumption="0"/>
+        <resource capacity="264" logistic-threshold="50" name="CPLT 120 OE PRY F2" normalized-consumption="0"/>
+        <resource capacity="18" logistic-threshold="50" name="CPLT 120 OECL PRY F1" normalized-consumption="0"/>
+        <resource capacity="72" logistic-threshold="50" name="CPLT 120 OFUM PH F1" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -3988,9 +3988,9 @@
     </crew-ranks>
     <logistics>
       <category name="munition">
-        <resource capacity="180" logistic-threshold="50" name="CPLT 120 OE PRY F2" normalized-consumption="0"/>
-        <resource capacity="48" logistic-threshold="50" name="CPLT 120 OFUM PH F1" normalized-consumption="0"/>
-        <resource capacity="12" logistic-threshold="50" name="CPLT 120 OECL PRY F1" normalized-consumption="0"/>
+        <resource capacity="352" logistic-threshold="50" name="CPLT 120 OE PRY F2" normalized-consumption="0"/>
+        <resource capacity="96" logistic-threshold="50" name="CPLT 120 OFUM PH F1" normalized-consumption="0"/>
+        <resource capacity="24" logistic-threshold="50" name="CPLT 120 OECL PRY F1" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -4024,8 +4024,8 @@
     </crew-ranks>
     <logistics>
       <category name="munition">
-        <resource capacity="180" logistic-threshold="50" name="CPLT 120 OE PRY F2" normalized-consumption="0"/>
-        <resource capacity="48" logistic-threshold="50" name="CPLT 120 OFUM PH F1" normalized-consumption="0"/>
+        <resource capacity="352" logistic-threshold="50" name="CPLT 120 OE PRY F2" normalized-consumption="0"/>
+        <resource capacity="96" logistic-threshold="50" name="CPLT 120 OFUM PH F1" normalized-consumption="0"/>
         <resource capacity="24" logistic-threshold="50" name="CPLT 120 OECL PRY F1" normalized-consumption="0"/>
       </category>
     </logistics>
@@ -4060,9 +4060,9 @@
     </crew-ranks>
     <logistics>
       <category name="munition">
-        <resource capacity="108" logistic-threshold="50" name="CPLT 120 OE PRY F2" normalized-consumption="0"/>
-        <resource capacity="29" logistic-threshold="50" name="CPLT 120 OFUM PH F1" normalized-consumption="0"/>
-        <resource capacity="7" logistic-threshold="50" name="CPLT 120 OECL PRY F1" normalized-consumption="0"/>
+        <resource capacity="172" logistic-threshold="50" name="CPLT 120 OE PRY F2" normalized-consumption="0"/>
+        <resource capacity="48" logistic-threshold="50" name="CPLT 120 OFUM PH F1" normalized-consumption="0"/>
+        <resource capacity="12" logistic-threshold="50" name="CPLT 120 OECL PRY F1" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -5468,9 +5468,9 @@
     </crew-ranks>
     <logistics>
       <category name="munition">
-        <resource capacity="108" logistic-threshold="50" name="CPLT 120 OE PRY F2" normalized-consumption="0"/>
-        <resource capacity="29" logistic-threshold="50" name="CPLT 120 OFUM PH F1" normalized-consumption="0"/>
-        <resource capacity="7" logistic-threshold="50" name="CPLT 120 OECL PRY F1" normalized-consumption="0"/>
+        <resource capacity="176" logistic-threshold="50" name="CPLT 120 OE PRY F2" normalized-consumption="0"/>
+        <resource capacity="48" logistic-threshold="50" name="CPLT 120 OFUM PH F1" normalized-consumption="0"/>
+        <resource capacity="12" logistic-threshold="50" name="CPLT 120 OECL PRY F1" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -5504,9 +5504,9 @@
     </crew-ranks>
     <logistics>
       <category name="munition">
-        <resource capacity="108" logistic-threshold="50" name="CPLT 120 OE PRY F2" normalized-consumption="0"/>
-        <resource capacity="29" logistic-threshold="50" name="CPLT 120 OFUM PH F1" normalized-consumption="0"/>
-        <resource capacity="7" logistic-threshold="50" name="CPLT 120 OECL PRY F1" normalized-consumption="0"/>
+        <resource capacity="176" logistic-threshold="50" name="CPLT 120 OE PRY F2" normalized-consumption="0"/>
+        <resource capacity="48" logistic-threshold="50" name="CPLT 120 OFUM PH F1" normalized-consumption="0"/>
+        <resource capacity="12" logistic-threshold="50" name="CPLT 120 OECL PRY F1" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -5540,9 +5540,9 @@
     </crew-ranks>
     <logistics>
       <category name="munition">
-        <resource capacity="180" logistic-threshold="50" name="CPLT 120 OE PRY F2" normalized-consumption="0"/>
-        <resource capacity="48" logistic-threshold="50" name="CPLT 120 OFUM PH F1" normalized-consumption="0"/>
-        <resource capacity="12" logistic-threshold="50" name="CPLT 120 OECL PRY F1" normalized-consumption="0"/>
+        <resource capacity="264" logistic-threshold="50" name="CPLT 120 OE PRY F2" normalized-consumption="0"/>
+        <resource capacity="72" logistic-threshold="50" name="CPLT 120 OFUM PH F1" normalized-consumption="0"/>
+        <resource capacity="18" logistic-threshold="50" name="CPLT 120 OECL PRY F1" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -5576,9 +5576,9 @@
     </crew-ranks>
     <logistics>
       <category name="munition">
-        <resource capacity="180" logistic-threshold="50" name="CPLT 120 OE PRY F2" normalized-consumption="0"/>
-        <resource capacity="48" logistic-threshold="50" name="CPLT 120 OECL PRY F1" normalized-consumption="0"/>
-        <resource capacity="12" logistic-threshold="50" name="CPLT 120 OFUM PH F1" normalized-consumption="0"/>
+        <resource capacity="264" logistic-threshold="50" name="CPLT 120 OE PRY F2" normalized-consumption="0"/>
+        <resource capacity="18" logistic-threshold="50" name="CPLT 120 OECL PRY F1" normalized-consumption="0"/>
+        <resource capacity="72" logistic-threshold="50" name="CPLT 120 OFUM PH F1" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -5612,9 +5612,9 @@
     </crew-ranks>
     <logistics>
       <category name="munition">
-        <resource capacity="180" logistic-threshold="50" name="CPLT 120 OE PRY F2" normalized-consumption="0"/>
-        <resource capacity="48" logistic-threshold="50" name="CPLT 120 OFUM PH F1" normalized-consumption="0"/>
-        <resource capacity="12" logistic-threshold="50" name="CPLT 120 OECL PRY F1" normalized-consumption="0"/>
+        <resource capacity="352" logistic-threshold="50" name="CPLT 120 OE PRY F2" normalized-consumption="0"/>
+        <resource capacity="96" logistic-threshold="50" name="CPLT 120 OFUM PH F1" normalized-consumption="0"/>
+        <resource capacity="24" logistic-threshold="50" name="CPLT 120 OECL PRY F1" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -5648,8 +5648,8 @@
     </crew-ranks>
     <logistics>
       <category name="munition">
-        <resource capacity="180" logistic-threshold="50" name="CPLT 120 OE PRY F2" normalized-consumption="0"/>
-        <resource capacity="48" logistic-threshold="50" name="CPLT 120 OFUM PH F1" normalized-consumption="0"/>
+        <resource capacity="352" logistic-threshold="50" name="CPLT 120 OE PRY F2" normalized-consumption="0"/>
+        <resource capacity="96" logistic-threshold="50" name="CPLT 120 OFUM PH F1" normalized-consumption="0"/>
         <resource capacity="24" logistic-threshold="50" name="CPLT 120 OECL PRY F1" normalized-consumption="0"/>
       </category>
     </logistics>
@@ -11054,7 +11054,7 @@
       <crew-rank count="5" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite tranche D" threshold="10"/>
+      <stock category="Unite non tranche D" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -11081,7 +11081,7 @@
       <crew-rank count="6" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite tranche D" threshold="10"/>
+      <stock category="Unite non tranche D" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -11139,7 +11139,7 @@
       <crew-rank count="5" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite non tranche D" threshold="10"/>
+      <stock category="Unite tranche D" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -11166,7 +11166,7 @@
       <crew-rank count="6" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite non tranche D" threshold="10"/>
+      <stock category="Unite tranche D" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -11296,7 +11296,7 @@
       <crew-rank count="5" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite tranche D" threshold="10"/>
+      <stock category="Unite non tranche D" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -11323,7 +11323,7 @@
       <crew-rank count="6" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite tranche D" threshold="10"/>
+      <stock category="Unite non tranche D" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -11376,7 +11376,7 @@
       <crew-rank count="6" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite non tranche D" threshold="10"/>
+      <stock category="Unite tranche D" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -11403,7 +11403,7 @@
       <crew-rank count="5" type="SousOfficier"/>
     </crew-ranks>
     <stocks>
-      <stock category="Unite non tranche D" threshold="10"/>
+      <stock category="Unite tranche D" threshold="10"/>
     </stocks>
     <postures>
       <posture name="PosteReflexe" setup-time="900s"/>
@@ -12357,7 +12357,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortuaire" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -12403,7 +12403,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortuaire" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -12453,7 +12453,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortuaire" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -12504,7 +12504,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortuaire" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -12553,7 +12553,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortuaire" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -12598,7 +12598,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortuaire" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -12647,7 +12647,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortuaire" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -12696,7 +12696,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortuaire" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -12745,7 +12745,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortuaire" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -12793,7 +12793,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortuaire" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -12839,7 +12839,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortuaire" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -12889,7 +12889,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortuaire" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -12941,7 +12941,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortuaire" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -12991,7 +12991,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortuaire" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -13044,7 +13044,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortuaire" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -13093,7 +13093,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortuaire" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -13137,7 +13137,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortuaire" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -13186,7 +13186,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortuaire" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -13235,7 +13235,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortuaire" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -13288,7 +13288,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortuaire" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -13333,7 +13333,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortuaire" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -13386,7 +13386,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortuaire" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -13437,7 +13437,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortuaire" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -13487,7 +13487,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortuaire" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -13535,7 +13535,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortuaire" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -17529,7 +17529,7 @@
     </crew-ranks>
     <logistics>
       <category name="funeraire">
-        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortuaire" normalized-consumption="0"/>
+        <resource capacity="50" logistic-threshold="10" name="Sac de transport de dépouille mortelle" normalized-consumption="0"/>
       </category>
     </logistics>
     <stocks>
@@ -19425,4 +19425,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="2393570614" -->
+<!-- signature="1552731482" -->
