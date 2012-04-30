@@ -49,7 +49,8 @@ public:
     virtual bool Exists( const QString& oldLogin, const QString& newLogin ) const = 0;
     virtual bool Exists( const QString& login ) const = 0;
     virtual bool IsControlled( const kernel::Entity_ABC& entity ) const = 0;
-    virtual bool IsControlled( const std::string& exclude, const kernel::Entity_ABC& entity ) const = 0;
+    virtual bool IsControlledByLowLevel( const std::string& exclude, const kernel::Entity_ABC& entity ) const = 0;
+    virtual bool IsControlledByLowLevel( const kernel::Entity_ABC& entity ) const = 0;
     virtual void Display( const T_ProfileEditors& editors ) = 0;
     virtual void Clean() = 0;
     //@}

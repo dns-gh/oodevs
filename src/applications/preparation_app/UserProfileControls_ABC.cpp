@@ -358,7 +358,7 @@ void UserProfileControls_ABC::UpdateColor( gui::ValuedListItem* item )
 {
     if( const Entity_ABC* entity = item->GetValue< const Entity_ABC >() )
         if( entity->Retrieve< ProfileHierarchies_ABC >() )
-            if( !supervisor_ && profile_ && checker_.IsControlled( profile_->GetLogin().toStdString(), *entity ) )
+            if( !supervisor_ && profile_ && checker_.IsControlledByLowLevel( profile_->GetLogin().toStdString(), *entity ) )
                 item->SetFontColor( QColor( 255, 10, 10 ) );
 }
 

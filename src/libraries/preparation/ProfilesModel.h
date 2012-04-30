@@ -83,6 +83,7 @@ public:
     const UserProfile* Find( const QString& name ) const;
     bool IsReadable( const kernel::Entity_ABC& entity ) const;
     bool IsWriteable( const kernel::Entity_ABC& entity ) const;
+    bool IsWriteableByLowLevel( const kernel::Entity_ABC& entity ) const;
     bool IsReadable( const kernel::Entity_ABC& entity, const std::string& profile ) const;
     bool IsWriteable( const kernel::Entity_ABC& entity, const std::string& profile ) const;
     bool IsControlled( const std::set< std::string >& editors, const kernel::Entity_ABC& entity );

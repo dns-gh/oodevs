@@ -42,7 +42,8 @@ public:
     virtual bool Exists( const QString& oldLogin, const QString& newLogin ) const;
     virtual bool Exists( const QString& login ) const;
     virtual bool IsControlled( const kernel::Entity_ABC& entity ) const;
-    virtual bool IsControlled( const std::string& exclude, const kernel::Entity_ABC& entity ) const;
+    virtual bool IsControlledByLowLevel( const std::string& exclude, const kernel::Entity_ABC& entity ) const;
+    virtual bool IsControlledByLowLevel( const kernel::Entity_ABC& entity ) const;
     virtual void Clean();
     //@}
 

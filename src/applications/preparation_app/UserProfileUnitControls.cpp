@@ -185,8 +185,7 @@ void UserProfileUnitControls::NotifyUpdated( const Entity_ABC& entity )
 // -----------------------------------------------------------------------------
 void UserProfileUnitControls::HideAssignedAutomats()
 {
-    func_ = boost::bind( &UserProfileUnitControls::ApplyShowFilter, this, _1 ) ||
-          ( boost::bind( &UserProfileUnitControls::ApplyShowFilter, this, _1 ) && boost::bind( &UserProfileUnitControls::ApplyHideFilter, this, _1 ) );
+    func_ = boost::bind( &UserProfileUnitControls::ApplyHideFilter, this, _1 );
     UpdateFilter();
 }
 
@@ -199,8 +198,8 @@ bool UserProfileUnitControls::ApplyHideFilter( gui::ValuedListItem* item ) const
     if( item )
         if( ValuedListItem* value = static_cast< ValuedListItem* >( item ) )
             if( const Entity_ABC* entity = value->GetValue< const Entity_ABC >() )
-                return !checker_.IsControlled( *entity );
-        return false;
+                return !checker_.IsControlledByLowLevel( *entity ) || Status( value->text( 2 ).toInt() ) != eNothing;
+    return false;
 }
 
 // -----------------------------------------------------------------------------

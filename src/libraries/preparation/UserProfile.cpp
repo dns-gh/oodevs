@@ -16,16 +16,13 @@
 #include "TacticalHierarchies.h"
 #include "clients_kernel/Automat_ABC.h"
 #include "clients_kernel/Controller.h"
-#include "clients_kernel/Entity_ABC.h"
-#include "clients_kernel/Formation_ABC.h"
+#include "clients_kernel/Entity_ABC.h"#include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/ExtensionType.h"
 #include "clients_kernel/ExtensionTypes.h"
 #include "clients_kernel/DictionaryType.h"
-#include "clients_kernel/Team_ABC.h"
-#include "tools/Iterator.h"
-#include <xeumeuleu/xml.hpp>
+#include "clients_kernel/Team_ABC.h"#include "tools/Iterator.h"#include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: UserProfile constructor
@@ -63,6 +60,7 @@ UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, co
         >> xml::end;
     login_ = login.c_str();
     password_ = pass.c_str();
+    ComputeLowLevel();
     controller_.Create( *this );
 }
 
@@ -96,6 +94,7 @@ UserProfile::UserProfile( const QString& login, const std::string& role, kernel:
     , isClone_    ( false )
     , userRole_   ( role )
 {
+    ComputeLowLevel();
     controller_.Create( *this );
 }
 
@@ -118,6 +117,7 @@ UserProfile::UserProfile( const UserProfile& p )
     , writeAutomats_   ( p.writeAutomats_ )
     , writePopulations_( p.writePopulations_ )
     , isClone_         ( true )
+    , isLowLevel_      ( p.isLowLevel_ )
     , userRole_        ( p.userRole_ )
 {
     // NOTHING
@@ -289,6 +289,15 @@ QString UserProfile::GetPassword() const
     return password_;
 }
 
+// -----------------------------------------------------------------------------
+// Name: UserProfile::IsLowLevel
+// Created: LDC 2012-04-30
+// -----------------------------------------------------------------------------
+bool UserProfile::IsLowLevel() const
+{
+    return isLowLevel_;
+}
+
 namespace
 {
     template< typename List >
@@ -325,7 +334,7 @@ bool UserProfile::IsWriteable( const kernel::Entity_ABC& entity ) const
 // Name: UserProfile::GetUserRole
 // Created: JSR 2010-10-06
 // -----------------------------------------------------------------------------
-std::string UserProfile::GetUserRole() const
+const std::string& UserProfile::GetUserRole() const
 {
     return userRole_;
 }
@@ -406,6 +415,7 @@ void UserProfile::SetWriteable( const kernel::Entity_ABC& entity, bool writeable
 void UserProfile::SetUserRole( const std::string& role )
 {
     userRole_ = role;
+    ComputeLowLevel();
 }
 
 // -----------------------------------------------------------------------------
@@ -442,6 +452,7 @@ UserProfile& UserProfile::operator=( const UserProfile& p )
     writeAutomats_    = p.writeAutomats_;
     writePopulations_ = p.writePopulations_;
     userRole_         = p.userRole_;
+    isLowLevel_       = p.isLowLevel_;
     if( !isClone_ && changed )
         controller_.Update( *this );
     return *this;
@@ -499,63 +510,8 @@ void UserProfile::Visit( std::vector< unsigned long >& elements ) const
     elements.insert( elements.begin(), writePopulations_.begin(), writePopulations_.end() );
 }
 
-namespace
-{
-    void InsertAutomats( std::set< unsigned long >& automats, const kernel::Entity_ABC& entity, const Model& model )
-    {
-        const kernel::TacticalHierarchies* hirearchies = entity.Retrieve< kernel::TacticalHierarchies >();
-        if( hirearchies )
-        {
-            tools::Iterator< const kernel::Entity_ABC& > it = hirearchies->CreateSubordinateIterator();
-            while( it.HasMoreElements() )
-            {
-                const kernel::Entity_ABC& childEntity = it.NextElement();
-                const kernel::Automat_ABC* pAutomat = dynamic_cast< const kernel::Automat_ABC* >( &childEntity );
-                if( pAutomat )
-                    automats.insert( pAutomat->GetId() );
-                else
-                    InsertAutomats( automats, childEntity, model );
-            }
-        }
-    }
-
-    void InsertAutomatsFromTeams( const std::vector< unsigned long >& teams, std::set< unsigned long >& automats, const Model& model )
-    {
-        for( std::vector< unsigned long >::const_iterator it = teams.begin();  it != teams.end(); ++it )
-        {
-            kernel::Team_ABC* pTeam = model.FindTeam( *it );
-            if( pTeam )
-                InsertAutomats( automats, *pTeam, model );
-        }
-    }
-
-    void InsertAutomatsFromFormations( const std::vector< unsigned long >& formations, std::set< unsigned long >& automats, const Model& model )
-    {
-        for( std::vector< unsigned long >::const_iterator it = formations.begin();  it != formations.end(); ++it )
-        {
-            kernel::Formation_ABC* pFormation = model.FindFormation( *it );
-            if( pFormation )
-                InsertAutomats( automats, *pFormation, model );
-        }
-    }
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfile::VisitAllAutomats
-// Created: MMC 2012-04-23
-// -----------------------------------------------------------------------------
-void UserProfile::VisitAllAutomats( std::set< unsigned long >& elements ) const
-{
-    elements.insert( readAutomats_.begin(), readAutomats_.end() );
-    elements.insert( writeAutomats_.begin(), writeAutomats_.end() );
-    InsertAutomatsFromTeams( readSides_, elements, model_ );
-    InsertAutomatsFromTeams( writeSides_, elements, model_ );
-    InsertAutomatsFromFormations( readFormations_, elements, model_ );
-    InsertAutomatsFromFormations( writeFormations_, elements, model_ );
-}
-
-// -----------------------------------------------------------------------------
-// Name: UserProfile::GetWriteProfilesCount
+namespace{    void InsertAutomats( std::set< unsigned long >& automats, const kernel::Entity_ABC& entity, const Model& model )    {        const kernel::TacticalHierarchies* hirearchies = entity.Retrieve< kernel::TacticalHierarchies >();        if( hirearchies )        {            tools::Iterator< const kernel::Entity_ABC& > it = hirearchies->CreateSubordinateIterator();            while( it.HasMoreElements() )            {                const kernel::Entity_ABC& childEntity = it.NextElement();                const kernel::Automat_ABC* pAutomat = dynamic_cast< const kernel::Automat_ABC* >( &childEntity );                if( pAutomat )                    automats.insert( pAutomat->GetId() );                else                    InsertAutomats( automats, childEntity, model );            }        }    }    void InsertAutomatsFromTeams( const std::vector< unsigned long >& teams, std::set< unsigned long >& automats, const Model& model )    {        for( std::vector< unsigned long >::const_iterator it = teams.begin();  it != teams.end(); ++it )        {            kernel::Team_ABC* pTeam = model.FindTeam( *it );            if( pTeam )                InsertAutomats( automats, *pTeam, model );        }    }    void InsertAutomatsFromFormations( const std::vector< unsigned long >& formations, std::set< unsigned long >& automats, const Model& model )    {        for( std::vector< unsigned long >::const_iterator it = formations.begin();  it != formations.end(); ++it )        {            kernel::Formation_ABC* pFormation = model.FindFormation( *it );            if( pFormation )                InsertAutomats( automats, *pFormation, model );        }    }}// -----------------------------------------------------------------------------
+// Name: UserProfile::VisitAllAutomats// Created: MMC 2012-04-23// -----------------------------------------------------------------------------void UserProfile::VisitAllAutomats( std::set< unsigned long >& elements ) const{    elements.insert( readAutomats_.begin(), readAutomats_.end() );    elements.insert( writeAutomats_.begin(), writeAutomats_.end() );    InsertAutomatsFromTeams( readSides_, elements, model_ );    InsertAutomatsFromTeams( writeSides_, elements, model_ );    InsertAutomatsFromFormations( readFormations_, elements, model_ );    InsertAutomatsFromFormations( writeFormations_, elements, model_ );}// -----------------------------------------------------------------------------// Name: UserProfile::GetWriteProfilesCount
 // Created: LGY 2012-03-22
 // -----------------------------------------------------------------------------
 unsigned int UserProfile::GetWriteProfilesCount()
@@ -573,3 +529,11 @@ unsigned int UserProfile::GetProfilesCount() const
                                         readSides_.size()  + readFormations_.size() + readAutomats_.size() + readPopulations_.size() );
 }
 
+// -----------------------------------------------------------------------------
+// Name: UserProfile::ComputeLowLevel
+// Created: LDC 2012-04-30
+// -----------------------------------------------------------------------------
+void UserProfile::ComputeLowLevel()
+{
+    isLowLevel_ = ( userRole_ == "anibas" || userRole_ == "eniex" );
+}

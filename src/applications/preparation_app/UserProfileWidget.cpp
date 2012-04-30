@@ -216,7 +216,7 @@ void UserProfileWidget::Display( UserProfile& profile )
     
     if( userRoleDico_ )
     {
-        const std::string role = profile_->GetUserRole();
+        const std::string& role = profile_->GetUserRole();
         Update();
         if( !role.empty() )
             userRole_->setCurrentText( userRoleDico_->GetLabel( role, dicoKind_, dicoLanguage_ ).c_str() );

@@ -73,7 +73,7 @@ std::set< std::string > ControlsChecker::Find( const kernel::Entity_ABC& entity 
         if( it->first )
         {
             editors.insert( it->first->GetLogin().ascii() );
-            if( it->second && IsWriteable( entity, *it->second ) )
+            if( it->second && it->second->IsLowLevel() && IsWriteable( entity, *it->second ) )
                 results.insert( it->second->GetLogin().ascii() );
         }
     ProfilesModel::T_Units units;
@@ -135,10 +135,22 @@ bool ControlsChecker::IsControlled( const kernel::Entity_ABC& entity ) const
 }
 
 // -----------------------------------------------------------------------------
-// Name: ControlsChecker::IsControlled
+// Name: ControlsChecker::IsControlledByLowLevel
+// Created: LDC 2012-04-30
+// -----------------------------------------------------------------------------
+bool ControlsChecker::IsControlledByLowLevel( const kernel::Entity_ABC& entity ) const
+{
+    for( CIT_ProfileEditors it = editors_.begin(); it != editors_.end(); ++it )
+        if( it->second && it->second->IsLowLevel() && IsWriteable( entity, *it->second ) )
+            return true;
+    return model_.profiles_.IsWriteableByLowLevel( entity );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ControlsChecker::IsControlledByLowLevel
 // Created: LGY 2011-12-14
 // -----------------------------------------------------------------------------
-bool ControlsChecker::IsControlled( const std::string& exclude, const kernel::Entity_ABC& entity ) const
+bool ControlsChecker::IsControlledByLowLevel( const std::string& exclude, const kernel::Entity_ABC& entity ) const
 {
     std::set< std::string > editors;
     for( CIT_ProfileEditors it = editors_.begin(); it != editors_.end(); ++it )

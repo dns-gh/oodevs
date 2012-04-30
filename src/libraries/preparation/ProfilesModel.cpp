@@ -254,6 +254,19 @@ bool ProfilesModel::IsWriteable( const kernel::Entity_ABC& entity ) const
 }
 
 // -----------------------------------------------------------------------------
+// Name: ProfilesModel::IsWriteableByLowLevel
+// Created: SBO 2007-11-06
+// -----------------------------------------------------------------------------
+bool ProfilesModel::IsWriteableByLowLevel( const kernel::Entity_ABC& entity ) const
+{
+    for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
+        if( (*it)->IsLowLevel() && (*it)->IsWriteable( entity ) )
+            return true;
+    const kernel::Entity_ABC* superior = entity.Get< kernel::TacticalHierarchies >().GetSuperior();
+    return superior ? IsWriteableByLowLevel( *superior ) : false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: ProfilesModel::IsReadable
 // Created: LGY 2011-10-19
 // -----------------------------------------------------------------------------
@@ -355,7 +368,7 @@ void ProfilesModel::NotifyDeleted( const kernel::Population_ABC& population )
 void ProfilesModel::Visit( T_Units& units ) const
 {
     for( CIT_UserProfiles it = userProfiles_.begin(); it != userProfiles_.end(); ++it )
-        if( (*it)->GetUserRole() != "" )
+        if( (*it)->IsLowLevel() )
         {
             std::vector< unsigned long > ids;
             (*it)->Visit( ids );

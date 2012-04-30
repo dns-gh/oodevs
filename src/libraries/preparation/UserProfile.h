@@ -50,9 +50,10 @@ public:
     //@{
     QString GetLogin() const;
     QString GetPassword() const;
+    bool IsLowLevel() const;
     bool IsReadable( const kernel::Entity_ABC& entity ) const;
     bool IsWriteable( const kernel::Entity_ABC& entity ) const;
-    std::string GetUserRole() const;
+    const std::string& GetUserRole() const;
     void Visit( std::vector< unsigned long >& elements ) const;
     void VisitAllAutomats( std::set< unsigned long >& elements ) const;
     unsigned int GetWriteProfilesCount();
@@ -107,6 +108,7 @@ private:
     void SerializeRights( xml::xostream& xos, const std::string& tag, const T_Ids& list ) const;
     void SetRight( unsigned long id, T_Ids& ids, bool status );
     bool HasProperty( const std::string& name ) const;
+    void ComputeLowLevel();
     //@}
 
 private:
@@ -126,6 +128,7 @@ private:
     T_Ids writeAutomats_;
     T_Ids writePopulations_;
     bool isClone_;
+    bool isLowLevel_;
     std::string userRole_;
     //@}
 };
