@@ -194,7 +194,6 @@ void UserProfileControls_ABC::SelectParent( gui::ValuedListItem* item )
 void UserProfileControls_ABC::SelectChild( gui::ValuedListItem* item )
 {
     SetItem( item, eControl );
-    listView_->ensureItemVisible( item );
 
     ValuedListItem* value = static_cast< ValuedListItem* >( item->firstChild() );
     while( value )
