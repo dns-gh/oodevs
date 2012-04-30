@@ -78,6 +78,7 @@ void UserProfileRights_ABC::Display( UserProfile& profile )
     while( value )
     {
         SetStatus( value, false, false );
+        EnsureVisible( value );
         value = static_cast< ValuedListItem* >( value->nextSibling() );
     }
 }
@@ -173,13 +174,32 @@ void UserProfileRights_ABC::SetStatus( gui::ValuedListItem* item, bool inheritsR
 void UserProfileRights_ABC::SetStatus( gui::ValuedListItem* item, bool isReadable, bool isWriteable, bool inheritsReadable, bool inheritsWriteable )
 {
     SetStatus( item, MakeStatus( isReadable, isWriteable, inheritsReadable, inheritsWriteable ) );
-    if( isReadable || isWriteable )
-        listView_->ensureItemVisible( item );
 
     ValuedListItem* value = static_cast< ValuedListItem* >( item->firstChild() );
     while( value )
     {
         SetStatus( value, isReadable || inheritsReadable, isWriteable || inheritsWriteable );
+        value = static_cast< ValuedListItem* >( value->nextSibling() );
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfileRights_ABC::EnsureVisible
+// Created: LDC 2012-04-30
+// -----------------------------------------------------------------------------
+void UserProfileRights_ABC::EnsureVisible( gui::ValuedListItem* item )
+{
+    const Entity_ABC* entity = item->GetValue< const Entity_ABC >();
+    if( !entity )
+        return;
+    const bool isWriteable = profile_->IsWriteable( *entity );
+    const bool isReadable  = isWriteable || profile_->IsReadable( *entity );
+    if( isReadable || isWriteable )
+        listView_->ensureItemVisible( item );
+    ValuedListItem* value = static_cast< ValuedListItem* >( item->firstChild() );
+    while( value )
+    {
+        EnsureVisible( value );
         value = static_cast< ValuedListItem* >( value->nextSibling() );
     }
 }

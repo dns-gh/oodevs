@@ -76,6 +76,7 @@ private:
     void SetStatus( gui::ValuedListItem* item, bool inheritsReadable, bool inheritsWriteable );
     void SetStatus( gui::ValuedListItem* item, bool isReadable, bool isWriteable, bool inheritsReadable, bool inheritsWriteable );
     Status MakeStatus( bool read, bool write, bool inheritedRead, bool inheritedWrite );
+    void EnsureVisible( gui::ValuedListItem* item );
     //@}
 
 private:
