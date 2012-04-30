@@ -40,7 +40,7 @@
       <usage proportion="0.05" type="Travail"/>
     </usages>
   </template>
-  <template name="quartier d'affaire">
+  <template name="Quartier d'affaire">
     <architecture floor-number="3" height="15" material="Metal" occupation="0.75" parking-floors="2" roof-shape="Plat" trafficability="10"/>
     <color alpha="1" blue="255" green="85" red="85"/>
     <usages>
@@ -49,7 +49,7 @@
       <usage proportion="0.6" type="Travail"/>
     </usages>
   </template>
-  <template name="centre-ville historique">
+  <template name="Centre-ville historique">
     <architecture floor-number="5" height="20" material="Brique" occupation="0.25" parking-floors="0" roof-shape="Pentu" trafficability="25"/>
     <color alpha="1" blue="0" green="0" red="255"/>
     <usages>
@@ -59,4 +59,4 @@
     </usages>
   </template>
 </templates>
-<!-- signature="2870638458" -->
+<!-- signature="2312293519" -->
