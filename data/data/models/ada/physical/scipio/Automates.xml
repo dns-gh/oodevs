@@ -1163,13 +1163,11 @@
     <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC"/>
   </automat>
   <automat decisional-model="Masalife.Automate.TRANS.TAC" id="910" name="TRANS . PC GTIA - 2+2" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC"/>
     <unit max-occurs="1" min-occurs="1" type="TRANS . GTIA - MR - 2+2"/>
-    <unit max-occurs="1" min-occurs="1" type="TRANS . GTIA - AV - 2+2"/>
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . GTIA - AV - 2+2"/>
   </automat>
   <automat decisional-model="Masalife.Automate.TRANS.TAC" id="911" name="TRANS . PC GTIA - 3+1" type="Automate TRANS">
-    <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . PC"/>
-    <unit max-occurs="1" min-occurs="1" type="TRANS . GTIA - AV - 3+1"/>
+    <unit command-post="true" max-occurs="1" min-occurs="1" type="TRANS . GTIA - AV - 3+1"/>
     <unit max-occurs="1" min-occurs="1" type="TRANS . GTIA - MR - 3+1"/>
   </automat>
   <automat decisional-model="Masalife.Automate.TRANS.TAC" id="912" name="TRANS . PC GTIA Debarque" type="Automate TRANS">
@@ -1535,4 +1533,4 @@
     <unit type="MILICE OXYDE . PICK UP ZU23/2"/>
   </automat>
 </automats>
-<!-- signature="1272265031" -->
+<!-- signature="3145710807" -->
