@@ -20,6 +20,7 @@
 #include "Entities/Agents/Units/Humans/PHY_HumanWound.h"
 #include "Entities/Specialisations/LOG/MIL_AgentPionLOG_ABC.h"
 #include "Entities/Specialisations/LOG/MIL_AutomateLOG.h"
+#include "MT_Tools/MT_Logger.h"
 
 BOOST_CLASS_EXPORT_IMPLEMENT( PHY_MedicalEvacuationConsign )
 
@@ -106,6 +107,12 @@ void PHY_MedicalEvacuationConsign::EnterStateWaitingForEvacuation()
         pEvacuationAmbulance_->UnregisterHuman( *this );
         pEvacuationAmbulance_ = 0;
     }
+    if( GetState() == eFinished || !pHumanState_ )
+    {
+        MT_LOG_ERROR_MSG( __FUNCTION__  ": Bad human state." );
+        SetState( eFinished );
+        return;
+    }
     SetState( eWaitingForEvacuation );
     ResetTimer( 0 );
 }
@@ -150,6 +157,12 @@ void PHY_MedicalEvacuationConsign::EnterStateEvacuationGoingTo()
     //    assert( pEvacuationAmbulance_ ); // Peut asserter quand EnterStateEvacuationGoingTo() quand consign associée à une ambulance déjà affectée à un automate
     assert( !pDoctor_ );
     assert( GetState() == eWaitingForEvacuation );
+    if( GetState() != eWaitingForEvacuation )
+    {
+        MT_LOG_ERROR_MSG( __FUNCTION__  ": Bad human state." );
+        SetState( eFinished );
+        return;
+    }
     SetState( eEvacuationGoingTo );
     ResetTimer( 0 );
 }
@@ -167,7 +180,13 @@ void PHY_MedicalEvacuationConsign::EnterStateEvacuationLoading()
     assert( GetState() == eEvacuationGoingTo || GetState() == eWaitingForEvacuation );
     SetState( eEvacuationLoading );
     ResetTimer( 0 );
-    pHumanState_->NotifyHandledByMedical();
+    if( !pHumanState_ )
+    {
+        MT_LOG_ERROR_MSG( __FUNCTION__  ": Bad human state." );
+        SetState( eFinished );
+    }
+    else
+        pHumanState_->NotifyHandledByMedical();
 }
 
 // -----------------------------------------------------------------------------
@@ -188,6 +207,12 @@ bool PHY_MedicalEvacuationConsign::EnterStateEvacuationWaitingForFullLoading()
         return true;
     }
     assert( GetState() == eEvacuationWaitingForFullLoading );
+    if( GetState() != eEvacuationWaitingForFullLoading )
+    {
+        MT_LOG_ERROR_MSG( __FUNCTION__  ": Bad human state." );
+        SetState( eFinished );
+        return true;
+    }
     return false;
 }
 
@@ -202,6 +227,12 @@ void PHY_MedicalEvacuationConsign::EnterStateEvacuationGoingFrom()
     assert( pEvacuationAmbulance_ );
     assert( !pDoctor_ );
     assert( GetState() == eEvacuationWaitingForFullLoading );
+    if( GetState() != eEvacuationWaitingForFullLoading )
+    {
+        MT_LOG_ERROR_MSG( __FUNCTION__  ": Bad human state." );
+        SetState( eFinished );
+        return;
+    }
     SetState( eEvacuationGoingFrom );
     ResetTimer( 0 );
 }
@@ -217,6 +248,12 @@ void PHY_MedicalEvacuationConsign::EnterStateEvacuationUnloading()
     assert( pEvacuationAmbulance_ );
     assert( !pDoctor_ );
     assert( GetState() == eEvacuationGoingFrom );
+    if( GetState() != eEvacuationGoingFrom )
+    {
+        MT_LOG_ERROR_MSG( __FUNCTION__  ": Bad human state." );
+        SetState( eFinished );
+        return;
+    }
     SetState( eEvacuationUnloading );
     ResetTimer( 0 );
 }
@@ -268,7 +305,13 @@ void PHY_MedicalEvacuationConsign::EnterStateDiagnosing()
     assert( pHumanState_ );
     assert( pDoctor_ );
     assert( !pEvacuationAmbulance_ );
-
+    
+    if( GetState() == eFinished )
+    {
+        MT_LOG_ERROR_MSG( __FUNCTION__  ": Bad human state." );
+        SetState( eFinished );
+        return;
+    }
     SetState( eDiagnosing );
     ResetTimer( PHY_HumanWound::GetDiagnosticTime() );
 }
@@ -283,6 +326,12 @@ void PHY_MedicalEvacuationConsign::EnterStateWaitingForCollection()
     assert( !pEvacuationAmbulance_ );
     assert( pDoctor_ );
 
+    if( GetState() == eFinished || !pHumanState_ )
+    {
+        MT_LOG_ERROR_MSG( __FUNCTION__  ": Bad human state." );
+        SetState( eFinished );
+        return;
+    }
     GetPionMedical().StopUsingForLogistic( *pDoctor_ );
     pDoctor_ = 0;
     pHumanState_->NotifyDiagnosed();
