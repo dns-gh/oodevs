@@ -978,10 +978,10 @@
     <indirect-fire intervention-type="4" life-time="600s" setup-time="60s" type="fumigene" x-dispersion="1000" y-dispersion="1000"/>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="47" id-nature="3" name="155-mm FASCAM Shell" nature="Solid" package-mass="0.04" package-size="1" package-volume="0.1" type="Obus">
-    <indirect-fire intervention-type="6" life-time="2h" object-type="Mined Area (linear)" type="effect" x-dispersion="200" y-dispersion="200"/>
+    <indirect-fire intervention-type="6" life-time="2h" object-type="mined area (linear)" type="effect" x-dispersion="200" y-dispersion="200"/>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="48" id-nature="3" name="152-mm Chemical Shell" nature="Solid" package-mass="0.03" package-size="1" package-volume="0.1" type="Obus">
-    <indirect-fire intervention-type="4" life-time="30m" object-type="NBC Area" type="effect" x-dispersion="500" y-dispersion="500"/>
+    <indirect-fire intervention-type="4" life-time="30m" object-type="nbc zone" type="effect" x-dispersion="500" y-dispersion="500"/>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="49" id-nature="3" name="SA-8 Missile" nature="Solid" package-mass="0.17" package-size="1" package-volume="0.13" type="MissileAir">
     <attritions>
@@ -1107,7 +1107,7 @@
     </attritions>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="60" id-nature="3" name="Teargas bomb" nature="Solid" package-mass="0.027" package-size="16" package-volume="0.04" type="Obus">
-    <indirect-fire intervention-type="1" life-time="300s" object-type="" type="effect" x-dispersion="200" y-dispersion="200"/>
+    <indirect-fire intervention-type="1" life-time="300s" object-type="mines" type="effect" x-dispersion="200" y-dispersion="200"/>
   </resource>
   <resource category="munition" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" d-type="true" id="61" id-nature="3" name="Antitank Air Bomb" nature="Solid" package-mass="0.5" package-size="1" package-volume="0.5" type="Obus">
     <attritions>
@@ -1202,4 +1202,4 @@
   <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="91" id-nature="12" name="Running Water" nature="Liquid" package-mass="1" package-size="1" package-volume="1"/>
   <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="92" id-nature="13" name="Natural Gas" nature="Gaseous" package-mass="1" package-size="1" package-volume="1"/>
 </resources>
-<!-- signature="2339068590" -->
+<!-- signature="3705224739" -->
