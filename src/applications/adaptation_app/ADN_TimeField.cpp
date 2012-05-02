@@ -85,6 +85,7 @@ ADN_TimeField::ADN_TimeField( QWidget* pParent, const char* szName /* = 0*/ )
     , nMinimumHoursValue_  ( 0 )
     , bFreezeSlot_         ( false )
 {
+    // $$$$ ABR 2012-05-02: Need many transformation (locale().toString or QString::number) in order to manipulate non-localized data and to display localized data
     pConnector_ = new ADN_Connector_String<ADN_TimeField>(this);
 
     // objects
@@ -128,31 +129,35 @@ void ADN_TimeField::OnValueChanged( const QString& strValue )
         return;
 
     if( pComboBox_->currentText() == "s" )
-        nSecondsValue_ = strValue.toUInt();
+        nSecondsValue_ = locale().toUInt( strValue );
     else if( pComboBox_->currentText() == "m" )
-        nSecondsValue_ = strValue.toUInt() * 60;
+        nSecondsValue_ = locale().toUInt( strValue ) * 60;
     else if( pComboBox_->currentText() == "h" )
-        nSecondsValue_ = strValue.toUInt() * 3600;
+        nSecondsValue_ = locale().toUInt( strValue ) * 3600;
 
     if( strValue.isEmpty() || nSecondsValue_ < nMinimumSecondsValue_ )
     {
-        QString currentEmptyValue = QString::number( 0 );
+        QString currentEmptyValue = "0";
         if( nMinimumSecondsValue_ > 0 )
         {
             if( pComboBox_->currentText() == "s" )
-                currentEmptyValue = QString::number(nMinimumSecondsValue_);
+                currentEmptyValue = locale().toString( nMinimumSecondsValue_ );
             else if( pComboBox_->currentText() == "m" )
-                currentEmptyValue = QString::number(nMinimumMinutesValue_);
+                currentEmptyValue = locale().toString( nMinimumMinutesValue_ );
             else if( pComboBox_->currentText() == "h" )
-                currentEmptyValue = QString::number(nMinimumHoursValue_);
+                currentEmptyValue = locale().toString( nMinimumHoursValue_ );
         }
 
         nSecondsValue_ = nMinimumSecondsValue_;
         pLineEdit_->setText( currentEmptyValue );
-        static_cast<ADN_Connector_String<ADN_TimeField>*>(pConnector_)->SetDataChanged( currentEmptyValue + pComboBox_->currentText() );
+        unsigned value = locale().toUInt( currentEmptyValue );
+        static_cast<ADN_Connector_String<ADN_TimeField>*>(pConnector_)->SetDataChanged( QString::number( value ) + pComboBox_->currentText() );
     }
     else
-        static_cast<ADN_Connector_String<ADN_TimeField>*>(pConnector_)->SetDataChanged( strValue + pComboBox_->currentText() );
+    {
+        unsigned value = locale().toUInt( strValue );
+        static_cast<ADN_Connector_String<ADN_TimeField>*>(pConnector_)->SetDataChanged( QString::number( value ) + pComboBox_->currentText() );
+    }
 
     emit ValueChanged();
 }
@@ -168,13 +173,14 @@ void ADN_TimeField::OnUnitChanged( const QString& strUnit )
 
     bFreezeSlot_ = true;
     if( strUnit == "s" )
-        pLineEdit_->setText( QString::number( nSecondsValue_ ) );
+        pLineEdit_->setText( locale().toString( nSecondsValue_ ) );
     else if( strUnit == "m" )
-        pLineEdit_->setText( QString::number( std::max<unsigned int>( minutesValue, nMinimumMinutesValue_) )  );
+        pLineEdit_->setText( locale().toString( std::max<unsigned int>( minutesValue, nMinimumMinutesValue_) )  );
     else if( strUnit == "h" )
-        pLineEdit_->setText( QString::number( std::max<unsigned int>( hoursValue, nMinimumHoursValue_) ) );
+        pLineEdit_->setText( locale().toString( std::max<unsigned int>( hoursValue, nMinimumHoursValue_) ) );
 
-    static_cast<ADN_Connector_String<ADN_TimeField>*>(pConnector_)->SetDataChanged( pLineEdit_->text() + strUnit );
+    unsigned value = locale().toUInt( pLineEdit_->text() );
+    static_cast<ADN_Connector_String<ADN_TimeField>*>(pConnector_)->SetDataChanged( QString::number( value ) + strUnit );
     bFreezeSlot_ = false;
     pLineEdit_->setFocus();
     emit ValueChanged();
@@ -186,7 +192,8 @@ void ADN_TimeField::OnUnitChanged( const QString& strUnit )
 // -----------------------------------------------------------------------------
 QString ADN_TimeField::text() const
 {
-    return pLineEdit_->text() + pComboBox_->currentText();
+    unsigned value = locale().toUInt( pLineEdit_->text() );
+    return QString::number( value ) + pComboBox_->currentText();
 }
 
 // -----------------------------------------------------------------------------
@@ -215,7 +222,8 @@ void ADN_TimeField::setText( const QString& strText )
     std::stringstream strUnit;
     strUnit << cUnit;
     pComboBox_->setCurrentText( strUnit.str().c_str() );
-    pLineEdit_->setText( strTimeValue.c_str() );
+    unsigned value = locale().toUInt( strTimeValue.c_str() );
+    pLineEdit_->setText( locale().toString( value ) );
     emit ValueChanged();
 }
 
