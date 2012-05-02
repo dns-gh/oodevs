@@ -2607,11 +2607,11 @@
   <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="137" id-nature="3" name="Rechange NTI 1 glaise" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
   <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="138" id-nature="3" name="Rechange NTI 2 glaise" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
   <resource category="piece" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="139" id-nature="3" name="Rechange NTI 3 glaise" nature="Solide" package-mass="1.25" package-size="1" package-volume="1.25"/>
-  <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="140" id-nature="6" name="electricite" nature="Electric" package-mass="1" package-size="1" package-volume="1"/>
-  <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="141" id-nature="5" name="eau courante" nature="Liquid" package-mass="1" package-size="1" package-volume="1"/>
+  <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="140" id-nature="6" name="electricite" nature="Electricite" package-mass="1" package-size="1" package-volume="1"/>
+  <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="141" id-nature="5" name="eau courante" nature="Liquide" package-mass="1" package-size="1" package-volume="1"/>
   <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="142" id-nature="2" name="carburant" nature="Gasoil" package-mass="1" package-size="1" package-volume="1"/>
   <resource category="energie" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="143" id-nature="3" name="nourriture" nature="Solide" package-mass="1" package-size="1" package-volume="1"/>
   <resource category="funeraire" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="144" id-nature="3" name="Sac de transport de dépouille mortelle" nature="Solide" package-mass="0.001" package-size="1" package-volume="1"/>
   <resource category="funeraire" codeEMAT6="" codeEMAT8="" codeLFRIL="" codeNNO="" id="145" id-nature="3" name="Conteneur de transport post mortem" nature="Solide" package-mass="0.1" package-size="1" package-volume="2"/>
 </resources>
-<!-- signature="0967902524" -->
+<!-- signature="0932173177" -->
