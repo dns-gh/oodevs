@@ -34,28 +34,32 @@ DiplomacyDialog_ABC::DiplomacyDialog_ABC( QWidget* parent, kernel::Controllers& 
 {
     setSizePolicy( QSizePolicy::MinimumExpanding, QSizePolicy::MinimumExpanding );
     setCaption( tools::translate( "gui::DiplomacyDialog_ABC", "Diplomacy" ) );
-    Q3VBoxLayout* pMainLayout = new Q3VBoxLayout( this );
+    setMaximumSize( 1024, 768);
 
-    table_ = new Q3Table( this );
+    // Table
+    table_ = new Q3Table( this ); // $$$$ ABR 2012-05-02: TODO Use QT4 Table instead
     table_->setSelectionMode( Q3Table::NoSelection );
-    table_->setMinimumSize( 400, 200 );
-    pMainLayout->addWidget( table_ );
 
-    Q3HBoxLayout* pButtonLayout = new Q3HBoxLayout( pMainLayout );
-    pButtonLayout->setAlignment( Qt::AlignRight );
+    // Buttons
     QPushButton* okBtn     = new QPushButton( tools::translate( "gui::DiplomacyDialog_ABC", "Ok" ), this );
     QPushButton* cancelBtn = new QPushButton( tools::translate( "gui::DiplomacyDialog_ABC", "Cancel" ), this );
-    pButtonLayout->addWidget( okBtn );
-    pButtonLayout->addWidget( cancelBtn );
     okBtn->setDefault( true );
     okBtn->setMaximumWidth( 100 );
     cancelBtn->setMaximumWidth( 100 );
 
+    // Layouts
+    Q3VBoxLayout* pMainLayout = new Q3VBoxLayout( this, 5, 5 );
+    pMainLayout->addWidget( table_ );
+    Q3HBoxLayout* pButtonLayout = new Q3HBoxLayout( pMainLayout, 5 );
+    pButtonLayout->setAlignment( Qt::AlignCenter );
+    pButtonLayout->addWidget( okBtn );
+    pButtonLayout->addWidget( cancelBtn );
+
+    // Connections
     connect( cancelBtn, SIGNAL( clicked() ), SLOT( Reject() ) );
     connect( okBtn    , SIGNAL( clicked() ), SLOT( Validate() ) );
 
     controllers_.Register( *this );
-
     hide();
 }
 
@@ -131,7 +135,6 @@ void DiplomacyDialog_ABC::NotifyContextMenu( const kernel::Team_ABC& team, kerne
 void DiplomacyDialog_ABC::showEvent( QShowEvent* )
 {
     UpdateTable();
-
     for( unsigned int i = 0; i < teams_.size(); ++i )
         for( unsigned int j = 0; j < teams_.size(); ++j )
         {
@@ -153,18 +156,7 @@ void DiplomacyDialog_ABC::showEvent( QShowEvent* )
                 item->setText( diplomacy == kernel::Karma::unknown_ ? kernel::Karma::neutral_.GetName() : diplomacy.GetName() ); // $$$$ SBO 2008-12-09:
             }
         }
-}
-
-// -----------------------------------------------------------------------------
-// Name: DiplomacyDialog_ABC::sizeHint
-// Created: SBO 2008-12-09
-// -----------------------------------------------------------------------------
-QSize DiplomacyDialog_ABC::sizeHint()
-{
-    const QRect rect = table_->cellGeometry( 1, 1 );
-    const std::size_t w = ( teams_.size() + 1 ) * rect.width();
-    const std::size_t h = teams_.size() * rect.height() + 50;
-    return QSize( static_cast< int >( w ), static_cast< int >( h ) );
+    table_->adjustSize();
 }
 
 // -----------------------------------------------------------------------------
@@ -175,10 +167,17 @@ void DiplomacyDialog_ABC::UpdateTable()
 {
     table_->setNumCols( static_cast< int >( teams_.size() ) );
     table_->setNumRows( static_cast< int >( teams_.size() ) );
+    int maxName = 0;
     for( unsigned i = 0; i < teams_.size(); ++i )
     {
         const QString name = teams_.at( i )->GetName();
         table_->verticalHeader  ()->setLabel( i, name );
         table_->horizontalHeader()->setLabel( i, name );
+        table_->setRowStretchable( i, true );
+        table_->setColumnStretchable( i, true );
+        maxName = std::max< int >( name.size(), maxName );
     }
+    int newWidth = teams_.size() * maxName * 10;
+    int newHeight = teams_.size() * 40;
+    table_->setMinimumSize( newWidth < maximumWidth() - 20 ? newWidth : maximumWidth() - 20, newHeight < maximumHeight() - 80 ? newHeight : maximumHeight() - 80 );
 }
