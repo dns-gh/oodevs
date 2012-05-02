@@ -187,6 +187,7 @@
     </ClCompile>
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MainTabWidget.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_MainWindow.cpp" />
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Objects_Data_ObjectInfos.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_SearchListView.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Sensors_ModificatorTable.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_TableDialog.cpp" />
@@ -2130,6 +2131,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_NavigationInfos.h" />
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Objects_Data_ObjectInfos.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Tab_Container.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Type_ABC.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Type_Choice.h" />

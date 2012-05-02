@@ -25,7 +25,6 @@
 
 typedef ADN_Sensors_Data::TargetInfos TargetInfos;
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_TargetsListView constructor
 // Created: APE 2005-01-18
@@ -43,7 +42,6 @@ ADN_Sensors_TargetsListView::ADN_Sensors_TargetsListView( QWidget* pParent, cons
     this->SetDeletionEnabled( true );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_TargetsListView destructor
 // Created: APE 2005-01-18
@@ -52,7 +50,6 @@ ADN_Sensors_TargetsListView::~ADN_Sensors_TargetsListView()
 {
     delete pConnector_;
 }
-
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_TargetsListView::ConnectItem
@@ -72,7 +69,6 @@ void ADN_Sensors_TargetsListView::ConnectItem( bool bConnect )
     vItemConnectors_[ADN_Sensors_GUI::eObjPopulationModifier]->Connect( &pInfos->populationInfos_.rModifier_, bConnect );
 }
 
-
 // -----------------------------------------------------------------------------
 // Name: ADN_Sensors_TargetsListView::OnContextMenu
 // Created: APE 2005-01-18
@@ -86,7 +82,7 @@ void ADN_Sensors_TargetsListView::OnContextMenu( const QPoint& pt )
     ADN_Objects_Data::T_ObjectsInfos_Vector& vObjects = ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos();
     for( ADN_Objects_Data::IT_ObjectsInfos_Vector it = vObjects.begin(); it != vObjects.end(); ++it )
     {
-        ADN_Objects_Data::ObjectInfos* pObject = *it;
+        ADN_Objects_Data_ObjectInfos* pObject = *it;
         // Don't add a object to the menu if it already is present in the list.
         if( Contains( pObject ) )
             continue;
@@ -110,7 +106,7 @@ void ADN_Sensors_TargetsListView::OnContextMenu( const QPoint& pt )
     {
         // Add the weapon to the list.
         TargetInfos* pNewInfo = new TargetInfos();
-        pNewInfo->ptrObject_ = (ADN_Objects_Data::ObjectInfos*)nMenuResult;
+        pNewInfo->ptrObject_ = (ADN_Objects_Data_ObjectInfos*)nMenuResult;
         pNewInfo->strName_ = pNewInfo->ptrObject_.GetData()->strName_.GetData();
 
         ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
@@ -119,12 +115,11 @@ void ADN_Sensors_TargetsListView::OnContextMenu( const QPoint& pt )
     }
 }
 
-
 //-----------------------------------------------------------------------------
 // Name: ADN_Sensors_TargetsListView::Contains
 // Created: AGN 03-08-04
 //-----------------------------------------------------------------------------
-bool ADN_Sensors_TargetsListView::Contains( const ADN_Objects_Data::ObjectInfos* pInfo )
+bool ADN_Sensors_TargetsListView::Contains( const ADN_Objects_Data_ObjectInfos* pInfo )
 {
     Q3ListViewItemIterator it( this );
     while( it.current() != 0 )

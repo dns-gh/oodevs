@@ -124,7 +124,7 @@ void ADN_ListView_Composantes_Objects::OnContextMenu( const QPoint& pt )
     ADN_Objects_Data::T_ObjectsInfos_Vector& vObjects = ADN_Workspace::GetWorkspace().GetObjects().GetData().GetObjectInfos();
     for( ADN_Objects_Data::IT_ObjectsInfos_Vector it = vObjects.begin(); it != vObjects.end(); ++it )
     {
-        ADN_Objects_Data::ObjectInfos* pObject = *it;
+        ADN_Objects_Data_ObjectInfos* pObject = *it;
         // Don't add a object to the menu if it already is present in the list.
         if( Contains( pObject ) )
             continue;
@@ -148,7 +148,7 @@ void ADN_ListView_Composantes_Objects::OnContextMenu( const QPoint& pt )
     {
         // Add the weapon to the list.
         ObjectInfos* pNewInfo = new ObjectInfos();
-        pNewInfo->ptrObject_ = (ADN_Objects_Data::ObjectInfos*)nMenuResult;
+        pNewInfo->ptrObject_ = (ADN_Objects_Data_ObjectInfos*)nMenuResult;
 
         ADN_Connector_Vector_ABC* pCTable = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
         pCTable->AddItem( pNewInfo );
@@ -161,7 +161,7 @@ void ADN_ListView_Composantes_Objects::OnContextMenu( const QPoint& pt )
 // Name: ADN_ListView_Composantes_Objects::Contains
 // Created: AGN 03-08-04
 //-----------------------------------------------------------------------------
-bool ADN_ListView_Composantes_Objects::Contains( const ADN_Objects_Data::ObjectInfos* pInfo )
+bool ADN_ListView_Composantes_Objects::Contains( const ADN_Objects_Data_ObjectInfos* pInfo )
 {
     Q3ListViewItemIterator it( this );
     while ( it.current() != 0 )

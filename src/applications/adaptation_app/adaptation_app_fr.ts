@@ -6517,6 +6517,14 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
         <translation>Equipement - Nature de ressource invalide &apos;%1&apos;</translation>
     </message>
+    <message>
+        <source>Invalid object &apos;%1&apos;. Do you wish to continue with a default object instead ?</source>
+        <translation>Type d&apos;object - Object invalide &apos;%1&apos;. Voulez-vous continuer avec un objet par défault ?</translation>
+    </message>
+    <message>
+        <source>Invalid object &apos;%1&apos;</source>
+        <translation>Object invalide &apos;%1&apos;</translation>
+    </message>
 </context>
 <context>
     <name>Health_Data</name>

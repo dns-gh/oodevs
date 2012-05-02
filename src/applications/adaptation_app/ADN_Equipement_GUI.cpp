@@ -221,7 +221,7 @@ void ADN_Equipement_GUI::BuildAmmunition()
 
         // Effect (object) parameters
         pEffectParametersGroup_ = new Q3GroupBox( 3, Qt::Horizontal, tr( "Effect ammo parameters" ), pIndirectGroup );
-        builder.AddField< ADN_EditLine_String >( pEffectParametersGroup_, tr( "Created object" ), vConnectors[ eEffectType ] );
+        builder.AddField< ADN_ComboBox_Vector< ADN_Objects_Data_ObjectInfos> >( pEffectParametersGroup_, tr( "Created object" ), vConnectors[ eEffectType ] );
         builder.AddField< ADN_TimeField >( pEffectParametersGroup_, tr( "Span" ), vConnectors[ eEffectLifetime ] );
 
         // Mine parameters
@@ -346,6 +346,7 @@ void ADN_Equipement_GUI::IndirectTypeComboActivated( int nIndex )
         pIndirectEffectLayout_->setCurrentWidget( pMineParametersGroup_ );
     else if( type == eTypeMunitionTirIndirect_Effect )
         pIndirectEffectLayout_->setCurrentWidget( pEffectParametersGroup_ );
+    data_.Initialize();
 }
 
 // -----------------------------------------------------------------------------

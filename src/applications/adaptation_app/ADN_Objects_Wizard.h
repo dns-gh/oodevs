@@ -13,7 +13,7 @@
 #include "ADN_Objects_Data.h"
 #include "ADN_Wizard_ABC.h"
 
-typedef ADN_Wizard_ABC<ADN_Objects_Data::ObjectInfos> ADN_Wizard_ABC_ADN_Object_Data_ObjectInfos;
+typedef ADN_Wizard_ABC< ADN_Objects_Data_ObjectInfos > ADN_Wizard_ABC_ADN_Object_Data_ObjectInfos;
 
 // =============================================================================
 /** @class  ADN_Objects_Wizard

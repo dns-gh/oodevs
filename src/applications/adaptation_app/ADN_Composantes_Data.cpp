@@ -13,6 +13,7 @@
 #include "ADN_GuiTools.h"
 #include "ADN_Workspace.h"
 #include "ADN_Project_Data.h"
+#include "ADN_Objects_Data.h"
 #include "ADN_OpenFile_Exception.h"
 #include "ADN_SaveFile_Exception.h"
 #include "ADN_Tr.h"
@@ -1491,7 +1492,7 @@ void ADN_Composantes_Data::ObjectInfos::ReadArchive( xml::xistream& input )
     std::string strType;
     input >> xml::attribute( "type", strType );
 
-    ADN_Objects_Data::ObjectInfos* pObject = ADN_Workspace::GetWorkspace().GetObjects().GetData().FindObject( strType );
+    ADN_Objects_Data_ObjectInfos* pObject = ADN_Workspace::GetWorkspace().GetObjects().GetData().FindObject( strType );
     if( !pObject )
         throw ADN_DataException( tools::translate( "Composante_Data",  "Invalid data" ).ascii(), tools::translate( "Composante_Data",  "Equipment - Invalid object type '%1'" ).arg( strType.c_str() ).ascii() );
     ptrObject_ = pObject;

@@ -1363,6 +1363,9 @@
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ArmorCategory_Wizard.cpp">
       <Filter>Source Files\Workspace\Categories\Categories GUI\Wizard</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Objects_Data_ObjectInfos.cpp">
+      <Filter>Source Files\Workspace\Object\Objects Data</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\applications\adaptation_app\adaptation_app_pch.h">
@@ -2081,6 +2084,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ArmorCategory_Wizard.h">
       <Filter>Source Files\Workspace\Categories\Categories GUI\Wizard</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Objects_Data_ObjectInfos.h">
+      <Filter>Source Files\Workspace\Object\Objects Data</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

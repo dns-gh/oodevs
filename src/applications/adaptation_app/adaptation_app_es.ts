@@ -6508,6 +6508,14 @@ Click &quot;Ok&quot; to delete it and all its references.</source>
         <source>Equipment - Invalid resource nature &apos;%1&apos;</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Invalid object &apos;%1&apos;. Do you wish to continue with a default object instead ?</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Invalid object &apos;%1&apos;</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Health_Data</name>

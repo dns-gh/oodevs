@@ -34,7 +34,7 @@ public:
 private:
     void ConnectItem( bool bConnect );
     void OnContextMenu( const QPoint& pt );
-    bool Contains( const ADN_Objects_Data::ObjectInfos* pInfo );
+    bool Contains( const ADN_Objects_Data_ObjectInfos* pInfo );
 
 };
 
