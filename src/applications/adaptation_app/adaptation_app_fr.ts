@@ -6129,11 +6129,11 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
     <name>ADN_Wizard_ABC</name>
     <message>
         <source>Next</source>
-        <translation>Suivant</translation>
+        <translation>Continuer</translation>
     </message>
     <message>
         <source>Previous</source>
-        <translation>Précédent</translation>
+        <translation>Revenir</translation>
     </message>
     <message>
         <source>Cancel</source>
