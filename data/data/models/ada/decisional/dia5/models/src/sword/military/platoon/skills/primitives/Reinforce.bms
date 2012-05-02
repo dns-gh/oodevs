@@ -59,7 +59,7 @@ rootnode
         if self.params.positions and self.params.positions ~= NIL then
           positions = self.params.positions
         else 
-           positions = sword.military.queries.tactical.getPositionsToFollow[ "execute" ]({ elementsToFollow = { self.params.entity } })
+           positions = sword.military.queries.tactical.getPositionsToReinforce[ "execute" ]({ elementsToReinforce = { self.params.entity } })
         end
         for _,position in pairs( positions ) do
             Activate( skill.links.moveAndTakePosition, 
