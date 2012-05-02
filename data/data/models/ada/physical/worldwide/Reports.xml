@@ -366,13 +366,13 @@
     <parameter type="String"/>
   </report>
   <report category="operational" id="261" message="object activated"/>
-  <report category="operational" id="262" message="system %1 is being operated">
+  <report category="operational" id="262" message="element %1 is being operated">
     <parameter type="ObjectKnowledge"/>
   </report>
   <report category="operational" id="263" message="direct fire on target : %1">
     <parameter type="AgentKnowledge"/>
   </report>
-  <report category="operational" id="264" message="work completed for %1">
+  <report category="operational" id="264" message="element %1 is no longer operated">
     <parameter type="ObjectKnowledge"/>
   </report>
   <report category="operational" id="265" message="target illumination"/>
