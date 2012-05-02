@@ -1,14 +1,15 @@
 queryImplementation "getObstaclesInArea" 
 {
-    ["execute"] = function ( params )
+    ["execute"] = function ( params ) -- Return avoidable and constructor object
         local allRes={}
-        local obstacles = {}
-        obstacles = DEC_ObjectKnowledgesInZone( params.area.source, 
-            {"abattis", "anti tank obstacle", "barricade", "bridge destruction", 
-             "landslide", "mines", "mined area (linear)", "mined area (scattered)", 
-             "road destruction" } )
-        for _, objective in pairs( obstacles ) do
-            allRes[ #allRes + 1 ] = CreateKnowledge( sword.military.world.Object, objective )
+        local obstaclesConstructor = {}
+        local obstaclesAvoidable = {}
+        obstaclesConstructor = integration.getObjectsKnowledgeInZoneWithCapacity( "constructor", params.area)
+        obstaclesAvoidable = integration.getObjectsKnowledgeInZoneWithCapacity( "avoidable", params.area)
+        for _, objective in pairs( obstaclesAvoidable ) do
+            if exists(obstaclesConstructor, objective) then
+                 allRes[ #allRes + 1 ] = CreateKnowledge( integration.ontology.types.object, objective )
+            end
         end
         return allRes
     end
