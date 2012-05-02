@@ -50,6 +50,18 @@ protected:
 protected:
     T* pResult_;
     ADN_Wizard_FirstPage_ABC<T>* pFirstPage_;
+
+private:
+    //! @name Helpers
+    //@{
+    void InitButtonsText()
+    {
+        nextButton()->setText( qApp->translate( "ADN_Wizard_ABC", "Next" ) );
+        backButton()->setText( qApp->translate( "ADN_Wizard_ABC", "Previous" ) );
+        cancelButton()->setText( qApp->translate( "ADN_Wizard_ABC", "Cancel" ) );
+        finishButton()->setText( qApp->translate( "ADN_Wizard_ABC", "Done" ) );
+    }
+    //@}
 };
 
 #include "ADN_Wizard_ABC.inl"

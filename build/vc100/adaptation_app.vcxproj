@@ -3895,7 +3895,9 @@
     <None Include="..\..\src\applications\adaptation_app\res\fileopen.xpm" />
     <None Include="..\..\src\applications\adaptation_app\res\filesave.xpm" />
     <None Include="..\..\src\applications\adaptation_app\adaptation_app_es.ts" />
-    <None Include="..\..\src\applications\adaptation_app\adaptation_app_fr.ts" />
+    <None Include="..\..\src\applications\adaptation_app\adaptation_app_fr.ts">
+      <SubType>Designer</SubType>
+    </None>
     <CustomBuild Include="..\..\src\applications\adaptation_app\translator.pro">
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|win32'">Performing Custom Build Step</Message>
       <Message Condition="'$(Configuration)|$(Platform)'=='debug|x64'">Performing Custom Build Step</Message>

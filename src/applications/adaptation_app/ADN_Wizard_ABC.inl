@@ -34,10 +34,7 @@ ADN_Wizard_ABC<T>::ADN_Wizard_ABC( QWidget* pParent, const char* szName )
 , pFirstPage_          ( 0 )
 {
     setFixedSize( 600, 400 );
-    nextButton()->setText( qApp->translate( "ADN_Wizard_ABC", "Next" ) );
-    backButton()->setText( qApp->translate( "ADN_Wizard_ABC","Previous" ) );
-    cancelButton()->setText( qApp->translate( "ADN_Wizard_ABC", "Cancel" ) );
-    finishButton()->setText( qApp->translate( "ADN_Wizard_ABC","Done" ) );
+    InitButtonsText();
     setTitleFont( QFont( QApplication::font().family(), 12, QFont::Bold ) );
 }
 

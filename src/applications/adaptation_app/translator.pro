@@ -1,6 +1,7 @@
 HEADERS = ADN_GUI_ABC.h \
 ADN_Rich_ListViewItem.h \
 ADN_Table.h \
+ADN_Wizard_ABC.h \
 
 
 SOURCES = ADN_WeaponFilter.cpp \
