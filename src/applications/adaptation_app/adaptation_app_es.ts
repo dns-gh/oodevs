@@ -5996,6 +5996,25 @@ Click &quot;Ok&quot; to delete it.</source>
     </message>
 </context>
 <context>
+    <name>ADN_Wizard_ABC</name>
+    <message>
+        <source>Next</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Previous</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation type="unfinished">Cancelar</translation>
+    </message>
+    <message>
+        <source>Done</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_Workspace</name>
     <message>
         <source>Categories</source>

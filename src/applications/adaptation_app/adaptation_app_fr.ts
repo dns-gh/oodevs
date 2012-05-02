@@ -6006,6 +6006,25 @@ Cliquer sur &quot;Ok&quot; pour le détruire.</translation>
     </message>
 </context>
 <context>
+    <name>ADN_Wizard_ABC</name>
+    <message>
+        <source>Next</source>
+        <translation>Continuer</translation>
+    </message>
+    <message>
+        <source>Previous</source>
+        <translation>Revenir</translation>
+    </message>
+    <message>
+        <source>Cancel</source>
+        <translation>Annuler</translation>
+    </message>
+    <message>
+        <source>Done</source>
+        <translation>Terminer</translation>
+    </message>
+</context>
+<context>
     <name>ADN_Workspace</name>
     <message>
         <source>Knowledge groups</source>
