@@ -511,8 +511,62 @@ void UserProfile::Visit( std::vector< unsigned long >& elements ) const
     elements.insert( elements.begin(), writePopulations_.begin(), writePopulations_.end() );
 }
 
-namespace{    void InsertAutomats( std::set< unsigned long >& automats, const kernel::Entity_ABC& entity, const Model& model )    {        const kernel::TacticalHierarchies* hirearchies = entity.Retrieve< kernel::TacticalHierarchies >();        if( hirearchies )        {            tools::Iterator< const kernel::Entity_ABC& > it = hirearchies->CreateSubordinateIterator();            while( it.HasMoreElements() )            {                const kernel::Entity_ABC& childEntity = it.NextElement();                const kernel::Automat_ABC* pAutomat = dynamic_cast< const kernel::Automat_ABC* >( &childEntity );                if( pAutomat )                    automats.insert( pAutomat->GetId() );                else                    InsertAutomats( automats, childEntity, model );            }        }    }    void InsertAutomatsFromTeams( const std::vector< unsigned long >& teams, std::set< unsigned long >& automats, const Model& model )    {        for( std::vector< unsigned long >::const_iterator it = teams.begin();  it != teams.end(); ++it )        {            kernel::Team_ABC* pTeam = model.FindTeam( *it );            if( pTeam )                InsertAutomats( automats, *pTeam, model );        }    }    void InsertAutomatsFromFormations( const std::vector< unsigned long >& formations, std::set< unsigned long >& automats, const Model& model )    {        for( std::vector< unsigned long >::const_iterator it = formations.begin();  it != formations.end(); ++it )        {            kernel::Formation_ABC* pFormation = model.FindFormation( *it );            if( pFormation )                InsertAutomats( automats, *pFormation, model );        }    }}// -----------------------------------------------------------------------------
-// Name: UserProfile::VisitAllAutomats// Created: MMC 2012-04-23// -----------------------------------------------------------------------------void UserProfile::VisitAllAutomats( std::set< unsigned long >& elements ) const{    elements.insert( readAutomats_.begin(), readAutomats_.end() );    elements.insert( writeAutomats_.begin(), writeAutomats_.end() );    InsertAutomatsFromTeams( readSides_, elements, model_ );    InsertAutomatsFromTeams( writeSides_, elements, model_ );    InsertAutomatsFromFormations( readFormations_, elements, model_ );    InsertAutomatsFromFormations( writeFormations_, elements, model_ );}// -----------------------------------------------------------------------------// Name: UserProfile::GetWriteProfilesCount
+namespace{
+    void InsertAutomats( std::set< unsigned long >& automats, const kernel::Entity_ABC& entity, const Model& model )
+    {
+        const kernel::TacticalHierarchies* hirearchies = entity.Retrieve< kernel::TacticalHierarchies >();
+        if( hirearchies )
+        {
+            tools::Iterator< const kernel::Entity_ABC& > it = hirearchies->CreateSubordinateIterator();
+            while( it.HasMoreElements() )
+            {
+                const kernel::Entity_ABC& childEntity = it.NextElement();
+                const kernel::Automat_ABC* pAutomat = dynamic_cast< const kernel::Automat_ABC* >( &childEntity );
+                if( pAutomat )
+                    automats.insert( pAutomat->GetId() );
+                else
+                    InsertAutomats( automats, childEntity, model );
+            }
+        }
+    }
+
+    void InsertAutomatsFromTeams( const std::vector< unsigned long >& teams, std::set< unsigned long >& automats, const Model& model )
+    {
+        for( std::vector< unsigned long >::const_iterator it = teams.begin();  it != teams.end(); ++it )
+        {
+            kernel::Team_ABC* pTeam = model.FindTeam( *it );
+            if( pTeam )
+                InsertAutomats( automats, *pTeam, model );
+        }
+    }
+
+    void InsertAutomatsFromFormations( const std::vector< unsigned long >& formations, std::set< unsigned long >& automats, const Model& model )
+    {
+        for( std::vector< unsigned long >::const_iterator it = formations.begin();  it != formations.end(); ++it )
+        {
+            kernel::Formation_ABC* pFormation = model.FindFormation( *it );
+            if( pFormation )
+                InsertAutomats( automats, *pFormation, model );
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::VisitAllAutomats
+// Created: MMC 2012-04-23
+// -----------------------------------------------------------------------------
+void UserProfile::VisitAllAutomats( std::set< unsigned long >& elements ) const
+{
+    elements.insert( readAutomats_.begin(), readAutomats_.end() );
+    elements.insert( writeAutomats_.begin(), writeAutomats_.end() );
+    InsertAutomatsFromTeams( readSides_, elements, model_ );
+    InsertAutomatsFromTeams( writeSides_, elements, model_ );
+    InsertAutomatsFromFormations( readFormations_, elements, model_ );
+    InsertAutomatsFromFormations( writeFormations_, elements, model_ );
+}
+
+// -----------------------------------------------------------------------------
+// Name: UserProfile::GetWriteProfilesCount
 // Created: LGY 2012-03-22
 // -----------------------------------------------------------------------------
 unsigned int UserProfile::GetWriteProfilesCount()
