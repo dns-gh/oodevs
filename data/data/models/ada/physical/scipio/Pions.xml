@@ -285,7 +285,6 @@
         <resource capacity="160" logistic-threshold="30" name="OE CCR 155 MLE F1" normalized-consumption="0"/>
         <resource capacity="60" logistic-threshold="30" name="OE JUPU 155 F2" normalized-consumption="0"/>
         <resource capacity="20" logistic-threshold="30" name="CPLT FUM PH 155" normalized-consumption="0"/>
-        <resource capacity="36" logistic-threshold="30" name="O GR 155 F1" normalized-consumption="0"/>
         <resource capacity="20" logistic-threshold="30" name="O ECL 155 F1" normalized-consumption="0"/>
       </category>
     </logistics>
@@ -570,7 +569,6 @@
         <resource capacity="32" logistic-threshold="30" name="OE JUPU 155 F2" normalized-consumption="0"/>
         <resource capacity="8" logistic-threshold="30" name="O ECL 155 F1" normalized-consumption="0"/>
         <resource capacity="8" logistic-threshold="30" name="CPLT FUM PH 155" normalized-consumption="0"/>
-        <resource capacity="20" logistic-threshold="30" name="O GR 155 F1" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -830,7 +828,6 @@
         <resource capacity="160" logistic-threshold="30" name="OE CCR 155 MLE F1" normalized-consumption="0"/>
         <resource capacity="60" logistic-threshold="30" name="OE JUPU 155 F2" normalized-consumption="0"/>
         <resource capacity="20" logistic-threshold="30" name="CPLT FUM PH 155" normalized-consumption="0"/>
-        <resource capacity="36" logistic-threshold="30" name="O GR 155 F1" normalized-consumption="0"/>
         <resource capacity="20" logistic-threshold="30" name="O ECL 155 F1" normalized-consumption="0"/>
       </category>
     </logistics>
@@ -2760,7 +2757,6 @@
         <resource capacity="88" logistic-threshold="30" name="OE CCR 155 MLE F1" normalized-consumption="0"/>
         <resource capacity="32" logistic-threshold="30" name="OE JUPU 155 F2" normalized-consumption="0"/>
         <resource capacity="8" logistic-threshold="30" name="O ECL 155 F1" normalized-consumption="0"/>
-        <resource capacity="20" logistic-threshold="30" name="O GR 155 F1" normalized-consumption="0"/>
         <resource capacity="8" logistic-threshold="30" name="CPLT FUM PH 155" normalized-consumption="0"/>
       </category>
     </logistics>
@@ -3192,7 +3188,6 @@
         <resource capacity="10000" logistic-threshold="1" name="OE JUPU 155 F2" normalized-consumption="0"/>
         <resource capacity="10000" logistic-threshold="1" name="O ECL 155 F1" normalized-consumption="0"/>
         <resource capacity="10000" logistic-threshold="1" name="CPLT FUM PH 155" normalized-consumption="0"/>
-        <resource capacity="10000" logistic-threshold="1" name="O GR 155 F1" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -5307,7 +5302,6 @@
         <resource capacity="160" logistic-threshold="30" name="OE CCR 155 MLE F1" normalized-consumption="0"/>
         <resource capacity="60" logistic-threshold="30" name="OE JUPU 155 F2" normalized-consumption="0"/>
         <resource capacity="20" logistic-threshold="30" name="CPLT FUM PH 155" normalized-consumption="0"/>
-        <resource capacity="36" logistic-threshold="30" name="O GR 155 F1" normalized-consumption="0"/>
         <resource capacity="20" logistic-threshold="30" name="O ECL 155 F1" normalized-consumption="0"/>
       </category>
     </logistics>
@@ -5347,7 +5341,6 @@
         <resource capacity="160" logistic-threshold="30" name="OE CCR 155 MLE F1" normalized-consumption="0"/>
         <resource capacity="60" logistic-threshold="30" name="OE JUPU 155 F2" normalized-consumption="0"/>
         <resource capacity="20" logistic-threshold="30" name="CPLT FUM PH 155" normalized-consumption="0"/>
-        <resource capacity="36" logistic-threshold="30" name="O GR 155 F1" normalized-consumption="0"/>
         <resource capacity="20" logistic-threshold="30" name="O ECL 155 F1" normalized-consumption="0"/>
       </category>
     </logistics>
@@ -5391,7 +5384,6 @@
         <resource capacity="32" logistic-threshold="30" name="OE JUPU 155 F2" normalized-consumption="0"/>
         <resource capacity="8" logistic-threshold="30" name="O ECL 155 F1" normalized-consumption="0"/>
         <resource capacity="8" logistic-threshold="30" name="CPLT FUM PH 155" normalized-consumption="0"/>
-        <resource capacity="20" logistic-threshold="30" name="O GR 155 F1" normalized-consumption="0"/>
       </category>
     </logistics>
     <postures>
@@ -5433,7 +5425,6 @@
         <resource capacity="88" logistic-threshold="30" name="OE CCR 155 MLE F1" normalized-consumption="0"/>
         <resource capacity="32" logistic-threshold="30" name="OE JUPU 155 F2" normalized-consumption="0"/>
         <resource capacity="8" logistic-threshold="30" name="O ECL 155 F1" normalized-consumption="0"/>
-        <resource capacity="20" logistic-threshold="30" name="O GR 155 F1" normalized-consumption="0"/>
         <resource capacity="8" logistic-threshold="30" name="CPLT FUM PH 155" normalized-consumption="0"/>
       </category>
     </logistics>
@@ -19425,4 +19416,4 @@
     <crossing-height height="0m"/>
   </unit>
 </units>
-<!-- signature="1552731482" -->
+<!-- signature="2814671436" -->
