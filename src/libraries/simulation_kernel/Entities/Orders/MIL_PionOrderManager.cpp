@@ -18,6 +18,7 @@
 #include "Decision/DEC_Representations.h"
 #include "Entities/Agents/MIL_AgentPion.h"
 #include "Entities/Agents/Roles/Surrender/PHY_RoleInterface_Surrender.h"
+#include "Entities/Agents/Roles/Transported/PHY_RoleInterface_Transported.h"
 #include "Entities/Agents/Roles/Decision/DEC_RolePion_Decision.h"
 #include "Entities/Automates/MIL_Automate.h"
 #include "Entities/Orders/MIL_AutomateOrderManager.h"
@@ -53,6 +54,8 @@ void MIL_PionOrderManager::OnReceiveMission( const sword::UnitOrder& message )
 {
     // Check if the agent can receive this order (automate must be debraye)
     if( pion_.GetAutomate().IsEngaged() || pion_.IsDead() )
+        throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_unit_cannot_receive_order );
+    if( pion_.GetRole< transport::PHY_RoleInterface_Transported >().IsTransported() )
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_unit_cannot_receive_order );
     if( pion_.IsImmobilized() )
         throw NET_AsnException< sword::OrderAck_ErrorCode >( sword::OrderAck::error_unit_cannot_receive_order );
