@@ -157,11 +157,11 @@ bool ControlsChecker::IsControlledByLowLevel( const std::string& exclude, const 
         if( it->first )
         {
             editors.insert( it->first->GetLogin().ascii() );
-            if( it->second && it->second->GetLogin().ascii() != exclude && IsWriteable( entity, *it->second ) )
+            if( it->second && it->second->IsLowLevel() && it->second->GetLogin().ascii() != exclude && IsWriteable( entity, *it->second ) )
                 return true;
         }
     editors.insert( exclude );
-    return model_.profiles_.IsControlled( editors, entity );
+    return model_.profiles_.IsControlledByLowLevel( editors, entity );
 }
 
 // -----------------------------------------------------------------------------

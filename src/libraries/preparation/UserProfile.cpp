@@ -35,6 +35,7 @@ UserProfile::UserProfile( xml::xistream& xis, kernel::Controller& controller, co
     , model_     ( model )
     , extensions_( extensions )
     , isClone_   ( false )
+    , isLowLevel_( false )
 {
     const ExistenceChecker< tools::Resolver_ABC< kernel::Team_ABC > >       teamChecker( model_.GetTeamResolver() );
     const ExistenceChecker< tools::Resolver_ABC< kernel::Formation_ABC > >  formationChecker( model_.GetFormationResolver() );
@@ -77,6 +78,7 @@ UserProfile::UserProfile( const QString& login, kernel::Controller& controller, 
     , login_     ( login )
     , password_  ( "" )
     , isClone_   ( false )
+    , isLowLevel_( false )
 {
     controller_.Create( *this );
 }
@@ -93,6 +95,7 @@ UserProfile::UserProfile( const QString& login, const std::string& role, kernel:
     , login_      ( login )
     , password_   ( "" )
     , isClone_    ( false )
+    , isLowLevel_ ( false )
     , userRole_   ( role )
 {
     ComputeLowLevel();
@@ -590,5 +593,5 @@ unsigned int UserProfile::GetProfilesCount() const
 // -----------------------------------------------------------------------------
 void UserProfile::ComputeLowLevel()
 {
-    isLowLevel_ = ( userRole_ == "anibas" || userRole_ == "eniex" );
+    isLowLevel_ = ( userRole_ == "anibas" || userRole_ == "eniex" || userRole_ == "environment" );
 }
