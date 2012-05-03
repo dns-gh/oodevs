@@ -9,12 +9,13 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_Radars_ListView.h"
-#include "ADN_Tools.h"
+#include "ADN_Composantes_Data.h"
+#include "ADN_Connector_ListView.h"
 #include "ADN_Radars_Data.h"
 #include "ADN_Radars_GUI.h"
-#include "ADN_Connector_ListView.h"
 #include "ADN_Radars_Wizard.h"
 #include "ADN_Tr.h"
+#include "ADN_Tools.h"
 
 typedef ADN_Radars_Data::RadarInfos RadarInfos;
 
@@ -92,4 +93,15 @@ void ADN_Radars_ListView::OnContextMenu( const QPoint& pt )
     ADN_Radars_Wizard wizard( this );
     FillContextMenuWithDefault( popupMenu, wizard );
     popupMenu.exec( pt );
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Radars_ListView::GetToolTipFor
+// Created: LDC 2012-05-03
+// -----------------------------------------------------------------------------
+std::string ADN_Radars_ListView::GetToolTipFor( Q3ListViewItem& item )
+{
+    void* pData = static_cast<ADN_ListViewItem&>( item ).GetData();
+    RadarInfos* pCastData = static_cast< RadarInfos* >( pData );
+    return FormatUsersList( ADN_Workspace::GetWorkspace().GetComposantes().GetData().GetComposantesThatUse( *pCastData ) );
 }
