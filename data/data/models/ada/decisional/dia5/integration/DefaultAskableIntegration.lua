@@ -21,8 +21,10 @@ integration.stopInterrogatePion = function( pion )
         local criticalIntelligence = DEC_ObtenirRenseignementCritiqueSurPion( pion.source )
         if string.len( criticalIntelligence ) ~= 0 then
             meKnowledge:RC( eRC_criticalIntelligence, criticalIntelligence )
+            meKnowledge:sendCriticalIntelligence( integration.GetSuperiorKnowledge( meKnowledge ), {criticalIntelligence = criticalIntelligence, RC = eRC_criticalIntelligence} )
         else
             meKnowledge:RC( eRC_criticalIntelligenceNone )
+            meKnowledge:sendCriticalIntelligence( integration.GetSuperiorKnowledge( meKnowledge ), {RC = eRC_criticalIntelligenceNone} )
         end
     end
     pion[myself].actionInterrogate = DEC__StopAction( pion[myself].actionInterrogate )
@@ -51,8 +53,10 @@ integration.stopInterrogateCrowd = function( crowd )
         local criticalIntelligence = DEC_ObtenirRenseignementCritiqueSurFoule( crowd.source )
         if string.len( criticalIntelligence ) ~= 0 then
             meKnowledge:RC( eRC_criticalIntelligence, criticalIntelligence )
+            meKnowledge:sendCriticalIntelligence( integration.GetSuperiorKnowledge( meKnowledge ), {criticalIntelligence = criticalIntelligence, RC =eRC_criticalIntelligence} )
         else
             meKnowledge:RC( eRC_criticalIntelligenceNone )
+            meKnowledge:sendCriticalIntelligence( integration.GetSuperiorKnowledge( meKnowledge ), {RC = eRC_criticalIntelligenceNone } )
         end
     end
     crowd[myself].actionInterrogate = DEC__StopAction( crowd[myself].actionInterrogate )

@@ -58,6 +58,10 @@ masalife.brain.communication.setMessageTreatment( "reinforceGivenByUser",
     function( content, sender )
        content.unit.source.reinforceGivenByUser = true
     end )
+masalife.brain.communication.setMessageTreatment( "writeCriticalIntelligence",
+    function( content, sender )
+    meKnowledge:RC( content.RC, content.criticalIntelligence )  
+    end )
     
 -- -------------------------------------------------------------------------------- 
 -- Predicates
