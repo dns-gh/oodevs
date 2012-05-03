@@ -913,7 +913,7 @@ void PHY_RolePion_Perceiver::ExecutePerceptions()
         if( !perceivableUrbanBlock.empty() )
         {
             double occupation = 0.;
-            for( int i = 0; i < perceivableUrbanBlock.size(); ++i )
+            for( std::size_t i = 0; i < perceivableUrbanBlock.size(); ++i )
             {
                 NotifyPerception( *perceivableUrbanBlock[ i ], PHY_PerceptionLevel::identified_ );
                 occupation += perceivableUrbanBlock[ i ]->GetOccupation();
