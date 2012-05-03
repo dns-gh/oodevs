@@ -13,6 +13,7 @@
 #include "MIL.h"
 #include "Decision/DEC_Decision_ABC.h"
 #include "MT_Tools/MT_Logger.h"
+#include <boost/optional.hpp>
 
 class DEC_Knowledge_Object;
 class DEC_Model_ABC;
@@ -164,7 +165,7 @@ private://! @name Helpers
     //@{
     void HandleUpdateDecisionError( const std::exception* error = 0 );
     /* virtual */ void LogError   ( const std::exception* error = 0 ) const;
-
+    void ActivateMission( const std::string& strBehavior, const boost::shared_ptr< MIL_Mission_ABC > mission );
     virtual directia::brain::Brain& GetBrain();
 
     virtual void RegisterSelf( directia::brain::Brain& brain, bool isMasalife, const std::string& groupName ) = 0;
@@ -181,11 +182,18 @@ protected:
     //@}
 
 private:
+    //! @name Types
+    //@{
+    typedef boost::optional< std::pair< std::string, boost::shared_ptr< MIL_Mission_ABC > > > T_Mission;
+    //@}
+
+private:
     //!@name Data
     //@{
     boost::shared_ptr< directia::brain::Brain > pBrain_;
-    std::auto_ptr< struct ScriptRefs > pRefs_;
-    bool                               isMasalife_;
+    std::auto_ptr< struct ScriptRefs >          pRefs_;
+    T_Mission                                   nextMission_;
+    bool                                        isMasalife_;
     //@}
 };
 

@@ -137,6 +137,11 @@ void DEC_Decision< T >::UpdateDecision( float duration )
     {
         pBrain_->SelectActions         ();
         pBrain_->TriggerSelectedActions( duration );
+        if( nextMission_ )
+        {
+            ActivateMission( nextMission_->first, nextMission_->second );
+            nextMission_ = boost::none;
+        }
     }
     catch( std::exception& e )
     {
@@ -272,6 +277,19 @@ void DEC_Decision< T >::StopDefaultBehavior()
 template< class T >
 void DEC_Decision< T >::ActivateOrder( const std::string& strBehavior, const boost::shared_ptr< MIL_Mission_ABC > mission )
 {
+    if( !isMasalife_ )
+        ActivateMission( strBehavior, mission );
+    else
+        nextMission_ = std::make_pair( strBehavior, mission );
+}
+
+// -----------------------------------------------------------------------------
+// Name: DEC_Decision::ActivateMission
+// Created: LGY 2012-05-03
+// -----------------------------------------------------------------------------
+template< class T >
+void DEC_Decision< T >::ActivateMission( const std::string& strBehavior, const boost::shared_ptr< MIL_Mission_ABC > mission )
+{
     pMission_ = mission;
     // Register mission parameters in the brain...
     directia::tools::binders::ScriptRef refMission( *pBrain_ );
@@ -291,6 +309,7 @@ void DEC_Decision< T >::StopMission( const std::string& strBehavior )
     {
         pRefs_->stopEvents_.operator ()< const std::string& >( strBehavior );
         pMission_.reset();
+        nextMission_ = boost::none;
     }
     catch( std::runtime_error& )
     {
