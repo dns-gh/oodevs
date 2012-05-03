@@ -145,6 +145,25 @@ bool Stocks::HasDotations() const
 }
 
 // -----------------------------------------------------------------------------
+// Name: Stocks::HasDotationType
+// Created: ABR 2012-05-03
+// -----------------------------------------------------------------------------
+bool Stocks::HasDotationType( const kernel::DotationType& dotationType ) const
+{
+    if( item_ )
+    {
+        tools::Iterator< const Dotation& > dotationIt = item_->CreateIterator();
+        while( dotationIt.HasMoreElements() )
+        {
+            const Dotation& dotation = dotationIt.NextElement();
+            if( dotation.type_.GetId() == dotationType.GetId() && dotation.quantity_ > 0 )
+                return true;
+        }
+    }
+    return false;
+}
+
+// -----------------------------------------------------------------------------
 // Name: Stocks::ComputeWeightAndVolume
 // Created: JSR 2012-03-08
 // -----------------------------------------------------------------------------

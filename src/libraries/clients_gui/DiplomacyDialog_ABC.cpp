@@ -177,7 +177,7 @@ void DiplomacyDialog_ABC::UpdateTable()
         table_->setColumnStretchable( i, true );
         maxName = std::max< int >( name.size(), maxName );
     }
-    int newWidth = teams_.size() * maxName * 10;
-    int newHeight = teams_.size() * 40;
+    int newWidth = static_cast< int >( teams_.size() * maxName * 10 );
+    int newHeight = static_cast< int >( teams_.size() * 40 );
     table_->setMinimumSize( newWidth < maximumWidth() - 20 ? newWidth : maximumWidth() - 20, newHeight < maximumHeight() - 80 ? newHeight : maximumHeight() - 80 );
 }

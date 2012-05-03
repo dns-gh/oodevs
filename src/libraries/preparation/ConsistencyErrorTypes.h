@@ -22,9 +22,10 @@ enum E_ConsistencyCheck
     eLogisticMask                    = 0x000f << 4,
     eStockInitialization             = 0x0001 << 4,
     eStockMaxExceeded                = 0x0002 << 4,
-    eLogisticInitialization          = 0x0003 << 4,
-    eNoLogisticBase                  = 0x0004 << 4,
-    eNoLogisticFormation             = 0x0005 << 4,
+    eStockMissing                    = 0x0003 << 4,
+    eLogisticInitialization          = 0x0004 << 4,
+    eNoLogisticBase                  = 0x0005 << 4,
+    eNoLogisticFormation             = 0x0006 << 4,
 
     eProfileMask                     = 0x000f << 8,
     eProfileUniqueness               = 0x0001 << 8,

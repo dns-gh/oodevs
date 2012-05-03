@@ -50,6 +50,7 @@ public:
     bool HasDotations() const;
     void Clear();
     void ComputeWeightAndVolume( const std::string& dotationNature, double& weight, double& volume );
+    bool HasDotationType( const kernel::DotationType& dotationType ) const;
     //@}
 
 private:

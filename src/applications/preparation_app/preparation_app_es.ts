@@ -1350,6 +1350,10 @@
         <source>Logistic sector not included in a logistic base.</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Some resources used by logistic subordinate(s) are not initialized: %1.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>
