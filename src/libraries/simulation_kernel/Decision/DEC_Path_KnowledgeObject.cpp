@@ -29,11 +29,11 @@ DEC_Path_KnowledgeObject::DEC_Path_KnowledgeObject( const DEC_Agent_PathClass& p
 {
     const double rCost = pathClass.GetObjectCost( knowledge.GetType() );
     if( rCost > 0 )
-        rCostIn_  = rCost;
+        rCostIn_ = rCost;
     else
         rCostOut_ = -rCost;
     if( rCost != 0 )
-        scaledLocalisation_.Scale( 50 ); // $$$ LDC arbitrary 50m precision (useful for making path very close to obstacle expensive)
+        scaledLocalisation_.Scale( 100 ); // $$$ LDC arbitrary 100m precision (useful for making path very close to obstacle expensive)
 }
 
 // -----------------------------------------------------------------------------
@@ -51,11 +51,11 @@ DEC_Path_KnowledgeObject::DEC_Path_KnowledgeObject( const DEC_Population_PathCla
 {
     const double rCost = pathClass.GetObjectCost( knowledge.GetType() );
     if( rCost > 0 )
-        rCostIn_  = rCost;
+        rCostIn_ = rCost;
     else
         rCostOut_ = -rCost;
     if( rCost != 0 )
-        scaledLocalisation_.Scale( 50 ); // $$$ LDC arbitrary 50m precision (useful for making path very close to obstacle expensive)
+        scaledLocalisation_.Scale( 100 ); // $$$ LDC arbitrary 100m precision (useful for making path very close to obstacle expensive)
 }
 
 // -----------------------------------------------------------------------------
@@ -73,7 +73,7 @@ DEC_Path_KnowledgeObject::~DEC_Path_KnowledgeObject()
 // -----------------------------------------------------------------------------
 double DEC_Path_KnowledgeObject::ComputeCost( const MT_Vector2D& from, const MT_Vector2D& to, const TerrainData&, const TerrainData&, double weight ) const
 {
-    static const double epsilon = 1e-8;
+    static const double epsilon = 1e-4;
     const MT_Line line( from, to );
     bool isIntersectingWithReal = realLocalisation_.Intersect2D( line, epsilon );
     bool isToInsideReal = realLocalisation_.IsInside( to, epsilon );
@@ -91,7 +91,9 @@ double DEC_Path_KnowledgeObject::ComputeCost( const MT_Vector2D& from, const MT_
             else
                 return rCostIn_;
         }
-        else if( scaledLocalisation_.Intersect2D( line, epsilon ) || scaledLocalisation_.IsInside( to, epsilon ) || scaledLocalisation_.IsInside( from, epsilon ) )
+        else if( ( isIntersectingWithReal && scaledLocalisation_.Intersect2D( line, epsilon ) ) ||
+                 ( isToInsideReal && scaledLocalisation_.IsInside( to, epsilon ) ) ||
+                 ( isFromInsideReal && scaledLocalisation_.IsInside( from, epsilon ) ) )
             return rCostIn_;
     }
     return std::numeric_limits< double >::min();

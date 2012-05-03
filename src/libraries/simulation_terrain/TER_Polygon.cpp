@@ -198,7 +198,8 @@ bool TER_Polygon::IntersectWithBorder( const MT_Line& line, double rPrecision ) 
 
     if( pData_->borderVector_.size() > 8 //$$$$ Optim, il semblerait
    && ! pData_->boundingBox_.Intersect2D( line )
-   && ! pData_->boundingBox_.IsInside( line.GetPosStart() ) )
+   && ! pData_->boundingBox_.IsInside( line.GetPosStart() )
+   && ! pData_->boundingBox_.IsInside( line.GetPosEnd() ) )
         return false;
 
     const MT_Vector2D* pLastPos = 0;
@@ -209,7 +210,7 @@ bool TER_Polygon::IntersectWithBorder( const MT_Line& line, double rPrecision ) 
         if( pLastPos )
         {
             MT_Line lineTmp( *pLastPos, *pPos );
-            if( lineTmp.IsClipped( line ) && lineTmp.Intersect2D( line ) )
+            if( lineTmp.IsClipped( line ) && lineTmp.Intersect2D( line ) == eDoIntersect )
             {
                 if( !lineTmp.IsInside( line.GetPosStart(), rPrecision ) && !lineTmp.IsInside( line.GetPosEnd(), rPrecision ) )
                     return true;
