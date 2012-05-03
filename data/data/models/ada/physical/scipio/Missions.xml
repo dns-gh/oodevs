@@ -3977,6 +3977,18 @@
       <parameter dia-name="Objectives" name="Point de debarquement" optional="false" type="Path"/>
       <parameter dia-name="debarkment_time" name="Heure de debarquement" optional="false" type="DateTime"/>
     </mission>
+    <mission cdt-dia-behavior="france.military.company.tasks.Interroger" dia-type="T_Mission_Automate_AUTOMATE_COMMUNE_Interroger" id="28789" mrt-dia-behavior="france.military.company.tasks.Interroger" name="AUTOMATE COMMUNES Interroger">
+      <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
+      <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
+      <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="false" type="Limit"/>
+      <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="false" type="Limit"/>
+      <parameter dia-name="entity" name="Cible" optional="false" type="LocationComposite">
+        <choice>
+          <parameter type="AgentKnowledge"/>
+          <parameter type="CrowdKnowledge"/>
+        </choice>
+      </parameter>
+    </mission>
     <mission cdt-dia-behavior="france.military.batallion.tasks.FaireMouvement" dia-type="france.military.batallion.tasks.FaireMouvement" id="99999" mrt-dia-behavior="france.military.batallion.tasks.FaireMouvement" name="ADA Faire Mouvement">
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
@@ -4217,4 +4229,4 @@
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PoursuivreConvoi" id="406" name="Poursuivre convoi"/>
   </fragorders>
 </missions>
-<!-- signature="0971497438" -->
+<!-- signature="0102943736" -->
