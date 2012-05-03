@@ -596,7 +596,7 @@ void ADN_Urban_Data::InfrastructureInfos::WriteInfrastructure( xml::xostream& ou
     output << xml::start( "infrastructure" )
         << xml::attribute( "name",  trim( strData ) );
     if( pSymbol_.GetData() )
-        output << xml::attribute( "symbol", pSymbol_.GetData()->strName_ );
+        output << xml::attribute( "symbol", ADN_Workspace::GetWorkspace().GetSymbols().GetData().GetType( pSymbol_.GetData()->strName_.GetData() ) );
     else
         output << xml::attribute( "symbol", "" );
     if( !capacities_.empty() )

@@ -2489,5 +2489,8 @@
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_Composantes_Speeds_GUI.h">
       <Filter>Source Files\Workspace\Composantes\Composantes GUI</Filter>
     </CustomBuild>
+    <CustomBuild Include="..\..\src\applications\adaptation_app\infrastructures_fr.ts">
+      <Filter>Translations</Filter>
+    </CustomBuild>
   </ItemGroup>
 </Project>

@@ -135,6 +135,7 @@ bool ADN_App::Initialize( const std::string& inputFile, const std::string& outpu
     AddTranslator( locale, "adaptation" );
     AddTranslator( locale, "adaptation_app" );
     AddTranslator( locale, "ENT" );
+    AddTranslator( locale, "infrastructures" );
     AddTranslator( locale, "clients_gui_sword" );
     AddTranslator( locale, "clients_gui" );
     AddTranslator( locale, "clients_gui_app6" );

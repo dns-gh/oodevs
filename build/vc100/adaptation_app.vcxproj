@@ -3891,6 +3891,17 @@
     <None Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Enum.inl" />
     <None Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Vector.inl" />
     <None Include="..\..\src\applications\adaptation_app\ADN_EditLine.inl" />
+    <CustomBuild Include="..\..\src\applications\adaptation_app\infrastructures_fr.ts">
+      <FileType>Document</FileType>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|win32'">lrelease -verbose "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|win32'">lrelease -verbose "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='debug|x64'">lrelease -verbose "%(FullPath)"</Command>
+      <Command Condition="'$(Configuration)|$(Platform)'=='release|x64'">lrelease -verbose "%(FullPath)"</Command>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|win32'">./infrastructures.qm;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|win32'">./infrastructures.qm;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">./infrastructures.qm;%(Outputs)</Outputs>
+      <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">./infrastructures.qm;%(Outputs)</Outputs>
+    </CustomBuild>
     <None Include="..\..\src\applications\adaptation_app\res\checked_box.xpm" />
     <None Include="..\..\src\applications\adaptation_app\res\empty_box.xpm" />
     <None Include="..\..\src\applications\adaptation_app\res\filenew.xpm" />

@@ -12,6 +12,7 @@
 #include "ADN_Project_Data.h"
 #include "clients_kernel/SymbolFactory.h"
 #include "clients_kernel/SymbolRule.h"
+#include "clients_kernel/Tools.h"
 #include "tools/Loader_ABC.h"
 #include <boost/bind.hpp>
 
@@ -23,10 +24,10 @@
 // Name: ADN_Symbols_Data::SymbolsInfra constructor
 // Created: SLG 2011-02-17
 // -----------------------------------------------------------------------------
-ADN_Symbols_Data::SymbolsInfra::SymbolsInfra( xml::xistream& input )
-: strName_ ( "" )
+ADN_Symbols_Data::SymbolsInfra::SymbolsInfra( const QString& label )
+    : strName_( label.toStdString() )
 {
-    input >> xml::attribute( "name", strName_ );
+    // NOTHING
 }
 
 // -----------------------------------------------------------------------------
@@ -132,7 +133,10 @@ void ADN_Symbols_Data::ReadArchive( xml::xistream& xis )
 // -----------------------------------------------------------------------------
 void ADN_Symbols_Data::ReadInfra( xml::xistream& xis )
 {
-    infras_.AddItem( new SymbolsInfra( xis ) );
+    const std::string type = xis.attribute< std::string >( "name" );
+    const QString label = tools::findTranslation( "infrastructures", type.c_str() );
+    infras_.AddItem( new SymbolsInfra( label ) );
+    types_[ label.toStdString() ] = type;
 }
 
 // -----------------------------------------------------------------------------
@@ -159,8 +163,21 @@ ADN_Symbols_Data::T_SymbolsInfra_Vector& ADN_Symbols_Data::GetSymbolsInfras()
 // -----------------------------------------------------------------------------
 ADN_Symbols_Data::SymbolsInfra* ADN_Symbols_Data::FindSymbolInfra( const std::string& strName ) const
 {
+    const std::string label = tools::findTranslation( "infrastructures", strName.c_str() );
     for( CIT_SymbolsInfra_Vector it = infras_.begin(); it != infras_.end(); ++it )
-        if( **it == strName )
+        if( **it == label )
             return *it;
     return 0;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Symbols_Data::GetType
+// Created: LGY 2012-05-03
+// -----------------------------------------------------------------------------
+const std::string& ADN_Symbols_Data::GetType( const std::string& infra ) const
+{
+    std::map< std::string, std::string >::const_iterator it = types_.find( infra );
+    if( it != types_.end() )
+        return it->second;
+    return infra;
 }

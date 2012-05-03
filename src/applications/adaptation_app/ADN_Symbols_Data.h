@@ -43,7 +43,7 @@ public:
                        , public ADN_DataTreeNode_ABC
     {
     public:
-        explicit SymbolsInfra( xml::xistream& input );
+        explicit SymbolsInfra( const QString& label );
         virtual ~SymbolsInfra();
 
         virtual std::string GetNodeName();
@@ -71,6 +71,7 @@ public:
     kernel::SymbolFactory& GetSymbolFactory();
     T_SymbolsInfra_Vector& GetSymbolsInfras();
     SymbolsInfra* FindSymbolInfra( const std::string& strName ) const;
+    const std::string& GetType( const std::string& infra ) const;
     //@}
 
     //! @name Operations
@@ -92,6 +93,7 @@ private:
     //! @name Member data
     //@{
     T_SymbolsInfra_Vector                  infras_;
+    std::map< std::string, std::string >   types_;
     std::auto_ptr< kernel::SymbolFactory > factory_;
     //@}
 };
