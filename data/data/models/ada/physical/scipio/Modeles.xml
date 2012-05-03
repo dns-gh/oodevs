@@ -2757,7 +2757,13 @@
         <mission name="PION LOGISTIQUE Preparer bascule"/>
         <mission name="PION MELEE Organiser Accueil Colonne Refugies"/>
         <mission name="PION MELEE Renseigner sur foule"/>
-        <mission name="PION LOGISTIQUE Se Deployer"/>
+        <mission name="PION LOGISTIQUE Se Deployer">
+          <fragorder name="Modifier Regime Travail Maintenance"/>
+          <fragorder name="Modifier Priorites Reparations"/>
+          <fragorder name="Modifier Priorites Blesses"/>
+          <fragorder name="Modifier Priorites Tactiques Reparations"/>
+          <fragorder name="Modifier Priorites Tactiques Blesses"/>
+        </mission>
       </missions>
       <fragorders>
         <fragorder name="Rejoindre"/>
@@ -7415,4 +7421,4 @@
     </crowd>
   </crowd>
 </models>
-<!-- signature="1551336807" -->
+<!-- signature="1145491614" -->
