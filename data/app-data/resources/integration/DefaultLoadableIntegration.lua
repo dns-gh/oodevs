@@ -189,6 +189,11 @@ end
 integration.canTransportCrowd = function()
     return DEC_Agent_PeutTransporterFoule( myself )
 end
+
+integration.canTransportCrowdConcentration = function( crowd, concentration )
+    return DEC_CrowdKnowledge_CanLoadCrowdConcentration( myself, crowd.source, concentration )
+end
+
 -- Load crowd
 integration.startLoadCrowd = function( crowd, concentration )
     meKnowledge:RC( eRC_TransportEmbarquement )

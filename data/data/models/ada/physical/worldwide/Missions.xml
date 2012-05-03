@@ -2201,24 +2201,23 @@ overwhelming force.]]></doctrine>
         </choice>
       </parameter>
     </mission>
-    <mission dia-behavior="behaviors.tasks.Transport" dia-type="behaviors.tasks.Transport" id="4457" name="MLSECURITY - Transport">
+    <mission dia-behavior="behaviors.tasks.Transport" dia-type="behaviors.tasks.Transport" id="4457" name="MLSECURITY - Transport units">
       <description>
-        <doctrine><![CDATA[To transport a set of elements on a target position.]]></doctrine>
-        <usage><![CDATA[To transport entities ( agents, knowledge agents, crowds) on a specified position. 
-Entities are visited in the order of the list and are loaded on agent Unit. Once all elements are loaded (some entities could not be loaded), agent Unit moves toward issued destination and unload transported entities, one by one. ]]></usage>
+        <doctrine><![CDATA[To transport a set of units on a target position.]]></doctrine>
+        <usage><![CDATA[To transport entities ( agents and/or knowledge agents) on a specified position. 
+Entities are visited in the order of the list and are loaded on the agent. Once all elements are loaded (some entities could not be loaded), the agent moves toward issued destination and unload transported entities, one by one. ]]></usage>
       </description>
       <parameter dia-name="dangerDirection_" name="Direction dangereuse" optional="false" type="Heading"/>
       <parameter dia-name="phaseLines_" max-occurs="unbounded" min-occurs="1" name="Limas" optional="true" type="PhaseLine"/>
       <parameter dia-name="boundaryLimit1_" name="Limit 1" optional="true" type="Limit"/>
       <parameter dia-name="boundaryLimit2_" name="Limit 2" optional="true" type="Limit"/>
-      <parameter dia-name="entitiesToTransport" max-occurs="unbounded" min-occurs="1" name="Entities to transport" optional="false" type="LocationComposite">
+      <parameter dia-name="entitiesToTransport" max-occurs="unbounded" min-occurs="1" name="Units to transport (teamate agents or knowledge agents)" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Agent"/>
           <parameter type="AgentKnowledge"/>
-          <parameter type="CrowdKnowledge"/>
         </choice>
       </parameter>
-      <parameter dia-name="destination" name="Position (target destination)" optional="false" type="LocationComposite">
+      <parameter dia-name="destination" name="Target destination" optional="false" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
           <parameter type="Polygon"/>
@@ -4721,4 +4720,4 @@ A unit won't follow if it cannot perform the mission (mission is not set for thi
     <fragorder available-without-mission="false" dia-type="security.unit.tasks.StopAndGoToGarage" id="3005" name="Security - Stop Mission"/>
   </fragorders>
 </missions>
-<!-- signature="0336556160" -->
+<!-- signature="0770980341" -->
