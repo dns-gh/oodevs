@@ -97,7 +97,7 @@ public:
     virtual bool IsDead() const;
     virtual bool IsNeutralized() const;
     virtual bool IsPC() const;
-    virtual void SetPionAsPostCommand();
+    virtual void SetPionAsCommandPost( bool pc );
     virtual bool BelongsTo( const MIL_KnowledgeGroup& group ) const;
     virtual double Distance( const MIL_Agent_ABC& pion ) const;
     virtual const std::string& GetCriticalIntelligence() const;
@@ -165,6 +165,8 @@ public:
     virtual bool CanInteractWithTraffic() const;
     virtual void InteractWithTraffic( const std::vector< TER_Agent_ABC* >& agents );
     void ChangeSuperior( MIL_Automate& newAutomate );
+    void ChangeSuperiorSilently( MIL_Automate& newAutomate );
+    void NotifySendHeadquarters();
     void ChangeNationality( const std::string& nationality );
     //@}
 
@@ -209,7 +211,7 @@ private:
     //! @name Member data
     //@{
     const MIL_AgentTypePion*                  pType_;
-    bool                                      bIsPC_;
+    bool                                      bHasChanged_;
     std::string                               criticalIntelligence_;
     MIL_Automate*                             pAutomate_;
     const AlgorithmsFactories&                algorithmFactories_;

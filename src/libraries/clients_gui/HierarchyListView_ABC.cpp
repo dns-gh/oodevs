@@ -24,7 +24,6 @@
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/CommandPostAttributes_ABC.h"
 
 #pragma warning( disable : 4355 )
 

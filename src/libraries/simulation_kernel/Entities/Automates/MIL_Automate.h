@@ -148,7 +148,8 @@ public:
     //! @name Operations
     //@{
     bool CheckComposition() const;
-    void RegisterPion  ( MIL_AgentPion& pion, bool registerPC = true );
+    void RegisterPion  ( MIL_AgentPion& pion );
+    void SetCommandPost( MIL_AgentPion* pion );
     void UnregisterPion( MIL_AgentPion& pion );
     void RegisterAutomate  ( MIL_Automate& automate );
     void UnregisterAutomate( MIL_Automate& automate );

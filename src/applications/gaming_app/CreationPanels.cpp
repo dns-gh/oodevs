@@ -37,7 +37,7 @@ CreationPanels::CreationPanels( QWidget* parent, Controllers& controllers, const
 {
     Q3VBox* box = new Q3VBox( parent );
     setSizePolicy( QSizePolicy::Expanding, QSizePolicy::Expanding );
-    AddPanel( units_ = new UnitsPanel( this, *this, controllers, staticModel.types_, factory, icons, colorStrategy ) );
+    AddPanel( units_ = new UnitsPanel( this, *this, controllers, staticModel.types_, factory, icons, colorStrategy, false ) );
     AddPanel( crowds_ = new PopulationsPanel( this, *this, controllers, staticModel.types_, factory ) );
     AddPanel( objects_ = new ObjectCreationPanel( box, *this, controllers, actionsModel, staticModel, simulation, paramLayer, tools ) );
     AddPanel( drawings_ = new DrawerPanel( this, *this, paramLayer, controllers, drawings, config ) );

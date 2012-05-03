@@ -93,7 +93,7 @@ BOOST_CLASS_EXPORT_IMPLEMENT( MIL_AgentPion )
 MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, xml::xistream& xis )
     : MIL_Agent_ABC( xis )
     , pType_               ( &type )
-    , bIsPC_               ( xis.attribute< bool >( "command-post", false ) )
+    , bHasChanged_         ( false )
     , pAutomate_           ( &automate )
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
     , pOrderManager_       ( new MIL_PionOrderManager( *this ) )
@@ -103,11 +103,13 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
     , pColor_              ( new MIL_Color( xis ) )
     , pHumanRepartition_   ( new MIL_HumanRepartition( type.GetHumanRepartition() ) )
 {
-    automate.RegisterPion( *this, false );
+    automate.RegisterPion( *this );
     xis >> xml::optional
             >> xml::start( "critical-intelligence" ) // $$$$ ABR 2011-05-12: Factorize critical intelligence like affinities or extensions
                 >> xml::attribute( "content", criticalIntelligence_ )
             >> xml::end;
+    bool isPC( xis.attribute< bool >( "command-post", false ) );
+    SetPionAsCommandPost( isPC );        
 }
 
 // -----------------------------------------------------------------------------
@@ -117,7 +119,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
 MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& automate, const AlgorithmsFactories& algorithmFactories, const std::string name )
     : MIL_Agent_ABC( name )
     , pType_               ( &type )
-    , bIsPC_               ( false )
+    , bHasChanged_         ( false )
     , pAutomate_           ( &automate )
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
     , pOrderManager_       ( new MIL_PionOrderManager( *this ) )
@@ -129,7 +131,6 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
     pColor_.reset( new MIL_Color( automate.GetColor() ) );
     automate.RegisterPion( *this );
 
-    //$$$ What a nice shit !
     const std::string& longNameBase = automate.GetExtensions().GetExtension( "NomLong" ); 
     if( !longNameBase.empty() )
     {
@@ -147,7 +148,7 @@ MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, MIL_Automate& autom
 MIL_AgentPion::MIL_AgentPion( const MIL_AgentTypePion& type, const AlgorithmsFactories& algorithmFactories )
     : MIL_Agent_ABC( type.GetName() )
     , pType_               ( &type )
-    , bIsPC_               ( false )
+    , bHasChanged_         ( false )
     , pAutomate_           ( 0 )
     , pKnowledgeBlackBoard_( new DEC_KnowledgeBlackBoard_AgentPion( *this ) )
     , pOrderManager_       ( new MIL_PionOrderManager( *this ) )
@@ -213,8 +214,7 @@ void MIL_AgentPion::load( MIL_CheckPointInArchive& file, const unsigned int )
     MIL_Color* pColor;
     MIL_HumanRepartition* pRepartition;
     file >> boost::serialization::base_object< MIL_Agent_ABC >( *this );
-    file >> const_cast< bool& >( bIsPC_ )
-         >> pAutomate_
+    file >> pAutomate_
          >> pKnowledgeBlackBoard_
          >> pAffinities
          >> pExtensions
@@ -273,8 +273,7 @@ void MIL_AgentPion::save( MIL_CheckPointOutArchive& file, const unsigned int ) c
     const MIL_Color* const pColor = pColor_.get();
     const MIL_HumanRepartition* const pRepartition = pHumanRepartition_.get();
     file << boost::serialization::base_object< MIL_Agent_ABC >( *this );
-    file << bIsPC_
-        << pAutomate_
+    file << pAutomate_
         << pKnowledgeBlackBoard_
         << pAffinities
         << pExtensions
@@ -326,7 +325,7 @@ void MIL_AgentPion::WriteODB( xml::xostream& xos ) const
     MIL_Entity_ABC::WriteODB( xos ) ;
     xos << xml::attribute( "id", GetID() )
         << xml::attribute( "type", pType_->GetName() )
-        << xml::attribute( "command-post", bIsPC_ )
+        << xml::attribute( "command-post", IsPC() )
         << xml::attribute( "position", MIL_Tools::ConvertCoordSimToMos( GetRole< PHY_RolePion_Location >().GetPosition() ) );
     pColor_->WriteODB( xos );
     GetRole< PHY_RolePion_Composantes >().WriteODB( xos );         // Equipments
@@ -412,12 +411,27 @@ void MIL_AgentPion::CleanKnowledges()
 }
 
 // -----------------------------------------------------------------------------
-// Name: MIL_AgentPion::SetPionAsPostCommand
+// Name: MIL_AgentPion::SetPionAsCommandPost
 // Created: HBD 2011-02-21
 // -----------------------------------------------------------------------------
-void MIL_AgentPion::SetPionAsPostCommand()
+void MIL_AgentPion::SetPionAsCommandPost( bool pc )
 {
-    bIsPC_ = true;
+    if( pc )
+        pAutomate_->SetCommandPost( this );
+    else if( IsPC() )
+    {
+        pAutomate_->SetCommandPost( 0 );
+        NotifySendHeadquarters();
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::NotifySendHeadquarters
+// Created: JSR 2012-05-03
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::NotifySendHeadquarters()
+{
+    bHasChanged_ = true;
 }
 
 // -----------------------------------------------------------------------------
@@ -511,12 +525,14 @@ void MIL_AgentPion::UpdateNetwork()
     {
         GetRole< network::NET_RolePion_Dotations >().SendChangedState();
         GetRole< network::NET_RolePion_Dotations >().Clean();
-        if( pAffinities_->HasChanged() || pExtensions_->HasChanged() )
+        if( bHasChanged_ || pAffinities_->HasChanged() || pExtensions_->HasChanged() )
         {
             client::UnitAttributes msg;
             msg().mutable_unit()->set_id( GetID() );
             pAffinities_->UpdateNetwork( msg );
             pExtensions_->UpdateNetwork( msg );
+            if( bHasChanged_ )
+                msg().set_headquarters( IsPC() );
             msg.Send( NET_Publisher_ABC::Publisher() );
         }
     }
@@ -666,7 +682,7 @@ void MIL_AgentPion::SendCreation( unsigned int nCtx ) const
     creationMsg().mutable_type()->set_id( pType_->GetID() );
     creationMsg().set_name( GetName() );
     creationMsg().mutable_automat()->set_id( GetAutomate().GetID() );
-    creationMsg().set_pc( bIsPC_ );
+    creationMsg().set_pc( IsPC() );
     pHumanRepartition_->SendFullState( creationMsg );
     pColor_->SendFullState( creationMsg );
     creationMsg.Send( NET_Publisher_ABC::Publisher(), nCtx );
@@ -1133,9 +1149,9 @@ void MIL_AgentPion::OnReceiveChangeSuperior( const MIL_EntityManager& manager, c
         throw NET_AsnException< sword::HierarchyModificationAck::ErrorCode >( sword::HierarchyModificationAck::error_invalid_automate );
     if( pNewAutomate->GetArmy() != GetArmy() )
         throw NET_AsnException< sword::HierarchyModificationAck::ErrorCode >( sword::HierarchyModificationAck::error_parties_mismatched );
-    pAutomate_->UnregisterPion( *this );
-    pAutomate_ = pNewAutomate;
-    pAutomate_->RegisterPion( *this );
+    if( pAutomate_ == pNewAutomate )
+        return;
+    ChangeSuperiorSilently( *pNewAutomate );
 }
 
 // -----------------------------------------------------------------------------
@@ -1144,14 +1160,26 @@ void MIL_AgentPion::OnReceiveChangeSuperior( const MIL_EntityManager& manager, c
 // -----------------------------------------------------------------------------
 void MIL_AgentPion::ChangeSuperior( MIL_Automate& newAutomate )
 {
-    assert( GetArmy() == newAutomate.GetArmy() );
-    pAutomate_->UnregisterPion( *this );
-    pAutomate_ = &newAutomate;
-    pAutomate_->RegisterPion( *this );
+    if( pAutomate_ == &newAutomate )
+        return;
+    ChangeSuperiorSilently( newAutomate );
     client::UnitChangeSuperior asnMsg;
     asnMsg().mutable_unit()->set_id( GetID() );
     asnMsg().mutable_parent()->set_id( newAutomate.GetID() );
     asnMsg.Send( NET_Publisher_ABC::Publisher() );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::ChangeSuperiorSilently
+// Created: LDC 2012-05-03
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::ChangeSuperiorSilently( MIL_Automate& newAutomate )
+{
+    assert( GetArmy() == newAutomate.GetArmy() );
+    SetPionAsCommandPost( false );
+    pAutomate_->UnregisterPion( *this );
+    pAutomate_ = &newAutomate;
+    pAutomate_->RegisterPion( *this );
 }
 
 // -----------------------------------------------------------------------------
@@ -1311,7 +1339,7 @@ const MIL_AgentType_ABC& MIL_AgentPion::GetType() const
 // -----------------------------------------------------------------------------
 bool MIL_AgentPion::IsPC() const
 {
-    return bIsPC_;
+    return ( pAutomate_ && ( pAutomate_->GetPionPC() == *this ) );
 }
 
 // -----------------------------------------------------------------------------

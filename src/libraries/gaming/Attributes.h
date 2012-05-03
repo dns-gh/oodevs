@@ -11,9 +11,10 @@
 #define __Attributes_h_
 
 #include "clients_kernel/AgentExtensions.h"
-#include "clients_kernel/Updatable_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
 #include "clients_kernel/Aggregatable_ABC.h"
+#include "clients_kernel/CommandPostAttributes_ABC.h"
+#include "clients_kernel/Drawable_ABC.h"
+#include "clients_kernel/Updatable_ABC.h"
 #include "clients_kernel/Types.h"
 #include "tools/Resolver_ABC.h"
 #include "protocol/SimulationSenders.h"
@@ -99,26 +100,27 @@ public:
     E_Roe nRulesOfEngagementState_;
     E_PopulationRoe nRulesOfEngagementPopulationState_;
     E_MeetingEngagementStatus nCloseCombatState_;
-    bool  bDead_;
-    bool bNeutralized_;
     E_UnitPosture nOldPosture_;
     E_UnitPosture nCurrentPosture_;
     uint nPostureCompletionPourcentage_;
     uint nInstallationState_;
     E_FireAvailability nIndirectFireAvailability_;
+    bool bDead_;
+    bool bNeutralized_;
     bool bLoadingState_;
     bool bHumanTransportersReady_;
     bool bStealthModeEnabled_;
     bool bRadioEmitterSilence_;
     bool bRadioReceiverSilence_;
     bool bCommJammed_;
-    unsigned int knowledgeGroupJammed_;
     bool bRadarEnabled_;
     bool bPrisoner_;
     bool bUnderground_;
-    const kernel::Team_ABC* surrenderedTo_;
     bool bRefugeesManaged_;
     bool aggregated_;
+    bool isPC_;
+    const kernel::Team_ABC* surrenderedTo_;
+    unsigned int knowledgeGroupJammed_;
     std::map< std::string, std::string > extensions_;
     std::string criticalIntelligence_;
     float fLodgingSatisfactionPercent_;

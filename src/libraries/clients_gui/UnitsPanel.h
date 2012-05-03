@@ -45,7 +45,7 @@ class UnitsPanel : public InfoPanel_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             UnitsPanel( QWidget* parent, PanelStack_ABC& panel, kernel::Controllers& controllers, const kernel::AgentTypes& agentTypes, ItemFactory_ABC& factory, SymbolIcons& icons, ColorStrategy_ABC& colorStrategy, bool followSelection = false );
+             UnitsPanel( QWidget* parent, PanelStack_ABC& panel, kernel::Controllers& controllers, const kernel::AgentTypes& agentTypes, ItemFactory_ABC& factory, SymbolIcons& icons, ColorStrategy_ABC& colorStrategy, bool followSelection );
     virtual ~UnitsPanel();
     //@}
 
