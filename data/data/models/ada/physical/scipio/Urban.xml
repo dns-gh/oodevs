@@ -112,6 +112,9 @@
     <accommodation max-capacity="0.3" nominal-capacity="0.2" role="Travail"/>
   </accommodations>
   <infrastructures>
+    <infrastructure name="Caserne police" symbol="police-station">
+      <capacities/>
+    </infrastructure>
     <infrastructure name="Ressources eau" symbol="resource-water">
       <capacities/>
     </infrastructure>
@@ -184,4 +187,4 @@
     </infrastructure>
   </infrastructures>
 </urban>
-<!-- signature="0254285472" -->
+<!-- signature="3493308414" -->
