@@ -2355,6 +2355,26 @@ int ADN_Composantes_Data::GetNextId()
 
 // -----------------------------------------------------------------------------
 // Name: ADN_Composantes_Data::GetComposantesThatUse
+// Created: LDC 2012-05-03
+// -----------------------------------------------------------------------------
+QStringList ADN_Composantes_Data::GetComposantesThatUse( ADN_Radars_Data::RadarInfos& radar )
+{
+    QStringList result;
+    for( IT_ComposanteInfos_Vector it = vComposantes_.begin(); it != vComposantes_.end(); ++it )
+    {
+        ComposanteInfos* pComp = *it;
+        for( IT_RadarInfos_Vector it2 = pComp->vRadars_.begin(); it2 != pComp->vRadars_.end(); ++it2 )
+            if( (*it2)->ptrRadar_.GetData() == &radar )
+            {
+                result << pComp->strName_.GetData().c_str();
+                break;
+            }
+    }
+    return result;
+}
+
+// -----------------------------------------------------------------------------
+// Name: ADN_Composantes_Data::GetComposantesThatUse
 // Created: APE 2005-04-22
 // -----------------------------------------------------------------------------
 QStringList ADN_Composantes_Data::GetComposantesThatUse( ADN_Sensors_Data::SensorInfos& sensor )

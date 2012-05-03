@@ -714,6 +714,7 @@ public:
 
     int GetNextId();
 
+    QStringList GetComposantesThatUse( ADN_Radars_Data::RadarInfos& sensor );
     QStringList GetComposantesThatUse( ADN_Sensors_Data::SensorInfos& sensor );
     QStringList GetComposantesThatUse( ADN_Weapons_Data::WeaponInfos& weapon );
 

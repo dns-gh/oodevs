@@ -34,6 +34,7 @@ public:
     //@{
     void ConnectItem( bool bConnect );
     void OnContextMenu( const QPoint& pt );
+    virtual std::string GetToolTipFor( Q3ListViewItem& item );
     //@}
 };
 
