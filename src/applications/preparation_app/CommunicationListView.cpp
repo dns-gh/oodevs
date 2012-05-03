@@ -27,6 +27,20 @@
 
 using namespace kernel;
 
+namespace
+{
+    int ItemComparator( const gui::ValuedListItem& item1, const gui::ValuedListItem& item2, int /*col*/, bool /*ascending*/ )
+    {
+        const Entity_ABC* entity1 = item1.GetValue< const Entity_ABC >();
+        if( !entity1 )
+            return -1;
+        const Entity_ABC* entity2 = item2.GetValue< const Entity_ABC >();
+        if( !entity2 )
+            return 1;
+        return entity1->GetId() - entity2->GetId();
+    }
+}
+
 // -----------------------------------------------------------------------------
 // Name: CommunicationListView constructor
 // Created: SBO 2006-09-25
@@ -40,6 +54,7 @@ CommunicationListView::CommunicationListView( QWidget* parent, Controllers& cont
     controllers_.Register( *this );
     setResizeMode( Q3ListView::AllColumns );
     connect( this, SIGNAL( itemRenamed( Q3ListViewItem*, int, const QString& ) ), &modelBuilder_, SLOT( OnRename( Q3ListViewItem*, int, const QString& ) ) );
+    SetComparator( &ItemComparator );
 }
 
 // -----------------------------------------------------------------------------
