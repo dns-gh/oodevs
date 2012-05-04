@@ -129,7 +129,8 @@ ADN_ListViewItem* ADN_ListView::FindItem( const QString& itemName, int col /* = 
 inline void SetAutoClear(T_ConnectorVector& v,bool b)
 {
     for( T_ConnectorVector::iterator itConnector=v.begin();itConnector!=v.end();++itConnector)
-        (*itConnector)->SetAutoClear(b);
+        if( *itConnector != 0 )
+            (*itConnector)->SetAutoClear(b);
 }
 
 //-----------------------------------------------------------------------------

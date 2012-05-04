@@ -112,6 +112,8 @@ bool ADN_Composantes_Speeds_GUI::UpdateSpeedsValidator( double maxSpeed )
 // -----------------------------------------------------------------------------
 void ADN_Composantes_Speeds_GUI::OnItemSelected( void* pData )
 {
+    if( pData == 0 )
+        return;
     ComposanteInfos* infos = static_cast< ComposanteInfos* >( pData );
     oldMaxSpeed_ = infos->rMaxSpeed_.GetData();
     UpdateSpeedsValidator( oldMaxSpeed_ );
