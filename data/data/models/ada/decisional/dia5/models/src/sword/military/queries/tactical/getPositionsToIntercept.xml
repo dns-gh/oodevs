@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<query xmlns="http://www.masagroup.net/directia/schemas/bm" name="sword.military.queries.tactical.getPositionsToIntercept" source-version="1.0.0">
+    <parameters>
+        <parameter name="objectives">
+            <type>
+                <list>
+                    <class name="sword.military.knowledge.decisional.Reachable"/>
+                </list>
+            </type>
+        </parameter>
+    </parameters>
+    <target name="Destroying">
+        <type>
+            <class name="sword.military.knowledge.decisional.Reaching"/>
+        </type>
+    </target>
+</query>

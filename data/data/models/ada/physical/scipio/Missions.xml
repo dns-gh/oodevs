@@ -599,7 +599,7 @@
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
-      <parameter dia-name="destroyingPositions" max-occurs="unbounded" min-occurs="1" name="A partir de" optional="false" type="LocationComposite">
+      <parameter dia-name="destroyingPositions" max-occurs="unbounded" min-occurs="1" name="A partir de" optional="true" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
           <parameter type="UrbanKnowledge"/>
@@ -620,7 +620,7 @@
           <parameter type="UrbanKnowledge"/>
         </choice>
       </parameter>
-      <parameter dia-name="destroyingPositions" max-occurs="unbounded" min-occurs="1" name="Positions" optional="false" type="LocationComposite">
+      <parameter dia-name="destroyingPositions" max-occurs="unbounded" min-occurs="1" name="Positions" optional="true" type="LocationComposite">
         <choice>
           <parameter type="Point"/>
           <parameter type="UrbanKnowledge"/>
@@ -3138,4 +3138,4 @@
     <fragorder available-without-mission="true" dia-type="Rep_OrderConduite_PoursuivreConvoi" id="406" name="Poursuivre convoi"/>
   </fragorders>
 </missions>
-<!-- signature="3639908854" -->
+<!-- signature="0323235064" -->
