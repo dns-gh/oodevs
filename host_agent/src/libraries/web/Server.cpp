@@ -132,7 +132,7 @@ struct Server::Private : public boost::noncopyable
 // Created: BAX 2012-02-28
 // -----------------------------------------------------------------------------
 Server::Server( cpplog::BaseLogger& log, Observer_ABC& observer, int port )
-    : private_( boost::make_shared< Private >( log, observer, port ) )
+    : private_( new Private( log, observer, port ) )
 {
     // NOTHING
 }

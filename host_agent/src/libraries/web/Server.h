@@ -11,7 +11,7 @@
 #define SERVER_H
 
 #include <boost/noncopyable.hpp>
-#include <boost/shared_ptr.hpp>
+#include <memory>
 
 namespace cpplog
 {
@@ -47,7 +47,7 @@ private:
     //! @name Member data
     //@{
     struct Private;
-    boost::shared_ptr< Private > private_;
+    const std::auto_ptr< Private > private_;
     //@}
 };
 
