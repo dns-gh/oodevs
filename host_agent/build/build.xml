@@ -38,8 +38,8 @@
     <target name="samples" depends="sample_agent" description="build all samples"/>
 
     <target name="sample_agent" depends="runtime,host,web" description="build sample host agent">
-        <build-app name="sample_agent" subsystem="console" depends="boost,cpp-netlib" root="${samples.dir}" libs="runtime@{suffix},host@{suffix},web@{suffix}">
-            <syslibset libs="ws2_32"/>
+        <build-app name="sample_agent" subsystem="console" depends="boost,cpp-netlib,libarchive" root="${samples.dir}" libs="runtime@{suffix},host@{suffix},web@{suffix},zlib">
+            <syslibset libs="advapi32,ws2_32"/>
             <defineset define="_CRT_SECURE_NO_WARNINGS"/>
         </build-app>
     </target>
@@ -80,7 +80,9 @@
     <target name="configure" description="retrieve dependencies">
         <update name="boost" version="1.48"/>
         <update name="cpp-netlib"/>
+        <update name="libarchive"/>
         <update name="turtle"/>
+        <update name="zlib" version="1.2.6"/>
     </target>
 
     <!-- Clean -->

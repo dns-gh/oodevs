@@ -52,6 +52,7 @@ public:
     virtual void WriteFile( const boost::filesystem3::path& path, const std::string& content ) const = 0;
     virtual std::string ReadFile( const boost::filesystem3::path& path ) const = 0;
     virtual std::vector< boost::filesystem3::path > Glob( const boost::filesystem3::path& path, const std::wstring& name ) const = 0;
+    virtual void Unpack( const boost::filesystem3::path& input, const boost::filesystem3::path& prefix ) const = 0;
     //@}
 };
 

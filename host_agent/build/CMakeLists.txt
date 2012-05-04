@@ -14,6 +14,11 @@ include_directories( ${root_dir}/src/libraries )
 add_definitions( -D_CRT_SECURE_NO_WARNINGS )
 add_definitions( -D_SCL_SECURE_NO_WARNINGS )
 
+set( BOOST_INCLUDEDIR ${dev_dir}/include )
+find_package( Boost REQUIRED )
+set( ZLIB_ROOT ${dev_dir}/include/zlib ${dev_dir}/lib/${platform} )
+find_package( ZLIB REQUIRED )
+
 ################################################################################
 # runtime
 ################################################################################
@@ -62,6 +67,8 @@ set_target_folder( sample_agent samples )
 add_target_external_library( sample_agent cpp-netlib_uri-${platform}-mt_d cpp-netlib_uri-${platform}-mt )
 add_target_external_library( sample_agent cpp-netlib_server-${platform}-mt_d cpp-netlib_server-${platform}-mt )
 add_target_external_library( sample_agent cpp-netlib_client-${platform}-mt_d cpp-netlib_client-${platform}-mt )
+add_target_external_library( sample_agent archive_static_d archive_static )
+add_target_external_library( sample_agent zlibd zlib )
 target_link_libraries( sample_agent
     runtime
     host
