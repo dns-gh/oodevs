@@ -6675,6 +6675,14 @@ Click &quot;Ok&quot; to delete it.</source>
         <source>RoofShape - Invalid roofShape type name</source>
         <translation type="unfinished"></translation>
     </message>
+    <message>
+        <source>Material attribute is empty for &apos;%1&apos; template.</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>RoofShape attribute is empty for &apos;%1&apos; template.</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>Weapons_Data</name>
