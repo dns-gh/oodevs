@@ -9,7 +9,40 @@
 
 #include "Pool.h"
 
+#include <boost/make_shared.hpp>
+
 using namespace host;
+
+namespace
+{
+template< typename T >
+struct Handler
+{
+   typedef boost::packaged_task< T > Package;
+   typedef boost::shared_future< T > Future;
+
+   template< typename F >
+   explicit Handler( F functor )
+      : package_( boost::make_shared< Package >( functor ) )
+      , future_ ( package_->get_future() )
+   {
+      // NOTHING
+   }
+
+   ~Handler()
+   {
+      // NOTHING
+   }
+
+   void operator()()
+   {
+      (*package_)();
+   }
+
+   boost::shared_ptr< Package > package_;
+   Future future_;
+};
+}
 
 // -----------------------------------------------------------------------------
 // Name: Pool::Pool
@@ -32,13 +65,23 @@ Pool::~Pool()
     Stop();
 }
 
+namespace
+{
+template< typename T >
+typename Pool::Future Post( boost::asio::io_service& service, T task )
+{
+    service.post( task );
+    return task.future_;
+}
+}
+
 // -----------------------------------------------------------------------------
 // Name: Pool::Post
 // Created: BAX 2012-04-16
 // -----------------------------------------------------------------------------
-void Pool::Post( const Task& task )
+Pool::Future Pool::Post( const Task& task )
 {
-    service_.post( task );
+    return ::Post( service_, Handler< void >( task ) );
 }
 
 // -----------------------------------------------------------------------------

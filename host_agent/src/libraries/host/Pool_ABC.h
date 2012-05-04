@@ -12,6 +12,7 @@
 
 #include <boost/noncopyable.hpp>
 #include <boost/function.hpp>
+#include <boost/thread/future.hpp>
 
 namespace host
 {
@@ -33,11 +34,12 @@ public:
     //! @name Typedef helper
     //@{
     typedef boost::function< void() > Task;
+    typedef boost::shared_future< void > Future;
     //@}
 
     //! @name Methods
     //@{
-    virtual void Post( const Task& ) = 0;
+    virtual Future Post( const Task& ) = 0;
     virtual void Stop() = 0;
     //@}
 };

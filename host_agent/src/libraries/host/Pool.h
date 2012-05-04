@@ -42,7 +42,7 @@ public:
 
     //! @name Methods
     //@{
-    virtual void Post( const Task& task );
+    virtual Future Post( const Task& task );
     virtual void Stop();
     //@}
 
