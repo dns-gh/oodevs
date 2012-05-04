@@ -375,10 +375,6 @@ void MIL_Automate::Initialize( xml::xistream& xis, unsigned int gcPause, unsigne
 // -----------------------------------------------------------------------------
 void MIL_Automate::ReadUnitSubordinate( xml::xistream& xis )
 {
-    bool isPc = false;
-    xis >> xml::optional() >> xml::attribute( "command-post", isPc );
-    if( isPc && pPionPC_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Automat with id %d has several command posts", nID_ ) );
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( xis.attribute< std::string >( "type" ) );
     if( !pType )
     {
