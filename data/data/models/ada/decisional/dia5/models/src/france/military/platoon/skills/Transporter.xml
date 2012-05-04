@@ -34,7 +34,7 @@
         <class name="sword.military.world.PlatoonAlly"/>
     </body-type>
     <links>
-        <link name="moveToward" skill="sword.military.platoon.skills.MoveToward"/>
+        <link name="moveToward" skill="france.military.platoon.skills.MoveAlong"/>
     </links>
     <resources>
         <resource name="france.military.platoon.resources.CapaciteEmbarquement" variable="loadcapacity"/>
