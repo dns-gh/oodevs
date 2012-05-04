@@ -16,6 +16,8 @@ namespace tools
     const char* AppProjectVersion();
     const char* AppMajorVersion();
     const char* AppModelVersion(); //$$$ Crap for thales, à gicler à terme
+    const std::vector< int > SplitVersion( const std::string& version );
+    bool CheckVersion( const std::string& expectedVersion, const std::string& actualVersion );
 }
 
 #endif // __Version_h_

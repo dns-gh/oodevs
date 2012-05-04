@@ -165,7 +165,14 @@ void DEC_Workspace::InitializeDIA( MIL_Config& config )
 //-----------------------------------------------------------------------------
 void DEC_Workspace::LoadDIA( MIL_Config& config, xml::xistream& xis )
 {
-    xis >> xml::start( "decisional" );
+    std::string decisionalVersion;
+    xis >> xml::start( "decisional" )
+        >> xml::attribute( "model-version", decisionalVersion );
+
+    const std::string runtimeVersion = tools::AppProjectVersion();
+    if( !tools::CheckVersion( decisionalVersion, runtimeVersion ) )
+        throw std::runtime_error( "Decisional model version (" + decisionalVersion + ") does not match runtime version (" + runtimeVersion + ")" );
+
 
     std::map< std::string, std::string > strSourcePaths;
     xis >> xml::start( "RepertoiresSources" )
