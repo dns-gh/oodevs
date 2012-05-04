@@ -76,6 +76,7 @@ public:
     //@{
     virtual Reply ListExercises ( int offset, int limit ) const;
     virtual Reply CountExercises() const;
+    virtual Reply UploadPack( std::istream& src );
     //@}
 
 private:

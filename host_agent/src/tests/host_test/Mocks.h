@@ -23,7 +23,6 @@
 #include <runtime/Runtime_ABC.h>
 #include <web/Client_ABC.h>
 
-#include <boost/bind/apply.hpp>
 #include <boost/property_tree/ptree.hpp>
 #include <boost/filesystem/path.hpp>
 #include <cpplog/cpplog.hpp>
@@ -147,7 +146,14 @@ namespace mocks
     {
         MockPool()
         {
-            MOCK_EXPECT( Post ).calls( boost::bind( boost::apply< void >(), _1 ) );
+            MOCK_EXPECT( Post ).calls( &MockPool::Call );
+        }
+        static Future Call( Task task )
+        {
+            boost::promise< void > promise;
+            task();
+            promise.set_value();
+            return promise.get_future();
         }
         MOCK_METHOD( Post, 1 );
         MOCK_METHOD( Stop, 0 );

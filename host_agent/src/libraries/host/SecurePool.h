@@ -21,7 +21,6 @@ namespace cpplog
 
 namespace host
 {
-    class WaitGroup;
 // =============================================================================
 /** @class  SecurePool
     @brief  Secure thread pool class definition
@@ -40,14 +39,16 @@ public:
     //! @name Methods
     //@{
     virtual void Post( const Pool_ABC::Task& task );
+    virtual Pool_ABC& Get() const;
     //@}
 
 private:
     //! @name Private members
     //@{
-    mutable cpplog::BaseLogger& log_;
+    cpplog::BaseLogger& log_;
     const std::string name_;
-    const std::auto_ptr< WaitGroup > wait_;
+    const std::auto_ptr< boost::mutex > access_;
+    std::vector< Pool_ABC::Future > futures_;
     Pool_ABC& pool_;
     //@}
 };

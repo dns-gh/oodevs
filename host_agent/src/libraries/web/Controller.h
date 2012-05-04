@@ -44,7 +44,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::string Notify( const Request_ABC& request );
+    virtual std::string Notify( Request_ABC& request );
     //@}
 
 private:
@@ -81,6 +81,11 @@ private:
     //@{
     std::string ListExercises ( const Request_ABC& request );
     std::string CountExercises( const Request_ABC& request );
+    //@}
+
+    //! @name Pack Methods
+    //@{
+    std::string UploadPack( Request_ABC& request );
     //@}
 
 private:

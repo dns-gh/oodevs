@@ -8,11 +8,12 @@
 // *****************************************************************************
 
 #include "Controller.h"
+
+#include "cpplog/cpplog.hpp"
+#include "host/Agent_ABC.h"
 #include "Request_ABC.h"
 
-#include <cpplog/cpplog.hpp>
-#include <host/Agent_ABC.h>
-
+#include <boost/assign/list_of.hpp>
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/static_assert.hpp>
@@ -212,41 +213,50 @@ std::string UuidDispatch( const Request_ABC& request, const std::string& name, A
 // Name: Controller::Notify
 // Created: BAX 2012-03-07
 // -----------------------------------------------------------------------------
-std::string Controller::Notify( const Request_ABC& request )
+std::string Controller::Notify( Request_ABC& request )
 {
-    if( request.GetMethod() != "GET" )
-        return WriteHttpReply( BadRequest, "Invalid method type" );
-
     const std::string& uri = request.GetUri();
-    try
-    {
-        if( uri == "/get_cluster" )     return GetCluster( request );
-        if( uri == "/start_cluster" )   return StartCluster( request );
-        if( uri == "/stop_cluster" )    return StopCluster( request );
-        // nodes
-        if( uri == "/list_nodes" )      return ListNodes( request );
-        if( uri == "/count_nodes" )     return CountNodes( request );
-        if( uri == "/get_node" )        return GetNode( request );
-        if( uri == "/create_node" )     return CreateNode( request );
-        if( uri == "/delete_node" )     return DeleteNode( request );
-        if( uri == "/start_node" )      return StartNode( request );
-        if( uri == "/stop_node" )       return StopNode( request );
-        // sessions
-        if( uri == "/list_sessions" )   return ListSessions( request );
-        if( uri == "/count_sessions" )  return CountSessions( request );
-        if( uri == "/get_session" )     return GetSession( request );
-        if( uri == "/create_session" )  return CreateSession( request );
-        if( uri == "/delete_session" )  return DeleteSession( request );
-        if( uri == "/start_session" )   return StartSession( request );
-        if( uri == "/stop_session" )    return StopSession( request );
-        // exercises
-        if( uri == "/list_exercises")   return ListExercises( request );
-        if( uri == "/count_exercises" ) return CountExercises( request );
-    }
-    catch( const HttpException& err )
-    {
-        return WriteHttpReply( err.GetCode(), err.what() );
-    }
+    if( request.GetMethod() == "GET" )
+        try
+        {
+            if( uri == "/get_cluster" )     return GetCluster( request );
+            if( uri == "/start_cluster" )   return StartCluster( request );
+            if( uri == "/stop_cluster" )    return StopCluster( request );
+            // nodes
+            if( uri == "/list_nodes" )      return ListNodes( request );
+            if( uri == "/count_nodes" )     return CountNodes( request );
+            if( uri == "/get_node" )        return GetNode( request );
+            if( uri == "/create_node" )     return CreateNode( request );
+            if( uri == "/delete_node" )     return DeleteNode( request );
+            if( uri == "/start_node" )      return StartNode( request );
+            if( uri == "/stop_node" )       return StopNode( request );
+            // sessions
+            if( uri == "/list_sessions" )   return ListSessions( request );
+            if( uri == "/count_sessions" )  return CountSessions( request );
+            if( uri == "/get_session" )     return GetSession( request );
+            if( uri == "/create_session" )  return CreateSession( request );
+            if( uri == "/delete_session" )  return DeleteSession( request );
+            if( uri == "/start_session" )   return StartSession( request );
+            if( uri == "/stop_session" )    return StopSession( request );
+            // exercises
+            if( uri == "/list_exercises")   return ListExercises( request );
+            if( uri == "/count_exercises" ) return CountExercises( request );
+        }
+        catch( const HttpException& err )
+        {
+            return WriteHttpReply( err.GetCode(), err.what() );
+        }
+    else if( request.GetMethod() == "POST" )
+        try
+        {
+            if( uri == "/upload_pack" ) return UploadPack( request );
+        }
+        catch( const HttpException& err )
+        {
+            return WriteHttpReply( err.GetCode(), err.what() );
+        }
+    else
+        return WriteHttpReply( BadRequest, "Invalid method type" );
 
     return WriteHttpReply( NotFound, "Unknown URI" );
 }
@@ -438,3 +448,12 @@ std::string Controller::CountExercises( const Request_ABC& /*request*/ )
     return WriteHttpReply( agent_.CountExercises() );
 }
 
+// -----------------------------------------------------------------------------
+// Name: Controller::UploadPack
+// Created: BAX 2012-05-03
+// -----------------------------------------------------------------------------
+std::string Controller::UploadPack( Request_ABC& request )
+{
+    Request_ABC::T_Streams streams = request.ReadMimeParts( boost::assign::list_of( "pack" ) );
+    return WriteHttpReply( agent_.UploadPack( streams.front().get() ) );
+}

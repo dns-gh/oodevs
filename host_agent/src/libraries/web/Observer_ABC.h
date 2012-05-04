@@ -34,7 +34,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual std::string Notify( const Request_ABC& request ) = 0;
+    virtual std::string Notify( Request_ABC& request ) = 0;
     //@}
 };
 

@@ -116,7 +116,7 @@ namespace
         host::SessionController sessions( log, runtime, system, uuids, cfg.session.data, cfg.session.applications, pool, ports );
         host::Agent agent( log, cfg.cluster.enabled ? &cluster : 0, nodes, sessions );
         web::Controller controller( log, agent );
-        web::Server server( log, controller, cfg.ports.host );
+        web::Server server( log, pool, controller, cfg.ports.host );
         server.Listen();
         host::SecurePool run( log, "server", pool );
         run.Post( boost::bind( &web::Server::Run, &server ) );
@@ -189,7 +189,10 @@ int StartServer( int argc, const char* argv[] )
     return 0;
 }
 
+
+#if 1
 int main( int argc, const char* argv[] )
 {
     return StartServer( argc, argv );
 }
+#endif

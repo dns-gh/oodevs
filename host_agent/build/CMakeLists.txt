@@ -122,6 +122,7 @@ file( GLOB files
 add_executable_target( web_test ${files} )
 set_target_folder( web_test tests )
 target_link_libraries( web_test
+    host
     web
 )
 add_test_target( web_test web )

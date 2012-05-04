@@ -11,7 +11,9 @@
 
 #include <boost/noncopyable.hpp>
 #include <boost/optional.hpp>
+#include <boost/ref.hpp>
 #include <string>
+#include <vector>
 
 namespace web
 {
@@ -35,6 +37,13 @@ public:
     virtual std::string GetUri() const = 0;
     virtual boost::optional< std::string > GetParameter( const std::string& name ) const = 0;
     virtual boost::optional< std::string > GetHeader( const std::string& name ) const = 0;
+    //@}
+
+    //! @name Mime methods
+    //@{
+    typedef std::vector< std::string > T_Names;
+    typedef std::vector< boost::reference_wrapper< std::istream > > T_Streams;
+    virtual T_Streams ReadMimeParts( const T_Names& names ) = 0;
     //@}
 };
 

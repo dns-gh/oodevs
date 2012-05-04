@@ -59,7 +59,7 @@
         </build-test>
     </target>
 
-    <target name="web_test" depends="web" description="build web tests">
+    <target name="web_test" depends="host,web" description="build web tests">
         <build-test name="web" depends="boost" libs="web@{suffix}">
             <defineset define="_CRT_SECURE_NO_WARNINGS"/>
         </build-test>

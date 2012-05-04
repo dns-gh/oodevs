@@ -12,13 +12,10 @@
 #include "cpplog/cpplog.hpp"
 #include "Pool_ABC.h"
 
-#include <boost/bind.hpp>
-
 #ifdef _MSC_VER
 #   pragma warning( push )
 #   pragma warning( disable : 4244 )
 #endif
-#include <boost/thread/condition.hpp>
 #include <boost/thread/locks.hpp>
 #include <boost/thread/mutex.hpp>
 #ifdef _MSC_VER
@@ -27,55 +24,27 @@
 
 using namespace host;
 
-class host::WaitGroup : public boost::noncopyable
+namespace
 {
-public:
-    WaitGroup()
-        : counter_( 0 )
-    {
-        // NOTHING
-    }
-
-    ~WaitGroup()
-    {
-        // NOTHING
-    }
-
-    void Add()
-    {
-        boost::unique_lock< boost::mutex > lock( access_ );
-        counter_++;
-    }
-
-    void Done()
-    {
-        boost::unique_lock< boost::mutex > lock( access_ );
-        counter_--;
-        condition_.notify_one();
-    }
-
-    void Join()
-    {
-        boost::unique_lock< boost::mutex > lock( access_ );
-        while( counter_ > 0 )
-            condition_.wait( lock );
-    }
-
-private:
-    boost::mutex access_;
-    boost::condition_variable condition_;
-    int counter_;
-};
+bool CheckFuture( cpplog::BaseLogger& log, const Pool_ABC::Future& future, const std::string& name )
+{
+    if( !future.is_ready() )
+        return false;
+    if( future.has_exception() )
+        LOG_ERROR( log ) << "[" << name << "] Unexpected exception";
+    return true;
+}
+}
 
 // -----------------------------------------------------------------------------
 // Name: SecurePool::SecurePool
 // Created: BAX 2012-04-16
 // -----------------------------------------------------------------------------
 SecurePool::SecurePool( cpplog::BaseLogger& log, const std::string& name, Pool_ABC& pool )
-    : log_ ( log )
-    , name_( name )
-    , wait_( new WaitGroup() )
-    , pool_( pool )
+    : log_   ( log )
+    , name_  ( name )
+    , access_( new boost::mutex() )
+    , pool_  ( pool )
 {
     // NOTHING
 }
@@ -86,27 +55,9 @@ SecurePool::SecurePool( cpplog::BaseLogger& log, const std::string& name, Pool_A
 // -----------------------------------------------------------------------------
 SecurePool::~SecurePool()
 {
-    wait_->Join();
-}
-
-namespace
-{
-void WrapTask( WaitGroup& wait, const Pool_ABC::Task& task, cpplog::BaseLogger& log, const std::string& name )
-{
-    try
-    {
-        task();
-    }
-    catch( const std::exception& err )
-    {
-        LOG_ERROR( log ) << "[" << name << "] " << err.what();
-    }
-    catch( ... )
-    {
-        LOG_ERROR( log ) << "[" << name << "] Unexpected exception";
-    }
-    wait.Done();
-}
+    boost::wait_for_all( futures_.begin(), futures_.end() );
+    std::for_each( futures_.begin(), futures_.end(),
+        boost::bind( &CheckFuture, boost::ref( log_ ), _1, name_ ) );
 }
 
 // -----------------------------------------------------------------------------
@@ -115,6 +66,20 @@ void WrapTask( WaitGroup& wait, const Pool_ABC::Task& task, cpplog::BaseLogger& 
 // -----------------------------------------------------------------------------
 void SecurePool::Post( const Pool_ABC::Task& task )
 {
-    wait_->Add();
-    pool_.Post( boost::bind( &::WrapTask, boost::ref( *wait_ ), task, boost::ref( log_ ), name_ ) );
+    Pool_ABC::Future future = pool_.Post( task );
+    boost::lock_guard< boost::mutex > lock( *access_ );
+    futures_.erase(
+        std::remove_if( futures_.begin(), futures_.end(),
+            boost::bind( &CheckFuture, boost::ref( log_ ), _1, name_ ) ),
+        futures_.end() );
+    futures_.push_back( future );
+}
+
+// -----------------------------------------------------------------------------
+// Name: SecurePool::Get
+// Created: BAX 2012-05-04
+// -----------------------------------------------------------------------------
+Pool_ABC& SecurePool::Get() const
+{
+    return pool_;
 }

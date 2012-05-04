@@ -327,3 +327,19 @@ Reply Agent::CountExercises() const
 {
     return Count( sessions_.GetExercises().size() );
 }
+
+Reply Agent::UploadPack( std::istream& src )
+{
+    // does't do anything yet
+    std::vector< char > buf( 4096 );
+    size_t read = 0;
+    while( !src.eof() )
+    {
+        src.read( &buf[0], buf.size() );
+        read += static_cast< size_t >( src.gcount() );
+    }
+
+    boost::property_tree::ptree tree;
+    tree.put( "read", read );
+    return Reply( ToJson( tree ) );
+}

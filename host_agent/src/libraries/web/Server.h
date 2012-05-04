@@ -18,6 +18,11 @@ namespace cpplog
     class BaseLogger;
 }
 
+namespace host
+{
+    class Pool_ABC;
+}
+
 namespace web
 {
     class Observer_ABC;
@@ -32,7 +37,7 @@ class Server : public boost::noncopyable
 {
 public:
     //! @name Destructor
-             Server( cpplog::BaseLogger& logger, Observer_ABC& observer, int port );
+             Server( cpplog::BaseLogger& logger, host::Pool_ABC& pool, Observer_ABC& observer, int port );
     virtual ~Server();
     //@}
 

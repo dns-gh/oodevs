@@ -65,6 +65,8 @@ namespace
         // exercises
         MOCK_METHOD( ListExercises, 2 );
         MOCK_METHOD( CountExercises, 0 );
+        // other
+        MOCK_METHOD( UploadPack, 1 );
     };
 
     MOCK_BASE_CLASS( MockRequest, Request_ABC )
@@ -73,6 +75,7 @@ namespace
         MOCK_METHOD( GetUri, 0 );
         MOCK_METHOD( GetParameter, 1 );
         MOCK_METHOD( GetHeader, 1 );
+        MOCK_METHOD( ReadMimeParts, 1 );
     };
 
     const boost::xpressive::sregex httpCodeRegex = boost::xpressive::sregex::compile( "^HTTP\\/1\\.1\\s+(\\d+)\\s+.+\r\n" );
