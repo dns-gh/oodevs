@@ -26,7 +26,7 @@
 // Created: NLD 2006-11-21
 // -----------------------------------------------------------------------------
 MIL_AutomateMission::MIL_AutomateMission( const MIL_MissionType_ABC& type, MIL_Automate& automate, const sword::AutomatOrder& asn )
-    : MIL_Mission_ABC          ( type, automate.GetKnowledge(), asn.parameters(), automate.GetPionPC().GetRole< PHY_RoleInterface_Location >().GetPosition() )
+    : MIL_Mission_ABC          ( type, automate.GetKnowledge(), asn.parameters(), automate.GetPosition() )
     , automate_                ( automate )
     , bDIAMrtBehaviorActivated_( false )
     , bDIACdtBehaviorActivated_( false )

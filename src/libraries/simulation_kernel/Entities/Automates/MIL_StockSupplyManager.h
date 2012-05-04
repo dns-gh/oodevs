@@ -72,7 +72,7 @@ public:
     //! @name SupplyRecipient_ABC
     //@{
     virtual const MT_Vector2D&   GetPosition() const;
-    virtual const MIL_AgentPion& GetPC      () const;
+    virtual const MIL_AgentPion* GetPC      () const;
     virtual bool                 BelongsToLogisticBase( const MIL_AutomateLOG& logisticBase ) const;
     virtual void OnSupplyScheduled     ( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign );
     virtual void OnSupplyCanceled      ( boost::shared_ptr< const logistic::SupplyConsign_ABC > supplyConsign );

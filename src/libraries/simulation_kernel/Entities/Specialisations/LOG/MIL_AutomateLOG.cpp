@@ -426,7 +426,8 @@ MIL_AgentPion* MIL_AutomateLOG::SupplyCreateConvoyPion( const MIL_AgentTypePion&
     }
     if( !pConvoyAutomate )
         return 0;
-    const MT_Vector2D& location = pConvoyAutomate->GetPionPC().GetRole<PHY_RoleInterface_Location>().GetPosition();
+
+    const MT_Vector2D& location = pConvoyAutomate->GetPosition();
 
     std::stringstream ssName;
     ssName << logistic::SupplyConvoyConfig::convoyUnitBaseName_ << nextConvoyInstanceId_;

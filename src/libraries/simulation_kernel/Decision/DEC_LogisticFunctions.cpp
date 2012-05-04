@@ -101,7 +101,8 @@ void DEC_LogisticFunctions::PionMaintenanceChangeWorkRate( MIL_Agent_ABC& caller
 // -----------------------------------------------------------------------------
 void DEC_LogisticFunctions::AutomateMaintenanceEnableSystem( MIL_Automate& callerAutomate )
 {
-    PionMaintenanceEnableSystem( callerAutomate.GetPionPC() );
+    if( MIL_AgentPion* pionPc = callerAutomate.GetPionPC() )
+        PionMaintenanceEnableSystem( *pionPc );
 }
 
 // -----------------------------------------------------------------------------
@@ -110,7 +111,8 @@ void DEC_LogisticFunctions::AutomateMaintenanceEnableSystem( MIL_Automate& calle
 // -----------------------------------------------------------------------------
 void DEC_LogisticFunctions::AutomateMaintenanceDisableSystem( MIL_Automate& callerAutomate )
 {
-    PionMaintenanceDisableSystem( callerAutomate.GetPionPC() );
+    if( MIL_AgentPion* pionPc = callerAutomate.GetPionPC() )
+        PionMaintenanceDisableSystem( *pionPc );
 }
 
 // -----------------------------------------------------------------------------
@@ -119,7 +121,8 @@ void DEC_LogisticFunctions::AutomateMaintenanceDisableSystem( MIL_Automate& call
 // -----------------------------------------------------------------------------
 void DEC_LogisticFunctions::AutomateMaintenanceChangePriorities( MIL_Automate& callerAutomate, const std::vector< const PHY_ComposanteTypePion* >& priorities )
 {
-    PionMaintenanceChangePriorities( callerAutomate.GetPionPC(), priorities );
+    if( MIL_AgentPion* pionPc = callerAutomate.GetPionPC() )
+        PionMaintenanceChangePriorities( *pionPc, priorities );
 }
 
 // -----------------------------------------------------------------------------
@@ -128,7 +131,8 @@ void DEC_LogisticFunctions::AutomateMaintenanceChangePriorities( MIL_Automate& c
 // -----------------------------------------------------------------------------
 void DEC_LogisticFunctions::AutomateMaintenanceChangeTacticalPriorities( MIL_Automate& callerAutomate, const std::vector< const DEC_Decision_ABC* >& priorities )
 {
-    PionMaintenanceChangeTacticalPriorities( callerAutomate.GetPionPC(), priorities );
+    if( MIL_AgentPion* pionPc = callerAutomate.GetPionPC() )
+        PionMaintenanceChangeTacticalPriorities( *pionPc, priorities );
 }
 
 // -----------------------------------------------------------------------------
@@ -137,7 +141,8 @@ void DEC_LogisticFunctions::AutomateMaintenanceChangeTacticalPriorities( MIL_Aut
 // -----------------------------------------------------------------------------
 void DEC_LogisticFunctions::AutomateMaintenanceChangeWorkRate( MIL_Automate& callerAutomate, int workRate )
 {
-    PionMaintenanceChangeWorkRate( callerAutomate.GetPionPC(), workRate );
+    if( MIL_AgentPion* pionPc = callerAutomate.GetPionPC() )
+        PionMaintenanceChangeWorkRate( *pionPc, workRate );
 }
 
 // -----------------------------------------------------------------------------
@@ -291,7 +296,8 @@ void DEC_LogisticFunctions::PionMedicalChangeTacticalPriorities( MIL_Agent_ABC& 
 // -----------------------------------------------------------------------------
 void DEC_LogisticFunctions::AutomateMedicalEnableSystem( MIL_Automate& callerAutomate )
 {
-    PionMedicalEnableSystem( callerAutomate.GetPionPC() );
+    if( MIL_AgentPion* pionPc = callerAutomate.GetPionPC() )
+        PionMedicalEnableSystem( *pionPc );
 }
 
 // -----------------------------------------------------------------------------
@@ -300,7 +306,8 @@ void DEC_LogisticFunctions::AutomateMedicalEnableSystem( MIL_Automate& callerAut
 // -----------------------------------------------------------------------------
 void DEC_LogisticFunctions::AutomateMedicalDisableSystem( MIL_Automate& callerAutomate )
 {
-    PionMedicalDisableSystem( callerAutomate.GetPionPC() );
+    if( MIL_AgentPion* pionPc = callerAutomate.GetPionPC() )
+        PionMedicalDisableSystem( *pionPc );
 }
 
 // -----------------------------------------------------------------------------
@@ -309,7 +316,8 @@ void DEC_LogisticFunctions::AutomateMedicalDisableSystem( MIL_Automate& callerAu
 // -----------------------------------------------------------------------------
 void DEC_LogisticFunctions::AutomateMedicalEnableSortingFunction( MIL_Automate& callerAutomate )
 {
-    PionMedicalEnableSortingFunction( callerAutomate.GetPionPC() );
+    if( MIL_AgentPion* pionPc = callerAutomate.GetPionPC() )
+        PionMedicalEnableSortingFunction( *pionPc );
 }
 
 // -----------------------------------------------------------------------------
@@ -318,7 +326,8 @@ void DEC_LogisticFunctions::AutomateMedicalEnableSortingFunction( MIL_Automate& 
 // -----------------------------------------------------------------------------
 void DEC_LogisticFunctions::AutomateMedicalDisableSortingFunction( MIL_Automate& callerAutomate )
 {
-    PionMedicalDisableSortingFunction( callerAutomate.GetPionPC() );
+    if( MIL_AgentPion* pionPc = callerAutomate.GetPionPC() )
+        PionMedicalDisableSortingFunction( *pionPc );
 }
 
 // -----------------------------------------------------------------------------
@@ -327,7 +336,8 @@ void DEC_LogisticFunctions::AutomateMedicalDisableSortingFunction( MIL_Automate&
 // -----------------------------------------------------------------------------
 void DEC_LogisticFunctions::AutomateMedicalEnableHealingFunction( MIL_Automate& callerAutomate )
 {
-    PionMedicalEnableHealingFunction( callerAutomate.GetPionPC() );
+    if( MIL_AgentPion* pionPc = callerAutomate.GetPionPC() )
+        PionMedicalEnableHealingFunction( *pionPc );
 }
 
 // -----------------------------------------------------------------------------
@@ -336,7 +346,8 @@ void DEC_LogisticFunctions::AutomateMedicalEnableHealingFunction( MIL_Automate& 
 // -----------------------------------------------------------------------------
 void DEC_LogisticFunctions::AutomateMedicalDisableHealingFunction( MIL_Automate& callerAutomate )
 {
-    PionMedicalDisableHealingFunction( callerAutomate.GetPionPC() );
+    if( MIL_AgentPion* pionPc = callerAutomate.GetPionPC() )
+        PionMedicalDisableHealingFunction( *pionPc );
 }
 
 // -----------------------------------------------------------------------------
@@ -345,7 +356,8 @@ void DEC_LogisticFunctions::AutomateMedicalDisableHealingFunction( MIL_Automate&
 // -----------------------------------------------------------------------------
 void DEC_LogisticFunctions::AutomateMedicalChangePriorities( MIL_Automate& callerAutomate, const std::vector< const PHY_HumanWound* >& priorities )
 {
-    PionMedicalChangePriorities( callerAutomate.GetPionPC(), priorities );
+    if( MIL_AgentPion* pionPc = callerAutomate.GetPionPC() )
+        PionMedicalChangePriorities( *pionPc, priorities );
 }
 
 // -----------------------------------------------------------------------------
@@ -354,7 +366,8 @@ void DEC_LogisticFunctions::AutomateMedicalChangePriorities( MIL_Automate& calle
 // -----------------------------------------------------------------------------
 void DEC_LogisticFunctions::AutomateMedicalChangeTacticalPriorities( MIL_Automate& callerAutomate, const std::vector< const DEC_Decision_ABC* >& priorities )
 {
-    PionMedicalChangeTacticalPriorities( callerAutomate.GetPionPC(), priorities );
+    if( MIL_AgentPion* pionPc = callerAutomate.GetPionPC() )
+        PionMedicalChangeTacticalPriorities( *pionPc, priorities );
 }
 
 // -----------------------------------------------------------------------------
@@ -397,7 +410,8 @@ void DEC_LogisticFunctions::PionSupplyDisableSystem( MIL_Agent_ABC& callerAgent 
 // -----------------------------------------------------------------------------
 void DEC_LogisticFunctions::AutomateSupplyEnableSystem( MIL_Automate& callerAutomate )
 {
-    PionSupplyEnableSystem( callerAutomate.GetPionPC() );
+    if( MIL_AgentPion* pionPc = callerAutomate.GetPionPC() )
+        PionSupplyEnableSystem( *pionPc );
 }
 
 // -----------------------------------------------------------------------------
@@ -406,7 +420,8 @@ void DEC_LogisticFunctions::AutomateSupplyEnableSystem( MIL_Automate& callerAuto
 // -----------------------------------------------------------------------------
 void DEC_LogisticFunctions::AutomateSupplyDisableSystem( MIL_Automate& callerAutomate )
 {
-    PionSupplyDisableSystem( callerAutomate.GetPionPC() );
+    if( MIL_AgentPion* pionPc = callerAutomate.GetPionPC() )
+        PionSupplyDisableSystem( *pionPc );
 }
 
 // -----------------------------------------------------------------------------
@@ -492,7 +507,8 @@ DEC_Decision_ABC* DEC_LogisticFunctions::ConvoyGetCurrentSupplyRecipient( const 
     {
         logistic::SupplyRecipient_ABC* recipient = role->ConvoyGetCurrentSupplyRecipient();
         if( recipient )
-            return ( const_cast< DEC_Decision_ABC* >( &recipient->GetPC().GetDecision() ) );
+            if( const MIL_AgentPion* pionPc = recipient->GetPC() )
+                return ( const_cast< DEC_Decision_ABC* >( &pionPc->GetDecision() ) );
     }
     return 0;
 }

@@ -1339,7 +1339,8 @@ const MIL_AgentType_ABC& MIL_AgentPion::GetType() const
 // -----------------------------------------------------------------------------
 bool MIL_AgentPion::IsPC() const
 {
-    return ( pAutomate_ && ( pAutomate_->GetPionPC() == *this ) );
+    MIL_AgentPion* agent = pAutomate_->GetPionPC();
+    return ( pAutomate_ && agent && ( *agent == *this ) );
 }
 
 // -----------------------------------------------------------------------------

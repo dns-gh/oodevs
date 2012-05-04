@@ -1295,6 +1295,22 @@ MIL_StockSupplyManager& MIL_Automate::GetStockSupplyManager() const
     return *pStockSupplyManager_;
 }
 
+namespace
+{
+    const MT_Vector2D emptyPosition; // $$$$ LGY 2012-03-30: for empty automat
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::GetPosition
+// Created: LGY 2012-03-30
+// -----------------------------------------------------------------------------
+const MT_Vector2D& MIL_Automate::GetPosition() const
+{
+    if( pPionPC_ )
+        return pPionPC_->GetRole< PHY_RoleInterface_Location >().GetPosition();
+    return emptyPosition;
+}
+
 // -----------------------------------------------------------------------------
 // Name: MIL_Automate::IsSurrendered
 // Created: NLD 2005-02-24
@@ -1336,10 +1352,9 @@ const MIL_AutomateType& MIL_Automate::GetType() const
 // Name: MIL_Automate::GetPionPC
 // Created: NLD 2004-08-19
 // -----------------------------------------------------------------------------
-MIL_AgentPion& MIL_Automate::GetPionPC() const
+MIL_AgentPion* MIL_Automate::GetPionPC() const
 {
-    assert( pPionPC_ );
-    return *pPionPC_;
+    return pPionPC_;
 }
 
 // -----------------------------------------------------------------------------

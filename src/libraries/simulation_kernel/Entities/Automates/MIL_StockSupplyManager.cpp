@@ -177,14 +177,14 @@ void MIL_StockSupplyManager::NotifyStockSupplyNeeded( const PHY_DotationCategory
 // -----------------------------------------------------------------------------
 const MT_Vector2D& MIL_StockSupplyManager::GetPosition() const
 {
-    return pAutomate_->GetPionPC().GetRole< PHY_RoleInterface_Location >().GetPosition();
+    return pAutomate_->GetPosition();
 }
 
 // -----------------------------------------------------------------------------
 // Name: MIL_StockSupplyManager::GetPC
 // Created: NLD 2005-01-25
 // -----------------------------------------------------------------------------
-const MIL_AgentPion& MIL_StockSupplyManager::GetPC() const
+const MIL_AgentPion* MIL_StockSupplyManager::GetPC() const
 {
     return pAutomate_->GetPionPC();
 }
