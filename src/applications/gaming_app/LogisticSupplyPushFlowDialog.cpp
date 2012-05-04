@@ -151,7 +151,7 @@ LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Con
     resourcesTable_->verticalHeader()->hide();
     resourcesTable_->setMargin( 5 );
     resourcesTable_->setLeftMargin( 0 );
-    resourcesTable_->setColumnWidth( 0 , 120 );
+    resourcesTable_->setColumnStretchable( 0 , true );
     resourcesTable_->setColumnWidth( 1 , 70 );
     resourcesTable_->setColumnWidth( 2 , 70 );
     connect( resourcesTable_, SIGNAL( valueChanged( int, int ) ), this, SLOT( OnResourcesValueChanged( int, int ) ) );
@@ -169,7 +169,7 @@ LogisticSupplyPushFlowDialog::LogisticSupplyPushFlowDialog( QWidget* parent, Con
     carriersTable_->setEnabled( false );
     carriersTable_->setMargin( 5 );
     carriersTable_->setLeftMargin( 0 );
-    carriersTable_->setColumnWidth( 0 , 120 );
+    carriersTable_->setColumnStretchable( 0 , true );
     carriersTable_->setColumnWidth( 1 , 70 );
     carriersTable_->setColumnWidth( 2 , 70 );
     connect( carriersTable_, SIGNAL( valueChanged( int, int ) ), this, SLOT( OnCarriersValueChanged( int, int ) ) );
@@ -487,7 +487,7 @@ void LogisticSupplyPushFlowDialog::AddResourceItem()
     {
         curItem = static_cast< ExclusiveComboTableItem* >( resourcesTable_->item( row-1, 0 ) );
         if( curItem )
-            current = curItem->currentItem();
+            current = curItem->CurrentItem();
     }
 
     QStringList resourcesList; resourcesList.append( QString() );
@@ -503,10 +503,10 @@ void LogisticSupplyPushFlowDialog::AddResourceItem()
     resourcesTable_->setItem( rows, 0, new ExclusiveComboTableItem( resourcesTable_, resourcesList ) );
     resourcesTable_->setItem( rows, 1, new Q3TableItem( resourcesTable_, Q3TableItem::Never, QString() ) );
     resourcesTable_->setItem( rows, 2, new gui::SpinTableItem< int >( resourcesTable_, 0, std::numeric_limits< int >::max(), 1 ) );
-    resourcesTable_->setCurrentCell( rows, 0 );
+    resourcesTable_->setCurrentCell( rows, 1 );
 
     if( curItem )
-        curItem->setCurrentItem( current );
+        curItem->SetCurrentItem( current );
 }
 
 // -----------------------------------------------------------------------------
@@ -521,7 +521,7 @@ void LogisticSupplyPushFlowDialog::AddResourceItem( const QString& dotationName,
     const int rowIndex = resourcesTable_->numRows() - 1;
     ExclusiveComboTableItem* curItem = static_cast< ExclusiveComboTableItem* >( resourcesTable_->item( rowIndex, 0 ) );
     if( curItem )
-        curItem->setCurrentItem( dotationName );
+        curItem->SetCurrentText( dotationName );
     resourcesTable_->item( rowIndex, 1 )->setText( locale().toString( Available ) );
     resourcesTable_->item( rowIndex, 2 )->setText( locale().toString( qtySupply ) );
     static_cast< gui::SpinTableItem< int >* >( resourcesTable_->item( rowIndex, 2 ) )->SetMinMaxValue( 0, Available );
@@ -540,7 +540,7 @@ void LogisticSupplyPushFlowDialog::AddCarrierItem()
     {
         curItem = static_cast< ExclusiveComboTableItem* >( carriersTable_->item( row-1, 0 ) );
         if( curItem )
-            current = curItem->currentItem();
+            current = curItem->CurrentItem();
     }
 
     QStringList carriersList;
@@ -551,10 +551,10 @@ void LogisticSupplyPushFlowDialog::AddCarrierItem()
     carriersTable_->setItem( rows, 0, new ExclusiveComboTableItem( carriersTable_, carriersList ) );
     carriersTable_->setItem( rows, 1, new Q3TableItem( carriersTable_, Q3TableItem::Never, QString() ) );
     carriersTable_->setItem( rows, 2, new gui::SpinTableItem< int >( carriersTable_, 0, std::numeric_limits< int >::max(), 1 ) );
-    carriersTable_->setCurrentCell( rows, 0 );
+    carriersTable_->setCurrentCell( rows, 1 );
 
     if( curItem )
-        curItem->setCurrentItem( current );
+        curItem->SetCurrentItem( current );
 }
 
 // -----------------------------------------------------------------------------
@@ -569,7 +569,7 @@ void LogisticSupplyPushFlowDialog::AddCarrierItem( const QString& dotationName, 
     const int rowIndex = carriersTable_->numRows() - 1;
     ExclusiveComboTableItem* curItem = static_cast< ExclusiveComboTableItem* >( carriersTable_->item( rowIndex, 0 ) );
     if( curItem )
-        curItem->setCurrentItem( dotationName );
+        curItem->SetCurrentText( dotationName );
     carriersTable_->item( rowIndex, 1 )->setText( locale().toString( Available ) );
     carriersTable_->item( rowIndex, 2 )->setText( locale().toString( qtySupply ) );
     static_cast< gui::SpinTableItem< int >* >( carriersTable_->item( rowIndex, 2 ) )->SetMinMaxValue( 0, Available );
@@ -935,7 +935,7 @@ void LogisticSupplyPushFlowDialog::OnResourcesValueChanged( int row, int col )
     ExclusiveComboTableItem* item = static_cast< ExclusiveComboTableItem* >( resourcesTable_->item( row, 0 ) );
     QString selection;
     if( item )
-        selection = item->currentText();
+        selection = item->CurrentText();
     if( selection.isEmpty() && ( row + 1 == resourcesTable_->numRows() ) )
         return;
     Q3TableItem& itemAVailable = *resourcesTable_->item( row, 1 );
@@ -1010,7 +1010,7 @@ void LogisticSupplyPushFlowDialog::OnCarriersValueChanged( int row, int col )
     ExclusiveComboTableItem* item = static_cast< ExclusiveComboTableItem* >( carriersTable_->item( row, 0 ) );
     QString selection;
     if( item )
-        selection = item->currentText();
+        selection = item->CurrentText();
     Q3TableItem& itemAVailable = *carriersTable_->item( row, 1 );
     gui::SpinTableItem< int >& itemValue = *static_cast< gui::SpinTableItem< int >* >( carriersTable_->item( row, 2 ) );
     int newValue = itemValue.text().toInt();
