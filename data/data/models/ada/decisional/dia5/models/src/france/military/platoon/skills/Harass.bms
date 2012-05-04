@@ -23,8 +23,8 @@ rootnode
         self.hasShot = true
         self.movementDone = false
         if self.currentHarassPosition then
-            if #self.params.destroyingPositions > 1 then
-                self.harassPositions = removeListElementWithSameLocation( self.currentHarassPosition:getPosition(), self.params.destroyingPositions )
+            if self.numberOfInitialHarassPositions > 1 then
+                self.harassPositions = removeListElementWithSameLocation( self.currentHarassPosition:getPosition(), self.harassPositions )
              else
                 self.movementDone = true
              end
@@ -33,7 +33,6 @@ rootnode
 
     create = function ( self )
         self.hasShot = true
-        self.harassPositions = self.params.destroyingPositions
         self.entities = {}
         if self.params.entities and #self.params.entities ~= 0 then
             self.realEnemies = {}
@@ -41,43 +40,50 @@ rootnode
                 self.realEnemies[integration.getAgentIdFromKnowledge( enemyKnowledge )] = true
             end
         end
+        if self.params.destroyingPositions and self.params.destroyingPositions ~= NIL  then
+            self.harassPositions = self.params.destroyingPositions   
+        else       
+            self.harassPositions = sword.military.queries.tactical.getPositionsToIntercept[ "execute" ]( { objectives = { self.params.harassObjective }, dynamic = true } ) 
+        end
+        self.numberOfInitialHarassPositions = #self.harassPositions
     end,
     
     activate = function ( self )
       local Activate = Activate
-      Activate( skill.links.moveToward, 1, {entities = self.harassPositions} )
 
-      -- Mission Harceler (ne prend pas d'unité en parmètre et harcèle tous les ennemis qui rentre dans la zone)
+      Activate( skill.links.moveToward, 1, {entities = self.harassPositions} )
+      
+      -- Mission Harceler (ne prend pas d'unité en paramètre et harcèle tous les ennemis qui rentrent dans la zone)
       if not self.params.entities or #self.params.entities == 0 then
           if self.hasMovedOnce then
               Activate( skill.nodes.Control, 1, { entity  = self.params.harassObjective } )
-           end
-           self.entities = integration.getDestroyableInObjective ( self.params.harassObjective )
+          end
+          self.entities = integration.getDestroyableInObjective ( self.params.harassObjective )
       else -- Mission Intercepter : on ne tire que sur l'ennemi renseigné par l'utilisateur mais uniquement quand il est dans la zone
           -- Controle magique de l'objectif qui simule l'effet de patrouiller
-           local enemies = integration.getDestroyableInObjective ( self.params.harassObjective )
-           self.entities = {}
-           for _, element in pairs( enemies ) do
-                local realEnemyId = integration.getAgentIdFromKnowledge( element )
-                if self.realEnemies[ realEnemyId ] then
-                    if element:isOperational() and 
+          local enemies = integration.getDestroyableInObjective ( self.params.harassObjective )
+          self.entities = {}
+          for _, element in pairs( enemies ) do
+              local realEnemyId = integration.getAgentIdFromKnowledge( element )
+              if self.realEnemies[ realEnemyId ] then
+                  if element:isOperational() and 
                     ( ( masalife.brain.core.class.isOfType( self.params.harassObjective,sword.military.world.Area ) 
-              and DEC_Geometrie_EstPointDansLocalisation( element:getPosition(), self.params.harassObjective.source ) ) 
+                  and DEC_Geometrie_EstPointDansLocalisation( element:getPosition(), self.params.harassObjective.source ) ) 
                         or ( masalife.brain.core.class.isOfType( self.params.harassObjective, sword.military.world.UrbanBlock ) 
-              and DEC_IsPointInUrbanBlock( element:getPosition(), self.params.harassObjective.source ) ) )
+                  and DEC_IsPointInUrbanBlock( element:getPosition(), self.params.harassObjective.source ) ) )
                     then
-                        self.entities[ #self.entities + 1 ] = element
-                    end
-                end
-           end
+                      self.entities[ #self.entities + 1 ] = element
+                  end
+              end
+          end
       end
       if #self.entities ~= 0 and self.movementDone then -- arrived on a position to engage enemies
-            for _,  element in pairs( self.entities ) do
-                  if element:canNeutralizeIt() then
-                       Activate( skill.nodes.Shoot, element:destructionPriority(), { entity = element } )
-                  end
-            end
-       end
+          for _,  element in pairs( self.entities ) do
+              if element:canNeutralizeIt() then
+                  Activate( skill.nodes.Shoot, element:destructionPriority(), { entity = element } )
+              end
+          end
+      end
 
     end,
 }

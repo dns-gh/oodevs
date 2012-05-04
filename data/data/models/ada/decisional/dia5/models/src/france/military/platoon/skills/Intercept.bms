@@ -1,6 +1,5 @@
 -- **************************************************************************** 
--- Harass
--- $$$ MIA : A revoir. Virer les fonctions DEC et les isOfType.
+-- Intercept
 -- ****************************************************************************
 rootnode
 {
@@ -13,6 +12,11 @@ rootnode
 
     create = function ( self )
         self.arrived = false
+        if self.params.destroyingPositions and self.params.destroyingPositions ~= NIL then
+            self.positionsToIntercept = self.params.destroyingPositions
+        else
+            self.positionsToIntercept = sword.military.queries.tactical.getPositionsToIntercept[ "execute" ]( { objectives = { self.params.interceptionObjective }, dynamic = true } )
+        end
     end,
     
     activate = function ( self )
@@ -20,7 +24,8 @@ rootnode
       if self.arrived then
         Activate( skill.nodes.Control, 1, { entity  = self.params.interceptionObjective } )
       end
-      Activate( skill.links.moveToward, 1, {entities = self.params.destroyingPositions} )
+
+      Activate( skill.links.moveToward, 1, { entities = self.positionsToIntercept } )
       self.arrived = false
     end,
 }

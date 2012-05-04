@@ -12,13 +12,16 @@ L'agent va donc observer cette position en mesure d'engager les éléments ennem
                 <class name="sword.military.knowledge.decisional.Positionable"/>
             </type>
         </parameter>
-        <parameter name="destroyingPositions">
+        <parameter name="destroyingPositions" nullable="true">
             <description>Position d'observation de la poition ou harceler.</description>
             <type>
                 <list>
                     <class name="sword.military.knowledge.decisional.Neutralizing"/>
                 </list>
             </type>
+            <default>
+                <nil/>
+            </default>
         </parameter>
         <parameter name="obstacles" nullable="true">
             <type>

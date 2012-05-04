@@ -7,13 +7,16 @@
                 <class name="sword.military.knowledge.decisional.Positionable"/>
             </type>
         </parameter>
-        <parameter name="destroyingPositions">
+        <parameter name="destroyingPositions" nullable="true">
             <description>Positions d'observation où l'unité peut observer les unités ennemis avant l'engagement.</description>
             <type>
                 <list>
                     <class name="sword.military.knowledge.decisional.Neutralizing"/>
                 </list>
             </type>
+            <default>
+                <nil/>
+            </default>
         </parameter>
         <parameter name="obstacles" nullable="true">
             <type>
