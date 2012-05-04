@@ -6793,6 +6793,14 @@ Cliquer sur &quot;Ok&quot; pour le détruire ainsi que tous les éléments qui l
         <source>RoofShape - Invalid roofShape type name</source>
         <translation>Type de toit - Nom de type de toit invalide</translation>
     </message>
+    <message>
+        <source>Material attribute is empty for &apos;%1&apos; template.</source>
+        <translation>L&apos;attribut &apos;Matériau&apos; est vide pour le patron &apos;%1&apos;.</translation>
+    </message>
+    <message>
+        <source>RoofShape attribute is empty for &apos;%1&apos; template.</source>
+        <translation>L&apos;attribut &apos;Type de toit&apos; est vide pour le patron &apos;%1&apos;.</translation>
+    </message>
 </context>
 <context>
     <name>Weapons_Data</name>

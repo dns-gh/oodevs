@@ -431,13 +431,10 @@ void ADN_Urban_Data::ReadRoofShape( xml::xistream& input )
 // -----------------------------------------------------------------------------
 void ADN_Urban_Data::WriteRoofShapes( xml::xostream& output ) const
 {
-    if( !vRoofShapes_.empty() )
-    {
-        output << xml::start( "roof-shape-types" );
-        for( CIT_RoofShapeInfos_Vector it = vRoofShapes_.begin(); it != vRoofShapes_.end(); ++it )
-            ( *it )->WriteRoofShape( output );
-        output << xml::end;
-    }
+    output << xml::start( "roof-shape-types" );
+    for( CIT_RoofShapeInfos_Vector it = vRoofShapes_.begin(); it != vRoofShapes_.end(); ++it )
+        ( *it )->WriteRoofShape( output );
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -577,13 +574,10 @@ void ADN_Urban_Data::ReadInfrastructure( xml::xistream& input  )
 // -----------------------------------------------------------------------------
 void ADN_Urban_Data::WriteInfrastructures( xml::xostream& output ) const
 {
-    if( !vInfrastructures_.empty() )
-    {
-        output << xml::start( "infrastructures" );
-        for( CIT_InfrastructureInfos_Vector it = vInfrastructures_.begin(); it != vInfrastructures_.end(); ++it )
-            ( *it )->WriteInfrastructure( output );
-        output << xml::end;
-    }
+    output << xml::start( "infrastructures" );
+    for( CIT_InfrastructureInfos_Vector it = vInfrastructures_.begin(); it != vInfrastructures_.end(); ++it )
+        ( *it )->WriteInfrastructure( output );
+    output << xml::end;
 }
 
 // -----------------------------------------------------------------------------
@@ -796,6 +790,10 @@ std::string ADN_Urban_Data::UrbanTemplateInfos::GetItemName()
 // -----------------------------------------------------------------------------
 void ADN_Urban_Data::UrbanTemplateInfos::Write( xml::xostream& output )
 {
+    if( !ptrMaterial_.GetData() )
+        throw ADN_DataException( tools::translate( "Urban_Data", "Invalid data" ).ascii(), tools::translate( "Urban_Data", "Material attribute is empty for '%1' template." ).arg( strName_.GetData().c_str() ).ascii() );
+    if( !ptrRoofShape_.GetData() )
+        throw ADN_DataException( tools::translate( "Urban_Data", "Invalid data" ).ascii(), tools::translate( "Urban_Data", "RoofShape attribute is empty for '%1' template." ).arg( strName_.GetData().c_str() ).ascii() );
     output << xml::start( "template" )
                << xml::attribute( "name", strName_ )
                << xml::start( "architecture" )
