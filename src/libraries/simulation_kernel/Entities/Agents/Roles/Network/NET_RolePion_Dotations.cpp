@@ -126,7 +126,7 @@ void NET_RolePion_Dotations::SendFullState( unsigned int context ) const
     msg().set_neutralized( bLastStateNeutralized_ = pion_.IsNeutralized() );
     pion_.Apply( &network::NetworkUnitAttributesMessageSender_ABC::SendFullState, msg );
     SendMsgUnitAttributes( msg, context );
-
+    
     // 'standalones' messages
     pion_.Apply( &network::NetworkMessageSender_ABC::SendFullState, context );
 }

@@ -97,7 +97,7 @@ public:
     virtual bool IsDead() const;
     virtual bool IsNeutralized() const;
     virtual bool IsPC() const;
-    virtual void SetPionAsPostCommand();
+    virtual void SetPionAsCommandPost( bool pc );
     virtual bool BelongsTo( const MIL_KnowledgeGroup& group ) const;
     virtual double Distance( const MIL_Agent_ABC& pion ) const;
     virtual const std::string& GetCriticalIntelligence() const;
@@ -163,13 +163,14 @@ public:
     virtual void NotifyAttackedBy( MIL_AgentPion& pion, bool mustReport );
     virtual void NotifyAttackedBy( MIL_Population& population );
     void ChangeSuperior( MIL_Automate& newAutomate );
-
+    void NotifySendHeadquarters();
     //@}
 
 private:
     //! @name Operations
     //@{
     void UpdatePhysicalState();
+    void ChangeSuperiorSilently( MIL_Automate& newAutomate );
     //@}
 
     //! @name Magic actions
@@ -207,7 +208,7 @@ private:
     //! @name Member data
     //@{
     const MIL_AgentTypePion*                  pType_;
-    bool                                      bIsPC_;
+    bool                                      bHasChanged_;
     std::string                               criticalIntelligence_;
     MIL_Automate*                             pAutomate_;
     const AlgorithmsFactories&                algorithmFactories_;

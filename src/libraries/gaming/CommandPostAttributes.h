@@ -18,6 +18,7 @@
 namespace sword
 {
     class UnitCreation;
+    class UnitAttributes;
 }
 
 namespace kernel
@@ -33,6 +34,7 @@ namespace kernel
 // Created: SBO 2006-11-30
 // =============================================================================
 class CommandPostAttributes : public kernel::Extension_ABC
+                            , public kernel::Updatable_ABC< sword::UnitAttributes >
                             , public kernel::Drawable_ABC
                             , private boost::noncopyable
 {
@@ -47,6 +49,7 @@ public:
     //! @name Operations
     //@{
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
+    virtual void DoUpdate( const sword::UnitAttributes& message );
     //@}
 
     //! @name Accessors

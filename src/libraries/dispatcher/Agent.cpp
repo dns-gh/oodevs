@@ -42,31 +42,33 @@ Agent::Agent( Model_ABC& model, const sword::UnitCreation& msg, const tools::Res
     , type_                       ( types.Get( msg.type().id() ) )
     , name_                       ( msg.name() )
     , automat_                    ( &model.Automats().Get( msg.automat().id() ) )
-    , bPC_                        ( msg.pc() != 0 )
     , nDirection_                 ( 0 )
     , nHeight_                    ( 0 )
     , nAltitude_                  ( 0 )
     , nSpeed_                     ( 0 )
     , nOperationalStateValue_     ( 100 )
     , pReinforced_                ( 0 )
+    , bPC_                        ( msg.pc() != 0 )
     , bDead_                      ( false )
     , bNeutralized_               ( false )
     , bStealthModeEnabled_        ( false )
     , bUnderground_               ( false )
     , isMounted_                  ( false )
     , bHumanTransportersAvailable_( false )
+    , bNbcProtectionSuitEnabled_  ( false )
+    , communicationJammed_        ( false )
+    , bRadioRecieverEnabled_      ( true )
+    , bRadioEmitterEnabled_       ( true )
+    , bRadarEnabled_              ( false )
+    , bPrisonner_                 ( false )
+    , bRefugeeManaged_            ( false )
     , nLastPosture_               ( sword::UnitAttributes::stopping )
     , nCurrentPosture_            ( sword::UnitAttributes::stopping )
     , nPostureCompletion_         ( 100 )
     , nInstallationState_         ( 0 )
-    , bNbcProtectionSuitEnabled_  ( false )
     , contaminationPercentage_    ( 0 )
     , contaminationQuantity_      ( 0.f )
-    , communicationJammed_        ( false )
     , knowledgeGroupJammed_       ( 0 )
-    , bRadioRecieverEnabled_      ( true )
-    , bRadioEmitterEnabled_       ( true )
-    , bRadarEnabled_              ( false )
     , pTransporter_               ( 0 )
     , nForceRatioState_           ( sword::ForceRatio::neutral )
     , nCloseCombatState_          ( sword::avoiding )
@@ -79,8 +81,6 @@ Agent::Agent( Model_ABC& model, const sword::UnitCreation& msg, const tools::Res
     , nExperience_                ( sword::UnitAttributes::expert )
     , nStress_                    ( sword::UnitAttributes::calm )
     , pSideSurrenderedTo_         ( 0 )
-    , bPrisonner_                 ( false )
-    , bRefugeeManaged_            ( false )
     , decisionalInfos_            ( model )
     , pLogMedical_                ( 0 )
     , pLogMaintenance_            ( 0 )
@@ -312,6 +312,8 @@ void Agent::DoUpdate( const sword::UnitAttributes& message )
         pSatisfaction->health_ = message.satisfaction().access_to_health_care();
         statisfaction_.reset( pSatisfaction );
     }
+    if( message.has_headquarters() )
+        bPC_ = message.headquarters();
 
     if( message.has_decisional_model() )
     {
@@ -537,6 +539,7 @@ void Agent::SendFullUpdate( ClientPublisher_ABC& publisher ) const
             asn().mutable_satisfaction()->set_access_to_health_care ( statisfaction_->health_ );
         }
         asn().set_decisional_model( decisionalModel_ );
+        asn().set_headquarters( bPC_ );
 
         asn.Send( publisher );
     }

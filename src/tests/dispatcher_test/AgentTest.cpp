@@ -203,6 +203,7 @@ BOOST_AUTO_TEST_CASE( Agent_AttributesCanBeUpdated )
                 message.set_refugees_managed( true );
                 message.set_critical_intelligence( "critical intelligence" );
                 message.set_decisional_model( "" );
+                message.set_headquarters( false );
                 BOOST_REQUIRE( message.IsInitialized() );
                 agents.Get( 1 ).Update( message );
             }

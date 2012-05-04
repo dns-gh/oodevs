@@ -368,19 +368,13 @@ void MIL_Automate::Initialize( xml::xistream& xis, unsigned int gcPause, unsigne
 // -----------------------------------------------------------------------------
 void MIL_Automate::ReadUnitSubordinate( xml::xistream& xis )
 {
-    bool isPc = false;
-    xis >> xml::optional() >> xml::attribute( "command-post", isPc );
-    if( isPc && pPionPC_ )
-        throw MT_ScipioException( __FUNCTION__, __FILE__, __LINE__, MT_FormatString( "Automat with id %d has several command posts", nID_ ) );
     const MIL_AgentTypePion* pType = MIL_AgentTypePion::Find( xis.attribute< std::string >( "type" ) );
     if( !pType )
     {
         MT_LOG_ERROR_MSG( "Automate: Unit not created - Unknown type : " <<  xis.attribute< std::string >( "type" ) );
         return;
     }
-    MIL_AgentPion& pion = MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, *this, xis ); // Auto-registration
-    if( isPc )
-        pPionPC_ = &pion;
+    MIL_AgentServer::GetWorkspace().GetEntityManager().CreatePion( *pType, *this, xis ); // Auto-registration
 }
 
 // -----------------------------------------------------------------------------
@@ -982,8 +976,7 @@ void MIL_Automate::OnReceiveUnitCreationRequest( const sword::UnitMagicAction& m
             if( msg.parameters().elem_size() >= 4 )
             {
                 bool isPc =  msg.parameters().elem( 3 ).value().Get( 0 ).booleanvalue();
-                if( isPc )
-                    pion.SetPionAsPostCommand();
+                pion.SetPionAsCommandPost( isPc );
             }
         }
         else
@@ -1407,14 +1400,27 @@ bool MIL_Automate::IsEngaged() const
 // Name: MIL_Automate::RegisterPion
 // Created: NLD 2004-09-01
 // -----------------------------------------------------------------------------
-void MIL_Automate::RegisterPion( MIL_AgentPion& pion, bool registerPC )
+void MIL_Automate::RegisterPion( MIL_AgentPion& pion )
 {
     assert( std::find( pions_.begin(), pions_.end(), &pion ) == pions_.end() );
     pions_.push_back( &pion );
-    if( registerPC && !pPionPC_ )
+    if( !pPionPC_ )
+        SetCommandPost( &pion );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_Automate::SetCommandPost
+// Created: LDC 2012-05-03
+// -----------------------------------------------------------------------------
+void MIL_Automate::SetCommandPost( MIL_AgentPion* pion )
+{
+    if( pion && pion != pPionPC_ )
+        pion->NotifySendHeadquarters();
+    pPionPC_ = pion;
+    if( !pPionPC_ && !pions_.empty() )
     {
-        pPionPC_ = &pion;
-        pion.SetPionAsPostCommand();
+        MIL_AgentPion* newPC = pions_[0];
+        newPC->SetPionAsCommandPost( true );
     }
 }
 
@@ -1425,6 +1431,8 @@ void MIL_Automate::RegisterPion( MIL_AgentPion& pion, bool registerPC )
 void MIL_Automate::UnregisterPion( MIL_AgentPion& pion )
 {
     pions_.erase( std::remove( pions_.begin(), pions_.end(), &pion ), pions_.end() );
+    if( pPionPC_ == &pion )
+        SetCommandPost( 0 );
 }
 
 // -----------------------------------------------------------------------------

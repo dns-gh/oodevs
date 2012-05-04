@@ -48,26 +48,26 @@ Attributes::Attributes( kernel::Entity_ABC& entity, Controller& controller, cons
     , nRulesOfEngagementState_          ( (E_Roe)0 )
     , nRulesOfEngagementPopulationState_( (E_PopulationRoe)0 )
     , nCloseCombatState_                ( (E_MeetingEngagementStatus)0 )
-    , bDead_                            ( false )
-    , bNeutralized_                     ( false )
     , nOldPosture_                      ( (E_UnitPosture)0 )
     , nCurrentPosture_                  ( (E_UnitPosture)0 )
     , nPostureCompletionPourcentage_    ( 0 )
     , nInstallationState_               ( 0 )
     , nIndirectFireAvailability_        ( (E_FireAvailability)0 )
+    , bDead_                            ( false )
+    , bNeutralized_                     ( false )
     , bLoadingState_                    ( false )
     , bHumanTransportersReady_          ( false )
     , bStealthModeEnabled_              ( false )
     , bRadioEmitterSilence_             ( false )
     , bRadioReceiverSilence_            ( false )
     , bCommJammed_                      ( false )
-    , knowledgeGroupJammed_             ( 0 )
     , bRadarEnabled_                    ( false )
     , bPrisoner_                        ( false )
     , bUnderground_                     ( false )
-    , surrenderedTo_                    ( 0 )
     , bRefugeesManaged_                 ( false )
     , aggregated_                       ( false )
+    , isPC_( false )
+    , surrenderedTo_                    ( 0 )
     , fLodgingSatisfactionPercent_      ( 0.0f )
     , fSecuritySatisfactionPercent_     ( 0.0f )
     , fHealthSatisfactionPercent_       ( 0.0f )
@@ -256,6 +256,15 @@ void Attributes::DoUpdate( const sword::UnitAttributes& message )
 
     BOOST_FOREACH( const std::string& content, updated )
         controller_.Update( kernel::DictionaryUpdated( entity_, tools::translate( "Attributes", content.c_str() ) ) );
+
+    if( message.has_headquarters() )
+    {
+        if( isPC_ != message.headquarters() )
+        {
+            isPC_ = !isPC_;
+            UpdateHierarchies();
+        }
+    }
 
     controller_.Update( *(Attributes_ABC*)this );
 }

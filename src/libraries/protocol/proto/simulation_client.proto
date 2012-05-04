@@ -614,8 +614,8 @@ message UnitCreation {
    required UnitId           unit        = 1; //!< The unit identifier @see UnitId
    required UnitType         type        = 2; //!< The unit type @see UnitType
    required string           name        = 3; //!< The unit name
-   required AutomatId        automat     = 4; //!< @todo What's this ?
-   required bool             pc          = 5; //!< @todo What's this ?
+   required AutomatId        automat     = 4; //!< The automata the unit belongs to
+   required bool             pc          = 5; //!< Whether the unit is headquarters of its automata
    optional RgbColor         color       = 6; //!< The unit color @see RgbColor
    optional HumanRepartition repartition = 7; //!< The unit human repartition @see HumanRepartition
 }
@@ -902,6 +902,7 @@ message UnitAttributes {
     optional EnumUnitStress              stress                     = 50; //!< The stress @see EnumUnitStress
     optional int32                       transported_crowd          = 51; //!< The number of transported humans from a crowd
     optional string                      decisional_model           = 52; //!< The decisional model
+    optional bool                        headquarters               = 53; //!< Whether the unit is the headquarters of its automata
 }
 
 /** @struct UnitPathFind

@@ -66,3 +66,13 @@ void CommandPostAttributes::Draw( const geometry::Point2f& where, const kernel::
             points->Draw( where, viewport, tools );
     }
 }
+
+// -----------------------------------------------------------------------------
+// Name: CommandPostAttributes::DoUpdate
+// Created: LDC 2012-05-03
+// -----------------------------------------------------------------------------
+void CommandPostAttributes::DoUpdate( const sword::UnitAttributes& message )
+{
+    if( message.has_headquarters() )
+        commandPost_ = message.headquarters();
+}
