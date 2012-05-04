@@ -37,6 +37,7 @@
 #include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Profile_ABC.h"
 #include "clients_gui/ExclusiveComboTableItem.h"
+#include "clients_gui/SpinTableItem.h"
 #include "protocol/SimulationSenders.h"
 #include <boost/noncopyable.hpp>
 #include <boost/function.hpp>
@@ -168,6 +169,7 @@ LogisticSupplyChangeQuotasDialog::LogisticSupplyChangeQuotasDialog( QWidget* par
     table_->horizontalHeader()->setLabel( 0, tr( "Resource" ) );
     table_->horizontalHeader()->setLabel( 1, tr( "Quota" ) );
     table_->setLeftMargin( 0 );
+    table_->setColumnStretchable( 0, true );
     table_->setMinimumSize( 220, 200 );
     layout->addWidget( table_ );
 
@@ -384,6 +386,9 @@ void LogisticSupplyChangeQuotasDialog::AddDotation( const SupplyStates& states )
 // -----------------------------------------------------------------------------
 void LogisticSupplyChangeQuotasDialog::OnValueChanged( int row, int /*col*/ )
 {
+    if( row < 0 )
+        return;
+
     const Entity_ABC* agent = targetCombo_->count() ? targetCombo_->GetValue() : 0;
     if( !selected_ || !agent )
         return;
@@ -391,14 +396,14 @@ void LogisticSupplyChangeQuotasDialog::OnValueChanged( int row, int /*col*/ )
     ExclusiveComboTableItem& item = *static_cast< ExclusiveComboTableItem* >( table_->item( row, 0 ) );
     //if( col == 0 )
     {
-        if( item.currentItem() == 0 && row != table_->numRows() - 1 )
+        if( item.CurrentItem() == 0 && row != table_->numRows() - 1 )
             table_->removeRow( row );
-        else if( item.currentItem() && row == table_->numRows() - 1 )
+        else if( item.CurrentItem() && row == table_->numRows() - 1 )
         {
-            const int current = item.currentItem();
+            const int current = item.CurrentItem();
             if( table_->numRows() < int( dotationTypes_.size() ) - 1 )
                 AddItem();
-            item.setCurrentItem( current );
+            item.SetCurrentItem( current );
         }
         table_->setCurrentCell( row, 1 );
     }
@@ -420,5 +425,6 @@ void LogisticSupplyChangeQuotasDialog::AddItem()
     const unsigned int rows = table_->numRows() + 1;
     table_->setNumRows( rows );
     table_->setItem( rows - 1, 0, new ExclusiveComboTableItem( table_, dotationTypes_ ) );
+    table_->setItem( rows - 1, 1, new gui::SpinTableItem< int >( table_, 0, std::numeric_limits< int >::max(), 1 ) );
     table_->setCurrentCell( rows - 1, 1 );
 }
