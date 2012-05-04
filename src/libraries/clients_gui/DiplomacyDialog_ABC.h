@@ -68,7 +68,6 @@ private:
     virtual void NotifyContextMenu( const kernel::Team_ABC& team, kernel::ContextMenu& menu );
 
     virtual void showEvent( QShowEvent* );
-    virtual QSize sizeHint();
     void UpdateTable();
     //@}
 
