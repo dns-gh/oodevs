@@ -47,6 +47,7 @@ public:
     void SetCurrentItem( int index );
     QString CurrentText() const;
     void SetCurrentText( const QString& text );
+    void SetTexts( const QStringList& list );
     const QStringList& GetTexts() const;
     //@}
 

@@ -14,6 +14,8 @@
 #include <Qt3Support/q3table.h>
 #pragma warning( pop )
 
+#include "ComboTableItem.h"
+
 namespace gui
 {
 
@@ -23,13 +25,13 @@ namespace gui
 */
 // Created: SBO 2006-06-27
 // =============================================================================
-class ExclusiveComboTableItem : public Q3ComboTableItem
+class ExclusiveComboTableItem : public ComboTableItem
 {
 public:
     //! @name Constructors/Destructor
     //@{
     ExclusiveComboTableItem( Q3Table* table, const QStringList& list )
-        : Q3ComboTableItem( table, list )
+        : ComboTableItem( table, list, Q3TableItem::WhenCurrent )
         , list_( list ) {}
 
     virtual ~ExclusiveComboTableItem() {}
@@ -47,11 +49,11 @@ public:
                 list.remove( text );
         }
 
-        QString current = currentText();
-        const_cast< ExclusiveComboTableItem* >( this )->setStringList( list );        
-        if ( list.contains( current ) )
-            const_cast< ExclusiveComboTableItem* >( this )->setCurrentItem( current );
-        return Q3ComboTableItem::createEditor();
+        QString current = text();
+        const_cast< ExclusiveComboTableItem* >( this )->SetTexts( list );
+        if( list.contains( current ) )
+            const_cast< ExclusiveComboTableItem* >( this )->SetCurrentText( current );
+        return ComboTableItem::createEditor();
     }
     //@}
 

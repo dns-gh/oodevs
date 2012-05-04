@@ -266,8 +266,8 @@ void EditorFactory::Call( DotationsItem** const& value )
     if( !modalDialog_ || !modalDialog_->isActiveWindow() )
     {
         delete modalDialog_;
-        DotationsEditor* dotationsEditor = new DotationsEditor( modalDialog_, parent_, staticModel_.objectTypes_, *value );
-        dotationsEditor->SetCurrentItem( *value );
+        DotationsEditor* dotationsEditor = new DotationsEditor( modalDialog_, parent_, staticModel_ );
+        dotationsEditor->SetCurrentItem( *value, *selected_ );
         result_ = 0;
     }
 }

@@ -17,6 +17,7 @@ MultipleResolverEditor< Entity, Resolver >::MultipleResolverEditor( QDialog*& se
     , self_       ( self )
     , values_     ( 0 )
 {
+    self_ = this;
     setMinimumSize( 250, 250 );
     QVBoxLayout* mainLayout = new QVBoxLayout( this );
     // List

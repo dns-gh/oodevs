@@ -24,6 +24,7 @@ PositionEditor::PositionEditor( QDialog*& self, QWidget* parent, kernel::Control
     , value_( 0 )
     , self_( self )
 {
+    self_ = this;
     setCaption( tr( "Position Editor" ) );
     Q3VBoxLayout* pMainLayout = new Q3VBoxLayout( this );
     pMainLayout->setMargin( 10 );

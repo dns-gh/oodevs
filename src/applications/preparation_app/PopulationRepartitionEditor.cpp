@@ -22,6 +22,7 @@ PopulationRepartitionEditor::PopulationRepartitionEditor( QDialog*& self, QWidge
     , self_      ( self )
     , controller_( controller )
 {
+    self_ = this;
     setCaption( tr( "Repartition Editor" ) );
     QVBoxLayout* pMainLayout = new QVBoxLayout( this );
     pMainLayout->setMargin( 10 );
