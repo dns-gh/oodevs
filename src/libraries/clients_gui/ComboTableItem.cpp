@@ -131,3 +131,12 @@ void ComboTableItem::OnComboIndexChanged( int index )
 {
     currentIndex_ = index;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ComboTableItem::SetTexts
+// Created: ABR 2012-05-04
+// -----------------------------------------------------------------------------
+void ComboTableItem::SetTexts( const QStringList& list )
+{
+    contents_ = list;
+}

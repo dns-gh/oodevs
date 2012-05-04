@@ -276,6 +276,34 @@
         <source>Cancel</source>
         <translation>Cancelar</translation>
     </message>
+    <message>
+        <source>Display information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Hide information</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current weight</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maximal weight</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Current volume</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Maximal volume</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation type="unfinished"></translation>
+    </message>
 </context>
 <context>
     <name>EditorFactory</name>

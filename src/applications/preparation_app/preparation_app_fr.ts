@@ -276,6 +276,34 @@
         <source>Cancel</source>
         <translation>Annuler</translation>
     </message>
+    <message>
+        <source>Display information</source>
+        <translation>Afficher les informations</translation>
+    </message>
+    <message>
+        <source>Hide information</source>
+        <translation>Cacher les informations</translation>
+    </message>
+    <message>
+        <source>Current weight</source>
+        <translation>Poids courant</translation>
+    </message>
+    <message>
+        <source>Maximal weight</source>
+        <translation>Poids maximum</translation>
+    </message>
+    <message>
+        <source>Current volume</source>
+        <translation>Volume courant</translation>
+    </message>
+    <message>
+        <source>Maximal volume</source>
+        <translation>Volume maximum</translation>
+    </message>
+    <message>
+        <source>Clear</source>
+        <translation>Vider</translation>
+    </message>
 </context>
 <context>
     <name>EditorFactory</name>
