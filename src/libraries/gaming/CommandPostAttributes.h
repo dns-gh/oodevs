@@ -10,8 +10,7 @@
 #ifndef __CommandPostAttributes_h_
 #define __CommandPostAttributes_h_
 
-#include "clients_kernel/CommandPostAttributes_ABC.h"
-#include "clients_kernel/Drawable_ABC.h"
+#include "clients_kernel/CommandPostAttributes.h"
 #include "tools/Resolver_ABC.h"
 
 namespace sword
@@ -20,21 +19,14 @@ namespace sword
     class UnitAttributes;
 }
 
-namespace kernel
-{
-    class AgentType;
-    class Entity_ABC;
-}
-
 // =============================================================================
 /** @class  CommandPostAttributes
     @brief  Command-Post Attributes extension
 */
 // Created: SBO 2006-11-30
 // =============================================================================
-class CommandPostAttributes : public kernel::CommandPostAttributes_ABC
+class CommandPostAttributes : public kernel::CommandPostAttributes
                             , public kernel::Updatable_ABC< sword::UnitAttributes >
-                            , public kernel::Drawable_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -48,19 +40,6 @@ public:
     //@{
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void DoUpdate( const sword::UnitAttributes& message );
-    //@}
-
-    //! @name Accessors
-    //@{
-    virtual bool IsCommandPost() const;
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    kernel::Entity_ABC& entity_;
-    const kernel::AgentType& type_;
-    bool commandPost_;
     //@}
 };
 

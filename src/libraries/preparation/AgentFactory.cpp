@@ -124,7 +124,7 @@ Agent_ABC* AgentFactory::Create( Automat_ABC& parent, const AgentType& type, con
     if( result->GetType().IsLogisticSupply() )
         result->Attach( *new Stocks( controllers_.controller_, *result, dico ) );
     result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
-    result->Attach< CommandPostAttributes_ABC >( *new CommandPostAttributes( *result,  controllers_.controller_, type, dico, commandPost ) );
+    result->Attach< CommandPostAttributes_ABC >( *new ::CommandPostAttributes( *result,  controllers_.controller_, type, dico, commandPost ) );
     result->Attach< kernel::Color_ABC >( *new Color( parent ) );
     SetNationality( *result, parent );
     result->Polish();
@@ -257,7 +257,7 @@ Agent_ABC* AgentFactory::Create( xml::xistream& xis, Automat_ABC& parent )
     result->Attach< CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
     result->Attach( *new InitialState( xis, static_, result->GetType().GetId() ) );
     result->Attach< Affinities >( *new AgentAffinities( xis, *result, controllers_, model_, dico, tools::translate( "Affinities", "Affinities" ) ) );
-    result->Attach< CommandPostAttributes_ABC >( *new CommandPostAttributes( xis, controllers_.controller_, *result, *type, dico ) );
+    result->Attach< CommandPostAttributes_ABC >( *new ::CommandPostAttributes( xis, controllers_.controller_, *result, *type, dico ) );
     if( result->GetType().IsLogisticSupply() )
         result->Attach( *new Stocks( xis, controllers_.controller_, *result, static_.objectTypes_, dico ) );
     result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", xis, static_.extensions_ ) );
@@ -358,7 +358,7 @@ kernel::Agent_ABC* AgentFactory::Create( kernel::Ghost_ABC& ghost, const kernel:
     if( result->GetType().IsLogisticSupply() )
         result->Attach( *new Stocks( controllers_.controller_, *result, dico ) );
     result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
-    result->Attach< CommandPostAttributes_ABC >( *new CommandPostAttributes( *result, controllers_.controller_, type, dico ) );
+    result->Attach< CommandPostAttributes_ABC >( *new ::CommandPostAttributes( *result, controllers_.controller_, type, dico ) );
     result->Attach< kernel::Color_ABC >( *new Color( ghost ) );
     result->Polish();
     return result;
