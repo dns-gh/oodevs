@@ -15,6 +15,7 @@ ADN_AiEngine_Data.cpp \
 ADN_AiEngine_GUI.cpp \
 ADN_App.cpp \
 ADN_ArmorInfos.cpp \
+ADN_ArmorCategory_Wizard.cpp \
 ADN_AttritionEffectOnHuman.cpp \
 ADN_AutomatLogCategory_ListView.cpp \
 ADN_AutomatLog_ListView.cpp \

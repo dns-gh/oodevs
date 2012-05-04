@@ -149,6 +149,7 @@
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|win32'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <PreprocessorDefinitions Condition="'$(Configuration)|$(Platform)'=='release|x64'">%(PreprocessorDefinitions)</PreprocessorDefinitions>
     </ClCompile>
+    <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ArmorCategory_Wizard.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ColorNameSelector.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Equipment_LogisticSupplyClass.cpp" />
     <ClCompile Include="..\..\src\applications\adaptation_app\ADN_Config.cpp" />
@@ -1910,6 +1911,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='debug|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
       <Outputs Condition="'$(Configuration)|$(Platform)'=='release|x64'">$(IntDir)moc_%(Filename).cpp;%(Outputs)</Outputs>
     </CustomBuild>
+    <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ArmorCategory_Wizard.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_ComboBox_Equipment_LogisticSupplyClass.h" />
     <ClInclude Include="..\..\src\applications\adaptation_app\ADN_Config.h" />
     <CustomBuild Include="..\..\src\applications\adaptation_app\ADN_ConfigDialog.h">

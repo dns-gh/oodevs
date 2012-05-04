@@ -195,6 +195,26 @@
     </message>
 </context>
 <context>
+    <name>ADN_ArmorCategory_Wizard</name>
+    <message id="0">
+        <source>New armor plating creation</source>
+        <oldsource>New armor category creation</oldsource>
+        <translation type="unfinished">ADN_Sensors_Environments_GU</translation>
+    </message>
+    <message>
+        <source>Creation finished</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Armor plating</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Click &quot;Done&quot; to create the new armor plating.</source>
+        <translation type="unfinished"></translation>
+    </message>
+</context>
+<context>
     <name>ADN_AutomatLogCategory_ListView</name>
     <message>
         <source>Item &gt; Automat &gt; Unit &gt; Comp</source>
@@ -2263,14 +2283,6 @@ tirador</translation>
         <source>Armor-Plating</source>
         <translation>Blindaje</translation>
     </message>
-    <message>
-        <source>New Armor-Plating</source>
-        <translation>Nuevo blindaje</translation>
-    </message>
-    <message>
-        <source>Delete Armor-Plating</source>
-        <translation>Borrar blindaje</translation>
-    </message>
 </context>
 <context>
     <name>ADN_ListView_Categories_DotationNature</name>
@@ -4215,16 +4227,12 @@ Asegúrese que el archivo no esta protegido contra escritura.</translation>
 <context>
     <name>ADN_Sensors_Environments_GUI</name>
     <message>
-        <source>Environments</source>
-        <translation>Entornos</translation>
-    </message>
-    <message>
         <source>Modifiers</source>
         <translation>Modificadores</translation>
     </message>
-    <message id="0">
-        <source>ADN_Sensors_Environments_GUI</source>
-        <translation>ADN_Sensors_Environments_GUI</translation>
+    <message>
+        <source>Environments</source>
+        <translation type="unfinished"></translation>
     </message>
 </context>
 <context>

@@ -120,3 +120,21 @@ void ArmorInfos::WriteArchive( xml::xostream& output )
     }
     output << xml::end;
 }
+
+// -----------------------------------------------------------------------------
+// Name: ADN_ArmorInfos::CreateCopy
+// Created: ABR 2012-04-24
+// -----------------------------------------------------------------------------
+ArmorInfos* ArmorInfos::CreateCopy()
+{
+    ArmorInfos* pCopy = new ArmorInfos();
+    pCopy->nType_ = nType_.GetData();
+    pCopy->neutralizationAverageTime_ = neutralizationAverageTime_.GetData();
+    pCopy->neutralizationVariance_ = neutralizationVariance_.GetData();
+    pCopy->rBreakdownEVA_ = rBreakdownEVA_.GetData();
+    pCopy->rBreakdownNEVA_ = rBreakdownNEVA_.GetData();
+    for( IT_AttritionEffectOnHuman_Vector it = vAttritionEffects_.begin(); it != vAttritionEffects_.end(); ++it )
+        pCopy->vAttritionEffects_.AddItem( *it );
+    return pCopy;
+}
+

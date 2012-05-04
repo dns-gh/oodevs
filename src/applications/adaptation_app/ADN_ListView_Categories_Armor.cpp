@@ -11,6 +11,7 @@
 
 #include "adaptation_app_pch.h"
 #include "ADN_ListView_Categories_Armor.h"
+#include "ADN_ArmorCategory_Wizard.h"
 #include "ADN_Connector_ListView.h"
 #include "ADN_Categories_Data.h"
 #include "ADN_Categories_GUI.h"
@@ -73,43 +74,10 @@ void ADN_ListView_Categories_Armor::ConnectItem( bool bConnect )
 //-----------------------------------------------------------------------------
 void ADN_ListView_Categories_Armor::OnContextMenu( const QPoint& pt)
 {
-    Q3PopupMenu * pMenu=new Q3PopupMenu( this );
-    pMenu->insertItem( tools::translate( "ADN_ListView_Categories_Armor", "New Armor-Plating" ), 0  );
-    pMenu->insertItem( tools::translate( "ADN_ListView_Categories_Armor", "Delete Armor-Plating" ), 1 );
-    pMenu->setItemEnabled( 1, pCurData_ != 0 );
-    int nMenu=pMenu->exec( pt );
-    switch ( nMenu )
-    {
-        case 0:
-        {
-            // create new sensor & add it to list
-            ArmorInfos* pNewInfo=new ArmorInfos();
-
-            ADN_Connector_Vector_ABC* pCList = static_cast< ADN_Connector_Vector_ABC* >( pConnector_ );
-            pCList->AddItem( pNewInfo );
-
-            // Put the  new item at the top of the list (to be coherent with the application)
-            int pos= FindNdx( pNewInfo );
-            while( pos != 0 )
-            {
-                static_cast<ADN_Connector_Vector_ABC*>(&GetConnector())->SwapItem( pos - 1, pos );
-                --pos;
-            }
-
-            // set current item
-            setCurrentItem(FindItem(pNewInfo));
-            break;
-        }
-        case 1:
-        {
-            ArmorInfos* pCurArmor= ( ArmorInfos* ) pCurData_;
-
-            static_cast< ADN_Connector_Vector_ABC* >( pConnector_ )->RemItem(pCurArmor);
-            break;
-        }
-        default:
-            break;
-    }
+    Q3PopupMenu popupMenu( this );
+    ADN_ArmorCategory_Wizard wizard( this );
+    FillContextMenuWithDefault( popupMenu, wizard );
+    popupMenu.exec( pt );
 }
 
 // -----------------------------------------------------------------------------

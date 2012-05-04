@@ -26,6 +26,7 @@ public:
     ArmorInfos();
     std::string GetItemName();
 
+    ArmorInfos* CreateCopy();
     void ReadArchive( xml::xistream& );
     void ReadAttrition( xml::xistream& );
     void WriteArchive( xml::xostream& );
