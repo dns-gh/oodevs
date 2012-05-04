@@ -20,6 +20,10 @@
 #include "clients_kernel/Formation_ABC.h"
 #include "clients_kernel/Population_ABC.h"
 #include "clients_kernel/Team_ABC.h"
+#include "clients_kernel/ExtensionType.h"
+#include "clients_kernel/ExtensionTypes.h"
+#include "clients_kernel/DictionaryType.h"
+#include "clients_kernel/Team_ABC.h"
 #include "tools/Iterator.h"
 #include <xeumeuleu/xml.hpp>
 

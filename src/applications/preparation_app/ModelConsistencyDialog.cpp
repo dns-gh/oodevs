@@ -116,6 +116,7 @@ ModelConsistencyDialog::ModelConsistencyDialog( QWidget* parent, Model& model, c
     // Logistic
     errorDescriptions_[ eStockInitialization ]             = tr( "No stocks initialized." );
     errorDescriptions_[ eStockMaxExceeded ]                = tr( "Allocated stocks of nature %1 exceed max capacity." );
+    errorDescriptions_[ eStockMissing ]                    = tr( "Some resources used by logistic subordinate(s) are not initialized: %1." );
     errorDescriptions_[ eLogisticInitialization ]          = tr( "No logistic link initialized." );
     errorDescriptions_[ eNoLogisticBase ]                  = tr( "No valid logistic base defined." );
     errorDescriptions_[ eNoLogisticFormation ]             = tr( "Logistic sector not included in a logistic base." );

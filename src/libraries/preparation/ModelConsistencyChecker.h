@@ -70,7 +70,6 @@ public:
     //@{
     const T_ConsistencyErrors& GetConsistencyErrors() const;
     bool CheckConsistency( bool( *IsError )( E_ConsistencyCheck type ) );
-
     //@}
 
 private:
@@ -82,6 +81,7 @@ private:
     void CheckUniqueness( E_ConsistencyCheck type, bool ( *comparator )( const kernel::Entity_ABC&, const kernel::Entity_ABC& ) );
     void CheckStockInitialization();
     void CheckMaxStockExceeded();
+    void CheckMissingStock();
     void CheckLogisticInitialization();
     void CheckProfileUniqueness();
     void CheckProfileInitialization();

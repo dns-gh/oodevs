@@ -1394,6 +1394,10 @@
         <source>Logistic sector not included in a logistic base.</source>
         <translation>Secteur logistique non inclus dans une base logistique.</translation>
     </message>
+    <message>
+        <source>Some resources used by logistic subordinate(s) are not initialized: %1.</source>
+        <translation>Des ressources utilisées par des subordonnés logistiques ne sont pas initialisées: %1.</translation>
+    </message>
 </context>
 <context>
     <name>NewProfileDialog</name>

@@ -17,6 +17,7 @@
 #include "LimitsModel.h"
 #include "LogisticAttribute.h"
 #include "LogisticBaseStates.h"
+#include "LogisticLevelAttritube.h"
 #include "Model.h"
 #include "ObjectsModel.h"
 #include "ProfilesModel.h"
@@ -45,9 +46,11 @@
 #include "clients_kernel/ExtensionTypes.h"
 #include "clients_kernel/KnowledgeGroup_ABC.h"
 #include "clients_kernel/LogisticLevel.h"
+#include "clients_kernel/LogisticSupplyClass.h"
 #include "clients_kernel/ObjectTypes.h"
 #include "clients_kernel/Team_ABC.h"
 #include "clients_kernel/TacticalHierarchies.h"
+#include "ENT/ENT_Tr_Gen.h"
 #include "tools/GeneralConfig.h"
 #include "tools/SchemaWriter.h"
 #include <boost/foreach.hpp>
@@ -140,6 +143,7 @@ bool ModelConsistencyChecker::CheckConsistency( bool( *IsError )( E_ConsistencyC
 
     CheckStockInitialization();
     CheckMaxStockExceeded();
+    CheckMissingStock();
     CheckLogisticInitialization();
     CheckLogisticBase();
     CheckLogisticFormation();
@@ -290,88 +294,6 @@ void ModelConsistencyChecker::CheckUniqueness( E_ConsistencyCheck type, bool ( *
     }
 }
 
-
-namespace
-{
-    bool IsStockCompatible( const kernel::Agent_ABC& stockAgent, const kernel::DotationType& dotation, const ::StaticModel& staticModel )
-    {
-        kernel::AgentType& agentType = staticModel.types_.tools::Resolver< kernel::AgentType >::Get( stockAgent.GetType().GetId() );
-        return agentType.IsStockCategoryDefined( dotation.GetLogisticSupplyClass() );
-    }
-
-    const Entity_ABC* GetLogBase( const Entity_ABC& entity )
-    {
-        const TacticalHierarchies* hierarchy = static_cast< const TacticalHierarchies* >( entity.Retrieve< TacticalHierarchies >() );         
-        if( !hierarchy || !hierarchy->GetSuperior() )
-            return 0;
-        const Automat_ABC* pAutomatParent = dynamic_cast< const Automat_ABC* >( hierarchy->GetSuperior() );
-        const Formation_ABC* pFormationParent = dynamic_cast< const Formation_ABC* >( hierarchy->GetSuperior() );
-        if( pAutomatParent && pAutomatParent->GetLogisticLevel() == kernel::LogisticLevel::logistic_base_ )
-            return pAutomatParent;
-        if( pFormationParent && pFormationParent->GetLogisticLevel() == kernel::LogisticLevel::logistic_base_  )
-            return pFormationParent;
-        return GetLogBase( *hierarchy->GetSuperior() );
-    }
-
-    bool HasConsumption( const Agent_ABC& agent, const Agent_ABC& stockAgent, const ::StaticModel& staticModel )
-    {
-        kernel::AgentType& agentType = staticModel.types_.tools::Resolver< kernel::AgentType >::Get( agent.GetType().GetId() );
-        tools::Iterator< const kernel::AgentComposition& > agentCompositionIterator = agentType.CreateIterator();
-        while( agentCompositionIterator.HasMoreElements() )
-        {
-            const kernel::AgentComposition& agentComposition = agentCompositionIterator.NextElement();
-            const kernel::EquipmentType& equipmentType = staticModel.objectTypes_.tools::Resolver< kernel::EquipmentType >::Get( agentComposition.GetType().GetId() );
-            tools::Iterator< const kernel::DotationCapacityType& > resourcesIterator = equipmentType.CreateResourcesIterator();
-            while( resourcesIterator.HasMoreElements() )
-            {
-                const kernel::DotationCapacityType& dotationCapacity = resourcesIterator.NextElement();
-                const kernel::DotationType& category = staticModel.objectTypes_.kernel::Resolver2< kernel::DotationType >::Get( dotationCapacity.GetName() );
-                if( agentComposition.GetCount() > 0 && dotationCapacity.GetNormalizedConsumption() > 0. )
-                    if( IsStockCompatible( stockAgent, category, staticModel ) )
-                        return true;
-            }
-        }
-        return false;
-    }
-
-    bool HasChildrenConsumption( const kernel::Entity_ABC& entity, const Agent_ABC& stockAgent, const ::StaticModel& staticModel )
-    {
-        const kernel::TacticalHierarchies* pTacticalHierarchies = entity.Retrieve< kernel::TacticalHierarchies >();
-        if( pTacticalHierarchies )
-        {
-            tools::Iterator< const kernel::Entity_ABC& > children = pTacticalHierarchies->CreateSubordinateIterator();
-            while( children.HasMoreElements() )
-            {
-                const kernel::Entity_ABC& childrenEntity = children.NextElement();
-                const Agent_ABC* pAgent = dynamic_cast< const Agent_ABC* >( &childrenEntity );
-                if( pAgent )
-                {
-                    if( HasConsumption( *pAgent, stockAgent, staticModel ) )
-                        return true;
-                }
-                else if( HasChildrenConsumption( childrenEntity, stockAgent, staticModel ) )
-                    return true;
-            }
-        }
-        return false;
-    }
-
-    bool HasLogRequirements( const Entity_ABC& logBase, const Agent_ABC& stockAgent, const ::StaticModel& staticModel )
-    {
-        const LogisticHierarchiesBase* pLogChildrenHierarchy = logBase.Retrieve< LogisticHierarchiesBase >();
-        if( !pLogChildrenHierarchy )
-            return false;
-        tools::Iterator< const kernel::Entity_ABC& > logChildren = pLogChildrenHierarchy->CreateSubordinateIterator();
-        while( logChildren.HasMoreElements() )
-        {
-            const kernel::Entity_ABC& entity = logChildren.NextElement();
-            if( HasChildrenConsumption( entity, stockAgent, staticModel ) )
-                return true;
-        }
-        return false;
-    }
-}
-
 // -----------------------------------------------------------------------------
 // Name: ModelConsistencyChecker::CheckStockInitialization
 // Created: ABR 2011-09-22
@@ -383,11 +305,92 @@ void ModelConsistencyChecker::CheckStockInitialization()
     {
         const Agent_ABC& agent = it.NextElement();
         const Stocks* stocks = agent.Retrieve< Stocks >();
-        if( agent.GetType().HasStocks() && stocks && !stocks->HasDotations() )
+        if( agent.GetType().HasStocks() && ( !stocks || ( stocks && !stocks->HasDotations() ) ) )
+            AddError( eStockInitialization, &agent );
+    }
+}
+
+namespace
+{
+    void CompareConsumptionAndStock( const LogisticHierarchiesBase& pLogHierarchy, const TacticalHierarchies& tacticalHierarchy, std::vector< std::string >& missingStocks, const ::StaticModel& staticModel )
+    {
+        tools::Iterator< const kernel::Entity_ABC& > logChildIt = pLogHierarchy.CreateSubordinateIterator();
+
+        while( logChildIt.HasMoreElements() ) // for each log subordinate of the tc2 automat
         {
-            const Entity_ABC* pLogBase = GetLogBase( agent );
-            if( pLogBase && HasLogRequirements( *pLogBase, agent, staticModel_ ) )
-                AddError( eStockInitialization, &agent );
+            const kernel::Entity_ABC& logChild = logChildIt.NextElement();
+            if( const Automat_ABC* pLogChildAutomat = dynamic_cast< const Automat_ABC* >( &logChild ) ) // if it's an automat
+            {
+                const kernel::TacticalHierarchies* pTacticalHierarchies = logChild.Retrieve< kernel::TacticalHierarchies >();
+                tools::Iterator< const kernel::Entity_ABC& > child = pTacticalHierarchies->CreateSubordinateIterator();
+                while( child.HasMoreElements() ) // for each tactical subordinate in this automat
+                {
+                    const kernel::Entity_ABC& entity = child.NextElement();
+                    if( const Agent_ABC* pLogChildAgent = dynamic_cast< const Agent_ABC* >( &entity ) ) // if it's an agent
+                    {
+                        kernel::AgentType& agentType = staticModel.types_.tools::Resolver< kernel::AgentType >::Get( pLogChildAgent->GetType().GetId() );
+                        tools::Iterator< const kernel::AgentComposition& > agentCompositionIterator = agentType.CreateIterator();
+                        while( agentCompositionIterator.HasMoreElements() ) // for each equipment in this agent
+                        {
+                            const kernel::AgentComposition& agentComposition = agentCompositionIterator.NextElement();
+                            const kernel::EquipmentType& equipmentType = staticModel.objectTypes_.tools::Resolver< kernel::EquipmentType >::Get( agentComposition.GetType().GetId() );
+                            tools::Iterator< const kernel::DotationCapacityType& > resourcesIterator = equipmentType.CreateResourcesIterator();
+                            while( resourcesIterator.HasMoreElements() ) // for each resource in this equipment
+                            {
+                                const kernel::DotationCapacityType& dotationCapacity = resourcesIterator.NextElement();
+                                const kernel::DotationType& category = staticModel.objectTypes_.kernel::Resolver2< kernel::DotationType >::Get( dotationCapacity.GetName() );
+                                std::string stockCategoryName = category.GetLogisticSupplyClass().GetName();
+
+                                if( agentComposition.GetCount() > 0 &&
+                                    dotationCapacity.GetNormalizedConsumption() > 0. &&
+                                    std::find( missingStocks.begin(), missingStocks.end(), stockCategoryName ) == missingStocks.end() ) // if this resource is needed and not already missing
+                                {
+                                    bool missing = true;
+                                    tools::Iterator< const Entity_ABC& > tacticalChildIt = tacticalHierarchy.CreateSubordinateIterator();
+                                    while( tacticalChildIt.HasMoreElements() ) // for each tactical subordinate of the tc2 automat
+                                    {
+                                        const kernel::Entity_ABC& tacticalChild = tacticalChildIt.NextElement();
+                                        if( const Agent_ABC* tacticalChildAgent = dynamic_cast< const Agent_ABC* >( &tacticalChild ) ) // if it's an agent
+                                        {
+                                            const Stocks* stocks = tacticalChildAgent->Retrieve< Stocks >();
+                                            if( stocks && stocks->HasDotations() && stocks->HasDotationType( category ) ) // if it has stocks and enough of this dotation type
+                                                missing = false;
+                                        }
+                                    }
+                                    if( missing ) // if needed resource is missing on the tc2 automat
+                                        missingStocks.push_back( stockCategoryName );
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}
+
+// -----------------------------------------------------------------------------
+// Name: ModelConsistencyChecker::CheckMissingStock
+// Created: ABR 2012-05-03
+// -----------------------------------------------------------------------------
+void ModelConsistencyChecker::CheckMissingStock()
+{
+    Iterator< const Automat_ABC& > it = model_.GetAutomatResolver().CreateIterator();
+    while( it.HasMoreElements() )
+    {
+        const Automat_ABC& automat = it.NextElement();
+        const LogisticLevelAttritube* attribute = automat.Retrieve< LogisticLevelAttritube >();
+        if( attribute->GetLogisticLevel() == kernel::LogisticLevel::logistic_base_ )
+        {
+            std::vector< std::string > missingStocks;
+            CompareConsumptionAndStock( automat.Get< LogisticHierarchiesBase >(), automat.Get< TacticalHierarchies >(), missingStocks, staticModel_ );
+            if( !missingStocks.empty() )
+            {
+                std::string optional;
+                for( std::vector< std::string >::const_iterator it = missingStocks.begin(); it != missingStocks.end(); ++it )
+                    optional += ( optional.empty() ) ? *it : ( ", " + *it );
+                AddError( eStockMissing, &automat, optional );
+            }
         }
     }
 }
