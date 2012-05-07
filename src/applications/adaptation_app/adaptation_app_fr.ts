@@ -2874,8 +2874,8 @@ du tireur</translation>
         <translation>%</translation>
     </message>
     <message>
-        <source>Warning: only %1% set, need 100% or you won&apos;t be able to save.</source>
-        <translation>Attention: seulement %1% définis, il faut 100% pour pouvoir sauvegarder.</translation>
+        <source>Warning: total of percentages must equal 100%.</source>
+        <translation>Attention : la somme des pourcentages doit être égale à 100%.</translation>
     </message>
 </context>
 <context>

@@ -2874,7 +2874,7 @@ tirador</translation>
         <translation>%</translation>
     </message>
     <message>
-        <source>Warning: only %1% set, need 100% or you won&apos;t be able to save.</source>
+        <source>Warning: total of percentages must equal 100%.</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

@@ -75,5 +75,5 @@ void ADN_MultiPercentage::PercentageChanged()
         // It wrecks all the other values and switching from one element to the next results in nearly random values...
         sum += ( *it )->text().toDouble();
     }
-    warning_->setText( ( sum != 100 ) ? "<font color=\"#FF0000\">" + tr( "Warning: only %1\% set, need 100\% or you won't be able to save." ).arg( sum ) + "</font>" : "" );
+    warning_->setText( ( sum != 100 ) ? "<font color=\"#FF0000\">" + tr( "Warning: total of percentages must equal 100%." ) + "</font>" : "" );
 }
