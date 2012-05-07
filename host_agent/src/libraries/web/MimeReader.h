@@ -10,8 +10,14 @@
 #ifndef MIME_READER_H
 #define MIME_READER_H
 
+#include <boost/function.hpp>
 #include <boost/shared_ptr.hpp>
 #include <vector>
+
+namespace host
+{
+    class Pool_ABC;
+}
 
 namespace web
 {
@@ -21,10 +27,12 @@ public:
      MimeReader();
     ~MimeReader();
 
+    typedef boost::function< void( std::istream& ) > Handler;
+
     void PutHeader( const std::string& name, const std::string& value );
     bool IsValid() const;
-    std::istream& Register( const std::string& name );
-    void Parse( std::istream& src );
+    void Register( const std::string& name, const Handler& handler );
+    void Parse( host::Pool_ABC& pool, std::istream& src );
 
 private:
     struct Part;

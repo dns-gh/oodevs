@@ -42,80 +42,10 @@ void MoveData( T* dst, std::vector< T >& src, std::streamsize size )
     src.erase( src.begin(), src.begin() + static_cast< size_t >( size ) );
 }
 
-struct Buffer : public boost::noncopyable
-{
-    Buffer()
-        : running_( false )
-        , stopped_( false )
-    {
-        // NOTHING
-    }
-
-    ~Buffer()
-    {
-        // NOTHING
-    }
-
-    void Write( const char* data, size_t size )
-    {
-        boost::lock_guard< boost::mutex > lock( access_ );
-        running_ = true;
-        buffer_.insert( buffer_.end(), data, data + size );
-        condition_.notify_all();
-    }
-
-    void Close()
-    {
-        boost::lock_guard< boost::mutex > lock( access_ );
-        stopped_ = true;
-        condition_.notify_all();
-    }
-
-    void Join()
-    {
-        boost::unique_lock< boost::mutex > lock( access_ );
-        while( running_ )
-            condition_.wait( lock );
-    }
-
-    std::streamsize Read( char* data, std::streamsize size )
-    {
-        boost::unique_lock< boost::mutex > lock( access_ );
-        if( stopped_ && buffer_.empty() )
-        {
-            running_ = false;
-            condition_.notify_all();
-            return -1;
-        }
-
-        std::streamsize fill = 0;
-        while( fill < size )
-        {
-            // we will never get more data if producer is stopped and buffer is empty
-            if( buffer_.empty() )
-                if( stopped_ )
-                    break;
-                else
-                    condition_.wait( lock );
-            std::streamsize next = std::min( size - fill, static_cast< std::streamsize >( buffer_.size() ) );
-            if( next )
-                MoveData( data + fill, buffer_, next );
-            fill += next;
-        }
-        return fill;
-    }
-
-private:
-    boost::mutex access_;
-    boost::condition_variable condition_;
-    std::vector< char > buffer_;
-    bool running_;
-    bool stopped_;
-};
-
+template< typename T >
 struct Device : public boost::iostreams::source
 {
-    Device( Buffer* ref ) : ref_( ref )
+    Device( T* ref ) : ref_( ref )
     {
         // NOTHING
     }
@@ -131,27 +61,88 @@ struct Device : public boost::iostreams::source
     }
 
 private:
-    Buffer* ref_;
+    T* ref_;
 };
 }
 
-struct AsyncStream::Private
+struct AsyncStream::Private : public boost::noncopyable
 {
     Private()
-        : device_( &buffer_ )
-        , stream_( device_ )
+        : reading_( false )
+        , writing_( true )
     {
         // NOTHING
     }
 
     ~Private()
     {
-        buffer_.Join();
+        Join();
     }
 
-    Buffer buffer_;
-    Device device_;
-    boost::iostreams::stream< Device > stream_;
+    void Write( const char* data, size_t size )
+    {
+        boost::lock_guard< boost::mutex > lock( access_ );
+        if( !writing_ && !reading_ )
+            return;
+        buffer_.insert( buffer_.end(), data, data + size );
+        condition_.notify_all();
+    }
+
+    void CloseWrite()
+    {
+        boost::lock_guard< boost::mutex > lock( access_ );
+        writing_ = false;
+        condition_.notify_all();
+    }
+
+    void Read( AsyncStream::Handler handler )
+    {
+        boost::unique_lock< boost::mutex > lock( access_ );
+        reading_ = true;
+        lock.unlock();
+
+        Device< Private > device( this );
+        boost::iostreams::stream< Device< Private > > stream( device );
+        handler( stream );
+
+        lock.lock();
+        reading_ = false;
+        condition_.notify_all();
+    }
+
+    void Join()
+    {
+        boost::unique_lock< boost::mutex > lock( access_ );
+        while( reading_ )
+            condition_.wait( lock );
+    }
+
+    std::streamsize Read( char* data, std::streamsize size )
+    {
+        std::streamsize fill = 0;
+        boost::unique_lock< boost::mutex > lock( access_ );
+        while( fill < size )
+        {
+            // we will never get more data if producer is stopped and buffer is empty
+            if( buffer_.empty() )
+                if( !writing_ )
+                    return fill ? fill : -1;
+                else
+                    condition_.wait( lock );
+            std::streamsize next = std::min( size - fill, static_cast< std::streamsize >( buffer_.size() ) );
+            if( next )
+                MoveData( data + fill, buffer_, next );
+            fill += next;
+        }
+        return fill;
+    }
+
+private:
+    boost::mutex access_;
+    boost::condition_variable condition_;
+    std::vector< char > buffer_;
+    bool reading_;
+    bool writing_;
 };
 
 // -----------------------------------------------------------------------------
@@ -179,23 +170,23 @@ AsyncStream::~AsyncStream()
 // -----------------------------------------------------------------------------
 void AsyncStream::Write( const char* data, size_t size )
 {
-    private_->buffer_.Write( data, size );
+    private_->Write( data, size );
 }
 
 // -----------------------------------------------------------------------------
-// Name: AsyncStream::Close
+// Name: AsyncStream::CloseWrite
 // Created: BAX 2012-05-03
 // -----------------------------------------------------------------------------
-void AsyncStream::Close()
+void AsyncStream::CloseWrite()
 {
-    private_->buffer_.Close();
+    private_->CloseWrite();
 }
 
 // -----------------------------------------------------------------------------
-// Name: AsyncStream::Get
+// Name: AsyncStream::Read
 // Created: BAX 2012-05-03
 // -----------------------------------------------------------------------------
-std::istream& AsyncStream::Get()
+void AsyncStream::Read( Handler handler )
 {
-    return private_->stream_;
+    private_->Read( handler );
 }

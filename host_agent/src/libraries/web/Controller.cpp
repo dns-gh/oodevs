@@ -14,6 +14,7 @@
 #include "Request_ABC.h"
 
 #include <boost/assign/list_of.hpp>
+#include <boost/bind.hpp>
 #include <boost/format.hpp>
 #include <boost/lexical_cast.hpp>
 #include <boost/static_assert.hpp>
@@ -448,12 +449,22 @@ std::string Controller::CountExercises( const Request_ABC& /*request*/ )
     return WriteHttpReply( agent_.CountExercises() );
 }
 
+namespace
+{
+void OnUploadPack( host::Reply& reply, host::Agent_ABC& agent, std::istream& stream )
+{
+    reply = agent.UploadPack( stream );
+}
+}
+
 // -----------------------------------------------------------------------------
 // Name: Controller::UploadPack
 // Created: BAX 2012-05-03
 // -----------------------------------------------------------------------------
 std::string Controller::UploadPack( Request_ABC& request )
 {
-    Request_ABC::T_Streams streams = request.ReadMimeParts( boost::assign::list_of( "pack" ) );
-    return WriteHttpReply( agent_.UploadPack( streams.front().get() ) );
+    host::Reply reply( "Unable to find mime part 'pack'", false );
+    request.RegisterMime( "pack", boost::bind( &OnUploadPack, boost::ref( reply ), boost::ref( agent_ ), _1 ) );
+    request.ParseMime();
+    return WriteHttpReply( reply );
 }

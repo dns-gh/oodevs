@@ -48,17 +48,18 @@ BOOST_FIXTURE_TEST_CASE( reader_with_header_is_valid, Fixture )
 
 namespace
 {
-    void CheckStream( std::istream& src, const std::string& expected )
+void CheckStream( std::istream& src, size_t& count, const std::string& expected )
+{
+    char buffer[64];
+    std::string actual;
+    while( !src.eof() )
     {
-        char buffer[64];
-        std::string actual;
-        while( !src.eof() )
-        {
-            src.read( &buffer[0], sizeof buffer );
-            actual.append( &buffer[0], static_cast< size_t >( src.gcount() ) );
-        }
-        BOOST_CHECK_EQUAL( expected, actual );
+        src.read( &buffer[0], sizeof buffer );
+        actual.append( &buffer[0], static_cast< size_t >( src.gcount() ) );
     }
+    BOOST_CHECK_EQUAL( expected, actual );
+    ++count;
+}
 }
 
 BOOST_FIXTURE_TEST_CASE( reader_parse_single_part, Fixture )
@@ -75,12 +76,10 @@ BOOST_FIXTURE_TEST_CASE( reader_parse_single_part, Fixture )
     reader.PutHeader( "Content-Type", "multipart/form-data; boundary=" + limit );
     BOOST_CHECK_EQUAL( reader.IsValid(), true );
 
-    std::istream& part = reader.Register( "my_name" );
-    Pool::Future future = pool.Post( boost::bind( &MimeReader::Parse, &reader, boost::ref( buffer ) ) );
-
-    CheckStream( part, data );
-    future.wait();
-    BOOST_CHECK( !future.has_exception() );
+    size_t count = 0;
+    reader.Register( "my_name", boost::bind( &CheckStream, _1, boost::ref( count ), data ) );
+    reader.Parse( pool, buffer );
+    BOOST_CHECK_EQUAL( count, 1 );
 }
 
 BOOST_FIXTURE_TEST_CASE( reader_parse_multi_part, Fixture )
@@ -103,12 +102,41 @@ BOOST_FIXTURE_TEST_CASE( reader_parse_multi_part, Fixture )
     reader.PutHeader( "Content-Type", "multipart/form-data; boundary=" + limit );
     BOOST_CHECK_EQUAL( reader.IsValid(), true );
 
-    std::istream& itext = reader.Register( "text" );
-    std::istream& ibinary = reader.Register( "binary" );
-    Pool::Future future = pool.Post( boost::bind( &MimeReader::Parse, &reader, boost::ref( buffer ) ) );
+    size_t count = 0;
+    reader.Register( "text", boost::bind( &CheckStream, _1, boost::ref( count ), text ) );
+    reader.Register( "binary", boost::bind( &CheckStream, _1, boost::ref( count ), std::string( &binary[0], binary.size() ) ) );
+    reader.Parse( pool, buffer );
+    BOOST_CHECK_EQUAL( count, 2 );
+}
 
-    CheckStream( itext, text );
-    CheckStream( ibinary, std::string( &binary[0], binary.size() ) );
-    future.wait();
-    BOOST_CHECK( !future.has_exception() );
+namespace
+{
+void ReadLittle( std::istream& src, size_t& count, const char* data, size_t size )
+{
+    std::vector< char > buffer( size );
+    src.read( &buffer[0], size );
+    BOOST_CHECK_EQUAL( std::string( &buffer[0], buffer.size() ), std::string( data, size ) );
+    ++count;
+}
+}
+
+BOOST_FIXTURE_TEST_CASE( reader_skip_invalid_mime_handlers, Fixture )
+{
+    const std::string limit = "0123456789abcdefedcba9876543210";
+    const std::string headers = "Content-Disposition: form-data; filename=\"wut\"; name=\"my_name\"";
+    std::vector< char > binary = boost::assign::list_of( 1 )( 0 ).repeat( 8000 , 127 )( 42 );
+    std::stringstream buffer;
+    buffer << "--" + limit + " \t \r\n"
+           << headers + "\r\n"
+           << "\r\n"
+           << std::string( &binary[0], binary.size() ) + "\r\n"
+           << "--" + limit + "--\r\n";
+    reader.PutHeader( "Content-Type", "multipart/form-data; boundary=" + limit );
+    BOOST_CHECK_EQUAL( reader.IsValid(), true );
+
+    size_t count = 0;
+    reader.Register( "my_name", boost::bind( &ReadLittle, _1, boost::ref( count ), &binary[0], 1024 ) );
+    reader.Register( "zebulon", boost::bind( &ReadLittle, _1, boost::ref( count ), &binary[0], 0 ) );
+    reader.Parse( pool, buffer );
+    BOOST_CHECK_EQUAL( count, 1 );
 }

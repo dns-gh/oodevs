@@ -10,6 +10,7 @@
 #ifndef ASYNC_STREAM_H
 #define ASYNC_STREAM_H
 
+#include <boost/function.hpp>
 #include <boost/shared_ptr.hpp>
 
 namespace web
@@ -32,12 +33,13 @@ public:
     //! @name Writer Methods
     //@{
     void Write( const char* data, size_t size );
-    void Close();
+    void CloseWrite();
     //@}
 
     //! @name Writer Methods
     //@{
-    std::istream& Get();
+    typedef boost::function< void( std::istream& ) > Handler;
+    void Read( Handler handler );
     //@}
 
 private:

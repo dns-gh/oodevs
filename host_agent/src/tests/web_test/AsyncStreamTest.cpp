@@ -9,40 +9,83 @@
 
 #include "web_test.h"
 
-#include <host/Pool.h>
 #include <web/AsyncStream.h>
 
-#include <boost/phoenix/bind.hpp>
-#include <iostream>
+#include <boost/foreach.hpp>
+#include <boost/bind.hpp>
 
 using namespace web;
-using host::Pool;
 
 namespace
 {
     struct Fixture
     {
         Fixture()
-            : pool( 1 )
-            , stream( async.Get() )
         {
             // NOTHING
         }
-        Pool pool;
         AsyncStream async;
-        std::istream& stream;
     };
+
+    void ReadLine( std::string& dst, std::istream& src )
+    {
+        std::getline( src, dst );
+    }
+
+    void PeekGetLoop( std::istream& src, const std::string& line )
+    {
+        BOOST_FOREACH( char c, line )
+        {
+            BOOST_CHECK_EQUAL( src.peek(), c );
+            BOOST_CHECK_EQUAL( src.get(),  c );
+        }
+    }
 }
 
-BOOST_FIXTURE_TEST_CASE( async_primitives, Fixture )
+BOOST_FIXTURE_TEST_CASE( empty_async_joins, Fixture )
+{
+}
+
+BOOST_FIXTURE_TEST_CASE( async_writes_and_joins, Fixture )
+{
+    char tmp[256];
+    memset( tmp, 0, sizeof tmp );
+    async.Write( tmp, sizeof tmp );
+}
+
+BOOST_FIXTURE_TEST_CASE( async_writes_closes_and_joins, Fixture )
+{
+    char tmp[256];
+    memset( tmp, 0, sizeof tmp );
+    async.Write( tmp, sizeof tmp );
+    async.CloseWrite();
+}
+
+BOOST_FIXTURE_TEST_CASE( async_write_read, Fixture )
 {
     const std::string line = "abcd\n";
-    async.Write( line.c_str(), line.size() );
-    Pool::Future ft = pool.Post( boost::bind( &AsyncStream::Close, &async ) );
-    BOOST_CHECK_EQUAL( stream.get(), 'a' );
-    BOOST_CHECK_EQUAL( stream.get(), 'b' );
-    std::string read;
-    std::getline( stream, read );
-    BOOST_CHECK_EQUAL( read, "cd" );
-    ft.wait();
+    async.Write( line.data(), line.size() );
+    async.CloseWrite();
+    std::string reply;
+    async.Read( boost::bind( &ReadLine, boost::ref( reply ), _1 ) );
+    BOOST_CHECK_EQUAL( reply + "\n", line );
+}
+
+BOOST_FIXTURE_TEST_CASE( async_write_read_incomplete, Fixture )
+{
+    const std::string line = "abcd\n";
+    async.Write( line.data(), line.size() );
+    async.Write( line.data(), line.size() );
+    async.CloseWrite();
+    std::string reply;
+    async.Read( boost::bind( &ReadLine, boost::ref( reply ), _1 ) );
+    BOOST_CHECK_EQUAL( reply + "\n", line );
+}
+
+BOOST_FIXTURE_TEST_CASE( async_write_peek_get, Fixture )
+{
+    const std::string line = "abcd\n";
+    async.Write( line.data(), line.size() );
+    async.CloseWrite();
+    async.Read( boost::bind( &PeekGetLoop, _1, line ) );
 }

@@ -10,6 +10,7 @@
 #include "MimeReader.h"
 
 #include "AsyncStream.h"
+#include "host/Pool_ABC.h"
 #include "StreamBuffer.h"
 
 #include <boost/algorithm/string.hpp>
@@ -24,16 +25,18 @@ using namespace web;
 
 struct MimeReader::Part : boost::noncopyable
 {
-    explicit Part( const std::string& name )
-        : name_  ( name )
+    explicit Part( const std::string& name, const MimeReader::Handler handler )
+        : name_   ( name )
+        , handler_( handler )
     {
         // NOTHING
     }
     ~Part()
     {
-        async_.Close();
+        // NOTHING
     }
     const std::string name_;
+    const MimeReader::Handler handler_;
     AsyncStream async_;
 };
 
@@ -240,13 +243,12 @@ bool MimeReader::IsValid() const
     return !boundary_.empty();
 }
 
-std::istream& MimeReader::Register( const std::string& name )
+void MimeReader::Register( const std::string& name, const Handler& handler )
 {
-    parts_.push_back( boost::make_shared< Part >( name ) );
-    return parts_.back()->async_.Get();
+    parts_.push_back( boost::make_shared< Part >( name, handler ) );
 }
 
-void MimeReader::Parse( std::istream& src )
+void MimeReader::Parse( host::Pool_ABC& pool, std::istream& src )
 {
     StreamBuffer buf( src );
     const std::string end = "--" + boundary_;
@@ -257,6 +259,10 @@ void MimeReader::Parse( std::istream& src )
             break;
         if( !IsDelimiterLine( line, end ) )
             break;
-        ParseData( buf, NextPart( parts_, ParseHeaders( buf ) ), boundary_ );
+        T_Part part = NextPart( parts_, ParseHeaders( buf ) );
+        host::Pool_ABC::Future ft = pool.Post( boost::bind( &AsyncStream::Read, &part->async_, part->handler_ ) );
+        ParseData( buf, part, boundary_ );
+        part->async_.CloseWrite();
+        ft.wait();
     }
 }

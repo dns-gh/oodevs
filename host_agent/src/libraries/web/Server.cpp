@@ -21,7 +21,7 @@
 #include <boost/foreach.hpp>
 #include <boost/lexical_cast.hpp>
 
-#ifdef   WIN32
+#ifdef WIN32
 #   define _WIN32_WINNT 0x0501
 #endif
 #ifdef _MSC_VER
@@ -100,7 +100,12 @@ public:
         return boost::none;
     }
 
-    virtual T_Streams ReadMimeParts( const T_Names& /*names*/ )
+    virtual void RegisterMime( const std::string& /*name*/, const MimeHandler& /*handler*/ ) const
+    {
+        // NOTHING
+    }
+
+    virtual void ParseMime()
     {
         throw std::runtime_error( "unsupported action" );
     }
@@ -116,14 +121,14 @@ void OnReadBody( HttpServer::connection::input_range range, boost::system::error
                  HttpServer::connection_ptr link, size_t left, AsyncStream& async )
 {
     if( error )
-        return async.Close();
+        return async.CloseWrite();
     if( size > 0 )
         async.Write( range.begin(), size );
     left -= size;
     if( left > 0 )
         Callback( link, left, async );
     else
-        async.Close();
+        async.CloseWrite();
 }
 
 void ReadBody( HttpServer::connection_ptr link, size_t left, AsyncStream& async )
@@ -134,7 +139,7 @@ void ReadBody( HttpServer::connection_ptr link, size_t left, AsyncStream& async 
     }
     catch( const std::exception& /*err*/ )
     {
-        async.Close();
+        async.CloseWrite();
     }
 }
 
@@ -164,16 +169,15 @@ public:
         // NOTHING
     }
 
-    virtual T_Streams ReadMimeParts( const T_Names& names )
+    virtual void RegisterMime( const std::string& name, const MimeHandler& handler ) const
     {
-        if( !size_ )
-            return T_Streams();
-        T_Streams streams;
-        BOOST_FOREACH( const std::string& name, names )
-            streams.push_back( boost::ref( reader_->Register( name ) ) );
+        reader_->Register( name, handler );
+    }
+
+    virtual void ParseMime()
+    {
         ReadBody( link_, size_, stream_ );
-        pool_.Post( boost::bind( &MimeReader::Parse, reader_, boost::ref( stream_.Get() ) ) );
-        return streams;
+        stream_.Read( boost::bind( &MimeReader::Parse, reader_, boost::ref( pool_.Get() ), _1 ) );
     }
 
 private:

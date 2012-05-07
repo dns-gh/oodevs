@@ -9,6 +9,7 @@
 #ifndef REQUEST_ABC_H
 #define REQUEST_ABC_H
 
+#include <boost/function.hpp>
 #include <boost/noncopyable.hpp>
 #include <boost/optional.hpp>
 #include <boost/ref.hpp>
@@ -41,9 +42,9 @@ public:
 
     //! @name Mime methods
     //@{
-    typedef std::vector< std::string > T_Names;
-    typedef std::vector< boost::reference_wrapper< std::istream > > T_Streams;
-    virtual T_Streams ReadMimeParts( const T_Names& names ) = 0;
+    typedef boost::function< void( std::istream& ) > MimeHandler;
+    virtual void RegisterMime( const std::string& name, const MimeHandler& handler ) const = 0;
+    virtual void ParseMime() = 0;
     //@}
 };
 
