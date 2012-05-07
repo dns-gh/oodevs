@@ -17,6 +17,7 @@
 namespace kernel
 {
     class CoordinateConverter_ABC;
+    class PropertiesDictionary;
     class Controller;
 }
 
@@ -40,8 +41,10 @@ class PopulationPositions : public kernel::Moveable_ABC
 public:
     //! @name Constructors/Destructor
     //@{
-             PopulationPositions( const Population& owner, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const geometry::Point2f& position );
-             PopulationPositions( xml::xistream& xis, const Population& owner, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter );
+             PopulationPositions( Population& owner, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
+                                  const geometry::Point2f& position, kernel::PropertiesDictionary& dictionary );
+             PopulationPositions( xml::xistream& xis, Population& owner, kernel::Controller& controller,
+                                  const kernel::CoordinateConverter_ABC& converter, kernel::PropertiesDictionary& dictionary );
     virtual ~PopulationPositions();
     //@}
 
@@ -69,6 +72,7 @@ private:
     //@{
     static geometry::Point2f ReadPosition( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter );
     void UpdatePosition();
+    void CreateDictionary( kernel::PropertiesDictionary& dictionary );
 
     virtual void Draw( const geometry::Point2f& where, const kernel::Viewport_ABC& viewport, const kernel::GlTools_ABC& tools ) const;
     virtual void SerializeAttributes( xml::xostream& ) const;
@@ -78,8 +82,9 @@ private:
     //! @name Member data
     //@{
     const kernel::CoordinateConverter_ABC& converter_;
-    const Population& owner_;
+    Population& owner_;
     kernel::Controller& controller_;
+    kernel::Moveable_ABC* moveable_;
     geometry::Rectangle2f boundingBox_;
     geometry::Point2f center_;
     unsigned long livingHumans_;

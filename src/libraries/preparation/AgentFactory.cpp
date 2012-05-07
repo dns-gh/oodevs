@@ -172,9 +172,9 @@ Population_ABC* AgentFactory::Create( Entity_ABC& parent, const PopulationType& 
     else
         top = const_cast< Entity_ABC* >( &parent.Get< CommunicationHierarchies >().GetTop() );
     Population* result = new Population( type, number, controllers_.controller_, idManager_ );
-    result->Attach< Positions >( *new PopulationPositions( *result, controllers_.controller_, static_.coordinateConverter_, position ) );
-    result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, top ) );
     kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
+    result->Attach< Positions >( *new PopulationPositions( *result, controllers_.controller_, static_.coordinateConverter_, position, dictionary ) );
+    result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, top ) );
     result->Attach< Affinities >( *new PeopleAffinities( controllers_, model_, dictionary ) );
     result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     result->Attach< ProfileHierarchies_ABC >( *new ProfileHierarchies( controllers_.controller_, *result, &parent ) );
@@ -302,9 +302,9 @@ Automat_ABC* AgentFactory::Create( xml::xistream& xis, Entity_ABC& parent )
 Population_ABC* AgentFactory::Create( xml::xistream& xis, Team_ABC& parent, const kernel::PopulationType& type )
 {
     Population* result = new Population( xis, type, controllers_.controller_, idManager_ );
-    result->Attach< Positions >( *new PopulationPositions( xis, *result, controllers_.controller_, static_.coordinateConverter_ ) );
-    result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, &parent ) );
     kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
+    result->Attach< Positions >( *new PopulationPositions( xis, *result, controllers_.controller_, static_.coordinateConverter_, dictionary ) );
+    result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, &parent ) );
     result->Attach< Affinities >( *new PeopleAffinities( xis, controllers_, model_, dictionary ) );
     result->Attach( *new DictionaryExtensions( controllers_, "orbat-attributes", xis, static_.extensions_ ) );
     result->Attach< ProfileHierarchies_ABC >( *new ProfileHierarchies( controllers_.controller_, *result, &parent ) );

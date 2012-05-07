@@ -10,41 +10,51 @@
 #include "preparation_pch.h"
 #include "PopulationPositions.h"
 #include "Population.h"
+#include "MoveableProxy.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/PopulationType.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/DictionaryUpdated.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
 #include "clients_kernel/Viewport_ABC.h"
+#include "clients_kernel/PropertiesDictionary.h"
+#include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
 
 // -----------------------------------------------------------------------------
 // Name: PopulationPositions constructor
 // Created: SBO 2006-11-08
 // -----------------------------------------------------------------------------
-PopulationPositions::PopulationPositions( const Population& owner, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter, const geometry::Point2f& position )
+PopulationPositions::PopulationPositions( Population& owner, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter,
+                                          const geometry::Point2f& position, kernel::PropertiesDictionary& dictionary )
     : converter_   ( converter )
     , owner_       ( owner )
     , controller_  ( controller )
+    , moveable_    ( new MoveableProxy( *this ) )
     , center_      ( position )
     , livingHumans_( 0 )
     , radius_      ( 0.f )
 {
     UpdatePosition();
+    CreateDictionary( dictionary );
 }
 
 // -----------------------------------------------------------------------------
 // Name: PopulationPositions constructor
 // Created: SBO 2006-11-08
 // -----------------------------------------------------------------------------
-PopulationPositions::PopulationPositions( xml::xistream& xis, const Population& owner, kernel::Controller& controller, const kernel::CoordinateConverter_ABC& converter )
+PopulationPositions::PopulationPositions( xml::xistream& xis, Population& owner, kernel::Controller& controller,
+                                          const kernel::CoordinateConverter_ABC& converter, kernel::PropertiesDictionary& dictionary )
     : converter_   ( converter )
     , owner_       ( owner )
     , controller_  ( controller )
+    , moveable_    ( new MoveableProxy( *this ) )
     , center_      ( ReadPosition( xis, converter ) )
     , livingHumans_( 0 )
     , radius_      ( 0.f )
 {
     UpdatePosition();
+    CreateDictionary( dictionary );
 }
 
 // -----------------------------------------------------------------------------
@@ -53,7 +63,7 @@ PopulationPositions::PopulationPositions( xml::xistream& xis, const Population& 
 // -----------------------------------------------------------------------------
 PopulationPositions::~PopulationPositions()
 {
-    // NOTHING
+    delete moveable_;
 }
 
 // -----------------------------------------------------------------------------
@@ -103,6 +113,15 @@ geometry::Point2f PopulationPositions::GetPosition( bool ) const
 float PopulationPositions::GetHeight( bool ) const
 {
     return 0.;
+}
+
+// -----------------------------------------------------------------------------
+// Name: PopulationPositions::CreateDictionary
+// Created: LGY 2012-05-07
+// -----------------------------------------------------------------------------
+void PopulationPositions::CreateDictionary( kernel::PropertiesDictionary& dictionary )
+{
+    dictionary.Register( owner_, tools::translate( "Crowd", "Info/Position" ), moveable_ );
 }
 
 // -----------------------------------------------------------------------------
@@ -168,7 +187,7 @@ void PopulationPositions::SerializeAttributes( xml::xostream& xos ) const
 void PopulationPositions::Move( const geometry::Point2f& position )
 {
     center_ = position;
-    controller_.Update( owner_ );
+    controller_.Update( kernel::DictionaryUpdated( owner_, tools::translate( "Crowd", "Info" ) ) );
 }
 
 // -----------------------------------------------------------------------------
