@@ -340,15 +340,11 @@
     <name>ImportWidget</name>
     <message>
         <source>Package to be installed:</source>
-        <translation>Paquetage à installer:</translation>
+        <translation>Paquetage à installer :</translation>
     </message>
     <message>
         <source>Browse...</source>
         <translation>Parcourir...</translation>
-    </message>
-    <message>
-        <source>Package content:</source>
-        <translation>Contenu du paquetage</translation>
     </message>
     <message>
         <source>Select a package</source>
@@ -356,7 +352,15 @@
     </message>
     <message>
         <source>otpak corrupted: unable to load content properly</source>
-        <translation>otpak corrompy: impossible de lire le contenu</translation>
+        <translation>otpak corrompu : impossible de lire le contenu</translation>
+    </message>
+    <message>
+        <source>Package content:</source>
+        <translation>Contenu du paquetage :</translation>
+    </message>
+    <message>
+        <source>Version:</source>
+        <translation>Version :</translation>
     </message>
 </context>
 <context>

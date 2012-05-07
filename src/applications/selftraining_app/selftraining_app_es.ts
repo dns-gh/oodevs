@@ -347,15 +347,19 @@
         <translation>Examinar...</translation>
     </message>
     <message>
-        <source>Package content:</source>
-        <translation>Contenido de paquete:</translation>
-    </message>
-    <message>
         <source>Select a package</source>
         <translation>Seleccionar paquete</translation>
     </message>
     <message>
         <source>otpak corrupted: unable to load content properly</source>
+        <translation type="unfinished"></translation>
+    </message>
+    <message>
+        <source>Package content:</source>
+        <translation type="unfinished">Contenido de paquete:</translation>
+    </message>
+    <message>
+        <source>Version:</source>
         <translation type="unfinished"></translation>
     </message>
 </context>

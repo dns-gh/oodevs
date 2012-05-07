@@ -15,7 +15,7 @@
 #include "frontend/commands.h"
 #include "frontend/CreateExercise.h"
 #include "tools/GeneralConfig.h"
-
+#include "tools/Version.h"
 #include <xeumeuleu/xml.hpp>
 
 #pragma warning( push, 0 )
@@ -28,8 +28,9 @@
 // -----------------------------------------------------------------------------
 ImportWidget::ImportWidget( ScenarioEditPage& page, QWidget* parent, const tools::GeneralConfig& config )
     : gui::LanguageChangeObserver_ABC< Q3GroupBox >( 2, Qt::Vertical, parent )
-    , page_( page )
-    , config_( config )
+    , page_          ( page )
+    , config_        ( config )
+    , isValidVersion_( false )
 {
     setFrameShape( Q3GroupBox::DummyFrame::NoFrame );
     setMargin( 0 );
@@ -41,6 +42,12 @@ ImportWidget::ImportWidget( ScenarioEditPage& page, QWidget* parent, const tools
         package_ = new QLineEdit( hBox );
         browseButton_ = new QPushButton( hBox );
         connect( browseButton_, SIGNAL( clicked() ), SLOT( PackageBrowseClicked() ) );
+    }
+    {
+        versionLabel_ = new QLabel( group );
+        Q3HBox* hBox = new Q3HBox( group );
+        packageVersion_ = new QLineEdit( hBox );
+        packageVersion_->setReadOnly( true );
     }
     {
         contentLabel_ = new QLabel( group );
@@ -75,6 +82,7 @@ void ImportWidget::OnLanguageChanged()
 {
     packageLabel_->setText( tools::translate( "ImportWidget", "Package to be installed:" ) );
     contentLabel_->setText( tools::translate( "ImportWidget", "Package content:" ) );
+    versionLabel_->setText( tools::translate( "ImportWidget", "Version:" ) );
     browseButton_->setText( tools::translate( "ImportWidget", "Browse..." ) );
 }
 
@@ -120,7 +128,7 @@ void ImportWidget::InstallExercise()
 // -----------------------------------------------------------------------------
 bool ImportWidget::EnableEditButton()
 {
-    return packageContent_->count() != 0;
+    return isValidVersion_ && packageContent_->count() != 0;
 }
 
 // -----------------------------------------------------------------------------
@@ -137,13 +145,20 @@ bool ImportWidget::ReadPackageContentFile()
         return false;
     try
     {
-        std::string name, description;
+        std::string name, description, version;
         xml::xistreamstream xis( zipStream );
         xis >> xml::start( "content" )
                 >> xml::content( "name", name )
                 >> xml::content( "description", description )
+                >> xml::content( "version", version )
             >> xml::end;
         packageName_->setText( name.c_str() );
+        isValidVersion_ = tools::CheckVersion( version, tools::AppProjectVersion() );
+        QPalette* palette = new QPalette();
+        if( !isValidVersion_ )
+            palette->setColor( QPalette::Text, Qt::red );
+        packageVersion_->setPalette( *palette );
+        packageVersion_->setText( version.c_str() );
         packageDescription_->setText( description.c_str() );
     }
     catch( xml::exception& )
@@ -174,6 +189,7 @@ void ImportWidget::SelectPackage( const QString& filename )
     {
         packageName_->setText( "" );
         packageDescription_->setText( "" );
+        packageVersion_->setText( "" );
         packageContent_->clear();
         if( ReadPackageContentFile() )
             packageContent_->insertStringList( frontend::commands::ListPackageFiles( package_->text().ascii() ) );
