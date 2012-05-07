@@ -15,8 +15,8 @@
 // Name: Architecture constructor
 // Created: LGY 2011-04-14
 // -----------------------------------------------------------------------------
-Architecture::Architecture( xml::xistream& xis, std::auto_ptr< kernel::Architecture_ABC > pArchitecture )
-    : pArchitecture_( pArchitecture )
+Architecture::Architecture( xml::xistream& xis, kernel::PropertiesDictionary& dictionary )
+    : gui::Architecture( dictionary )
 {
     xis >> xml::optional
             >> xml::start( "physical" );
@@ -46,50 +46,4 @@ Architecture::Architecture( xml::xistream& xis, std::auto_ptr< kernel::Architect
 Architecture::~Architecture()
 {
     // NOTHING
-}
-
-// -----------------------------------------------------------------------------
-// Name: Architecture::Initialize
-// Created: LGY 2011-04-15
-// -----------------------------------------------------------------------------
-void Architecture::Initialize( unsigned int height, unsigned int floorNumber, unsigned int parkingFloors, const std::string& roofShape,
-                               const std::string& material, float occupation, float trafficability )
-{
-    pArchitecture_->Initialize( height, floorNumber, parkingFloors, roofShape, material, occupation, trafficability );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Architecture::GetMaterial
-// Created: LGY 2011-04-15
-// -----------------------------------------------------------------------------
-const std::string& Architecture::GetMaterial() const
-{
-    return pArchitecture_->GetMaterial();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Architecture::GetFloorNumber
-// Created: LGY 2011-04-19
-// -----------------------------------------------------------------------------
-unsigned int Architecture::GetFloorNumber() const
-{
-    return pArchitecture_->GetFloorNumber();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Architecture::GetOccupation
-// Created: LGY 2011-04-19
-// -----------------------------------------------------------------------------
-unsigned int Architecture::GetOccupation() const
-{
-    return pArchitecture_->GetOccupation();
-}
-
-// -----------------------------------------------------------------------------
-// Name: Architecture::GetHeight
-// Created: LGY 2012-04-10
-// -----------------------------------------------------------------------------
-unsigned int Architecture::GetHeight() const
-{
-    return pArchitecture_->GetHeight();
 }

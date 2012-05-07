@@ -10,7 +10,7 @@
 #ifndef __Color_h_
 #define __Color_h_
 
-#include "clients_kernel/Color_ABC.h"
+#include "clients_kernel/Color.h"
 
 namespace sword
 {
@@ -23,7 +23,7 @@ namespace sword
 */
 // Created: LGY 2011-06-27
 // =============================================================================
-class Color : public kernel::Color_ABC
+class Color : public kernel::Color
 {
 
 public:
@@ -31,20 +31,6 @@ public:
     //@{
     explicit Color( const sword::RgbColor& color );
     virtual ~Color();
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual bool IsOverride() const;
-    virtual const T_Color& GetColor() const;
-    virtual void ChangeColor( const T_Color& color );
-    virtual void Clear();
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    T_Color color_;
     //@}
 };
 

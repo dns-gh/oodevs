@@ -117,7 +117,6 @@
 namespace bfs = boost::filesystem;
 
 using namespace kernel;
-using namespace gui;
 
 // -----------------------------------------------------------------------------
 // Name: MainWindow constructor
@@ -130,15 +129,15 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     , model_            ( model )
     , modelBuilder_     ( new ModelBuilder( controllers, model ) )
     , config_           ( config )
-    , forward_          ( new CircularEventStrategy() )
-    , eventStrategy_    ( new ExclusiveEventStrategy( *forward_ ) )
-    , pPainter_         ( new ElevationPainter( staticModel_.detection_ ) )
+    , forward_          ( new gui::CircularEventStrategy() )
+    , eventStrategy_    ( new gui::ExclusiveEventStrategy( *forward_ ) )
+    , pPainter_         ( new gui::ElevationPainter( staticModel_.detection_ ) )
     , simpleFilter_     ( new gui::SimpleFilter() )
     , urbanFilter_      ( new gui::UrbanFilter() )
     , colorController_  ( new ColorController( controllers_ ) )
-    , glProxy_          ( new GlProxy() )
-    , lighting_         ( new LightingProxy( this ) )
-    , strategy_         ( new ColorStrategy( controllers, *glProxy_, *colorController_ ) )
+    , glProxy_          ( new gui::GlProxy() )
+    , lighting_         ( new gui::LightingProxy( this ) )
+    , strategy_         ( new gui::ColorStrategy( controllers, *glProxy_, *colorController_ ) )
     , pDockManager_     ( 0 )
     , menu_             ( 0 )
     , fileToolBar_      ( 0 )
@@ -177,32 +176,32 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     progressDialog_->setLabel( label );
     SetProgression( 0, tr( "Initialize data ..." ) );
 
-    strategy_->Add( std::auto_ptr< ColorModifier_ABC >( new SelectionColorModifier( controllers, *glProxy_ ) ) );
-    strategy_->Add( std::auto_ptr< ColorModifier_ABC >( new HighlightColorModifier( controllers ) ) );
-    strategy_->Add( std::auto_ptr< ColorModifier_ABC >( new OverFlyingColorModifier( controllers ) ) );
+    strategy_->Add( std::auto_ptr< gui::ColorModifier_ABC >( new gui::SelectionColorModifier( controllers, *glProxy_ ) ) );
+    strategy_->Add( std::auto_ptr< gui::ColorModifier_ABC >( new gui::HighlightColorModifier( controllers ) ) );
+    strategy_->Add( std::auto_ptr< gui::ColorModifier_ABC >( new gui::OverFlyingColorModifier( controllers ) ) );
 
     QStackedWidget* centralWidget = new QStackedWidget();
     setCentralWidget( centralWidget );
-    selector_ = new GlSelector( centralWidget, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_ );
+    selector_ = new gui::GlSelector( centralWidget, *glProxy_, controllers, config, staticModel.detection_, *eventStrategy_ );
 
     gui::SymbolIcons* symbols = new gui::SymbolIcons( this, *glProxy_ );
     connect( selector_, SIGNAL( Widget2dChanged( gui::GlWidget* ) ), symbols, SLOT( OnWidget2dChanged( gui::GlWidget* ) ) );
     gui::EntitySymbols* icons = new gui::EntitySymbols( *symbols, *strategy_ );
 
     // Dialogs
-    RichItemFactory* factory = new RichItemFactory( this );
+    gui::RichItemFactory* factory = new gui::RichItemFactory( this );
     ProfileDialog* profileDialog = new ProfileDialog( this, controllers, *factory, *icons, model_, staticModel_.extensions_ );
     ProfileWizardDialog* profileWizardDialog = new ProfileWizardDialog( this, model_, model_.profiles_ );
-    PreferencesDialog* prefDialog = new PreferencesDialog( this, controllers, *lighting_, staticModel_.coordinateSystems_, *pPainter_ );
+    gui::PreferencesDialog* prefDialog = new gui::PreferencesDialog( this, controllers, *lighting_, staticModel_.coordinateSystems_, *pPainter_ );
     prefDialog->AddPage( tr( "Orbat" ), *new OrbatPanel( prefDialog, controllers ) );
     new Dialogs( this, controllers, staticModel, PreparationProfile::GetProfile(), *strategy_, *colorController_, *icons, config, model_.GetSymbolsFactory(), *symbols );
 
     // A few layers
-    AutomatsLayer& automats = *new AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, PreparationProfile::GetProfile(), *simpleFilter_ );
-    FormationLayer& formation = *new FormationLayer( controllers_, *glProxy_, *strategy_, *glProxy_, PreparationProfile::GetProfile(), *simpleFilter_ );
-    LocationsLayer* locationsLayer = new LocationsLayer( *glProxy_ );
+    gui::AutomatsLayer& automats = *new gui::AutomatsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, PreparationProfile::GetProfile(), *simpleFilter_ );
+    gui::FormationLayer& formation = *new gui::FormationLayer( controllers_, *glProxy_, *strategy_, *glProxy_, PreparationProfile::GetProfile(), *simpleFilter_ );
+    gui::LocationsLayer* locationsLayer = new gui::LocationsLayer( *glProxy_ );
     ::LocationEditorToolbar* locEditToolBar = new ::LocationEditorToolbar( this, controllers_, staticModel_.coordinateConverter_, *glProxy_, *locationsLayer );
-    ParametersLayer* paramLayer = new ParametersLayer( *glProxy_, *locEditToolBar );
+    gui::ParametersLayer* paramLayer = new gui::ParametersLayer( *glProxy_, *locEditToolBar );
     gui::WeatherLayer* weatherLayer = new gui::WeatherLayer( *glProxy_, *eventStrategy_ );
     gui::TerrainProfilerLayer* profilerLayer = new gui::TerrainProfilerLayer( *glProxy_ );
     gui::TerrainPicker* picker = new gui::TerrainPicker( this );
@@ -217,7 +216,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
     performanceDialog_ = new PerformanceDialog( this, model, staticModel_ );
 
     addToolBar( fileToolBar_ );
-    addToolBar( new DisplayToolbar( this, controllers ) );
+    addToolBar( new gui::DisplayToolbar( this, controllers ) );
     addToolBar( new gui::GisToolbar( this, controllers, staticModel_.detection_, *profilerLayer ) );
     addToolBar( locEditToolBar );
 
@@ -236,7 +235,7 @@ MainWindow::MainWindow( Controllers& controllers, ::StaticModel& staticModel, Mo
                   *profilerLayer, *prefDialog, PreparationProfile::GetProfile(), *picker, automats, formation );
 
     // Status bar
-    StatusBar* pStatus = new StatusBar( statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_ );
+    gui::StatusBar* pStatus = new gui::StatusBar( statusBar(), *picker, staticModel_.detection_, staticModel_.coordinateConverter_ );
     connect( selector_, SIGNAL( MouseMove( const geometry::Point2f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point2f& ) ) );
     connect( selector_, SIGNAL( MouseMove( const geometry::Point3f& ) ), pStatus, SLOT( OnMouseMove( const geometry::Point3f& ) ) );
     controllers_.Register( *this );
@@ -265,31 +264,31 @@ MainWindow::~MainWindow()
 // Name: MainWindow::CreateLayers
 // Created: AGE 2006-08-22
 // -----------------------------------------------------------------------------
-void MainWindow::CreateLayers( ParametersLayer& parameters, gui::Layer_ABC& locations,
+void MainWindow::CreateLayers( gui::ParametersLayer& parameters, gui::Layer_ABC& locations,
                                gui::Layer_ABC& weather, gui::TerrainLayer& terrain, gui::Layer_ABC& profilerLayer,
-                               PreferencesDialog& preferences, const Profile_ABC& profile, gui::TerrainPicker& picker,
+                               gui::PreferencesDialog& preferences, const Profile_ABC& profile, gui::TerrainPicker& picker,
                                gui::AutomatsLayer& automats, gui::FormationLayer& formation )
 {
-    Layer_ABC& agents                   = *new ::AgentsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, PreparationProfile::GetProfile(), *simpleFilter_, this );
-    TooltipsLayer_ABC& tooltipLayer     = *new TooltipsLayer( *glProxy_ );
-    Layer_ABC& objectCreationLayer      = *new MiscLayer< ObjectCreationPanel >( pDockManager_->GetObjectCreationPanel() );
-    Layer_ABC& inhabitantCreationLayer  = *new MiscLayer< InhabitantCreationPanel >( pDockManager_->GetInhabitantCreationPanel() );
-    Layer_ABC& indicatorCreationLayer   = *new MiscLayer< ScoreDialog >( *pScoreDialog_ );
-    Elevation2dLayer& elevation2d       = *new Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
-    Layer_ABC& raster                   = *new RasterLayer( controllers_.controller_ );
-    Layer_ABC& watershed                = *new WatershedLayer( controllers_, staticModel_.detection_ );
-    Layer_ABC& elevation3d              = *new Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
-    Layer_ABC& urbanLayer               = *new ::UrbanLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_ );
-    Layer_ABC& grid                     = *new GridLayer( controllers_, *glProxy_ );
-    Layer_ABC& metrics                  = *new MetricsLayer( staticModel_.detection_, *glProxy_ );
-    Layer_ABC& limits                   = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, *eventStrategy_, profile, *simpleFilter_ );
-    Layer_ABC& objectsLayer             = *new ::ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, picker, *urbanFilter_ );
-    Layer_ABC& populations              = *new ::PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile, *simpleFilter_ );
-    Layer_ABC& ghosts                   = *new GhostsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile, *simpleFilter_ );
-    Layer_ABC& defaultLayer             = *new DefaultLayer( controllers_ );
-    Layer_ABC& drawerLayer              = *new DrawerLayer( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile, *simpleFilter_ );
-    Layer_ABC& inhabitantLayer          = *new ::InhabitantLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_, pDockManager_->GetLivingAreaPanel() );
-    Layer_ABC& contour                  = *new ::ContourLinesLayer( controllers_, staticModel_.detection_ );
+    gui::Layer_ABC& agents                   = *new ::AgentsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, PreparationProfile::GetProfile(), *simpleFilter_, this );
+    gui::TooltipsLayer_ABC& tooltipLayer     = *new gui::TooltipsLayer( *glProxy_ );
+    gui::Layer_ABC& objectCreationLayer      = *new gui::MiscLayer< ObjectCreationPanel >( pDockManager_->GetObjectCreationPanel() );
+    gui::Layer_ABC& inhabitantCreationLayer  = *new gui::MiscLayer< InhabitantCreationPanel >( pDockManager_->GetInhabitantCreationPanel() );
+    gui::Layer_ABC& indicatorCreationLayer   = *new gui::MiscLayer< ScoreDialog >( *pScoreDialog_ );
+    gui::Elevation2dLayer& elevation2d       = *new gui::Elevation2dLayer( controllers_.controller_, staticModel_.detection_ );
+    gui::Layer_ABC& raster                   = *new gui::RasterLayer( controllers_.controller_ );
+    gui::Layer_ABC& watershed                = *new gui::WatershedLayer( controllers_, staticModel_.detection_ );
+    gui::Layer_ABC& elevation3d              = *new gui::Elevation3dLayer( controllers_.controller_, staticModel_.detection_, *lighting_ );
+    gui::Layer_ABC& urbanLayer               = *new ::UrbanLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_ );
+    gui::Layer_ABC& grid                     = *new gui::GridLayer( controllers_, *glProxy_ );
+    gui::Layer_ABC& metrics                  = *new gui::MetricsLayer( staticModel_.detection_, *glProxy_ );
+    gui::Layer_ABC& limits                   = *new LimitsLayer( controllers_, *glProxy_, *strategy_, parameters, *modelBuilder_, *glProxy_, *eventStrategy_, profile, *simpleFilter_ );
+    gui::Layer_ABC& objectsLayer             = *new ::ObjectsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, picker, *urbanFilter_ );
+    gui::Layer_ABC& populations              = *new ::PopulationsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile, *simpleFilter_ );
+    gui::Layer_ABC& ghosts                   = *new GhostsLayer( controllers_, *glProxy_, *strategy_, *glProxy_, model_, profile, *simpleFilter_ );
+    gui::Layer_ABC& defaultLayer             = *new gui::DefaultLayer( controllers_ );
+    gui::Layer_ABC& drawerLayer              = *new gui::DrawerLayer( controllers_, *glProxy_, *strategy_, parameters, *glProxy_, profile, *simpleFilter_ );
+    gui::Layer_ABC& inhabitantLayer          = *new ::InhabitantLayer( controllers_, *glProxy_, *strategy_, *glProxy_, profile, *simpleFilter_, pDockManager_->GetLivingAreaPanel() );
+    gui::Layer_ABC& contour                  = *new gui::ContourLinesLayer( controllers_, staticModel_.detection_ );
 
     // ordre de dessin
     glProxy_->Register( defaultLayer );
@@ -656,7 +655,7 @@ void MainWindow::ClearLoadingErrors()
 // -----------------------------------------------------------------------------
 void MainWindow::WriteOptions()
 {
-    Settings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
+    gui::Settings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
     settings.beginGroup( "/Preparation/Options" );
     controllers_.options_.Save( settings );
     settings.endGroup();
@@ -668,7 +667,7 @@ void MainWindow::WriteOptions()
 // -----------------------------------------------------------------------------
 void MainWindow::ReadOptions()
 {
-    Settings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
+    gui::Settings settings( "MASA Group", tools::translate( "Application", "SWORD" ) );
     settings.beginGroup( "/Preparation/Options" );
     controllers_.options_.Load( settings );
     settings.endGroup();

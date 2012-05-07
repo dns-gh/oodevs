@@ -51,25 +51,25 @@ Limit::~Limit()
 // Name: Limit::Select
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-void Limit::Select( ActionController& actions ) const
+void Limit::Select( kernel::ActionController& actions ) const
 {
-    actions.Select( *this, *(kernel::TacticalLine_ABC*)this, *(kernel::Entity_ABC*)this );
+    actions.Select( *(kernel::TacticalLine_ABC*)this, *(kernel::Entity_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Limit::ContextMenu
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-void Limit::ContextMenu( ActionController& actions, const QPoint& point ) const
+void Limit::ContextMenu( kernel::ActionController& actions, const QPoint& point ) const
 {
-    actions.ContextMenu( *this, *(kernel::TacticalLine_ABC*)this, point );
+    actions.ContextMenu( *(kernel::TacticalLine_ABC*)this, point );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Limit::Activate
 // Created: AGE 2006-08-11
 // -----------------------------------------------------------------------------
-void Limit::Activate( ActionController& actions ) const
+void Limit::Activate( kernel::ActionController& actions ) const
 {
     actions.Activate( *this, *(kernel::TacticalLine_ABC*)this );
 }

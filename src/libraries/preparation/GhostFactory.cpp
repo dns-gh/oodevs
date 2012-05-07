@@ -30,8 +30,6 @@
 #include "clients_kernel/SymbolFactory.h"
 #include "clients_kernel/SymbolHierarchy_ABC.h"
 
-using namespace kernel;
-
 // -----------------------------------------------------------------------------
 // Name: GhostFactory constructor
 // Created: ABR 2011-10-14
@@ -64,22 +62,22 @@ GhostFactory::~GhostFactory()
 kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, const kernel::GhostPrototype& prototype, const geometry::Point2f& position )
 {
     Ghost* result = new Ghost( controllers_.controller_, idManager_, prototype );
-    PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
-    result->Attach< Positions >( *new GhostPositions( *result, staticModel_.coordinateConverter_, controllers_.controller_, position, dico ) );
+    kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
+    result->Attach< kernel::Positions >( *new GhostPositions( *result, staticModel_.coordinateConverter_, controllers_.controller_, position, dico ) );
     result->Attach< kernel::Color_ABC >( *new Color( parent ) );
     result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, result->GetLevelSymbol(), result->GetSymbol(), &parent ) );
 
     if( prototype.ghostType_ == eGhostType_Agent )
     {
-        result->Attach< CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
+        result->Attach< kernel::CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
     }
     else
     {
         assert( prototype.ghostType_ == eGhostType_Automat );
         const kernel::Karma& karma = parent.Get< kernel::TacticalHierarchies >().GetTop().Get< kernel::Diplomacies_ABC >().GetKarma();
         result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( symbolsFactory_.GetSymbolBase( karma ) ) );
-        Entity_ABC* kg = AgentFactory::FindorCreateKnowledgeGroup( parent, knowledgeGroupFactory_ );
-        result->Attach< CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, kg ) );
+        kernel::Entity_ABC* kg = AgentFactory::FindorCreateKnowledgeGroup( parent, knowledgeGroupFactory_ );
+        result->Attach< kernel::CommunicationHierarchies >( *new AutomatCommunications( controllers_.controller_, *result, kg ) );
     }
     result->Polish();
     return result;
@@ -92,20 +90,20 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, const kerne
 kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, xml::xistream& xis )
 {
     Ghost* result = new Ghost( controllers_.controller_, idManager_, xis, symbolsFactory_ );
-    PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
-    result->Attach< Positions >( *new GhostPositions( xis, *result, staticModel_.coordinateConverter_, controllers_.controller_, dico ) );
+    kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
+    result->Attach< kernel::Positions >( *new GhostPositions( xis, *result, staticModel_.coordinateConverter_, controllers_.controller_, dico ) );
     result->Attach< kernel::Color_ABC >( *new Color( xis ) );
     result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, result->GetLevelSymbol(), result->GetSymbol(), &parent ) );
 
     if( result->GetGhostType() == eGhostType_Agent )
     {
-        result->Attach< CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
+        result->Attach< kernel::CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
     }
     else
     {
         assert( result->GetGhostType() == eGhostType_Automat );
         result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( xis ) );
-        result->Attach< CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, model_.knowledgeGroups_ ) );
+        result->Attach< kernel::CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, model_.knowledgeGroups_ ) );
     }
     result->Polish();
     return result;
@@ -118,25 +116,25 @@ kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, xml::xistre
 kernel::Ghost_ABC* GhostFactory::Create( kernel::Entity_ABC& parent, xml::xistream& xis, E_GhostType ghostType )
 {
     Ghost* result = new Ghost( controllers_.controller_, idManager_, xis, parent, ghostType );
-    PropertiesDictionary& dico = result->Get< PropertiesDictionary >();
+    kernel::PropertiesDictionary& dico = result->Get< kernel::PropertiesDictionary >();
 
     result->Attach< kernel::Color_ABC >( *new Color( xis ) );
     result->Attach< kernel::TacticalHierarchies >( *new AgentHierarchies( controllers_.controller_, *result, result->GetLevelSymbol(), result->GetSymbol(), &parent ) );
 
     if( result->GetGhostType() == eGhostType_Agent )
     {
-        result->Attach< Positions >( *new GhostPositions( xis, *result, staticModel_.coordinateConverter_, controllers_.controller_, dico ) );
-        result->Attach< CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
+        result->Attach< kernel::Positions >( *new GhostPositions( xis, *result, staticModel_.coordinateConverter_, controllers_.controller_, dico ) );
+        result->Attach< kernel::CommunicationHierarchies >( *new AgentCommunications( controllers_.controller_, *result, &parent ) );
     }
     else
     {
         assert( result->GetGhostType() == eGhostType_Automat );
 
         const geometry::Point2f position = ComputeAutomatPosition( xis );
-        result->Attach< Positions >( *new GhostPositions( *result, staticModel_.coordinateConverter_, controllers_.controller_, position, dico ) );
+        result->Attach< kernel::Positions >( *new GhostPositions( *result, staticModel_.coordinateConverter_, controllers_.controller_, position, dico ) );
 
         result->Attach< kernel::SymbolHierarchy_ABC >( *new Symbol( xis ) );
-        result->Attach< CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, model_.knowledgeGroups_ ) );
+        result->Attach< kernel::CommunicationHierarchies >( *new AutomatCommunications( xis, controllers_.controller_, *result, model_.knowledgeGroups_ ) );
     }
     result->Polish();
     return result;

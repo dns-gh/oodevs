@@ -99,12 +99,14 @@
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='release|x64'">Create</PrecompiledHeader>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\clients_kernel\Color.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\FormationLevels.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Ghost_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Karma.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Level.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\LogisticLevel.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\LogisticSupplyClass.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\NewClass.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\StaticModel.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\App6Symbol.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\ApproximativeMap.cpp" />
@@ -118,6 +120,7 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\SymbolHierarchy.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Tools.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Units.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanColor_ABC.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Workers.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Circle.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Lines.cpp" />
@@ -226,6 +229,7 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\Application_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Availability.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\clients_kernel_pch.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\Color.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Filter_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Finalizable_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\FormationLevels.h" />
@@ -237,6 +241,7 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\LogisticLevel.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\LogisticSupplyClass.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\MaintenanceStates_ABC.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\NewClass.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\OverFlyingObserver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\StaticModel.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\AltitudeModified.h" />

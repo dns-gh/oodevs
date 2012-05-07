@@ -10,8 +10,8 @@
 #ifndef _ColorController_h
 #define _ColorController_h
 
-#include "clients_gui/ColorModifier_ABC.h"
 #include "clients_gui/ColorEditor_ABC.h"
+#include "clients_gui/ColorController.h"
 #include "tools/ElementObserver_ABC.h"
 #include <boost/optional.hpp>
 
@@ -27,10 +27,8 @@ namespace kernel
 */
 // Created: LGY 2011-06-23
 // =============================================================================
-class ColorController : public gui::ColorModifier_ABC
-                      , public gui::ColorEditor_ABC
-                      , public tools::Observer_ABC
-                      , public tools::ElementObserver_ABC< kernel::Entity_ABC >
+class ColorController : public gui::ColorEditor_ABC
+                      , public gui::ColorController
 {
 public:
     //! @name Constructors/Destructor
@@ -41,13 +39,9 @@ public:
 
     //! @name Operations
     //@{
-    virtual QColor Apply( const kernel::Entity_ABC& entity, const QColor& base );
     virtual void Add( const kernel::Entity_ABC& entity, const QColor& newColor );
     virtual void Remove( const kernel::Entity_ABC& entity );
     virtual void Reset( const kernel::Entity_ABC& entity, const QColor& newColor );
-
-    virtual void NotifyCreated( const kernel::Entity_ABC& entity );
-    virtual void NotifyDeleted( const kernel::Entity_ABC& entity );
     //@}
 
 private:
@@ -55,23 +49,15 @@ private:
     //@{
     void AddSubordinate( const kernel::Entity_ABC& entity, const QColor& newColor, const boost::optional< QColor >& oldColor = boost::none );
     void RemoveSubordinate( const kernel::Entity_ABC& entity, const QColor& color );
-    void UpdateHierarchies( const kernel::Entity_ABC& entity );
+    virtual void UpdateHierarchies( const kernel::Entity_ABC& entity );
     void UpdateLogisticBaseStates( const kernel::TacticalHierarchies& tactical );
     void ResetSubordinate( const kernel::Entity_ABC& entity, const QColor& newColor );
     //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef std::map< unsigned long, QColor > T_Colors;
-    typedef T_Colors::const_iterator        CIT_Colors;
-    //@}
-
+    
 private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    T_Colors colors_;
     //@}
 };
 

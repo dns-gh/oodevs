@@ -41,7 +41,7 @@ public:
 
     //! @name Operations
     //@{
-    virtual bool IsOverride() const = 0;
+    virtual bool IsOverriden() const = 0;
     virtual const T_Color& GetColor() const = 0;
     virtual void ChangeColor( const T_Color& color ) = 0;
     virtual void Clear() = 0;

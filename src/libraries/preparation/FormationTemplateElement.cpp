@@ -34,7 +34,7 @@ FormationTemplateElement::FormationTemplateElement( FormationModel& formations, 
     if( extensions.IsEnabled() )
         extensions_ = extensions.GetExtensions();
     const kernel::Color_ABC& color = formation.Get< kernel::Color_ABC >();
-    if( color.IsOverride() )
+    if( color.IsOverriden() )
         color_ = color.GetColor();
     const kernel::SymbolHierarchy_ABC& symbol = formation.Get< kernel::SymbolHierarchy_ABC >();
     if( symbol.IsOverriden() )

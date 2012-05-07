@@ -10,8 +10,7 @@
 #ifndef __Color_h_
 #define __Color_h_
 
-#include "clients_kernel/Color_ABC.h"
-#include <boost/optional.hpp>
+#include "clients_kernel/Color.h"
 
 namespace xml
 {
@@ -30,7 +29,7 @@ namespace kernel
 */
 // Created: LGY 2011-06-24
 // =============================================================================
-class Color : public kernel::Color_ABC
+class Color : public kernel::Color
 {
 public:
     //! @name Constructors/Destructor
@@ -44,17 +43,6 @@ public:
     //! @name Operations
     //@{
     virtual void SerializeAttributes( xml::xostream& xos ) const;
-
-    virtual bool IsOverride() const;
-    virtual const T_Color& GetColor() const;
-    virtual void ChangeColor( const T_Color& color );
-    virtual void Clear();
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    boost::optional< T_Color > color_;
     //@}
 };
 

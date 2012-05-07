@@ -50,25 +50,25 @@ Lima::~Lima()
 // Name: Lima::Select
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-void Lima::Select( ActionController& actions ) const
+void Lima::Select( kernel::ActionController& actions ) const
 {
-    actions.Select( *this, *(kernel::TacticalLine_ABC*)this, *(kernel::Entity_ABC*)this );
+    actions.Select( *(kernel::Entity_ABC*)this, *(kernel::TacticalLine_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Lima::ContextMenu
 // Created: AGE 2006-03-24
 // -----------------------------------------------------------------------------
-void Lima::ContextMenu( ActionController& actions, const QPoint& point ) const
+void Lima::ContextMenu( kernel::ActionController& actions, const QPoint& point ) const
 {
-    actions.ContextMenu( *this, *(kernel::TacticalLine_ABC*)this, point );
+    actions.ContextMenu( *(kernel::TacticalLine_ABC*)this, point );
 }
 
 // -----------------------------------------------------------------------------
 // Name: Lima::Activate
 // Created: AGE 2006-08-11
 // -----------------------------------------------------------------------------
-void Lima::Activate( ActionController& actions ) const
+void Lima::Activate( kernel::ActionController& actions ) const
 {
     actions.Activate( *this, *(kernel::TacticalLine_ABC*)this );
 }

@@ -91,7 +91,7 @@ void Limit::UpdateToSim( E_State state )
 // -----------------------------------------------------------------------------
 void Limit::Select( kernel::ActionController& actions ) const
 {
-    actions.Select( *(Entity_ABC*)this, *(kernel::TacticalLine_ABC*)this, *this );
+    actions.Select( *(kernel::TacticalLine_ABC*)this, *(kernel::Entity_ABC*)this );
 }
 
 // -----------------------------------------------------------------------------
@@ -100,7 +100,7 @@ void Limit::Select( kernel::ActionController& actions ) const
 // -----------------------------------------------------------------------------
 void Limit::ContextMenu( kernel::ActionController& actions, const QPoint& point ) const
 {
-    actions.ContextMenu( *(Entity_ABC*)this, *(kernel::TacticalLine_ABC*)this, *this, point );
+    actions.ContextMenu( *(kernel::TacticalLine_ABC*)this, point );
 }
 
 // -----------------------------------------------------------------------------

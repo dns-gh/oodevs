@@ -22,7 +22,6 @@
 #include "clients_gui/TerrainObjectProxy.h"
 #include "clients_gui/UrbanDisplayOptions.h"
 #include "clients_gui/Usages.h"
-#include "clients_gui/Architecture.h"
 #include "clients_kernel/PropertiesDictionary.h"
 #include "MT_Tools/MT_Logger.h"
 #include "protocol/Protocol.h"
@@ -70,7 +69,7 @@ void UrbanModel::Create( const sword::UrbanCreation& message )
     const kernel::UrbanColor_ABC& color = pTerrainObject->Get< kernel::UrbanColor_ABC >();
     pTerrainObject->Attach< kernel::UrbanPositions_ABC >( *new UrbanPositions( message.location(), message.attributes(), static_.coordinateConverter_, pTerrainObject->GetName().toStdString(), color ) );
     if( message.attributes().has_architecture() )
-        pTerrainObject->Attach< kernel::Architecture_ABC >( *new Architecture( message.attributes(), std::auto_ptr< kernel::Architecture_ABC >( new gui::Architecture( dictionary ) ) ) );
+        pTerrainObject->Attach< kernel::Architecture_ABC >( *new Architecture( message.attributes(), dictionary ) );
     pTerrainObject->Attach< kernel::Usages_ABC >( *new Usages( message.attributes(), std::auto_ptr< kernel::Usages_ABC >( new gui::Usages( dictionary, static_.accommodationTypes_, pTerrainObject->GetLivingSpace() ) ) ) );
     pTerrainObject->Update( message );
     pTerrainObject->Polish();

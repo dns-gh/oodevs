@@ -52,7 +52,7 @@ Color::Color()
 Color::Color( const kernel::Entity_ABC& parent )
 {
     if( const kernel::Color_ABC* pColor = parent.Retrieve< kernel::Color_ABC >() )
-        if( pColor->IsOverride() )
+        if( pColor->IsOverriden() )
             color_ = pColor->GetColor();
 }
 
@@ -89,40 +89,4 @@ void Color::SerializeAttributes( xml::xostream& xos ) const
         T_Color color = *color_;
         xos << xml::attribute( "color", RgbToHex( color.get< 0 >(), color.get< 1 >(), color.get< 2 >() ) );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: Color::IsOverride
-// Created: LGY 2011-06-24
-// -----------------------------------------------------------------------------
-bool Color::IsOverride() const
-{
-    return color_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Color::ChangeColor
-// Created: LGY 2011-06-24
-// -----------------------------------------------------------------------------
-void Color::ChangeColor( const T_Color& color )
-{
-    color_ = color;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Color::Clear
-// Created: LGY 2011-06-24
-// -----------------------------------------------------------------------------
-void Color::Clear()
-{
-    color_ = boost::none;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Color::GetColor
-// Created: LGY 2011-06-24
-// -----------------------------------------------------------------------------
-const Color::T_Color& Color::GetColor() const
-{
-    return *color_;
 }

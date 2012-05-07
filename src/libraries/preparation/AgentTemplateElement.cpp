@@ -45,7 +45,7 @@ AgentTemplateElement::AgentTemplateElement( AgentsModel& agents, const kernel::A
     if( extensions.IsEnabled() )
         extensions_ = extensions.GetExtensions();
     const kernel::Color_ABC& color = agent.Get< kernel::Color_ABC >();
-    if( color.IsOverride() )
+    if( color.IsOverriden() )
         color_ = color.GetColor();
 }
 

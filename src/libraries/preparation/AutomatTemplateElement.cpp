@@ -34,7 +34,7 @@ AutomatTemplateElement::AutomatTemplateElement( AgentsModel& agents, const kerne
     if( extensions.IsEnabled() )
         extensions_ = extensions.GetExtensions();
     const kernel::Color_ABC& color = automat.Get< kernel::Color_ABC >();
-    if( color.IsOverride() )
+    if( color.IsOverriden() )
         color_ = color.GetColor();
     const kernel::SymbolHierarchy_ABC& symbol = automat.Get< kernel::SymbolHierarchy_ABC >();
     if( symbol.IsOverriden() )

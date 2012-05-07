@@ -10,7 +10,7 @@
 #ifndef __Architecture_h_
 #define __Architecture_h_
 
-#include "clients_kernel/Architecture_ABC.h"
+#include "clients_gui/Architecture.h"
 
 namespace sword
 {
@@ -23,29 +23,13 @@ namespace sword
 */
 // Created: LGY 2011-04-15
 // =============================================================================
-class Architecture : public kernel::Architecture_ABC
+class Architecture : public gui::Architecture
 {
 public:
     //! @name Constructors/Destructor
     //@{
-             Architecture( const sword::UrbanAttributes& message, std::auto_ptr< kernel::Architecture_ABC > pArchitecture );
+             Architecture( const sword::UrbanAttributes& message, kernel::PropertiesDictionary& dictionary );
     virtual ~Architecture();
-    //@}
-
-    //! @name Operations
-    //@{
-    virtual void Initialize( unsigned int height, unsigned int floorNumber, unsigned int parkingFloors, const std::string& roofShape,
-                             const std::string& material, float occupation, float trafficability );
-    virtual const std::string& GetMaterial() const;
-    virtual unsigned int GetFloorNumber() const;
-    virtual unsigned int GetOccupation() const;
-    virtual unsigned int GetHeight() const;
-    //@}
-
-private:
-    //! @name Member data
-    //@{
-    std::auto_ptr< kernel::Architecture_ABC > pArchitecture_;
     //@}
 };
 

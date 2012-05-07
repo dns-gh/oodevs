@@ -27,7 +27,6 @@
 #include "clients_kernel/Infrastructure_ABC.h"
 #include "clients_kernel/ResourceNetwork_ABC.h"
 #include "clients_gui/TerrainObjectProxy.h"
-#include "clients_gui/Architecture.h"
 #include "clients_gui/Usages.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -71,7 +70,7 @@ gui::TerrainObjectProxy* UrbanFactory::Create( xml::xistream& xis ) const
     kernel::PropertiesDictionary& dictionary = pTerrainObject->Get< kernel::PropertiesDictionary >();
     pTerrainObject->Attach< kernel::StructuralStateAttribute_ABC >( *new StructuralStateAttribute( 100, dictionary ) );
     pTerrainObject->Attach< kernel::UrbanColor_ABC >( *new UrbanColor( xis ) );
-    pTerrainObject->Attach< kernel::Architecture_ABC >( *new Architecture( xis, std::auto_ptr< kernel::Architecture_ABC >( new gui::Architecture( dictionary ) ) ) );
+    pTerrainObject->Attach< kernel::Architecture_ABC >( *new Architecture( xis, dictionary ) );
     pTerrainObject->Attach< kernel::Usages_ABC >( *new Usages( xis, std::auto_ptr< kernel::Usages_ABC >( new gui::Usages( dictionary, accommodations_, pTerrainObject->GetLivingSpace() ) ) ) );
     pTerrainObject->Attach< kernel::UrbanPositions_ABC >( *new UrbanPositions( xis, pTerrainObject->GetName().ascii(),
                                                                                pTerrainObject->Get< kernel::UrbanColor_ABC >(), converter_,

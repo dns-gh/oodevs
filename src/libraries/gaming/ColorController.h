@@ -10,7 +10,7 @@
 #ifndef __ColorController_h_
 #define __ColorController_h_
 
-#include "clients_gui/ColorModifier_ABC.h"
+#include "clients_gui/ColorController.h"
 #include "tools/ElementObserver_ABC.h"
 
 namespace kernel
@@ -28,12 +28,7 @@ namespace kernel
 */
 // Created: LGY 2011-06-27
 // =============================================================================
-class ColorController : public gui::ColorModifier_ABC
-                      , public tools::Observer_ABC
-                      , public tools::ElementObserver_ABC< kernel::Agent_ABC >
-                      , public tools::ElementObserver_ABC< kernel::Formation_ABC >
-                      , public tools::ElementObserver_ABC< kernel::Automat_ABC >
-                      , public tools::ElementObserver_ABC< kernel::Team_ABC >
+class ColorController : public gui::ColorController
 
 {
 public:
@@ -43,38 +38,16 @@ public:
     virtual ~ColorController();
     //@}
 
-    //! @name Operations
-    //@{
-    virtual QColor Apply( const kernel::Entity_ABC& entity, const QColor& base );
-
-    virtual void NotifyCreated( const kernel::Agent_ABC& agent );
-    virtual void NotifyDeleted( const kernel::Agent_ABC& agent );
-    virtual void NotifyCreated( const kernel::Automat_ABC& automat );
-    virtual void NotifyDeleted( const kernel::Automat_ABC& automat );
-    virtual void NotifyCreated( const kernel::Formation_ABC& formation );
-    virtual void NotifyDeleted( const kernel::Formation_ABC& formation );
-    virtual void NotifyCreated( const kernel::Team_ABC& team );
-    virtual void NotifyDeleted( const kernel::Team_ABC& team );
-    //@}
-
 private:
     //! @name Helpers
     //@{
-    void ChangeColor( const kernel::Entity_ABC& entity );
-    //@}
-
-private:
-    //! @name Types
-    //@{
-    typedef std::map< unsigned long, QColor > T_Colors;
-    typedef T_Colors::const_iterator        CIT_Colors;
+    virtual void UpdateHierarchies( const kernel::Entity_ABC& entity );
     //@}
 
 private:
     //! @name Member data
     //@{
     kernel::Controllers& controllers_;
-    T_Colors colors_;
     //@}
 };
 

@@ -38,18 +38,6 @@ ColorController::~ColorController()
 }
 
 // -----------------------------------------------------------------------------
-// Name: ColorController::Apply
-// Created: LGY 2011-06-23
-// -----------------------------------------------------------------------------
-QColor ColorController::Apply( const kernel::Entity_ABC& entity, const QColor& base )
-{
-    CIT_Colors it = colors_.find( entity.GetId() );
-    if( it != colors_.end() )
-        return it->second;
-    return base;
-}
-
-// -----------------------------------------------------------------------------
 // Name: ColorController::Add
 // Created: LGY 2011-06-23
 // -----------------------------------------------------------------------------
@@ -96,7 +84,7 @@ void ColorController::Remove( const kernel::Entity_ABC& entity )
         if( const kernel::TacticalHierarchies* pHierarchies = entity.Retrieve< kernel::TacticalHierarchies >() )
             if( const kernel::Entity_ABC* pSuperior = pHierarchies->GetSuperior() )
                 if( const kernel::Color_ABC* pColor = pSuperior->Retrieve< kernel::Color_ABC >() )
-                    if( pColor->IsOverride() )
+                    if( pColor->IsOverriden() )
                         Add( entity, static_cast< QColor >( *pColor ) );
         UpdateHierarchies( entity );
     }
@@ -184,27 +172,4 @@ void ColorController::ResetSubordinate( const kernel::Entity_ABC& entity, const 
         const kernel::Entity_ABC& child = it.NextElement();
         ResetSubordinate( child, newColor );
     }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ColorController::NotifyCreated
-// Created: LGY 2011-06-24
-// -----------------------------------------------------------------------------
-void ColorController::NotifyCreated( const kernel::Entity_ABC& entity )
-{
-    if( const kernel::Color_ABC* color = entity.Retrieve< kernel::Color_ABC >() )
-        if( color->IsOverride() )
-        {
-            colors_[ entity.GetId() ] = static_cast< QColor >( *color );
-            UpdateHierarchies( entity );
-        }
-}
-
-// -----------------------------------------------------------------------------
-// Name: ColorController::NotifyDeleted
-// Created: LGY 2011-06-24
-// -----------------------------------------------------------------------------
-void ColorController::NotifyDeleted( const kernel::Entity_ABC& entity )
-{
-    colors_.erase( entity.GetId() );
 }

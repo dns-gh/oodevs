@@ -122,7 +122,7 @@ void ColorEditor::NotifyUpdated( const kernel::Team_ABC& team )
     if( const kernel::Color_ABC* pTeamColor = team.Retrieve< kernel::Color_ABC >() )
     {
         QColor baseColor = colorStrategy_.FindBaseColor( team );
-        if( pTeamColor->IsOverride() && static_cast< QColor >( *pTeamColor ) != baseColor )
+        if( pTeamColor->IsOverriden() && static_cast< QColor >( *pTeamColor ) != baseColor )
             colorEditor_.Reset( team, baseColor );
     }
 }
@@ -136,6 +136,6 @@ void ColorEditor::Update( const kernel::Entity_ABC& entity, kernel::ContextMenu&
     selected_ = const_cast< kernel::Entity_ABC* >( &entity );
     menu.InsertItem( "Color", tools::translate( "ColorEditor", "Change color" ), this, SLOT( Show() ) );
     if( const kernel::Color_ABC* pColor = entity.Retrieve< kernel::Color_ABC>() )
-        if( pColor->IsOverride() )
+        if( pColor->IsOverriden() )
             menu.InsertItem( "Color", tools::translate( "ColorEditor", "Reset color" ), this, SLOT( Reset() ) );
 }
