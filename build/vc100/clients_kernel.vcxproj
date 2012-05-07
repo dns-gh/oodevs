@@ -106,7 +106,6 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\Level.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\LogisticLevel.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\LogisticSupplyClass.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_kernel\NewClass.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\StaticModel.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\App6Symbol.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\ApproximativeMap.cpp" />
@@ -121,6 +120,7 @@
     <ClCompile Include="..\..\src\libraries\clients_kernel\Tools.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Units.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanColor_ABC.cpp" />
+    <ClCompile Include="..\..\src\libraries\clients_kernel\UrbanPositions.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Workers.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Circle.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_kernel\Lines.cpp" />
@@ -241,7 +241,6 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\LogisticLevel.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\LogisticSupplyClass.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\MaintenanceStates_ABC.h" />
-    <ClInclude Include="..\..\src\libraries\clients_kernel\NewClass.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\OverFlyingObserver_ABC.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\StaticModel.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\AltitudeModified.h" />
@@ -268,6 +267,7 @@
     <ClInclude Include="..\..\src\libraries\clients_kernel\Tools.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Types.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Units.h" />
+    <ClInclude Include="..\..\src\libraries\clients_kernel\UrbanPositions.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\VariantPointer.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\Workers.h" />
     <ClInclude Include="..\..\src\libraries\clients_kernel\WorkerTask_ABC.h" />

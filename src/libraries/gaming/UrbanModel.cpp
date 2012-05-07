@@ -67,7 +67,7 @@ void UrbanModel::Create( const sword::UrbanCreation& message )
     kernel::PropertiesDictionary& dictionary = pTerrainObject->Get< kernel::PropertiesDictionary >();
     pTerrainObject->Attach< kernel::UrbanColor_ABC >( *new UrbanColor( message.attributes() ) );
     const kernel::UrbanColor_ABC& color = pTerrainObject->Get< kernel::UrbanColor_ABC >();
-    pTerrainObject->Attach< kernel::UrbanPositions_ABC >( *new UrbanPositions( message.location(), message.attributes(), static_.coordinateConverter_, pTerrainObject->GetName().toStdString(), color ) );
+    pTerrainObject->Attach< kernel::UrbanPositions_ABC >( *new UrbanPositions( message.location(), static_.coordinateConverter_, pTerrainObject->GetName().toStdString(), color ) );
     if( message.attributes().has_architecture() )
         pTerrainObject->Attach< kernel::Architecture_ABC >( *new Architecture( message.attributes(), dictionary ) );
     pTerrainObject->Attach< kernel::Usages_ABC >( *new Usages( message.attributes(), std::auto_ptr< kernel::Usages_ABC >( new gui::Usages( dictionary, static_.accommodationTypes_, pTerrainObject->GetLivingSpace() ) ) ) );

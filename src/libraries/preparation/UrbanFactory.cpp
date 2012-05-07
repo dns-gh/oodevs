@@ -73,8 +73,7 @@ gui::TerrainObjectProxy* UrbanFactory::Create( xml::xistream& xis ) const
     pTerrainObject->Attach< kernel::Architecture_ABC >( *new Architecture( xis, dictionary ) );
     pTerrainObject->Attach< kernel::Usages_ABC >( *new Usages( xis, std::auto_ptr< kernel::Usages_ABC >( new gui::Usages( dictionary, accommodations_, pTerrainObject->GetLivingSpace() ) ) ) );
     pTerrainObject->Attach< kernel::UrbanPositions_ABC >( *new UrbanPositions( xis, pTerrainObject->GetName().ascii(),
-                                                                               pTerrainObject->Get< kernel::UrbanColor_ABC >(), converter_,
-                                                                               pTerrainObject->Get< kernel::Architecture_ABC >() ) );
+                                                                               pTerrainObject->Get< kernel::UrbanColor_ABC >(), converter_ ) );
     pTerrainObject->Attach< kernel::ResourceNetwork_ABC >( *new ResourceNetworkAttribute( controllers_, xis,
                                                                                           pTerrainObject->Get< kernel::UrbanPositions_ABC >().Barycenter(),
                                                                                           urbanObjects_, objects_, objectTypes_ ) );
