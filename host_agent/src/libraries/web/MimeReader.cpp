@@ -164,21 +164,20 @@ bool IsName( const std::string& name, T part )
     return !name.empty() && name == part->name_;
 }
 
-#ifdef MSC_VER
-#define DISABLE_MSVC_WARNING( N ) __pragma(warning(suppress:N))
-#else
-#define DISABLE_MSVC_WARNING( ... )
-#endif
-
 // naive string search function (use boyer-moore instead..)
 size_t FindNeedle( const char* haystack, size_t hsize, const char* needle, size_t nsize )
 {
     const char first = needle[0];
     const char* ptr = haystack;
-    DISABLE_MSVC_WARNING( 4706 )
-    while( ( ptr = static_cast< const char* >( memchr( ptr, first, hsize - ( ptr - haystack ) - nsize ) ) ) )
-        if( !memcmp( ptr++, needle, nsize ) )
-            return ptr - 1 - haystack;
+    for(;;)
+    {
+        ptr = static_cast< const char* >( memchr( ptr, first, hsize - ( ptr - haystack ) - nsize ) );
+        if( !ptr )
+            break;
+        if( !memcmp( ptr, needle, nsize ) )
+            return ptr - haystack;
+        ++ptr;
+    }
     return hsize;
 }
 
