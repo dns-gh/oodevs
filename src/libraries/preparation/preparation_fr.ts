@@ -745,21 +745,6 @@ Détail: %1.</translation>
     </message>
 </context>
 <context>
-    <name>Team</name>
-    <message>
-        <source>Info/Identifier</source>
-        <translation>Info/Identifiant</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nom</translation>
-    </message>
-    <message>
-        <source>Info/Karma</source>
-        <translation>Info/Affiliation</translation>
-    </message>
-</context>
-<context>
     <name>TeamFactory</name>
     <message>
         <source>No side</source>
@@ -807,6 +792,13 @@ Détail: %1.</translation>
     <message>
         <source>Local weather </source>
         <translation>Météo locale </translation>
+    </message>
+</context>
+<context>
+    <name>preparation::Team</name>
+    <message>
+        <source>Info/Karma</source>
+        <translation>Info/Affiliation</translation>
     </message>
 </context>
 </TS>

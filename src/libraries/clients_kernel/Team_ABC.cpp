@@ -68,4 +68,3 @@ void Team_ABC::Activate( ActionController& controller ) const
 {
     controller.Activate( *this, *(const Entity_ABC*)this );
 }
-

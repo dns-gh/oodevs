@@ -10,13 +10,12 @@
 #ifndef __Team_h_
 #define __Team_h_
 
-#include "clients_kernel/EntityImplementation.h"
-#include "clients_kernel/Team_ABC.h"
-#include "clients_kernel/OptionsObserver_ABC.h"
+#include "clients_kernel/Team.h"
 #include "clients_kernel/Karma.h"
 
 namespace kernel
 {
+    class Controllers;
     class OptionVariant;
 }
 
@@ -31,9 +30,8 @@ namespace sword
 */
 // Created: AGN 2003-12-22
 // =============================================================================
-class Team : public kernel::EntityImplementation< kernel::Team_ABC >
+class Team : public kernel::Team
            , public tools::Observer_ABC
-           , public kernel::OptionsObserver_ABC
 {
 public:
     //! @name Constructors/Destructor
@@ -54,20 +52,9 @@ private:
     Team& operator=( const Team& );
     //@}
 
-    //! @name Operations
-    //@{
-    virtual void OptionChanged( const std::string& name, const kernel::OptionVariant& value );
-    //@}
-
-    //! @name Helpers
-    //@{
-        void CreateDictionary( kernel::Controller& controller );
-    //@}
-
 private:
     //! @name Attributes
     //@{
-    kernel::Controllers& controllers_;
     kernel::Karma karma_;
     //@}
 

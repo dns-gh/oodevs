@@ -326,6 +326,17 @@
     </message>
 </context>
 <context>
+    <name>Team</name>
+    <message>
+        <source>Info/Identifier</source>
+        <translation>Info/Identificador</translation>
+    </message>
+    <message>
+        <source>Info/Name</source>
+        <translation>Info/Nombre</translation>
+    </message>
+</context>
+<context>
     <name>Tristate</name>
     <message>
         <source>Off</source>

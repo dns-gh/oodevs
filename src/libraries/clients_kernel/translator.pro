@@ -13,6 +13,7 @@ Point.cpp \
 Polygon.cpp \
 Rectangle.cpp \
 StockAttribute_ABC.cpp \
+Team.cpp \
 Tools.cpp \
 TristateOption.cpp \
 Units.cpp \

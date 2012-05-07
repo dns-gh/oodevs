@@ -9,13 +9,9 @@
 
 #include "gaming_pch.h"
 #include "Team.h"
-#include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/Controllers.h"
 #include "clients_kernel/Tools.h"
 #include "protocol/SimulationSenders.h"
-
-using namespace kernel;
 
 namespace
 {
@@ -33,7 +29,7 @@ namespace
 
     QString MakeName( const std::string& name )
     {
-        return name.empty() ? QString( tools::translate( "Team", "Army %1" ) ).arg( name.c_str() ) : name.c_str();
+        return name.empty() ? QString( tools::translate( "gaming::Team", "Army %1" ) ).arg( name.c_str() ) : name.c_str();
     }
 }
 
@@ -41,9 +37,8 @@ namespace
 // Name: Team constructor
 // Created: NLD 2005-02-14
 // -----------------------------------------------------------------------------
-Team::Team( const sword::PartyCreation& message, Controllers& controllers )
-    : EntityImplementation< Team_ABC >( controllers.controller_, message.party().id(), QString( message.name().c_str() ) )
-    , controllers_( controllers )
+Team::Team( const sword::PartyCreation& message, kernel::Controllers& controllers )
+    : kernel::Team( controllers, message.party().id(), QString( message.name().c_str() ) )
     , karma_      ( MakeKarma( message.type() ) )
 {
     CreateDictionary( controllers_.controller_ );
@@ -61,38 +56,10 @@ Team::~Team()
 }
 
 // -----------------------------------------------------------------------------
-// Name: Team::CreateDictionary
-// Created: AGE 2006-06-27
-// -----------------------------------------------------------------------------
-void Team::CreateDictionary( kernel::Controller& controller )
-{
-    PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
-    Attach( dictionary );
-    const Team& self = *this;
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Team", "Info/Identifier" ), self.id_ );
-    dictionary.Register( *(const Entity_ABC*)this, tools::translate( "Team", "Info/Name" ), self.name_ );
-}
-
-// -----------------------------------------------------------------------------
 // Name: Team::GetKarma
 // Created: MGD 2009-12-18
 // -----------------------------------------------------------------------------
 const kernel::Karma& Team::GetKarma() const
 {
     return karma_;
-}
-
-// -----------------------------------------------------------------------------
-// Name: Team::OptionChanged
-// Created: LGY 2011-10-21
-// -----------------------------------------------------------------------------
-void Team::OptionChanged( const std::string& name, const kernel::OptionVariant& /*value*/ )
-{
-    if( name == "Color/Neutralized" || name == "Color/TacticallyDestroyed" || name == "Color/TotallyDestroyed" )
-    {
-        if( const kernel::TacticalHierarchies* pTactical = Retrieve< kernel::TacticalHierarchies >() )
-            controllers_.controller_.Update( *pTactical );
-        if( const kernel::CommunicationHierarchies* pCommunication = Retrieve< kernel::CommunicationHierarchies >() )
-            controllers_.controller_.Update( *pCommunication );
-    }
 }

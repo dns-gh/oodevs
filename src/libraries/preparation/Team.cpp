@@ -10,23 +10,17 @@
 #include "preparation_pch.h"
 #include "Team.h"
 #include "IdManager.h"
-#include "clients_kernel/Tools.h"
 #include "clients_kernel/Controller.h"
 #include "clients_kernel/Controllers.h"
-#include "clients_kernel/PropertiesDictionary.h"
-#include "clients_kernel/TacticalHierarchies.h"
-#include "clients_kernel/CommunicationHierarchies.h"
+#include "clients_kernel/Tools.h"
 #include <xeumeuleu/xml.hpp>
-
-using namespace kernel;
 
 // -----------------------------------------------------------------------------
 // Name: Team constructor
 // Created: SBO 2006-08-29
 // -----------------------------------------------------------------------------
-Team::Team( Controllers& controllers, IdManager& idManager )
-    : EntityImplementation< Team_ABC >( controllers.controller_, idManager.GetNextId(), "" )
-    , controllers_( controllers )
+Team::Team( kernel::Controllers& controllers, IdManager& idManager )
+    : kernel::Team( controllers, idManager.GetNextId(), "" )
 {
     name_ = tools::translate( "Preparation", "Army %L1" ).arg( id_ );
     RegisterSelf( *this );
@@ -38,9 +32,8 @@ Team::Team( Controllers& controllers, IdManager& idManager )
 // Name: Team constructor
 // Created: SBO 2006-10-05
 // -----------------------------------------------------------------------------
-Team::Team( xml::xistream& xis, Controllers& controllers, IdManager& idManager )
-    : EntityImplementation< Team_ABC >( controllers.controller_, xis.attribute< unsigned long >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
-    , controllers_( controllers )
+Team::Team( xml::xistream& xis, kernel::Controllers& controllers, IdManager& idManager )
+    : kernel::Team( controllers, xis.attribute< unsigned long >( "id" ), xis.attribute< std::string >( "name" ).c_str() )
 {
     RegisterSelf( *this );
     idManager.Lock( id_ );
@@ -78,30 +71,3 @@ void Team::SerializeAttributes( xml::xostream& xos ) const
         << xml::attribute( "name", name_.ascii() );
 }
 
-// -----------------------------------------------------------------------------
-// Name: Team::CreateDictionary
-// Created: SBO 2006-10-27
-// -----------------------------------------------------------------------------
-void Team::CreateDictionary( Controller& controller )
-{
-    PropertiesDictionary& dictionary = *new PropertiesDictionary( controller );
-    Attach( dictionary );
-    const Team& constSelf = *this;
-    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Team", "Info/Identifier" ), constSelf.id_ );
-    dictionary.Register( *static_cast< const Entity_ABC* >( this ), tools::translate( "Team", "Info/Name" ), name_, *this, &Team::Rename );
-}
-
-// -----------------------------------------------------------------------------
-// Name: Team::OptionChanged
-// Created: ABR 2011-10-24
-// -----------------------------------------------------------------------------
-void Team::OptionChanged( const std::string& name, const kernel::OptionVariant& /*value*/ )
-{
-    if( name == "Color/Phantom" )
-    {
-        if( const kernel::TacticalHierarchies* pTactical = Retrieve< kernel::TacticalHierarchies >() )
-            controllers_.controller_.Update( *pTactical );
-        if( const kernel::CommunicationHierarchies* pCommunication = Retrieve< kernel::CommunicationHierarchies >() )
-            controllers_.controller_.Update( *pCommunication );
-    }
-}

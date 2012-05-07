@@ -1442,21 +1442,6 @@
     </message>
 </context>
 <context>
-    <name>Team</name>
-    <message>
-        <source>Army %1</source>
-        <translation>Armée %1</translation>
-    </message>
-    <message>
-        <source>Info/Identifier</source>
-        <translation>Info/Identifiant</translation>
-    </message>
-    <message>
-        <source>Info/Name</source>
-        <translation>Info/Nom</translation>
-    </message>
-</context>
-<context>
     <name>TeamFactory</name>
     <message>
         <source>No side</source>
@@ -1529,6 +1514,13 @@
     <message>
         <source>Profile &apos;%1&apos; does not exist.</source>
         <translation>Le profil &apos;%1&apos; n&apos;existe pas.</translation>
+    </message>
+</context>
+<context>
+    <name>gaming::Team</name>
+    <message>
+        <source>Army %1</source>
+        <translation type="unfinished">Armée %1</translation>
     </message>
 </context>
 </TS>

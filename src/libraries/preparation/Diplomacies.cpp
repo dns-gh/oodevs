@@ -62,7 +62,7 @@ Diplomacies::~Diplomacies()
 // -----------------------------------------------------------------------------
 void Diplomacies::CreateDictionary( PropertiesDictionary& dico )
 {
-    dico.Register( static_cast< const Entity_ABC& >( team_ ), tools::translate( "Team", "Info/Karma" ), karma_, *this, &Diplomacies::SetKarma );
+    dico.Register( static_cast< const Entity_ABC& >( team_ ), tools::translate( "preparation::Team", "Info/Karma" ), karma_, *this, &Diplomacies::SetKarma );
 }
 
 // -----------------------------------------------------------------------------
