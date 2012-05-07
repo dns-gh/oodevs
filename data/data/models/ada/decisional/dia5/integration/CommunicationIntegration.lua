@@ -171,14 +171,14 @@ end
 
 masalife.brain.communication.setMessageTreatment( "TaskDone",
     function( message )
-        local myFrontElements = integration.listenFrontElementCallbacks
+        local myFrontElements = integration.listenFrontElementCallbacks[meKnowledge]
         local frontElement = message.element
         if myFrontElements and frontElement then
             if myFrontElements[ frontElement ] then
                 myFrontElements[ frontElement ] = nil
-                if #myFrontElements == 0 then
+                if not next( myFrontElements ) then
                     myself.feedback = true
-                    integration.listenFrontElementCallbacks = {}
+                    integration.listenFrontElementCallbacks[meKnowledge] = {}
                 end
             end
         end
@@ -189,7 +189,9 @@ integration.listenFrontElementCallbacks = {}
 integration.ListenFrontElement = function( entity )
     -- comparer la connaissance meKnowledge (pion) avec la connaissance que l'automate a de ce pion ne fonctionne pas
     -- maintenant on compare l'objet c++ qui est derriere
-    integration.listenFrontElementCallbacks[entity.source] = true
+    integration.listenFrontElementCallbacks[meKnowledge] = integration.listenFrontElementCallbacks[meKnowledge] or {}
+    local listenFrontElementCallbacks = integration.listenFrontElementCallbacks[meKnowledge]
+    listenFrontElementCallbacks[entity.source] = true
 end
 
 integration.getAgentFromKnowledge = function( entity )
