@@ -9,8 +9,15 @@
 
 #include "AsyncStream.h"
 
-#include <boost/iostreams/concepts.hpp>
+#ifdef _MSC_VER
+#   pragma warning( push )
+#   pragma warning( disable : 4702 )
+#endif
 #include <boost/iostreams/stream.hpp>
+#ifdef _MSC_VER
+#   pragma warning( pop )
+#endif
+
 #include <boost/thread/condition_variable.hpp>
 #include <vector>
 
