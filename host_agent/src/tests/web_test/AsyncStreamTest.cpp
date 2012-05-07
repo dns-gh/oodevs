@@ -32,11 +32,6 @@ namespace
         AsyncStream async;
         std::istream& stream;
     };
-
-    void GetLine( std::istream& a, std::string& b )
-    {
-        std::getline( a, b );
-    }
 }
 
 BOOST_FIXTURE_TEST_CASE( async_primitives, Fixture )
