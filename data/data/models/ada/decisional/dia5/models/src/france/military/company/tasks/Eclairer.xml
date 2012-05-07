@@ -23,7 +23,7 @@
 		</parameter>
 		<parameter name="supportTasks">
 			<value>
-				<string>france.military.platoon.tasks.Soutenir;france.military.platoon.combat.support.engineer.tasks.AppuiMobilite</string>
+				<string>france.military.platoon.tasks.Appuyer;france.military.platoon.combat.support.engineer.tasks.AppuiMobilite</string>
 			</value>
 		</parameter>
 		<parameter name="objectives">
@@ -38,7 +38,7 @@
 		</parameter>
 		<parameter name="taskForSupporting">
 			<value>
-				<string>france.military.platoon.tasks.Soutenir</string>
+				<string>france.military.platoon.tasks.Appuyer</string>
 			</value>
 		</parameter>
 	</next-task>
