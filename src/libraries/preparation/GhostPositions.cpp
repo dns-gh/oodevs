@@ -9,6 +9,7 @@
 
 #include "preparation_pch.h"
 #include "GhostPositions.h"
+#include "MoveableProxy.h"
 #include "clients_kernel/Ghost_ABC.h"
 #include "clients_kernel/CommunicationHierarchies.h"
 #include "clients_kernel/Controller.h"
@@ -27,35 +28,6 @@ using namespace kernel;
 
 namespace
 {
-    class MoveableProxy : public kernel::Moveable_ABC
-    {
-    public:
-        explicit MoveableProxy( kernel::Moveable_ABC& moveable )
-            : moveable_( &moveable )
-        {}
-        virtual ~MoveableProxy()
-        {}
-
-        virtual void Move( const geometry::Point2f& position )
-        {
-            moveable_->Move( position );
-        }
-        virtual geometry::Point2f GetPosition( bool aggregated ) const
-        {
-            return moveable_->GetPosition( aggregated );
-        }
-        virtual float GetHeight( bool ) const { throw std::runtime_error( __FUNCTION__ ": not implemented" ); }
-        virtual bool IsAt( const geometry::Point2f& /*pos*/, float /*precision = 100.f*/,  float /*adaptiveFactor = 1.f*/) const { throw std::runtime_error( __FUNCTION__ ": not implemented" ); }
-        virtual bool IsIn( const geometry::Rectangle2f& /*rectangle*/ ) const { throw std::runtime_error( __FUNCTION__ ": not implemented" ); }
-        virtual geometry::Rectangle2f GetBoundingBox() const { throw std::runtime_error( __FUNCTION__ ": not implemented" ); }
-        virtual void Accept( LocationVisitor_ABC& /*visitor*/ ) const { throw std::runtime_error( __FUNCTION__ ": not implemented" ); }
-        virtual bool CanAggregate() const { throw std::runtime_error( __FUNCTION__ ": not implemented" ); }
-        virtual bool IsAggregated() const { throw std::runtime_error( __FUNCTION__ ": not implemented" ); }
-
-    private:
-        kernel::Moveable_ABC* moveable_;
-    };
-
     geometry::Point2f ReadPosition( xml::xistream& xis, const kernel::CoordinateConverter_ABC& converter )
     {
         const std::string position = xis.attribute< std::string >( "position" );

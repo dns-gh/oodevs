@@ -146,9 +146,9 @@ kernel::Population_ABC* AgentFactory::Create( kernel::Entity_ABC& parent, const 
     else
         top = const_cast< kernel::Entity_ABC* >( &parent.Get< kernel::CommunicationHierarchies >().GetTop() );
     Population* result = new Population( type, number, controllers_.controller_, idManager_ );
-    result->Attach< kernel::Positions >( *new PopulationPositions( *result, controllers_.controller_, static_.coordinateConverter_, position ) );
-    result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, top ) );
     kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
+    result->Attach< kernel::Positions >( *new PopulationPositions( *result, controllers_.controller_, static_.coordinateConverter_, position, dictionary ) );
+    result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, top ) );
     result->Attach< Affinities >( *new PeopleAffinities( controllers_, model_, dictionary ) );
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", static_.extensions_ ) );
     if( Populations* popus = top->Retrieve< Populations >() )
@@ -272,9 +272,9 @@ kernel::Automat_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Entity_AB
 kernel::Population_ABC* AgentFactory::Create( xml::xistream& xis, kernel::Team_ABC& parent, const kernel::PopulationType& type )
 {
     Population* result = new Population( xis, type, controllers_.controller_, idManager_ );
-    result->Attach< kernel::Positions >( *new PopulationPositions( xis, *result, controllers_.controller_, static_.coordinateConverter_ ) );
+    kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();    
+    result->Attach< kernel::Positions >( *new PopulationPositions( xis, *result, controllers_.controller_, static_.coordinateConverter_, dictionary ) );
     result->Attach< kernel::TacticalHierarchies >( *new PopulationHierarchies( *result, &parent ) );
-    kernel::PropertiesDictionary& dictionary = result->Get< kernel::PropertiesDictionary >();
     result->Attach< Affinities >( *new PeopleAffinities( xis, controllers_, model_, dictionary ) );
     result->Attach( *new kernel::DictionaryExtensions( controllers_, "orbat-attributes", xis, static_.extensions_ ) );
     if( Populations* popus = parent.Retrieve< Populations >() )

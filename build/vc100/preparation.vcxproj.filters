@@ -526,6 +526,9 @@
     <ClCompile Include="..\..\src\libraries\preparation\UrbanFactory.cpp">
       <Filter>Source Files\Model\Urban</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\libraries\preparation\MoveableProxy.cpp">
+      <Filter>Source Files\Model\Agent\Extensions</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\src\libraries\preparation\preparation_pch.h">
@@ -986,6 +989,9 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\preparation\UrbanFactory_ABC.h">
       <Filter>Source Files\Model\Urban</Filter>
+    </ClInclude>
+    <ClInclude Include="..\..\src\libraries\preparation\MoveableProxy.h">
+      <Filter>Source Files\Model\Agent\Extensions</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

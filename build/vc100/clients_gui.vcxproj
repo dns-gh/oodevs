@@ -112,7 +112,6 @@
     <ClCompile Include="..\..\src\libraries\clients_gui\NatureEditionCategory.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\NatureEditionWidget.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\Logger.cpp" />
-    <ClCompile Include="..\..\src\libraries\clients_gui\NewClass.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\OverFlyingColorModifier.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\resources.cpp" />
     <ClCompile Include="..\..\src\libraries\clients_gui\RichGroupBox.cpp" />
@@ -535,7 +534,6 @@
     </ClInclude>
     <ClInclude Include="..\..\src\libraries\clients_gui\LongNameHelper.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\ModalDialog.h" />
-    <ClInclude Include="..\..\src\libraries\clients_gui\NewClass.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\OverFlyingColorModifier.h" />
     <ClInclude Include="..\..\src\libraries\clients_gui\resources.h" />
     <CustomBuild Include="..\..\src\libraries\clients_gui\StatusBar.h">
