@@ -11,7 +11,6 @@
 
 using namespace web;
 
-
 // -----------------------------------------------------------------------------
 // Name: StreamBuffer::StreamBuffer
 // Created: BAX 2012-05-03

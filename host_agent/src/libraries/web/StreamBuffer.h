@@ -11,7 +11,6 @@
 #define STREAM_BUFFER_H
 
 #include <boost/noncopyable.hpp>
-#include <iostream>
 #include <string>
 
 namespace web
