@@ -17,6 +17,8 @@
 #include <web/Observer_ABC.h>
 #include <web/Request_ABC.h>
 
+#include <boost/bind.hpp>
+#include <boost/bind/apply.hpp>
 #include <boost/algorithm/string/join.hpp>
 #include <boost/assign/list_of.hpp>
 #include <boost/foreach.hpp>
@@ -75,7 +77,8 @@ namespace
         MOCK_METHOD( GetUri, 0 );
         MOCK_METHOD( GetParameter, 1 );
         MOCK_METHOD( GetHeader, 1 );
-        MOCK_METHOD( ReadMimeParts, 1 );
+        MOCK_METHOD( RegisterMime, 2 );
+        MOCK_METHOD( ParseMime, 0 );
     };
 
     const boost::xpressive::sregex httpCodeRegex = boost::xpressive::sregex::compile( "^HTTP\\/1\\.1\\s+(\\d+)\\s+.+\r\n" );
@@ -317,4 +320,26 @@ BOOST_FIXTURE_TEST_CASE( controller_reject_invalid_parameters, Fixture )
 {
     SetRequest( "GET", "/list_exercises", boost::assign::map_list_of( "offset", "abc" ) );
     CheckNotify( 400, "invalid parameter \"offset\"=\"abc\"" );
+}
+
+namespace
+{
+bool RegisterMime( Request_ABC::MimeHandler& dst, const Request_ABC::MimeHandler& src )
+{
+    dst = src;
+    return true;
+}
+}
+
+BOOST_FIXTURE_TEST_CASE( controller_upload_pack, Fixture )
+{
+    SetRequest( "POST", "/upload_pack" );
+    Request_ABC::MimeHandler handler;
+    MOCK_EXPECT( request.RegisterMime ).once().with( "pack", boost::bind( &RegisterMime, boost::ref( handler ), _1 ) );
+    const std::string dummy = "dummy mime file";
+    std::stringstream stream( dummy );
+    MOCK_EXPECT( request.ParseMime ).once().calls( boost::bind( boost::apply< void >(), boost::cref( handler ), boost::ref( stream ) ) );
+    const std::string expected = "dummy reply";
+    MOCK_EXPECT( agent.UploadPack ).once().with( boost::ref( stream ) ).returns( expected );
+    CheckNotify( 200, expected );
 }

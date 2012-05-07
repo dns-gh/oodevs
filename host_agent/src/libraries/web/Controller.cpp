@@ -217,7 +217,8 @@ std::string UuidDispatch( const Request_ABC& request, const std::string& name, A
 std::string Controller::Notify( Request_ABC& request )
 {
     const std::string& uri = request.GetUri();
-    if( request.GetMethod() == "GET" )
+    const std::string& method = request.GetMethod();
+    if( method == "GET" )
         try
         {
             if( uri == "/get_cluster" )     return GetCluster( request );
@@ -247,7 +248,7 @@ std::string Controller::Notify( Request_ABC& request )
         {
             return WriteHttpReply( err.GetCode(), err.what() );
         }
-    else if( request.GetMethod() == "POST" )
+    else if( method == "POST" )
         try
         {
             if( uri == "/upload_pack" ) return UploadPack( request );
