@@ -155,7 +155,7 @@
   </object>
   <object name="eboulement" type="landslide">
     <geometries>
-      <geometry symbol="G*MPORC---****X" type="polygon"/>
+      <geometry symbol="G*EBOUL---****X" type="polygon"/>
     </geometries>
     <activable/>
     <avoidable distance="500"/>
@@ -602,4 +602,4 @@
     <universal/>
   </object>
 </objects>
-<!-- signature="1587057676" -->
+<!-- signature="0482670743" -->
