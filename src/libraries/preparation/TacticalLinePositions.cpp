@@ -12,7 +12,9 @@
 #include "TacticalLine_ABC.h"
 #include "clients_kernel/CoordinateConverter_ABC.h"
 #include "clients_kernel/GlTools_ABC.h"
+#include "clients_kernel/Lines.h"
 #include "clients_kernel/LocationVisitor_ABC.h"
+#include "clients_kernel/TacticalHierarchies.h"
 #include "clients_kernel/Viewport_ABC.h"
 #include <xeumeuleu/xml.hpp>
 
@@ -136,19 +138,35 @@ void TacticalLinePositions::Draw( const geometry::Point2f&, const kernel::Viewpo
 {
     if( ! viewport.IsVisible( boundingBox_ ) )
         return;
+    
+    std::string symbol = owner_.Get< kernel::TacticalHierarchies >().GetSymbol();
     glPushAttrib( GL_CURRENT_BIT | GL_LINE_BIT );
-        glLineWidth( 5.f );
-        tools.DrawLines( pointList_ );
-        glLineWidth( 3.f );
-        if( owner_.IsLimit() )
-            glColor3f( 0.1f, 0.1f, 0.1f );
-        else
-            glColor4f( 0.55f, 0.3f, 0.1f, 1.0f );
-        tools.DrawLines( pointList_ );
+        if( symbol.empty() )
+        {
+            glLineWidth( 5.f );
+            tools.DrawLines( pointList_ );
+            glLineWidth( 3.f );
+            if( owner_.IsLimit() )
+                glColor3f( 0.1f, 0.1f, 0.1f );
+            else
+                glColor4f( 0.55f, 0.3f, 0.1f, 1.0f );
+            tools.DrawLines( pointList_ );
+        }
         if( tools.ShouldDisplay() )
             for( CIT_PointVector it = pointList_.begin(); it != pointList_.end(); ++it )
                 tools.DrawDisc( *it, 5.f, kernel::GlTools_ABC::pixels );
     glPopAttrib();
+
+    if( !symbol.empty() )
+    {
+        kernel::Lines location;
+        for( CIT_PointVector it = pointList_.begin(); it != pointList_.end(); ++it )
+        {
+            const geometry::Point2f& point = *it;
+            location.AddPoint( point );
+        }
+        tools.DrawTacticalGraphics( symbol, location, false );
+    }
 }
 
 // -----------------------------------------------------------------------------

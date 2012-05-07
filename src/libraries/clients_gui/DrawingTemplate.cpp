@@ -204,8 +204,13 @@ void DrawingTemplate::Draw( const T_PointVector& points, svg::RenderingContext_A
     if( markerStart_ )
         DrawStartMarker( context, tools, points[0], points[1] );
     if( markerMiddle_ )
-        for( CIT_PointVector it = points.begin() + 1; it != points.end() - 1; ++it )
-            DrawMiddleMarker( context, tools, *it, *(it-1), *(it+1) );
+        for( CIT_PointVector it = points.begin(); it != points.end() - 1; ++it )
+        {
+            const geometry::Point2f& start = *it;
+            const geometry::Point2f& end = *(it + 1);
+            geometry::Point2f middle( (start.X() + end.X())/2, (start.Y() + end.Y())/2 );
+            DrawMiddleMarker( context, tools, middle, start, end );
+        }
     if( markerEnd_ )
         DrawEndMarker( context, tools, points.back(), points[ points.size() - 2 ] );
     if( marker_ )

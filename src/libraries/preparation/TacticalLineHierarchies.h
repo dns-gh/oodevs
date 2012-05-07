@@ -27,6 +27,12 @@ public:
              TacticalLineHierarchies( kernel::Entity_ABC& holder, kernel::Entity_ABC* superior );
     virtual ~TacticalLineHierarchies();
     //@}
+    
+    //! @name Operations
+    //@{
+    virtual std::string GetSymbol() const;
+    virtual std::string GetLevel() const;
+    //@}
 
 private:
     //! @name Copy/Assignment
