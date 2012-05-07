@@ -44,6 +44,7 @@ public:
 private:
     //! @name Private Methods
     //@{
+    void SkipLocally( size_t size );
     void FillAtLeast( size_t size );
     //@}
 

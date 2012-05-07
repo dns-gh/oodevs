@@ -48,6 +48,8 @@ bool StreamBuffer::Eof() const
 char StreamBuffer::Peek()
 {
     FillAtLeast( 64 );
+    if( !size_ )
+        throw std::runtime_error( "buffer overread" );
     return buffer_[skip_];
 }
 
@@ -79,6 +81,16 @@ size_t StreamBuffer::Peek( char** dst )
 // -----------------------------------------------------------------------------
 void StreamBuffer::Skip( size_t offset )
 {
+    FillAtLeast( offset );
+    SkipLocally( offset );
+}
+
+// -----------------------------------------------------------------------------
+// Name: StreamBuffer::SkipLocally
+// Created: BAX 2012-05-07
+// -----------------------------------------------------------------------------
+void StreamBuffer::SkipLocally( size_t offset )
+{
     offset = std::min( offset, size_ );
     skip_ += offset;
     size_ -= offset;
@@ -93,7 +105,7 @@ size_t StreamBuffer::Read( char* dst, size_t size )
     FillAtLeast( size );
     const size_t next = std::min( size_, size );
     memcpy( dst, &buffer_[skip_], next );
-    Skip( next );
+    SkipLocally( next );
     return next;
 }
 
@@ -126,12 +138,14 @@ std::string StreamBuffer::GetLine()
     for(;;)
     {
         FillAtLeast( 256 );
+        if( !size_ )
+            break;
         const char* src  = &buffer_[skip_];
         const void* next = memchr( src, '\n', size_ );
         const char* ptr  = next ? static_cast< const char* >( next ) : &src[size_];
         const ptrdiff_t diff = ptr - src;
         reply.append( src, diff );
-        Skip( diff + 1 );
+        SkipLocally( diff + 1 );
         if( next )
             break;
     }
