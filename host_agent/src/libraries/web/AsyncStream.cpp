@@ -92,10 +92,11 @@ struct Buffer : public boost::noncopyable
         while( fill < size )
         {
             // we will never get more data if producer is stopped and buffer is empty
-            if( !stopped_ )
-                condition_.wait( lock );
-            else if( buffer_.empty() )
-                break;
+            if( buffer_.empty() )
+                if( stopped_ )
+                    break;
+                else
+                    condition_.wait( lock );
             std::streamsize next = std::min( size - fill, static_cast< std::streamsize >( buffer_.size() ) );
             if( next )
                 MoveData( data + fill, buffer_, next );
