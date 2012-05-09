@@ -165,10 +165,6 @@ LPTHREAD_START_ROUTINE Api::GetExitProcessPointer() const
     return exit_;
 }
 
-#ifdef _MSC_VER
-#   pragma warning( disable: 4127 )
-#endif
-
 // -----------------------------------------------------------------------------
 // Name: Api::GetModuleFilename
 // Created: BAX 2012-04-24
@@ -177,7 +173,7 @@ std::wstring Api::GetModuleFilename() const
 {
     DWORD ret;
     std::vector< wchar_t > buffer( 256 );
-    while( true )
+    for(;;)
     {
         ret = ::GetModuleFileNameW( 0, &buffer[0], static_cast< DWORD >( buffer.size() ) );
         if( ret < buffer.size() || ::GetLastError() != ERROR_INSUFFICIENT_BUFFER )
