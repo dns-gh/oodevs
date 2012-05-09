@@ -89,7 +89,7 @@ private:
     //! @name Helpers
     //@{
     void ReadValue( xml::xistream& xis );
-    void ReadChoice( xml::xistream& xis, T_Aliases& data );
+    void ReadChoice( xml::xistream& xis, T_Aliases& data, bool lowerCase );
     //@}
 
 private:

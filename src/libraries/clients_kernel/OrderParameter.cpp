@@ -33,11 +33,11 @@ OrderParameter::OrderParameter( xml::xistream& xis )
     xis >> xml::list( "value", *this, &OrderParameter::ReadValue )
         >> xml::optional
         >> xml::start( "choice" )
-            >> xml::list( "parameter", boost::bind( &OrderParameter::ReadChoice, this, _1, boost::ref( aliases_ ) ) )
+            >> xml::list( "parameter", boost::bind( &OrderParameter::ReadChoice, this, _1, boost::ref( aliases_ ), true ) )
         >> xml::end
         >> xml::optional
             >> xml::start( "objects" )
-                >> xml::list( "parameter", boost::bind( &OrderParameter::ReadChoice, this, _1, boost::ref( genObjects_ ) ) )
+                >> xml::list( "parameter", boost::bind( &OrderParameter::ReadChoice, this, _1, boost::ref( genObjects_ ), false ) )
             >> xml::end
         >> xml::optional
             >> xml::attribute< unsigned int >( "min-occurs", minOccurs_ );
@@ -188,11 +188,11 @@ void OrderParameter::ReadValue( xml::xistream& xis )
 // Name: OrderParameter::ReadChoice
 // Created: LDC 2010-08-18
 // -----------------------------------------------------------------------------
-void OrderParameter::ReadChoice( xml::xistream& xis, T_Aliases& data )
+void OrderParameter::ReadChoice( xml::xistream& xis, T_Aliases& data, bool lowerCase )
 {
     std::string type;
     xis >> xml::attribute( "type", type );
-    data.insert( boost::algorithm::to_lower_copy( type ) );
+    data.insert( lowerCase ? boost::algorithm::to_lower_copy( type ) : type );
 }
 
 // -----------------------------------------------------------------------------
