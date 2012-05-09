@@ -1061,6 +1061,10 @@ void MIL_Automate::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg, 
         GetDecision().Reload(); 
         pOrderManager_->CancelMission();
         break;
+    case sword::UnitMagicAction::unit_change_affinities:
+        for( IT_PionVector it = pions_.begin(); it != pions_.end(); ++it )
+            (*it)->OnReceiveMsgChangeAffinities( msg );
+        break;
     default:
         {
             if ( !pPionPC_ )

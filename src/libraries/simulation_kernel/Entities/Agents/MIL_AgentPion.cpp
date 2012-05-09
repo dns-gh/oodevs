@@ -1069,7 +1069,7 @@ void MIL_AgentPion::OnReceiveUnitMagicAction( const sword::UnitMagicAction& msg,
         OnReceiveCreateWound( msg.parameters() );
         break;
     case sword::UnitMagicAction::unit_change_affinities:
-        pAffinities_->OnReceiveMsgChangeAffinities( msg );
+        OnReceiveMsgChangeAffinities( msg );
         break;
     case sword::UnitMagicAction::change_extension:
         pExtensions_->OnReceiveMsgChangeExtensions( msg );
@@ -1508,6 +1508,15 @@ void MIL_AgentPion::Apply2( boost::function< void( PHY_DotationStock& ) > visito
         itf->Apply( visitor );
     else
         MT_LOG_ERROR_MSG( "Unit " << GetID() << " is not a logistic unit." );
+}
+
+// -----------------------------------------------------------------------------
+// Name: MIL_AgentPion::OnReceiveMsgChangeAffinities
+// Created: LGY 2012-05-09
+// -----------------------------------------------------------------------------
+void MIL_AgentPion::OnReceiveMsgChangeAffinities( const sword::UnitMagicAction& msg )
+{
+    pAffinities_->OnReceiveMsgChangeAffinities( msg );
 }
 
 // -----------------------------------------------------------------------------
