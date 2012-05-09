@@ -35,104 +35,103 @@ using runtime::Utf8Convert;
 
 namespace
 {
-    template< typename T >
-    bool ReadParameter( T& dst, const std::string& name, int& idx, int argc, const char* argv[] )
+template< typename T >
+bool ReadParameter( T& dst, const std::string& name, int& idx, int argc, const char* argv[] )
+{
+    if( name != argv[idx] )
+        return false;
+    if( ++idx >= argc )
+        throw std::runtime_error( "missing " + name + " parameter" );
+    dst = boost::lexical_cast< T >( argv[idx] );
+    return true;
+}
+
+struct Configuration
+{
+    std::wstring java;
+    struct
     {
-        if( name != argv[idx] )
-            return false;
-        if( ++idx >= argc )
-            throw std::runtime_error( "missing " + name + " parameter" );
-        dst = boost::lexical_cast< T >( argv[idx] );
+        int host;
+        int proxy;
+        int period;
+        int min;
+        int max;
+    } ports;
+    struct
+    {
+        std::wstring jar;
+    } proxy;
+    struct
+    {
+        bool enabled;
+    } cluster;
+    struct
+    {
+        std::wstring jar;
+        std::wstring root;
+    } node;
+    struct
+    {
+        std::wstring data;
+        std::wstring applications;
+    } session;
+
+    bool Parse( cpplog::BaseLogger& log, int argc, const char* argv[] )
+    {
+        for( int i = 0; i < argc; ++i )
+        {
+            bool found = false;
+            found |= ReadParameter( ports.host, "--port_host", i, argc, argv );
+            found |= ReadParameter( ports.period, "--port_period", i, argc, argv );
+            found |= ReadParameter( ports.min, "--port_min", i, argc, argv );
+            found |= ReadParameter( ports.max, "--port_max", i, argc, argv );
+            found |= ReadParameter( ports.proxy, "--port_proxy", i, argc, argv );
+            found |= ReadParameter( cluster.enabled, "--cluster", i, argc, argv );
+            found |= ReadParameter( java, "--java", i, argc, argv );
+            found |= ReadParameter( proxy.jar, "--proxy_jar", i, argc, argv );
+            found |= ReadParameter( node.jar, "--node_jar", i, argc, argv );
+            found |= ReadParameter( node.root, "--node_root", i, argc, argv );
+            found |= ReadParameter( session.data, "--session_data", i, argc, argv );
+            found |= ReadParameter( session.applications, "--session_applications", i, argc, argv );
+            if( !found )
+            {
+                LOG_ERROR( log ) << "[cfg] Unknown parameter " << argv[i];
+                return false;
+            }
+        }
         return true;
     }
+};
 
-    struct Configuration
-    {
-        std::wstring java;
-        struct
-        {
-            int host;
-            int proxy;
-            int period;
-            int min;
-            int max;
-        } ports;
-        struct
-        {
-            std::wstring jar;
-        } proxy;
-        struct
-        {
-            bool enabled;
-        } cluster;
-        struct
-        {
-            std::wstring jar;
-            std::wstring root;
-        } node;
-        struct
-        {
-            std::wstring data;
-            std::wstring applications;
-        } session;
+void Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const host::FileSystem_ABC& system, Configuration& cfg )
+{
+    host::Pool pool( 8 );
+    host::UuidFactory uuids;
+    web::Client client;
+    host::Proxy proxy( log, runtime, system, cfg.java, cfg.proxy.jar, cfg.ports.proxy, client, pool );
+    proxy.Register( "api", "localhost", cfg.ports.host );
+    host::PortFactory ports( cfg.ports.period, cfg.ports.min, cfg.ports.max );
+    host::NodeController nodes( log, runtime, system, uuids, proxy, cfg.java, cfg.node.jar, cfg.node.root, "node", pool, ports );
+    host::NodeController cluster( log, runtime, system, uuids, proxy, cfg.java, cfg.node.jar, cfg.node.root, "cluster", pool, ports );
+    host::SessionController sessions( log, runtime, system, uuids, cfg.session.data, cfg.session.applications, pool, ports );
+    host::Agent agent( log, cfg.cluster.enabled ? &cluster : 0, nodes, sessions );
+    web::Controller controller( log, agent );
+    web::Server server( log, pool, controller, cfg.ports.host );
+    server.Listen();
+    host::SecurePool run( log, "server", pool );
+    run.Post( boost::bind( &web::Server::Run, &server ) );
+    getc( stdin );
+    server.Stop();
+}
 
-        bool Parse( cpplog::BaseLogger& log, int argc, const char* argv[] )
-        {
-            for( int i = 0; i < argc; ++i )
-            {
-                bool found = false;
-                found |= ReadParameter( ports.host, "--port_host", i, argc, argv );
-                found |= ReadParameter( ports.period, "--port_period", i, argc, argv );
-                found |= ReadParameter( ports.min, "--port_min", i, argc, argv );
-                found |= ReadParameter( ports.max, "--port_max", i, argc, argv );
-                found |= ReadParameter( ports.proxy, "--port_proxy", i, argc, argv );
-                found |= ReadParameter( cluster.enabled, "--cluster", i, argc, argv );
-                found |= ReadParameter( java, "--java", i, argc, argv );
-                found |= ReadParameter( proxy.jar, "--proxy_jar", i, argc, argv );
-                found |= ReadParameter( node.jar, "--node_jar", i, argc, argv );
-                found |= ReadParameter( node.root, "--node_root", i, argc, argv );
-                found |= ReadParameter( session.data, "--session_data", i, argc, argv );
-                found |= ReadParameter( session.applications, "--session_applications", i, argc, argv );
-                if( !found )
-                {
-                    LOG_ERROR( log ) << "[cfg] Unknown parameter " << argv[i];
-                    return false;
-                }
-            }
-            return true;
-        }
-    };
-
-    void Start( cpplog::BaseLogger& log, const runtime::Runtime_ABC& runtime, const host::FileSystem_ABC& system, Configuration& cfg )
-    {
-        host::Pool pool( 8 );
-        host::UuidFactory uuids;
-        web::Client client;
-        host::Proxy proxy( log, runtime, system, cfg.java, cfg.proxy.jar, cfg.ports.proxy, client, pool );
-        proxy.Register( "api", "localhost", cfg.ports.host );
-        host::PortFactory ports( cfg.ports.period, cfg.ports.min, cfg.ports.max );
-        host::NodeController nodes( log, runtime, system, uuids, proxy, cfg.java, cfg.node.jar, cfg.node.root, "node", pool, ports );
-        host::NodeController cluster( log, runtime, system, uuids, proxy, cfg.java, cfg.node.jar, cfg.node.root, "cluster", pool, ports );
-        host::SessionController sessions( log, runtime, system, uuids, cfg.session.data, cfg.session.applications, pool, ports );
-        host::Agent agent( log, cfg.cluster.enabled ? &cluster : 0, nodes, sessions );
-        web::Controller controller( log, agent );
-        web::Server server( log, pool, controller, cfg.ports.host );
-        server.Listen();
-        host::SecurePool run( log, "server", pool );
-        run.Post( boost::bind( &web::Server::Run, &server ) );
-        getc( stdin );
-        server.Stop();
-    }
-
-    template< typename T >
-    T GetTree( boost::property_tree::ptree& tree, const std::string& key, const T& value )
-    {
-        const boost::optional< T > opt = tree.get_optional< T >( key );
-        if( opt != boost::none )
-            return *opt;
-        tree.put< T >( key, value );
-        return value;
-    }
+template< typename T >
+T GetTree( boost::property_tree::ptree& tree, const std::string& key, const T& value )
+{
+    const boost::optional< T > opt = tree.get_optional< T >( key );
+    if( opt != boost::none )
+        return *opt;
+    tree.put< T >( key, value );
+    return value;
 }
 
 int StartServer( int argc, const char* argv[] )
@@ -188,11 +187,9 @@ int StartServer( int argc, const char* argv[] )
     LOG_INFO( log ) << "Host Agent - Exit";
     return 0;
 }
+}
 
-
-#if 1
 int main( int argc, const char* argv[] )
 {
     return StartServer( argc, argv );
 }
-#endif
