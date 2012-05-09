@@ -1110,6 +1110,11 @@ void MIL_EntityManager::ProcessCrowdCreationRequest( const UnitMagicAction& mess
     MT_Vector2D point;
     MIL_Tools::ConvertCoordMosToSim( location.coordinates().elem( 0 ), point );
     int number = parameters.elem( 2 ).value().Get( 0 ).quantity();
+    if( number == 0 )
+    {
+        ack().set_error_code( MagicActionAck::error_invalid_parameter );
+        return;
+    }
     std::string name = ( parameters.elem( 3 ).value_size() == 1 && parameters.elem( 3 ).value().Get( 0 ).has_acharstr() ) ? parameters.elem( 3 ).value().Get( 0 ).acharstr() : std::string();
     populationFactory_->Create( type, point, number, name, army, 0, context );
 }
