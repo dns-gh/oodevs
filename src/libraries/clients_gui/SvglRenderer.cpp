@@ -48,6 +48,12 @@ SvglRenderer::~SvglRenderer()
 {
     for( CIT_Lists it = lists_.begin(); it != lists_.end(); ++it )
         glDeleteLists( it->second, 1 );
+    if( colorList_ )
+    {
+        glDeleteLists( colorList_, 1 );
+        colorList_ = 0;
+        renderer_.reset( new TextRenderer() );
+    }
 }
 
 // -----------------------------------------------------------------------------
@@ -94,18 +100,7 @@ void SvglRenderer::Render( svg::Node_ABC* node, const std::string& style, const 
 {
     CreateStaticLists();
 
-    // $$$$ JSR 2011-10-12: HACK temporaire : Désactivation des display lists, on dessiner les symboles pour contourner le bug 6421. A investiguer...
-    ConfigureColorList();
-    ConfigureWidthList( viewport, vWidth, vHeight );
-    const BoundingBox box( viewport.Left(), viewport.Bottom(), viewport.Right(), viewport.Top() );
-    ListPaint color( colorList_ );
-    renderingContext_->SetViewport( box, vWidth, vHeight );
-    renderingContext_->PushProperty( RenderingContext::color, color );
-    std::auto_ptr< Style > border( CreateStyle( style ) );
-    references_->Register( "border", *border );
-    node->Draw( *renderingContext_, *references_ );
-    renderingContext_->PopProperty( RenderingContext::color );
-    /*unsigned int listId = 0;
+    unsigned int listId = 0;
     CIT_Lists it = lists_.find( node );
     if( it == lists_.end() )
     {
@@ -119,7 +114,7 @@ void SvglRenderer::Render( svg::Node_ABC* node, const std::string& style, const 
 
     ConfigureColorList();
     ConfigureWidthList( viewport, vWidth, vHeight );
-    glCallList( listId );*/
+    glCallList( listId );
 }
 
 // -----------------------------------------------------------------------------
@@ -195,7 +190,7 @@ void SvglRenderer::CreateStaticLists()
 {
     if( ! colorList_ )
     {
-        renderer_->InitializeFont( "Arial", 700 ); // $$$$ AGE 2007-05-24:
+        renderer_->InitializeFont( "Arial", 700 );
         colorList_ = glGenLists( 1 );
     }
 }
